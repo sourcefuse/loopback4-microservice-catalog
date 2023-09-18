@@ -1,34 +1,37 @@
-import {SurveyQuestion, SurveyQuestionDto} from '../models';
-import {SurveyQuestionRepository} from '../repositories';
-import {SurveyService} from '../services';
 import {service} from '@loopback/core';
 import {
+  AnyObject,
   Count,
   CountSchema,
   Filter,
-  repository,
+  FilterBuilder,
   Where,
+  WhereBuilder,
+  repository,
 } from '@loopback/repository';
 import {
-  param,
+  HttpErrors,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
-  del,
+  post,
   requestBody,
   response,
-  post,
-  HttpErrors,
 } from '@loopback/rest';
 import {
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
-import {authenticate, STRATEGY} from 'loopback4-authentication';
+import {STRATEGY, authenticate} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {AppErrorCodes, ErrorKeys, PermissionKey} from '../enum';
+import {SurveyQuestion, SurveyQuestionDto} from '../models';
+import {SurveyQuestionRepository} from '../repositories';
 import {SurveyQuestionRepository as SurveyQuestionSequelizeRepo} from '../repositories/sequelize';
+import {SurveyService} from '../services';
 
 const basePath = '/surveys/{surveyId}/survey-questions';
 const orderByCreatedOn = 'created_on DESC';
@@ -104,7 +107,10 @@ export class SurveyQuestionController {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: [PermissionKey.ViewSurveyQuestion],
+    permissions: [
+      PermissionKey.ViewSurveyQuestion,
+      PermissionKey.ViewOpenSurveyQuestion,
+    ],
   })
   @get(`${basePath}/count`)
   @response(STATUS_CODE.OK, {
@@ -122,7 +128,10 @@ export class SurveyQuestionController {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: [PermissionKey.ViewSurveyQuestion],
+    permissions: [
+      PermissionKey.ViewSurveyQuestion,
+      PermissionKey.ViewOpenSurveyQuestion,
+    ],
   })
   @get(`${basePath}`)
   @response(STATUS_CODE.OK, {
@@ -140,6 +149,10 @@ export class SurveyQuestionController {
     @param.path.string('surveyId') surveyId: string,
     @param.filter(SurveyQuestion) filter?: Filter<SurveyQuestion>,
   ): Promise<SurveyQuestion[]> {
+    filter = this.addWhereToFilter(
+      {surveyId},
+      filter,
+    ) as Filter<SurveyQuestion>;
     return this.surveyQuestionRepository.find(filter);
   }
 
@@ -174,7 +187,10 @@ export class SurveyQuestionController {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: [PermissionKey.ViewSurveyQuestion],
+    permissions: [
+      PermissionKey.ViewSurveyQuestion,
+      PermissionKey.ViewOpenSurveyQuestion,
+    ],
   })
   @get(`${basePath}/{id}`)
   @response(STATUS_CODE.OK, {
@@ -298,5 +314,34 @@ export class SurveyQuestionController {
       .catch(error => {
         throw new Error(error);
       });
+  }
+
+  private addWhereToFilter<T extends object = AnyObject>(
+    whereObject: Where<T>,
+    filter?: Filter<T>,
+  ): Filter<T> {
+    const filterBuilder = new FilterBuilder<T>();
+    const whereBuilder = new WhereBuilder<T>();
+    if (!filter) {
+      return filterBuilder.where(whereObject).build();
+    }
+
+    if (!filter.where) {
+      filter.where = whereObject;
+      return filter;
+    }
+
+    const where = whereBuilder
+      .and([whereObject, ...this.getWhereWithAnd(filter.where)])
+      .build();
+    filter.where = where;
+    return filter;
+  }
+
+  private getWhereWithAnd(where: AnyObject) {
+    if (where?.and) {
+      return where?.and;
+    }
+    return [where];
   }
 }

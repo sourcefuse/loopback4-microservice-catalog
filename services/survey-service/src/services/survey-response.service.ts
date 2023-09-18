@@ -1,38 +1,38 @@
 import {
-  injectable,
   /* inject, */
   BindingScope,
   inject,
+  injectable,
 } from '@loopback/core';
 import {ILogger, LOGGER} from '@sourceloop/core';
 
 import {repository, Where} from '@loopback/repository';
-import {ErrorKeys} from '../enum/error-keys.enum';
+import {HttpErrors} from '@loopback/rest';
+import {isArray} from 'lodash';
+import {AuthorizeErrorKeys} from 'loopback4-authorization';
 import moment from 'moment';
+import {ErrorKeys} from '../enum/error-keys.enum';
 import {QuestionType} from '../enum/question.enum';
 import {
-  SurveyResponseDto,
-  SurveyResponse,
   Question,
   SurveyCycle,
+  SurveyResponse,
   SurveyResponseDetailDto,
+  SurveyResponseDto,
 } from '../models';
 import {SurveyResponseDetail} from '../models/survey-response-detail.model';
-import {HttpErrors} from '@loopback/rest';
+import {
+  SurveyCycleRepository as SurveyCycleSequelizeRepo,
+  SurveyResponderRepository as SurveyResponderSequelizeRepo,
+  SurveyResponseDetailRepository as SurveyResponseDetailSequelizeRepo,
+  SurveyResponseRepository as SurveyResponseSequelizeRepo,
+  SurveyRepository as SurveySequelizeRepo,
+} from '../repositories/sequelize';
 import {SurveyCycleRepository} from '../repositories/survey-cycle.repository';
+import {SurveyResponderRepository} from '../repositories/survey-responder.repository';
 import {SurveyResponseDetailRepository} from '../repositories/survey-response-detail.repository';
 import {SurveyResponseRepository} from '../repositories/survey-response.repository';
 import {SurveyRepository} from '../repositories/survey.repository';
-import {isArray} from 'lodash';
-import {SurveyResponderRepository} from '../repositories/survey-responder.repository';
-import {AuthorizeErrorKeys} from 'loopback4-authorization';
-import {
-  SurveyResponseRepository as SurveyResponseSequelizeRepo,
-  SurveyResponseDetailRepository as SurveyResponseDetailSequelizeRepo,
-  SurveyRepository as SurveySequelizeRepo,
-  SurveyCycleRepository as SurveyCycleSequelizeRepo,
-  SurveyResponderRepository as SurveyResponderSequelizeRepo,
-} from '../repositories/sequelize';
 
 const sqlDateFormat = 'YYYY-MM-DD';
 
@@ -248,8 +248,8 @@ export class SurveyResponseService {
       questionId: surveyResponseDetailDto.questionId,
       score: surveyResponseDetailDto.score,
       responseType: questionType,
-      textAnswer,
-      optionId,
+      textAnswer: textAnswer ?? '', // the create all issue
+      optionId: optionId ?? '', // the create all issue
     });
   }
 

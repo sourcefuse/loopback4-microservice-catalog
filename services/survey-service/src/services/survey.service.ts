@@ -1,34 +1,34 @@
-import {injectable, BindingScope, inject, service} from '@loopback/core';
+import {BindingScope, inject, injectable, service} from '@loopback/core';
 import {AnyObject, Filter, repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {ILogger, LOGGER} from '@sourceloop/core';
-import moment from 'moment';
-import {Survey, SurveyDto, SurveyQuestion} from '../models';
-import {QuestionStatus} from '../enum/question.enum';
-import {ErrorKeys} from '../enum/error-keys.enum';
-import {SurveyRepository} from '../repositories/survey.repository';
-import {QuestionTemplateRepository} from '../repositories/question-template.repository';
-import {TemplateQuestionRepository} from '../repositories/template-questions.repository';
-import {SurveyQuestionRepository} from '../repositories/survey-question.repository';
-import {SurveyCycleRepository} from '../repositories/survey-cycle.repository';
-import {SurveyResponderRepository} from '../repositories/survey-responder.repository';
-import {CreateSurveyHelperService} from './create-survey-helper.service';
-import {QuestionTemplateStatus} from '../enum/template.enum';
-import {unescapeHtml} from '../utils/html.utils';
 import jsdom from 'jsdom';
-import {SurveyCycleService} from './survey-cycle.service';
-import {QuestionRepository} from '../repositories';
+import moment from 'moment';
 import {SurveyStatus} from '../enum';
-const {JSDOM} = jsdom;
+import {ErrorKeys} from '../enum/error-keys.enum';
+import {QuestionStatus} from '../enum/question.enum';
+import {QuestionTemplateStatus} from '../enum/template.enum';
+import {Survey, SurveyDto, SurveyQuestion} from '../models';
+import {QuestionRepository} from '../repositories';
+import {QuestionTemplateRepository} from '../repositories/question-template.repository';
 import {
   QuestionRepository as QuestionSequelizeRepo,
-  SurveyRepository as SurveySequelizeRepo,
+  QuestionTemplateRepository as QuestionTemplateSequelizeRepo,
   SurveyCycleRepository as SurveyCycleSequelizeRepo,
   SurveyQuestionRepository as SurveyQuestionSequelizeRepo,
   SurveyResponderRepository as SurveyResponderSequelizeRepo,
-  QuestionTemplateRepository as QuestionTemplateSequelizeRepo,
+  SurveyRepository as SurveySequelizeRepo,
   TemplateQuestionRepository as TemplateQuestionSequelizeRepo,
 } from '../repositories/sequelize';
+import {SurveyCycleRepository} from '../repositories/survey-cycle.repository';
+import {SurveyQuestionRepository} from '../repositories/survey-question.repository';
+import {SurveyResponderRepository} from '../repositories/survey-responder.repository';
+import {SurveyRepository} from '../repositories/survey.repository';
+import {TemplateQuestionRepository} from '../repositories/template-questions.repository';
+import {unescapeHtml} from '../utils/html.utils';
+import {CreateSurveyHelperService} from './create-survey-helper.service';
+import {SurveyCycleService} from './survey-cycle.service';
+const {JSDOM} = jsdom;
 
 const orderByCreatedOn = 'created_on DESC';
 const defaultLeadingZero = 6;
@@ -81,11 +81,13 @@ export class SurveyService {
       const title = this.getHtmlTextContent(survey.surveyText);
       this.validateTitleLength(title);
     }
-    const existingQuestionTemplate =
-      await this.questionTemplateRepository.findOne({
+    let existingQuestionTemplate;
+    if (templateId) {
+      existingQuestionTemplate = await this.questionTemplateRepository.findOne({
         fields: ['id', 'isEnableWeight'],
         where: {id: survey.existingTemplateId},
       });
+    }
 
     if (!survey.baseSurveyId && existingQuestionTemplate?.isEnableWeight) {
       survey.isEnableWeights = true;
@@ -113,7 +115,7 @@ export class SurveyService {
     const sectionIdMap: Map<string, string> = new Map();
 
     //find exisiting questions only of baseSurvey and create copies of them, store ids in pairs
-    if (!survey.baseSurveyId) {
+    if (!survey.baseSurveyId && templateId) {
       const existingTemplateQuestions =
         await this.templateQuestionRepository.find({
           where: {templateId: templateId},
@@ -258,11 +260,11 @@ export class SurveyService {
     }
 
     //CASE 5 -> start date cannot be present with status draft
-    if (survey?.startDate && survey?.status === SurveyStatus.DRAFT) {
-      throw new HttpErrors.BadRequest(
-        ErrorKeys.SurveyCannotBeActivatedInDraftState,
-      );
-    }
+    // if (survey?.startDate && survey?.status === SurveyStatus.DRAFT) {
+    //   throw new HttpErrors.BadRequest(
+    //     ErrorKeys.SurveyCannotBeActivatedInDraftState,
+    //   );
+    // }
 
     this.checkPastDateValidation(survey);
   }

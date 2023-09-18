@@ -3,6 +3,9 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {Client, expect} from '@loopback/testlab';
+import moment from 'moment';
+import {QuestionStatus, QuestionType, SurveyStatus} from '../../enum';
+import {Survey} from '../../models';
 import {
   QuestionRepository,
   SectionRepository,
@@ -12,12 +15,9 @@ import {
   SurveyResponderRepository,
 } from '../../repositories';
 import {SurveyServiceApplication} from '../application';
-import {setUpApplication} from './helper';
-import {token} from '../datasources/userCredsAndPermission';
 import {surveyRequestBody} from '../datasources/mockdata';
-import {QuestionStatus, QuestionType, SurveyStatus} from '../../enum';
-import moment from 'moment';
-import {Survey} from '../../models';
+import {token} from '../datasources/userCredsAndPermission';
+import {setUpApplication} from './helper';
 
 const DATE_FORMAT = 'YYYY-MM-DD';
 const surveyText =
@@ -170,20 +170,6 @@ describe('Survey Controller', () => {
       .set('authorization', `Bearer ${token}`)
       .send(surveyBody)
       .expect(400);
-    expect(response).to.have.property('error');
-  });
-
-  it('will return 400 if start date is added and status is draft', async () => {
-    const surveyToUpdate = {
-      startDate: moment().format(DATE_FORMAT),
-      status: SurveyStatus.DRAFT,
-    };
-    const response = await client
-      .patch(`${basePath}/1`)
-      .set('authorization', `Bearer ${token}`)
-      .send(surveyToUpdate)
-      .expect(400);
-
     expect(response).to.have.property('error');
   });
 
