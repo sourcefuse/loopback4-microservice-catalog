@@ -1,55 +1,33 @@
-﻿// Copyright (c) 2023 Sourcefuse Technologies
-//
-// This software is released under the MIT License.
-// https://opensource.org/licenses/MIT
-import {PermissionKey, RoleKey} from '../enums';
-import {inject} from '@loopback/context';
-import {service} from '@loopback/core';
 import {
   Count,
   CountSchema,
   Filter,
+  FilterExcludingWhere,
   repository,
   Where,
-  WhereBuilder,
 } from '@loopback/repository';
 import {
-  del,
+  post,
+  param,
   get,
   getModelSchemaRef,
-  getWhereSchemaFor,
-  HttpErrors,
-  param,
   patch,
-  post,
+  put,
+  del,
   requestBody,
+  response,
 } from '@loopback/rest';
-import {
-  CONTENT_TYPE,
-  IAuthUserWithPermissions,
-  OPERATION_SECURITY_SPEC,
-  STATUS_CODE,
-} from '@sourceloop/core';
-import {
-  authenticate,
-  AuthenticationBindings,
-  STRATEGY,
-} from 'loopback4-authentication';
-import {authorize} from 'loopback4-authorization';
-import {Group, UserGroup} from '../models';
-import {GroupRepository, UserGroupRepository} from '../repositories';
-import {UserGroupService} from '../services';
+import {UserGroup} from '../models';
+import {UserGroupRepository} from '../repositories';
+import { OPERATION_SECURITY_SPEC } from '@sourceloop/core';
+import { authenticate, STRATEGY } from 'loopback4-authentication';
+import { authorize } from 'loopback4-authorization';
+import { PermissionKey } from '../enums';
 
-const basePath = '/groups/{id}/user-groups';
 export class UserGroupController {
   constructor(
-    @repository(GroupRepository) protected groupRepository: GroupRepository,
     @repository(UserGroupRepository)
-    public userGroupRepository: UserGroupRepository,
-    @inject(AuthenticationBindings.CURRENT_USER)
-    private readonly currentUser: IAuthUserWithPermissions,
-    @service(UserGroupService)
-    private readonly userGroupService: UserGroupService,
+    public userGroupRepository : UserGroupRepository,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {
@@ -57,104 +35,29 @@ export class UserGroupController {
   })
   @authorize({
     permissions: [
-      PermissionKey.ViewUserGroupList,
-      PermissionKey.ViewUserGroupListNum,
+      PermissionKey.CreateUserGroup,
+      PermissionKey.CreateUserGroupNum,
     ],
   })
-  @get(basePath, {
-    security: OPERATION_SECURITY_SPEC,
-    responses: {
-      [STATUS_CODE.OK]: {
-        description: 'Array of Group has many UserGroup',
-        content: {
-          [CONTENT_TYPE.JSON]: {
-            schema: {type: 'array', items: getModelSchemaRef(UserGroup)},
-          },
-        },
-      },
-    },
-  })
-  async find(
-    @param.path.string('id') id: string,
-    @param.query.object('filter') filter?: Filter<UserGroup>,
-  ): Promise<UserGroup[]> {
-    return this.groupRepository.userGroups(id).find(filter);
-  }
-
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({
-    permissions: [
-      PermissionKey.ViewUserGroupList,
-      PermissionKey.ViewUserGroupListNum,
-    ],
-  })
-  @get(`${basePath}/count`, {
-    security: OPERATION_SECURITY_SPEC,
-    responses: {
-      [STATUS_CODE.OK]: {
-        description: 'User Group model count',
-        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
-      },
-    },
-  })
-  async count(
-    @param.path.string('id') id: string,
-    @param.query.object('where', getWhereSchemaFor(UserGroup))
-    where?: Where<UserGroup>,
-  ): Promise<Count> {
-    return this.getUserGroupCount(id, where);
-  }
-
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({
-    permissions: [
-      PermissionKey.AddMemberToUserGroup,
-      PermissionKey.AddMemberToUserGroupNum,
-    ],
-  })
-  @post(basePath, {
-    security: OPERATION_SECURITY_SPEC,
-    responses: {
-      [STATUS_CODE.OK]: {
-        description: 'Group model instance',
-        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(UserGroup)}},
-      },
-    },
+  @post('/user-groups',{security: OPERATION_SECURITY_SPEC,responses:{}})
+  @response(200, {
+    description: 'UserGroup model instance',
+    content: {'application/json': {schema: getModelSchemaRef(UserGroup)}},
   })
   async create(
-    @param.path.string('id') id: typeof Group.prototype.id,
     @requestBody({
       content: {
-        [CONTENT_TYPE.JSON]: {
+        'application/json': {
           schema: getModelSchemaRef(UserGroup, {
-            title: 'NewUserGroupInGroup',
+            title: 'NewUserGroup',
             exclude: ['id'],
-            optional: ['groupId'],
           }),
         },
       },
     })
     userGroup: Omit<UserGroup, 'id'>,
   ): Promise<UserGroup> {
-    let [userGroupRecord] = await this.groupRepository.userGroups(id).find({
-      where: {
-        groupId: id,
-        userTenantId: userGroup.userTenantId,
-      },
-      limit: 1,
-    });
-    if (!userGroupRecord) {
-      userGroupRecord = await this.userGroupService.create(userGroup);
-      await this.groupRepository.updateById(id, {
-        modifiedOn: userGroupRecord.modifiedOn,
-      });
-    }
-
-    return userGroupRecord;
+    return this.userGroupRepository.create(userGroup);
   }
 
   @authenticate(STRATEGY.BEARER, {
@@ -162,48 +65,74 @@ export class UserGroupController {
   })
   @authorize({
     permissions: [
-      PermissionKey.UpdateMemberInUserGroup,
-      PermissionKey.UpdateMemberInUserGroupNum,
+      PermissionKey.ViewUserGroupList,
+      PermissionKey.ViewUserGroupListNum,
     ],
   })
-  @patch(`${basePath}/{userGroupId}`, {
-    security: OPERATION_SECURITY_SPEC,
-    responses: {
-      [STATUS_CODE.OK]: {
-        description: 'Group.UserGroup PATCH success count',
+  @get('/user-groups/count',{security: OPERATION_SECURITY_SPEC,responses:{}})
+  @response(200, {
+    description: 'UserGroup model count',
+    content: {'application/json': {schema: CountSchema}},
+  })
+  async count(
+    @param.where(UserGroup) where?: Where<UserGroup>,
+  ): Promise<Count> {
+    return this.userGroupRepository.count(where);
+  }
+
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({
+    permissions: [
+      PermissionKey.ViewUserGroupList,
+      PermissionKey.ViewUserGroupListNum,
+    ],
+  })
+  @get('/user-groups',{security: OPERATION_SECURITY_SPEC,responses:{}})
+  @response(200, {
+    description: 'Array of UserGroup model instances',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'array',
+          items: getModelSchemaRef(UserGroup, {includeRelations: true}),
+        },
       },
     },
   })
-  async patch(
-    @param.path.string('userGroupId') userGroupId: string,
-    @param.path.string('id') id: string,
+  async find(
+    @param.filter(UserGroup) filter?: Filter<UserGroup>,
+  ): Promise<UserGroup[]> {
+    return this.userGroupRepository.find(filter);
+  }
+
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateUserGroup,
+      PermissionKey.UpdateUserGroupNum,
+    ],
+  })
+  @patch('/user-groups',{security: OPERATION_SECURITY_SPEC,responses:{}})
+  @response(200, {
+    description: 'UserGroup PATCH success count',
+    content: {'application/json': {schema: CountSchema}},
+  })
+  async updateAll(
     @requestBody({
       content: {
-        [CONTENT_TYPE.JSON]: {
+        'application/json': {
           schema: getModelSchemaRef(UserGroup, {partial: true}),
         },
       },
     })
-    userGroup: Partial<UserGroup>,
-  ): Promise<void> {
-    const numberOfOwners = await this.getUserGroupCount(id, {isOwner: true});
-    if (numberOfOwners.count === 1) {
-      const [userGroupRecord] = await this.groupRepository.userGroups(id).find({
-        where: {
-          groupId: id,
-          id: userGroupId,
-          isOwner: true,
-        },
-        limit: 1,
-      });
-      if (userGroupRecord && !userGroup?.isOwner) {
-        throw new HttpErrors.Forbidden('The team needs at least one owner');
-      }
-    }
-    await this.userGroupService.updateById(userGroupId, userGroup);
-    await this.groupRepository.updateById(id, {
-      modifiedOn: new Date(),
-    });
+    userGroup: UserGroup,
+    @param.where(UserGroup) where?: Where<UserGroup>,
+  ): Promise<Count> {
+    return this.userGroupRepository.updateAll(userGroup, where);
   }
 
   @authenticate(STRATEGY.BEARER, {
@@ -211,78 +140,87 @@ export class UserGroupController {
   })
   @authorize({
     permissions: [
-      PermissionKey.RemoveMemberFromUserGroup,
-      PermissionKey.LeaveUserGroup,
-      PermissionKey.RemoveMemberFromUserGroupNum,
-      PermissionKey.LeaveUserGroupNum,
+      PermissionKey.ViewUserGroupList,
+      PermissionKey.ViewUserGroupList,
     ],
   })
-  @del(`${basePath}/{userGroupId}`, {
-    security: OPERATION_SECURITY_SPEC,
-    responses: {
-      [STATUS_CODE.OK]: {
-        description: 'Group.UserGroup DELETE success count',
+  @get('/user-groups/{id}',{security: OPERATION_SECURITY_SPEC,responses:{}})
+  @response(200, {
+    description: 'UserGroup model instance',
+    content: {
+      'application/json': {
+        schema: getModelSchemaRef(UserGroup, {includeRelations: true}),
       },
     },
   })
-  async delete(
+  async findById(
     @param.path.string('id') id: string,
-    @param.path.string('userGroupId') userGroupId: string,
-  ): Promise<void> {
-    const isAdmin = +this.currentUser.role === RoleKey.Admin;
-
-    const userGroups = await this.groupRepository.userGroups(id).find({
-      where: {
-        groupId: id,
-        or: [{id: userGroupId}, {userTenantId: this.currentUser.userTenantId}],
-      },
-      limit: 2,
-    });
-    const userGroupRecord = userGroups.find(
-      userGroup => userGroup.id === userGroupId,
-    );
-    const currentUserGroup = userGroups.find(
-      userGroup => userGroup.userTenantId === this.currentUser.userTenantId,
-    );
-    if (!userGroupRecord) {
-      throw new HttpErrors.Forbidden('Unable to find user group records');
-    }
-
-    if (
-      !(
-        isAdmin ||
-        currentUserGroup?.isOwner ||
-        userGroupRecord?.userTenantId === this.currentUser.userTenantId
-      )
-    ) {
-      throw new HttpErrors.Forbidden('Only group owners can access');
-    }
-
-    if (
-      userGroupRecord.userTenantId === this.currentUser.userTenantId &&
-      currentUserGroup?.isOwner
-    ) {
-      throw new HttpErrors.Forbidden(
-        'An owner cannot remove himself as the owner',
-      );
-    }
-    const numberOfmembers = await this.getUserGroupCount(id, {});
-    if (numberOfmembers.count === 1) {
-      if (userGroupRecord?.isOwner) {
-        throw new HttpErrors.Forbidden('The team needs at least one owner');
-      } else {
-        throw new HttpErrors.Forbidden('The team needs at least one member');
-      }
-    }
-    await this.userGroupService.deleteById(userGroupId);
-    await this.groupRepository.updateById(id, {
-      modifiedOn: new Date(),
-    });
+    @param.filter(UserGroup, {exclude: 'where'}) filter?: FilterExcludingWhere<UserGroup>
+  ): Promise<UserGroup> {
+    return this.userGroupRepository.findById(id, filter);
   }
 
-  private async getUserGroupCount(id: string, where?: Where<UserGroup>) {
-    const whereBuilder = new WhereBuilder<UserGroup>(where);
-    whereBuilder.eq('groupId', id);
-    return this.userGroupRepository.count(whereBuilder.build());
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateUserGroup,
+      PermissionKey.UpdateUserGroupNum,
+    ],
+  })
+  @patch('/user-groups/{id}',{security: OPERATION_SECURITY_SPEC,responses:{}})
+  @response(204, {
+    description: 'UserGroup PATCH success',
+  })
+  async updateById(
+    @param.path.string('id') id: string,
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: getModelSchemaRef(UserGroup, {partial: true}),
+        },
+      },
+    })
+    userGroup: UserGroup,
+  ): Promise<void> {
+    await this.userGroupRepository.updateById(id, userGroup);
+  }
+
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateUserGroup,
+      PermissionKey.UpdateUserGroupNum,
+    ],
+  })
+  @put('/user-groups/{id}',{security: OPERATION_SECURITY_SPEC,responses:{}})
+  @response(204, {
+    description: 'UserGroup PUT success',
+  })
+  async replaceById(
+    @param.path.string('id') id: string,
+    @requestBody() userGroup: UserGroup,
+  ): Promise<void> {
+    await this.userGroupRepository.replaceById(id, userGroup);
+  }
+
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({
+    permissions: [
+      PermissionKey.DeleteUserGroup,
+      PermissionKey.DeleteUserGroupNum,
+    ],
+  })
+  @del('/user-groups/{id}',{security: OPERATION_SECURITY_SPEC,responses:{}})
+  @response(204, {
+    description: 'UserGroup DELETE success',
+  })
+  async deleteById(@param.path.string('id') id: string): Promise<void> {
+    await this.userGroupRepository.deleteById(id);
   }
 }

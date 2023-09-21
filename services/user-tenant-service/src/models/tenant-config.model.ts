@@ -5,7 +5,6 @@
 import {belongsTo, model, property} from '@loopback/repository';
 import {ConfigKey, UserModifiableEntity} from '@sourceloop/core';
 import {Tenant, TenantWithRelations} from './index';
-
 @model({
   name: 'tenant_configs',
 })
@@ -28,6 +27,7 @@ export class TenantConfig extends UserModifiableEntity<TenantConfig> {
     name: 'config_value',
   })
   configValue?: object;
+
 
   @belongsTo(
     () => Tenant,

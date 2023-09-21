@@ -1,64 +1,24 @@
-﻿// Copyright (c) 2023 Sourcefuse Technologies
-//
-// This software is released under the MIT License.
-// https://opensource.org/licenses/MIT
-import {Getter, inject} from '@loopback/core';
-import {
-  HasManyRepositoryFactory,
-  juggler,
-  repository,
-} from '@loopback/repository';
-import {
-  ConditionalAuditRepositoryMixin,
-  IAuditMixinOptions,
-} from '@sourceloop/audit-log';
-import {
-  DefaultUserModifyCrudRepository,
-  IAuthUserWithPermissions,
-} from '@sourceloop/core';
-import {AuthenticationBindings} from 'loopback4-authentication';
-import {UserTenantDataSourceName} from '../keys';
+import {inject, Getter} from '@loopback/core';
+import {DefaultCrudRepository, juggler, repository, HasManyRepositoryFactory} from '@loopback/repository';
+import {DbDataSource} from '../datasources';
 import {Group, GroupRelations, UserGroup} from '../models';
-import {AuditLogRepository} from './audit.repository';
+import { UserTenantDataSourceName } from '../keys';
 import {UserGroupRepository} from './user-group.repository';
 
-const GroupAuditOpts: IAuditMixinOptions = {
-  actionKey: 'Group_Logs',
-};
+export class GroupRepository extends DefaultCrudRepository<
+  Group,
+  typeof Group.prototype.id,
+  GroupRelations
+> {
 
-export class GroupRepository extends ConditionalAuditRepositoryMixin(
-  DefaultUserModifyCrudRepository<
-    Group,
-    typeof Group.prototype.id,
-    GroupRelations
-  >,
-  GroupAuditOpts,
-) {
-  public readonly userGroups: HasManyRepositoryFactory<
-    UserGroup,
-    typeof Group.prototype.id
-  >;
+  public readonly userGroups: HasManyRepositoryFactory<UserGroup, typeof Group.prototype.id>;
 
   constructor(
     @inject(`datasources.${UserTenantDataSourceName}`)
-    dataSource: juggler.DataSource,
-    @inject.getter(AuthenticationBindings.CURRENT_USER)
-    protected readonly getCurrentUser: Getter<
-      IAuthUserWithPermissions | undefined
-    >,
-    @repository.getter('UserGroupRepository')
-    protected userGroupRepositoryGetter: Getter<UserGroupRepository>,
-    @repository.getter('AuditLogRepository')
-    public getAuditLogRepository: Getter<AuditLogRepository>,
+    dataSource: juggler.DataSource, @repository.getter('UserGroupRepository') protected userGroupRepositoryGetter: Getter<UserGroupRepository>,
   ) {
-    super(Group, dataSource, getCurrentUser);
-    this.userGroups = this.createHasManyRepositoryFactoryFor(
-      'userGroups',
-      userGroupRepositoryGetter,
-    );
-    this.registerInclusionResolver(
-      'userGroups',
-      this.userGroups.inclusionResolver,
-    );
+    super(Group, dataSource);
+    this.userGroups = this.createHasManyRepositoryFactoryFor('userGroups', userGroupRepositoryGetter,);
+    this.registerInclusionResolver('userGroups', this.userGroups.inclusionResolver);
   }
 }

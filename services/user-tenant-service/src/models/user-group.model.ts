@@ -21,6 +21,7 @@ export class UserGroup extends UserModifiableEntity<UserGroup> {
   })
   id?: string;
 
+
   @belongsTo(
     () => Group,
     {name: 'group'},
@@ -41,12 +42,6 @@ export class UserGroup extends UserModifiableEntity<UserGroup> {
   )
   userTenantId: string;
 
-  @property({
-    name: 'is_owner',
-    type: 'boolean',
-    default: false,
-  })
-  isOwner?: boolean;
 }
 
 export interface UserGroupRelations {

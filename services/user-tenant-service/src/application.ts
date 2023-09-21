@@ -9,6 +9,7 @@ import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import * as path from 'path';
 import {UserTenantServiceComponent} from './component';
+import {TenantGuardService, TenantUtilitiesBindings, TenantUtilitiesComponent} from '@sourceloop/core';
 
 export {ApplicationConfig};
 
@@ -18,7 +19,11 @@ export class UserTenantServiceApplication extends BootMixin(
   constructor(options: ApplicationConfig = {}) {
     super(options);
     this.static('/', path.join(__dirname, '../public'));
+
+
+   
     this.component(UserTenantServiceComponent);
+
 
     this.projectRoot = __dirname;
     this.bootOptions = {

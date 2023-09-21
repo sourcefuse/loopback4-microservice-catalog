@@ -4,16 +4,22 @@
 // https://opensource.org/licenses/MIT
 import {belongsTo, hasMany, model, property} from '@loopback/repository';
 import {BaseEntity, IUserPrefs, UserStatus} from '@sourceloop/core';
-
-import {
-  Role,
-  Tenant,
-  TenantWithRelations,
-  User,
-  UserLevelPermission,
-  UserWithRelations,
-} from './';
+import {UserLevelPermission} from './user-level-permission.model';
 import {UserGroup, UserGroupWithRelations} from './user-group.model';
+import {User, UserWithRelations} from './user.model';
+import {Tenant, TenantWithRelations} from './tenant.model';
+import {Role} from './role.model';
+import {UserInvitation} from './user-invitation.model';
+
+// import {
+//   Role,
+//   Tenant,
+//   TenantWithRelations,
+//   User,
+//   UserLevelPermission,
+//   UserWithRelations,
+// } from './';
+// import {UserGroup, UserGroupWithRelations} from './user-group.model';
 
 @model({
   name: 'user_tenants',
@@ -39,7 +45,6 @@ export class UserTenant extends BaseEntity<UserTenant> implements IUserPrefs {
     },
   })
   status?: UserStatus;
-
   @belongsTo(
     () => User,
     {keyFrom: 'user_id', name: 'user'},
@@ -50,6 +55,8 @@ export class UserTenant extends BaseEntity<UserTenant> implements IUserPrefs {
   )
   userId: string;
 
+
+
   @belongsTo(
     () => Tenant,
     {keyFrom: 'tenant_id', name: 'tenant'},
@@ -59,6 +66,8 @@ export class UserTenant extends BaseEntity<UserTenant> implements IUserPrefs {
     },
   )
   tenantId: string;
+
+
 
   @belongsTo(
     () => Role,
@@ -75,6 +84,9 @@ export class UserTenant extends BaseEntity<UserTenant> implements IUserPrefs {
 
   @hasMany(() => UserGroup, {keyTo: 'userTenantId'})
   userGroups: UserGroup[];
+
+  @hasMany(() => UserInvitation,{keyTo:'userTenantId'})
+  userInvitations: UserInvitation[];
 }
 
 export interface UserTenantRelations {
@@ -85,3 +97,11 @@ export interface UserTenantRelations {
 }
 
 export type UserTenantWithRelations = UserTenant & UserTenantRelations;
+
+
+//user-tenant-role.controller.ts
+// user-tenant-tenant.controller.ts
+// user-tenant-user.controller.ts
+// user-tenant-user-group.controller.ts
+// user-tenant-user-level-permission.controller.ts
+// user-tenant-user-invitation.controller.ts

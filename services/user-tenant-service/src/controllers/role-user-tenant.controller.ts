@@ -1,14 +1,9 @@
-﻿// Copyright (c) 2023 Sourcefuse Technologies
-//
-// This software is released under the MIT License.
-// https://opensource.org/licenses/MIT
 import {
   Count,
   CountSchema,
   Filter,
   repository,
   Where,
-  WhereBuilder,
 } from '@loopback/repository';
 import {
   del,
@@ -21,26 +16,19 @@ import {
   requestBody,
 } from '@loopback/rest';
 import {
-  CONTENT_TYPE,
-  STATUS_CODE,
-  OPERATION_SECURITY_SPEC,
-} from '@sourceloop/core';
-import {authenticate, STRATEGY} from 'loopback4-authentication';
-import {authorize} from 'loopback4-authorization';
-import {PermissionKey} from '../enums';
-
-import {Role, UserTenant} from '../models';
-import {RoleRepository, UserTenantRepository} from '../repositories';
-
-const basePath = '/roles/{id}/user-tenants';
+  Role,
+  UserTenant,
+} from '../models';
+import {RoleRepository} from '../repositories';
+import { OPERATION_SECURITY_SPEC } from '@sourceloop/core';
+import { authenticate, STRATEGY } from 'loopback4-authentication';
+import { authorize } from 'loopback4-authorization';
+import { PermissionKey } from '../enums';
 
 export class RoleUserTenantController {
   constructor(
-    @repository(RoleRepository)
-    private readonly roleRepository: RoleRepository,
-    @repository(UserTenantRepository)
-    private readonly utRepo: UserTenantRepository,
-  ) {}
+    @repository(RoleRepository) protected roleRepository: RoleRepository,
+  ) { }
 
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
@@ -48,17 +36,14 @@ export class RoleUserTenantController {
   @authorize({
     permissions: [PermissionKey.ViewRoles, PermissionKey.ViewRolesNum],
   })
-  @get(basePath, {
-    security: OPERATION_SECURITY_SPEC,
+  @get('/roles/{id}/user-tenants', {
+    security:OPERATION_SECURITY_SPEC,
     responses: {
-      [STATUS_CODE.OK]: {
+      '200': {
         description: 'Array of Role has many UserTenant',
         content: {
-          [CONTENT_TYPE.JSON]: {
-            schema: {
-              type: 'array',
-              items: getModelSchemaRef(UserTenant),
-            },
+          'application/json': {
+            schema: {type: 'array', items: getModelSchemaRef(UserTenant)},
           },
         },
       },
@@ -75,41 +60,14 @@ export class RoleUserTenantController {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: [PermissionKey.ViewRoles, PermissionKey.ViewRolesNum],
-  })
-  @get(`${basePath}/count`, {
-    security: OPERATION_SECURITY_SPEC,
-    responses: {
-      [STATUS_CODE.OK]: {
-        description: 'User tenant count for specified role id',
-        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
-      },
-    },
-  })
-  async count(
-    @param.path.string('id') id: string,
-    @param.query.object('where', getWhereSchemaFor(UserTenant))
-    where?: Where<UserTenant>,
-  ): Promise<Count> {
-    const whereBuilder = new WhereBuilder(where);
-    whereBuilder.eq('roleId', id);
-    return this.utRepo.count(whereBuilder.build());
-  }
-
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({
     permissions: [PermissionKey.NotAllowed, PermissionKey.NotAllowedNum],
   })
-  @post(basePath, {
-    security: OPERATION_SECURITY_SPEC,
+  @post('/roles/{id}/user-tenants', {
+    security:OPERATION_SECURITY_SPEC,
     responses: {
-      [STATUS_CODE.OK]: {
+      '200': {
         description: 'Role model instance',
-        content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(UserTenant)},
-        },
+        content: {'application/json': {schema: getModelSchemaRef(UserTenant)}},
       },
     },
   })
@@ -117,16 +75,15 @@ export class RoleUserTenantController {
     @param.path.string('id') id: typeof Role.prototype.id,
     @requestBody({
       content: {
-        [CONTENT_TYPE.JSON]: {
+        'application/json': {
           schema: getModelSchemaRef(UserTenant, {
             title: 'NewUserTenantInRole',
             exclude: ['id'],
-            optional: ['roleId'],
+            optional: ['roleId']
           }),
         },
       },
-    })
-    userTenant: Omit<UserTenant, 'id'>,
+    }) userTenant: Omit<UserTenant, 'id'>,
   ): Promise<UserTenant> {
     return this.roleRepository.userTenants(id).create(userTenant);
   }
@@ -137,12 +94,12 @@ export class RoleUserTenantController {
   @authorize({
     permissions: [PermissionKey.NotAllowed, PermissionKey.NotAllowedNum],
   })
-  @patch(basePath, {
-    security: OPERATION_SECURITY_SPEC,
+  @patch('/roles/{id}/user-tenants', {
+    security:OPERATION_SECURITY_SPEC,
     responses: {
-      [STATUS_CODE.OK]: {
+      '200': {
         description: 'Role.UserTenant PATCH success count',
-        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
+        content: {'application/json': {schema: CountSchema}},
       },
     },
   })
@@ -150,14 +107,13 @@ export class RoleUserTenantController {
     @param.path.string('id') id: string,
     @requestBody({
       content: {
-        [CONTENT_TYPE.JSON]: {
+        'application/json': {
           schema: getModelSchemaRef(UserTenant, {partial: true}),
         },
       },
     })
     userTenant: Partial<UserTenant>,
-    @param.query.object('where', getWhereSchemaFor(UserTenant))
-    where?: Where<UserTenant>,
+    @param.query.object('where', getWhereSchemaFor(UserTenant)) where?: Where<UserTenant>,
   ): Promise<Count> {
     return this.roleRepository.userTenants(id).patch(userTenant, where);
   }
@@ -168,19 +124,18 @@ export class RoleUserTenantController {
   @authorize({
     permissions: [PermissionKey.NotAllowed, PermissionKey.NotAllowedNum],
   })
-  @del(basePath, {
-    security: OPERATION_SECURITY_SPEC,
+  @del('/roles/{id}/user-tenants', {
+    security:OPERATION_SECURITY_SPEC,
     responses: {
-      [STATUS_CODE.OK]: {
+      '200': {
         description: 'Role.UserTenant DELETE success count',
-        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
+        content: {'application/json': {schema: CountSchema}},
       },
     },
   })
   async delete(
     @param.path.string('id') id: string,
-    @param.query.object('where', getWhereSchemaFor(UserTenant))
-    where?: Where<UserTenant>,
+    @param.query.object('where', getWhereSchemaFor(UserTenant)) where?: Where<UserTenant>,
   ): Promise<Count> {
     return this.roleRepository.userTenants(id).delete(where);
   }

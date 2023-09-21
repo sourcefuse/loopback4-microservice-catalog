@@ -10,7 +10,7 @@ import {
   property,
 } from '@loopback/repository';
 import {UserModifiableEntity} from '@sourceloop/core';
-import {UserTenantGroupType} from '../enums';
+
 import {UserGroup, UserGroupWithRelations} from './user-group.model';
 @model({
   name: 'groups',
@@ -45,16 +45,7 @@ export class Group<T = DataObject<Model>> extends UserModifiableEntity<
   })
   photoUrl?: string;
 
-  @property({
-    name: 'group_type',
-    jsonSchema: {
-      enum: Object.values(UserTenantGroupType),
-    },
-    default: UserTenantGroupType.Tenant,
-  })
-  groupType?: UserTenantGroupType;
-
-  @hasMany(() => UserGroup, {keyTo: 'groupId'})
+  @hasMany(() => UserGroup,{keyTo:'groupId'})
   userGroups: UserGroup[];
 }
 

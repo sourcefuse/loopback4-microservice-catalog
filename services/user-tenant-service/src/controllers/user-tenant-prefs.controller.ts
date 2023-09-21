@@ -1,65 +1,54 @@
-﻿// Copyright (c) 2023 Sourcefuse Technologies
-//
-// This software is released under the MIT License.
-// https://opensource.org/licenses/MIT
-import {PermissionKey} from '../enums';
-import {inject} from '@loopback/context';
-import {Filter, repository} from '@loopback/repository';
 import {
-  get,
-  getFilterSchemaFor,
-  getModelSchemaRef,
-  param,
+  Count,
+  CountSchema,
+  Filter,
+  FilterExcludingWhere,
+  repository,
+  Where,
+} from '@loopback/repository';
+import {
   post,
+  param,
+  get,
+  getModelSchemaRef,
+  patch,
+  put,
+  del,
   requestBody,
+  response,
 } from '@loopback/rest';
-import {
-  CONTENT_TYPE,
-  IAuthUserWithPermissions,
-  STATUS_CODE,
-} from '@sourceloop/core';
-import {
-  authenticate,
-  AuthenticationBindings,
-  STRATEGY,
-} from 'loopback4-authentication';
-import {authorize} from 'loopback4-authorization';
 import {UserTenantPrefs} from '../models';
-import {UserTenantPrefsRepository} from '../repositories/user-tenant-prefs.repository';
-
-const basePath = '/user-tenant-prefs';
+import {UserTenantPrefsRepository} from '../repositories';
+import { OPERATION_SECURITY_SPEC } from '@sourceloop/core';
+import { authenticate, STRATEGY } from 'loopback4-authentication';
+import { authorize } from 'loopback4-authorization';
+import { PermissionKey } from '../enums';
 
 export class UserTenantPrefsController {
   constructor(
     @repository(UserTenantPrefsRepository)
-    public userTenantPrefsRepository: UserTenantPrefsRepository,
-    @inject(AuthenticationBindings.CURRENT_USER)
-    private readonly currentUser: IAuthUserWithPermissions,
+    public userTenantPrefsRepository : UserTenantPrefsRepository,
   ) {}
+
 
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
   @authorize({
     permissions: [
-      PermissionKey.UpdateUserTenantPreference,
-      PermissionKey.UpdateUserTenantPreferenceNum,
+      PermissionKey.CreateUserTenantPreference,
+      PermissionKey.CreateUserTenantPreferenceNum,
     ],
   })
-  @post(basePath, {
-    responses: {
-      [STATUS_CODE.OK]: {
-        description: 'UserTenantPrefs model instance',
-        content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(UserTenantPrefs)},
-        },
-      },
-    },
+  @post('/user-tenant-prefs',{security: OPERATION_SECURITY_SPEC,responses:{}})
+  @response(200, {
+    description: 'UserTenantPrefs model instance',
+    content: {'application/json': {schema: getModelSchemaRef(UserTenantPrefs)}},
   })
   async create(
     @requestBody({
       content: {
-        [CONTENT_TYPE.JSON]: {
+        'application/json': {
           schema: getModelSchemaRef(UserTenantPrefs, {
             title: 'NewUserTenantPrefs',
             exclude: ['id'],
@@ -68,23 +57,8 @@ export class UserTenantPrefsController {
       },
     })
     userTenantPrefs: Omit<UserTenantPrefs, 'id'>,
-  ): Promise<void> {
-    if (this.currentUser.userTenantId) {
-      userTenantPrefs.userTenantId = this.currentUser.userTenantId;
-    }
-    const prefExists = await this.userTenantPrefsRepository.findOne({
-      where: {
-        userTenantId: userTenantPrefs.userTenantId,
-        configKey: userTenantPrefs.configKey,
-      },
-    });
-    if (!prefExists) {
-      await this.userTenantPrefsRepository.create(userTenantPrefs);
-    } else {
-      await this.userTenantPrefsRepository.updateById(prefExists.id, {
-        configValue: userTenantPrefs.configValue,
-      });
-    }
+  ): Promise<UserTenantPrefs> {
+    return this.userTenantPrefsRepository.create(userTenantPrefs);
   }
 
   @authenticate(STRATEGY.BEARER, {
@@ -96,33 +70,158 @@ export class UserTenantPrefsController {
       PermissionKey.ViewUserTenantPreferenceNum,
     ],
   })
-  @get(basePath, {
-    responses: {
-      [STATUS_CODE.OK]: {
-        description: 'Array of UserTenantPrefs model instances',
-        content: {
-          [CONTENT_TYPE.JSON]: {
-            schema: {
-              type: 'array',
-              items: getModelSchemaRef(UserTenantPrefs, {
-                includeRelations: true,
-              }),
-            },
-          },
+  @get('/user-tenant-prefs/count',{security: OPERATION_SECURITY_SPEC,responses:{}})
+  @response(200, {
+    description: 'UserTenantPrefs model count',
+    content: {'application/json': {schema: CountSchema}},
+  })
+  async count(
+    @param.where(UserTenantPrefs) where?: Where<UserTenantPrefs>,
+  ): Promise<Count> {
+    return this.userTenantPrefsRepository.count(where);
+  }
+
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({
+    permissions: [
+      PermissionKey.ViewUserTenantPreference,
+      PermissionKey.ViewUserTenantPreferenceNum,
+    ],
+  })
+  @get('/user-tenant-prefs',{security: OPERATION_SECURITY_SPEC,responses:{}})
+  @response(200, {
+    description: 'Array of UserTenantPrefs model instances',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'array',
+          items: getModelSchemaRef(UserTenantPrefs, {includeRelations: true}),
         },
       },
     },
   })
   async find(
-    @param.query.object('filter', getFilterSchemaFor(UserTenantPrefs))
-    filter?: Filter<UserTenantPrefs>,
+    @param.filter(UserTenantPrefs) filter?: Filter<UserTenantPrefs>,
   ): Promise<UserTenantPrefs[]> {
-    if (!filter) {
-      filter = {where: {}};
-    }
-    filter.where = {
-      and: [filter.where ?? {}, {userTenantId: this.currentUser.userTenantId}],
-    };
     return this.userTenantPrefsRepository.find(filter);
+  }
+
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateUserTenantPreference,
+      PermissionKey.UpdateUserTenantPreferenceNum,
+    ],
+  })
+  @patch('/user-tenant-prefs',{security: OPERATION_SECURITY_SPEC,responses:{}})
+  @response(200, {
+    description: 'UserTenantPrefs PATCH success count',
+    content: {'application/json': {schema: CountSchema}},
+  })
+  async updateAll(
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: getModelSchemaRef(UserTenantPrefs, {partial: true}),
+        },
+      },
+    })
+    userTenantPrefs: UserTenantPrefs,
+    @param.where(UserTenantPrefs) where?: Where<UserTenantPrefs>,
+  ): Promise<Count> {
+    return this.userTenantPrefsRepository.updateAll(userTenantPrefs, where);
+  }
+
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({
+    permissions: [
+      PermissionKey.ViewUserTenantPreference,
+      PermissionKey.ViewUserTenantPreferenceNum,
+    ],
+  })
+  @get('/user-tenant-prefs/{id}',{security: OPERATION_SECURITY_SPEC,responses:{}})
+  @response(200, {
+    description: 'UserTenantPrefs model instance',
+    content: {
+      'application/json': {
+        schema: getModelSchemaRef(UserTenantPrefs, {includeRelations: true}),
+      },
+    },
+  })
+  async findById(
+    @param.path.string('id') id: string,
+    @param.filter(UserTenantPrefs, {exclude: 'where'}) filter?: FilterExcludingWhere<UserTenantPrefs>
+  ): Promise<UserTenantPrefs> {
+    return this.userTenantPrefsRepository.findById(id, filter);
+  }
+
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateUserTenantPreference,
+      PermissionKey.UpdateUserTenantPreferenceNum,
+    ],
+  })
+  @patch('/user-tenant-prefs/{id}',{security: OPERATION_SECURITY_SPEC,responses:{}})
+  @response(204, {
+    description: 'UserTenantPrefs PATCH success',
+  })
+  async updateById(
+    @param.path.string('id') id: string,
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: getModelSchemaRef(UserTenantPrefs, {partial: true}),
+        },
+      },
+    })
+    userTenantPrefs: UserTenantPrefs,
+  ): Promise<void> {
+    await this.userTenantPrefsRepository.updateById(id, userTenantPrefs);
+  }
+
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateUserTenantPreference,
+      PermissionKey.UpdateUserTenantPreferenceNum,
+    ],
+  })
+  @put('/user-tenant-prefs/{id}',{security: OPERATION_SECURITY_SPEC,responses:{}})
+  @response(204, {
+    description: 'UserTenantPrefs PUT success',
+  })
+  async replaceById(
+    @param.path.string('id') id: string,
+    @requestBody() userTenantPrefs: UserTenantPrefs,
+  ): Promise<void> {
+    await this.userTenantPrefsRepository.replaceById(id, userTenantPrefs);
+  }
+
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({
+    permissions: [
+      PermissionKey.DeleteUserTenantPreference,
+      PermissionKey.DeleteUserTenantPreferenceNum,
+    ],
+  })
+  @del('/user-tenant-prefs/{id}',{security: OPERATION_SECURITY_SPEC,responses:{}})
+  @response(204, {
+    description: 'UserTenantPrefs DELETE success',
+  })
+  async deleteById(@param.path.string('id') id: string): Promise<void> {
+    await this.userTenantPrefsRepository.deleteById(id);
   }
 }

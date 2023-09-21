@@ -2,15 +2,12 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {bind, BindingScope, service} from '@loopback/core';
-import {repository, Where, WhereBuilder} from '@loopback/repository';
-import {IAuthUserWithPermissions} from '@sourceloop/core';
-import {Group, UserGroup} from '../models';
-import {UserGroupView} from '../models/group-user-view.model';
+import {bind, BindingScope, inject, service} from '@loopback/core';
+import {repository} from '@loopback/repository';
+import {UserGroup} from '../models';
 import {
   GroupRepository,
   UserGroupRepository,
-  UserGroupViewRepository,
 } from '../repositories';
 import {UserGroupHelperService} from './user-group-helper.service';
 
@@ -21,10 +18,8 @@ export class UserGroupService {
     public groupRepository: GroupRepository,
     @repository(UserGroupRepository)
     public userGroupRepository: UserGroupRepository,
-    @service(UserGroupHelperService)
+    @inject('services.UserGroupHelperService')
     private readonly userGroupHelperService: UserGroupHelperService,
-    @repository(UserGroupViewRepository)
-    public userGroupViewRepository: UserGroupViewRepository,
   ) {}
 
   async create(userGroupToCreate: Partial<UserGroup>) {
@@ -49,12 +44,4 @@ export class UserGroupService {
     });
   }
 
-  getAccessCountFilter(
-    currentUser: IAuthUserWithPermissions,
-    where?: Where<Group>,
-  ) {
-    const whereBuilder = new WhereBuilder<UserGroupView>(where);
-    whereBuilder.eq('userTenantId', `${currentUser.userTenantId}`);
-    return whereBuilder.build();
-  }
 }

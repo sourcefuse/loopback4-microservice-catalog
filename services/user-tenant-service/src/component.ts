@@ -1,82 +1,28 @@
-﻿// Copyright (c) 2023 Sourcefuse Technologies
-//
-// This software is released under the MIT License.
-// https://opensource.org/licenses/MIT
 import {
   Application,
-  Binding,
+  injectable,
   Component,
   config,
   ContextTags,
-  ControllerClass,
   CoreBindings,
   inject,
-  injectable,
+  Binding,
+  ControllerClass,
   ProviderMap,
 } from '@loopback/core';
-import {Class, Model, Repository} from '@loopback/repository';
-import {CoreComponent} from '@sourceloop/core';
-import {
-  GroupController,
-  HomePageController,
-  PingController,
-  RoleController,
-  RoleUserTenantController,
-  TenantController,
-  TenantUserController,
-  UserGroupController,
-  UserGroupsController,
-  UserSignupController,
-  UserTenantController,
-  UserTenantPrefsController,
-} from './controllers';
-import {UserTenantServiceComponentBindings} from './keys';
-import {
-  AuditLog,
-  AuthClient,
-  Group,
-  GroupUserCountView,
-  Role,
-  Tenant,
-  TenantConfig,
-  User,
-  UserCredentials,
-  UserDto,
-  UserGroup,
-  UserGroupView,
-  UserLevelPermission,
-  UserSignupCheckDto,
-  UserTenant,
-  UserTenantPrefs,
-  UserView,
-} from './models';
-import {
-  AuditLogRepository,
-  AuthClientRepository,
-  GroupRepository,
-  NonRestrictedUserViewRepository,
-  RoleRepository,
-  TenantConfigRepository,
-  TenantRepository,
-  UserCredentialsRepository,
-  UserGroupCountViewRepository,
-  UserGroupRepository,
-  UserGroupViewRepository,
-  UserLevelPermissionRepository,
-  UserRepository,
-  UserTenantPrefsRepository,
-  UserTenantRepository,
-  UserViewRepository,
-} from './repositories';
-import {
-  DEFAULT_USER_TENANT_SERVICE_OPTIONS,
-  UserTenantServiceComponentOptions,
-} from './types';
+import {CoreComponent, TenantUtilitiesComponent} from '@sourceloop/core';
+import {UserTenantServiceComponentBindings} from './keys'
+import {DEFAULT_USER_SERVICE_OPTIONS, UserTenantServiceComponentOptions} from './types';
+import { Class, Model, Repository } from '@loopback/repository';
+import { AuthClient, Role, Tenant, TenantConfig, User, UserCredentials, UserGroup, UserInvitation, UserLevelPermission, UserTenant, UserTenantPrefs, UserView } from './models';
+import { GroupController, GroupUserGroupController, RoleController, RoleUserTenantController, RoleUserViewController, TenantConfigTenantController, TenantController, TenantTenantConfigController, TenantUserController, TenantUserTenantController, UserController, UserCredentialsUserController, UserGroupController, UserGroupGroupController, UserGroupUserTenantController, UserInvitationUserTenantController, UserLevelPermissionUserTenantController, UserTenantController, UserTenantPrefsController, UserTenantPrefsUserTenantController, UserTenantRoleController, UserTenantTenantController, UserTenantUserController, UserTenantUserGroupController, UserTenantUserInvitationController, UserTenantUserLevelPermissionController, UserUserCredentialsController, UserUserTenantController, UserViewController } from './controllers';
+import { AuthClientRepository, GroupRepository, RoleRepository, TenantConfigRepository, TenantRepository, UserCredentialsRepository, UserGroupRepository, UserInvitationRepository, UserLevelPermissionRepository, UserRepository, UserTenantPrefsRepository, UserTenantRepository, UserViewRepository } from './repositories';
+import { Group } from './models/group.model';
+import { UserGroupService } from './services/user-group.service';
+import { UserGroupHelperService } from './services';
 
 // Configure the binding for UserTenantServiceComponent
-@injectable({
-  tags: {[ContextTags.KEY]: UserTenantServiceComponentBindings.COMPONENT},
-})
+@injectable({tags: {[ContextTags.KEY]: UserTenantServiceComponentBindings.COMPONENT}})
 export class UserTenantServiceComponent implements Component {
   repositories?: Class<Repository<Model>>[];
 
@@ -94,62 +40,76 @@ export class UserTenantServiceComponent implements Component {
   providers?: ProviderMap = {};
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
-    private readonly application: Application,
+    private application: Application,
     @config()
-    private readonly options: UserTenantServiceComponentOptions = DEFAULT_USER_TENANT_SERVICE_OPTIONS,
+    private options: UserTenantServiceComponentOptions = DEFAULT_USER_SERVICE_OPTIONS,
   ) {
-    this.bindings = [];
+    this.bindings=[];
     this.application.component(CoreComponent);
-    this.models = [
-      AuthClient,
-      AuditLog,
-      GroupUserCountView,
-      UserGroupView,
-      Group,
+    this.application.bind('services.UserGroupService').toClass(UserGroupService);
+    this.application.bind('services.UserGroupHelperService').toClass(UserGroupHelperService);
+    // this.application.bind('services.UserOperationsService').toClass(UserOperationsService);
+    this.application.component(TenantUtilitiesComponent);
+    this.models=[
       Role,
+      UserTenant,
       TenantConfig,
       Tenant,
-      UserCredentials,
-      UserDto,
-      UserGroup,
-      UserLevelPermission,
-      UserSignupCheckDto,
-      UserTenantPrefs,
-      UserTenant,
       UserView,
+      Group,
+      UserGroup,
       User,
+      UserCredentials,
+      UserLevelPermission,
+      UserInvitation,
+      UserTenantPrefs,
+      AuthClient
     ];
-    this.controllers = [
-      GroupController,
-      HomePageController,
-      PingController,
-      RoleUserTenantController,
+    this.controllers=[
       RoleController,
-      TenantUserController,
+      RoleUserTenantController,
       TenantController,
-      UserGroupController,
-      UserGroupsController,
-      UserSignupController,
-      UserTenantPrefsController,
       UserTenantController,
+      TenantUserTenantController,
+      GroupUserGroupController,
+      GroupController,
+      TenantTenantConfigController,
+      RoleUserViewController,
+      TenantConfigTenantController,
+      UserGroupController,
+      UserGroupGroupController,
+      UserGroupUserTenantController,
+      TenantUserController,
+      UserTenantPrefsController,
+      UserController,
+      UserCredentialsUserController,
+      UserTenantRoleController,
+      UserTenantUserController,
+      UserUserTenantController,
+      UserTenantTenantController,
+      UserUserCredentialsController,
+      UserInvitationUserTenantController,
+      UserTenantUserInvitationController,
+      UserTenantUserGroupController,
+      UserTenantUserLevelPermissionController,
+      UserTenantPrefsUserTenantController,
+      UserLevelPermissionUserTenantController,
+      UserViewController
     ];
-    this.repositories = [
-      AuthClientRepository,
-      AuditLogRepository,
-      UserGroupCountViewRepository,
-      GroupRepository,
-      NonRestrictedUserViewRepository,
+    this.repositories=[
       RoleRepository,
+      UserTenantRepository,
       TenantConfigRepository,
       TenantRepository,
-      UserCredentialsRepository,
-      UserGroupViewRepository,
-      UserGroupRepository,
-      UserLevelPermissionRepository,
-      UserTenantPrefsRepository,
-      UserTenantRepository,
-      UserViewRepository,
       UserRepository,
+      UserCredentialsRepository,
+      UserViewRepository,
+      GroupRepository,
+      UserGroupRepository,
+      UserInvitationRepository,
+      UserTenantPrefsRepository,
+      UserLevelPermissionRepository,
+      AuthClientRepository
     ];
   }
 }

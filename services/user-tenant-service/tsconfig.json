@@ -2,23 +2,8 @@
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "@loopback/build/config/tsconfig.common.json",
   "compilerOptions": {
-    "experimentalDecorators":true,
     "outDir": "dist",
-    "rootDir": "src",
-    "lib": [
-      "es2015"
-    ],
-    "composite": true
+    "rootDir": "src"
   },
-  "include": [
-    "src",
-    "migrations",
-    "migration.js",
-    ".eslintrc.js"
-  ],
-  "references": [
-    {
-      "path": "../../packages/core/tsconfig.json"
-    }
-  ]
+  "include": ["src"]
 }
