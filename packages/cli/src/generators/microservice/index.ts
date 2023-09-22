@@ -3,22 +3,22 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import fs from 'fs';
-import {join} from 'path';
+import { join } from 'path';
 import AppGenerator from '../../app-generator';
 import {
+  BASESERVICECOMPONENTLIST,
+  BASESERVICEDSLIST,
   DATASOURCES,
   DATASOURCE_CONNECTORS,
   MIGRATIONS,
   MIGRATION_CONNECTORS,
   SERVICES,
-  BASESERVICEDSLIST,
-  BASESERVICECOMPONENTLIST,
 } from '../../enum';
-import {AnyObject, MicroserviceOptions} from '../../types';
+import { AnyObject, MicroserviceOptions } from '../../types';
 import {
+  JSON_SPACING,
   appendDependencies,
   getDependencyVersion,
-  JSON_SPACING,
 } from '../../utils';
 const chalk = require('chalk'); //NOSONAR
 
@@ -127,7 +127,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     );
     this.projectInfo.datasourceConnector =
       DATASOURCE_CONNECTORS[
-        this.options.datasourceType ?? DATASOURCES.POSTGRES
+      this.options.datasourceType ?? DATASOURCES.POSTGRES
       ];
     this.projectInfo.datasourceConnectorName =
       this.projectInfo.datasourceConnector;
@@ -261,7 +261,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         const name = this.options.name ?? DEFAULT_NAME;
         fs.unlink(
           this.destinationPath(join('services', name, 'src', 'lambda.ts')),
-          () => {},
+          () => { },
         );
         this.log(
           this.destinationPath(join('services', name, 'src', 'lambda.ts')),
@@ -632,6 +632,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
             join('services', name, 'migration', 'lambda.js'),
           ),
         );
+        this.fs.delete(join('services', name, 'migration', 'migrations', 'lambda.js'));
         this.fs.copy(
           this.destinationPath(join(MIGRATION_FOLDER, name, dbconfig)),
           this.destinationPath(join('services', name, 'migration', dbconfig)),
@@ -639,7 +640,12 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       } else {
         // do nothing
       }
+      this.fs.delete(join(MIGRATION_FOLDER, name, 'migrations', 'lambda.js'));
+      this.log(
+        this.destinationPath(join(MIGRATION_FOLDER, name, 'migrations', 'lambda.js')),
+      );
     }
+
   }
 
   private _migrationExists() {
