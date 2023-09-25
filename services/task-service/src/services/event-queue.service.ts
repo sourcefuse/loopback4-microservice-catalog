@@ -65,7 +65,7 @@ export class EventQueueServiceSQS {
         const data = await connection.receiveMessage(receiveParams).promise();
         const messages = data.Messages;
         if (messages?.length) {
-          for (const message of messages) {
+          const messagePromises = messages.map(async (message: AnyObject) => {
             const event: Event = JSON.parse(message.Body || '{}');
 
             // Logic to process this event
@@ -78,7 +78,9 @@ export class EventQueueServiceSQS {
                 ReceiptHandle: message.ReceiptHandle!,
               })
               .promise();
-          }
+          });
+
+          await Promise.all(messagePromises);
         }
       } catch (error) {
         throw new HttpErrors.InternalServerError(`Error with Queue, ${error}`);

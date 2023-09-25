@@ -8,7 +8,7 @@ dotenvExt.load({
   errorOnMissing: false,
   includeProcessEnv: true,
 });
-const type = 'OIDC';
+const type = 'TASK_SERVICE';
 
 try {
   if (fs.existsSync('.infolder')) {

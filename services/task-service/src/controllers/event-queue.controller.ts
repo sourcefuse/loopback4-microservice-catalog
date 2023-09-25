@@ -24,7 +24,7 @@ export class EventQueueController {
 
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [TaskPermssionKey.AddToQueue]})
-  @post(`${baseUrl}/enqueue-event`, {
+  @post(`${baseUrl}/enqueue`, {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Enque model instance',
@@ -103,7 +103,7 @@ export class EventQueueController {
   }
 
   @authorize({permissions: ['*']})
-  @get(`${baseUrl}/health-check`, {
+  @get(`${baseUrl}/ping`, {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Health check response',
