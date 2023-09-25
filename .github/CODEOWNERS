@@ -3,3 +3,43 @@
 # @loopback4-admins will be requested for
 # review when someone opens a pull request.
 *       @sourcefuse/loopback4-admins
+
+# In this example, owner owns any files in the packages/cache
+# directory at the root of the repository and any of its
+# subdirectories.
+/packages/cache samarpan.bhattacharya@sourcefuse.com
+
+# In this example, owner owns any files in the services/audit-service
+# directory at the root of the repository and any of its
+# subdirectories.
+/services/audit-service @sourcefuse/loopback4-admins arpit.khanna@sourcefuse.com
+
+# In this example, owner owns any files in the services/authentication-service
+# directory at the root of the repository and any of its
+# subdirectories.
+/services/authentication-service @sourcefuse/loopback4-admins surbhi.sharma1@sourcefuse.com
+
+# In this example, owner owns any files in the services/chat-service
+# directory at the root of the repository and any of its
+# subdirectories.
+/services/chat-service @sourcefuse/loopback4-admins surbhi.sharma1@sourcefuse.com rashi.sharma@sourcefuse.com
+
+# In this example, owner owns any files in the services/in-mail-service
+# directory at the root of the repository and any of its
+# subdirectories.
+/services/in-mail-service @sourcefuse/loopback4-admins @shivamSF
+
+# In this example, owner owns any files in the services/oidc-service
+# directory at the root of the repository and any of its
+# subdirectories.
+/services/oidc-service @sourcefuse/loopback4-admins @antriksha102
+
+# In this example, owner owns any files in the services/search-service
+# directory at the root of the repository and any of its
+# subdirectories.
+/services/search-service @sourcefuse/loopback4-admins @akshatdubeysf
+
+# In this example, owner owns any files in the services/survey-service
+# directory at the root of the repository and any of its
+# subdirectories.
+/services/survey-service @sourcefuse/loopback4-admins swati.prashar@sourcefuse.com
