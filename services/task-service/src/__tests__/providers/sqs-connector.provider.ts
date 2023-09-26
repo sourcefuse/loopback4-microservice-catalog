@@ -22,7 +22,7 @@ export class SQSConnector implements Provider<EventQueueConnector> {
   }
 
   value(): Promise<EventQueueConnector> {
-    return Promise.resolve(this);
+    return Promise.resolve(this as unknown as EventQueueConnector);
   }
 
   async connect(settings: AnyObject): Promise<SQS> {

@@ -1,5 +1,5 @@
 import {juggler} from '@loopback/repository';
-import {EventWorkflowMapping} from '../models';
+import {EventWorkflows} from '../models';
 import {Getter, inject} from '@loopback/core';
 import {TaskDbSourceName} from '../types';
 import {
@@ -9,8 +9,8 @@ import {
 import {AuthenticationBindings} from 'loopback4-authentication';
 
 export class EventWorkflowMappingRepository extends DefaultUserModifyCrudRepository<
-  EventWorkflowMapping,
-  typeof EventWorkflowMapping.prototype.id
+  EventWorkflows,
+  typeof EventWorkflows.prototype.id
 > {
   constructor(
     @inject(`datasources.${TaskDbSourceName}`)
@@ -20,6 +20,6 @@ export class EventWorkflowMappingRepository extends DefaultUserModifyCrudReposit
       IAuthUserWithPermissions | undefined
     >,
   ) {
-    super(EventWorkflowMapping, dataSource, getCurrentUser);
+    super(EventWorkflows, dataSource, getCurrentUser);
   }
 }

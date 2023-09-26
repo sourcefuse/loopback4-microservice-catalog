@@ -104,14 +104,18 @@ export class CustomBpmnRunner extends BaseBpmnRunner {
     let users: AnyObject[] = [];
     if (groups && groups.length > 0) {
       for (const group of groups) {
-        // NOSONAR: Start
         switch (group) {
           case 'dev_group':
             users = [];
             break;
+          case 'user_group':
+            users = [{user: 'sample'}];
+            break;
+          case 'design_group':
+            users = [{user: 'des1'}, {user: 'des2'}];
+            break;
           // Add more groups if needed
         }
-        // NOSONAR: End
       }
     }
     return users;

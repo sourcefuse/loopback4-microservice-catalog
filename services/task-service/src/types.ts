@@ -18,7 +18,16 @@ export interface EventQueueConnector {
   settings: {[key: string]: AnyObject};
   connect(settings: {[key: string]: AnyObject}): Promise<AnyObject>;
   disconnect(settings: {[key: string]: AnyObject}): Promise<void>;
-  ping(): Promise<AnyObject>;
+  ping(): Promise<HealthResponse>;
+}
+
+export interface HealthResponse {
+  greeting: string;
+  date: string;
+  url: string;
+  headers: {
+    [key: string]: string;
+  };
 }
 
 export enum TaskServiceNames {

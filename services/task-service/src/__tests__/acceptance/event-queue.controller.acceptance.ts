@@ -8,7 +8,7 @@ const testUser = {
   id: 1,
   username: 'test_user',
   password: 'test_pass',
-  permissions: ['StartListening', 'StopListening', 'AddToQueue', 'APIAdmin'],
+  permissions: ['1', '2', '3', '4'],
 };
 
 const token = jwt.sign(testUser, 'task-Service-Secret', {
@@ -29,9 +29,7 @@ describe('EventQueueController', () => {
   });
 
   it('gives status 401 when no token is passed', async () => {
-    const response = await client
-      .post('/event-queue/enqueue-event')
-      .expect(401);
+    const response = await client.post('/event-queue/enqueue').expect(401);
     expect(response).to.have.property('error');
   });
 
@@ -41,7 +39,7 @@ describe('EventQueueController', () => {
     };
 
     await client
-      .post('/event-queue/enqueue-event')
+      .post('/event-queue/enqueue')
       .set('authorization', `Bearer ${token}`)
       .send(eventPayload)
       .expect(204); // No Content status

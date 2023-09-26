@@ -13,6 +13,7 @@ import {authorize} from 'loopback4-authorization';
 import {TaskPermssionKey} from '../enums/permission-key.enum';
 import {Event} from '../models';
 import {EventQueueServiceSQS} from '../services/event-queue.service';
+import {HealthResponse} from '../types';
 
 const baseUrl = '/event-queue';
 
@@ -58,49 +59,6 @@ export class EventQueueController {
       throw new HttpErrors.InternalServerError('Failed to enqueue event');
     }
   }
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [TaskPermssionKey.StartListening]})
-  @get(`${baseUrl}/start-listening`, {
-    responses: {
-      [STATUS_CODE.NO_CONTENT]: {
-        description: 'Started listening to events',
-      },
-      [STATUS_CODE.INTERNAL_SERVER_ERROR]: {
-        description: 'Failed to start listening to events',
-      },
-    },
-  })
-  async startListening(): Promise<void> {
-    try {
-      await this.eventQueueService.startListening();
-    } catch (error) {
-      throw new HttpErrors.InternalServerError(
-        'Failed to start listening to events',
-      );
-    }
-  }
-
-  @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: [TaskPermssionKey.StopListening]})
-  @get(`${baseUrl}/stop-listening`, {
-    responses: {
-      [STATUS_CODE.NO_CONTENT]: {
-        description: 'Stopped listening to events',
-      },
-      [STATUS_CODE.INTERNAL_SERVER_ERROR]: {
-        description: 'Failed to stop listening to events',
-      },
-    },
-  })
-  async stopListening(): Promise<void> {
-    try {
-      await this.eventQueueService.stopListening();
-    } catch (error) {
-      throw new HttpErrors.InternalServerError(
-        'Failed to stop listening to events',
-      );
-    }
-  }
 
   @authorize({permissions: ['*']})
   @get(`${baseUrl}/ping`, {
@@ -120,7 +78,7 @@ export class EventQueueController {
       },
     },
   })
-  async healthCheck(): Promise<AnyObject> {
+  async healthCheck(): Promise<HealthResponse> {
     try {
       const healthCheckResponse = await this.eventQueueService.healthCheck();
       return healthCheckResponse;

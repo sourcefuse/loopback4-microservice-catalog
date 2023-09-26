@@ -7,7 +7,7 @@ const testUser = {
   id: 1,
   username: 'test_user',
   password: 'test_pass',
-  permissions: ['StartListening', 'StopListening', 'AddToQueue', 'APIAdmin'],
+  permissions: ['1', '2', '3', '4'],
 };
 
 const token = jwt.sign(testUser, 'task-Service-Secret', {

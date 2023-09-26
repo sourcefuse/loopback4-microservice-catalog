@@ -1,7 +1,7 @@
 import {getModelSchemaRef, post, requestBody} from '@loopback/rest';
 import {authorize} from 'loopback4-authorization';
 import {STRATEGY, authenticate} from 'loopback4-authentication';
-import {EventWorkflowMapping} from '../models';
+import {EventWorkflows} from '../models';
 import {repository} from '@loopback/repository';
 import {EventWorkflowMappingRepository} from '../repositories';
 import {CONTENT_TYPE, OPERATION_SECURITY_SPEC} from '@sourceloop/core';
@@ -24,13 +24,13 @@ export class EventsController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(EventWorkflowMapping, {
+          schema: getModelSchemaRef(EventWorkflows, {
             title: 'EventWorkflowMapping',
           }),
         },
       },
     })
-    eventWorkflowMapping: Omit<EventWorkflowMapping, 'id'>,
+    eventWorkflowMapping: Omit<EventWorkflows, 'id'>,
   ) {
     await this.eventWorkflowMapping.create(eventWorkflowMapping);
   }

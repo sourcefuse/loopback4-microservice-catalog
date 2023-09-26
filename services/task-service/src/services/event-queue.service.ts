@@ -4,7 +4,7 @@ import {AnyObject} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {TaskServiceBindings} from '../keys';
 import {Event} from '../models';
-import {EventQueueConnector} from '../types';
+import {EventQueueConnector, HealthResponse} from '../types';
 import {EventProcessorService} from './event-processor.service';
 
 @injectable(
@@ -40,17 +40,8 @@ export class EventQueueServiceSQS {
     });
   }
 
-  async startListening(): Promise<void> {
-    const connection = await this.connector.connect(this.connector.settings);
-    connection.onEvent((event: Event) => {});
-  }
-
-  async stopListening(): Promise<void> {
-    await this.connector.disconnect(this.connector.settings);
-  }
-
   listenForEvents(): void {
-    // Start listening to the SQS queue for incoming events
+    // Start listening to the queue for incoming events
     const queueUrl = this.connector.settings.queueUrl;
 
     const receiveParams = {
@@ -71,7 +62,7 @@ export class EventQueueServiceSQS {
             // Logic to process this event
             await this.eventProcessorService.processEvent(event);
 
-            // Delete the processed message from the SQS queue
+            // Delete the processed message from the queue
             await connection
               .deleteMessage({
                 QueueUrl: queueUrl,
@@ -93,7 +84,7 @@ export class EventQueueServiceSQS {
     receiveMessages();
   }
 
-  async healthCheck(): Promise<AnyObject> {
+  async healthCheck(): Promise<HealthResponse> {
     const healthCheckResponse = await this.connector.ping();
     return healthCheckResponse;
   }
