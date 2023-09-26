@@ -721,3 +721,7 @@ setupSequence() {
 - You can also use custom sequence instead by providing custom sequence name in the application.
 
 ![sequence](https://loopback.io/pages/en/lb4/imgs/middleware.png)
+
+### ProxyBuilder Component
+
+Read about the `ProxyBuilderComponent` [here](/packages/core/src/components/proxy-builder/README.md).

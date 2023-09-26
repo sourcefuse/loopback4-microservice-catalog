@@ -4,5 +4,6 @@
 // https://opensource.org/licenses/MIT
 export * from './bearer-verifier';
 export * from './logger-extension';
+export * from './proxy-builder';
 export * from './swagger-authentication';
 export * from './tenant-utilities';
