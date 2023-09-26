@@ -1,5 +1,4 @@
 import {inject} from '@loopback/core';
-import {AnyObject} from '@loopback/repository';
 import {
   HttpErrors,
   get,
