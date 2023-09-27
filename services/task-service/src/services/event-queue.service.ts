@@ -56,20 +56,9 @@ export class EventQueueServiceSQS {
         const data = await connection.receiveMessage(receiveParams).promise();
         const messages = data.Messages;
         if (messages?.length) {
-          const messagePromises = messages.map(async (message: AnyObject) => {
-            const event: Event = JSON.parse(message.Body || '{}');
-
-            // Logic to process this event
-            await this.eventProcessorService.processEvent(event);
-
-            // Delete the processed message from the queue
-            await connection
-              .deleteMessage({
-                QueueUrl: queueUrl,
-                ReceiptHandle: message.ReceiptHandle!,
-              })
-              .promise();
-          });
+          const messagePromises = messages.map((message: AnyObject) =>
+            this._processEvent(message, connection, queueUrl),
+          );
 
           await Promise.all(messagePromises);
         }
@@ -87,5 +76,24 @@ export class EventQueueServiceSQS {
   async healthCheck(): Promise<HealthResponse> {
     const healthCheckResponse = await this.connector.ping();
     return healthCheckResponse;
+  }
+
+  private async _processEvent(
+    message: AnyObject,
+    connection: AnyObject,
+    queueUrl: AnyObject,
+  ) {
+    const event: Event = JSON.parse(message.Body || '{}');
+
+    // Logic to process this event
+    await this.eventProcessorService.processEvent(event);
+
+    // Delete the processed message from the queue
+    await connection
+      .deleteMessage({
+        QueueUrl: queueUrl,
+        ReceiptHandle: message.ReceiptHandle!,
+      })
+      .promise();
   }
 }

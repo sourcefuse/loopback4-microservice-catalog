@@ -2,9 +2,9 @@ import {model, property} from '@loopback/repository';
 import {CoreEntity} from '@sourceloop/core';
 
 @model({
-  name: 'task_workflow_mappings',
+  name: 'task_workflows',
 })
-export class TaskWorkFlowMapping extends CoreEntity<TaskWorkFlowMapping> {
+export class TaskWorkflows extends CoreEntity<TaskWorkflows> {
   @property({
     type: 'string',
     id: true,

@@ -1,5 +1,5 @@
 import {injectable, BindingScope, service, inject} from '@loopback/core';
-import {AnyObject, DataObject} from '@loopback/repository';
+import {AnyObject, DataObject, repository} from '@loopback/repository';
 import {CamundaService} from './camunda.service';
 import {
   WorkflowServiceBindings,
@@ -17,6 +17,7 @@ import {TaskDbService} from './task-db.service';
 import {HttpErrors} from '@loopback/rest';
 import {WebhookService} from './webhook.service';
 import {MessageDTO} from '../models';
+import {TaskRepository} from '../repositories';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class TaskOperationService {
@@ -37,6 +38,8 @@ export class TaskOperationService {
     private readonly customBpmnRunner: TaskReturnMap,
     @service(WebhookService)
     private readonly webhookService: WebhookService,
+    @repository(TaskRepository)
+    private readonly taskRepo: TaskRepository,
   ) {
     this.clientBpmnRunner = this.customBpmnRunner;
   }
@@ -76,14 +79,8 @@ export class TaskOperationService {
       await Promise.all(tasksPromises);
     } else {
       if (this.clientBpmnRunner.tasksArray.length > 0) {
-        const tasksArrayPromises = this.clientBpmnRunner.tasksArray.map(
-          async task => {
-            await this.taskDbService.addTaskToDB(task);
-            await this.workflowOpsService.execWorkflow(
-              task.key,
-              TaskServiceNames.TASK,
-            );
-          },
+        const tasksArrayPromises = this.clientBpmnRunner.tasksArray.map(task =>
+          this._createTaskAndExecuteWorkflow(task),
         );
         await Promise.all(tasksArrayPromises);
       }
@@ -138,7 +135,7 @@ export class TaskOperationService {
             ? TaskStatus.in_progress
             : TaskStatus.completed;
 
-        await this.taskDbService.updateTask(taskKey, ut);
+        await this.taskDbService.updateTaskStatus(taskKey, ut);
         if (payload) {
           const messageDTO: DataObject<MessageDTO> = {
             message: 'Event Proccessed',
@@ -215,5 +212,23 @@ export class TaskOperationService {
       }
       return false;
     });
+  }
+
+  private async _createTaskAndExecuteWorkflow(task: Task) {
+    await this.taskRepo.create({
+      key: task.key,
+      name: task.name,
+      description: task.description,
+      status: task.status,
+      severity: task.severity,
+      priority: task.priority,
+      type: task.type,
+      assigneeId: task.assigneeId,
+      startDate: task.startDate,
+      dueDate: task.dueDate,
+      endDate: task.endDate,
+    });
+
+    await this.workflowOpsService.execWorkflow(task.key, TaskServiceNames.TASK);
   }
 }

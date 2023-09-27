@@ -1,16 +1,16 @@
 import {DefaultCrudRepository, juggler} from '@loopback/repository';
-import {TaskWorkFlowMapping} from '../models';
+import {TaskWorkflows} from '../models';
 import {inject} from '@loopback/core';
 import {TaskDbSourceName} from '../types';
 
 export class TaskWorkFlowMappingRepository extends DefaultCrudRepository<
-  TaskWorkFlowMapping,
-  typeof TaskWorkFlowMapping.prototype.id
+  TaskWorkflows,
+  typeof TaskWorkflows.prototype.id
 > {
   constructor(
     @inject(`datasources.${TaskDbSourceName}`)
     dataSource: juggler.DataSource,
   ) {
-    super(TaskWorkFlowMapping, dataSource);
+    super(TaskWorkflows, dataSource);
   }
 }

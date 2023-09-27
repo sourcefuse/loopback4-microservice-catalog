@@ -11,7 +11,7 @@ import {TaskOperationService} from '../services/task-operation.service';
 import {authorize} from 'loopback4-authorization';
 import {WebhookService} from '../services/webhook.service';
 import {STRATEGY, authenticate} from 'loopback4-authentication';
-import {SubscriberDTO, TaskDto, TaskWorkFlowMapping} from '../models';
+import {SubscriberDTO, TaskDto, TaskWorkflows} from '../models';
 import {ApiKeyVerificationService} from '../services/api-key-verification.service';
 import {repository} from '@loopback/repository';
 import {TaskWorkFlowMappingRepository} from '../repositories';
@@ -79,13 +79,13 @@ export class TaskServiceController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(TaskWorkFlowMapping, {
+          schema: getModelSchemaRef(TaskWorkflows, {
             title: 'TaskWorkFlowMapping',
           }),
         },
       },
     })
-    taskWorkflowMapping: Omit<TaskWorkFlowMapping, 'id'>,
+    taskWorkflowMapping: Omit<TaskWorkflows, 'id'>,
   ) {
     await this.taskWorkflowMapping.create(taskWorkflowMapping);
   }

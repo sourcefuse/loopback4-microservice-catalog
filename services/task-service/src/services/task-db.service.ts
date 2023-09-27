@@ -12,24 +12,7 @@ export class TaskDbService {
     private readonly taskRepo: TaskRepository,
   ) {}
 
-  public async addTaskToDB(task: Task) {
-    // add a task to DB
-    await this.taskRepo.create({
-      key: task.key,
-      name: task.name,
-      description: task.description,
-      status: task.status,
-      severity: task.severity,
-      priority: task.priority,
-      type: task.type,
-      assigneeId: task.assigneeId,
-      startDate: task.startDate,
-      dueDate: task.dueDate,
-      endDate: task.endDate,
-    });
-  }
-
-  public async updateTask(key: string, task: Task) {
+  public async updateTaskStatus(key: string, task: Task) {
     const dbTask = await this.taskRepo.findOne({
       where: {
         key,

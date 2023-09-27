@@ -1,7 +1,7 @@
 import {BindingScope, injectable, service} from '@loopback/core';
 import {Workflow, WorkflowRepository} from '@sourceloop/bpmn-service';
 import {TaskServiceNames} from '../types';
-import {EventWorkflows, TaskWorkFlowMapping} from '../models';
+import {EventWorkflows, TaskWorkflows} from '../models';
 import {Filter, repository} from '@loopback/repository';
 import {
   EventWorkflowMappingRepository,
@@ -56,8 +56,8 @@ export class WorkflowOperationService {
 
   public async findTaskWorkflowByKey(
     keyValue: string,
-  ): Promise<TaskWorkFlowMapping | null> {
-    const filter: Filter<TaskWorkFlowMapping> = {
+  ): Promise<TaskWorkflows | null> {
+    const filter: Filter<TaskWorkflows> = {
       where: {
         taskKey: keyValue,
       },
