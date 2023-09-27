@@ -2,7 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {DATASOURCES, SERVICES} from './enum';
+import {DATASOURCES, IacList, SERVICES} from './enum';
 import Generator from 'yeoman-generator';
 import {Question} from 'inquirer';
 
@@ -49,6 +49,14 @@ export interface MigrationOptions extends Generator.GeneratorOptions {
   name?: string;
   includeMigrations?: boolean;
   customMigrations?: boolean;
+}
+
+export interface CdkOptions extends Generator.GeneratorOptions {
+  iac?: IacList;
+  dir?: string;
+  packageJsonName?: string;
+  applicationClassName?: string;
+  relativePathToApp?: string;
 }
 
 export type PromptFunction = (questions: Question[]) => Promise<AnyObject>;
