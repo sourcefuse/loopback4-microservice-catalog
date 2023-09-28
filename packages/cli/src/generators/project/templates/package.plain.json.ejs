@@ -69,18 +69,11 @@
 <% if (project.mocha) { -%>
     "test": "mocha dist/__tests__",
 <% } -%>
-<% if (project.prettier || project.eslint) { -%>
-<% if (packageManager === 'yarn') { -%>
-    "posttest": "yarn run lint",
-<% } else { -%>
-    "posttest": "npm run lint",
-<% } -%>
-<% } -%>
 <% if (project.mocha && (project.prettier || project.eslint)) { -%>
 <% if (packageManager === 'yarn') { -%>
-    "test:dev": "mocha dist/__tests__/**/*.js && yarn run posttest",
+    "test:dev": "mocha dist/__tests__/**/*.js",
 <% } else { -%>
-    "test:dev": "mocha dist/__tests__/**/*.js && npm run posttest",
+    "test:dev": "mocha dist/__tests__/**/*.js",
 <% } -%>
 <% } else if (project.mocha) { -%>
     "test:dev": "mocha dist/__tests__/**/*.js",

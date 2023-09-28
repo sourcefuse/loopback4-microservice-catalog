@@ -27,9 +27,8 @@
     "pretest": "npm run clean && npm run build",
     "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
     "coverage": "nyc npm run test && npx update-badge",
-    "posttest": "npm run lint",
     "prepublishOnly": "npm run test",
-    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
+    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
     "postinstall": "node migration.js"
   },
