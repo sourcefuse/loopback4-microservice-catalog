@@ -43,6 +43,8 @@ jobs:
           npx lerna bootstrap
       - name: Test
         run: npx lerna run test
+      - name: Lint
+        run: npx lerna run lint
       - name: Stash Changes
         run: git stash
       - name: Bump Versions
