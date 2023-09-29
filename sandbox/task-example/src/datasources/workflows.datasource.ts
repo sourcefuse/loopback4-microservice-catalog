@@ -1,6 +1,5 @@
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {juggler} from '@loopback/repository';
-// @ts-ignore
 import {WorkflowServiceSourceName} from '@sourceloop/task-service';
 
 const config = {

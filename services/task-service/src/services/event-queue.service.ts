@@ -65,10 +65,13 @@ export class EventQueueServiceSQS {
       } catch (error) {
         throw new HttpErrors.InternalServerError(`Error with Queue, ${error}`);
       }
+
+      /* eslint-disable */
       // Call the function recursively to continuously listen for new messages
       receiveMessages();
     };
 
+    /* eslint-disable */
     // Start listening for events
     receiveMessages();
   }

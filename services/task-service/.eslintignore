@@ -2,6 +2,8 @@ node_modules/
 dist/
 coverage/
 migrations/
+src/__tests__/data.ts
+src/__tests__/providers/custom-runner.provider.ts
 
 .eslintrc.js
 migration.js

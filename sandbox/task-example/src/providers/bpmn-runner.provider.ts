@@ -25,6 +25,7 @@ export class CustomBpmnRunner extends BaseBpmnRunner {
     return returnMap;
   }
 
+  /* eslint-disable */
   getWorkerFunctions(): Record<string, ProccessorFunction> {
     return {
       'read-payload': (
