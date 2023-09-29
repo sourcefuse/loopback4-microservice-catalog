@@ -1,5 +1,4 @@
 import {
-  Getter,
   inject,
   /* inject, */
   injectable,
@@ -10,26 +9,24 @@ import {
   ValueOrPromise,
 } from '@loopback/core';
 import { repository } from '@loopback/repository';
+import { HttpErrors } from '@loopback/rest';
 import { IAuthUserWithPermissions } from '@sourceloop/core';
 import { AuthenticationBindings } from 'loopback4-authentication';
-import { GroupRepository } from '../repositories';
-import { HttpErrors, Request, RestBindings } from '@loopback/rest';
-import { Group } from '../models';
-import { group } from 'console';
 import { UserTenantServiceKey } from '../keys';
+import { GroupRepository } from '../repositories';
 
 /**
  * This class will be bound to the application as an `Interceptor` during
  * `boot`
  */
-@injectable({tags: {key: GroupTenantInterceptor.BINDING_KEY}})
+@injectable({ tags: { key: GroupTenantInterceptor.BINDING_KEY } })
 export class GroupTenantInterceptor implements Provider<Interceptor> {
   static readonly BINDING_KEY = UserTenantServiceKey.GroupTenantInterceptor;
-  
+
   constructor(
-    @repository(GroupRepository) protected groupRepository:GroupRepository,
-    @inject(AuthenticationBindings.CURRENT_USER) protected currentUser:IAuthUserWithPermissions,
-    ) {}
+    @repository(GroupRepository) protected groupRepository: GroupRepository,
+    @inject(AuthenticationBindings.CURRENT_USER) protected currentUser: IAuthUserWithPermissions,
+  ) { }
 
 
   /**
@@ -53,24 +50,24 @@ export class GroupTenantInterceptor implements Provider<Interceptor> {
   ) {
     try {
       // Add pre-invocation logic here
-      const groupId = invocationCtx.args[0]; 
-      const groups=await this.groupRepository.find({
-        where:{id:groupId}
+      const groupId = invocationCtx.args[0];
+      const groups = await this.groupRepository.find({
+        where: { id: groupId }
       })
-      const groupRecord=groups.find(group=>
-        group.tenantId===this.currentUser.tenantId,
+      const groupRecord = groups.find(group =>
+        group.tenantId === this.currentUser.tenantId,
       );
-      if(!groupRecord){
+      if (!groupRecord) {
         throw new HttpErrors.Forbidden('Group Access Not Allowed')
       }
 
-      
+
       const result = await next();
       // Add post-invocation logic here
       return result;
-    } catch (err) {
+    } catch (err) { //NoSona
       // Add error handling logic here
-      throw err;
+      throw new HttpErrors.Forbidden(err);
     }
   }
 }

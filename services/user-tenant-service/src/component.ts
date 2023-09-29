@@ -1,29 +1,28 @@
 import {
   Application,
-  injectable,
-  Component,
-  config,
-  ContextTags,
-  CoreBindings,
-  inject,
   Binding,
+  Component,
+  ContextTags,
   ControllerClass,
+  CoreBindings,
   ProviderMap,
+  config,
+  inject,
+  injectable,
 } from '@loopback/core';
-import {CoreComponent, TenantUtilitiesComponent} from '@sourceloop/core';
-import {UserTenantServiceComponentBindings, UserTenantServiceKey} from './keys'
-import {DEFAULT_USER_SERVICE_OPTIONS, UserTenantServiceComponentOptions} from './types';
 import { Class, Model, Repository } from '@loopback/repository';
-import { AuthClient, Role, Tenant, TenantConfig, User, UserCredentials, UserDto, UserGroup, UserInvitation, UserLevelPermission, UserTenant, UserTenantPrefs, UserView } from './models';
-import {  GroupUserController, TenantController, TenantGroupController, TenantRoleController, TenantTenantConfigController, TenantUserController, UserTenantController, UserTenantPrefsController, UserTenantUserGroupController, UserTenantUserLevelPermissionController } from './controllers';
-import { AuthClientRepository, GroupRepository, RoleRepository, TenantConfigRepository, TenantRepository, UserCredentialsRepository, UserGroupRepository, UserInvitationRepository, UserLevelPermissionRepository, UserRepository, UserTenantPrefsRepository, UserTenantRepository, UserViewRepository } from './repositories';
-import { Group } from './models/group.model';
-import {  UserOperationsService, UserGroupService } from './services';
+import { CoreComponent, TenantUtilitiesComponent } from '@sourceloop/core';
+import { GroupUserController, TenantController, TenantGroupController, TenantRoleController, TenantTenantConfigController, TenantUserController, UserTenantController, UserTenantPrefsController, UserTenantUserGroupController, UserTenantUserLevelPermissionController } from './controllers';
 import { GroupTenantInterceptor, TenantInterceptorInterceptor, UserTenantInterceptorInterceptor } from './interceptors';
-// import { GroupTenantInterceptor } from './interceptors';
+import { UserTenantServiceComponentBindings, UserTenantServiceKey } from './keys';
+import { AuthClient, Role, Tenant, TenantConfig, User, UserCredentials, UserDto, UserGroup, UserInvitation, UserLevelPermission, UserTenant, UserTenantPrefs, UserView } from './models';
+import { Group } from './models/group.model';
+import { AuthClientRepository, GroupRepository, RoleRepository, TenantConfigRepository, TenantRepository, UserCredentialsRepository, UserGroupRepository, UserInvitationRepository, UserLevelPermissionRepository, UserRepository, UserTenantPrefsRepository, UserTenantRepository, UserViewRepository } from './repositories';
+import { UserGroupService, UserOperationsService } from './services';
+import { DEFAULT_USER_SERVICE_OPTIONS, UserTenantServiceComponentOptions } from './types';
 
 // Configure the binding for UserTenantServiceComponent
-@injectable({tags: {[ContextTags.KEY]: UserTenantServiceComponentBindings.COMPONENT}})
+@injectable({ tags: { [ContextTags.KEY]: UserTenantServiceComponentBindings.COMPONENT } })
 export class UserTenantServiceComponent implements Component {
   repositories?: Class<Repository<Model>>[];
 
@@ -45,7 +44,7 @@ export class UserTenantServiceComponent implements Component {
     @config()
     private options: UserTenantServiceComponentOptions = DEFAULT_USER_SERVICE_OPTIONS,
   ) {
-    this.bindings=[];
+    this.bindings = [];
     this.application.component(CoreComponent);
     this.application.bind(UserTenantServiceKey.UserGroupService).toClass(UserGroupService);
     this.application.bind(UserTenantServiceKey.UserOperationsService).toClass(UserOperationsService);
@@ -54,7 +53,7 @@ export class UserTenantServiceComponent implements Component {
     this.application.bind(UserTenantServiceKey.GroupTenantInterceptor).toProvider(GroupTenantInterceptor);
     this.application.bind(UserTenantServiceKey.TenantInterceptorInterceptor).toProvider(TenantInterceptorInterceptor);
     this.application.bind(UserTenantServiceKey.UserTenantInterceptorInterceptor).toProvider(UserTenantInterceptorInterceptor);
-    this.models=[
+    this.models = [
       Role,
       UserTenant,
       TenantConfig,
@@ -70,7 +69,7 @@ export class UserTenantServiceComponent implements Component {
       AuthClient,
       UserDto
     ];
-    this.controllers=[
+    this.controllers = [
       TenantRoleController,
       TenantController,
       UserTenantController,
@@ -82,7 +81,7 @@ export class UserTenantServiceComponent implements Component {
       UserTenantUserGroupController,
       UserTenantUserLevelPermissionController,
     ];
-    this.repositories=[
+    this.repositories = [
       RoleRepository,
       UserTenantRepository,
       TenantConfigRepository,

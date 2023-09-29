@@ -3,7 +3,7 @@
   "info": {
     "title": "@sourceloop/user-tenant-service",
     "version": "0.8.8",
-    "description": "user-service",
+    "description": "Sourceloop User Tenant Service.",
     "contact": {
       "name": "SourceFuse"
     }

@@ -17,15 +17,15 @@ import { UserTenantServiceKey } from '../keys';
  * This class will be bound to the application as an `Interceptor` during
  * `boot`
  */
-@injectable({tags: {key: TenantInterceptorInterceptor.BINDING_KEY}})
+@injectable({ tags: { key: TenantInterceptorInterceptor.BINDING_KEY } })
 export class TenantInterceptorInterceptor implements Provider<Interceptor> {
   static readonly BINDING_KEY = UserTenantServiceKey.TenantInterceptorInterceptor;
 
-  
+
   constructor(
-    @inject(AuthenticationBindings.CURRENT_USER) protected currentUser:IAuthUserWithPermissions,
-  ) {}
-  
+    @inject(AuthenticationBindings.CURRENT_USER) protected currentUser: IAuthUserWithPermissions,
+  ) { }
+
 
   /**
    * This method is used by LoopBack context to produce an interceptor function
@@ -49,8 +49,8 @@ export class TenantInterceptorInterceptor implements Provider<Interceptor> {
     try {
       // Add pre-invocation logic here
 
-      const tenantId=invocationCtx.args[0];
-      if(tenantId!==this.currentUser.tenantId){
+      const tenantId = invocationCtx.args[0];
+      if (tenantId !== this.currentUser.tenantId) {
         throw new HttpErrors.Forbidden('Access to different Tenant Not Allowed-')
       }
       const result = await next();
@@ -58,7 +58,7 @@ export class TenantInterceptorInterceptor implements Provider<Interceptor> {
       return result;
     } catch (err) {
       // Add error handling logic here
-      throw err;
+      throw new HttpErrors.Forbidden(err);
     }
   }
 }

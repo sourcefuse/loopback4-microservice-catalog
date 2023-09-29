@@ -1,34 +1,34 @@
+import { Getter, inject, intercept } from '@loopback/core';
 import {
   Filter,
-  repository,
   Where,
+  repository,
 } from '@loopback/repository';
 import {
+  HttpErrors,
+  Request,
+  RestBindings,
   del,
   get,
   getModelSchemaRef,
   getWhereSchemaFor,
-  HttpErrors,
   param,
   post,
-  Request,
   requestBody,
-  RestBindings,
 } from '@loopback/rest';
+import { IAuthUserWithPermissions, OPERATION_SECURITY_SPEC } from '@sourceloop/core';
+import { AuthenticationBindings, STRATEGY, authenticate } from 'loopback4-authentication';
+import { authorize } from 'loopback4-authorization';
+import { PermissionKey, STATUS_CODE } from '../enums';
+import { UserTenantServiceKey } from '../keys';
 import {
   Group,
   UserGroup,
 } from '../models';
-import {GroupRepository, UserTenantRepository} from '../repositories';
-import { authenticate, AuthenticationBindings, STRATEGY } from 'loopback4-authentication';
-import { authorize } from 'loopback4-authorization';
-import { PermissionKey, STATUS_CODE } from '../enums';
-import { IAuthUserWithPermissions, OPERATION_SECURITY_SPEC } from '@sourceloop/core';
-import {  Getter, inject, intercept } from '@loopback/core';
+import { GroupRepository, UserTenantRepository } from '../repositories';
 import { UserGroupService } from '../services';
-import { UserTenantServiceKey } from '../keys';
 
-const baseUrl="/groups/{id}/user";
+const baseUrl = "/groups/{id}/user";
 
 
 @intercept(UserTenantServiceKey.GroupTenantInterceptor)
@@ -38,7 +38,7 @@ export class GroupUserController {
     @repository(UserTenantRepository) protected userTenantRepository: UserTenantRepository,
     @inject(AuthenticationBindings.CURRENT_USER)
     private readonly currentUser: IAuthUserWithPermissions,
-    @inject(UserTenantServiceKey.UserGroupService) 
+    @inject(UserTenantServiceKey.UserGroupService)
     private readonly userGroupService: UserGroupService, @inject.getter(RestBindings.Http.REQUEST) private readonly getRequest: Getter<Request>,
   ) { }
 
@@ -59,7 +59,7 @@ export class GroupUserController {
         description: 'Array of Group has many UserGroup',
         content: {
           'application/json': {
-            schema: {type: 'array', items: getModelSchemaRef(UserGroup)},
+            schema: { type: 'array', items: getModelSchemaRef(UserGroup) },
           },
         },
       },
@@ -86,7 +86,7 @@ export class GroupUserController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Group model instance',
-        content: {'application/json': {schema: getModelSchemaRef(UserGroup)}},
+        content: { 'application/json': { schema: getModelSchemaRef(UserGroup) } },
       },
     },
   })
@@ -97,13 +97,13 @@ export class GroupUserController {
         'application/json': {
           schema: getModelSchemaRef(UserGroup, {
             title: 'NewUserGroupInGroup',
-            exclude: ['id','groupId'],
+            exclude: ['id', 'groupId'],
           }),
         },
       },
-    }) userGroup: Omit<UserGroup, 'id' >,
+    }) userGroup: Omit<UserGroup, 'id'>,
   ): Promise<UserGroup> {
-    userGroup.groupId=id??'';
+    userGroup.groupId = id ?? '';
     return this.userGroupService.create(userGroup);
   }
 
@@ -122,7 +122,7 @@ export class GroupUserController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Group model instance',
-        content: {'application/json': { schema: {type: 'array', items: getModelSchemaRef(UserGroup)}}},
+        content: { 'application/json': { schema: { type: 'array', items: getModelSchemaRef(UserGroup) } } },
       },
     },
   })
@@ -131,18 +131,18 @@ export class GroupUserController {
     @requestBody({
       content: {
         'application/json': {
-          schema: {type:'array',items:getModelSchemaRef(UserGroup, {
-            title: 'NewUserGroupInGroup',
-            exclude: ['id','groupId'],
-          })},
+          schema: {
+            type: 'array', items: getModelSchemaRef(UserGroup, {
+              title: 'NewUserGroupInGroup',
+              exclude: ['id', 'groupId'],
+            })
+          },
         },
       },
     }) userGroups: UserGroup[],
   ): Promise<UserGroup[]> {
-    const userTenantIdArray=userGroups.map(userGroup=>{
-      return userGroup.userTenantId;
-    })
-    return this.userGroupService.createAll(userTenantIdArray,id??'');
+    const userTenantIdArray = userGroups.map(userGroup => userGroup.userTenantId)
+    return this.userGroupService.createAll(userTenantIdArray, id ?? '');
   }
 
 
@@ -168,24 +168,24 @@ export class GroupUserController {
     @param.path.string('userId') userId: string,
     @param.query.object('where', getWhereSchemaFor(UserGroup)) where?: Where<UserGroup>,
   ): Promise<void> {
-    const userTenant=await this.userTenantRepository.findOne({
-      where:{
-        userId:userId,
-        tenantId:this.currentUser.tenantId
+    const userTenant = await this.userTenantRepository.findOne({
+      where: {
+        userId: userId,
+        tenantId: this.currentUser.tenantId
       },
-      limit:1
+      limit: 1
     });
     const userGroups = await this.groupRepository.userGroups(id).find({
       where: {
         groupId: id,
-        userTenantId:userTenant?.id,
+        userTenantId: userTenant?.id,
       },
       limit: 2,
     });
     const userGroupRecord = userGroups.find(
       userGroup => userGroup.userTenantId === userTenant?.id,
     );
-    const userGroupId=userGroupRecord?.id;
+    const userGroupId = userGroupRecord?.id;
     if (!userGroupRecord) {
       throw new HttpErrors.Forbidden('Unable to find user group records');
     }
@@ -198,8 +198,8 @@ export class GroupUserController {
         'An owner cannot remove himself as the owner',
       );
     }
-    
-    await this.userGroupService.deleteById(userGroupId??"");
+
+    await this.userGroupService.deleteById(userGroupId ?? "");
     await this.groupRepository.updateById(id, {
       modifiedOn: new Date(),
     });
