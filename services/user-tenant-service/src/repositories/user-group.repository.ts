@@ -1,6 +1,5 @@
 import {inject, Getter} from '@loopback/core';
 import {DefaultCrudRepository, juggler, repository, BelongsToAccessor} from '@loopback/repository';
-import {DbDataSource} from '../datasources';
 import {UserGroup, UserGroupRelations, Group, UserTenant} from '../models';
 import { UserTenantDataSourceName } from '../keys';
 import {GroupRepository} from './group.repository';

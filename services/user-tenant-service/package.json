@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/user-tenant-service",
-  "version": "0.8.9",
+  "version": "0.8.8",
   "description": "Sourceloop User Tenant Service.",
   "keywords": [
     "loopback-extension",
@@ -9,10 +9,14 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
-    "node": ">=10.16"
+    "node": "16 || 17 || 18"
   },
   "scripts": {
+    "prebuild": "npm run clean",
     "build": "lb-tsc",
+    "postbuild": "npm run openapi-spec",
+    "openapi-spec": "node ./dist/openapi-spec && npm run apidocs",
+    "apidocs": "npx widdershins --language_tabs 'javascript:JavaScript:request' 'javascript--nodejs:Node.JS' --summary openapi.json -o openapi.md",
     "build:watch": "lb-tsc --watch",
     "lint": "npm run eslint && npm run prettier:check",
     "lint:fix": "npm run eslint:fix && npm run prettier:fix",
@@ -25,20 +29,30 @@
     "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
     "posttest": "npm run lint",
     "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
+    "docker:build": "docker build -t user-tenant-service .",
+    "docker:run": "docker run -p 3000:3000 -d user-tenant-service",
+    "premigrate": "npm run build",
+    "migrate": "node ./dist/migrate",
+    "prestart": "npm run rebuild",
+    "start": "node -r source-map-support/register .",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
     "rebuild": "npm run clean && npm run build",
-    "prune": "npm prune --production"
+    "postinstall": "node migration.js"
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
+    "directory": "services/user-tenant-service"
   },
-  "author": "Tyagi-Sunny<sunny.tyagi@sourcefuse.com>",
+  "author": "SourceFuse",
   "license": "MIT",
   "files": [
     "README.md",
     "dist",
     "src",
+    "migration.js",
+    "migrations",
+    "database.json",
     "!*/__tests__"
   ],
   "peerDependencies": {
@@ -53,8 +67,7 @@
     "@loopback/rest": "^13.1.0",
     "@loopback/rest-explorer": "^6.1.0",
     "@loopback/service-proxy": "^6.1.0",
-    "@sourceloop/audit-log": "^5.1.2",
-    "@sourceloop/core": "^8.2.0",
+    "@sourceloop/core": "^8.1.0",
     "bcrypt": "^5.0.1",
     "dotenv": "^16.0.3",
     "dotenv-extended": "^2.9.0",

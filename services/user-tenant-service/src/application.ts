@@ -9,7 +9,6 @@ import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import * as path from 'path';
 import {UserTenantServiceComponent} from './component';
-import {TenantGuardService, TenantUtilitiesBindings, TenantUtilitiesComponent} from '@sourceloop/core';
 
 export {ApplicationConfig};
 

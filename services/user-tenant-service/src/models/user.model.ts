@@ -29,11 +29,12 @@ import {
 export class User<T = DataObject<Model>>
   extends UserModifiableEntity<T & User>
   implements IAuthUser {
-  @property({
-    type: 'string',
-    id: true,
-  })
-  id?: string;
+    @property({
+      type: 'string',
+      id: true,
+      generated: true,
+    })
+    id: string;
 
   @property({
     type: 'string',
@@ -85,11 +86,6 @@ export class User<T = DataObject<Model>>
   })
   authClientIds?: string;
 
-  @property({
-    type: 'string',
-    name: 'default_tenant_id',
-  })
-  tenantId: string;
 
   @property({
     type: 'date',
@@ -129,11 +125,11 @@ export class User<T = DataObject<Model>>
 
   @belongsTo(
     () => Tenant,
-    {keyFrom: 'default_tenant_id', name: 'defaultTenant'},
+    {keyFrom: 'defaultTenantId', name: 'defaultTenant'},
     {
       name: 'default_tenant_id',
       required: false,
-    },
+    }
   )
   defaultTenantId?: string;
 
@@ -142,6 +138,7 @@ export class User<T = DataObject<Model>>
 
   @hasMany(() => UserTenant, {keyTo: 'userId'})
   userTenants: UserTenant[];
+
 }
 
 export interface UserRelations {
@@ -151,6 +148,3 @@ export interface UserRelations {
 }
 
 export type UserWithRelations = User & UserRelations;
-
-// user-user-tenant.controller.ts
-// user-user-credentials.controller.ts

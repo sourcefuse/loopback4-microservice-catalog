@@ -5,10 +5,7 @@ import { UserTenantDataSourceName } from '../keys';
 import {TenantRepository} from './tenant.repository';
 import {UserCredentialsRepository} from './user-credentials.repository';
 import {UserTenantRepository} from './user-tenant.repository';
-import { DefaultUserModifyCrudRepository, IAuthUserWithPermissions, TenantGuardMixin, tenantGuard } from '@sourceloop/core';
-import { AuthenticationBindings } from 'loopback4-authentication';
 
-@tenantGuard()
 export class UserRepository extends DefaultCrudRepository<
 User,
 typeof User.prototype.id,
@@ -29,8 +26,6 @@ UserRelations
   protected userCredentialsRepositoryGetter: Getter<UserCredentialsRepository>, 
   @repository.getter('UserTenantRepository') 
   protected userTenantRepositoryGetter: Getter<UserTenantRepository>, 
-  @inject.getter(AuthenticationBindings.CURRENT_USER)
-  getCurrentUser: Getter<IAuthUserWithPermissions>,
   ) {
     super(User, dataSource);
     this.userTenants = this.createHasManyRepositoryFactoryFor('userTenants', userTenantRepositoryGetter,);

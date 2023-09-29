@@ -12,3 +12,12 @@ export namespace UserTenantServiceComponentBindings {
 export const UserTenantDataSourceName = 'AuthDB';
 export const UserTenantCacheSourceName = 'AuthCache';
 
+export namespace UserTenantServiceKey{
+  export const  UserGroupService='services.UserGroupService';
+  export const UserOperationsService='services.UserOperationsService';
+  export const GroupTenantInterceptor='interceptors.GroupTenantInterceptor';
+  export const TenantInterceptorInterceptor='interceptors.TenantInterceptorInterceptor';
+  export const UserTenantInterceptorInterceptor='interceptors.UserTenantInterceptorInterceptor';
+}
+
+

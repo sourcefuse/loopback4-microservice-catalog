@@ -2,7 +2,6 @@ import {
   Count,
   CountSchema,
   Filter,
-  FilterExcludingWhere,
   repository,
   Where,
 } from '@loopback/repository';
@@ -11,23 +10,27 @@ import {
   param,
   get,
   getModelSchemaRef,
-  patch,
-  put,
   del,
   requestBody,
   response,
+  HttpErrors,
 } from '@loopback/rest';
 import {UserTenantPrefs} from '../models';
 import {UserTenantPrefsRepository} from '../repositories';
-import { OPERATION_SECURITY_SPEC } from '@sourceloop/core';
-import { authenticate, STRATEGY } from 'loopback4-authentication';
-import { authorize } from 'loopback4-authorization';
-import { PermissionKey } from '../enums';
+import { IAuthUserWithPermissions, OPERATION_SECURITY_SPEC } from '@sourceloop/core';
+import { authenticate, AuthenticationBindings, STRATEGY } from 'loopback4-authentication';
+import { authorize, AuthorizeErrorKeys } from 'loopback4-authorization';
+import { PermissionKey, STATUS_CODE } from '../enums';
+import { inject } from '@loopback/core';
+
+const baseUrl='/user-tenant-prefs';
 
 export class UserTenantPrefsController {
   constructor(
     @repository(UserTenantPrefsRepository)
     public userTenantPrefsRepository : UserTenantPrefsRepository,
+    @inject(AuthenticationBindings.CURRENT_USER)
+    private readonly currentUser: IAuthUserWithPermissions,
   ) {}
 
 
@@ -40,8 +43,8 @@ export class UserTenantPrefsController {
       PermissionKey.CreateUserTenantPreferenceNum,
     ],
   })
-  @post('/user-tenant-prefs',{security: OPERATION_SECURITY_SPEC,responses:{}})
-  @response(200, {
+  @post(baseUrl,{security: OPERATION_SECURITY_SPEC,responses:{}})
+  @response(STATUS_CODE.OK, {
     description: 'UserTenantPrefs model instance',
     content: {'application/json': {schema: getModelSchemaRef(UserTenantPrefs)}},
   })
@@ -51,13 +54,29 @@ export class UserTenantPrefsController {
         'application/json': {
           schema: getModelSchemaRef(UserTenantPrefs, {
             title: 'NewUserTenantPrefs',
-            exclude: ['id'],
+            exclude: ['id','userTenantId'],
           }),
         },
       },
     })
     userTenantPrefs: Omit<UserTenantPrefs, 'id'>,
   ): Promise<UserTenantPrefs> {
+
+    if (this.currentUser.userTenantId) {
+      userTenantPrefs.userTenantId = this.currentUser.userTenantId;
+    }
+    const prefExists = await this.userTenantPrefsRepository.findOne({
+      where: {
+        userTenantId: userTenantPrefs.userTenantId,
+        configKey: userTenantPrefs.configKey,
+      },
+    });
+    if (prefExists) {
+     await this.userTenantPrefsRepository.updateById(prefExists.id, {
+        configValue: userTenantPrefs.configValue,
+      });
+      return userTenantPrefs;
+    }
     return this.userTenantPrefsRepository.create(userTenantPrefs);
   }
 
@@ -70,14 +89,20 @@ export class UserTenantPrefsController {
       PermissionKey.ViewUserTenantPreferenceNum,
     ],
   })
-  @get('/user-tenant-prefs/count',{security: OPERATION_SECURITY_SPEC,responses:{}})
-  @response(200, {
+  @get(`${baseUrl}/count`,{security: OPERATION_SECURITY_SPEC,responses:{}})
+  @response(STATUS_CODE.OK, {
     description: 'UserTenantPrefs model count',
     content: {'application/json': {schema: CountSchema}},
   })
   async count(
     @param.where(UserTenantPrefs) where?: Where<UserTenantPrefs>,
   ): Promise<Count> {
+    if (!where) {
+      where = {};
+    }
+    where = {
+      and:[where??{},{userTenantId: this.currentUser.userTenantId}]
+    };
     return this.userTenantPrefsRepository.count(where);
   }
 
@@ -90,8 +115,8 @@ export class UserTenantPrefsController {
       PermissionKey.ViewUserTenantPreferenceNum,
     ],
   })
-  @get('/user-tenant-prefs',{security: OPERATION_SECURITY_SPEC,responses:{}})
-  @response(200, {
+  @get(baseUrl,{security: OPERATION_SECURITY_SPEC,responses:{}})
+  @response(STATUS_CODE.OK, {
     description: 'Array of UserTenantPrefs model instances',
     content: {
       'application/json': {
@@ -105,107 +130,13 @@ export class UserTenantPrefsController {
   async find(
     @param.filter(UserTenantPrefs) filter?: Filter<UserTenantPrefs>,
   ): Promise<UserTenantPrefs[]> {
+    if (!filter) {
+      filter = {where: {}};
+    }
+    filter.where = {
+      and: [filter.where ?? {}, {userTenantId: this.currentUser.userTenantId}],
+    };
     return this.userTenantPrefsRepository.find(filter);
-  }
-
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({
-    permissions: [
-      PermissionKey.UpdateUserTenantPreference,
-      PermissionKey.UpdateUserTenantPreferenceNum,
-    ],
-  })
-  @patch('/user-tenant-prefs',{security: OPERATION_SECURITY_SPEC,responses:{}})
-  @response(200, {
-    description: 'UserTenantPrefs PATCH success count',
-    content: {'application/json': {schema: CountSchema}},
-  })
-  async updateAll(
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(UserTenantPrefs, {partial: true}),
-        },
-      },
-    })
-    userTenantPrefs: UserTenantPrefs,
-    @param.where(UserTenantPrefs) where?: Where<UserTenantPrefs>,
-  ): Promise<Count> {
-    return this.userTenantPrefsRepository.updateAll(userTenantPrefs, where);
-  }
-
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({
-    permissions: [
-      PermissionKey.ViewUserTenantPreference,
-      PermissionKey.ViewUserTenantPreferenceNum,
-    ],
-  })
-  @get('/user-tenant-prefs/{id}',{security: OPERATION_SECURITY_SPEC,responses:{}})
-  @response(200, {
-    description: 'UserTenantPrefs model instance',
-    content: {
-      'application/json': {
-        schema: getModelSchemaRef(UserTenantPrefs, {includeRelations: true}),
-      },
-    },
-  })
-  async findById(
-    @param.path.string('id') id: string,
-    @param.filter(UserTenantPrefs, {exclude: 'where'}) filter?: FilterExcludingWhere<UserTenantPrefs>
-  ): Promise<UserTenantPrefs> {
-    return this.userTenantPrefsRepository.findById(id, filter);
-  }
-
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({
-    permissions: [
-      PermissionKey.UpdateUserTenantPreference,
-      PermissionKey.UpdateUserTenantPreferenceNum,
-    ],
-  })
-  @patch('/user-tenant-prefs/{id}',{security: OPERATION_SECURITY_SPEC,responses:{}})
-  @response(204, {
-    description: 'UserTenantPrefs PATCH success',
-  })
-  async updateById(
-    @param.path.string('id') id: string,
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(UserTenantPrefs, {partial: true}),
-        },
-      },
-    })
-    userTenantPrefs: UserTenantPrefs,
-  ): Promise<void> {
-    await this.userTenantPrefsRepository.updateById(id, userTenantPrefs);
-  }
-
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({
-    permissions: [
-      PermissionKey.UpdateUserTenantPreference,
-      PermissionKey.UpdateUserTenantPreferenceNum,
-    ],
-  })
-  @put('/user-tenant-prefs/{id}',{security: OPERATION_SECURITY_SPEC,responses:{}})
-  @response(204, {
-    description: 'UserTenantPrefs PUT success',
-  })
-  async replaceById(
-    @param.path.string('id') id: string,
-    @requestBody() userTenantPrefs: UserTenantPrefs,
-  ): Promise<void> {
-    await this.userTenantPrefsRepository.replaceById(id, userTenantPrefs);
   }
 
   @authenticate(STRATEGY.BEARER, {
@@ -217,11 +148,15 @@ export class UserTenantPrefsController {
       PermissionKey.DeleteUserTenantPreferenceNum,
     ],
   })
-  @del('/user-tenant-prefs/{id}',{security: OPERATION_SECURITY_SPEC,responses:{}})
-  @response(204, {
+  @del(`${baseUrl}/{id}`,{security: OPERATION_SECURITY_SPEC,responses:{}})
+  @response(STATUS_CODE.NO_CONTENT, {
     description: 'UserTenantPrefs DELETE success',
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
+    const userTenantPrefs=await this.userTenantPrefsRepository.findById(id);
+    if(userTenantPrefs.userTenantId!==this.currentUser.userTenantId){
+      throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
+    }
     await this.userTenantPrefsRepository.deleteById(id);
   }
 }

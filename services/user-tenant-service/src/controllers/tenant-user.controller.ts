@@ -1,6 +1,4 @@
 import {
-  Count,
-  CountSchema,
   Filter,
   repository,
   Where,
@@ -16,20 +14,27 @@ import {
   requestBody,
 } from '@loopback/rest';
 import {
-  Tenant,
   User,
+  UserDto,
   UserView,
 } from '../models';
-import {TenantRepository, UserViewRepository} from '../repositories';
-import { PermissionKey } from '../enums';
+import {TenantRepository, UserRepository} from '../repositories';
+import { PermissionKey, STATUS_CODE } from '../enums';
 import { authenticate, STRATEGY } from 'loopback4-authentication';
 import { authorize } from 'loopback4-authorization';
 import { OPERATION_SECURITY_SPEC } from '@sourceloop/core';
+import { inject, intercept } from '@loopback/core';
+import { UserOperationsService } from '../services';
+import { UserTenantServiceKey } from '../keys';
+const baseUrl='/tenants/{id}/users';
 
+@intercept(UserTenantServiceKey.TenantInterceptorInterceptor)
 export class TenantUserController {
   constructor(
     @repository(TenantRepository) protected tenantRepository: TenantRepository,
-    @repository(UserViewRepository) protected userViewRepository: UserViewRepository,
+    @repository(UserRepository) protected userRepository: UserRepository,
+    @inject(UserTenantServiceKey.UserOperationsService)
+    protected userOperationsService: UserOperationsService,
   ) { }
 
 
@@ -38,18 +43,14 @@ export class TenantUserController {
   })
   @authorize({
     permissions: [
-      PermissionKey.ViewAnyUser,
       PermissionKey.ViewTenantUser,
-      PermissionKey.ViewTenantUserRestricted,
-      PermissionKey.ViewAnyUserNum,
       PermissionKey.ViewTenantUserNum,
-      PermissionKey.ViewTenantUserRestrictedNum,
     ],
   })
-  @get('/tenants/{id}/users', {
+  @get(baseUrl, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Array of Tenant has many User',
         content: {
           'application/json': {
@@ -63,8 +64,7 @@ export class TenantUserController {
     @param.path.string('id') id: string,
     @param.query.object('filter') filter?: Filter<UserView>,
   ): Promise<UserView[]> {
-    // return this.tenantRepository.users(id).find(filter);
-    return this.userViewRepository.find(filter);
+    return this.userOperationsService.find(id,filter);
   }
 
   @authenticate(STRATEGY.BEARER, {
@@ -72,38 +72,34 @@ export class TenantUserController {
   })
   @authorize({
     permissions: [
-      PermissionKey.CreateAnyUser,
       PermissionKey.CreateTenantUser,
-      PermissionKey.CreateTenantUserRestricted,
-      PermissionKey.CreateAnyUserNum,
       PermissionKey.CreateTenantUserNum,
-      PermissionKey.CreateTenantUserRestrictedNum,
     ],
   })
-  @post('/tenants/{id}/users', {
+  @post(baseUrl, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Tenant model instance',
         content: {'application/json': {schema: getModelSchemaRef(User)}},
       },
     },
   })
   async create(
-    @param.path.string('id') id: typeof Tenant.prototype.id,
+    @param.path.string('id') id: string,
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(User, {
+          schema: getModelSchemaRef(UserDto, {
             title: 'NewUserInTenant',
-            exclude: ['id'],
-            optional: ['defaultTenantId']
+            exclude: ['id','defaultTenantId']
           }),
         },
       },
-    }) user: Omit<User, 'id'>,
+    }) user: UserDto,
   ): Promise<User> {
-    return this.tenantRepository.users(id).create(user);
+    user.defaultTenantId=id;
+    return this.userOperationsService.create(user, id);
   }
 
 
@@ -112,27 +108,21 @@ export class TenantUserController {
   })
   @authorize({
     permissions: [
-      PermissionKey.UpdateAnyUser,
-      PermissionKey.UpdateOwnUser,
       PermissionKey.UpdateTenantUser,
-      PermissionKey.UpdateTenantUserRestricted,
-      PermissionKey.UpdateAnyUserNum,
-      PermissionKey.UpdateOwnUserNum,
       PermissionKey.UpdateTenantUserNum,
-      PermissionKey.UpdateTenantUserRestrictedNum,
     ],
   })
-  @patch('/tenants/{id}/users', {
+  @patch(`${baseUrl}/{userId}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
-      '200': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'Tenant.User PATCH success count',
-        content: {'application/json': {schema: CountSchema}},
       },
     },
   })
   async patch(
     @param.path.string('id') id: string,
+    @param.path.string('userId') userId: string,
     @requestBody({
       content: {
         'application/json': {
@@ -140,10 +130,13 @@ export class TenantUserController {
         },
       },
     })
-    user: Partial<User>,
+    user: Omit<
+      UserView,
+      'id' | 'authClientIds' | 'lastLogin' | 'status' | 'tenantId'
+    >,
     @param.query.object('where', getWhereSchemaFor(User)) where?: Where<User>,
-  ): Promise<Count> {
-    return this.tenantRepository.users(id).patch(user, where);
+  ): Promise<void> {
+    await this.userOperationsService.updateById(user,userId,id);
   }
 
   @authenticate(STRATEGY.BEARER, {
@@ -151,27 +144,23 @@ export class TenantUserController {
   })
   @authorize({
     permissions: [
-      PermissionKey.DeleteAnyUser,
       PermissionKey.DeleteTenantUser,
-      PermissionKey.DeleteTenantUserRestricted,
-      PermissionKey.DeleteAnyUserNum,
       PermissionKey.DeleteTenantUserNum,
-      PermissionKey.DeleteTenantUserRestrictedNum,
     ],
   })
-  @del('/tenants/{id}/users', {
+  @del(`${baseUrl}/{userId}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
-      '200': {
+      [STATUS_CODE.NO_CONTENT]: {
         description: 'Tenant.User DELETE success count',
-        content: {'application/json': {schema: CountSchema}},
       },
     },
   })
   async delete(
     @param.path.string('id') id: string,
+    @param.path.string('userId') userId: string,
     @param.query.object('where', getWhereSchemaFor(User)) where?: Where<User>,
-  ): Promise<Count> {
-    return this.tenantRepository.users(id).delete(where);
+  ): Promise<void> {
+    await this.userOperationsService.deleteById(userId, id);
   }
 }

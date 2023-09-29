@@ -4,7 +4,9 @@ import {Role, RoleRelations, UserTenant, UserView} from '../models';
 import { UserTenantDataSourceName } from '../keys';
 import {UserTenantRepository} from './user-tenant.repository';
 import {UserViewRepository} from './user-view.repository';
+import { tenantGuard } from '@sourceloop/core';
 
+@tenantGuard()
 export class RoleRepository extends DefaultCrudRepository<
   Role,
   typeof Role.prototype.id,

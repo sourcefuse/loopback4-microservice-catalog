@@ -21,8 +21,10 @@ import {Tenant} from '../models';
 import {TenantRepository} from '../repositories';
 import { authenticate, STRATEGY } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-import { PermissionKey } from '../enums';
+import { PermissionKey, STATUS_CODE } from '../enums';
 import { OPERATION_SECURITY_SPEC } from '@sourceloop/core';
+
+const baseUrl='/tenants';
 
 export class TenantController {
   constructor(
@@ -36,8 +38,8 @@ export class TenantController {
   @authorize({
     permissions: [PermissionKey.CreateTenant, PermissionKey.CreateTenantNum],
   })
-  @post('/tenants',{security:OPERATION_SECURITY_SPEC,responses:{}})
-  @response(200, {
+  @post(baseUrl,{security:OPERATION_SECURITY_SPEC,responses:{}})
+  @response(STATUS_CODE.OK, {
     description: 'Tenant model instance',
     content: {'application/json': {schema: getModelSchemaRef(Tenant)}},
   })
@@ -63,8 +65,8 @@ export class TenantController {
   @authorize({
     permissions: [PermissionKey.ViewTenant, PermissionKey.ViewTenantNum],
   })
-  @get('/tenants/count',{security:OPERATION_SECURITY_SPEC,responses:{}})
-  @response(200, {
+  @get(`${baseUrl}/count`,{security:OPERATION_SECURITY_SPEC,responses:{}})
+  @response(STATUS_CODE.OK, {
     description: 'Tenant model count',
     content: {'application/json': {schema: CountSchema}},
   })
@@ -80,8 +82,8 @@ export class TenantController {
   @authorize({
     permissions: [PermissionKey.ViewTenant, PermissionKey.ViewTenantNum],
   })
-  @get('/tenants',{security:OPERATION_SECURITY_SPEC,responses:{}})
-  @response(200, {
+  @get(baseUrl,{security:OPERATION_SECURITY_SPEC,responses:{}})
+  @response(STATUS_CODE.OK, {
     description: 'Array of Tenant model instances',
     content: {
       'application/json': {
@@ -105,8 +107,8 @@ export class TenantController {
   @authorize({
     permissions: [PermissionKey.UpdateTenant, PermissionKey.UpdateTenantNum],
   })
-  @patch('/tenants',{security:OPERATION_SECURITY_SPEC,responses:{}})
-  @response(200, {
+  @patch(baseUrl,{security:OPERATION_SECURITY_SPEC,responses:{}})
+  @response(STATUS_CODE.OK, {
     description: 'Tenant PATCH success count',
     content: {'application/json': {schema: CountSchema}},
   })
@@ -131,12 +133,10 @@ export class TenantController {
     permissions: [
       PermissionKey.ViewTenant,
       PermissionKey.ViewTenantNum,
-      PermissionKey.ViewOwnTenantNum,
-      PermissionKey.ViewOwnTenant,
     ],
   })
-  @get('/tenants/{id}',{security:OPERATION_SECURITY_SPEC,responses:{}})
-  @response(200, {
+  @get(`${baseUrl}/{id}`,{security:OPERATION_SECURITY_SPEC,responses:{}})
+  @response(STATUS_CODE.OK, {
     description: 'Tenant model instance',
     content: {
       'application/json': {
@@ -158,12 +158,10 @@ export class TenantController {
     permissions: [
       PermissionKey.UpdateTenant,
       PermissionKey.UpdateTenantNum,
-      PermissionKey.UpdateOwnTenantNum,
-      PermissionKey.UpdateOwnTenant,
     ],
   })
-  @patch('/tenants/{id}',{security:OPERATION_SECURITY_SPEC,responses:{}})
-  @response(204, {
+  @patch(`${baseUrl}/{id}`,{security:OPERATION_SECURITY_SPEC,responses:{}})
+  @response(STATUS_CODE.NO_CONTENT, {
     description: 'Tenant PATCH success',
   })
   async updateById(
@@ -187,12 +185,10 @@ export class TenantController {
     permissions: [
       PermissionKey.UpdateTenant,
       PermissionKey.UpdateTenantNum,
-      PermissionKey.UpdateOwnTenantNum,
-      PermissionKey.UpdateOwnTenant,
     ],
   })
-  @put('/tenants/{id}',{security:OPERATION_SECURITY_SPEC,responses:{}})
-  @response(204, {
+  @put(`${baseUrl}/{id}`,{security:OPERATION_SECURITY_SPEC,responses:{}})
+  @response(STATUS_CODE.NO_CONTENT, {
     description: 'Tenant PUT success',
   })
   async replaceById(
@@ -208,8 +204,8 @@ export class TenantController {
   @authorize({
     permissions: [PermissionKey.DeleteTenant, PermissionKey.DeleteTenantUser],
   })
-  @del('/tenants/{id}',{security:OPERATION_SECURITY_SPEC,responses:{}})
-  @response(204, {
+  @del(`${baseUrl}/{id}`,{security:OPERATION_SECURITY_SPEC,responses:{}})
+  @response(STATUS_CODE.NO_CONTENT, {
     description: 'Tenant DELETE success',
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {

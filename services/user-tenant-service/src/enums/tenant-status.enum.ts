@@ -2,7 +2,8 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-export const enum TenantStatus {
-  ACTIVE = 'ACTIVE',
-  INACTIVE = 'INACTIVE',
+export  enum TenantStatus {
+  ACTIVE = 1,
+  INACTIVE = 2,
+  PENDING=0
 }

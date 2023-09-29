@@ -19,15 +19,22 @@ import {
   Tenant,
   TenantConfig,
 } from '../models';
-import {TenantRepository} from '../repositories';
-import { OPERATION_SECURITY_SPEC } from '@sourceloop/core';
-import { authenticate, STRATEGY } from 'loopback4-authentication';
+import {TenantConfigRepository, TenantRepository} from '../repositories';
+import { IAuthUserWithPermissions, OPERATION_SECURITY_SPEC } from '@sourceloop/core';
+import { authenticate, AuthenticationBindings, STRATEGY } from 'loopback4-authentication';
 import { authorize } from 'loopback4-authorization';
-import { PermissionKey } from '../enums';
+import { PermissionKey, STATUS_CODE } from '../enums';
+import { inject, intercept } from '@loopback/core';
+import { UserTenantServiceKey } from '../keys';
+const baseUrl='/tenants/{id}/tenant-configs';
 
+@intercept(UserTenantServiceKey.TenantInterceptorInterceptor)
 export class TenantTenantConfigController {
   constructor(
     @repository(TenantRepository) protected tenantRepository: TenantRepository,
+    @repository(TenantConfigRepository) protected tenantConfigRepository: TenantConfigRepository,
+    @inject(AuthenticationBindings.CURRENT_USER)
+    private readonly currentUser: IAuthUserWithPermissions,
   ) { }
 
   @authenticate(STRATEGY.BEARER, {
@@ -36,10 +43,10 @@ export class TenantTenantConfigController {
   @authorize({
     permissions: [PermissionKey.ViewTenant, PermissionKey.ViewTenantNum],
   })
-  @get('/tenants/{id}/tenant-configs', {
+  @get(baseUrl, {
     security:OPERATION_SECURITY_SPEC,
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Array of Tenant has many TenantConfig',
         content: {
           'application/json': {
@@ -53,6 +60,7 @@ export class TenantTenantConfigController {
     @param.path.string('id') id: string,
     @param.query.object('filter') filter?: Filter<TenantConfig>,
   ): Promise<TenantConfig[]> {
+
     return this.tenantRepository.tenantConfigs(id).find(filter);
   }
 
@@ -62,10 +70,10 @@ export class TenantTenantConfigController {
   @authorize({
     permissions: [PermissionKey.CreateTenant, PermissionKey.CreateTenantNum],
   })
-  @post('/tenants/{id}/tenant-configs', {
+  @post(baseUrl, {
     security:OPERATION_SECURITY_SPEC,
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Tenant model instance',
         content: {'application/json': {schema: getModelSchemaRef(TenantConfig)}},
       },
@@ -78,14 +86,31 @@ export class TenantTenantConfigController {
         'application/json': {
           schema: getModelSchemaRef(TenantConfig, {
             title: 'NewTenantConfigInTenant',
-            exclude: ['id'],
-            optional: ['tenantId']
+            exclude: ['id','tenantId'],
           }),
         },
       },
     }) tenantConfig: Omit<TenantConfig, 'id'>,
   ): Promise<TenantConfig> {
-    return this.tenantRepository.tenantConfigs(id).create(tenantConfig);
+
+
+    if (this.currentUser.tenantId) {
+      tenantConfig.tenantId = this.currentUser.tenantId;
+    }
+    const configExists = await this.tenantConfigRepository.findOne({
+      where: {
+        tenantId: tenantConfig.tenantId,
+        configKey: tenantConfig.configKey,
+      },
+    });
+    if (configExists) {
+     await this.tenantConfigRepository.updateById(configExists.id, {
+        configValue: tenantConfig.configValue,
+      });
+      return tenantConfig;
+    }
+
+    return this.tenantConfigRepository.create(tenantConfig);
   }
 
   @authenticate(STRATEGY.BEARER, {
@@ -94,10 +119,10 @@ export class TenantTenantConfigController {
   @authorize({
     permissions: [PermissionKey.UpdateTenant, PermissionKey.UpdateTenantNum],
   })
-  @patch('/tenants/{id}/tenant-configs', {
+  @patch(baseUrl, {
     security:OPERATION_SECURITY_SPEC,
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Tenant.TenantConfig PATCH success count',
         content: {'application/json': {schema: CountSchema}},
       },
@@ -108,13 +133,18 @@ export class TenantTenantConfigController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(TenantConfig, {partial: true}),
+          schema: getModelSchemaRef(TenantConfig,{
+            title: 'NewTenantConfigInTenant',
+            exclude: ['id','tenantId'],
+            partial:true,
+          }),
         },
       },
     })
     tenantConfig: Partial<TenantConfig>,
     @param.query.object('where', getWhereSchemaFor(TenantConfig)) where?: Where<TenantConfig>,
   ): Promise<Count> {
+
     return this.tenantRepository.tenantConfigs(id).patch(tenantConfig, where);
   }
 
@@ -125,10 +155,10 @@ export class TenantTenantConfigController {
   @authorize({
     permissions: [PermissionKey.DeleteTenant, PermissionKey.DeleteTenantUser],
   })
-  @del('/tenants/{id}/tenant-configs', {
+  @del(baseUrl, {
     security:OPERATION_SECURITY_SPEC,
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Tenant.TenantConfig DELETE success count',
         content: {'application/json': {schema: CountSchema}},
       },

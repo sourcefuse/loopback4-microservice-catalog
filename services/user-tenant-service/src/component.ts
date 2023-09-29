@@ -11,15 +11,16 @@ import {
   ProviderMap,
 } from '@loopback/core';
 import {CoreComponent, TenantUtilitiesComponent} from '@sourceloop/core';
-import {UserTenantServiceComponentBindings} from './keys'
+import {UserTenantServiceComponentBindings, UserTenantServiceKey} from './keys'
 import {DEFAULT_USER_SERVICE_OPTIONS, UserTenantServiceComponentOptions} from './types';
 import { Class, Model, Repository } from '@loopback/repository';
-import { AuthClient, Role, Tenant, TenantConfig, User, UserCredentials, UserGroup, UserInvitation, UserLevelPermission, UserTenant, UserTenantPrefs, UserView } from './models';
-import { GroupController, GroupUserGroupController, RoleController, RoleUserTenantController, RoleUserViewController, TenantConfigTenantController, TenantController, TenantTenantConfigController, TenantUserController, TenantUserTenantController, UserController, UserCredentialsUserController, UserGroupController, UserGroupGroupController, UserGroupUserTenantController, UserInvitationUserTenantController, UserLevelPermissionUserTenantController, UserTenantController, UserTenantPrefsController, UserTenantPrefsUserTenantController, UserTenantRoleController, UserTenantTenantController, UserTenantUserController, UserTenantUserGroupController, UserTenantUserInvitationController, UserTenantUserLevelPermissionController, UserUserCredentialsController, UserUserTenantController, UserViewController } from './controllers';
+import { AuthClient, Role, Tenant, TenantConfig, User, UserCredentials, UserDto, UserGroup, UserInvitation, UserLevelPermission, UserTenant, UserTenantPrefs, UserView } from './models';
+import {  GroupUserController, TenantController, TenantGroupController, TenantRoleController, TenantTenantConfigController, TenantUserController, UserTenantController, UserTenantPrefsController, UserTenantUserGroupController, UserTenantUserLevelPermissionController } from './controllers';
 import { AuthClientRepository, GroupRepository, RoleRepository, TenantConfigRepository, TenantRepository, UserCredentialsRepository, UserGroupRepository, UserInvitationRepository, UserLevelPermissionRepository, UserRepository, UserTenantPrefsRepository, UserTenantRepository, UserViewRepository } from './repositories';
 import { Group } from './models/group.model';
-import { UserGroupService } from './services/user-group.service';
-import { UserGroupHelperService } from './services';
+import {  UserOperationsService, UserGroupService } from './services';
+import { GroupTenantInterceptor, TenantInterceptorInterceptor, UserTenantInterceptorInterceptor } from './interceptors';
+// import { GroupTenantInterceptor } from './interceptors';
 
 // Configure the binding for UserTenantServiceComponent
 @injectable({tags: {[ContextTags.KEY]: UserTenantServiceComponentBindings.COMPONENT}})
@@ -46,10 +47,13 @@ export class UserTenantServiceComponent implements Component {
   ) {
     this.bindings=[];
     this.application.component(CoreComponent);
-    this.application.bind('services.UserGroupService').toClass(UserGroupService);
-    this.application.bind('services.UserGroupHelperService').toClass(UserGroupHelperService);
-    // this.application.bind('services.UserOperationsService').toClass(UserOperationsService);
+    this.application.bind(UserTenantServiceKey.UserGroupService).toClass(UserGroupService);
+    this.application.bind(UserTenantServiceKey.UserOperationsService).toClass(UserOperationsService);
     this.application.component(TenantUtilitiesComponent);
+
+    this.application.bind(UserTenantServiceKey.GroupTenantInterceptor).toProvider(GroupTenantInterceptor);
+    this.application.bind(UserTenantServiceKey.TenantInterceptorInterceptor).toProvider(TenantInterceptorInterceptor);
+    this.application.bind(UserTenantServiceKey.UserTenantInterceptorInterceptor).toProvider(UserTenantInterceptorInterceptor);
     this.models=[
       Role,
       UserTenant,
@@ -63,38 +67,20 @@ export class UserTenantServiceComponent implements Component {
       UserLevelPermission,
       UserInvitation,
       UserTenantPrefs,
-      AuthClient
+      AuthClient,
+      UserDto
     ];
     this.controllers=[
-      RoleController,
-      RoleUserTenantController,
+      TenantRoleController,
       TenantController,
       UserTenantController,
-      TenantUserTenantController,
-      GroupUserGroupController,
-      GroupController,
+      GroupUserController,
       TenantTenantConfigController,
-      RoleUserViewController,
-      TenantConfigTenantController,
-      UserGroupController,
-      UserGroupGroupController,
-      UserGroupUserTenantController,
+      TenantGroupController,
       TenantUserController,
       UserTenantPrefsController,
-      UserController,
-      UserCredentialsUserController,
-      UserTenantRoleController,
-      UserTenantUserController,
-      UserUserTenantController,
-      UserTenantTenantController,
-      UserUserCredentialsController,
-      UserInvitationUserTenantController,
-      UserTenantUserInvitationController,
       UserTenantUserGroupController,
       UserTenantUserLevelPermissionController,
-      UserTenantPrefsUserTenantController,
-      UserLevelPermissionUserTenantController,
-      UserViewController
     ];
     this.repositories=[
       RoleRepository,

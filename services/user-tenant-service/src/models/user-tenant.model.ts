@@ -11,16 +11,6 @@ import {Tenant, TenantWithRelations} from './tenant.model';
 import {Role} from './role.model';
 import {UserInvitation} from './user-invitation.model';
 
-// import {
-//   Role,
-//   Tenant,
-//   TenantWithRelations,
-//   User,
-//   UserLevelPermission,
-//   UserWithRelations,
-// } from './';
-// import {UserGroup, UserGroupWithRelations} from './user-group.model';
-
 @model({
   name: 'user_tenants',
 })
@@ -97,11 +87,3 @@ export interface UserTenantRelations {
 }
 
 export type UserTenantWithRelations = UserTenant & UserTenantRelations;
-
-
-//user-tenant-role.controller.ts
-// user-tenant-tenant.controller.ts
-// user-tenant-user.controller.ts
-// user-tenant-user-group.controller.ts
-// user-tenant-user-level-permission.controller.ts
-// user-tenant-user-invitation.controller.ts

@@ -4,7 +4,6 @@
 // https://opensource.org/licenses/MIT
 import { hasMany, model, property, hasOne} from '@loopback/repository';
 import { UserModifiableEntity } from '@sourceloop/core';
-import { RoleType } from '../enums';
 
 import { UserTenant, UserTenantRelations } from './user-tenant.model';
 import {UserView} from './user-view.model';
@@ -27,18 +26,27 @@ export class Role extends UserModifiableEntity<Role> {
 
   @property({
     type: 'number',
-    required: true,
     name: 'role_type',
     jsonSchema: {
       maximum: 15,
       minimum: 0,
     },
   })
-  roleType: RoleType;
+  roleType?: number;
 
   @property({
+    type: 'string'
+  })
+  description?: string;
+
+  
+  @property({
+  
     type: 'array',
     itemType: 'string',
+    postgresql:{
+      dataType:'varchar[]'
+    }
   })
   permissions?: string[];
 
@@ -46,17 +54,29 @@ export class Role extends UserModifiableEntity<Role> {
     name: 'allowed_clients',
     type: 'array',
     itemType: 'string',
+    postgresql:{
+      dataType:'varchar[]'
+    }
   })
   allowedClients?: string[];
 
-  @hasMany(() => UserTenant,{keyTo:'roleId'})
+
+  @property({
+    type: 'string',
+    name:'tenant_id',
+    required:true
+  })
+  tenantId: string;
+
+  @hasMany(() => UserTenant, {keyTo: 'roleId'})
   userTenants: UserTenant[];
 
-  @hasOne(() => UserView, {keyFrom:'createdBy',keyTo: 'id'})
+  @hasOne(() => UserView, {keyFrom: 'createdBy', keyTo: 'id'})
   createdByUser?: UserView;
 
-  @hasOne(() => UserView, { keyFrom: 'modifiedBy', keyTo: 'id' })
+  @hasOne(() => UserView, {keyFrom: 'modifiedBy', keyTo: 'id'})
   modifiedByUser?: UserView;
+
 }
 
 export interface RoleRelations {

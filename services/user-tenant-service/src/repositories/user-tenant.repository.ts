@@ -8,8 +8,7 @@ import {UserRepository} from './user.repository';
 import {TenantRepository} from './tenant.repository';
 import {RoleRepository} from './role.repository';
 import {UserInvitationRepository} from './user-invitation.repository';
-import { IAuthUserWithPermissions, tenantGuard } from '@sourceloop/core';
-import { AuthenticationBindings } from 'loopback4-authentication';
+import {  tenantGuard } from '@sourceloop/core';
 
 @tenantGuard()
 export class UserTenantRepository extends DefaultCrudRepository<
@@ -45,8 +44,6 @@ export class UserTenantRepository extends DefaultCrudRepository<
     protected roleRepositoryGetter: Getter<RoleRepository>, 
     @repository.getter('UserInvitationRepository') 
     protected userInvitationRepositoryGetter: Getter<UserInvitationRepository>,
-    @inject.getter(AuthenticationBindings.CURRENT_USER)
-    getCurrentUser: Getter<IAuthUserWithPermissions>,
   ) {
     super(UserTenant, dataSource);
     this.userInvitations = this.createHasManyRepositoryFactoryFor('userInvitations', userInvitationRepositoryGetter,);

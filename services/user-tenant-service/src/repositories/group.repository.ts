@@ -1,10 +1,11 @@
 import {inject, Getter} from '@loopback/core';
 import {DefaultCrudRepository, juggler, repository, HasManyRepositoryFactory} from '@loopback/repository';
-import {DbDataSource} from '../datasources';
 import {Group, GroupRelations, UserGroup} from '../models';
 import { UserTenantDataSourceName } from '../keys';
 import {UserGroupRepository} from './user-group.repository';
+import { tenantGuard } from '@sourceloop/core';
 
+@tenantGuard()
 export class GroupRepository extends DefaultCrudRepository<
   Group,
   typeof Group.prototype.id,

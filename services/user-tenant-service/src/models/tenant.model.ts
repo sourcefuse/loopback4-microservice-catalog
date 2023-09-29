@@ -12,6 +12,8 @@ import {
   UserTenantWithRelations,
 } from '../models';
 import {User} from './user.model';
+import {Role} from './role.model';
+import {Group} from './group.model';
 
 @model({
   name: 'tenants',
@@ -84,6 +86,12 @@ export class Tenant extends UserModifiableEntity<Tenant> {
 
   @hasMany(() => User, {keyTo: 'defaultTenantId'})
   users: User[];
+
+  @hasMany(() => Role,{keyTo: 'tenantId'})
+  roles: Role[];
+
+  @hasMany(() => Group,{keyTo:'tenantId'})
+  groups: Group[];
 }
 
 export interface TenantRelations {

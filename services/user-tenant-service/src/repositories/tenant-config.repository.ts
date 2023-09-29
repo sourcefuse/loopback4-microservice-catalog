@@ -3,7 +3,9 @@ import {DefaultCrudRepository, juggler, repository, BelongsToAccessor} from '@lo
 import {TenantConfig, TenantConfigRelations, Tenant} from '../models';
 import { UserTenantDataSourceName } from '../keys';
 import {TenantRepository} from './tenant.repository';
+import { tenantGuard } from '@sourceloop/core';
 
+@tenantGuard()
 export class TenantConfigRepository extends DefaultCrudRepository<
   TenantConfig,
   typeof TenantConfig.prototype.id,

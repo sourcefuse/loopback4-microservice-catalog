@@ -11,3 +11,4 @@ export * from './auth-client.model';
 export * from './user-level-permission.model';
 export * from './user-tenant-prefs.model';
 export * from './user-invitation.model';
+export * from './user-dto.model';

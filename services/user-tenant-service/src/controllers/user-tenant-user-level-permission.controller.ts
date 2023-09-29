@@ -10,6 +10,7 @@ import {
   get,
   getModelSchemaRef,
   getWhereSchemaFor,
+  HttpErrors,
   param,
   patch,
   post,
@@ -20,14 +21,21 @@ import {
   UserLevelPermission,
 } from '../models';
 import {UserTenantRepository} from '../repositories';
-import { OPERATION_SECURITY_SPEC } from '@sourceloop/core';
-import { authenticate, STRATEGY } from 'loopback4-authentication';
+import { IAuthUserWithPermissions, OPERATION_SECURITY_SPEC } from '@sourceloop/core';
+import { authenticate, AuthenticationBindings, STRATEGY } from 'loopback4-authentication';
 import { authorize } from 'loopback4-authorization';
-import { PermissionKey } from '../enums';
+import { PermissionKey, STATUS_CODE } from '../enums';
+import { inject, intercept } from '@loopback/core';
+import { UserTenantServiceKey } from '../keys';
 
+const baseUrl='/user-tenants/{id}/user-level-permissions';
+
+@intercept(UserTenantServiceKey.UserTenantInterceptorInterceptor)
 export class UserTenantUserLevelPermissionController {
   constructor(
     @repository(UserTenantRepository) protected userTenantRepository: UserTenantRepository,
+    @inject(AuthenticationBindings.CURRENT_USER)
+    private readonly currentUser: IAuthUserWithPermissions,
   ) { }
 
   @authenticate(STRATEGY.BEARER, {
@@ -38,10 +46,10 @@ export class UserTenantUserLevelPermissionController {
       PermissionKey.ViewUserTenant,
     ],
   })
-  @get('/user-tenants/{id}/user-level-permissions', {
+  @get(baseUrl, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'Array of UserTenant has many UserLevelPermission',
         content: {
           'application/json': {
@@ -55,6 +63,7 @@ export class UserTenantUserLevelPermissionController {
     @param.path.string('id') id: string,
     @param.query.object('filter') filter?: Filter<UserLevelPermission>,
   ): Promise<UserLevelPermission[]> {
+
     return this.userTenantRepository.userLevelPermissions(id).find(filter);
   }
 
@@ -66,10 +75,10 @@ export class UserTenantUserLevelPermissionController {
       PermissionKey.CreateUserTenant,PermissionKey.CreateUserPermissions
     ],
   })
-  @post('/user-tenants/{id}/user-level-permissions', {
+  @post(baseUrl, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'UserTenant model instance',
         content: {'application/json': {schema: getModelSchemaRef(UserLevelPermission)}},
       },
@@ -89,6 +98,9 @@ export class UserTenantUserLevelPermissionController {
       },
     }) userLevelPermission: Omit<UserLevelPermission, 'id'>,
   ): Promise<UserLevelPermission> {
+    if(id===this.currentUser.userTenantId){
+      throw new HttpErrors.Forbidden('user can not change its own permission')
+    }
     return this.userTenantRepository.userLevelPermissions(id).create(userLevelPermission);
   }
 
@@ -101,10 +113,10 @@ export class UserTenantUserLevelPermissionController {
       PermissionKey.UpdateUserTenant,PermissionKey.UpdateUserPermissions
     ],
   })
-  @patch('/user-tenants/{id}/user-level-permissions', {
+  @patch(baseUrl, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'UserTenant.UserLevelPermission PATCH success count',
         content: {'application/json': {schema: CountSchema}},
       },
@@ -122,6 +134,9 @@ export class UserTenantUserLevelPermissionController {
     userLevelPermission: Partial<UserLevelPermission>,
     @param.query.object('where', getWhereSchemaFor(UserLevelPermission)) where?: Where<UserLevelPermission>,
   ): Promise<Count> {
+    if(id===this.currentUser.userTenantId){
+      throw new HttpErrors.Forbidden('user can not change its own permission')
+    }
     return this.userTenantRepository.userLevelPermissions(id).patch(userLevelPermission, where);
   }
 
@@ -133,10 +148,10 @@ export class UserTenantUserLevelPermissionController {
       PermissionKey.DeleteUserTenant
     ],
   })
-  @del('/user-tenants/{id}/user-level-permissions', {
+  @del(baseUrl, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
-      '200': {
+      [STATUS_CODE.OK]: {
         description: 'UserTenant.UserLevelPermission DELETE success count',
         content: {'application/json': {schema: CountSchema}},
       },
@@ -146,6 +161,10 @@ export class UserTenantUserLevelPermissionController {
     @param.path.string('id') id: string,
     @param.query.object('where', getWhereSchemaFor(UserLevelPermission)) where?: Where<UserLevelPermission>,
   ): Promise<Count> {
+
+    if(id===this.currentUser.userTenantId){
+      throw new HttpErrors.Forbidden('user can not change its own permission')
+    }
     return this.userTenantRepository.userLevelPermissions(id).delete(where);
   }
 }
