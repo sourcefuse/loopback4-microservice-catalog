@@ -1,6 +1,6 @@
 # sourceloop-cli
 
-This is a `sourceloop` based cli that provides commands to scaffold a monorepo, add extensiona, facades and microservices to it.
+This is a `sourceloop` based cli that provides commands to scaffold a monorepo, add extensions, facades and microservices to it.
 
 ## Building
 
@@ -75,8 +75,14 @@ OPTIONS
   -a, --applicationClassName=applicationClassName  Class name of the service you want to deploy
   -d, --dir=dir                                    Name of the dir to store arc-cdk files
   -i, --iac=(lambda)                               iac for the service
+
+  -o, --overwriteDockerfile                        Overwrite the existing Dockerfile for Lambda deployment (if it
+                                                   exists)?
+
   -p, --packageJsonName=packageJsonName            Package name for arc-cdk
+
   -r, --relativePathToApp=relativePathToApp        Relative path to the service you want to deploy
+
   --help                                           show manual pages
 ```
 

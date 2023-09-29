@@ -57,6 +57,7 @@ export interface CdkOptions extends Generator.GeneratorOptions {
   packageJsonName?: string;
   applicationClassName?: string;
   relativePathToApp?: string;
+  overwriteDockerfile?: boolean;
 }
 
 export type PromptFunction = (questions: Question[]) => Promise<AnyObject>;

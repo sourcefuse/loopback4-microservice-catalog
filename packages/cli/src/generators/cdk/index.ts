@@ -36,6 +36,10 @@ type RemoteConfig = {
    * The tag of the repository to reference.
    */
   tag: string;
+  /**
+   * The name of the directory that hosts the arc-cdk templates.
+   */
+  templateDir: string;
 };
 
 /**
@@ -51,6 +55,14 @@ type IacConfig = {
    * The file that contains the main stack configuration for the specific IAC.
    */
   mainStackFile: string;
+  /**
+   * An object that holds environment variables to be included in the stack.
+   * These variables are typically used to configure resources in the stack.
+   *
+   * Example:
+   * in lambda stack its name is lambdaEnvVariables
+   */
+  iacEnvObjectName: string;
 };
 
 type LambdaConfig = IacConfig & {
@@ -69,15 +81,17 @@ const filesToKeep: string[] = [];
 
 export default class CdkGenerator extends BaseGenerator<CdkOptions> {
   private remoteConfig: RemoteConfig = {
-    owner: 'Yogi-Vishwas',
-    repo: 'arc-cdk-template',
-    tag: '0.2.3',
+    owner: 'sourcefuse',
+    repo: 'arc-lambda',
+    tag: '1.2.0',
+    templateDir: 'arc-cdk-templates',
   };
   private [IacList.LAMBDA]: LambdaConfig = {
     envSchemaFile: '.env.schema',
     mainStackFile: 'src/main.ts',
     handlerFile: 'lambda.ts',
-    dockerFile: 'Dockerfile.lambda',
+    dockerFile: 'Dockerfile',
+    iacEnvObjectName: 'lambdaEnvVariables',
   };
 
   initializing() {
@@ -91,7 +105,7 @@ export default class CdkGenerator extends BaseGenerator<CdkOptions> {
       this.options.dir = 'cdk';
     }
     if (!this.options.packageJsonName) {
-      this.options.packageJsonName = `cdktf`;
+      this.options.packageJsonName = `arc-cdktf`;
     }
     if (!this.options.iac) {
       throw new Error(
@@ -117,15 +131,15 @@ export default class CdkGenerator extends BaseGenerator<CdkOptions> {
       return filesToKeep.some(reqPath => filePath.startsWith(reqPath));
     };
 
-    const {owner, repo, tag} = this.remoteConfig;
+    const {owner, repo, tag, templateDir: dir} = this.remoteConfig;
     /**
      * When the tar file is downloaded and extracted it creates a dir structure like
      * ${repo}-${tag}
-     *    |
-     *    | -- ${iac}
-     *  so let's say if we choose iac as lambda we need to keep ${repo}-${tag}/${iac} files.
+     *    | -- arc-cdk-templates
+     *            | -- ${iac}
+     *  so let's say if we choose iac as lambda we need to keep ${repo}-${tag}/arc-cdk-templates/${iac} files.
      */
-    filesToKeep.push(`${repo}-${tag}/${this.options.iac!}`);
+    filesToKeep.push(`${repo}-${tag}/${dir}/${this.options.iac!}`);
 
     const url = `https://github.com/${owner}/${repo}/archive/refs/tags/${tag}.tar.gz`;
     const outputDir = this.options.dir;
@@ -137,11 +151,11 @@ export default class CdkGenerator extends BaseGenerator<CdkOptions> {
 
       const response = await fetch(url);
       /**
-       * We strip 2 leading path segments from file names to match the structure
-       * ${repo}-${tag}/${iac} and avoid creating an unnecessary subdirectory
+       * We strip 3 leading path segments from file names to match the structure
+       * ${repo}-${tag}/arc-cdk-templates/${iac} and avoid creating an unnecessary subdirectory
        * inside the specified output directory (${dir}).
        */
-      const stripLeadingPathSegments = 2;
+      const stripLeadingPathSegments = 3;
 
       if (response.ok) {
         await new Promise<void>((resolve, reject) => {
@@ -205,7 +219,7 @@ export default class CdkGenerator extends BaseGenerator<CdkOptions> {
           (this[this.options.iac!] as LambdaConfig).handlerFile
         }`,
       ),
-      'app_class_name_placeholder',
+      '{{app_class_name_placeholder}}',
       this.options.applicationClassName!,
     );
 
@@ -215,7 +229,7 @@ export default class CdkGenerator extends BaseGenerator<CdkOptions> {
           (this[this.options.iac!] as LambdaConfig).handlerFile
         }`,
       ),
-      'app_import_placeholder',
+      '{{app_import_placeholder}}',
       appImport,
     );
   }
@@ -223,7 +237,7 @@ export default class CdkGenerator extends BaseGenerator<CdkOptions> {
   async updatePackageJsonName() {
     await this._updateFile(
       this.destinationPath(`${this.options.dir}/package.json`),
-      'package_json_name_placeholder',
+      '{{package_json_name_placeholder}}',
       this.options.packageJsonName!,
     );
   }
@@ -250,7 +264,9 @@ export default class CdkGenerator extends BaseGenerator<CdkOptions> {
           }`,
         ),
       );
-      const dec = sourcefile!.getVariableDeclaration('lambdaEnvVar');
+      const dec = sourcefile!.getVariableDeclaration(
+        (this[this.options.iac!] as IacConfig).iacEnvObjectName,
+      );
       if (dec) {
         const objectLiteralExpression =
           dec.getInitializer() as ObjectLiteralExpression;
@@ -283,28 +299,21 @@ export default class CdkGenerator extends BaseGenerator<CdkOptions> {
   }
 
   async writing() {
-    const deps = {
-      devDependencies: {
-        '@types/aws-lambda': '^8.10.119',
-        '@types/i18n': '^0.13.6',
+    const packageJsonContent = await readFile(
+      `${this.options.dir}/package.json`,
+      {
+        encoding: 'utf-8',
       },
-      dependencies: {
-        '@vendia/serverless-express': '^4.10.4',
-        i18n: '^0.15.1',
-      },
-    };
-
-    await this._addDependencies(this.destinationPath('package.json'), deps);
+    );
+    const dependencies =
+      JSON.parse(packageJsonContent).config.templateDependencies;
+    await this._addDependencies(
+      this.destinationPath('package.json'),
+      dependencies,
+    );
   }
 
-  install() {
-    this.log('Installing project dependencies...');
-    this.spawnCommandSync('npm', ['install'], {
-      cwd: this.destinationPath(this.options.dir!),
-    });
-  }
-
-  async end() {
+  async moveFiles() {
     // We need to move lambda.ts alongside application.ts
     // and Dockerfile.lambda to the root
     if (this.options.iac === IacList.LAMBDA) {
@@ -314,10 +323,24 @@ export default class CdkGenerator extends BaseGenerator<CdkOptions> {
         .handlerFile;
       const directory = this.options.dir;
 
-      await this._moveFile(
-        this.destinationPath(`${directory}/${dockerFileName}`),
-        this.destinationPath(dockerFileName!),
-      );
+      // if user permits to overwrite, Overwrite Dockerfile
+      // else create Dockerfile.lambda
+      if (this.options.overwriteDockerfile) {
+        await this._moveFile(
+          this.destinationPath(`${directory}/${dockerFileName}`),
+          this.destinationPath(dockerFileName!),
+        );
+      } else {
+        await this._moveFile(
+          this.destinationPath(`${directory}/${dockerFileName}`),
+          this.destinationPath(`${dockerFileName}.lambda`),
+        );
+        this.log(
+          chalk.yellow.bold(
+            'Note: When deploying your Lambda, ensure that you rename "Dockerfile.lambda" to "Dockerfile".',
+          ),
+        );
+      }
 
       await this._moveFile(
         this.destinationPath(`${directory}/${lambdaFileName}`),
@@ -326,8 +349,21 @@ export default class CdkGenerator extends BaseGenerator<CdkOptions> {
         ),
       );
     }
+  }
 
-    const {owner, repo, tag} = this.remoteConfig;
+  install() {
+    this.log('Installing project dependencies...');
+    this.spawnCommandSync('npm', ['install'], {
+      cwd: this.destinationRoot(),
+    });
+
+    this.spawnCommandSync('npm', ['install'], {
+      cwd: this.destinationPath(this.options.dir!),
+    });
+  }
+
+  async end() {
+    const {owner, repo, templateDir: dir} = this.remoteConfig;
     this.log(`
 ${chalk.green("🚀 Hooray! You're all set to launch your app.")}
 Next steps:
@@ -344,7 +380,7 @@ ${chalk.green('Happy Deploying! 🚀')}
 For more information or if you encounter any errors, please refer to the ${chalk.blue(
       'README',
     )} at:
-${chalk.blue(`https://github.com/${owner}/${repo}/blob/${tag}/README.md`)}
+${chalk.blue(`https://github.com/${owner}/${repo}/blob/main/${dir}/README.md`)}
 `);
   }
 
@@ -398,7 +434,7 @@ ${chalk.blue(`https://github.com/${owner}/${repo}/blob/${tag}/README.md`)}
       );
 
       if (matchingFiles.length === 0) {
-        console.warn(chalk.yellow('No .env file found in the directory.'));
+        this.log(chalk.yellow('No .env file found in the directory.'));
       }
 
       for (const preferredFile of preferenceOrder) {

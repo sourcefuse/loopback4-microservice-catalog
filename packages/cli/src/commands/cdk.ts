@@ -51,6 +51,13 @@ export class Cdk extends Base<CdkOptions> {
       required: false,
       default: this.getDefaultAppPath(),
     }),
+    overwriteDockerfile: flags.boolean({
+      name: 'overwriteDockerfile',
+      char: 'o',
+      description:
+        'Overwrite the existing Dockerfile for Lambda deployment (if it exists)?',
+      required: false,
+    }),
   };
 
   static getDefaultAppClassName() {
