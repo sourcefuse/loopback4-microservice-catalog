@@ -12,6 +12,8 @@ export class BearerTokenVerifyProvider
 {
   value(): VerifyFunction.BearerFn {
     return async (token: string) => {
+      // return bearer fn
+
       return verify(token, 'task-Service-Secret', {
         issuer: 'sf',
       }) as IAuthUserWithPermissions;
