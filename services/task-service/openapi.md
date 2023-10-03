@@ -46,6 +46,7 @@ const inputBody = '{
 }';
 const headers = {
   'Content-Type':'application/json',
+  'Accept':'application/json',
   'Authorization':'Bearer {access-token}'
 };
 
@@ -72,6 +73,7 @@ const inputBody = {
 };
 const headers = {
   'Content-Type':'application/json',
+  'Accept':'application/json',
   'Authorization':'Bearer {access-token}'
 };
 
@@ -93,7 +95,7 @@ fetch('/api-keys',
 
 | Permissions |
 | ------- |
-| APIAdmin   |
+| 4   |
 
 > Body parameter
 
@@ -111,10 +113,22 @@ fetch('/api-keys',
 |---|---|---|---|---|
 |body|body|[ClientApp](#schemaclientapp)|false|none|
 
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "apiKey": "string",
+  "apiSecret": "string"
+}
+```
+
 <h3 id="apikeycontroller.generateapikeys-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Generated API keys|[ApiKeyExcluding_id_](#schemaapikeyexcluding_id_)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -142,7 +156,7 @@ const headers = {
   'Accept':'application/json'
 };
 
-fetch('/event-queue/enqueue-event',
+fetch('/event-queue/enqueue',
 {
   method: 'POST',
   body: inputBody,
@@ -170,7 +184,7 @@ const headers = {
   'Accept':'application/json'
 };
 
-fetch('/event-queue/enqueue-event',
+fetch('/event-queue/enqueue',
 {
   method: 'POST',
   body: JSON.stringify(inputBody),
@@ -184,11 +198,11 @@ fetch('/event-queue/enqueue-event',
 
 ```
 
-`POST /event-queue/enqueue-event`
+`POST /event-queue/enqueue`
 
 | Permissions |
 | ------- |
-| AddToQueue   |
+| 3   |
 
 > Body parameter
 
@@ -246,7 +260,7 @@ const headers = {
   'Accept':'application/json'
 };
 
-fetch('/event-queue/health-check',
+fetch('/event-queue/ping',
 {
   method: 'GET',
 
@@ -267,7 +281,7 @@ const headers = {
   'Accept':'application/json'
 };
 
-fetch('/event-queue/health-check',
+fetch('/event-queue/ping',
 {
   method: 'GET',
 
@@ -281,7 +295,7 @@ fetch('/event-queue/health-check',
 
 ```
 
-`GET /event-queue/health-check`
+`GET /event-queue/ping`
 
 > Example responses
 
@@ -304,114 +318,6 @@ fetch('/event-queue/health-check',
 This operation does not require authentication
 </aside>
 
-## EventQueueController.startListening
-
-<a id="opIdEventQueueController.startListening"></a>
-
-> Code samples
-
-```javascript
-
-fetch('/event-queue/start-listening',
-{
-  method: 'GET'
-
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-fetch('/event-queue/start-listening',
-{
-  method: 'GET'
-
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /event-queue/start-listening`
-
-| Permissions |
-| ------- |
-| StartListening   |
-
-<h3 id="eventqueuecontroller.startlistening-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Started listening to events|None|
-|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Failed to start listening to events|None|
-
-<aside class="success">
-This operation does not require authentication
-</aside>
-
-## EventQueueController.stopListening
-
-<a id="opIdEventQueueController.stopListening"></a>
-
-> Code samples
-
-```javascript
-
-fetch('/event-queue/stop-listening',
-{
-  method: 'GET'
-
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-fetch('/event-queue/stop-listening',
-{
-  method: 'GET'
-
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /event-queue/stop-listening`
-
-| Permissions |
-| ------- |
-| StopListening   |
-
-<h3 id="eventqueuecontroller.stoplistening-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Stopped listening to events|None|
-|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Failed to stop listening to events|None|
-
-<aside class="success">
-This operation does not require authentication
-</aside>
-
 <h1 id="bpmn-service-eventscontroller">EventsController</h1>
 
 ## EventsController.mapTaskToWorkflow
@@ -422,11 +328,16 @@ This operation does not require authentication
 
 ```javascript
 const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
   "id": "string",
   "eventKey": "string",
-  "workflowKey": "string",
-  "createdBy": "string",
-  "modifiedBy": "string"
+  "workflowKey": "string"
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -450,11 +361,16 @@ fetch('/events/mapping',
 ```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
   "id": "string",
   "eventKey": "string",
-  "workflowKey": "string",
-  "createdBy": "string",
-  "modifiedBy": "string"
+  "workflowKey": "string"
 };
 const headers = {
   'Content-Type':'application/json',
@@ -481,11 +397,16 @@ fetch('/events/mapping',
 
 ```json
 {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
   "id": "string",
   "eventKey": "string",
-  "workflowKey": "string",
-  "createdBy": "string",
-  "modifiedBy": "string"
+  "workflowKey": "string"
 }
 ```
 
@@ -1668,6 +1589,30 @@ TaskWorkFlowMapping
 |workflowKey|string|true|none|An identifier for a particular workflow|
 |taskKey|string|true|none|An identifier for a particular task within an event|
 
+<h2 id="tocS_ApiKeyExcluding_id_">ApiKeyExcluding_id_</h2>
+<!-- backwards compatibility -->
+<a id="schemaapikeyexcluding_id_"></a>
+<a id="schema_ApiKeyExcluding_id_"></a>
+<a id="tocSapikeyexcluding_id_"></a>
+<a id="tocsapikeyexcluding_id_"></a>
+
+```json
+{
+  "apiKey": "string",
+  "apiSecret": "string"
+}
+
+```
+
+ApiKeyExcluding_id_
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|apiKey|string|true|none|API key generated by the task service|
+|apiSecret|string|true|none|API secret generated by the task service|
+
 <h2 id="tocS_ClientApp">ClientApp</h2>
 <!-- backwards compatibility -->
 <a id="schemaclientapp"></a>
@@ -1729,11 +1674,16 @@ ClientAppDTO
 
 ```json
 {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
   "id": "string",
   "eventKey": "string",
-  "workflowKey": "string",
-  "createdBy": "string",
-  "modifiedBy": "string"
+  "workflowKey": "string"
 }
 
 ```
@@ -1744,11 +1694,16 @@ EventWorkflowMapping
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
 |id|string|false|none|none|
 |eventKey|string|true|none|An identifier for a particular event queued by a service or a user|
 |workflowKey|string|true|none|An identifier for a particular workflow|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
 
 <h2 id="tocS_workflows.ScopeFilter">workflows.ScopeFilter</h2>
 <!-- backwards compatibility -->
