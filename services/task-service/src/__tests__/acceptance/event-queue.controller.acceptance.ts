@@ -1,7 +1,6 @@
 import {Client, expect} from '@loopback/testlab';
 import {setupApplication} from '../helper';
 import {TaskServiceApplication} from '../../application';
-import {samplePayload} from '../data';
 import * as jwt from 'jsonwebtoken';
 
 const testUser = {
@@ -32,18 +31,4 @@ describe('EventQueueController', () => {
     const response = await client.post('/event-queue/enqueue').expect(401);
     expect(response).to.have.property('error');
   });
-
-  // it('enqueueEvent successfully', async () => {
-  //   const eventPayload = {
-  //     ...samplePayload,
-  //   };
-
-  //   TODO: will add a proper test case by mocking AWS
-
-  //   await client
-  //     .post('/event-queue/enqueue')
-  //     .set('authorization', `Bearer ${token}`)
-  //     .send(eventPayload)
-  //     .expect(204); // No Content status
-  // });
 });
