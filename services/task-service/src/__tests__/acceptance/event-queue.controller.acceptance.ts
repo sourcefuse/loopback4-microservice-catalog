@@ -1,19 +1,6 @@
 import {Client, expect} from '@loopback/testlab';
 import {setupApplication} from '../helper';
 import {TaskServiceApplication} from '../../application';
-import * as jwt from 'jsonwebtoken';
-
-const testUser = {
-  id: 1,
-  username: 'test_user',
-  password: 'test_pass',
-  permissions: ['1', '2', '3', '4'],
-};
-
-const token = jwt.sign(testUser, 'task-Service-Secret', {
-  expiresIn: 180000,
-  issuer: 'sf',
-});
 
 describe('EventQueueController', () => {
   let app: TaskServiceApplication;
