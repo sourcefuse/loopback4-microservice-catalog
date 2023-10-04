@@ -2,21 +2,18 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Constructor, inject} from '@loopback/core';
-import {AuditDbSourceName} from '@sourceloop/audit-log';
-
-import {AuditLog} from '../../models';
+import {inject} from '@loopback/core';
 import {
   SequelizeCrudRepository,
   SequelizeDataSource,
 } from '@loopback/sequelize';
-import {AuditLogExtraLogicMixin} from '../audit-log.repository';
+import {AuditDbSourceName} from '@sourceloop/audit-log';
+import {AuditLog} from '../../models';
 
-export class AuditLogRepository extends AuditLogExtraLogicMixin<
+export class AuditLogRepository extends SequelizeCrudRepository<
   AuditLog,
-  typeof AuditLog.prototype.id,
-  Constructor<SequelizeCrudRepository<AuditLog, typeof AuditLog.prototype.id>>
->(SequelizeCrudRepository) {
+  typeof AuditLog.prototype.id
+> {
   constructor(
     @inject(`datasources.${AuditDbSourceName}`) dataSource: SequelizeDataSource,
   ) {

@@ -2,14 +2,15 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {SequelizeAuditServiceApplication} from '../fixtures/sequelize.application';
 import {DefaultCrudRepository} from '@loopback/repository';
+import {ControllerInstance} from '@loopback/rest';
 import {expect} from '@loopback/testlab';
 import {AuditController} from '../../controllers/sequelize';
-import {AuditLogRepository as SequelzieAuditLogRepository} from '../../sequelize.index';
+import {MappingLogRepository} from '../../repositories/sequelize';
+import {JobRepository} from '../../repositories/sequelize/job.repository';
+import {AuditLogRepository as SequelizeAuditLogRepository} from '../../sequelize.index';
+import {SequelizeAuditServiceApplication} from '../fixtures/sequelize.application';
 import {getBaseClass} from '../utils/getBaseClass';
-import {ControllerInstance} from '@loopback/rest';
-
 let sequelizeApp: SequelizeAuditServiceApplication;
 
 const setup = async () => {
@@ -37,7 +38,7 @@ describe('Sequelize Component', () => {
       }
     });
 
-    it('Uses the sequelize compatible repository in controllers', async () => {
+    it('Uses the sequelize compatible repository in  Audit controller', async () => {
       /**
        * Bound controller classes in `sequelizeApp` (rest app using sequelize component bound)
        */
@@ -49,8 +50,18 @@ describe('Sequelize Component', () => {
       const expectedBindings = [
         {
           controller: AuditController,
-          repository: SequelzieAuditLogRepository,
+          repository: SequelizeAuditLogRepository,
           prop: 'auditLogRepository',
+        },
+        {
+          controller: AuditController,
+          repository: JobRepository,
+          prop: 'jobRepository',
+        },
+        {
+          controller: AuditController,
+          repository: MappingLogRepository,
+          prop: 'mappingLogRepository',
         },
       ];
 

@@ -1,9 +1,8 @@
-import {injectable, BindingScope, Provider, inject} from '@loopback/core';
-import {AuditLogExportFn, ExportHandlerFn} from '../types';
-import * as XLSX from 'xlsx';
+import {BindingScope, Provider, inject, injectable} from '@loopback/core';
 import {AnyObject} from '@loopback/repository';
+import * as XLSX from 'xlsx';
 import {ExportHandlerServiceBindings} from '../keys';
-
+import {AuditLogExportFn, ExportHandlerFn} from '../types';
 @injectable({scope: BindingScope.TRANSIENT})
 export class AuditLogExportProvider implements Provider<AuditLogExportFn> {
   constructor(

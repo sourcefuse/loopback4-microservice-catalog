@@ -29,28 +29,26 @@ import {authorize} from 'loopback4-authorization';
 import {inject, service} from '@loopback/core';
 import {FileStatusKey} from '../enums/file-status-key.enum';
 import {OperationKey} from '../enums/operation-key.enum';
-import {inject, service} from '@loopback/core';
-import {FileStatusKey} from '../enums/file-status-key.enum';
-import {OperationKey} from '../enums/operation-key.enum';
 import {PermissionKey} from '../enums/permission-key.enum';
 import {
   AuditLogExportServiceBindings,
   ColumnBuilderServiceBindings,
   ExportToCsvServiceBindings,
 } from '../keys';
-import {
-  AuditLogExportServiceBindings,
-  ColumnBuilderServiceBindings,
-  ExportToCsvServiceBindings,
-} from '../keys';
+
 import {AuditLog, CustomFilter, Job, MappingLog} from '../models';
 import {
   AuditLogRepository,
   JobRepository,
   MappingLogRepository,
 } from '../repositories';
-import {AuditLogRepository as SequelizeAuditLogRepository} from '../repositories/sequelize';
+import {
+  AuditLogRepository as AuditLogSequelizeRepository,
+  JobRepository as JobSequelizeRepository,
+  MappingLogRepository as MappingLogSequelizeRepository,
+} from '../repositories/sequelize';
 import {JobProcessingService} from '../services';
+import {JobProcessingService as JobProcessingSequelizeService} from '../services/sequelize';
 import {
   ArchiveOutput,
   AuditLogExportFn,
@@ -59,19 +57,22 @@ import {
   ExportToCsvFn,
 } from '../types';
 import {constructWhere} from '../utils/construct-where';
-
 const basePath = '/audit-logs';
 
 export class AuditController {
   constructor(
     @repository(AuditLogRepository)
-    public auditLogRepository: AuditLogRepository | SequelizeAuditLogRepository,
+    public auditLogRepository: AuditLogRepository | AuditLogSequelizeRepository,
     @repository(JobRepository)
-    public jobRepository: JobRepository,
+    public jobRepository: JobRepository | JobSequelizeRepository,
     @service(JobProcessingService)
-    public jobProcessingService: JobProcessingService,
+    public jobProcessingService:
+      | JobProcessingService
+      | JobProcessingSequelizeService,
     @repository(MappingLogRepository)
-    public mappingLogRepository: MappingLogRepository,
+    public mappingLogRepository:
+      | MappingLogRepository
+      | MappingLogSequelizeRepository,
     @inject(ExportToCsvServiceBindings.EXPORT_LOGS)
     public exportToCsv: ExportToCsvFn,
     @inject(AuditLogExportServiceBindings.EXPORT_AUDIT_LOGS)

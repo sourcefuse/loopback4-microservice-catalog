@@ -12,6 +12,11 @@ import {
 import {CustomFilter, MappingLog} from '../models';
 import {JobRepository, MappingLogRepository} from '../repositories';
 import {
+  AuditLogRepository as AuditLogSequelizeRepository,
+  JobRepository as JobSequelizeRepository,
+  MappingLogRepository as MappingLogSequelizeRepository,
+} from '../repositories/sequelize';
+import {
   AuditLogExportFn,
   ColumnBuilderFn,
   QuerySelectedFilesFn,
@@ -27,11 +32,13 @@ export class JobProcessingService {
     @inject(ColumnBuilderServiceBindings.COLUMN_BUILDER)
     public columnBuilder: ColumnBuilderFn,
     @repository(MappingLogRepository)
-    public mappingLogRepository: MappingLogRepository,
+    public mappingLogRepository:
+      | MappingLogRepository
+      | MappingLogSequelizeRepository,
     @repository(JobRepository)
-    public jobRepository: JobRepository,
+    public jobRepository: JobRepository | JobSequelizeRepository,
     @repository(AuditLogRepository)
-    public auditLogRepository: AuditLogRepository,
+    public auditLogRepository: AuditLogRepository | AuditLogSequelizeRepository,
   ) {}
 
   async start(jobId: string) {
@@ -69,8 +76,10 @@ export class JobProcessingService {
           (customFilter.actedOn == null ||
             filterUsed.actedOn == null ||
             filterUsed.actedOn === customFilter.actedOn) &&
-          (customFilter.entityId ??
-            filterUsed.entityId ??
+          // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+          (customFilter.entityId ||
+            // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+            filterUsed.entityId ||
             filterUsed.entityId === customFilter.entityId) &&
           (customFilter.date == null ||
             filterUsed.date == null ||

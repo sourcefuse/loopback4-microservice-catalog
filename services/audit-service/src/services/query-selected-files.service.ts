@@ -1,15 +1,15 @@
 import {
-  injectable,
   BindingScope,
-  Provider,
   CoreBindings,
+  Provider,
   inject,
+  injectable,
 } from '@loopback/core';
-import AWS from 'aws-sdk';
-import {AuditLog} from '@sourceloop/audit-log';
 import {Filter, defineCrudRepositoryClass, juggler} from '@loopback/repository';
-import {AuditServiceApplication} from '../application';
+import {AuditLog} from '@sourceloop/audit-log';
+import AWS from 'aws-sdk';
 import csvtojson from 'csvtojson';
+import {AuditServiceApplication} from '../application';
 import {QuerySelectedFilesFn} from '../types';
 
 @injectable({scope: BindingScope.TRANSIENT})
@@ -18,7 +18,7 @@ export class QuerySelectedFilesProvider
 {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
-    private application: AuditServiceApplication,
+    protected application: AuditServiceApplication,
   ) {}
 
   value(): QuerySelectedFilesFn {
