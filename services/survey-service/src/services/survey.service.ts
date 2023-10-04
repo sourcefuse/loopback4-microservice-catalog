@@ -260,11 +260,11 @@ export class SurveyService {
     }
 
     //CASE 5 -> start date cannot be present with status draft
-    // if (survey?.startDate && survey?.status === SurveyStatus.DRAFT) {
-    //   throw new HttpErrors.BadRequest(
-    //     ErrorKeys.SurveyCannotBeActivatedInDraftState,
-    //   );
-    // }
+    if (survey?.startDate && survey?.status === SurveyStatus.DRAFT) {
+      throw new HttpErrors.BadRequest(
+        ErrorKeys.SurveyCannotBeActivatedInDraftState,
+      );
+    }
 
     this.checkPastDateValidation(survey);
   }
