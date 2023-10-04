@@ -25,7 +25,7 @@
     "openapi-spec": "node ./dist/openapi-spec",
     "apidocs": "./node_modules/.bin/widdershins --search false --language_tabs 'javascript:JavaScript:request' 'javascript--nodejs:Node.JS' --summary openapi.json -o openapi.md",
     "pretest": "npm run build",
-    "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
+    "test": "lb-mocha --allow-console-logs --exit \"dist/__tests__\"",
     "coverage": "nyc npm run test",
     "posttest": "npm run lint",
     "prepublishOnly": "npm run test",
