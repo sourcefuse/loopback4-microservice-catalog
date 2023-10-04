@@ -1,0 +1,1064 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Bpmn Service",
+    "version": "1.0.0",
+    "description": "a Reusable, customizable and workflow based task service",
+    "contact": {
+      "name": "SourceFuse"
+    }
+  },
+  "paths": {
+    "/api-keys": {
+      "post": {
+        "x-controller-name": "ApiKeyController",
+        "x-operation-name": "generateApiKeys",
+        "tags": [
+          "ApiKeyController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Generated API keys",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiKeyExcluding_id_"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 4   |\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientApp"
+              }
+            }
+          }
+        },
+        "operationId": "ApiKeyController.generateApiKeys"
+      }
+    },
+    "/event-queue/enqueue": {
+      "post": {
+        "x-controller-name": "EventQueueController",
+        "x-operation-name": "enqueueEvent",
+        "tags": [
+          "EventQueueController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Enque model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Event"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Event enqueued successfully"
+          },
+          "500": {
+            "description": "Failed to enqueue event"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 3   |\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Event"
+              }
+            }
+          }
+        },
+        "operationId": "EventQueueController.enqueueEvent"
+      }
+    },
+    "/event-queue/ping": {
+      "get": {
+        "x-controller-name": "EventQueueController",
+        "x-operation-name": "healthCheck",
+        "tags": [
+          "EventQueueController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Health check response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to perform health check"
+          }
+        },
+        "description": "",
+        "operationId": "EventQueueController.healthCheck"
+      }
+    },
+    "/events/mapping": {
+      "post": {
+        "x-controller-name": "EventsController",
+        "x-operation-name": "mapTaskToWorkflow",
+        "tags": [
+          "EventsController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {},
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventWorkflowMapping"
+              }
+            }
+          }
+        },
+        "operationId": "EventsController.mapTaskToWorkflow"
+      }
+    },
+    "/tasks/mapping": {
+      "post": {
+        "x-controller-name": "TaskServiceController",
+        "x-operation-name": "mapTaskToWorkflow",
+        "tags": [
+          "TaskServiceController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {},
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskWorkFlowMapping"
+              }
+            }
+          }
+        },
+        "operationId": "TaskServiceController.mapTaskToWorkflow"
+      }
+    },
+    "/tasks/subscribe": {
+      "post": {
+        "x-controller-name": "TaskServiceController",
+        "x-operation-name": "subscribeToWebhook",
+        "tags": [
+          "TaskServiceController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {},
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubscriberDTO"
+              }
+            }
+          }
+        },
+        "operationId": "TaskServiceController.subscribeToWebhook"
+      }
+    },
+    "/tasks": {
+      "post": {
+        "x-controller-name": "TaskServiceController",
+        "x-operation-name": "updateTask",
+        "tags": [
+          "TaskServiceController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {},
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskDto"
+              }
+            }
+          }
+        },
+        "operationId": "TaskServiceController.updateTask"
+      }
+    },
+    "/workflows/{id}/execute": {
+      "post": {
+        "x-controller-name": "WorkflowController",
+        "x-operation-name": "startWorkflow",
+        "tags": [
+          "WorkflowController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Workflow instance"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateWorkflow   |\n| 2   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExecuteWorkflowDto"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "WorkflowController.startWorkflow"
+      }
+    },
+    "/workflows/{id}/version/{version}": {
+      "delete": {
+        "x-controller-name": "WorkflowController",
+        "x-operation-name": "deleteVersionById",
+        "tags": [
+          "WorkflowController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Workflow DELETE success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteWorkflow   |\n| 4   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "schema": {
+              "type": "number"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "WorkflowController.deleteVersionById"
+      }
+    },
+    "/workflows/{id}": {
+      "patch": {
+        "x-controller-name": "WorkflowController",
+        "x-operation-name": "updateById",
+        "tags": [
+          "WorkflowController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Workflow PATCH success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateWorkflow   |\n| 3   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkflowDtoPartial"
+              }
+            }
+          }
+        },
+        "operationId": "WorkflowController.updateById"
+      },
+      "get": {
+        "x-controller-name": "WorkflowController",
+        "x-operation-name": "count",
+        "tags": [
+          "WorkflowController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Workflow Model"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewWorkflow   |\n| 1   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "WorkflowController.count"
+      },
+      "delete": {
+        "x-controller-name": "WorkflowController",
+        "x-operation-name": "deleteById",
+        "tags": [
+          "WorkflowController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Workflow DELETE success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteWorkflow   |\n| 4   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "WorkflowController.deleteById"
+      }
+    },
+    "/workflows": {
+      "post": {
+        "x-controller-name": "WorkflowController",
+        "x-operation-name": "create",
+        "tags": [
+          "WorkflowController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Workflow model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Workflow"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateWorkflow   |\n| 2   |\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewWorkflow"
+              }
+            }
+          }
+        },
+        "operationId": "WorkflowController.create"
+      },
+      "get": {
+        "x-controller-name": "WorkflowController",
+        "x-operation-name": "find",
+        "tags": [
+          "WorkflowController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of Workflow model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Workflow"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewWorkflow   |\n| 1   |\n",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/workflows.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "WorkflowController.find"
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "Workflow": {
+        "title": "Workflow",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "workflowVersion": {
+            "type": "number",
+            "description": "Last deployed workflow version"
+          },
+          "externalIdentifier": {
+            "type": "string",
+            "description": "The key that is used to identify the workflow in the respective workflow engine."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the workflow"
+          },
+          "provider": {
+            "type": "string",
+            "description": "Provider could be the engine that will handle the workflow - camunda, zeebe, etc"
+          },
+          "inputSchema": {
+            "type": "object",
+            "description": "Schema used for validation during workflow execution"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the workflow"
+          }
+        },
+        "required": [
+          "workflowVersion",
+          "externalIdentifier",
+          "provider",
+          "inputSchema"
+        ],
+        "additionalProperties": false
+      },
+      "NewWorkflow": {
+        "title": "NewWorkflow",
+        "type": "object",
+        "description": "(tsType: WorkflowDto, schemaOptions: { title: 'NewWorkflow' })",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "bpmnFile": {
+            "type": "string"
+          },
+          "inputSchema": {
+            "type": "object"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "bpmnFile",
+          "inputSchema"
+        ],
+        "additionalProperties": true,
+        "x-typescript-type": "WorkflowDto"
+      },
+      "WorkflowDto": {
+        "title": "WorkflowDto",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "bpmnFile": {
+            "type": "string"
+          },
+          "inputSchema": {
+            "type": "object"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "bpmnFile",
+          "inputSchema"
+        ],
+        "additionalProperties": true
+      },
+      "WorkflowDtoPartial": {
+        "title": "WorkflowDtoPartial",
+        "type": "object",
+        "description": "(tsType: Partial<WorkflowDto>, schemaOptions: { partial: true })",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "bpmnFile": {
+            "type": "string"
+          },
+          "inputSchema": {
+            "type": "object"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true,
+        "x-typescript-type": "Partial<WorkflowDto>"
+      },
+      "ExecuteWorkflowDto": {
+        "title": "ExecuteWorkflowDto",
+        "type": "object",
+        "properties": {
+          "workflowVersion": {
+            "type": "number"
+          },
+          "input": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "input"
+        ],
+        "additionalProperties": false
+      },
+      "Event": {
+        "title": "Event",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string",
+            "description": "An identifier for a particular event queued by a service or a user"
+          },
+          "description": {
+            "type": "string",
+            "description": "A short description of an event"
+          },
+          "source": {
+            "type": "string",
+            "description": "Origination of an event- can be a service or from a user"
+          },
+          "payload": {
+            "type": "object",
+            "description": "A dynamic object that contains information to be run in the workers of a bpmn engine"
+          }
+        },
+        "required": [
+          "key",
+          "description",
+          "source",
+          "payload"
+        ],
+        "additionalProperties": false
+      },
+      "TaskDto": {
+        "title": "TaskDto",
+        "type": "object",
+        "properties": {
+          "taskKey": {
+            "type": "string",
+            "description": "An identifier for a particular task within an event"
+          },
+          "payload": {
+            "type": "object",
+            "description": "A dynamic object that contains information to be run in the user task of a bpmn engine"
+          },
+          "id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "taskKey"
+        ],
+        "additionalProperties": false
+      },
+      "SubscriberDTO": {
+        "title": "SubscriberDTO",
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "url of the regsiterer who is subscribed to the webhook"
+          },
+          "key": {
+            "type": "string",
+            "description": "identifier of an event key or task key"
+          },
+          "id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "url",
+          "key"
+        ],
+        "additionalProperties": false
+      },
+      "TaskWorkFlowMapping": {
+        "title": "TaskWorkFlowMapping",
+        "type": "object",
+        "description": "(tsType: TaskWorkflows, schemaOptions: { title: 'TaskWorkFlowMapping' })",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "workflowKey": {
+            "type": "string",
+            "description": "An identifier for a particular workflow"
+          },
+          "taskKey": {
+            "type": "string",
+            "description": "An identifier for a particular task within an event"
+          }
+        },
+        "required": [
+          "workflowKey",
+          "taskKey"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "TaskWorkflows"
+      },
+      "ApiKeyExcluding_id_": {
+        "title": "ApiKeyExcluding_id_",
+        "type": "object",
+        "description": "(tsType: Omit<ApiKey, 'id'>, schemaOptions: { exclude: [ 'id' ] })",
+        "properties": {
+          "apiKey": {
+            "type": "string",
+            "description": "API key generated by the task service"
+          },
+          "apiSecret": {
+            "type": "string",
+            "description": "API secret generated by the task service"
+          }
+        },
+        "required": [
+          "apiKey",
+          "apiSecret"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<ApiKey, 'id'>"
+      },
+      "ClientApp": {
+        "title": "ClientApp",
+        "type": "object",
+        "description": "(tsType: ClientAppDTO, schemaOptions: { title: 'ClientApp' })",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "An identifier for a client"
+          },
+          "secret": {
+            "type": "string",
+            "description": "An extra layer of auth"
+          },
+          "id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "key"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "ClientAppDTO"
+      },
+      "ClientAppDTO": {
+        "title": "ClientAppDTO",
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "An identifier for a client"
+          },
+          "secret": {
+            "type": "string",
+            "description": "An extra layer of auth"
+          },
+          "id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "key"
+        ],
+        "additionalProperties": false
+      },
+      "EventWorkflowMapping": {
+        "title": "EventWorkflowMapping",
+        "type": "object",
+        "description": "(tsType: EventWorkflows, schemaOptions: { title: 'EventWorkflowMapping' })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "eventKey": {
+            "type": "string",
+            "description": "An identifier for a particular event queued by a service or a user"
+          },
+          "workflowKey": {
+            "type": "string",
+            "description": "An identifier for a particular workflow"
+          }
+        },
+        "required": [
+          "eventKey",
+          "workflowKey"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "EventWorkflows"
+      },
+      "workflows.ScopeFilter": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "uniqueItems": true
+              }
+            ]
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true
+            }
+          }
+        },
+        "additionalProperties": false,
+        "title": "workflows.ScopeFilter"
+      },
+      "workflows.IncludeFilter.Items": {
+        "title": "workflows.IncludeFilter.Items",
+        "type": "object",
+        "properties": {
+          "relation": {
+            "type": "string",
+            "enum": [
+              "workflowVersions"
+            ]
+          },
+          "scope": {
+            "$ref": "#/components/schemas/workflows.ScopeFilter"
+          }
+        }
+      },
+      "workflows.Filter": {
+        "type": "object",
+        "title": "workflows.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "title": "workflows.WhereFilter",
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "workflowVersion": {
+                    "type": "boolean"
+                  },
+                  "externalIdentifier": {
+                    "type": "boolean"
+                  },
+                  "name": {
+                    "type": "boolean"
+                  },
+                  "provider": {
+                    "type": "boolean"
+                  },
+                  "inputSchema": {
+                    "type": "boolean"
+                  },
+                  "description": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
+                    "id",
+                    "workflowVersion",
+                    "externalIdentifier",
+                    "name",
+                    "provider",
+                    "inputSchema",
+                    "description"
+                  ],
+                  "example": "deleted"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "workflows.Fields"
+          },
+          "include": {
+            "title": "workflows.IncludeFilter",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/workflows.IncludeFilter.Items"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<Workflow>"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ]
+}
