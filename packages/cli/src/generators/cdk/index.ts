@@ -142,11 +142,11 @@ export default class CdkGenerator extends BaseGenerator<CdkOptions> {
     filesToKeep.push(`${repo}-${tag}/${dir}/${this.options.iac!}`);
 
     const url = `https://github.com/${owner}/${repo}/archive/refs/tags/${tag}.tar.gz`;
-    const outputDir = this.options.dir;
+    const outputDir = this.options.dir!;
 
     try {
-      if (!existsSync(outputDir!)) {
-        mkdirSync(outputDir!, {recursive: true});
+      if (!existsSync(outputDir)) {
+        mkdirSync(outputDir, {recursive: true});
       }
 
       const response = await fetch(url);
@@ -318,7 +318,7 @@ export default class CdkGenerator extends BaseGenerator<CdkOptions> {
     // and Dockerfile.lambda to the root
     if (this.options.iac === IacList.LAMBDA) {
       const dockerFileName = (this[this.options.iac] as LambdaConfig)
-        .dockerFile;
+        .dockerFile!;
       const lambdaFileName = (this[this.options.iac] as LambdaConfig)
         .handlerFile;
       const directory = this.options.dir;
@@ -328,7 +328,7 @@ export default class CdkGenerator extends BaseGenerator<CdkOptions> {
       if (this.options.overwriteDockerfile) {
         await this._moveFile(
           this.destinationPath(`${directory}/${dockerFileName}`),
-          this.destinationPath(dockerFileName!),
+          this.destinationPath(dockerFileName),
         );
       } else {
         await this._moveFile(
@@ -549,6 +549,7 @@ ${chalk.blue(`https://github.com/${owner}/${repo}/blob/main/${dir}/README.md`)}
       devDependencies: Record<string, string>;
     },
   ) {
+    const JSON_INDENTATION = 2;
     try {
       const packageJsonContent = await readFile(packageJsonPath, {
         encoding: 'utf-8',
@@ -567,14 +568,14 @@ ${chalk.blue(`https://github.com/${owner}/${repo}/blob/main/${dir}/README.md`)}
 
       await writeFile(
         packageJsonPath,
-        JSON.stringify(parsedPackageJson, null, 2),
+        JSON.stringify(parsedPackageJson, null, JSON_INDENTATION),
       );
     } catch (error) {
       this.log.error(
         `Failed to add dependencies. Please add the following dependencies manually:\n${JSON.stringify(
           depsToAdd,
           null,
-          2,
+          JSON_INDENTATION,
         )}`,
       );
     }

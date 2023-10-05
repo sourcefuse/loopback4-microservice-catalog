@@ -10,6 +10,7 @@ import {join} from 'node:path';
 import {Project} from 'ts-morph';
 import {existsSync} from 'node:fs';
 
+const DEFAULT_APP_PATH = 'src/application.ts';
 export class Cdk extends Base<CdkOptions> {
   static description = 'add arc-cdk';
 
@@ -63,7 +64,7 @@ export class Cdk extends Base<CdkOptions> {
   static getDefaultAppClassName() {
     let appClassName: string | undefined = undefined;
     const currentDir = process.cwd();
-    const appPath = join(currentDir, 'src/application.ts');
+    const appPath = join(currentDir, DEFAULT_APP_PATH);
     const project = new Project();
     const sourcefile = project.addSourceFileAtPathIfExists(appPath);
     if (sourcefile) {
@@ -77,8 +78,8 @@ export class Cdk extends Base<CdkOptions> {
 
   static getDefaultAppPath() {
     let path: string | undefined = undefined;
-    if (existsSync('src/application.ts')) {
-      path = 'src/application.ts';
+    if (existsSync(DEFAULT_APP_PATH)) {
+      path = DEFAULT_APP_PATH;
     }
     return path;
   }
