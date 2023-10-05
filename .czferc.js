@@ -29,8 +29,6 @@ const scopes = [
   {name: 'core'},
   {name: 'cli'},
   {name: 'cache'},
-  {name: 'search-client'},
-  {name: 'user-onboarding'},
   {name: 'authentication-service'},
   {name: 'in-mail-service'},
   {name: 'notification-service'},
