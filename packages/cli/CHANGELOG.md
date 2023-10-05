@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.1.5 (2023-10-05)</small>
+
+* chore(cli): upgrade node version to 18 for sourceloop cli (#1707) ([7ab9a63](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7ab9a63)), closes [#1707](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1707) [#1706](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1706)
+* refactor(all-services): remove redundant `posttest` script (#1677) ([4b252cf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4b252cf)), closes [#1677](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1677) [#1657](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1657)
+* fix(cli):  lambda files should only be generated if opted for cdk (#1699) ([5ac0946](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5ac0946)), closes [#1699](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1699) [#1698](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1698)
+
+
+
+
+
 ## <small>4.1.4 (2023-09-01)</small>
 
 * refactor(all-services): fix sonar code smells (#1602) ([51f1cc3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/51f1cc3)), closes [#1602](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1602)

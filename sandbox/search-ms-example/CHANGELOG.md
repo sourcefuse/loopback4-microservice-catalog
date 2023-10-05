@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.6.18 (2023-10-05)</small>
+
+* refactor(all-services): remove redundant `posttest` script (#1677) ([4b252cf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4b252cf)), closes [#1677](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1677) [#1657](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1657)
+
+
+
+
+
 ## <small>0.6.17 (2023-09-01)</small>
 
 * refactor(all-services): fix sonar code smells (#1602) ([51f1cc3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/51f1cc3)), closes [#1602](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1602)

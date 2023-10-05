@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>6.0.22 (2023-10-05)</small>
+
+* refactor(all-services): remove redundant `posttest` script (#1677) ([4b252cf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4b252cf)), closes [#1677](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1677) [#1657](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1657)
+
+
+
+
+
 ## <small>6.0.21 (2023-09-01)</small>
 
 * [Snyk] Upgrade casbin from 5.26.1 to 5.26.2 (#1609) ([b63a4c8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b63a4c8)), closes [#1609](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1609)

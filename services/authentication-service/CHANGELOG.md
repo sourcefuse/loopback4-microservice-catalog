@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>11.2.6 (2023-10-05)</small>
+
+* refactor(all-services): remove redundant `posttest` script (#1677) ([4b252cf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4b252cf)), closes [#1677](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1677) [#1657](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1657)
+
+
+
+
+
 ## <small>11.2.5 (2023-09-01)</small>
 
 * fix(authentication-service): change saml redirect api endpoint  (#1608) ([21dca33](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/21dca33)), closes [#1608](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1608) [#1607](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1607) [#1607](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1607)

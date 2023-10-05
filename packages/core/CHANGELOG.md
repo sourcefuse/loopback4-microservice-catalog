@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 8.2.0 (2023-10-05)
+
+* refactor(all-services): remove redundant `posttest` script (#1677) ([4b252cf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4b252cf)), closes [#1677](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1677) [#1657](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1657)
+* feat(core): add ProxyBuilder component in core (#1680) ([24dd9c6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/24dd9c6)), closes [#1680](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1680) [#1679](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1679) [#1679](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1679)
+
+
+
+
+
 ## 8.1.0 (2023-09-01)
 
 * [Snyk] Upgrade tslib from 2.6.0 to 2.6.1 (#1606) ([f65b2d3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f65b2d3)), closes [#1606](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1606)

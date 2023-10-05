@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>5.0.20 (2023-10-05)</small>
+
+* refactor(all-services): remove redundant `posttest` script (#1677) ([4b252cf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4b252cf)), closes [#1677](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1677) [#1657](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1657)
+
+
+
+
+
 ## <small>5.0.19 (2023-09-01)</small>
 
 * [Snyk] Upgrade tslib from 2.6.0 to 2.6.1 (#1604) ([7a307f5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7a307f5)), closes [#1604](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1604)
