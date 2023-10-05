@@ -5,10 +5,6 @@
     "packages/cache",
     "packages/feature-toggle",
     "packages/custom-sf-changelog/",
-    "packages/user-onboarding/projects/user-onboarding-lib",
-    "packages/user-onboarding/projects/user-onboarding-element",
-    "packages/search/projects/search-lib",
-    "packages/search/projects/search-element",
     "services/*",
     "facades/*",
     "sandbox/**"
