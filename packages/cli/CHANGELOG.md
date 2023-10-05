@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.2.0 (2023-10-05)
+
+* feat(cli): add cdk command in cli (#1705) ([ffaeec4](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ffaeec4)), closes [#1705](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1705) [#1664](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1664) [#1664](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1664) [#1664](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1664)
+
+
+
+
+
 ## <small>4.1.5 (2023-10-05)</small>
 
 * chore(cli): upgrade node version to 18 for sourceloop cli (#1707) ([7ab9a63](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7ab9a63)), closes [#1707](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1707) [#1706](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1706)
