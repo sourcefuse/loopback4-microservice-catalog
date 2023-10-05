@@ -22,6 +22,10 @@ export enum DATASOURCES {
   MYSQL = 'mysql',
 }
 
+export enum IacList {
+  LAMBDA = 'lambda',
+}
+
 export type MigrationConnectors = 'pg' | 'mysql';
 export type DatasourceConnectors = 'postgresql' | 'mysql';
 export const MIGRATION_CONNECTORS: {

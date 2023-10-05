@@ -1,6 +1,6 @@
 # sourceloop-cli
 
-This is a `sourceloop` based cli that provides commands to scaffold a monorepo, add extensiona, facades and microservices to it.
+This is a `sourceloop` based cli that provides commands to scaffold a monorepo, add extensions, facades and microservices to it.
 
 ## Building
 
@@ -13,6 +13,7 @@ npm install @sourceloop/cli
 ## Usage
 
 <!-- usage -->
+
 ```sh-session
 $ npm install -g @sourceloop/cli
 $ sl COMMAND
@@ -24,17 +25,20 @@ USAGE
   $ sl COMMAND
 ...
 ```
+
 <!-- usagestop -->
 
 ## Commands
 
 <!-- commands -->
-* [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
-* [`sl extension [NAME]`](#sl-extension-name)
-* [`sl help [COMMAND]`](#sl-help-command)
-* [`sl microservice [NAME]`](#sl-microservice-name)
-* [`sl scaffold [NAME]`](#sl-scaffold-name)
-* [`sl update`](#sl-update)
+
+- [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
+- [`sl cdk`](#sl-cdk)
+- [`sl extension [NAME]`](#sl-extension-name)
+- [`sl help [COMMAND]`](#sl-help-command)
+- [`sl microservice [NAME]`](#sl-microservice-name)
+- [`sl scaffold [NAME]`](#sl-scaffold-name)
+- [`sl update`](#sl-update)
 
 ## `sl autocomplete [SHELL]`
 
@@ -58,6 +62,31 @@ EXAMPLES
 ```
 
 _See code: [@oclif/plugin-autocomplete](https://github.com/oclif/plugin-autocomplete/blob/v1.3.10/src/commands/autocomplete/index.ts)_
+
+## `sl cdk`
+
+add arc-cdk
+
+```
+USAGE
+  $ sl cdk
+
+OPTIONS
+  -a, --applicationClassName=applicationClassName  Class name of the service you want to deploy
+  -d, --dir=dir                                    Name of the dir to store arc-cdk files
+  -i, --iac=(lambda)                               iac for the service
+
+  -o, --overwriteDockerfile                        Overwrite the existing Dockerfile for Lambda deployment (if it
+                                                   exists)?
+
+  -p, --packageJsonName=packageJsonName            Package name for arc-cdk
+
+  -r, --relativePathToApp=relativePathToApp        Relative path to the service you want to deploy
+
+  --help                                           show manual pages
+```
+
+_See code: [src/commands/cdk.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v4.1.4/src/commands/cdk.ts)_
 
 ## `sl extension [NAME]`
 
@@ -175,4 +204,5 @@ OPTIONS
 ```
 
 _See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v4.1.5/src/commands/update.ts)_
+
 <!-- commandsstop -->
