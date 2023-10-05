@@ -1,7 +1,7 @@
 import {inject} from '@loopback/core';
 import {DefaultCrudRepository, juggler} from '@loopback/repository';
 import {AuthClient} from '../models';
-import { UserTenantDataSourceName } from '../keys';
+import {UserTenantDataSourceName} from '../keys';
 
 export class AuthClientRepository extends DefaultCrudRepository<
   AuthClient,
@@ -9,7 +9,7 @@ export class AuthClientRepository extends DefaultCrudRepository<
 > {
   constructor(
     @inject(`datasources.${UserTenantDataSourceName}`)
-    dataSource: juggler.DataSource, 
+    dataSource: juggler.DataSource,
   ) {
     super(AuthClient, dataSource);
   }

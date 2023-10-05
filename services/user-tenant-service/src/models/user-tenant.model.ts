@@ -45,8 +45,6 @@ export class UserTenant extends BaseEntity<UserTenant> implements IUserPrefs {
   )
   userId: string;
 
-
-
   @belongsTo(
     () => Tenant,
     {keyFrom: 'tenant_id', name: 'tenant'},
@@ -56,8 +54,6 @@ export class UserTenant extends BaseEntity<UserTenant> implements IUserPrefs {
     },
   )
   tenantId: string;
-
-
 
   @belongsTo(
     () => Role,
@@ -75,7 +71,7 @@ export class UserTenant extends BaseEntity<UserTenant> implements IUserPrefs {
   @hasMany(() => UserGroup, {keyTo: 'userTenantId'})
   userGroups: UserGroup[];
 
-  @hasMany(() => UserInvitation,{keyTo:'userTenantId'})
+  @hasMany(() => UserInvitation, {keyTo: 'userTenantId'})
   userInvitations: UserInvitation[];
 }
 

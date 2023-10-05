@@ -2,10 +2,10 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import { hasMany, model, property, hasOne} from '@loopback/repository';
-import { UserModifiableEntity } from '@sourceloop/core';
+import {hasMany, model, property, hasOne} from '@loopback/repository';
+import {UserModifiableEntity} from '@sourceloop/core';
 
-import { UserTenant, UserTenantRelations } from './user-tenant.model';
+import {UserTenant, UserTenantRelations} from './user-tenant.model';
 import {UserView} from './user-view.model';
 
 @model({
@@ -35,18 +35,16 @@ export class Role extends UserModifiableEntity<Role> {
   roleType?: number;
 
   @property({
-    type: 'string'
+    type: 'string',
   })
   description?: string;
 
-  
   @property({
-  
     type: 'array',
     itemType: 'string',
-    postgresql:{
-      dataType:'varchar[]'
-    }
+    postgresql: {
+      dataType: 'varchar[]',
+    },
   })
   permissions?: string[];
 
@@ -54,17 +52,16 @@ export class Role extends UserModifiableEntity<Role> {
     name: 'allowed_clients',
     type: 'array',
     itemType: 'string',
-    postgresql:{
-      dataType:'varchar[]'
-    }
+    postgresql: {
+      dataType: 'varchar[]',
+    },
   })
   allowedClients?: string[];
 
-
   @property({
     type: 'string',
-    name:'tenant_id',
-    required:true
+    name: 'tenant_id',
+    required: true,
   })
   tenantId: string;
 
@@ -76,7 +73,6 @@ export class Role extends UserModifiableEntity<Role> {
 
   @hasOne(() => UserView, {keyFrom: 'modifiedBy', keyTo: 'id'})
   modifiedByUser?: UserView;
-
 }
 
 export interface RoleRelations {

@@ -78,19 +78,19 @@ export class Tenant extends UserModifiableEntity<Tenant> {
   })
   country?: string;
 
-  @hasMany(() => TenantConfig,{keyTo: 'tenantId'})
+  @hasMany(() => TenantConfig, {keyTo: 'tenantId'})
   tenantConfigs: TenantConfig[];
 
-  @hasMany(() => UserTenant,{keyTo: 'tenantId'})
+  @hasMany(() => UserTenant, {keyTo: 'tenantId'})
   userTenants: UserTenant[];
 
   @hasMany(() => User, {keyTo: 'defaultTenantId'})
   users: User[];
 
-  @hasMany(() => Role,{keyTo: 'tenantId'})
+  @hasMany(() => Role, {keyTo: 'tenantId'})
   roles: Role[];
 
-  @hasMany(() => Group,{keyTo:'tenantId'})
+  @hasMany(() => Group, {keyTo: 'tenantId'})
   groups: Group[];
 }
 

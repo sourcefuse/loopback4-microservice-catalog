@@ -28,13 +28,14 @@ import {
 })
 export class User<T = DataObject<Model>>
   extends UserModifiableEntity<T & User>
-  implements IAuthUser {
-    @property({
-      type: 'string',
-      id: true,
-      generated: true,
-    })
-    id: string;
+  implements IAuthUser
+{
+  @property({
+    type: 'string',
+    id: true,
+    generated: true,
+  })
+  id: string;
 
   @property({
     type: 'string',
@@ -86,7 +87,6 @@ export class User<T = DataObject<Model>>
   })
   authClientIds?: string;
 
-
   @property({
     type: 'date',
     name: 'last_login',
@@ -117,8 +117,6 @@ export class User<T = DataObject<Model>>
   })
   dob?: Date;
 
-
-
   //Indexer property to allow additional data
   //eslint-disable-next-line @typescript-eslint/no-explicit-any
   [prop: string]: any; //NOSONAR
@@ -129,7 +127,7 @@ export class User<T = DataObject<Model>>
     {
       name: 'default_tenant_id',
       required: false,
-    }
+    },
   )
   defaultTenantId?: string;
 
@@ -138,7 +136,6 @@ export class User<T = DataObject<Model>>
 
   @hasMany(() => UserTenant, {keyTo: 'userId'})
   userTenants: UserTenant[];
-
 }
 
 export interface UserRelations {

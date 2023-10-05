@@ -19,17 +19,17 @@ import {
 } from '@loopback/rest';
 import {Tenant} from '../models';
 import {TenantRepository} from '../repositories';
-import { authenticate, STRATEGY } from 'loopback4-authentication';
+import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-import { PermissionKey, STATUS_CODE } from '../enums';
-import { OPERATION_SECURITY_SPEC } from '@sourceloop/core';
+import {PermissionKey, STATUS_CODE} from '../enums';
+import {OPERATION_SECURITY_SPEC} from '@sourceloop/core';
 
-const baseUrl='/tenants';
+const baseUrl = '/tenants';
 
 export class TenantController {
   constructor(
     @repository(TenantRepository)
-    public tenantRepository : TenantRepository,
+    public tenantRepository: TenantRepository,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {
@@ -38,7 +38,7 @@ export class TenantController {
   @authorize({
     permissions: [PermissionKey.CreateTenant, PermissionKey.CreateTenantNum],
   })
-  @post(baseUrl,{security:OPERATION_SECURITY_SPEC,responses:{}})
+  @post(baseUrl, {security: OPERATION_SECURITY_SPEC, responses: {}})
   @response(STATUS_CODE.OK, {
     description: 'Tenant model instance',
     content: {'application/json': {schema: getModelSchemaRef(Tenant)}},
@@ -65,14 +65,12 @@ export class TenantController {
   @authorize({
     permissions: [PermissionKey.ViewTenant, PermissionKey.ViewTenantNum],
   })
-  @get(`${baseUrl}/count`,{security:OPERATION_SECURITY_SPEC,responses:{}})
+  @get(`${baseUrl}/count`, {security: OPERATION_SECURITY_SPEC, responses: {}})
   @response(STATUS_CODE.OK, {
     description: 'Tenant model count',
     content: {'application/json': {schema: CountSchema}},
   })
-  async count(
-    @param.where(Tenant) where?: Where<Tenant>,
-  ): Promise<Count> {
+  async count(@param.where(Tenant) where?: Where<Tenant>): Promise<Count> {
     return this.tenantRepository.count(where);
   }
 
@@ -82,7 +80,7 @@ export class TenantController {
   @authorize({
     permissions: [PermissionKey.ViewTenant, PermissionKey.ViewTenantNum],
   })
-  @get(baseUrl,{security:OPERATION_SECURITY_SPEC,responses:{}})
+  @get(baseUrl, {security: OPERATION_SECURITY_SPEC, responses: {}})
   @response(STATUS_CODE.OK, {
     description: 'Array of Tenant model instances',
     content: {
@@ -94,20 +92,17 @@ export class TenantController {
       },
     },
   })
-  async find(
-    @param.filter(Tenant) filter?: Filter<Tenant>,
-  ): Promise<Tenant[]> {
+  async find(@param.filter(Tenant) filter?: Filter<Tenant>): Promise<Tenant[]> {
     return this.tenantRepository.find(filter);
   }
 
-  
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
   @authorize({
     permissions: [PermissionKey.UpdateTenant, PermissionKey.UpdateTenantNum],
   })
-  @patch(baseUrl,{security:OPERATION_SECURITY_SPEC,responses:{}})
+  @patch(baseUrl, {security: OPERATION_SECURITY_SPEC, responses: {}})
   @response(STATUS_CODE.OK, {
     description: 'Tenant PATCH success count',
     content: {'application/json': {schema: CountSchema}},
@@ -130,12 +125,9 @@ export class TenantController {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: [
-      PermissionKey.ViewTenant,
-      PermissionKey.ViewTenantNum,
-    ],
+    permissions: [PermissionKey.ViewTenant, PermissionKey.ViewTenantNum],
   })
-  @get(`${baseUrl}/{id}`,{security:OPERATION_SECURITY_SPEC,responses:{}})
+  @get(`${baseUrl}/{id}`, {security: OPERATION_SECURITY_SPEC, responses: {}})
   @response(STATUS_CODE.OK, {
     description: 'Tenant model instance',
     content: {
@@ -146,7 +138,8 @@ export class TenantController {
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(Tenant, {exclude: 'where'}) filter?: FilterExcludingWhere<Tenant>
+    @param.filter(Tenant, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Tenant>,
   ): Promise<Tenant> {
     return this.tenantRepository.findById(id, filter);
   }
@@ -155,12 +148,9 @@ export class TenantController {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: [
-      PermissionKey.UpdateTenant,
-      PermissionKey.UpdateTenantNum,
-    ],
+    permissions: [PermissionKey.UpdateTenant, PermissionKey.UpdateTenantNum],
   })
-  @patch(`${baseUrl}/{id}`,{security:OPERATION_SECURITY_SPEC,responses:{}})
+  @patch(`${baseUrl}/{id}`, {security: OPERATION_SECURITY_SPEC, responses: {}})
   @response(STATUS_CODE.NO_CONTENT, {
     description: 'Tenant PATCH success',
   })
@@ -182,12 +172,9 @@ export class TenantController {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: [
-      PermissionKey.UpdateTenant,
-      PermissionKey.UpdateTenantNum,
-    ],
+    permissions: [PermissionKey.UpdateTenant, PermissionKey.UpdateTenantNum],
   })
-  @put(`${baseUrl}/{id}`,{security:OPERATION_SECURITY_SPEC,responses:{}})
+  @put(`${baseUrl}/{id}`, {security: OPERATION_SECURITY_SPEC, responses: {}})
   @response(STATUS_CODE.NO_CONTENT, {
     description: 'Tenant PUT success',
   })
@@ -204,7 +191,7 @@ export class TenantController {
   @authorize({
     permissions: [PermissionKey.DeleteTenant, PermissionKey.DeleteTenantUser],
   })
-  @del(`${baseUrl}/{id}`,{security:OPERATION_SECURITY_SPEC,responses:{}})
+  @del(`${baseUrl}/{id}`, {security: OPERATION_SECURITY_SPEC, responses: {}})
   @response(STATUS_CODE.NO_CONTENT, {
     description: 'Tenant DELETE success',
   })

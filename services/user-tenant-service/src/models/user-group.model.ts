@@ -21,7 +21,6 @@ export class UserGroup extends UserModifiableEntity<UserGroup> {
   })
   id: string;
 
-
   @belongsTo(
     () => Group,
     {name: 'group'},
@@ -41,7 +40,6 @@ export class UserGroup extends UserModifiableEntity<UserGroup> {
     },
   )
   userTenantId: string;
-
 }
 
 export interface UserGroupRelations {
@@ -51,6 +49,6 @@ export interface UserGroupRelations {
 
 export type UserGroupWithRelations = UserGroup & UserGroupRelations;
 
-export class UserGroupProjection{
-  userTenantId:string;
+export class UserGroupProjection {
+  userTenantId: string;
 }

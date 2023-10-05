@@ -1,9 +1,5 @@
-import { Getter, inject, intercept } from '@loopback/core';
-import {
-  Filter,
-  Where,
-  repository,
-} from '@loopback/repository';
+import {Getter, inject, intercept} from '@loopback/core';
+import {Filter, Where, repository} from '@loopback/repository';
 import {
   HttpErrors,
   Request,
@@ -16,32 +12,37 @@ import {
   post,
   requestBody,
 } from '@loopback/rest';
-import { IAuthUserWithPermissions, OPERATION_SECURITY_SPEC } from '@sourceloop/core';
-import { AuthenticationBindings, STRATEGY, authenticate } from 'loopback4-authentication';
-import { authorize } from 'loopback4-authorization';
-import { PermissionKey, STATUS_CODE } from '../enums';
-import { UserTenantServiceKey } from '../keys';
 import {
-  Group,
-  UserGroup,
-} from '../models';
-import { GroupRepository, UserTenantRepository } from '../repositories';
-import { UserGroupService } from '../services';
+  IAuthUserWithPermissions,
+  OPERATION_SECURITY_SPEC,
+} from '@sourceloop/core';
+import {
+  AuthenticationBindings,
+  STRATEGY,
+  authenticate,
+} from 'loopback4-authentication';
+import {authorize} from 'loopback4-authorization';
+import {PermissionKey, STATUS_CODE} from '../enums';
+import {UserTenantServiceKey} from '../keys';
+import {Group, UserGroup} from '../models';
+import {GroupRepository, UserTenantRepository} from '../repositories';
+import {UserGroupService} from '../services';
 
-const baseUrl = "/groups/{id}/user";
-
+const baseUrl = '/groups/{id}/user';
 
 @intercept(UserTenantServiceKey.GroupTenantInterceptor)
 export class GroupUserController {
   constructor(
     @repository(GroupRepository) protected groupRepository: GroupRepository,
-    @repository(UserTenantRepository) protected userTenantRepository: UserTenantRepository,
+    @repository(UserTenantRepository)
+    protected userTenantRepository: UserTenantRepository,
     @inject(AuthenticationBindings.CURRENT_USER)
     private readonly currentUser: IAuthUserWithPermissions,
     @inject(UserTenantServiceKey.UserGroupService)
-    private readonly userGroupService: UserGroupService, @inject.getter(RestBindings.Http.REQUEST) private readonly getRequest: Getter<Request>,
-  ) { }
-
+    private readonly userGroupService: UserGroupService,
+    @inject.getter(RestBindings.Http.REQUEST)
+    private readonly getRequest: Getter<Request>,
+  ) {}
 
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
@@ -59,7 +60,7 @@ export class GroupUserController {
         description: 'Array of Group has many UserGroup',
         content: {
           'application/json': {
-            schema: { type: 'array', items: getModelSchemaRef(UserGroup) },
+            schema: {type: 'array', items: getModelSchemaRef(UserGroup)},
           },
         },
       },
@@ -86,7 +87,7 @@ export class GroupUserController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Group model instance',
-        content: { 'application/json': { schema: getModelSchemaRef(UserGroup) } },
+        content: {'application/json': {schema: getModelSchemaRef(UserGroup)}},
       },
     },
   })
@@ -101,12 +102,12 @@ export class GroupUserController {
           }),
         },
       },
-    }) userGroup: Omit<UserGroup, 'id'>,
+    })
+    userGroup: Omit<UserGroup, 'id'>,
   ): Promise<UserGroup> {
     userGroup.groupId = id ?? '';
     return this.userGroupService.create(userGroup);
   }
-
 
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
@@ -122,7 +123,11 @@ export class GroupUserController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Group model instance',
-        content: { 'application/json': { schema: { type: 'array', items: getModelSchemaRef(UserGroup) } } },
+        content: {
+          'application/json': {
+            schema: {type: 'array', items: getModelSchemaRef(UserGroup)},
+          },
+        },
       },
     },
   })
@@ -132,19 +137,22 @@ export class GroupUserController {
       content: {
         'application/json': {
           schema: {
-            type: 'array', items: getModelSchemaRef(UserGroup, {
+            type: 'array',
+            items: getModelSchemaRef(UserGroup, {
               title: 'NewUserGroupInGroup',
               exclude: ['id', 'groupId'],
-            })
+            }),
           },
         },
       },
-    }) userGroups: UserGroup[],
+    })
+    userGroups: UserGroup[],
   ): Promise<UserGroup[]> {
-    const userTenantIdArray = userGroups.map(userGroup => userGroup.userTenantId)
+    const userTenantIdArray = userGroups.map(
+      userGroup => userGroup.userTenantId,
+    );
     return this.userGroupService.createAll(userTenantIdArray, id ?? '');
   }
-
 
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
@@ -166,14 +174,15 @@ export class GroupUserController {
   async delete(
     @param.path.string('id') id: string,
     @param.path.string('userId') userId: string,
-    @param.query.object('where', getWhereSchemaFor(UserGroup)) where?: Where<UserGroup>,
+    @param.query.object('where', getWhereSchemaFor(UserGroup))
+    where?: Where<UserGroup>,
   ): Promise<void> {
     const userTenant = await this.userTenantRepository.findOne({
       where: {
         userId: userId,
-        tenantId: this.currentUser.tenantId
+        tenantId: this.currentUser.tenantId,
       },
-      limit: 1
+      limit: 1,
     });
     const userGroups = await this.groupRepository.userGroups(id).find({
       where: {
@@ -190,21 +199,15 @@ export class GroupUserController {
       throw new HttpErrors.Forbidden('Unable to find user group records');
     }
 
-
-    if (
-      userGroupRecord.userTenantId === this.currentUser.userTenantId
-    ) {
+    if (userGroupRecord.userTenantId === this.currentUser.userTenantId) {
       throw new HttpErrors.Forbidden(
         'An owner cannot remove himself as the owner',
       );
     }
 
-    await this.userGroupService.deleteById(userGroupId ?? "");
+    await this.userGroupService.deleteById(userGroupId ?? '');
     await this.groupRepository.updateById(id, {
       modifiedOn: new Date(),
     });
   }
-
 }
-
-

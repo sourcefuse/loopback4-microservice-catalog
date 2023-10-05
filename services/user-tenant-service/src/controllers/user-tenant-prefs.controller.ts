@@ -17,22 +17,28 @@ import {
 } from '@loopback/rest';
 import {UserTenantPrefs} from '../models';
 import {UserTenantPrefsRepository} from '../repositories';
-import { IAuthUserWithPermissions, OPERATION_SECURITY_SPEC } from '@sourceloop/core';
-import { authenticate, AuthenticationBindings, STRATEGY } from 'loopback4-authentication';
-import { authorize, AuthorizeErrorKeys } from 'loopback4-authorization';
-import { PermissionKey, STATUS_CODE } from '../enums';
-import { inject } from '@loopback/core';
+import {
+  IAuthUserWithPermissions,
+  OPERATION_SECURITY_SPEC,
+} from '@sourceloop/core';
+import {
+  authenticate,
+  AuthenticationBindings,
+  STRATEGY,
+} from 'loopback4-authentication';
+import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
+import {PermissionKey, STATUS_CODE} from '../enums';
+import {inject} from '@loopback/core';
 
-const baseUrl='/user-tenant-prefs';
+const baseUrl = '/user-tenant-prefs';
 
 export class UserTenantPrefsController {
   constructor(
     @repository(UserTenantPrefsRepository)
-    public userTenantPrefsRepository : UserTenantPrefsRepository,
+    public userTenantPrefsRepository: UserTenantPrefsRepository,
     @inject(AuthenticationBindings.CURRENT_USER)
     private readonly currentUser: IAuthUserWithPermissions,
   ) {}
-
 
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
@@ -43,7 +49,7 @@ export class UserTenantPrefsController {
       PermissionKey.CreateUserTenantPreferenceNum,
     ],
   })
-  @post(baseUrl,{security: OPERATION_SECURITY_SPEC,responses:{}})
+  @post(baseUrl, {security: OPERATION_SECURITY_SPEC, responses: {}})
   @response(STATUS_CODE.OK, {
     description: 'UserTenantPrefs model instance',
     content: {'application/json': {schema: getModelSchemaRef(UserTenantPrefs)}},
@@ -54,14 +60,13 @@ export class UserTenantPrefsController {
         'application/json': {
           schema: getModelSchemaRef(UserTenantPrefs, {
             title: 'NewUserTenantPrefs',
-            exclude: ['id','userTenantId'],
+            exclude: ['id', 'userTenantId'],
           }),
         },
       },
     })
     userTenantPrefs: Omit<UserTenantPrefs, 'id'>,
   ): Promise<UserTenantPrefs> {
-
     if (this.currentUser.userTenantId) {
       userTenantPrefs.userTenantId = this.currentUser.userTenantId;
     }
@@ -72,7 +77,7 @@ export class UserTenantPrefsController {
       },
     });
     if (prefExists) {
-     await this.userTenantPrefsRepository.updateById(prefExists.id, {
+      await this.userTenantPrefsRepository.updateById(prefExists.id, {
         configValue: userTenantPrefs.configValue,
       });
       return userTenantPrefs;
@@ -89,7 +94,7 @@ export class UserTenantPrefsController {
       PermissionKey.ViewUserTenantPreferenceNum,
     ],
   })
-  @get(`${baseUrl}/count`,{security: OPERATION_SECURITY_SPEC,responses:{}})
+  @get(`${baseUrl}/count`, {security: OPERATION_SECURITY_SPEC, responses: {}})
   @response(STATUS_CODE.OK, {
     description: 'UserTenantPrefs model count',
     content: {'application/json': {schema: CountSchema}},
@@ -101,7 +106,7 @@ export class UserTenantPrefsController {
       where = {};
     }
     where = {
-      and:[where??{},{userTenantId: this.currentUser.userTenantId}]
+      and: [where ?? {}, {userTenantId: this.currentUser.userTenantId}],
     };
     return this.userTenantPrefsRepository.count(where);
   }
@@ -115,7 +120,7 @@ export class UserTenantPrefsController {
       PermissionKey.ViewUserTenantPreferenceNum,
     ],
   })
-  @get(baseUrl,{security: OPERATION_SECURITY_SPEC,responses:{}})
+  @get(baseUrl, {security: OPERATION_SECURITY_SPEC, responses: {}})
   @response(STATUS_CODE.OK, {
     description: 'Array of UserTenantPrefs model instances',
     content: {
@@ -148,13 +153,13 @@ export class UserTenantPrefsController {
       PermissionKey.DeleteUserTenantPreferenceNum,
     ],
   })
-  @del(`${baseUrl}/{id}`,{security: OPERATION_SECURITY_SPEC,responses:{}})
+  @del(`${baseUrl}/{id}`, {security: OPERATION_SECURITY_SPEC, responses: {}})
   @response(STATUS_CODE.NO_CONTENT, {
     description: 'UserTenantPrefs DELETE success',
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
-    const userTenantPrefs=await this.userTenantPrefsRepository.findById(id);
-    if(userTenantPrefs.userTenantId!==this.currentUser.userTenantId){
+    const userTenantPrefs = await this.userTenantPrefsRepository.findById(id);
+    if (userTenantPrefs.userTenantId !== this.currentUser.userTenantId) {
       throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
     }
     await this.userTenantPrefsRepository.deleteById(id);

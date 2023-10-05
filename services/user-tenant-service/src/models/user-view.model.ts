@@ -148,13 +148,10 @@ export class UserView<T = DataObject<Model>> extends UserModifiableEntity<
   })
   roleName?: string;
 
-
   @property({
     name: 'user_tenant_id',
     type: 'string',
     required: true,
   })
   userTenantId: string;
-
-
 }

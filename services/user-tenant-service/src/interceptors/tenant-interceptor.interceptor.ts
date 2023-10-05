@@ -8,24 +8,24 @@ import {
   Provider,
   ValueOrPromise,
 } from '@loopback/core';
-import { HttpErrors } from '@loopback/rest';
-import { IAuthUserWithPermissions } from '@sourceloop/core';
-import { AuthenticationBindings } from 'loopback4-authentication';
-import { UserTenantServiceKey } from '../keys';
+import {HttpErrors} from '@loopback/rest';
+import {IAuthUserWithPermissions} from '@sourceloop/core';
+import {AuthenticationBindings} from 'loopback4-authentication';
+import {UserTenantServiceKey} from '../keys';
 
 /**
  * This class will be bound to the application as an `Interceptor` during
  * `boot`
  */
-@injectable({ tags: { key: TenantInterceptorInterceptor.BINDING_KEY } })
+@injectable({tags: {key: TenantInterceptorInterceptor.BINDING_KEY}})
 export class TenantInterceptorInterceptor implements Provider<Interceptor> {
-  static readonly BINDING_KEY = UserTenantServiceKey.TenantInterceptorInterceptor;
-
+  static readonly BINDING_KEY =
+    UserTenantServiceKey.TenantInterceptorInterceptor;
 
   constructor(
-    @inject(AuthenticationBindings.CURRENT_USER) protected currentUser: IAuthUserWithPermissions,
-  ) { }
-
+    @inject(AuthenticationBindings.CURRENT_USER)
+    protected currentUser: IAuthUserWithPermissions,
+  ) {}
 
   /**
    * This method is used by LoopBack context to produce an interceptor function
@@ -51,7 +51,9 @@ export class TenantInterceptorInterceptor implements Provider<Interceptor> {
 
       const tenantId = invocationCtx.args[0];
       if (tenantId !== this.currentUser.tenantId) {
-        throw new HttpErrors.Forbidden('Access to different Tenant Not Allowed-')
+        throw new HttpErrors.Forbidden(
+          'Access to different Tenant Not Allowed-',
+        );
       }
       const result = await next();
       // Add post-invocation logic here

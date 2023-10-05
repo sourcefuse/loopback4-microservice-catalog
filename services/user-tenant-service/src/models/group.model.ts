@@ -45,17 +45,15 @@ export class Group<T = DataObject<Model>> extends UserModifiableEntity<
   })
   photoUrl?: string;
 
-
   @property({
     type: 'string',
-    name:'tenant_id',
-    required:true
+    name: 'tenant_id',
+    required: true,
   })
   tenantId: string;
-  
+
   @hasMany(() => UserGroup, {keyTo: 'groupId'})
   userGroups: UserGroup[];
-
 }
 
 export interface GroupRelations {

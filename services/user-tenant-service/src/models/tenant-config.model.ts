@@ -28,7 +28,6 @@ export class TenantConfig extends UserModifiableEntity<TenantConfig> {
   })
   configValue?: object;
 
-
   @belongsTo(
     () => Tenant,
     {keyFrom: 'tenant_id', name: 'tenant'},

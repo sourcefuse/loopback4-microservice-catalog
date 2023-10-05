@@ -16,19 +16,23 @@ import {
   post,
   requestBody,
 } from '@loopback/rest';
-import {
-  Tenant,
-  Group,
-} from '../models';
+import {Tenant, Group} from '../models';
 import {GroupRepository, TenantRepository} from '../repositories';
-import { authenticate, AuthenticationBindings, STRATEGY } from 'loopback4-authentication';
-import { authorize } from 'loopback4-authorization';
-import { PermissionKey, STATUS_CODE } from '../enums';
-import { IAuthUserWithPermissions, OPERATION_SECURITY_SPEC } from '@sourceloop/core';
-import { inject, intercept } from '@loopback/core';
-import { UserGroupService } from '../services';
-import { UserTenantServiceKey } from '../keys';
-const baseUrl='/tenants/{id}/groups';
+import {
+  authenticate,
+  AuthenticationBindings,
+  STRATEGY,
+} from 'loopback4-authentication';
+import {authorize} from 'loopback4-authorization';
+import {PermissionKey, STATUS_CODE} from '../enums';
+import {
+  IAuthUserWithPermissions,
+  OPERATION_SECURITY_SPEC,
+} from '@sourceloop/core';
+import {inject, intercept} from '@loopback/core';
+import {UserGroupService} from '../services';
+import {UserTenantServiceKey} from '../keys';
+const baseUrl = '/tenants/{id}/groups';
 
 @intercept(UserTenantServiceKey.TenantInterceptorInterceptor)
 export class TenantGroupController {
@@ -37,18 +41,16 @@ export class TenantGroupController {
     @inject(AuthenticationBindings.CURRENT_USER)
     private readonly currentUser: IAuthUserWithPermissions,
     @repository(GroupRepository)
-    public groupRepository : GroupRepository,
+    public groupRepository: GroupRepository,
     @inject(UserTenantServiceKey.UserGroupService)
-    private readonly userGroupService: UserGroupService
-  ) { }
+    private readonly userGroupService: UserGroupService,
+  ) {}
 
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: [
-      PermissionKey.ViewGroupList,
-    ],
+    permissions: [PermissionKey.ViewGroupList],
   })
   @get(baseUrl, {
     security: OPERATION_SECURITY_SPEC,
@@ -67,7 +69,6 @@ export class TenantGroupController {
     @param.path.string('id') id: string,
     @param.query.object('filter') filter?: Filter<Group>,
   ): Promise<Group[]> {
-
     return this.groupRepository.find(filter);
   }
 
@@ -75,10 +76,7 @@ export class TenantGroupController {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: [
-      PermissionKey.CreateGroup,
-      PermissionKey.CreateGroupNum,
-    ],
+    permissions: [PermissionKey.CreateGroup, PermissionKey.CreateGroupNum],
   })
   @post(baseUrl, {
     security: OPERATION_SECURITY_SPEC,
@@ -96,23 +94,23 @@ export class TenantGroupController {
         'application/json': {
           schema: getModelSchemaRef(Group, {
             title: 'NewGroupInTenant',
-            exclude: ['id','tenantId'],
+            exclude: ['id', 'tenantId'],
           }),
         },
       },
-    }) group: Omit<Group, 'id'>,
+    })
+    group: Omit<Group, 'id'>,
   ): Promise<Group> {
-
-    const groupInDb=await this.groupRepository.findOne({
-      where:{
-        name:group.name
-      }
+    const groupInDb = await this.groupRepository.findOne({
+      where: {
+        name: group.name,
+      },
     });
-    if(groupInDb){
+    if (groupInDb) {
       throw new HttpErrors.Forbidden(' Group with same name already exist');
     }
-    group.tenantId=id??'';
-    const createdGroup=await this.groupRepository.create(group);
+    group.tenantId = id ?? '';
+    const createdGroup = await this.groupRepository.create(group);
     const groupOwner = {
       groupId: `${createdGroup.id}`,
       userTenantId: this.currentUser.userTenantId,
@@ -125,10 +123,7 @@ export class TenantGroupController {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: [
-      PermissionKey.UpdateGroup,
-      PermissionKey.UpdateGroupNum,
-    ],
+    permissions: [PermissionKey.UpdateGroup, PermissionKey.UpdateGroupNum],
   })
   @patch(baseUrl, {
     security: OPERATION_SECURITY_SPEC,
@@ -158,10 +153,7 @@ export class TenantGroupController {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: [
-      PermissionKey.DeleteGroup,
-      PermissionKey.DeleteGroupNum,
-    ],
+    permissions: [PermissionKey.DeleteGroup, PermissionKey.DeleteGroupNum],
   })
   @del(`${baseUrl}/{groupId}`, {
     security: OPERATION_SECURITY_SPEC,
@@ -177,7 +169,7 @@ export class TenantGroupController {
     @param.path.string('groupId') groupId: string,
     @param.query.object('where', getWhereSchemaFor(Group)) where?: Where<Group>,
   ): Promise<void> {
-    await this.userGroupService.deleteAllBygroupIds([groupId])
+    await this.userGroupService.deleteAllBygroupIds([groupId]);
     await this.groupRepository.deleteById(groupId);
   }
 }

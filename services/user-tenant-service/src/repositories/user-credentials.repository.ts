@@ -1,7 +1,12 @@
 import {inject, Getter} from '@loopback/core';
-import {DefaultCrudRepository, juggler, repository, BelongsToAccessor} from '@loopback/repository';
+import {
+  DefaultCrudRepository,
+  juggler,
+  repository,
+  BelongsToAccessor,
+} from '@loopback/repository';
 import {UserCredentials, UserCredentialsRelations, User} from '../models';
-import { UserTenantDataSourceName } from '../keys';
+import {UserTenantDataSourceName} from '../keys';
 import {UserRepository} from './user.repository';
 
 export class UserCredentialsRepository extends DefaultCrudRepository<
@@ -9,15 +14,19 @@ export class UserCredentialsRepository extends DefaultCrudRepository<
   typeof UserCredentials.prototype.id,
   UserCredentialsRelations
 > {
-
-  public readonly user: BelongsToAccessor<User, typeof UserCredentials.prototype.id>;
+  public readonly user: BelongsToAccessor<
+    User,
+    typeof UserCredentials.prototype.id
+  >;
 
   constructor(
     @inject(`datasources.${UserTenantDataSourceName}`)
-    dataSource: juggler.DataSource, @repository.getter('UserRepository') protected userRepositoryGetter: Getter<UserRepository>,
+    dataSource: juggler.DataSource,
+    @repository.getter('UserRepository')
+    protected userRepositoryGetter: Getter<UserRepository>,
   ) {
     super(UserCredentials, dataSource);
-    this.user = this.createBelongsToAccessorFor('user', userRepositoryGetter,);
+    this.user = this.createBelongsToAccessorFor('user', userRepositoryGetter);
     this.registerInclusionResolver('user', this.user.inclusionResolver);
   }
 }

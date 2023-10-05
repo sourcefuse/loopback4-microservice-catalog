@@ -1,13 +1,19 @@
-import { DataObject, Model, model, property, belongsTo} from "@loopback/repository";
-import { UserModifiableEntity } from "@sourceloop/core";
+import {
+  DataObject,
+  Model,
+  model,
+  property,
+  belongsTo,
+} from '@loopback/repository';
+import {UserModifiableEntity} from '@sourceloop/core';
 import {UserTenant} from './user-tenant.model';
 
 @model({
-  name: 'user_invitations'
+  name: 'user_invitations',
 })
 export class UserInvitation<T = DataObject<Model>> extends UserModifiableEntity<
   T & UserInvitation
->{
+> {
   @property({
     type: 'string',
     id: true,
@@ -17,7 +23,7 @@ export class UserInvitation<T = DataObject<Model>> extends UserModifiableEntity<
 
   @property({
     type: 'date',
-    name: 'expires_on'
+    name: 'expires_on',
   })
   expiresOn?: Date;
 
@@ -29,10 +35,10 @@ export class UserInvitation<T = DataObject<Model>> extends UserModifiableEntity<
 
   @belongsTo(
     () => UserTenant,
-    {keyFrom:'user_tenant_id',name:'userTenant'},
+    {keyFrom: 'user_tenant_id', name: 'userTenant'},
     {
-        name:'user_tenant_id',
-        required:true,
+      name: 'user_tenant_id',
+      required: true,
     },
   )
   userTenantId: string;

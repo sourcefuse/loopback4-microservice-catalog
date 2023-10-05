@@ -35,7 +35,6 @@ export class UserTenantPrefs extends UserModifiableEntity<UserTenantPrefs> {
   })
   configValue?: object;
 
-
   @belongsTo(
     () => UserTenant,
     {keyFrom: 'user_tenant_id'},
