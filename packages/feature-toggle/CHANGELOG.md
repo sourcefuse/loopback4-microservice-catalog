@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.6.0 (2023-10-06)
+
+* feat(feature-toggle): Ability to pass multiple features in feature_flag decorator along with filter  ([2913a65](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2913a65)), closes [#1717](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1717)
+
+
+
+
+
 ## <small>0.5.4 (2023-09-01)</small>
 
 **Note:** Version bump only for package @sourceloop/feature-toggle

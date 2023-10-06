@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.7.0 (2023-10-06)
+
+* feat(feature-toggle): Ability to pass multiple features in feature_flag decorator along with filter  ([2913a65](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2913a65)), closes [#1717](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1717)
+
+
+
+
+
 ## <small>0.6.22 (2023-10-05)</small>
 
 * refactor(all-services): remove redundant `posttest` script (#1677) ([4b252cf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4b252cf)), closes [#1677](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1677) [#1657](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1657)
