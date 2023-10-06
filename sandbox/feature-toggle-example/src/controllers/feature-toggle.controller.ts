@@ -138,4 +138,58 @@ export class FeatureToggleExampleController {
   async find6(): Promise<boolean> {
     return true;
   }
+
+  @authenticate(STRATEGY.BEARER)
+  @featureFlag({
+    featureKey: ['Calendar', 'Calling'],
+    options: {
+      operator: 'OR',
+    },
+  })
+  @authorize({permissions: ['*']})
+  @get('/events', {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: desp,
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {
+              type: 'boolean',
+            },
+          },
+        },
+      },
+    },
+  })
+  async find7(): Promise<boolean> {
+    return true;
+  }
+
+  @authenticate(STRATEGY.BEARER)
+  @featureFlag({
+    featureKey: ['Calendar', 'Calling'],
+    options: {
+      operator: 'AND',
+    },
+  })
+  @authorize({permissions: ['*']})
+  @get('/events', {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: desp,
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {
+              type: 'boolean',
+            },
+          },
+        },
+      },
+    },
+  })
+  async find8(): Promise<boolean> {
+    return true;
+  }
 }
