@@ -5,13 +5,14 @@
 import {BindingTemplate, extensionFor} from '@loopback/core';
 import {IAuthUserWithPermissions} from '@sourceloop/core';
 export interface FeatureFlagMetadata {
-  featureKey: string;
+  featureKey: string | string[];
   options?: FeatureFlagOptions;
 }
 export type FeatureFlagOptions = {
-  handler: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [property: string]: any; //NOSONAR
+  handler?: string;
+  operator?: 'AND' | 'OR';
 };
 
 export type FeatureInterface = () => Promise<boolean>;
@@ -49,3 +50,9 @@ export const asFeatureHandler: BindingTemplate = binding => {
   extensionFor(HANDLER_EXTENSION_POINT_NAME)(binding);
   binding.tag({namespace: 'handlers'});
 };
+
+export interface FilterStrategy {
+  applyFilter(data: string[], filterValues: string[]): string[];
+}
+
+export declare type FilterType = 'AND' | 'OR';

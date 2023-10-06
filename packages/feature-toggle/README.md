@@ -21,6 +21,17 @@ If you want to skip the check:
 @featureFlag({featureKey: '*'})
 ```
 
+Multiple feature check with operator
+
+```ts
+@featureFlag({
+    featureKey: ['feature_key1', 'feature_key2'],
+    options: {
+      operator: 'AND' | 'OR'
+    },
+  })
+```
+
 Feature Check plus handler call
 
 ```ts
