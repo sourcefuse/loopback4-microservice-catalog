@@ -1,17 +1,21 @@
+// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {inject, intercept} from '@loopback/core';
 import {
   Count,
   CountSchema,
   Filter,
-  repository,
   Where,
+  repository,
 } from '@loopback/repository';
 import {
+  HttpErrors,
   del,
   get,
   getModelSchemaRef,
   getWhereSchemaFor,
-  HttpErrors,
   param,
   patch,
   post,
@@ -22,11 +26,11 @@ import {
   OPERATION_SECURITY_SPEC,
 } from '@sourceloop/core';
 import {
-  authenticate,
   AuthenticationBindings,
   STRATEGY,
+  authenticate,
 } from 'loopback4-authentication';
-import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
+import {AuthorizeErrorKeys, authorize} from 'loopback4-authorization';
 import {PermissionKey, STATUS_CODE} from '../enums';
 import {UserTenantServiceKey} from '../keys';
 import {UserLevelPermission, UserTenant} from '../models';
@@ -53,7 +57,7 @@ export class UserTenantUserLevelPermissionController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Array of UserTenant has many UserLevelPermission',
+        description: 'Array of UserLevelPermissions of UserTenant',
         content: {
           'application/json': {
             schema: {
@@ -85,7 +89,7 @@ export class UserTenantUserLevelPermissionController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'UserTenant model instance',
+        description: 'UserLevelPermission model instance',
         content: {
           'application/json': {schema: getModelSchemaRef(UserLevelPermission)},
         },

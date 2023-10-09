@@ -1,3 +1,7 @@
+// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {
   inject,
   /* inject, */
@@ -51,17 +55,14 @@ export class UserTenantInterceptorInterceptor implements Provider<Interceptor> {
     next: () => ValueOrPromise<InvocationResult>,
   ) {
     try {
-      // Add pre-invocation logic here
       const userTenantId = invocationCtx.args[0];
       const userTenant = await this.userTenantRepository.findById(userTenantId);
       if (userTenant.tenantId !== this.currentUser.tenantId) {
         throw new HttpErrors.Forbidden('user tenant is from another tenant');
       }
       const result = await next();
-      // Add post-invocation logic here
       return result;
     } catch (err) {
-      // Add error handling logic here
       throw new HttpErrors.Forbidden(err);
     }
   }

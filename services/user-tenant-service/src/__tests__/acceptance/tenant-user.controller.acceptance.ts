@@ -16,7 +16,7 @@ import {
   UserTenantRepository,
 } from '../../repositories';
 import {UserOperationsService} from '../../services';
-import {setupApplication} from './test-helper';
+import {issuer, secret, setupApplication} from './test-helper';
 
 describe('TenantUser Controller', function (this: Mocha.Suite) {
   this.timeout(100000);
@@ -121,7 +121,7 @@ describe('TenantUser Controller', function (this: Mocha.Suite) {
     testUser = {
       id: user.id,
       userTenantId: userTenant.id ?? '',
-      username: 'sf',
+      username: issuer,
       tenantId: tenant.id ?? '',
       password: pass,
       roleId: role.id ?? '',
@@ -139,9 +139,9 @@ describe('TenantUser Controller', function (this: Mocha.Suite) {
   function setCurrentUser() {
     app.bind(AuthenticationBindings.CURRENT_USER).to(testUser);
     app.bind('services.UserOperationsService').toClass(UserOperationsService);
-    token = jwt.sign(testUser, 'test_secret', {
+    token = jwt.sign(testUser, secret, {
       expiresIn: 180000,
-      issuer: 'sf',
+      issuer,
     });
   }
 });

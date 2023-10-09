@@ -1,20 +1,24 @@
+// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+import {inject, intercept} from '@loopback/core';
 import {Filter, repository} from '@loopback/repository';
 import {get, getModelSchemaRef, param} from '@loopback/rest';
-import {UserGroup} from '../models';
-import {UserTenantRepository} from '../repositories';
 import {
   IAuthUserWithPermissions,
   OPERATION_SECURITY_SPEC,
 } from '@sourceloop/core';
 import {
-  authenticate,
   AuthenticationBindings,
   STRATEGY,
+  authenticate,
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKey, STATUS_CODE} from '../enums';
-import {inject, intercept} from '@loopback/core';
 import {UserTenantServiceKey} from '../keys';
+import {UserGroup} from '../models';
+import {UserTenantRepository} from '../repositories';
 
 const baseUrl = '/user-tenants/{id}/user-groups';
 
@@ -37,7 +41,7 @@ export class UserTenantUserGroupController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Array of UserTenant has many UserGroup',
+        description: 'Array of UserGroups of UserTenant',
         content: {
           'application/json': {
             schema: {type: 'array', items: getModelSchemaRef(UserGroup)},

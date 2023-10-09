@@ -1,19 +1,27 @@
-import {inject, Getter} from '@loopback/core';
+// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+import {Getter, inject} from '@loopback/core';
 import {
-  DefaultCrudRepository,
-  juggler,
-  repository,
   HasManyRepositoryFactory,
   HasOneRepositoryFactory,
+  juggler,
+  repository,
 } from '@loopback/repository';
-import {Role, RoleRelations, UserTenant, UserView} from '../models';
+import {
+  DefaultUserModifyCrudRepository,
+  IAuthUserWithPermissions,
+  tenantGuard,
+} from '@sourceloop/core';
+import {AuthenticationBindings} from 'loopback4-authentication';
 import {UserTenantDataSourceName} from '../keys';
+import {Role, RoleRelations, UserTenant, UserView} from '../models';
 import {UserTenantRepository} from './user-tenant.repository';
 import {UserViewRepository} from './user-view.repository';
-import {tenantGuard} from '@sourceloop/core';
 
 @tenantGuard()
-export class RoleRepository extends DefaultCrudRepository<
+export class RoleRepository extends DefaultUserModifyCrudRepository<
   Role,
   typeof Role.prototype.id,
   RoleRelations
@@ -40,8 +48,12 @@ export class RoleRepository extends DefaultCrudRepository<
     protected userTenantRepositoryGetter: Getter<UserTenantRepository>,
     @repository.getter('UserViewRepository')
     protected userViewRepositoryGetter: Getter<UserViewRepository>,
+    @inject.getter(AuthenticationBindings.CURRENT_USER)
+    protected readonly getCurrentUser: Getter<
+      IAuthUserWithPermissions | undefined
+    >,
   ) {
-    super(Role, dataSource);
+    super(Role, dataSource, getCurrentUser);
     this.modifiedByUser = this.createHasOneRepositoryFactoryFor(
       'modifiedByUser',
       userViewRepositoryGetter,

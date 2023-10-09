@@ -1,27 +1,35 @@
-import {inject, Getter} from '@loopback/core';
+// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+import {Getter, inject} from '@loopback/core';
 import {
-  DefaultCrudRepository,
+  HasManyRepositoryFactory,
   juggler,
   repository,
-  HasManyRepositoryFactory,
 } from '@loopback/repository';
 import {
-  Tenant,
-  TenantRelations,
-  TenantConfig,
-  UserTenant,
-  User,
-  Role,
-  Group,
-} from '../models';
+  DefaultUserModifyCrudRepository,
+  IAuthUserWithPermissions,
+} from '@sourceloop/core';
+import {AuthenticationBindings} from 'loopback4-authentication';
 import {UserTenantDataSourceName} from '../keys';
+import {
+  Group,
+  Role,
+  Tenant,
+  TenantConfig,
+  TenantRelations,
+  User,
+  UserTenant,
+} from '../models';
+import {GroupRepository} from './group.repository';
+import {RoleRepository} from './role.repository';
 import {TenantConfigRepository} from './tenant-config.repository';
 import {UserTenantRepository} from './user-tenant.repository';
 import {UserRepository} from './user.repository';
-import {RoleRepository} from './role.repository';
-import {GroupRepository} from './group.repository';
 
-export class TenantRepository extends DefaultCrudRepository<
+export class TenantRepository extends DefaultUserModifyCrudRepository<
   Tenant,
   typeof Tenant.prototype.id,
   TenantRelations
@@ -64,8 +72,12 @@ export class TenantRepository extends DefaultCrudRepository<
     protected roleRepositoryGetter: Getter<RoleRepository>,
     @repository.getter('GroupRepository')
     protected groupRepositoryGetter: Getter<GroupRepository>,
+    @inject.getter(AuthenticationBindings.CURRENT_USER)
+    protected readonly getCurrentUser: Getter<
+      IAuthUserWithPermissions | undefined
+    >,
   ) {
-    super(Tenant, dataSource);
+    super(Tenant, dataSource, getCurrentUser);
     this.groups = this.createHasManyRepositoryFactoryFor(
       'groups',
       groupRepositoryGetter,

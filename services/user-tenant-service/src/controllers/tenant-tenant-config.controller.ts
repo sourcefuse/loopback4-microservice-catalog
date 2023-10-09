@@ -1,9 +1,14 @@
+// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+import {inject, intercept} from '@loopback/core';
 import {
   Count,
   CountSchema,
   Filter,
-  repository,
   Where,
+  repository,
 } from '@loopback/repository';
 import {
   del,
@@ -15,21 +20,20 @@ import {
   post,
   requestBody,
 } from '@loopback/rest';
-import {Tenant, TenantConfig} from '../models';
-import {TenantConfigRepository, TenantRepository} from '../repositories';
 import {
   IAuthUserWithPermissions,
   OPERATION_SECURITY_SPEC,
 } from '@sourceloop/core';
 import {
-  authenticate,
   AuthenticationBindings,
   STRATEGY,
+  authenticate,
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKey, STATUS_CODE} from '../enums';
-import {inject, intercept} from '@loopback/core';
 import {UserTenantServiceKey} from '../keys';
+import {Tenant, TenantConfig} from '../models';
+import {TenantConfigRepository, TenantRepository} from '../repositories';
 const baseUrl = '/tenants/{id}/tenant-configs';
 
 @intercept(UserTenantServiceKey.TenantInterceptorInterceptor)
@@ -52,7 +56,7 @@ export class TenantTenantConfigController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Array of Tenant has many TenantConfig',
+        description: 'Array of TenantConfigs of Tenant',
         content: {
           'application/json': {
             schema: {type: 'array', items: getModelSchemaRef(TenantConfig)},
@@ -78,7 +82,7 @@ export class TenantTenantConfigController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Tenant model instance',
+        description: 'TenantConfig model instance',
         content: {
           'application/json': {schema: getModelSchemaRef(TenantConfig)},
         },

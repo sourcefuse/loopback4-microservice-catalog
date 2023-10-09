@@ -1,3 +1,7 @@
+// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {
   inject,
   /* inject, */
@@ -47,8 +51,6 @@ export class TenantInterceptorInterceptor implements Provider<Interceptor> {
     next: () => ValueOrPromise<InvocationResult>,
   ) {
     try {
-      // Add pre-invocation logic here
-
       const tenantId = invocationCtx.args[0];
       if (tenantId !== this.currentUser.tenantId) {
         throw new HttpErrors.Forbidden(
@@ -56,10 +58,8 @@ export class TenantInterceptorInterceptor implements Provider<Interceptor> {
         );
       }
       const result = await next();
-      // Add post-invocation logic here
       return result;
     } catch (err) {
-      // Add error handling logic here
       throw new HttpErrors.Forbidden(err);
     }
   }

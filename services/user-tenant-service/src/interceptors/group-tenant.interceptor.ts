@@ -1,3 +1,7 @@
+// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {
   inject,
   /* inject, */
@@ -49,24 +53,18 @@ export class GroupTenantInterceptor implements Provider<Interceptor> {
     next: () => ValueOrPromise<InvocationResult>,
   ) {
     try {
-      // Add pre-invocation logic here
       const groupId = invocationCtx.args[0];
       const groups = await this.groupRepository.find({
         where: {id: groupId},
       });
-      const groupRecord = groups.find(
-        group => group.tenantId === this.currentUser.tenantId,
-      );
-      if (!groupRecord) {
+
+      if (!groups.length) {
         throw new HttpErrors.Forbidden('Group Access Not Allowed');
       }
 
       const result = await next();
-      // Add post-invocation logic here
       return result;
     } catch (err) {
-      //NoSona
-      // Add error handling logic here
       throw new HttpErrors.Forbidden(err);
     }
   }

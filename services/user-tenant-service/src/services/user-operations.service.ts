@@ -1,5 +1,10 @@
+// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+
 import {BindingScope, Getter, inject, injectable} from '@loopback/core';
-import {Filter, repository, WhereBuilder} from '@loopback/repository';
+import {Filter, WhereBuilder, repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {
   IAuthUserWithPermissions,
@@ -14,10 +19,10 @@ import {Tenant, User, UserDto, UserTenant, UserView} from '../models';
 import {
   RoleRepository,
   TenantRepository,
-  UserRepository,
-  UserViewRepository,
-  UserTenantRepository,
   UserGroupRepository,
+  UserRepository,
+  UserTenantRepository,
+  UserViewRepository,
 } from '../repositories';
 
 @injectable({scope: BindingScope.TRANSIENT})

@@ -155,7 +155,7 @@ fetch('/groups/{id}/user/bulk',
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Group model instance|Inline|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|UserGroup model instance|Inline|
 
 <h3 id="groupusercontroller.createbulkusergroups-responseschema">Response Schema</h3>
 
@@ -237,7 +237,7 @@ fetch('/groups/{id}/user/{userId}',
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Group.UserGroup DELETE success count|None|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|DELETE Group.UserGroup|None|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -363,7 +363,7 @@ fetch('/groups/{id}/user',
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Group model instance|[UserGroup](#schemausergroup)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|UserGroup model instance|[UserGroup](#schemausergroup)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -456,7 +456,7 @@ fetch('/groups/{id}/user',
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Group has many UserGroup|Inline|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of UserGroup of a Group|Inline|
 
 <h3 id="groupusercontroller.find-responseschema">Response Schema</h3>
 
@@ -592,8 +592,7 @@ const inputBody = '{
   "country": "string"
 }';
 const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Content-Type':'application/json'
 };
 
 fetch('/tenants/{id}',
@@ -632,8 +631,7 @@ const inputBody = {
   "country": "string"
 };
 const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Content-Type':'application/json'
 };
 
 fetch('/tenants/{id}',
@@ -688,28 +686,11 @@ fetch('/tenants/{id}',
 |id|path|string|true|none|
 |body|body|[Tenant](#schematenant)|false|none|
 
-> Example responses
-
-> 204 Response
-
-```json
-null
-```
-
 <h3 id="tenantcontroller.replacebyid-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content|Inline|
-
-<h3 id="tenantcontroller.replacebyid-responseschema">Response Schema</h3>
-
-Status Code **204**
-
-*Tenant PUT success*
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Tenant PUT success|None|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -743,8 +724,7 @@ const inputBody = '{
   "country": "string"
 }';
 const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Content-Type':'application/json'
 };
 
 fetch('/tenants/{id}',
@@ -783,8 +763,7 @@ const inputBody = {
   "country": "string"
 };
 const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Content-Type':'application/json'
 };
 
 fetch('/tenants/{id}',
@@ -839,28 +818,11 @@ fetch('/tenants/{id}',
 |id|path|string|true|none|
 |body|body|[TenantPartial](#schematenantpartial)|false|none|
 
-> Example responses
-
-> 204 Response
-
-```json
-null
-```
-
 <h3 id="tenantcontroller.updatebyid-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content|Inline|
-
-<h3 id="tenantcontroller.updatebyid-responseschema">Response Schema</h3>
-
-Status Code **204**
-
-*Tenant PATCH success*
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Tenant PATCH success|None|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -990,6 +952,8 @@ fetch('/tenants/{id}',
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "locale": "string",
             "status": 12,
@@ -1025,6 +989,8 @@ fetch('/tenants/{id}',
                 "deletedBy": "string",
                 "createdOn": "2019-08-24T14:15:22Z",
                 "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
                 "id": "string",
                 "authProvider": "string",
                 "authId": "string",
@@ -1218,6 +1184,8 @@ fetch('/tenants/{id}',
               "deletedBy": "string",
               "createdOn": "2019-08-24T14:15:22Z",
               "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
               "id": "string",
               "authProvider": "string",
               "authId": "string",
@@ -1234,6 +1202,8 @@ fetch('/tenants/{id}',
                 "deletedBy": "string",
                 "createdOn": "2019-08-24T14:15:22Z",
                 "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
                 "id": "string",
                 "locale": "string",
                 "status": 12,
@@ -1404,6 +1374,8 @@ fetch('/tenants/{id}',
                 "deletedBy": "string",
                 "createdOn": "2019-08-24T14:15:22Z",
                 "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
                 "id": "string",
                 "locale": "string",
                 "status": 12,
@@ -1439,6 +1411,8 @@ fetch('/tenants/{id}',
                     "deletedBy": "string",
                     "createdOn": "2019-08-24T14:15:22Z",
                     "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
                     "id": "string",
                     "authProvider": "string",
                     "authId": "string",
@@ -1599,6 +1573,8 @@ fetch('/tenants/{id}',
                   "deletedBy": "string",
                   "createdOn": "2019-08-24T14:15:22Z",
                   "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
                   "id": "string",
                   "locale": "string",
                   "status": 12,
@@ -1675,6 +1651,8 @@ fetch('/tenants/{id}',
       "deletedBy": "string",
       "createdOn": "2019-08-24T14:15:22Z",
       "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
       "id": "string",
       "locale": "string",
       "status": 12,
@@ -1865,6 +1843,8 @@ fetch('/tenants/{id}',
           "deletedBy": "string",
           "createdOn": "2019-08-24T14:15:22Z",
           "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
           "id": "string",
           "authProvider": "string",
           "authId": "string",
@@ -1943,6 +1923,8 @@ fetch('/tenants/{id}',
               "deletedBy": "string",
               "createdOn": "2019-08-24T14:15:22Z",
               "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
               "id": "string",
               "authProvider": "string",
               "authId": "string",
@@ -2288,6 +2270,8 @@ fetch('/tenants/{id}',
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "locale": "string",
             "status": 12,
@@ -2473,6 +2457,8 @@ fetch('/tenants/{id}',
                 "deletedBy": "string",
                 "createdOn": "2019-08-24T14:15:22Z",
                 "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
                 "id": "string",
                 "locale": "string",
                 "status": 12,
@@ -2627,6 +2613,8 @@ fetch('/tenants/{id}',
                   "deletedBy": "string",
                   "createdOn": "2019-08-24T14:15:22Z",
                   "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
                   "id": "string",
                   "locale": "string",
                   "status": 12,
@@ -2675,6 +2663,8 @@ fetch('/tenants/{id}',
         "deletedBy": "string",
         "createdOn": "2019-08-24T14:15:22Z",
         "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
         "id": "string",
         "authProvider": "string",
         "authId": "string",
@@ -2691,6 +2681,8 @@ fetch('/tenants/{id}',
           "deletedBy": "string",
           "createdOn": "2019-08-24T14:15:22Z",
           "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
           "id": "string",
           "locale": "string",
           "status": 12,
@@ -3032,6 +3024,8 @@ fetch('/tenants/{id}',
           "deletedBy": "string",
           "createdOn": "2019-08-24T14:15:22Z",
           "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
           "id": "string",
           "locale": "string",
           "status": 12,
@@ -3127,6 +3121,8 @@ fetch('/tenants/{id}',
               "deletedBy": "string",
               "createdOn": "2019-08-24T14:15:22Z",
               "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
               "id": "string",
               "authProvider": "string",
               "authId": "string",
@@ -3207,6 +3203,8 @@ fetch('/tenants/{id}',
                   "deletedBy": "string",
                   "createdOn": "2019-08-24T14:15:22Z",
                   "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
                   "id": "string",
                   "authProvider": "string",
                   "authId": "string",
@@ -3417,6 +3415,8 @@ fetch('/tenants/{id}',
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "locale": "string",
             "status": 12,
@@ -3514,6 +3514,8 @@ fetch('/tenants/{id}',
                 "deletedBy": "string",
                 "createdOn": "2019-08-24T14:15:22Z",
                 "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
                 "id": "string",
                 "authProvider": "string",
                 "authId": "string",
@@ -3594,6 +3596,8 @@ fetch('/tenants/{id}',
                     "deletedBy": "string",
                     "createdOn": "2019-08-24T14:15:22Z",
                     "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
                     "id": "string",
                     "authProvider": "string",
                     "authId": "string",
@@ -3840,15 +3844,10 @@ None
 
 ```javascript
 
-const headers = {
-  'Accept':'application/json'
-};
-
 fetch('/tenants/{id}',
 {
-  method: 'DELETE',
+  method: 'DELETE'
 
-  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -3861,15 +3860,10 @@ fetch('/tenants/{id}',
 ```javascript--nodejs
 const fetch = require('node-fetch');
 
-const headers = {
-  'Accept':'application/json'
-};
-
 fetch('/tenants/{id}',
 {
-  method: 'DELETE',
+  method: 'DELETE'
 
-  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -3892,28 +3886,11 @@ fetch('/tenants/{id}',
 |---|---|---|---|---|
 |id|path|string|true|none|
 
-> Example responses
-
-> 204 Response
-
-```json
-null
-```
-
 <h3 id="tenantcontroller.deletebyid-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content|Inline|
-
-<h3 id="tenantcontroller.deletebyid-responseschema">Response Schema</h3>
-
-Status Code **204**
-
-*Tenant DELETE success*
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Tenant DELETE success|None|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -4327,6 +4304,8 @@ fetch('/tenants',
         "deletedBy": "string",
         "createdOn": "2019-08-24T14:15:22Z",
         "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
         "id": "string",
         "locale": "string",
         "status": 12,
@@ -4362,6 +4341,8 @@ fetch('/tenants',
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "authProvider": "string",
             "authId": "string",
@@ -4555,6 +4536,8 @@ fetch('/tenants',
           "deletedBy": "string",
           "createdOn": "2019-08-24T14:15:22Z",
           "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
           "id": "string",
           "authProvider": "string",
           "authId": "string",
@@ -4571,6 +4554,8 @@ fetch('/tenants',
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "locale": "string",
             "status": 12,
@@ -4757,6 +4742,8 @@ fetch('/tenants',
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "locale": "string",
             "status": 12,
@@ -4792,6 +4779,8 @@ fetch('/tenants',
                 "deletedBy": "string",
                 "createdOn": "2019-08-24T14:15:22Z",
                 "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
                 "id": "string",
                 "authProvider": "string",
                 "authId": "string",
@@ -4968,6 +4957,8 @@ fetch('/tenants',
               "deletedBy": "string",
               "createdOn": "2019-08-24T14:15:22Z",
               "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
               "id": "string",
               "locale": "string",
               "status": 12,
@@ -5003,6 +4994,8 @@ fetch('/tenants',
                   "deletedBy": "string",
                   "createdOn": "2019-08-24T14:15:22Z",
                   "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
                   "id": "string",
                   "authProvider": "string",
                   "authId": "string",
@@ -5196,6 +5189,8 @@ Status Code **200**
 |»»»» deletedBy|string¦null|false|none|none|
 |»»»» createdOn|string(date-time)|false|none|none|
 |»»»» modifiedOn|string(date-time)|false|none|none|
+|»»»» createdBy|string|false|none|none|
+|»»»» modifiedBy|string|false|none|none|
 |»»»» id|string|false|none|none|
 |»»»» locale|string|false|none|none|
 |»»»» status|number|false|none|none|
@@ -5231,6 +5226,8 @@ Status Code **200**
 |»»»»»» deletedBy|string¦null|false|none|none|
 |»»»»»» createdOn|string(date-time)|false|none|none|
 |»»»»»» modifiedOn|string(date-time)|false|none|none|
+|»»»»»» createdBy|string|false|none|none|
+|»»»»»» modifiedBy|string|false|none|none|
 |»»»»»» id|string|false|none|none|
 |»»»»»» authProvider|string|true|none|none|
 |»»»»»» authId|string|false|none|none|
@@ -5448,7 +5445,7 @@ fetch('/tenants/{id}/groups/{groupId}',
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Tenant.Group DELETE success count|[loopback.Count](#schemaloopback.count)|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Tenant.Group DELETE|[loopback.Count](#schemaloopback.count)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -5582,7 +5579,7 @@ fetch('/tenants/{id}/groups',
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Tenant model instance|[Group](#schemagroup)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Group model instance|[Group](#schemagroup)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -5806,7 +5803,7 @@ fetch('/tenants/{id}/groups',
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Tenant has many Group|Inline|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Groups of Tenant|Inline|
 
 <h3 id="tenantgroupcontroller.find-responseschema">Response Schema</h3>
 
@@ -5912,7 +5909,7 @@ fetch('/tenants/{id}/roles/{roleId}',
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Tenant.Role DELETE success count|[loopback.Count](#schemaloopback.count)|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Tenant.Role DELETE success|[loopback.Count](#schemaloopback.count)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -6070,7 +6067,7 @@ fetch('/tenants/{id}/roles',
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Tenant model instance|[Role](#schemarole)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Role model instance|[Role](#schemarole)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -6313,7 +6310,7 @@ fetch('/tenants/{id}/roles',
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Tenant has many Role|Inline|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Roles of Tenant|Inline|
 
 <h3 id="tenantrolecontroller.find-responseschema">Response Schema</h3>
 
@@ -6468,7 +6465,7 @@ fetch('/tenants/{id}/tenant-configs',
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Tenant model instance|[TenantConfig](#schematenantconfig)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|TenantConfig model instance|[TenantConfig](#schematenantconfig)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -6683,7 +6680,7 @@ fetch('/tenants/{id}/tenant-configs',
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Tenant has many TenantConfig|Inline|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of TenantConfigs of Tenant|Inline|
 
 <h3 id="tenanttenantconfigcontroller.find-responseschema">Response Schema</h3>
 
@@ -6933,7 +6930,7 @@ fetch('/tenants/{id}/users/{userId}',
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Tenant.User PATCH success count|None|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Tenant.User PATCH|None|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -6996,7 +6993,7 @@ fetch('/tenants/{id}/users/{userId}',
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Tenant.User DELETE success count|None|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Tenant.User DELETE|None|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -7172,7 +7169,7 @@ fetch('/tenants/{id}/users',
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Tenant model instance|[User](#schemauser)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|User model instance|[User](#schemauser)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -7276,7 +7273,7 @@ fetch('/tenants/{id}/users',
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Tenant has many User|Inline|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Users of Tenant|Inline|
 
 <h3 id="tenantusercontroller.find-responseschema">Response Schema</h3>
 
@@ -7415,7 +7412,7 @@ fetch('/user/{id}/tenants',
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Tenant User is a part of|Inline|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Tenants to Which the User Belongs|Inline|
 
 <h3 id="usertenantcontroller.find-responseschema">Response Schema</h3>
 
@@ -7839,6 +7836,8 @@ fetch('/user-tenant-prefs',
       "deletedBy": "string",
       "createdOn": "2019-08-24T14:15:22Z",
       "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
       "id": "string",
       "locale": "string",
       "status": 12,
@@ -8031,6 +8030,8 @@ fetch('/user-tenant-prefs',
           "deletedBy": "string",
           "createdOn": "2019-08-24T14:15:22Z",
           "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
           "id": "string",
           "authProvider": "string",
           "authId": "string",
@@ -8111,6 +8112,8 @@ fetch('/user-tenant-prefs',
               "deletedBy": "string",
               "createdOn": "2019-08-24T14:15:22Z",
               "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
               "id": "string",
               "authProvider": "string",
               "authId": "string",
@@ -8426,6 +8429,8 @@ Status Code **200**
 |»»» deletedBy|string¦null|false|none|none|
 |»»» createdOn|string(date-time)|false|none|none|
 |»»» modifiedOn|string(date-time)|false|none|none|
+|»»» createdBy|string|false|none|none|
+|»»» modifiedBy|string|false|none|none|
 |»»» id|string|false|none|none|
 |»»» locale|string|false|none|none|
 |»»» status|number|false|none|none|
@@ -8572,6 +8577,8 @@ Status Code **200**
 |»»»»» deletedBy|string¦null|false|none|none|
 |»»»»» createdOn|string(date-time)|false|none|none|
 |»»»»» modifiedOn|string(date-time)|false|none|none|
+|»»»»» createdBy|string|false|none|none|
+|»»»»» modifiedBy|string|false|none|none|
 |»»»»» id|string|false|none|none|
 |»»»»» authProvider|string|true|none|none|
 |»»»»» authId|string|false|none|none|
@@ -8720,7 +8727,7 @@ fetch('/user-tenants/{id}/user-groups',
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of UserTenant has many UserGroup|Inline|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of UserGroups of UserTenant|Inline|
 
 <h3 id="usertenantusergroupcontroller.find-responseschema">Response Schema</h3>
 
@@ -8874,7 +8881,7 @@ fetch('/user-tenants/{id}/user-level-permissions',
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|UserTenant model instance|[UserLevelPermission](#schemauserlevelpermission)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|UserLevelPermission model instance|[UserLevelPermission](#schemauserlevelpermission)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -9094,7 +9101,7 @@ fetch('/user-tenants/{id}/user-level-permissions',
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of UserTenant has many UserLevelPermission|Inline|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of UserLevelPermissions of UserTenant|Inline|
 
 <h3 id="usertenantuserlevelpermissioncontroller.find-responseschema">Response Schema</h3>
 
@@ -9526,6 +9533,8 @@ NewTenant
         "deletedBy": "string",
         "createdOn": "2019-08-24T14:15:22Z",
         "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
         "id": "string",
         "locale": "string",
         "status": 12,
@@ -9703,6 +9712,8 @@ NewTenant
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "authProvider": "string",
             "authId": "string",
@@ -9783,6 +9794,8 @@ NewTenant
                 "deletedBy": "string",
                 "createdOn": "2019-08-24T14:15:22Z",
                 "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
                 "id": "string",
                 "authProvider": "string",
                 "authId": "string",
@@ -10106,6 +10119,8 @@ GroupWithRelations
         "deletedBy": "string",
         "createdOn": "2019-08-24T14:15:22Z",
         "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
         "id": "string",
         "locale": "string",
         "status": 12,
@@ -10141,6 +10156,8 @@ GroupWithRelations
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "authProvider": "string",
             "authId": "string",
@@ -10334,6 +10351,8 @@ GroupWithRelations
           "deletedBy": "string",
           "createdOn": "2019-08-24T14:15:22Z",
           "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
           "id": "string",
           "authProvider": "string",
           "authId": "string",
@@ -10350,6 +10369,8 @@ GroupWithRelations
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "locale": "string",
             "status": 12,
@@ -10536,6 +10557,8 @@ GroupWithRelations
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "locale": "string",
             "status": 12,
@@ -10571,6 +10594,8 @@ GroupWithRelations
                 "deletedBy": "string",
                 "createdOn": "2019-08-24T14:15:22Z",
                 "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
                 "id": "string",
                 "authProvider": "string",
                 "authId": "string",
@@ -10747,6 +10772,8 @@ GroupWithRelations
               "deletedBy": "string",
               "createdOn": "2019-08-24T14:15:22Z",
               "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
               "id": "string",
               "locale": "string",
               "status": 12,
@@ -10782,6 +10809,8 @@ GroupWithRelations
                   "deletedBy": "string",
                   "createdOn": "2019-08-24T14:15:22Z",
                   "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
                   "id": "string",
                   "authProvider": "string",
                   "authId": "string",
@@ -10957,6 +10986,8 @@ TenantConfigWithRelations
   "deletedBy": "string",
   "createdOn": "2019-08-24T14:15:22Z",
   "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
   "id": "string",
   "authProvider": "string",
   "authId": "string",
@@ -11027,6 +11058,8 @@ TenantConfigWithRelations
           "deletedBy": "string",
           "createdOn": "2019-08-24T14:15:22Z",
           "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
           "id": "string",
           "locale": "string",
           "status": 12,
@@ -11214,6 +11247,8 @@ TenantConfigWithRelations
               "deletedBy": "string",
               "createdOn": "2019-08-24T14:15:22Z",
               "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
               "id": "string",
               "locale": "string",
               "status": 12,
@@ -11382,6 +11417,8 @@ TenantConfigWithRelations
                 "deletedBy": "string",
                 "createdOn": "2019-08-24T14:15:22Z",
                 "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
                 "id": "string",
                 "locale": "string",
                 "status": 12,
@@ -11520,6 +11557,8 @@ TenantConfigWithRelations
       "deletedBy": "string",
       "createdOn": "2019-08-24T14:15:22Z",
       "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
       "id": "string",
       "authProvider": "string",
       "authId": "string",
@@ -11536,6 +11575,8 @@ TenantConfigWithRelations
         "deletedBy": "string",
         "createdOn": "2019-08-24T14:15:22Z",
         "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
         "id": "string",
         "locale": "string",
         "status": 12,
@@ -11866,6 +11907,8 @@ UserCredentialsWithRelations
 |deletedBy|string¦null|false|none|none|
 |createdOn|string(date-time)|false|none|none|
 |modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
 |id|string|false|none|none|
 |authProvider|string|true|none|none|
 |authId|string|false|none|none|
@@ -11946,6 +11989,8 @@ UserCredentialsWithRelations
         "deletedBy": "string",
         "createdOn": "2019-08-24T14:15:22Z",
         "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
         "id": "string",
         "locale": "string",
         "status": 12,
@@ -11981,6 +12026,8 @@ UserCredentialsWithRelations
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "authProvider": "string",
             "authId": "string",
@@ -12174,6 +12221,8 @@ UserCredentialsWithRelations
           "deletedBy": "string",
           "createdOn": "2019-08-24T14:15:22Z",
           "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
           "id": "string",
           "authProvider": "string",
           "authId": "string",
@@ -12190,6 +12239,8 @@ UserCredentialsWithRelations
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "locale": "string",
             "status": 12,
@@ -12376,6 +12427,8 @@ UserCredentialsWithRelations
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "locale": "string",
             "status": 12,
@@ -12411,6 +12464,8 @@ UserCredentialsWithRelations
                 "deletedBy": "string",
                 "createdOn": "2019-08-24T14:15:22Z",
                 "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
                 "id": "string",
                 "authProvider": "string",
                 "authId": "string",
@@ -12587,6 +12642,8 @@ UserCredentialsWithRelations
               "deletedBy": "string",
               "createdOn": "2019-08-24T14:15:22Z",
               "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
               "id": "string",
               "locale": "string",
               "status": 12,
@@ -12622,6 +12679,8 @@ UserCredentialsWithRelations
                   "deletedBy": "string",
                   "createdOn": "2019-08-24T14:15:22Z",
                   "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
                   "id": "string",
                   "authProvider": "string",
                   "authId": "string",
@@ -12766,6 +12825,8 @@ UserCredentialsWithRelations
     "deletedBy": "string",
     "createdOn": "2019-08-24T14:15:22Z",
     "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
     "id": "string",
     "authProvider": "string",
     "authId": "string",
@@ -12836,6 +12897,8 @@ UserCredentialsWithRelations
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "locale": "string",
             "status": 12,
@@ -13023,6 +13086,8 @@ UserCredentialsWithRelations
                 "deletedBy": "string",
                 "createdOn": "2019-08-24T14:15:22Z",
                 "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
                 "id": "string",
                 "locale": "string",
                 "status": 12,
@@ -13177,6 +13242,8 @@ UserCredentialsWithRelations
                   "deletedBy": "string",
                   "createdOn": "2019-08-24T14:15:22Z",
                   "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
                   "id": "string",
                   "locale": "string",
                   "status": 12,
@@ -13227,6 +13294,8 @@ UserCredentialsWithRelations
           "deletedBy": "string",
           "createdOn": "2019-08-24T14:15:22Z",
           "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
           "id": "string",
           "locale": "string",
           "status": 12,
@@ -13550,6 +13619,8 @@ UserCredentialsWithRelations
       "deletedBy": "string",
       "createdOn": "2019-08-24T14:15:22Z",
       "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
       "id": "string",
       "locale": "string",
       "status": 12,
@@ -13742,6 +13813,8 @@ UserCredentialsWithRelations
           "deletedBy": "string",
           "createdOn": "2019-08-24T14:15:22Z",
           "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
           "id": "string",
           "authProvider": "string",
           "authId": "string",
@@ -13820,6 +13893,8 @@ UserCredentialsWithRelations
               "deletedBy": "string",
               "createdOn": "2019-08-24T14:15:22Z",
               "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
               "id": "string",
               "authProvider": "string",
               "authId": "string",
@@ -14260,6 +14335,8 @@ UserViewWithRelations
       "deletedBy": "string",
       "createdOn": "2019-08-24T14:15:22Z",
       "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
       "id": "string",
       "locale": "string",
       "status": 12,
@@ -14450,6 +14527,8 @@ UserViewWithRelations
           "deletedBy": "string",
           "createdOn": "2019-08-24T14:15:22Z",
           "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
           "id": "string",
           "authProvider": "string",
           "authId": "string",
@@ -14530,6 +14609,8 @@ UserViewWithRelations
               "deletedBy": "string",
               "createdOn": "2019-08-24T14:15:22Z",
               "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
               "id": "string",
               "authProvider": "string",
               "authId": "string",
@@ -14921,6 +15002,8 @@ RoleWithRelations
     "deletedBy": "string",
     "createdOn": "2019-08-24T14:15:22Z",
     "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
     "id": "string",
     "locale": "string",
     "status": 12,
@@ -15113,6 +15196,8 @@ RoleWithRelations
         "deletedBy": "string",
         "createdOn": "2019-08-24T14:15:22Z",
         "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
         "id": "string",
         "authProvider": "string",
         "authId": "string",
@@ -15193,6 +15278,8 @@ RoleWithRelations
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "authProvider": "string",
             "authId": "string",
@@ -15547,6 +15634,8 @@ UserLevelPermissionWithRelations
           "deletedBy": "string",
           "createdOn": "2019-08-24T14:15:22Z",
           "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
           "id": "string",
           "locale": "string",
           "status": 12,
@@ -15710,6 +15799,8 @@ UserLevelPermissionWithRelations
               "deletedBy": "string",
               "createdOn": "2019-08-24T14:15:22Z",
               "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
               "id": "string",
               "authProvider": "string",
               "authId": "string",
@@ -15790,6 +15881,8 @@ UserLevelPermissionWithRelations
                   "deletedBy": "string",
                   "createdOn": "2019-08-24T14:15:22Z",
                   "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
                   "id": "string",
                   "authProvider": "string",
                   "authId": "string",
@@ -16021,6 +16114,8 @@ UserLevelPermissionWithRelations
     "deletedBy": "string",
     "createdOn": "2019-08-24T14:15:22Z",
     "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
     "id": "string",
     "locale": "string",
     "status": 12,
@@ -16213,6 +16308,8 @@ UserLevelPermissionWithRelations
         "deletedBy": "string",
         "createdOn": "2019-08-24T14:15:22Z",
         "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
         "id": "string",
         "authProvider": "string",
         "authId": "string",
@@ -16293,6 +16390,8 @@ UserLevelPermissionWithRelations
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "authProvider": "string",
             "authId": "string",
@@ -16622,6 +16721,8 @@ UserGroupWithRelations
     "deletedBy": "string",
     "createdOn": "2019-08-24T14:15:22Z",
     "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
     "id": "string",
     "locale": "string",
     "status": 12,
@@ -16814,6 +16915,8 @@ UserGroupWithRelations
         "deletedBy": "string",
         "createdOn": "2019-08-24T14:15:22Z",
         "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
         "id": "string",
         "authProvider": "string",
         "authId": "string",
@@ -16894,6 +16997,8 @@ UserGroupWithRelations
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "authProvider": "string",
             "authId": "string",
@@ -17211,6 +17316,8 @@ UserInvitationWithRelations
   "deletedBy": "string",
   "createdOn": "2019-08-24T14:15:22Z",
   "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
   "id": "string",
   "locale": "string",
   "status": 12,
@@ -17280,6 +17387,8 @@ UserInvitationWithRelations
           "deletedBy": "string",
           "createdOn": "2019-08-24T14:15:22Z",
           "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
           "id": "string",
           "locale": "string",
           "status": 12,
@@ -17467,6 +17576,8 @@ UserInvitationWithRelations
               "deletedBy": "string",
               "createdOn": "2019-08-24T14:15:22Z",
               "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
               "id": "string",
               "locale": "string",
               "status": 12,
@@ -17635,6 +17746,8 @@ UserInvitationWithRelations
                 "deletedBy": "string",
                 "createdOn": "2019-08-24T14:15:22Z",
                 "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
                 "id": "string",
                 "locale": "string",
                 "status": 12,
@@ -17773,6 +17886,8 @@ UserInvitationWithRelations
       "deletedBy": "string",
       "createdOn": "2019-08-24T14:15:22Z",
       "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
       "id": "string",
       "authProvider": "string",
       "authId": "string",
@@ -17789,6 +17904,8 @@ UserInvitationWithRelations
         "deletedBy": "string",
         "createdOn": "2019-08-24T14:15:22Z",
         "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
         "id": "string",
         "locale": "string",
         "status": 12,
@@ -18145,6 +18262,8 @@ UserInvitationWithRelations
         "deletedBy": "string",
         "createdOn": "2019-08-24T14:15:22Z",
         "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
         "id": "string",
         "locale": "string",
         "status": 12,
@@ -18180,6 +18299,8 @@ UserInvitationWithRelations
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "authProvider": "string",
             "authId": "string",
@@ -18373,6 +18494,8 @@ UserInvitationWithRelations
           "deletedBy": "string",
           "createdOn": "2019-08-24T14:15:22Z",
           "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
           "id": "string",
           "authProvider": "string",
           "authId": "string",
@@ -18389,6 +18512,8 @@ UserInvitationWithRelations
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "locale": "string",
             "status": 12,
@@ -18575,6 +18700,8 @@ UserInvitationWithRelations
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "locale": "string",
             "status": 12,
@@ -18610,6 +18737,8 @@ UserInvitationWithRelations
                 "deletedBy": "string",
                 "createdOn": "2019-08-24T14:15:22Z",
                 "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
                 "id": "string",
                 "authProvider": "string",
                 "authId": "string",
@@ -18786,6 +18915,8 @@ UserInvitationWithRelations
               "deletedBy": "string",
               "createdOn": "2019-08-24T14:15:22Z",
               "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
               "id": "string",
               "locale": "string",
               "status": 12,
@@ -18821,6 +18952,8 @@ UserInvitationWithRelations
                   "deletedBy": "string",
                   "createdOn": "2019-08-24T14:15:22Z",
                   "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
                   "id": "string",
                   "authProvider": "string",
                   "authId": "string",
@@ -18985,6 +19118,8 @@ UserInvitationWithRelations
         "deletedBy": "string",
         "createdOn": "2019-08-24T14:15:22Z",
         "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
         "id": "string",
         "locale": "string",
         "status": 12,
@@ -19095,6 +19230,8 @@ UserInvitationWithRelations
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "authProvider": "string",
             "authId": "string",
@@ -19175,6 +19312,8 @@ UserInvitationWithRelations
                 "deletedBy": "string",
                 "createdOn": "2019-08-24T14:15:22Z",
                 "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
                 "id": "string",
                 "authProvider": "string",
                 "authId": "string",
@@ -19372,6 +19511,8 @@ UserInvitationWithRelations
         "deletedBy": "string",
         "createdOn": "2019-08-24T14:15:22Z",
         "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
         "id": "string",
         "locale": "string",
         "status": 12,
@@ -19564,6 +19705,8 @@ UserInvitationWithRelations
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "authProvider": "string",
             "authId": "string",
@@ -19644,6 +19787,8 @@ UserInvitationWithRelations
                 "deletedBy": "string",
                 "createdOn": "2019-08-24T14:15:22Z",
                 "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
                 "id": "string",
                 "authProvider": "string",
                 "authId": "string",
@@ -19946,6 +20091,8 @@ UserInvitationWithRelations
         "deletedBy": "string",
         "createdOn": "2019-08-24T14:15:22Z",
         "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
         "id": "string",
         "locale": "string",
         "status": 12,
@@ -20125,6 +20272,8 @@ UserInvitationWithRelations
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "authProvider": "string",
             "authId": "string",
@@ -20205,6 +20354,8 @@ UserInvitationWithRelations
                 "deletedBy": "string",
                 "createdOn": "2019-08-24T14:15:22Z",
                 "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
                 "id": "string",
                 "authProvider": "string",
                 "authId": "string",
@@ -20462,6 +20613,8 @@ UserInvitationWithRelations
         "deletedBy": "string",
         "createdOn": "2019-08-24T14:15:22Z",
         "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
         "id": "string",
         "locale": "string",
         "status": 12,
@@ -20654,6 +20807,8 @@ UserInvitationWithRelations
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "authProvider": "string",
             "authId": "string",
@@ -20734,6 +20889,8 @@ UserInvitationWithRelations
                 "deletedBy": "string",
                 "createdOn": "2019-08-24T14:15:22Z",
                 "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
                 "id": "string",
                 "authProvider": "string",
                 "authId": "string",
@@ -21016,6 +21173,8 @@ UserTenantWithRelations
 |deletedBy|string¦null|false|none|none|
 |createdOn|string(date-time)|false|none|none|
 |modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
 |id|string|false|none|none|
 |locale|string|false|none|none|
 |status|number|false|none|none|
@@ -21094,6 +21253,8 @@ UserTenantWithRelations
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "locale": "string",
             "status": 12,
@@ -21129,6 +21290,8 @@ UserTenantWithRelations
                 "deletedBy": "string",
                 "createdOn": "2019-08-24T14:15:22Z",
                 "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
                 "id": "string",
                 "authProvider": "string",
                 "authId": "string",
@@ -21322,6 +21485,8 @@ UserTenantWithRelations
               "deletedBy": "string",
               "createdOn": "2019-08-24T14:15:22Z",
               "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
               "id": "string",
               "authProvider": "string",
               "authId": "string",
@@ -21338,6 +21503,8 @@ UserTenantWithRelations
                 "deletedBy": "string",
                 "createdOn": "2019-08-24T14:15:22Z",
                 "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
                 "id": "string",
                 "locale": "string",
                 "status": 12,
@@ -21508,6 +21675,8 @@ UserTenantWithRelations
                 "deletedBy": "string",
                 "createdOn": "2019-08-24T14:15:22Z",
                 "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
                 "id": "string",
                 "locale": "string",
                 "status": 12,
@@ -21543,6 +21712,8 @@ UserTenantWithRelations
                     "deletedBy": "string",
                     "createdOn": "2019-08-24T14:15:22Z",
                     "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
                     "id": "string",
                     "authProvider": "string",
                     "authId": "string",
@@ -21703,6 +21874,8 @@ UserTenantWithRelations
                   "deletedBy": "string",
                   "createdOn": "2019-08-24T14:15:22Z",
                   "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
                   "id": "string",
                   "locale": "string",
                   "status": 12,
@@ -21779,6 +21952,8 @@ UserTenantWithRelations
       "deletedBy": "string",
       "createdOn": "2019-08-24T14:15:22Z",
       "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
       "id": "string",
       "locale": "string",
       "status": 12,
@@ -21969,6 +22144,8 @@ UserTenantWithRelations
           "deletedBy": "string",
           "createdOn": "2019-08-24T14:15:22Z",
           "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
           "id": "string",
           "authProvider": "string",
           "authId": "string",
@@ -22047,6 +22224,8 @@ UserTenantWithRelations
               "deletedBy": "string",
               "createdOn": "2019-08-24T14:15:22Z",
               "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
               "id": "string",
               "authProvider": "string",
               "authId": "string",
@@ -22392,6 +22571,8 @@ UserTenantWithRelations
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "locale": "string",
             "status": 12,
@@ -22577,6 +22758,8 @@ UserTenantWithRelations
                 "deletedBy": "string",
                 "createdOn": "2019-08-24T14:15:22Z",
                 "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
                 "id": "string",
                 "locale": "string",
                 "status": 12,
@@ -22731,6 +22914,8 @@ UserTenantWithRelations
                   "deletedBy": "string",
                   "createdOn": "2019-08-24T14:15:22Z",
                   "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
                   "id": "string",
                   "locale": "string",
                   "status": 12,
@@ -22779,6 +22964,8 @@ UserTenantWithRelations
         "deletedBy": "string",
         "createdOn": "2019-08-24T14:15:22Z",
         "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
         "id": "string",
         "authProvider": "string",
         "authId": "string",
@@ -22795,6 +22982,8 @@ UserTenantWithRelations
           "deletedBy": "string",
           "createdOn": "2019-08-24T14:15:22Z",
           "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
           "id": "string",
           "locale": "string",
           "status": 12,
@@ -23136,6 +23325,8 @@ UserTenantWithRelations
           "deletedBy": "string",
           "createdOn": "2019-08-24T14:15:22Z",
           "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
           "id": "string",
           "locale": "string",
           "status": 12,
@@ -23231,6 +23422,8 @@ UserTenantWithRelations
               "deletedBy": "string",
               "createdOn": "2019-08-24T14:15:22Z",
               "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
               "id": "string",
               "authProvider": "string",
               "authId": "string",
@@ -23311,6 +23504,8 @@ UserTenantWithRelations
                   "deletedBy": "string",
                   "createdOn": "2019-08-24T14:15:22Z",
                   "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
                   "id": "string",
                   "authProvider": "string",
                   "authId": "string",
@@ -23521,6 +23716,8 @@ UserTenantWithRelations
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "locale": "string",
             "status": 12,
@@ -23618,6 +23815,8 @@ UserTenantWithRelations
                 "deletedBy": "string",
                 "createdOn": "2019-08-24T14:15:22Z",
                 "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
                 "id": "string",
                 "authProvider": "string",
                 "authId": "string",
@@ -23698,6 +23897,8 @@ UserTenantWithRelations
                     "deletedBy": "string",
                     "createdOn": "2019-08-24T14:15:22Z",
                     "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
                     "id": "string",
                     "authProvider": "string",
                     "authId": "string",
@@ -24697,6 +24898,8 @@ NewUserTenantPrefs
     "deletedBy": "string",
     "createdOn": "2019-08-24T14:15:22Z",
     "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
     "id": "string",
     "locale": "string",
     "status": 12,
@@ -24889,6 +25092,8 @@ NewUserTenantPrefs
         "deletedBy": "string",
         "createdOn": "2019-08-24T14:15:22Z",
         "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
         "id": "string",
         "authProvider": "string",
         "authId": "string",
@@ -24969,6 +25174,8 @@ NewUserTenantPrefs
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "authProvider": "string",
             "authId": "string",

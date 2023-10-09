@@ -1,16 +1,20 @@
-import {inject, Getter} from '@loopback/core';
+// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+import {Getter, inject} from '@loopback/core';
+import {BelongsToAccessor, juggler, repository} from '@loopback/repository';
 import {
-  DefaultCrudRepository,
-  juggler,
-  repository,
-  BelongsToAccessor,
-} from '@loopback/repository';
-import {UserGroup, UserGroupRelations, Group, UserTenant} from '../models';
+  DefaultUserModifyCrudRepository,
+  IAuthUserWithPermissions,
+} from '@sourceloop/core';
+import {AuthenticationBindings} from 'loopback4-authentication';
 import {UserTenantDataSourceName} from '../keys';
+import {Group, UserGroup, UserGroupRelations, UserTenant} from '../models';
 import {GroupRepository} from './group.repository';
 import {UserTenantRepository} from './user-tenant.repository';
 
-export class UserGroupRepository extends DefaultCrudRepository<
+export class UserGroupRepository extends DefaultUserModifyCrudRepository<
   UserGroup,
   typeof UserGroup.prototype.id,
   UserGroupRelations
@@ -32,8 +36,12 @@ export class UserGroupRepository extends DefaultCrudRepository<
     protected groupRepositoryGetter: Getter<GroupRepository>,
     @repository.getter('UserTenantRepository')
     protected userTenantRepositoryGetter: Getter<UserTenantRepository>,
+    @inject.getter(AuthenticationBindings.CURRENT_USER)
+    protected readonly getCurrentUser: Getter<
+      IAuthUserWithPermissions | undefined
+    >,
   ) {
-    super(UserGroup, dataSource);
+    super(UserGroup, dataSource, getCurrentUser);
     this.userTenant = this.createBelongsToAccessorFor(
       'userTenant',
       userTenantRepositoryGetter,

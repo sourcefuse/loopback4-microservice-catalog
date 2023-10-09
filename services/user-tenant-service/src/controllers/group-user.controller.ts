@@ -1,3 +1,7 @@
+// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {Getter, inject, intercept} from '@loopback/core';
 import {Filter, Where, repository} from '@loopback/repository';
 import {
@@ -57,7 +61,7 @@ export class GroupUserController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Array of Group has many UserGroup',
+        description: 'Array of UserGroup of a Group',
         content: {
           'application/json': {
             schema: {type: 'array', items: getModelSchemaRef(UserGroup)},
@@ -86,7 +90,7 @@ export class GroupUserController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Group model instance',
+        description: 'UserGroup model instance',
         content: {'application/json': {schema: getModelSchemaRef(UserGroup)}},
       },
     },
@@ -122,7 +126,7 @@ export class GroupUserController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Group model instance',
+        description: 'UserGroup model instance',
         content: {
           'application/json': {
             schema: {type: 'array', items: getModelSchemaRef(UserGroup)},
@@ -167,7 +171,7 @@ export class GroupUserController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Group.UserGroup DELETE success count',
+        description: 'DELETE Group.UserGroup',
       },
     },
   })

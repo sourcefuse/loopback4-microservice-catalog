@@ -9,7 +9,7 @@ import {AuthenticationBindings} from 'loopback4-authentication';
 import {UserTenantServiceApplication} from '../../application';
 import {PermissionKey} from '../../enums';
 import {TenantConfig} from '../../models';
-import {setupApplication} from './test-helper';
+import {issuer, secret, setupApplication} from './test-helper';
 
 describe('Tenant Tenant-Config Controller', function (this: Mocha.Suite) {
   this.timeout(10000);
@@ -87,9 +87,9 @@ describe('Tenant Tenant-Config Controller', function (this: Mocha.Suite) {
       password: pass,
       permissions: [],
     };
-    const newToken = jwt.sign(newTestUser, 'test_secret', {
+    const newToken = jwt.sign(newTestUser, secret, {
       expiresIn: 180000,
-      issuer: 'sf',
+      issuer: issuer,
     });
     await client
       .post(`${basePath}/${id}/tenant-configs`)
@@ -105,9 +105,9 @@ describe('Tenant Tenant-Config Controller', function (this: Mocha.Suite) {
 
   function setCurrentUser() {
     app.bind(AuthenticationBindings.CURRENT_USER).to(testUser);
-    token = jwt.sign(testUser, 'test_secret', {
+    token = jwt.sign(testUser, secret, {
       expiresIn: 180000,
-      issuer: 'sf',
+      issuer,
     });
   }
 });

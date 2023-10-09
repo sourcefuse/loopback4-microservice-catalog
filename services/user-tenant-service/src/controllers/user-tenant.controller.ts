@@ -1,19 +1,23 @@
+// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+import {inject} from '@loopback/core';
 import {Filter, repository} from '@loopback/repository';
-import {get, getModelSchemaRef, HttpErrors, param} from '@loopback/rest';
-import {UserTenant, Tenant} from '../models';
-import {TenantRepository, UserTenantRepository} from '../repositories';
+import {HttpErrors, get, getModelSchemaRef, param} from '@loopback/rest';
 import {
   IAuthUserWithPermissions,
   OPERATION_SECURITY_SPEC,
 } from '@sourceloop/core';
 import {
-  authenticate,
   AuthenticationBindings,
   STRATEGY,
+  authenticate,
 } from 'loopback4-authentication';
-import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
+import {AuthorizeErrorKeys, authorize} from 'loopback4-authorization';
 import {PermissionKey, STATUS_CODE} from '../enums';
-import {inject} from '@loopback/core';
+import {Tenant, UserTenant} from '../models';
+import {TenantRepository, UserTenantRepository} from '../repositories';
 
 const baseUrl = '/user/{id}/tenants';
 
@@ -36,7 +40,7 @@ export class UserTenantController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Array of Tenant User is a part of',
+        description: 'Array of Tenants to Which the User Belongs',
         content: {
           'application/json': {
             schema: {type: 'array', items: getModelSchemaRef(Tenant)},

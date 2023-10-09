@@ -23,7 +23,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Group model instance",
+            "description": "UserGroup model instance",
             "content": {
               "application/json": {
                 "schema": {
@@ -77,7 +77,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Group.UserGroup DELETE success count"
+            "description": "DELETE Group.UserGroup"
           }
         },
         "description": "\n\n| Permissions |\n| ------- |\n| RemoveMemberFromUserGroup   |\n| 22   |\n",
@@ -130,7 +130,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Group model instance",
+            "description": "UserGroup model instance",
             "content": {
               "application/json": {
                 "schema": {
@@ -176,7 +176,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Array of Group has many UserGroup",
+            "description": "Array of UserGroup of a Group",
             "content": {
               "application/json": {
                 "schema": {
@@ -273,7 +273,7 @@
         ],
         "responses": {
           "204": {
-            "description": "Tenant.Group DELETE success count",
+            "description": "Tenant.Group DELETE",
             "content": {
               "application/json": {
                 "schema": {
@@ -333,7 +333,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Tenant model instance",
+            "description": "Group model instance",
             "content": {
               "application/json": {
                 "schema": {
@@ -439,7 +439,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Array of Tenant has many Group",
+            "description": "Array of Groups of Tenant",
             "content": {
               "application/json": {
                 "schema": {
@@ -492,7 +492,7 @@
         ],
         "responses": {
           "204": {
-            "description": "Tenant.Role DELETE success count",
+            "description": "Tenant.Role DELETE success",
             "content": {
               "application/json": {
                 "schema": {
@@ -552,7 +552,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Tenant model instance",
+            "description": "Role model instance",
             "content": {
               "application/json": {
                 "schema": {
@@ -658,7 +658,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Array of Tenant has many Role",
+            "description": "Array of Roles of Tenant",
             "content": {
               "application/json": {
                 "schema": {
@@ -711,7 +711,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Tenant model instance",
+            "description": "TenantConfig model instance",
             "content": {
               "application/json": {
                 "schema": {
@@ -817,7 +817,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Array of Tenant has many TenantConfig",
+            "description": "Array of TenantConfigs of Tenant",
             "content": {
               "application/json": {
                 "schema": {
@@ -920,7 +920,7 @@
         ],
         "responses": {
           "204": {
-            "description": "Tenant.User PATCH success count"
+            "description": "Tenant.User PATCH"
           }
         },
         "description": "\n\n| Permissions |\n| ------- |\n| UpdateTenantUser   |\n| 14   |\n",
@@ -981,7 +981,7 @@
         ],
         "responses": {
           "204": {
-            "description": "Tenant.User DELETE success count"
+            "description": "Tenant.User DELETE"
           }
         },
         "description": "\n\n| Permissions |\n| ------- |\n| DeleteTenantUser   |\n| 15   |\n",
@@ -1034,7 +1034,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Tenant model instance",
+            "description": "User model instance",
             "content": {
               "application/json": {
                 "schema": {
@@ -1080,7 +1080,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Array of Tenant has many User",
+            "description": "Array of Users of Tenant",
             "content": {
               "application/json": {
                 "schema": {
@@ -1133,14 +1133,7 @@
         ],
         "responses": {
           "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "description": "Tenant PUT success"
-                }
-              }
-            }
+            "description": "Tenant PUT success"
           }
         },
         "description": "\n\n| Permissions |\n| ------- |\n| UpdateTenant   |\n| 18   |\n",
@@ -1179,14 +1172,7 @@
         ],
         "responses": {
           "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "description": "Tenant PATCH success"
-                }
-              }
-            }
+            "description": "Tenant PATCH success"
           }
         },
         "description": "\n\n| Permissions |\n| ------- |\n| UpdateTenant   |\n| 18   |\n",
@@ -1272,14 +1258,7 @@
         ],
         "responses": {
           "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "description": "Tenant DELETE success"
-                }
-              }
-            }
+            "description": "Tenant DELETE success"
           }
         },
         "description": "\n\n| Permissions |\n| ------- |\n| DeleteTenant   |\n| DeleteTenantUser   |\n",
@@ -1440,7 +1419,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Array of Tenant User is a part of",
+            "description": "Array of Tenants to Which the User Belongs",
             "content": {
               "application/json": {
                 "schema": {
@@ -1654,7 +1633,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Array of UserTenant has many UserGroup",
+            "description": "Array of UserGroups of UserTenant",
             "content": {
               "application/json": {
                 "schema": {
@@ -1707,7 +1686,7 @@
         ],
         "responses": {
           "200": {
-            "description": "UserTenant model instance",
+            "description": "UserLevelPermission model instance",
             "content": {
               "application/json": {
                 "schema": {
@@ -1813,7 +1792,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Array of UserTenant has many UserLevelPermission",
+            "description": "Array of UserLevelPermissions of UserTenant",
             "content": {
               "application/json": {
                 "schema": {
@@ -2378,6 +2357,12 @@
             "type": "string",
             "format": "date-time"
           },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
           "id": {
             "type": "string"
           },
@@ -2897,6 +2882,12 @@
           "modifiedOn": {
             "type": "string",
             "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
           },
           "id": {
             "type": "string"

@@ -41,11 +41,14 @@ function setUpEnv() {
   process.env.NODE_ENV = 'test';
   process.env.ENABLE_TRACING = '0';
   process.env.ENABLE_OBF = '0';
-  process.env.JWT_SECRET = 'test_secret';
-  process.env.JWT_ISSUER = 'sf';
+  process.env.JWT_SECRET = secret;
+  process.env.JWT_ISSUER = issuer;
 }
 
 export interface AppWithClient {
   app: UserTenantServiceApplication;
   client: Client;
 }
+
+export const issuer = 'sf';
+export const secret = 'test_secret';

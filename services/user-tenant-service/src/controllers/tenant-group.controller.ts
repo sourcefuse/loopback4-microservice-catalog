@@ -1,37 +1,41 @@
+// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+import {inject, intercept} from '@loopback/core';
 import {
   Count,
   CountSchema,
   Filter,
-  repository,
   Where,
+  repository,
 } from '@loopback/repository';
 import {
+  HttpErrors,
   del,
   get,
   getModelSchemaRef,
   getWhereSchemaFor,
-  HttpErrors,
   param,
   patch,
   post,
   requestBody,
 } from '@loopback/rest';
-import {Tenant, Group} from '../models';
-import {GroupRepository, TenantRepository} from '../repositories';
-import {
-  authenticate,
-  AuthenticationBindings,
-  STRATEGY,
-} from 'loopback4-authentication';
-import {authorize} from 'loopback4-authorization';
-import {PermissionKey, STATUS_CODE} from '../enums';
 import {
   IAuthUserWithPermissions,
   OPERATION_SECURITY_SPEC,
 } from '@sourceloop/core';
-import {inject, intercept} from '@loopback/core';
-import {UserGroupService} from '../services';
+import {
+  AuthenticationBindings,
+  STRATEGY,
+  authenticate,
+} from 'loopback4-authentication';
+import {authorize} from 'loopback4-authorization';
+import {PermissionKey, STATUS_CODE} from '../enums';
 import {UserTenantServiceKey} from '../keys';
+import {Group, Tenant} from '../models';
+import {GroupRepository, TenantRepository} from '../repositories';
+import {UserGroupService} from '../services';
 const baseUrl = '/tenants/{id}/groups';
 
 @intercept(UserTenantServiceKey.TenantInterceptorInterceptor)
@@ -56,7 +60,7 @@ export class TenantGroupController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Array of Tenant has many Group',
+        description: 'Array of Groups of Tenant',
         content: {
           'application/json': {
             schema: {type: 'array', items: getModelSchemaRef(Group)},
@@ -82,7 +86,7 @@ export class TenantGroupController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Tenant model instance',
+        description: 'Group model instance',
         content: {'application/json': {schema: getModelSchemaRef(Group)}},
       },
     },
@@ -159,7 +163,7 @@ export class TenantGroupController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
-        description: 'Tenant.Group DELETE success count',
+        description: 'Tenant.Group DELETE',
         content: {'application/json': {schema: CountSchema}},
       },
     },

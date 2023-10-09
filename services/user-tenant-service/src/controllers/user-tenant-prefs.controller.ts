@@ -1,3 +1,8 @@
+// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+import {inject} from '@loopback/core';
 import {
   Count,
   CountSchema,
@@ -6,17 +11,15 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
-  del,
+  HttpErrors,
+  param,
+  post,
   requestBody,
   response,
-  HttpErrors,
 } from '@loopback/rest';
-import {UserTenantPrefs} from '../models';
-import {UserTenantPrefsRepository} from '../repositories';
 import {
   IAuthUserWithPermissions,
   OPERATION_SECURITY_SPEC,
@@ -28,7 +31,8 @@ import {
 } from 'loopback4-authentication';
 import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
 import {PermissionKey, STATUS_CODE} from '../enums';
-import {inject} from '@loopback/core';
+import {UserTenantPrefs} from '../models';
+import {UserTenantPrefsRepository} from '../repositories';
 
 const baseUrl = '/user-tenant-prefs';
 

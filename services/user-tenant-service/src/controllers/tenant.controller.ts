@@ -1,3 +1,7 @@
+// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {
   Count,
   CountSchema,
@@ -7,22 +11,21 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
-  response,
 } from '@loopback/rest';
-import {Tenant} from '../models';
-import {TenantRepository} from '../repositories';
+import {OPERATION_SECURITY_SPEC} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKey, STATUS_CODE} from '../enums';
-import {OPERATION_SECURITY_SPEC} from '@sourceloop/core';
+import {Tenant} from '../models';
+import {TenantRepository} from '../repositories';
 
 const baseUrl = '/tenants';
 
@@ -38,10 +41,14 @@ export class TenantController {
   @authorize({
     permissions: [PermissionKey.CreateTenant, PermissionKey.CreateTenantNum],
   })
-  @post(baseUrl, {security: OPERATION_SECURITY_SPEC, responses: {}})
-  @response(STATUS_CODE.OK, {
-    description: 'Tenant model instance',
-    content: {'application/json': {schema: getModelSchemaRef(Tenant)}},
+  @post(baseUrl, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Tenant model instance',
+        content: {'application/json': {schema: getModelSchemaRef(Tenant)}},
+      },
+    },
   })
   async create(
     @requestBody({
@@ -65,10 +72,14 @@ export class TenantController {
   @authorize({
     permissions: [PermissionKey.ViewTenant, PermissionKey.ViewTenantNum],
   })
-  @get(`${baseUrl}/count`, {security: OPERATION_SECURITY_SPEC, responses: {}})
-  @response(STATUS_CODE.OK, {
-    description: 'Tenant model count',
-    content: {'application/json': {schema: CountSchema}},
+  @get(`${baseUrl}/count`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Tenant model count',
+        content: {'application/json': {schema: CountSchema}},
+      },
+    },
   })
   async count(@param.where(Tenant) where?: Where<Tenant>): Promise<Count> {
     return this.tenantRepository.count(where);
@@ -80,14 +91,18 @@ export class TenantController {
   @authorize({
     permissions: [PermissionKey.ViewTenant, PermissionKey.ViewTenantNum],
   })
-  @get(baseUrl, {security: OPERATION_SECURITY_SPEC, responses: {}})
-  @response(STATUS_CODE.OK, {
-    description: 'Array of Tenant model instances',
-    content: {
-      'application/json': {
-        schema: {
-          type: 'array',
-          items: getModelSchemaRef(Tenant, {includeRelations: true}),
+  @get(baseUrl, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Array of Tenant model instances',
+        content: {
+          'application/json': {
+            schema: {
+              type: 'array',
+              items: getModelSchemaRef(Tenant, {includeRelations: true}),
+            },
+          },
         },
       },
     },
@@ -102,10 +117,14 @@ export class TenantController {
   @authorize({
     permissions: [PermissionKey.UpdateTenant, PermissionKey.UpdateTenantNum],
   })
-  @patch(baseUrl, {security: OPERATION_SECURITY_SPEC, responses: {}})
-  @response(STATUS_CODE.OK, {
-    description: 'Tenant PATCH success count',
-    content: {'application/json': {schema: CountSchema}},
+  @patch(baseUrl, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Tenant PATCH success count',
+        content: {'application/json': {schema: CountSchema}},
+      },
+    },
   })
   async updateAll(
     @requestBody({
@@ -127,12 +146,16 @@ export class TenantController {
   @authorize({
     permissions: [PermissionKey.ViewTenant, PermissionKey.ViewTenantNum],
   })
-  @get(`${baseUrl}/{id}`, {security: OPERATION_SECURITY_SPEC, responses: {}})
-  @response(STATUS_CODE.OK, {
-    description: 'Tenant model instance',
-    content: {
-      'application/json': {
-        schema: getModelSchemaRef(Tenant, {includeRelations: true}),
+  @get(`${baseUrl}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Tenant model instance',
+        content: {
+          'application/json': {
+            schema: getModelSchemaRef(Tenant, {includeRelations: true}),
+          },
+        },
       },
     },
   })
@@ -150,9 +173,13 @@ export class TenantController {
   @authorize({
     permissions: [PermissionKey.UpdateTenant, PermissionKey.UpdateTenantNum],
   })
-  @patch(`${baseUrl}/{id}`, {security: OPERATION_SECURITY_SPEC, responses: {}})
-  @response(STATUS_CODE.NO_CONTENT, {
-    description: 'Tenant PATCH success',
+  @patch(`${baseUrl}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Tenant PATCH success',
+      },
+    },
   })
   async updateById(
     @param.path.string('id') id: string,
@@ -174,9 +201,13 @@ export class TenantController {
   @authorize({
     permissions: [PermissionKey.UpdateTenant, PermissionKey.UpdateTenantNum],
   })
-  @put(`${baseUrl}/{id}`, {security: OPERATION_SECURITY_SPEC, responses: {}})
-  @response(STATUS_CODE.NO_CONTENT, {
-    description: 'Tenant PUT success',
+  @put(`${baseUrl}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Tenant PUT success',
+      },
+    },
   })
   async replaceById(
     @param.path.string('id') id: string,
@@ -191,9 +222,13 @@ export class TenantController {
   @authorize({
     permissions: [PermissionKey.DeleteTenant, PermissionKey.DeleteTenantUser],
   })
-  @del(`${baseUrl}/{id}`, {security: OPERATION_SECURITY_SPEC, responses: {}})
-  @response(STATUS_CODE.NO_CONTENT, {
-    description: 'Tenant DELETE success',
+  @del(`${baseUrl}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Tenant DELETE success',
+      },
+    },
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.tenantRepository.deleteById(id);

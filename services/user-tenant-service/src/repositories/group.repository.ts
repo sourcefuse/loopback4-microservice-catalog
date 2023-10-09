@@ -1,17 +1,25 @@
-import {inject, Getter} from '@loopback/core';
+// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+import {Getter, inject} from '@loopback/core';
 import {
-  DefaultCrudRepository,
+  HasManyRepositoryFactory,
   juggler,
   repository,
-  HasManyRepositoryFactory,
 } from '@loopback/repository';
-import {Group, GroupRelations, UserGroup} from '../models';
+import {
+  DefaultUserModifyCrudRepository,
+  IAuthUserWithPermissions,
+  tenantGuard,
+} from '@sourceloop/core';
+import {AuthenticationBindings} from 'loopback4-authentication';
 import {UserTenantDataSourceName} from '../keys';
+import {Group, GroupRelations, UserGroup} from '../models';
 import {UserGroupRepository} from './user-group.repository';
-import {tenantGuard} from '@sourceloop/core';
 
 @tenantGuard()
-export class GroupRepository extends DefaultCrudRepository<
+export class GroupRepository extends DefaultUserModifyCrudRepository<
   Group,
   typeof Group.prototype.id,
   GroupRelations
@@ -26,8 +34,12 @@ export class GroupRepository extends DefaultCrudRepository<
     dataSource: juggler.DataSource,
     @repository.getter('UserGroupRepository')
     protected userGroupRepositoryGetter: Getter<UserGroupRepository>,
+    @inject.getter(AuthenticationBindings.CURRENT_USER)
+    protected readonly getCurrentUser: Getter<
+      IAuthUserWithPermissions | undefined
+    >,
   ) {
-    super(Group, dataSource);
+    super(Group, dataSource, getCurrentUser);
     this.userGroups = this.createHasManyRepositoryFactoryFor(
       'userGroups',
       userGroupRepositoryGetter,

@@ -10,7 +10,7 @@ import {UserTenantServiceApplication} from '../../application';
 import {PermissionKey} from '../../enums';
 import {Tenant} from '../../models';
 import {TenantRepository} from '../../repositories';
-import {setupApplication} from './test-helper';
+import {issuer, secret, setupApplication} from './test-helper';
 
 describe('Tenant Controller', function (this: Mocha.Suite) {
   this.timeout(10000);
@@ -147,9 +147,9 @@ describe('Tenant Controller', function (this: Mocha.Suite) {
       permissions: [],
     };
 
-    const newToken = jwt.sign(newTestUser, 'test_secret', {
+    const newToken = jwt.sign(newTestUser, secret, {
       expiresIn: 180000,
-      issuer: 'sf',
+      issuer,
     });
     await client
       .post(basePath)
@@ -168,9 +168,9 @@ describe('Tenant Controller', function (this: Mocha.Suite) {
 
   function setCurrentUser() {
     app.bind(AuthenticationBindings.CURRENT_USER).to(testUser);
-    token = jwt.sign(testUser, 'test_secret', {
+    token = jwt.sign(testUser, secret, {
       expiresIn: 180000,
-      issuer: 'sf',
+      issuer: issuer,
     });
   }
 });

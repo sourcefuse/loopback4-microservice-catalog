@@ -1,15 +1,19 @@
-import {inject, Getter} from '@loopback/core';
+// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+import {Getter, inject} from '@loopback/core';
+import {BelongsToAccessor, juggler, repository} from '@loopback/repository';
 import {
-  DefaultCrudRepository,
-  juggler,
-  repository,
-  BelongsToAccessor,
-} from '@loopback/repository';
-import {UserLevelPermission, UserTenant} from '../models';
+  DefaultUserModifyCrudRepository,
+  IAuthUserWithPermissions,
+} from '@sourceloop/core';
+import {AuthenticationBindings} from 'loopback4-authentication';
 import {UserTenantDataSourceName} from '../keys';
+import {UserLevelPermission, UserTenant} from '../models';
 import {UserTenantRepository} from './user-tenant.repository';
 
-export class UserLevelPermissionRepository extends DefaultCrudRepository<
+export class UserLevelPermissionRepository extends DefaultUserModifyCrudRepository<
   UserLevelPermission,
   typeof UserLevelPermission.prototype.id
 > {
@@ -23,8 +27,12 @@ export class UserLevelPermissionRepository extends DefaultCrudRepository<
     dataSource: juggler.DataSource,
     @repository.getter('UserTenantRepository')
     protected userTenantRepositoryGetter: Getter<UserTenantRepository>,
+    @inject.getter(AuthenticationBindings.CURRENT_USER)
+    protected readonly getCurrentUser: Getter<
+      IAuthUserWithPermissions | undefined
+    >,
   ) {
-    super(UserLevelPermission, dataSource);
+    super(UserLevelPermission, dataSource, getCurrentUser);
     this.userTenant = this.createBelongsToAccessorFor(
       'userTenant',
       userTenantRepositoryGetter,

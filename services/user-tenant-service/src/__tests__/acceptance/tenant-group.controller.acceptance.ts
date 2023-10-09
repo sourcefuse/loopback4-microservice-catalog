@@ -18,7 +18,7 @@ import {
   UserTenantRepository,
 } from '../../repositories';
 import {UserGroupService} from '../../services';
-import {setupApplication} from './test-helper';
+import {issuer, secret, setupApplication} from './test-helper';
 
 describe('Group Controller', function (this: Mocha.Suite) {
   this.timeout(100000);
@@ -106,6 +106,20 @@ describe('Group Controller', function (this: Mocha.Suite) {
       .expect(204);
   });
 
+  it('gives status 200 when a task is updated ', async () => {
+    const group = await groupRepo.create(
+      new Group({
+        name: 'test_admin',
+      }),
+    );
+    await client
+      .patch(`${basePath}/${id}/groups`)
+      .set('authorization', `Bearer ${token}`)
+      .send({name: 'new_admin'})
+      .query({id: group.id})
+      .expect(200);
+  });
+
   it('gives status 403 when user doesnt have the required permissions', async () => {
     const newTestUserId = '9640864d-a84a-e6b4-f20e-918ff280cdbb';
     const newTestUser = {
@@ -116,9 +130,9 @@ describe('Group Controller', function (this: Mocha.Suite) {
       password: pass,
       permissions: [],
     };
-    const newToken = jwt.sign(newTestUser, 'test_secret', {
+    const newToken = jwt.sign(newTestUser, secret, {
       expiresIn: 180000,
-      issuer: 'sf',
+      issuer: issuer,
     });
     app.bind(AuthenticationBindings.CURRENT_USER).to(newTestUser);
     await client
@@ -192,9 +206,9 @@ describe('Group Controller', function (this: Mocha.Suite) {
   function setCurrentUser() {
     app.bind(AuthenticationBindings.CURRENT_USER).to(testUser);
     app.bind(UserTenantServiceKey.UserGroupService).toClass(UserGroupService);
-    token = jwt.sign(testUser, 'test_secret', {
+    token = jwt.sign(testUser, secret, {
       expiresIn: 180000,
-      issuer: 'sf',
+      issuer: issuer,
     });
   }
 });

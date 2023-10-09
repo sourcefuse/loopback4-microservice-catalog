@@ -1,32 +1,40 @@
-import {inject, Getter} from '@loopback/core';
+// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+import {Getter, inject} from '@loopback/core';
 import {
-  DefaultCrudRepository,
+  BelongsToAccessor,
+  HasManyRepositoryFactory,
   juggler,
   repository,
-  HasManyRepositoryFactory,
-  BelongsToAccessor,
 } from '@loopback/repository';
 import {
+  DefaultUserModifyCrudRepository,
+  IAuthUserWithPermissions,
+  tenantGuard,
+} from '@sourceloop/core';
+import {AuthenticationBindings} from 'loopback4-authentication';
+import {UserTenantDataSourceName} from '../keys';
+import {
+  Role,
+  Tenant,
+  User,
+  UserGroup,
+  UserInvitation,
+  UserLevelPermission,
   UserTenant,
   UserTenantRelations,
-  UserLevelPermission,
-  UserGroup,
-  User,
-  Tenant,
-  Role,
-  UserInvitation,
 } from '../models';
-import {UserTenantDataSourceName} from '../keys';
-import {UserLevelPermissionRepository} from './user-level-permission.repository';
-import {UserGroupRepository} from './user-group.repository';
-import {UserRepository} from './user.repository';
-import {TenantRepository} from './tenant.repository';
 import {RoleRepository} from './role.repository';
+import {TenantRepository} from './tenant.repository';
+import {UserGroupRepository} from './user-group.repository';
 import {UserInvitationRepository} from './user-invitation.repository';
-import {tenantGuard} from '@sourceloop/core';
+import {UserLevelPermissionRepository} from './user-level-permission.repository';
+import {UserRepository} from './user.repository';
 
 @tenantGuard()
-export class UserTenantRepository extends DefaultCrudRepository<
+export class UserTenantRepository extends DefaultUserModifyCrudRepository<
   UserTenant,
   typeof UserTenant.prototype.id,
   UserTenantRelations
@@ -70,8 +78,12 @@ export class UserTenantRepository extends DefaultCrudRepository<
     protected roleRepositoryGetter: Getter<RoleRepository>,
     @repository.getter('UserInvitationRepository')
     protected userInvitationRepositoryGetter: Getter<UserInvitationRepository>,
+    @inject.getter(AuthenticationBindings.CURRENT_USER)
+    protected readonly getCurrentUser: Getter<
+      IAuthUserWithPermissions | undefined
+    >,
   ) {
-    super(UserTenant, dataSource);
+    super(UserTenant, dataSource, getCurrentUser);
     this.userInvitations = this.createHasManyRepositoryFactoryFor(
       'userInvitations',
       userInvitationRepositoryGetter,

@@ -3,13 +3,13 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {belongsTo, model, property} from '@loopback/repository';
-import {BaseEntity} from '@sourceloop/core';
+import {UserModifiableEntity} from '@sourceloop/core';
 import {User, UserWithRelations} from './index';
 
 @model({
   name: 'user_credentials',
 })
-export class UserCredentials extends BaseEntity<UserCredentials> {
+export class UserCredentials extends UserModifiableEntity<UserCredentials> {
   @property({
     type: 'string',
     id: true,

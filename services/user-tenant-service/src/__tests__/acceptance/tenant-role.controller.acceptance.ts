@@ -9,7 +9,7 @@ import {UserTenantServiceApplication} from '../../application';
 import {PermissionKey} from '../../enums';
 import {Role} from '../../models';
 import {RoleRepository} from '../../repositories';
-import {setupApplication} from './test-helper';
+import {issuer, secret, setupApplication} from './test-helper';
 
 describe('Role Controller', function (this: Mocha.Suite) {
   this.timeout(10000);
@@ -77,6 +77,20 @@ describe('Role Controller', function (this: Mocha.Suite) {
       .expect(200);
   });
 
+  it('gives status 200 when a task is updated ', async () => {
+    const role = await roleRepo.create(
+      new Role({
+        name: 'admin_devops',
+      }),
+    );
+    await client
+      .patch(`${basePath}/${id}/roles`)
+      .set('authorization', `Bearer ${token}`)
+      .send({name: 'admin_sde'})
+      .query({id: role.id})
+      .expect(200);
+  });
+
   it('gives status 204 when a role is deleted ', async () => {
     const role = await roleRepo.create(
       new Role({
@@ -100,9 +114,9 @@ describe('Role Controller', function (this: Mocha.Suite) {
       password: pass,
       permissions: [],
     };
-    const newToken = jwt.sign(newTestUser, 'test_secret', {
+    const newToken = jwt.sign(newTestUser, secret, {
       expiresIn: 180000,
-      issuer: 'sf',
+      issuer,
     });
     await client
       .post(`${basePath}/${id}/roles`)
@@ -122,9 +136,9 @@ describe('Role Controller', function (this: Mocha.Suite) {
 
   function setCurrentUser() {
     app.bind(AuthenticationBindings.CURRENT_USER).to(testUser);
-    token = jwt.sign(testUser, 'test_secret', {
+    token = jwt.sign(testUser, secret, {
       expiresIn: 180000,
-      issuer: 'sf',
+      issuer: issuer,
     });
   }
 });

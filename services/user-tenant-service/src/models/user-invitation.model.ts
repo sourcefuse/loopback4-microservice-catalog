@@ -1,9 +1,13 @@
+// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {
   DataObject,
   Model,
+  belongsTo,
   model,
   property,
-  belongsTo,
 } from '@loopback/repository';
 import {UserModifiableEntity} from '@sourceloop/core';
 import {UserTenant} from './user-tenant.model';

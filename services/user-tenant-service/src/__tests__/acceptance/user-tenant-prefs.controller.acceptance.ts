@@ -15,7 +15,7 @@ import {
   UserRepository,
   UserTenantRepository,
 } from '../../repositories';
-import {setupApplication} from './test-helper';
+import {issuer, secret, setupApplication} from './test-helper';
 
 interface USER {
   id: string | undefined;
@@ -156,9 +156,9 @@ describe('UserTenantPrefs Controller', function (this: Mocha.Suite) {
 
   function setCurrentUser() {
     app.bind(AuthenticationBindings.CURRENT_USER).to(testUser);
-    token = jwt.sign(testUser, 'test_secret', {
+    token = jwt.sign(testUser, secret, {
       expiresIn: 180000,
-      issuer: 'sf',
+      issuer,
     });
   }
 });

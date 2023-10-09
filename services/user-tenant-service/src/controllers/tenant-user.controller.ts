@@ -1,4 +1,9 @@
-import {Filter, repository, Where} from '@loopback/repository';
+// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+import {inject, intercept} from '@loopback/core';
+import {Filter, Where, repository} from '@loopback/repository';
 import {
   del,
   get,
@@ -9,15 +14,14 @@ import {
   post,
   requestBody,
 } from '@loopback/rest';
+import {OPERATION_SECURITY_SPEC} from '@sourceloop/core';
+import {STRATEGY, authenticate} from 'loopback4-authentication';
+import {authorize} from 'loopback4-authorization';
+import {PermissionKey, STATUS_CODE} from '../enums';
+import {UserTenantServiceKey} from '../keys';
 import {User, UserDto, UserView} from '../models';
 import {TenantRepository, UserRepository} from '../repositories';
-import {PermissionKey, STATUS_CODE} from '../enums';
-import {authenticate, STRATEGY} from 'loopback4-authentication';
-import {authorize} from 'loopback4-authorization';
-import {OPERATION_SECURITY_SPEC} from '@sourceloop/core';
-import {inject, intercept} from '@loopback/core';
 import {UserOperationsService} from '../services';
-import {UserTenantServiceKey} from '../keys';
 const baseUrl = '/tenants/{id}/users';
 
 @intercept(UserTenantServiceKey.TenantInterceptorInterceptor)
@@ -42,7 +46,7 @@ export class TenantUserController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Array of Tenant has many User',
+        description: 'Array of Users of Tenant',
         content: {
           'application/json': {
             schema: {type: 'array', items: getModelSchemaRef(User)},
@@ -71,7 +75,7 @@ export class TenantUserController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Tenant model instance',
+        description: 'User model instance',
         content: {'application/json': {schema: getModelSchemaRef(User)}},
       },
     },
@@ -107,7 +111,7 @@ export class TenantUserController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
-        description: 'Tenant.User PATCH success count',
+        description: 'Tenant.User PATCH',
       },
     },
   })
@@ -143,7 +147,7 @@ export class TenantUserController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
-        description: 'Tenant.User DELETE success count',
+        description: 'Tenant.User DELETE',
       },
     },
   })
