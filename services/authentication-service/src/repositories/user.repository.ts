@@ -6,6 +6,7 @@ import {Getter, inject} from '@loopback/core';
 import {
   BelongsToAccessor,
   DataObject,
+  Entity,
   HasManyRepositoryFactory,
   HasOneRepositoryFactory,
   juggler,
@@ -73,8 +74,10 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
     @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
     @inject(AuthServiceBindings.PASSWORD_DECRYPTION_PROVIDER)
     private readonly passwordDecryptionFn: PasswordDecryptionFn,
+    @inject('models.User')
+    private readonly user: typeof Entity & {prototype: User},
   ) {
-    super(User, dataSource, getCurrentUser);
+    super(user, dataSource, getCurrentUser);
     this.userTenants = this.createHasManyRepositoryFactoryFor(
       'userTenants',
       userTenantRepositoryGetter,

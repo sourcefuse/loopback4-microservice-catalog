@@ -4,19 +4,20 @@
 // https://opensource.org/licenses/MIT
 import {Getter, inject} from '@loopback/core';
 import {
+  Entity,
   HasManyRepositoryFactory,
-  repository,
   juggler,
+  repository,
 } from '@loopback/repository';
-import {AuthenticationBindings} from 'loopback4-authentication';
 import {
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
 } from '@sourceloop/core';
+import {AuthenticationBindings} from 'loopback4-authentication';
 
 import {Tenant, TenantConfig} from '../models';
-import {TenantConfigRepository} from './tenant-config.repository';
 import {AuthDbSourceName} from '../types';
+import {TenantConfigRepository} from './tenant-config.repository';
 
 export class TenantRepository extends DefaultUserModifyCrudRepository<
   Tenant,
@@ -35,8 +36,10 @@ export class TenantRepository extends DefaultUserModifyCrudRepository<
     >,
     @repository.getter('TenantConfigRepository')
     protected tenantConfigRepositoryGetter: Getter<TenantConfigRepository>,
+    @inject('models.Tenant')
+    private readonly tenant: typeof Entity & {prototype: Tenant},
   ) {
-    super(Tenant, dataSource, getCurrentUser);
+    super(tenant, dataSource, getCurrentUser);
     this.tenantConfigs = this.createHasManyRepositoryFactoryFor(
       'tenantConfigs',
       tenantConfigRepositoryGetter,

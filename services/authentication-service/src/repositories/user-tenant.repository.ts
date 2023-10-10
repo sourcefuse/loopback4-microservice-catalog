@@ -5,6 +5,7 @@
 import {Getter, inject} from '@loopback/core';
 import {
   BelongsToAccessor,
+  Entity,
   HasManyRepositoryFactory,
   juggler,
   repository,
@@ -55,8 +56,10 @@ export class UserTenantRepository extends DefaultSoftCrudRepository<
     protected roleRepositoryGetter: Getter<RoleRepository>,
     @repository.getter('UserLevelPermissionRepository')
     protected userLevelPermissionRepositoryGetter: Getter<UserLevelPermissionRepository>,
+    @inject('models.UserTenant')
+    private readonly userTenant: typeof Entity & {prototype: UserTenant},
   ) {
-    super(UserTenant, dataSource);
+    super(userTenant, dataSource);
     this.userLevelPermissions = this.createHasManyRepositoryFactoryFor(
       'userLevelPermissions',
       userLevelPermissionRepositoryGetter,

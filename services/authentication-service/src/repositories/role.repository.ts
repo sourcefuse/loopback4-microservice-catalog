@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {Getter, inject} from '@loopback/core';
-import {juggler} from '@loopback/repository';
+import {Entity, juggler} from '@loopback/repository';
 import {
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
@@ -24,7 +24,9 @@ export class RoleRepository extends DefaultUserModifyCrudRepository<
     protected readonly getCurrentUser: Getter<
       IAuthUserWithPermissions | undefined
     >,
+    @inject('models.Role')
+    private readonly role: typeof Entity & {prototype: Role},
   ) {
-    super(Role, dataSource, getCurrentUser);
+    super(role, dataSource, getCurrentUser);
   }
 }
