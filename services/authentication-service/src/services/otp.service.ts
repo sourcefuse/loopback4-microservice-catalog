@@ -12,17 +12,17 @@ import {AuthClient, User} from '../models';
 import {OtpResponse} from '../modules/auth';
 import {OtpFn, VerifyBindings} from '../providers';
 import {OtpCacheRepository, UserRepository} from '../repositories';
-
+import {UserRepository as SequelizeUserRepository} from '../repositories/sequelize';
 @injectable({scope: BindingScope.TRANSIENT})
 export class OtpService {
   constructor(
     @repository(OtpCacheRepository)
-    private readonly otpCacheRepo: OtpCacheRepository,
+    protected readonly otpCacheRepo: OtpCacheRepository,
     @repository(UserRepository)
-    public userRepository: UserRepository,
-    @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
+    public userRepository: UserRepository | SequelizeUserRepository,
+    @inject(LOGGER.LOGGER_INJECT) protected readonly logger: ILogger,
     @inject(VerifyBindings.OTP_PROVIDER, {optional: true})
-    private readonly otpSender: OtpFn,
+    protected readonly otpSender: OtpFn,
   ) {}
 
   async sendOtp(

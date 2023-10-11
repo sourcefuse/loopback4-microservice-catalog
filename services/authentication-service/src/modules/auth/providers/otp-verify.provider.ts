@@ -5,28 +5,29 @@
 import {inject, Provider} from '@loopback/context';
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
+import {ILogger, LOGGER} from '@sourceloop/core';
 import {
   AuthenticationBindings,
   AuthErrorKeys,
   VerifyFunction,
 } from 'loopback4-authentication';
-import {OtpCacheRepository, UserRepository} from '../../../repositories';
-import {ILogger, LOGGER} from '@sourceloop/core';
 import {totp} from 'otplib';
-import {OtpService} from '../../../services';
 import {AuthClient} from '../../../models';
-
+import {OtpCacheRepository, UserRepository} from '../../../repositories';
+import {UserRepository as SequelizeUserRepository} from '../../../repositories/sequelize';
+import {OtpService} from '../../../services';
+import {OtpService as SequelizeOtpService} from '../../../services/sequelize';
 export class OtpVerifyProvider implements Provider<VerifyFunction.OtpAuthFn> {
   constructor(
     @repository(UserRepository)
-    public userRepository: UserRepository,
+    public userRepository: UserRepository | SequelizeUserRepository,
     @repository(OtpCacheRepository)
     public otpCacheRepo: OtpCacheRepository,
-    @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
+    @inject(LOGGER.LOGGER_INJECT) protected readonly logger: ILogger,
     @inject(AuthenticationBindings.CURRENT_CLIENT)
-    private readonly client: AuthClient,
+    protected readonly client: AuthClient,
     @inject('services.otpService')
-    private readonly otpService: OtpService,
+    protected readonly otpService: OtpService | SequelizeOtpService,
   ) {}
 
   value(): VerifyFunction.OtpAuthFn {

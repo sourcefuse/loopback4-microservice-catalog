@@ -5,12 +5,12 @@
 import {inject, Provider} from '@loopback/context';
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
-import * as GoogleStrategy from 'passport-google-oauth20';
 import {
   AuthErrorKeys,
   IAuthUser,
   VerifyFunction,
 } from 'loopback4-authentication';
+import * as GoogleStrategy from 'passport-google-oauth20';
 
 import {
   GooglePostVerifyFn,
@@ -20,22 +20,27 @@ import {
   VerifyBindings,
 } from '../../../providers';
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
+import {
+  UserCredentialsRepository as SequelizeUserCredentialsRepository,
+  UserRepository as SequelizeUserRepository,
+} from '../../../repositories/sequelize';
 import {AuthUser} from '../models/auth-user.model';
-
 export class GoogleOauth2VerifyProvider
   implements Provider<VerifyFunction.GoogleAuthFn>
 {
   constructor(
     @repository(UserRepository)
-    public userRepository: UserRepository,
+    public userRepository: UserRepository | SequelizeUserRepository,
     @repository(UserCredentialsRepository)
-    public userCredsRepository: UserCredentialsRepository,
+    public userCredsRepository:
+      | UserCredentialsRepository
+      | SequelizeUserCredentialsRepository,
     @inject(SignUpBindings.GOOGLE_SIGN_UP_PROVIDER)
-    private readonly signupProvider: GoogleSignUpFn,
+    protected readonly signupProvider: GoogleSignUpFn,
     @inject(VerifyBindings.GOOGLE_PRE_VERIFY_PROVIDER)
-    private readonly preVerifyProvider: GooglePreVerifyFn,
+    protected readonly preVerifyProvider: GooglePreVerifyFn,
     @inject(VerifyBindings.GOOGLE_POST_VERIFY_PROVIDER)
-    private readonly postVerifyProvider: GooglePostVerifyFn,
+    protected readonly postVerifyProvider: GooglePostVerifyFn,
   ) {}
 
   value(): VerifyFunction.GoogleAuthFn {

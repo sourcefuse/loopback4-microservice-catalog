@@ -5,27 +5,32 @@
 import {inject, Provider} from '@loopback/context';
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
+import {ILogger, LOGGER} from '@sourceloop/core';
 import {AuthErrorKeys, VerifyFunction} from 'loopback4-authentication';
+import {authenticator} from 'otplib';
+import {UserCredentials} from '../../../models';
 import {
   OtpCacheRepository,
   UserCredentialsRepository,
   UserRepository,
 } from '../../../repositories';
-import {ILogger, LOGGER} from '@sourceloop/core';
-import {authenticator} from 'otplib';
-import {UserCredentials} from '../../../models';
-
+import {
+  UserCredentialsRepository as SequelizeUserCredentialsRepository,
+  UserRepository as SequelizeUserRepository,
+} from '../../../repositories/sequelize';
 export class GoogleAuthenticatorVerifyProvider
   implements Provider<VerifyFunction.OtpAuthFn>
 {
   constructor(
     @repository(UserRepository)
-    public userRepository: UserRepository,
+    public userRepository: UserRepository | SequelizeUserRepository,
     @repository(UserCredentialsRepository)
-    public userCredsRepository: UserCredentialsRepository,
+    public userCredsRepository:
+      | UserCredentialsRepository
+      | SequelizeUserCredentialsRepository,
     @repository(OtpCacheRepository)
     public otpCacheRepo: OtpCacheRepository,
-    @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
+    @inject(LOGGER.LOGGER_INJECT) protected readonly logger: ILogger,
   ) {}
 
   value(): VerifyFunction.OtpAuthFn {

@@ -19,22 +19,27 @@ import {
   KeyCloakSignUpFn,
 } from '../../../providers/types';
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
+import {
+  UserCredentialsRepository as SequelizeUserCredentialsRepository,
+  UserRepository as SequelizeUserRepository,
+} from '../../../repositories/sequelize';
 import {AuthUser} from '../models/auth-user.model';
-
 export class KeycloakVerifyProvider
   implements Provider<VerifyFunction.KeycloakAuthFn>
 {
   constructor(
     @repository(UserRepository)
-    public userRepository: UserRepository,
+    public userRepository: UserRepository | SequelizeUserRepository,
     @repository(UserCredentialsRepository)
-    public userCredsRepository: UserCredentialsRepository,
+    public userCredsRepository:
+      | UserCredentialsRepository
+      | SequelizeUserCredentialsRepository,
     @inject(SignUpBindings.KEYCLOAK_SIGN_UP_PROVIDER)
-    private readonly signupProvider: KeyCloakSignUpFn,
+    protected readonly signupProvider: KeyCloakSignUpFn,
     @inject(VerifyBindings.KEYCLOAK_PRE_VERIFY_PROVIDER)
-    private readonly preVerifyProvider: KeyCloakPreVerifyFn,
+    protected readonly preVerifyProvider: KeyCloakPreVerifyFn,
     @inject(VerifyBindings.KEYCLOAK_POST_VERIFY_PROVIDER)
-    private readonly postVerifyProvider: KeyCloakPostVerifyFn,
+    protected readonly postVerifyProvider: KeyCloakPostVerifyFn,
   ) {}
 
   value(): VerifyFunction.KeycloakAuthFn {

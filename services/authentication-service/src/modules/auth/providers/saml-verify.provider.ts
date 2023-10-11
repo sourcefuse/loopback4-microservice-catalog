@@ -1,5 +1,7 @@
 import {inject, Provider} from '@loopback/core';
 import {repository} from '@loopback/repository';
+import {HttpErrors} from '@loopback/rest';
+import * as SamlStrategy from '@node-saml/passport-saml';
 import {
   AuthErrorKeys,
   IAuthUser,
@@ -13,22 +15,25 @@ import {
   VerifyBindings,
 } from '../../../providers';
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
-import * as SamlStrategy from '@node-saml/passport-saml';
-import {HttpErrors} from '@loopback/rest';
+import {
+  UserCredentialsRepository as SequelizeUserCredentialsRepository,
+  UserRepository as SequelizeUserRepository,
+} from '../../../repositories/sequelize';
 import {AuthUser} from '../models/auth-user.model';
-
 export class SamlVerifyProvider implements Provider<VerifyFunction.SamlFn> {
   constructor(
     @repository(UserRepository)
-    public userRepository: UserRepository,
+    public userRepository: UserRepository | SequelizeUserRepository,
     @repository(UserCredentialsRepository)
-    public userCredsRepository: UserCredentialsRepository,
+    public userCredsRepository:
+      | UserCredentialsRepository
+      | SequelizeUserCredentialsRepository,
     @inject(SignUpBindings.SAML_SIGN_UP_PROVIDER)
-    private readonly signupProvider: SamlSignUpFn,
+    protected readonly signupProvider: SamlSignUpFn,
     @inject(VerifyBindings.SAML_PRE_VERIFY_PROVIDER)
-    private readonly preVerifyProvider: SamlPreVerifyFn,
+    protected readonly preVerifyProvider: SamlPreVerifyFn,
     @inject(VerifyBindings.SAML_POST_VERIFY_PROVIDER)
-    private readonly postVerifyProvider: SamlPostVerifyFn,
+    protected readonly postVerifyProvider: SamlPostVerifyFn,
   ) {}
 
   value(): VerifyFunction.SamlFn {

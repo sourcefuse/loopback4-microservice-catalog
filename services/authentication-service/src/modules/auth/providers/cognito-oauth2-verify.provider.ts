@@ -19,6 +19,10 @@ import {
   VerifyBindings,
 } from '../../../providers';
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
+import {
+  UserCredentialsRepository as SequelizeUserCredentialsRepository,
+  UserRepository as SequelizeUserRepository,
+} from '../../../repositories/sequelize';
 import {AuthUser} from '../models/auth-user.model';
 
 export class CognitoOauth2VerifyProvider
@@ -26,15 +30,17 @@ export class CognitoOauth2VerifyProvider
 {
   constructor(
     @repository(UserRepository)
-    public userRepository: UserRepository,
+    public userRepository: UserRepository | SequelizeUserRepository,
     @repository(UserCredentialsRepository)
-    public userCredsRepository: UserCredentialsRepository,
+    public userCredsRepository:
+      | UserCredentialsRepository
+      | SequelizeUserCredentialsRepository,
     @inject(SignUpBindings.COGNITO_SIGN_UP_PROVIDER)
-    private readonly signupProvider: CognitoSignUpFn,
+    protected readonly signupProvider: CognitoSignUpFn,
     @inject(VerifyBindings.COGNITO_PRE_VERIFY_PROVIDER)
-    private readonly preVerifyProvider: CognitoPreVerifyFn,
+    protected readonly preVerifyProvider: CognitoPreVerifyFn,
     @inject(VerifyBindings.COGNITO_POST_VERIFY_PROVIDER)
-    private readonly postVerifyProvider: CognitoPostVerifyFn,
+    protected readonly postVerifyProvider: CognitoPostVerifyFn,
   ) {}
 
   value(): VerifyFunction.CognitoAuthFn {

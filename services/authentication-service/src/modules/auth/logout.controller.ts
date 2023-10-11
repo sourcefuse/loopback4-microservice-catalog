@@ -26,6 +26,7 @@ import {
   X_TS_TYPE,
 } from '@sourceloop/core';
 import {encode} from 'base-64';
+import crypto from 'crypto';
 import {HttpsProxyAgent} from 'https-proxy-agent';
 import {
   authenticate,
@@ -36,17 +37,6 @@ import {
 import {authorize} from 'loopback4-authorization';
 import fetch from 'node-fetch';
 import {URLSearchParams} from 'url';
-import {LoginActivity, RefreshTokenRequest} from '../../models';
-import {
-  LoginActivityRepository,
-  RefreshTokenRepository,
-  RevokedTokenRepository,
-  UserRepository,
-  UserTenantRepository,
-} from '../../repositories';
-import {AuthServiceBindings} from '../../keys';
-import {ActorId} from '../../types';
-import crypto from 'crypto';
 import {
   AuthClient,
   IUserActivity,
@@ -56,7 +46,22 @@ import {
   User,
   UserTenant,
 } from '../..';
-
+import {AuthServiceBindings} from '../../keys';
+import {LoginActivity, RefreshTokenRequest} from '../../models';
+import {JwtPayloadFn as SequelizeJwtPayloadFn} from '../../providers/sequelize';
+import {
+  LoginActivityRepository,
+  RefreshTokenRepository,
+  RevokedTokenRepository,
+  UserRepository,
+  UserTenantRepository,
+} from '../../repositories';
+import {
+  LoginActivityRepository as SequelizeLoginActivityRepository,
+  UserRepository as SequelizeUserRepository,
+  UserTenantRepository as SequelizeUserTenantRepository,
+} from '../../repositories/sequelize';
+import {ActorId} from '../../types';
 const proxyUrl = process.env.HTTPS_PROXY ?? process.env.HTTP_PROXY;
 
 const getProxyAgent = () => {
@@ -70,27 +75,29 @@ const size = 16;
 
 export class LogoutController {
   constructor(
-    @inject(RestBindings.Http.REQUEST) private readonly req: Request,
+    @inject(RestBindings.Http.REQUEST) protected readonly req: Request,
     @repository(RevokedTokenRepository)
-    private readonly revokedTokens: RevokedTokenRepository,
+    protected readonly revokedTokens: RevokedTokenRepository,
     @repository(RefreshTokenRepository)
     public refreshTokenRepo: RefreshTokenRepository,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @repository(LoginActivityRepository)
-    private readonly loginActivityRepo: LoginActivityRepository,
+    protected readonly loginActivityRepo:
+      | LoginActivityRepository
+      | SequelizeLoginActivityRepository,
     @inject(AuthServiceBindings.ActorIdKey)
-    private readonly actorKey: ActorId,
-    @inject.context() private readonly ctx: RequestContext,
+    protected readonly actorKey: ActorId,
+    @inject.context() protected readonly ctx: RequestContext,
     @repository(UserRepository)
-    public userRepo: UserRepository,
+    public userRepo: UserRepository | SequelizeUserRepository,
     @repository(UserTenantRepository)
-    public userTenantRepo: UserTenantRepository,
+    public userTenantRepo: UserTenantRepository | SequelizeUserTenantRepository,
     @inject(AuthServiceBindings.JWTPayloadProvider)
-    private readonly getJwtPayload: JwtPayloadFn,
+    protected readonly getJwtPayload: JwtPayloadFn | SequelizeJwtPayloadFn,
     @inject(AuthenticationBindings.CURRENT_CLIENT)
-    private readonly client: AuthClient | undefined,
+    protected readonly client: AuthClient | undefined,
     @inject(AuthServiceBindings.MarkUserActivity, {optional: true})
-    private readonly userActivity?: IUserActivity,
+    protected readonly userActivity?: IUserActivity,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {

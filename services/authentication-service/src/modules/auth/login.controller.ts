@@ -55,6 +55,7 @@ import {
   JWTSignerFn,
   JwtPayloadFn,
 } from '../../providers';
+import {JwtPayloadFn as SequelizeJwtPayloadFn} from '../../providers/sequelize';
 import {
   AuthClientRepository,
   LoginActivityRepository,
@@ -68,8 +69,20 @@ import {
   UserRepository,
   UserTenantRepository,
 } from '../../repositories';
+import {
+  AuthClientRepository as SequelizeAuthClientRepository,
+  LoginActivityRepository as SequelizeLoginActivityRepository,
+  RoleRepository as SequelizeRoleRepository,
+  TenantConfigRepository as SequelizeTenantConfigRepository,
+  UserCredentialsRepository as SequelizeUserCredentialsRepository,
+  UserLevelPermissionRepository as SequelizeUserLevelPermissionRepository,
+  UserLevelResourceRepository as SequelizeUserLevelResourceRepository,
+  UserRepository as SequelizeUserRepository,
+  UserTenantRepository as SequelizeUserTenantRepository,
+} from '../../repositories/sequelize';
 import {TenantConfigRepository} from '../../repositories/tenant-config.repository';
 import {LoginHelperService} from '../../services';
+import {LoginHelperService as SequelizeLoginHelperService} from '../../services/sequelize';
 import {ActorId, ExternalTokens, IUserActivity} from '../../types';
 import {
   AuthRefreshTokenRequest,
@@ -80,51 +93,64 @@ import {
 import {AuthUser} from './models/auth-user.model';
 import {ResetPassword} from './models/reset-password.dto';
 import {TokenResponse} from './models/token-response.dto';
-
 export class LoginController {
   constructor(
     @inject(AuthenticationBindings.CURRENT_CLIENT)
-    private readonly client: AuthClient | undefined,
+    protected readonly client: AuthClient | undefined,
     @inject(AuthenticationBindings.CURRENT_USER)
-    private readonly user: AuthUser | undefined,
+    protected readonly user: AuthUser | undefined,
     @repository(AuthClientRepository)
-    public authClientRepository: AuthClientRepository,
+    public authClientRepository:
+      | AuthClientRepository
+      | SequelizeAuthClientRepository,
     @repository(UserRepository)
-    public userRepo: UserRepository,
+    public userRepo: UserRepository | SequelizeUserRepository,
     @repository(OtpCacheRepository)
     public otpCacheRepo: OtpCacheRepository,
     @repository(RoleRepository)
-    public roleRepo: RoleRepository,
+    public roleRepo: RoleRepository | SequelizeRoleRepository,
     @repository(UserLevelPermissionRepository)
-    public utPermsRepo: UserLevelPermissionRepository,
+    public utPermsRepo:
+      | UserLevelPermissionRepository
+      | SequelizeUserLevelPermissionRepository,
     @repository(UserLevelResourceRepository)
-    public userResourcesRepository: UserLevelResourceRepository,
+    public userResourcesRepository:
+      | UserLevelResourceRepository
+      | SequelizeUserLevelResourceRepository,
     @repository(UserTenantRepository)
-    public userTenantRepo: UserTenantRepository,
+    public userTenantRepo: UserTenantRepository | SequelizeUserTenantRepository,
     @repository(RefreshTokenRepository)
     public refreshTokenRepo: RefreshTokenRepository,
     @repository(RevokedTokenRepository)
     public revokedTokensRepo: RevokedTokenRepository,
     @repository(TenantConfigRepository)
-    public tenantConfigRepo: TenantConfigRepository,
+    public tenantConfigRepo:
+      | TenantConfigRepository
+      | SequelizeTenantConfigRepository,
     @repository(UserCredentialsRepository)
-    public userCredsRepository: UserCredentialsRepository,
+    public userCredsRepository:
+      | UserCredentialsRepository
+      | SequelizeUserCredentialsRepository,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @inject(AuthServiceBindings.JWTPayloadProvider)
-    private readonly getJwtPayload: JwtPayloadFn,
+    protected readonly getJwtPayload: JwtPayloadFn | SequelizeJwtPayloadFn,
     @inject('services.LoginHelperService')
-    private readonly loginHelperService: LoginHelperService,
+    protected readonly loginHelperService:
+      | LoginHelperService
+      | SequelizeLoginHelperService,
     @inject(AuthCodeBindings.AUTH_CODE_GENERATOR_PROVIDER)
-    private readonly getAuthCode: AuthCodeGeneratorFn,
+    protected readonly getAuthCode: AuthCodeGeneratorFn,
     @inject(AuthCodeBindings.JWT_SIGNER)
-    private readonly jwtSigner: JWTSignerFn<object>,
+    protected readonly jwtSigner: JWTSignerFn<object>,
     @repository(LoginActivityRepository)
-    private readonly loginActivityRepo: LoginActivityRepository,
+    protected readonly loginActivityRepo:
+      | LoginActivityRepository
+      | SequelizeLoginActivityRepository,
     @inject(AuthServiceBindings.ActorIdKey)
-    private readonly actorKey: ActorId,
-    @inject.context() private readonly ctx: RequestContext,
+    protected readonly actorKey: ActorId,
+    @inject.context() protected readonly ctx: RequestContext,
     @inject(AuthServiceBindings.MarkUserActivity, {optional: true})
-    private readonly userActivity?: IUserActivity,
+    protected readonly userActivity?: IUserActivity,
   ) {}
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)

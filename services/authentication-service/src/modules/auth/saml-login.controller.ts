@@ -1,5 +1,5 @@
-import {inject} from '@loopback/context';
-import {AnyObject, repository} from '@loopback/repository';
+import { inject } from '@loopback/context';
+import { AnyObject, repository } from '@loopback/repository';
 import {
   HttpErrors,
   Request,
@@ -24,22 +24,22 @@ import {
   authenticate,
   authenticateClient,
 } from 'loopback4-authentication';
-import {authorize} from 'loopback4-authorization';
-import {AuthCodeBindings} from '../../providers/keys';
-import {AuthCodeGeneratorFn} from '../../providers/types';
-import {AuthClientRepository} from '../../repositories';
-import {AuthUser} from './models/auth-user.model';
-import {ClientAuthRequest} from './models/client-auth-request.dto';
-import {TokenResponse} from './models/token-response.dto';
-
+import { authorize } from 'loopback4-authorization';
+import { AuthCodeBindings } from '../../providers/keys';
+import { AuthCodeGeneratorFn } from '../../providers/types';
+import { AuthClientRepository } from '../../repositories';
+import { AuthClientRepository as SequelizeAuthClientRepository } from '../../repositories/sequelize';
+import { AuthUser } from './models/auth-user.model';
+import { ClientAuthRequest } from './models/client-auth-request.dto';
+import { TokenResponse } from './models/token-response.dto';
 export class SamlLoginController {
   constructor(
     @repository(AuthClientRepository)
-    public authClientRepository: AuthClientRepository,
+    public authClientRepository: AuthClientRepository|SequelizeAuthClientRepository,
     @inject(LOGGER.LOGGER_INJECT)
     public logger: ILogger,
     @inject(AuthCodeBindings.AUTH_CODE_GENERATOR_PROVIDER)
-    private readonly getAuthCode: AuthCodeGeneratorFn,
+    protected readonly getAuthCode: AuthCodeGeneratorFn,
   ) {}
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)

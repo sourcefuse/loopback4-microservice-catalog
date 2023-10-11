@@ -5,12 +5,7 @@ import {
   Where,
   repository,
 } from '@loopback/repository';
-import {LoginActivityRepository} from '../repositories';
-import {STRATEGY, authenticate} from 'loopback4-authentication';
-import {authorize} from 'loopback4-authorization';
 import {
-  ResponseObject,
-  RestBindings,
   get,
   getFilterSchemaFor,
   getModelSchemaRef,
@@ -22,19 +17,22 @@ import {
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
-import {LoginActivity} from '../models';
-import {ActiveUsersRange, PermissionKey} from '../enums';
-import {ActiveUsersGroupData} from '../types';
-import {inject} from '@loopback/core';
+import {STRATEGY, authenticate} from 'loopback4-authentication';
+import {authorize} from 'loopback4-authorization';
 import moment from 'moment';
+import {ActiveUsersRange, PermissionKey} from '../enums';
+import {LoginActivity} from '../models';
+import {LoginActivityRepository} from '../repositories';
+import {LoginActivityRepository as SequelizeLoginActivityRepository} from '../repositories/sequelize';
+import {ActiveUsersGroupData} from '../types';
 
 const baseUrl = '/login-activity';
-
 export class LoginActivityController {
   constructor(
     @repository(LoginActivityRepository)
-    private readonly loginActivityRepo: LoginActivityRepository,
-    @inject(RestBindings.Http.RESPONSE) private response: ResponseObject,
+    protected readonly loginActivityRepo:
+      | LoginActivityRepository
+      | SequelizeLoginActivityRepository,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {

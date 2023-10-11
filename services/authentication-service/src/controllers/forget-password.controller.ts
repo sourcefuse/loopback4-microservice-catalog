@@ -32,18 +32,22 @@ import {
   ResetPasswordWithClient,
   User,
 } from '../models';
+
 import {ForgotPasswordHandlerFn} from '../providers';
 import {RevokedTokenRepository, UserRepository} from '../repositories';
+import {UserRepository as SequelizeUserRepository} from '../repositories/sequelize';
 import {LoginHelperService} from '../services';
-
+import {LoginHelperService as SequelizeLoginHelperService} from '../services/sequelize';
 export class ForgetPasswordController {
   constructor(
     @repository(UserRepository)
-    private readonly userRepo: UserRepository,
+    protected readonly userRepo: UserRepository | SequelizeUserRepository,
     @repository(RevokedTokenRepository)
-    private readonly revokedTokensRepo: RevokedTokenRepository,
+    protected readonly revokedTokensRepo: RevokedTokenRepository,
     @inject('services.LoginHelperService')
-    private readonly loginHelperService: LoginHelperService,
+    protected readonly loginHelperService:
+      | LoginHelperService
+      | SequelizeLoginHelperService,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
   ) {}
 

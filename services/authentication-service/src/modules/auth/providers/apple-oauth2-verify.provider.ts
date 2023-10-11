@@ -5,12 +5,12 @@
 import {inject, Provider} from '@loopback/context';
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
-import * as AppleStrategy from 'passport-apple';
 import {
   AuthErrorKeys,
   IAuthUser,
   VerifyFunction,
 } from 'loopback4-authentication';
+import * as AppleStrategy from 'passport-apple';
 
 import {
   ApplePostVerifyFn,
@@ -20,22 +20,27 @@ import {
   VerifyBindings,
 } from '../../../providers';
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
+import {
+  UserCredentialsRepository as SequelizeUserCredentialsRepository,
+  UserRepository as SequelizeUserRepository,
+} from '../../../repositories/sequelize';
 import {AuthUser} from '../models/auth-user.model';
-
 export class AppleOauth2VerifyProvider
   implements Provider<VerifyFunction.AppleAuthFn>
 {
   constructor(
     @repository(UserRepository)
-    public userRepository: UserRepository,
+    public userRepository: UserRepository | SequelizeUserRepository,
     @repository(UserCredentialsRepository)
-    public userCredsRepository: UserCredentialsRepository,
+    public userCredsRepository:
+      | UserCredentialsRepository
+      | SequelizeUserCredentialsRepository,
     @inject(SignUpBindings.APPLE_SIGN_UP_PROVIDER)
-    private readonly signupProvider: AppleSignUpFn,
+    protected readonly signupProvider: AppleSignUpFn,
     @inject(VerifyBindings.APPLE_PRE_VERIFY_PROVIDER)
-    private readonly preVerifyProvider: ApplePreVerifyFn,
+    protected readonly preVerifyProvider: ApplePreVerifyFn,
     @inject(VerifyBindings.APPLE_POST_VERIFY_PROVIDER)
-    private readonly postVerifyProvider: ApplePostVerifyFn,
+    protected readonly postVerifyProvider: ApplePostVerifyFn,
   ) {}
 
   value(): VerifyFunction.AppleAuthFn {

@@ -4,41 +4,41 @@
 // https://opensource.org/licenses/MIT
 // Uncomment these imports to begin using these cool features!
 
-import {get, getModelSchemaRef, post, requestBody} from '@loopback/rest';
+import { inject } from '@loopback/core';
+import { AnyObject } from '@loopback/repository';
+import { get, getModelSchemaRef, post, requestBody } from '@loopback/rest';
 import {
   CONTENT_TYPE,
   ErrorCodes,
-  STATUS_CODE,
   OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
 } from '@sourceloop/core';
-import {authorize} from 'loopback4-authorization';
-import {SignupRequestDto} from '../models/signup-request-dto.model';
 import * as jwt from 'jsonwebtoken';
-import {LocalUserProfileDto} from '../models/local-user-profile';
-import {SignupWithTokenReponseDto} from '../models/signup-with-token-response-dto.model';
-import {inject} from '@loopback/core';
-import {PreSignupFn, UserSignupFn} from '../types';
 import {
-  authenticate,
   AuthenticationBindings,
   STRATEGY,
+  authenticate,
 } from 'loopback4-authentication';
-import {SignupRequest} from '../models/signup-request.model';
+import { authorize } from 'loopback4-authorization';
+import { LocalUserProfileDto } from '../models/local-user-profile';
+import { SignupRequestDto } from '../models/signup-request-dto.model';
+import { SignupRequest } from '../models/signup-request.model';
+import { SignupWithTokenReponseDto } from '../models/signup-with-token-response-dto.model';
 import {
   SignUpBindings,
   SignupTokenHandlerFn,
-  VerifyBindings,
+  VerifyBindings
 } from '../providers';
-import {AnyObject} from '@loopback/repository';
+import { PreSignupFn, UserSignupFn } from '../types';
 
 const successResponse = 'Sucess Response.';
 const basePath = '/auth/sign-up';
 export class SignupRequestController {
   constructor(
     @inject(SignUpBindings.PRE_LOCAL_SIGNUP_PROVIDER)
-    private readonly preSignupFn: PreSignupFn<LocalUserProfileDto, AnyObject>,
+    protected readonly preSignupFn: PreSignupFn<LocalUserProfileDto, AnyObject>,
     @inject(SignUpBindings.LOCAL_SIGNUP_PROVIDER)
-    private readonly userSignupFn: UserSignupFn<LocalUserProfileDto, AnyObject>,
+    protected readonly userSignupFn: UserSignupFn<LocalUserProfileDto, AnyObject>,
   ) {}
 
   @authorize({permissions: ['*']})

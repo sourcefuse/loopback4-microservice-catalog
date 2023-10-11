@@ -2,8 +2,8 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {inject} from '@loopback/context';
-import {repository} from '@loopback/repository';
+import { inject } from '@loopback/context';
+import { repository } from '@loopback/repository';
 import {
   get,
   getModelSchemaRef,
@@ -30,13 +30,14 @@ import {
   AuthErrorKeys,
   STRATEGY,
 } from 'loopback4-authentication';
-import {authorize} from 'loopback4-authorization';
-import {URLSearchParams} from 'url';
-import {AuthCodeBindings, AuthCodeGeneratorFn} from '../../providers';
-import {AuthClientRepository} from '../../repositories';
-import {AuthUser} from './models/auth-user.model';
-import {ClientAuthRequest} from './models/client-auth-request.dto';
-import {TokenResponse} from './models/token-response.dto';
+import { authorize } from 'loopback4-authorization';
+import { URLSearchParams } from 'url';
+import { AuthCodeBindings, AuthCodeGeneratorFn } from '../../providers';
+import { AuthClientRepository } from '../../repositories';
+import { AuthClientRepository as SequelizeAuthClientRepository } from '../../repositories/sequelize';
+import { AuthUser } from './models/auth-user.model';
+import { ClientAuthRequest } from './models/client-auth-request.dto';
+import { TokenResponse } from './models/token-response.dto';
 
 const queryGen = (from: 'body' | 'query') => {
   return (req: Request) => {
@@ -49,10 +50,10 @@ const queryGen = (from: 'body' | 'query') => {
 export class CognitoLoginController {
   constructor(
     @repository(AuthClientRepository)
-    public authClientRepository: AuthClientRepository,
+    public authClientRepository: AuthClientRepository|SequelizeAuthClientRepository,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @inject(AuthCodeBindings.AUTH_CODE_GENERATOR_PROVIDER)
-    private readonly getAuthCode: AuthCodeGeneratorFn,
+    protected readonly getAuthCode: AuthCodeGeneratorFn,
   ) {}
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)

@@ -1,10 +1,12 @@
 import {inject, Provider} from '@loopback/core';
 import {repository} from '@loopback/repository';
+import {HttpErrors} from '@loopback/rest';
 import {
   AuthErrorKeys,
   IAuthUser,
   VerifyFunction,
 } from 'loopback4-authentication';
+import * as AzureADStrategy from 'passport-azure-ad';
 import {
   AzureAdPostVerifyFn,
   AzureAdPreVerifyFn,
@@ -13,24 +15,27 @@ import {
   VerifyBindings,
 } from '../../../providers';
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
-import * as AzureADStrategy from 'passport-azure-ad';
-import {HttpErrors} from '@loopback/rest';
+import {
+  UserCredentialsRepository as SequelizeUserCredentialsRepository,
+  UserRepository as SequelizeUserRepository,
+} from '../../../repositories/sequelize';
 import {AuthUser} from '../models/auth-user.model';
-
 export class AzureAdVerifyProvider
   implements Provider<VerifyFunction.AzureADAuthFn>
 {
   constructor(
     @repository(UserRepository)
-    public userRepository: UserRepository,
+    public userRepository: UserRepository | SequelizeUserRepository,
     @repository(UserCredentialsRepository)
-    public userCredsRepository: UserCredentialsRepository,
+    public userCredsRepository:
+      | UserCredentialsRepository
+      | SequelizeUserCredentialsRepository,
     @inject(SignUpBindings.AZURE_AD_SIGN_UP_PROVIDER)
-    private readonly signupProvider: AzureAdSignUpFn,
+    protected readonly signupProvider: AzureAdSignUpFn,
     @inject(VerifyBindings.AZURE_AD_PRE_VERIFY_PROVIDER)
-    private readonly preVerifyProvider: AzureAdPreVerifyFn,
+    protected readonly preVerifyProvider: AzureAdPreVerifyFn,
     @inject(VerifyBindings.AZURE_AD_POST_VERIFY_PROVIDER)
-    private readonly postVerifyProvider: AzureAdPostVerifyFn,
+    protected readonly postVerifyProvider: AzureAdPostVerifyFn,
   ) {}
 
   value(): VerifyFunction.AzureADAuthFn {

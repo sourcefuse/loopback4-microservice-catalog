@@ -107,15 +107,15 @@ import {IAuthServiceConfig, IMfaConfig, IOtpConfig} from './types';
 export class AuthenticationServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
-    private readonly application: RestApplication,
+    protected readonly application: RestApplication,
     @inject(AuthServiceBindings.MfaConfig, {optional: true})
-    private readonly mfaConfig: IMfaConfig,
+    protected readonly mfaConfig: IMfaConfig,
     @inject(AuthServiceBindings.OtpConfig, {optional: true})
-    private readonly otpConfig: IOtpConfig,
+    protected readonly otpConfig: IOtpConfig,
     @inject(AuthServiceBindings.Config, {optional: true})
-    private readonly authConfig?: IAuthServiceConfig,
+    protected readonly authConfig?: IAuthServiceConfig,
     @inject(AuthenticationBindings.CONFIG, {optional: true})
-    private readonly config?: AuthenticationConfig,
+    protected readonly config?: AuthenticationConfig,
   ) {
     this.bindings = [];
     this.providers = {};

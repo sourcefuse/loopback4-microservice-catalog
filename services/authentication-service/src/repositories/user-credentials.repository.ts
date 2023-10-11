@@ -2,13 +2,13 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Getter, inject} from '@loopback/core';
-import {BelongsToAccessor, repository, juggler} from '@loopback/repository';
-import {DefaultSoftCrudRepository} from '@sourceloop/core';
+import { Getter, inject } from '@loopback/core';
+import { BelongsToAccessor, juggler, repository } from '@loopback/repository';
+import { DefaultSoftCrudRepository } from '@sourceloop/core';
 
-import {User, UserCredentials, UserCredentialsRelations} from '../models';
-import {UserRepository} from './user.repository';
-import {AuthDbSourceName} from '../types';
+import { User, UserCredentials, UserCredentialsRelations } from '../models';
+import { AuthDbSourceName } from '../types';
+import { UserRepository } from './user.repository';
 
 export class UserCredentialsRepository extends DefaultSoftCrudRepository<
   UserCredentials,

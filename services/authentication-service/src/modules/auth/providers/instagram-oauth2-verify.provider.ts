@@ -5,12 +5,12 @@
 import {inject, Provider} from '@loopback/context';
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
-import * as InstagramStrategy from 'passport-instagram';
 import {
   AuthErrorKeys,
   IAuthUser,
   VerifyFunction,
 } from 'loopback4-authentication';
+import * as InstagramStrategy from 'passport-instagram';
 
 import {
   InstagramPostVerifyFn,
@@ -20,22 +20,27 @@ import {
   VerifyBindings,
 } from '../../../providers';
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
+import {
+  UserCredentialsRepository as SequelizeUserCredentialsRepository,
+  UserRepository as SequelizeUserRepository,
+} from '../../../repositories/sequelize';
 import {AuthUser} from '../models/auth-user.model';
-
 export class InstagramOauth2VerifyProvider
   implements Provider<VerifyFunction.InstagramAuthFn>
 {
   constructor(
     @repository(UserRepository)
-    public userRepository: UserRepository,
+    public userRepository: UserRepository | SequelizeUserRepository,
     @repository(UserCredentialsRepository)
-    public userCredsRepository: UserCredentialsRepository,
+    public userCredsRepository:
+      | UserCredentialsRepository
+      | SequelizeUserCredentialsRepository,
     @inject(SignUpBindings.INSTAGRAM_SIGN_UP_PROVIDER)
-    private readonly signupProvider: InstagramSignUpFn,
+    protected readonly signupProvider: InstagramSignUpFn,
     @inject(VerifyBindings.INSTAGRAM_PRE_VERIFY_PROVIDER)
-    private readonly preVerifyProvider: InstagramPreVerifyFn,
+    protected readonly preVerifyProvider: InstagramPreVerifyFn,
     @inject(VerifyBindings.INSTAGRAM_POST_VERIFY_PROVIDER)
-    private readonly postVerifyProvider: InstagramPostVerifyFn,
+    protected readonly postVerifyProvider: InstagramPostVerifyFn,
   ) {}
 
   value(): VerifyFunction.InstagramAuthFn {
