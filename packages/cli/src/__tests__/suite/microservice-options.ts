@@ -5,28 +5,16 @@ export const microserviceOptionsSuite = [
     name: 'microservice command to create a facade',
     options: {
       name: 'test',
-      cdk: false,
       facade: true,
       uniquePrefix: 'base',
     },
-    prompts: [
-      {
-        input: {
-          type: 'confirm',
-          name: 'cdk',
-          message: 'include arc-cdk?',
-          default: false,
-        },
-        output: false,
-      },
-    ],
+    prompts: [],
     argv: ['test', '--facade', '--uniquePrefix', 'base'],
   },
   {
     name: 'microservice command to create a microservice including migrations',
     options: {
       name: 'test',
-      cdk: false,
       facade: false,
       uniquePrefix: 'base',
       baseOnService: true,
@@ -35,6 +23,7 @@ export const microserviceOptionsSuite = [
       datasourceType: DATASOURCES.POSTGRES,
       includeMigrations: true,
     },
+    prompts: [],
     argv: [
       'test',
       '--no-facade',
@@ -49,23 +38,11 @@ export const microserviceOptionsSuite = [
       DATASOURCES.POSTGRES,
       '--includeMigrations',
     ],
-    prompts: [
-      {
-        input: {
-          type: 'confirm',
-          name: 'cdk',
-          message: 'include arc-cdk?',
-          default: false,
-        },
-        output: false,
-      },
-    ],
   },
   {
     name: 'microservice command to create a microservice with custom migrations',
     options: {
       name: 'test',
-      cdk: false,
       facade: false,
       uniquePrefix: 'base',
       baseOnService: true,
@@ -74,17 +51,7 @@ export const microserviceOptionsSuite = [
       datasourceType: DATASOURCES.POSTGRES,
       customMigrations: true,
     },
-    prompts: [
-      {
-        input: {
-          type: 'confirm',
-          name: 'cdk',
-          message: 'include arc-cdk?',
-          default: false,
-        },
-        output: false,
-      },
-    ],
+    prompts: [],
     argv: [
       'test',
       '--no-facade',

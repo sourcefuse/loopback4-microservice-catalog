@@ -2,9 +2,9 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {DATASOURCES, IacList, SERVICES} from './enum';
+import { Question } from 'inquirer';
 import Generator from 'yeoman-generator';
-import {Question} from 'inquirer';
+import { DATASOURCES, IacList, SERVICES } from './enum';
 
 export interface ProjectInfo {
   projectType: 'extension' | 'microservice' | 'application';
