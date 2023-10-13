@@ -2,7 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {inject, intercept} from '@loopback/core';
+import {intercept, service} from '@loopback/core';
 import {Filter, Where, repository} from '@loopback/repository';
 import {
   del,
@@ -29,7 +29,7 @@ export class TenantUserController {
   constructor(
     @repository(TenantRepository) protected tenantRepository: TenantRepository,
     @repository(UserRepository) protected userRepository: UserRepository,
-    @inject(UserTenantServiceKey.UserOperationsService)
+    @service(UserOperationsService)
     protected userOperationsService: UserOperationsService,
   ) {}
 

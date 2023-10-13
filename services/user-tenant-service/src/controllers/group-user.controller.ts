@@ -2,7 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Getter, inject, intercept} from '@loopback/core';
+import {Getter, inject, intercept, service} from '@loopback/core';
 import {Filter, Where, repository} from '@loopback/repository';
 import {
   HttpErrors,
@@ -42,7 +42,7 @@ export class GroupUserController {
     protected userTenantRepository: UserTenantRepository,
     @inject(AuthenticationBindings.CURRENT_USER)
     private readonly currentUser: IAuthUserWithPermissions,
-    @inject(UserTenantServiceKey.UserGroupService)
+    @service(UserGroupService)
     private readonly userGroupService: UserGroupService,
     @inject.getter(RestBindings.Http.REQUEST)
     private readonly getRequest: Getter<Request>,

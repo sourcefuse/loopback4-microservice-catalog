@@ -51,6 +51,10 @@ export class TenantInterceptorInterceptor implements Provider<Interceptor> {
     next: () => ValueOrPromise<InvocationResult>,
   ) {
     try {
+      /**
+       * Interceptors are applied to methods in which the tenantId is a parameter within the API endpoint,
+       * which is why we can anticipate that tenantId will be the first argument in the invocationCtx.
+       */
       const tenantId = invocationCtx.args[0];
       if (tenantId !== this.currentUser.tenantId) {
         throw new HttpErrors.Forbidden(

@@ -2,7 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {inject, intercept} from '@loopback/core';
+import {inject, intercept, service} from '@loopback/core';
 import {
   Count,
   CountSchema,
@@ -46,7 +46,7 @@ export class TenantGroupController {
     private readonly currentUser: IAuthUserWithPermissions,
     @repository(GroupRepository)
     public groupRepository: GroupRepository,
-    @inject(UserTenantServiceKey.UserGroupService)
+    @service(UserGroupService)
     private readonly userGroupService: UserGroupService,
   ) {}
 

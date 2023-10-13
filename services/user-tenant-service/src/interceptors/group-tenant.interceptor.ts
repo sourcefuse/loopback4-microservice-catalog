@@ -53,6 +53,10 @@ export class GroupTenantInterceptor implements Provider<Interceptor> {
     next: () => ValueOrPromise<InvocationResult>,
   ) {
     try {
+      /**
+       * Interceptors are applied to methods in which the groupId is a parameter within the API endpoint,
+       * which is why we can anticipate that groupId will be the first argument in the invocationCtx.
+       */
       const groupId = invocationCtx.args[0];
       const groups = await this.groupRepository.find({
         where: {id: groupId},

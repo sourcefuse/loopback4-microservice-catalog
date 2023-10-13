@@ -77,7 +77,7 @@ describe('Role Controller', function (this: Mocha.Suite) {
       .expect(200);
   });
 
-  it('gives status 200 when a task is updated ', async () => {
+  it('gives status 200 when a role is updated ', async () => {
     const role = await roleRepo.create(
       new Role({
         name: 'admin_devops',

@@ -9,6 +9,7 @@ import {
   ControllerClass,
   CoreBindings,
   ProviderMap,
+  createServiceBinding,
   inject,
   injectable,
 } from '@loopback/core';
@@ -108,23 +109,21 @@ export class UserTenantServiceComponent implements Component {
     this.bindings = [];
 
     this.application.component(CoreComponent);
-    this.application
-      .bind(UserTenantServiceKey.UserGroupService)
-      .toClass(UserGroupService);
-    this.application
-      .bind(UserTenantServiceKey.UserOperationsService)
-      .toClass(UserOperationsService);
-    this.application.component(TenantUtilitiesComponent);
 
-    this.application
-      .bind(UserTenantServiceKey.GroupTenantInterceptor)
-      .toProvider(GroupTenantInterceptor);
-    this.application
-      .bind(UserTenantServiceKey.TenantInterceptorInterceptor)
-      .toProvider(TenantInterceptorInterceptor);
-    this.application
-      .bind(UserTenantServiceKey.UserTenantInterceptorInterceptor)
-      .toProvider(UserTenantInterceptorInterceptor);
+    this.bindings = [
+      createServiceBinding(UserGroupService),
+      createServiceBinding(UserOperationsService),
+      Binding.bind(UserTenantServiceKey.GroupTenantInterceptor).toProvider(
+        GroupTenantInterceptor,
+      ),
+      Binding.bind(
+        UserTenantServiceKey.TenantInterceptorInterceptor,
+      ).toProvider(TenantInterceptorInterceptor),
+      Binding.bind(
+        UserTenantServiceKey.UserTenantInterceptorInterceptor,
+      ).toProvider(UserTenantInterceptorInterceptor),
+    ];
+    this.application.component(TenantUtilitiesComponent);
 
     // Mount default sequence if needed
     if (!this.config?.useCustomSequence) {
