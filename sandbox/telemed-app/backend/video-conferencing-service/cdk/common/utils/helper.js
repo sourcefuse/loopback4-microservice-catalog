@@ -1,0 +1,7 @@
+'use strict';
+Object.defineProperty(exports, '__esModule', {value: true});
+exports.getResourceName = void 0;
+const getResourceName = ({namespace, environment, randomName}) =>
+  `${namespace}-${environment}-${randomName}`;
+exports.getResourceName = getResourceName;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaGVscGVyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiaGVscGVyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7OztBQUFPLE1BQU0sZUFBZSxHQUFHLENBQUMsRUFDOUIsU0FBUyxFQUNULFdBQVcsRUFDWCxVQUFVLEdBS1gsRUFBRSxFQUFFLENBQUMsR0FBRyxTQUFTLElBQUksV0FBVyxJQUFJLFVBQVUsRUFBRSxDQUFDO0FBUnJDLFFBQUEsZUFBZSxtQkFRc0IiLCJzb3VyY2VzQ29udGVudCI6WyJleHBvcnQgY29uc3QgZ2V0UmVzb3VyY2VOYW1lID0gKHtcbiAgbmFtZXNwYWNlLFxuICBlbnZpcm9ubWVudCxcbiAgcmFuZG9tTmFtZSxcbn06IHtcbiAgbmFtZXNwYWNlOiBzdHJpbmc7XG4gIGVudmlyb25tZW50OiBzdHJpbmc7XG4gIHJhbmRvbU5hbWU6IHN0cmluZztcbn0pID0+IGAke25hbWVzcGFjZX0tJHtlbnZpcm9ubWVudH0tJHtyYW5kb21OYW1lfWA7XG4iXX0=

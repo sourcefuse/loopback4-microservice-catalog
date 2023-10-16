@@ -35,6 +35,6 @@
     "packages/feature-toggle",
     "packages/custom-sf-changelog/",
     "services/*",
-    "sandbox/**"
+"sandbox/**"
   ]
 }

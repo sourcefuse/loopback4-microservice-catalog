@@ -51,5 +51,7 @@
 	"End date can not be less than start date": "End date can not be less than start date",
 	"Survey can not be activated without a start date": "Survey can not be activated without a start date",
 	"Survey Cannot Be Activated In A Draft State": "Survey Cannot Be Activated In A Draft State",
-	"Invalid value entered in name": "Invalid value entered in name"
+	"Invalid value entered in name": "Invalid value entered in name",
+	"could not update the task": "could not update the task",
+	"Invalid API key or secret": "Invalid API key or secret"
 }
