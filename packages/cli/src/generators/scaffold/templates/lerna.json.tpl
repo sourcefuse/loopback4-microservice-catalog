@@ -1,10 +1,6 @@
 {
   "packages": ["packages/*", "services/*", "facades/*"],
-  "command": {
-    "bootstrap": {
-      "concurrency": 4,
-      "forceLocal": true
-    },
+  "command":{
     "version": {
       "conventionalCommits": true,
       "message": "chore(release): publish"

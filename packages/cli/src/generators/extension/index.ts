@@ -2,11 +2,11 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {AnyObject, ExtensionOptions} from '../../types';
-import BaseExtensionGenerator from '../../extension-generator';
-import {join} from 'path';
-import {JSON_SPACING} from '../../utils';
 import fs from 'fs';
+import {join} from 'path';
+import BaseExtensionGenerator from '../../extension-generator';
+import {AnyObject, ExtensionOptions} from '../../types';
+import {JSON_SPACING} from '../../utils';
 
 export default class ExtensionGenerator extends BaseExtensionGenerator<ExtensionOptions> {
   constructor(public args: string[], public opts: ExtensionOptions) {
@@ -55,7 +55,7 @@ export default class ExtensionGenerator extends BaseExtensionGenerator<Extension
       packageJson.name = `@local/${packageJson.name}`;
       packageJson.license = 'MIT';
       const scripts = packageJson.scripts;
-      scripts.preinstall = 'npm i @loopback/build --no-save && npm run build';
+      scripts.postinstall = 'npm run build';
       scripts.prune = 'npm prune --production';
       packageJson.scripts = scripts;
       fs.writeFileSync(

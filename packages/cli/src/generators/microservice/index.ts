@@ -123,7 +123,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     );
     this.projectInfo.datasourceConnector =
       DATASOURCE_CONNECTORS[
-      this.options.datasourceType ?? DATASOURCES.POSTGRES
+        this.options.datasourceType ?? DATASOURCES.POSTGRES
       ];
     this.projectInfo.datasourceConnectorName =
       this.projectInfo.datasourceConnector;
@@ -225,12 +225,24 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         packageJsonFile,
         JSON.stringify(packageJson, undefined, JSON_SPACING),
       );
-      this.spawnCommandSync('npm', ['i']);
-      this.spawnCommandSync('npm', ['run', 'prettier:fix']);
       this.destinationRoot(join(this.destinationPath(), BACK_TO_ROOT));
+      this.spawnCommandSync('npx', ['lerna', 'clean']);
+      this.spawnCommandSync('npm', ['i']);
 
       this.addMigrations();
-
+      this._appendDockerScript();
+      if (this.options.cdk) {
+        this._includeCdk();
+      } else {
+        const name = this.options.name ?? DEFAULT_NAME;
+        fs.unlink(
+          this.destinationPath(join('services', name, 'src', 'lambda.ts')),
+          () => {},
+        );
+        this.log(
+          this.destinationPath(join('services', name, 'src', 'lambda.ts')),
+        );
+      }
       return true;
     }
     return false;
@@ -282,6 +294,22 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     );
   }
 
+  _appendDockerScript() {
+    const packageJsonFile = join(this.destinationRoot(), './package.json');
+    const packageJson = this.fs.readJSON(packageJsonFile) as AnyObject;
+    const scripts = {...packageJson.scripts};
+    scripts[
+      `docker:build:${this.options.baseService}`
+    ] = `docker build --build-arg SERVICE_NAME=${this.options.baseService} --build-arg FROM_FOLDER=services -t $REPOSITORY_URI-${this.options.baseService}:$CUSTOM_TAG -f ./services/${this.options.name}/Dockerfile .`;
+    packageJson.scripts = scripts;
+    fs.writeFile(
+      packageJsonFile,
+      JSON.stringify(packageJson, undefined, JSON_SPACING),
+      function () {
+        //This is intentional.
+      },
+    );
+  }
   private _setDataSourceName() {
     if (this.options.baseService) {
       return BASESERVICEDSLIST[this.options.baseService];
@@ -442,11 +470,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       if (
         !fs.existsSync(
           this.destinationPath(
-            join(
-              'services',
-              name,
-              sourceloopMigrationPath(this.options.baseService),
-            ),
+            sourceloopMigrationPath(this.options.baseService),
           ),
         )
       ) {
@@ -459,13 +483,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       }
 
       this.fs.copy(
-        this.destinationPath(
-          join(
-            'services',
-            name,
-            sourceloopMigrationPath(this.options.baseService),
-          ),
-        ),
+        this.destinationPath(sourceloopMigrationPath(this.options.baseService)),
         this.destinationPath(join(MIGRATION_FOLDER, name, 'migrations')),
       );
       let connector = MIGRATION_CONNECTORS[DATASOURCES.POSTGRES]; // default
@@ -482,8 +500,36 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       );
 
 
+        this.fs.copy(
+          this.destinationPath(
+            join(
+              'services',
+              name,
+              sourceloopMigrationPath(this.options.baseService),
+              'lambda.js',
+            ),
+          ),
+          this.destinationPath(
+            join('services', name, 'migration', 'lambda.js'),
+          ),
+        );
+        this.fs.delete(
+          join('services', name, 'migration', 'migrations', 'lambda.js'),
+        );
+        this.fs.copy(
+          this.destinationPath(join(MIGRATION_FOLDER, name, dbconfig)),
+          this.destinationPath(join('services', name, 'migration', dbconfig)),
+        );
+      } else {
+        // do nothing
+      }
+      this.fs.delete(join(MIGRATION_FOLDER, name, 'migrations', 'lambda.js'));
+      this.log(
+        this.destinationPath(
+          join(MIGRATION_FOLDER, name, 'migrations', 'lambda.js'),
+        ),
+      );
     }
-
   }
 
   private _migrationExists() {
@@ -536,7 +582,6 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
 
   async end() {
     if (this.projectInfo) {
-      this.spawnCommandSync('lerna', ['bootstrap', '--force-local']);
       this.projectInfo.outdir = this.options.name ?? DEFAULT_NAME;
     }
     await super.end();
