@@ -12,16 +12,16 @@ import {
   Provider,
   ValueOrPromise,
 } from '@loopback/core';
-import { HttpErrors } from '@loopback/rest';
-import { IAuthUserWithPermissions } from '@sourceloop/core';
-import { AuthenticationBindings } from 'loopback4-authentication';
-import { UserTenantServiceKey } from '../keys';
+import {HttpErrors} from '@loopback/rest';
+import {IAuthUserWithPermissions} from '@sourceloop/core';
+import {AuthenticationBindings} from 'loopback4-authentication';
+import {UserTenantServiceKey} from '../keys';
 
 /**
  * This class will be bound to the application as an `Interceptor` during
  * `boot`
  */
-@injectable({ tags: { key: TenantInterceptorInterceptor.BINDING_KEY } })
+@injectable({tags: {key: TenantInterceptorInterceptor.BINDING_KEY}})
 export class TenantInterceptorInterceptor implements Provider<Interceptor> {
   static readonly BINDING_KEY =
     UserTenantServiceKey.TenantInterceptorInterceptor;
@@ -29,7 +29,7 @@ export class TenantInterceptorInterceptor implements Provider<Interceptor> {
   constructor(
     @inject(AuthenticationBindings.CURRENT_USER)
     protected currentUser: IAuthUserWithPermissions,
-  ) { }
+  ) {}
 
   /**
    * This method is used by LoopBack context to produce an interceptor function
