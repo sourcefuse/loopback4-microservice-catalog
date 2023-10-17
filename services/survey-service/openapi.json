@@ -1911,7 +1911,7 @@
         "tags": [
           "SurveyQuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15047   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 15047   |\n| 15021   |\n",
         "responses": {
           "200": {
             "description": "SurveyQuestion model count",
@@ -2051,7 +2051,7 @@
         "tags": [
           "SurveyQuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15047   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 15047   |\n| 15021   |\n",
         "responses": {
           "200": {
             "description": "SurveyQuestion model instance",
@@ -2240,7 +2240,7 @@
         "tags": [
           "SurveyQuestionController"
         ],
-        "description": "\n\n| Permissions |\n| ------- |\n| 15047   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 15047   |\n| 15021   |\n",
         "responses": {
           "200": {
             "description": "Array of SurveyQuestion model instances",

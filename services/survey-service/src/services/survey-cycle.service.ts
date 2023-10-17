@@ -28,9 +28,11 @@ export class SurveyCycleService {
       endDate: moment(new Date(survey.endDate)).format(sqlDateFormat),
       extId: survey.extId,
       surveyId,
+      isActivated: true,
     });
     const surveyCycle = await this.surveyCycleRepository.findOne({
       where: {surveyId},
+      order: ['created_on DESC'],
     });
 
     return Promise.all([

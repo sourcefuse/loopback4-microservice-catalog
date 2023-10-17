@@ -18604,6 +18604,7 @@ fetch('/surveys/{surveyId}/survey-questions/count',
 | Permissions |
 | ------- |
 | 15047   |
+| 15021   |
 
 <h3 id="surveyquestioncontroller.count-parameters">Parameters</h3>
 
@@ -18968,6 +18969,7 @@ fetch('/surveys/{surveyId}/survey-questions/{id}',
 | Permissions |
 | ------- |
 | 15047   |
+| 15021   |
 
 <h3 id="surveyquestioncontroller.findbyid-parameters">Parameters</h3>
 
@@ -20867,6 +20869,7 @@ fetch('/surveys/{surveyId}/survey-questions',
 | Permissions |
 | ------- |
 | 15047   |
+| 15021   |
 
 <h3 id="surveyquestioncontroller.find-parameters">Parameters</h3>
 
