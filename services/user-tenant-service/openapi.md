@@ -1,5 +1,5 @@
 ---
-title: "@sourceloop/user-tenant-service v0.8.0"
+title: "@sourceloop/user-tenant-service v0.8.8"
 language_tabs:
   - javascript: JavaScript
   - javascript--nodejs: Node.JS
@@ -16,7 +16,7 @@ headingLevel: 2
 
 <!-- Generator: Widdershins v4.0.1 -->
 
-<h1 id="-sourceloop-user-tenant-service">@sourceloop/user-tenant-service v0.8.0</h1>
+<h1 id="-sourceloop-user-tenant-service">@sourceloop/user-tenant-service v0.8.8</h1>
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
@@ -26,205 +26,35 @@ Base URLs:
 
 * <a href="/">/</a>
 
-<h1 id="-sourceloop-user-tenant-service-usersignupcontroller">UserSignupController</h1>
+<h1 id="-sourceloop-user-tenant-service-groupusercontroller">GroupUserController</h1>
 
-## UserSignupController.checkUserSignup
+## GroupUserController.createBulkUserGroups
 
-<a id="opIdUserSignupController.checkUserSignup"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/check-signup/{email}',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/check-signup/{email}',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /check-signup/{email}`
-
-| Permissions |
-| ------- |
-| ViewAnyUser   |
-| ViewTenantUser   |
-| 11   |
-| 12   |
-
-<h3 id="usersignupcontroller.checkusersignup-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|email|path|string|true|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "isSignedUp": true
-}
-```
-
-<h3 id="usersignupcontroller.checkusersignup-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Success Response.|[UserSignupCheckDto](#schemausersignupcheckdto)|
-|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|The syntax of the request entity is incorrect.|None|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Invalid Credentials.|None|
-|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
-|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
-
-<aside class="success">
-This operation does not require authentication
-</aside>
-
-<h1 id="-sourceloop-user-tenant-service-groupcontroller">GroupController</h1>
-
-## GroupController.count
-
-<a id="opIdGroupController.count"></a>
+<a id="opIdGroupUserController.createBulkUserGroups"></a>
 
 > Code samples
 
 ```javascript
-
+const inputBody = '[
+  {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "userTenantId": "string"
+  }
+]';
 const headers = {
+  'Content-Type':'application/json',
   'Accept':'application/json'
 };
 
-fetch('/groups/count',
+fetch('/groups/{id}/user/bulk',
 {
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/groups/count',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /groups/count`
-
-| Permissions |
-| ------- |
-| ViewUserGroupList   |
-| 2   |
-
-<h3 id="groupcontroller.count-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|where|query|object|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "count": 0
-}
-```
-
-<h3 id="groupcontroller.count-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Group model count|[loopback.Count](#schemaloopback.count)|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-None
-</aside>
-
-## GroupController.updateById
-
-<a id="opIdGroupController.updateById"></a>
-
-> Code samples
-
-```javascript
-const inputBody = '{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "description": "string",
-  "photoUrl": "string",
-  "groupType": "Tenant"
-}';
-const headers = {
-  'Content-Type':'application/json'
-};
-
-fetch('/groups/{id}',
-{
-  method: 'PATCH',
+  method: 'POST',
   body: inputBody,
   headers: headers
 })
@@ -238,27 +68,26 @@ fetch('/groups/{id}',
 
 ```javascript--nodejs
 const fetch = require('node-fetch');
-const inputBody = {
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "description": "string",
-  "photoUrl": "string",
-  "groupType": "Tenant"
-};
+const inputBody = [
+  {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "userTenantId": "string"
+  }
+];
 const headers = {
-  'Content-Type':'application/json'
+  'Content-Type':'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/groups/{id}',
+fetch('/groups/{id}/user/bulk',
 {
-  method: 'PATCH',
+  method: 'POST',
   body: JSON.stringify(inputBody),
   headers: headers
 })
@@ -270,152 +99,97 @@ fetch('/groups/{id}',
 
 ```
 
-`PATCH /groups/{id}`
+`POST /groups/{id}/user/bulk`
 
 | Permissions |
 | ------- |
-| UpdateUserGroup   |
-| 3   |
+| CreateMultipleUserGroup   |
+| 31   |
 
 > Body parameter
 
 ```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "description": "string",
-  "photoUrl": "string",
-  "groupType": "Tenant"
-}
+[
+  {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "userTenantId": "string"
+  }
+]
 ```
 
-<h3 id="groupcontroller.updatebyid-parameters">Parameters</h3>
+<h3 id="groupusercontroller.createbulkusergroups-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
 |id|path|string|true|none|
-|body|body|[GroupPartial](#schemagrouppartial)|false|none|
-
-<h3 id="groupcontroller.updatebyid-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Group PATCH success|None|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-None
-</aside>
-
-## GroupController.findById
-
-<a id="opIdGroupController.findById"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/groups/{id}',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/groups/{id}',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /groups/{id}`
-
-| Permissions |
-| ------- |
-| ViewUserGroupList   |
-| ViewUserGroupList   |
-
-<h3 id="groupcontroller.findbyid-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|id|path|string|true|none|
-|filter|query|[groups.Filter](#schemagroups.filter)|false|none|
+|body|body|[NewUserGroupInGroup](#schemanewusergroupingroup)|false|none|
 
 > Example responses
 
 > 200 Response
 
 ```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "description": "string",
-  "photoUrl": "string",
-  "groupType": "Tenant"
-}
+[
+  {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "groupId": "string",
+    "userTenantId": "string"
+  }
+]
 ```
 
-<h3 id="groupcontroller.findbyid-responses">Responses</h3>
+<h3 id="groupusercontroller.createbulkusergroups-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Group model instance|[Group](#schemagroup)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|UserGroup model instance|Inline|
+
+<h3 id="groupusercontroller.createbulkusergroups-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[UserGroup](#schemausergroup)]|false|none|none|
+|» UserGroup|[UserGroup](#schemausergroup)|false|none|none|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|string(date-time)¦null|false|none|none|
+|»» deletedBy|string¦null|false|none|none|
+|»» createdOn|string(date-time)|false|none|none|
+|»» modifiedOn|string(date-time)|false|none|none|
+|»» createdBy|string|false|none|none|
+|»» modifiedBy|string|false|none|none|
+|»» id|string|false|none|none|
+|»» groupId|string|true|none|none|
+|»» userTenantId|string|true|none|none|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
 None
 </aside>
 
-## GroupController.deleteById
+## GroupUserController.delete
 
-<a id="opIdGroupController.deleteById"></a>
+<a id="opIdGroupUserController.delete"></a>
 
 > Code samples
 
 ```javascript
 
-fetch('/groups/{id}',
+fetch('/groups/{id}/user/{userId}',
 {
   method: 'DELETE'
 
@@ -431,7 +205,7 @@ fetch('/groups/{id}',
 ```javascript--nodejs
 const fetch = require('node-fetch');
 
-fetch('/groups/{id}',
+fetch('/groups/{id}/user/{userId}',
 {
   method: 'DELETE'
 
@@ -444,33 +218,35 @@ fetch('/groups/{id}',
 
 ```
 
-`DELETE /groups/{id}`
+`DELETE /groups/{id}/user/{userId}`
 
 | Permissions |
 | ------- |
-| DeleteUserGroup   |
-| 4   |
+| RemoveMemberFromUserGroup   |
+| 22   |
 
-<h3 id="groupcontroller.deletebyid-parameters">Parameters</h3>
+<h3 id="groupusercontroller.delete-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
 |id|path|string|true|none|
+|userId|path|string|true|none|
+|where|query|object|false|none|
 
-<h3 id="groupcontroller.deletebyid-responses">Responses</h3>
+<h3 id="groupusercontroller.delete-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Group DELETE success|None|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|DELETE Group.UserGroup|None|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
 None
 </aside>
 
-## GroupController.create
+## GroupUserController.create
 
-<a id="opIdGroupController.create"></a>
+<a id="opIdGroupUserController.create"></a>
 
 > Code samples
 
@@ -483,17 +259,14 @@ const inputBody = '{
   "modifiedOn": "2019-08-24T14:15:22Z",
   "createdBy": "string",
   "modifiedBy": "string",
-  "name": "string",
-  "description": "string",
-  "photoUrl": "string",
-  "groupType": "Tenant"
+  "userTenantId": "string"
 }';
 const headers = {
   'Content-Type':'application/json',
   'Accept':'application/json'
 };
 
-fetch('/groups',
+fetch('/groups/{id}/user',
 {
   method: 'POST',
   body: inputBody,
@@ -517,17 +290,14 @@ const inputBody = {
   "modifiedOn": "2019-08-24T14:15:22Z",
   "createdBy": "string",
   "modifiedBy": "string",
-  "name": "string",
-  "description": "string",
-  "photoUrl": "string",
-  "groupType": "Tenant"
+  "userTenantId": "string"
 };
 const headers = {
   'Content-Type':'application/json',
   'Accept':'application/json'
 };
 
-fetch('/groups',
+fetch('/groups/{id}/user',
 {
   method: 'POST',
   body: JSON.stringify(inputBody),
@@ -541,7 +311,7 @@ fetch('/groups',
 
 ```
 
-`POST /groups`
+`POST /groups/{id}/user`
 
 | Permissions |
 | ------- |
@@ -559,531 +329,11 @@ fetch('/groups',
   "modifiedOn": "2019-08-24T14:15:22Z",
   "createdBy": "string",
   "modifiedBy": "string",
-  "name": "string",
-  "description": "string",
-  "photoUrl": "string",
-  "groupType": "Tenant"
+  "userTenantId": "string"
 }
 ```
 
-<h3 id="groupcontroller.create-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|body|body|[NewTeam](#schemanewteam)|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "description": "string",
-  "photoUrl": "string",
-  "groupType": "Tenant"
-}
-```
-
-<h3 id="groupcontroller.create-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Group model instance|[Group](#schemagroup)|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-None
-</aside>
-
-## GroupController.find
-
-<a id="opIdGroupController.find"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/groups',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/groups',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /groups`
-
-| Permissions |
-| ------- |
-| ViewUserGroupList   |
-| 2   |
-
-<h3 id="groupcontroller.find-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|filter|query|[groups.Filter](#schemagroups.filter)|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-[
-  {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "name": "string",
-    "description": "string",
-    "photoUrl": "string",
-    "groupType": "Tenant"
-  }
-]
-```
-
-<h3 id="groupcontroller.find-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Group model instances|Inline|
-
-<h3 id="groupcontroller.find-responseschema">Response Schema</h3>
-
-Status Code **200**
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|[[Group](#schemagroup)]|false|none|none|
-|» Group|[Group](#schemagroup)|false|none|none|
-|»» deleted|boolean|false|none|none|
-|»» deletedOn|string(date-time)¦null|false|none|none|
-|»» deletedBy|string¦null|false|none|none|
-|»» createdOn|string(date-time)|false|none|none|
-|»» modifiedOn|string(date-time)|false|none|none|
-|»» createdBy|string|false|none|none|
-|»» modifiedBy|string|false|none|none|
-|»» id|string|false|none|none|
-|»» name|string|false|none|none|
-|»» description|string|false|none|none|
-|»» photoUrl|string|false|none|none|
-|»» groupType|string|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|groupType|Tenant|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-None
-</aside>
-
-<h1 id="-sourceloop-user-tenant-service-usergroupcontroller">UserGroupController</h1>
-
-## UserGroupController.count
-
-<a id="opIdUserGroupController.count"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/groups/{id}/user-groups/count',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/groups/{id}/user-groups/count',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /groups/{id}/user-groups/count`
-
-| Permissions |
-| ------- |
-| ViewUserGroupList   |
-| 2   |
-
-<h3 id="usergroupcontroller.count-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|id|path|string|true|none|
-|where|query|object|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "count": 0
-}
-```
-
-<h3 id="usergroupcontroller.count-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|User Group model count|[loopback.Count](#schemaloopback.count)|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-None
-</aside>
-
-## UserGroupController.patch
-
-<a id="opIdUserGroupController.patch"></a>
-
-> Code samples
-
-```javascript
-const inputBody = '{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "groupId": "string",
-  "userTenantId": "string",
-  "isOwner": true
-}';
-const headers = {
-  'Content-Type':'application/json'
-};
-
-fetch('/groups/{id}/user-groups/{userGroupId}',
-{
-  method: 'PATCH',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-const inputBody = {
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "groupId": "string",
-  "userTenantId": "string",
-  "isOwner": true
-};
-const headers = {
-  'Content-Type':'application/json'
-};
-
-fetch('/groups/{id}/user-groups/{userGroupId}',
-{
-  method: 'PATCH',
-  body: JSON.stringify(inputBody),
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`PATCH /groups/{id}/user-groups/{userGroupId}`
-
-| Permissions |
-| ------- |
-| UpdateMemberInUserGroup   |
-| 33   |
-
-> Body parameter
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "groupId": "string",
-  "userTenantId": "string",
-  "isOwner": true
-}
-```
-
-<h3 id="usergroupcontroller.patch-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|userGroupId|path|string|true|none|
-|id|path|string|true|none|
-|body|body|[UserGroupPartial](#schemausergrouppartial)|false|none|
-
-<h3 id="usergroupcontroller.patch-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Group.UserGroup PATCH success count|None|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-None
-</aside>
-
-## UserGroupController.delete
-
-<a id="opIdUserGroupController.delete"></a>
-
-> Code samples
-
-```javascript
-
-fetch('/groups/{id}/user-groups/{userGroupId}',
-{
-  method: 'DELETE'
-
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-fetch('/groups/{id}/user-groups/{userGroupId}',
-{
-  method: 'DELETE'
-
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`DELETE /groups/{id}/user-groups/{userGroupId}`
-
-| Permissions |
-| ------- |
-| RemoveMemberFromUserGroup   |
-| LeaveUserGroup   |
-| 34   |
-| 35   |
-
-<h3 id="usergroupcontroller.delete-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|id|path|string|true|none|
-|userGroupId|path|string|true|none|
-
-<h3 id="usergroupcontroller.delete-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Group.UserGroup DELETE success count|None|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-None
-</aside>
-
-## UserGroupController.create
-
-<a id="opIdUserGroupController.create"></a>
-
-> Code samples
-
-```javascript
-const inputBody = '{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "groupId": "string",
-  "userTenantId": "string",
-  "isOwner": true
-}';
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json'
-};
-
-fetch('/groups/{id}/user-groups',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-const inputBody = {
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "groupId": "string",
-  "userTenantId": "string",
-  "isOwner": true
-};
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json'
-};
-
-fetch('/groups/{id}/user-groups',
-{
-  method: 'POST',
-  body: JSON.stringify(inputBody),
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`POST /groups/{id}/user-groups`
-
-| Permissions |
-| ------- |
-| AddMemberToUserGroup   |
-| 32   |
-
-> Body parameter
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "groupId": "string",
-  "userTenantId": "string",
-  "isOwner": true
-}
-```
-
-<h3 id="usergroupcontroller.create-parameters">Parameters</h3>
+<h3 id="groupusercontroller.create-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -1105,25 +355,24 @@ fetch('/groups/{id}/user-groups',
   "modifiedBy": "string",
   "id": "string",
   "groupId": "string",
-  "userTenantId": "string",
-  "isOwner": true
+  "userTenantId": "string"
 }
 ```
 
-<h3 id="usergroupcontroller.create-responses">Responses</h3>
+<h3 id="groupusercontroller.create-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Group model instance|[UserGroup](#schemausergroup)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|UserGroup model instance|[UserGroup](#schemausergroup)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
 None
 </aside>
 
-## UserGroupController.find
+## GroupUserController.find
 
-<a id="opIdUserGroupController.find"></a>
+<a id="opIdGroupUserController.find"></a>
 
 > Code samples
 
@@ -1133,7 +382,7 @@ const headers = {
   'Accept':'application/json'
 };
 
-fetch('/groups/{id}/user-groups',
+fetch('/groups/{id}/user',
 {
   method: 'GET',
 
@@ -1154,7 +403,7 @@ const headers = {
   'Accept':'application/json'
 };
 
-fetch('/groups/{id}/user-groups',
+fetch('/groups/{id}/user',
 {
   method: 'GET',
 
@@ -1168,14 +417,14 @@ fetch('/groups/{id}/user-groups',
 
 ```
 
-`GET /groups/{id}/user-groups`
+`GET /groups/{id}/user`
 
 | Permissions |
 | ------- |
 | ViewUserGroupList   |
 | 2   |
 
-<h3 id="usergroupcontroller.find-parameters">Parameters</h3>
+<h3 id="groupusercontroller.find-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -1198,19 +447,18 @@ fetch('/groups/{id}/user-groups',
     "modifiedBy": "string",
     "id": "string",
     "groupId": "string",
-    "userTenantId": "string",
-    "isOwner": true
+    "userTenantId": "string"
   }
 ]
 ```
 
-<h3 id="usergroupcontroller.find-responses">Responses</h3>
+<h3 id="groupusercontroller.find-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Group has many UserGroup|Inline|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of UserGroup of a Group|Inline|
 
-<h3 id="usergroupcontroller.find-responseschema">Response Schema</h3>
+<h3 id="groupusercontroller.find-responseschema">Response Schema</h3>
 
 Status Code **200**
 
@@ -1228,2295 +476,6 @@ Status Code **200**
 |»» id|string|false|none|none|
 |»» groupId|string|true|none|none|
 |»» userTenantId|string|true|none|none|
-|»» isOwner|boolean|false|none|none|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-None
-</aside>
-
-<h1 id="-sourceloop-user-tenant-service-pingcontroller">PingController</h1>
-
-## PingController.ping
-
-<a id="opIdPingController.ping"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/ping',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/ping',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /ping`
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "greeting": "string",
-  "date": "string"
-}
-```
-
-<h3 id="pingcontroller.ping-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Ping Response|[PingResponse](#schemapingresponse)|
-
-<aside class="success">
-This operation does not require authentication
-</aside>
-
-<h1 id="-sourceloop-user-tenant-service-rolecontroller">RoleController</h1>
-
-## RoleController.count
-
-<a id="opIdRoleController.count"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/roles/count',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/roles/count',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /roles/count`
-
-| Permissions |
-| ------- |
-| ViewRoles   |
-| 6   |
-
-<h3 id="rolecontroller.count-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|where|query|object|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "count": 0
-}
-```
-
-<h3 id="rolecontroller.count-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Role model count|[loopback.Count](#schemaloopback.count)|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-None
-</aside>
-
-## RoleController.replaceById
-
-<a id="opIdRoleController.replaceById"></a>
-
-> Code samples
-
-```javascript
-const inputBody = '{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "roleType": 15,
-  "permissions": [
-    "string"
-  ],
-  "allowedClients": [
-    "string"
-  ]
-}';
-const headers = {
-  'Content-Type':'application/json'
-};
-
-fetch('/roles/{id}',
-{
-  method: 'PUT',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-const inputBody = {
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "roleType": 15,
-  "permissions": [
-    "string"
-  ],
-  "allowedClients": [
-    "string"
-  ]
-};
-const headers = {
-  'Content-Type':'application/json'
-};
-
-fetch('/roles/{id}',
-{
-  method: 'PUT',
-  body: JSON.stringify(inputBody),
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`PUT /roles/{id}`
-
-| Permissions |
-| ------- |
-| UpdateRoles   |
-| 9   |
-
-> Body parameter
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "roleType": 15,
-  "permissions": [
-    "string"
-  ],
-  "allowedClients": [
-    "string"
-  ]
-}
-```
-
-<h3 id="rolecontroller.replacebyid-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|id|path|string|true|none|
-|body|body|[Role](#schemarole)|false|none|
-
-<h3 id="rolecontroller.replacebyid-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Role PUT success|None|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-None
-</aside>
-
-## RoleController.updateById
-
-<a id="opIdRoleController.updateById"></a>
-
-> Code samples
-
-```javascript
-const inputBody = '{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "roleType": 15,
-  "permissions": [
-    "string"
-  ],
-  "allowedClients": [
-    "string"
-  ]
-}';
-const headers = {
-  'Content-Type':'application/json'
-};
-
-fetch('/roles/{id}',
-{
-  method: 'PATCH',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-const inputBody = {
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "roleType": 15,
-  "permissions": [
-    "string"
-  ],
-  "allowedClients": [
-    "string"
-  ]
-};
-const headers = {
-  'Content-Type':'application/json'
-};
-
-fetch('/roles/{id}',
-{
-  method: 'PATCH',
-  body: JSON.stringify(inputBody),
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`PATCH /roles/{id}`
-
-| Permissions |
-| ------- |
-| UpdateRoles   |
-| UpdateRoles   |
-
-> Body parameter
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "roleType": 15,
-  "permissions": [
-    "string"
-  ],
-  "allowedClients": [
-    "string"
-  ]
-}
-```
-
-<h3 id="rolecontroller.updatebyid-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|id|path|string|true|none|
-|body|body|[RolePartial](#schemarolepartial)|false|none|
-
-<h3 id="rolecontroller.updatebyid-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Role PATCH success|None|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-None
-</aside>
-
-## RoleController.findById
-
-<a id="opIdRoleController.findById"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/roles/{id}',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/roles/{id}',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /roles/{id}`
-
-| Permissions |
-| ------- |
-| ViewRoles   |
-| 6   |
-
-<h3 id="rolecontroller.findbyid-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|id|path|string|true|none|
-|filter|query|[roles.Filter](#schemaroles.filter)|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "roleType": 15,
-  "permissions": [
-    "string"
-  ],
-  "allowedClients": [
-    "string"
-  ],
-  "userTenants": [
-    {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "id": "string",
-      "locale": "string",
-      "status": 12,
-      "userId": "string",
-      "tenantId": "string",
-      "roleId": "string",
-      "user": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "firstName": "string",
-        "lastName": "string",
-        "middleName": "string",
-        "username": "string",
-        "email": "string",
-        "designation": "string",
-        "phone": "string",
-        "authClientIds": "string",
-        "lastLogin": "2019-08-24T14:15:22Z",
-        "photoUrl": "string",
-        "gender": "M",
-        "dob": "2019-08-24T14:15:22Z",
-        "defaultTenantId": "string",
-        "defaultTenant": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "name": "string",
-          "status": 1,
-          "key": "string",
-          "website": "string",
-          "address": "string",
-          "city": "string",
-          "state": "string",
-          "zip": "string",
-          "country": "string",
-          "primaryContactEmail": "string",
-          "allowedDomain": "string",
-          "tenantType": "string",
-          "tenantConfigs": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "configKey": "string",
-              "configValue": {},
-              "tenantId": "string",
-              "tenant": {}
-            }
-          ],
-          "userTenants": [
-            {}
-          ]
-        },
-        "credentials": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "id": "string",
-          "authProvider": "string",
-          "authId": "string",
-          "authToken": "string",
-          "secretKey": "string",
-          "password": "string",
-          "userId": "string",
-          "user": {}
-        },
-        "userTenants": [
-          {}
-        ]
-      },
-      "tenant": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "name": "string",
-        "status": 1,
-        "key": "string",
-        "website": "string",
-        "address": "string",
-        "city": "string",
-        "state": "string",
-        "zip": "string",
-        "country": "string",
-        "primaryContactEmail": "string",
-        "allowedDomain": "string",
-        "tenantType": "string",
-        "tenantConfigs": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "configKey": "string",
-            "configValue": {},
-            "tenantId": "string",
-            "tenant": {}
-          }
-        ],
-        "userTenants": [
-          {}
-        ]
-      },
-      "role": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "name": "string",
-        "roleType": 15,
-        "permissions": [
-          "string"
-        ],
-        "allowedClients": [
-          "string"
-        ],
-        "userTenants": [],
-        "createdByUser": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "firstName": "string",
-          "lastName": "string",
-          "middleName": "string",
-          "username": "string",
-          "email": "string",
-          "designation": "string",
-          "phone": "string",
-          "authClientIds": "string",
-          "lastLogin": "string",
-          "photoUrl": "string",
-          "gender": "M",
-          "dob": "2019-08-24T14:15:22Z",
-          "defaultTenantId": "string",
-          "status": 11,
-          "tenantId": "string",
-          "roleId": "string",
-          "tenantName": "string",
-          "tenantKey": "string",
-          "roleName": "string",
-          "roleType": 0,
-          "userTenantId": "string",
-          "expiresOn": "2019-08-24T14:15:22Z"
-        },
-        "modifiedByUser": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "firstName": "string",
-          "lastName": "string",
-          "middleName": "string",
-          "username": "string",
-          "email": "string",
-          "designation": "string",
-          "phone": "string",
-          "authClientIds": "string",
-          "lastLogin": "string",
-          "photoUrl": "string",
-          "gender": "M",
-          "dob": "2019-08-24T14:15:22Z",
-          "defaultTenantId": "string",
-          "status": 11,
-          "tenantId": "string",
-          "roleId": "string",
-          "tenantName": "string",
-          "tenantKey": "string",
-          "roleName": "string",
-          "roleType": 0,
-          "userTenantId": "string",
-          "expiresOn": "2019-08-24T14:15:22Z"
-        }
-      },
-      "userLevelPermissions": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "permission": "string",
-          "allowed": true,
-          "userTenantId": "string",
-          "userTenant": {}
-        }
-      ],
-      "userGroups": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "groupId": "string",
-          "userTenantId": "string",
-          "isOwner": true,
-          "group": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "name": "string",
-            "description": "string",
-            "photoUrl": "string",
-            "groupType": "Tenant",
-            "userGroups": [
-              {}
-            ]
-          },
-          "userTenant": {}
-        }
-      ]
-    }
-  ],
-  "createdByUser": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "firstName": "string",
-    "lastName": "string",
-    "middleName": "string",
-    "username": "string",
-    "email": "string",
-    "designation": "string",
-    "phone": "string",
-    "authClientIds": "string",
-    "lastLogin": "string",
-    "photoUrl": "string",
-    "gender": "M",
-    "dob": "2019-08-24T14:15:22Z",
-    "defaultTenantId": "string",
-    "status": 11,
-    "tenantId": "string",
-    "roleId": "string",
-    "tenantName": "string",
-    "tenantKey": "string",
-    "roleName": "string",
-    "roleType": 0,
-    "userTenantId": "string",
-    "expiresOn": "2019-08-24T14:15:22Z"
-  },
-  "modifiedByUser": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "firstName": "string",
-    "lastName": "string",
-    "middleName": "string",
-    "username": "string",
-    "email": "string",
-    "designation": "string",
-    "phone": "string",
-    "authClientIds": "string",
-    "lastLogin": "string",
-    "photoUrl": "string",
-    "gender": "M",
-    "dob": "2019-08-24T14:15:22Z",
-    "defaultTenantId": "string",
-    "status": 11,
-    "tenantId": "string",
-    "roleId": "string",
-    "tenantName": "string",
-    "tenantKey": "string",
-    "roleName": "string",
-    "roleType": 0,
-    "userTenantId": "string",
-    "expiresOn": "2019-08-24T14:15:22Z"
-  }
-}
-```
-
-<h3 id="rolecontroller.findbyid-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Role model instance|[RoleWithRelations](#schemarolewithrelations)|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-None
-</aside>
-
-## RoleController.deleteById
-
-<a id="opIdRoleController.deleteById"></a>
-
-> Code samples
-
-```javascript
-
-fetch('/roles/{id}',
-{
-  method: 'DELETE'
-
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-fetch('/roles/{id}',
-{
-  method: 'DELETE'
-
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`DELETE /roles/{id}`
-
-| Permissions |
-| ------- |
-| DeleteRoles   |
-| 10   |
-
-<h3 id="rolecontroller.deletebyid-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|id|path|string|true|none|
-
-<h3 id="rolecontroller.deletebyid-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Role DELETE success|None|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-None
-</aside>
-
-## RoleController.create
-
-<a id="opIdRoleController.create"></a>
-
-> Code samples
-
-```javascript
-const inputBody = '{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "name": "string",
-  "roleType": 15,
-  "permissions": [
-    "string"
-  ],
-  "allowedClients": [
-    "string"
-  ]
-}';
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json'
-};
-
-fetch('/roles',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-const inputBody = {
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "name": "string",
-  "roleType": 15,
-  "permissions": [
-    "string"
-  ],
-  "allowedClients": [
-    "string"
-  ]
-};
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json'
-};
-
-fetch('/roles',
-{
-  method: 'POST',
-  body: JSON.stringify(inputBody),
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`POST /roles`
-
-| Permissions |
-| ------- |
-| CreateRoles   |
-| 8   |
-
-> Body parameter
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "name": "string",
-  "roleType": 15,
-  "permissions": [
-    "string"
-  ],
-  "allowedClients": [
-    "string"
-  ]
-}
-```
-
-<h3 id="rolecontroller.create-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|body|body|[NewRole](#schemanewrole)|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "roleType": 15,
-  "permissions": [
-    "string"
-  ],
-  "allowedClients": [
-    "string"
-  ]
-}
-```
-
-<h3 id="rolecontroller.create-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Role model instance|[Role](#schemarole)|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-None
-</aside>
-
-## RoleController.updateAll
-
-<a id="opIdRoleController.updateAll"></a>
-
-> Code samples
-
-```javascript
-const inputBody = '{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "roleType": 15,
-  "permissions": [
-    "string"
-  ],
-  "allowedClients": [
-    "string"
-  ]
-}';
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json'
-};
-
-fetch('/roles',
-{
-  method: 'PATCH',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-const inputBody = {
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "roleType": 15,
-  "permissions": [
-    "string"
-  ],
-  "allowedClients": [
-    "string"
-  ]
-};
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json'
-};
-
-fetch('/roles',
-{
-  method: 'PATCH',
-  body: JSON.stringify(inputBody),
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`PATCH /roles`
-
-| Permissions |
-| ------- |
-| UpdateRoles   |
-| 9   |
-
-> Body parameter
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "roleType": 15,
-  "permissions": [
-    "string"
-  ],
-  "allowedClients": [
-    "string"
-  ]
-}
-```
-
-<h3 id="rolecontroller.updateall-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|where|query|object|false|none|
-|body|body|[RolePartial](#schemarolepartial)|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "count": 0
-}
-```
-
-<h3 id="rolecontroller.updateall-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Role PATCH success count|[loopback.Count](#schemaloopback.count)|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-None
-</aside>
-
-## RoleController.find
-
-<a id="opIdRoleController.find"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/roles',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/roles',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /roles`
-
-| Permissions |
-| ------- |
-| ViewRoles   |
-| 6   |
-
-<h3 id="rolecontroller.find-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|filter|query|[roles.Filter](#schemaroles.filter)|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-[
-  {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "name": "string",
-    "roleType": 15,
-    "permissions": [
-      "string"
-    ],
-    "allowedClients": [
-      "string"
-    ],
-    "userTenants": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "id": "string",
-        "locale": "string",
-        "status": 12,
-        "userId": "string",
-        "tenantId": "string",
-        "roleId": "string",
-        "user": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "firstName": "string",
-          "lastName": "string",
-          "middleName": "string",
-          "username": "string",
-          "email": "string",
-          "designation": "string",
-          "phone": "string",
-          "authClientIds": "string",
-          "lastLogin": "2019-08-24T14:15:22Z",
-          "photoUrl": "string",
-          "gender": "M",
-          "dob": "2019-08-24T14:15:22Z",
-          "defaultTenantId": "string",
-          "defaultTenant": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "name": "string",
-            "status": 1,
-            "key": "string",
-            "website": "string",
-            "address": "string",
-            "city": "string",
-            "state": "string",
-            "zip": "string",
-            "country": "string",
-            "primaryContactEmail": "string",
-            "allowedDomain": "string",
-            "tenantType": "string",
-            "tenantConfigs": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "configKey": "string",
-                "configValue": {},
-                "tenantId": "string",
-                "tenant": {}
-              }
-            ],
-            "userTenants": [
-              {}
-            ]
-          },
-          "credentials": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "id": "string",
-            "authProvider": "string",
-            "authId": "string",
-            "authToken": "string",
-            "secretKey": "string",
-            "password": "string",
-            "userId": "string",
-            "user": {}
-          },
-          "userTenants": [
-            {}
-          ]
-        },
-        "tenant": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "name": "string",
-          "status": 1,
-          "key": "string",
-          "website": "string",
-          "address": "string",
-          "city": "string",
-          "state": "string",
-          "zip": "string",
-          "country": "string",
-          "primaryContactEmail": "string",
-          "allowedDomain": "string",
-          "tenantType": "string",
-          "tenantConfigs": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "configKey": "string",
-              "configValue": {},
-              "tenantId": "string",
-              "tenant": {}
-            }
-          ],
-          "userTenants": [
-            {}
-          ]
-        },
-        "role": {},
-        "userLevelPermissions": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "permission": "string",
-            "allowed": true,
-            "userTenantId": "string",
-            "userTenant": {}
-          }
-        ],
-        "userGroups": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "groupId": "string",
-            "userTenantId": "string",
-            "isOwner": true,
-            "group": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "name": "string",
-              "description": "string",
-              "photoUrl": "string",
-              "groupType": "Tenant",
-              "userGroups": [
-                {}
-              ]
-            },
-            "userTenant": {}
-          }
-        ]
-      }
-    ],
-    "createdByUser": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "firstName": "string",
-      "lastName": "string",
-      "middleName": "string",
-      "username": "string",
-      "email": "string",
-      "designation": "string",
-      "phone": "string",
-      "authClientIds": "string",
-      "lastLogin": "string",
-      "photoUrl": "string",
-      "gender": "M",
-      "dob": "2019-08-24T14:15:22Z",
-      "defaultTenantId": "string",
-      "status": 11,
-      "tenantId": "string",
-      "roleId": "string",
-      "tenantName": "string",
-      "tenantKey": "string",
-      "roleName": "string",
-      "roleType": 0,
-      "userTenantId": "string",
-      "expiresOn": "2019-08-24T14:15:22Z"
-    },
-    "modifiedByUser": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "firstName": "string",
-      "lastName": "string",
-      "middleName": "string",
-      "username": "string",
-      "email": "string",
-      "designation": "string",
-      "phone": "string",
-      "authClientIds": "string",
-      "lastLogin": "string",
-      "photoUrl": "string",
-      "gender": "M",
-      "dob": "2019-08-24T14:15:22Z",
-      "defaultTenantId": "string",
-      "status": 11,
-      "tenantId": "string",
-      "roleId": "string",
-      "tenantName": "string",
-      "tenantKey": "string",
-      "roleName": "string",
-      "roleType": 0,
-      "userTenantId": "string",
-      "expiresOn": "2019-08-24T14:15:22Z"
-    }
-  }
-]
-```
-
-<h3 id="rolecontroller.find-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Role model instances|Inline|
-
-<h3 id="rolecontroller.find-responseschema">Response Schema</h3>
-
-Status Code **200**
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|[[RoleWithRelations](#schemarolewithrelations)]|false|none|[(tsType: RoleWithRelations, schemaOptions: { includeRelations: true })]|
-|» RoleWithRelations|[RoleWithRelations](#schemarolewithrelations)|false|none|(tsType: RoleWithRelations, schemaOptions: { includeRelations: true })|
-|»» deleted|boolean|false|none|none|
-|»» deletedOn|string(date-time)¦null|false|none|none|
-|»» deletedBy|string¦null|false|none|none|
-|»» createdOn|string(date-time)|false|none|none|
-|»» modifiedOn|string(date-time)|false|none|none|
-|»» createdBy|string|false|none|none|
-|»» modifiedBy|string|false|none|none|
-|»» id|string|false|none|none|
-|»» name|string|true|none|none|
-|»» roleType|number|true|none|none|
-|»» permissions|[string]|false|none|none|
-|»» allowedClients|[string]|false|none|none|
-|»» userTenants|[[UserTenantWithRelations](#schemausertenantwithrelations)]|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»» UserTenantWithRelations|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» deleted|boolean|false|none|none|
-|»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»» deletedBy|string¦null|false|none|none|
-|»»»» createdOn|string(date-time)|false|none|none|
-|»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»» id|string|false|none|none|
-|»»»» locale|string|false|none|none|
-|»»»» status|number|false|none|none|
-|»»»» userId|string|true|none|none|
-|»»»» tenantId|string|true|none|none|
-|»»»» roleId|string|true|none|none|
-|»»»» user|[UserWithRelations](#schemauserwithrelations)|false|none|This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» deleted|boolean|false|none|none|
-|»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»» deletedBy|string¦null|false|none|none|
-|»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»» createdBy|string|false|none|none|
-|»»»»» modifiedBy|string|false|none|none|
-|»»»»» id|string|false|none|none|
-|»»»»» firstName|string|true|none|none|
-|»»»»» lastName|string|false|none|none|
-|»»»»» middleName|string|false|none|none|
-|»»»»» username|string|true|none|none|
-|»»»»» email|string|true|none|none|
-|»»»»» designation|string|false|none|none|
-|»»»»» phone|string|false|none|none|
-|»»»»» authClientIds|string|false|none|none|
-|»»»»» lastLogin|string(date-time)|false|none|none|
-|»»»»» photoUrl|string|false|none|none|
-|»»»»» gender|string|false|none|This field takes a single character as input in database.<br>    'M' for male and 'F' for female.|
-|»»»»» dob|string(date-time)|false|none|none|
-|»»»»» defaultTenantId|string|false|none|none|
-|»»»»» defaultTenant|[TenantWithRelations](#schematenantwithrelations)|false|none|signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»» deleted|boolean|false|none|none|
-|»»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»»» deletedBy|string¦null|false|none|none|
-|»»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»»» createdBy|string|false|none|none|
-|»»»»»» modifiedBy|string|false|none|none|
-|»»»»»» id|string|false|none|none|
-|»»»»»» name|string|true|none|none|
-|»»»»»» status|number¦null|true|none|Tenant status - Active or Inactive|
-|»»»»»» key|string|false|none|none|
-|»»»»»» website|string|false|none|none|
-|»»»»»» address|string|false|none|none|
-|»»»»»» city|string|false|none|none|
-|»»»»»» state|string|false|none|none|
-|»»»»»» zip|string|false|none|none|
-|»»»»»» country|string|false|none|none|
-|»»»»»» primaryContactEmail|string|false|none|none|
-|»»»»»» allowedDomain|string|false|none|none|
-|»»»»»» tenantType|string|false|none|none|
-|»»»»»» tenantConfigs|[[TenantConfigWithRelations](#schematenantconfigwithrelations)]|false|none|(tsType: TenantConfigWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»»» TenantConfigWithRelations|[TenantConfigWithRelations](#schematenantconfigwithrelations)|false|none|(tsType: TenantConfigWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»»»» deleted|boolean|false|none|none|
-|»»»»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»»»»» deletedBy|string¦null|false|none|none|
-|»»»»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»»»»» createdBy|string|false|none|none|
-|»»»»»»»» modifiedBy|string|false|none|none|
-|»»»»»»»» id|string|false|none|none|
-|»»»»»»»» configKey|string|true|none|none|
-|»»»»»»»» configValue|object|false|none|none|
-|»»»»»»»» tenantId|string|true|none|none|
-|»»»»»»»» tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»» userTenants|[[UserTenantWithRelations](#schemausertenantwithrelations)]|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»»» UserTenantWithRelations|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» credentials|[UserCredentialsWithRelations](#schemausercredentialswithrelations)|false|none|(tsType: UserCredentialsWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»» deleted|boolean|false|none|none|
-|»»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»»» deletedBy|string¦null|false|none|none|
-|»»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»»» id|string|false|none|none|
-|»»»»»» authProvider|string|true|none|none|
-|»»»»»» authId|string|false|none|none|
-|»»»»»» authToken|string|false|none|none|
-|»»»»»» secretKey|string|false|none|Secret for Authenticator app|
-|»»»»»» password|string|false|none|none|
-|»»»»»» userId|string|true|none|none|
-|»»»»»» user|[UserWithRelations](#schemauserwithrelations)|false|none|This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» userTenants|[[UserTenantWithRelations](#schemausertenantwithrelations)]|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»» UserTenantWithRelations|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» role|[RoleWithRelations](#schemarolewithrelations)|false|none|(tsType: RoleWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» userLevelPermissions|[[UserLevelPermissionWithRelations](#schemauserlevelpermissionwithrelations)]|false|none|(tsType: UserLevelPermissionWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» UserLevelPermissionWithRelations|[UserLevelPermissionWithRelations](#schemauserlevelpermissionwithrelations)|false|none|(tsType: UserLevelPermissionWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»» deleted|boolean|false|none|none|
-|»»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»»» deletedBy|string¦null|false|none|none|
-|»»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»»» createdBy|string|false|none|none|
-|»»»»»» modifiedBy|string|false|none|none|
-|»»»»»» id|string|false|none|none|
-|»»»»»» permission|string|true|none|none|
-|»»»»»» allowed|boolean|true|none|none|
-|»»»»»» userTenantId|string|true|none|none|
-|»»»»»» userTenant|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» userGroups|[[UserGroupWithRelations](#schemausergroupwithrelations)]|false|none|(tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» UserGroupWithRelations|[UserGroupWithRelations](#schemausergroupwithrelations)|false|none|(tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»» deleted|boolean|false|none|none|
-|»»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»»» deletedBy|string¦null|false|none|none|
-|»»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»»» createdBy|string|false|none|none|
-|»»»»»» modifiedBy|string|false|none|none|
-|»»»»»» id|string|false|none|none|
-|»»»»»» groupId|string|true|none|none|
-|»»»»»» userTenantId|string|true|none|none|
-|»»»»»» isOwner|boolean|false|none|none|
-|»»»»»» group|[GroupWithRelations](#schemagroupwithrelations)|false|none|(tsType: GroupWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»»» deleted|boolean|false|none|none|
-|»»»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»»»» deletedBy|string¦null|false|none|none|
-|»»»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»»»» createdBy|string|false|none|none|
-|»»»»»»» modifiedBy|string|false|none|none|
-|»»»»»»» id|string|false|none|none|
-|»»»»»»» name|string|false|none|none|
-|»»»»»»» description|string|false|none|none|
-|»»»»»»» photoUrl|string|false|none|none|
-|»»»»»»» groupType|string|false|none|none|
-|»»»»»»» userGroups|[[UserGroupWithRelations](#schemausergroupwithrelations)]|false|none|(tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»»»» UserGroupWithRelations|[UserGroupWithRelations](#schemausergroupwithrelations)|false|none|(tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»» userTenant|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
-|»» createdByUser|[UserViewWithRelations](#schemauserviewwithrelations)|false|none|User details view in DB (tsType: UserViewWithRelations, schemaOptions: { includeRelations: true })|
-|»»» deleted|boolean|false|none|none|
-|»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»» deletedBy|string¦null|false|none|none|
-|»»» createdOn|string(date-time)|false|none|none|
-|»»» modifiedOn|string(date-time)|false|none|none|
-|»»» createdBy|string|false|none|none|
-|»»» modifiedBy|string|false|none|none|
-|»»» id|string|false|none|none|
-|»»» firstName|string|true|none|none|
-|»»» lastName|string|false|none|none|
-|»»» middleName|string|false|none|none|
-|»»» username|string|true|none|none|
-|»»» email|string|true|none|none|
-|»»» designation|string|false|none|none|
-|»»» phone|string|false|none|none|
-|»»» authClientIds|string|false|none|none|
-|»»» lastLogin|string|false|none|none|
-|»»» photoUrl|string|false|none|none|
-|»»» gender|string|false|none|This field takes a single character as input in database.<br>    'M' for male and 'F' for female.|
-|»»» dob|string(date-time)¦null|false|none|none|
-|»»» defaultTenantId|string|true|none|none|
-|»»» status|number|false|none|none|
-|»»» tenantId|string|true|none|none|
-|»»» roleId|string|true|none|none|
-|»»» tenantName|string|true|none|none|
-|»»» tenantKey|string|false|none|none|
-|»»» roleName|string|false|none|none|
-|»»» roleType|number|false|none|none|
-|»»» userTenantId|string|true|none|none|
-|»»» expiresOn|string(date-time)|false|none|none|
-|»» modifiedByUser|[UserViewWithRelations](#schemauserviewwithrelations)|false|none|User details view in DB (tsType: UserViewWithRelations, schemaOptions: { includeRelations: true })|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|gender|M|
-|gender|F|
-|gender|O|
-|status|1|
-|status|0|
-|groupType|Tenant|
-|gender|M|
-|gender|F|
-|gender|O|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-None
-</aside>
-
-<h1 id="-sourceloop-user-tenant-service-roleusertenantcontroller">RoleUserTenantController</h1>
-
-## RoleUserTenantController.count
-
-<a id="opIdRoleUserTenantController.count"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/roles/{id}/user-tenants/count',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/roles/{id}/user-tenants/count',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /roles/{id}/user-tenants/count`
-
-| Permissions |
-| ------- |
-| ViewRoles   |
-| 6   |
-
-<h3 id="roleusertenantcontroller.count-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|id|path|string|true|none|
-|where|query|object|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "count": 0
-}
-```
-
-<h3 id="roleusertenantcontroller.count-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|User tenant count for specified role id|[loopback.Count](#schemaloopback.count)|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-None
-</aside>
-
-## RoleUserTenantController.create
-
-<a id="opIdRoleUserTenantController.create"></a>
-
-> Code samples
-
-```javascript
-const inputBody = '{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "locale": "string",
-  "status": 12,
-  "userId": "string",
-  "tenantId": "string",
-  "roleId": "string"
-}';
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json'
-};
-
-fetch('/roles/{id}/user-tenants',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-const inputBody = {
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "locale": "string",
-  "status": 12,
-  "userId": "string",
-  "tenantId": "string",
-  "roleId": "string"
-};
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json'
-};
-
-fetch('/roles/{id}/user-tenants',
-{
-  method: 'POST',
-  body: JSON.stringify(inputBody),
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`POST /roles/{id}/user-tenants`
-
-| Permissions |
-| ------- |
-| NotAllowed   |
-| 7   |
-
-> Body parameter
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "locale": "string",
-  "status": 12,
-  "userId": "string",
-  "tenantId": "string",
-  "roleId": "string"
-}
-```
-
-<h3 id="roleusertenantcontroller.create-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|id|path|string|true|none|
-|body|body|[NewUserTenantInRole](#schemanewusertenantinrole)|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "id": "string",
-  "locale": "string",
-  "status": 12,
-  "userId": "string",
-  "tenantId": "string",
-  "roleId": "string"
-}
-```
-
-<h3 id="roleusertenantcontroller.create-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Role model instance|[UserTenant](#schemausertenant)|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-None
-</aside>
-
-## RoleUserTenantController.patch
-
-<a id="opIdRoleUserTenantController.patch"></a>
-
-> Code samples
-
-```javascript
-const inputBody = '{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "id": "string",
-  "locale": "string",
-  "status": 12,
-  "userId": "string",
-  "tenantId": "string",
-  "roleId": "string"
-}';
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json'
-};
-
-fetch('/roles/{id}/user-tenants',
-{
-  method: 'PATCH',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-const inputBody = {
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "id": "string",
-  "locale": "string",
-  "status": 12,
-  "userId": "string",
-  "tenantId": "string",
-  "roleId": "string"
-};
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json'
-};
-
-fetch('/roles/{id}/user-tenants',
-{
-  method: 'PATCH',
-  body: JSON.stringify(inputBody),
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`PATCH /roles/{id}/user-tenants`
-
-| Permissions |
-| ------- |
-| NotAllowed   |
-| 7   |
-
-> Body parameter
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "id": "string",
-  "locale": "string",
-  "status": 12,
-  "userId": "string",
-  "tenantId": "string",
-  "roleId": "string"
-}
-```
-
-<h3 id="roleusertenantcontroller.patch-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|id|path|string|true|none|
-|where|query|object|false|none|
-|body|body|[UserTenantPartial](#schemausertenantpartial)|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "count": 0
-}
-```
-
-<h3 id="roleusertenantcontroller.patch-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Role.UserTenant PATCH success count|[loopback.Count](#schemaloopback.count)|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-None
-</aside>
-
-## RoleUserTenantController.find
-
-<a id="opIdRoleUserTenantController.find"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/roles/{id}/user-tenants',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/roles/{id}/user-tenants',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /roles/{id}/user-tenants`
-
-| Permissions |
-| ------- |
-| ViewRoles   |
-| 6   |
-
-<h3 id="roleusertenantcontroller.find-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|id|path|string|true|none|
-|filter|query|object|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-[
-  {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "id": "string",
-    "locale": "string",
-    "status": 12,
-    "userId": "string",
-    "tenantId": "string",
-    "roleId": "string"
-  }
-]
-```
-
-<h3 id="roleusertenantcontroller.find-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Role has many UserTenant|Inline|
-
-<h3 id="roleusertenantcontroller.find-responseschema">Response Schema</h3>
-
-Status Code **200**
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|[[UserTenant](#schemausertenant)]|false|none|none|
-|» UserTenant|[UserTenant](#schemausertenant)|false|none|none|
-|»» deleted|boolean|false|none|none|
-|»» deletedOn|string(date-time)¦null|false|none|none|
-|»» deletedBy|string¦null|false|none|none|
-|»» createdOn|string(date-time)|false|none|none|
-|»» modifiedOn|string(date-time)|false|none|none|
-|»» id|string|false|none|none|
-|»» locale|string|false|none|none|
-|»» status|number|false|none|none|
-|»» userId|string|true|none|none|
-|»» tenantId|string|true|none|none|
-|»» roleId|string|true|none|none|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-None
-</aside>
-
-## RoleUserTenantController.delete
-
-<a id="opIdRoleUserTenantController.delete"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/roles/{id}/user-tenants',
-{
-  method: 'DELETE',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/roles/{id}/user-tenants',
-{
-  method: 'DELETE',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`DELETE /roles/{id}/user-tenants`
-
-| Permissions |
-| ------- |
-| NotAllowed   |
-| 7   |
-
-<h3 id="roleusertenantcontroller.delete-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|id|path|string|true|none|
-|where|query|object|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "count": 0
-}
-```
-
-<h3 id="roleusertenantcontroller.delete-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Role.UserTenant DELETE success count|[loopback.Count](#schemaloopback.count)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -3577,7 +536,7 @@ fetch('/tenants/count',
 | Permissions |
 | ------- |
 | ViewTenant   |
-| 27   |
+| 17   |
 
 <h3 id="tenantcontroller.count-parameters">Parameters</h3>
 
@@ -3606,22 +565,40 @@ To perform this operation, you must be authenticated by means of one of the foll
 None
 </aside>
 
-## TenantController.getTenantConfig
+## TenantController.replaceById
 
-<a id="opIdTenantController.getTenantConfig"></a>
+<a id="opIdTenantController.replaceById"></a>
 
 > Code samples
 
 ```javascript
-
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "name": "string",
+  "status": 1,
+  "key": "string",
+  "website": "string",
+  "address": "string",
+  "city": "string",
+  "state": "string",
+  "zip": "string",
+  "country": "string"
+}';
 const headers = {
-  'Accept':'application/json'
+  'Content-Type':'application/json'
 };
 
-fetch('/tenants/{id}/config',
+fetch('/tenants/{id}',
 {
-  method: 'GET',
-
+  method: 'PUT',
+  body: inputBody,
   headers: headers
 })
 .then(function(res) {
@@ -3634,15 +611,33 @@ fetch('/tenants/{id}/config',
 
 ```javascript--nodejs
 const fetch = require('node-fetch');
-
+const inputBody = {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "name": "string",
+  "status": 1,
+  "key": "string",
+  "website": "string",
+  "address": "string",
+  "city": "string",
+  "state": "string",
+  "zip": "string",
+  "country": "string"
+};
 const headers = {
-  'Accept':'application/json'
+  'Content-Type':'application/json'
 };
 
-fetch('/tenants/{id}/config',
+fetch('/tenants/{id}',
 {
-  method: 'GET',
-
+  method: 'PUT',
+  body: JSON.stringify(inputBody),
   headers: headers
 })
 .then(function(res) {
@@ -3653,68 +648,49 @@ fetch('/tenants/{id}/config',
 
 ```
 
-`GET /tenants/{id}/config`
+`PUT /tenants/{id}`
 
 | Permissions |
 | ------- |
-| ViewTenant   |
-| 27   |
-| 29   |
-| ViewOwnTenant   |
+| UpdateTenant   |
+| 18   |
 
-<h3 id="tenantcontroller.gettenantconfig-parameters">Parameters</h3>
+> Body parameter
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "name": "string",
+  "status": 1,
+  "key": "string",
+  "website": "string",
+  "address": "string",
+  "city": "string",
+  "state": "string",
+  "zip": "string",
+  "country": "string"
+}
+```
+
+<h3 id="tenantcontroller.replacebyid-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
 |id|path|string|true|none|
+|body|body|[Tenant](#schematenant)|false|none|
 
-> Example responses
-
-> 200 Response
-
-```json
-[
-  {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "configKey": "string",
-    "configValue": {},
-    "tenantId": "string"
-  }
-]
-```
-
-<h3 id="tenantcontroller.gettenantconfig-responses">Responses</h3>
+<h3 id="tenantcontroller.replacebyid-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Tenant config instances|Inline|
-
-<h3 id="tenantcontroller.gettenantconfig-responseschema">Response Schema</h3>
-
-Status Code **200**
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|[[TenantConfig](#schematenantconfig)]|false|none|none|
-|» TenantConfig|[TenantConfig](#schematenantconfig)|false|none|none|
-|»» deleted|boolean|false|none|none|
-|»» deletedOn|string(date-time)¦null|false|none|none|
-|»» deletedBy|string¦null|false|none|none|
-|»» createdOn|string(date-time)|false|none|none|
-|»» modifiedOn|string(date-time)|false|none|none|
-|»» createdBy|string|false|none|none|
-|»» modifiedBy|string|false|none|none|
-|»» id|string|false|none|none|
-|»» configKey|string|true|none|none|
-|»» configValue|object|false|none|none|
-|»» tenantId|string|true|none|none|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Tenant PUT success|None|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -3745,10 +721,7 @@ const inputBody = '{
   "city": "string",
   "state": "string",
   "zip": "string",
-  "country": "string",
-  "primaryContactEmail": "string",
-  "allowedDomain": "string",
-  "tenantType": "string"
+  "country": "string"
 }';
 const headers = {
   'Content-Type':'application/json'
@@ -3787,10 +760,7 @@ const inputBody = {
   "city": "string",
   "state": "string",
   "zip": "string",
-  "country": "string",
-  "primaryContactEmail": "string",
-  "allowedDomain": "string",
-  "tenantType": "string"
+  "country": "string"
 };
 const headers = {
   'Content-Type':'application/json'
@@ -3815,9 +785,7 @@ fetch('/tenants/{id}',
 | Permissions |
 | ------- |
 | UpdateTenant   |
-| 28   |
-| 30   |
-| UpdateOwnTenant   |
+| 18   |
 
 > Body parameter
 
@@ -3839,10 +807,7 @@ fetch('/tenants/{id}',
   "city": "string",
   "state": "string",
   "zip": "string",
-  "country": "string",
-  "primaryContactEmail": "string",
-  "allowedDomain": "string",
-  "tenantType": "string"
+  "country": "string"
 }
 ```
 
@@ -3916,9 +881,7 @@ fetch('/tenants/{id}',
 | Permissions |
 | ------- |
 | ViewTenant   |
-| 27   |
-| 29   |
-| ViewOwnTenant   |
+| 17   |
 
 <h3 id="tenantcontroller.findbyid-parameters">Parameters</h3>
 
@@ -3950,9 +913,6 @@ fetch('/tenants/{id}',
   "state": "string",
   "zip": "string",
   "country": "string",
-  "primaryContactEmail": "string",
-  "allowedDomain": "string",
-  "tenantType": "string",
   "tenantConfigs": [
     {
       "deleted": true,
@@ -3984,9 +944,6 @@ fetch('/tenants/{id}',
         "state": "string",
         "zip": "string",
         "country": "string",
-        "primaryContactEmail": "string",
-        "allowedDomain": "string",
-        "tenantType": "string",
         "tenantConfigs": [],
         "userTenants": [
           {
@@ -3995,6 +952,8 @@ fetch('/tenants/{id}',
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "locale": "string",
             "status": 12,
@@ -4030,6 +989,8 @@ fetch('/tenants/{id}',
                 "deletedBy": "string",
                 "createdOn": "2019-08-24T14:15:22Z",
                 "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
                 "id": "string",
                 "authProvider": "string",
                 "authId": "string",
@@ -4055,12 +1016,14 @@ fetch('/tenants/{id}',
               "id": "string",
               "name": "string",
               "roleType": 15,
+              "description": "string",
               "permissions": [
                 "string"
               ],
               "allowedClients": [
                 "string"
               ],
+              "tenantId": "string",
               "userTenants": [
                 {}
               ],
@@ -4092,9 +1055,7 @@ fetch('/tenants/{id}',
                 "tenantName": "string",
                 "tenantKey": "string",
                 "roleName": "string",
-                "roleType": 0,
-                "userTenantId": "string",
-                "expiresOn": "2019-08-24T14:15:22Z"
+                "userTenantId": "string"
               },
               "modifiedByUser": {
                 "deleted": true,
@@ -4124,9 +1085,7 @@ fetch('/tenants/{id}',
                 "tenantName": "string",
                 "tenantKey": "string",
                 "roleName": "string",
-                "roleType": 0,
-                "userTenantId": "string",
-                "expiresOn": "2019-08-24T14:15:22Z"
+                "userTenantId": "string"
               }
             },
             "userLevelPermissions": [
@@ -4157,7 +1116,6 @@ fetch('/tenants/{id}',
                 "id": "string",
                 "groupId": "string",
                 "userTenantId": "string",
-                "isOwner": true,
                 "group": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -4170,12 +1128,515 @@ fetch('/tenants/{id}',
                   "name": "string",
                   "description": "string",
                   "photoUrl": "string",
-                  "groupType": "Tenant",
+                  "tenantId": "string",
                   "userGroups": [
                     {}
                   ]
                 },
                 "userTenant": {}
+              }
+            ],
+            "userInvitations": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "expiresOn": "2019-08-24T14:15:22Z",
+                "token": "string",
+                "userTenantId": "string",
+                "userTenant": {}
+              }
+            ]
+          }
+        ],
+        "users": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "middleName": "string",
+            "username": "string",
+            "email": "string",
+            "designation": "string",
+            "phone": "string",
+            "authClientIds": "string",
+            "lastLogin": "2019-08-24T14:15:22Z",
+            "photoUrl": "string",
+            "gender": "M",
+            "dob": "2019-08-24T14:15:22Z",
+            "defaultTenantId": "string",
+            "defaultTenant": {},
+            "credentials": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "authProvider": "string",
+              "authId": "string",
+              "authToken": "string",
+              "secretKey": "string",
+              "password": "string",
+              "userId": "string",
+              "user": {}
+            },
+            "userTenants": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "locale": "string",
+                "status": 12,
+                "userId": "string",
+                "tenantId": "string",
+                "roleId": "string",
+                "user": {},
+                "tenant": {},
+                "role": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "roleType": 15,
+                  "description": "string",
+                  "permissions": [
+                    "string"
+                  ],
+                  "allowedClients": [
+                    "string"
+                  ],
+                  "tenantId": "string",
+                  "userTenants": [
+                    {}
+                  ],
+                  "createdByUser": {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "firstName": "string",
+                    "lastName": "string",
+                    "middleName": "string",
+                    "username": "string",
+                    "email": "string",
+                    "designation": "string",
+                    "phone": "string",
+                    "authClientIds": "string",
+                    "lastLogin": "string",
+                    "photoUrl": "string",
+                    "gender": "M",
+                    "dob": "2019-08-24T14:15:22Z",
+                    "defaultTenantId": "string",
+                    "status": 11,
+                    "tenantId": "string",
+                    "roleId": "string",
+                    "tenantName": "string",
+                    "tenantKey": "string",
+                    "roleName": "string",
+                    "userTenantId": "string"
+                  },
+                  "modifiedByUser": {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "firstName": "string",
+                    "lastName": "string",
+                    "middleName": "string",
+                    "username": "string",
+                    "email": "string",
+                    "designation": "string",
+                    "phone": "string",
+                    "authClientIds": "string",
+                    "lastLogin": "string",
+                    "photoUrl": "string",
+                    "gender": "M",
+                    "dob": "2019-08-24T14:15:22Z",
+                    "defaultTenantId": "string",
+                    "status": 11,
+                    "tenantId": "string",
+                    "roleId": "string",
+                    "tenantName": "string",
+                    "tenantKey": "string",
+                    "roleName": "string",
+                    "userTenantId": "string"
+                  }
+                },
+                "userLevelPermissions": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "permission": "string",
+                    "allowed": true,
+                    "userTenantId": "string",
+                    "userTenant": {}
+                  }
+                ],
+                "userGroups": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "groupId": "string",
+                    "userTenantId": "string",
+                    "group": {},
+                    "userTenant": {}
+                  }
+                ],
+                "userInvitations": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "expiresOn": "2019-08-24T14:15:22Z",
+                    "token": "string",
+                    "userTenantId": "string",
+                    "userTenant": {}
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "roles": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "roleType": 15,
+            "description": "string",
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
+            "tenantId": "string",
+            "userTenants": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "locale": "string",
+                "status": 12,
+                "userId": "string",
+                "tenantId": "string",
+                "roleId": "string",
+                "user": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "middleName": "string",
+                  "username": "string",
+                  "email": "string",
+                  "designation": "string",
+                  "phone": "string",
+                  "authClientIds": "string",
+                  "lastLogin": "2019-08-24T14:15:22Z",
+                  "photoUrl": "string",
+                  "gender": "M",
+                  "dob": "2019-08-24T14:15:22Z",
+                  "defaultTenantId": "string",
+                  "defaultTenant": {},
+                  "credentials": {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "authProvider": "string",
+                    "authId": "string",
+                    "authToken": "string",
+                    "secretKey": "string",
+                    "password": "string",
+                    "userId": "string",
+                    "user": {}
+                  },
+                  "userTenants": [
+                    {}
+                  ]
+                },
+                "tenant": {},
+                "role": {},
+                "userLevelPermissions": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "permission": "string",
+                    "allowed": true,
+                    "userTenantId": "string",
+                    "userTenant": {}
+                  }
+                ],
+                "userGroups": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "groupId": "string",
+                    "userTenantId": "string",
+                    "group": {},
+                    "userTenant": {}
+                  }
+                ],
+                "userInvitations": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "expiresOn": "2019-08-24T14:15:22Z",
+                    "token": "string",
+                    "userTenantId": "string",
+                    "userTenant": {}
+                  }
+                ]
+              }
+            ],
+            "createdByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            },
+            "modifiedByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            }
+          }
+        ],
+        "groups": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "description": "string",
+            "photoUrl": "string",
+            "tenantId": "string",
+            "userGroups": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "groupId": "string",
+                "userTenantId": "string",
+                "group": {},
+                "userTenant": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "locale": "string",
+                  "status": 12,
+                  "userId": "string",
+                  "tenantId": "string",
+                  "roleId": "string",
+                  "user": {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "firstName": "string",
+                    "lastName": "string",
+                    "middleName": "string",
+                    "username": "string",
+                    "email": "string",
+                    "designation": "string",
+                    "phone": "string",
+                    "authClientIds": "string",
+                    "lastLogin": "2019-08-24T14:15:22Z",
+                    "photoUrl": "string",
+                    "gender": "M",
+                    "dob": "2019-08-24T14:15:22Z",
+                    "defaultTenantId": "string",
+                    "defaultTenant": {},
+                    "credentials": {},
+                    "userTenants": []
+                  },
+                  "tenant": {},
+                  "role": {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "name": "string",
+                    "roleType": 15,
+                    "description": "string",
+                    "permissions": [],
+                    "allowedClients": [],
+                    "tenantId": "string",
+                    "userTenants": [],
+                    "createdByUser": {},
+                    "modifiedByUser": {}
+                  },
+                  "userLevelPermissions": [
+                    {}
+                  ],
+                  "userGroups": [
+                    {}
+                  ],
+                  "userInvitations": [
+                    {}
+                  ]
+                }
               }
             ]
           }
@@ -4190,6 +1651,8 @@ fetch('/tenants/{id}',
       "deletedBy": "string",
       "createdOn": "2019-08-24T14:15:22Z",
       "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
       "id": "string",
       "locale": "string",
       "status": 12,
@@ -4236,9 +1699,6 @@ fetch('/tenants/{id}',
           "state": "string",
           "zip": "string",
           "country": "string",
-          "primaryContactEmail": "string",
-          "allowedDomain": "string",
-          "tenantType": "string",
           "tenantConfigs": [
             {
               "deleted": true,
@@ -4255,7 +1715,127 @@ fetch('/tenants/{id}',
               "tenant": {}
             }
           ],
-          "userTenants": []
+          "userTenants": [],
+          "users": [
+            {}
+          ],
+          "roles": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "roleType": 15,
+              "description": "string",
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
+              "tenantId": "string",
+              "userTenants": [
+                {}
+              ],
+              "createdByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              },
+              "modifiedByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              }
+            }
+          ],
+          "groups": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "description": "string",
+              "photoUrl": "string",
+              "tenantId": "string",
+              "userGroups": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "groupId": "string",
+                  "userTenantId": "string",
+                  "group": {},
+                  "userTenant": {}
+                }
+              ]
+            }
+          ]
         },
         "credentials": {
           "deleted": true,
@@ -4263,6 +1843,8 @@ fetch('/tenants/{id}',
           "deletedBy": "string",
           "createdOn": "2019-08-24T14:15:22Z",
           "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
           "id": "string",
           "authProvider": "string",
           "authId": "string",
@@ -4294,9 +1876,6 @@ fetch('/tenants/{id}',
         "state": "string",
         "zip": "string",
         "country": "string",
-        "primaryContactEmail": "string",
-        "allowedDomain": "string",
-        "tenantType": "string",
         "tenantConfigs": [
           {
             "deleted": true,
@@ -4313,7 +1892,170 @@ fetch('/tenants/{id}',
             "tenant": {}
           }
         ],
-        "userTenants": []
+        "userTenants": [],
+        "users": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "middleName": "string",
+            "username": "string",
+            "email": "string",
+            "designation": "string",
+            "phone": "string",
+            "authClientIds": "string",
+            "lastLogin": "2019-08-24T14:15:22Z",
+            "photoUrl": "string",
+            "gender": "M",
+            "dob": "2019-08-24T14:15:22Z",
+            "defaultTenantId": "string",
+            "defaultTenant": {},
+            "credentials": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "authProvider": "string",
+              "authId": "string",
+              "authToken": "string",
+              "secretKey": "string",
+              "password": "string",
+              "userId": "string",
+              "user": {}
+            },
+            "userTenants": [
+              {}
+            ]
+          }
+        ],
+        "roles": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "roleType": 15,
+            "description": "string",
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
+            "tenantId": "string",
+            "userTenants": [
+              {}
+            ],
+            "createdByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            },
+            "modifiedByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            }
+          }
+        ],
+        "groups": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "description": "string",
+            "photoUrl": "string",
+            "tenantId": "string",
+            "userGroups": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "groupId": "string",
+                "userTenantId": "string",
+                "group": {},
+                "userTenant": {}
+              }
+            ]
+          }
+        ]
       },
       "role": {
         "deleted": true,
@@ -4326,12 +2068,14 @@ fetch('/tenants/{id}',
         "id": "string",
         "name": "string",
         "roleType": 15,
+        "description": "string",
         "permissions": [
           "string"
         ],
         "allowedClients": [
           "string"
         ],
+        "tenantId": "string",
         "userTenants": [
           {}
         ],
@@ -4363,9 +2107,7 @@ fetch('/tenants/{id}',
           "tenantName": "string",
           "tenantKey": "string",
           "roleName": "string",
-          "roleType": 0,
-          "userTenantId": "string",
-          "expiresOn": "2019-08-24T14:15:22Z"
+          "userTenantId": "string"
         },
         "modifiedByUser": {
           "deleted": true,
@@ -4395,9 +2137,7 @@ fetch('/tenants/{id}',
           "tenantName": "string",
           "tenantKey": "string",
           "roleName": "string",
-          "roleType": 0,
-          "userTenantId": "string",
-          "expiresOn": "2019-08-24T14:15:22Z"
+          "userTenantId": "string"
         }
       },
       "userLevelPermissions": [
@@ -4428,7 +2168,6 @@ fetch('/tenants/{id}',
           "id": "string",
           "groupId": "string",
           "userTenantId": "string",
-          "isOwner": true,
           "group": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -4441,12 +2180,1644 @@ fetch('/tenants/{id}',
             "name": "string",
             "description": "string",
             "photoUrl": "string",
-            "groupType": "Tenant",
+            "tenantId": "string",
             "userGroups": [
               {}
             ]
           },
           "userTenant": {}
+        }
+      ],
+      "userInvitations": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "expiresOn": "2019-08-24T14:15:22Z",
+          "token": "string",
+          "userTenantId": "string",
+          "userTenant": {}
+        }
+      ]
+    }
+  ],
+  "users": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "firstName": "string",
+      "lastName": "string",
+      "middleName": "string",
+      "username": "string",
+      "email": "string",
+      "designation": "string",
+      "phone": "string",
+      "authClientIds": "string",
+      "lastLogin": "2019-08-24T14:15:22Z",
+      "photoUrl": "string",
+      "gender": "M",
+      "dob": "2019-08-24T14:15:22Z",
+      "defaultTenantId": "string",
+      "defaultTenant": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "name": "string",
+        "status": 1,
+        "key": "string",
+        "website": "string",
+        "address": "string",
+        "city": "string",
+        "state": "string",
+        "zip": "string",
+        "country": "string",
+        "tenantConfigs": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "configKey": "string",
+            "configValue": {},
+            "tenantId": "string",
+            "tenant": {}
+          }
+        ],
+        "userTenants": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "locale": "string",
+            "status": 12,
+            "userId": "string",
+            "tenantId": "string",
+            "roleId": "string",
+            "user": {},
+            "tenant": {},
+            "role": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "roleType": 15,
+              "description": "string",
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
+              "tenantId": "string",
+              "userTenants": [
+                {}
+              ],
+              "createdByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              },
+              "modifiedByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              }
+            },
+            "userLevelPermissions": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "permission": "string",
+                "allowed": true,
+                "userTenantId": "string",
+                "userTenant": {}
+              }
+            ],
+            "userGroups": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "groupId": "string",
+                "userTenantId": "string",
+                "group": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "description": "string",
+                  "photoUrl": "string",
+                  "tenantId": "string",
+                  "userGroups": [
+                    {}
+                  ]
+                },
+                "userTenant": {}
+              }
+            ],
+            "userInvitations": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "expiresOn": "2019-08-24T14:15:22Z",
+                "token": "string",
+                "userTenantId": "string",
+                "userTenant": {}
+              }
+            ]
+          }
+        ],
+        "users": [],
+        "roles": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "roleType": 15,
+            "description": "string",
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
+            "tenantId": "string",
+            "userTenants": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "locale": "string",
+                "status": 12,
+                "userId": "string",
+                "tenantId": "string",
+                "roleId": "string",
+                "user": {},
+                "tenant": {},
+                "role": {},
+                "userLevelPermissions": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "permission": "string",
+                    "allowed": true,
+                    "userTenantId": "string",
+                    "userTenant": {}
+                  }
+                ],
+                "userGroups": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "groupId": "string",
+                    "userTenantId": "string",
+                    "group": {},
+                    "userTenant": {}
+                  }
+                ],
+                "userInvitations": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "expiresOn": "2019-08-24T14:15:22Z",
+                    "token": "string",
+                    "userTenantId": "string",
+                    "userTenant": {}
+                  }
+                ]
+              }
+            ],
+            "createdByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            },
+            "modifiedByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            }
+          }
+        ],
+        "groups": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "description": "string",
+            "photoUrl": "string",
+            "tenantId": "string",
+            "userGroups": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "groupId": "string",
+                "userTenantId": "string",
+                "group": {},
+                "userTenant": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "locale": "string",
+                  "status": 12,
+                  "userId": "string",
+                  "tenantId": "string",
+                  "roleId": "string",
+                  "user": {},
+                  "tenant": {},
+                  "role": {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "name": "string",
+                    "roleType": 15,
+                    "description": "string",
+                    "permissions": [],
+                    "allowedClients": [],
+                    "tenantId": "string",
+                    "userTenants": [],
+                    "createdByUser": {},
+                    "modifiedByUser": {}
+                  },
+                  "userLevelPermissions": [
+                    {}
+                  ],
+                  "userGroups": [
+                    {}
+                  ],
+                  "userInvitations": [
+                    {}
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "credentials": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "authProvider": "string",
+        "authId": "string",
+        "authToken": "string",
+        "secretKey": "string",
+        "password": "string",
+        "userId": "string",
+        "user": {}
+      },
+      "userTenants": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "locale": "string",
+          "status": 12,
+          "userId": "string",
+          "tenantId": "string",
+          "roleId": "string",
+          "user": {},
+          "tenant": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "status": 1,
+            "key": "string",
+            "website": "string",
+            "address": "string",
+            "city": "string",
+            "state": "string",
+            "zip": "string",
+            "country": "string",
+            "tenantConfigs": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "configKey": "string",
+                "configValue": {},
+                "tenantId": "string",
+                "tenant": {}
+              }
+            ],
+            "userTenants": [
+              {}
+            ],
+            "users": [],
+            "roles": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "roleType": 15,
+                "description": "string",
+                "permissions": [
+                  "string"
+                ],
+                "allowedClients": [
+                  "string"
+                ],
+                "tenantId": "string",
+                "userTenants": [
+                  {}
+                ],
+                "createdByUser": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "middleName": "string",
+                  "username": "string",
+                  "email": "string",
+                  "designation": "string",
+                  "phone": "string",
+                  "authClientIds": "string",
+                  "lastLogin": "string",
+                  "photoUrl": "string",
+                  "gender": "M",
+                  "dob": "2019-08-24T14:15:22Z",
+                  "defaultTenantId": "string",
+                  "status": 11,
+                  "tenantId": "string",
+                  "roleId": "string",
+                  "tenantName": "string",
+                  "tenantKey": "string",
+                  "roleName": "string",
+                  "userTenantId": "string"
+                },
+                "modifiedByUser": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "middleName": "string",
+                  "username": "string",
+                  "email": "string",
+                  "designation": "string",
+                  "phone": "string",
+                  "authClientIds": "string",
+                  "lastLogin": "string",
+                  "photoUrl": "string",
+                  "gender": "M",
+                  "dob": "2019-08-24T14:15:22Z",
+                  "defaultTenantId": "string",
+                  "status": 11,
+                  "tenantId": "string",
+                  "roleId": "string",
+                  "tenantName": "string",
+                  "tenantKey": "string",
+                  "roleName": "string",
+                  "userTenantId": "string"
+                }
+              }
+            ],
+            "groups": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "description": "string",
+                "photoUrl": "string",
+                "tenantId": "string",
+                "userGroups": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "groupId": "string",
+                    "userTenantId": "string",
+                    "group": {},
+                    "userTenant": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "role": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "roleType": 15,
+            "description": "string",
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
+            "tenantId": "string",
+            "userTenants": [
+              {}
+            ],
+            "createdByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            },
+            "modifiedByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            }
+          },
+          "userLevelPermissions": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "permission": "string",
+              "allowed": true,
+              "userTenantId": "string",
+              "userTenant": {}
+            }
+          ],
+          "userGroups": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "groupId": "string",
+              "userTenantId": "string",
+              "group": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "description": "string",
+                "photoUrl": "string",
+                "tenantId": "string",
+                "userGroups": [
+                  {}
+                ]
+              },
+              "userTenant": {}
+            }
+          ],
+          "userInvitations": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "expiresOn": "2019-08-24T14:15:22Z",
+              "token": "string",
+              "userTenantId": "string",
+              "userTenant": {}
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "roles": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "name": "string",
+      "roleType": 15,
+      "description": "string",
+      "permissions": [
+        "string"
+      ],
+      "allowedClients": [
+        "string"
+      ],
+      "tenantId": "string",
+      "userTenants": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "locale": "string",
+          "status": 12,
+          "userId": "string",
+          "tenantId": "string",
+          "roleId": "string",
+          "user": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "middleName": "string",
+            "username": "string",
+            "email": "string",
+            "designation": "string",
+            "phone": "string",
+            "authClientIds": "string",
+            "lastLogin": "2019-08-24T14:15:22Z",
+            "photoUrl": "string",
+            "gender": "M",
+            "dob": "2019-08-24T14:15:22Z",
+            "defaultTenantId": "string",
+            "defaultTenant": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "status": 1,
+              "key": "string",
+              "website": "string",
+              "address": "string",
+              "city": "string",
+              "state": "string",
+              "zip": "string",
+              "country": "string",
+              "tenantConfigs": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "configKey": "string",
+                  "configValue": {},
+                  "tenantId": "string",
+                  "tenant": {}
+                }
+              ],
+              "userTenants": [
+                {}
+              ],
+              "users": [
+                {}
+              ],
+              "roles": [],
+              "groups": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "description": "string",
+                  "photoUrl": "string",
+                  "tenantId": "string",
+                  "userGroups": [
+                    {}
+                  ]
+                }
+              ]
+            },
+            "credentials": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "authProvider": "string",
+              "authId": "string",
+              "authToken": "string",
+              "secretKey": "string",
+              "password": "string",
+              "userId": "string",
+              "user": {}
+            },
+            "userTenants": [
+              {}
+            ]
+          },
+          "tenant": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "status": 1,
+            "key": "string",
+            "website": "string",
+            "address": "string",
+            "city": "string",
+            "state": "string",
+            "zip": "string",
+            "country": "string",
+            "tenantConfigs": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "configKey": "string",
+                "configValue": {},
+                "tenantId": "string",
+                "tenant": {}
+              }
+            ],
+            "userTenants": [
+              {}
+            ],
+            "users": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "2019-08-24T14:15:22Z",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "defaultTenant": {},
+                "credentials": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "authProvider": "string",
+                  "authId": "string",
+                  "authToken": "string",
+                  "secretKey": "string",
+                  "password": "string",
+                  "userId": "string",
+                  "user": {}
+                },
+                "userTenants": [
+                  {}
+                ]
+              }
+            ],
+            "roles": [],
+            "groups": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "description": "string",
+                "photoUrl": "string",
+                "tenantId": "string",
+                "userGroups": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "groupId": "string",
+                    "userTenantId": "string",
+                    "group": {},
+                    "userTenant": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "role": {},
+          "userLevelPermissions": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "permission": "string",
+              "allowed": true,
+              "userTenantId": "string",
+              "userTenant": {}
+            }
+          ],
+          "userGroups": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "groupId": "string",
+              "userTenantId": "string",
+              "group": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "description": "string",
+                "photoUrl": "string",
+                "tenantId": "string",
+                "userGroups": [
+                  {}
+                ]
+              },
+              "userTenant": {}
+            }
+          ],
+          "userInvitations": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "expiresOn": "2019-08-24T14:15:22Z",
+              "token": "string",
+              "userTenantId": "string",
+              "userTenant": {}
+            }
+          ]
+        }
+      ],
+      "createdByUser": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "firstName": "string",
+        "lastName": "string",
+        "middleName": "string",
+        "username": "string",
+        "email": "string",
+        "designation": "string",
+        "phone": "string",
+        "authClientIds": "string",
+        "lastLogin": "string",
+        "photoUrl": "string",
+        "gender": "M",
+        "dob": "2019-08-24T14:15:22Z",
+        "defaultTenantId": "string",
+        "status": 11,
+        "tenantId": "string",
+        "roleId": "string",
+        "tenantName": "string",
+        "tenantKey": "string",
+        "roleName": "string",
+        "userTenantId": "string"
+      },
+      "modifiedByUser": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "firstName": "string",
+        "lastName": "string",
+        "middleName": "string",
+        "username": "string",
+        "email": "string",
+        "designation": "string",
+        "phone": "string",
+        "authClientIds": "string",
+        "lastLogin": "string",
+        "photoUrl": "string",
+        "gender": "M",
+        "dob": "2019-08-24T14:15:22Z",
+        "defaultTenantId": "string",
+        "status": 11,
+        "tenantId": "string",
+        "roleId": "string",
+        "tenantName": "string",
+        "tenantKey": "string",
+        "roleName": "string",
+        "userTenantId": "string"
+      }
+    }
+  ],
+  "groups": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "name": "string",
+      "description": "string",
+      "photoUrl": "string",
+      "tenantId": "string",
+      "userGroups": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "groupId": "string",
+          "userTenantId": "string",
+          "group": {},
+          "userTenant": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "locale": "string",
+            "status": 12,
+            "userId": "string",
+            "tenantId": "string",
+            "roleId": "string",
+            "user": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "2019-08-24T14:15:22Z",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "defaultTenant": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "status": 1,
+                "key": "string",
+                "website": "string",
+                "address": "string",
+                "city": "string",
+                "state": "string",
+                "zip": "string",
+                "country": "string",
+                "tenantConfigs": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "configKey": "string",
+                    "configValue": {},
+                    "tenantId": "string",
+                    "tenant": {}
+                  }
+                ],
+                "userTenants": [
+                  {}
+                ],
+                "users": [
+                  {}
+                ],
+                "roles": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "name": "string",
+                    "roleType": 15,
+                    "description": "string",
+                    "permissions": [],
+                    "allowedClients": [],
+                    "tenantId": "string",
+                    "userTenants": [],
+                    "createdByUser": {},
+                    "modifiedByUser": {}
+                  }
+                ],
+                "groups": []
+              },
+              "credentials": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "authProvider": "string",
+                "authId": "string",
+                "authToken": "string",
+                "secretKey": "string",
+                "password": "string",
+                "userId": "string",
+                "user": {}
+              },
+              "userTenants": [
+                {}
+              ]
+            },
+            "tenant": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "status": 1,
+              "key": "string",
+              "website": "string",
+              "address": "string",
+              "city": "string",
+              "state": "string",
+              "zip": "string",
+              "country": "string",
+              "tenantConfigs": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "configKey": "string",
+                  "configValue": {},
+                  "tenantId": "string",
+                  "tenant": {}
+                }
+              ],
+              "userTenants": [
+                {}
+              ],
+              "users": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "middleName": "string",
+                  "username": "string",
+                  "email": "string",
+                  "designation": "string",
+                  "phone": "string",
+                  "authClientIds": "string",
+                  "lastLogin": "2019-08-24T14:15:22Z",
+                  "photoUrl": "string",
+                  "gender": "M",
+                  "dob": "2019-08-24T14:15:22Z",
+                  "defaultTenantId": "string",
+                  "defaultTenant": {},
+                  "credentials": {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "authProvider": "string",
+                    "authId": "string",
+                    "authToken": "string",
+                    "secretKey": "string",
+                    "password": "string",
+                    "userId": "string",
+                    "user": {}
+                  },
+                  "userTenants": [
+                    {}
+                  ]
+                }
+              ],
+              "roles": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "roleType": 15,
+                  "description": "string",
+                  "permissions": [
+                    "string"
+                  ],
+                  "allowedClients": [
+                    "string"
+                  ],
+                  "tenantId": "string",
+                  "userTenants": [
+                    {}
+                  ],
+                  "createdByUser": {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "firstName": "string",
+                    "lastName": "string",
+                    "middleName": "string",
+                    "username": "string",
+                    "email": "string",
+                    "designation": "string",
+                    "phone": "string",
+                    "authClientIds": "string",
+                    "lastLogin": "string",
+                    "photoUrl": "string",
+                    "gender": "M",
+                    "dob": "2019-08-24T14:15:22Z",
+                    "defaultTenantId": "string",
+                    "status": 11,
+                    "tenantId": "string",
+                    "roleId": "string",
+                    "tenantName": "string",
+                    "tenantKey": "string",
+                    "roleName": "string",
+                    "userTenantId": "string"
+                  },
+                  "modifiedByUser": {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "firstName": "string",
+                    "lastName": "string",
+                    "middleName": "string",
+                    "username": "string",
+                    "email": "string",
+                    "designation": "string",
+                    "phone": "string",
+                    "authClientIds": "string",
+                    "lastLogin": "string",
+                    "photoUrl": "string",
+                    "gender": "M",
+                    "dob": "2019-08-24T14:15:22Z",
+                    "defaultTenantId": "string",
+                    "status": 11,
+                    "tenantId": "string",
+                    "roleId": "string",
+                    "tenantName": "string",
+                    "tenantKey": "string",
+                    "roleName": "string",
+                    "userTenantId": "string"
+                  }
+                }
+              ],
+              "groups": []
+            },
+            "role": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "roleType": 15,
+              "description": "string",
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
+              "tenantId": "string",
+              "userTenants": [
+                {}
+              ],
+              "createdByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              },
+              "modifiedByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              }
+            },
+            "userLevelPermissions": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "permission": "string",
+                "allowed": true,
+                "userTenantId": "string",
+                "userTenant": {}
+              }
+            ],
+            "userGroups": [
+              {}
+            ],
+            "userInvitations": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "expiresOn": "2019-08-24T14:15:22Z",
+                "token": "string",
+                "userTenantId": "string",
+                "userTenant": {}
+              }
+            ]
+          }
         }
       ]
     }
@@ -4542,16 +3913,14 @@ const inputBody = '{
   "createdBy": "string",
   "modifiedBy": "string",
   "name": "string",
+  "status": 1,
   "key": "string",
   "website": "string",
   "address": "string",
   "city": "string",
   "state": "string",
   "zip": "string",
-  "country": "string",
-  "primaryContactEmail": "string",
-  "allowedDomain": "string",
-  "tenantType": "string"
+  "country": "string"
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -4583,16 +3952,14 @@ const inputBody = {
   "createdBy": "string",
   "modifiedBy": "string",
   "name": "string",
+  "status": 1,
   "key": "string",
   "website": "string",
   "address": "string",
   "city": "string",
   "state": "string",
   "zip": "string",
-  "country": "string",
-  "primaryContactEmail": "string",
-  "allowedDomain": "string",
-  "tenantType": "string"
+  "country": "string"
 };
 const headers = {
   'Content-Type':'application/json',
@@ -4618,7 +3985,7 @@ fetch('/tenants',
 | Permissions |
 | ------- |
 | CreateTenant   |
-| 26   |
+| 16   |
 
 > Body parameter
 
@@ -4632,16 +3999,14 @@ fetch('/tenants',
   "createdBy": "string",
   "modifiedBy": "string",
   "name": "string",
+  "status": 1,
   "key": "string",
   "website": "string",
   "address": "string",
   "city": "string",
   "state": "string",
   "zip": "string",
-  "country": "string",
-  "primaryContactEmail": "string",
-  "allowedDomain": "string",
-  "tenantType": "string"
+  "country": "string"
 }
 ```
 
@@ -4673,10 +4038,7 @@ fetch('/tenants',
   "city": "string",
   "state": "string",
   "zip": "string",
-  "country": "string",
-  "primaryContactEmail": "string",
-  "allowedDomain": "string",
-  "tenantType": "string"
+  "country": "string"
 }
 ```
 
@@ -4715,10 +4077,7 @@ const inputBody = '{
   "city": "string",
   "state": "string",
   "zip": "string",
-  "country": "string",
-  "primaryContactEmail": "string",
-  "allowedDomain": "string",
-  "tenantType": "string"
+  "country": "string"
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -4758,10 +4117,7 @@ const inputBody = {
   "city": "string",
   "state": "string",
   "zip": "string",
-  "country": "string",
-  "primaryContactEmail": "string",
-  "allowedDomain": "string",
-  "tenantType": "string"
+  "country": "string"
 };
 const headers = {
   'Content-Type':'application/json',
@@ -4787,7 +4143,7 @@ fetch('/tenants',
 | Permissions |
 | ------- |
 | UpdateTenant   |
-| 28   |
+| 18   |
 
 > Body parameter
 
@@ -4809,10 +4165,7 @@ fetch('/tenants',
   "city": "string",
   "state": "string",
   "zip": "string",
-  "country": "string",
-  "primaryContactEmail": "string",
-  "allowedDomain": "string",
-  "tenantType": "string"
+  "country": "string"
 }
 ```
 
@@ -4896,7 +4249,7 @@ fetch('/tenants',
 | Permissions |
 | ------- |
 | ViewTenant   |
-| 27   |
+| 17   |
 
 <h3 id="tenantcontroller.find-parameters">Parameters</h3>
 
@@ -4928,9 +4281,6 @@ fetch('/tenants',
     "state": "string",
     "zip": "string",
     "country": "string",
-    "primaryContactEmail": "string",
-    "allowedDomain": "string",
-    "tenantType": "string",
     "tenantConfigs": [
       {
         "deleted": true,
@@ -4954,6 +4304,8 @@ fetch('/tenants',
         "deletedBy": "string",
         "createdOn": "2019-08-24T14:15:22Z",
         "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
         "id": "string",
         "locale": "string",
         "status": 12,
@@ -4989,6 +4341,8 @@ fetch('/tenants',
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "authProvider": "string",
             "authId": "string",
@@ -5014,12 +4368,14 @@ fetch('/tenants',
           "id": "string",
           "name": "string",
           "roleType": 15,
+          "description": "string",
           "permissions": [
             "string"
           ],
           "allowedClients": [
             "string"
           ],
+          "tenantId": "string",
           "userTenants": [
             {}
           ],
@@ -5051,9 +4407,7 @@ fetch('/tenants',
             "tenantName": "string",
             "tenantKey": "string",
             "roleName": "string",
-            "roleType": 0,
-            "userTenantId": "string",
-            "expiresOn": "2019-08-24T14:15:22Z"
+            "userTenantId": "string"
           },
           "modifiedByUser": {
             "deleted": true,
@@ -5083,9 +4437,7 @@ fetch('/tenants',
             "tenantName": "string",
             "tenantKey": "string",
             "roleName": "string",
-            "roleType": 0,
-            "userTenantId": "string",
-            "expiresOn": "2019-08-24T14:15:22Z"
+            "userTenantId": "string"
           }
         },
         "userLevelPermissions": [
@@ -5116,7 +4468,6 @@ fetch('/tenants',
             "id": "string",
             "groupId": "string",
             "userTenantId": "string",
-            "isOwner": true,
             "group": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -5129,12 +4480,655 @@ fetch('/tenants',
               "name": "string",
               "description": "string",
               "photoUrl": "string",
-              "groupType": "Tenant",
+              "tenantId": "string",
               "userGroups": [
                 {}
               ]
             },
             "userTenant": {}
+          }
+        ],
+        "userInvitations": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "expiresOn": "2019-08-24T14:15:22Z",
+            "token": "string",
+            "userTenantId": "string",
+            "userTenant": {}
+          }
+        ]
+      }
+    ],
+    "users": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "firstName": "string",
+        "lastName": "string",
+        "middleName": "string",
+        "username": "string",
+        "email": "string",
+        "designation": "string",
+        "phone": "string",
+        "authClientIds": "string",
+        "lastLogin": "2019-08-24T14:15:22Z",
+        "photoUrl": "string",
+        "gender": "M",
+        "dob": "2019-08-24T14:15:22Z",
+        "defaultTenantId": "string",
+        "defaultTenant": {},
+        "credentials": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "authProvider": "string",
+          "authId": "string",
+          "authToken": "string",
+          "secretKey": "string",
+          "password": "string",
+          "userId": "string",
+          "user": {}
+        },
+        "userTenants": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "locale": "string",
+            "status": 12,
+            "userId": "string",
+            "tenantId": "string",
+            "roleId": "string",
+            "user": {},
+            "tenant": {},
+            "role": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "roleType": 15,
+              "description": "string",
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
+              "tenantId": "string",
+              "userTenants": [
+                {}
+              ],
+              "createdByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              },
+              "modifiedByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              }
+            },
+            "userLevelPermissions": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "permission": "string",
+                "allowed": true,
+                "userTenantId": "string",
+                "userTenant": {}
+              }
+            ],
+            "userGroups": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "groupId": "string",
+                "userTenantId": "string",
+                "group": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "description": "string",
+                  "photoUrl": "string",
+                  "tenantId": "string",
+                  "userGroups": [
+                    {}
+                  ]
+                },
+                "userTenant": {}
+              }
+            ],
+            "userInvitations": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "expiresOn": "2019-08-24T14:15:22Z",
+                "token": "string",
+                "userTenantId": "string",
+                "userTenant": {}
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "roles": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "name": "string",
+        "roleType": 15,
+        "description": "string",
+        "permissions": [
+          "string"
+        ],
+        "allowedClients": [
+          "string"
+        ],
+        "tenantId": "string",
+        "userTenants": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "locale": "string",
+            "status": 12,
+            "userId": "string",
+            "tenantId": "string",
+            "roleId": "string",
+            "user": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "2019-08-24T14:15:22Z",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "defaultTenant": {},
+              "credentials": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "authProvider": "string",
+                "authId": "string",
+                "authToken": "string",
+                "secretKey": "string",
+                "password": "string",
+                "userId": "string",
+                "user": {}
+              },
+              "userTenants": [
+                {}
+              ]
+            },
+            "tenant": {},
+            "role": {},
+            "userLevelPermissions": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "permission": "string",
+                "allowed": true,
+                "userTenantId": "string",
+                "userTenant": {}
+              }
+            ],
+            "userGroups": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "groupId": "string",
+                "userTenantId": "string",
+                "group": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "description": "string",
+                  "photoUrl": "string",
+                  "tenantId": "string",
+                  "userGroups": [
+                    {}
+                  ]
+                },
+                "userTenant": {}
+              }
+            ],
+            "userInvitations": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "expiresOn": "2019-08-24T14:15:22Z",
+                "token": "string",
+                "userTenantId": "string",
+                "userTenant": {}
+              }
+            ]
+          }
+        ],
+        "createdByUser": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "firstName": "string",
+          "lastName": "string",
+          "middleName": "string",
+          "username": "string",
+          "email": "string",
+          "designation": "string",
+          "phone": "string",
+          "authClientIds": "string",
+          "lastLogin": "string",
+          "photoUrl": "string",
+          "gender": "M",
+          "dob": "2019-08-24T14:15:22Z",
+          "defaultTenantId": "string",
+          "status": 11,
+          "tenantId": "string",
+          "roleId": "string",
+          "tenantName": "string",
+          "tenantKey": "string",
+          "roleName": "string",
+          "userTenantId": "string"
+        },
+        "modifiedByUser": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "firstName": "string",
+          "lastName": "string",
+          "middleName": "string",
+          "username": "string",
+          "email": "string",
+          "designation": "string",
+          "phone": "string",
+          "authClientIds": "string",
+          "lastLogin": "string",
+          "photoUrl": "string",
+          "gender": "M",
+          "dob": "2019-08-24T14:15:22Z",
+          "defaultTenantId": "string",
+          "status": 11,
+          "tenantId": "string",
+          "roleId": "string",
+          "tenantName": "string",
+          "tenantKey": "string",
+          "roleName": "string",
+          "userTenantId": "string"
+        }
+      }
+    ],
+    "groups": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "name": "string",
+        "description": "string",
+        "photoUrl": "string",
+        "tenantId": "string",
+        "userGroups": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "groupId": "string",
+            "userTenantId": "string",
+            "group": {},
+            "userTenant": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "locale": "string",
+              "status": 12,
+              "userId": "string",
+              "tenantId": "string",
+              "roleId": "string",
+              "user": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "2019-08-24T14:15:22Z",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "defaultTenant": {},
+                "credentials": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "authProvider": "string",
+                  "authId": "string",
+                  "authToken": "string",
+                  "secretKey": "string",
+                  "password": "string",
+                  "userId": "string",
+                  "user": {}
+                },
+                "userTenants": [
+                  {}
+                ]
+              },
+              "tenant": {},
+              "role": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "roleType": 15,
+                "description": "string",
+                "permissions": [
+                  "string"
+                ],
+                "allowedClients": [
+                  "string"
+                ],
+                "tenantId": "string",
+                "userTenants": [
+                  {}
+                ],
+                "createdByUser": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "middleName": "string",
+                  "username": "string",
+                  "email": "string",
+                  "designation": "string",
+                  "phone": "string",
+                  "authClientIds": "string",
+                  "lastLogin": "string",
+                  "photoUrl": "string",
+                  "gender": "M",
+                  "dob": "2019-08-24T14:15:22Z",
+                  "defaultTenantId": "string",
+                  "status": 11,
+                  "tenantId": "string",
+                  "roleId": "string",
+                  "tenantName": "string",
+                  "tenantKey": "string",
+                  "roleName": "string",
+                  "userTenantId": "string"
+                },
+                "modifiedByUser": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "middleName": "string",
+                  "username": "string",
+                  "email": "string",
+                  "designation": "string",
+                  "phone": "string",
+                  "authClientIds": "string",
+                  "lastLogin": "string",
+                  "photoUrl": "string",
+                  "gender": "M",
+                  "dob": "2019-08-24T14:15:22Z",
+                  "defaultTenantId": "string",
+                  "status": 11,
+                  "tenantId": "string",
+                  "roleId": "string",
+                  "tenantName": "string",
+                  "tenantKey": "string",
+                  "roleName": "string",
+                  "userTenantId": "string"
+                }
+              },
+              "userLevelPermissions": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "permission": "string",
+                  "allowed": true,
+                  "userTenantId": "string",
+                  "userTenant": {}
+                }
+              ],
+              "userGroups": [
+                {}
+              ],
+              "userInvitations": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "expiresOn": "2019-08-24T14:15:22Z",
+                  "token": "string",
+                  "userTenantId": "string",
+                  "userTenant": {}
+                }
+              ]
+            }
           }
         ]
       }
@@ -5174,9 +5168,6 @@ Status Code **200**
 |»» state|string|false|none|none|
 |»» zip|string|false|none|none|
 |»» country|string|false|none|none|
-|»» primaryContactEmail|string|false|none|none|
-|»» allowedDomain|string|false|none|none|
-|»» tenantType|string|false|none|none|
 |»» tenantConfigs|[[TenantConfigWithRelations](#schematenantconfigwithrelations)]|false|none|(tsType: TenantConfigWithRelations, schemaOptions: { includeRelations: true })|
 |»»» TenantConfigWithRelations|[TenantConfigWithRelations](#schematenantconfigwithrelations)|false|none|(tsType: TenantConfigWithRelations, schemaOptions: { includeRelations: true })|
 |»»»» deleted|boolean|false|none|none|
@@ -5198,6 +5189,8 @@ Status Code **200**
 |»»»» deletedBy|string¦null|false|none|none|
 |»»»» createdOn|string(date-time)|false|none|none|
 |»»»» modifiedOn|string(date-time)|false|none|none|
+|»»»» createdBy|string|false|none|none|
+|»»»» modifiedBy|string|false|none|none|
 |»»»» id|string|false|none|none|
 |»»»» locale|string|false|none|none|
 |»»»» status|number|false|none|none|
@@ -5233,6 +5226,8 @@ Status Code **200**
 |»»»»»» deletedBy|string¦null|false|none|none|
 |»»»»»» createdOn|string(date-time)|false|none|none|
 |»»»»»» modifiedOn|string(date-time)|false|none|none|
+|»»»»»» createdBy|string|false|none|none|
+|»»»»»» modifiedBy|string|false|none|none|
 |»»»»»» id|string|false|none|none|
 |»»»»»» authProvider|string|true|none|none|
 |»»»»»» authId|string|false|none|none|
@@ -5254,9 +5249,11 @@ Status Code **200**
 |»»»»» modifiedBy|string|false|none|none|
 |»»»»» id|string|false|none|none|
 |»»»»» name|string|true|none|none|
-|»»»»» roleType|number|true|none|none|
+|»»»»» roleType|number|false|none|none|
+|»»»»» description|string|false|none|none|
 |»»»»» permissions|[string]|false|none|none|
 |»»»»» allowedClients|[string]|false|none|none|
+|»»»»» tenantId|string|true|none|none|
 |»»»»» userTenants|[[UserTenantWithRelations](#schemausertenantwithrelations)]|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»» UserTenantWithRelations|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»» createdByUser|[UserViewWithRelations](#schemauserviewwithrelations)|false|none|User details view in DB (tsType: UserViewWithRelations, schemaOptions: { includeRelations: true })|
@@ -5287,9 +5284,7 @@ Status Code **200**
 |»»»»»» tenantName|string|true|none|none|
 |»»»»»» tenantKey|string|false|none|none|
 |»»»»»» roleName|string|false|none|none|
-|»»»»»» roleType|number|false|none|none|
 |»»»»»» userTenantId|string|true|none|none|
-|»»»»»» expiresOn|string(date-time)|false|none|none|
 |»»»»» modifiedByUser|[UserViewWithRelations](#schemauserviewwithrelations)|false|none|User details view in DB (tsType: UserViewWithRelations, schemaOptions: { includeRelations: true })|
 |»»»» userLevelPermissions|[[UserLevelPermissionWithRelations](#schemauserlevelpermissionwithrelations)]|false|none|(tsType: UserLevelPermissionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»» UserLevelPermissionWithRelations|[UserLevelPermissionWithRelations](#schemauserlevelpermissionwithrelations)|false|none|(tsType: UserLevelPermissionWithRelations, schemaOptions: { includeRelations: true })|
@@ -5317,7 +5312,6 @@ Status Code **200**
 |»»»»»» id|string|false|none|none|
 |»»»»»» groupId|string|true|none|none|
 |»»»»»» userTenantId|string|true|none|none|
-|»»»»»» isOwner|boolean|false|none|none|
 |»»»»»» group|[GroupWithRelations](#schemagroupwithrelations)|false|none|(tsType: GroupWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»» deleted|boolean|false|none|none|
 |»»»»»»» deletedOn|string(date-time)¦null|false|none|none|
@@ -5330,10 +5324,30 @@ Status Code **200**
 |»»»»»»» name|string|false|none|none|
 |»»»»»»» description|string|false|none|none|
 |»»»»»»» photoUrl|string|false|none|none|
-|»»»»»»» groupType|string|false|none|none|
+|»»»»»»» tenantId|string|true|none|none|
 |»»»»»»» userGroups|[[UserGroupWithRelations](#schemausergroupwithrelations)]|false|none|(tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»»» UserGroupWithRelations|[UserGroupWithRelations](#schemausergroupwithrelations)|false|none|(tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»» userTenant|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
+|»»»» userInvitations|[[UserInvitationWithRelations](#schemauserinvitationwithrelations)]|false|none|(tsType: UserInvitationWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»» UserInvitationWithRelations|[UserInvitationWithRelations](#schemauserinvitationwithrelations)|false|none|(tsType: UserInvitationWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»» deleted|boolean|false|none|none|
+|»»»»»» deletedOn|string(date-time)¦null|false|none|none|
+|»»»»»» deletedBy|string¦null|false|none|none|
+|»»»»»» createdOn|string(date-time)|false|none|none|
+|»»»»»» modifiedOn|string(date-time)|false|none|none|
+|»»»»»» createdBy|string|false|none|none|
+|»»»»»» modifiedBy|string|false|none|none|
+|»»»»»» id|string|false|none|none|
+|»»»»»» expiresOn|string(date-time)|false|none|none|
+|»»»»»» token|string|false|none|none|
+|»»»»»» userTenantId|string|true|none|none|
+|»»»»»» userTenant|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
+|»» users|[[UserWithRelations](#schemauserwithrelations)]|false|none|This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true })|
+|»»» UserWithRelations|[UserWithRelations](#schemauserwithrelations)|false|none|This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true })|
+|»» roles|[[RoleWithRelations](#schemarolewithrelations)]|false|none|(tsType: RoleWithRelations, schemaOptions: { includeRelations: true })|
+|»»» RoleWithRelations|[RoleWithRelations](#schemarolewithrelations)|false|none|(tsType: RoleWithRelations, schemaOptions: { includeRelations: true })|
+|»» groups|[[GroupWithRelations](#schemagroupwithrelations)]|false|none|(tsType: GroupWithRelations, schemaOptions: { includeRelations: true })|
+|»»» GroupWithRelations|[GroupWithRelations](#schemagroupwithrelations)|false|none|(tsType: GroupWithRelations, schemaOptions: { includeRelations: true })|
 
 #### Enumerated Values
 
@@ -5347,18 +5361,17 @@ Status Code **200**
 |gender|M|
 |gender|F|
 |gender|O|
-|groupType|Tenant|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
 None
 </aside>
 
-<h1 id="-sourceloop-user-tenant-service-tenantusercontroller">TenantUserController</h1>
+<h1 id="-sourceloop-user-tenant-service-tenantgroupcontroller">TenantGroupController</h1>
 
-## TenantUserController.count
+## TenantGroupController.delete
 
-<a id="opIdTenantUserController.count"></a>
+<a id="opIdTenantGroupController.delete"></a>
 
 > Code samples
 
@@ -5368,7 +5381,354 @@ const headers = {
   'Accept':'application/json'
 };
 
-fetch('/tenants/{id}/users/count',
+fetch('/tenants/{id}/groups/{groupId}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/tenants/{id}/groups/{groupId}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`DELETE /tenants/{id}/groups/{groupId}`
+
+| Permissions |
+| ------- |
+| DeleteUserGroup   |
+| 35   |
+
+<h3 id="tenantgroupcontroller.delete-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|groupId|path|string|true|none|
+|where|query|object|false|none|
+
+> Example responses
+
+> 204 Response
+
+```json
+{
+  "count": 0
+}
+```
+
+<h3 id="tenantgroupcontroller.delete-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Tenant.Group DELETE|[loopback.Count](#schemaloopback.count)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
+</aside>
+
+## TenantGroupController.create
+
+<a id="opIdTenantGroupController.create"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "name": "string",
+  "description": "string",
+  "photoUrl": "string"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/tenants/{id}/groups',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "name": "string",
+  "description": "string",
+  "photoUrl": "string"
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/tenants/{id}/groups',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /tenants/{id}/groups`
+
+| Permissions |
+| ------- |
+| CreateUserGroup   |
+| 32   |
+
+> Body parameter
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "name": "string",
+  "description": "string",
+  "photoUrl": "string"
+}
+```
+
+<h3 id="tenantgroupcontroller.create-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[NewGroupInTenant](#schemanewgroupintenant)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "name": "string",
+  "description": "string",
+  "photoUrl": "string",
+  "tenantId": "string"
+}
+```
+
+<h3 id="tenantgroupcontroller.create-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Group model instance|[Group](#schemagroup)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
+</aside>
+
+## TenantGroupController.patch
+
+<a id="opIdTenantGroupController.patch"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "name": "string",
+  "description": "string",
+  "photoUrl": "string",
+  "tenantId": "string"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/tenants/{id}/groups',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "name": "string",
+  "description": "string",
+  "photoUrl": "string",
+  "tenantId": "string"
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/tenants/{id}/groups',
+{
+  method: 'PATCH',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PATCH /tenants/{id}/groups`
+
+| Permissions |
+| ------- |
+| UpdateUserGroup   |
+| 34   |
+
+> Body parameter
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "name": "string",
+  "description": "string",
+  "photoUrl": "string",
+  "tenantId": "string"
+}
+```
+
+<h3 id="tenantgroupcontroller.patch-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|where|query|object|false|none|
+|body|body|[GroupPartial](#schemagrouppartial)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "count": 0
+}
+```
+
+<h3 id="tenantgroupcontroller.patch-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Tenant.Group PATCH success count|[loopback.Count](#schemaloopback.count)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
+</aside>
+
+## TenantGroupController.find
+
+<a id="opIdTenantGroupController.find"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/tenants/{id}/groups',
 {
   method: 'GET',
 
@@ -5389,7 +5749,7 @@ const headers = {
   'Accept':'application/json'
 };
 
-fetch('/tenants/{id}/users/count',
+fetch('/tenants/{id}/groups',
 {
   method: 'GET',
 
@@ -5403,18 +5763,1005 @@ fetch('/tenants/{id}/users/count',
 
 ```
 
-`GET /tenants/{id}/users/count`
+`GET /tenants/{id}/groups`
 
 | Permissions |
 | ------- |
-| ViewAnyUser   |
-| ViewTenantUser   |
-| ViewTenantUserRestricted   |
-| 11   |
-| 12   |
-| 13   |
+| ViewUserGroupList   |
 
-<h3 id="tenantusercontroller.count-parameters">Parameters</h3>
+<h3 id="tenantgroupcontroller.find-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|filter|query|object|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "name": "string",
+    "description": "string",
+    "photoUrl": "string",
+    "tenantId": "string"
+  }
+]
+```
+
+<h3 id="tenantgroupcontroller.find-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Groups of Tenant|Inline|
+
+<h3 id="tenantgroupcontroller.find-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[Group](#schemagroup)]|false|none|none|
+|» Group|[Group](#schemagroup)|false|none|none|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|string(date-time)¦null|false|none|none|
+|»» deletedBy|string¦null|false|none|none|
+|»» createdOn|string(date-time)|false|none|none|
+|»» modifiedOn|string(date-time)|false|none|none|
+|»» createdBy|string|false|none|none|
+|»» modifiedBy|string|false|none|none|
+|»» id|string|false|none|none|
+|»» name|string|false|none|none|
+|»» description|string|false|none|none|
+|»» photoUrl|string|false|none|none|
+|»» tenantId|string|true|none|none|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
+</aside>
+
+<h1 id="-sourceloop-user-tenant-service-tenantrolecontroller">TenantRoleController</h1>
+
+## TenantRoleController.delete
+
+<a id="opIdTenantRoleController.delete"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/tenants/{id}/roles/{roleId}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/tenants/{id}/roles/{roleId}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`DELETE /tenants/{id}/roles/{roleId}`
+
+| Permissions |
+| ------- |
+| DeleteRoles   |
+| 10   |
+
+<h3 id="tenantrolecontroller.delete-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|roleId|path|string|true|none|
+|where|query|object|false|none|
+
+> Example responses
+
+> 204 Response
+
+```json
+{
+  "count": 0
+}
+```
+
+<h3 id="tenantrolecontroller.delete-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Tenant.Role DELETE success|[loopback.Count](#schemaloopback.count)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
+</aside>
+
+## TenantRoleController.create
+
+<a id="opIdTenantRoleController.create"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "name": "string",
+  "roleType": 15,
+  "description": "string",
+  "permissions": [
+    "string"
+  ],
+  "allowedClients": [
+    "string"
+  ]
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/tenants/{id}/roles',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "name": "string",
+  "roleType": 15,
+  "description": "string",
+  "permissions": [
+    "string"
+  ],
+  "allowedClients": [
+    "string"
+  ]
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/tenants/{id}/roles',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /tenants/{id}/roles`
+
+| Permissions |
+| ------- |
+| CreateRoles   |
+| 8   |
+
+> Body parameter
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "name": "string",
+  "roleType": 15,
+  "description": "string",
+  "permissions": [
+    "string"
+  ],
+  "allowedClients": [
+    "string"
+  ]
+}
+```
+
+<h3 id="tenantrolecontroller.create-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[NewRoleInTenant](#schemanewroleintenant)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "name": "string",
+  "roleType": 15,
+  "description": "string",
+  "permissions": [
+    "string"
+  ],
+  "allowedClients": [
+    "string"
+  ],
+  "tenantId": "string"
+}
+```
+
+<h3 id="tenantrolecontroller.create-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Role model instance|[Role](#schemarole)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
+</aside>
+
+## TenantRoleController.patch
+
+<a id="opIdTenantRoleController.patch"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "name": "string",
+  "roleType": 15,
+  "description": "string",
+  "permissions": [
+    "string"
+  ],
+  "allowedClients": [
+    "string"
+  ]
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/tenants/{id}/roles',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "name": "string",
+  "roleType": 15,
+  "description": "string",
+  "permissions": [
+    "string"
+  ],
+  "allowedClients": [
+    "string"
+  ]
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/tenants/{id}/roles',
+{
+  method: 'PATCH',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PATCH /tenants/{id}/roles`
+
+| Permissions |
+| ------- |
+| UpdateRoles   |
+| 9   |
+
+> Body parameter
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "name": "string",
+  "roleType": 15,
+  "description": "string",
+  "permissions": [
+    "string"
+  ],
+  "allowedClients": [
+    "string"
+  ]
+}
+```
+
+<h3 id="tenantrolecontroller.patch-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|where|query|object|false|none|
+|body|body|[RolePartialExcluding_id-tenantId_](#schemarolepartialexcluding_id-tenantid_)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "count": 0
+}
+```
+
+<h3 id="tenantrolecontroller.patch-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Tenant.Role PATCH success count|[loopback.Count](#schemaloopback.count)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
+</aside>
+
+## TenantRoleController.find
+
+<a id="opIdTenantRoleController.find"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/tenants/{id}/roles',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/tenants/{id}/roles',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /tenants/{id}/roles`
+
+| Permissions |
+| ------- |
+| ViewRoles   |
+| 6   |
+
+<h3 id="tenantrolecontroller.find-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|filter|query|object|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "name": "string",
+    "roleType": 15,
+    "description": "string",
+    "permissions": [
+      "string"
+    ],
+    "allowedClients": [
+      "string"
+    ],
+    "tenantId": "string"
+  }
+]
+```
+
+<h3 id="tenantrolecontroller.find-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Roles of Tenant|Inline|
+
+<h3 id="tenantrolecontroller.find-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[Role](#schemarole)]|false|none|none|
+|» Role|[Role](#schemarole)|false|none|none|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|string(date-time)¦null|false|none|none|
+|»» deletedBy|string¦null|false|none|none|
+|»» createdOn|string(date-time)|false|none|none|
+|»» modifiedOn|string(date-time)|false|none|none|
+|»» createdBy|string|false|none|none|
+|»» modifiedBy|string|false|none|none|
+|»» id|string|false|none|none|
+|»» name|string|true|none|none|
+|»» roleType|number|false|none|none|
+|»» description|string|false|none|none|
+|»» permissions|[string]|false|none|none|
+|»» allowedClients|[string]|false|none|none|
+|»» tenantId|string|true|none|none|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
+</aside>
+
+<h1 id="-sourceloop-user-tenant-service-tenanttenantconfigcontroller">TenantTenantConfigController</h1>
+
+## TenantTenantConfigController.create
+
+<a id="opIdTenantTenantConfigController.create"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "configKey": "string",
+  "configValue": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/tenants/{id}/tenant-configs',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "configKey": "string",
+  "configValue": {}
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/tenants/{id}/tenant-configs',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /tenants/{id}/tenant-configs`
+
+| Permissions |
+| ------- |
+| CreateTenant   |
+| 16   |
+
+> Body parameter
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "configKey": "string",
+  "configValue": {}
+}
+```
+
+<h3 id="tenanttenantconfigcontroller.create-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[NewTenantConfigInTenant](#schemanewtenantconfigintenant)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "configKey": "string",
+  "configValue": {},
+  "tenantId": "string"
+}
+```
+
+<h3 id="tenanttenantconfigcontroller.create-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|TenantConfig model instance|[TenantConfig](#schematenantconfig)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
+</aside>
+
+## TenantTenantConfigController.patch
+
+<a id="opIdTenantTenantConfigController.patch"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "configKey": "string",
+  "configValue": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/tenants/{id}/tenant-configs',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "configKey": "string",
+  "configValue": {}
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/tenants/{id}/tenant-configs',
+{
+  method: 'PATCH',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PATCH /tenants/{id}/tenant-configs`
+
+| Permissions |
+| ------- |
+| UpdateTenant   |
+| 18   |
+
+> Body parameter
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "configKey": "string",
+  "configValue": {}
+}
+```
+
+<h3 id="tenanttenantconfigcontroller.patch-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|where|query|object|false|none|
+|body|body|[NewTenantConfigInTenant](#schemanewtenantconfigintenant)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "count": 0
+}
+```
+
+<h3 id="tenanttenantconfigcontroller.patch-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Tenant.TenantConfig PATCH success count|[loopback.Count](#schemaloopback.count)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
+</aside>
+
+## TenantTenantConfigController.find
+
+<a id="opIdTenantTenantConfigController.find"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/tenants/{id}/tenant-configs',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/tenants/{id}/tenant-configs',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /tenants/{id}/tenant-configs`
+
+| Permissions |
+| ------- |
+| ViewTenant   |
+| 17   |
+
+<h3 id="tenanttenantconfigcontroller.find-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|filter|query|object|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "configKey": "string",
+    "configValue": {},
+    "tenantId": "string"
+  }
+]
+```
+
+<h3 id="tenanttenantconfigcontroller.find-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of TenantConfigs of Tenant|Inline|
+
+<h3 id="tenanttenantconfigcontroller.find-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[TenantConfig](#schematenantconfig)]|false|none|none|
+|» TenantConfig|[TenantConfig](#schematenantconfig)|false|none|none|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|string(date-time)¦null|false|none|none|
+|»» deletedBy|string¦null|false|none|none|
+|»» createdOn|string(date-time)|false|none|none|
+|»» modifiedOn|string(date-time)|false|none|none|
+|»» createdBy|string|false|none|none|
+|»» modifiedBy|string|false|none|none|
+|»» id|string|false|none|none|
+|»» configKey|string|true|none|none|
+|»» configValue|object|false|none|none|
+|»» tenantId|string|true|none|none|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
+</aside>
+
+## TenantTenantConfigController.delete
+
+<a id="opIdTenantTenantConfigController.delete"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/tenants/{id}/tenant-configs',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/tenants/{id}/tenant-configs',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`DELETE /tenants/{id}/tenant-configs`
+
+| Permissions |
+| ------- |
+| DeleteTenant   |
+| DeleteTenantUser   |
+
+<h3 id="tenanttenantconfigcontroller.delete-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -5431,181 +6778,22 @@ fetch('/tenants/{id}/users/count',
 }
 ```
 
-<h3 id="tenantusercontroller.count-responses">Responses</h3>
+<h3 id="tenanttenantconfigcontroller.delete-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|User model count|[loopback.Count](#schemaloopback.count)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Tenant.TenantConfig DELETE success count|[loopback.Count](#schemaloopback.count)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
 None
 </aside>
 
-## TenantUserController.findAllUsers
+<h1 id="-sourceloop-user-tenant-service-tenantusercontroller">TenantUserController</h1>
 
-<a id="opIdTenantUserController.findAllUsers"></a>
+## TenantUserController.patch
 
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/tenants/{id}/users/view-all',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/tenants/{id}/users/view-all',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /tenants/{id}/users/view-all`
-
-| Permissions |
-| ------- |
-| ViewAllUser   |
-| 14   |
-
-<h3 id="tenantusercontroller.findallusers-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|id|path|string|true|none|
-|filter|query|[v_users.Filter](#schemav_users.filter)|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-[
-  {
-    "roleId": "string",
-    "tenantId": "string",
-    "status": 0,
-    "authProvider": "string",
-    "authId": "string",
-    "userTenantId": "string",
-    "userDetails": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "firstName": "string",
-      "lastName": "string",
-      "middleName": "string",
-      "username": "string",
-      "email": "string",
-      "designation": "string",
-      "phone": "string",
-      "authClientIds": "string",
-      "lastLogin": "2019-08-24T14:15:22Z",
-      "photoUrl": "string",
-      "gender": "M",
-      "dob": "2019-08-24T14:15:22Z",
-      "defaultTenantId": "string"
-    }
-  }
-]
-```
-
-<h3 id="tenantusercontroller.findallusers-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Tenant has many Users|Inline|
-|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|The syntax of the request entity is incorrect.|None|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Invalid Credentials.|None|
-|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
-|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
-
-<h3 id="tenantusercontroller.findallusers-responseschema">Response Schema</h3>
-
-Status Code **200**
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|[[UserDto](#schemauserdto)]|false|none|none|
-|» UserDto|[UserDto](#schemauserdto)|false|none|none|
-|»» roleId|string|true|none|none|
-|»» tenantId|string|true|none|none|
-|»» status|number|false|none|none|
-|»» authProvider|string|false|none|none|
-|»» authId|string|false|none|none|
-|»» userTenantId|string|false|none|none|
-|»» userDetails|[User](#schemauser)|false|none|This is signature for user model.|
-|»»» deleted|boolean|false|none|none|
-|»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»» deletedBy|string¦null|false|none|none|
-|»»» createdOn|string(date-time)|false|none|none|
-|»»» modifiedOn|string(date-time)|false|none|none|
-|»»» createdBy|string|false|none|none|
-|»»» modifiedBy|string|false|none|none|
-|»»» id|string|false|none|none|
-|»»» firstName|string|true|none|none|
-|»»» lastName|string|false|none|none|
-|»»» middleName|string|false|none|none|
-|»»» username|string|true|none|none|
-|»»» email|string|true|none|none|
-|»»» designation|string|false|none|none|
-|»»» phone|string|false|none|none|
-|»»» authClientIds|string|false|none|none|
-|»»» lastLogin|string(date-time)|false|none|none|
-|»»» photoUrl|string|false|none|none|
-|»»» gender|string|false|none|This field takes a single character as input in database.<br>    'M' for male and 'F' for female.|
-|»»» dob|string(date-time)|false|none|none|
-|»»» defaultTenantId|string|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|gender|M|
-|gender|F|
-|gender|O|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-None
-</aside>
-
-## TenantUserController.updateById
-
-<a id="opIdTenantUserController.updateById"></a>
+<a id="opIdTenantUserController.patch"></a>
 
 > Code samples
 
@@ -5627,24 +6815,14 @@ const inputBody = '{
   "designation": "string",
   "phone": "string",
   "authClientIds": "string",
-  "lastLogin": "string",
+  "lastLogin": "2019-08-24T14:15:22Z",
   "photoUrl": "string",
   "gender": "M",
   "dob": "2019-08-24T14:15:22Z",
-  "defaultTenantId": "string",
-  "status": 11,
-  "tenantId": "string",
-  "roleId": "string",
-  "tenantName": "string",
-  "tenantKey": "string",
-  "roleName": "string",
-  "roleType": 0,
-  "userTenantId": "string",
-  "expiresOn": "2019-08-24T14:15:22Z"
+  "defaultTenantId": "string"
 }';
 const headers = {
-  'Content-Type':'application/json',
-  'Authorization':'string'
+  'Content-Type':'application/json'
 };
 
 fetch('/tenants/{id}/users/{userId}',
@@ -5680,24 +6858,14 @@ const inputBody = {
   "designation": "string",
   "phone": "string",
   "authClientIds": "string",
-  "lastLogin": "string",
+  "lastLogin": "2019-08-24T14:15:22Z",
   "photoUrl": "string",
   "gender": "M",
   "dob": "2019-08-24T14:15:22Z",
-  "defaultTenantId": "string",
-  "status": 11,
-  "tenantId": "string",
-  "roleId": "string",
-  "tenantName": "string",
-  "tenantKey": "string",
-  "roleName": "string",
-  "roleType": 0,
-  "userTenantId": "string",
-  "expiresOn": "2019-08-24T14:15:22Z"
+  "defaultTenantId": "string"
 };
 const headers = {
-  'Content-Type':'application/json',
-  'Authorization':'string'
+  'Content-Type':'application/json'
 };
 
 fetch('/tenants/{id}/users/{userId}',
@@ -5718,14 +6886,8 @@ fetch('/tenants/{id}/users/{userId}',
 
 | Permissions |
 | ------- |
-| UpdateAnyUser   |
-| UpdateOwnUser   |
 | UpdateTenantUser   |
-| UpdateTenantUserRestricted   |
-| 19   |
-| 20   |
-| 21   |
-| 22   |
+| 14   |
 
 > Body parameter
 
@@ -5747,46 +6909,37 @@ fetch('/tenants/{id}/users/{userId}',
   "designation": "string",
   "phone": "string",
   "authClientIds": "string",
-  "lastLogin": "string",
+  "lastLogin": "2019-08-24T14:15:22Z",
   "photoUrl": "string",
   "gender": "M",
   "dob": "2019-08-24T14:15:22Z",
-  "defaultTenantId": "string",
-  "status": 11,
-  "tenantId": "string",
-  "roleId": "string",
-  "tenantName": "string",
-  "tenantKey": "string",
-  "roleName": "string",
-  "roleType": 0,
-  "userTenantId": "string",
-  "expiresOn": "2019-08-24T14:15:22Z"
+  "defaultTenantId": "string"
 }
 ```
 
-<h3 id="tenantusercontroller.updatebyid-parameters">Parameters</h3>
+<h3 id="tenantusercontroller.patch-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|Authorization|header|string|false|none|
 |id|path|string|true|none|
 |userId|path|string|true|none|
-|body|body|[UserViewPartial](#schemauserviewpartial)|false|none|
+|where|query|object|false|none|
+|body|body|[UserPartial](#schemauserpartial)|false|none|
 
-<h3 id="tenantusercontroller.updatebyid-responses">Responses</h3>
+<h3 id="tenantusercontroller.patch-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|User PATCH success|None|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Tenant.User PATCH|None|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
 None
 </aside>
 
-## TenantUserController.deleteById
+## TenantUserController.delete
 
-<a id="opIdTenantUserController.deleteById"></a>
+<a id="opIdTenantUserController.delete"></a>
 
 > Code samples
 
@@ -5825,143 +6978,22 @@ fetch('/tenants/{id}/users/{userId}',
 
 | Permissions |
 | ------- |
-| DeleteAnyUser   |
 | DeleteTenantUser   |
-| DeleteTenantUserRestricted   |
-| 23   |
-| 24   |
-| 25   |
+| 15   |
 
-<h3 id="tenantusercontroller.deletebyid-parameters">Parameters</h3>
+<h3 id="tenantusercontroller.delete-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
 |id|path|string|true|none|
 |userId|path|string|true|none|
+|where|query|object|false|none|
 
-<h3 id="tenantusercontroller.deletebyid-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|User DELETE success|None|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-None
-</aside>
-
-## TenantUserController.findById
-
-<a id="opIdTenantUserController.findById"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/tenants/{id}/users/{userid}',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/tenants/{id}/users/{userid}',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /tenants/{id}/users/{userid}`
-
-| Permissions |
-| ------- |
-| ViewAnyUser   |
-| ViewTenantUser   |
-| ViewTenantUserRestricted   |
-| ViewOwnUser   |
-| 11   |
-| 12   |
-| 13   |
-| 15   |
-
-<h3 id="tenantusercontroller.findbyid-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|id|path|string|true|none|
-|userid|path|string|true|none|
-|filter|query|[v_users.Filter](#schemav_users.filter)|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "firstName": "string",
-  "lastName": "string",
-  "middleName": "string",
-  "username": "string",
-  "email": "string",
-  "designation": "string",
-  "phone": "string",
-  "authClientIds": "string",
-  "lastLogin": "string",
-  "photoUrl": "string",
-  "gender": "M",
-  "dob": "2019-08-24T14:15:22Z",
-  "defaultTenantId": "string",
-  "status": 11,
-  "tenantId": "string",
-  "roleId": "string",
-  "tenantName": "string",
-  "tenantKey": "string",
-  "roleName": "string",
-  "roleType": 0,
-  "userTenantId": "string",
-  "expiresOn": "2019-08-24T14:15:22Z"
-}
-```
-
-<h3 id="tenantusercontroller.findbyid-responses">Responses</h3>
+<h3 id="tenantusercontroller.delete-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|User model instance|[UserViewWithRelations](#schemauserviewwithrelations)|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Tenant.User DELETE|None|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -5976,35 +7008,27 @@ None
 
 ```javascript
 const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "firstName": "string",
+  "lastName": "string",
+  "middleName": "string",
+  "username": "string",
+  "email": "string",
+  "designation": "string",
+  "phone": "string",
+  "authClientIds": "string",
+  "lastLogin": "2019-08-24T14:15:22Z",
+  "photoUrl": "string",
+  "gender": "M",
+  "dob": "2019-08-24T14:15:22Z",
   "roleId": "string",
-  "tenantId": "string",
-  "status": 0,
-  "authProvider": "string",
-  "authId": "string",
-  "userTenantId": "string",
-  "userDetails": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "firstName": "string",
-    "lastName": "string",
-    "middleName": "string",
-    "username": "string",
-    "email": "string",
-    "designation": "string",
-    "phone": "string",
-    "authClientIds": "string",
-    "lastLogin": "2019-08-24T14:15:22Z",
-    "photoUrl": "string",
-    "gender": "M",
-    "dob": "2019-08-24T14:15:22Z",
-    "defaultTenantId": "string"
-  }
+  "locale": "string"
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -6028,35 +7052,27 @@ fetch('/tenants/{id}/users',
 ```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "firstName": "string",
+  "lastName": "string",
+  "middleName": "string",
+  "username": "string",
+  "email": "string",
+  "designation": "string",
+  "phone": "string",
+  "authClientIds": "string",
+  "lastLogin": "2019-08-24T14:15:22Z",
+  "photoUrl": "string",
+  "gender": "M",
+  "dob": "2019-08-24T14:15:22Z",
   "roleId": "string",
-  "tenantId": "string",
-  "status": 0,
-  "authProvider": "string",
-  "authId": "string",
-  "userTenantId": "string",
-  "userDetails": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "firstName": "string",
-    "lastName": "string",
-    "middleName": "string",
-    "username": "string",
-    "email": "string",
-    "designation": "string",
-    "phone": "string",
-    "authClientIds": "string",
-    "lastLogin": "2019-08-24T14:15:22Z",
-    "photoUrl": "string",
-    "gender": "M",
-    "dob": "2019-08-24T14:15:22Z",
-    "defaultTenantId": "string"
-  }
+  "locale": "string"
 };
 const headers = {
   'Content-Type':'application/json',
@@ -6081,46 +7097,34 @@ fetch('/tenants/{id}/users',
 
 | Permissions |
 | ------- |
-| CreateAnyUser   |
 | CreateTenantUser   |
-| CreateTenantUserRestricted   |
-| 16   |
-| 17   |
-| 18   |
+| 13   |
 
 > Body parameter
 
 ```json
 {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "firstName": "string",
+  "lastName": "string",
+  "middleName": "string",
+  "username": "string",
+  "email": "string",
+  "designation": "string",
+  "phone": "string",
+  "authClientIds": "string",
+  "lastLogin": "2019-08-24T14:15:22Z",
+  "photoUrl": "string",
+  "gender": "M",
+  "dob": "2019-08-24T14:15:22Z",
   "roleId": "string",
-  "tenantId": "string",
-  "status": 0,
-  "authProvider": "string",
-  "authId": "string",
-  "userTenantId": "string",
-  "userDetails": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "firstName": "string",
-    "lastName": "string",
-    "middleName": "string",
-    "username": "string",
-    "email": "string",
-    "designation": "string",
-    "phone": "string",
-    "authClientIds": "string",
-    "lastLogin": "2019-08-24T14:15:22Z",
-    "photoUrl": "string",
-    "gender": "M",
-    "dob": "2019-08-24T14:15:22Z",
-    "defaultTenantId": "string"
-  }
+  "locale": "string"
 }
 ```
 
@@ -6129,7 +7133,7 @@ fetch('/tenants/{id}/users',
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
 |id|path|string|true|none|
-|body|body|[NewUser](#schemanewuser)|false|none|
+|body|body|[NewUserInTenant](#schemanewuserintenant)|false|none|
 
 > Example responses
 
@@ -6137,35 +7141,27 @@ fetch('/tenants/{id}/users',
 
 ```json
 {
-  "roleId": "string",
-  "tenantId": "string",
-  "status": 0,
-  "authProvider": "string",
-  "authId": "string",
-  "userTenantId": "string",
-  "userDetails": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "firstName": "string",
-    "lastName": "string",
-    "middleName": "string",
-    "username": "string",
-    "email": "string",
-    "designation": "string",
-    "phone": "string",
-    "authClientIds": "string",
-    "lastLogin": "2019-08-24T14:15:22Z",
-    "photoUrl": "string",
-    "gender": "M",
-    "dob": "2019-08-24T14:15:22Z",
-    "defaultTenantId": "string"
-  }
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "firstName": "string",
+  "lastName": "string",
+  "middleName": "string",
+  "username": "string",
+  "email": "string",
+  "designation": "string",
+  "phone": "string",
+  "authClientIds": "string",
+  "lastLogin": "2019-08-24T14:15:22Z",
+  "photoUrl": "string",
+  "gender": "M",
+  "dob": "2019-08-24T14:15:22Z",
+  "defaultTenantId": "string"
 }
 ```
 
@@ -6173,11 +7169,7 @@ fetch('/tenants/{id}/users',
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Tenant model instance|[UserDto](#schemauserdto)|
-|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|The syntax of the request entity is incorrect.|None|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Invalid Credentials.|None|
-|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
-|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|User model instance|[User](#schemauser)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -6235,293 +7227,14 @@ fetch('/tenants/{id}/users',
 
 | Permissions |
 | ------- |
-| ViewAnyUser   |
 | ViewTenantUser   |
-| ViewTenantUserRestricted   |
-| 11   |
 | 12   |
-| 13   |
 
 <h3 id="tenantusercontroller.find-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
 |id|path|string|true|none|
-|filter|query|[v_users.Filter](#schemav_users.filter)|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-[
-  {
-    "roleId": "string",
-    "tenantId": "string",
-    "status": 0,
-    "authProvider": "string",
-    "authId": "string",
-    "userTenantId": "string",
-    "userDetails": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "firstName": "string",
-      "lastName": "string",
-      "middleName": "string",
-      "username": "string",
-      "email": "string",
-      "designation": "string",
-      "phone": "string",
-      "authClientIds": "string",
-      "lastLogin": "2019-08-24T14:15:22Z",
-      "photoUrl": "string",
-      "gender": "M",
-      "dob": "2019-08-24T14:15:22Z",
-      "defaultTenantId": "string"
-    }
-  }
-]
-```
-
-<h3 id="tenantusercontroller.find-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Tenant has many Users|Inline|
-|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|The syntax of the request entity is incorrect.|None|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Invalid Credentials.|None|
-|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
-|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
-
-<h3 id="tenantusercontroller.find-responseschema">Response Schema</h3>
-
-Status Code **200**
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|[[UserDto](#schemauserdto)]|false|none|none|
-|» UserDto|[UserDto](#schemauserdto)|false|none|none|
-|»» roleId|string|true|none|none|
-|»» tenantId|string|true|none|none|
-|»» status|number|false|none|none|
-|»» authProvider|string|false|none|none|
-|»» authId|string|false|none|none|
-|»» userTenantId|string|false|none|none|
-|»» userDetails|[User](#schemauser)|false|none|This is signature for user model.|
-|»»» deleted|boolean|false|none|none|
-|»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»» deletedBy|string¦null|false|none|none|
-|»»» createdOn|string(date-time)|false|none|none|
-|»»» modifiedOn|string(date-time)|false|none|none|
-|»»» createdBy|string|false|none|none|
-|»»» modifiedBy|string|false|none|none|
-|»»» id|string|false|none|none|
-|»»» firstName|string|true|none|none|
-|»»» lastName|string|false|none|none|
-|»»» middleName|string|false|none|none|
-|»»» username|string|true|none|none|
-|»»» email|string|true|none|none|
-|»»» designation|string|false|none|none|
-|»»» phone|string|false|none|none|
-|»»» authClientIds|string|false|none|none|
-|»»» lastLogin|string(date-time)|false|none|none|
-|»»» photoUrl|string|false|none|none|
-|»»» gender|string|false|none|This field takes a single character as input in database.<br>    'M' for male and 'F' for female.|
-|»»» dob|string(date-time)|false|none|none|
-|»»» defaultTenantId|string|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|gender|M|
-|gender|F|
-|gender|O|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-None
-</aside>
-
-<h1 id="-sourceloop-user-tenant-service-usergroupscontroller">UserGroupsController</h1>
-
-## UserGroupsController.getCount
-
-<a id="opIdUserGroupsController.getCount"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/user-groups/count',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/user-groups/count',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /user-groups/count`
-
-| Permissions |
-| ------- |
-| ViewUserGroupList   |
-| 2   |
-
-<h3 id="usergroupscontroller.getcount-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|where|query|object|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-[
-  {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "groupId": "string",
-    "userTenantId": "string",
-    "isOwner": true
-  }
-]
-```
-
-<h3 id="usergroupscontroller.getcount-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Count of UserGroup|Inline|
-
-<h3 id="usergroupscontroller.getcount-responseschema">Response Schema</h3>
-
-Status Code **200**
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|[[UserGroup](#schemausergroup)]|false|none|none|
-|» UserGroup|[UserGroup](#schemausergroup)|false|none|none|
-|»» deleted|boolean|false|none|none|
-|»» deletedOn|string(date-time)¦null|false|none|none|
-|»» deletedBy|string¦null|false|none|none|
-|»» createdOn|string(date-time)|false|none|none|
-|»» modifiedOn|string(date-time)|false|none|none|
-|»» createdBy|string|false|none|none|
-|»» modifiedBy|string|false|none|none|
-|»» id|string|false|none|none|
-|»» groupId|string|true|none|none|
-|»» userTenantId|string|true|none|none|
-|»» isOwner|boolean|false|none|none|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-None
-</aside>
-
-## UserGroupsController.find
-
-<a id="opIdUserGroupsController.find"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/user-groups',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/user-groups',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /user-groups`
-
-| Permissions |
-| ------- |
-| ViewUserGroupList   |
-| 2   |
-
-<h3 id="usergroupscontroller.find-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
 |filter|query|object|false|none|
 
 > Example responses
@@ -6539,27 +7252,37 @@ fetch('/user-groups',
     "createdBy": "string",
     "modifiedBy": "string",
     "id": "string",
-    "groupId": "string",
-    "userTenantId": "string",
-    "isOwner": true
+    "firstName": "string",
+    "lastName": "string",
+    "middleName": "string",
+    "username": "string",
+    "email": "string",
+    "designation": "string",
+    "phone": "string",
+    "authClientIds": "string",
+    "lastLogin": "2019-08-24T14:15:22Z",
+    "photoUrl": "string",
+    "gender": "M",
+    "dob": "2019-08-24T14:15:22Z",
+    "defaultTenantId": "string"
   }
 ]
 ```
 
-<h3 id="usergroupscontroller.find-responses">Responses</h3>
+<h3 id="tenantusercontroller.find-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of UserGroup|Inline|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Users of Tenant|Inline|
 
-<h3 id="usergroupscontroller.find-responseschema">Response Schema</h3>
+<h3 id="tenantusercontroller.find-responseschema">Response Schema</h3>
 
 Status Code **200**
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|*anonymous*|[[UserGroup](#schemausergroup)]|false|none|none|
-|» UserGroup|[UserGroup](#schemausergroup)|false|none|none|
+|*anonymous*|[[User](#schemauser)]|false|none|[This is signature for user model.]|
+|» User|[User](#schemauser)|false|none|This is signature for user model.|
 |»» deleted|boolean|false|none|none|
 |»» deletedOn|string(date-time)¦null|false|none|none|
 |»» deletedBy|string¦null|false|none|none|
@@ -6568,9 +7291,161 @@ Status Code **200**
 |»» createdBy|string|false|none|none|
 |»» modifiedBy|string|false|none|none|
 |»» id|string|false|none|none|
-|»» groupId|string|true|none|none|
-|»» userTenantId|string|true|none|none|
-|»» isOwner|boolean|false|none|none|
+|»» firstName|string|true|none|none|
+|»» lastName|string|false|none|none|
+|»» middleName|string|false|none|none|
+|»» username|string|true|none|none|
+|»» email|string|true|none|none|
+|»» designation|string|false|none|none|
+|»» phone|string|false|none|none|
+|»» authClientIds|string|false|none|none|
+|»» lastLogin|string(date-time)|false|none|none|
+|»» photoUrl|string|false|none|none|
+|»» gender|string|false|none|This field takes a single character as input in database.<br>    'M' for male and 'F' for female.|
+|»» dob|string(date-time)|false|none|none|
+|»» defaultTenantId|string|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|gender|M|
+|gender|F|
+|gender|O|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
+</aside>
+
+<h1 id="-sourceloop-user-tenant-service-usertenantcontroller">UserTenantController</h1>
+
+## UserTenantController.find
+
+<a id="opIdUserTenantController.find"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/user/{id}/tenants',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/user/{id}/tenants',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /user/{id}/tenants`
+
+| Permissions |
+| ------- |
+| ViewAllTenantOfSelf   |
+
+<h3 id="usertenantcontroller.find-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|filter|query|object|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "name": "string",
+    "status": 1,
+    "key": "string",
+    "website": "string",
+    "address": "string",
+    "city": "string",
+    "state": "string",
+    "zip": "string",
+    "country": "string"
+  }
+]
+```
+
+<h3 id="usertenantcontroller.find-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Tenants to Which the User Belongs|Inline|
+
+<h3 id="usertenantcontroller.find-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[Tenant](#schematenant)]|false|none|[signature for all tenants]|
+|» Tenant|[Tenant](#schematenant)|false|none|signature for all tenants|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|string(date-time)¦null|false|none|none|
+|»» deletedBy|string¦null|false|none|none|
+|»» createdOn|string(date-time)|false|none|none|
+|»» modifiedOn|string(date-time)|false|none|none|
+|»» createdBy|string|false|none|none|
+|»» modifiedBy|string|false|none|none|
+|»» id|string|false|none|none|
+|»» name|string|true|none|none|
+|»» status|number¦null|true|none|Tenant status - Active or Inactive|
+|»» key|string|false|none|none|
+|»» website|string|false|none|none|
+|»» address|string|false|none|none|
+|»» city|string|false|none|none|
+|»» state|string|false|none|none|
+|»» zip|string|false|none|none|
+|»» country|string|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|status|1|
+|status|0|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -6578,6 +7453,175 @@ None
 </aside>
 
 <h1 id="-sourceloop-user-tenant-service-usertenantprefscontroller">UserTenantPrefsController</h1>
+
+## UserTenantPrefsController.count
+
+<a id="opIdUserTenantPrefsController.count"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/user-tenant-prefs/count',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/user-tenant-prefs/count',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /user-tenant-prefs/count`
+
+| Permissions |
+| ------- |
+| ViewUserTenantPreference   |
+| 25   |
+
+<h3 id="usertenantprefscontroller.count-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|where|query|object|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "count": 0
+}
+```
+
+<h3 id="usertenantprefscontroller.count-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|UserTenantPrefs model count|[loopback.Count](#schemaloopback.count)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
+</aside>
+
+## UserTenantPrefsController.deleteById
+
+<a id="opIdUserTenantPrefsController.deleteById"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/user-tenant-prefs/{id}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/user-tenant-prefs/{id}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`DELETE /user-tenant-prefs/{id}`
+
+| Permissions |
+| ------- |
+| DeleteUserTenantPreference   |
+| 30   |
+
+<h3 id="usertenantprefscontroller.deletebyid-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+
+> Example responses
+
+> 204 Response
+
+```json
+null
+```
+
+<h3 id="usertenantprefscontroller.deletebyid-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content|Inline|
+
+<h3 id="usertenantprefscontroller.deletebyid-responseschema">Response Schema</h3>
+
+Status Code **204**
+
+*UserTenantPrefs DELETE success*
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
+</aside>
 
 ## UserTenantPrefsController.create
 
@@ -6595,8 +7639,7 @@ const inputBody = '{
   "createdBy": "string",
   "modifiedBy": "string",
   "configKey": "string",
-  "configValue": {},
-  "userTenantId": "string"
+  "configValue": {}
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -6628,8 +7671,7 @@ const inputBody = {
   "createdBy": "string",
   "modifiedBy": "string",
   "configKey": "string",
-  "configValue": {},
-  "userTenantId": "string"
+  "configValue": {}
 };
 const headers = {
   'Content-Type':'application/json',
@@ -6654,8 +7696,8 @@ fetch('/user-tenant-prefs',
 
 | Permissions |
 | ------- |
-| UpdateUserTenantPreference   |
-| 36   |
+| CreateUserTenantPreference   |
+| 29   |
 
 > Body parameter
 
@@ -6669,8 +7711,7 @@ fetch('/user-tenant-prefs',
   "createdBy": "string",
   "modifiedBy": "string",
   "configKey": "string",
-  "configValue": {},
-  "userTenantId": "string"
+  "configValue": {}
 }
 ```
 
@@ -6706,8 +7747,9 @@ fetch('/user-tenant-prefs',
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|UserTenantPrefs model instance|[UserTenantPrefs](#schemausertenantprefs)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
 </aside>
 
 ## UserTenantPrefsController.find
@@ -6762,7 +7804,7 @@ fetch('/user-tenant-prefs',
 | Permissions |
 | ------- |
 | ViewUserTenantPreference   |
-| 37   |
+| 25   |
 
 <h3 id="usertenantprefscontroller.find-parameters">Parameters</h3>
 
@@ -6794,6 +7836,8 @@ fetch('/user-tenant-prefs',
       "deletedBy": "string",
       "createdOn": "2019-08-24T14:15:22Z",
       "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
       "id": "string",
       "locale": "string",
       "status": 12,
@@ -6840,9 +7884,6 @@ fetch('/user-tenant-prefs',
           "state": "string",
           "zip": "string",
           "country": "string",
-          "primaryContactEmail": "string",
-          "allowedDomain": "string",
-          "tenantType": "string",
           "tenantConfigs": [
             {
               "deleted": true,
@@ -6861,6 +7902,126 @@ fetch('/user-tenant-prefs',
           ],
           "userTenants": [
             {}
+          ],
+          "users": [
+            {}
+          ],
+          "roles": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "roleType": 15,
+              "description": "string",
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
+              "tenantId": "string",
+              "userTenants": [
+                {}
+              ],
+              "createdByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              },
+              "modifiedByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              }
+            }
+          ],
+          "groups": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "description": "string",
+              "photoUrl": "string",
+              "tenantId": "string",
+              "userGroups": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "groupId": "string",
+                  "userTenantId": "string",
+                  "group": {},
+                  "userTenant": {}
+                }
+              ]
+            }
           ]
         },
         "credentials": {
@@ -6869,6 +8030,8 @@ fetch('/user-tenant-prefs',
           "deletedBy": "string",
           "createdOn": "2019-08-24T14:15:22Z",
           "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
           "id": "string",
           "authProvider": "string",
           "authId": "string",
@@ -6900,9 +8063,6 @@ fetch('/user-tenant-prefs',
         "state": "string",
         "zip": "string",
         "country": "string",
-        "primaryContactEmail": "string",
-        "allowedDomain": "string",
-        "tenantType": "string",
         "tenantConfigs": [
           {
             "deleted": true,
@@ -6921,6 +8081,169 @@ fetch('/user-tenant-prefs',
         ],
         "userTenants": [
           {}
+        ],
+        "users": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "middleName": "string",
+            "username": "string",
+            "email": "string",
+            "designation": "string",
+            "phone": "string",
+            "authClientIds": "string",
+            "lastLogin": "2019-08-24T14:15:22Z",
+            "photoUrl": "string",
+            "gender": "M",
+            "dob": "2019-08-24T14:15:22Z",
+            "defaultTenantId": "string",
+            "defaultTenant": {},
+            "credentials": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "authProvider": "string",
+              "authId": "string",
+              "authToken": "string",
+              "secretKey": "string",
+              "password": "string",
+              "userId": "string",
+              "user": {}
+            },
+            "userTenants": [
+              {}
+            ]
+          }
+        ],
+        "roles": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "roleType": 15,
+            "description": "string",
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
+            "tenantId": "string",
+            "userTenants": [
+              {}
+            ],
+            "createdByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            },
+            "modifiedByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            }
+          }
+        ],
+        "groups": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "description": "string",
+            "photoUrl": "string",
+            "tenantId": "string",
+            "userGroups": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "groupId": "string",
+                "userTenantId": "string",
+                "group": {},
+                "userTenant": {}
+              }
+            ]
+          }
         ]
       },
       "role": {
@@ -6934,12 +8257,14 @@ fetch('/user-tenant-prefs',
         "id": "string",
         "name": "string",
         "roleType": 15,
+        "description": "string",
         "permissions": [
           "string"
         ],
         "allowedClients": [
           "string"
         ],
+        "tenantId": "string",
         "userTenants": [
           {}
         ],
@@ -6971,9 +8296,7 @@ fetch('/user-tenant-prefs',
           "tenantName": "string",
           "tenantKey": "string",
           "roleName": "string",
-          "roleType": 0,
-          "userTenantId": "string",
-          "expiresOn": "2019-08-24T14:15:22Z"
+          "userTenantId": "string"
         },
         "modifiedByUser": {
           "deleted": true,
@@ -7003,9 +8326,7 @@ fetch('/user-tenant-prefs',
           "tenantName": "string",
           "tenantKey": "string",
           "roleName": "string",
-          "roleType": 0,
-          "userTenantId": "string",
-          "expiresOn": "2019-08-24T14:15:22Z"
+          "userTenantId": "string"
         }
       },
       "userLevelPermissions": [
@@ -7036,7 +8357,6 @@ fetch('/user-tenant-prefs',
           "id": "string",
           "groupId": "string",
           "userTenantId": "string",
-          "isOwner": true,
           "group": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -7049,11 +8369,27 @@ fetch('/user-tenant-prefs',
             "name": "string",
             "description": "string",
             "photoUrl": "string",
-            "groupType": "Tenant",
+            "tenantId": "string",
             "userGroups": [
               {}
             ]
           },
+          "userTenant": {}
+        }
+      ],
+      "userInvitations": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "expiresOn": "2019-08-24T14:15:22Z",
+          "token": "string",
+          "userTenantId": "string",
           "userTenant": {}
         }
       ]
@@ -7093,6 +8429,8 @@ Status Code **200**
 |»»» deletedBy|string¦null|false|none|none|
 |»»» createdOn|string(date-time)|false|none|none|
 |»»» modifiedOn|string(date-time)|false|none|none|
+|»»» createdBy|string|false|none|none|
+|»»» modifiedBy|string|false|none|none|
 |»»» id|string|false|none|none|
 |»»» locale|string|false|none|none|
 |»»» status|number|false|none|none|
@@ -7139,9 +8477,6 @@ Status Code **200**
 |»»»»» state|string|false|none|none|
 |»»»»» zip|string|false|none|none|
 |»»»»» country|string|false|none|none|
-|»»»»» primaryContactEmail|string|false|none|none|
-|»»»»» allowedDomain|string|false|none|none|
-|»»»»» tenantType|string|false|none|none|
 |»»»»» tenantConfigs|[[TenantConfigWithRelations](#schematenantconfigwithrelations)]|false|none|(tsType: TenantConfigWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»» TenantConfigWithRelations|[TenantConfigWithRelations](#schematenantconfigwithrelations)|false|none|(tsType: TenantConfigWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»» deleted|boolean|false|none|none|
@@ -7158,12 +8493,92 @@ Status Code **200**
 |»»»»»»» tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»» userTenants|[[UserTenantWithRelations](#schemausertenantwithrelations)]|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»» UserTenantWithRelations|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»» users|[[UserWithRelations](#schemauserwithrelations)]|false|none|This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»» UserWithRelations|[UserWithRelations](#schemauserwithrelations)|false|none|This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»» roles|[[RoleWithRelations](#schemarolewithrelations)]|false|none|(tsType: RoleWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»» RoleWithRelations|[RoleWithRelations](#schemarolewithrelations)|false|none|(tsType: RoleWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»»» deleted|boolean|false|none|none|
+|»»»»»»» deletedOn|string(date-time)¦null|false|none|none|
+|»»»»»»» deletedBy|string¦null|false|none|none|
+|»»»»»»» createdOn|string(date-time)|false|none|none|
+|»»»»»»» modifiedOn|string(date-time)|false|none|none|
+|»»»»»»» createdBy|string|false|none|none|
+|»»»»»»» modifiedBy|string|false|none|none|
+|»»»»»»» id|string|false|none|none|
+|»»»»»»» name|string|true|none|none|
+|»»»»»»» roleType|number|false|none|none|
+|»»»»»»» description|string|false|none|none|
+|»»»»»»» permissions|[string]|false|none|none|
+|»»»»»»» allowedClients|[string]|false|none|none|
+|»»»»»»» tenantId|string|true|none|none|
+|»»»»»»» userTenants|[[UserTenantWithRelations](#schemausertenantwithrelations)]|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»»»» UserTenantWithRelations|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»»» createdByUser|[UserViewWithRelations](#schemauserviewwithrelations)|false|none|User details view in DB (tsType: UserViewWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»»»» deleted|boolean|false|none|none|
+|»»»»»»»» deletedOn|string(date-time)¦null|false|none|none|
+|»»»»»»»» deletedBy|string¦null|false|none|none|
+|»»»»»»»» createdOn|string(date-time)|false|none|none|
+|»»»»»»»» modifiedOn|string(date-time)|false|none|none|
+|»»»»»»»» createdBy|string|false|none|none|
+|»»»»»»»» modifiedBy|string|false|none|none|
+|»»»»»»»» id|string|false|none|none|
+|»»»»»»»» firstName|string|true|none|none|
+|»»»»»»»» lastName|string|false|none|none|
+|»»»»»»»» middleName|string|false|none|none|
+|»»»»»»»» username|string|true|none|none|
+|»»»»»»»» email|string|true|none|none|
+|»»»»»»»» designation|string|false|none|none|
+|»»»»»»»» phone|string|false|none|none|
+|»»»»»»»» authClientIds|string|false|none|none|
+|»»»»»»»» lastLogin|string|false|none|none|
+|»»»»»»»» photoUrl|string|false|none|none|
+|»»»»»»»» gender|string|false|none|This field takes a single character as input in database.<br>    'M' for male and 'F' for female.|
+|»»»»»»»» dob|string(date-time)¦null|false|none|none|
+|»»»»»»»» defaultTenantId|string|true|none|none|
+|»»»»»»»» status|number|false|none|none|
+|»»»»»»»» tenantId|string|true|none|none|
+|»»»»»»»» roleId|string|true|none|none|
+|»»»»»»»» tenantName|string|true|none|none|
+|»»»»»»»» tenantKey|string|false|none|none|
+|»»»»»»»» roleName|string|false|none|none|
+|»»»»»»»» userTenantId|string|true|none|none|
+|»»»»»»» modifiedByUser|[UserViewWithRelations](#schemauserviewwithrelations)|false|none|User details view in DB (tsType: UserViewWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»» groups|[[GroupWithRelations](#schemagroupwithrelations)]|false|none|(tsType: GroupWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»» GroupWithRelations|[GroupWithRelations](#schemagroupwithrelations)|false|none|(tsType: GroupWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»»» deleted|boolean|false|none|none|
+|»»»»»»» deletedOn|string(date-time)¦null|false|none|none|
+|»»»»»»» deletedBy|string¦null|false|none|none|
+|»»»»»»» createdOn|string(date-time)|false|none|none|
+|»»»»»»» modifiedOn|string(date-time)|false|none|none|
+|»»»»»»» createdBy|string|false|none|none|
+|»»»»»»» modifiedBy|string|false|none|none|
+|»»»»»»» id|string|false|none|none|
+|»»»»»»» name|string|false|none|none|
+|»»»»»»» description|string|false|none|none|
+|»»»»»»» photoUrl|string|false|none|none|
+|»»»»»»» tenantId|string|true|none|none|
+|»»»»»»» userGroups|[[UserGroupWithRelations](#schemausergroupwithrelations)]|false|none|(tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»»»» UserGroupWithRelations|[UserGroupWithRelations](#schemausergroupwithrelations)|false|none|(tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»»»»» deleted|boolean|false|none|none|
+|»»»»»»»»» deletedOn|string(date-time)¦null|false|none|none|
+|»»»»»»»»» deletedBy|string¦null|false|none|none|
+|»»»»»»»»» createdOn|string(date-time)|false|none|none|
+|»»»»»»»»» modifiedOn|string(date-time)|false|none|none|
+|»»»»»»»»» createdBy|string|false|none|none|
+|»»»»»»»»» modifiedBy|string|false|none|none|
+|»»»»»»»»» id|string|false|none|none|
+|»»»»»»»»» groupId|string|true|none|none|
+|»»»»»»»»» userTenantId|string|true|none|none|
+|»»»»»»»»» group|[GroupWithRelations](#schemagroupwithrelations)|false|none|(tsType: GroupWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»»»»» userTenant|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
 |»»»» credentials|[UserCredentialsWithRelations](#schemausercredentialswithrelations)|false|none|(tsType: UserCredentialsWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»» deleted|boolean|false|none|none|
 |»»»»» deletedOn|string(date-time)¦null|false|none|none|
 |»»»»» deletedBy|string¦null|false|none|none|
 |»»»»» createdOn|string(date-time)|false|none|none|
 |»»»»» modifiedOn|string(date-time)|false|none|none|
+|»»»»» createdBy|string|false|none|none|
+|»»»»» modifiedBy|string|false|none|none|
 |»»»»» id|string|false|none|none|
 |»»»»» authProvider|string|true|none|none|
 |»»»»» authId|string|false|none|none|
@@ -7176,52 +8591,6 @@ Status Code **200**
 |»»»»» UserTenantWithRelations|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
 |»»» tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
 |»»» role|[RoleWithRelations](#schemarolewithrelations)|false|none|(tsType: RoleWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» deleted|boolean|false|none|none|
-|»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»» deletedBy|string¦null|false|none|none|
-|»»»» createdOn|string(date-time)|false|none|none|
-|»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»» createdBy|string|false|none|none|
-|»»»» modifiedBy|string|false|none|none|
-|»»»» id|string|false|none|none|
-|»»»» name|string|true|none|none|
-|»»»» roleType|number|true|none|none|
-|»»»» permissions|[string]|false|none|none|
-|»»»» allowedClients|[string]|false|none|none|
-|»»»» userTenants|[[UserTenantWithRelations](#schemausertenantwithrelations)]|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» UserTenantWithRelations|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» createdByUser|[UserViewWithRelations](#schemauserviewwithrelations)|false|none|User details view in DB (tsType: UserViewWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» deleted|boolean|false|none|none|
-|»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»» deletedBy|string¦null|false|none|none|
-|»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»» createdBy|string|false|none|none|
-|»»»»» modifiedBy|string|false|none|none|
-|»»»»» id|string|false|none|none|
-|»»»»» firstName|string|true|none|none|
-|»»»»» lastName|string|false|none|none|
-|»»»»» middleName|string|false|none|none|
-|»»»»» username|string|true|none|none|
-|»»»»» email|string|true|none|none|
-|»»»»» designation|string|false|none|none|
-|»»»»» phone|string|false|none|none|
-|»»»»» authClientIds|string|false|none|none|
-|»»»»» lastLogin|string|false|none|none|
-|»»»»» photoUrl|string|false|none|none|
-|»»»»» gender|string|false|none|This field takes a single character as input in database.<br>    'M' for male and 'F' for female.|
-|»»»»» dob|string(date-time)¦null|false|none|none|
-|»»»»» defaultTenantId|string|true|none|none|
-|»»»»» status|number|false|none|none|
-|»»»»» tenantId|string|true|none|none|
-|»»»»» roleId|string|true|none|none|
-|»»»»» tenantName|string|true|none|none|
-|»»»»» tenantKey|string|false|none|none|
-|»»»»» roleName|string|false|none|none|
-|»»»»» roleType|number|false|none|none|
-|»»»»» userTenantId|string|true|none|none|
-|»»»»» expiresOn|string(date-time)|false|none|none|
-|»»»» modifiedByUser|[UserViewWithRelations](#schemauserviewwithrelations)|false|none|User details view in DB (tsType: UserViewWithRelations, schemaOptions: { includeRelations: true })|
 |»»» userLevelPermissions|[[UserLevelPermissionWithRelations](#schemauserlevelpermissionwithrelations)]|false|none|(tsType: UserLevelPermissionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»» UserLevelPermissionWithRelations|[UserLevelPermissionWithRelations](#schemauserlevelpermissionwithrelations)|false|none|(tsType: UserLevelPermissionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»» deleted|boolean|false|none|none|
@@ -7238,6 +8607,8 @@ Status Code **200**
 |»»»»» userTenant|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
 |»»» userGroups|[[UserGroupWithRelations](#schemausergroupwithrelations)]|false|none|(tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })|
 |»»»» UserGroupWithRelations|[UserGroupWithRelations](#schemausergroupwithrelations)|false|none|(tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })|
+|»»» userInvitations|[[UserInvitationWithRelations](#schemauserinvitationwithrelations)]|false|none|(tsType: UserInvitationWithRelations, schemaOptions: { includeRelations: true })|
+|»»»» UserInvitationWithRelations|[UserInvitationWithRelations](#schemauserinvitationwithrelations)|false|none|(tsType: UserInvitationWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»» deleted|boolean|false|none|none|
 |»»»»» deletedOn|string(date-time)¦null|false|none|none|
 |»»»»» deletedBy|string¦null|false|none|none|
@@ -7246,24 +8617,9 @@ Status Code **200**
 |»»»»» createdBy|string|false|none|none|
 |»»»»» modifiedBy|string|false|none|none|
 |»»»»» id|string|false|none|none|
-|»»»»» groupId|string|true|none|none|
+|»»»»» expiresOn|string(date-time)|false|none|none|
+|»»»»» token|string|false|none|none|
 |»»»»» userTenantId|string|true|none|none|
-|»»»»» isOwner|boolean|false|none|none|
-|»»»»» group|[GroupWithRelations](#schemagroupwithrelations)|false|none|(tsType: GroupWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»» deleted|boolean|false|none|none|
-|»»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»»» deletedBy|string¦null|false|none|none|
-|»»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»»» createdBy|string|false|none|none|
-|»»»»»» modifiedBy|string|false|none|none|
-|»»»»»» id|string|false|none|none|
-|»»»»»» name|string|false|none|none|
-|»»»»»» description|string|false|none|none|
-|»»»»»» photoUrl|string|false|none|none|
-|»»»»»» groupType|string|false|none|none|
-|»»»»»» userGroups|[[UserGroupWithRelations](#schemausergroupwithrelations)]|false|none|(tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»»» UserGroupWithRelations|[UserGroupWithRelations](#schemausergroupwithrelations)|false|none|(tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»» userTenant|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
 
 #### Enumerated Values
@@ -7278,17 +8634,17 @@ Status Code **200**
 |gender|M|
 |gender|F|
 |gender|O|
-|groupType|Tenant|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
 </aside>
 
-<h1 id="-sourceloop-user-tenant-service-usertenantcontroller">UserTenantController</h1>
+<h1 id="-sourceloop-user-tenant-service-usertenantusergroupcontroller">UserTenantUserGroupController</h1>
 
-## UserTenantController.findById
+## UserTenantUserGroupController.find
 
-<a id="opIdUserTenantController.findById"></a>
+<a id="opIdUserTenantUserGroupController.find"></a>
 
 > Code samples
 
@@ -7298,7 +8654,7 @@ const headers = {
   'Accept':'application/json'
 };
 
-fetch('/user-tenants/{id}',
+fetch('/user-tenants/{id}/user-groups',
 {
   method: 'GET',
 
@@ -7319,7 +8675,7 @@ const headers = {
   'Accept':'application/json'
 };
 
-fetch('/user-tenants/{id}',
+fetch('/user-tenants/{id}/user-groups',
 {
   method: 'GET',
 
@@ -7333,25 +8689,173 @@ fetch('/user-tenants/{id}',
 
 ```
 
-`GET /user-tenants/{id}`
+`GET /user-tenants/{id}/user-groups`
 
 | Permissions |
 | ------- |
-| ViewAnyUser   |
-| ViewOwnUser   |
-| ViewTenantUser   |
-| ViewTenantUserRestricted   |
-| 11   |
-| 15   |
-| 12   |
-| 13   |
+| ViewUserTenant   |
 
-<h3 id="usertenantcontroller.findbyid-parameters">Parameters</h3>
+<h3 id="usertenantusergroupcontroller.find-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
 |id|path|string|true|none|
-|filter|query|[v_users.Filter1](#schemav_users.filter1)|false|none|
+|filter|query|object|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "groupId": "string",
+    "userTenantId": "string"
+  }
+]
+```
+
+<h3 id="usertenantusergroupcontroller.find-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of UserGroups of UserTenant|Inline|
+
+<h3 id="usertenantusergroupcontroller.find-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[UserGroup](#schemausergroup)]|false|none|none|
+|» UserGroup|[UserGroup](#schemausergroup)|false|none|none|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|string(date-time)¦null|false|none|none|
+|»» deletedBy|string¦null|false|none|none|
+|»» createdOn|string(date-time)|false|none|none|
+|»» modifiedOn|string(date-time)|false|none|none|
+|»» createdBy|string|false|none|none|
+|»» modifiedBy|string|false|none|none|
+|»» id|string|false|none|none|
+|»» groupId|string|true|none|none|
+|»» userTenantId|string|true|none|none|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
+</aside>
+
+<h1 id="-sourceloop-user-tenant-service-usertenantuserlevelpermissioncontroller">UserTenantUserLevelPermissionController</h1>
+
+## UserTenantUserLevelPermissionController.create
+
+<a id="opIdUserTenantUserLevelPermissionController.create"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "permission": "string",
+  "allowed": true,
+  "userTenantId": "string"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/user-tenants/{id}/user-level-permissions',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "permission": "string",
+  "allowed": true,
+  "userTenantId": "string"
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/user-tenants/{id}/user-level-permissions',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /user-tenants/{id}/user-level-permissions`
+
+| Permissions |
+| ------- |
+| CreateUserTenant   |
+| CreateUserPermissions   |
+
+> Body parameter
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "permission": "string",
+  "allowed": true,
+  "userTenantId": "string"
+}
+```
+
+<h3 id="usertenantuserlevelpermissioncontroller.create-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[NewUserLevelPermissionInUserTenant](#schemanewuserlevelpermissioninusertenant)|false|none|
 
 > Example responses
 
@@ -7367,314 +8871,345 @@ fetch('/user-tenants/{id}',
   "createdBy": "string",
   "modifiedBy": "string",
   "id": "string",
-  "firstName": "string",
-  "lastName": "string",
-  "middleName": "string",
-  "username": "string",
-  "email": "string",
-  "designation": "string",
-  "phone": "string",
-  "authClientIds": "string",
-  "lastLogin": "string",
-  "photoUrl": "string",
-  "gender": "M",
-  "dob": "2019-08-24T14:15:22Z",
-  "defaultTenantId": "string",
-  "status": 11,
-  "tenantId": "string",
-  "roleId": "string",
-  "tenantName": "string",
-  "tenantKey": "string",
-  "roleName": "string",
-  "roleType": 0,
-  "userTenantId": "string",
-  "expiresOn": "2019-08-24T14:15:22Z"
+  "permission": "string",
+  "allowed": true,
+  "userTenantId": "string"
 }
 ```
 
-<h3 id="usertenantcontroller.findbyid-responses">Responses</h3>
+<h3 id="usertenantuserlevelpermissioncontroller.create-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|UserView model instance|[UserViewWithRelations](#schemauserviewwithrelations)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|UserLevelPermission model instance|[UserLevelPermission](#schemauserlevelpermission)|
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
+</aside>
+
+## UserTenantUserLevelPermissionController.patch
+
+<a id="opIdUserTenantUserLevelPermissionController.patch"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "permission": "string",
+  "allowed": true,
+  "userTenantId": "string"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/user-tenants/{id}/user-level-permissions',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "permission": "string",
+  "allowed": true,
+  "userTenantId": "string"
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/user-tenants/{id}/user-level-permissions',
+{
+  method: 'PATCH',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PATCH /user-tenants/{id}/user-level-permissions`
+
+| Permissions |
+| ------- |
+| UpdateUserTenant   |
+| UpdateUserPermissions   |
+
+> Body parameter
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "permission": "string",
+  "allowed": true,
+  "userTenantId": "string"
+}
+```
+
+<h3 id="usertenantuserlevelpermissioncontroller.patch-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|where|query|object|false|none|
+|body|body|[UserLevelPermissionPartial](#schemauserlevelpermissionpartial)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "count": 0
+}
+```
+
+<h3 id="usertenantuserlevelpermissioncontroller.patch-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|UserTenant.UserLevelPermission PATCH success count|[loopback.Count](#schemaloopback.count)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
+</aside>
+
+## UserTenantUserLevelPermissionController.find
+
+<a id="opIdUserTenantUserLevelPermissionController.find"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/user-tenants/{id}/user-level-permissions',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/user-tenants/{id}/user-level-permissions',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /user-tenants/{id}/user-level-permissions`
+
+| Permissions |
+| ------- |
+| ViewUserTenant   |
+
+<h3 id="usertenantuserlevelpermissioncontroller.find-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|filter|query|object|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "permission": "string",
+    "allowed": true,
+    "userTenantId": "string"
+  }
+]
+```
+
+<h3 id="usertenantuserlevelpermissioncontroller.find-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of UserLevelPermissions of UserTenant|Inline|
+
+<h3 id="usertenantuserlevelpermissioncontroller.find-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[UserLevelPermission](#schemauserlevelpermission)]|false|none|none|
+|» UserLevelPermission|[UserLevelPermission](#schemauserlevelpermission)|false|none|none|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|string(date-time)¦null|false|none|none|
+|»» deletedBy|string¦null|false|none|none|
+|»» createdOn|string(date-time)|false|none|none|
+|»» modifiedOn|string(date-time)|false|none|none|
+|»» createdBy|string|false|none|none|
+|»» modifiedBy|string|false|none|none|
+|»» id|string|false|none|none|
+|»» permission|string|true|none|none|
+|»» allowed|boolean|true|none|none|
+|»» userTenantId|string|true|none|none|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
+</aside>
+
+## UserTenantUserLevelPermissionController.delete
+
+<a id="opIdUserTenantUserLevelPermissionController.delete"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/user-tenants/{id}/user-level-permissions',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/user-tenants/{id}/user-level-permissions',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`DELETE /user-tenants/{id}/user-level-permissions`
+
+| Permissions |
+| ------- |
+| DeleteUserTenant   |
+
+<h3 id="usertenantuserlevelpermissioncontroller.delete-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|where|query|object|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "count": 0
+}
+```
+
+<h3 id="usertenantuserlevelpermissioncontroller.delete-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|UserTenant.UserLevelPermission DELETE success count|[loopback.Count](#schemaloopback.count)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
 </aside>
 
 # Schemas
-
-<h2 id="tocS_Group">Group</h2>
-<!-- backwards compatibility -->
-<a id="schemagroup"></a>
-<a id="schema_Group"></a>
-<a id="tocSgroup"></a>
-<a id="tocsgroup"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "description": "string",
-  "photoUrl": "string",
-  "groupType": "Tenant"
-}
-
-```
-
-Group
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|name|string|false|none|none|
-|description|string|false|none|none|
-|photoUrl|string|false|none|none|
-|groupType|string|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|groupType|Tenant|
-
-<h2 id="tocS_NewTeam">NewTeam</h2>
-<!-- backwards compatibility -->
-<a id="schemanewteam"></a>
-<a id="schema_NewTeam"></a>
-<a id="tocSnewteam"></a>
-<a id="tocsnewteam"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "name": "string",
-  "description": "string",
-  "photoUrl": "string",
-  "groupType": "Tenant"
-}
-
-```
-
-NewTeam
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|name|string|false|none|none|
-|description|string|false|none|none|
-|photoUrl|string|false|none|none|
-|groupType|string|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|groupType|Tenant|
-
-<h2 id="tocS_GroupPartial">GroupPartial</h2>
-<!-- backwards compatibility -->
-<a id="schemagrouppartial"></a>
-<a id="schema_GroupPartial"></a>
-<a id="tocSgrouppartial"></a>
-<a id="tocsgrouppartial"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "description": "string",
-  "photoUrl": "string",
-  "groupType": "Tenant"
-}
-
-```
-
-GroupPartial
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|name|string|false|none|none|
-|description|string|false|none|none|
-|photoUrl|string|false|none|none|
-|groupType|string|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|groupType|Tenant|
-
-<h2 id="tocS_UserTenant">UserTenant</h2>
-<!-- backwards compatibility -->
-<a id="schemausertenant"></a>
-<a id="schema_UserTenant"></a>
-<a id="tocSusertenant"></a>
-<a id="tocsusertenant"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "id": "string",
-  "locale": "string",
-  "status": 12,
-  "userId": "string",
-  "tenantId": "string",
-  "roleId": "string"
-}
-
-```
-
-UserTenant
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|id|string|false|none|none|
-|locale|string|false|none|none|
-|status|number|false|none|none|
-|userId|string|true|none|none|
-|tenantId|string|true|none|none|
-|roleId|string|true|none|none|
-
-<h2 id="tocS_NewUserTenantInRole">NewUserTenantInRole</h2>
-<!-- backwards compatibility -->
-<a id="schemanewusertenantinrole"></a>
-<a id="schema_NewUserTenantInRole"></a>
-<a id="tocSnewusertenantinrole"></a>
-<a id="tocsnewusertenantinrole"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "locale": "string",
-  "status": 12,
-  "userId": "string",
-  "tenantId": "string",
-  "roleId": "string"
-}
-
-```
-
-NewUserTenantInRole
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|locale|string|false|none|none|
-|status|number|false|none|none|
-|userId|string|true|none|none|
-|tenantId|string|true|none|none|
-|roleId|string|false|none|none|
-
-<h2 id="tocS_UserTenantPartial">UserTenantPartial</h2>
-<!-- backwards compatibility -->
-<a id="schemausertenantpartial"></a>
-<a id="schema_UserTenantPartial"></a>
-<a id="tocSusertenantpartial"></a>
-<a id="tocsusertenantpartial"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "id": "string",
-  "locale": "string",
-  "status": 12,
-  "userId": "string",
-  "tenantId": "string",
-  "roleId": "string"
-}
-
-```
-
-UserTenantPartial
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|id|string|false|none|none|
-|locale|string|false|none|none|
-|status|number|false|none|none|
-|userId|string|false|none|none|
-|tenantId|string|false|none|none|
-|roleId|string|false|none|none|
 
 <h2 id="tocS_Role">Role</h2>
 <!-- backwards compatibility -->
@@ -7695,12 +9230,14 @@ UserTenantPartial
   "id": "string",
   "name": "string",
   "roleType": 15,
+  "description": "string",
   "permissions": [
     "string"
   ],
   "allowedClients": [
     "string"
-  ]
+  ],
+  "tenantId": "string"
 }
 
 ```
@@ -7720,16 +9257,18 @@ Role
 |modifiedBy|string|false|none|none|
 |id|string|false|none|none|
 |name|string|true|none|none|
-|roleType|number|true|none|none|
+|roleType|number|false|none|none|
+|description|string|false|none|none|
 |permissions|[string]|false|none|none|
 |allowedClients|[string]|false|none|none|
+|tenantId|string|true|none|none|
 
-<h2 id="tocS_NewRole">NewRole</h2>
+<h2 id="tocS_NewRoleInTenant">NewRoleInTenant</h2>
 <!-- backwards compatibility -->
-<a id="schemanewrole"></a>
-<a id="schema_NewRole"></a>
-<a id="tocSnewrole"></a>
-<a id="tocsnewrole"></a>
+<a id="schemanewroleintenant"></a>
+<a id="schema_NewRoleInTenant"></a>
+<a id="tocSnewroleintenant"></a>
+<a id="tocsnewroleintenant"></a>
 
 ```json
 {
@@ -7742,6 +9281,7 @@ Role
   "modifiedBy": "string",
   "name": "string",
   "roleType": 15,
+  "description": "string",
   "permissions": [
     "string"
   ],
@@ -7752,7 +9292,7 @@ Role
 
 ```
 
-NewRole
+NewRoleInTenant
 
 ### Properties
 
@@ -7766,9 +9306,178 @@ NewRole
 |createdBy|string|false|none|none|
 |modifiedBy|string|false|none|none|
 |name|string|true|none|none|
-|roleType|number|true|none|none|
+|roleType|number|false|none|none|
+|description|string|false|none|none|
 |permissions|[string]|false|none|none|
 |allowedClients|[string]|false|none|none|
+
+<h2 id="tocS_RolePartialExcluding_id-tenantId_">RolePartialExcluding_id-tenantId_</h2>
+<!-- backwards compatibility -->
+<a id="schemarolepartialexcluding_id-tenantid_"></a>
+<a id="schema_RolePartialExcluding_id-tenantId_"></a>
+<a id="tocSrolepartialexcluding_id-tenantid_"></a>
+<a id="tocsrolepartialexcluding_id-tenantid_"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "name": "string",
+  "roleType": 15,
+  "description": "string",
+  "permissions": [
+    "string"
+  ],
+  "allowedClients": [
+    "string"
+  ]
+}
+
+```
+
+RolePartialExcluding_id-tenantId_
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|name|string|false|none|none|
+|roleType|number|false|none|none|
+|description|string|false|none|none|
+|permissions|[string]|false|none|none|
+|allowedClients|[string]|false|none|none|
+
+<h2 id="tocS_Tenant">Tenant</h2>
+<!-- backwards compatibility -->
+<a id="schematenant"></a>
+<a id="schema_Tenant"></a>
+<a id="tocStenant"></a>
+<a id="tocstenant"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "name": "string",
+  "status": 1,
+  "key": "string",
+  "website": "string",
+  "address": "string",
+  "city": "string",
+  "state": "string",
+  "zip": "string",
+  "country": "string"
+}
+
+```
+
+Tenant
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|name|string|true|none|none|
+|status|number¦null|true|none|Tenant status - Active or Inactive|
+|key|string|false|none|none|
+|website|string|false|none|none|
+|address|string|false|none|none|
+|city|string|false|none|none|
+|state|string|false|none|none|
+|zip|string|false|none|none|
+|country|string|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|status|1|
+|status|0|
+
+<h2 id="tocS_NewTenant">NewTenant</h2>
+<!-- backwards compatibility -->
+<a id="schemanewtenant"></a>
+<a id="schema_NewTenant"></a>
+<a id="tocSnewtenant"></a>
+<a id="tocsnewtenant"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "name": "string",
+  "status": 1,
+  "key": "string",
+  "website": "string",
+  "address": "string",
+  "city": "string",
+  "state": "string",
+  "zip": "string",
+  "country": "string"
+}
+
+```
+
+NewTenant
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|name|string|true|none|none|
+|status|number¦null|true|none|Tenant status - Active or Inactive|
+|key|string|false|none|none|
+|website|string|false|none|none|
+|address|string|false|none|none|
+|city|string|false|none|none|
+|state|string|false|none|none|
+|zip|string|false|none|none|
+|country|string|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|status|1|
+|status|0|
 
 <h2 id="tocS_GroupWithRelations">GroupWithRelations</h2>
 <!-- backwards compatibility -->
@@ -7790,7 +9499,7 @@ NewRole
   "name": "string",
   "description": "string",
   "photoUrl": "string",
-  "groupType": "Tenant",
+  "tenantId": "string",
   "userGroups": [
     {
       "deleted": true,
@@ -7803,7 +9512,6 @@ NewRole
       "id": "string",
       "groupId": "string",
       "userTenantId": "string",
-      "isOwner": true,
       "group": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -7816,7 +9524,7 @@ NewRole
         "name": "string",
         "description": "string",
         "photoUrl": "string",
-        "groupType": "Tenant",
+        "tenantId": "string",
         "userGroups": []
       },
       "userTenant": {
@@ -7825,6 +9533,8 @@ NewRole
         "deletedBy": "string",
         "createdOn": "2019-08-24T14:15:22Z",
         "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
         "id": "string",
         "locale": "string",
         "status": 12,
@@ -7871,9 +9581,6 @@ NewRole
             "state": "string",
             "zip": "string",
             "country": "string",
-            "primaryContactEmail": "string",
-            "allowedDomain": "string",
-            "tenantType": "string",
             "tenantConfigs": [
               {
                 "deleted": true,
@@ -7892,6 +9599,111 @@ NewRole
             ],
             "userTenants": [
               {}
+            ],
+            "users": [
+              {}
+            ],
+            "roles": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "roleType": 15,
+                "description": "string",
+                "permissions": [
+                  "string"
+                ],
+                "allowedClients": [
+                  "string"
+                ],
+                "tenantId": "string",
+                "userTenants": [
+                  {}
+                ],
+                "createdByUser": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "middleName": "string",
+                  "username": "string",
+                  "email": "string",
+                  "designation": "string",
+                  "phone": "string",
+                  "authClientIds": "string",
+                  "lastLogin": "string",
+                  "photoUrl": "string",
+                  "gender": "M",
+                  "dob": "2019-08-24T14:15:22Z",
+                  "defaultTenantId": "string",
+                  "status": 11,
+                  "tenantId": "string",
+                  "roleId": "string",
+                  "tenantName": "string",
+                  "tenantKey": "string",
+                  "roleName": "string",
+                  "userTenantId": "string"
+                },
+                "modifiedByUser": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "middleName": "string",
+                  "username": "string",
+                  "email": "string",
+                  "designation": "string",
+                  "phone": "string",
+                  "authClientIds": "string",
+                  "lastLogin": "string",
+                  "photoUrl": "string",
+                  "gender": "M",
+                  "dob": "2019-08-24T14:15:22Z",
+                  "defaultTenantId": "string",
+                  "status": 11,
+                  "tenantId": "string",
+                  "roleId": "string",
+                  "tenantName": "string",
+                  "tenantKey": "string",
+                  "roleName": "string",
+                  "userTenantId": "string"
+                }
+              }
+            ],
+            "groups": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "description": "string",
+                "photoUrl": "string",
+                "tenantId": "string",
+                "userGroups": []
+              }
             ]
           },
           "credentials": {
@@ -7900,6 +9712,8 @@ NewRole
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "authProvider": "string",
             "authId": "string",
@@ -7931,9 +9745,6 @@ NewRole
           "state": "string",
           "zip": "string",
           "country": "string",
-          "primaryContactEmail": "string",
-          "allowedDomain": "string",
-          "tenantType": "string",
           "tenantConfigs": [
             {
               "deleted": true,
@@ -7952,6 +9763,154 @@ NewRole
           ],
           "userTenants": [
             {}
+          ],
+          "users": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "2019-08-24T14:15:22Z",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "defaultTenant": {},
+              "credentials": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "authProvider": "string",
+                "authId": "string",
+                "authToken": "string",
+                "secretKey": "string",
+                "password": "string",
+                "userId": "string",
+                "user": {}
+              },
+              "userTenants": [
+                {}
+              ]
+            }
+          ],
+          "roles": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "roleType": 15,
+              "description": "string",
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
+              "tenantId": "string",
+              "userTenants": [
+                {}
+              ],
+              "createdByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              },
+              "modifiedByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              }
+            }
+          ],
+          "groups": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "description": "string",
+              "photoUrl": "string",
+              "tenantId": "string",
+              "userGroups": []
+            }
           ]
         },
         "role": {
@@ -7965,12 +9924,14 @@ NewRole
           "id": "string",
           "name": "string",
           "roleType": 15,
+          "description": "string",
           "permissions": [
             "string"
           ],
           "allowedClients": [
             "string"
           ],
+          "tenantId": "string",
           "userTenants": [
             {}
           ],
@@ -8002,9 +9963,7 @@ NewRole
             "tenantName": "string",
             "tenantKey": "string",
             "roleName": "string",
-            "roleType": 0,
-            "userTenantId": "string",
-            "expiresOn": "2019-08-24T14:15:22Z"
+            "userTenantId": "string"
           },
           "modifiedByUser": {
             "deleted": true,
@@ -8034,9 +9993,7 @@ NewRole
             "tenantName": "string",
             "tenantKey": "string",
             "roleName": "string",
-            "roleType": 0,
-            "userTenantId": "string",
-            "expiresOn": "2019-08-24T14:15:22Z"
+            "userTenantId": "string"
           }
         },
         "userLevelPermissions": [
@@ -8057,6 +10014,22 @@ NewRole
         ],
         "userGroups": [
           {}
+        ],
+        "userInvitations": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "expiresOn": "2019-08-24T14:15:22Z",
+            "token": "string",
+            "userTenantId": "string",
+            "userTenant": {}
+          }
         ]
       }
     }
@@ -8082,14 +10055,8 @@ GroupWithRelations
 |name|string|false|none|none|
 |description|string|false|none|none|
 |photoUrl|string|false|none|none|
-|groupType|string|false|none|none|
+|tenantId|string|true|none|none|
 |userGroups|[[UserGroupWithRelations](#schemausergroupwithrelations)]|false|none|[(tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })]|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|groupType|Tenant|
 
 <h2 id="tocS_TenantConfigWithRelations">TenantConfigWithRelations</h2>
 <!-- backwards compatibility -->
@@ -8129,9 +10096,6 @@ GroupWithRelations
     "state": "string",
     "zip": "string",
     "country": "string",
-    "primaryContactEmail": "string",
-    "allowedDomain": "string",
-    "tenantType": "string",
     "tenantConfigs": [
       {
         "deleted": true,
@@ -8155,6 +10119,8 @@ GroupWithRelations
         "deletedBy": "string",
         "createdOn": "2019-08-24T14:15:22Z",
         "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
         "id": "string",
         "locale": "string",
         "status": 12,
@@ -8190,6 +10156,8 @@ GroupWithRelations
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "authProvider": "string",
             "authId": "string",
@@ -8215,12 +10183,14 @@ GroupWithRelations
           "id": "string",
           "name": "string",
           "roleType": 15,
+          "description": "string",
           "permissions": [
             "string"
           ],
           "allowedClients": [
             "string"
           ],
+          "tenantId": "string",
           "userTenants": [
             {}
           ],
@@ -8252,9 +10222,7 @@ GroupWithRelations
             "tenantName": "string",
             "tenantKey": "string",
             "roleName": "string",
-            "roleType": 0,
-            "userTenantId": "string",
-            "expiresOn": "2019-08-24T14:15:22Z"
+            "userTenantId": "string"
           },
           "modifiedByUser": {
             "deleted": true,
@@ -8284,9 +10252,7 @@ GroupWithRelations
             "tenantName": "string",
             "tenantKey": "string",
             "roleName": "string",
-            "roleType": 0,
-            "userTenantId": "string",
-            "expiresOn": "2019-08-24T14:15:22Z"
+            "userTenantId": "string"
           }
         },
         "userLevelPermissions": [
@@ -8317,7 +10283,6 @@ GroupWithRelations
             "id": "string",
             "groupId": "string",
             "userTenantId": "string",
-            "isOwner": true,
             "group": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -8330,83 +10295,243 @@ GroupWithRelations
               "name": "string",
               "description": "string",
               "photoUrl": "string",
-              "groupType": "Tenant",
+              "tenantId": "string",
               "userGroups": [
                 {}
               ]
             },
             "userTenant": {}
           }
+        ],
+        "userInvitations": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "expiresOn": "2019-08-24T14:15:22Z",
+            "token": "string",
+            "userTenantId": "string",
+            "userTenant": {}
+          }
         ]
       }
-    ]
-  }
-}
-
-```
-
-TenantConfigWithRelations
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|configKey|string|true|none|none|
-|configValue|object|false|none|none|
-|tenantId|string|true|none|none|
-|tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
-
-<h2 id="tocS_TenantWithRelations">TenantWithRelations</h2>
-<!-- backwards compatibility -->
-<a id="schematenantwithrelations"></a>
-<a id="schema_TenantWithRelations"></a>
-<a id="tocStenantwithrelations"></a>
-<a id="tocstenantwithrelations"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "status": 1,
-  "key": "string",
-  "website": "string",
-  "address": "string",
-  "city": "string",
-  "state": "string",
-  "zip": "string",
-  "country": "string",
-  "primaryContactEmail": "string",
-  "allowedDomain": "string",
-  "tenantType": "string",
-  "tenantConfigs": [
-    {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "configKey": "string",
-      "configValue": {},
-      "tenantId": "string",
-      "tenant": {
+    ],
+    "users": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "firstName": "string",
+        "lastName": "string",
+        "middleName": "string",
+        "username": "string",
+        "email": "string",
+        "designation": "string",
+        "phone": "string",
+        "authClientIds": "string",
+        "lastLogin": "2019-08-24T14:15:22Z",
+        "photoUrl": "string",
+        "gender": "M",
+        "dob": "2019-08-24T14:15:22Z",
+        "defaultTenantId": "string",
+        "defaultTenant": {},
+        "credentials": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "authProvider": "string",
+          "authId": "string",
+          "authToken": "string",
+          "secretKey": "string",
+          "password": "string",
+          "userId": "string",
+          "user": {}
+        },
+        "userTenants": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "locale": "string",
+            "status": 12,
+            "userId": "string",
+            "tenantId": "string",
+            "roleId": "string",
+            "user": {},
+            "tenant": {},
+            "role": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "roleType": 15,
+              "description": "string",
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
+              "tenantId": "string",
+              "userTenants": [
+                {}
+              ],
+              "createdByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              },
+              "modifiedByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              }
+            },
+            "userLevelPermissions": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "permission": "string",
+                "allowed": true,
+                "userTenantId": "string",
+                "userTenant": {}
+              }
+            ],
+            "userGroups": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "groupId": "string",
+                "userTenantId": "string",
+                "group": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "description": "string",
+                  "photoUrl": "string",
+                  "tenantId": "string",
+                  "userGroups": [
+                    {}
+                  ]
+                },
+                "userTenant": {}
+              }
+            ],
+            "userInvitations": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "expiresOn": "2019-08-24T14:15:22Z",
+                "token": "string",
+                "userTenantId": "string",
+                "userTenant": {}
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "roles": [
+      {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
         "deletedBy": "string",
@@ -8416,18 +10541,15 @@ TenantConfigWithRelations
         "modifiedBy": "string",
         "id": "string",
         "name": "string",
-        "status": 1,
-        "key": "string",
-        "website": "string",
-        "address": "string",
-        "city": "string",
-        "state": "string",
-        "zip": "string",
-        "country": "string",
-        "primaryContactEmail": "string",
-        "allowedDomain": "string",
-        "tenantType": "string",
-        "tenantConfigs": [],
+        "roleType": 15,
+        "description": "string",
+        "permissions": [
+          "string"
+        ],
+        "allowedClients": [
+          "string"
+        ],
+        "tenantId": "string",
         "userTenants": [
           {
             "deleted": true,
@@ -8435,6 +10557,8 @@ TenantConfigWithRelations
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "locale": "string",
             "status": 12,
@@ -8470,6 +10594,8 @@ TenantConfigWithRelations
                 "deletedBy": "string",
                 "createdOn": "2019-08-24T14:15:22Z",
                 "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
                 "id": "string",
                 "authProvider": "string",
                 "authId": "string",
@@ -8484,91 +10610,7 @@ TenantConfigWithRelations
               ]
             },
             "tenant": {},
-            "role": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "name": "string",
-              "roleType": 15,
-              "permissions": [
-                "string"
-              ],
-              "allowedClients": [
-                "string"
-              ],
-              "userTenants": [
-                {}
-              ],
-              "createdByUser": {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "firstName": "string",
-                "lastName": "string",
-                "middleName": "string",
-                "username": "string",
-                "email": "string",
-                "designation": "string",
-                "phone": "string",
-                "authClientIds": "string",
-                "lastLogin": "string",
-                "photoUrl": "string",
-                "gender": "M",
-                "dob": "2019-08-24T14:15:22Z",
-                "defaultTenantId": "string",
-                "status": 11,
-                "tenantId": "string",
-                "roleId": "string",
-                "tenantName": "string",
-                "tenantKey": "string",
-                "roleName": "string",
-                "roleType": 0,
-                "userTenantId": "string",
-                "expiresOn": "2019-08-24T14:15:22Z"
-              },
-              "modifiedByUser": {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "firstName": "string",
-                "lastName": "string",
-                "middleName": "string",
-                "username": "string",
-                "email": "string",
-                "designation": "string",
-                "phone": "string",
-                "authClientIds": "string",
-                "lastLogin": "string",
-                "photoUrl": "string",
-                "gender": "M",
-                "dob": "2019-08-24T14:15:22Z",
-                "defaultTenantId": "string",
-                "status": 11,
-                "tenantId": "string",
-                "roleId": "string",
-                "tenantName": "string",
-                "tenantKey": "string",
-                "roleName": "string",
-                "roleType": 0,
-                "userTenantId": "string",
-                "expiresOn": "2019-08-24T14:15:22Z"
-              }
-            },
+            "role": {},
             "userLevelPermissions": [
               {
                 "deleted": true,
@@ -8597,7 +10639,6 @@ TenantConfigWithRelations
                 "id": "string",
                 "groupId": "string",
                 "userTenantId": "string",
-                "isOwner": true,
                 "group": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -8610,170 +10651,31 @@ TenantConfigWithRelations
                   "name": "string",
                   "description": "string",
                   "photoUrl": "string",
-                  "groupType": "Tenant",
+                  "tenantId": "string",
                   "userGroups": [
                     {}
                   ]
                 },
                 "userTenant": {}
               }
+            ],
+            "userInvitations": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "expiresOn": "2019-08-24T14:15:22Z",
+                "token": "string",
+                "userTenantId": "string",
+                "userTenant": {}
+              }
             ]
           }
-        ]
-      }
-    }
-  ],
-  "userTenants": [
-    {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "id": "string",
-      "locale": "string",
-      "status": 12,
-      "userId": "string",
-      "tenantId": "string",
-      "roleId": "string",
-      "user": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "firstName": "string",
-        "lastName": "string",
-        "middleName": "string",
-        "username": "string",
-        "email": "string",
-        "designation": "string",
-        "phone": "string",
-        "authClientIds": "string",
-        "lastLogin": "2019-08-24T14:15:22Z",
-        "photoUrl": "string",
-        "gender": "M",
-        "dob": "2019-08-24T14:15:22Z",
-        "defaultTenantId": "string",
-        "defaultTenant": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "name": "string",
-          "status": 1,
-          "key": "string",
-          "website": "string",
-          "address": "string",
-          "city": "string",
-          "state": "string",
-          "zip": "string",
-          "country": "string",
-          "primaryContactEmail": "string",
-          "allowedDomain": "string",
-          "tenantType": "string",
-          "tenantConfigs": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "configKey": "string",
-              "configValue": {},
-              "tenantId": "string",
-              "tenant": {}
-            }
-          ],
-          "userTenants": []
-        },
-        "credentials": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "id": "string",
-          "authProvider": "string",
-          "authId": "string",
-          "authToken": "string",
-          "secretKey": "string",
-          "password": "string",
-          "userId": "string",
-          "user": {}
-        },
-        "userTenants": [
-          {}
-        ]
-      },
-      "tenant": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "name": "string",
-        "status": 1,
-        "key": "string",
-        "website": "string",
-        "address": "string",
-        "city": "string",
-        "state": "string",
-        "zip": "string",
-        "country": "string",
-        "primaryContactEmail": "string",
-        "allowedDomain": "string",
-        "tenantType": "string",
-        "tenantConfigs": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "configKey": "string",
-            "configValue": {},
-            "tenantId": "string",
-            "tenant": {}
-          }
-        ],
-        "userTenants": []
-      },
-      "role": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "name": "string",
-        "roleType": 15,
-        "permissions": [
-          "string"
-        ],
-        "allowedClients": [
-          "string"
-        ],
-        "userTenants": [
-          {}
         ],
         "createdByUser": {
           "deleted": true,
@@ -8803,9 +10705,7 @@ TenantConfigWithRelations
           "tenantName": "string",
           "tenantKey": "string",
           "roleName": "string",
-          "roleType": 0,
-          "userTenantId": "string",
-          "expiresOn": "2019-08-24T14:15:22Z"
+          "userTenantId": "string"
         },
         "modifiedByUser": {
           "deleted": true,
@@ -8835,41 +10735,26 @@ TenantConfigWithRelations
           "tenantName": "string",
           "tenantKey": "string",
           "roleName": "string",
-          "roleType": 0,
-          "userTenantId": "string",
-          "expiresOn": "2019-08-24T14:15:22Z"
+          "userTenantId": "string"
         }
-      },
-      "userLevelPermissions": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "permission": "string",
-          "allowed": true,
-          "userTenantId": "string",
-          "userTenant": {}
-        }
-      ],
-      "userGroups": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "groupId": "string",
-          "userTenantId": "string",
-          "isOwner": true,
-          "group": {
+      }
+    ],
+    "groups": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "name": "string",
+        "description": "string",
+        "photoUrl": "string",
+        "tenantId": "string",
+        "userGroups": [
+          {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
             "deletedBy": "string",
@@ -8878,24 +10763,197 @@ TenantConfigWithRelations
             "createdBy": "string",
             "modifiedBy": "string",
             "id": "string",
-            "name": "string",
-            "description": "string",
-            "photoUrl": "string",
-            "groupType": "Tenant",
-            "userGroups": [
-              {}
-            ]
-          },
-          "userTenant": {}
-        }
-      ]
-    }
-  ]
+            "groupId": "string",
+            "userTenantId": "string",
+            "group": {},
+            "userTenant": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "locale": "string",
+              "status": 12,
+              "userId": "string",
+              "tenantId": "string",
+              "roleId": "string",
+              "user": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "2019-08-24T14:15:22Z",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "defaultTenant": {},
+                "credentials": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "authProvider": "string",
+                  "authId": "string",
+                  "authToken": "string",
+                  "secretKey": "string",
+                  "password": "string",
+                  "userId": "string",
+                  "user": {}
+                },
+                "userTenants": [
+                  {}
+                ]
+              },
+              "tenant": {},
+              "role": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "roleType": 15,
+                "description": "string",
+                "permissions": [
+                  "string"
+                ],
+                "allowedClients": [
+                  "string"
+                ],
+                "tenantId": "string",
+                "userTenants": [
+                  {}
+                ],
+                "createdByUser": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "middleName": "string",
+                  "username": "string",
+                  "email": "string",
+                  "designation": "string",
+                  "phone": "string",
+                  "authClientIds": "string",
+                  "lastLogin": "string",
+                  "photoUrl": "string",
+                  "gender": "M",
+                  "dob": "2019-08-24T14:15:22Z",
+                  "defaultTenantId": "string",
+                  "status": 11,
+                  "tenantId": "string",
+                  "roleId": "string",
+                  "tenantName": "string",
+                  "tenantKey": "string",
+                  "roleName": "string",
+                  "userTenantId": "string"
+                },
+                "modifiedByUser": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "middleName": "string",
+                  "username": "string",
+                  "email": "string",
+                  "designation": "string",
+                  "phone": "string",
+                  "authClientIds": "string",
+                  "lastLogin": "string",
+                  "photoUrl": "string",
+                  "gender": "M",
+                  "dob": "2019-08-24T14:15:22Z",
+                  "defaultTenantId": "string",
+                  "status": 11,
+                  "tenantId": "string",
+                  "roleId": "string",
+                  "tenantName": "string",
+                  "tenantKey": "string",
+                  "roleName": "string",
+                  "userTenantId": "string"
+                }
+              },
+              "userLevelPermissions": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "permission": "string",
+                  "allowed": true,
+                  "userTenantId": "string",
+                  "userTenant": {}
+                }
+              ],
+              "userGroups": [
+                {}
+              ],
+              "userInvitations": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "expiresOn": "2019-08-24T14:15:22Z",
+                  "token": "string",
+                  "userTenantId": "string",
+                  "userTenant": {}
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
 }
 
 ```
 
-TenantWithRelations
+TenantConfigWithRelations
 
 ### Properties
 
@@ -8909,27 +10967,10 @@ TenantWithRelations
 |createdBy|string|false|none|none|
 |modifiedBy|string|false|none|none|
 |id|string|false|none|none|
-|name|string|true|none|none|
-|status|number¦null|true|none|Tenant status - Active or Inactive|
-|key|string|false|none|none|
-|website|string|false|none|none|
-|address|string|false|none|none|
-|city|string|false|none|none|
-|state|string|false|none|none|
-|zip|string|false|none|none|
-|country|string|false|none|none|
-|primaryContactEmail|string|false|none|none|
-|allowedDomain|string|false|none|none|
-|tenantType|string|false|none|none|
-|tenantConfigs|[[TenantConfigWithRelations](#schematenantconfigwithrelations)]|false|none|[(tsType: TenantConfigWithRelations, schemaOptions: { includeRelations: true })]|
-|userTenants|[[UserTenantWithRelations](#schemausertenantwithrelations)]|false|none|[(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })]|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|status|1|
-|status|0|
+|configKey|string|true|none|none|
+|configValue|object|false|none|none|
+|tenantId|string|true|none|none|
+|tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
 
 <h2 id="tocS_UserCredentialsWithRelations">UserCredentialsWithRelations</h2>
 <!-- backwards compatibility -->
@@ -8945,6 +10986,8 @@ TenantWithRelations
   "deletedBy": "string",
   "createdOn": "2019-08-24T14:15:22Z",
   "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
   "id": "string",
   "authProvider": "string",
   "authId": "string",
@@ -8992,9 +11035,6 @@ TenantWithRelations
       "state": "string",
       "zip": "string",
       "country": "string",
-      "primaryContactEmail": "string",
-      "allowedDomain": "string",
-      "tenantType": "string",
       "tenantConfigs": [
         {
           "deleted": true,
@@ -9018,6 +11058,8 @@ TenantWithRelations
           "deletedBy": "string",
           "createdOn": "2019-08-24T14:15:22Z",
           "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
           "id": "string",
           "locale": "string",
           "status": 12,
@@ -9037,12 +11079,14 @@ TenantWithRelations
             "id": "string",
             "name": "string",
             "roleType": 15,
+            "description": "string",
             "permissions": [
               "string"
             ],
             "allowedClients": [
               "string"
             ],
+            "tenantId": "string",
             "userTenants": [
               {}
             ],
@@ -9074,9 +11118,7 @@ TenantWithRelations
               "tenantName": "string",
               "tenantKey": "string",
               "roleName": "string",
-              "roleType": 0,
-              "userTenantId": "string",
-              "expiresOn": "2019-08-24T14:15:22Z"
+              "userTenantId": "string"
             },
             "modifiedByUser": {
               "deleted": true,
@@ -9106,9 +11148,7 @@ TenantWithRelations
               "tenantName": "string",
               "tenantKey": "string",
               "roleName": "string",
-              "roleType": 0,
-              "userTenantId": "string",
-              "expiresOn": "2019-08-24T14:15:22Z"
+              "userTenantId": "string"
             }
           },
           "userLevelPermissions": [
@@ -9139,7 +11179,6 @@ TenantWithRelations
               "id": "string",
               "groupId": "string",
               "userTenantId": "string",
-              "isOwner": true,
               "group": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -9152,12 +11191,361 @@ TenantWithRelations
                 "name": "string",
                 "description": "string",
                 "photoUrl": "string",
-                "groupType": "Tenant",
+                "tenantId": "string",
                 "userGroups": [
                   {}
                 ]
               },
               "userTenant": {}
+            }
+          ],
+          "userInvitations": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "expiresOn": "2019-08-24T14:15:22Z",
+              "token": "string",
+              "userTenantId": "string",
+              "userTenant": {}
+            }
+          ]
+        }
+      ],
+      "users": [
+        {}
+      ],
+      "roles": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "roleType": 15,
+          "description": "string",
+          "permissions": [
+            "string"
+          ],
+          "allowedClients": [
+            "string"
+          ],
+          "tenantId": "string",
+          "userTenants": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "locale": "string",
+              "status": 12,
+              "userId": "string",
+              "tenantId": "string",
+              "roleId": "string",
+              "user": {},
+              "tenant": {},
+              "role": {},
+              "userLevelPermissions": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "permission": "string",
+                  "allowed": true,
+                  "userTenantId": "string",
+                  "userTenant": {}
+                }
+              ],
+              "userGroups": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "groupId": "string",
+                  "userTenantId": "string",
+                  "group": {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "name": "string",
+                    "description": "string",
+                    "photoUrl": "string",
+                    "tenantId": "string",
+                    "userGroups": []
+                  },
+                  "userTenant": {}
+                }
+              ],
+              "userInvitations": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "expiresOn": "2019-08-24T14:15:22Z",
+                  "token": "string",
+                  "userTenantId": "string",
+                  "userTenant": {}
+                }
+              ]
+            }
+          ],
+          "createdByUser": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "middleName": "string",
+            "username": "string",
+            "email": "string",
+            "designation": "string",
+            "phone": "string",
+            "authClientIds": "string",
+            "lastLogin": "string",
+            "photoUrl": "string",
+            "gender": "M",
+            "dob": "2019-08-24T14:15:22Z",
+            "defaultTenantId": "string",
+            "status": 11,
+            "tenantId": "string",
+            "roleId": "string",
+            "tenantName": "string",
+            "tenantKey": "string",
+            "roleName": "string",
+            "userTenantId": "string"
+          },
+          "modifiedByUser": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "middleName": "string",
+            "username": "string",
+            "email": "string",
+            "designation": "string",
+            "phone": "string",
+            "authClientIds": "string",
+            "lastLogin": "string",
+            "photoUrl": "string",
+            "gender": "M",
+            "dob": "2019-08-24T14:15:22Z",
+            "defaultTenantId": "string",
+            "status": 11,
+            "tenantId": "string",
+            "roleId": "string",
+            "tenantName": "string",
+            "tenantKey": "string",
+            "roleName": "string",
+            "userTenantId": "string"
+          }
+        }
+      ],
+      "groups": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "description": "string",
+          "photoUrl": "string",
+          "tenantId": "string",
+          "userGroups": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "groupId": "string",
+              "userTenantId": "string",
+              "group": {},
+              "userTenant": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "locale": "string",
+                "status": 12,
+                "userId": "string",
+                "tenantId": "string",
+                "roleId": "string",
+                "user": {},
+                "tenant": {},
+                "role": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "roleType": 15,
+                  "description": "string",
+                  "permissions": [
+                    "string"
+                  ],
+                  "allowedClients": [
+                    "string"
+                  ],
+                  "tenantId": "string",
+                  "userTenants": [
+                    {}
+                  ],
+                  "createdByUser": {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "firstName": "string",
+                    "lastName": "string",
+                    "middleName": "string",
+                    "username": "string",
+                    "email": "string",
+                    "designation": "string",
+                    "phone": "string",
+                    "authClientIds": "string",
+                    "lastLogin": "string",
+                    "photoUrl": "string",
+                    "gender": "M",
+                    "dob": "2019-08-24T14:15:22Z",
+                    "defaultTenantId": "string",
+                    "status": 11,
+                    "tenantId": "string",
+                    "roleId": "string",
+                    "tenantName": "string",
+                    "tenantKey": "string",
+                    "roleName": "string",
+                    "userTenantId": "string"
+                  },
+                  "modifiedByUser": {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "firstName": "string",
+                    "lastName": "string",
+                    "middleName": "string",
+                    "username": "string",
+                    "email": "string",
+                    "designation": "string",
+                    "phone": "string",
+                    "authClientIds": "string",
+                    "lastLogin": "string",
+                    "photoUrl": "string",
+                    "gender": "M",
+                    "dob": "2019-08-24T14:15:22Z",
+                    "defaultTenantId": "string",
+                    "status": 11,
+                    "tenantId": "string",
+                    "roleId": "string",
+                    "tenantName": "string",
+                    "tenantKey": "string",
+                    "roleName": "string",
+                    "userTenantId": "string"
+                  }
+                },
+                "userLevelPermissions": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "permission": "string",
+                    "allowed": true,
+                    "userTenantId": "string",
+                    "userTenant": {}
+                  }
+                ],
+                "userGroups": [
+                  {}
+                ],
+                "userInvitations": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "expiresOn": "2019-08-24T14:15:22Z",
+                    "token": "string",
+                    "userTenantId": "string",
+                    "userTenant": {}
+                  }
+                ]
+              }
             }
           ]
         }
@@ -9169,6 +11557,8 @@ TenantWithRelations
       "deletedBy": "string",
       "createdOn": "2019-08-24T14:15:22Z",
       "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
       "id": "string",
       "authProvider": "string",
       "authId": "string",
@@ -9185,6 +11575,8 @@ TenantWithRelations
         "deletedBy": "string",
         "createdOn": "2019-08-24T14:15:22Z",
         "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
         "id": "string",
         "locale": "string",
         "status": 12,
@@ -9210,9 +11602,6 @@ TenantWithRelations
           "state": "string",
           "zip": "string",
           "country": "string",
-          "primaryContactEmail": "string",
-          "allowedDomain": "string",
-          "tenantType": "string",
           "tenantConfigs": [
             {
               "deleted": true,
@@ -9231,6 +11620,126 @@ TenantWithRelations
           ],
           "userTenants": [
             {}
+          ],
+          "users": [
+            {}
+          ],
+          "roles": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "roleType": 15,
+              "description": "string",
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
+              "tenantId": "string",
+              "userTenants": [
+                {}
+              ],
+              "createdByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              },
+              "modifiedByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              }
+            }
+          ],
+          "groups": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "description": "string",
+              "photoUrl": "string",
+              "tenantId": "string",
+              "userGroups": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "groupId": "string",
+                  "userTenantId": "string",
+                  "group": {},
+                  "userTenant": {}
+                }
+              ]
+            }
           ]
         },
         "role": {
@@ -9244,12 +11753,14 @@ TenantWithRelations
           "id": "string",
           "name": "string",
           "roleType": 15,
+          "description": "string",
           "permissions": [
             "string"
           ],
           "allowedClients": [
             "string"
           ],
+          "tenantId": "string",
           "userTenants": [
             {}
           ],
@@ -9281,9 +11792,7 @@ TenantWithRelations
             "tenantName": "string",
             "tenantKey": "string",
             "roleName": "string",
-            "roleType": 0,
-            "userTenantId": "string",
-            "expiresOn": "2019-08-24T14:15:22Z"
+            "userTenantId": "string"
           },
           "modifiedByUser": {
             "deleted": true,
@@ -9313,9 +11822,7 @@ TenantWithRelations
             "tenantName": "string",
             "tenantKey": "string",
             "roleName": "string",
-            "roleType": 0,
-            "userTenantId": "string",
-            "expiresOn": "2019-08-24T14:15:22Z"
+            "userTenantId": "string"
           }
         },
         "userLevelPermissions": [
@@ -9346,7 +11853,6 @@ TenantWithRelations
             "id": "string",
             "groupId": "string",
             "userTenantId": "string",
-            "isOwner": true,
             "group": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -9359,11 +11865,27 @@ TenantWithRelations
               "name": "string",
               "description": "string",
               "photoUrl": "string",
-              "groupType": "Tenant",
+              "tenantId": "string",
               "userGroups": [
                 {}
               ]
             },
+            "userTenant": {}
+          }
+        ],
+        "userInvitations": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "expiresOn": "2019-08-24T14:15:22Z",
+            "token": "string",
+            "userTenantId": "string",
             "userTenant": {}
           }
         ]
@@ -9385,6 +11907,8 @@ UserCredentialsWithRelations
 |deletedBy|string¦null|false|none|none|
 |createdOn|string(date-time)|false|none|none|
 |modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
 |id|string|false|none|none|
 |authProvider|string|true|none|none|
 |authId|string|false|none|none|
@@ -9442,9 +11966,6 @@ UserCredentialsWithRelations
     "state": "string",
     "zip": "string",
     "country": "string",
-    "primaryContactEmail": "string",
-    "allowedDomain": "string",
-    "tenantType": "string",
     "tenantConfigs": [
       {
         "deleted": true,
@@ -9468,6 +11989,8 @@ UserCredentialsWithRelations
         "deletedBy": "string",
         "createdOn": "2019-08-24T14:15:22Z",
         "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
         "id": "string",
         "locale": "string",
         "status": 12,
@@ -9503,6 +12026,8 @@ UserCredentialsWithRelations
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "authProvider": "string",
             "authId": "string",
@@ -9528,12 +12053,14 @@ UserCredentialsWithRelations
           "id": "string",
           "name": "string",
           "roleType": 15,
+          "description": "string",
           "permissions": [
             "string"
           ],
           "allowedClients": [
             "string"
           ],
+          "tenantId": "string",
           "userTenants": [
             {}
           ],
@@ -9565,9 +12092,7 @@ UserCredentialsWithRelations
             "tenantName": "string",
             "tenantKey": "string",
             "roleName": "string",
-            "roleType": 0,
-            "userTenantId": "string",
-            "expiresOn": "2019-08-24T14:15:22Z"
+            "userTenantId": "string"
           },
           "modifiedByUser": {
             "deleted": true,
@@ -9597,9 +12122,7 @@ UserCredentialsWithRelations
             "tenantName": "string",
             "tenantKey": "string",
             "roleName": "string",
-            "roleType": 0,
-            "userTenantId": "string",
-            "expiresOn": "2019-08-24T14:15:22Z"
+            "userTenantId": "string"
           }
         },
         "userLevelPermissions": [
@@ -9630,7 +12153,6 @@ UserCredentialsWithRelations
             "id": "string",
             "groupId": "string",
             "userTenantId": "string",
-            "isOwner": true,
             "group": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -9643,12 +12165,655 @@ UserCredentialsWithRelations
               "name": "string",
               "description": "string",
               "photoUrl": "string",
-              "groupType": "Tenant",
+              "tenantId": "string",
               "userGroups": [
                 {}
               ]
             },
             "userTenant": {}
+          }
+        ],
+        "userInvitations": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "expiresOn": "2019-08-24T14:15:22Z",
+            "token": "string",
+            "userTenantId": "string",
+            "userTenant": {}
+          }
+        ]
+      }
+    ],
+    "users": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "firstName": "string",
+        "lastName": "string",
+        "middleName": "string",
+        "username": "string",
+        "email": "string",
+        "designation": "string",
+        "phone": "string",
+        "authClientIds": "string",
+        "lastLogin": "2019-08-24T14:15:22Z",
+        "photoUrl": "string",
+        "gender": "M",
+        "dob": "2019-08-24T14:15:22Z",
+        "defaultTenantId": "string",
+        "defaultTenant": {},
+        "credentials": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "authProvider": "string",
+          "authId": "string",
+          "authToken": "string",
+          "secretKey": "string",
+          "password": "string",
+          "userId": "string",
+          "user": {}
+        },
+        "userTenants": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "locale": "string",
+            "status": 12,
+            "userId": "string",
+            "tenantId": "string",
+            "roleId": "string",
+            "user": {},
+            "tenant": {},
+            "role": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "roleType": 15,
+              "description": "string",
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
+              "tenantId": "string",
+              "userTenants": [
+                {}
+              ],
+              "createdByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              },
+              "modifiedByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              }
+            },
+            "userLevelPermissions": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "permission": "string",
+                "allowed": true,
+                "userTenantId": "string",
+                "userTenant": {}
+              }
+            ],
+            "userGroups": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "groupId": "string",
+                "userTenantId": "string",
+                "group": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "description": "string",
+                  "photoUrl": "string",
+                  "tenantId": "string",
+                  "userGroups": [
+                    {}
+                  ]
+                },
+                "userTenant": {}
+              }
+            ],
+            "userInvitations": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "expiresOn": "2019-08-24T14:15:22Z",
+                "token": "string",
+                "userTenantId": "string",
+                "userTenant": {}
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "roles": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "name": "string",
+        "roleType": 15,
+        "description": "string",
+        "permissions": [
+          "string"
+        ],
+        "allowedClients": [
+          "string"
+        ],
+        "tenantId": "string",
+        "userTenants": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "locale": "string",
+            "status": 12,
+            "userId": "string",
+            "tenantId": "string",
+            "roleId": "string",
+            "user": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "2019-08-24T14:15:22Z",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "defaultTenant": {},
+              "credentials": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "authProvider": "string",
+                "authId": "string",
+                "authToken": "string",
+                "secretKey": "string",
+                "password": "string",
+                "userId": "string",
+                "user": {}
+              },
+              "userTenants": [
+                {}
+              ]
+            },
+            "tenant": {},
+            "role": {},
+            "userLevelPermissions": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "permission": "string",
+                "allowed": true,
+                "userTenantId": "string",
+                "userTenant": {}
+              }
+            ],
+            "userGroups": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "groupId": "string",
+                "userTenantId": "string",
+                "group": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "description": "string",
+                  "photoUrl": "string",
+                  "tenantId": "string",
+                  "userGroups": [
+                    {}
+                  ]
+                },
+                "userTenant": {}
+              }
+            ],
+            "userInvitations": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "expiresOn": "2019-08-24T14:15:22Z",
+                "token": "string",
+                "userTenantId": "string",
+                "userTenant": {}
+              }
+            ]
+          }
+        ],
+        "createdByUser": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "firstName": "string",
+          "lastName": "string",
+          "middleName": "string",
+          "username": "string",
+          "email": "string",
+          "designation": "string",
+          "phone": "string",
+          "authClientIds": "string",
+          "lastLogin": "string",
+          "photoUrl": "string",
+          "gender": "M",
+          "dob": "2019-08-24T14:15:22Z",
+          "defaultTenantId": "string",
+          "status": 11,
+          "tenantId": "string",
+          "roleId": "string",
+          "tenantName": "string",
+          "tenantKey": "string",
+          "roleName": "string",
+          "userTenantId": "string"
+        },
+        "modifiedByUser": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "firstName": "string",
+          "lastName": "string",
+          "middleName": "string",
+          "username": "string",
+          "email": "string",
+          "designation": "string",
+          "phone": "string",
+          "authClientIds": "string",
+          "lastLogin": "string",
+          "photoUrl": "string",
+          "gender": "M",
+          "dob": "2019-08-24T14:15:22Z",
+          "defaultTenantId": "string",
+          "status": 11,
+          "tenantId": "string",
+          "roleId": "string",
+          "tenantName": "string",
+          "tenantKey": "string",
+          "roleName": "string",
+          "userTenantId": "string"
+        }
+      }
+    ],
+    "groups": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "name": "string",
+        "description": "string",
+        "photoUrl": "string",
+        "tenantId": "string",
+        "userGroups": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "groupId": "string",
+            "userTenantId": "string",
+            "group": {},
+            "userTenant": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "locale": "string",
+              "status": 12,
+              "userId": "string",
+              "tenantId": "string",
+              "roleId": "string",
+              "user": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "2019-08-24T14:15:22Z",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "defaultTenant": {},
+                "credentials": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "authProvider": "string",
+                  "authId": "string",
+                  "authToken": "string",
+                  "secretKey": "string",
+                  "password": "string",
+                  "userId": "string",
+                  "user": {}
+                },
+                "userTenants": [
+                  {}
+                ]
+              },
+              "tenant": {},
+              "role": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "roleType": 15,
+                "description": "string",
+                "permissions": [
+                  "string"
+                ],
+                "allowedClients": [
+                  "string"
+                ],
+                "tenantId": "string",
+                "userTenants": [
+                  {}
+                ],
+                "createdByUser": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "middleName": "string",
+                  "username": "string",
+                  "email": "string",
+                  "designation": "string",
+                  "phone": "string",
+                  "authClientIds": "string",
+                  "lastLogin": "string",
+                  "photoUrl": "string",
+                  "gender": "M",
+                  "dob": "2019-08-24T14:15:22Z",
+                  "defaultTenantId": "string",
+                  "status": 11,
+                  "tenantId": "string",
+                  "roleId": "string",
+                  "tenantName": "string",
+                  "tenantKey": "string",
+                  "roleName": "string",
+                  "userTenantId": "string"
+                },
+                "modifiedByUser": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "middleName": "string",
+                  "username": "string",
+                  "email": "string",
+                  "designation": "string",
+                  "phone": "string",
+                  "authClientIds": "string",
+                  "lastLogin": "string",
+                  "photoUrl": "string",
+                  "gender": "M",
+                  "dob": "2019-08-24T14:15:22Z",
+                  "defaultTenantId": "string",
+                  "status": 11,
+                  "tenantId": "string",
+                  "roleId": "string",
+                  "tenantName": "string",
+                  "tenantKey": "string",
+                  "roleName": "string",
+                  "userTenantId": "string"
+                }
+              },
+              "userLevelPermissions": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "permission": "string",
+                  "allowed": true,
+                  "userTenantId": "string",
+                  "userTenant": {}
+                }
+              ],
+              "userGroups": [
+                {}
+              ],
+              "userInvitations": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "expiresOn": "2019-08-24T14:15:22Z",
+                  "token": "string",
+                  "userTenantId": "string",
+                  "userTenant": {}
+                }
+              ]
+            }
           }
         ]
       }
@@ -9660,6 +12825,8 @@ UserCredentialsWithRelations
     "deletedBy": "string",
     "createdOn": "2019-08-24T14:15:22Z",
     "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
     "id": "string",
     "authProvider": "string",
     "authId": "string",
@@ -9707,9 +12874,6 @@ UserCredentialsWithRelations
         "state": "string",
         "zip": "string",
         "country": "string",
-        "primaryContactEmail": "string",
-        "allowedDomain": "string",
-        "tenantType": "string",
         "tenantConfigs": [
           {
             "deleted": true,
@@ -9733,6 +12897,8 @@ UserCredentialsWithRelations
             "deletedBy": "string",
             "createdOn": "2019-08-24T14:15:22Z",
             "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
             "id": "string",
             "locale": "string",
             "status": 12,
@@ -9752,12 +12918,14 @@ UserCredentialsWithRelations
               "id": "string",
               "name": "string",
               "roleType": 15,
+              "description": "string",
               "permissions": [
                 "string"
               ],
               "allowedClients": [
                 "string"
               ],
+              "tenantId": "string",
               "userTenants": [
                 {}
               ],
@@ -9789,9 +12957,7 @@ UserCredentialsWithRelations
                 "tenantName": "string",
                 "tenantKey": "string",
                 "roleName": "string",
-                "roleType": 0,
-                "userTenantId": "string",
-                "expiresOn": "2019-08-24T14:15:22Z"
+                "userTenantId": "string"
               },
               "modifiedByUser": {
                 "deleted": true,
@@ -9821,9 +12987,7 @@ UserCredentialsWithRelations
                 "tenantName": "string",
                 "tenantKey": "string",
                 "roleName": "string",
-                "roleType": 0,
-                "userTenantId": "string",
-                "expiresOn": "2019-08-24T14:15:22Z"
+                "userTenantId": "string"
               }
             },
             "userLevelPermissions": [
@@ -9854,7 +13018,6 @@ UserCredentialsWithRelations
                 "id": "string",
                 "groupId": "string",
                 "userTenantId": "string",
-                "isOwner": true,
                 "group": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -9867,12 +13030,257 @@ UserCredentialsWithRelations
                   "name": "string",
                   "description": "string",
                   "photoUrl": "string",
-                  "groupType": "Tenant",
+                  "tenantId": "string",
                   "userGroups": [
                     {}
                   ]
                 },
                 "userTenant": {}
+              }
+            ],
+            "userInvitations": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "expiresOn": "2019-08-24T14:15:22Z",
+                "token": "string",
+                "userTenantId": "string",
+                "userTenant": {}
+              }
+            ]
+          }
+        ],
+        "users": [
+          {}
+        ],
+        "roles": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "roleType": 15,
+            "description": "string",
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
+            "tenantId": "string",
+            "userTenants": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "locale": "string",
+                "status": 12,
+                "userId": "string",
+                "tenantId": "string",
+                "roleId": "string",
+                "user": {},
+                "tenant": {},
+                "role": {},
+                "userLevelPermissions": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "permission": "string",
+                    "allowed": true,
+                    "userTenantId": "string",
+                    "userTenant": {}
+                  }
+                ],
+                "userGroups": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "groupId": "string",
+                    "userTenantId": "string",
+                    "group": {},
+                    "userTenant": {}
+                  }
+                ],
+                "userInvitations": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "expiresOn": "2019-08-24T14:15:22Z",
+                    "token": "string",
+                    "userTenantId": "string",
+                    "userTenant": {}
+                  }
+                ]
+              }
+            ],
+            "createdByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            },
+            "modifiedByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            }
+          }
+        ],
+        "groups": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "description": "string",
+            "photoUrl": "string",
+            "tenantId": "string",
+            "userGroups": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "groupId": "string",
+                "userTenantId": "string",
+                "group": {},
+                "userTenant": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "locale": "string",
+                  "status": 12,
+                  "userId": "string",
+                  "tenantId": "string",
+                  "roleId": "string",
+                  "user": {},
+                  "tenant": {},
+                  "role": {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "name": "string",
+                    "roleType": 15,
+                    "description": "string",
+                    "permissions": [],
+                    "allowedClients": [],
+                    "tenantId": "string",
+                    "userTenants": [],
+                    "createdByUser": {},
+                    "modifiedByUser": {}
+                  },
+                  "userLevelPermissions": [
+                    {}
+                  ],
+                  "userGroups": [
+                    {}
+                  ],
+                  "userInvitations": [
+                    {}
+                  ]
+                }
               }
             ]
           }
@@ -9886,6 +13294,8 @@ UserCredentialsWithRelations
           "deletedBy": "string",
           "createdOn": "2019-08-24T14:15:22Z",
           "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
           "id": "string",
           "locale": "string",
           "status": 12,
@@ -9911,9 +13321,6 @@ UserCredentialsWithRelations
             "state": "string",
             "zip": "string",
             "country": "string",
-            "primaryContactEmail": "string",
-            "allowedDomain": "string",
-            "tenantType": "string",
             "tenantConfigs": [
               {
                 "deleted": true,
@@ -9932,6 +13339,126 @@ UserCredentialsWithRelations
             ],
             "userTenants": [
               {}
+            ],
+            "users": [
+              {}
+            ],
+            "roles": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "roleType": 15,
+                "description": "string",
+                "permissions": [
+                  "string"
+                ],
+                "allowedClients": [
+                  "string"
+                ],
+                "tenantId": "string",
+                "userTenants": [
+                  {}
+                ],
+                "createdByUser": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "middleName": "string",
+                  "username": "string",
+                  "email": "string",
+                  "designation": "string",
+                  "phone": "string",
+                  "authClientIds": "string",
+                  "lastLogin": "string",
+                  "photoUrl": "string",
+                  "gender": "M",
+                  "dob": "2019-08-24T14:15:22Z",
+                  "defaultTenantId": "string",
+                  "status": 11,
+                  "tenantId": "string",
+                  "roleId": "string",
+                  "tenantName": "string",
+                  "tenantKey": "string",
+                  "roleName": "string",
+                  "userTenantId": "string"
+                },
+                "modifiedByUser": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "middleName": "string",
+                  "username": "string",
+                  "email": "string",
+                  "designation": "string",
+                  "phone": "string",
+                  "authClientIds": "string",
+                  "lastLogin": "string",
+                  "photoUrl": "string",
+                  "gender": "M",
+                  "dob": "2019-08-24T14:15:22Z",
+                  "defaultTenantId": "string",
+                  "status": 11,
+                  "tenantId": "string",
+                  "roleId": "string",
+                  "tenantName": "string",
+                  "tenantKey": "string",
+                  "roleName": "string",
+                  "userTenantId": "string"
+                }
+              }
+            ],
+            "groups": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "description": "string",
+                "photoUrl": "string",
+                "tenantId": "string",
+                "userGroups": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "groupId": "string",
+                    "userTenantId": "string",
+                    "group": {},
+                    "userTenant": {}
+                  }
+                ]
+              }
             ]
           },
           "role": {
@@ -9945,12 +13472,14 @@ UserCredentialsWithRelations
             "id": "string",
             "name": "string",
             "roleType": 15,
+            "description": "string",
             "permissions": [
               "string"
             ],
             "allowedClients": [
               "string"
             ],
+            "tenantId": "string",
             "userTenants": [
               {}
             ],
@@ -9982,9 +13511,7 @@ UserCredentialsWithRelations
               "tenantName": "string",
               "tenantKey": "string",
               "roleName": "string",
-              "roleType": 0,
-              "userTenantId": "string",
-              "expiresOn": "2019-08-24T14:15:22Z"
+              "userTenantId": "string"
             },
             "modifiedByUser": {
               "deleted": true,
@@ -10014,9 +13541,7 @@ UserCredentialsWithRelations
               "tenantName": "string",
               "tenantKey": "string",
               "roleName": "string",
-              "roleType": 0,
-              "userTenantId": "string",
-              "expiresOn": "2019-08-24T14:15:22Z"
+              "userTenantId": "string"
             }
           },
           "userLevelPermissions": [
@@ -10047,7 +13572,6 @@ UserCredentialsWithRelations
               "id": "string",
               "groupId": "string",
               "userTenantId": "string",
-              "isOwner": true,
               "group": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -10060,11 +13584,27 @@ UserCredentialsWithRelations
                 "name": "string",
                 "description": "string",
                 "photoUrl": "string",
-                "groupType": "Tenant",
+                "tenantId": "string",
                 "userGroups": [
                   {}
                 ]
               },
+              "userTenant": {}
+            }
+          ],
+          "userInvitations": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "expiresOn": "2019-08-24T14:15:22Z",
+              "token": "string",
+              "userTenantId": "string",
               "userTenant": {}
             }
           ]
@@ -10079,6 +13619,8 @@ UserCredentialsWithRelations
       "deletedBy": "string",
       "createdOn": "2019-08-24T14:15:22Z",
       "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
       "id": "string",
       "locale": "string",
       "status": 12,
@@ -10125,9 +13667,6 @@ UserCredentialsWithRelations
           "state": "string",
           "zip": "string",
           "country": "string",
-          "primaryContactEmail": "string",
-          "allowedDomain": "string",
-          "tenantType": "string",
           "tenantConfigs": [
             {
               "deleted": true,
@@ -10146,6 +13685,126 @@ UserCredentialsWithRelations
           ],
           "userTenants": [
             {}
+          ],
+          "users": [
+            {}
+          ],
+          "roles": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "roleType": 15,
+              "description": "string",
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
+              "tenantId": "string",
+              "userTenants": [
+                {}
+              ],
+              "createdByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              },
+              "modifiedByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              }
+            }
+          ],
+          "groups": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "description": "string",
+              "photoUrl": "string",
+              "tenantId": "string",
+              "userGroups": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "groupId": "string",
+                  "userTenantId": "string",
+                  "group": {},
+                  "userTenant": {}
+                }
+              ]
+            }
           ]
         },
         "credentials": {
@@ -10154,6 +13813,8 @@ UserCredentialsWithRelations
           "deletedBy": "string",
           "createdOn": "2019-08-24T14:15:22Z",
           "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
           "id": "string",
           "authProvider": "string",
           "authId": "string",
@@ -10183,9 +13844,6 @@ UserCredentialsWithRelations
         "state": "string",
         "zip": "string",
         "country": "string",
-        "primaryContactEmail": "string",
-        "allowedDomain": "string",
-        "tenantType": "string",
         "tenantConfigs": [
           {
             "deleted": true,
@@ -10204,6 +13862,167 @@ UserCredentialsWithRelations
         ],
         "userTenants": [
           {}
+        ],
+        "users": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "middleName": "string",
+            "username": "string",
+            "email": "string",
+            "designation": "string",
+            "phone": "string",
+            "authClientIds": "string",
+            "lastLogin": "2019-08-24T14:15:22Z",
+            "photoUrl": "string",
+            "gender": "M",
+            "dob": "2019-08-24T14:15:22Z",
+            "defaultTenantId": "string",
+            "defaultTenant": {},
+            "credentials": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "authProvider": "string",
+              "authId": "string",
+              "authToken": "string",
+              "secretKey": "string",
+              "password": "string",
+              "userId": "string",
+              "user": {}
+            },
+            "userTenants": []
+          }
+        ],
+        "roles": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "roleType": 15,
+            "description": "string",
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
+            "tenantId": "string",
+            "userTenants": [
+              {}
+            ],
+            "createdByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            },
+            "modifiedByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            }
+          }
+        ],
+        "groups": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "description": "string",
+            "photoUrl": "string",
+            "tenantId": "string",
+            "userGroups": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "groupId": "string",
+                "userTenantId": "string",
+                "group": {},
+                "userTenant": {}
+              }
+            ]
+          }
         ]
       },
       "role": {
@@ -10217,12 +14036,14 @@ UserCredentialsWithRelations
         "id": "string",
         "name": "string",
         "roleType": 15,
+        "description": "string",
         "permissions": [
           "string"
         ],
         "allowedClients": [
           "string"
         ],
+        "tenantId": "string",
         "userTenants": [
           {}
         ],
@@ -10254,9 +14075,7 @@ UserCredentialsWithRelations
           "tenantName": "string",
           "tenantKey": "string",
           "roleName": "string",
-          "roleType": 0,
-          "userTenantId": "string",
-          "expiresOn": "2019-08-24T14:15:22Z"
+          "userTenantId": "string"
         },
         "modifiedByUser": {
           "deleted": true,
@@ -10286,9 +14105,7 @@ UserCredentialsWithRelations
           "tenantName": "string",
           "tenantKey": "string",
           "roleName": "string",
-          "roleType": 0,
-          "userTenantId": "string",
-          "expiresOn": "2019-08-24T14:15:22Z"
+          "userTenantId": "string"
         }
       },
       "userLevelPermissions": [
@@ -10319,7 +14136,6 @@ UserCredentialsWithRelations
           "id": "string",
           "groupId": "string",
           "userTenantId": "string",
-          "isOwner": true,
           "group": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -10332,11 +14148,27 @@ UserCredentialsWithRelations
             "name": "string",
             "description": "string",
             "photoUrl": "string",
-            "groupType": "Tenant",
+            "tenantId": "string",
             "userGroups": [
               {}
             ]
           },
+          "userTenant": {}
+        }
+      ],
+      "userInvitations": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "expiresOn": "2019-08-24T14:15:22Z",
+          "token": "string",
+          "userTenantId": "string",
           "userTenant": {}
         }
       ]
@@ -10385,2408 +14217,6 @@ UserWithRelations
 |gender|F|
 |gender|O|
 
-<h2 id="tocS_UserLevelPermissionWithRelations">UserLevelPermissionWithRelations</h2>
-<!-- backwards compatibility -->
-<a id="schemauserlevelpermissionwithrelations"></a>
-<a id="schema_UserLevelPermissionWithRelations"></a>
-<a id="tocSuserlevelpermissionwithrelations"></a>
-<a id="tocsuserlevelpermissionwithrelations"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "permission": "string",
-  "allowed": true,
-  "userTenantId": "string",
-  "userTenant": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "id": "string",
-    "locale": "string",
-    "status": 12,
-    "userId": "string",
-    "tenantId": "string",
-    "roleId": "string",
-    "user": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "firstName": "string",
-      "lastName": "string",
-      "middleName": "string",
-      "username": "string",
-      "email": "string",
-      "designation": "string",
-      "phone": "string",
-      "authClientIds": "string",
-      "lastLogin": "2019-08-24T14:15:22Z",
-      "photoUrl": "string",
-      "gender": "M",
-      "dob": "2019-08-24T14:15:22Z",
-      "defaultTenantId": "string",
-      "defaultTenant": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "name": "string",
-        "status": 1,
-        "key": "string",
-        "website": "string",
-        "address": "string",
-        "city": "string",
-        "state": "string",
-        "zip": "string",
-        "country": "string",
-        "primaryContactEmail": "string",
-        "allowedDomain": "string",
-        "tenantType": "string",
-        "tenantConfigs": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "configKey": "string",
-            "configValue": {},
-            "tenantId": "string",
-            "tenant": {}
-          }
-        ],
-        "userTenants": [
-          {}
-        ]
-      },
-      "credentials": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "id": "string",
-        "authProvider": "string",
-        "authId": "string",
-        "authToken": "string",
-        "secretKey": "string",
-        "password": "string",
-        "userId": "string",
-        "user": {}
-      },
-      "userTenants": [
-        {}
-      ]
-    },
-    "tenant": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "name": "string",
-      "status": 1,
-      "key": "string",
-      "website": "string",
-      "address": "string",
-      "city": "string",
-      "state": "string",
-      "zip": "string",
-      "country": "string",
-      "primaryContactEmail": "string",
-      "allowedDomain": "string",
-      "tenantType": "string",
-      "tenantConfigs": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "configKey": "string",
-          "configValue": {},
-          "tenantId": "string",
-          "tenant": {}
-        }
-      ],
-      "userTenants": [
-        {}
-      ]
-    },
-    "role": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "name": "string",
-      "roleType": 15,
-      "permissions": [
-        "string"
-      ],
-      "allowedClients": [
-        "string"
-      ],
-      "userTenants": [
-        {}
-      ],
-      "createdByUser": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "firstName": "string",
-        "lastName": "string",
-        "middleName": "string",
-        "username": "string",
-        "email": "string",
-        "designation": "string",
-        "phone": "string",
-        "authClientIds": "string",
-        "lastLogin": "string",
-        "photoUrl": "string",
-        "gender": "M",
-        "dob": "2019-08-24T14:15:22Z",
-        "defaultTenantId": "string",
-        "status": 11,
-        "tenantId": "string",
-        "roleId": "string",
-        "tenantName": "string",
-        "tenantKey": "string",
-        "roleName": "string",
-        "roleType": 0,
-        "userTenantId": "string",
-        "expiresOn": "2019-08-24T14:15:22Z"
-      },
-      "modifiedByUser": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "firstName": "string",
-        "lastName": "string",
-        "middleName": "string",
-        "username": "string",
-        "email": "string",
-        "designation": "string",
-        "phone": "string",
-        "authClientIds": "string",
-        "lastLogin": "string",
-        "photoUrl": "string",
-        "gender": "M",
-        "dob": "2019-08-24T14:15:22Z",
-        "defaultTenantId": "string",
-        "status": 11,
-        "tenantId": "string",
-        "roleId": "string",
-        "tenantName": "string",
-        "tenantKey": "string",
-        "roleName": "string",
-        "roleType": 0,
-        "userTenantId": "string",
-        "expiresOn": "2019-08-24T14:15:22Z"
-      }
-    },
-    "userLevelPermissions": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "permission": "string",
-        "allowed": true,
-        "userTenantId": "string",
-        "userTenant": {}
-      }
-    ],
-    "userGroups": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "groupId": "string",
-        "userTenantId": "string",
-        "isOwner": true,
-        "group": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "name": "string",
-          "description": "string",
-          "photoUrl": "string",
-          "groupType": "Tenant",
-          "userGroups": [
-            {}
-          ]
-        },
-        "userTenant": {}
-      }
-    ]
-  }
-}
-
-```
-
-UserLevelPermissionWithRelations
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|permission|string|true|none|none|
-|allowed|boolean|true|none|none|
-|userTenantId|string|true|none|none|
-|userTenant|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
-
-<h2 id="tocS_UserGroupWithRelations">UserGroupWithRelations</h2>
-<!-- backwards compatibility -->
-<a id="schemausergroupwithrelations"></a>
-<a id="schema_UserGroupWithRelations"></a>
-<a id="tocSusergroupwithrelations"></a>
-<a id="tocsusergroupwithrelations"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "groupId": "string",
-  "userTenantId": "string",
-  "isOwner": true,
-  "group": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "name": "string",
-    "description": "string",
-    "photoUrl": "string",
-    "groupType": "Tenant",
-    "userGroups": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "groupId": "string",
-        "userTenantId": "string",
-        "isOwner": true,
-        "group": {},
-        "userTenant": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "id": "string",
-          "locale": "string",
-          "status": 12,
-          "userId": "string",
-          "tenantId": "string",
-          "roleId": "string",
-          "user": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "firstName": "string",
-            "lastName": "string",
-            "middleName": "string",
-            "username": "string",
-            "email": "string",
-            "designation": "string",
-            "phone": "string",
-            "authClientIds": "string",
-            "lastLogin": "2019-08-24T14:15:22Z",
-            "photoUrl": "string",
-            "gender": "M",
-            "dob": "2019-08-24T14:15:22Z",
-            "defaultTenantId": "string",
-            "defaultTenant": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "name": "string",
-              "status": 1,
-              "key": "string",
-              "website": "string",
-              "address": "string",
-              "city": "string",
-              "state": "string",
-              "zip": "string",
-              "country": "string",
-              "primaryContactEmail": "string",
-              "allowedDomain": "string",
-              "tenantType": "string",
-              "tenantConfigs": [
-                {
-                  "deleted": true,
-                  "deletedOn": "2019-08-24T14:15:22Z",
-                  "deletedBy": "string",
-                  "createdOn": "2019-08-24T14:15:22Z",
-                  "modifiedOn": "2019-08-24T14:15:22Z",
-                  "createdBy": "string",
-                  "modifiedBy": "string",
-                  "id": "string",
-                  "configKey": "string",
-                  "configValue": {},
-                  "tenantId": "string",
-                  "tenant": {}
-                }
-              ],
-              "userTenants": [
-                {}
-              ]
-            },
-            "credentials": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "id": "string",
-              "authProvider": "string",
-              "authId": "string",
-              "authToken": "string",
-              "secretKey": "string",
-              "password": "string",
-              "userId": "string",
-              "user": {}
-            },
-            "userTenants": [
-              {}
-            ]
-          },
-          "tenant": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "name": "string",
-            "status": 1,
-            "key": "string",
-            "website": "string",
-            "address": "string",
-            "city": "string",
-            "state": "string",
-            "zip": "string",
-            "country": "string",
-            "primaryContactEmail": "string",
-            "allowedDomain": "string",
-            "tenantType": "string",
-            "tenantConfigs": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "configKey": "string",
-                "configValue": {},
-                "tenantId": "string",
-                "tenant": {}
-              }
-            ],
-            "userTenants": [
-              {}
-            ]
-          },
-          "role": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "name": "string",
-            "roleType": 15,
-            "permissions": [
-              "string"
-            ],
-            "allowedClients": [
-              "string"
-            ],
-            "userTenants": [
-              {}
-            ],
-            "createdByUser": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "firstName": "string",
-              "lastName": "string",
-              "middleName": "string",
-              "username": "string",
-              "email": "string",
-              "designation": "string",
-              "phone": "string",
-              "authClientIds": "string",
-              "lastLogin": "string",
-              "photoUrl": "string",
-              "gender": "M",
-              "dob": "2019-08-24T14:15:22Z",
-              "defaultTenantId": "string",
-              "status": 11,
-              "tenantId": "string",
-              "roleId": "string",
-              "tenantName": "string",
-              "tenantKey": "string",
-              "roleName": "string",
-              "roleType": 0,
-              "userTenantId": "string",
-              "expiresOn": "2019-08-24T14:15:22Z"
-            },
-            "modifiedByUser": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "firstName": "string",
-              "lastName": "string",
-              "middleName": "string",
-              "username": "string",
-              "email": "string",
-              "designation": "string",
-              "phone": "string",
-              "authClientIds": "string",
-              "lastLogin": "string",
-              "photoUrl": "string",
-              "gender": "M",
-              "dob": "2019-08-24T14:15:22Z",
-              "defaultTenantId": "string",
-              "status": 11,
-              "tenantId": "string",
-              "roleId": "string",
-              "tenantName": "string",
-              "tenantKey": "string",
-              "roleName": "string",
-              "roleType": 0,
-              "userTenantId": "string",
-              "expiresOn": "2019-08-24T14:15:22Z"
-            }
-          },
-          "userLevelPermissions": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "permission": "string",
-              "allowed": true,
-              "userTenantId": "string",
-              "userTenant": {}
-            }
-          ],
-          "userGroups": [
-            {}
-          ]
-        }
-      }
-    ]
-  },
-  "userTenant": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "id": "string",
-    "locale": "string",
-    "status": 12,
-    "userId": "string",
-    "tenantId": "string",
-    "roleId": "string",
-    "user": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "firstName": "string",
-      "lastName": "string",
-      "middleName": "string",
-      "username": "string",
-      "email": "string",
-      "designation": "string",
-      "phone": "string",
-      "authClientIds": "string",
-      "lastLogin": "2019-08-24T14:15:22Z",
-      "photoUrl": "string",
-      "gender": "M",
-      "dob": "2019-08-24T14:15:22Z",
-      "defaultTenantId": "string",
-      "defaultTenant": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "name": "string",
-        "status": 1,
-        "key": "string",
-        "website": "string",
-        "address": "string",
-        "city": "string",
-        "state": "string",
-        "zip": "string",
-        "country": "string",
-        "primaryContactEmail": "string",
-        "allowedDomain": "string",
-        "tenantType": "string",
-        "tenantConfigs": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "configKey": "string",
-            "configValue": {},
-            "tenantId": "string",
-            "tenant": {}
-          }
-        ],
-        "userTenants": [
-          {}
-        ]
-      },
-      "credentials": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "id": "string",
-        "authProvider": "string",
-        "authId": "string",
-        "authToken": "string",
-        "secretKey": "string",
-        "password": "string",
-        "userId": "string",
-        "user": {}
-      },
-      "userTenants": [
-        {}
-      ]
-    },
-    "tenant": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "name": "string",
-      "status": 1,
-      "key": "string",
-      "website": "string",
-      "address": "string",
-      "city": "string",
-      "state": "string",
-      "zip": "string",
-      "country": "string",
-      "primaryContactEmail": "string",
-      "allowedDomain": "string",
-      "tenantType": "string",
-      "tenantConfigs": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "configKey": "string",
-          "configValue": {},
-          "tenantId": "string",
-          "tenant": {}
-        }
-      ],
-      "userTenants": [
-        {}
-      ]
-    },
-    "role": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "name": "string",
-      "roleType": 15,
-      "permissions": [
-        "string"
-      ],
-      "allowedClients": [
-        "string"
-      ],
-      "userTenants": [
-        {}
-      ],
-      "createdByUser": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "firstName": "string",
-        "lastName": "string",
-        "middleName": "string",
-        "username": "string",
-        "email": "string",
-        "designation": "string",
-        "phone": "string",
-        "authClientIds": "string",
-        "lastLogin": "string",
-        "photoUrl": "string",
-        "gender": "M",
-        "dob": "2019-08-24T14:15:22Z",
-        "defaultTenantId": "string",
-        "status": 11,
-        "tenantId": "string",
-        "roleId": "string",
-        "tenantName": "string",
-        "tenantKey": "string",
-        "roleName": "string",
-        "roleType": 0,
-        "userTenantId": "string",
-        "expiresOn": "2019-08-24T14:15:22Z"
-      },
-      "modifiedByUser": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "firstName": "string",
-        "lastName": "string",
-        "middleName": "string",
-        "username": "string",
-        "email": "string",
-        "designation": "string",
-        "phone": "string",
-        "authClientIds": "string",
-        "lastLogin": "string",
-        "photoUrl": "string",
-        "gender": "M",
-        "dob": "2019-08-24T14:15:22Z",
-        "defaultTenantId": "string",
-        "status": 11,
-        "tenantId": "string",
-        "roleId": "string",
-        "tenantName": "string",
-        "tenantKey": "string",
-        "roleName": "string",
-        "roleType": 0,
-        "userTenantId": "string",
-        "expiresOn": "2019-08-24T14:15:22Z"
-      }
-    },
-    "userLevelPermissions": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "permission": "string",
-        "allowed": true,
-        "userTenantId": "string",
-        "userTenant": {}
-      }
-    ],
-    "userGroups": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "groupId": "string",
-        "userTenantId": "string",
-        "isOwner": true,
-        "group": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "name": "string",
-          "description": "string",
-          "photoUrl": "string",
-          "groupType": "Tenant",
-          "userGroups": [
-            {}
-          ]
-        },
-        "userTenant": {}
-      }
-    ]
-  }
-}
-
-```
-
-UserGroupWithRelations
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|groupId|string|true|none|none|
-|userTenantId|string|true|none|none|
-|isOwner|boolean|false|none|none|
-|group|[GroupWithRelations](#schemagroupwithrelations)|false|none|(tsType: GroupWithRelations, schemaOptions: { includeRelations: true })|
-|userTenant|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
-
-<h2 id="tocS_UserTenantWithRelations">UserTenantWithRelations</h2>
-<!-- backwards compatibility -->
-<a id="schemausertenantwithrelations"></a>
-<a id="schema_UserTenantWithRelations"></a>
-<a id="tocSusertenantwithrelations"></a>
-<a id="tocsusertenantwithrelations"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "id": "string",
-  "locale": "string",
-  "status": 12,
-  "userId": "string",
-  "tenantId": "string",
-  "roleId": "string",
-  "user": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "firstName": "string",
-    "lastName": "string",
-    "middleName": "string",
-    "username": "string",
-    "email": "string",
-    "designation": "string",
-    "phone": "string",
-    "authClientIds": "string",
-    "lastLogin": "2019-08-24T14:15:22Z",
-    "photoUrl": "string",
-    "gender": "M",
-    "dob": "2019-08-24T14:15:22Z",
-    "defaultTenantId": "string",
-    "defaultTenant": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "name": "string",
-      "status": 1,
-      "key": "string",
-      "website": "string",
-      "address": "string",
-      "city": "string",
-      "state": "string",
-      "zip": "string",
-      "country": "string",
-      "primaryContactEmail": "string",
-      "allowedDomain": "string",
-      "tenantType": "string",
-      "tenantConfigs": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "configKey": "string",
-          "configValue": {},
-          "tenantId": "string",
-          "tenant": {}
-        }
-      ],
-      "userTenants": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "id": "string",
-          "locale": "string",
-          "status": 12,
-          "userId": "string",
-          "tenantId": "string",
-          "roleId": "string",
-          "user": {},
-          "tenant": {},
-          "role": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "name": "string",
-            "roleType": 15,
-            "permissions": [
-              "string"
-            ],
-            "allowedClients": [
-              "string"
-            ],
-            "userTenants": [
-              {}
-            ],
-            "createdByUser": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "firstName": "string",
-              "lastName": "string",
-              "middleName": "string",
-              "username": "string",
-              "email": "string",
-              "designation": "string",
-              "phone": "string",
-              "authClientIds": "string",
-              "lastLogin": "string",
-              "photoUrl": "string",
-              "gender": "M",
-              "dob": "2019-08-24T14:15:22Z",
-              "defaultTenantId": "string",
-              "status": 11,
-              "tenantId": "string",
-              "roleId": "string",
-              "tenantName": "string",
-              "tenantKey": "string",
-              "roleName": "string",
-              "roleType": 0,
-              "userTenantId": "string",
-              "expiresOn": "2019-08-24T14:15:22Z"
-            },
-            "modifiedByUser": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "firstName": "string",
-              "lastName": "string",
-              "middleName": "string",
-              "username": "string",
-              "email": "string",
-              "designation": "string",
-              "phone": "string",
-              "authClientIds": "string",
-              "lastLogin": "string",
-              "photoUrl": "string",
-              "gender": "M",
-              "dob": "2019-08-24T14:15:22Z",
-              "defaultTenantId": "string",
-              "status": 11,
-              "tenantId": "string",
-              "roleId": "string",
-              "tenantName": "string",
-              "tenantKey": "string",
-              "roleName": "string",
-              "roleType": 0,
-              "userTenantId": "string",
-              "expiresOn": "2019-08-24T14:15:22Z"
-            }
-          },
-          "userLevelPermissions": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "permission": "string",
-              "allowed": true,
-              "userTenantId": "string",
-              "userTenant": {}
-            }
-          ],
-          "userGroups": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "groupId": "string",
-              "userTenantId": "string",
-              "isOwner": true,
-              "group": {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "name": "string",
-                "description": "string",
-                "photoUrl": "string",
-                "groupType": "Tenant",
-                "userGroups": [
-                  {}
-                ]
-              },
-              "userTenant": {}
-            }
-          ]
-        }
-      ]
-    },
-    "credentials": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "id": "string",
-      "authProvider": "string",
-      "authId": "string",
-      "authToken": "string",
-      "secretKey": "string",
-      "password": "string",
-      "userId": "string",
-      "user": {}
-    },
-    "userTenants": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "id": "string",
-        "locale": "string",
-        "status": 12,
-        "userId": "string",
-        "tenantId": "string",
-        "roleId": "string",
-        "user": {},
-        "tenant": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "name": "string",
-          "status": 1,
-          "key": "string",
-          "website": "string",
-          "address": "string",
-          "city": "string",
-          "state": "string",
-          "zip": "string",
-          "country": "string",
-          "primaryContactEmail": "string",
-          "allowedDomain": "string",
-          "tenantType": "string",
-          "tenantConfigs": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "configKey": "string",
-              "configValue": {},
-              "tenantId": "string",
-              "tenant": {}
-            }
-          ],
-          "userTenants": [
-            {}
-          ]
-        },
-        "role": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "name": "string",
-          "roleType": 15,
-          "permissions": [
-            "string"
-          ],
-          "allowedClients": [
-            "string"
-          ],
-          "userTenants": [
-            {}
-          ],
-          "createdByUser": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "firstName": "string",
-            "lastName": "string",
-            "middleName": "string",
-            "username": "string",
-            "email": "string",
-            "designation": "string",
-            "phone": "string",
-            "authClientIds": "string",
-            "lastLogin": "string",
-            "photoUrl": "string",
-            "gender": "M",
-            "dob": "2019-08-24T14:15:22Z",
-            "defaultTenantId": "string",
-            "status": 11,
-            "tenantId": "string",
-            "roleId": "string",
-            "tenantName": "string",
-            "tenantKey": "string",
-            "roleName": "string",
-            "roleType": 0,
-            "userTenantId": "string",
-            "expiresOn": "2019-08-24T14:15:22Z"
-          },
-          "modifiedByUser": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "firstName": "string",
-            "lastName": "string",
-            "middleName": "string",
-            "username": "string",
-            "email": "string",
-            "designation": "string",
-            "phone": "string",
-            "authClientIds": "string",
-            "lastLogin": "string",
-            "photoUrl": "string",
-            "gender": "M",
-            "dob": "2019-08-24T14:15:22Z",
-            "defaultTenantId": "string",
-            "status": 11,
-            "tenantId": "string",
-            "roleId": "string",
-            "tenantName": "string",
-            "tenantKey": "string",
-            "roleName": "string",
-            "roleType": 0,
-            "userTenantId": "string",
-            "expiresOn": "2019-08-24T14:15:22Z"
-          }
-        },
-        "userLevelPermissions": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "permission": "string",
-            "allowed": true,
-            "userTenantId": "string",
-            "userTenant": {}
-          }
-        ],
-        "userGroups": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "groupId": "string",
-            "userTenantId": "string",
-            "isOwner": true,
-            "group": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "name": "string",
-              "description": "string",
-              "photoUrl": "string",
-              "groupType": "Tenant",
-              "userGroups": [
-                {}
-              ]
-            },
-            "userTenant": {}
-          }
-        ]
-      }
-    ]
-  },
-  "tenant": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "name": "string",
-    "status": 1,
-    "key": "string",
-    "website": "string",
-    "address": "string",
-    "city": "string",
-    "state": "string",
-    "zip": "string",
-    "country": "string",
-    "primaryContactEmail": "string",
-    "allowedDomain": "string",
-    "tenantType": "string",
-    "tenantConfigs": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "configKey": "string",
-        "configValue": {},
-        "tenantId": "string",
-        "tenant": {}
-      }
-    ],
-    "userTenants": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "id": "string",
-        "locale": "string",
-        "status": 12,
-        "userId": "string",
-        "tenantId": "string",
-        "roleId": "string",
-        "user": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "firstName": "string",
-          "lastName": "string",
-          "middleName": "string",
-          "username": "string",
-          "email": "string",
-          "designation": "string",
-          "phone": "string",
-          "authClientIds": "string",
-          "lastLogin": "2019-08-24T14:15:22Z",
-          "photoUrl": "string",
-          "gender": "M",
-          "dob": "2019-08-24T14:15:22Z",
-          "defaultTenantId": "string",
-          "defaultTenant": {},
-          "credentials": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "id": "string",
-            "authProvider": "string",
-            "authId": "string",
-            "authToken": "string",
-            "secretKey": "string",
-            "password": "string",
-            "userId": "string",
-            "user": {}
-          },
-          "userTenants": [
-            {}
-          ]
-        },
-        "tenant": {},
-        "role": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "name": "string",
-          "roleType": 15,
-          "permissions": [
-            "string"
-          ],
-          "allowedClients": [
-            "string"
-          ],
-          "userTenants": [
-            {}
-          ],
-          "createdByUser": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "firstName": "string",
-            "lastName": "string",
-            "middleName": "string",
-            "username": "string",
-            "email": "string",
-            "designation": "string",
-            "phone": "string",
-            "authClientIds": "string",
-            "lastLogin": "string",
-            "photoUrl": "string",
-            "gender": "M",
-            "dob": "2019-08-24T14:15:22Z",
-            "defaultTenantId": "string",
-            "status": 11,
-            "tenantId": "string",
-            "roleId": "string",
-            "tenantName": "string",
-            "tenantKey": "string",
-            "roleName": "string",
-            "roleType": 0,
-            "userTenantId": "string",
-            "expiresOn": "2019-08-24T14:15:22Z"
-          },
-          "modifiedByUser": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "firstName": "string",
-            "lastName": "string",
-            "middleName": "string",
-            "username": "string",
-            "email": "string",
-            "designation": "string",
-            "phone": "string",
-            "authClientIds": "string",
-            "lastLogin": "string",
-            "photoUrl": "string",
-            "gender": "M",
-            "dob": "2019-08-24T14:15:22Z",
-            "defaultTenantId": "string",
-            "status": 11,
-            "tenantId": "string",
-            "roleId": "string",
-            "tenantName": "string",
-            "tenantKey": "string",
-            "roleName": "string",
-            "roleType": 0,
-            "userTenantId": "string",
-            "expiresOn": "2019-08-24T14:15:22Z"
-          }
-        },
-        "userLevelPermissions": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "permission": "string",
-            "allowed": true,
-            "userTenantId": "string",
-            "userTenant": {}
-          }
-        ],
-        "userGroups": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "groupId": "string",
-            "userTenantId": "string",
-            "isOwner": true,
-            "group": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "name": "string",
-              "description": "string",
-              "photoUrl": "string",
-              "groupType": "Tenant",
-              "userGroups": [
-                {}
-              ]
-            },
-            "userTenant": {}
-          }
-        ]
-      }
-    ]
-  },
-  "role": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "name": "string",
-    "roleType": 15,
-    "permissions": [
-      "string"
-    ],
-    "allowedClients": [
-      "string"
-    ],
-    "userTenants": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "id": "string",
-        "locale": "string",
-        "status": 12,
-        "userId": "string",
-        "tenantId": "string",
-        "roleId": "string",
-        "user": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "firstName": "string",
-          "lastName": "string",
-          "middleName": "string",
-          "username": "string",
-          "email": "string",
-          "designation": "string",
-          "phone": "string",
-          "authClientIds": "string",
-          "lastLogin": "2019-08-24T14:15:22Z",
-          "photoUrl": "string",
-          "gender": "M",
-          "dob": "2019-08-24T14:15:22Z",
-          "defaultTenantId": "string",
-          "defaultTenant": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "name": "string",
-            "status": 1,
-            "key": "string",
-            "website": "string",
-            "address": "string",
-            "city": "string",
-            "state": "string",
-            "zip": "string",
-            "country": "string",
-            "primaryContactEmail": "string",
-            "allowedDomain": "string",
-            "tenantType": "string",
-            "tenantConfigs": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "configKey": "string",
-                "configValue": {},
-                "tenantId": "string",
-                "tenant": {}
-              }
-            ],
-            "userTenants": [
-              {}
-            ]
-          },
-          "credentials": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "id": "string",
-            "authProvider": "string",
-            "authId": "string",
-            "authToken": "string",
-            "secretKey": "string",
-            "password": "string",
-            "userId": "string",
-            "user": {}
-          },
-          "userTenants": [
-            {}
-          ]
-        },
-        "tenant": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "name": "string",
-          "status": 1,
-          "key": "string",
-          "website": "string",
-          "address": "string",
-          "city": "string",
-          "state": "string",
-          "zip": "string",
-          "country": "string",
-          "primaryContactEmail": "string",
-          "allowedDomain": "string",
-          "tenantType": "string",
-          "tenantConfigs": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "configKey": "string",
-              "configValue": {},
-              "tenantId": "string",
-              "tenant": {}
-            }
-          ],
-          "userTenants": [
-            {}
-          ]
-        },
-        "role": {},
-        "userLevelPermissions": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "permission": "string",
-            "allowed": true,
-            "userTenantId": "string",
-            "userTenant": {}
-          }
-        ],
-        "userGroups": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "groupId": "string",
-            "userTenantId": "string",
-            "isOwner": true,
-            "group": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "name": "string",
-              "description": "string",
-              "photoUrl": "string",
-              "groupType": "Tenant",
-              "userGroups": [
-                {}
-              ]
-            },
-            "userTenant": {}
-          }
-        ]
-      }
-    ],
-    "createdByUser": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "firstName": "string",
-      "lastName": "string",
-      "middleName": "string",
-      "username": "string",
-      "email": "string",
-      "designation": "string",
-      "phone": "string",
-      "authClientIds": "string",
-      "lastLogin": "string",
-      "photoUrl": "string",
-      "gender": "M",
-      "dob": "2019-08-24T14:15:22Z",
-      "defaultTenantId": "string",
-      "status": 11,
-      "tenantId": "string",
-      "roleId": "string",
-      "tenantName": "string",
-      "tenantKey": "string",
-      "roleName": "string",
-      "roleType": 0,
-      "userTenantId": "string",
-      "expiresOn": "2019-08-24T14:15:22Z"
-    },
-    "modifiedByUser": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "firstName": "string",
-      "lastName": "string",
-      "middleName": "string",
-      "username": "string",
-      "email": "string",
-      "designation": "string",
-      "phone": "string",
-      "authClientIds": "string",
-      "lastLogin": "string",
-      "photoUrl": "string",
-      "gender": "M",
-      "dob": "2019-08-24T14:15:22Z",
-      "defaultTenantId": "string",
-      "status": 11,
-      "tenantId": "string",
-      "roleId": "string",
-      "tenantName": "string",
-      "tenantKey": "string",
-      "roleName": "string",
-      "roleType": 0,
-      "userTenantId": "string",
-      "expiresOn": "2019-08-24T14:15:22Z"
-    }
-  },
-  "userLevelPermissions": [
-    {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "permission": "string",
-      "allowed": true,
-      "userTenantId": "string",
-      "userTenant": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "id": "string",
-        "locale": "string",
-        "status": 12,
-        "userId": "string",
-        "tenantId": "string",
-        "roleId": "string",
-        "user": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "firstName": "string",
-          "lastName": "string",
-          "middleName": "string",
-          "username": "string",
-          "email": "string",
-          "designation": "string",
-          "phone": "string",
-          "authClientIds": "string",
-          "lastLogin": "2019-08-24T14:15:22Z",
-          "photoUrl": "string",
-          "gender": "M",
-          "dob": "2019-08-24T14:15:22Z",
-          "defaultTenantId": "string",
-          "defaultTenant": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "name": "string",
-            "status": 1,
-            "key": "string",
-            "website": "string",
-            "address": "string",
-            "city": "string",
-            "state": "string",
-            "zip": "string",
-            "country": "string",
-            "primaryContactEmail": "string",
-            "allowedDomain": "string",
-            "tenantType": "string",
-            "tenantConfigs": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "configKey": "string",
-                "configValue": {},
-                "tenantId": "string",
-                "tenant": {}
-              }
-            ],
-            "userTenants": [
-              {}
-            ]
-          },
-          "credentials": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "id": "string",
-            "authProvider": "string",
-            "authId": "string",
-            "authToken": "string",
-            "secretKey": "string",
-            "password": "string",
-            "userId": "string",
-            "user": {}
-          },
-          "userTenants": [
-            {}
-          ]
-        },
-        "tenant": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "name": "string",
-          "status": 1,
-          "key": "string",
-          "website": "string",
-          "address": "string",
-          "city": "string",
-          "state": "string",
-          "zip": "string",
-          "country": "string",
-          "primaryContactEmail": "string",
-          "allowedDomain": "string",
-          "tenantType": "string",
-          "tenantConfigs": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "configKey": "string",
-              "configValue": {},
-              "tenantId": "string",
-              "tenant": {}
-            }
-          ],
-          "userTenants": [
-            {}
-          ]
-        },
-        "role": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "name": "string",
-          "roleType": 15,
-          "permissions": [
-            "string"
-          ],
-          "allowedClients": [
-            "string"
-          ],
-          "userTenants": [
-            {}
-          ],
-          "createdByUser": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "firstName": "string",
-            "lastName": "string",
-            "middleName": "string",
-            "username": "string",
-            "email": "string",
-            "designation": "string",
-            "phone": "string",
-            "authClientIds": "string",
-            "lastLogin": "string",
-            "photoUrl": "string",
-            "gender": "M",
-            "dob": "2019-08-24T14:15:22Z",
-            "defaultTenantId": "string",
-            "status": 11,
-            "tenantId": "string",
-            "roleId": "string",
-            "tenantName": "string",
-            "tenantKey": "string",
-            "roleName": "string",
-            "roleType": 0,
-            "userTenantId": "string",
-            "expiresOn": "2019-08-24T14:15:22Z"
-          },
-          "modifiedByUser": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "firstName": "string",
-            "lastName": "string",
-            "middleName": "string",
-            "username": "string",
-            "email": "string",
-            "designation": "string",
-            "phone": "string",
-            "authClientIds": "string",
-            "lastLogin": "string",
-            "photoUrl": "string",
-            "gender": "M",
-            "dob": "2019-08-24T14:15:22Z",
-            "defaultTenantId": "string",
-            "status": 11,
-            "tenantId": "string",
-            "roleId": "string",
-            "tenantName": "string",
-            "tenantKey": "string",
-            "roleName": "string",
-            "roleType": 0,
-            "userTenantId": "string",
-            "expiresOn": "2019-08-24T14:15:22Z"
-          }
-        },
-        "userLevelPermissions": [],
-        "userGroups": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "groupId": "string",
-            "userTenantId": "string",
-            "isOwner": true,
-            "group": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "name": "string",
-              "description": "string",
-              "photoUrl": "string",
-              "groupType": "Tenant",
-              "userGroups": [
-                {}
-              ]
-            },
-            "userTenant": {}
-          }
-        ]
-      }
-    }
-  ],
-  "userGroups": [
-    {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "groupId": "string",
-      "userTenantId": "string",
-      "isOwner": true,
-      "group": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "name": "string",
-        "description": "string",
-        "photoUrl": "string",
-        "groupType": "Tenant",
-        "userGroups": [
-          {}
-        ]
-      },
-      "userTenant": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "id": "string",
-        "locale": "string",
-        "status": 12,
-        "userId": "string",
-        "tenantId": "string",
-        "roleId": "string",
-        "user": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "firstName": "string",
-          "lastName": "string",
-          "middleName": "string",
-          "username": "string",
-          "email": "string",
-          "designation": "string",
-          "phone": "string",
-          "authClientIds": "string",
-          "lastLogin": "2019-08-24T14:15:22Z",
-          "photoUrl": "string",
-          "gender": "M",
-          "dob": "2019-08-24T14:15:22Z",
-          "defaultTenantId": "string",
-          "defaultTenant": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "name": "string",
-            "status": 1,
-            "key": "string",
-            "website": "string",
-            "address": "string",
-            "city": "string",
-            "state": "string",
-            "zip": "string",
-            "country": "string",
-            "primaryContactEmail": "string",
-            "allowedDomain": "string",
-            "tenantType": "string",
-            "tenantConfigs": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "configKey": "string",
-                "configValue": {},
-                "tenantId": "string",
-                "tenant": {}
-              }
-            ],
-            "userTenants": [
-              {}
-            ]
-          },
-          "credentials": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "id": "string",
-            "authProvider": "string",
-            "authId": "string",
-            "authToken": "string",
-            "secretKey": "string",
-            "password": "string",
-            "userId": "string",
-            "user": {}
-          },
-          "userTenants": [
-            {}
-          ]
-        },
-        "tenant": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "name": "string",
-          "status": 1,
-          "key": "string",
-          "website": "string",
-          "address": "string",
-          "city": "string",
-          "state": "string",
-          "zip": "string",
-          "country": "string",
-          "primaryContactEmail": "string",
-          "allowedDomain": "string",
-          "tenantType": "string",
-          "tenantConfigs": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "configKey": "string",
-              "configValue": {},
-              "tenantId": "string",
-              "tenant": {}
-            }
-          ],
-          "userTenants": [
-            {}
-          ]
-        },
-        "role": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "name": "string",
-          "roleType": 15,
-          "permissions": [
-            "string"
-          ],
-          "allowedClients": [
-            "string"
-          ],
-          "userTenants": [
-            {}
-          ],
-          "createdByUser": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "firstName": "string",
-            "lastName": "string",
-            "middleName": "string",
-            "username": "string",
-            "email": "string",
-            "designation": "string",
-            "phone": "string",
-            "authClientIds": "string",
-            "lastLogin": "string",
-            "photoUrl": "string",
-            "gender": "M",
-            "dob": "2019-08-24T14:15:22Z",
-            "defaultTenantId": "string",
-            "status": 11,
-            "tenantId": "string",
-            "roleId": "string",
-            "tenantName": "string",
-            "tenantKey": "string",
-            "roleName": "string",
-            "roleType": 0,
-            "userTenantId": "string",
-            "expiresOn": "2019-08-24T14:15:22Z"
-          },
-          "modifiedByUser": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "firstName": "string",
-            "lastName": "string",
-            "middleName": "string",
-            "username": "string",
-            "email": "string",
-            "designation": "string",
-            "phone": "string",
-            "authClientIds": "string",
-            "lastLogin": "string",
-            "photoUrl": "string",
-            "gender": "M",
-            "dob": "2019-08-24T14:15:22Z",
-            "defaultTenantId": "string",
-            "status": 11,
-            "tenantId": "string",
-            "roleId": "string",
-            "tenantName": "string",
-            "tenantKey": "string",
-            "roleName": "string",
-            "roleType": 0,
-            "userTenantId": "string",
-            "expiresOn": "2019-08-24T14:15:22Z"
-          }
-        },
-        "userLevelPermissions": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "permission": "string",
-            "allowed": true,
-            "userTenantId": "string",
-            "userTenant": {}
-          }
-        ],
-        "userGroups": []
-      }
-    }
-  ]
-}
-
-```
-
-UserTenantWithRelations
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|id|string|false|none|none|
-|locale|string|false|none|none|
-|status|number|false|none|none|
-|userId|string|true|none|none|
-|tenantId|string|true|none|none|
-|roleId|string|true|none|none|
-|user|[UserWithRelations](#schemauserwithrelations)|false|none|This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true })|
-|tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
-|role|[RoleWithRelations](#schemarolewithrelations)|false|none|(tsType: RoleWithRelations, schemaOptions: { includeRelations: true })|
-|userLevelPermissions|[[UserLevelPermissionWithRelations](#schemauserlevelpermissionwithrelations)]|false|none|[(tsType: UserLevelPermissionWithRelations, schemaOptions: { includeRelations: true })]|
-|userGroups|[[UserGroupWithRelations](#schemausergroupwithrelations)]|false|none|[(tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })]|
-
 <h2 id="tocS_UserViewWithRelations">UserViewWithRelations</h2>
 <!-- backwards compatibility -->
 <a id="schemauserviewwithrelations"></a>
@@ -12823,9 +14253,7 @@ UserTenantWithRelations
   "tenantName": "string",
   "tenantKey": "string",
   "roleName": "string",
-  "roleType": 0,
-  "userTenantId": "string",
-  "expiresOn": "2019-08-24T14:15:22Z"
+  "userTenantId": "string"
 }
 
 ```
@@ -12863,9 +14291,7 @@ UserViewWithRelations
 |tenantName|string|true|none|none|
 |tenantKey|string|false|none|none|
 |roleName|string|false|none|none|
-|roleType|number|false|none|none|
 |userTenantId|string|true|none|none|
-|expiresOn|string(date-time)|false|none|none|
 
 #### Enumerated Values
 
@@ -12894,12 +14320,14 @@ UserViewWithRelations
   "id": "string",
   "name": "string",
   "roleType": 15,
+  "description": "string",
   "permissions": [
     "string"
   ],
   "allowedClients": [
     "string"
   ],
+  "tenantId": "string",
   "userTenants": [
     {
       "deleted": true,
@@ -12907,6 +14335,8 @@ UserViewWithRelations
       "deletedBy": "string",
       "createdOn": "2019-08-24T14:15:22Z",
       "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
       "id": "string",
       "locale": "string",
       "status": 12,
@@ -12953,9 +14383,6 @@ UserViewWithRelations
           "state": "string",
           "zip": "string",
           "country": "string",
-          "primaryContactEmail": "string",
-          "allowedDomain": "string",
-          "tenantType": "string",
           "tenantConfigs": [
             {
               "deleted": true,
@@ -12974,6 +14401,124 @@ UserViewWithRelations
           ],
           "userTenants": [
             {}
+          ],
+          "users": [
+            {}
+          ],
+          "roles": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "roleType": 15,
+              "description": "string",
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
+              "tenantId": "string",
+              "userTenants": [],
+              "createdByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              },
+              "modifiedByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              }
+            }
+          ],
+          "groups": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "description": "string",
+              "photoUrl": "string",
+              "tenantId": "string",
+              "userGroups": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "groupId": "string",
+                  "userTenantId": "string",
+                  "group": {},
+                  "userTenant": {}
+                }
+              ]
+            }
           ]
         },
         "credentials": {
@@ -12982,6 +14527,8 @@ UserViewWithRelations
           "deletedBy": "string",
           "createdOn": "2019-08-24T14:15:22Z",
           "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
           "id": "string",
           "authProvider": "string",
           "authId": "string",
@@ -13013,9 +14560,6 @@ UserViewWithRelations
         "state": "string",
         "zip": "string",
         "country": "string",
-        "primaryContactEmail": "string",
-        "allowedDomain": "string",
-        "tenantType": "string",
         "tenantConfigs": [
           {
             "deleted": true,
@@ -13034,6 +14578,167 @@ UserViewWithRelations
         ],
         "userTenants": [
           {}
+        ],
+        "users": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "middleName": "string",
+            "username": "string",
+            "email": "string",
+            "designation": "string",
+            "phone": "string",
+            "authClientIds": "string",
+            "lastLogin": "2019-08-24T14:15:22Z",
+            "photoUrl": "string",
+            "gender": "M",
+            "dob": "2019-08-24T14:15:22Z",
+            "defaultTenantId": "string",
+            "defaultTenant": {},
+            "credentials": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "authProvider": "string",
+              "authId": "string",
+              "authToken": "string",
+              "secretKey": "string",
+              "password": "string",
+              "userId": "string",
+              "user": {}
+            },
+            "userTenants": [
+              {}
+            ]
+          }
+        ],
+        "roles": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "roleType": 15,
+            "description": "string",
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
+            "tenantId": "string",
+            "userTenants": [],
+            "createdByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            },
+            "modifiedByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            }
+          }
+        ],
+        "groups": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "description": "string",
+            "photoUrl": "string",
+            "tenantId": "string",
+            "userGroups": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "groupId": "string",
+                "userTenantId": "string",
+                "group": {},
+                "userTenant": {}
+              }
+            ]
+          }
         ]
       },
       "role": {
@@ -13047,12 +14752,14 @@ UserViewWithRelations
         "id": "string",
         "name": "string",
         "roleType": 15,
+        "description": "string",
         "permissions": [
           "string"
         ],
         "allowedClients": [
           "string"
         ],
+        "tenantId": "string",
         "userTenants": [],
         "createdByUser": {
           "deleted": true,
@@ -13082,9 +14789,7 @@ UserViewWithRelations
           "tenantName": "string",
           "tenantKey": "string",
           "roleName": "string",
-          "roleType": 0,
-          "userTenantId": "string",
-          "expiresOn": "2019-08-24T14:15:22Z"
+          "userTenantId": "string"
         },
         "modifiedByUser": {
           "deleted": true,
@@ -13114,9 +14819,7 @@ UserViewWithRelations
           "tenantName": "string",
           "tenantKey": "string",
           "roleName": "string",
-          "roleType": 0,
-          "userTenantId": "string",
-          "expiresOn": "2019-08-24T14:15:22Z"
+          "userTenantId": "string"
         }
       },
       "userLevelPermissions": [
@@ -13147,7 +14850,6 @@ UserViewWithRelations
           "id": "string",
           "groupId": "string",
           "userTenantId": "string",
-          "isOwner": true,
           "group": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -13160,11 +14862,27 @@ UserViewWithRelations
             "name": "string",
             "description": "string",
             "photoUrl": "string",
-            "groupType": "Tenant",
+            "tenantId": "string",
             "userGroups": [
               {}
             ]
           },
+          "userTenant": {}
+        }
+      ],
+      "userInvitations": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "expiresOn": "2019-08-24T14:15:22Z",
+          "token": "string",
+          "userTenantId": "string",
           "userTenant": {}
         }
       ]
@@ -13198,9 +14916,7 @@ UserViewWithRelations
     "tenantName": "string",
     "tenantKey": "string",
     "roleName": "string",
-    "roleType": 0,
-    "userTenantId": "string",
-    "expiresOn": "2019-08-24T14:15:22Z"
+    "userTenantId": "string"
   },
   "modifiedByUser": {
     "deleted": true,
@@ -13230,9 +14946,7 @@ UserViewWithRelations
     "tenantName": "string",
     "tenantKey": "string",
     "roleName": "string",
-    "roleType": 0,
-    "userTenantId": "string",
-    "expiresOn": "2019-08-24T14:15:22Z"
+    "userTenantId": "string"
   }
 }
 
@@ -13253,19 +14967,6233 @@ RoleWithRelations
 |modifiedBy|string|false|none|none|
 |id|string|false|none|none|
 |name|string|true|none|none|
-|roleType|number|true|none|none|
+|roleType|number|false|none|none|
+|description|string|false|none|none|
 |permissions|[string]|false|none|none|
 |allowedClients|[string]|false|none|none|
+|tenantId|string|true|none|none|
 |userTenants|[[UserTenantWithRelations](#schemausertenantwithrelations)]|false|none|[(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })]|
 |createdByUser|[UserViewWithRelations](#schemauserviewwithrelations)|false|none|User details view in DB (tsType: UserViewWithRelations, schemaOptions: { includeRelations: true })|
 |modifiedByUser|[UserViewWithRelations](#schemauserviewwithrelations)|false|none|User details view in DB (tsType: UserViewWithRelations, schemaOptions: { includeRelations: true })|
 
-<h2 id="tocS_RolePartial">RolePartial</h2>
+<h2 id="tocS_UserLevelPermissionWithRelations">UserLevelPermissionWithRelations</h2>
 <!-- backwards compatibility -->
-<a id="schemarolepartial"></a>
-<a id="schema_RolePartial"></a>
-<a id="tocSrolepartial"></a>
-<a id="tocsrolepartial"></a>
+<a id="schemauserlevelpermissionwithrelations"></a>
+<a id="schema_UserLevelPermissionWithRelations"></a>
+<a id="tocSuserlevelpermissionwithrelations"></a>
+<a id="tocsuserlevelpermissionwithrelations"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "permission": "string",
+  "allowed": true,
+  "userTenantId": "string",
+  "userTenant": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "locale": "string",
+    "status": 12,
+    "userId": "string",
+    "tenantId": "string",
+    "roleId": "string",
+    "user": {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "firstName": "string",
+      "lastName": "string",
+      "middleName": "string",
+      "username": "string",
+      "email": "string",
+      "designation": "string",
+      "phone": "string",
+      "authClientIds": "string",
+      "lastLogin": "2019-08-24T14:15:22Z",
+      "photoUrl": "string",
+      "gender": "M",
+      "dob": "2019-08-24T14:15:22Z",
+      "defaultTenantId": "string",
+      "defaultTenant": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "name": "string",
+        "status": 1,
+        "key": "string",
+        "website": "string",
+        "address": "string",
+        "city": "string",
+        "state": "string",
+        "zip": "string",
+        "country": "string",
+        "tenantConfigs": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "configKey": "string",
+            "configValue": {},
+            "tenantId": "string",
+            "tenant": {}
+          }
+        ],
+        "userTenants": [
+          {}
+        ],
+        "users": [
+          {}
+        ],
+        "roles": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "roleType": 15,
+            "description": "string",
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
+            "tenantId": "string",
+            "userTenants": [
+              {}
+            ],
+            "createdByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            },
+            "modifiedByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            }
+          }
+        ],
+        "groups": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "description": "string",
+            "photoUrl": "string",
+            "tenantId": "string",
+            "userGroups": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "groupId": "string",
+                "userTenantId": "string",
+                "group": {},
+                "userTenant": {}
+              }
+            ]
+          }
+        ]
+      },
+      "credentials": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "authProvider": "string",
+        "authId": "string",
+        "authToken": "string",
+        "secretKey": "string",
+        "password": "string",
+        "userId": "string",
+        "user": {}
+      },
+      "userTenants": [
+        {}
+      ]
+    },
+    "tenant": {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "name": "string",
+      "status": 1,
+      "key": "string",
+      "website": "string",
+      "address": "string",
+      "city": "string",
+      "state": "string",
+      "zip": "string",
+      "country": "string",
+      "tenantConfigs": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "configKey": "string",
+          "configValue": {},
+          "tenantId": "string",
+          "tenant": {}
+        }
+      ],
+      "userTenants": [
+        {}
+      ],
+      "users": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "firstName": "string",
+          "lastName": "string",
+          "middleName": "string",
+          "username": "string",
+          "email": "string",
+          "designation": "string",
+          "phone": "string",
+          "authClientIds": "string",
+          "lastLogin": "2019-08-24T14:15:22Z",
+          "photoUrl": "string",
+          "gender": "M",
+          "dob": "2019-08-24T14:15:22Z",
+          "defaultTenantId": "string",
+          "defaultTenant": {},
+          "credentials": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "authProvider": "string",
+            "authId": "string",
+            "authToken": "string",
+            "secretKey": "string",
+            "password": "string",
+            "userId": "string",
+            "user": {}
+          },
+          "userTenants": [
+            {}
+          ]
+        }
+      ],
+      "roles": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "roleType": 15,
+          "description": "string",
+          "permissions": [
+            "string"
+          ],
+          "allowedClients": [
+            "string"
+          ],
+          "tenantId": "string",
+          "userTenants": [
+            {}
+          ],
+          "createdByUser": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "middleName": "string",
+            "username": "string",
+            "email": "string",
+            "designation": "string",
+            "phone": "string",
+            "authClientIds": "string",
+            "lastLogin": "string",
+            "photoUrl": "string",
+            "gender": "M",
+            "dob": "2019-08-24T14:15:22Z",
+            "defaultTenantId": "string",
+            "status": 11,
+            "tenantId": "string",
+            "roleId": "string",
+            "tenantName": "string",
+            "tenantKey": "string",
+            "roleName": "string",
+            "userTenantId": "string"
+          },
+          "modifiedByUser": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "middleName": "string",
+            "username": "string",
+            "email": "string",
+            "designation": "string",
+            "phone": "string",
+            "authClientIds": "string",
+            "lastLogin": "string",
+            "photoUrl": "string",
+            "gender": "M",
+            "dob": "2019-08-24T14:15:22Z",
+            "defaultTenantId": "string",
+            "status": 11,
+            "tenantId": "string",
+            "roleId": "string",
+            "tenantName": "string",
+            "tenantKey": "string",
+            "roleName": "string",
+            "userTenantId": "string"
+          }
+        }
+      ],
+      "groups": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "description": "string",
+          "photoUrl": "string",
+          "tenantId": "string",
+          "userGroups": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "groupId": "string",
+              "userTenantId": "string",
+              "group": {},
+              "userTenant": {}
+            }
+          ]
+        }
+      ]
+    },
+    "role": {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "name": "string",
+      "roleType": 15,
+      "description": "string",
+      "permissions": [
+        "string"
+      ],
+      "allowedClients": [
+        "string"
+      ],
+      "tenantId": "string",
+      "userTenants": [
+        {}
+      ],
+      "createdByUser": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "firstName": "string",
+        "lastName": "string",
+        "middleName": "string",
+        "username": "string",
+        "email": "string",
+        "designation": "string",
+        "phone": "string",
+        "authClientIds": "string",
+        "lastLogin": "string",
+        "photoUrl": "string",
+        "gender": "M",
+        "dob": "2019-08-24T14:15:22Z",
+        "defaultTenantId": "string",
+        "status": 11,
+        "tenantId": "string",
+        "roleId": "string",
+        "tenantName": "string",
+        "tenantKey": "string",
+        "roleName": "string",
+        "userTenantId": "string"
+      },
+      "modifiedByUser": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "firstName": "string",
+        "lastName": "string",
+        "middleName": "string",
+        "username": "string",
+        "email": "string",
+        "designation": "string",
+        "phone": "string",
+        "authClientIds": "string",
+        "lastLogin": "string",
+        "photoUrl": "string",
+        "gender": "M",
+        "dob": "2019-08-24T14:15:22Z",
+        "defaultTenantId": "string",
+        "status": 11,
+        "tenantId": "string",
+        "roleId": "string",
+        "tenantName": "string",
+        "tenantKey": "string",
+        "roleName": "string",
+        "userTenantId": "string"
+      }
+    },
+    "userLevelPermissions": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "permission": "string",
+        "allowed": true,
+        "userTenantId": "string",
+        "userTenant": {}
+      }
+    ],
+    "userGroups": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "groupId": "string",
+        "userTenantId": "string",
+        "group": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "description": "string",
+          "photoUrl": "string",
+          "tenantId": "string",
+          "userGroups": [
+            {}
+          ]
+        },
+        "userTenant": {}
+      }
+    ],
+    "userInvitations": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "expiresOn": "2019-08-24T14:15:22Z",
+        "token": "string",
+        "userTenantId": "string",
+        "userTenant": {}
+      }
+    ]
+  }
+}
+
+```
+
+UserLevelPermissionWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|permission|string|true|none|none|
+|allowed|boolean|true|none|none|
+|userTenantId|string|true|none|none|
+|userTenant|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
+
+<h2 id="tocS_UserGroupWithRelations">UserGroupWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemausergroupwithrelations"></a>
+<a id="schema_UserGroupWithRelations"></a>
+<a id="tocSusergroupwithrelations"></a>
+<a id="tocsusergroupwithrelations"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "groupId": "string",
+  "userTenantId": "string",
+  "group": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "name": "string",
+    "description": "string",
+    "photoUrl": "string",
+    "tenantId": "string",
+    "userGroups": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "groupId": "string",
+        "userTenantId": "string",
+        "group": {},
+        "userTenant": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "locale": "string",
+          "status": 12,
+          "userId": "string",
+          "tenantId": "string",
+          "roleId": "string",
+          "user": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "middleName": "string",
+            "username": "string",
+            "email": "string",
+            "designation": "string",
+            "phone": "string",
+            "authClientIds": "string",
+            "lastLogin": "2019-08-24T14:15:22Z",
+            "photoUrl": "string",
+            "gender": "M",
+            "dob": "2019-08-24T14:15:22Z",
+            "defaultTenantId": "string",
+            "defaultTenant": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "status": 1,
+              "key": "string",
+              "website": "string",
+              "address": "string",
+              "city": "string",
+              "state": "string",
+              "zip": "string",
+              "country": "string",
+              "tenantConfigs": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "configKey": "string",
+                  "configValue": {},
+                  "tenantId": "string",
+                  "tenant": {}
+                }
+              ],
+              "userTenants": [
+                {}
+              ],
+              "users": [
+                {}
+              ],
+              "roles": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "roleType": 15,
+                  "description": "string",
+                  "permissions": [
+                    "string"
+                  ],
+                  "allowedClients": [
+                    "string"
+                  ],
+                  "tenantId": "string",
+                  "userTenants": [
+                    {}
+                  ],
+                  "createdByUser": {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "firstName": "string",
+                    "lastName": "string",
+                    "middleName": "string",
+                    "username": "string",
+                    "email": "string",
+                    "designation": "string",
+                    "phone": "string",
+                    "authClientIds": "string",
+                    "lastLogin": "string",
+                    "photoUrl": "string",
+                    "gender": "M",
+                    "dob": "2019-08-24T14:15:22Z",
+                    "defaultTenantId": "string",
+                    "status": 11,
+                    "tenantId": "string",
+                    "roleId": "string",
+                    "tenantName": "string",
+                    "tenantKey": "string",
+                    "roleName": "string",
+                    "userTenantId": "string"
+                  },
+                  "modifiedByUser": {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "firstName": "string",
+                    "lastName": "string",
+                    "middleName": "string",
+                    "username": "string",
+                    "email": "string",
+                    "designation": "string",
+                    "phone": "string",
+                    "authClientIds": "string",
+                    "lastLogin": "string",
+                    "photoUrl": "string",
+                    "gender": "M",
+                    "dob": "2019-08-24T14:15:22Z",
+                    "defaultTenantId": "string",
+                    "status": 11,
+                    "tenantId": "string",
+                    "roleId": "string",
+                    "tenantName": "string",
+                    "tenantKey": "string",
+                    "roleName": "string",
+                    "userTenantId": "string"
+                  }
+                }
+              ],
+              "groups": [
+                {}
+              ]
+            },
+            "credentials": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "authProvider": "string",
+              "authId": "string",
+              "authToken": "string",
+              "secretKey": "string",
+              "password": "string",
+              "userId": "string",
+              "user": {}
+            },
+            "userTenants": [
+              {}
+            ]
+          },
+          "tenant": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "status": 1,
+            "key": "string",
+            "website": "string",
+            "address": "string",
+            "city": "string",
+            "state": "string",
+            "zip": "string",
+            "country": "string",
+            "tenantConfigs": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "configKey": "string",
+                "configValue": {},
+                "tenantId": "string",
+                "tenant": {}
+              }
+            ],
+            "userTenants": [
+              {}
+            ],
+            "users": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "2019-08-24T14:15:22Z",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "defaultTenant": {},
+                "credentials": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "authProvider": "string",
+                  "authId": "string",
+                  "authToken": "string",
+                  "secretKey": "string",
+                  "password": "string",
+                  "userId": "string",
+                  "user": {}
+                },
+                "userTenants": [
+                  {}
+                ]
+              }
+            ],
+            "roles": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "roleType": 15,
+                "description": "string",
+                "permissions": [
+                  "string"
+                ],
+                "allowedClients": [
+                  "string"
+                ],
+                "tenantId": "string",
+                "userTenants": [
+                  {}
+                ],
+                "createdByUser": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "middleName": "string",
+                  "username": "string",
+                  "email": "string",
+                  "designation": "string",
+                  "phone": "string",
+                  "authClientIds": "string",
+                  "lastLogin": "string",
+                  "photoUrl": "string",
+                  "gender": "M",
+                  "dob": "2019-08-24T14:15:22Z",
+                  "defaultTenantId": "string",
+                  "status": 11,
+                  "tenantId": "string",
+                  "roleId": "string",
+                  "tenantName": "string",
+                  "tenantKey": "string",
+                  "roleName": "string",
+                  "userTenantId": "string"
+                },
+                "modifiedByUser": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "middleName": "string",
+                  "username": "string",
+                  "email": "string",
+                  "designation": "string",
+                  "phone": "string",
+                  "authClientIds": "string",
+                  "lastLogin": "string",
+                  "photoUrl": "string",
+                  "gender": "M",
+                  "dob": "2019-08-24T14:15:22Z",
+                  "defaultTenantId": "string",
+                  "status": 11,
+                  "tenantId": "string",
+                  "roleId": "string",
+                  "tenantName": "string",
+                  "tenantKey": "string",
+                  "roleName": "string",
+                  "userTenantId": "string"
+                }
+              }
+            ],
+            "groups": [
+              {}
+            ]
+          },
+          "role": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "roleType": 15,
+            "description": "string",
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
+            "tenantId": "string",
+            "userTenants": [
+              {}
+            ],
+            "createdByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            },
+            "modifiedByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            }
+          },
+          "userLevelPermissions": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "permission": "string",
+              "allowed": true,
+              "userTenantId": "string",
+              "userTenant": {}
+            }
+          ],
+          "userGroups": [
+            {}
+          ],
+          "userInvitations": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "expiresOn": "2019-08-24T14:15:22Z",
+              "token": "string",
+              "userTenantId": "string",
+              "userTenant": {}
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "userTenant": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "locale": "string",
+    "status": 12,
+    "userId": "string",
+    "tenantId": "string",
+    "roleId": "string",
+    "user": {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "firstName": "string",
+      "lastName": "string",
+      "middleName": "string",
+      "username": "string",
+      "email": "string",
+      "designation": "string",
+      "phone": "string",
+      "authClientIds": "string",
+      "lastLogin": "2019-08-24T14:15:22Z",
+      "photoUrl": "string",
+      "gender": "M",
+      "dob": "2019-08-24T14:15:22Z",
+      "defaultTenantId": "string",
+      "defaultTenant": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "name": "string",
+        "status": 1,
+        "key": "string",
+        "website": "string",
+        "address": "string",
+        "city": "string",
+        "state": "string",
+        "zip": "string",
+        "country": "string",
+        "tenantConfigs": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "configKey": "string",
+            "configValue": {},
+            "tenantId": "string",
+            "tenant": {}
+          }
+        ],
+        "userTenants": [
+          {}
+        ],
+        "users": [
+          {}
+        ],
+        "roles": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "roleType": 15,
+            "description": "string",
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
+            "tenantId": "string",
+            "userTenants": [
+              {}
+            ],
+            "createdByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            },
+            "modifiedByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            }
+          }
+        ],
+        "groups": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "description": "string",
+            "photoUrl": "string",
+            "tenantId": "string",
+            "userGroups": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "groupId": "string",
+                "userTenantId": "string",
+                "group": {},
+                "userTenant": {}
+              }
+            ]
+          }
+        ]
+      },
+      "credentials": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "authProvider": "string",
+        "authId": "string",
+        "authToken": "string",
+        "secretKey": "string",
+        "password": "string",
+        "userId": "string",
+        "user": {}
+      },
+      "userTenants": [
+        {}
+      ]
+    },
+    "tenant": {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "name": "string",
+      "status": 1,
+      "key": "string",
+      "website": "string",
+      "address": "string",
+      "city": "string",
+      "state": "string",
+      "zip": "string",
+      "country": "string",
+      "tenantConfigs": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "configKey": "string",
+          "configValue": {},
+          "tenantId": "string",
+          "tenant": {}
+        }
+      ],
+      "userTenants": [
+        {}
+      ],
+      "users": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "firstName": "string",
+          "lastName": "string",
+          "middleName": "string",
+          "username": "string",
+          "email": "string",
+          "designation": "string",
+          "phone": "string",
+          "authClientIds": "string",
+          "lastLogin": "2019-08-24T14:15:22Z",
+          "photoUrl": "string",
+          "gender": "M",
+          "dob": "2019-08-24T14:15:22Z",
+          "defaultTenantId": "string",
+          "defaultTenant": {},
+          "credentials": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "authProvider": "string",
+            "authId": "string",
+            "authToken": "string",
+            "secretKey": "string",
+            "password": "string",
+            "userId": "string",
+            "user": {}
+          },
+          "userTenants": [
+            {}
+          ]
+        }
+      ],
+      "roles": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "roleType": 15,
+          "description": "string",
+          "permissions": [
+            "string"
+          ],
+          "allowedClients": [
+            "string"
+          ],
+          "tenantId": "string",
+          "userTenants": [
+            {}
+          ],
+          "createdByUser": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "middleName": "string",
+            "username": "string",
+            "email": "string",
+            "designation": "string",
+            "phone": "string",
+            "authClientIds": "string",
+            "lastLogin": "string",
+            "photoUrl": "string",
+            "gender": "M",
+            "dob": "2019-08-24T14:15:22Z",
+            "defaultTenantId": "string",
+            "status": 11,
+            "tenantId": "string",
+            "roleId": "string",
+            "tenantName": "string",
+            "tenantKey": "string",
+            "roleName": "string",
+            "userTenantId": "string"
+          },
+          "modifiedByUser": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "middleName": "string",
+            "username": "string",
+            "email": "string",
+            "designation": "string",
+            "phone": "string",
+            "authClientIds": "string",
+            "lastLogin": "string",
+            "photoUrl": "string",
+            "gender": "M",
+            "dob": "2019-08-24T14:15:22Z",
+            "defaultTenantId": "string",
+            "status": 11,
+            "tenantId": "string",
+            "roleId": "string",
+            "tenantName": "string",
+            "tenantKey": "string",
+            "roleName": "string",
+            "userTenantId": "string"
+          }
+        }
+      ],
+      "groups": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "description": "string",
+          "photoUrl": "string",
+          "tenantId": "string",
+          "userGroups": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "groupId": "string",
+              "userTenantId": "string",
+              "group": {},
+              "userTenant": {}
+            }
+          ]
+        }
+      ]
+    },
+    "role": {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "name": "string",
+      "roleType": 15,
+      "description": "string",
+      "permissions": [
+        "string"
+      ],
+      "allowedClients": [
+        "string"
+      ],
+      "tenantId": "string",
+      "userTenants": [
+        {}
+      ],
+      "createdByUser": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "firstName": "string",
+        "lastName": "string",
+        "middleName": "string",
+        "username": "string",
+        "email": "string",
+        "designation": "string",
+        "phone": "string",
+        "authClientIds": "string",
+        "lastLogin": "string",
+        "photoUrl": "string",
+        "gender": "M",
+        "dob": "2019-08-24T14:15:22Z",
+        "defaultTenantId": "string",
+        "status": 11,
+        "tenantId": "string",
+        "roleId": "string",
+        "tenantName": "string",
+        "tenantKey": "string",
+        "roleName": "string",
+        "userTenantId": "string"
+      },
+      "modifiedByUser": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "firstName": "string",
+        "lastName": "string",
+        "middleName": "string",
+        "username": "string",
+        "email": "string",
+        "designation": "string",
+        "phone": "string",
+        "authClientIds": "string",
+        "lastLogin": "string",
+        "photoUrl": "string",
+        "gender": "M",
+        "dob": "2019-08-24T14:15:22Z",
+        "defaultTenantId": "string",
+        "status": 11,
+        "tenantId": "string",
+        "roleId": "string",
+        "tenantName": "string",
+        "tenantKey": "string",
+        "roleName": "string",
+        "userTenantId": "string"
+      }
+    },
+    "userLevelPermissions": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "permission": "string",
+        "allowed": true,
+        "userTenantId": "string",
+        "userTenant": {}
+      }
+    ],
+    "userGroups": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "groupId": "string",
+        "userTenantId": "string",
+        "group": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "description": "string",
+          "photoUrl": "string",
+          "tenantId": "string",
+          "userGroups": [
+            {}
+          ]
+        },
+        "userTenant": {}
+      }
+    ],
+    "userInvitations": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "expiresOn": "2019-08-24T14:15:22Z",
+        "token": "string",
+        "userTenantId": "string",
+        "userTenant": {}
+      }
+    ]
+  }
+}
+
+```
+
+UserGroupWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|groupId|string|true|none|none|
+|userTenantId|string|true|none|none|
+|group|[GroupWithRelations](#schemagroupwithrelations)|false|none|(tsType: GroupWithRelations, schemaOptions: { includeRelations: true })|
+|userTenant|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
+
+<h2 id="tocS_UserInvitationWithRelations">UserInvitationWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemauserinvitationwithrelations"></a>
+<a id="schema_UserInvitationWithRelations"></a>
+<a id="tocSuserinvitationwithrelations"></a>
+<a id="tocsuserinvitationwithrelations"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "expiresOn": "2019-08-24T14:15:22Z",
+  "token": "string",
+  "userTenantId": "string",
+  "userTenant": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "locale": "string",
+    "status": 12,
+    "userId": "string",
+    "tenantId": "string",
+    "roleId": "string",
+    "user": {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "firstName": "string",
+      "lastName": "string",
+      "middleName": "string",
+      "username": "string",
+      "email": "string",
+      "designation": "string",
+      "phone": "string",
+      "authClientIds": "string",
+      "lastLogin": "2019-08-24T14:15:22Z",
+      "photoUrl": "string",
+      "gender": "M",
+      "dob": "2019-08-24T14:15:22Z",
+      "defaultTenantId": "string",
+      "defaultTenant": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "name": "string",
+        "status": 1,
+        "key": "string",
+        "website": "string",
+        "address": "string",
+        "city": "string",
+        "state": "string",
+        "zip": "string",
+        "country": "string",
+        "tenantConfigs": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "configKey": "string",
+            "configValue": {},
+            "tenantId": "string",
+            "tenant": {}
+          }
+        ],
+        "userTenants": [
+          {}
+        ],
+        "users": [
+          {}
+        ],
+        "roles": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "roleType": 15,
+            "description": "string",
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
+            "tenantId": "string",
+            "userTenants": [
+              {}
+            ],
+            "createdByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            },
+            "modifiedByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            }
+          }
+        ],
+        "groups": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "description": "string",
+            "photoUrl": "string",
+            "tenantId": "string",
+            "userGroups": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "groupId": "string",
+                "userTenantId": "string",
+                "group": {},
+                "userTenant": {}
+              }
+            ]
+          }
+        ]
+      },
+      "credentials": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "authProvider": "string",
+        "authId": "string",
+        "authToken": "string",
+        "secretKey": "string",
+        "password": "string",
+        "userId": "string",
+        "user": {}
+      },
+      "userTenants": [
+        {}
+      ]
+    },
+    "tenant": {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "name": "string",
+      "status": 1,
+      "key": "string",
+      "website": "string",
+      "address": "string",
+      "city": "string",
+      "state": "string",
+      "zip": "string",
+      "country": "string",
+      "tenantConfigs": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "configKey": "string",
+          "configValue": {},
+          "tenantId": "string",
+          "tenant": {}
+        }
+      ],
+      "userTenants": [
+        {}
+      ],
+      "users": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "firstName": "string",
+          "lastName": "string",
+          "middleName": "string",
+          "username": "string",
+          "email": "string",
+          "designation": "string",
+          "phone": "string",
+          "authClientIds": "string",
+          "lastLogin": "2019-08-24T14:15:22Z",
+          "photoUrl": "string",
+          "gender": "M",
+          "dob": "2019-08-24T14:15:22Z",
+          "defaultTenantId": "string",
+          "defaultTenant": {},
+          "credentials": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "authProvider": "string",
+            "authId": "string",
+            "authToken": "string",
+            "secretKey": "string",
+            "password": "string",
+            "userId": "string",
+            "user": {}
+          },
+          "userTenants": [
+            {}
+          ]
+        }
+      ],
+      "roles": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "roleType": 15,
+          "description": "string",
+          "permissions": [
+            "string"
+          ],
+          "allowedClients": [
+            "string"
+          ],
+          "tenantId": "string",
+          "userTenants": [
+            {}
+          ],
+          "createdByUser": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "middleName": "string",
+            "username": "string",
+            "email": "string",
+            "designation": "string",
+            "phone": "string",
+            "authClientIds": "string",
+            "lastLogin": "string",
+            "photoUrl": "string",
+            "gender": "M",
+            "dob": "2019-08-24T14:15:22Z",
+            "defaultTenantId": "string",
+            "status": 11,
+            "tenantId": "string",
+            "roleId": "string",
+            "tenantName": "string",
+            "tenantKey": "string",
+            "roleName": "string",
+            "userTenantId": "string"
+          },
+          "modifiedByUser": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "middleName": "string",
+            "username": "string",
+            "email": "string",
+            "designation": "string",
+            "phone": "string",
+            "authClientIds": "string",
+            "lastLogin": "string",
+            "photoUrl": "string",
+            "gender": "M",
+            "dob": "2019-08-24T14:15:22Z",
+            "defaultTenantId": "string",
+            "status": 11,
+            "tenantId": "string",
+            "roleId": "string",
+            "tenantName": "string",
+            "tenantKey": "string",
+            "roleName": "string",
+            "userTenantId": "string"
+          }
+        }
+      ],
+      "groups": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "description": "string",
+          "photoUrl": "string",
+          "tenantId": "string",
+          "userGroups": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "groupId": "string",
+              "userTenantId": "string",
+              "group": {},
+              "userTenant": {}
+            }
+          ]
+        }
+      ]
+    },
+    "role": {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "name": "string",
+      "roleType": 15,
+      "description": "string",
+      "permissions": [
+        "string"
+      ],
+      "allowedClients": [
+        "string"
+      ],
+      "tenantId": "string",
+      "userTenants": [
+        {}
+      ],
+      "createdByUser": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "firstName": "string",
+        "lastName": "string",
+        "middleName": "string",
+        "username": "string",
+        "email": "string",
+        "designation": "string",
+        "phone": "string",
+        "authClientIds": "string",
+        "lastLogin": "string",
+        "photoUrl": "string",
+        "gender": "M",
+        "dob": "2019-08-24T14:15:22Z",
+        "defaultTenantId": "string",
+        "status": 11,
+        "tenantId": "string",
+        "roleId": "string",
+        "tenantName": "string",
+        "tenantKey": "string",
+        "roleName": "string",
+        "userTenantId": "string"
+      },
+      "modifiedByUser": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "firstName": "string",
+        "lastName": "string",
+        "middleName": "string",
+        "username": "string",
+        "email": "string",
+        "designation": "string",
+        "phone": "string",
+        "authClientIds": "string",
+        "lastLogin": "string",
+        "photoUrl": "string",
+        "gender": "M",
+        "dob": "2019-08-24T14:15:22Z",
+        "defaultTenantId": "string",
+        "status": 11,
+        "tenantId": "string",
+        "roleId": "string",
+        "tenantName": "string",
+        "tenantKey": "string",
+        "roleName": "string",
+        "userTenantId": "string"
+      }
+    },
+    "userLevelPermissions": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "permission": "string",
+        "allowed": true,
+        "userTenantId": "string",
+        "userTenant": {}
+      }
+    ],
+    "userGroups": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "groupId": "string",
+        "userTenantId": "string",
+        "group": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "description": "string",
+          "photoUrl": "string",
+          "tenantId": "string",
+          "userGroups": [
+            {}
+          ]
+        },
+        "userTenant": {}
+      }
+    ],
+    "userInvitations": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "expiresOn": "2019-08-24T14:15:22Z",
+        "token": "string",
+        "userTenantId": "string",
+        "userTenant": {}
+      }
+    ]
+  }
+}
+
+```
+
+UserInvitationWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|expiresOn|string(date-time)|false|none|none|
+|token|string|false|none|none|
+|userTenantId|string|true|none|none|
+|userTenant|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
+
+<h2 id="tocS_UserTenantWithRelations">UserTenantWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemausertenantwithrelations"></a>
+<a id="schema_UserTenantWithRelations"></a>
+<a id="tocSusertenantwithrelations"></a>
+<a id="tocsusertenantwithrelations"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "locale": "string",
+  "status": 12,
+  "userId": "string",
+  "tenantId": "string",
+  "roleId": "string",
+  "user": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "firstName": "string",
+    "lastName": "string",
+    "middleName": "string",
+    "username": "string",
+    "email": "string",
+    "designation": "string",
+    "phone": "string",
+    "authClientIds": "string",
+    "lastLogin": "2019-08-24T14:15:22Z",
+    "photoUrl": "string",
+    "gender": "M",
+    "dob": "2019-08-24T14:15:22Z",
+    "defaultTenantId": "string",
+    "defaultTenant": {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "name": "string",
+      "status": 1,
+      "key": "string",
+      "website": "string",
+      "address": "string",
+      "city": "string",
+      "state": "string",
+      "zip": "string",
+      "country": "string",
+      "tenantConfigs": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "configKey": "string",
+          "configValue": {},
+          "tenantId": "string",
+          "tenant": {}
+        }
+      ],
+      "userTenants": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "locale": "string",
+          "status": 12,
+          "userId": "string",
+          "tenantId": "string",
+          "roleId": "string",
+          "user": {},
+          "tenant": {},
+          "role": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "roleType": 15,
+            "description": "string",
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
+            "tenantId": "string",
+            "userTenants": [
+              {}
+            ],
+            "createdByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            },
+            "modifiedByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            }
+          },
+          "userLevelPermissions": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "permission": "string",
+              "allowed": true,
+              "userTenantId": "string",
+              "userTenant": {}
+            }
+          ],
+          "userGroups": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "groupId": "string",
+              "userTenantId": "string",
+              "group": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "description": "string",
+                "photoUrl": "string",
+                "tenantId": "string",
+                "userGroups": [
+                  {}
+                ]
+              },
+              "userTenant": {}
+            }
+          ],
+          "userInvitations": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "expiresOn": "2019-08-24T14:15:22Z",
+              "token": "string",
+              "userTenantId": "string",
+              "userTenant": {}
+            }
+          ]
+        }
+      ],
+      "users": [
+        {}
+      ],
+      "roles": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "roleType": 15,
+          "description": "string",
+          "permissions": [
+            "string"
+          ],
+          "allowedClients": [
+            "string"
+          ],
+          "tenantId": "string",
+          "userTenants": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "locale": "string",
+              "status": 12,
+              "userId": "string",
+              "tenantId": "string",
+              "roleId": "string",
+              "user": {},
+              "tenant": {},
+              "role": {},
+              "userLevelPermissions": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "permission": "string",
+                  "allowed": true,
+                  "userTenantId": "string",
+                  "userTenant": {}
+                }
+              ],
+              "userGroups": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "groupId": "string",
+                  "userTenantId": "string",
+                  "group": {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "name": "string",
+                    "description": "string",
+                    "photoUrl": "string",
+                    "tenantId": "string",
+                    "userGroups": []
+                  },
+                  "userTenant": {}
+                }
+              ],
+              "userInvitations": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "expiresOn": "2019-08-24T14:15:22Z",
+                  "token": "string",
+                  "userTenantId": "string",
+                  "userTenant": {}
+                }
+              ]
+            }
+          ],
+          "createdByUser": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "middleName": "string",
+            "username": "string",
+            "email": "string",
+            "designation": "string",
+            "phone": "string",
+            "authClientIds": "string",
+            "lastLogin": "string",
+            "photoUrl": "string",
+            "gender": "M",
+            "dob": "2019-08-24T14:15:22Z",
+            "defaultTenantId": "string",
+            "status": 11,
+            "tenantId": "string",
+            "roleId": "string",
+            "tenantName": "string",
+            "tenantKey": "string",
+            "roleName": "string",
+            "userTenantId": "string"
+          },
+          "modifiedByUser": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "middleName": "string",
+            "username": "string",
+            "email": "string",
+            "designation": "string",
+            "phone": "string",
+            "authClientIds": "string",
+            "lastLogin": "string",
+            "photoUrl": "string",
+            "gender": "M",
+            "dob": "2019-08-24T14:15:22Z",
+            "defaultTenantId": "string",
+            "status": 11,
+            "tenantId": "string",
+            "roleId": "string",
+            "tenantName": "string",
+            "tenantKey": "string",
+            "roleName": "string",
+            "userTenantId": "string"
+          }
+        }
+      ],
+      "groups": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "description": "string",
+          "photoUrl": "string",
+          "tenantId": "string",
+          "userGroups": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "groupId": "string",
+              "userTenantId": "string",
+              "group": {},
+              "userTenant": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "locale": "string",
+                "status": 12,
+                "userId": "string",
+                "tenantId": "string",
+                "roleId": "string",
+                "user": {},
+                "tenant": {},
+                "role": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "roleType": 15,
+                  "description": "string",
+                  "permissions": [
+                    "string"
+                  ],
+                  "allowedClients": [
+                    "string"
+                  ],
+                  "tenantId": "string",
+                  "userTenants": [
+                    {}
+                  ],
+                  "createdByUser": {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "firstName": "string",
+                    "lastName": "string",
+                    "middleName": "string",
+                    "username": "string",
+                    "email": "string",
+                    "designation": "string",
+                    "phone": "string",
+                    "authClientIds": "string",
+                    "lastLogin": "string",
+                    "photoUrl": "string",
+                    "gender": "M",
+                    "dob": "2019-08-24T14:15:22Z",
+                    "defaultTenantId": "string",
+                    "status": 11,
+                    "tenantId": "string",
+                    "roleId": "string",
+                    "tenantName": "string",
+                    "tenantKey": "string",
+                    "roleName": "string",
+                    "userTenantId": "string"
+                  },
+                  "modifiedByUser": {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "firstName": "string",
+                    "lastName": "string",
+                    "middleName": "string",
+                    "username": "string",
+                    "email": "string",
+                    "designation": "string",
+                    "phone": "string",
+                    "authClientIds": "string",
+                    "lastLogin": "string",
+                    "photoUrl": "string",
+                    "gender": "M",
+                    "dob": "2019-08-24T14:15:22Z",
+                    "defaultTenantId": "string",
+                    "status": 11,
+                    "tenantId": "string",
+                    "roleId": "string",
+                    "tenantName": "string",
+                    "tenantKey": "string",
+                    "roleName": "string",
+                    "userTenantId": "string"
+                  }
+                },
+                "userLevelPermissions": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "permission": "string",
+                    "allowed": true,
+                    "userTenantId": "string",
+                    "userTenant": {}
+                  }
+                ],
+                "userGroups": [
+                  {}
+                ],
+                "userInvitations": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "expiresOn": "2019-08-24T14:15:22Z",
+                    "token": "string",
+                    "userTenantId": "string",
+                    "userTenant": {}
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "credentials": {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "authProvider": "string",
+      "authId": "string",
+      "authToken": "string",
+      "secretKey": "string",
+      "password": "string",
+      "userId": "string",
+      "user": {}
+    },
+    "userTenants": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "locale": "string",
+        "status": 12,
+        "userId": "string",
+        "tenantId": "string",
+        "roleId": "string",
+        "user": {},
+        "tenant": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "status": 1,
+          "key": "string",
+          "website": "string",
+          "address": "string",
+          "city": "string",
+          "state": "string",
+          "zip": "string",
+          "country": "string",
+          "tenantConfigs": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "configKey": "string",
+              "configValue": {},
+              "tenantId": "string",
+              "tenant": {}
+            }
+          ],
+          "userTenants": [
+            {}
+          ],
+          "users": [
+            {}
+          ],
+          "roles": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "roleType": 15,
+              "description": "string",
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
+              "tenantId": "string",
+              "userTenants": [
+                {}
+              ],
+              "createdByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              },
+              "modifiedByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              }
+            }
+          ],
+          "groups": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "description": "string",
+              "photoUrl": "string",
+              "tenantId": "string",
+              "userGroups": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "groupId": "string",
+                  "userTenantId": "string",
+                  "group": {},
+                  "userTenant": {}
+                }
+              ]
+            }
+          ]
+        },
+        "role": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "roleType": 15,
+          "description": "string",
+          "permissions": [
+            "string"
+          ],
+          "allowedClients": [
+            "string"
+          ],
+          "tenantId": "string",
+          "userTenants": [
+            {}
+          ],
+          "createdByUser": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "middleName": "string",
+            "username": "string",
+            "email": "string",
+            "designation": "string",
+            "phone": "string",
+            "authClientIds": "string",
+            "lastLogin": "string",
+            "photoUrl": "string",
+            "gender": "M",
+            "dob": "2019-08-24T14:15:22Z",
+            "defaultTenantId": "string",
+            "status": 11,
+            "tenantId": "string",
+            "roleId": "string",
+            "tenantName": "string",
+            "tenantKey": "string",
+            "roleName": "string",
+            "userTenantId": "string"
+          },
+          "modifiedByUser": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "middleName": "string",
+            "username": "string",
+            "email": "string",
+            "designation": "string",
+            "phone": "string",
+            "authClientIds": "string",
+            "lastLogin": "string",
+            "photoUrl": "string",
+            "gender": "M",
+            "dob": "2019-08-24T14:15:22Z",
+            "defaultTenantId": "string",
+            "status": 11,
+            "tenantId": "string",
+            "roleId": "string",
+            "tenantName": "string",
+            "tenantKey": "string",
+            "roleName": "string",
+            "userTenantId": "string"
+          }
+        },
+        "userLevelPermissions": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "permission": "string",
+            "allowed": true,
+            "userTenantId": "string",
+            "userTenant": {}
+          }
+        ],
+        "userGroups": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "groupId": "string",
+            "userTenantId": "string",
+            "group": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "description": "string",
+              "photoUrl": "string",
+              "tenantId": "string",
+              "userGroups": [
+                {}
+              ]
+            },
+            "userTenant": {}
+          }
+        ],
+        "userInvitations": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "expiresOn": "2019-08-24T14:15:22Z",
+            "token": "string",
+            "userTenantId": "string",
+            "userTenant": {}
+          }
+        ]
+      }
+    ]
+  },
+  "tenant": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "name": "string",
+    "status": 1,
+    "key": "string",
+    "website": "string",
+    "address": "string",
+    "city": "string",
+    "state": "string",
+    "zip": "string",
+    "country": "string",
+    "tenantConfigs": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "configKey": "string",
+        "configValue": {},
+        "tenantId": "string",
+        "tenant": {}
+      }
+    ],
+    "userTenants": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "locale": "string",
+        "status": 12,
+        "userId": "string",
+        "tenantId": "string",
+        "roleId": "string",
+        "user": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "firstName": "string",
+          "lastName": "string",
+          "middleName": "string",
+          "username": "string",
+          "email": "string",
+          "designation": "string",
+          "phone": "string",
+          "authClientIds": "string",
+          "lastLogin": "2019-08-24T14:15:22Z",
+          "photoUrl": "string",
+          "gender": "M",
+          "dob": "2019-08-24T14:15:22Z",
+          "defaultTenantId": "string",
+          "defaultTenant": {},
+          "credentials": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "authProvider": "string",
+            "authId": "string",
+            "authToken": "string",
+            "secretKey": "string",
+            "password": "string",
+            "userId": "string",
+            "user": {}
+          },
+          "userTenants": [
+            {}
+          ]
+        },
+        "tenant": {},
+        "role": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "roleType": 15,
+          "description": "string",
+          "permissions": [
+            "string"
+          ],
+          "allowedClients": [
+            "string"
+          ],
+          "tenantId": "string",
+          "userTenants": [
+            {}
+          ],
+          "createdByUser": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "middleName": "string",
+            "username": "string",
+            "email": "string",
+            "designation": "string",
+            "phone": "string",
+            "authClientIds": "string",
+            "lastLogin": "string",
+            "photoUrl": "string",
+            "gender": "M",
+            "dob": "2019-08-24T14:15:22Z",
+            "defaultTenantId": "string",
+            "status": 11,
+            "tenantId": "string",
+            "roleId": "string",
+            "tenantName": "string",
+            "tenantKey": "string",
+            "roleName": "string",
+            "userTenantId": "string"
+          },
+          "modifiedByUser": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "middleName": "string",
+            "username": "string",
+            "email": "string",
+            "designation": "string",
+            "phone": "string",
+            "authClientIds": "string",
+            "lastLogin": "string",
+            "photoUrl": "string",
+            "gender": "M",
+            "dob": "2019-08-24T14:15:22Z",
+            "defaultTenantId": "string",
+            "status": 11,
+            "tenantId": "string",
+            "roleId": "string",
+            "tenantName": "string",
+            "tenantKey": "string",
+            "roleName": "string",
+            "userTenantId": "string"
+          }
+        },
+        "userLevelPermissions": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "permission": "string",
+            "allowed": true,
+            "userTenantId": "string",
+            "userTenant": {}
+          }
+        ],
+        "userGroups": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "groupId": "string",
+            "userTenantId": "string",
+            "group": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "description": "string",
+              "photoUrl": "string",
+              "tenantId": "string",
+              "userGroups": [
+                {}
+              ]
+            },
+            "userTenant": {}
+          }
+        ],
+        "userInvitations": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "expiresOn": "2019-08-24T14:15:22Z",
+            "token": "string",
+            "userTenantId": "string",
+            "userTenant": {}
+          }
+        ]
+      }
+    ],
+    "users": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "firstName": "string",
+        "lastName": "string",
+        "middleName": "string",
+        "username": "string",
+        "email": "string",
+        "designation": "string",
+        "phone": "string",
+        "authClientIds": "string",
+        "lastLogin": "2019-08-24T14:15:22Z",
+        "photoUrl": "string",
+        "gender": "M",
+        "dob": "2019-08-24T14:15:22Z",
+        "defaultTenantId": "string",
+        "defaultTenant": {},
+        "credentials": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "authProvider": "string",
+          "authId": "string",
+          "authToken": "string",
+          "secretKey": "string",
+          "password": "string",
+          "userId": "string",
+          "user": {}
+        },
+        "userTenants": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "locale": "string",
+            "status": 12,
+            "userId": "string",
+            "tenantId": "string",
+            "roleId": "string",
+            "user": {},
+            "tenant": {},
+            "role": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "roleType": 15,
+              "description": "string",
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
+              "tenantId": "string",
+              "userTenants": [
+                {}
+              ],
+              "createdByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              },
+              "modifiedByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              }
+            },
+            "userLevelPermissions": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "permission": "string",
+                "allowed": true,
+                "userTenantId": "string",
+                "userTenant": {}
+              }
+            ],
+            "userGroups": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "groupId": "string",
+                "userTenantId": "string",
+                "group": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "description": "string",
+                  "photoUrl": "string",
+                  "tenantId": "string",
+                  "userGroups": [
+                    {}
+                  ]
+                },
+                "userTenant": {}
+              }
+            ],
+            "userInvitations": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "expiresOn": "2019-08-24T14:15:22Z",
+                "token": "string",
+                "userTenantId": "string",
+                "userTenant": {}
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "roles": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "name": "string",
+        "roleType": 15,
+        "description": "string",
+        "permissions": [
+          "string"
+        ],
+        "allowedClients": [
+          "string"
+        ],
+        "tenantId": "string",
+        "userTenants": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "locale": "string",
+            "status": 12,
+            "userId": "string",
+            "tenantId": "string",
+            "roleId": "string",
+            "user": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "2019-08-24T14:15:22Z",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "defaultTenant": {},
+              "credentials": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "authProvider": "string",
+                "authId": "string",
+                "authToken": "string",
+                "secretKey": "string",
+                "password": "string",
+                "userId": "string",
+                "user": {}
+              },
+              "userTenants": [
+                {}
+              ]
+            },
+            "tenant": {},
+            "role": {},
+            "userLevelPermissions": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "permission": "string",
+                "allowed": true,
+                "userTenantId": "string",
+                "userTenant": {}
+              }
+            ],
+            "userGroups": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "groupId": "string",
+                "userTenantId": "string",
+                "group": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "description": "string",
+                  "photoUrl": "string",
+                  "tenantId": "string",
+                  "userGroups": [
+                    {}
+                  ]
+                },
+                "userTenant": {}
+              }
+            ],
+            "userInvitations": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "expiresOn": "2019-08-24T14:15:22Z",
+                "token": "string",
+                "userTenantId": "string",
+                "userTenant": {}
+              }
+            ]
+          }
+        ],
+        "createdByUser": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "firstName": "string",
+          "lastName": "string",
+          "middleName": "string",
+          "username": "string",
+          "email": "string",
+          "designation": "string",
+          "phone": "string",
+          "authClientIds": "string",
+          "lastLogin": "string",
+          "photoUrl": "string",
+          "gender": "M",
+          "dob": "2019-08-24T14:15:22Z",
+          "defaultTenantId": "string",
+          "status": 11,
+          "tenantId": "string",
+          "roleId": "string",
+          "tenantName": "string",
+          "tenantKey": "string",
+          "roleName": "string",
+          "userTenantId": "string"
+        },
+        "modifiedByUser": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "firstName": "string",
+          "lastName": "string",
+          "middleName": "string",
+          "username": "string",
+          "email": "string",
+          "designation": "string",
+          "phone": "string",
+          "authClientIds": "string",
+          "lastLogin": "string",
+          "photoUrl": "string",
+          "gender": "M",
+          "dob": "2019-08-24T14:15:22Z",
+          "defaultTenantId": "string",
+          "status": 11,
+          "tenantId": "string",
+          "roleId": "string",
+          "tenantName": "string",
+          "tenantKey": "string",
+          "roleName": "string",
+          "userTenantId": "string"
+        }
+      }
+    ],
+    "groups": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "name": "string",
+        "description": "string",
+        "photoUrl": "string",
+        "tenantId": "string",
+        "userGroups": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "groupId": "string",
+            "userTenantId": "string",
+            "group": {},
+            "userTenant": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "locale": "string",
+              "status": 12,
+              "userId": "string",
+              "tenantId": "string",
+              "roleId": "string",
+              "user": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "2019-08-24T14:15:22Z",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "defaultTenant": {},
+                "credentials": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "authProvider": "string",
+                  "authId": "string",
+                  "authToken": "string",
+                  "secretKey": "string",
+                  "password": "string",
+                  "userId": "string",
+                  "user": {}
+                },
+                "userTenants": [
+                  {}
+                ]
+              },
+              "tenant": {},
+              "role": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "roleType": 15,
+                "description": "string",
+                "permissions": [
+                  "string"
+                ],
+                "allowedClients": [
+                  "string"
+                ],
+                "tenantId": "string",
+                "userTenants": [
+                  {}
+                ],
+                "createdByUser": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "middleName": "string",
+                  "username": "string",
+                  "email": "string",
+                  "designation": "string",
+                  "phone": "string",
+                  "authClientIds": "string",
+                  "lastLogin": "string",
+                  "photoUrl": "string",
+                  "gender": "M",
+                  "dob": "2019-08-24T14:15:22Z",
+                  "defaultTenantId": "string",
+                  "status": 11,
+                  "tenantId": "string",
+                  "roleId": "string",
+                  "tenantName": "string",
+                  "tenantKey": "string",
+                  "roleName": "string",
+                  "userTenantId": "string"
+                },
+                "modifiedByUser": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "middleName": "string",
+                  "username": "string",
+                  "email": "string",
+                  "designation": "string",
+                  "phone": "string",
+                  "authClientIds": "string",
+                  "lastLogin": "string",
+                  "photoUrl": "string",
+                  "gender": "M",
+                  "dob": "2019-08-24T14:15:22Z",
+                  "defaultTenantId": "string",
+                  "status": 11,
+                  "tenantId": "string",
+                  "roleId": "string",
+                  "tenantName": "string",
+                  "tenantKey": "string",
+                  "roleName": "string",
+                  "userTenantId": "string"
+                }
+              },
+              "userLevelPermissions": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "permission": "string",
+                  "allowed": true,
+                  "userTenantId": "string",
+                  "userTenant": {}
+                }
+              ],
+              "userGroups": [
+                {}
+              ],
+              "userInvitations": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "expiresOn": "2019-08-24T14:15:22Z",
+                  "token": "string",
+                  "userTenantId": "string",
+                  "userTenant": {}
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "role": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "name": "string",
+    "roleType": 15,
+    "description": "string",
+    "permissions": [
+      "string"
+    ],
+    "allowedClients": [
+      "string"
+    ],
+    "tenantId": "string",
+    "userTenants": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "locale": "string",
+        "status": 12,
+        "userId": "string",
+        "tenantId": "string",
+        "roleId": "string",
+        "user": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "firstName": "string",
+          "lastName": "string",
+          "middleName": "string",
+          "username": "string",
+          "email": "string",
+          "designation": "string",
+          "phone": "string",
+          "authClientIds": "string",
+          "lastLogin": "2019-08-24T14:15:22Z",
+          "photoUrl": "string",
+          "gender": "M",
+          "dob": "2019-08-24T14:15:22Z",
+          "defaultTenantId": "string",
+          "defaultTenant": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "status": 1,
+            "key": "string",
+            "website": "string",
+            "address": "string",
+            "city": "string",
+            "state": "string",
+            "zip": "string",
+            "country": "string",
+            "tenantConfigs": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "configKey": "string",
+                "configValue": {},
+                "tenantId": "string",
+                "tenant": {}
+              }
+            ],
+            "userTenants": [
+              {}
+            ],
+            "users": [
+              {}
+            ],
+            "roles": [
+              {}
+            ],
+            "groups": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "description": "string",
+                "photoUrl": "string",
+                "tenantId": "string",
+                "userGroups": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "groupId": "string",
+                    "userTenantId": "string",
+                    "group": {},
+                    "userTenant": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "credentials": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "authProvider": "string",
+            "authId": "string",
+            "authToken": "string",
+            "secretKey": "string",
+            "password": "string",
+            "userId": "string",
+            "user": {}
+          },
+          "userTenants": [
+            {}
+          ]
+        },
+        "tenant": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "status": 1,
+          "key": "string",
+          "website": "string",
+          "address": "string",
+          "city": "string",
+          "state": "string",
+          "zip": "string",
+          "country": "string",
+          "tenantConfigs": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "configKey": "string",
+              "configValue": {},
+              "tenantId": "string",
+              "tenant": {}
+            }
+          ],
+          "userTenants": [
+            {}
+          ],
+          "users": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "2019-08-24T14:15:22Z",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "defaultTenant": {},
+              "credentials": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "authProvider": "string",
+                "authId": "string",
+                "authToken": "string",
+                "secretKey": "string",
+                "password": "string",
+                "userId": "string",
+                "user": {}
+              },
+              "userTenants": [
+                {}
+              ]
+            }
+          ],
+          "roles": [
+            {}
+          ],
+          "groups": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "description": "string",
+              "photoUrl": "string",
+              "tenantId": "string",
+              "userGroups": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "groupId": "string",
+                  "userTenantId": "string",
+                  "group": {},
+                  "userTenant": {}
+                }
+              ]
+            }
+          ]
+        },
+        "role": {},
+        "userLevelPermissions": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "permission": "string",
+            "allowed": true,
+            "userTenantId": "string",
+            "userTenant": {}
+          }
+        ],
+        "userGroups": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "groupId": "string",
+            "userTenantId": "string",
+            "group": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "description": "string",
+              "photoUrl": "string",
+              "tenantId": "string",
+              "userGroups": [
+                {}
+              ]
+            },
+            "userTenant": {}
+          }
+        ],
+        "userInvitations": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "expiresOn": "2019-08-24T14:15:22Z",
+            "token": "string",
+            "userTenantId": "string",
+            "userTenant": {}
+          }
+        ]
+      }
+    ],
+    "createdByUser": {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "firstName": "string",
+      "lastName": "string",
+      "middleName": "string",
+      "username": "string",
+      "email": "string",
+      "designation": "string",
+      "phone": "string",
+      "authClientIds": "string",
+      "lastLogin": "string",
+      "photoUrl": "string",
+      "gender": "M",
+      "dob": "2019-08-24T14:15:22Z",
+      "defaultTenantId": "string",
+      "status": 11,
+      "tenantId": "string",
+      "roleId": "string",
+      "tenantName": "string",
+      "tenantKey": "string",
+      "roleName": "string",
+      "userTenantId": "string"
+    },
+    "modifiedByUser": {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "firstName": "string",
+      "lastName": "string",
+      "middleName": "string",
+      "username": "string",
+      "email": "string",
+      "designation": "string",
+      "phone": "string",
+      "authClientIds": "string",
+      "lastLogin": "string",
+      "photoUrl": "string",
+      "gender": "M",
+      "dob": "2019-08-24T14:15:22Z",
+      "defaultTenantId": "string",
+      "status": 11,
+      "tenantId": "string",
+      "roleId": "string",
+      "tenantName": "string",
+      "tenantKey": "string",
+      "roleName": "string",
+      "userTenantId": "string"
+    }
+  },
+  "userLevelPermissions": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "permission": "string",
+      "allowed": true,
+      "userTenantId": "string",
+      "userTenant": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "locale": "string",
+        "status": 12,
+        "userId": "string",
+        "tenantId": "string",
+        "roleId": "string",
+        "user": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "firstName": "string",
+          "lastName": "string",
+          "middleName": "string",
+          "username": "string",
+          "email": "string",
+          "designation": "string",
+          "phone": "string",
+          "authClientIds": "string",
+          "lastLogin": "2019-08-24T14:15:22Z",
+          "photoUrl": "string",
+          "gender": "M",
+          "dob": "2019-08-24T14:15:22Z",
+          "defaultTenantId": "string",
+          "defaultTenant": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "status": 1,
+            "key": "string",
+            "website": "string",
+            "address": "string",
+            "city": "string",
+            "state": "string",
+            "zip": "string",
+            "country": "string",
+            "tenantConfigs": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "configKey": "string",
+                "configValue": {},
+                "tenantId": "string",
+                "tenant": {}
+              }
+            ],
+            "userTenants": [
+              {}
+            ],
+            "users": [
+              {}
+            ],
+            "roles": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "roleType": 15,
+                "description": "string",
+                "permissions": [
+                  "string"
+                ],
+                "allowedClients": [
+                  "string"
+                ],
+                "tenantId": "string",
+                "userTenants": [
+                  {}
+                ],
+                "createdByUser": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "middleName": "string",
+                  "username": "string",
+                  "email": "string",
+                  "designation": "string",
+                  "phone": "string",
+                  "authClientIds": "string",
+                  "lastLogin": "string",
+                  "photoUrl": "string",
+                  "gender": "M",
+                  "dob": "2019-08-24T14:15:22Z",
+                  "defaultTenantId": "string",
+                  "status": 11,
+                  "tenantId": "string",
+                  "roleId": "string",
+                  "tenantName": "string",
+                  "tenantKey": "string",
+                  "roleName": "string",
+                  "userTenantId": "string"
+                },
+                "modifiedByUser": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "middleName": "string",
+                  "username": "string",
+                  "email": "string",
+                  "designation": "string",
+                  "phone": "string",
+                  "authClientIds": "string",
+                  "lastLogin": "string",
+                  "photoUrl": "string",
+                  "gender": "M",
+                  "dob": "2019-08-24T14:15:22Z",
+                  "defaultTenantId": "string",
+                  "status": 11,
+                  "tenantId": "string",
+                  "roleId": "string",
+                  "tenantName": "string",
+                  "tenantKey": "string",
+                  "roleName": "string",
+                  "userTenantId": "string"
+                }
+              }
+            ],
+            "groups": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "description": "string",
+                "photoUrl": "string",
+                "tenantId": "string",
+                "userGroups": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "groupId": "string",
+                    "userTenantId": "string",
+                    "group": {},
+                    "userTenant": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "credentials": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "authProvider": "string",
+            "authId": "string",
+            "authToken": "string",
+            "secretKey": "string",
+            "password": "string",
+            "userId": "string",
+            "user": {}
+          },
+          "userTenants": [
+            {}
+          ]
+        },
+        "tenant": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "status": 1,
+          "key": "string",
+          "website": "string",
+          "address": "string",
+          "city": "string",
+          "state": "string",
+          "zip": "string",
+          "country": "string",
+          "tenantConfigs": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "configKey": "string",
+              "configValue": {},
+              "tenantId": "string",
+              "tenant": {}
+            }
+          ],
+          "userTenants": [
+            {}
+          ],
+          "users": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "2019-08-24T14:15:22Z",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "defaultTenant": {},
+              "credentials": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "authProvider": "string",
+                "authId": "string",
+                "authToken": "string",
+                "secretKey": "string",
+                "password": "string",
+                "userId": "string",
+                "user": {}
+              },
+              "userTenants": [
+                {}
+              ]
+            }
+          ],
+          "roles": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "roleType": 15,
+              "description": "string",
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
+              "tenantId": "string",
+              "userTenants": [
+                {}
+              ],
+              "createdByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              },
+              "modifiedByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              }
+            }
+          ],
+          "groups": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "description": "string",
+              "photoUrl": "string",
+              "tenantId": "string",
+              "userGroups": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "groupId": "string",
+                  "userTenantId": "string",
+                  "group": {},
+                  "userTenant": {}
+                }
+              ]
+            }
+          ]
+        },
+        "role": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "roleType": 15,
+          "description": "string",
+          "permissions": [
+            "string"
+          ],
+          "allowedClients": [
+            "string"
+          ],
+          "tenantId": "string",
+          "userTenants": [
+            {}
+          ],
+          "createdByUser": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "middleName": "string",
+            "username": "string",
+            "email": "string",
+            "designation": "string",
+            "phone": "string",
+            "authClientIds": "string",
+            "lastLogin": "string",
+            "photoUrl": "string",
+            "gender": "M",
+            "dob": "2019-08-24T14:15:22Z",
+            "defaultTenantId": "string",
+            "status": 11,
+            "tenantId": "string",
+            "roleId": "string",
+            "tenantName": "string",
+            "tenantKey": "string",
+            "roleName": "string",
+            "userTenantId": "string"
+          },
+          "modifiedByUser": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "middleName": "string",
+            "username": "string",
+            "email": "string",
+            "designation": "string",
+            "phone": "string",
+            "authClientIds": "string",
+            "lastLogin": "string",
+            "photoUrl": "string",
+            "gender": "M",
+            "dob": "2019-08-24T14:15:22Z",
+            "defaultTenantId": "string",
+            "status": 11,
+            "tenantId": "string",
+            "roleId": "string",
+            "tenantName": "string",
+            "tenantKey": "string",
+            "roleName": "string",
+            "userTenantId": "string"
+          }
+        },
+        "userLevelPermissions": [],
+        "userGroups": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "groupId": "string",
+            "userTenantId": "string",
+            "group": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "description": "string",
+              "photoUrl": "string",
+              "tenantId": "string",
+              "userGroups": [
+                {}
+              ]
+            },
+            "userTenant": {}
+          }
+        ],
+        "userInvitations": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "expiresOn": "2019-08-24T14:15:22Z",
+            "token": "string",
+            "userTenantId": "string",
+            "userTenant": {}
+          }
+        ]
+      }
+    }
+  ],
+  "userGroups": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "groupId": "string",
+      "userTenantId": "string",
+      "group": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "name": "string",
+        "description": "string",
+        "photoUrl": "string",
+        "tenantId": "string",
+        "userGroups": [
+          {}
+        ]
+      },
+      "userTenant": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "locale": "string",
+        "status": 12,
+        "userId": "string",
+        "tenantId": "string",
+        "roleId": "string",
+        "user": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "firstName": "string",
+          "lastName": "string",
+          "middleName": "string",
+          "username": "string",
+          "email": "string",
+          "designation": "string",
+          "phone": "string",
+          "authClientIds": "string",
+          "lastLogin": "2019-08-24T14:15:22Z",
+          "photoUrl": "string",
+          "gender": "M",
+          "dob": "2019-08-24T14:15:22Z",
+          "defaultTenantId": "string",
+          "defaultTenant": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "status": 1,
+            "key": "string",
+            "website": "string",
+            "address": "string",
+            "city": "string",
+            "state": "string",
+            "zip": "string",
+            "country": "string",
+            "tenantConfigs": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "configKey": "string",
+                "configValue": {},
+                "tenantId": "string",
+                "tenant": {}
+              }
+            ],
+            "userTenants": [
+              {}
+            ],
+            "users": [
+              {}
+            ],
+            "roles": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "roleType": 15,
+                "description": "string",
+                "permissions": [
+                  "string"
+                ],
+                "allowedClients": [
+                  "string"
+                ],
+                "tenantId": "string",
+                "userTenants": [
+                  {}
+                ],
+                "createdByUser": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "middleName": "string",
+                  "username": "string",
+                  "email": "string",
+                  "designation": "string",
+                  "phone": "string",
+                  "authClientIds": "string",
+                  "lastLogin": "string",
+                  "photoUrl": "string",
+                  "gender": "M",
+                  "dob": "2019-08-24T14:15:22Z",
+                  "defaultTenantId": "string",
+                  "status": 11,
+                  "tenantId": "string",
+                  "roleId": "string",
+                  "tenantName": "string",
+                  "tenantKey": "string",
+                  "roleName": "string",
+                  "userTenantId": "string"
+                },
+                "modifiedByUser": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "middleName": "string",
+                  "username": "string",
+                  "email": "string",
+                  "designation": "string",
+                  "phone": "string",
+                  "authClientIds": "string",
+                  "lastLogin": "string",
+                  "photoUrl": "string",
+                  "gender": "M",
+                  "dob": "2019-08-24T14:15:22Z",
+                  "defaultTenantId": "string",
+                  "status": 11,
+                  "tenantId": "string",
+                  "roleId": "string",
+                  "tenantName": "string",
+                  "tenantKey": "string",
+                  "roleName": "string",
+                  "userTenantId": "string"
+                }
+              }
+            ],
+            "groups": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "description": "string",
+                "photoUrl": "string",
+                "tenantId": "string",
+                "userGroups": [
+                  {}
+                ]
+              }
+            ]
+          },
+          "credentials": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "authProvider": "string",
+            "authId": "string",
+            "authToken": "string",
+            "secretKey": "string",
+            "password": "string",
+            "userId": "string",
+            "user": {}
+          },
+          "userTenants": [
+            {}
+          ]
+        },
+        "tenant": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "status": 1,
+          "key": "string",
+          "website": "string",
+          "address": "string",
+          "city": "string",
+          "state": "string",
+          "zip": "string",
+          "country": "string",
+          "tenantConfigs": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "configKey": "string",
+              "configValue": {},
+              "tenantId": "string",
+              "tenant": {}
+            }
+          ],
+          "userTenants": [
+            {}
+          ],
+          "users": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "2019-08-24T14:15:22Z",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "defaultTenant": {},
+              "credentials": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "authProvider": "string",
+                "authId": "string",
+                "authToken": "string",
+                "secretKey": "string",
+                "password": "string",
+                "userId": "string",
+                "user": {}
+              },
+              "userTenants": [
+                {}
+              ]
+            }
+          ],
+          "roles": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "roleType": 15,
+              "description": "string",
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
+              "tenantId": "string",
+              "userTenants": [
+                {}
+              ],
+              "createdByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              },
+              "modifiedByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              }
+            }
+          ],
+          "groups": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "description": "string",
+              "photoUrl": "string",
+              "tenantId": "string",
+              "userGroups": [
+                {}
+              ]
+            }
+          ]
+        },
+        "role": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "roleType": 15,
+          "description": "string",
+          "permissions": [
+            "string"
+          ],
+          "allowedClients": [
+            "string"
+          ],
+          "tenantId": "string",
+          "userTenants": [
+            {}
+          ],
+          "createdByUser": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "middleName": "string",
+            "username": "string",
+            "email": "string",
+            "designation": "string",
+            "phone": "string",
+            "authClientIds": "string",
+            "lastLogin": "string",
+            "photoUrl": "string",
+            "gender": "M",
+            "dob": "2019-08-24T14:15:22Z",
+            "defaultTenantId": "string",
+            "status": 11,
+            "tenantId": "string",
+            "roleId": "string",
+            "tenantName": "string",
+            "tenantKey": "string",
+            "roleName": "string",
+            "userTenantId": "string"
+          },
+          "modifiedByUser": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "middleName": "string",
+            "username": "string",
+            "email": "string",
+            "designation": "string",
+            "phone": "string",
+            "authClientIds": "string",
+            "lastLogin": "string",
+            "photoUrl": "string",
+            "gender": "M",
+            "dob": "2019-08-24T14:15:22Z",
+            "defaultTenantId": "string",
+            "status": 11,
+            "tenantId": "string",
+            "roleId": "string",
+            "tenantName": "string",
+            "tenantKey": "string",
+            "roleName": "string",
+            "userTenantId": "string"
+          }
+        },
+        "userLevelPermissions": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "permission": "string",
+            "allowed": true,
+            "userTenantId": "string",
+            "userTenant": {}
+          }
+        ],
+        "userGroups": [],
+        "userInvitations": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "expiresOn": "2019-08-24T14:15:22Z",
+            "token": "string",
+            "userTenantId": "string",
+            "userTenant": {}
+          }
+        ]
+      }
+    }
+  ],
+  "userInvitations": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "expiresOn": "2019-08-24T14:15:22Z",
+      "token": "string",
+      "userTenantId": "string",
+      "userTenant": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "locale": "string",
+        "status": 12,
+        "userId": "string",
+        "tenantId": "string",
+        "roleId": "string",
+        "user": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "firstName": "string",
+          "lastName": "string",
+          "middleName": "string",
+          "username": "string",
+          "email": "string",
+          "designation": "string",
+          "phone": "string",
+          "authClientIds": "string",
+          "lastLogin": "2019-08-24T14:15:22Z",
+          "photoUrl": "string",
+          "gender": "M",
+          "dob": "2019-08-24T14:15:22Z",
+          "defaultTenantId": "string",
+          "defaultTenant": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "status": 1,
+            "key": "string",
+            "website": "string",
+            "address": "string",
+            "city": "string",
+            "state": "string",
+            "zip": "string",
+            "country": "string",
+            "tenantConfigs": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "configKey": "string",
+                "configValue": {},
+                "tenantId": "string",
+                "tenant": {}
+              }
+            ],
+            "userTenants": [
+              {}
+            ],
+            "users": [
+              {}
+            ],
+            "roles": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "roleType": 15,
+                "description": "string",
+                "permissions": [
+                  "string"
+                ],
+                "allowedClients": [
+                  "string"
+                ],
+                "tenantId": "string",
+                "userTenants": [
+                  {}
+                ],
+                "createdByUser": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "middleName": "string",
+                  "username": "string",
+                  "email": "string",
+                  "designation": "string",
+                  "phone": "string",
+                  "authClientIds": "string",
+                  "lastLogin": "string",
+                  "photoUrl": "string",
+                  "gender": "M",
+                  "dob": "2019-08-24T14:15:22Z",
+                  "defaultTenantId": "string",
+                  "status": 11,
+                  "tenantId": "string",
+                  "roleId": "string",
+                  "tenantName": "string",
+                  "tenantKey": "string",
+                  "roleName": "string",
+                  "userTenantId": "string"
+                },
+                "modifiedByUser": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "middleName": "string",
+                  "username": "string",
+                  "email": "string",
+                  "designation": "string",
+                  "phone": "string",
+                  "authClientIds": "string",
+                  "lastLogin": "string",
+                  "photoUrl": "string",
+                  "gender": "M",
+                  "dob": "2019-08-24T14:15:22Z",
+                  "defaultTenantId": "string",
+                  "status": 11,
+                  "tenantId": "string",
+                  "roleId": "string",
+                  "tenantName": "string",
+                  "tenantKey": "string",
+                  "roleName": "string",
+                  "userTenantId": "string"
+                }
+              }
+            ],
+            "groups": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "description": "string",
+                "photoUrl": "string",
+                "tenantId": "string",
+                "userGroups": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "groupId": "string",
+                    "userTenantId": "string",
+                    "group": {},
+                    "userTenant": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "credentials": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "authProvider": "string",
+            "authId": "string",
+            "authToken": "string",
+            "secretKey": "string",
+            "password": "string",
+            "userId": "string",
+            "user": {}
+          },
+          "userTenants": [
+            {}
+          ]
+        },
+        "tenant": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "status": 1,
+          "key": "string",
+          "website": "string",
+          "address": "string",
+          "city": "string",
+          "state": "string",
+          "zip": "string",
+          "country": "string",
+          "tenantConfigs": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "configKey": "string",
+              "configValue": {},
+              "tenantId": "string",
+              "tenant": {}
+            }
+          ],
+          "userTenants": [
+            {}
+          ],
+          "users": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "2019-08-24T14:15:22Z",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "defaultTenant": {},
+              "credentials": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "authProvider": "string",
+                "authId": "string",
+                "authToken": "string",
+                "secretKey": "string",
+                "password": "string",
+                "userId": "string",
+                "user": {}
+              },
+              "userTenants": [
+                {}
+              ]
+            }
+          ],
+          "roles": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "roleType": 15,
+              "description": "string",
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
+              "tenantId": "string",
+              "userTenants": [
+                {}
+              ],
+              "createdByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              },
+              "modifiedByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              }
+            }
+          ],
+          "groups": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "description": "string",
+              "photoUrl": "string",
+              "tenantId": "string",
+              "userGroups": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "groupId": "string",
+                  "userTenantId": "string",
+                  "group": {},
+                  "userTenant": {}
+                }
+              ]
+            }
+          ]
+        },
+        "role": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "roleType": 15,
+          "description": "string",
+          "permissions": [
+            "string"
+          ],
+          "allowedClients": [
+            "string"
+          ],
+          "tenantId": "string",
+          "userTenants": [
+            {}
+          ],
+          "createdByUser": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "middleName": "string",
+            "username": "string",
+            "email": "string",
+            "designation": "string",
+            "phone": "string",
+            "authClientIds": "string",
+            "lastLogin": "string",
+            "photoUrl": "string",
+            "gender": "M",
+            "dob": "2019-08-24T14:15:22Z",
+            "defaultTenantId": "string",
+            "status": 11,
+            "tenantId": "string",
+            "roleId": "string",
+            "tenantName": "string",
+            "tenantKey": "string",
+            "roleName": "string",
+            "userTenantId": "string"
+          },
+          "modifiedByUser": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "middleName": "string",
+            "username": "string",
+            "email": "string",
+            "designation": "string",
+            "phone": "string",
+            "authClientIds": "string",
+            "lastLogin": "string",
+            "photoUrl": "string",
+            "gender": "M",
+            "dob": "2019-08-24T14:15:22Z",
+            "defaultTenantId": "string",
+            "status": 11,
+            "tenantId": "string",
+            "roleId": "string",
+            "tenantName": "string",
+            "tenantKey": "string",
+            "roleName": "string",
+            "userTenantId": "string"
+          }
+        },
+        "userLevelPermissions": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "permission": "string",
+            "allowed": true,
+            "userTenantId": "string",
+            "userTenant": {}
+          }
+        ],
+        "userGroups": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "groupId": "string",
+            "userTenantId": "string",
+            "group": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "description": "string",
+              "photoUrl": "string",
+              "tenantId": "string",
+              "userGroups": [
+                {}
+              ]
+            },
+            "userTenant": {}
+          }
+        ],
+        "userInvitations": []
+      }
+    }
+  ]
+}
+
+```
+
+UserTenantWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|locale|string|false|none|none|
+|status|number|false|none|none|
+|userId|string|true|none|none|
+|tenantId|string|true|none|none|
+|roleId|string|true|none|none|
+|user|[UserWithRelations](#schemauserwithrelations)|false|none|This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true })|
+|tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
+|role|[RoleWithRelations](#schemarolewithrelations)|false|none|(tsType: RoleWithRelations, schemaOptions: { includeRelations: true })|
+|userLevelPermissions|[[UserLevelPermissionWithRelations](#schemauserlevelpermissionwithrelations)]|false|none|[(tsType: UserLevelPermissionWithRelations, schemaOptions: { includeRelations: true })]|
+|userGroups|[[UserGroupWithRelations](#schemausergroupwithrelations)]|false|none|[(tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })]|
+|userInvitations|[[UserInvitationWithRelations](#schemauserinvitationwithrelations)]|false|none|[(tsType: UserInvitationWithRelations, schemaOptions: { includeRelations: true })]|
+
+<h2 id="tocS_TenantWithRelations">TenantWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schematenantwithrelations"></a>
+<a id="schema_TenantWithRelations"></a>
+<a id="tocStenantwithrelations"></a>
+<a id="tocstenantwithrelations"></a>
 
 ```json
 {
@@ -13278,18 +21206,2994 @@ RoleWithRelations
   "modifiedBy": "string",
   "id": "string",
   "name": "string",
-  "roleType": 15,
-  "permissions": [
-    "string"
+  "status": 1,
+  "key": "string",
+  "website": "string",
+  "address": "string",
+  "city": "string",
+  "state": "string",
+  "zip": "string",
+  "country": "string",
+  "tenantConfigs": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "configKey": "string",
+      "configValue": {},
+      "tenantId": "string",
+      "tenant": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "name": "string",
+        "status": 1,
+        "key": "string",
+        "website": "string",
+        "address": "string",
+        "city": "string",
+        "state": "string",
+        "zip": "string",
+        "country": "string",
+        "tenantConfigs": [],
+        "userTenants": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "locale": "string",
+            "status": 12,
+            "userId": "string",
+            "tenantId": "string",
+            "roleId": "string",
+            "user": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "2019-08-24T14:15:22Z",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "defaultTenant": {},
+              "credentials": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "authProvider": "string",
+                "authId": "string",
+                "authToken": "string",
+                "secretKey": "string",
+                "password": "string",
+                "userId": "string",
+                "user": {}
+              },
+              "userTenants": [
+                {}
+              ]
+            },
+            "tenant": {},
+            "role": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "roleType": 15,
+              "description": "string",
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
+              "tenantId": "string",
+              "userTenants": [
+                {}
+              ],
+              "createdByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              },
+              "modifiedByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              }
+            },
+            "userLevelPermissions": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "permission": "string",
+                "allowed": true,
+                "userTenantId": "string",
+                "userTenant": {}
+              }
+            ],
+            "userGroups": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "groupId": "string",
+                "userTenantId": "string",
+                "group": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "description": "string",
+                  "photoUrl": "string",
+                  "tenantId": "string",
+                  "userGroups": [
+                    {}
+                  ]
+                },
+                "userTenant": {}
+              }
+            ],
+            "userInvitations": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "expiresOn": "2019-08-24T14:15:22Z",
+                "token": "string",
+                "userTenantId": "string",
+                "userTenant": {}
+              }
+            ]
+          }
+        ],
+        "users": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "middleName": "string",
+            "username": "string",
+            "email": "string",
+            "designation": "string",
+            "phone": "string",
+            "authClientIds": "string",
+            "lastLogin": "2019-08-24T14:15:22Z",
+            "photoUrl": "string",
+            "gender": "M",
+            "dob": "2019-08-24T14:15:22Z",
+            "defaultTenantId": "string",
+            "defaultTenant": {},
+            "credentials": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "authProvider": "string",
+              "authId": "string",
+              "authToken": "string",
+              "secretKey": "string",
+              "password": "string",
+              "userId": "string",
+              "user": {}
+            },
+            "userTenants": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "locale": "string",
+                "status": 12,
+                "userId": "string",
+                "tenantId": "string",
+                "roleId": "string",
+                "user": {},
+                "tenant": {},
+                "role": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "roleType": 15,
+                  "description": "string",
+                  "permissions": [
+                    "string"
+                  ],
+                  "allowedClients": [
+                    "string"
+                  ],
+                  "tenantId": "string",
+                  "userTenants": [
+                    {}
+                  ],
+                  "createdByUser": {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "firstName": "string",
+                    "lastName": "string",
+                    "middleName": "string",
+                    "username": "string",
+                    "email": "string",
+                    "designation": "string",
+                    "phone": "string",
+                    "authClientIds": "string",
+                    "lastLogin": "string",
+                    "photoUrl": "string",
+                    "gender": "M",
+                    "dob": "2019-08-24T14:15:22Z",
+                    "defaultTenantId": "string",
+                    "status": 11,
+                    "tenantId": "string",
+                    "roleId": "string",
+                    "tenantName": "string",
+                    "tenantKey": "string",
+                    "roleName": "string",
+                    "userTenantId": "string"
+                  },
+                  "modifiedByUser": {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "firstName": "string",
+                    "lastName": "string",
+                    "middleName": "string",
+                    "username": "string",
+                    "email": "string",
+                    "designation": "string",
+                    "phone": "string",
+                    "authClientIds": "string",
+                    "lastLogin": "string",
+                    "photoUrl": "string",
+                    "gender": "M",
+                    "dob": "2019-08-24T14:15:22Z",
+                    "defaultTenantId": "string",
+                    "status": 11,
+                    "tenantId": "string",
+                    "roleId": "string",
+                    "tenantName": "string",
+                    "tenantKey": "string",
+                    "roleName": "string",
+                    "userTenantId": "string"
+                  }
+                },
+                "userLevelPermissions": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "permission": "string",
+                    "allowed": true,
+                    "userTenantId": "string",
+                    "userTenant": {}
+                  }
+                ],
+                "userGroups": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "groupId": "string",
+                    "userTenantId": "string",
+                    "group": {},
+                    "userTenant": {}
+                  }
+                ],
+                "userInvitations": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "expiresOn": "2019-08-24T14:15:22Z",
+                    "token": "string",
+                    "userTenantId": "string",
+                    "userTenant": {}
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "roles": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "roleType": 15,
+            "description": "string",
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
+            "tenantId": "string",
+            "userTenants": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "locale": "string",
+                "status": 12,
+                "userId": "string",
+                "tenantId": "string",
+                "roleId": "string",
+                "user": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "middleName": "string",
+                  "username": "string",
+                  "email": "string",
+                  "designation": "string",
+                  "phone": "string",
+                  "authClientIds": "string",
+                  "lastLogin": "2019-08-24T14:15:22Z",
+                  "photoUrl": "string",
+                  "gender": "M",
+                  "dob": "2019-08-24T14:15:22Z",
+                  "defaultTenantId": "string",
+                  "defaultTenant": {},
+                  "credentials": {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "authProvider": "string",
+                    "authId": "string",
+                    "authToken": "string",
+                    "secretKey": "string",
+                    "password": "string",
+                    "userId": "string",
+                    "user": {}
+                  },
+                  "userTenants": [
+                    {}
+                  ]
+                },
+                "tenant": {},
+                "role": {},
+                "userLevelPermissions": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "permission": "string",
+                    "allowed": true,
+                    "userTenantId": "string",
+                    "userTenant": {}
+                  }
+                ],
+                "userGroups": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "groupId": "string",
+                    "userTenantId": "string",
+                    "group": {},
+                    "userTenant": {}
+                  }
+                ],
+                "userInvitations": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "expiresOn": "2019-08-24T14:15:22Z",
+                    "token": "string",
+                    "userTenantId": "string",
+                    "userTenant": {}
+                  }
+                ]
+              }
+            ],
+            "createdByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            },
+            "modifiedByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            }
+          }
+        ],
+        "groups": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "description": "string",
+            "photoUrl": "string",
+            "tenantId": "string",
+            "userGroups": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "groupId": "string",
+                "userTenantId": "string",
+                "group": {},
+                "userTenant": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "locale": "string",
+                  "status": 12,
+                  "userId": "string",
+                  "tenantId": "string",
+                  "roleId": "string",
+                  "user": {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "firstName": "string",
+                    "lastName": "string",
+                    "middleName": "string",
+                    "username": "string",
+                    "email": "string",
+                    "designation": "string",
+                    "phone": "string",
+                    "authClientIds": "string",
+                    "lastLogin": "2019-08-24T14:15:22Z",
+                    "photoUrl": "string",
+                    "gender": "M",
+                    "dob": "2019-08-24T14:15:22Z",
+                    "defaultTenantId": "string",
+                    "defaultTenant": {},
+                    "credentials": {},
+                    "userTenants": []
+                  },
+                  "tenant": {},
+                  "role": {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "name": "string",
+                    "roleType": 15,
+                    "description": "string",
+                    "permissions": [],
+                    "allowedClients": [],
+                    "tenantId": "string",
+                    "userTenants": [],
+                    "createdByUser": {},
+                    "modifiedByUser": {}
+                  },
+                  "userLevelPermissions": [
+                    {}
+                  ],
+                  "userGroups": [
+                    {}
+                  ],
+                  "userInvitations": [
+                    {}
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
   ],
-  "allowedClients": [
-    "string"
+  "userTenants": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "locale": "string",
+      "status": 12,
+      "userId": "string",
+      "tenantId": "string",
+      "roleId": "string",
+      "user": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "firstName": "string",
+        "lastName": "string",
+        "middleName": "string",
+        "username": "string",
+        "email": "string",
+        "designation": "string",
+        "phone": "string",
+        "authClientIds": "string",
+        "lastLogin": "2019-08-24T14:15:22Z",
+        "photoUrl": "string",
+        "gender": "M",
+        "dob": "2019-08-24T14:15:22Z",
+        "defaultTenantId": "string",
+        "defaultTenant": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "status": 1,
+          "key": "string",
+          "website": "string",
+          "address": "string",
+          "city": "string",
+          "state": "string",
+          "zip": "string",
+          "country": "string",
+          "tenantConfigs": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "configKey": "string",
+              "configValue": {},
+              "tenantId": "string",
+              "tenant": {}
+            }
+          ],
+          "userTenants": [],
+          "users": [
+            {}
+          ],
+          "roles": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "roleType": 15,
+              "description": "string",
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
+              "tenantId": "string",
+              "userTenants": [
+                {}
+              ],
+              "createdByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              },
+              "modifiedByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              }
+            }
+          ],
+          "groups": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "description": "string",
+              "photoUrl": "string",
+              "tenantId": "string",
+              "userGroups": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "groupId": "string",
+                  "userTenantId": "string",
+                  "group": {},
+                  "userTenant": {}
+                }
+              ]
+            }
+          ]
+        },
+        "credentials": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "authProvider": "string",
+          "authId": "string",
+          "authToken": "string",
+          "secretKey": "string",
+          "password": "string",
+          "userId": "string",
+          "user": {}
+        },
+        "userTenants": [
+          {}
+        ]
+      },
+      "tenant": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "name": "string",
+        "status": 1,
+        "key": "string",
+        "website": "string",
+        "address": "string",
+        "city": "string",
+        "state": "string",
+        "zip": "string",
+        "country": "string",
+        "tenantConfigs": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "configKey": "string",
+            "configValue": {},
+            "tenantId": "string",
+            "tenant": {}
+          }
+        ],
+        "userTenants": [],
+        "users": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "middleName": "string",
+            "username": "string",
+            "email": "string",
+            "designation": "string",
+            "phone": "string",
+            "authClientIds": "string",
+            "lastLogin": "2019-08-24T14:15:22Z",
+            "photoUrl": "string",
+            "gender": "M",
+            "dob": "2019-08-24T14:15:22Z",
+            "defaultTenantId": "string",
+            "defaultTenant": {},
+            "credentials": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "authProvider": "string",
+              "authId": "string",
+              "authToken": "string",
+              "secretKey": "string",
+              "password": "string",
+              "userId": "string",
+              "user": {}
+            },
+            "userTenants": [
+              {}
+            ]
+          }
+        ],
+        "roles": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "roleType": 15,
+            "description": "string",
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
+            "tenantId": "string",
+            "userTenants": [
+              {}
+            ],
+            "createdByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            },
+            "modifiedByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            }
+          }
+        ],
+        "groups": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "description": "string",
+            "photoUrl": "string",
+            "tenantId": "string",
+            "userGroups": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "groupId": "string",
+                "userTenantId": "string",
+                "group": {},
+                "userTenant": {}
+              }
+            ]
+          }
+        ]
+      },
+      "role": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "name": "string",
+        "roleType": 15,
+        "description": "string",
+        "permissions": [
+          "string"
+        ],
+        "allowedClients": [
+          "string"
+        ],
+        "tenantId": "string",
+        "userTenants": [
+          {}
+        ],
+        "createdByUser": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "firstName": "string",
+          "lastName": "string",
+          "middleName": "string",
+          "username": "string",
+          "email": "string",
+          "designation": "string",
+          "phone": "string",
+          "authClientIds": "string",
+          "lastLogin": "string",
+          "photoUrl": "string",
+          "gender": "M",
+          "dob": "2019-08-24T14:15:22Z",
+          "defaultTenantId": "string",
+          "status": 11,
+          "tenantId": "string",
+          "roleId": "string",
+          "tenantName": "string",
+          "tenantKey": "string",
+          "roleName": "string",
+          "userTenantId": "string"
+        },
+        "modifiedByUser": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "firstName": "string",
+          "lastName": "string",
+          "middleName": "string",
+          "username": "string",
+          "email": "string",
+          "designation": "string",
+          "phone": "string",
+          "authClientIds": "string",
+          "lastLogin": "string",
+          "photoUrl": "string",
+          "gender": "M",
+          "dob": "2019-08-24T14:15:22Z",
+          "defaultTenantId": "string",
+          "status": 11,
+          "tenantId": "string",
+          "roleId": "string",
+          "tenantName": "string",
+          "tenantKey": "string",
+          "roleName": "string",
+          "userTenantId": "string"
+        }
+      },
+      "userLevelPermissions": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "permission": "string",
+          "allowed": true,
+          "userTenantId": "string",
+          "userTenant": {}
+        }
+      ],
+      "userGroups": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "groupId": "string",
+          "userTenantId": "string",
+          "group": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "description": "string",
+            "photoUrl": "string",
+            "tenantId": "string",
+            "userGroups": [
+              {}
+            ]
+          },
+          "userTenant": {}
+        }
+      ],
+      "userInvitations": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "expiresOn": "2019-08-24T14:15:22Z",
+          "token": "string",
+          "userTenantId": "string",
+          "userTenant": {}
+        }
+      ]
+    }
+  ],
+  "users": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "firstName": "string",
+      "lastName": "string",
+      "middleName": "string",
+      "username": "string",
+      "email": "string",
+      "designation": "string",
+      "phone": "string",
+      "authClientIds": "string",
+      "lastLogin": "2019-08-24T14:15:22Z",
+      "photoUrl": "string",
+      "gender": "M",
+      "dob": "2019-08-24T14:15:22Z",
+      "defaultTenantId": "string",
+      "defaultTenant": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "name": "string",
+        "status": 1,
+        "key": "string",
+        "website": "string",
+        "address": "string",
+        "city": "string",
+        "state": "string",
+        "zip": "string",
+        "country": "string",
+        "tenantConfigs": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "configKey": "string",
+            "configValue": {},
+            "tenantId": "string",
+            "tenant": {}
+          }
+        ],
+        "userTenants": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "locale": "string",
+            "status": 12,
+            "userId": "string",
+            "tenantId": "string",
+            "roleId": "string",
+            "user": {},
+            "tenant": {},
+            "role": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "roleType": 15,
+              "description": "string",
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
+              "tenantId": "string",
+              "userTenants": [
+                {}
+              ],
+              "createdByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              },
+              "modifiedByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              }
+            },
+            "userLevelPermissions": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "permission": "string",
+                "allowed": true,
+                "userTenantId": "string",
+                "userTenant": {}
+              }
+            ],
+            "userGroups": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "groupId": "string",
+                "userTenantId": "string",
+                "group": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "description": "string",
+                  "photoUrl": "string",
+                  "tenantId": "string",
+                  "userGroups": [
+                    {}
+                  ]
+                },
+                "userTenant": {}
+              }
+            ],
+            "userInvitations": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "expiresOn": "2019-08-24T14:15:22Z",
+                "token": "string",
+                "userTenantId": "string",
+                "userTenant": {}
+              }
+            ]
+          }
+        ],
+        "users": [],
+        "roles": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "roleType": 15,
+            "description": "string",
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
+            "tenantId": "string",
+            "userTenants": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "locale": "string",
+                "status": 12,
+                "userId": "string",
+                "tenantId": "string",
+                "roleId": "string",
+                "user": {},
+                "tenant": {},
+                "role": {},
+                "userLevelPermissions": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "permission": "string",
+                    "allowed": true,
+                    "userTenantId": "string",
+                    "userTenant": {}
+                  }
+                ],
+                "userGroups": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "groupId": "string",
+                    "userTenantId": "string",
+                    "group": {},
+                    "userTenant": {}
+                  }
+                ],
+                "userInvitations": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "expiresOn": "2019-08-24T14:15:22Z",
+                    "token": "string",
+                    "userTenantId": "string",
+                    "userTenant": {}
+                  }
+                ]
+              }
+            ],
+            "createdByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            },
+            "modifiedByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            }
+          }
+        ],
+        "groups": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "description": "string",
+            "photoUrl": "string",
+            "tenantId": "string",
+            "userGroups": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "groupId": "string",
+                "userTenantId": "string",
+                "group": {},
+                "userTenant": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "locale": "string",
+                  "status": 12,
+                  "userId": "string",
+                  "tenantId": "string",
+                  "roleId": "string",
+                  "user": {},
+                  "tenant": {},
+                  "role": {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "name": "string",
+                    "roleType": 15,
+                    "description": "string",
+                    "permissions": [],
+                    "allowedClients": [],
+                    "tenantId": "string",
+                    "userTenants": [],
+                    "createdByUser": {},
+                    "modifiedByUser": {}
+                  },
+                  "userLevelPermissions": [
+                    {}
+                  ],
+                  "userGroups": [
+                    {}
+                  ],
+                  "userInvitations": [
+                    {}
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "credentials": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "authProvider": "string",
+        "authId": "string",
+        "authToken": "string",
+        "secretKey": "string",
+        "password": "string",
+        "userId": "string",
+        "user": {}
+      },
+      "userTenants": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "locale": "string",
+          "status": 12,
+          "userId": "string",
+          "tenantId": "string",
+          "roleId": "string",
+          "user": {},
+          "tenant": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "status": 1,
+            "key": "string",
+            "website": "string",
+            "address": "string",
+            "city": "string",
+            "state": "string",
+            "zip": "string",
+            "country": "string",
+            "tenantConfigs": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "configKey": "string",
+                "configValue": {},
+                "tenantId": "string",
+                "tenant": {}
+              }
+            ],
+            "userTenants": [
+              {}
+            ],
+            "users": [],
+            "roles": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "roleType": 15,
+                "description": "string",
+                "permissions": [
+                  "string"
+                ],
+                "allowedClients": [
+                  "string"
+                ],
+                "tenantId": "string",
+                "userTenants": [
+                  {}
+                ],
+                "createdByUser": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "middleName": "string",
+                  "username": "string",
+                  "email": "string",
+                  "designation": "string",
+                  "phone": "string",
+                  "authClientIds": "string",
+                  "lastLogin": "string",
+                  "photoUrl": "string",
+                  "gender": "M",
+                  "dob": "2019-08-24T14:15:22Z",
+                  "defaultTenantId": "string",
+                  "status": 11,
+                  "tenantId": "string",
+                  "roleId": "string",
+                  "tenantName": "string",
+                  "tenantKey": "string",
+                  "roleName": "string",
+                  "userTenantId": "string"
+                },
+                "modifiedByUser": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "middleName": "string",
+                  "username": "string",
+                  "email": "string",
+                  "designation": "string",
+                  "phone": "string",
+                  "authClientIds": "string",
+                  "lastLogin": "string",
+                  "photoUrl": "string",
+                  "gender": "M",
+                  "dob": "2019-08-24T14:15:22Z",
+                  "defaultTenantId": "string",
+                  "status": 11,
+                  "tenantId": "string",
+                  "roleId": "string",
+                  "tenantName": "string",
+                  "tenantKey": "string",
+                  "roleName": "string",
+                  "userTenantId": "string"
+                }
+              }
+            ],
+            "groups": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "description": "string",
+                "photoUrl": "string",
+                "tenantId": "string",
+                "userGroups": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "groupId": "string",
+                    "userTenantId": "string",
+                    "group": {},
+                    "userTenant": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "role": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "roleType": 15,
+            "description": "string",
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
+            "tenantId": "string",
+            "userTenants": [
+              {}
+            ],
+            "createdByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            },
+            "modifiedByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            }
+          },
+          "userLevelPermissions": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "permission": "string",
+              "allowed": true,
+              "userTenantId": "string",
+              "userTenant": {}
+            }
+          ],
+          "userGroups": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "groupId": "string",
+              "userTenantId": "string",
+              "group": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "description": "string",
+                "photoUrl": "string",
+                "tenantId": "string",
+                "userGroups": [
+                  {}
+                ]
+              },
+              "userTenant": {}
+            }
+          ],
+          "userInvitations": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "expiresOn": "2019-08-24T14:15:22Z",
+              "token": "string",
+              "userTenantId": "string",
+              "userTenant": {}
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "roles": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "name": "string",
+      "roleType": 15,
+      "description": "string",
+      "permissions": [
+        "string"
+      ],
+      "allowedClients": [
+        "string"
+      ],
+      "tenantId": "string",
+      "userTenants": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "locale": "string",
+          "status": 12,
+          "userId": "string",
+          "tenantId": "string",
+          "roleId": "string",
+          "user": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "middleName": "string",
+            "username": "string",
+            "email": "string",
+            "designation": "string",
+            "phone": "string",
+            "authClientIds": "string",
+            "lastLogin": "2019-08-24T14:15:22Z",
+            "photoUrl": "string",
+            "gender": "M",
+            "dob": "2019-08-24T14:15:22Z",
+            "defaultTenantId": "string",
+            "defaultTenant": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "status": 1,
+              "key": "string",
+              "website": "string",
+              "address": "string",
+              "city": "string",
+              "state": "string",
+              "zip": "string",
+              "country": "string",
+              "tenantConfigs": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "configKey": "string",
+                  "configValue": {},
+                  "tenantId": "string",
+                  "tenant": {}
+                }
+              ],
+              "userTenants": [
+                {}
+              ],
+              "users": [
+                {}
+              ],
+              "roles": [],
+              "groups": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "description": "string",
+                  "photoUrl": "string",
+                  "tenantId": "string",
+                  "userGroups": [
+                    {}
+                  ]
+                }
+              ]
+            },
+            "credentials": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "authProvider": "string",
+              "authId": "string",
+              "authToken": "string",
+              "secretKey": "string",
+              "password": "string",
+              "userId": "string",
+              "user": {}
+            },
+            "userTenants": [
+              {}
+            ]
+          },
+          "tenant": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "status": 1,
+            "key": "string",
+            "website": "string",
+            "address": "string",
+            "city": "string",
+            "state": "string",
+            "zip": "string",
+            "country": "string",
+            "tenantConfigs": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "configKey": "string",
+                "configValue": {},
+                "tenantId": "string",
+                "tenant": {}
+              }
+            ],
+            "userTenants": [
+              {}
+            ],
+            "users": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "2019-08-24T14:15:22Z",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "defaultTenant": {},
+                "credentials": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "authProvider": "string",
+                  "authId": "string",
+                  "authToken": "string",
+                  "secretKey": "string",
+                  "password": "string",
+                  "userId": "string",
+                  "user": {}
+                },
+                "userTenants": [
+                  {}
+                ]
+              }
+            ],
+            "roles": [],
+            "groups": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "description": "string",
+                "photoUrl": "string",
+                "tenantId": "string",
+                "userGroups": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "groupId": "string",
+                    "userTenantId": "string",
+                    "group": {},
+                    "userTenant": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "role": {},
+          "userLevelPermissions": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "permission": "string",
+              "allowed": true,
+              "userTenantId": "string",
+              "userTenant": {}
+            }
+          ],
+          "userGroups": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "groupId": "string",
+              "userTenantId": "string",
+              "group": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "description": "string",
+                "photoUrl": "string",
+                "tenantId": "string",
+                "userGroups": [
+                  {}
+                ]
+              },
+              "userTenant": {}
+            }
+          ],
+          "userInvitations": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "expiresOn": "2019-08-24T14:15:22Z",
+              "token": "string",
+              "userTenantId": "string",
+              "userTenant": {}
+            }
+          ]
+        }
+      ],
+      "createdByUser": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "firstName": "string",
+        "lastName": "string",
+        "middleName": "string",
+        "username": "string",
+        "email": "string",
+        "designation": "string",
+        "phone": "string",
+        "authClientIds": "string",
+        "lastLogin": "string",
+        "photoUrl": "string",
+        "gender": "M",
+        "dob": "2019-08-24T14:15:22Z",
+        "defaultTenantId": "string",
+        "status": 11,
+        "tenantId": "string",
+        "roleId": "string",
+        "tenantName": "string",
+        "tenantKey": "string",
+        "roleName": "string",
+        "userTenantId": "string"
+      },
+      "modifiedByUser": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "firstName": "string",
+        "lastName": "string",
+        "middleName": "string",
+        "username": "string",
+        "email": "string",
+        "designation": "string",
+        "phone": "string",
+        "authClientIds": "string",
+        "lastLogin": "string",
+        "photoUrl": "string",
+        "gender": "M",
+        "dob": "2019-08-24T14:15:22Z",
+        "defaultTenantId": "string",
+        "status": 11,
+        "tenantId": "string",
+        "roleId": "string",
+        "tenantName": "string",
+        "tenantKey": "string",
+        "roleName": "string",
+        "userTenantId": "string"
+      }
+    }
+  ],
+  "groups": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "name": "string",
+      "description": "string",
+      "photoUrl": "string",
+      "tenantId": "string",
+      "userGroups": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "groupId": "string",
+          "userTenantId": "string",
+          "group": {},
+          "userTenant": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "locale": "string",
+            "status": 12,
+            "userId": "string",
+            "tenantId": "string",
+            "roleId": "string",
+            "user": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "2019-08-24T14:15:22Z",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "defaultTenant": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "status": 1,
+                "key": "string",
+                "website": "string",
+                "address": "string",
+                "city": "string",
+                "state": "string",
+                "zip": "string",
+                "country": "string",
+                "tenantConfigs": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "configKey": "string",
+                    "configValue": {},
+                    "tenantId": "string",
+                    "tenant": {}
+                  }
+                ],
+                "userTenants": [
+                  {}
+                ],
+                "users": [
+                  {}
+                ],
+                "roles": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "name": "string",
+                    "roleType": 15,
+                    "description": "string",
+                    "permissions": [],
+                    "allowedClients": [],
+                    "tenantId": "string",
+                    "userTenants": [],
+                    "createdByUser": {},
+                    "modifiedByUser": {}
+                  }
+                ],
+                "groups": []
+              },
+              "credentials": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "authProvider": "string",
+                "authId": "string",
+                "authToken": "string",
+                "secretKey": "string",
+                "password": "string",
+                "userId": "string",
+                "user": {}
+              },
+              "userTenants": [
+                {}
+              ]
+            },
+            "tenant": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "status": 1,
+              "key": "string",
+              "website": "string",
+              "address": "string",
+              "city": "string",
+              "state": "string",
+              "zip": "string",
+              "country": "string",
+              "tenantConfigs": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "configKey": "string",
+                  "configValue": {},
+                  "tenantId": "string",
+                  "tenant": {}
+                }
+              ],
+              "userTenants": [
+                {}
+              ],
+              "users": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "middleName": "string",
+                  "username": "string",
+                  "email": "string",
+                  "designation": "string",
+                  "phone": "string",
+                  "authClientIds": "string",
+                  "lastLogin": "2019-08-24T14:15:22Z",
+                  "photoUrl": "string",
+                  "gender": "M",
+                  "dob": "2019-08-24T14:15:22Z",
+                  "defaultTenantId": "string",
+                  "defaultTenant": {},
+                  "credentials": {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "authProvider": "string",
+                    "authId": "string",
+                    "authToken": "string",
+                    "secretKey": "string",
+                    "password": "string",
+                    "userId": "string",
+                    "user": {}
+                  },
+                  "userTenants": [
+                    {}
+                  ]
+                }
+              ],
+              "roles": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "roleType": 15,
+                  "description": "string",
+                  "permissions": [
+                    "string"
+                  ],
+                  "allowedClients": [
+                    "string"
+                  ],
+                  "tenantId": "string",
+                  "userTenants": [
+                    {}
+                  ],
+                  "createdByUser": {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "firstName": "string",
+                    "lastName": "string",
+                    "middleName": "string",
+                    "username": "string",
+                    "email": "string",
+                    "designation": "string",
+                    "phone": "string",
+                    "authClientIds": "string",
+                    "lastLogin": "string",
+                    "photoUrl": "string",
+                    "gender": "M",
+                    "dob": "2019-08-24T14:15:22Z",
+                    "defaultTenantId": "string",
+                    "status": 11,
+                    "tenantId": "string",
+                    "roleId": "string",
+                    "tenantName": "string",
+                    "tenantKey": "string",
+                    "roleName": "string",
+                    "userTenantId": "string"
+                  },
+                  "modifiedByUser": {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "firstName": "string",
+                    "lastName": "string",
+                    "middleName": "string",
+                    "username": "string",
+                    "email": "string",
+                    "designation": "string",
+                    "phone": "string",
+                    "authClientIds": "string",
+                    "lastLogin": "string",
+                    "photoUrl": "string",
+                    "gender": "M",
+                    "dob": "2019-08-24T14:15:22Z",
+                    "defaultTenantId": "string",
+                    "status": 11,
+                    "tenantId": "string",
+                    "roleId": "string",
+                    "tenantName": "string",
+                    "tenantKey": "string",
+                    "roleName": "string",
+                    "userTenantId": "string"
+                  }
+                }
+              ],
+              "groups": []
+            },
+            "role": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "roleType": 15,
+              "description": "string",
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
+              "tenantId": "string",
+              "userTenants": [
+                {}
+              ],
+              "createdByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              },
+              "modifiedByUser": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "middleName": "string",
+                "username": "string",
+                "email": "string",
+                "designation": "string",
+                "phone": "string",
+                "authClientIds": "string",
+                "lastLogin": "string",
+                "photoUrl": "string",
+                "gender": "M",
+                "dob": "2019-08-24T14:15:22Z",
+                "defaultTenantId": "string",
+                "status": 11,
+                "tenantId": "string",
+                "roleId": "string",
+                "tenantName": "string",
+                "tenantKey": "string",
+                "roleName": "string",
+                "userTenantId": "string"
+              }
+            },
+            "userLevelPermissions": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "permission": "string",
+                "allowed": true,
+                "userTenantId": "string",
+                "userTenant": {}
+              }
+            ],
+            "userGroups": [
+              {}
+            ],
+            "userInvitations": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "expiresOn": "2019-08-24T14:15:22Z",
+                "token": "string",
+                "userTenantId": "string",
+                "userTenant": {}
+              }
+            ]
+          }
+        }
+      ]
+    }
   ]
 }
 
 ```
 
-RolePartial
+TenantWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|name|string|true|none|none|
+|status|number¦null|true|none|Tenant status - Active or Inactive|
+|key|string|false|none|none|
+|website|string|false|none|none|
+|address|string|false|none|none|
+|city|string|false|none|none|
+|state|string|false|none|none|
+|zip|string|false|none|none|
+|country|string|false|none|none|
+|tenantConfigs|[[TenantConfigWithRelations](#schematenantconfigwithrelations)]|false|none|[(tsType: TenantConfigWithRelations, schemaOptions: { includeRelations: true })]|
+|userTenants|[[UserTenantWithRelations](#schemausertenantwithrelations)]|false|none|[(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })]|
+|users|[[UserWithRelations](#schemauserwithrelations)]|false|none|[This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true })]|
+|roles|[[RoleWithRelations](#schemarolewithrelations)]|false|none|[(tsType: RoleWithRelations, schemaOptions: { includeRelations: true })]|
+|groups|[[GroupWithRelations](#schemagroupwithrelations)]|false|none|[(tsType: GroupWithRelations, schemaOptions: { includeRelations: true })]|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|status|1|
+|status|0|
+
+<h2 id="tocS_TenantPartial">TenantPartial</h2>
+<!-- backwards compatibility -->
+<a id="schematenantpartial"></a>
+<a id="schema_TenantPartial"></a>
+<a id="tocStenantpartial"></a>
+<a id="tocstenantpartial"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "name": "string",
+  "status": 1,
+  "key": "string",
+  "website": "string",
+  "address": "string",
+  "city": "string",
+  "state": "string",
+  "zip": "string",
+  "country": "string"
+}
+
+```
+
+TenantPartial
 
 ### Properties
 
@@ -13304,9 +24208,305 @@ RolePartial
 |modifiedBy|string|false|none|none|
 |id|string|false|none|none|
 |name|string|false|none|none|
-|roleType|number|false|none|none|
-|permissions|[string]|false|none|none|
-|allowedClients|[string]|false|none|none|
+|status|number¦null|false|none|Tenant status - Active or Inactive|
+|key|string|false|none|none|
+|website|string|false|none|none|
+|address|string|false|none|none|
+|city|string|false|none|none|
+|state|string|false|none|none|
+|zip|string|false|none|none|
+|country|string|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|status|1|
+|status|0|
+
+<h2 id="tocS_UserGroup">UserGroup</h2>
+<!-- backwards compatibility -->
+<a id="schemausergroup"></a>
+<a id="schema_UserGroup"></a>
+<a id="tocSusergroup"></a>
+<a id="tocsusergroup"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "groupId": "string",
+  "userTenantId": "string"
+}
+
+```
+
+UserGroup
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|groupId|string|true|none|none|
+|userTenantId|string|true|none|none|
+
+<h2 id="tocS_NewUserGroupInGroup">NewUserGroupInGroup</h2>
+<!-- backwards compatibility -->
+<a id="schemanewusergroupingroup"></a>
+<a id="schema_NewUserGroupInGroup"></a>
+<a id="tocSnewusergroupingroup"></a>
+<a id="tocsnewusergroupingroup"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "userTenantId": "string"
+}
+
+```
+
+NewUserGroupInGroup
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|userTenantId|string|true|none|none|
+
+<h2 id="tocS_TenantConfig">TenantConfig</h2>
+<!-- backwards compatibility -->
+<a id="schematenantconfig"></a>
+<a id="schema_TenantConfig"></a>
+<a id="tocStenantconfig"></a>
+<a id="tocstenantconfig"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "configKey": "string",
+  "configValue": {},
+  "tenantId": "string"
+}
+
+```
+
+TenantConfig
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|configKey|string|true|none|none|
+|configValue|object|false|none|none|
+|tenantId|string|true|none|none|
+
+<h2 id="tocS_NewTenantConfigInTenant">NewTenantConfigInTenant</h2>
+<!-- backwards compatibility -->
+<a id="schemanewtenantconfigintenant"></a>
+<a id="schema_NewTenantConfigInTenant"></a>
+<a id="tocSnewtenantconfigintenant"></a>
+<a id="tocsnewtenantconfigintenant"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "configKey": "string",
+  "configValue": {}
+}
+
+```
+
+NewTenantConfigInTenant
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|configKey|string|true|none|none|
+|configValue|object|false|none|none|
+
+<h2 id="tocS_Group">Group</h2>
+<!-- backwards compatibility -->
+<a id="schemagroup"></a>
+<a id="schema_Group"></a>
+<a id="tocSgroup"></a>
+<a id="tocsgroup"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "name": "string",
+  "description": "string",
+  "photoUrl": "string",
+  "tenantId": "string"
+}
+
+```
+
+Group
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|name|string|false|none|none|
+|description|string|false|none|none|
+|photoUrl|string|false|none|none|
+|tenantId|string|true|none|none|
+
+<h2 id="tocS_NewGroupInTenant">NewGroupInTenant</h2>
+<!-- backwards compatibility -->
+<a id="schemanewgroupintenant"></a>
+<a id="schema_NewGroupInTenant"></a>
+<a id="tocSnewgroupintenant"></a>
+<a id="tocsnewgroupintenant"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "name": "string",
+  "description": "string",
+  "photoUrl": "string"
+}
+
+```
+
+NewGroupInTenant
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|name|string|false|none|none|
+|description|string|false|none|none|
+|photoUrl|string|false|none|none|
+
+<h2 id="tocS_GroupPartial">GroupPartial</h2>
+<!-- backwards compatibility -->
+<a id="schemagrouppartial"></a>
+<a id="schema_GroupPartial"></a>
+<a id="tocSgrouppartial"></a>
+<a id="tocsgrouppartial"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "name": "string",
+  "description": "string",
+  "photoUrl": "string",
+  "tenantId": "string"
+}
+
+```
+
+GroupPartial
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|name|string|false|none|none|
+|description|string|false|none|none|
+|photoUrl|string|false|none|none|
+|tenantId|string|false|none|none|
 
 <h2 id="tocS_User">User</h2>
 <!-- backwards compatibility -->
@@ -13378,6 +24578,76 @@ User
 |gender|F|
 |gender|O|
 
+<h2 id="tocS_NewUserInTenant">NewUserInTenant</h2>
+<!-- backwards compatibility -->
+<a id="schemanewuserintenant"></a>
+<a id="schema_NewUserInTenant"></a>
+<a id="tocSnewuserintenant"></a>
+<a id="tocsnewuserintenant"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "firstName": "string",
+  "lastName": "string",
+  "middleName": "string",
+  "username": "string",
+  "email": "string",
+  "designation": "string",
+  "phone": "string",
+  "authClientIds": "string",
+  "lastLogin": "2019-08-24T14:15:22Z",
+  "photoUrl": "string",
+  "gender": "M",
+  "dob": "2019-08-24T14:15:22Z",
+  "roleId": "string",
+  "locale": "string"
+}
+
+```
+
+NewUserInTenant
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|firstName|string|true|none|none|
+|lastName|string|false|none|none|
+|middleName|string|false|none|none|
+|username|string|true|none|none|
+|email|string|true|none|none|
+|designation|string|false|none|none|
+|phone|string|false|none|none|
+|authClientIds|string|false|none|none|
+|lastLogin|string(date-time)|false|none|none|
+|photoUrl|string|false|none|none|
+|gender|string|false|none|This field takes a single character as input in database.<br>    'M' for male and 'F' for female.|
+|dob|string(date-time)|false|none|none|
+|roleId|string|true|none|none|
+|locale|string|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|gender|M|
+|gender|F|
+|gender|O|
+
 <h2 id="tocS_UserDto">UserDto</h2>
 <!-- backwards compatibility -->
 <a id="schemauserdto"></a>
@@ -13387,35 +24657,29 @@ User
 
 ```json
 {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "firstName": "string",
+  "lastName": "string",
+  "middleName": "string",
+  "username": "string",
+  "email": "string",
+  "designation": "string",
+  "phone": "string",
+  "authClientIds": "string",
+  "lastLogin": "2019-08-24T14:15:22Z",
+  "photoUrl": "string",
+  "gender": "M",
+  "dob": "2019-08-24T14:15:22Z",
+  "defaultTenantId": "string",
   "roleId": "string",
-  "tenantId": "string",
-  "status": 0,
-  "authProvider": "string",
-  "authId": "string",
-  "userTenantId": "string",
-  "userDetails": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "firstName": "string",
-    "lastName": "string",
-    "middleName": "string",
-    "username": "string",
-    "email": "string",
-    "designation": "string",
-    "phone": "string",
-    "authClientIds": "string",
-    "lastLogin": "2019-08-24T14:15:22Z",
-    "photoUrl": "string",
-    "gender": "M",
-    "dob": "2019-08-24T14:15:22Z",
-    "defaultTenantId": "string"
-  }
+  "locale": "string"
 }
 
 ```
@@ -13426,20 +24690,44 @@ UserDto
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|firstName|string|true|none|none|
+|lastName|string|false|none|none|
+|middleName|string|false|none|none|
+|username|string|true|none|none|
+|email|string|true|none|none|
+|designation|string|false|none|none|
+|phone|string|false|none|none|
+|authClientIds|string|false|none|none|
+|lastLogin|string(date-time)|false|none|none|
+|photoUrl|string|false|none|none|
+|gender|string|false|none|This field takes a single character as input in database.<br>    'M' for male and 'F' for female.|
+|dob|string(date-time)|false|none|none|
+|defaultTenantId|string|false|none|none|
 |roleId|string|true|none|none|
-|tenantId|string|true|none|none|
-|status|number|false|none|none|
-|authProvider|string|false|none|none|
-|authId|string|false|none|none|
-|userTenantId|string|false|none|none|
-|userDetails|[User](#schemauser)|false|none|This is signature for user model.|
+|locale|string|false|none|none|
 
-<h2 id="tocS_UserOptional_tenantId_">UserOptional_tenantId_</h2>
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|gender|M|
+|gender|F|
+|gender|O|
+
+<h2 id="tocS_UserPartial">UserPartial</h2>
 <!-- backwards compatibility -->
-<a id="schemauseroptional_tenantid_"></a>
-<a id="schema_UserOptional_tenantId_"></a>
-<a id="tocSuseroptional_tenantid_"></a>
-<a id="tocsuseroptional_tenantid_"></a>
+<a id="schemauserpartial"></a>
+<a id="schema_UserPartial"></a>
+<a id="tocSuserpartial"></a>
+<a id="tocsuserpartial"></a>
 
 ```json
 {
@@ -13468,142 +24756,7 @@ UserDto
 
 ```
 
-UserOptional_tenantId_
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|firstName|string|true|none|none|
-|lastName|string|false|none|none|
-|middleName|string|false|none|none|
-|username|string|true|none|none|
-|email|string|true|none|none|
-|designation|string|false|none|none|
-|phone|string|false|none|none|
-|authClientIds|string|false|none|none|
-|lastLogin|string(date-time)|false|none|none|
-|photoUrl|string|false|none|none|
-|gender|string|false|none|This field takes a single character as input in database.<br>    'M' for male and 'F' for female.|
-|dob|string(date-time)|false|none|none|
-|defaultTenantId|string|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|gender|M|
-|gender|F|
-|gender|O|
-
-<h2 id="tocS_NewUser">NewUser</h2>
-<!-- backwards compatibility -->
-<a id="schemanewuser"></a>
-<a id="schema_NewUser"></a>
-<a id="tocSnewuser"></a>
-<a id="tocsnewuser"></a>
-
-```json
-{
-  "roleId": "string",
-  "tenantId": "string",
-  "status": 0,
-  "authProvider": "string",
-  "authId": "string",
-  "userTenantId": "string",
-  "userDetails": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "firstName": "string",
-    "lastName": "string",
-    "middleName": "string",
-    "username": "string",
-    "email": "string",
-    "designation": "string",
-    "phone": "string",
-    "authClientIds": "string",
-    "lastLogin": "2019-08-24T14:15:22Z",
-    "photoUrl": "string",
-    "gender": "M",
-    "dob": "2019-08-24T14:15:22Z",
-    "defaultTenantId": "string"
-  }
-}
-
-```
-
-NewUser
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|roleId|string|true|none|none|
-|tenantId|string|false|none|none|
-|status|number|false|none|none|
-|authProvider|string|false|none|none|
-|authId|string|false|none|none|
-|userTenantId|string|false|none|none|
-|userDetails|[UserOptional_tenantId_](#schemauseroptional_tenantid_)|false|none|This is signature for user model. (tsType: @loopback/repository-json-schema#Optional<User, 'tenantId'>, schemaOptions: { optional: [ 'tenantId' ] })|
-
-<h2 id="tocS_UserViewPartial">UserViewPartial</h2>
-<!-- backwards compatibility -->
-<a id="schemauserviewpartial"></a>
-<a id="schema_UserViewPartial"></a>
-<a id="tocSuserviewpartial"></a>
-<a id="tocsuserviewpartial"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "firstName": "string",
-  "lastName": "string",
-  "middleName": "string",
-  "username": "string",
-  "email": "string",
-  "designation": "string",
-  "phone": "string",
-  "authClientIds": "string",
-  "lastLogin": "string",
-  "photoUrl": "string",
-  "gender": "M",
-  "dob": "2019-08-24T14:15:22Z",
-  "defaultTenantId": "string",
-  "status": 11,
-  "tenantId": "string",
-  "roleId": "string",
-  "tenantName": "string",
-  "tenantKey": "string",
-  "roleName": "string",
-  "roleType": 0,
-  "userTenantId": "string",
-  "expiresOn": "2019-08-24T14:15:22Z"
-}
-
-```
-
-UserViewPartial
+UserPartial
 
 ### Properties
 
@@ -13625,20 +24778,11 @@ UserViewPartial
 |designation|string|false|none|none|
 |phone|string|false|none|none|
 |authClientIds|string|false|none|none|
-|lastLogin|string|false|none|none|
+|lastLogin|string(date-time)|false|none|none|
 |photoUrl|string|false|none|none|
 |gender|string|false|none|This field takes a single character as input in database.<br>    'M' for male and 'F' for female.|
-|dob|string(date-time)¦null|false|none|none|
+|dob|string(date-time)|false|none|none|
 |defaultTenantId|string|false|none|none|
-|status|number|false|none|none|
-|tenantId|string|false|none|none|
-|roleId|string|false|none|none|
-|tenantName|string|false|none|none|
-|tenantKey|string|false|none|none|
-|roleName|string|false|none|none|
-|roleType|number|false|none|none|
-|userTenantId|string|false|none|none|
-|expiresOn|string(date-time)|false|none|none|
 
 #### Enumerated Values
 
@@ -13647,384 +24791,6 @@ UserViewPartial
 |gender|M|
 |gender|F|
 |gender|O|
-
-<h2 id="tocS_Tenant">Tenant</h2>
-<!-- backwards compatibility -->
-<a id="schematenant"></a>
-<a id="schema_Tenant"></a>
-<a id="tocStenant"></a>
-<a id="tocstenant"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "status": 1,
-  "key": "string",
-  "website": "string",
-  "address": "string",
-  "city": "string",
-  "state": "string",
-  "zip": "string",
-  "country": "string",
-  "primaryContactEmail": "string",
-  "allowedDomain": "string",
-  "tenantType": "string"
-}
-
-```
-
-Tenant
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|name|string|true|none|none|
-|status|number¦null|true|none|Tenant status - Active or Inactive|
-|key|string|false|none|none|
-|website|string|false|none|none|
-|address|string|false|none|none|
-|city|string|false|none|none|
-|state|string|false|none|none|
-|zip|string|false|none|none|
-|country|string|false|none|none|
-|primaryContactEmail|string|false|none|none|
-|allowedDomain|string|false|none|none|
-|tenantType|string|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|status|1|
-|status|0|
-
-<h2 id="tocS_NewTenant">NewTenant</h2>
-<!-- backwards compatibility -->
-<a id="schemanewtenant"></a>
-<a id="schema_NewTenant"></a>
-<a id="tocSnewtenant"></a>
-<a id="tocsnewtenant"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "name": "string",
-  "key": "string",
-  "website": "string",
-  "address": "string",
-  "city": "string",
-  "state": "string",
-  "zip": "string",
-  "country": "string",
-  "primaryContactEmail": "string",
-  "allowedDomain": "string",
-  "tenantType": "string"
-}
-
-```
-
-NewTenant
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|name|string|true|none|none|
-|key|string|false|none|none|
-|website|string|false|none|none|
-|address|string|false|none|none|
-|city|string|false|none|none|
-|state|string|false|none|none|
-|zip|string|false|none|none|
-|country|string|false|none|none|
-|primaryContactEmail|string|false|none|none|
-|allowedDomain|string|false|none|none|
-|tenantType|string|false|none|none|
-
-<h2 id="tocS_TenantPartial">TenantPartial</h2>
-<!-- backwards compatibility -->
-<a id="schematenantpartial"></a>
-<a id="schema_TenantPartial"></a>
-<a id="tocStenantpartial"></a>
-<a id="tocstenantpartial"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "status": 1,
-  "key": "string",
-  "website": "string",
-  "address": "string",
-  "city": "string",
-  "state": "string",
-  "zip": "string",
-  "country": "string",
-  "primaryContactEmail": "string",
-  "allowedDomain": "string",
-  "tenantType": "string"
-}
-
-```
-
-TenantPartial
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|name|string|false|none|none|
-|status|number¦null|false|none|Tenant status - Active or Inactive|
-|key|string|false|none|none|
-|website|string|false|none|none|
-|address|string|false|none|none|
-|city|string|false|none|none|
-|state|string|false|none|none|
-|zip|string|false|none|none|
-|country|string|false|none|none|
-|primaryContactEmail|string|false|none|none|
-|allowedDomain|string|false|none|none|
-|tenantType|string|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|status|1|
-|status|0|
-
-<h2 id="tocS_TenantConfig">TenantConfig</h2>
-<!-- backwards compatibility -->
-<a id="schematenantconfig"></a>
-<a id="schema_TenantConfig"></a>
-<a id="tocStenantconfig"></a>
-<a id="tocstenantconfig"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "configKey": "string",
-  "configValue": {},
-  "tenantId": "string"
-}
-
-```
-
-TenantConfig
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|configKey|string|true|none|none|
-|configValue|object|false|none|none|
-|tenantId|string|true|none|none|
-
-<h2 id="tocS_UserGroup">UserGroup</h2>
-<!-- backwards compatibility -->
-<a id="schemausergroup"></a>
-<a id="schema_UserGroup"></a>
-<a id="tocSusergroup"></a>
-<a id="tocsusergroup"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "groupId": "string",
-  "userTenantId": "string",
-  "isOwner": true
-}
-
-```
-
-UserGroup
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|groupId|string|true|none|none|
-|userTenantId|string|true|none|none|
-|isOwner|boolean|false|none|none|
-
-<h2 id="tocS_NewUserGroupInGroup">NewUserGroupInGroup</h2>
-<!-- backwards compatibility -->
-<a id="schemanewusergroupingroup"></a>
-<a id="schema_NewUserGroupInGroup"></a>
-<a id="tocSnewusergroupingroup"></a>
-<a id="tocsnewusergroupingroup"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "groupId": "string",
-  "userTenantId": "string",
-  "isOwner": true
-}
-
-```
-
-NewUserGroupInGroup
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|groupId|string|false|none|none|
-|userTenantId|string|true|none|none|
-|isOwner|boolean|false|none|none|
-
-<h2 id="tocS_UserGroupPartial">UserGroupPartial</h2>
-<!-- backwards compatibility -->
-<a id="schemausergrouppartial"></a>
-<a id="schema_UserGroupPartial"></a>
-<a id="tocSusergrouppartial"></a>
-<a id="tocsusergrouppartial"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "groupId": "string",
-  "userTenantId": "string",
-  "isOwner": true
-}
-
-```
-
-UserGroupPartial
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|groupId|string|false|none|none|
-|userTenantId|string|false|none|none|
-|isOwner|boolean|false|none|none|
-
-<h2 id="tocS_UserSignupCheckDto">UserSignupCheckDto</h2>
-<!-- backwards compatibility -->
-<a id="schemausersignupcheckdto"></a>
-<a id="schema_UserSignupCheckDto"></a>
-<a id="tocSusersignupcheckdto"></a>
-<a id="tocsusersignupcheckdto"></a>
-
-```json
-{
-  "isSignedUp": true
-}
-
-```
-
-UserSignupCheckDto
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|isSignedUp|boolean|true|none|none|
 
 <h2 id="tocS_UserTenantPrefs">UserTenantPrefs</h2>
 <!-- backwards compatibility -->
@@ -14085,8 +24851,7 @@ UserTenantPrefs
   "createdBy": "string",
   "modifiedBy": "string",
   "configKey": "string",
-  "configValue": {},
-  "userTenantId": "string"
+  "configValue": {}
 }
 
 ```
@@ -14106,7 +24871,6 @@ NewUserTenantPrefs
 |modifiedBy|string|false|none|none|
 |configKey|string|true|none|none|
 |configValue|object|true|none|none|
-|userTenantId|string|false|none|none|
 
 <h2 id="tocS_UserTenantPrefsWithRelations">UserTenantPrefsWithRelations</h2>
 <!-- backwards compatibility -->
@@ -14134,6 +24898,8 @@ NewUserTenantPrefs
     "deletedBy": "string",
     "createdOn": "2019-08-24T14:15:22Z",
     "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
     "id": "string",
     "locale": "string",
     "status": 12,
@@ -14180,9 +24946,6 @@ NewUserTenantPrefs
         "state": "string",
         "zip": "string",
         "country": "string",
-        "primaryContactEmail": "string",
-        "allowedDomain": "string",
-        "tenantType": "string",
         "tenantConfigs": [
           {
             "deleted": true,
@@ -14201,6 +24964,126 @@ NewUserTenantPrefs
         ],
         "userTenants": [
           {}
+        ],
+        "users": [
+          {}
+        ],
+        "roles": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "roleType": 15,
+            "description": "string",
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
+            "tenantId": "string",
+            "userTenants": [
+              {}
+            ],
+            "createdByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            },
+            "modifiedByUser": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "middleName": "string",
+              "username": "string",
+              "email": "string",
+              "designation": "string",
+              "phone": "string",
+              "authClientIds": "string",
+              "lastLogin": "string",
+              "photoUrl": "string",
+              "gender": "M",
+              "dob": "2019-08-24T14:15:22Z",
+              "defaultTenantId": "string",
+              "status": 11,
+              "tenantId": "string",
+              "roleId": "string",
+              "tenantName": "string",
+              "tenantKey": "string",
+              "roleName": "string",
+              "userTenantId": "string"
+            }
+          }
+        ],
+        "groups": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "description": "string",
+            "photoUrl": "string",
+            "tenantId": "string",
+            "userGroups": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "groupId": "string",
+                "userTenantId": "string",
+                "group": {},
+                "userTenant": {}
+              }
+            ]
+          }
         ]
       },
       "credentials": {
@@ -14209,6 +25092,8 @@ NewUserTenantPrefs
         "deletedBy": "string",
         "createdOn": "2019-08-24T14:15:22Z",
         "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
         "id": "string",
         "authProvider": "string",
         "authId": "string",
@@ -14240,9 +25125,6 @@ NewUserTenantPrefs
       "state": "string",
       "zip": "string",
       "country": "string",
-      "primaryContactEmail": "string",
-      "allowedDomain": "string",
-      "tenantType": "string",
       "tenantConfigs": [
         {
           "deleted": true,
@@ -14261,6 +25143,169 @@ NewUserTenantPrefs
       ],
       "userTenants": [
         {}
+      ],
+      "users": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "firstName": "string",
+          "lastName": "string",
+          "middleName": "string",
+          "username": "string",
+          "email": "string",
+          "designation": "string",
+          "phone": "string",
+          "authClientIds": "string",
+          "lastLogin": "2019-08-24T14:15:22Z",
+          "photoUrl": "string",
+          "gender": "M",
+          "dob": "2019-08-24T14:15:22Z",
+          "defaultTenantId": "string",
+          "defaultTenant": {},
+          "credentials": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "authProvider": "string",
+            "authId": "string",
+            "authToken": "string",
+            "secretKey": "string",
+            "password": "string",
+            "userId": "string",
+            "user": {}
+          },
+          "userTenants": [
+            {}
+          ]
+        }
+      ],
+      "roles": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "roleType": 15,
+          "description": "string",
+          "permissions": [
+            "string"
+          ],
+          "allowedClients": [
+            "string"
+          ],
+          "tenantId": "string",
+          "userTenants": [
+            {}
+          ],
+          "createdByUser": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "middleName": "string",
+            "username": "string",
+            "email": "string",
+            "designation": "string",
+            "phone": "string",
+            "authClientIds": "string",
+            "lastLogin": "string",
+            "photoUrl": "string",
+            "gender": "M",
+            "dob": "2019-08-24T14:15:22Z",
+            "defaultTenantId": "string",
+            "status": 11,
+            "tenantId": "string",
+            "roleId": "string",
+            "tenantName": "string",
+            "tenantKey": "string",
+            "roleName": "string",
+            "userTenantId": "string"
+          },
+          "modifiedByUser": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "middleName": "string",
+            "username": "string",
+            "email": "string",
+            "designation": "string",
+            "phone": "string",
+            "authClientIds": "string",
+            "lastLogin": "string",
+            "photoUrl": "string",
+            "gender": "M",
+            "dob": "2019-08-24T14:15:22Z",
+            "defaultTenantId": "string",
+            "status": 11,
+            "tenantId": "string",
+            "roleId": "string",
+            "tenantName": "string",
+            "tenantKey": "string",
+            "roleName": "string",
+            "userTenantId": "string"
+          }
+        }
+      ],
+      "groups": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "description": "string",
+          "photoUrl": "string",
+          "tenantId": "string",
+          "userGroups": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "groupId": "string",
+              "userTenantId": "string",
+              "group": {},
+              "userTenant": {}
+            }
+          ]
+        }
       ]
     },
     "role": {
@@ -14274,12 +25319,14 @@ NewUserTenantPrefs
       "id": "string",
       "name": "string",
       "roleType": 15,
+      "description": "string",
       "permissions": [
         "string"
       ],
       "allowedClients": [
         "string"
       ],
+      "tenantId": "string",
       "userTenants": [
         {}
       ],
@@ -14311,9 +25358,7 @@ NewUserTenantPrefs
         "tenantName": "string",
         "tenantKey": "string",
         "roleName": "string",
-        "roleType": 0,
-        "userTenantId": "string",
-        "expiresOn": "2019-08-24T14:15:22Z"
+        "userTenantId": "string"
       },
       "modifiedByUser": {
         "deleted": true,
@@ -14343,9 +25388,7 @@ NewUserTenantPrefs
         "tenantName": "string",
         "tenantKey": "string",
         "roleName": "string",
-        "roleType": 0,
-        "userTenantId": "string",
-        "expiresOn": "2019-08-24T14:15:22Z"
+        "userTenantId": "string"
       }
     },
     "userLevelPermissions": [
@@ -14376,7 +25419,6 @@ NewUserTenantPrefs
         "id": "string",
         "groupId": "string",
         "userTenantId": "string",
-        "isOwner": true,
         "group": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -14389,11 +25431,27 @@ NewUserTenantPrefs
           "name": "string",
           "description": "string",
           "photoUrl": "string",
-          "groupType": "Tenant",
+          "tenantId": "string",
           "userGroups": [
             {}
           ]
         },
+        "userTenant": {}
+      }
+    ],
+    "userInvitations": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "expiresOn": "2019-08-24T14:15:22Z",
+        "token": "string",
+        "userTenantId": "string",
         "userTenant": {}
       }
     ]
@@ -14421,6 +25479,130 @@ UserTenantPrefsWithRelations
 |userTenantId|string|false|none|none|
 |userTenant|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
 
+<h2 id="tocS_UserLevelPermission">UserLevelPermission</h2>
+<!-- backwards compatibility -->
+<a id="schemauserlevelpermission"></a>
+<a id="schema_UserLevelPermission"></a>
+<a id="tocSuserlevelpermission"></a>
+<a id="tocsuserlevelpermission"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "permission": "string",
+  "allowed": true,
+  "userTenantId": "string"
+}
+
+```
+
+UserLevelPermission
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|permission|string|true|none|none|
+|allowed|boolean|true|none|none|
+|userTenantId|string|true|none|none|
+
+<h2 id="tocS_NewUserLevelPermissionInUserTenant">NewUserLevelPermissionInUserTenant</h2>
+<!-- backwards compatibility -->
+<a id="schemanewuserlevelpermissioninusertenant"></a>
+<a id="schema_NewUserLevelPermissionInUserTenant"></a>
+<a id="tocSnewuserlevelpermissioninusertenant"></a>
+<a id="tocsnewuserlevelpermissioninusertenant"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "permission": "string",
+  "allowed": true,
+  "userTenantId": "string"
+}
+
+```
+
+NewUserLevelPermissionInUserTenant
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|permission|string|true|none|none|
+|allowed|boolean|true|none|none|
+|userTenantId|string|false|none|none|
+
+<h2 id="tocS_UserLevelPermissionPartial">UserLevelPermissionPartial</h2>
+<!-- backwards compatibility -->
+<a id="schemauserlevelpermissionpartial"></a>
+<a id="schema_UserLevelPermissionPartial"></a>
+<a id="tocSuserlevelpermissionpartial"></a>
+<a id="tocsuserlevelpermissionpartial"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "permission": "string",
+  "allowed": true,
+  "userTenantId": "string"
+}
+
+```
+
+UserLevelPermissionPartial
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|permission|string|false|none|none|
+|allowed|boolean|false|none|none|
+|userTenantId|string|false|none|none|
+
 <h2 id="tocS_loopback.Count">loopback.Count</h2>
 <!-- backwards compatibility -->
 <a id="schemaloopback.count"></a>
@@ -14442,614 +25624,6 @@ loopback.Count
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |count|number|false|none|none|
-
-<h2 id="tocS_groups.ScopeFilter">groups.ScopeFilter</h2>
-<!-- backwards compatibility -->
-<a id="schemagroups.scopefilter"></a>
-<a id="schema_groups.ScopeFilter"></a>
-<a id="tocSgroups.scopefilter"></a>
-<a id="tocsgroups.scopefilter"></a>
-
-```json
-{
-  "offset": 0,
-  "limit": 100,
-  "skip": 0,
-  "order": "string",
-  "where": {},
-  "fields": {},
-  "include": [
-    {}
-  ]
-}
-
-```
-
-groups.ScopeFilter
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|offset|integer|false|none|none|
-|limit|integer|false|none|none|
-|skip|integer|false|none|none|
-|order|any|false|none|none|
-
-oneOf
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|string|false|none|none|
-
-xor
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|[string]|false|none|none|
-
-continued
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|where|object|false|none|none|
-|fields|any|false|none|none|
-
-oneOf
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|object|false|none|none|
-
-xor
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|[string]|false|none|none|
-
-continued
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|include|[object]|false|none|none|
-
-<h2 id="tocS_groups.IncludeFilter.Items">groups.IncludeFilter.Items</h2>
-<!-- backwards compatibility -->
-<a id="schemagroups.includefilter.items"></a>
-<a id="schema_groups.IncludeFilter.Items"></a>
-<a id="tocSgroups.includefilter.items"></a>
-<a id="tocsgroups.includefilter.items"></a>
-
-```json
-{
-  "relation": "userGroups",
-  "scope": {
-    "offset": 0,
-    "limit": 100,
-    "skip": 0,
-    "order": "string",
-    "where": {},
-    "fields": {},
-    "include": [
-      {}
-    ]
-  }
-}
-
-```
-
-groups.IncludeFilter.Items
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|relation|string|false|none|none|
-|scope|[groups.ScopeFilter](#schemagroups.scopefilter)|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|relation|userGroups|
-
-<h2 id="tocS_groups.Filter">groups.Filter</h2>
-<!-- backwards compatibility -->
-<a id="schemagroups.filter"></a>
-<a id="schema_groups.Filter"></a>
-<a id="tocSgroups.filter"></a>
-<a id="tocsgroups.filter"></a>
-
-```json
-{
-  "offset": 0,
-  "limit": 100,
-  "skip": 0,
-  "order": "string",
-  "where": {},
-  "fields": {
-    "deleted": true,
-    "deletedOn": true,
-    "deletedBy": true,
-    "createdOn": true,
-    "modifiedOn": true,
-    "createdBy": true,
-    "modifiedBy": true,
-    "id": true,
-    "name": true,
-    "description": true,
-    "photoUrl": true,
-    "groupType": true
-  },
-  "include": [
-    {
-      "relation": "userGroups",
-      "scope": {
-        "offset": 0,
-        "limit": 100,
-        "skip": 0,
-        "order": "string",
-        "where": {},
-        "fields": {},
-        "include": [
-          {}
-        ]
-      }
-    }
-  ]
-}
-
-```
-
-groups.Filter
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|offset|integer|false|none|none|
-|limit|integer|false|none|none|
-|skip|integer|false|none|none|
-|order|any|false|none|none|
-
-oneOf
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|string|false|none|none|
-
-xor
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|[string]|false|none|none|
-
-continued
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|where|object|false|none|none|
-|fields|any|false|none|none|
-
-oneOf
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|object|false|none|none|
-|»» deleted|boolean|false|none|none|
-|»» deletedOn|boolean|false|none|none|
-|»» deletedBy|boolean|false|none|none|
-|»» createdOn|boolean|false|none|none|
-|»» modifiedOn|boolean|false|none|none|
-|»» createdBy|boolean|false|none|none|
-|»» modifiedBy|boolean|false|none|none|
-|»» id|boolean|false|none|none|
-|»» name|boolean|false|none|none|
-|»» description|boolean|false|none|none|
-|»» photoUrl|boolean|false|none|none|
-|»» groupType|boolean|false|none|none|
-
-xor
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|[string]|false|none|none|
-
-continued
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|include|[anyOf]|false|none|none|
-
-anyOf
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|[groups.IncludeFilter.Items](#schemagroups.includefilter.items)|false|none|none|
-
-or
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|string|false|none|none|
-
-<h2 id="tocS_PingResponse">PingResponse</h2>
-<!-- backwards compatibility -->
-<a id="schemapingresponse"></a>
-<a id="schema_PingResponse"></a>
-<a id="tocSpingresponse"></a>
-<a id="tocspingresponse"></a>
-
-```json
-{
-  "greeting": "string",
-  "date": "string"
-}
-
-```
-
-PingResponse
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|greeting|string|false|none|none|
-|date|string|false|none|none|
-
-<h2 id="tocS_roles.ScopeFilter">roles.ScopeFilter</h2>
-<!-- backwards compatibility -->
-<a id="schemaroles.scopefilter"></a>
-<a id="schema_roles.ScopeFilter"></a>
-<a id="tocSroles.scopefilter"></a>
-<a id="tocsroles.scopefilter"></a>
-
-```json
-{
-  "offset": 0,
-  "limit": 100,
-  "skip": 0,
-  "order": "string",
-  "where": {},
-  "fields": {},
-  "include": [
-    {}
-  ]
-}
-
-```
-
-roles.ScopeFilter
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|offset|integer|false|none|none|
-|limit|integer|false|none|none|
-|skip|integer|false|none|none|
-|order|any|false|none|none|
-
-oneOf
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|string|false|none|none|
-
-xor
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|[string]|false|none|none|
-
-continued
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|where|object|false|none|none|
-|fields|any|false|none|none|
-
-oneOf
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|object|false|none|none|
-
-xor
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|[string]|false|none|none|
-
-continued
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|include|[object]|false|none|none|
-
-<h2 id="tocS_roles.IncludeFilter.Items">roles.IncludeFilter.Items</h2>
-<!-- backwards compatibility -->
-<a id="schemaroles.includefilter.items"></a>
-<a id="schema_roles.IncludeFilter.Items"></a>
-<a id="tocSroles.includefilter.items"></a>
-<a id="tocsroles.includefilter.items"></a>
-
-```json
-{
-  "relation": "userTenants",
-  "scope": {
-    "offset": 0,
-    "limit": 100,
-    "skip": 0,
-    "order": "string",
-    "where": {},
-    "fields": {},
-    "include": [
-      {}
-    ]
-  }
-}
-
-```
-
-roles.IncludeFilter.Items
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|relation|string|false|none|none|
-|scope|[roles.ScopeFilter](#schemaroles.scopefilter)|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|relation|userTenants|
-|relation|createdByUser|
-|relation|modifiedByUser|
-
-<h2 id="tocS_roles.Filter">roles.Filter</h2>
-<!-- backwards compatibility -->
-<a id="schemaroles.filter"></a>
-<a id="schema_roles.Filter"></a>
-<a id="tocSroles.filter"></a>
-<a id="tocsroles.filter"></a>
-
-```json
-{
-  "offset": 0,
-  "limit": 100,
-  "skip": 0,
-  "order": "string",
-  "where": {},
-  "fields": {
-    "deleted": true,
-    "deletedOn": true,
-    "deletedBy": true,
-    "createdOn": true,
-    "modifiedOn": true,
-    "createdBy": true,
-    "modifiedBy": true,
-    "id": true,
-    "name": true,
-    "roleType": true,
-    "permissions": true,
-    "allowedClients": true
-  },
-  "include": [
-    {
-      "relation": "userTenants",
-      "scope": {
-        "offset": 0,
-        "limit": 100,
-        "skip": 0,
-        "order": "string",
-        "where": {},
-        "fields": {},
-        "include": [
-          {}
-        ]
-      }
-    }
-  ]
-}
-
-```
-
-roles.Filter
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|offset|integer|false|none|none|
-|limit|integer|false|none|none|
-|skip|integer|false|none|none|
-|order|any|false|none|none|
-
-oneOf
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|string|false|none|none|
-
-xor
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|[string]|false|none|none|
-
-continued
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|where|object|false|none|none|
-|fields|any|false|none|none|
-
-oneOf
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|object|false|none|none|
-|»» deleted|boolean|false|none|none|
-|»» deletedOn|boolean|false|none|none|
-|»» deletedBy|boolean|false|none|none|
-|»» createdOn|boolean|false|none|none|
-|»» modifiedOn|boolean|false|none|none|
-|»» createdBy|boolean|false|none|none|
-|»» modifiedBy|boolean|false|none|none|
-|»» id|boolean|false|none|none|
-|»» name|boolean|false|none|none|
-|»» roleType|boolean|false|none|none|
-|»» permissions|boolean|false|none|none|
-|»» allowedClients|boolean|false|none|none|
-
-xor
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|[string]|false|none|none|
-
-continued
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|include|[anyOf]|false|none|none|
-
-anyOf
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|[roles.IncludeFilter.Items](#schemaroles.includefilter.items)|false|none|none|
-
-or
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|string|false|none|none|
-
-<h2 id="tocS_v_users.Filter">v_users.Filter</h2>
-<!-- backwards compatibility -->
-<a id="schemav_users.filter"></a>
-<a id="schema_v_users.Filter"></a>
-<a id="tocSv_users.filter"></a>
-<a id="tocsv_users.filter"></a>
-
-```json
-{
-  "offset": 0,
-  "limit": 100,
-  "skip": 0,
-  "order": "string",
-  "where": {},
-  "fields": {
-    "deleted": true,
-    "deletedOn": true,
-    "deletedBy": true,
-    "createdOn": true,
-    "modifiedOn": true,
-    "createdBy": true,
-    "modifiedBy": true,
-    "id": true,
-    "firstName": true,
-    "lastName": true,
-    "middleName": true,
-    "username": true,
-    "email": true,
-    "designation": true,
-    "phone": true,
-    "authClientIds": true,
-    "lastLogin": true,
-    "photoUrl": true,
-    "gender": true,
-    "dob": true,
-    "defaultTenantId": true,
-    "status": true,
-    "tenantId": true,
-    "roleId": true,
-    "tenantName": true,
-    "tenantKey": true,
-    "roleName": true,
-    "roleType": true,
-    "userTenantId": true,
-    "expiresOn": true
-  }
-}
-
-```
-
-v_users.Filter
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|offset|integer|false|none|none|
-|limit|integer|false|none|none|
-|skip|integer|false|none|none|
-|order|any|false|none|none|
-
-oneOf
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|string|false|none|none|
-
-xor
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|[string]|false|none|none|
-
-continued
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|where|object|false|none|none|
-|fields|any|false|none|none|
-
-oneOf
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|object|false|none|none|
-|»» deleted|boolean|false|none|none|
-|»» deletedOn|boolean|false|none|none|
-|»» deletedBy|boolean|false|none|none|
-|»» createdOn|boolean|false|none|none|
-|»» modifiedOn|boolean|false|none|none|
-|»» createdBy|boolean|false|none|none|
-|»» modifiedBy|boolean|false|none|none|
-|»» id|boolean|false|none|none|
-|»» firstName|boolean|false|none|none|
-|»» lastName|boolean|false|none|none|
-|»» middleName|boolean|false|none|none|
-|»» username|boolean|false|none|none|
-|»» email|boolean|false|none|none|
-|»» designation|boolean|false|none|none|
-|»» phone|boolean|false|none|none|
-|»» authClientIds|boolean|false|none|none|
-|»» lastLogin|boolean|false|none|none|
-|»» photoUrl|boolean|false|none|none|
-|»» gender|boolean|false|none|none|
-|»» dob|boolean|false|none|none|
-|»» defaultTenantId|boolean|false|none|none|
-|»» status|boolean|false|none|none|
-|»» tenantId|boolean|false|none|none|
-|»» roleId|boolean|false|none|none|
-|»» tenantName|boolean|false|none|none|
-|»» tenantKey|boolean|false|none|none|
-|»» roleName|boolean|false|none|none|
-|»» roleType|boolean|false|none|none|
-|»» userTenantId|boolean|false|none|none|
-|»» expiresOn|boolean|false|none|none|
-
-xor
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|[string]|false|none|none|
 
 <h2 id="tocS_tenants.ScopeFilter">tenants.ScopeFilter</h2>
 <!-- backwards compatibility -->
@@ -15161,6 +25735,9 @@ tenants.IncludeFilter.Items
 |---|---|
 |relation|tenantConfigs|
 |relation|userTenants|
+|relation|users|
+|relation|roles|
+|relation|groups|
 
 <h2 id="tocS_tenants.Filter">tenants.Filter</h2>
 <!-- backwards compatibility -->
@@ -15192,10 +25769,7 @@ tenants.IncludeFilter.Items
     "city": true,
     "state": true,
     "zip": true,
-    "country": true,
-    "primaryContactEmail": true,
-    "allowedDomain": true,
-    "tenantType": true
+    "country": true
   },
   "include": [
     {
@@ -15268,9 +25842,6 @@ oneOf
 |»» state|boolean|false|none|none|
 |»» zip|boolean|false|none|none|
 |»» country|boolean|false|none|none|
-|»» primaryContactEmail|boolean|false|none|none|
-|»» allowedDomain|boolean|false|none|none|
-|»» tenantType|boolean|false|none|none|
 
 xor
 
@@ -15327,10 +25898,7 @@ or
     "city": true,
     "state": true,
     "zip": true,
-    "country": true,
-    "primaryContactEmail": true,
-    "allowedDomain": true,
-    "tenantType": true
+    "country": true
   },
   "include": [
     {
@@ -15404,9 +25972,6 @@ oneOf
 |»» state|boolean|false|none|none|
 |»» zip|boolean|false|none|none|
 |»» country|boolean|false|none|none|
-|»» primaryContactEmail|boolean|false|none|none|
-|»» allowedDomain|boolean|false|none|none|
-|»» tenantType|boolean|false|none|none|
 
 xor
 
@@ -15659,124 +26224,4 @@ or
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |» *anonymous*|string|false|none|none|
-
-<h2 id="tocS_v_users.Filter1">v_users.Filter1</h2>
-<!-- backwards compatibility -->
-<a id="schemav_users.filter1"></a>
-<a id="schema_v_users.Filter1"></a>
-<a id="tocSv_users.filter1"></a>
-<a id="tocsv_users.filter1"></a>
-
-```json
-{
-  "offset": 0,
-  "limit": 100,
-  "skip": 0,
-  "order": "string",
-  "fields": {
-    "deleted": true,
-    "deletedOn": true,
-    "deletedBy": true,
-    "createdOn": true,
-    "modifiedOn": true,
-    "createdBy": true,
-    "modifiedBy": true,
-    "id": true,
-    "firstName": true,
-    "lastName": true,
-    "middleName": true,
-    "username": true,
-    "email": true,
-    "designation": true,
-    "phone": true,
-    "authClientIds": true,
-    "lastLogin": true,
-    "photoUrl": true,
-    "gender": true,
-    "dob": true,
-    "defaultTenantId": true,
-    "status": true,
-    "tenantId": true,
-    "roleId": true,
-    "tenantName": true,
-    "tenantKey": true,
-    "roleName": true,
-    "roleType": true,
-    "userTenantId": true,
-    "expiresOn": true
-  }
-}
-
-```
-
-v_users.Filter
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|offset|integer|false|none|none|
-|limit|integer|false|none|none|
-|skip|integer|false|none|none|
-|order|any|false|none|none|
-
-oneOf
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|string|false|none|none|
-
-xor
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|[string]|false|none|none|
-
-continued
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|fields|any|false|none|none|
-
-oneOf
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|object|false|none|none|
-|»» deleted|boolean|false|none|none|
-|»» deletedOn|boolean|false|none|none|
-|»» deletedBy|boolean|false|none|none|
-|»» createdOn|boolean|false|none|none|
-|»» modifiedOn|boolean|false|none|none|
-|»» createdBy|boolean|false|none|none|
-|»» modifiedBy|boolean|false|none|none|
-|»» id|boolean|false|none|none|
-|»» firstName|boolean|false|none|none|
-|»» lastName|boolean|false|none|none|
-|»» middleName|boolean|false|none|none|
-|»» username|boolean|false|none|none|
-|»» email|boolean|false|none|none|
-|»» designation|boolean|false|none|none|
-|»» phone|boolean|false|none|none|
-|»» authClientIds|boolean|false|none|none|
-|»» lastLogin|boolean|false|none|none|
-|»» photoUrl|boolean|false|none|none|
-|»» gender|boolean|false|none|none|
-|»» dob|boolean|false|none|none|
-|»» defaultTenantId|boolean|false|none|none|
-|»» status|boolean|false|none|none|
-|»» tenantId|boolean|false|none|none|
-|»» roleId|boolean|false|none|none|
-|»» tenantName|boolean|false|none|none|
-|»» tenantKey|boolean|false|none|none|
-|»» roleName|boolean|false|none|none|
-|»» roleType|boolean|false|none|none|
-|»» userTenantId|boolean|false|none|none|
-|»» expiresOn|boolean|false|none|none|
-
-xor
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|[string]|false|none|none|
 

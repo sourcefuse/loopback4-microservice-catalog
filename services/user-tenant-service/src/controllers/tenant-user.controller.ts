@@ -1,61 +1,36 @@
-﻿// Copyright (c) 2023 Sourcefuse Technologies
+// Copyright (c) 2023 Sourcefuse Technologies
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {inject} from '@loopback/context';
-import {
-  Count,
-  CountSchema,
-  Filter,
-  FilterBuilder,
-  repository,
-  Where,
-  WhereBuilder,
-} from '@loopback/repository';
+import {intercept, service} from '@loopback/core';
+import {Filter, Where, repository} from '@loopback/repository';
 import {
   del,
   get,
-  getFilterSchemaFor,
   getModelSchemaRef,
-  HttpErrors,
+  getWhereSchemaFor,
   param,
   patch,
   post,
   requestBody,
 } from '@loopback/rest';
-import {
-  CONTENT_TYPE,
-  ErrorCodes,
-  IAuthUserWithPermissions,
-  STATUS_CODE,
-  OPERATION_SECURITY_SPEC,
-} from '@sourceloop/core';
-import {
-  authenticate,
-  AuthenticationBindings,
-  STRATEGY,
-} from 'loopback4-authentication';
-import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
-import {PermissionKey, RoleKey} from '../enums';
+import {OPERATION_SECURITY_SPEC} from '@sourceloop/core';
+import {STRATEGY, authenticate} from 'loopback4-authentication';
+import {authorize} from 'loopback4-authorization';
+import {PermissionKey, STATUS_CODE} from '../enums';
+import {UserTenantServiceKey} from '../keys';
+import {User, UserDto, UserView} from '../models';
+import {TenantRepository, UserRepository} from '../repositories';
+import {UserOperationsService} from '../services';
+const baseUrl = '/tenants/{id}/users';
 
-import {Tenant, UserDto, UserView} from '../models';
-import {
-  NonRestrictedUserViewRepository,
-  UserViewRepository,
-} from '../repositories';
-import {UserOperationsService} from '../services/user-operations.service';
-
-const basePath = '/tenants/{id}/users';
-const superAdminRoleType = 10;
-
+@intercept(UserTenantServiceKey.TenantInterceptorInterceptor)
 export class TenantUserController {
   constructor(
-    @repository(UserViewRepository)
-    private readonly userViewRepo: UserViewRepository,
-    @repository(NonRestrictedUserViewRepository)
-    private readonly nonRestrictedUserViewRepo: NonRestrictedUserViewRepository,
-    @inject('services.UserOperationsService')
-    private readonly userOpService: UserOperationsService,
+    @repository(TenantRepository) protected tenantRepository: TenantRepository,
+    @repository(UserRepository) protected userRepository: UserRepository,
+    @service(UserOperationsService)
+    protected userOperationsService: UserOperationsService,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {
@@ -63,104 +38,28 @@ export class TenantUserController {
   })
   @authorize({
     permissions: [
-      PermissionKey.ViewAnyUser,
       PermissionKey.ViewTenantUser,
-      PermissionKey.ViewTenantUserRestricted,
-      PermissionKey.ViewAnyUserNum,
       PermissionKey.ViewTenantUserNum,
-      PermissionKey.ViewTenantUserRestrictedNum,
     ],
   })
-  @get(basePath, {
+  @get(baseUrl, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
-      ...ErrorCodes,
       [STATUS_CODE.OK]: {
-        description: 'Array of Tenant has many Users',
+        description: 'Array of Users of Tenant',
         content: {
-          [CONTENT_TYPE.JSON]: {
-            schema: {type: 'array', items: getModelSchemaRef(UserDto)},
+          'application/json': {
+            schema: {type: 'array', items: getModelSchemaRef(User)},
           },
         },
       },
     },
   })
   async find(
-    @inject(AuthenticationBindings.CURRENT_USER)
-    currentUser: IAuthUserWithPermissions,
     @param.path.string('id') id: string,
-    @param.query.object('filter', getFilterSchemaFor(UserView))
-    filter?: Filter<UserView>,
+    @param.query.object('filter') filter?: Filter<UserView>,
   ): Promise<UserView[]> {
-    if (
-      currentUser.permissions.indexOf(PermissionKey.ViewAnyUser) < 0 &&
-      currentUser.tenantId !== id
-    ) {
-      throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
-    }
-
-    let whereClause = filter?.where;
-    if (
-      currentUser.permissions.indexOf(PermissionKey.ViewTenantUserRestricted) >=
-        0 &&
-      currentUser.tenantId === id
-    ) {
-      whereClause =
-        await this.userOpService.checkViewTenantRestrictedPermissions(
-          currentUser,
-          filter?.where,
-        );
-    }
-
-    const filterBuilder = new FilterBuilder(filter);
-    const whereBuilder = new WhereBuilder<UserView>();
-    if (whereClause) {
-      whereBuilder.and(whereClause, {
-        tenantId: id,
-      });
-    } else {
-      whereBuilder.eq('tenantId', id);
-    }
-    whereBuilder.neq('roleType', superAdminRoleType);
-    filterBuilder.where(whereBuilder.build());
-    if (+currentUser.role === RoleKey.SuperAdmin) {
-      return this.nonRestrictedUserViewRepo.find(filterBuilder.build());
-    }
-    return this.userViewRepo.find(filterBuilder.build());
-  }
-
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({
-    permissions: [PermissionKey.ViewAllUser, PermissionKey.ViewAllUserNum],
-  })
-  @get(`${basePath}/view-all`, {
-    security: OPERATION_SECURITY_SPEC,
-    responses: {
-      ...ErrorCodes,
-      [STATUS_CODE.OK]: {
-        description: 'Array of Tenant has many Users',
-        content: {
-          [CONTENT_TYPE.JSON]: {
-            schema: {type: 'array', items: getModelSchemaRef(UserDto)},
-          },
-        },
-      },
-    },
-  })
-  async findAllUsers(
-    @param.path.string('id') id: string,
-    @param.query.object('filter', getFilterSchemaFor(UserView))
-    filter?: Filter<UserView>,
-  ): Promise<UserView[]> {
-    const filterBuilder = new FilterBuilder(filter);
-    const whereBuilder = new WhereBuilder<UserView>();
-    whereBuilder.eq('tenantId', id);
-    whereBuilder.neq('roleType', superAdminRoleType);
-    filterBuilder.where(whereBuilder.build());
-
-    return this.nonRestrictedUserViewRepo.find(filterBuilder.build());
+    return this.userOperationsService.find(id, filter);
   }
 
   @authenticate(STRATEGY.BEARER, {
@@ -168,178 +67,35 @@ export class TenantUserController {
   })
   @authorize({
     permissions: [
-      PermissionKey.ViewAnyUser,
-      PermissionKey.ViewTenantUser,
-      PermissionKey.ViewTenantUserRestricted,
-      PermissionKey.ViewAnyUserNum,
-      PermissionKey.ViewTenantUserNum,
-      PermissionKey.ViewTenantUserRestrictedNum,
+      PermissionKey.CreateTenantUser,
+      PermissionKey.CreateTenantUserNum,
     ],
   })
-  @get(`${basePath}/count`, {
-    security: OPERATION_SECURITY_SPEC,
-    responses: {
-      [STATUS_CODE.OK]: {
-        description: 'User model count',
-        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
-      },
-    },
-  })
-  async count(
-    @inject(AuthenticationBindings.CURRENT_USER)
-    currentUser: IAuthUserWithPermissions,
-    @param.path.string('id') id: string,
-    @param.query.object('where')
-    where?: Where<UserView>,
-  ): Promise<Count> {
-    if (
-      currentUser.permissions.indexOf(PermissionKey.ViewAnyUser) < 0 &&
-      currentUser.tenantId !== id
-    ) {
-      throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
-    }
-
-    let whereClause = where;
-    if (
-      currentUser.permissions.indexOf(PermissionKey.ViewTenantUserRestricted) >=
-        0 &&
-      currentUser.tenantId === id
-    ) {
-      whereClause =
-        await this.userOpService.checkViewTenantRestrictedPermissions(
-          currentUser,
-          where,
-        );
-    }
-
-    const whereBuilder = new WhereBuilder<UserView>();
-    if (whereClause) {
-      whereBuilder.and(whereClause, {
-        tenantId: id,
-      });
-    } else {
-      whereBuilder.eq('tenantId', id);
-    }
-    whereBuilder.neq('roleType', superAdminRoleType);
-    if (+currentUser.role === RoleKey.SuperAdmin) {
-      return this.nonRestrictedUserViewRepo.count(whereBuilder.build());
-    } else {
-      return this.userViewRepo.count(whereBuilder.build());
-    }
-  }
-
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({
-    permissions: [
-      PermissionKey.ViewAnyUser,
-      PermissionKey.ViewTenantUser,
-      PermissionKey.ViewTenantUserRestricted,
-      PermissionKey.ViewOwnUser,
-      PermissionKey.ViewAnyUserNum,
-      PermissionKey.ViewTenantUserNum,
-      PermissionKey.ViewTenantUserRestrictedNum,
-      PermissionKey.ViewOwnUserNum,
-    ],
-  })
-  @get(`${basePath}/{userid}`, {
+  @post(baseUrl, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'User model instance',
-        content: {
-          [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(UserView, {
-              includeRelations: true,
-            }),
-          },
-        },
-      },
-    },
-  })
-  async findById(
-    @inject(AuthenticationBindings.CURRENT_USER)
-    currentUser: IAuthUserWithPermissions,
-    @param.path.string('id') id: string,
-    @param.path.string('userid') userId: string,
-    @param.query.object('filter', getFilterSchemaFor(UserView))
-    filter?: Filter<UserView>,
-  ): Promise<UserView> {
-    if (
-      currentUser.permissions.indexOf(PermissionKey.ViewAnyUser) < 0 &&
-      currentUser.tenantId !== id
-    ) {
-      throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
-    }
-
-    if (
-      currentUser.permissions.indexOf(PermissionKey.ViewOwnUser) >= 0 &&
-      currentUser.id !== userId
-    ) {
-      throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
-    }
-
-    const filterBuilder = new FilterBuilder(filter);
-    filterBuilder.where({
-      tenantId: id,
-    });
-
-    return this.userViewRepo.findById(userId, filterBuilder.build());
-  }
-
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({
-    permissions: [
-      PermissionKey.CreateAnyUser,
-      PermissionKey.CreateTenantUser,
-      PermissionKey.CreateTenantUserRestricted,
-      PermissionKey.CreateAnyUserNum,
-      PermissionKey.CreateTenantUserNum,
-      PermissionKey.CreateTenantUserRestrictedNum,
-    ],
-  })
-  @post(basePath, {
-    security: OPERATION_SECURITY_SPEC,
-    responses: {
-      ...ErrorCodes,
-      [STATUS_CODE.OK]: {
-        description: 'Tenant model instance',
-        content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(UserDto)},
-        },
+        content: {'application/json': {schema: getModelSchemaRef(User)}},
       },
     },
   })
   async create(
-    @param.path.string('id') id: typeof Tenant.prototype.id,
+    @param.path.string('id') id: string,
     @requestBody({
       content: {
-        [CONTENT_TYPE.JSON]: {
+        'application/json': {
           schema: getModelSchemaRef(UserDto, {
-            title: 'NewUser',
-            optional: ['tenantId'],
+            title: 'NewUserInTenant',
+            exclude: ['id', 'defaultTenantId'],
           }),
         },
       },
     })
-    userData: UserDto,
-    @inject(AuthenticationBindings.CURRENT_USER)
-    currentUser: IAuthUserWithPermissions,
-  ): Promise<UserDto> {
-    if (!id) {
-      throw new HttpErrors.BadRequest('Tenant Id not specified !');
-    }
-    userData.tenantId = id;
-    userData.userDetails.email = userData.userDetails.email.toLowerCase();
-    userData.userDetails.username = userData.userDetails.username.toLowerCase();
-
-    return this.userOpService.create(userData, currentUser, {
-      authId: userData.authId,
-      authProvider: userData.authProvider,
-    });
+    user: UserDto,
+  ): Promise<User> {
+    user.defaultTenantId = id;
+    return this.userOperationsService.create(user, id);
   }
 
   @authenticate(STRATEGY.BEARER, {
@@ -347,34 +103,25 @@ export class TenantUserController {
   })
   @authorize({
     permissions: [
-      PermissionKey.UpdateAnyUser,
-      PermissionKey.UpdateOwnUser,
       PermissionKey.UpdateTenantUser,
-      PermissionKey.UpdateTenantUserRestricted,
-      PermissionKey.UpdateAnyUserNum,
-      PermissionKey.UpdateOwnUserNum,
       PermissionKey.UpdateTenantUserNum,
-      PermissionKey.UpdateTenantUserRestrictedNum,
     ],
   })
-  @patch(`${basePath}/{userId}`, {
+  @patch(`${baseUrl}/{userId}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
-        description: 'User PATCH success',
+        description: 'Tenant.User PATCH',
       },
     },
   })
-  async updateById(
-    @param.header.string('Authorization') token: string,
-    @inject(AuthenticationBindings.CURRENT_USER)
-    currentUser: IAuthUserWithPermissions,
+  async patch(
     @param.path.string('id') id: string,
     @param.path.string('userId') userId: string,
     @requestBody({
       content: {
-        [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(UserView, {partial: true}),
+        'application/json': {
+          schema: getModelSchemaRef(User, {partial: true}),
         },
       },
     })
@@ -382,14 +129,9 @@ export class TenantUserController {
       UserView,
       'id' | 'authClientIds' | 'lastLogin' | 'status' | 'tenantId'
     >,
+    @param.query.object('where', getWhereSchemaFor(User)) where?: Where<User>,
   ): Promise<void> {
-    if (currentUser.id === userId && user.roleId !== undefined) {
-      throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
-    }
-    if (user.username) {
-      user.username = user.username.toLowerCase();
-    }
-    await this.userOpService.updateById(currentUser, userId, user, id);
+    await this.userOperationsService.updateById(user, userId, id);
   }
 
   @authenticate(STRATEGY.BEARER, {
@@ -397,28 +139,23 @@ export class TenantUserController {
   })
   @authorize({
     permissions: [
-      PermissionKey.DeleteAnyUser,
       PermissionKey.DeleteTenantUser,
-      PermissionKey.DeleteTenantUserRestricted,
-      PermissionKey.DeleteAnyUserNum,
       PermissionKey.DeleteTenantUserNum,
-      PermissionKey.DeleteTenantUserRestrictedNum,
     ],
   })
-  @del(`${basePath}/{userId}`, {
+  @del(`${baseUrl}/{userId}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
-        description: 'User DELETE success',
+        description: 'Tenant.User DELETE',
       },
     },
   })
-  async deleteById(
-    @inject(AuthenticationBindings.CURRENT_USER)
-    currentUser: IAuthUserWithPermissions,
+  async delete(
     @param.path.string('id') id: string,
     @param.path.string('userId') userId: string,
+    @param.query.object('where', getWhereSchemaFor(User)) where?: Where<User>,
   ): Promise<void> {
-    await this.userOpService.deleteById(currentUser, userId, id);
+    await this.userOperationsService.deleteById(userId, id);
   }
 }

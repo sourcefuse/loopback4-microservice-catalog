@@ -11,6 +11,9 @@ import {
   UserTenant,
   UserTenantWithRelations,
 } from '../models';
+import {User} from './user.model';
+import {Role} from './role.model';
+import {Group} from './group.model';
 
 @model({
   name: 'tenants',
@@ -75,29 +78,20 @@ export class Tenant extends UserModifiableEntity<Tenant> {
   })
   country?: string;
 
-  @property({
-    name: 'primary_contact_email',
-    type: 'string',
-  })
-  primaryContactEmail: string;
-
-  @property({
-    name: 'allowed_domain',
-    type: 'string',
-  })
-  allowedDomain: string;
-
-  @property({
-    name: 'tenant_type',
-    type: 'string',
-  })
-  tenantType: string;
-
   @hasMany(() => TenantConfig, {keyTo: 'tenantId'})
   tenantConfigs: TenantConfig[];
 
   @hasMany(() => UserTenant, {keyTo: 'tenantId'})
   userTenants: UserTenant[];
+
+  @hasMany(() => User, {keyTo: 'defaultTenantId'})
+  users: User[];
+
+  @hasMany(() => Role, {keyTo: 'tenantId'})
+  roles: Role[];
+
+  @hasMany(() => Group, {keyTo: 'tenantId'})
+  groups: Group[];
 }
 
 export interface TenantRelations {

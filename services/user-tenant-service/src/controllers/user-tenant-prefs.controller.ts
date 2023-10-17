@@ -1,33 +1,40 @@
-﻿// Copyright (c) 2023 Sourcefuse Technologies
+// Copyright (c) 2023 Sourcefuse Technologies
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {PermissionKey} from '../enums';
-import {inject} from '@loopback/context';
-import {Filter, repository} from '@loopback/repository';
+import {inject} from '@loopback/core';
 import {
+  Count,
+  CountSchema,
+  Filter,
+  repository,
+  Where,
+} from '@loopback/repository';
+import {
+  del,
   get,
-  getFilterSchemaFor,
   getModelSchemaRef,
+  HttpErrors,
   param,
   post,
   requestBody,
+  response,
 } from '@loopback/rest';
 import {
-  CONTENT_TYPE,
   IAuthUserWithPermissions,
-  STATUS_CODE,
+  OPERATION_SECURITY_SPEC,
 } from '@sourceloop/core';
 import {
   authenticate,
   AuthenticationBindings,
   STRATEGY,
 } from 'loopback4-authentication';
-import {authorize} from 'loopback4-authorization';
+import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
+import {PermissionKey, STATUS_CODE} from '../enums';
 import {UserTenantPrefs} from '../models';
-import {UserTenantPrefsRepository} from '../repositories/user-tenant-prefs.repository';
+import {UserTenantPrefsRepository} from '../repositories';
 
-const basePath = '/user-tenant-prefs';
+const baseUrl = '/user-tenant-prefs';
 
 export class UserTenantPrefsController {
   constructor(
@@ -42,33 +49,28 @@ export class UserTenantPrefsController {
   })
   @authorize({
     permissions: [
-      PermissionKey.UpdateUserTenantPreference,
-      PermissionKey.UpdateUserTenantPreferenceNum,
+      PermissionKey.CreateUserTenantPreference,
+      PermissionKey.CreateUserTenantPreferenceNum,
     ],
   })
-  @post(basePath, {
-    responses: {
-      [STATUS_CODE.OK]: {
-        description: 'UserTenantPrefs model instance',
-        content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(UserTenantPrefs)},
-        },
-      },
-    },
+  @post(baseUrl, {security: OPERATION_SECURITY_SPEC, responses: {}})
+  @response(STATUS_CODE.OK, {
+    description: 'UserTenantPrefs model instance',
+    content: {'application/json': {schema: getModelSchemaRef(UserTenantPrefs)}},
   })
   async create(
     @requestBody({
       content: {
-        [CONTENT_TYPE.JSON]: {
+        'application/json': {
           schema: getModelSchemaRef(UserTenantPrefs, {
             title: 'NewUserTenantPrefs',
-            exclude: ['id'],
+            exclude: ['id', 'userTenantId'],
           }),
         },
       },
     })
     userTenantPrefs: Omit<UserTenantPrefs, 'id'>,
-  ): Promise<void> {
+  ): Promise<UserTenantPrefs> {
     if (this.currentUser.userTenantId) {
       userTenantPrefs.userTenantId = this.currentUser.userTenantId;
     }
@@ -78,13 +80,13 @@ export class UserTenantPrefsController {
         configKey: userTenantPrefs.configKey,
       },
     });
-    if (!prefExists) {
-      await this.userTenantPrefsRepository.create(userTenantPrefs);
-    } else {
+    if (prefExists) {
       await this.userTenantPrefsRepository.updateById(prefExists.id, {
         configValue: userTenantPrefs.configValue,
       });
+      return userTenantPrefs;
     }
+    return this.userTenantPrefsRepository.create(userTenantPrefs);
   }
 
   @authenticate(STRATEGY.BEARER, {
@@ -96,26 +98,46 @@ export class UserTenantPrefsController {
       PermissionKey.ViewUserTenantPreferenceNum,
     ],
   })
-  @get(basePath, {
-    responses: {
-      [STATUS_CODE.OK]: {
-        description: 'Array of UserTenantPrefs model instances',
-        content: {
-          [CONTENT_TYPE.JSON]: {
-            schema: {
-              type: 'array',
-              items: getModelSchemaRef(UserTenantPrefs, {
-                includeRelations: true,
-              }),
-            },
-          },
+  @get(`${baseUrl}/count`, {security: OPERATION_SECURITY_SPEC, responses: {}})
+  @response(STATUS_CODE.OK, {
+    description: 'UserTenantPrefs model count',
+    content: {'application/json': {schema: CountSchema}},
+  })
+  async count(
+    @param.where(UserTenantPrefs) where?: Where<UserTenantPrefs>,
+  ): Promise<Count> {
+    if (!where) {
+      where = {};
+    }
+    where = {
+      and: [where ?? {}, {userTenantId: this.currentUser.userTenantId}],
+    };
+    return this.userTenantPrefsRepository.count(where);
+  }
+
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({
+    permissions: [
+      PermissionKey.ViewUserTenantPreference,
+      PermissionKey.ViewUserTenantPreferenceNum,
+    ],
+  })
+  @get(baseUrl, {security: OPERATION_SECURITY_SPEC, responses: {}})
+  @response(STATUS_CODE.OK, {
+    description: 'Array of UserTenantPrefs model instances',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'array',
+          items: getModelSchemaRef(UserTenantPrefs, {includeRelations: true}),
         },
       },
     },
   })
   async find(
-    @param.query.object('filter', getFilterSchemaFor(UserTenantPrefs))
-    filter?: Filter<UserTenantPrefs>,
+    @param.filter(UserTenantPrefs) filter?: Filter<UserTenantPrefs>,
   ): Promise<UserTenantPrefs[]> {
     if (!filter) {
       filter = {where: {}};
@@ -124,5 +146,26 @@ export class UserTenantPrefsController {
       and: [filter.where ?? {}, {userTenantId: this.currentUser.userTenantId}],
     };
     return this.userTenantPrefsRepository.find(filter);
+  }
+
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({
+    permissions: [
+      PermissionKey.DeleteUserTenantPreference,
+      PermissionKey.DeleteUserTenantPreferenceNum,
+    ],
+  })
+  @del(`${baseUrl}/{id}`, {security: OPERATION_SECURITY_SPEC, responses: {}})
+  @response(STATUS_CODE.NO_CONTENT, {
+    description: 'UserTenantPrefs DELETE success',
+  })
+  async deleteById(@param.path.string('id') id: string): Promise<void> {
+    const userTenantPrefs = await this.userTenantPrefsRepository.findById(id);
+    if (userTenantPrefs.userTenantId !== this.currentUser.userTenantId) {
+      throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
+    }
+    await this.userTenantPrefsRepository.deleteById(id);
   }
 }

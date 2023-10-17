@@ -1,32 +1,23 @@
-﻿// Copyright (c) 2023 Sourcefuse Technologies
+// Copyright (c) 2023 Sourcefuse Technologies
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {Getter, inject} from '@loopback/core';
 import {BelongsToAccessor, juggler, repository} from '@loopback/repository';
-
 import {
-  ConditionalAuditRepositoryMixin,
-  IAuditMixinOptions,
-} from '@sourceloop/audit-log';
-import {SoftCrudRepository} from 'loopback4-soft-delete';
+  DefaultUserModifyCrudRepository,
+  IAuthUserWithPermissions,
+} from '@sourceloop/core';
+import {AuthenticationBindings} from 'loopback4-authentication';
 import {UserTenantDataSourceName} from '../keys';
 import {User, UserCredentials, UserCredentialsRelations} from '../models';
-import {AuditLogRepository} from './audit.repository';
 import {UserRepository} from './user.repository';
 
-const UserCredentialsAuditOpts: IAuditMixinOptions = {
-  actionKey: 'User_Credentials_Logs',
-};
-
-export class UserCredentialsRepository extends ConditionalAuditRepositoryMixin(
-  SoftCrudRepository<
-    UserCredentials,
-    typeof UserCredentials.prototype.id,
-    UserCredentialsRelations
-  >,
-  UserCredentialsAuditOpts,
-) {
+export class UserCredentialsRepository extends DefaultUserModifyCrudRepository<
+  UserCredentials,
+  typeof UserCredentials.prototype.id,
+  UserCredentialsRelations
+> {
   public readonly user: BelongsToAccessor<
     User,
     typeof UserCredentials.prototype.id
@@ -37,10 +28,13 @@ export class UserCredentialsRepository extends ConditionalAuditRepositoryMixin(
     dataSource: juggler.DataSource,
     @repository.getter('UserRepository')
     protected userRepositoryGetter: Getter<UserRepository>,
-    @repository.getter('AuditLogRepository')
-    public getAuditLogRepository: Getter<AuditLogRepository>,
+    @inject.getter(AuthenticationBindings.CURRENT_USER)
+    protected readonly getCurrentUser: Getter<
+      IAuthUserWithPermissions | undefined
+    >,
   ) {
-    super(UserCredentials, dataSource);
+    super(UserCredentials, dataSource, getCurrentUser);
     this.user = this.createBelongsToAccessorFor('user', userRepositoryGetter);
+    this.registerInclusionResolver('user', this.user.inclusionResolver);
   }
 }

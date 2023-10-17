@@ -7,7 +7,8 @@ import {
   createRestAppClient,
   givenHttpServerConfig,
 } from '@loopback/testlab';
-import {UserTenantServiceApplication} from '../application';
+import {UserTenantServiceApplication} from '../../application';
+import {AuthenticationDbDataSource} from '../datasources';
 
 export async function setupApplication(): Promise<AppWithClient> {
   const restConfig = givenHttpServerConfig({
@@ -17,18 +18,18 @@ export async function setupApplication(): Promise<AppWithClient> {
     // host: process.env.HOST,
     // port: +process.env.PORT,
   });
+  setUpEnv();
 
   const app = new UserTenantServiceApplication({
     rest: restConfig,
   });
 
-  await app.boot();
-  setUpEnv();
-  app.bind('datasources.config.pgdb').to({
-    name: 'pgdb',
+  app.bind('datasources.AuthDB').to({
+    name: 'AuthDB',
     connector: 'memory',
   });
-
+  app.dataSource(AuthenticationDbDataSource);
+  await app.boot();
   await app.start();
 
   const client = createRestAppClient(app);
@@ -40,9 +41,14 @@ function setUpEnv() {
   process.env.NODE_ENV = 'test';
   process.env.ENABLE_TRACING = '0';
   process.env.ENABLE_OBF = '0';
+  process.env.JWT_SECRET = secret;
+  process.env.JWT_ISSUER = issuer;
 }
 
 export interface AppWithClient {
   app: UserTenantServiceApplication;
   client: Client;
 }
+
+export const issuer = 'sf';
+export const secret = 'test_secret';

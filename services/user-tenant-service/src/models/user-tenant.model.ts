@@ -3,22 +3,21 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {belongsTo, hasMany, model, property} from '@loopback/repository';
-import {BaseEntity, IUserPrefs, UserStatus} from '@sourceloop/core';
-
-import {
-  Role,
-  Tenant,
-  TenantWithRelations,
-  User,
-  UserLevelPermission,
-  UserWithRelations,
-} from './';
+import {IUserPrefs, UserModifiableEntity, UserStatus} from '@sourceloop/core';
+import {Role} from './role.model';
+import {Tenant, TenantWithRelations} from './tenant.model';
 import {UserGroup, UserGroupWithRelations} from './user-group.model';
+import {UserInvitation} from './user-invitation.model';
+import {UserLevelPermission} from './user-level-permission.model';
+import {User, UserWithRelations} from './user.model';
 
 @model({
   name: 'user_tenants',
 })
-export class UserTenant extends BaseEntity<UserTenant> implements IUserPrefs {
+export class UserTenant
+  extends UserModifiableEntity<UserTenant>
+  implements IUserPrefs
+{
   @property({
     type: 'string',
     id: true,
@@ -39,7 +38,6 @@ export class UserTenant extends BaseEntity<UserTenant> implements IUserPrefs {
     },
   })
   status?: UserStatus;
-
   @belongsTo(
     () => User,
     {keyFrom: 'user_id', name: 'user'},
@@ -75,6 +73,9 @@ export class UserTenant extends BaseEntity<UserTenant> implements IUserPrefs {
 
   @hasMany(() => UserGroup, {keyTo: 'userTenantId'})
   userGroups: UserGroup[];
+
+  @hasMany(() => UserInvitation, {keyTo: 'userTenantId'})
+  userInvitations: UserInvitation[];
 }
 
 export interface UserTenantRelations {

@@ -17,9 +17,9 @@ export class UserGroup extends UserModifiableEntity<UserGroup> {
   @property({
     type: 'string',
     id: true,
-    generated: false,
+    generated: true,
   })
-  id?: string;
+  id: string;
 
   @belongsTo(
     () => Group,
@@ -40,13 +40,6 @@ export class UserGroup extends UserModifiableEntity<UserGroup> {
     },
   )
   userTenantId: string;
-
-  @property({
-    name: 'is_owner',
-    type: 'boolean',
-    default: false,
-  })
-  isOwner?: boolean;
 }
 
 export interface UserGroupRelations {
@@ -55,3 +48,7 @@ export interface UserGroupRelations {
 }
 
 export type UserGroupWithRelations = UserGroup & UserGroupRelations;
+
+export class UserGroupProjection {
+  userTenantId: string;
+}

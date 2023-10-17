@@ -33,8 +33,9 @@ export class User<T = DataObject<Model>>
   @property({
     type: 'string',
     id: true,
+    generated: true,
   })
-  id?: string;
+  id: string;
 
   @property({
     type: 'string',
@@ -122,7 +123,7 @@ export class User<T = DataObject<Model>>
 
   @belongsTo(
     () => Tenant,
-    {keyFrom: 'default_tenant_id', name: 'defaultTenant'},
+    {keyFrom: 'defaultTenantId', name: 'defaultTenant'},
     {
       name: 'default_tenant_id',
       required: false,

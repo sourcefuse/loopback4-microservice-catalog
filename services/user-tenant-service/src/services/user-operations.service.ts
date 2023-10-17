@@ -1,214 +1,155 @@
-﻿// Copyright (c) 2023 Sourcefuse Technologies
+// Copyright (c) 2023 Sourcefuse Technologies
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {PermissionKey, RoleTypeMap, RoleTypeMapValue} from '../enums';
-import {bind, BindingScope} from '@loopback/core';
-import {Options, repository, Where, WhereBuilder} from '@loopback/repository';
+
+import {BindingScope, Getter, inject, injectable} from '@loopback/core';
+import {Filter, WhereBuilder, repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
-import {IAuthUserWithPermissions, UserStatus} from '@sourceloop/core';
+import {
+  IAuthUserWithPermissions,
+  ILogger,
+  LOGGER,
+  UserStatus,
+} from '@sourceloop/core';
+import {AuthenticationBindings} from 'loopback4-authentication';
 import {AuthorizeErrorKeys} from 'loopback4-authorization';
+
+import {Tenant, User, UserDto, UserTenant, UserView} from '../models';
 import {
-  Role,
-  User,
-  UserDto,
-  UserTenant,
-  UserTenantWithRelations,
-  UserView,
-} from '../models';
-import {
-  AuthClientRepository,
   RoleRepository,
+  TenantRepository,
   UserGroupRepository,
   UserRepository,
   UserTenantRepository,
+  UserViewRepository,
 } from '../repositories';
 
-@bind({scope: BindingScope.TRANSIENT})
+@injectable({scope: BindingScope.TRANSIENT})
 export class UserOperationsService {
   constructor(
-    @repository(UserRepository)
-    private readonly userRepository: UserRepository,
-    @repository(UserTenantRepository)
-    private readonly utRepo: UserTenantRepository,
-    @repository(RoleRepository)
-    private readonly roleRepo: RoleRepository,
-    @repository(AuthClientRepository)
-    private readonly authClientsRepo: AuthClientRepository,
+    @repository(RoleRepository) readonly roleRepository: RoleRepository,
+    @repository(UserRepository) readonly userRepository: UserRepository,
+    @repository(UserViewRepository)
+    readonly userViewRepository: UserViewRepository,
+    @repository(TenantRepository) readonly tenantRepository: TenantRepository,
     @repository(UserGroupRepository)
-    private readonly userGroupRepository: UserGroupRepository,
+    readonly userGroupRepository: UserGroupRepository,
+    @repository(UserTenantRepository)
+    readonly userTenantRepository: UserTenantRepository,
+    @inject.getter(AuthenticationBindings.CURRENT_USER)
+    readonly getCurrentUser: Getter<IAuthUserWithPermissions>,
+    @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
   ) {}
 
-  async create(
-    userData: UserDto,
-    currentUser: IAuthUserWithPermissions,
-    options?: Options,
-  ): Promise<UserDto> {
-    const user = userData.userDetails;
-    this.validateUserCreation(user, userData, currentUser, options);
-
-    const role: Role = await this.roleRepo.findById(userData.roleId);
-    const roleType = (RoleTypeMap[role.roleType] as RoleTypeMapValue)
-      .permissionKey;
-
-    const userExists = await this.userRepository.findOne({
+  async create(userDtoData: UserDto, tenantId: string): Promise<User> {
+    const tenant = await this.tenantRepository.findById(tenantId);
+    await this._validateUserCreation(userDtoData, tenant);
+    const role = await this.roleRepository.findById(userDtoData.roleId);
+    let userToReturn: User;
+    const currentUserToken = await this.getCurrentUser();
+    const currentUser = await this.userRepository.findById(
+      currentUserToken.id ?? '',
+    );
+    const userInDB = await this.userRepository.findOne({
       where: {
-        or: [{username: user.username}, {email: user.email}],
-      },
-      fields: {
-        id: true,
+        or: [{username: userDtoData.username}, {email: userDtoData.email}],
       },
     });
-    if (userExists) {
-      const userTenantExists = await this.utRepo.findOne({
+
+    if (userInDB) {
+      const userTenantExists = await this.userTenantRepository.findOne({
         where: {
-          userId: userExists.id,
-          tenantId: userData.tenantId,
+          userId: userInDB.id,
+          tenantId,
         },
       });
       if (userTenantExists) {
-        throw new HttpErrors.BadRequest('User already exists');
-      } else {
-        if (
-          currentUser.tenantId === userData.tenantId &&
-          currentUser.permissions.indexOf(
-            PermissionKey.CreateTenantUserRestricted,
-          ) >= 0 &&
-          currentUser.permissions.indexOf(`CreateTenant${roleType}`) < 0
-        ) {
-          throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
-        }
-        const userTenant: UserTenant = await this.createUserTenantData(
-          userData,
-          UserStatus.REGISTERED,
-          userExists?.id,
-          options,
-        );
-        return new UserDto({
-          userDetails: userExists,
-          roleId: userTenant.roleId,
-          status: userTenant.status,
-          tenantId: userTenant.tenantId,
-          userTenantId: userTenant.id,
-          authProvider: options?.authProvider,
-        });
+        throw new HttpErrors.Conflict(`User Already Exists`);
       }
-    }
-
-    if (
-      currentUser.tenantId === userData.tenantId &&
-      currentUser.permissions.indexOf(
-        PermissionKey.CreateTenantUserRestricted,
-      ) >= 0 &&
-      currentUser.permissions.indexOf(`CreateTenant${roleType}`) < 0
-    ) {
-      throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
-    }
-    const authClients = await this.authClientsRepo.find({
-      where: {
-        clientId: {
-          inq: role.allowedClients,
-        },
-      },
-    });
-    const authClientIds = authClients.map(client => client.id);
-    user.authClientIds = `{${authClientIds.join(',')}}`;
-    const username = user.username;
-    user.username = username.toLowerCase();
-    //Override default tenant id
-    user.defaultTenantId = userData.tenantId;
-    const userSaved = await this.userRepository.create(user, options);
-    const userTenantData = await this.createUserTenantData(
-      userData,
-      UserStatus.REGISTERED,
-      userSaved?.id,
-      options,
-    );
-    return new UserDto({
-      userDetails: userSaved,
-      roleId: userTenantData.roleId,
-      status: userTenantData.status,
-      tenantId: userTenantData.tenantId,
-      userTenantId: userTenantData.id,
-      authProvider: options?.authProvider,
-    });
-  }
-
-  validateUserCreation(
-    user: User,
-    userData: UserDto,
-    currentUser: IAuthUserWithPermissions,
-    options?: Options,
-  ) {
-    if (
-      currentUser.permissions.indexOf(PermissionKey.CreateTenantUser) >= 0 &&
-      currentUser.tenantId !== userData.tenantId
-    ) {
-      throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
-    }
-
-    user.email = user?.email?.toLowerCase().trim();
-
-    // Check for valid email
-    const emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
-    if (user.email && !emailRegex.test(user.email)) {
-      throw new HttpErrors.BadRequest('Email invalid.');
-    }
-
-    // Check for allowed domains
-    const allowedDomains = (process.env.AUTO_SIGNUP_DOMAINS ?? '').split(',');
-    const emailDomain = user.email.split('@')[1];
-    if (!(emailDomain && allowedDomains.length > 0)) {
-      throw new HttpErrors.BadRequest(
-        'Domain not supported, please enter a valid email',
-      );
-    }
-
-    if (
-      allowedDomains &&
-      allowedDomains.length === 1 &&
-      allowedDomains[0] === '*' &&
-      options
-    ) {
-      options.authProvider = 'keycloak';
-    } else if (!allowedDomains.includes(emailDomain) && options) {
-      options.authProvider = options.authProvider || 'internal';
+      userToReturn = userInDB;
     } else {
-      // Do nothing
+      // user creation
+      userDtoData.authClientIds = `{${(
+        currentUser.authClientIds as unknown as number[]
+      ).join()}}`;
+      userDtoData.defaultTenantId = tenantId;
+
+      userToReturn = await this.userRepository.create({
+        firstName: userDtoData.firstName,
+        lastName: userDtoData.lastName,
+        middleName: userDtoData.middleName,
+        username: userDtoData.username,
+        email: userDtoData.email,
+        phone: userDtoData.phone,
+        authClientIds: userDtoData.authClientIds,
+        photoUrl: userDtoData.photoUrl,
+        gender: userDtoData.gender,
+        dob: userDtoData.dob,
+        designation: userDtoData.designation,
+        defaultTenantId: userDtoData.defaultTenantId,
+      });
     }
+
+    await this.userTenantRepository.create({
+      locale: userDtoData.locale,
+      status: UserStatus.REGISTERED,
+      userId: userToReturn.id,
+      roleId: role.id,
+      tenantId,
+    });
+
+    return userToReturn;
   }
 
-  async createUserTenantData(
-    userData: UserDto,
-    userStatus: UserStatus,
-    userId?: string,
-    options?: Options,
+  async find(
+    tenantId: string,
+    filter?: Filter<UserView>,
+    permissions?: string[],
   ) {
-    return this.utRepo.create(
-      {
-        roleId: userData.roleId,
-        status: userStatus,
-        tenantId: userData.tenantId,
-        userId,
+    const currentUser = await this.getCurrentUser();
+    const currentUserTenantId = currentUser.tenantId;
+    if (currentUserTenantId !== tenantId) {
+      throw new HttpErrors.Unauthorized();
+    }
+    const whereBuilder = new WhereBuilder<User>(filter?.where ?? {});
+
+    const userTenantsWhere = new WhereBuilder({
+      tenantId: tenantId,
+    });
+    const userTenants = await this.userTenantRepository.find({
+      where: userTenantsWhere.build(),
+    });
+    whereBuilder.and({
+      id: {
+        inq: userTenants.map(userTenant => userTenant.userId),
       },
-      options,
-    );
+    });
+    if (filter) {
+      filter.where = whereBuilder.build();
+    } else {
+      filter = {
+        where: whereBuilder.build(),
+      };
+    }
+    return this.userViewRepository.find(filter);
   }
 
   async updateById(
-    currentUser: IAuthUserWithPermissions,
-    id: string,
     userData: Omit<
       UserView,
       'id' | 'authClientIds' | 'lastLogin' | 'status' | 'tenantId'
     >,
+    userId: string,
     tenantId: string,
   ): Promise<void> {
-    await this.checkForUpdatePermissions(currentUser, id, tenantId);
-
+    const currentUser = await this.getCurrentUser();
+    if (tenantId !== currentUser.tenantId) {
+      throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
+    }
     if (userData.username) {
       const whereBuilder = new WhereBuilder();
-      whereBuilder.neq('id', id);
+      whereBuilder.neq('id', userId);
       whereBuilder.eq('username', userData.username);
       const userNameExists = await this.userRepository.count(
         whereBuilder.build(),
@@ -223,10 +164,10 @@ export class UserOperationsService {
     });
 
     if (tempUser) {
-      await this.userRepository.updateById(id, tempUser);
+      await this.userRepository.updateById(userId, tempUser);
     }
 
-    await this.updateUserTenant(userData, id, currentUser);
+    await this.updateUserTenant(userData, userId, currentUser);
   }
 
   async updateUserTenant(
@@ -242,25 +183,16 @@ export class UserOperationsService {
       utData.status = userData.status;
     }
     if (utData && Object.keys(utData).length > 0) {
-      await this.utRepo.updateAll(utData, {
+      await this.userTenantRepository.updateAll(utData, {
         userId: id,
         tenantId: userData.tenantId ?? currentUser.tenantId,
       });
     }
   }
 
-  async deleteById(
-    currentUser: IAuthUserWithPermissions,
-    id: string,
-    tenantId: string,
-  ): Promise<void> {
-    await this.checkForDeleteTenantUserRestrictedPermission(currentUser, id);
-
-    await this.checkForDeleteTenantUserPermission(currentUser, id);
-
-    await this.checkForDeleteAnyUserPermission(currentUser, tenantId);
-
-    const existingUserTenant = await this.utRepo.findOne({
+  async deleteById(id: string, tenantId: string): Promise<void> {
+    const currentUser = await this.getCurrentUser();
+    const existingUserTenant = await this.userTenantRepository.findOne({
       where: {
         userId: id,
         tenantId: currentUser.tenantId,
@@ -269,11 +201,11 @@ export class UserOperationsService {
     await this.userGroupRepository.deleteAll({
       userTenantId: existingUserTenant?.id,
     });
-    await this.utRepo.deleteAll({
+    await this.userTenantRepository.deleteAll({
       userId: id,
       tenantId: currentUser.tenantId,
     });
-    const ut = await this.utRepo.findOne({
+    const ut = await this.userTenantRepository.findOne({
       where: {
         userId: id,
       },
@@ -289,174 +221,22 @@ export class UserOperationsService {
     });
   }
 
-  async checkViewTenantRestrictedPermissions(
-    currentUser: IAuthUserWithPermissions,
-    where?: Where<UserView>,
-  ): Promise<Where<UserView>> {
-    const whereBuilder = new WhereBuilder<UserView>();
-    const role = await this.roleRepo.find();
-    const allowedRoles: string[] = [];
-    role.forEach(r => {
-      if (
-        r.id &&
-        currentUser.permissions.indexOf(
-          `ViewTenant${
-            (RoleTypeMap[r.roleType] as RoleTypeMapValue).permissionKey
-          }`,
-        ) >= 0
-      ) {
-        allowedRoles.push(r.id);
-      }
-    });
-
-    if (where) {
-      whereBuilder.and(
-        {
-          roleId: {
-            inq: allowedRoles,
-          },
-        },
-        where,
-      );
-    } else {
-      whereBuilder.inq('roleId', allowedRoles);
-    }
-    return whereBuilder.build();
-  }
-
-  async checkForDeleteTenantUserRestrictedPermission(
-    currentUser: IAuthUserWithPermissions,
-    id: string,
-  ) {
-    if (
-      currentUser.permissions.indexOf(
-        PermissionKey.DeleteTenantUserRestricted,
-      ) >= 0
-    ) {
-      const userTenant = (await this.utRepo.findOne({
-        where: {
-          userId: id,
-          tenantId: currentUser.tenantId,
-        },
-        include: [
-          {
-            relation: 'role',
-          },
-        ],
-      })) as UserTenantWithRelations;
-      if (
-        !userTenant ||
-        currentUser.permissions.indexOf(
-          `DeleteTenant${
-            (RoleTypeMap[userTenant.role.roleType] as RoleTypeMapValue)
-              .permissionKey
-          }`,
-        ) < 0
-      ) {
-        throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
-      }
-    }
-  }
-
-  async checkForDeleteTenantUserPermission(
-    currentUser: IAuthUserWithPermissions,
-    id: string,
-  ) {
-    if (currentUser.permissions.indexOf(PermissionKey.DeleteTenantUser) >= 0) {
-      const userTenant = await this.utRepo.findOne({
-        where: {
-          userId: id,
-          tenantId: currentUser.tenantId,
-        },
-      });
-      if (!userTenant) {
-        throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
-      }
-    }
-  }
-
-  async checkForDeleteAnyUserPermission(
-    currentUser: IAuthUserWithPermissions,
-    tenantId: string,
-  ) {
-    if (
-      currentUser.permissions.indexOf(PermissionKey.DeleteAnyUser) < 0 &&
-      tenantId !== currentUser.tenantId
-    ) {
-      throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
-    }
-  }
-
-  async checkForUpdatePermissions(
-    currentUser: IAuthUserWithPermissions,
-    id: string,
-    tenantId?: string,
-  ) {
-    if (
-      currentUser.permissions.indexOf(PermissionKey.UpdateOwnUser) >= 0 &&
-      currentUser.id !== id
-    ) {
+  private async _validateUserCreation(userDtoData: UserDto, tenant: Tenant) {
+    const currentUser = await this.getCurrentUser();
+    if (tenant.id !== currentUser.tenantId) {
       throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
     }
 
-    if (
-      currentUser.tenantId === tenantId &&
-      currentUser.permissions.indexOf(
-        PermissionKey.UpdateTenantUserRestricted,
-      ) >= 0 &&
-      currentUser.id !== id
-    ) {
-      const userTenant = (await this.utRepo.findOne({
-        where: {
-          userId: id,
-          tenantId: currentUser.tenantId,
-        },
-        include: [
-          {
-            relation: 'role',
-          },
-        ],
-      })) as UserTenantWithRelations;
-      if (
-        !userTenant ||
-        currentUser.permissions.indexOf(
-          `UpdateTenant${
-            (RoleTypeMap[userTenant.role.roleType] as RoleTypeMapValue)
-              .permissionKey
-          }`,
-        ) < 0
-      ) {
-        throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
-      }
-    }
+    userDtoData.email = userDtoData.email.toLowerCase().trim();
+    userDtoData.username = userDtoData.username.toLowerCase().trim();
 
-    if (currentUser.permissions.indexOf(PermissionKey.UpdateTenantUser) >= 0) {
-      const userTenant = await this.utRepo.findOne({
-        where: {
-          userId: id,
-          tenantId: currentUser.tenantId,
-        },
-      });
-      if (!userTenant) {
-        throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
-      }
+    // Check for valid email
+    // sonarignore:start
+    const emailRegex =
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    // sonarignore:end
+    if (userDtoData.email && !emailRegex.test(userDtoData.email)) {
+      throw new HttpErrors.BadRequest(`Invalid Email`);
     }
-
-    if (
-      currentUser.permissions.indexOf(PermissionKey.UpdateAnyUser) < 0 &&
-      tenantId !== currentUser.tenantId
-    ) {
-      throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
-    }
-  }
-
-  async getUserTenant(userId: string, currentUser: IAuthUserWithPermissions) {
-    return this.utRepo.findOne({
-      where: {
-        userId: userId,
-        tenantId: currentUser.tenantId,
-      },
-      include: [{relation: 'role'}],
-    });
   }
 }

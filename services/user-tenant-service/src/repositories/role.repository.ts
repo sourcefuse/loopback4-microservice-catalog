@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2023 Sourcefuse Technologies
+// Copyright (c) 2023 Sourcefuse Technologies
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
@@ -12,31 +12,20 @@ import {
 import {
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
+  tenantGuard,
 } from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
-
-import {
-  ConditionalAuditRepositoryMixin,
-  IAuditMixinOptions,
-} from '@sourceloop/audit-log';
 import {UserTenantDataSourceName} from '../keys';
 import {Role, RoleRelations, UserTenant, UserView} from '../models';
-import {AuditLogRepository} from './audit.repository';
 import {UserTenantRepository} from './user-tenant.repository';
 import {UserViewRepository} from './user-view.repository';
 
-const RoleAuditOpts: IAuditMixinOptions = {
-  actionKey: 'Role_Logs',
-};
-
-export class RoleRepository extends ConditionalAuditRepositoryMixin(
-  DefaultUserModifyCrudRepository<
-    Role,
-    typeof Role.prototype.id,
-    RoleRelations
-  >,
-  RoleAuditOpts,
-) {
+@tenantGuard()
+export class RoleRepository extends DefaultUserModifyCrudRepository<
+  Role,
+  typeof Role.prototype.id,
+  RoleRelations
+> {
   public readonly userTenants: HasManyRepositoryFactory<
     UserTenant,
     typeof Role.prototype.id
@@ -55,16 +44,14 @@ export class RoleRepository extends ConditionalAuditRepositoryMixin(
   constructor(
     @inject(`datasources.${UserTenantDataSourceName}`)
     dataSource: juggler.DataSource,
-    @inject.getter(AuthenticationBindings.CURRENT_USER)
-    protected readonly getCurrentUser: Getter<
-      IAuthUserWithPermissions | undefined
-    >,
     @repository.getter('UserTenantRepository')
     protected userTenantRepositoryGetter: Getter<UserTenantRepository>,
     @repository.getter('UserViewRepository')
     protected userViewRepositoryGetter: Getter<UserViewRepository>,
-    @repository.getter('AuditLogRepository')
-    public getAuditLogRepository: Getter<AuditLogRepository>,
+    @inject.getter(AuthenticationBindings.CURRENT_USER)
+    protected readonly getCurrentUser: Getter<
+      IAuthUserWithPermissions | undefined
+    >,
   ) {
     super(Role, dataSource, getCurrentUser);
     this.modifiedByUser = this.createHasOneRepositoryFactoryFor(

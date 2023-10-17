@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2023 Sourcefuse Technologies
+// Copyright (c) 2023 Sourcefuse Technologies
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
@@ -9,23 +9,16 @@ import {
   Entity,
   HasManyRepositoryFactory,
   HasOneRepositoryFactory,
-  juggler,
   Options,
+  juggler,
   repository,
 } from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {
-  ConditionalAuditRepositoryMixin,
-  IAuditMixinOptions,
-} from '@sourceloop/audit-log';
-import {
-  AuthenticateErrorKeys,
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
 } from '@sourceloop/core';
-import * as bcrypt from 'bcrypt';
-import {AuthenticationBindings, AuthErrorKeys} from 'loopback4-authentication';
-
+import {AuthenticationBindings} from 'loopback4-authentication';
 import {UserTenantDataSourceName} from '../keys';
 import {
   Tenant,
@@ -34,25 +27,19 @@ import {
   UserRelations,
   UserTenant,
 } from '../models';
-import {AuditLogRepository} from './audit.repository';
 import {TenantRepository} from './tenant.repository';
 import {UserCredentialsRepository} from './user-credentials.repository';
 import {UserTenantRepository} from './user-tenant.repository';
 
-const saltRounds = 10;
-
-const UserAuditOpts: IAuditMixinOptions = {
-  actionKey: 'User_Logs',
-};
-export class UserRepository extends ConditionalAuditRepositoryMixin(
-  DefaultUserModifyCrudRepository<
-    User,
-    typeof User.prototype.id,
-    UserRelations
-  >,
-  UserAuditOpts,
-) {
-  public readonly tenant: BelongsToAccessor<Tenant, typeof User.prototype.id>;
+export class UserRepository extends DefaultUserModifyCrudRepository<
+  User,
+  typeof User.prototype.id,
+  UserRelations
+> {
+  public readonly defaultTenant: BelongsToAccessor<
+    Tenant,
+    typeof User.prototype.id
+  >;
 
   public readonly credentials: HasOneRepositoryFactory<
     UserCredentials,
@@ -67,10 +54,6 @@ export class UserRepository extends ConditionalAuditRepositoryMixin(
   constructor(
     @inject(`datasources.${UserTenantDataSourceName}`)
     dataSource: juggler.DataSource,
-    @inject.getter(AuthenticationBindings.CURRENT_USER)
-    protected readonly getCurrentUser: Getter<
-      IAuthUserWithPermissions | undefined
-    >,
     @repository.getter('TenantRepository')
     protected tenantRepositoryGetter: Getter<TenantRepository>,
     @repository.getter('UserCredentialsRepository')
@@ -79,8 +62,10 @@ export class UserRepository extends ConditionalAuditRepositoryMixin(
     protected userTenantRepositoryGetter: Getter<UserTenantRepository>,
     @inject('models.User')
     private readonly user: typeof Entity & {prototype: User},
-    @repository.getter('AuditLogRepository')
-    public getAuditLogRepository: Getter<AuditLogRepository>,
+    @inject.getter(AuthenticationBindings.CURRENT_USER)
+    protected readonly getCurrentUser: Getter<
+      IAuthUserWithPermissions | undefined
+    >,
   ) {
     super(user, dataSource, getCurrentUser);
     this.userTenants = this.createHasManyRepositoryFactoryFor(
@@ -99,13 +84,13 @@ export class UserRepository extends ConditionalAuditRepositoryMixin(
       'credentials',
       this.credentials.inclusionResolver,
     );
-    this.tenant = this.createBelongsToAccessorFor(
+    this.defaultTenant = this.createBelongsToAccessorFor(
       'defaultTenant',
       tenantRepositoryGetter,
     );
     this.registerInclusionResolver(
       'defaultTenant',
-      this.tenant.inclusionResolver,
+      this.defaultTenant.inclusionResolver,
     );
   }
 
@@ -147,49 +132,6 @@ export class UserRepository extends ConditionalAuditRepositoryMixin(
       await super.deleteByIdHard(user.id);
       throw new HttpErrors.UnprocessableEntity('Error while hashing password');
     }
-    return user;
-  }
-
-  async verifyPassword(username: string, password: string): Promise<User> {
-    const user = await super.findOne({where: {username}});
-    const creds = user && (await this.credentials(user.id).get());
-    if (!user || user.deleted || !creds || !creds.password) {
-      throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
-    } else if (!(await bcrypt.compare(password, creds.password))) {
-      throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
-    } else if (
-      process.env.USER_TEMP_PASSWORD &&
-      (await bcrypt.compare(password, process.env.USER_TEMP_PASSWORD))
-    ) {
-      throw new HttpErrors.Forbidden(
-        AuthenticateErrorKeys.TempPasswordLoginDisallowed,
-      );
-    } else {
-      return user;
-    }
-  }
-
-  async updatePassword(
-    username: string,
-    password: string,
-    newPassword: string,
-  ): Promise<User> {
-    const user = await super.findOne({where: {username}});
-    const creds = user && (await this.credentials(user.id).get());
-    if (!user || user.deleted || !creds || !creds.password) {
-      throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
-    } else if (!(await bcrypt.compare(password, creds.password))) {
-      throw new HttpErrors.Unauthorized(AuthErrorKeys.WrongPassword);
-    } else if (await bcrypt.compare(newPassword, creds.password)) {
-      throw new HttpErrors.Unauthorized(
-        'Password cannot be same as previous password!',
-      );
-    } else {
-      // Do nothing
-    }
-    await this.credentials(user.id).patch({
-      password: await bcrypt.hash(newPassword, saltRounds),
-    });
     return user;
   }
 }

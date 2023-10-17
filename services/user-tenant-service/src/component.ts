@@ -1,41 +1,54 @@
-﻿// Copyright (c) 2023 Sourcefuse Technologies
+// Copyright (c) 2023 Sourcefuse Technologies
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {
-  Application,
   Binding,
   Component,
-  config,
   ContextTags,
   ControllerClass,
   CoreBindings,
+  ProviderMap,
+  createServiceBinding,
   inject,
   injectable,
-  ProviderMap,
 } from '@loopback/core';
 import {Class, Model, Repository} from '@loopback/repository';
-import {CoreComponent} from '@sourceloop/core';
+import {RestApplication} from '@loopback/rest';
 import {
-  GroupController,
-  HomePageController,
-  PingController,
-  RoleController,
-  RoleUserTenantController,
+  BearerVerifierBindings,
+  BearerVerifierComponent,
+  BearerVerifierConfig,
+  BearerVerifierType,
+  CoreComponent,
+  ServiceSequence,
+  TenantUtilitiesComponent,
+} from '@sourceloop/core';
+import {AuthenticationComponent} from 'loopback4-authentication';
+import {
+  AuthorizationBindings,
+  AuthorizationComponent,
+} from 'loopback4-authorization';
+import {
+  GroupUserController,
   TenantController,
+  TenantGroupController,
+  TenantRoleController,
+  TenantTenantConfigController,
   TenantUserController,
-  UserGroupController,
-  UserGroupsController,
-  UserSignupController,
   UserTenantController,
   UserTenantPrefsController,
+  UserTenantUserGroupController,
+  UserTenantUserLevelPermissionController,
 } from './controllers';
-import {UserTenantServiceComponentBindings} from './keys';
 import {
-  AuditLog,
+  GroupTenantInterceptor,
+  TenantInterceptorInterceptor,
+  UserTenantInterceptorInterceptor,
+} from './interceptors';
+import {UserTenantServiceComponentBindings, UserTenantServiceKey} from './keys';
+import {
   AuthClient,
-  Group,
-  GroupUserCountView,
   Role,
   Tenant,
   TenantConfig,
@@ -43,35 +56,30 @@ import {
   UserCredentials,
   UserDto,
   UserGroup,
-  UserGroupView,
+  UserInvitation,
   UserLevelPermission,
-  UserSignupCheckDto,
   UserTenant,
   UserTenantPrefs,
   UserView,
 } from './models';
+import {Group} from './models/group.model';
 import {
-  AuditLogRepository,
   AuthClientRepository,
   GroupRepository,
-  NonRestrictedUserViewRepository,
   RoleRepository,
   TenantConfigRepository,
   TenantRepository,
   UserCredentialsRepository,
-  UserGroupCountViewRepository,
   UserGroupRepository,
-  UserGroupViewRepository,
+  UserInvitationRepository,
   UserLevelPermissionRepository,
   UserRepository,
   UserTenantPrefsRepository,
   UserTenantRepository,
   UserViewRepository,
 } from './repositories';
-import {
-  DEFAULT_USER_TENANT_SERVICE_OPTIONS,
-  UserTenantServiceComponentOptions,
-} from './types';
+import {UserGroupService, UserOperationsService} from './services';
+import {IUserServiceConfig} from './types';
 
 // Configure the binding for UserTenantServiceComponent
 @injectable({
@@ -94,62 +102,93 @@ export class UserTenantServiceComponent implements Component {
   providers?: ProviderMap = {};
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
-    private readonly application: Application,
-    @config()
-    private readonly options: UserTenantServiceComponentOptions = DEFAULT_USER_TENANT_SERVICE_OPTIONS,
+    private application: RestApplication,
+    @inject(UserTenantServiceComponentBindings.Config, {optional: true})
+    private readonly config?: IUserServiceConfig,
   ) {
     this.bindings = [];
+
     this.application.component(CoreComponent);
+
+    this.bindings = [
+      createServiceBinding(UserGroupService),
+      createServiceBinding(UserOperationsService),
+      Binding.bind(UserTenantServiceKey.GroupTenantInterceptor).toProvider(
+        GroupTenantInterceptor,
+      ),
+      Binding.bind(
+        UserTenantServiceKey.TenantInterceptorInterceptor,
+      ).toProvider(TenantInterceptorInterceptor),
+      Binding.bind(
+        UserTenantServiceKey.UserTenantInterceptorInterceptor,
+      ).toProvider(UserTenantInterceptorInterceptor),
+    ];
+    this.application.component(TenantUtilitiesComponent);
+
+    // Mount default sequence if needed
+    if (!this.config?.useCustomSequence) {
+      this.setupSequence();
+    }
     this.models = [
-      AuthClient,
-      AuditLog,
-      GroupUserCountView,
-      UserGroupView,
-      Group,
       Role,
+      UserTenant,
       TenantConfig,
       Tenant,
-      UserCredentials,
-      UserDto,
-      UserGroup,
-      UserLevelPermission,
-      UserSignupCheckDto,
-      UserTenantPrefs,
-      UserTenant,
       UserView,
+      Group,
+      UserGroup,
       User,
+      UserCredentials,
+      UserLevelPermission,
+      UserInvitation,
+      UserTenantPrefs,
+      AuthClient,
+      UserDto,
     ];
     this.controllers = [
-      GroupController,
-      HomePageController,
-      PingController,
-      RoleUserTenantController,
-      RoleController,
-      TenantUserController,
+      TenantRoleController,
       TenantController,
-      UserGroupController,
-      UserGroupsController,
-      UserSignupController,
-      UserTenantPrefsController,
       UserTenantController,
+      GroupUserController,
+      TenantTenantConfigController,
+      TenantGroupController,
+      TenantUserController,
+      UserTenantPrefsController,
+      UserTenantUserGroupController,
+      UserTenantUserLevelPermissionController,
     ];
     this.repositories = [
-      AuthClientRepository,
-      AuditLogRepository,
-      UserGroupCountViewRepository,
-      GroupRepository,
-      NonRestrictedUserViewRepository,
       RoleRepository,
+      UserTenantRepository,
       TenantConfigRepository,
       TenantRepository,
-      UserCredentialsRepository,
-      UserGroupViewRepository,
-      UserGroupRepository,
-      UserLevelPermissionRepository,
-      UserTenantPrefsRepository,
-      UserTenantRepository,
-      UserViewRepository,
       UserRepository,
+      UserCredentialsRepository,
+      UserViewRepository,
+      GroupRepository,
+      UserGroupRepository,
+      UserInvitationRepository,
+      UserTenantPrefsRepository,
+      UserLevelPermissionRepository,
+      AuthClientRepository,
     ];
+  }
+  setupSequence() {
+    this.application.sequence(ServiceSequence);
+
+    // Mount authentication component for default sequence
+    this.application.component(AuthenticationComponent);
+    // Mount bearer verifier component
+    this.application.bind(BearerVerifierBindings.Config).to({
+      authServiceUrl: '',
+      type: BearerVerifierType.service,
+    } as BearerVerifierConfig);
+    this.application.component(BearerVerifierComponent);
+
+    // Mount authorization component for default sequence
+    this.application.bind(AuthorizationBindings.CONFIG).to({
+      allowAlwaysPaths: ['/explorer'],
+    });
+    this.application.component(AuthorizationComponent);
   }
 }

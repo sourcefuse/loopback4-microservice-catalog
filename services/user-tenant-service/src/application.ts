@@ -18,6 +18,7 @@ export class UserTenantServiceApplication extends BootMixin(
   constructor(options: ApplicationConfig = {}) {
     super(options);
     this.static('/', path.join(__dirname, '../public'));
+
     this.component(UserTenantServiceComponent);
 
     this.projectRoot = __dirname;

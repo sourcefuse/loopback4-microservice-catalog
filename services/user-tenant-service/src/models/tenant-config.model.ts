@@ -5,7 +5,6 @@
 import {belongsTo, model, property} from '@loopback/repository';
 import {ConfigKey, UserModifiableEntity} from '@sourceloop/core';
 import {Tenant, TenantWithRelations} from './index';
-
 @model({
   name: 'tenant_configs',
 })

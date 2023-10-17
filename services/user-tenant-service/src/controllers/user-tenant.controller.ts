@@ -1,121 +1,76 @@
-﻿// Copyright (c) 2023 Sourcefuse Technologies
+// Copyright (c) 2023 Sourcefuse Technologies
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {inject} from '@loopback/core';
+import {Filter, repository} from '@loopback/repository';
+import {HttpErrors, get, getModelSchemaRef, param} from '@loopback/rest';
 import {
-  FilterBuilder,
-  FilterExcludingWhere,
-  repository,
-  WhereBuilder,
-} from '@loopback/repository';
-import {get, getModelSchemaRef, HttpErrors, param} from '@loopback/rest';
-import {
-  CONTENT_TYPE,
   IAuthUserWithPermissions,
-  STATUS_CODE,
+  OPERATION_SECURITY_SPEC,
 } from '@sourceloop/core';
 import {
-  authenticate,
   AuthenticationBindings,
   STRATEGY,
+  authenticate,
 } from 'loopback4-authentication';
-import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
-import {PermissionKey} from '../enums';
+import {AuthorizeErrorKeys, authorize} from 'loopback4-authorization';
+import {PermissionKey, STATUS_CODE} from '../enums';
+import {Tenant, UserTenant} from '../models';
+import {TenantRepository, UserTenantRepository} from '../repositories';
 
-import {UserView} from '../models';
-import {UserTenantRepository, UserViewRepository} from '../repositories';
-import {UserOperationsService} from '../services';
+const baseUrl = '/user/{id}/tenants';
 
 export class UserTenantController {
   constructor(
     @repository(UserTenantRepository)
-    protected readonly userTenantRepository: UserTenantRepository,
-    @repository(UserViewRepository)
-    protected readonly userViewRepository: UserViewRepository,
-    @inject('services.UserOperationsService')
-    private readonly userOpService: UserOperationsService,
+    protected userTenantRepository: UserTenantRepository,
+    @repository(TenantRepository) protected tenantRepository: TenantRepository,
+    @inject(AuthenticationBindings.CURRENT_USER)
+    private readonly currentUser: IAuthUserWithPermissions,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: [
-      PermissionKey.ViewAnyUser,
-      PermissionKey.ViewOwnUser,
-      PermissionKey.ViewTenantUser,
-      PermissionKey.ViewTenantUserRestricted,
-      PermissionKey.ViewAnyUserNum,
-      PermissionKey.ViewOwnUserNum,
-      PermissionKey.ViewTenantUserNum,
-      PermissionKey.ViewTenantUserRestrictedNum,
-    ],
+    permissions: [PermissionKey.ViewAllTenantOfSelf],
   })
-  @get('/user-tenants/{id}', {
+  @get(baseUrl, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'UserView model instance',
+        description: 'Array of Tenants to Which the User Belongs',
         content: {
-          [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(UserView, {includeRelations: true}),
+          'application/json': {
+            schema: {type: 'array', items: getModelSchemaRef(Tenant)},
           },
         },
       },
     },
   })
-  async findById(
-    @inject(AuthenticationBindings.CURRENT_USER)
-    currentUser: IAuthUserWithPermissions,
+  async find(
     @param.path.string('id') id: string,
-    @param.filter(UserView, {exclude: 'where'})
-    filter?: FilterExcludingWhere<UserView>,
-  ): Promise<UserView> {
-    const ut = await this.userTenantRepository.findById(id);
-    if (
-      currentUser.permissions.indexOf(PermissionKey.ViewAnyUser) < 0 &&
-      currentUser.tenantId !== ut.tenantId
-    ) {
+    @param.query.object('filter') filter?: Filter<UserTenant>,
+  ): Promise<Tenant[]> {
+    // Check if the user can access the data
+    if (id !== this.currentUser.id) {
       throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
     }
 
-    if (
-      currentUser.permissions.indexOf(PermissionKey.ViewOwnUser) >= 0 &&
-      currentUser.id !== ut.userId
-    ) {
-      throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
-    }
+    // Find user tenants for the specified user ID
+    const userTenants = await this.userTenantRepository.find({
+      where: {userId: id},
+    });
 
-    let whereClause;
-    if (
-      currentUser.permissions.indexOf(PermissionKey.ViewTenantUserRestricted) >=
-        0 &&
-      currentUser.tenantId === id
-    ) {
-      whereClause =
-        await this.userOpService.checkViewTenantRestrictedPermissions(
-          currentUser,
-        );
-    }
+    // Extract tenant IDs from user tenants
+    const tenantIds = userTenants.map(userTenant => userTenant.tenantId);
 
-    const filterBuilder = new FilterBuilder<UserView>(filter);
-    const whereBuilder = new WhereBuilder<UserView>();
-    if (whereClause) {
-      whereBuilder.and(whereClause, {
-        userTenantId: id,
-      });
-    } else {
-      whereBuilder.eq('userTenantId', id);
-    }
-    filterBuilder.where(whereBuilder.build());
+    // Find tenants based on the extracted tenant IDs
+    const tenants = await this.tenantRepository.find({
+      where: {id: {inq: tenantIds}},
+    });
 
-    const userData = await this.userViewRepository.findOne(
-      filterBuilder.build(),
-    );
-
-    if (!userData) {
-      throw new HttpErrors.NotFound('User not found !');
-    }
-    return userData;
+    return tenants;
   }
 }

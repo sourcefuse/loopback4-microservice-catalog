@@ -1,13 +1,13 @@
-﻿// Copyright (c) 2023 Sourcefuse Technologies
+// Copyright (c) 2023 Sourcefuse Technologies
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {PermissionKey} from '../../enums';
 import {Client, expect} from '@loopback/testlab';
 import * as jwt from 'jsonwebtoken';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {nanoid} from 'nanoid';
-import {UserTenantServiceApplication} from '../application';
+import {UserTenantServiceApplication} from '../../application';
+import {PermissionKey} from '../../enums';
 import {Role, Tenant, User, UserTenant} from '../../models';
 import {
   RoleRepository,
@@ -15,7 +15,7 @@ import {
   UserRepository,
   UserTenantRepository,
 } from '../../repositories';
-import {setupApplication} from './test-helper';
+import {issuer, secret, setupApplication} from './test-helper';
 
 interface USER {
   id: string | undefined;
@@ -24,11 +24,11 @@ interface USER {
   tenantId: string | undefined;
   password: string;
   permissions: PermissionKey[];
+  defaultTenantId: string | undefined;
 }
 
-describe('UserTenantPrefs Controller', function () {
-  /* eslint-disable @typescript-eslint/no-invalid-this */
-  this.timeout(10000);
+describe('UserTenantPrefs Controller', function (this: Mocha.Suite) {
+  this.timeout(100000);
   let app: UserTenantServiceApplication;
   let userTenantRepo: UserTenantRepository;
   let roleRepo: RoleRepository;
@@ -44,14 +44,16 @@ describe('UserTenantPrefs Controller', function () {
     userTenantId: undefined,
     username: '',
     tenantId: undefined,
+    defaultTenantId: undefined,
     password: pass,
     permissions: [
       PermissionKey.UpdateUserTenantPreference,
       PermissionKey.ViewUserTenantPreference,
+      PermissionKey.ViewUserTenantPreferenceNum,
+      PermissionKey.CreateUserTenantPreference,
     ],
   };
   const data = {
-    userTenantId: '',
     configValue: {value: 'sample value'},
     configKey: 'last-accessd-url',
   };
@@ -88,12 +90,12 @@ describe('UserTenantPrefs Controller', function () {
       .expect(422);
   });
 
-  it('gives status 204 when a new userTenantPref is created', async () => {
+  it('gives status 200 when a new userTenantPref is created', async () => {
     await client
       .post(basePath)
       .set('authorization', `Bearer ${token}`)
       .send(data)
-      .expect(204);
+      .expect(200);
   });
 
   async function givenRepositories() {
@@ -104,21 +106,6 @@ describe('UserTenantPrefs Controller', function () {
   }
 
   async function setupMockData() {
-    const user = await userRepo.create(
-      new User({
-        firstName: 'tenant_pref_user',
-        username: 'tenant_pref_test_user',
-        email: 'abc@xyz',
-      }),
-    );
-
-    const role = await roleRepo.create(
-      new Role({
-        name: 'test_admin',
-        roleType: 0 as unknown as undefined,
-      }),
-    );
-
     const key = nanoid(10);
     const tenant = await tenantRepo.create(
       new Tenant({
@@ -127,6 +114,22 @@ describe('UserTenantPrefs Controller', function () {
         status: 1,
       }),
     );
+
+    const user = await userRepo.create(
+      new User({
+        firstName: 'tenant_pref_user',
+        username: 'tenant_pref_test_user',
+        email: 'abc@xyz',
+        defaultTenantId: tenant.id,
+      }),
+    );
+
+    const newRole = new Role();
+    newRole.name = 'test_admin';
+    newRole.roleType = 0;
+    newRole.tenantId = tenant.id ?? '';
+    testUser.tenantId = tenant.id;
+    const role = await roleRepo.create(newRole);
     const userTenant = await userTenantRepo.create(
       new UserTenant({
         userId: user.id,
@@ -139,23 +142,23 @@ describe('UserTenantPrefs Controller', function () {
       userTenantId: userTenant.id,
       username: user.username,
       tenantId: tenant.id,
+      defaultTenantId: tenant.id,
       password: pass,
       permissions: [
         PermissionKey.UpdateUserTenantPreference,
         PermissionKey.ViewUserTenantPreference,
+        PermissionKey.ViewUserTenantPreferenceNum,
+        PermissionKey.CreateUserTenantPreference,
       ],
     };
-    if (testUser.userTenantId) {
-      data.userTenantId = testUser.userTenantId;
-    }
     setCurrentUser();
   }
 
   function setCurrentUser() {
     app.bind(AuthenticationBindings.CURRENT_USER).to(testUser);
-    token = jwt.sign(testUser, 'kdskssdkdfs', {
+    token = jwt.sign(testUser, secret, {
       expiresIn: 180000,
-      issuer: 'sf',
+      issuer,
     });
   }
 });

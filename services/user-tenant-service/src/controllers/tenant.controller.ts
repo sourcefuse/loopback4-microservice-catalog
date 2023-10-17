@@ -1,9 +1,7 @@
-﻿// Copyright (c) 2023 Sourcefuse Technologies
+// Copyright (c) 2023 Sourcefuse Technologies
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {PermissionKey} from '../enums';
-import {inject} from '@loopback/core';
 import {
   Count,
   CountSchema,
@@ -16,36 +14,25 @@ import {
   del,
   get,
   getModelSchemaRef,
-  HttpErrors,
   param,
   patch,
   post,
+  put,
   requestBody,
 } from '@loopback/rest';
-import {
-  CONTENT_TYPE,
-  IAuthUserWithPermissions,
-  OPERATION_SECURITY_SPEC,
-  STATUS_CODE,
-  TenantStatus,
-} from '@sourceloop/core';
-import {
-  authenticate,
-  AuthenticationBindings,
-  STRATEGY,
-} from 'loopback4-authentication';
-import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
-import {Tenant, TenantConfig} from '../models';
-import {TenantConfigRepository, TenantRepository} from '../repositories';
+import {OPERATION_SECURITY_SPEC} from '@sourceloop/core';
+import {authenticate, STRATEGY} from 'loopback4-authentication';
+import {authorize} from 'loopback4-authorization';
+import {PermissionKey, STATUS_CODE} from '../enums';
+import {Tenant} from '../models';
+import {TenantRepository} from '../repositories';
 
-const basePath = '/tenants';
+const baseUrl = '/tenants';
 
 export class TenantController {
   constructor(
     @repository(TenantRepository)
     public tenantRepository: TenantRepository,
-    @repository(TenantConfigRepository)
-    public tenantConfigRepository: TenantConfigRepository,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {
@@ -54,31 +41,28 @@ export class TenantController {
   @authorize({
     permissions: [PermissionKey.CreateTenant, PermissionKey.CreateTenantNum],
   })
-  @post(basePath, {
+  @post(baseUrl, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Tenant model instance',
-        content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Tenant)},
-        },
+        content: {'application/json': {schema: getModelSchemaRef(Tenant)}},
       },
     },
   })
   async create(
     @requestBody({
       content: {
-        [CONTENT_TYPE.JSON]: {
+        'application/json': {
           schema: getModelSchemaRef(Tenant, {
             title: 'NewTenant',
-            exclude: ['id', 'status'],
+            exclude: ['id'],
           }),
         },
       },
     })
     tenant: Omit<Tenant, 'id'>,
   ): Promise<Tenant> {
-    tenant.status = TenantStatus.ACTIVE;
     return this.tenantRepository.create(tenant);
   }
 
@@ -88,12 +72,12 @@ export class TenantController {
   @authorize({
     permissions: [PermissionKey.ViewTenant, PermissionKey.ViewTenantNum],
   })
-  @get(`${basePath}/count`, {
+  @get(`${baseUrl}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Tenant model count',
-        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
+        content: {'application/json': {schema: CountSchema}},
       },
     },
   })
@@ -107,13 +91,13 @@ export class TenantController {
   @authorize({
     permissions: [PermissionKey.ViewTenant, PermissionKey.ViewTenantNum],
   })
-  @get(basePath, {
+  @get(baseUrl, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Array of Tenant model instances',
         content: {
-          [CONTENT_TYPE.JSON]: {
+          'application/json': {
             schema: {
               type: 'array',
               items: getModelSchemaRef(Tenant, {includeRelations: true}),
@@ -133,19 +117,19 @@ export class TenantController {
   @authorize({
     permissions: [PermissionKey.UpdateTenant, PermissionKey.UpdateTenantNum],
   })
-  @patch(basePath, {
+  @patch(baseUrl, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Tenant PATCH success count',
-        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
+        content: {'application/json': {schema: CountSchema}},
       },
     },
   })
   async updateAll(
     @requestBody({
       content: {
-        [CONTENT_TYPE.JSON]: {
+        'application/json': {
           schema: getModelSchemaRef(Tenant, {partial: true}),
         },
       },
@@ -160,20 +144,15 @@ export class TenantController {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: [
-      PermissionKey.ViewTenant,
-      PermissionKey.ViewTenantNum,
-      PermissionKey.ViewOwnTenantNum,
-      PermissionKey.ViewOwnTenant,
-    ],
+    permissions: [PermissionKey.ViewTenant, PermissionKey.ViewTenantNum],
   })
-  @get(`${basePath}/{id}`, {
+  @get(`${baseUrl}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Tenant model instance',
         content: {
-          [CONTENT_TYPE.JSON]: {
+          'application/json': {
             schema: getModelSchemaRef(Tenant, {includeRelations: true}),
           },
         },
@@ -181,18 +160,10 @@ export class TenantController {
     },
   })
   async findById(
-    @inject(AuthenticationBindings.CURRENT_USER)
-    currentUser: IAuthUserWithPermissions,
     @param.path.string('id') id: string,
     @param.filter(Tenant, {exclude: 'where'})
     filter?: FilterExcludingWhere<Tenant>,
   ): Promise<Tenant> {
-    if (
-      currentUser.permissions.indexOf(PermissionKey.ViewOwnTenant) < 0 &&
-      currentUser.tenantId !== id
-    ) {
-      throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
-    }
     return this.tenantRepository.findById(id, filter);
   }
 
@@ -200,14 +171,9 @@ export class TenantController {
     passReqToCallback: true,
   })
   @authorize({
-    permissions: [
-      PermissionKey.UpdateTenant,
-      PermissionKey.UpdateTenantNum,
-      PermissionKey.UpdateOwnTenantNum,
-      PermissionKey.UpdateOwnTenant,
-    ],
+    permissions: [PermissionKey.UpdateTenant, PermissionKey.UpdateTenantNum],
   })
-  @patch(`${basePath}/{id}`, {
+  @patch(`${baseUrl}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -216,25 +182,38 @@ export class TenantController {
     },
   })
   async updateById(
-    @inject(AuthenticationBindings.CURRENT_USER)
-    currentUser: IAuthUserWithPermissions,
     @param.path.string('id') id: string,
     @requestBody({
       content: {
-        [CONTENT_TYPE.JSON]: {
+        'application/json': {
           schema: getModelSchemaRef(Tenant, {partial: true}),
         },
       },
     })
     tenant: Tenant,
   ): Promise<void> {
-    if (
-      currentUser.permissions.indexOf(PermissionKey.ViewOwnTenant) < 0 &&
-      currentUser.tenantId !== id
-    ) {
-      throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
-    }
     await this.tenantRepository.updateById(id, tenant);
+  }
+
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({
+    permissions: [PermissionKey.UpdateTenant, PermissionKey.UpdateTenantNum],
+  })
+  @put(`${baseUrl}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Tenant PUT success',
+      },
+    },
+  })
+  async replaceById(
+    @param.path.string('id') id: string,
+    @requestBody() tenant: Tenant,
+  ): Promise<void> {
+    await this.tenantRepository.replaceById(id, tenant);
   }
 
   @authenticate(STRATEGY.BEARER, {
@@ -243,7 +222,7 @@ export class TenantController {
   @authorize({
     permissions: [PermissionKey.DeleteTenant, PermissionKey.DeleteTenantUser],
   })
-  @del(`${basePath}/{id}`, {
+  @del(`${baseUrl}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -253,50 +232,5 @@ export class TenantController {
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.tenantRepository.deleteById(id);
-  }
-
-  @authenticate(STRATEGY.BEARER, {
-    passReqToCallback: true,
-  })
-  @authorize({
-    permissions: [
-      PermissionKey.ViewTenant,
-      PermissionKey.ViewTenantNum,
-      PermissionKey.ViewOwnTenantNum,
-      PermissionKey.ViewOwnTenant,
-    ],
-  })
-  @get(`${basePath}/{id}/config`, {
-    security: OPERATION_SECURITY_SPEC,
-    responses: {
-      [STATUS_CODE.OK]: {
-        description: 'Tenant config instances',
-        content: {
-          [CONTENT_TYPE.JSON]: {
-            schema: {
-              type: 'array',
-              items: getModelSchemaRef(TenantConfig),
-            },
-          },
-        },
-      },
-    },
-  })
-  async getTenantConfig(
-    @inject(AuthenticationBindings.CURRENT_USER)
-    currentUser: IAuthUserWithPermissions,
-    @param.path.string('id') id: string,
-  ): Promise<TenantConfig[]> {
-    if (
-      currentUser.permissions.indexOf(PermissionKey.ViewOwnTenant) < 0 &&
-      currentUser.tenantId !== id
-    ) {
-      throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
-    }
-    return this.tenantConfigRepository.find({
-      where: {
-        tenantId: id,
-      },
-    });
   }
 }

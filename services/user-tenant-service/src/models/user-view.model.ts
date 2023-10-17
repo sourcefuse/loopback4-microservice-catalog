@@ -149,21 +149,9 @@ export class UserView<T = DataObject<Model>> extends UserModifiableEntity<
   roleName?: string;
 
   @property({
-    name: 'roletype',
-    type: 'number',
-  })
-  roleType?: number;
-
-  @property({
     name: 'user_tenant_id',
     type: 'string',
     required: true,
   })
   userTenantId: string;
-
-  @property({
-    type: 'date',
-    name: 'expires_on',
-  })
-  expiresOn?: Date;
 }

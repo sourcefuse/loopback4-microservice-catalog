@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2023 Sourcefuse Technologies
+// Copyright (c) 2023 Sourcefuse Technologies
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
@@ -13,29 +13,27 @@ import {
   IAuthUserWithPermissions,
 } from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
-
-import {
-  ConditionalAuditRepositoryMixin,
-  IAuditMixinOptions,
-} from '@sourceloop/audit-log';
 import {UserTenantDataSourceName} from '../keys';
-import {Tenant, TenantConfig, TenantRelations, UserTenant} from '../models';
-import {AuditLogRepository} from './audit.repository';
+import {
+  Group,
+  Role,
+  Tenant,
+  TenantConfig,
+  TenantRelations,
+  User,
+  UserTenant,
+} from '../models';
+import {GroupRepository} from './group.repository';
+import {RoleRepository} from './role.repository';
 import {TenantConfigRepository} from './tenant-config.repository';
 import {UserTenantRepository} from './user-tenant.repository';
+import {UserRepository} from './user.repository';
 
-const TenantAuditOpts: IAuditMixinOptions = {
-  actionKey: 'Tenant_Logs',
-};
-
-export class TenantRepository extends ConditionalAuditRepositoryMixin(
-  DefaultUserModifyCrudRepository<
-    Tenant,
-    typeof Tenant.prototype.id,
-    TenantRelations
-  >,
-  TenantAuditOpts,
-) {
+export class TenantRepository extends DefaultUserModifyCrudRepository<
+  Tenant,
+  typeof Tenant.prototype.id,
+  TenantRelations
+> {
   public readonly tenantConfigs: HasManyRepositoryFactory<
     TenantConfig,
     typeof Tenant.prototype.id
@@ -46,6 +44,21 @@ export class TenantRepository extends ConditionalAuditRepositoryMixin(
     typeof Tenant.prototype.id
   >;
 
+  public readonly users: HasManyRepositoryFactory<
+    User,
+    typeof Tenant.prototype.id
+  >;
+
+  public readonly roles: HasManyRepositoryFactory<
+    Role,
+    typeof Tenant.prototype.id
+  >;
+
+  public readonly groups: HasManyRepositoryFactory<
+    Group,
+    typeof Tenant.prototype.id
+  >;
+
   constructor(
     @inject(`datasources.${UserTenantDataSourceName}`)
     dataSource: juggler.DataSource,
@@ -53,14 +66,33 @@ export class TenantRepository extends ConditionalAuditRepositoryMixin(
     protected tenantConfigRepositoryGetter: Getter<TenantConfigRepository>,
     @repository.getter('UserTenantRepository')
     protected userTenantRepositoryGetter: Getter<UserTenantRepository>,
+    @repository.getter('UserRepository')
+    protected userRepositoryGetter: Getter<UserRepository>,
+    @repository.getter('RoleRepository')
+    protected roleRepositoryGetter: Getter<RoleRepository>,
+    @repository.getter('GroupRepository')
+    protected groupRepositoryGetter: Getter<GroupRepository>,
     @inject.getter(AuthenticationBindings.CURRENT_USER)
     protected readonly getCurrentUser: Getter<
       IAuthUserWithPermissions | undefined
     >,
-    @repository.getter('AuditLogRepository')
-    public getAuditLogRepository: Getter<AuditLogRepository>,
   ) {
     super(Tenant, dataSource, getCurrentUser);
+    this.groups = this.createHasManyRepositoryFactoryFor(
+      'groups',
+      groupRepositoryGetter,
+    );
+    this.registerInclusionResolver('groups', this.groups.inclusionResolver);
+    this.roles = this.createHasManyRepositoryFactoryFor(
+      'roles',
+      roleRepositoryGetter,
+    );
+    this.registerInclusionResolver('roles', this.roles.inclusionResolver);
+    this.users = this.createHasManyRepositoryFactoryFor(
+      'users',
+      userRepositoryGetter,
+    );
+    this.registerInclusionResolver('users', this.users.inclusionResolver);
     this.userTenants = this.createHasManyRepositoryFactoryFor(
       'userTenants',
       userTenantRepositoryGetter,
@@ -69,7 +101,6 @@ export class TenantRepository extends ConditionalAuditRepositoryMixin(
       'userTenants',
       this.userTenants.inclusionResolver,
     );
-
     this.tenantConfigs = this.createHasManyRepositoryFactoryFor(
       'tenantConfigs',
       tenantConfigRepositoryGetter,

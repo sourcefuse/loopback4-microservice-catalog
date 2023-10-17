@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2023 Sourcefuse Technologies
+// Copyright (c) 2023 Sourcefuse Technologies
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
@@ -9,31 +9,21 @@ import {
   repository,
 } from '@loopback/repository';
 import {
-  ConditionalAuditRepositoryMixin,
-  IAuditMixinOptions,
-} from '@sourceloop/audit-log';
-import {
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
+  tenantGuard,
 } from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {UserTenantDataSourceName} from '../keys';
 import {Group, GroupRelations, UserGroup} from '../models';
-import {AuditLogRepository} from './audit.repository';
 import {UserGroupRepository} from './user-group.repository';
 
-const GroupAuditOpts: IAuditMixinOptions = {
-  actionKey: 'Group_Logs',
-};
-
-export class GroupRepository extends ConditionalAuditRepositoryMixin(
-  DefaultUserModifyCrudRepository<
-    Group,
-    typeof Group.prototype.id,
-    GroupRelations
-  >,
-  GroupAuditOpts,
-) {
+@tenantGuard()
+export class GroupRepository extends DefaultUserModifyCrudRepository<
+  Group,
+  typeof Group.prototype.id,
+  GroupRelations
+> {
   public readonly userGroups: HasManyRepositoryFactory<
     UserGroup,
     typeof Group.prototype.id
@@ -42,14 +32,12 @@ export class GroupRepository extends ConditionalAuditRepositoryMixin(
   constructor(
     @inject(`datasources.${UserTenantDataSourceName}`)
     dataSource: juggler.DataSource,
+    @repository.getter('UserGroupRepository')
+    protected userGroupRepositoryGetter: Getter<UserGroupRepository>,
     @inject.getter(AuthenticationBindings.CURRENT_USER)
     protected readonly getCurrentUser: Getter<
       IAuthUserWithPermissions | undefined
     >,
-    @repository.getter('UserGroupRepository')
-    protected userGroupRepositoryGetter: Getter<UserGroupRepository>,
-    @repository.getter('AuditLogRepository')
-    public getAuditLogRepository: Getter<AuditLogRepository>,
   ) {
     super(Group, dataSource, getCurrentUser);
     this.userGroups = this.createHasManyRepositoryFactoryFor(

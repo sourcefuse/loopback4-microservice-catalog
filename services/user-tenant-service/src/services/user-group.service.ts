@@ -2,17 +2,19 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {bind, BindingScope, service} from '@loopback/core';
-import {repository, Where, WhereBuilder} from '@loopback/repository';
+import {bind, BindingScope, inject} from '@loopback/core';
+import {repository} from '@loopback/repository';
+import {HttpErrors} from '@loopback/rest';
 import {IAuthUserWithPermissions} from '@sourceloop/core';
-import {Group, UserGroup} from '../models';
-import {UserGroupView} from '../models/group-user-view.model';
+import {AuthenticationBindings} from 'loopback4-authentication';
+import {UserGroup} from '../models';
 import {
   GroupRepository,
   UserGroupRepository,
-  UserGroupViewRepository,
+  UserTenantRepository,
 } from '../repositories';
-import {UserGroupHelperService} from './user-group-helper.service';
+
+type UserTenantIds = string[];
 
 @bind({scope: BindingScope.REQUEST})
 export class UserGroupService {
@@ -21,21 +23,96 @@ export class UserGroupService {
     public groupRepository: GroupRepository,
     @repository(UserGroupRepository)
     public userGroupRepository: UserGroupRepository,
-    @service(UserGroupHelperService)
-    private readonly userGroupHelperService: UserGroupHelperService,
-    @repository(UserGroupViewRepository)
-    public userGroupViewRepository: UserGroupViewRepository,
+    @repository(UserTenantRepository)
+    public userTenantRepository: UserTenantRepository,
+    @inject(AuthenticationBindings.CURRENT_USER)
+    private readonly currentUser: IAuthUserWithPermissions,
   ) {}
 
   async create(userGroupToCreate: Partial<UserGroup>) {
+    try {
+      const userTenant = await this.userTenantRepository.findById(
+        userGroupToCreate.userTenantId,
+      ); //NOSONAR
+      if (!userTenant) {
+        throw new Error('user access not allowed');
+      }
+    } catch {
+      throw new HttpErrors.Forbidden('user access not allowed');
+    }
+
+    const userGroup = await this.userGroupRepository.findOne({
+      where: {
+        userTenantId: userGroupToCreate.userTenantId,
+        groupId: userGroupToCreate.groupId,
+      },
+    });
+    if (userGroup) {
+      throw new HttpErrors.Forbidden('User is already added in this group');
+    }
     return this.userGroupRepository.create(userGroupToCreate);
   }
 
   async updateById(userGroupId: string, userGroupToUpdate: Partial<UserGroup>) {
-    await this.userGroupHelperService.updateById(
-      userGroupId,
-      userGroupToUpdate,
-    );
+    await this.userGroupRepository.findById(userGroupId);
+    await this.userGroupRepository.updateById(userGroupId, userGroupToUpdate);
+  }
+
+  async createAll(
+    userTenantIdArray: UserTenantIds,
+    groupId: typeof UserGroup.prototype.id,
+  ) {
+    try {
+      const userTenants = await this.userTenantRepository.find({
+        where: {
+          id: {inq: userTenantIdArray},
+        },
+      });
+
+      if (!userTenants) {
+        throw HttpErrors.Forbidden('Users access not allowed');
+      }
+
+      const userTenantIdsOfTenant = userTenants.map(
+        userTenant => userTenant.id ?? '',
+      );
+
+      const userGroups = await this.userGroupRepository.find({
+        where: {
+          groupId: groupId,
+          userTenantId: {inq: userTenantIdsOfTenant},
+        },
+      });
+      let userTenantIdResult;
+      if (userGroups) {
+        const userGroupRecords = userGroups.map(
+          userGroup => userGroup.userTenantId,
+        );
+        userTenantIdResult = userTenantIdsOfTenant.filter(
+          userTenantId => !userGroupRecords.includes(userTenantId),
+        );
+      } else {
+        userTenantIdResult = userTenantIdsOfTenant;
+      }
+      if (!userTenantIdResult) {
+        throw new HttpErrors.Forbidden(
+          'users already exist in this user group',
+        );
+      }
+
+      const userGroupsToCreate = userTenantIdResult.map(userTenantId => {
+        const userGroup = new UserGroup();
+        userGroup.groupId = groupId;
+        userGroup.userTenantId = userTenantId ?? '';
+        return userGroup;
+      });
+      const createdUserGroups = await this.userGroupRepository.createAll(
+        userGroupsToCreate,
+      );
+      return createdUserGroups;
+    } catch {
+      throw new HttpErrors.Forbidden('User should be from same tenant');
+    }
   }
 
   async deleteById(userGroupId: string) {
@@ -47,14 +124,5 @@ export class UserGroupService {
     await this.userGroupRepository.deleteAll({
       groupId: {inq: groupIds},
     });
-  }
-
-  getAccessCountFilter(
-    currentUser: IAuthUserWithPermissions,
-    where?: Where<Group>,
-  ) {
-    const whereBuilder = new WhereBuilder<UserGroupView>(where);
-    whereBuilder.eq('userTenantId', `${currentUser.userTenantId}`);
-    return whereBuilder.build();
   }
 }

@@ -2,18 +2,17 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {PermissionKey} from '../../enums';
 import {Client, expect} from '@loopback/testlab';
 import * as jwt from 'jsonwebtoken';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {nanoid} from 'nanoid';
-import {UserTenantServiceApplication} from '../application';
+import {UserTenantServiceApplication} from '../../application';
+import {PermissionKey} from '../../enums';
 import {Tenant} from '../../models';
 import {TenantRepository} from '../../repositories';
-import {setupApplication} from './test-helper';
+import {issuer, secret, setupApplication} from './test-helper';
 
-describe('Tenant Controller', function () {
-  /* eslint-disable @typescript-eslint/no-invalid-this */
+describe('Tenant Controller', function (this: Mocha.Suite) {
   this.timeout(10000);
   let app: UserTenantServiceApplication;
   let tenantRepo: TenantRepository;
@@ -34,8 +33,6 @@ describe('Tenant Controller', function () {
       PermissionKey.CreateTenant,
       PermissionKey.UpdateTenant,
       PermissionKey.DeleteTenant,
-      PermissionKey.ViewOwnTenant,
-      PermissionKey.UpdateOwnTenant,
     ],
   };
   before('setupApplication', async () => {
@@ -75,6 +72,7 @@ describe('Tenant Controller', function () {
     const tenant = {
       name: tenantName,
       key: key,
+      status: 1,
     };
     await client
       .post(basePath)
@@ -137,7 +135,7 @@ describe('Tenant Controller', function () {
     expect(countResponse.body).to.have.property('count');
   });
 
-  it('gives status 403 when user doesnt habe the required permissions', async () => {
+  it('gives status 403 when user doesnt have the required permissions', async () => {
     const key = nanoid(10);
     const newTestUserId = '9640864d-a84a-e6b4-f20e-918ff280cdbb';
     const newTestUser = {
@@ -149,15 +147,16 @@ describe('Tenant Controller', function () {
       permissions: [],
     };
 
-    const newToken = jwt.sign(newTestUser, 'kdskssdkdfs', {
+    const newToken = jwt.sign(newTestUser, secret, {
       expiresIn: 180000,
-      issuer: 'sf',
+      issuer,
     });
     await client
       .post(basePath)
       .send({
         name: tenantName,
         key: key,
+        status: 1,
       })
       .set('authorization', `Bearer ${newToken}`)
       .expect(403);
@@ -169,9 +168,9 @@ describe('Tenant Controller', function () {
 
   function setCurrentUser() {
     app.bind(AuthenticationBindings.CURRENT_USER).to(testUser);
-    token = jwt.sign(testUser, 'kdskssdkdfs', {
+    token = jwt.sign(testUser, secret, {
       expiresIn: 180000,
-      issuer: 'sf',
+      issuer: issuer,
     });
   }
 });
