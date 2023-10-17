@@ -6,8 +6,9 @@ const constructs_1 = require('constructs');
 class AwsProvider extends constructs_1.Construct {
   constructor(scope, name) {
     super(scope, name);
+// sonarignore:start
     new aws.provider.AwsProvider(this, 'aws', {
-      // NOSONAR
+      // sonarignore:end
       region: process.env.AWS_REGION,
       accessKey: process.env.AWS_ACCESS_KEY_ID,
       secretKey: process.env.AWS_SECRET_ACCESS_KEY,

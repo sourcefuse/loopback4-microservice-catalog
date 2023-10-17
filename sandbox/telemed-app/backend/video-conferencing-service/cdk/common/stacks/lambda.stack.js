@@ -20,8 +20,9 @@ class LambdaStack extends cdktf_1.TerraformStack {
       config.codePath,
       `../${config.useImage ? '' : 'dist'}`,
     );
+    // sonarignore:start
     new arc_cdk_1.LambdaWithApiGateway(this, 'lambda-apiGateway', {
-      // NOSONAR
+      // sonarignore:end
       ...config,
       name: pet.id,
     });

@@ -26,9 +26,9 @@ export class LambdaStack extends TerraformStack {
       config.codePath,
       `../${config.useImage ? '' : 'dist'}`,
     );
-
+    // sonarignore:start
     new LambdaWithApiGateway(this, 'lambda-apiGateway', {
-      // NOSONAR
+      // sonarignore:end
       ...config,
       name: pet.id,
     });

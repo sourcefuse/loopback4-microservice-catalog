@@ -14,8 +14,9 @@ class MigrationStack extends cdktf_1.TerraformStack {
     const pet = new random.pet.Pet(this, 'random-name', {
       length: 2,
     });
+    // sonarignore:start
     new arc_cdk_1.Lambda(this, 'lambda', {
-      // NOSONAR
+    // sonarignore:end
       ...config,
       name: pet.id,
     });

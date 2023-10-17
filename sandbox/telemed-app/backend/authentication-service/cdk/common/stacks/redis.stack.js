@@ -95,8 +95,9 @@ class RedisStack extends cdktf_1.TerraformStack {
       cidr_blocks: `\${[for s in data.${dataAwsSubnetSubnet.terraformResourceType}.${dataAwsSubnetSubnet.friendlyUniqueId} : s.cidr_block]}`,
     };
     securityGroup.addOverride('egress', [egressConfig]);
+    // sonarignore:start
     new redis_1.Redis(this, 'redis', {
-      // NOSONAR
+     // sonarignore:end
       allowedSecurityGroupIds: dataAwsSecurityGroupsRedisUserSg.ids,
       applyImmediately: true,
       atRestEncryptionEnabled: true,

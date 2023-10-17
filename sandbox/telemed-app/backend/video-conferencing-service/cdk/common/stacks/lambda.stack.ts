@@ -1,7 +1,7 @@
 import * as random from '@cdktf/provider-random';
+import {ILambdaWithApiGateway, LambdaWithApiGateway} from 'arc-cdk';
 import {TerraformStack} from 'cdktf';
 import {Construct} from 'constructs';
-import {ILambdaWithApiGateway, LambdaWithApiGateway} from 'arc-cdk';
 import {AwsProvider} from '../constructs/awsProvider';
 import path = require('path');
 
@@ -26,9 +26,9 @@ export class LambdaStack extends TerraformStack {
       config.codePath,
       `../${config.useImage ? '' : 'dist'}`,
     );
-
+    // sonarignore:start
     new LambdaWithApiGateway(this, 'lambda-apiGateway', {
-      // NOSONAR
+      // sonarignore:end
       ...config,
       name: pet.id,
     });

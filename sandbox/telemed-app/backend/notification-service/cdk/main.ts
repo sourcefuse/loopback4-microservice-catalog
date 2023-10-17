@@ -32,9 +32,9 @@ const getSecurityGroup = () => {
   }
   return [];
 };
-
+// sonarignore:start
 new MigrationStack(app, 'migration', {
-  // NOSONAR
+  // sonarignore:end
   codePath: resolve(__dirname, '../migration'),
   handler: 'lambda.handler',
   runtime: 'nodejs18.x',
@@ -55,9 +55,9 @@ new MigrationStack(app, 'migration', {
   namespace: process.env.NAMESPACE || '',
   environment: process.env.ENV || '',
 });
-
+// sonarignore:start
 new LambdaStack(app, 'lambda', {
-  // NOSONAR
+  // sonarignore:end
   s3Bucket: process.env.S3_BUCKET!,
   codePath: __dirname,
   handler: 'lambda.handler',

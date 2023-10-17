@@ -13,7 +13,7 @@ dotenvExt.load({
 });
 const app = new cdktf_1.App();
 const getSubnetIds = () => {
-  var _a;
+  let _a;
   try {
     const subnetIds =
       ((_a = process.env) === null || _a === void 0 ? void 0 : _a.SUBNET_IDS) ||
@@ -25,7 +25,7 @@ const getSubnetIds = () => {
   return [];
 };
 const getSecurityGroup = () => {
-  var _a;
+  let _a;
   try {
     const securityGroup =
       ((_a = process.env) === null || _a === void 0
@@ -37,8 +37,9 @@ const getSecurityGroup = () => {
   }
   return [];
 };
+// sonarignore:start
 new common_1.MigrationStack(app, 'migration', {
-  // NOSONAR
+// sonarignore:end
   codePath: (0, path_1.resolve)(__dirname, '../migration'),
   handler: 'lambda.handler',
   runtime: 'nodejs18.x',
@@ -59,8 +60,9 @@ new common_1.MigrationStack(app, 'migration', {
   namespace: process.env.NAMESPACE || '',
   environment: process.env.ENV || '',
 });
+// sonarignore:start
 new common_1.LambdaStack(app, 'lambda', {
-  // NOSONAR
+// sonarignore:end
   s3Bucket: process.env.S3_BUCKET,
   codePath: __dirname,
   handler: 'lambda.handler',
