@@ -23,12 +23,20 @@ import {
 import {ChatServiceBindings} from './keys';
 import {IChatServiceConfig} from './types';
 
+import {Class, Model, Repository} from '@loopback/repository';
 import {AuthenticationComponent} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import {Class, Model, Repository} from '@loopback/repository';
+import {
+  AttachmentFileController,
+  MessageController,
+  MessageMessageController,
+  MessageMessageRecipientController,
+  MessageRecipientController,
+  MessageRecipientMessageController,
+} from './controllers';
 import {
   AttachmentFile,
   AttachmentFileDto,
@@ -40,21 +48,13 @@ import {
   MessageRecipientRepository,
   MessageRepository,
 } from './repositories';
-import {
-  AttachmentFileController,
-  MessageController,
-  MessageMessageController,
-  MessageMessageRecipientController,
-  MessageRecipientController,
-  MessageRecipientMessageController,
-} from './controllers';
 
 export class ChatServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
-    private readonly application: RestApplication,
+    protected readonly application: RestApplication,
     @inject(ChatServiceBindings.Config, {optional: true})
-    private readonly chatConfig?: IChatServiceConfig,
+    protected readonly chatConfig?: IChatServiceConfig,
   ) {
     this.bindings = [];
     this.providers = {};

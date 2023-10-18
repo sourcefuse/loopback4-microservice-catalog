@@ -11,13 +11,13 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
 } from '@loopback/rest';
 import {
@@ -30,13 +30,15 @@ import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../enums';
 import {MessageRecipient} from '../models';
 import {MessageRecipientRepository} from '../repositories';
-
+import {MessageRecipientRepository as SequelizeMessageRecipientRepository} from '../repositories/sequelize';
 const basePath = '/message-recipients';
 
 export class MessageRecipientController {
   constructor(
     @repository(MessageRecipientRepository)
-    public messageRecipientRepository: MessageRecipientRepository,
+    public messageRecipientRepository:
+      | MessageRecipientRepository
+      | SequelizeMessageRecipientRepository,
   ) {}
 
   @authenticate(STRATEGY.BEARER)

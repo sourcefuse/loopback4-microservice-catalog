@@ -9,18 +9,20 @@ import {
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
-import {authenticate, STRATEGY} from 'loopback4-authentication';
+import {STRATEGY, authenticate} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../enums';
 import {Message, MessageRecipient} from '../models';
 import {MessageRecipientRepository} from '../repositories';
-
+import {MessageRecipientRepository as SequelizeMessageRecipientRepository} from '../repositories/sequelize';
 const basePath = '/message-recipients/{id}/message';
 
 export class MessageRecipientMessageController {
   constructor(
     @repository(MessageRecipientRepository)
-    public messageRecipientRepository: MessageRecipientRepository,
+    public messageRecipientRepository:
+      | MessageRecipientRepository
+      | SequelizeMessageRecipientRepository,
   ) {}
 
   @authenticate(STRATEGY.BEARER)
