@@ -62,8 +62,6 @@ const MIGRATION_TEMPLATE = join(
 
 const MIGRATION_FOLDER = join('packages', 'migrations');
 
-const sourceloopCdkPath = (packageName: SERVICES) =>
-  join('node_modules', `@sourceloop/${packageName}`, 'iac');
 
 const sourceloopMigrationPath = (packageName: SERVICES) =>
   join('node_modules', `@sourceloop/${packageName}`, 'migrations');
@@ -99,9 +97,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     }
   }
 
-  async setCdk() {
-    this.projectInfo.cdk = this.options.cdk;
-  }
+
 
   //Loopback4 prompts
   async promptProjectName() {
@@ -215,27 +211,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         'docker:push:dev'
       ] = `sudo docker push $IMAGE_REPO_NAME/${this.options.uniquePrefix}-$npm_package_name:$IMAGE_TAG_VERSION`;
       scripts['coverage'] = 'nyc npm run test';
-      if (this.options.cdk) {
-        packageJson.devDependencies = packageJson.devDependencies ?? {};
-        packageJson.devDependencies['@types/i18n'] = getDependencyVersion(
-          this.projectInfo.dependencies,
-          '@types/i18n',
-        );
-        packageJson.dependencies['@types/aws-lambda'] = getDependencyVersion(
-          this.projectInfo.dependencies,
-          '@types/aws-lambda',
-        );
-        scripts['build:layers'] = 'scripts/build-dependency-layer.sh';
-        scripts['build:migrations'] = 'scripts/build-migrations.sh';
-        scripts['build:all'] =
-          'npm run build && npm run build:layers && npm run build:migrations';
-        scripts['db:migrate'] =
-          "../../node_modules/db-migrate/bin/db-migrate up --config './migration/migrations/database.json'";
-        scripts['db:migrate:down'] =
-          "./node_modules/db-migrate/bin/db-migrate down --config './migrations/database.json'";
-        scripts['db:migrate:reset'] =
-          "./node_modules/db-migrate/bin/db-migrate reset --config './migrations/database.json'";
-      }
+
       packageJson.scripts = scripts;
       if (this.options.baseService) {
         packageJson.dependencies[`@sourceloop/${this.options.baseService}`] =
@@ -255,18 +231,6 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
 
       this.addMigrations();
 
-      if (this.options.cdk) {
-        this._includeCdk();
-      } else {
-        const name = this.options.name ?? DEFAULT_NAME;
-        fs.unlink(
-          this.destinationPath(join('services', name, 'src', 'lambda.ts')),
-          () => { },
-        );
-        this.log(
-          this.destinationPath(join('services', name, 'src', 'lambda.ts')),
-        );
-      }
       return true;
     }
     return false;
@@ -287,59 +251,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       this._addMigrationScripts();
     }
   }
-  private _includeCdk() {
-    const name = this.options.name ?? DEFAULT_NAME;
 
-    if (
-      !this.shouldExit() &&
-      this.options.baseService &&
-      fs.existsSync(
-        this.destinationPath(
-          join('services', name, sourceloopCdkPath(this.options.baseService)),
-        ),
-      )
-    ) {
-      this.fs.copy(
-        this.destinationPath(
-          join(
-            'services',
-            name,
-            sourceloopCdkPath(this.options.baseService),
-            'cdk',
-          ),
-        ),
-        this.destinationPath(join('services', name, 'cdk')),
-      );
-
-      if (!fs.existsSync(this.destinationPath(join('iac', 'dependencies')))) {
-        this.fs.copy(
-          this.destinationPath(
-            join(
-              'services',
-              name,
-              sourceloopCdkPath(this.options.baseService),
-              'dependencies',
-            ),
-          ),
-          this.destinationPath(join('iac', 'dependencies')),
-        );
-      }
-
-      this.fs.copy(
-        this.destinationPath(
-          join(
-            'services',
-            name,
-            sourceloopCdkPath(this.options.baseService),
-            'scripts',
-          ),
-        ),
-        this.destinationPath(join('services', name, 'scripts')),
-      );
-    } else {
-      // do nothing
-    }
-  }
 
   addScope() {
     let czConfig = this.fs.read(
@@ -522,35 +434,6 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       },
     );
 
-    if (
-      this.options.cdk &&
-      this.options.baseService &&
-      fs.existsSync(
-        this.destinationPath(
-          join('services', name, sourceloopCdkPath(this.options.baseService)),
-        ),
-      )
-    ) {
-      this.fs.copyTpl(
-        this.templatePath(MIGRATION_TEMPLATE),
-        this.destinationPath(join('services', name, 'migration', dbconfig)),
-        {
-          name: name.toUpperCase(),
-          connector,
-        },
-      );
-      this.fs.copy(
-        this.destinationPath(
-          join(
-            'services',
-            name,
-            sourceloopMigrationPath(this.options.baseService),
-            'lambda.js',
-          ),
-        ),
-        this.destinationPath(join('services', name, 'migration', 'lambda.js')),
-      );
-    }
   }
 
   private _includeSourceloopMigrations() {
@@ -598,52 +481,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         },
       );
 
-      if (
-        this.options.cdk &&
-        fs.existsSync(
-          this.destinationPath(
-            join('services', name, sourceloopCdkPath(this.options.baseService)),
-          ),
-        )
-      ) {
-        this.fs.copy(
-          this.destinationPath(
-            join(
-              'services',
-              name,
-              sourceloopMigrationPath(this.options.baseService),
-            ),
-          ),
-          this.destinationPath(
-            join('services', name, 'migration', 'migrations'),
-          ),
-        );
 
-        this.fs.copy(
-          this.destinationPath(
-            join(
-              'services',
-              name,
-              sourceloopMigrationPath(this.options.baseService),
-              'lambda.js',
-            ),
-          ),
-          this.destinationPath(
-            join('services', name, 'migration', 'lambda.js'),
-          ),
-        );
-        this.fs.delete(join('services', name, 'migration', 'migrations', 'lambda.js'));
-        this.fs.copy(
-          this.destinationPath(join(MIGRATION_FOLDER, name, dbconfig)),
-          this.destinationPath(join('services', name, 'migration', dbconfig)),
-        );
-      } else {
-        // do nothing
-      }
-      this.fs.delete(join(MIGRATION_FOLDER, name, 'migrations', 'lambda.js'));
-      this.log(
-        this.destinationPath(join(MIGRATION_FOLDER, name, 'migrations', 'lambda.js')),
-      );
     }
 
   }

@@ -15,11 +15,6 @@ export class Microservice extends Base<MicroserviceOptions> {
       name: 'help',
       description: 'show manual pages',
     }),
-    cdk: flags.boolean({
-      name: 'cdk',
-      description: 'include arc-cdk?',
-      allowNo: true,
-    }),
     facade: flags.boolean({
       name: 'facade',
       description: 'Create as facade',
