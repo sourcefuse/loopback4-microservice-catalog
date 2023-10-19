@@ -33,15 +33,17 @@ import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
 import {PermissionKey, STATUS_CODE} from '../enums';
 import {UserTenantPrefs} from '../models';
 import {UserTenantPrefsRepository} from '../repositories';
-
+import {UserTenantPrefsRepository as SequelizeUserTenantPrefsRepository} from '../repositories/sequelize';
 const baseUrl = '/user-tenant-prefs';
 
 export class UserTenantPrefsController {
   constructor(
     @repository(UserTenantPrefsRepository)
-    public userTenantPrefsRepository: UserTenantPrefsRepository,
+    public userTenantPrefsRepository:
+      | UserTenantPrefsRepository
+      | SequelizeUserTenantPrefsRepository,
     @inject(AuthenticationBindings.CURRENT_USER)
-    private readonly currentUser: IAuthUserWithPermissions,
+    protected readonly currentUser: IAuthUserWithPermissions,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {

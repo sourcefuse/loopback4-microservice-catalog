@@ -19,16 +19,18 @@ import {PermissionKey, STATUS_CODE} from '../enums';
 import {UserTenantServiceKey} from '../keys';
 import {UserGroup} from '../models';
 import {UserTenantRepository} from '../repositories';
-
+import {UserTenantRepository as SequelizeUserTenantRepository} from '../repositories/sequelize';
 const baseUrl = '/user-tenants/{id}/user-groups';
 
 @intercept(UserTenantServiceKey.UserTenantInterceptorInterceptor)
 export class UserTenantUserGroupController {
   constructor(
     @repository(UserTenantRepository)
-    protected userTenantRepository: UserTenantRepository,
+    protected userTenantRepository:
+      | UserTenantRepository
+      | SequelizeUserTenantRepository,
     @inject(AuthenticationBindings.CURRENT_USER)
-    private readonly currentUser: IAuthUserWithPermissions,
+    protected readonly currentUser: IAuthUserWithPermissions,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {

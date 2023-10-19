@@ -34,16 +34,23 @@ import {PermissionKey, STATUS_CODE} from '../enums';
 import {UserTenantServiceKey} from '../keys';
 import {Tenant, TenantConfig} from '../models';
 import {TenantConfigRepository, TenantRepository} from '../repositories';
+import {
+  TenantConfigRepository as SequelizeTenantConfigRepository,
+  TenantRepository as SequelizeTenantRepository,
+} from '../repositories/sequelize';
 const baseUrl = '/tenants/{id}/tenant-configs';
 
 @intercept(UserTenantServiceKey.TenantInterceptorInterceptor)
 export class TenantTenantConfigController {
   constructor(
-    @repository(TenantRepository) protected tenantRepository: TenantRepository,
+    @repository(TenantRepository)
+    protected tenantRepository: TenantRepository | SequelizeTenantRepository,
     @repository(TenantConfigRepository)
-    protected tenantConfigRepository: TenantConfigRepository,
+    protected tenantConfigRepository:
+      | TenantConfigRepository
+      | SequelizeTenantConfigRepository,
     @inject(AuthenticationBindings.CURRENT_USER)
-    private readonly currentUser: IAuthUserWithPermissions,
+    protected readonly currentUser: IAuthUserWithPermissions,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {

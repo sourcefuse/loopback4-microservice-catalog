@@ -21,16 +21,25 @@ import {PermissionKey, STATUS_CODE} from '../enums';
 import {UserTenantServiceKey} from '../keys';
 import {User, UserDto, UserView} from '../models';
 import {TenantRepository, UserRepository} from '../repositories';
+import {
+  TenantRepository as SequelizeTenantRepository,
+  UserRepository as SequelizeUserRepository,
+} from '../repositories/sequelize';
 import {UserOperationsService} from '../services';
+import {UserOperationsService as SequelizeUserOperationsService} from '../services/sequelize';
 const baseUrl = '/tenants/{id}/users';
 
 @intercept(UserTenantServiceKey.TenantInterceptorInterceptor)
 export class TenantUserController {
   constructor(
-    @repository(TenantRepository) protected tenantRepository: TenantRepository,
-    @repository(UserRepository) protected userRepository: UserRepository,
+    @repository(TenantRepository)
+    protected tenantRepository: TenantRepository | SequelizeTenantRepository,
+    @repository(UserRepository)
+    protected userRepository: UserRepository | SequelizeUserRepository,
     @service(UserOperationsService)
-    protected userOperationsService: UserOperationsService,
+    protected userOperationsService:
+      | UserOperationsService
+      | SequelizeUserOperationsService,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {

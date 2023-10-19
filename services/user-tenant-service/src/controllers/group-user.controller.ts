@@ -30,22 +30,31 @@ import {PermissionKey, STATUS_CODE} from '../enums';
 import {UserTenantServiceKey} from '../keys';
 import {Group, UserGroup} from '../models';
 import {GroupRepository, UserTenantRepository} from '../repositories';
+import {
+  GroupRepository as SequelizeGroupRepository,
+  UserTenantRepository as SequelizeUserTenantRepository,
+} from '../repositories/sequelize';
 import {UserGroupService} from '../services';
-
+import {UserGroupService as SequelizeUserGroupService} from '../services/sequelize';
 const baseUrl = '/groups/{id}/user';
 
 @intercept(UserTenantServiceKey.GroupTenantInterceptor)
 export class GroupUserController {
   constructor(
-    @repository(GroupRepository) protected groupRepository: GroupRepository,
+    @repository(GroupRepository)
+    protected groupRepository: GroupRepository | SequelizeGroupRepository,
     @repository(UserTenantRepository)
-    protected userTenantRepository: UserTenantRepository,
+    protected userTenantRepository:
+      | UserTenantRepository
+      | SequelizeUserTenantRepository,
     @inject(AuthenticationBindings.CURRENT_USER)
-    private readonly currentUser: IAuthUserWithPermissions,
+    protected readonly currentUser: IAuthUserWithPermissions,
     @service(UserGroupService)
-    private readonly userGroupService: UserGroupService,
+    protected readonly userGroupService:
+      | UserGroupService
+      | SequelizeUserGroupService,
     @inject.getter(RestBindings.Http.REQUEST)
-    private readonly getRequest: Getter<Request>,
+    protected readonly getRequest: Getter<Request>,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {

@@ -10,6 +10,14 @@
   "types": "dist/index.d.ts",
   "exports": {
     ".": "./dist/index.js",
+    "./src/components/tenant-utilities/decorators/sequelize": {
+      "types": "./dist/components/tenant-utilities/decorators/sequelize/index.d.ts",
+      "default": "./dist/components/tenant-utilities/decorators/sequelize/index.js"
+    },
+    "./src/components/tenant-utilities/mixins/sequelize": {
+      "types": "./dist/components/tenant-utilities/mixins/sequelize/index.d.ts",
+      "default": "./dist/components/tenant-utilities/mixins/sequelize/index.js"
+    },
     "./sequelize": {
       "types": "./dist/repositories/sequelize/index.d.ts",
       "default": "./dist/repositories/sequelize/index.js"

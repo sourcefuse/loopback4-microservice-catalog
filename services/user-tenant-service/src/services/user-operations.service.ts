@@ -24,22 +24,38 @@ import {
   UserTenantRepository,
   UserViewRepository,
 } from '../repositories';
-
+import {
+  RoleRepository as SequelizeRoleRepository,
+  TenantRepository as SequelizeTenantRepository,
+  UserGroupRepository as SequelizeUserGroupRepository,
+  UserRepository as SequelizeUserRepository,
+  UserTenantRepository as SequelizeUserTenantRepository,
+  UserViewRepository as SequelizeUserViewRepository,
+} from '../repositories/sequelize';
 @injectable({scope: BindingScope.TRANSIENT})
 export class UserOperationsService {
   constructor(
-    @repository(RoleRepository) readonly roleRepository: RoleRepository,
-    @repository(UserRepository) readonly userRepository: UserRepository,
+    @repository(RoleRepository)
+    readonly roleRepository: RoleRepository | SequelizeRoleRepository,
+    @repository(UserRepository)
+    readonly userRepository: UserRepository | SequelizeUserRepository,
     @repository(UserViewRepository)
-    readonly userViewRepository: UserViewRepository,
-    @repository(TenantRepository) readonly tenantRepository: TenantRepository,
+    readonly userViewRepository:
+      | UserViewRepository
+      | SequelizeUserViewRepository,
+    @repository(TenantRepository)
+    readonly tenantRepository: TenantRepository | SequelizeTenantRepository,
     @repository(UserGroupRepository)
-    readonly userGroupRepository: UserGroupRepository,
+    readonly userGroupRepository:
+      | UserGroupRepository
+      | SequelizeUserGroupRepository,
     @repository(UserTenantRepository)
-    readonly userTenantRepository: UserTenantRepository,
+    readonly userTenantRepository:
+      | UserTenantRepository
+      | SequelizeUserTenantRepository,
     @inject.getter(AuthenticationBindings.CURRENT_USER)
     readonly getCurrentUser: Getter<IAuthUserWithPermissions>,
-    @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
+    @inject(LOGGER.LOGGER_INJECT) protected readonly logger: ILogger,
   ) {}
 
   async create(userDtoData: UserDto, tenantId: string): Promise<User> {

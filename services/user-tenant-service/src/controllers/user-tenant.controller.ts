@@ -18,16 +18,22 @@ import {AuthorizeErrorKeys, authorize} from 'loopback4-authorization';
 import {PermissionKey, STATUS_CODE} from '../enums';
 import {Tenant, UserTenant} from '../models';
 import {TenantRepository, UserTenantRepository} from '../repositories';
-
+import {
+  TenantRepository as SequelizeTenantRepository,
+  UserTenantRepository as SequelizeUserTenantRepository,
+} from '../repositories/sequelize';
 const baseUrl = '/user/{id}/tenants';
 
 export class UserTenantController {
   constructor(
     @repository(UserTenantRepository)
-    protected userTenantRepository: UserTenantRepository,
-    @repository(TenantRepository) protected tenantRepository: TenantRepository,
+    protected userTenantRepository:
+      | UserTenantRepository
+      | SequelizeUserTenantRepository,
+    @repository(TenantRepository)
+    protected tenantRepository: TenantRepository | SequelizeTenantRepository,
     @inject(AuthenticationBindings.CURRENT_USER)
-    private readonly currentUser: IAuthUserWithPermissions,
+    protected readonly currentUser: IAuthUserWithPermissions,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {

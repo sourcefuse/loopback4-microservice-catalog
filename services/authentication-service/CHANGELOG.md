@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 11.3.0 (2023-10-19)
+
+* revert(cli): remove cdk flag from microservice command (#1721) ([bac0866](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bac0866)), closes [#1721](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1721) [#1710](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1710)
+* feat(authentication-service): repositories now allow user to override model reference (#1720) ([88a64dd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/88a64dd)), closes [#1720](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1720) [#1223](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1223)
+
+
+
+
+
 ## <small>11.2.6 (2023-10-05)</small>
 
 * refactor(all-services): remove redundant `posttest` script (#1677) ([4b252cf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4b252cf)), closes [#1677](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1677) [#1657](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1657)

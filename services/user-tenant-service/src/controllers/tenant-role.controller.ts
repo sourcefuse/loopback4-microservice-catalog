@@ -35,14 +35,19 @@ import {PermissionKey, STATUS_CODE} from '../enums';
 import {UserTenantServiceKey} from '../keys';
 import {Role, Tenant} from '../models';
 import {RoleRepository, TenantRepository} from '../repositories';
-
+import {
+  RoleRepository as SequelizeRoleRepository,
+  TenantRepository as SequelizeTenantRepository,
+} from '../repositories/sequelize';
 const baseUrl = '/tenants/{id}/roles';
 
 @intercept(UserTenantServiceKey.TenantInterceptorInterceptor)
 export class TenantRoleController {
   constructor(
-    @repository(TenantRepository) protected tenantRepository: TenantRepository,
-    @repository(RoleRepository) protected roleRepository: RoleRepository,
+    @repository(TenantRepository)
+    protected tenantRepository: TenantRepository | SequelizeTenantRepository,
+    @repository(RoleRepository)
+    protected roleRepository: RoleRepository | SequelizeRoleRepository,
     @inject(AuthenticationBindings.CURRENT_USER)
     protected currentUser: IAuthUserWithPermissions,
   ) {}

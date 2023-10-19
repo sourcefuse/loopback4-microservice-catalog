@@ -24,6 +24,7 @@ export class UserTenantServiceApplication extends BootMixin(
     this.projectRoot = __dirname;
     this.bootOptions = {
       controllers: {
+        // Customize ControllerBooter Conventions here
         dirs: ['controllers'],
         extensions: ['.controller.js'],
         nested: true,

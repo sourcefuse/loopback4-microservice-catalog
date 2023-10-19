@@ -35,16 +35,16 @@ import {PermissionKey, STATUS_CODE} from '../enums';
 import {UserTenantServiceKey} from '../keys';
 import {UserLevelPermission, UserTenant} from '../models';
 import {UserTenantRepository} from '../repositories';
-
+import {UserTenantRepository as SequelizeUserTenantRepository} from '../repositories/sequelize'
 const baseUrl = '/user-tenants/{id}/user-level-permissions';
 
 @intercept(UserTenantServiceKey.UserTenantInterceptorInterceptor)
 export class UserTenantUserLevelPermissionController {
   constructor(
     @repository(UserTenantRepository)
-    protected userTenantRepository: UserTenantRepository,
+    protected userTenantRepository: UserTenantRepository|SequelizeUserTenantRepository,
     @inject(AuthenticationBindings.CURRENT_USER)
-    private readonly currentUser: IAuthUserWithPermissions,
+    protected readonly currentUser: IAuthUserWithPermissions,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {

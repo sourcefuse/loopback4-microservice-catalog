@@ -7,8 +7,9 @@ import {
   createRestAppClient,
   givenHttpServerConfig,
 } from '@loopback/testlab';
-import {UserTenantServiceApplication} from '../../application';
+
 import {AuthenticationDbDataSource} from '../datasources';
+import {UserTenantServiceApplication} from './application';
 
 export async function setupApplication(): Promise<AppWithClient> {
   const restConfig = givenHttpServerConfig({

@@ -13,20 +13,28 @@ import {
   UserGroupRepository,
   UserTenantRepository,
 } from '../repositories';
-
+import {
+  GroupRepository as SequelizeGroupRepository,
+  UserGroupRepository as SequelizeUserGroupRepository,
+  UserTenantRepository as SequelizeUserTenantRepository,
+} from '../repositories/sequelize';
 type UserTenantIds = string[];
 
 @bind({scope: BindingScope.REQUEST})
 export class UserGroupService {
   constructor(
     @repository(GroupRepository)
-    public groupRepository: GroupRepository,
+    public groupRepository: GroupRepository | SequelizeGroupRepository,
     @repository(UserGroupRepository)
-    public userGroupRepository: UserGroupRepository,
+    public userGroupRepository:
+      | UserGroupRepository
+      | SequelizeUserGroupRepository,
     @repository(UserTenantRepository)
-    public userTenantRepository: UserTenantRepository,
+    public userTenantRepository:
+      | UserTenantRepository
+      | SequelizeUserTenantRepository,
     @inject(AuthenticationBindings.CURRENT_USER)
-    private readonly currentUser: IAuthUserWithPermissions,
+    protected readonly currentUser: IAuthUserWithPermissions,
   ) {}
 
   async create(userGroupToCreate: Partial<UserGroup>) {
@@ -106,9 +114,8 @@ export class UserGroupService {
         userGroup.userTenantId = userTenantId ?? '';
         return userGroup;
       });
-      const createdUserGroups = await this.userGroupRepository.createAll(
-        userGroupsToCreate,
-      );
+      const createdUserGroups =
+        await this.userGroupRepository.createAll(userGroupsToCreate);
       return createdUserGroups;
     } catch {
       throw new HttpErrors.Forbidden('User should be from same tenant');

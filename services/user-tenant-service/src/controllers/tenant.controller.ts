@@ -26,13 +26,13 @@ import {authorize} from 'loopback4-authorization';
 import {PermissionKey, STATUS_CODE} from '../enums';
 import {Tenant} from '../models';
 import {TenantRepository} from '../repositories';
-
+import {TenantRepository as SequelizeTenantRepository} from '../repositories/sequelize';
 const baseUrl = '/tenants';
 
 export class TenantController {
   constructor(
     @repository(TenantRepository)
-    public tenantRepository: TenantRepository,
+    public tenantRepository: TenantRepository | SequelizeTenantRepository,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {
