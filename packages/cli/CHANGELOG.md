@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.2.1 (2023-10-19)</small>
+
+* revert(cli): remove cdk flag from microservice command (#1721) ([bac0866](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bac0866)), closes [#1721](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1721) [#1710](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1710)
+
+
+
+
+
 ## 4.2.0 (2023-10-05)
 
 * feat(cli): add cdk command in cli (#1705) ([ffaeec4](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ffaeec4)), closes [#1705](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1705) [#1664](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1664) [#1664](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1664) [#1664](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1664)

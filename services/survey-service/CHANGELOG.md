@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.2.4 (2023-10-19)</small>
+
+* fix(survey-service): minor fix in survey service (#1701) ([c283f96](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c283f96)), closes [#1701](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1701) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
 ## <small>0.2.3 (2023-10-05)</small>
 
 * refactor(all-services): remove redundant `posttest` script (#1677) ([4b252cf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4b252cf)), closes [#1677](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1677) [#1657](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1657)
