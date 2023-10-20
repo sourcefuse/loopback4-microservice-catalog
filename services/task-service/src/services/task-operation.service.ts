@@ -69,9 +69,8 @@ export class TaskOperationService {
     key: string,
     payload?: AnyObject,
   ) {
-    const tasks: AnyObject[] = await this.camundaService.getCurrentExternalTask(
-      id,
-    );
+    const tasks: AnyObject[] =
+      await this.camundaService.getCurrentExternalTask(id);
     if (tasks && tasks.length > 0) {
       const tasksPromises = tasks.map(task =>
         this._registerOrUpdateCommand(task, {key, payload, name, id}),

@@ -1,5 +1,5 @@
 ---
-title: "@sourceloop/user-tenant-service v0.8.8"
+title: "@sourceloop/user-tenant-service v0.9.0"
 language_tabs:
   - javascript: JavaScript
   - javascript--nodejs: Node.JS
@@ -16,7 +16,7 @@ headingLevel: 2
 
 <!-- Generator: Widdershins v4.0.1 -->
 
-<h1 id="-sourceloop-user-tenant-service">@sourceloop/user-tenant-service v0.8.8</h1>
+<h1 id="-sourceloop-user-tenant-service">@sourceloop/user-tenant-service v0.9.0</h1>
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
@@ -5420,7 +5420,7 @@ fetch('/tenants/{id}/groups/{groupId}',
 
 | Permissions |
 | ------- |
-| DeleteUserGroup   |
+| DeleteGroup   |
 | 35   |
 
 <h3 id="tenantgroupcontroller.delete-parameters">Parameters</h3>
@@ -5527,7 +5527,7 @@ fetch('/tenants/{id}/groups',
 
 | Permissions |
 | ------- |
-| CreateUserGroup   |
+| CreateGroup   |
 | 32   |
 
 > Body parameter
@@ -5665,7 +5665,7 @@ fetch('/tenants/{id}/groups',
 
 | Permissions |
 | ------- |
-| UpdateUserGroup   |
+| UpdateGroup   |
 | 34   |
 
 > Body parameter
@@ -5767,7 +5767,7 @@ fetch('/tenants/{id}/groups',
 
 | Permissions |
 | ------- |
-| ViewUserGroupList   |
+| ViewGroupList   |
 
 <h3 id="tenantgroupcontroller.find-parameters">Parameters</h3>
 

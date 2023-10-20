@@ -1,8 +1,10 @@
 'use strict';
+// sonarignore:start
 let __createBinding =
-  (this && this.__createBinding) || //NOSONAR
+  (this && this.__createBinding) ||
   (Object.create
     ? function (o, m, k, k2) {
+        // sonarignore:end
         if (k2 === undefined) k2 = k;
         let desc = Object.getOwnPropertyDescriptor(m, k);
         if (
@@ -22,9 +24,11 @@ let __createBinding =
         if (k2 === undefined) k2 = k;
         o[k2] = m[k];
       });
+// sonarignore:start
 let __exportStar =
-  (this && this.__exportStar) || //NOsONAR
+  (this && this.__exportStar) ||
   function (m, exports) {
+    // sonarignore:end
     for (let p in m)
       if (p !== 'default' && !Object.hasOwn.call(exports, p))
         __createBinding(exports, m, p);

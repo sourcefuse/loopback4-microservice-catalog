@@ -1,6 +1,6 @@
+import {ILambdaWithApiGateway} from 'arc-cdk';
 import {TerraformStack} from 'cdktf';
 import {Construct} from 'constructs';
-import {ILambdaWithApiGateway} from 'arc-cdk';
 export declare class LambdaStack extends TerraformStack {
   constructor(
     scope: Construct,

@@ -106,9 +106,8 @@ export class UserGroupService {
         userGroup.userTenantId = userTenantId ?? '';
         return userGroup;
       });
-      const createdUserGroups = await this.userGroupRepository.createAll(
-        userGroupsToCreate,
-      );
+      const createdUserGroups =
+        await this.userGroupRepository.createAll(userGroupsToCreate);
       return createdUserGroups;
     } catch {
       throw new HttpErrors.Forbidden('User should be from same tenant');

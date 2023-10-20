@@ -48,9 +48,8 @@ export class CalendarService {
         response['workingHours'] = [];
         for (const workingHour of workingHours) {
           workingHour.calendarId = calendarId;
-          const workigHourResp = await this.workingHourRepository.create(
-            workingHour,
-          );
+          const workigHourResp =
+            await this.workingHourRepository.create(workingHour);
           response.workingHours.push(workigHourResp);
         }
       }
@@ -72,9 +71,8 @@ export class CalendarService {
         id: {nin: workingHourIds},
       },
     };
-    const workingHourToDelete = await this.workingHourRepository.find(
-      workingHourFilter,
-    );
+    const workingHourToDelete =
+      await this.workingHourRepository.find(workingHourFilter);
     for (const workingHour of workingHourToDelete) {
       await this.workingHourRepository.deleteById(workingHour.id);
     }
