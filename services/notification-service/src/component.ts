@@ -36,13 +36,17 @@ import {
 } from './controllers';
 import {NotifServiceBindings} from './keys';
 import {Notification, NotificationAccess, NotificationUser} from './models';
-import {NotificationFilterProvider, ChannelManagerProvider} from './providers';
+import {ChannelManagerProvider, NotificationFilterProvider} from './providers';
 import {NotificationUserProvider} from './providers/notification-user.service';
 import {
   NotificationAccessRepository,
   NotificationRepository,
   NotificationUserRepository,
 } from './repositories';
+import {
+  NotificationRepository as NotificationSequelizeRepository,
+  NotificationUserRepository as NotificationUserSequelizeRepository,
+} from './repositories/sequelize';
 import {INotifServiceConfig} from './types';
 
 export class NotificationServiceComponent implements Component {
@@ -78,12 +82,19 @@ export class NotificationServiceComponent implements Component {
       // Mount default sequence if needed
       this.setupSequence();
     }
-
-    this.repositories = [
-      NotificationAccessRepository,
-      NotificationRepository,
-      NotificationUserRepository,
-    ];
+    if (this.notifConfig?.useSequelize) {
+      this.repositories = [
+        NotificationAccessRepository,
+        NotificationSequelizeRepository,
+        NotificationUserSequelizeRepository,
+      ];
+    } else {
+      this.repositories = [
+        NotificationAccessRepository,
+        NotificationRepository,
+        NotificationUserRepository,
+      ];
+    }
 
     this.models = [Notification, NotificationUser, NotificationAccess];
 
