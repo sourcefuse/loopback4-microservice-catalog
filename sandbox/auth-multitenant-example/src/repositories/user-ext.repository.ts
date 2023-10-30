@@ -139,8 +139,7 @@ export class UserExtRepository extends DefaultSoftCrudRepository<
   async verifyPassword(username: string, password: string): Promise<User> {
     const user = await super.findOne({where: {username}});
     const creds = user && (await this.credentials(user.id).get());
-    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-    if (!user || user.deleted || !creds?.password) {
+    if ((!user || user.deleted) ?? !creds?.password) {
       throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
     } else if (!(await bcrypt.compare(password, creds.password))) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
@@ -163,8 +162,7 @@ export class UserExtRepository extends DefaultSoftCrudRepository<
   ): Promise<User> {
     const user = await super.findOne({where: {username}});
     const creds = user && (await this.credentials(user.id).get());
-    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-    if (!user || user.deleted || !creds?.password) {
+    if ((!user || user.deleted) ?? !creds?.password) {
       throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
     } else if (!(await bcrypt.compare(password, creds.password))) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.WrongPassword);
