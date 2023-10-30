@@ -23,7 +23,7 @@
     }
   },
   "engines": {
-    "node": "16 || 17 || 18"
+    "node": "18 || 20"
   },
   "scripts": {
     "build": "npm run clean && lb-tsc",

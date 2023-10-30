@@ -69,10 +69,8 @@ export class JobProcessingService {
           (customFilter.actedOn == null ||
             filterUsed.actedOn == null ||
             filterUsed.actedOn === customFilter.actedOn) &&
-          // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-          (customFilter.entityId ||
-            // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-            filterUsed.entityId ||
+          (customFilter.entityId ??
+            filterUsed.entityId ??
             filterUsed.entityId === customFilter.entityId) &&
           (customFilter.date == null ||
             filterUsed.date == null ||

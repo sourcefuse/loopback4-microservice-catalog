@@ -175,8 +175,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
 
   writing() {
     if (!this.shouldExit()) {
-      // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-      if (this.options.baseService || this.options.datasourceName) {
+      if (this.options.baseService ?? this.options.datasourceName) {
         this._createDataSource();
       } else {
         this._createFacadeRedisDatasource();
