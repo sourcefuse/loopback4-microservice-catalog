@@ -1,0 +1,32 @@
+'use strict';
+Object.defineProperty(exports, '__esModule', {value: true});
+exports.LambdaStack = void 0;
+const random = require('@cdktf/provider-random');
+const arc_cdk_1 = require('arc-cdk');
+const cdktf_1 = require('cdktf');
+const awsProvider_1 = require('../constructs/awsProvider');
+const path = require('path');
+class LambdaStack extends cdktf_1.TerraformStack {
+  constructor(scope, id, config) {
+    super(scope, id);
+    new awsProvider_1.AwsProvider(this, 'aws'); // NOSONAR
+    new random.provider.RandomProvider(this, 'random'); // NOSONAR
+    // Create random value
+    const pet = new random.pet.Pet(this, 'random-name', {
+      length: 2,
+    });
+    // overwrite codePath based on useImage as deploy via docker needs different codePath
+    config.codePath = path.resolve(
+      config.codePath,
+      `../${config.useImage ? '' : 'dist'}`,
+    );
+    // sonarignore:start
+    new arc_cdk_1.LambdaWithApiGateway(this, 'lambda-apiGateway', {
+      // sonarignore:end
+      ...config,
+      name: pet.id,
+    });
+  }
+}
+exports.LambdaStack = LambdaStack;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibGFtYmRhLnN0YWNrLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsibGFtYmRhLnN0YWNrLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7OztBQUFBLGlEQUFpRDtBQUNqRCxxQ0FBb0U7QUFDcEUsaUNBQXFDO0FBRXJDLDJEQUFzRDtBQUN0RCw2QkFBOEI7QUFFOUIsTUFBYSxXQUFZLFNBQVEsc0JBQWM7SUFDN0MsWUFDRSxLQUFnQixFQUNoQixFQUFVLEVBQ1YsTUFBMkM7UUFFM0MsS0FBSyxDQUFDLEtBQUssRUFBRSxFQUFFLENBQUMsQ0FBQztRQUVqQixJQUFJLHlCQUFXLENBQUMsSUFBSSxFQUFFLEtBQUssQ0FBQyxDQUFDLENBQUMsVUFBVTtRQUN4QyxJQUFJLE1BQU0sQ0FBQyxRQUFRLENBQUMsY0FBYyxDQUFDLElBQUksRUFBRSxRQUFRLENBQUMsQ0FBQyxDQUFDLFVBQVU7UUFFOUQsc0JBQXNCO1FBQ3RCLE1BQU0sR0FBRyxHQUFHLElBQUksTUFBTSxDQUFDLEdBQUcsQ0FBQyxHQUFHLENBQUMsSUFBSSxFQUFFLGFBQWEsRUFBRTtZQUNsRCxNQUFNLEVBQUUsQ0FBQztTQUNWLENBQUMsQ0FBQztRQUVILHFGQUFxRjtRQUNyRixNQUFNLENBQUMsUUFBUSxHQUFHLElBQUksQ0FBQyxPQUFPLENBQzVCLE1BQU0sQ0FBQyxRQUFRLEVBQ2YsTUFBTSxNQUFNLENBQUMsUUFBUSxDQUFDLENBQUMsQ0FBQyxFQUFFLENBQUMsQ0FBQyxDQUFDLE1BQU0sRUFBRSxDQUN0QyxDQUFDO1FBQ0Ysb0JBQW9CO1FBQ3BCLElBQUksOEJBQW9CLENBQUMsSUFBSSxFQUFFLG1CQUFtQixFQUFFO1lBQ2xELGtCQUFrQjtZQUNsQixHQUFHLE1BQU07WUFDVCxJQUFJLEVBQUUsR0FBRyxDQUFDLEVBQUU7U0FDYixDQUFDLENBQUM7SUFDTCxDQUFDO0NBQ0Y7QUE1QkQsa0NBNEJDIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0ICogYXMgcmFuZG9tIGZyb20gJ0BjZGt0Zi9wcm92aWRlci1yYW5kb20nO1xuaW1wb3J0IHtJTGFtYmRhV2l0aEFwaUdhdGV3YXksIExhbWJkYVdpdGhBcGlHYXRld2F5fSBmcm9tICdhcmMtY2RrJztcbmltcG9ydCB7VGVycmFmb3JtU3RhY2t9IGZyb20gJ2Nka3RmJztcbmltcG9ydCB7Q29uc3RydWN0fSBmcm9tICdjb25zdHJ1Y3RzJztcbmltcG9ydCB7QXdzUHJvdmlkZXJ9IGZyb20gJy4uL2NvbnN0cnVjdHMvYXdzUHJvdmlkZXInO1xuaW1wb3J0IHBhdGggPSByZXF1aXJlKCdwYXRoJyk7XG5cbmV4cG9ydCBjbGFzcyBMYW1iZGFTdGFjayBleHRlbmRzIFRlcnJhZm9ybVN0YWNrIHtcbiAgY29uc3RydWN0b3IoXG4gICAgc2NvcGU6IENvbnN0cnVjdCxcbiAgICBpZDogc3RyaW5nLFxuICAgIGNvbmZpZzogT21pdDxJTGFtYmRhV2l0aEFwaUdhdGV3YXksICduYW1lJz4sXG4gICkge1xuICAgIHN1cGVyKHNjb3BlLCBpZCk7XG5cbiAgICBuZXcgQXdzUHJvdmlkZXIodGhpcywgJ2F3cycpOyAvLyBOT1NPTkFSXG4gICAgbmV3IHJhbmRvbS5wcm92aWRlci5SYW5kb21Qcm92aWRlcih0aGlzLCAncmFuZG9tJyk7IC8vIE5PU09OQVJcblxuICAgIC8vIENyZWF0ZSByYW5kb20gdmFsdWVcbiAgICBjb25zdCBwZXQgPSBuZXcgcmFuZG9tLnBldC5QZXQodGhpcywgJ3JhbmRvbS1uYW1lJywge1xuICAgICAgbGVuZ3RoOiAyLFxuICAgIH0pO1xuXG4gICAgLy8gb3ZlcndyaXRlIGNvZGVQYXRoIGJhc2VkIG9uIHVzZUltYWdlIGFzIGRlcGxveSB2aWEgZG9ja2VyIG5lZWRzIGRpZmZlcmVudCBjb2RlUGF0aFxuICAgIGNvbmZpZy5jb2RlUGF0aCA9IHBhdGgucmVzb2x2ZShcbiAgICAgIGNvbmZpZy5jb2RlUGF0aCxcbiAgICAgIGAuLi8ke2NvbmZpZy51c2VJbWFnZSA/ICcnIDogJ2Rpc3QnfWAsXG4gICAgKTtcbiAgICAvLyBzb25hcmlnbm9yZTpzdGFydFxuICAgIG5ldyBMYW1iZGFXaXRoQXBpR2F0ZXdheSh0aGlzLCAnbGFtYmRhLWFwaUdhdGV3YXknLCB7XG4gICAgICAvLyBzb25hcmlnbm9yZTplbmRcbiAgICAgIC4uLmNvbmZpZyxcbiAgICAgIG5hbWU6IHBldC5pZCxcbiAgICB9KTtcbiAgfVxufVxuIl19

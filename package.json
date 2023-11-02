@@ -3,7 +3,7 @@
   "private": false,
   "scripts": {
     "prepare": "husky install",
-    "postinstall": "patch-package",
+    "postinstall": "npx patch-package",
     "clean-deps": "lerna clean --yes && lerna exec --no-private \"npm install --ignore-scripts --package-lock-only --no-audit\"",
     "export-typedocs": "npx tsc export-typedocs.ts && node export-typedocs"
   },
@@ -15,7 +15,7 @@
     "cz-conventional-changelog": "^3.3.0",
     "cz-format-extension": "^1.5.0",
     "husky": "^7.0.4",
-    "lerna": "^5.1.5",
+    "lerna": "^7.2.0",
     "typedoc": "0.23.23",
     "typedoc-plugin-markdown": "3.14.0"
   },
@@ -27,5 +27,13 @@
   "dependencies": {
     "handlebars": "^4.7.7",
     "patch-package": "^8.0.0"
-  }
+  },
+  "workspaces": [
+    "packages/core/",
+    "packages/cli/",
+    "packages/cache",
+    "packages/feature-toggle",
+    "packages/custom-sf-changelog/",
+    "services/*"
+  ]
 }

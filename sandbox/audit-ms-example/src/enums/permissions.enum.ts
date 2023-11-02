@@ -4,6 +4,6 @@
 // https://opensource.org/licenses/MIT
 export declare const enum PermissionKey {
   CreateTodo = 'TodoCreator',
-  UpdateTodo = 'TodoCreator',
-  DeleteTodo = 'TodoCreator',
+  UpdateTodo = 'UpdateTodoCreator',
+  DeleteTodo = 'DeleteTodoCreator',
 }

@@ -1,7 +1,7 @@
 import * as random from '@cdktf/provider-random';
+import {ILambda, Lambda} from 'arc-cdk';
 import {TerraformStack} from 'cdktf';
 import {Construct} from 'constructs';
-import {ILambda, Lambda} from 'arc-cdk';
 import {AwsProvider} from '../constructs/awsProvider';
 
 export class MigrationStack extends TerraformStack {
@@ -15,8 +15,9 @@ export class MigrationStack extends TerraformStack {
     const pet = new random.pet.Pet(this, 'random-name', {
       length: 2,
     });
-
-    new Lambda(this, 'lambda', {// NOSONAR
+    // sonarignore:start
+    new Lambda(this, 'lambda', {
+      // sonarignore:end
       ...config,
       name: pet.id,
     });

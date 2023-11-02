@@ -1,21 +1,21 @@
-import {injectable, BindingScope, inject} from '@loopback/core';
+import {BindingScope, inject, injectable} from '@loopback/core';
+import {Filter, repository} from '@loopback/repository';
+import {HttpErrors} from '@loopback/rest';
+import {AuditLog, AuditLogRepository} from '@sourceloop/audit-log';
+import {FileStatusKey} from '../enums/file-status-key.enum';
+import {OperationKey} from '../enums/operation-key.enum';
 import {
   AuditLogExportServiceBindings,
   ColumnBuilderServiceBindings,
   QuerySelectedFilesServiceBindings,
 } from '../keys';
-import {repository, Filter} from '@loopback/repository';
-import {JobRepository, MappingLogRepository} from '../repositories';
-import {AuditLog, AuditLogRepository} from '@sourceloop/audit-log';
 import {CustomFilter, MappingLog} from '../models';
-import {FileStatusKey} from '../enums/file-status-key.enum';
-import {HttpErrors} from '@loopback/rest';
+import {JobRepository, MappingLogRepository} from '../repositories';
 import {
   AuditLogExportFn,
   ColumnBuilderFn,
   QuerySelectedFilesFn,
 } from '../types';
-import {OperationKey} from '../enums/operation-key.enum';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class JobProcessingService {
@@ -69,8 +69,8 @@ export class JobProcessingService {
           (customFilter.actedOn == null ||
             filterUsed.actedOn == null ||
             filterUsed.actedOn === customFilter.actedOn) &&
-          (customFilter.entityId ||
-            filterUsed.entityId ||
+          (customFilter.entityId ??
+            filterUsed.entityId ??
             filterUsed.entityId === customFilter.entityId) &&
           (customFilter.date == null ||
             filterUsed.date == null ||

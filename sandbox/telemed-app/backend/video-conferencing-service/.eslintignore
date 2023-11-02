@@ -1,4 +1,6 @@
 node_modules/
 dist/
 coverage/
+cdk/
+migration/
 .eslintrc.js

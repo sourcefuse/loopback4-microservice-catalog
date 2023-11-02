@@ -2,8 +2,8 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {injectable, /* inject, */ BindingScope} from '@loopback/core';
 import {inject} from '@loopback/context';
+import {/* inject, */ BindingScope, injectable} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 
@@ -11,18 +11,18 @@ import {MeetLinkGeneratorProvider, VideoChatBindings} from '../keys';
 import {SessionAttendees, VideoChatSession} from '../models';
 import {VonageSessionWebhookPayload} from '../providers/vonage';
 
+import moment from 'moment';
 import {VonageBindings} from '../providers/vonage/keys';
 import {
   SessionAttendeesRepository,
   VideoChatSessionRepository,
 } from '../repositories';
-import moment from 'moment';
 import {
+  IConfig,
   MeetingOptions,
   SessionOptions,
   SessionResponse,
   VideoChatInterface,
-  IConfig,
 } from '../types';
 import {MeetingLinkIdGenerator} from './meeting-link-id-generator.provider';
 
@@ -63,9 +63,8 @@ export class ChatSessionService {
       }
     }
 
-    const meetingResp = await this.videoChatProvider.getMeetingLink(
-      meetingOptions,
-    );
+    const meetingResp =
+      await this.videoChatProvider.getMeetingLink(meetingOptions);
     const meetingLinkId = await this.generator();
     //provider for this cryptoRandomString
     const videoSessionDetail = new VideoChatSession({

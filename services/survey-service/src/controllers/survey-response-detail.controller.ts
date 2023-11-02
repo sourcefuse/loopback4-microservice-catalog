@@ -7,19 +7,19 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  param,
   get,
   getModelSchemaRef,
-  response,
   HttpErrors,
+  param,
+  response,
 } from '@loopback/rest';
 import {STATUS_CODE} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-import {SurveyResponseDetailRepository} from '../repositories/survey-response-detail.repository';
 import {PermissionKey} from '../enum/permission-key.enum';
 import {SurveyResponseDetail} from '../models/survey-response-detail.model';
 import {SurveyResponseDetailRepository as SurveyResponseDetailSequelizeRepo} from '../repositories/sequelize';
+import {SurveyResponseDetailRepository} from '../repositories/survey-response-detail.repository';
 const basePath = '/survey-cycles/{surveyCycleId}/survey-response-detail-view';
 
 export class SurveyResponseDetailViewController {
@@ -100,9 +100,8 @@ export class SurveyResponseDetailViewController {
     @param.filter(SurveyResponseDetail, {exclude: 'where'})
     filter?: FilterExcludingWhere<SurveyResponseDetail>,
   ): Promise<SurveyResponseDetail> {
-    const surveyResponse = await this.surveyResponseDetailRepository.findOne(
-      filter,
-    );
+    const surveyResponse =
+      await this.surveyResponseDetailRepository.findOne(filter);
     if (!surveyResponse) {
       throw new HttpErrors.BadRequest('Entity not found');
     }

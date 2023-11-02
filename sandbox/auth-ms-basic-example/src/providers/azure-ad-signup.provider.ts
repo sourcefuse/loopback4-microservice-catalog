@@ -57,8 +57,8 @@ export class AzureAdSignupProvider implements Provider<AzureAdSignUpFn> {
       }
 
       const user = await this.userRepo.createWithoutPassword({
-        firstName: profile.name.givenName,
-        lastName: profile.name.familyName,
+        firstName: profile.name!.givenName,
+        lastName: profile.name!.familyName,
         username: profile.upn,
         email: profile.upn,
         defaultTenantId: tenant?.id,

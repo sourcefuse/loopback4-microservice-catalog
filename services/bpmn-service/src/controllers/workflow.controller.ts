@@ -5,11 +5,11 @@
 import {Getter, inject} from '@loopback/core';
 import {AnyObject, Filter, repository} from '@loopback/repository';
 import {
+  HttpErrors,
   del,
   get,
   getFilterSchemaFor,
   getModelSchemaRef,
-  HttpErrors,
   param,
   patch,
   post,
@@ -20,7 +20,7 @@ import {
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
-import {authenticate, STRATEGY} from 'loopback4-authentication';
+import {STRATEGY, authenticate} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {ErrorKeys} from '../enums/error-keys.enum';
 import {PermissionKey} from '../enums/permission-key.enum';
@@ -85,9 +85,8 @@ export class WorkflowController {
     workflowDto: WorkflowDto,
   ): Promise<Workflow> {
     try {
-      const workflowResponse = await this.workflowManagerService.createWorkflow(
-        workflowDto,
-      );
+      const workflowResponse =
+        await this.workflowManagerService.createWorkflow(workflowDto);
 
       const entity = new Workflow({
         workflowVersion: workflowResponse.version,
@@ -141,9 +140,8 @@ export class WorkflowController {
     workflowDto: WorkflowDto,
     @param.path.string('id') id: string,
   ): Promise<void> {
-    const workflowResponse = await this.workflowManagerService.updateWorkflow(
-      workflowDto,
-    );
+    const workflowResponse =
+      await this.workflowManagerService.updateWorkflow(workflowDto);
 
     const entity = new Workflow({
       workflowVersion: workflowResponse.version,

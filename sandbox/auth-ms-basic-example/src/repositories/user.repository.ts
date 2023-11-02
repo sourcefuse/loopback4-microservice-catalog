@@ -4,8 +4,8 @@ import {
   DataObject,
   HasManyRepositoryFactory,
   HasOneRepositoryFactory,
-  juggler,
   Options,
+  juggler,
   repository,
 } from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
@@ -22,15 +22,15 @@ import {
   UserTenantRepository,
 } from '@sourceloop/authentication-service';
 import {
-  AuthenticateErrorKeys,
   AuthProvider,
+  AuthenticateErrorKeys,
   DefaultSoftCrudRepository,
   ILogger,
   LOGGER,
   UserStatus,
 } from '@sourceloop/core';
-import {AuthErrorKeys} from 'loopback4-authentication';
 import * as bcrypt from 'bcrypt';
+import {AuthErrorKeys} from 'loopback4-authentication';
 
 const saltRounds = 10;
 
@@ -125,6 +125,7 @@ export class UserRepository extends DefaultSoftCrudRepository<
     if (!user || user.deleted) {
       throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
     } else if (
+      // eslint-disable-next-line
       !creds ||
       !creds.password ||
       creds.authProvider !== AuthProvider.INTERNAL ||
@@ -144,7 +145,7 @@ export class UserRepository extends DefaultSoftCrudRepository<
   ): Promise<User> {
     const user = await super.findOne({where: {username}});
     const creds = user && (await this.credentials(user.id).get());
-    if (!user || user.deleted || !creds || !creds.password) {
+    if ((!user || user.deleted) ?? !creds?.password) {
       throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
     } else if (creds.authProvider !== AuthProvider.INTERNAL) {
       throw new HttpErrors.BadRequest(
@@ -186,8 +187,7 @@ export class UserRepository extends DefaultSoftCrudRepository<
         AuthenticateErrorKeys.PasswordCannotBeChanged,
       );
     }
-
-    if (!user || user.deleted || !creds || !creds.password) {
+    if ((!user || user.deleted) ?? !creds?.password) {
       throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
     } else if (await bcrypt.compare(newPassword, creds.password)) {
       throw new HttpErrors.Unauthorized(

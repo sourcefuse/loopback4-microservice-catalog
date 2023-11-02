@@ -22,23 +22,23 @@ import {
   requestBody,
 } from '@loopback/rest';
 import {
-  STATUS_CODE,
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
 } from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {Calendar, Event, EventAttendeeView} from '../models';
+import {ErrorKeys} from '../models/enums/error-keys';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {
   CalendarRepository,
-  SubscriptionRepository,
   EventAttendeeViewRepository,
   EventRepository,
+  SubscriptionRepository,
 } from '../repositories';
-import {ValidatorService} from '../services/validator.service';
-import {ErrorKeys} from '../models/enums/error-keys';
 import {CalendarEventService} from '../services';
+import {ValidatorService} from '../services/validator.service';
 
 const basePath = '/calendars/{id}/events';
 
@@ -99,9 +99,8 @@ export class CalendarEventController {
       timeMin,
       timeMax,
     );
-    const subscription = await this.calendarEventService.primarySubscription(
-      calendarId,
-    );
+    const subscription =
+      await this.calendarEventService.primarySubscription(calendarId);
     if (!subscription) {
       throw new HttpErrors.NotFound(ErrorKeys.SubscriptionNotExist);
     }

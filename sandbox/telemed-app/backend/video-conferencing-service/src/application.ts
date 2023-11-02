@@ -18,7 +18,10 @@ import {
   SFCoreBindings,
   ServiceSequence,
 } from '@sourceloop/core';
-import {VideoConfServiceComponent, VonageBindings} from '@sourceloop/video-conferencing-service';
+import {
+  VideoConfServiceComponent,
+  VonageBindings,
+} from '@sourceloop/video-conferencing-service';
 import * as dotenv from 'dotenv';
 import * as dotenvExt from 'dotenv-extended';
 import {AuthenticationComponent} from 'loopback4-authentication';
@@ -58,8 +61,10 @@ export class VideoConferencingApplication extends BootMixin(
     super(options);
 
     // To check if monitoring is enabled from env or not
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const enableObf = !!+(process.env.ENABLE_OBF ?? 0);
     // To check if authorization is enabled for swagger stats or not
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const authentication =
       process.env.SWAGGER_USER && process.env.SWAGGER_PASSWORD ? true : false;
 
@@ -84,7 +89,6 @@ export class VideoConferencingApplication extends BootMixin(
     };
 
     this.bind(SFCoreBindings.config).to({configObject});
-
 
     // Set up the custom sequence
     this.sequence(ServiceSequence);

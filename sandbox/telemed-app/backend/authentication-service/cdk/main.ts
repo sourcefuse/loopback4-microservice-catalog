@@ -1,8 +1,8 @@
-import { App } from 'cdktf';
+import {App} from 'cdktf';
 import * as dotenv from 'dotenv';
 import * as dotenvExt from 'dotenv-extended';
-import { resolve } from 'path';
-import { LambdaStack, MigrationStack, RedisStack } from './common';
+import {resolve} from 'path';
+import {LambdaStack, MigrationStack, RedisStack} from './common';
 
 dotenv.config();
 dotenvExt.load({
@@ -32,8 +32,9 @@ const getSecurityGroup = () => {
   }
   return [];
 };
-
-new MigrationStack(app, 'migration', { // NOSONAR
+// sonarignore:start
+new MigrationStack(app, 'migration', {
+  // sonarignore:end
   codePath: resolve(__dirname, '../migration'),
   handler: 'lambda.handler',
   runtime: 'nodejs18.x',
@@ -54,8 +55,9 @@ new MigrationStack(app, 'migration', { // NOSONAR
   namespace: process.env.NAMESPACE || '',
   environment: process.env.ENV || '',
 });
-
-new LambdaStack(app, 'lambda', {// NOSONAR
+// sonarignore:start
+new LambdaStack(app, 'lambda', {
+  // sonarignore:end
   s3Bucket: process.env.S3_BUCKET!,
   codePath: __dirname,
   handler: 'lambda.handler',
@@ -75,43 +77,44 @@ new LambdaStack(app, 'lambda', {// NOSONAR
   environment: process.env.ENV || '',
   createRole: {
     iamPolicy: JSON.stringify({
-      Version: "2012-10-17",
+      Version: '2012-10-17',
       Statement: [
         {
-          Effect: "Allow",
+          Effect: 'Allow',
           Action: [
-            "logs:CreateLogGroup",
-            "logs:CreateLogStream",
-            "logs:PutLogEvents",
-            "ec2:CreateNetworkInterface",
-            "ec2:DescribeNetworkInterfaces",
-            "ec2:DeleteNetworkInterface",
-            "ec2:AssignPrivateIpAddresses",
-            "ec2:UnassignPrivateIpAddresses",
-            "secretsmanager:GetSecretValue",
+            'logs:CreateLogGroup',
+            'logs:CreateLogStream',
+            'logs:PutLogEvents',
+            'ec2:CreateNetworkInterface',
+            'ec2:DescribeNetworkInterfaces',
+            'ec2:DeleteNetworkInterface',
+            'ec2:AssignPrivateIpAddresses',
+            'ec2:UnassignPrivateIpAddresses',
+            'secretsmanager:GetSecretValue',
           ],
-          Resource: "*",
+          Resource: '*',
         },
       ],
     }),
     iamRole: JSON.stringify({
-      Version: "2012-10-17",
+      Version: '2012-10-17',
       Statement: [
         {
-          Action: "sts:AssumeRole",
+          Action: 'sts:AssumeRole',
           Principal: {
-            Service: "lambda.amazonaws.com",
+            Service: 'lambda.amazonaws.com',
           },
-          Effect: "Allow",
-          Sid: "",
+          Effect: 'Allow',
+          Sid: '',
         },
       ],
-    })
+    }),
   },
   useImage: true,
 });
-
-new RedisStack(app, 'redis', {// NOSONAR
+// sonarignore:start
+new RedisStack(app, 'redis', {
+  // sonarignore:end
   namespace: process.env.NAMESPACE || '',
   environment: process.env.ENV || '',
 });

@@ -175,7 +175,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
 
   writing() {
     if (!this.shouldExit()) {
-      if (this.options.baseService || this.options.datasourceName) {
+      if (this.options.baseService ?? this.options.datasourceName) {
         this._createDataSource();
       } else {
         this._createFacadeRedisDatasource();

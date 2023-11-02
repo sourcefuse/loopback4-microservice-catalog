@@ -10,16 +10,16 @@ import {
   StubbedInstanceWithSinonAccessor,
 } from '@loopback/testlab';
 
+import {Filter} from '@loopback/repository';
 import {AuditLog, AuditLogRepository} from '@sourceloop/audit-log';
 import {AuditController} from '../../controllers';
-import {dummyLog} from '../sample-data/dummy-log';
+import {FileStatusKey} from '../../enums/file-status-key.enum';
+import {Job} from '../../models';
 import {JobRepository, MappingLogRepository} from '../../repositories';
 import {ColumnBuilderProvider, JobProcessingService} from '../../services';
-import {filterAppliedActedAt} from '../sample-data/filters';
-import {Job} from '../../models';
-import {Filter} from '@loopback/repository';
-import {FileStatusKey} from '../../enums/file-status-key.enum';
 import {getTestAuditController} from '../helpers/db.helper';
+import {dummyLog} from '../sample-data/dummy-log';
+import {filterAppliedActedAt} from '../sample-data/filters';
 
 let auditLogRepository: StubbedInstanceWithSinonAccessor<AuditLogRepository>;
 let jobRepository: StubbedInstanceWithSinonAccessor<JobRepository>;
@@ -102,9 +102,8 @@ describe('AuditController(unit) ', () => {
       );
       sinon.assert.calledOnce(logFetch);
       expect(controllerResult).to.have.length(1);
-      const controllerResultWithoutFilter = await controller.find(
-        includeArchivedLogs,
-      );
+      const controllerResultWithoutFilter =
+        await controller.find(includeArchivedLogs);
       expect(controllerResultWithoutFilter).to.have.length(2);
     });
   });

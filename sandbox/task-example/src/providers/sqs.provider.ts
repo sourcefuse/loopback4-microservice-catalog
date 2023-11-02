@@ -2,6 +2,7 @@ import {BindingScope, Provider, inject, injectable} from '@loopback/core';
 import {AnyObject} from '@loopback/repository';
 import {
   EventQueueConnector,
+  HealthResponse,
   TaskServiceBindings,
 } from '@sourceloop/task-service';
 import {SQS} from 'aws-sdk';
@@ -38,7 +39,7 @@ export class SQSConnector implements Provider<EventQueueConnector> {
     // Note: Since the SQS instance is created per request, you might not need to disconnect explicitly.
   }
 
-  async ping(): Promise<AnyObject> {
+  async ping(): Promise<HealthResponse> {
     // Health check logic goes here
     const queueUrl = this.settings.queueUrl;
     const response = await this.sqs
@@ -47,6 +48,12 @@ export class SQSConnector implements Provider<EventQueueConnector> {
         AttributeNames: ['All'],
       })
       .promise();
-    return response;
+    const healthResponse: HealthResponse = {
+      greeting: response.Attributes!.greeting,
+      date: response.Attributes!.date,
+      url: response.Attributes!.url,
+      headers: {},
+    };
+    return healthResponse;
   }
 }

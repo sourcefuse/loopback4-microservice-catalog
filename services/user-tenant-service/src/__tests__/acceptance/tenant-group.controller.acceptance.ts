@@ -41,10 +41,10 @@ describe('Group Controller', function (this: Mocha.Suite) {
     tenantId: id,
     password: pass,
     permissions: [
-      PermissionKey.ViewUserGroupList,
-      PermissionKey.UpdateUserGroup,
-      PermissionKey.DeleteUserGroup,
-      PermissionKey.CreateUserGroup,
+      PermissionKey.ViewGroupList,
+      PermissionKey.UpdateGroup,
+      PermissionKey.DeleteGroup,
+      PermissionKey.CreateGroup,
     ],
   };
 
@@ -194,10 +194,10 @@ describe('Group Controller', function (this: Mocha.Suite) {
       tenantId: tenant.id ?? '',
       password: pass,
       permissions: [
-        PermissionKey.ViewUserGroupList,
-        PermissionKey.UpdateUserGroup,
-        PermissionKey.DeleteUserGroup,
-        PermissionKey.CreateUserGroup,
+        PermissionKey.ViewGroupList,
+        PermissionKey.UpdateGroup,
+        PermissionKey.DeleteGroup,
+        PermissionKey.CreateGroup,
       ],
     };
     setCurrentUser();

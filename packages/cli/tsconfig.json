@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "skipLibCheck": true,
     "declaration": true,
     "importHelpers": true,
     "module": "commonjs",
@@ -8,7 +9,11 @@
     "strict": true,
     "target": "es2017",
     "composite": false,
-    "typeRoots": ["./src/types", "./node_modules/@types"],
+    "typeRoots": [
+      "./../../node_modules/@types",
+      "./node_modules/@types",
+      "src/types"
+    ],
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "experimentalDecorators": true

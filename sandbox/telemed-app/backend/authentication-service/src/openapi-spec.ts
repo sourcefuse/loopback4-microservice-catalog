@@ -24,6 +24,6 @@ exportOpenApiSpec()
     process.exit(0);
   })
   .catch(err => {
-    console.error('Fail to export OpenAPI spec from the application.', err);// NOSONAR
+    console.error('Fail to export OpenAPI spec from the application.', err); // NOSONAR
     process.exit(1);
   });

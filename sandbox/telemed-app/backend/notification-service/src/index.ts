@@ -1,12 +1,12 @@
-import { getSecretValue } from './config';
+import {getSecretValue} from './config';
 // import  from './application';
 
 export * from './application';
 
 const PORT = 3000;
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function main(options: any = {}) {
-  const {NotificationApplication} =require('./application');
+  const {NotificationApplication} = require('./application');
   const app = new NotificationApplication(options);
   await app.boot();
   await app.start();
@@ -36,11 +36,12 @@ if (require.main === module) {
       },
     },
   };
-  getSecretValue().then(res=>{
-    Object.assign(process.env,res);    
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
+  getSecretValue().then(res => {
+    Object.assign(process.env, res);
     main(config).catch(err => {
       console.error('Cannot start the application.', err); // NOSONAR
       process.exit(1);
     });
-  })
+  });
 }
