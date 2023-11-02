@@ -134,9 +134,9 @@ OPTIONS
   -p, --uniquePrefix=uniquePrefix
       Unique prefix to be used for docker images
 
-  -s,
-  --baseService=(authentication-service|audit-service|chat-service|notification-service|bpmn-service|feature-toggle-serv
-  ice|in-mail-service|payment-service|scheduler-service|search-service|video-conferencing-service|user-tenant-service)
+  -s, --baseService=(authentication-service|audit-service|chat-service|notification-service|bpmn-service|feature-toggle-
+  service|in-mail-service|payment-service|scheduler-service|search-service|survey-service|video-conferencing-service|use
+  r-tenant-service)
       Base sourceloop microservice
 
   --[no-]baseOnService
