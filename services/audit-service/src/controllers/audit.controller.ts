@@ -26,22 +26,22 @@ import {
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 
+import {inject, service} from '@loopback/core';
+import {FileStatusKey} from '../enums/file-status-key.enum';
+import {OperationKey} from '../enums/operation-key.enum';
 import {PermissionKey} from '../enums/permission-key.enum';
+import {
+  AuditLogExportServiceBindings,
+  ColumnBuilderServiceBindings,
+  ExportToCsvServiceBindings,
+} from '../keys';
 import {AuditLog, CustomFilter, Job, MappingLog} from '../models';
 import {
   AuditLogRepository,
   JobRepository,
   MappingLogRepository,
 } from '../repositories';
-import {inject, service} from '@loopback/core';
 import {JobProcessingService} from '../services';
-import {FileStatusKey} from '../enums/file-status-key.enum';
-import {OperationKey} from '../enums/operation-key.enum';
-import {
-  AuditLogExportServiceBindings,
-  ColumnBuilderServiceBindings,
-  ExportToCsvServiceBindings,
-} from '../keys';
 import {
   ArchiveOutput,
   AuditLogExportFn,
@@ -264,7 +264,7 @@ export class AuditController {
     let selectedAuditLogs = await this.auditLogRepository.find({
       where: where,
     });
-    if (!selectedAuditLogs) {
+    if (!selectedAuditLogs.length) {
       return {
         message: `No entry selected`,
         numberOfEntriesArchived: 0,
