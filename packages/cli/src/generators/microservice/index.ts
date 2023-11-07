@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import fs from 'fs';
-import { join } from 'path';
+import {join} from 'path';
 import AppGenerator from '../../app-generator';
 import {
   BASESERVICECOMPONENTLIST,
@@ -14,7 +14,7 @@ import {
   MIGRATION_CONNECTORS,
   SERVICES,
 } from '../../enum';
-import { AnyObject, MicroserviceOptions } from '../../types';
+import {AnyObject, MicroserviceOptions} from '../../types';
 import {
   JSON_SPACING,
   appendDependencies,
@@ -62,7 +62,6 @@ const MIGRATION_TEMPLATE = join(
 
 const MIGRATION_FOLDER = join('packages', 'migrations');
 
-
 const sourceloopMigrationPath = (packageName: SERVICES) =>
   join('node_modules', `@sourceloop/${packageName}`, 'migrations');
 
@@ -96,8 +95,6 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       this.projectInfo.serviceDependency = this.options.baseService;
     }
   }
-
-
 
   //Loopback4 prompts
   async promptProjectName() {
@@ -231,18 +228,6 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
 
       this.addMigrations();
       this._appendDockerScript();
-      if (this.options.cdk) {
-        this._includeCdk();
-      } else {
-        const name = this.options.name ?? DEFAULT_NAME;
-        fs.unlink(
-          this.destinationPath(join('services', name, 'src', 'lambda.ts')),
-          () => {},
-        );
-        this.log(
-          this.destinationPath(join('services', name, 'src', 'lambda.ts')),
-        );
-      }
       return true;
     }
     return false;
@@ -263,7 +248,6 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       this._addMigrationScripts();
     }
   }
-
 
   addScope() {
     let czConfig = this.fs.read(
@@ -461,7 +445,6 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         connector,
       },
     );
-
   }
 
   private _includeSourceloopMigrations() {
@@ -497,37 +480,6 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
           name: name.toUpperCase(),
           connector,
         },
-      );
-
-
-        this.fs.copy(
-          this.destinationPath(
-            join(
-              'services',
-              name,
-              sourceloopMigrationPath(this.options.baseService),
-              'lambda.js',
-            ),
-          ),
-          this.destinationPath(
-            join('services', name, 'migration', 'lambda.js'),
-          ),
-        );
-        this.fs.delete(
-          join('services', name, 'migration', 'migrations', 'lambda.js'),
-        );
-        this.fs.copy(
-          this.destinationPath(join(MIGRATION_FOLDER, name, dbconfig)),
-          this.destinationPath(join('services', name, 'migration', dbconfig)),
-        );
-      } else {
-        // do nothing
-      }
-      this.fs.delete(join(MIGRATION_FOLDER, name, 'migrations', 'lambda.js'));
-      this.log(
-        this.destinationPath(
-          join(MIGRATION_FOLDER, name, 'migrations', 'lambda.js'),
-        ),
       );
     }
   }
