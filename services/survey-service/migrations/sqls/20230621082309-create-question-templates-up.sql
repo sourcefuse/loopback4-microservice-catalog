@@ -1,4 +1,4 @@
-CREATE TABLE question_templates (
+CREATE TABLE main.question_templates (
     id uuid DEFAULT (md5(((random())::text || (clock_timestamp())::text)))::uuid NOT NULL,
     uid varchar(20) NOT NULL,
     name VARCHAR(500) NOT NULL,
@@ -16,20 +16,10 @@ CREATE TABLE question_templates (
     PRIMARY KEY (id)
 );
 
-CREATE OR REPLACE FUNCTION moddatetime()
- RETURNS trigger
- LANGUAGE plpgsql
-AS $function$
-BEGIN
-    NEW.modified_on = now();
-    RETURN NEW;
-END;
-$function$
-;
-CREATE TRIGGER question_templates_before_update BEFORE UPDATE ON question_templates FOR EACH ROW
+CREATE TRIGGER question_templates_before_update BEFORE UPDATE ON main.question_templates FOR EACH ROW
 EXECUTE FUNCTION moddatetime();
 
 
-CREATE INDEX idx_question_templates_status ON question_templates (status);
+CREATE INDEX idx_question_templates_status ON main.question_templates (status);
 
-CREATE INDEX idx_question_templates_is_enable_weight ON question_templates (is_enable_weight);
+CREATE INDEX idx_question_templates_is_enable_weight ON main.question_templates (is_enable_weight);

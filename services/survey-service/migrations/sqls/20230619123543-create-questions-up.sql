@@ -1,6 +1,6 @@
 CREATE TYPE question_type_enum AS ENUM ('Drop Down','Multi Selection','Scale','Single Selection','Text');
 
-CREATE TABLE questions (
+CREATE TABLE main.questions (
     id uuid DEFAULT (md5(((random())::text || (clock_timestamp())::text)))::uuid NOT NULL,
     uid VARCHAR(20) NOT NULL,
     name TEXT NULL,
@@ -9,8 +9,8 @@ CREATE TABLE questions (
     question_type question_type_enum NOT NULL,
     is_score_enabled BOOLEAN DEFAULT FALSE,
     is_followup_enabled BOOLEAN DEFAULT FALSE,
-    root_question_id uuid DEFAULT (md5(((random())::text || (clock_timestamp())::text)))::uuid NOT NULL,
-    parent_question_id uuid DEFAULT (md5(((random())::text || (clock_timestamp())::text)))::uuid NOT NULL,
+    root_question_id uuid NOT NULL,
+    parent_question_id uuid NOT NULL,
     validation JSON NULL,
     created_on timestamp DEFAULT current_timestamp,
     modified_on timestamp DEFAULT current_timestamp,
@@ -25,14 +25,14 @@ CREATE TABLE questions (
 );
 
 ALTER TABLE
-    questions
+    main.questions
 ADD
-    CONSTRAINT fk_question_root FOREIGN KEY (root_question_id) REFERENCES questions (id) ON DELETE NO ACTION ON UPDATE NO ACTION;
+    CONSTRAINT fk_question_root FOREIGN KEY (root_question_id) REFERENCES main.questions (id) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 ALTER TABLE
-    questions
+    main.questions
 ADD
-    CONSTRAINT fk_question_parent FOREIGN KEY (parent_question_id) REFERENCES questions (id) ON DELETE NO ACTION ON UPDATE NO ACTION;
+    CONSTRAINT fk_question_parent FOREIGN KEY (parent_question_id) REFERENCES main.questions (id) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 
 CREATE OR REPLACE FUNCTION moddatetime()
@@ -46,6 +46,6 @@ END;
 $function$
 ;
 
-CREATE TRIGGER questions_before_update BEFORE UPDATE ON questions FOR EACH ROW EXECUTE FUNCTION moddatetime();
+CREATE TRIGGER questions_before_update BEFORE UPDATE ON main.questions FOR EACH ROW EXECUTE FUNCTION moddatetime();
 
-CREATE INDEX idx_question_question_type ON questions (question_type);
+CREATE INDEX idx_question_question_type ON main.questions (question_type);

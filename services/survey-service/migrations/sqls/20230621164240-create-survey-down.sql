@@ -14,4 +14,4 @@ DROP INDEX IF EXISTS idx_surveys_recurrence_end_after_occurrences;
 
 DROP INDEX IF EXISTS idx_surveys_is_enable_weights;
 
-DROP TABLE IF EXISTS surveys;
+DROP TABLE IF EXISTS main.surveys;

@@ -1,7 +1,7 @@
-CREATE TABLE template_questions (
+CREATE TABLE main.template_questions (
     id uuid DEFAULT (md5(((random())::text || (clock_timestamp())::text)))::uuid NOT NULL,
-    template_id uuid DEFAULT (md5(((random())::text || (clock_timestamp())::text)))::uuid NOT NULL,
-    question_id uuid DEFAULT (md5(((random())::text || (clock_timestamp())::text)))::uuid NOT NULL,
+    template_id uuid NOT NULL,
+    question_id uuid NOT NULL,
     display_order INTEGER NOT NULL,
     is_mandatory boolean DEFAULT FALSE,
     dependent_on_question_id varchar(50),
@@ -19,31 +19,21 @@ CREATE TABLE template_questions (
 );
 
 ALTER TABLE
-    template_questions
+    main.template_questions
 ADD
-    CONSTRAINT fk_template_questions_question FOREIGN KEY (question_id) REFERENCES questions (id) ON DELETE NO ACTION ON UPDATE NO ACTION;
+    CONSTRAINT fk_template_questions_question FOREIGN KEY (question_id) REFERENCES main.questions (id) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 ALTER TABLE
-    template_questions
+    main.template_questions
 ADD
-    CONSTRAINT fk_template_questions_question_templates FOREIGN KEY (template_id) REFERENCES question_templates (id) ON DELETE NO ACTION ON UPDATE NO ACTION;
+    CONSTRAINT fk_template_questions_question_templates FOREIGN KEY (template_id) REFERENCES main.question_templates (id) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 
-CREATE OR REPLACE FUNCTION moddatetime()
- RETURNS trigger
- LANGUAGE plpgsql
-AS $function$
-BEGIN
-    NEW.modified_on = now();
-    RETURN NEW;
-END;
-$function$
-;
-CREATE TRIGGER template_questions_before_update BEFORE UPDATE ON template_questions FOR EACH ROW
+CREATE TRIGGER template_questions_before_update BEFORE UPDATE ON main.template_questions FOR EACH ROW
 EXECUTE FUNCTION moddatetime();
 
-CREATE INDEX idx_template_questions_question_id ON template_questions (question_id);
+CREATE INDEX idx_template_questions_question_id ON main.template_questions (question_id);
 
-CREATE INDEX idx_template_questions_template_id ON template_questions (template_id);
+CREATE INDEX idx_template_questions_template_id ON main.template_questions (template_id);
 
-CREATE INDEX idx_template_questions_display_order ON template_questions (display_order);
+CREATE INDEX idx_template_questions_display_order ON main.template_questions (display_order);

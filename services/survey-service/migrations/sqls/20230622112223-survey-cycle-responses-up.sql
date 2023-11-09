@@ -1,7 +1,7 @@
-CREATE TABLE survey_cycle_responses (
+CREATE TABLE main.survey_cycle_responses (
     id uuid DEFAULT (md5(((random())::text || (clock_timestamp())::text)))::uuid NOT NULL,
     survey_responder_id varchar(50) NOT NULL,
-    survey_cycle_id uuid DEFAULT (md5(((random())::text || (clock_timestamp())::text)))::uuid NOT NULL,
+    survey_cycle_id uuid NOT NULL,
     total_score DECIMAL(5, 2),
     created_on timestamp DEFAULT current_timestamp,
     modified_on timestamp DEFAULT current_timestamp,
@@ -16,23 +16,13 @@ CREATE TABLE survey_cycle_responses (
 );
 
 ALTER TABLE
-    survey_cycle_responses
+    main.survey_cycle_responses
 ADD
-    CONSTRAINT fk_survey_cycle_responses_survey_cycle FOREIGN KEY (survey_cycle_id) REFERENCES survey_cycles (id);
+    CONSTRAINT fk_survey_cycle_responses_survey_cycle FOREIGN KEY (survey_cycle_id) REFERENCES main.survey_cycles (id);
 
-CREATE OR REPLACE FUNCTION moddatetime()
- RETURNS trigger
- LANGUAGE plpgsql
-AS $function$
-BEGIN
-    NEW.modified_on = now();
-    RETURN NEW;
-END;
-$function$
-;
-CREATE TRIGGER survey_cycle_responses_before_update BEFORE UPDATE ON survey_cycle_responses FOR EACH ROW
+CREATE TRIGGER survey_cycle_responses_before_update BEFORE UPDATE ON main.survey_cycle_responses FOR EACH ROW
 EXECUTE FUNCTION moddatetime();
 
-CREATE INDEX idx_survey_cycle_responses_survey_responder_id ON survey_cycle_responses (survey_responder_id);
+CREATE INDEX idx_survey_cycle_responses_survey_responder_id ON main.survey_cycle_responses (survey_responder_id);
 
-CREATE INDEX idx_survey_response_survey_cycle_id ON survey_cycle_responses (survey_cycle_id);
+CREATE INDEX idx_survey_response_survey_cycle_id ON main.survey_cycle_responses (survey_cycle_id);
