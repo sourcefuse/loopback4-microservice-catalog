@@ -38,13 +38,11 @@ jobs:
           NPM_USERNAME: ${{ vars.NPM_USERNAME }}
 
       - name: Bootstrap
-        run: |
-          npm ci
-          npx lerna bootstrap
+        run: npm ci
       - name: Test
-        run: npx lerna run test
+        run: npm run test --workspaces --if-present
       - name: Lint
-        run: npx lerna run lint
+        run: npm run lint --workspaces --if-present
       - name: Stash Changes
         run: git stash
       - name: Bump Versions
