@@ -1,7 +1,22 @@
 # Check out https://hub.docker.com/_/node to select a new base image
-FROM node:16-alpine AS BUILD_IMAGE
+ARG nodeVer=18-alpine
 
-RUN apk update && apk add curl bash && rm -rf /var/cache/apk/*
+# select a base image to build from
+FROM node:$nodeVer AS BASE
+
+# Take the build variables for image base
+ARG SERVICE_NAME
+ARG FROM_FOLDER
+# This command is used to install some dependencies in the Docker image.
+# Nessasary for running node-prune and npm install
+RUN  apk update &&  apk add --no-cache --virtual .gyp \
+    python3 \
+    make \
+    g++ \
+    bash \
+    curl
+
+# This is used to download and install the `node-prune` tool in the Docker image.
 RUN curl -sfL https://gobinaries.com/tj/node-prune | bash -s -- -b /usr/local/bin
 
 # Set to a non-root built-in user `node`
@@ -9,6 +24,8 @@ USER node
 
 # Create app directory (with user `node`)
 RUN mkdir -p /home/node/app
+
+# Set the working directory to `/home/node/app`
 WORKDIR /home/node/app
 
 # Install app dependencies
@@ -16,50 +33,56 @@ WORKDIR /home/node/app
 # where available (npm@5+)
 COPY --chown=node package*.json ./
 
-# Bundle app source code
-COPY --chown=node . .
+# The following two commands is used to copy the `packages`,`service` directory from the local file system to the Docker image.
+#  The `--chown=node` flag ensures that the ownership of the copied files/directories is set to the `node` user.
+#  This is important because the subsequent commands in the Dockerfile are executed with the `node` user,
+#  and it needs the appropriate permissions to access and modify the copied files/directories.
+COPY --chown=node packages ./packages
+
+COPY --chown=node $FROM_FOLDER/$SERVICE_NAME ./$FROM_FOLDER/$SERVICE_NAME
+
+# Installing all dependencies
+RUN npm ci
+
+# Building the app
+# set the Working Directory to the service
+WORKDIR /home/node/app/$FROM_FOLDER/$SERVICE_NAME
+# Run Build Command
 RUN npm run build
 
-# To make npm prune work, else it looks for symbolically linked packages as well
-RUN rm package-lock.json
-
-# Workaround for symlinked packages [copy packages in temp folder]
-RUN mkdir -p /tmp/app-packages
-# COPY --chown=node node_modules/@local/core /tmp/app-packages/core
-
-# Run node prune
+# Run node-prune
 RUN npm prune --production
 RUN /usr/local/bin/node-prune
 
-# Workaround for symlinked packages [npm prune for all packages]
-# WORKDIR /tmp/app-packages/core
-RUN npm prune --production
-RUN /usr/local/bin/node-prune
+# Start fresh for a smaller  image size
+FROM node:$nodeVer
 
-# Workaround for symlinked packages [reset WORKDIR]
+# Take the build variables for image stage
+ARG SERVICE_NAME
+ARG FROM_FOLDER
+
+RUN mkdir -p /home/node/app
+
+USER node
+
 WORKDIR /home/node/app
 
-FROM node:16-alpine
-WORKDIR /home/node/app
 
-ARG NR_ENABLED
+# These `COPY` commands are used to copy files and directories from the `BASE` 
+# stage of the Docker image to the current stage.
+COPY --from=BASE --chown=node /home/node/app/node_modules ./node_modules
+COPY --from=BASE --chown=node /home/node/app/package.json ./
+COPY --from=BASE --chown=node /home/node/app/package-lock.json ./
+COPY --from=BASE --chown=node /home/node/app/packages ./packages
+COPY --from=BASE --chown=node /home/node/app/$FROM_FOLDER/$SERVICE_NAME ./$FROM_FOLDER/$SERVICE_NAME
 
-# Copy from build image
-COPY --from=BUILD_IMAGE /home/node/app/dist ./dist
-COPY --from=BUILD_IMAGE /home/node/app/public ./public
-COPY --from=BUILD_IMAGE /home/node/app/node_modules ./node_modules
+# Set the working directory to `/home/node/app/services/auth-service`
+WORKDIR /home/node/app/$FROM_FOLDER/$SERVICE_NAME
 
-# Workaround for symlinked packages [copy all packages manually]
-# COPY --from=BUILD_IMAGE /tmp/app-packages/core ./node_modules/@local/core
-
-COPY --from=BUILD_IMAGE /home/node/app/.env.example ./.env.example
-COPY --from=BUILD_IMAGE /home/node/app/.env.defaults ./.env.defaults
-
-RUN if [ "$NR_ENABLED" = "1" ] ; then npm i newrelic; fi
 
 # Bind to all network interfaces so that it can be mapped to the host OS
-ENV HOST=::
-ENV PORT=3000
+ENV HOST=0.0.0.0 PORT=3000
+
 EXPOSE ${PORT}
 
-CMD [ "node", "-r", "./dist/opentelemetry-registry.js", "./dist/index.js" ]
+CMD [ "node", "." ]

@@ -2,12 +2,12 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import fs, {readdirSync} from 'fs';
+import {join} from 'path';
 import {AnyObject} from '../../types';
 import BaseUpdateGenerator from '../../update-generator';
-import {join} from 'path';
-import fs, {readdirSync} from 'fs';
-import {PackageDependencies, UpdateOptions} from './types/types';
 import {JSON_SPACING} from '../../utils';
+import {PackageDependencies, UpdateOptions} from './types/types';
 const chalk = require('chalk'); //NOSONAR
 const fse = require('fs-extra'); //NOSONAR
 
@@ -55,9 +55,7 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
       }
     }
 
-    // lerna bootstrap at the end
     this.destinationRoot(monoRepo);
-    await this.spawnCommandSync('lerna', ['bootstrap', '--force-local']);
   }
 
   private _getDirectories(folderPath: string) {
@@ -72,7 +70,10 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
     if (incompatibleDeps) {
       await this._updateDependencies();
     }
-    const currDir = this.destinationPath();
+    const BACK_TO_ROOT = join('..', '..');
+    const currDir = this.destinationPath(
+      join(this.destinationPath(), BACK_TO_ROOT),
+    );
     if (currDir.includes('/packages/')) {
       await this.spawnCommandSync('npm', ['i']);
     }

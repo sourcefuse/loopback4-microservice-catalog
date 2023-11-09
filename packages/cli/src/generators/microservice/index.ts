@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import fs from 'fs';
-import { join } from 'path';
+import {join} from 'path';
 import AppGenerator from '../../app-generator';
 import {
   BASESERVICECOMPONENTLIST,
@@ -14,7 +14,7 @@ import {
   MIGRATION_CONNECTORS,
   SERVICES,
 } from '../../enum';
-import { AnyObject, MicroserviceOptions } from '../../types';
+import {AnyObject, MicroserviceOptions} from '../../types';
 import {
   JSON_SPACING,
   appendDependencies,
@@ -62,7 +62,6 @@ const MIGRATION_TEMPLATE = join(
 
 const MIGRATION_FOLDER = join('packages', 'migrations');
 
-
 const sourceloopMigrationPath = (packageName: SERVICES) =>
   join('node_modules', `@sourceloop/${packageName}`, 'migrations');
 
@@ -97,8 +96,6 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     }
   }
 
-
-
   //Loopback4 prompts
   async promptProjectName() {
     return super.promptProjectName();
@@ -123,7 +120,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     );
     this.projectInfo.datasourceConnector =
       DATASOURCE_CONNECTORS[
-      this.options.datasourceType ?? DATASOURCES.POSTGRES
+        this.options.datasourceType ?? DATASOURCES.POSTGRES
       ];
     this.projectInfo.datasourceConnectorName =
       this.projectInfo.datasourceConnector;
@@ -225,12 +222,12 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         packageJsonFile,
         JSON.stringify(packageJson, undefined, JSON_SPACING),
       );
-      this.spawnCommandSync('npm', ['i']);
-      this.spawnCommandSync('npm', ['run', 'prettier:fix']);
       this.destinationRoot(join(this.destinationPath(), BACK_TO_ROOT));
+      this.spawnCommandSync('npx', ['lerna', 'clean']);
+      this.spawnCommandSync('npm', ['i']);
 
       this.addMigrations();
-
+      this._appendDockerScript();
       return true;
     }
     return false;
@@ -251,7 +248,6 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       this._addMigrationScripts();
     }
   }
-
 
   addScope() {
     let czConfig = this.fs.read(
@@ -282,6 +278,22 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     );
   }
 
+  _appendDockerScript() {
+    const packageJsonFile = join(this.destinationRoot(), './package.json');
+    const packageJson = this.fs.readJSON(packageJsonFile) as AnyObject;
+    const scripts = {...packageJson.scripts};
+    scripts[
+      `docker:build:${this.options.baseService}`
+    ] = `docker build --build-arg SERVICE_NAME=${this.options.baseService} --build-arg FROM_FOLDER=services -t $REPOSITORY_URI-${this.options.baseService}:$CUSTOM_TAG -f ./services/${this.options.name}/Dockerfile .`;
+    packageJson.scripts = scripts;
+    fs.writeFile(
+      packageJsonFile,
+      JSON.stringify(packageJson, undefined, JSON_SPACING),
+      function () {
+        //This is intentional.
+      },
+    );
+  }
   private _setDataSourceName() {
     if (this.options.baseService) {
       return BASESERVICEDSLIST[this.options.baseService];
@@ -433,7 +445,6 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         connector,
       },
     );
-
   }
 
   private _includeSourceloopMigrations() {
@@ -442,11 +453,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       if (
         !fs.existsSync(
           this.destinationPath(
-            join(
-              'services',
-              name,
-              sourceloopMigrationPath(this.options.baseService),
-            ),
+            sourceloopMigrationPath(this.options.baseService),
           ),
         )
       ) {
@@ -459,13 +466,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       }
 
       this.fs.copy(
-        this.destinationPath(
-          join(
-            'services',
-            name,
-            sourceloopMigrationPath(this.options.baseService),
-          ),
-        ),
+        this.destinationPath(sourceloopMigrationPath(this.options.baseService)),
         this.destinationPath(join(MIGRATION_FOLDER, name, 'migrations')),
       );
       let connector = MIGRATION_CONNECTORS[DATASOURCES.POSTGRES]; // default
@@ -480,10 +481,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
           connector,
         },
       );
-
-
     }
-
   }
 
   private _migrationExists() {
@@ -536,7 +534,6 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
 
   async end() {
     if (this.projectInfo) {
-      this.spawnCommandSync('lerna', ['bootstrap', '--force-local']);
       this.projectInfo.outdir = this.options.name ?? DEFAULT_NAME;
     }
     await super.end();
