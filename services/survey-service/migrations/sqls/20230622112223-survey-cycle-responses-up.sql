@@ -1,6 +1,6 @@
 CREATE TABLE main.survey_cycle_responses (
     id uuid DEFAULT (md5(((random())::text || (clock_timestamp())::text)))::uuid NOT NULL,
-    survey_responder_id varchar(50) NOT NULL,
+    survey_responder_id uuid NOT NULL,
     survey_cycle_id uuid NOT NULL,
     total_score DECIMAL(5, 2),
     created_on timestamp DEFAULT current_timestamp,
