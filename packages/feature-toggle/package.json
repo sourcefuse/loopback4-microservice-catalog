@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/feature-toggle",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Package for feature toggle",
   "keywords": [
     "loopback-extension",
