@@ -1,4 +1,4 @@
-DROP TABLE section;
+DROP TABLE main.section;
 
 ALTER TABLE
-    survey_questions DROP COLUMN section_id;
+    main.survey_questions DROP COLUMN section_id;
