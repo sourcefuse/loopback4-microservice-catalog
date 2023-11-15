@@ -3,9 +3,11 @@
   "private": false,
   "scripts": {
     "prepare": "husky install",
+    "build": "npm run build --workspaces --if-present",
     "postinstall": "npx patch-package",
     "clean-deps": "lerna clean --yes && lerna exec --no-private \"npm install --ignore-scripts --package-lock-only --no-audit\"",
-    "export-typedocs": "npx tsc export-typedocs.ts && node export-typedocs"
+    "export-typedocs": "npx tsc export-typedocs.ts && node export-typedocs",
+    "clean": "npm run clean --workspaces --if-present"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.2.3",
