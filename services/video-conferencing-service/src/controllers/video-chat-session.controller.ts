@@ -26,11 +26,10 @@ import {ServiceBindings} from '../keys';
 import {SessionAttendees, VideoChatSession} from '../models';
 import {VonageSessionWebhookPayload} from '../providers/vonage';
 import {ChatSessionService} from '../services/chat-session.service';
-import {ChatSessionService as SequelizeChatSessionService} from '../services/sequelize/chat-session.service';
 export class VideoChatSessionController {
   constructor(
     @inject(ServiceBindings.SessionChatService)
-    public chatSessionService: ChatSessionService | SequelizeChatSessionService,
+    public chatSessionService: ChatSessionService,
   ) {}
 
   @authenticate(STRATEGY.BEARER)

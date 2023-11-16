@@ -86,7 +86,14 @@ npm i @sourceloop/video-conferencing-service
 
 This service supports Sequelize as the underlying ORM using [@loopback/sequelize](https://www.npmjs.com/package/@loopback/sequelize) extension. And in order to use it, you'll need to do following changes.
 
-1. Change the import statements from `@sourceloop/video-conferencing-service` to `@sourceloop/video-conferencing-service/sequelize`. This can be done easily with your I-DEs find and replace feature.
+1.To use Sequelize in your application, add following to application.ts:
+
+```ts
+this.bind(VideoChatBindings.Config).to({
+  useCustomSequence: false,
+  useSequelize: true,
+});
+```
 
 2. Use the `SequelizeDataSource` in your audit datasource as the parent class. Refer [this](https://www.npmjs.com/package/@loopback/sequelize#step-1-configure-datasource) for more details.
 

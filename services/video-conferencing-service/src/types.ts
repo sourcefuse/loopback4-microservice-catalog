@@ -203,5 +203,4 @@ export interface ISessionService {
     active: string,
   ): Promise<SessionAttendees[]>;
 }
-export { SessionAttendees };
-
+export {SessionAttendees};

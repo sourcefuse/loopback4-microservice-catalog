@@ -16,11 +16,10 @@ import {
 import {ExternalStorageOptions} from '..';
 import {ServiceBindings} from '../keys';
 import {ChatArchiveService} from '../services';
-import {ChatArchiveService as SequelizeChatArchiveService} from '../services/sequelize';
 export class VideoChatArchiveController {
   constructor(
     @inject(ServiceBindings.ArchiveChatService)
-    public chatArchiveService: ChatArchiveService | SequelizeChatArchiveService,
+    public chatArchiveService: ChatArchiveService,
   ) {}
 
   @authenticate(STRATEGY.BEARER)
