@@ -82,6 +82,14 @@ npm i @sourceloop/video-conferencing-service
 
 ![video](https://user-images.githubusercontent.com/82804130/126984338-754c0788-270a-40df-b601-ff66dcd3d5f8.jpg)
 
+### Using with Sequelize
+
+This service supports Sequelize as the underlying ORM using [@loopback/sequelize](https://www.npmjs.com/package/@loopback/sequelize) extension. And in order to use it, you'll need to do following changes.
+
+1. Change the import statements from `@sourceloop/video-conferencing-service` to `@sourceloop/video-conferencing-service/sequelize`. This can be done easily with your I-DEs find and replace feature.
+
+2. Use the `SequelizeDataSource` in your audit datasource as the parent class. Refer [this](https://www.npmjs.com/package/@loopback/sequelize#step-1-configure-datasource) for more details.
+
 ### Environment Variables
 
 Do not forget to set Environment variables. The examples below show a common configuration for a PostgreSQL Database running locally.

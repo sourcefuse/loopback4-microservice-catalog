@@ -53,9 +53,9 @@ import {
 export class VideoConfServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
-    private readonly application: RestApplication,
+    protected readonly application: RestApplication,
     @inject(VideoChatBindings.Config, {optional: true})
-    private readonly videChatConfig?: IServiceConfig,
+    protected readonly videoChatConfig?: IServiceConfig,
   ) {
     this.bindings = [];
     this.providers = {};
@@ -88,7 +88,7 @@ export class VideoConfServiceComponent implements Component {
     this.application.service(VonageService);
     this.application.service(TwilioService);
 
-    if (!this.videChatConfig?.useCustomSequence) {
+    if (!this.videoChatConfig?.useCustomSequence) {
       // Mount default sequence if needed
       this.setupSequence(this.bindings);
     }
