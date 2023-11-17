@@ -28,6 +28,10 @@
 
 </p>
 
+## IMPORTANT NOTE
+
+From v5 onwards our cli now supports workspaces, transfering the responsibility of managing dependencies from lerna to npm. We will be providing support for our older version v4 till 30th June 2024. For more details on how to migrate from older versions of lerna to v7 [click here](https://lerna.js.org/docs/legacy-package-management).
+
 # ARC API
 
 ARC API (aka Sourceloop), is a collection of pre-built microservices designed to accelerate the development timeline for enterprise projects. These services address common challenges encountered by large enterprises during the development of cloud-native platforms for digital transformation initiatives or new product creation. Implemented as [LoopBack Extensions](https://loopback.io/doc/en/lb4/Extending-LoopBack-4.html), ARC API services can be seamlessly integrated into existing LoopBack or NestJS applications or generated as standalone services using the LoopBack Command-line interface.
