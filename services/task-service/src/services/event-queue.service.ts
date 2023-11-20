@@ -2,6 +2,10 @@ import {BindingScope, inject, injectable} from '@loopback/context';
 import {asLifeCycleObserver, service} from '@loopback/core';
 import {AnyObject} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
+import {
+  EventProcessorServiceInterface,
+  EventQueueServiceInterface,
+} from '../interfaces';
 import {TaskServiceBindings} from '../keys';
 import {Event} from '../models';
 import {EventQueueConnector, HealthResponse} from '../types';
@@ -13,10 +17,10 @@ import {EventProcessorService} from './event-processor.service';
   },
   asLifeCycleObserver,
 )
-export class EventQueueServiceSQS {
+export class EventQueueService implements EventQueueServiceInterface {
   constructor(
     @service(EventProcessorService)
-    private readonly eventProcessorService: EventProcessorService,
+    private readonly eventProcessorService: EventProcessorServiceInterface,
     @inject(TaskServiceBindings.CONNECTOR_CONFIG)
     private settings: AnyObject,
     @inject(TaskServiceBindings.TASK_PROVIDER)
@@ -40,7 +44,7 @@ export class EventQueueServiceSQS {
     });
   }
 
-  listenForEvents(): void {
+  private listenForEvents(): void {
     // Start listening to the queue for incoming events
     const queueUrl = this.connector.settings.queueUrl;
 

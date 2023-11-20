@@ -9,7 +9,7 @@ import {
   WorkflowServiceBindings,
 } from '@sourceloop/bpmn-service';
 import FormData from 'form-data';
-import {HttpClientService} from './http.service';
+import {HttpClientService} from './index';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class CamundaService {

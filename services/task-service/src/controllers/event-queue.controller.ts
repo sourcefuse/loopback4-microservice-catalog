@@ -1,4 +1,4 @@
-import {inject} from '@loopback/core';
+import {service} from '@loopback/core';
 import {
   HttpErrors,
   get,
@@ -10,16 +10,17 @@ import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
 import {STRATEGY, authenticate} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {TaskPermssionKey} from '../enums/permission-key.enum';
+import {EventQueueServiceInterface} from '../interfaces';
 import {Event} from '../models';
-import {EventQueueServiceSQS} from '../services/event-queue.service';
+import {EventQueueService} from '../services/event-queue.service';
 import {HealthResponse} from '../types';
 
 const baseUrl = '/event-queue';
 
 export class EventQueueController {
   constructor(
-    @inject('services.EventQueueServiceSQS')
-    private eventQueueService: EventQueueServiceSQS,
+    @service(EventQueueService)
+    private eventQueueService: EventQueueServiceInterface,
   ) {}
 
   @authenticate(STRATEGY.BEARER)

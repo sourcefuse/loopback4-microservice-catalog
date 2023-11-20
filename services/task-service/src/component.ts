@@ -20,6 +20,8 @@ import {
 } from '@sourceloop/core';
 import * as controllers from './controllers';
 
+import {TaskServiceBindings} from './keys';
+import {WorkflowProvider} from './providers';
 import {
   ApiKeyRepository,
   EventRepository,
@@ -29,16 +31,13 @@ import {
 } from './repositories';
 import {EventWorkflowMappingRepository} from './repositories/event-workflow-mapping.repository';
 import {
-  CamundaService,
-  EventProcessorService,
-  EventQueueServiceSQS,
-  HttpClientService,
-  TaskOperationService,
-  WebhookService,
-  UtilityService,
-  WorkflowOperationService,
-  TaskDbService,
   ApiKeyVerificationService,
+  EventProcessorService,
+  EventQueueService,
+  TaskOperationService,
+  UtilityService,
+  WebhookService,
+  WorkflowOperationService,
 } from './services';
 
 export class TaskServiceComponent implements Component {
@@ -53,15 +52,12 @@ export class TaskServiceComponent implements Component {
   providers: ProviderMap = {};
 
   services = [
-    CamundaService,
     EventProcessorService,
-    EventQueueServiceSQS,
-    HttpClientService,
+    EventQueueService,
     TaskOperationService,
     UtilityService,
     WorkflowOperationService,
     WebhookService,
-    TaskDbService,
     ApiKeyVerificationService,
   ];
 
@@ -103,6 +99,9 @@ export class TaskServiceComponent implements Component {
       WebhookSubscriptionsRepository,
       ApiKeyRepository,
     ];
+    this.providers = {
+      [TaskServiceBindings.TASK_WORKFLOW_MANAGER.key]: WorkflowProvider,
+    };
   }
 
   /**

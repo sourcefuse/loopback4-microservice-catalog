@@ -13,7 +13,7 @@ import {
   TaskServiceBindings,
   TaskServiceComponent,
 } from '@sourceloop/task-service';
-import {CustomBpmnRunner, SQSConnector} from './providers';
+import {BpmnProvider, CustomBpmnRunner, SQSConnector} from './providers';
 
 import path from 'path';
 import {MySequence} from './sequence';
@@ -56,6 +56,9 @@ export class TaskServiceUserApplication extends BootMixin(
     this.bind(TaskServiceBindings.TASK_PROVIDER).toProvider(SQSConnector);
     this.bind(TaskServiceBindings.CUSTOM_BPMN_RUNNER).toProvider(
       CustomBpmnRunner,
+    );
+    this.bind(TaskServiceBindings.TASK_WORKFLOW_MANAGER).toProvider(
+      BpmnProvider,
     );
 
     this.projectRoot = __dirname;

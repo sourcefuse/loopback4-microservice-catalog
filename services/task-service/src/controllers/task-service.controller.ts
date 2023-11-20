@@ -1,4 +1,5 @@
 import {inject, service} from '@loopback/core';
+import {repository} from '@loopback/repository';
 import {
   HttpErrors,
   Request,
@@ -7,26 +8,30 @@ import {
   post,
   requestBody,
 } from '@loopback/rest';
-import {TaskOperationService} from '../services/task-operation.service';
-import {authorize} from 'loopback4-authorization';
-import {WebhookService} from '../services/webhook.service';
-import {STRATEGY, authenticate} from 'loopback4-authentication';
-import {SubscriberDTO, TaskDto, TaskWorkflows} from '../models';
-import {ApiKeyVerificationService} from '../services/api-key-verification.service';
-import {repository} from '@loopback/repository';
-import {TaskWorkFlowMappingRepository} from '../repositories';
 import {CONTENT_TYPE, OPERATION_SECURITY_SPEC} from '@sourceloop/core';
+import {STRATEGY, authenticate} from 'loopback4-authentication';
+import {authorize} from 'loopback4-authorization';
+import {
+  ApiKeyVerificationServiceInterface,
+  TaskOperationServiceInterface,
+  WebhookServiceInterface,
+} from '../interfaces';
+import {SubscriberDTO, TaskDto, TaskWorkflows} from '../models';
+import {TaskWorkFlowMappingRepository} from '../repositories';
+import {ApiKeyVerificationService} from '../services/api-key-verification.service';
+import {TaskOperationService} from '../services/task-operation.service';
+import {WebhookService} from '../services/webhook.service';
 
 const baseUrl = 'tasks';
 
 export class TaskServiceController {
   constructor(
     @service(TaskOperationService)
-    private readonly taskOpsService: TaskOperationService,
+    private readonly taskOpsService: TaskOperationServiceInterface,
     @service(WebhookService)
-    private readonly webhookService: WebhookService,
+    private readonly webhookService: WebhookServiceInterface,
     @service(ApiKeyVerificationService)
-    private readonly apiKeyVerificationService: ApiKeyVerificationService,
+    private readonly apiKeyVerificationService: ApiKeyVerificationServiceInterface,
     @repository(TaskWorkFlowMappingRepository)
     private readonly taskWorkflowMapping: TaskWorkFlowMappingRepository,
   ) {}

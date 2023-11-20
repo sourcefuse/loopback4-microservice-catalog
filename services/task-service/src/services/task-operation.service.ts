@@ -1,35 +1,50 @@
-import {injectable, BindingScope, service, inject} from '@loopback/core';
+import {BindingScope, inject, injectable, service} from '@loopback/core';
 import {AnyObject, DataObject, repository} from '@loopback/repository';
-import {CamundaService} from './camunda.service';
 import {
-  WorkflowServiceBindings,
-  WorkerRegisterFn,
   BPMTask,
+  Variable,
   WorkerImplementationFn,
+  WorkerRegisterFn,
+  WorkflowServiceBindings,
 } from '@sourceloop/bpmn-service';
 import {TaskProcessorCommand} from '../commands';
 
-import {TaskServiceBindings} from '../keys';
-import {Task, TaskReturnMap, TaskServiceNames, TaskStatus} from '../types';
-import {WorkflowOperationService} from './workflow-operation.service';
-import {UtilityService} from './utility.service';
-import {TaskDbService} from './task-db.service';
 import {HttpErrors} from '@loopback/rest';
-import {WebhookService} from './webhook.service';
+import {
+  TaskOperationServiceInterface,
+  UtilityServiceInterface,
+  WebhookServiceInterface,
+  WorkflowOperationServiceInterface,
+} from '../interfaces';
+import {TaskServiceBindings} from '../keys';
 import {MessageDTO} from '../models';
+import {WorkflowProvider} from '../providers';
 import {TaskRepository} from '../repositories';
+import {
+  Task,
+  TaskReturnMap,
+  TaskServiceNames,
+  TaskStatus,
+  TaskType,
+} from '../types';
+import {UtilityService} from './utility.service';
+import {WebhookService} from './webhook.service';
+import {WorkflowOperationService} from './workflow-operation.service';
 
 @injectable({scope: BindingScope.TRANSIENT})
-export class TaskOperationService {
+export class TaskOperationService implements TaskOperationServiceInterface {
+  private getWorkflowTasksById: <T>(type: TaskType, id: string) => Promise<T[]>;
+  private completeWorkflowTask: (
+    type: TaskType,
+    id: string,
+    variables?: Variable,
+  ) => Promise<void>;
+
   constructor(
-    @service(TaskDbService)
-    private readonly taskDbService: TaskDbService,
-    @service(CamundaService)
-    private readonly camundaService: CamundaService,
     @service(WorkflowOperationService)
-    private readonly workflowOpsService: WorkflowOperationService,
+    private readonly workflowOpsService: WorkflowOperationServiceInterface,
     @service(UtilityService)
-    private readonly utilityService: UtilityService,
+    private readonly utilityService: UtilityServiceInterface,
     @inject(WorkflowServiceBindings.RegisterWorkerFunction)
     private readonly regFn: WorkerRegisterFn,
     @inject(WorkflowServiceBindings.WorkerImplementationFunction)
@@ -37,11 +52,17 @@ export class TaskOperationService {
     @inject(TaskServiceBindings.CUSTOM_BPMN_RUNNER)
     private readonly customBpmnRunner: TaskReturnMap,
     @service(WebhookService)
-    private readonly webhookService: WebhookService,
+    private readonly webhookService: WebhookServiceInterface,
     @repository(TaskRepository)
     private readonly taskRepo: TaskRepository,
+    @inject(TaskServiceBindings.TASK_WORKFLOW_MANAGER)
+    private readonly taskWorkflowManager: WorkflowProvider,
   ) {
     this.clientBpmnRunner = this.customBpmnRunner;
+    const {getWorkflowTasksById, completeWorkflowTask} =
+      this.taskWorkflowManager.value();
+    this.getWorkflowTasksById = getWorkflowTasksById;
+    this.completeWorkflowTask = completeWorkflowTask;
   }
 
   clientBpmnRunner: TaskReturnMap = {
@@ -69,8 +90,10 @@ export class TaskOperationService {
     key: string,
     payload?: AnyObject,
   ) {
-    const tasks: AnyObject[] =
-      await this.camundaService.getCurrentExternalTask(id);
+    const tasks: AnyObject[] = await this.getWorkflowTasksById(
+      TaskType.External,
+      id,
+    );
     if (tasks && tasks.length > 0) {
       const tasksPromises = tasks.map(task =>
         this._registerOrUpdateCommand(task, {key, payload, name, id}),
@@ -112,8 +135,8 @@ export class TaskOperationService {
       );
       if (!workflow)
         throw new HttpErrors.NotFound('No workflow found with key');
-
-      const userTasks: Task[] = await this.camundaService.getCurrentUserTask(
+      const userTasks: Task[] = await this.getWorkflowTasksById(
+        TaskType.User,
         workflow.externalIdentifier,
       );
       if (!userTasks || userTasks.length === 0) return;
@@ -122,19 +145,23 @@ export class TaskOperationService {
 
       for (const ut of userTasks) {
         if (!ut.id) continue;
-        await this.camundaService.completeUserTask(ut.id, transformedPayload);
+        await this.completeWorkflowTask(
+          TaskType.User,
+          ut.id,
+          transformedPayload,
+        );
 
         // check if there are Task tasks left
-        const pendingTasks: Task[] =
-          await this.camundaService.getCurrentUserTask(
-            workflow.externalIdentifier,
-          );
+        const pendingTasks: Task[] = await this.getWorkflowTasksById(
+          TaskType.User,
+          workflow.externalIdentifier,
+        );
         ut.status =
           pendingTasks?.length > 0
             ? TaskStatus.in_progress
             : TaskStatus.completed;
 
-        await this.taskDbService.updateTaskStatus(taskKey, ut);
+        await this.updateTaskStatus(taskKey, ut);
         if (payload) {
           const messageDTO: DataObject<MessageDTO> = {
             message: 'Event Proccessed',
@@ -149,6 +176,19 @@ export class TaskOperationService {
       }
     } catch (error) {
       throw new HttpErrors.InternalServerError(`could not update the task`);
+    }
+  }
+
+  private async updateTaskStatus(key: string, task: Task) {
+    const dbTask = await this.taskRepo.findOne({
+      where: {
+        key,
+      },
+    });
+
+    if (dbTask) {
+      dbTask.status = task.status;
+      await this.taskRepo.update(dbTask);
     }
   }
 

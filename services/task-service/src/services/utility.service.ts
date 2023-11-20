@@ -1,16 +1,17 @@
 import {BindingScope, Getter, inject, injectable} from '@loopback/context';
 import {AnyObject} from '@loopback/repository';
 import {
-  WorkflowServiceBindings,
   WorkerMap,
   WorkerNameCmdPair,
+  WorkflowServiceBindings,
 } from '@sourceloop/bpmn-service';
 
 import {v4 as uuidv4} from 'uuid';
+import {UtilityServiceInterface} from '../interfaces';
 import {ClientAppDTO} from '../models';
 
 @injectable({scope: BindingScope.TRANSIENT})
-export class UtilityService {
+export class UtilityService implements UtilityServiceInterface {
   constructor(
     @inject.getter(WorkflowServiceBindings.WORKER_MAP)
     private readonly workerMapGetter: Getter<WorkerMap>,

@@ -1,17 +1,16 @@
-import {BindingScope, injectable, service} from '@loopback/core';
+import {BindingScope, injectable} from '@loopback/core';
 import {DataObject, repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
+import fetch from 'node-fetch';
+import {WebhookServiceInterface} from '../interfaces';
 import {MessageDTO} from '../models';
 import {WebhookSubscriptionsRepository} from '../repositories';
-import {HttpClientService} from './http.service';
 
 @injectable({scope: BindingScope.TRANSIENT})
-export class WebhookService {
+export class WebhookService implements WebhookServiceInterface {
   constructor(
     @repository(WebhookSubscriptionsRepository)
     private readonly webhookSubscriptionsRepo: WebhookSubscriptionsRepository,
-    @service(HttpClientService)
-    private readonly httpService: HttpClientService,
   ) {}
 
   public async addToSubscription(url: string, key: string) {
@@ -53,7 +52,13 @@ export class WebhookService {
 
       if (subscribers.length > 0) {
         const postPromises = subscribers.map(subscriber =>
-          this.httpService.post(subscriber.url, data),
+          fetch(subscriber.url, {
+            method: 'post',
+            body: JSON.stringify(data),
+            headers: {
+              'content-type': 'application/json',
+            },
+          }),
         );
         await Promise.all(postPromises);
       }

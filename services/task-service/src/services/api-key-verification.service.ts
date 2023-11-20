@@ -1,11 +1,14 @@
 // api-key-verification.service.ts
+import {injectable} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
+import {ApiKeyVerificationServiceInterface} from '../interfaces';
 import {ApiKeyRepository} from '../repositories';
-import {injectable} from '@loopback/core';
 
 @injectable()
-export class ApiKeyVerificationService {
+export class ApiKeyVerificationService
+  implements ApiKeyVerificationServiceInterface
+{
   constructor(
     @repository(ApiKeyRepository)
     private readonly apiKeyRepo: ApiKeyRepository,

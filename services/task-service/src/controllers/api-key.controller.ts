@@ -10,6 +10,7 @@ import {
 import {STRATEGY, authenticate} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {TaskPermssionKey} from '../enums/permission-key.enum';
+import {UtilityServiceInterface} from '../interfaces';
 import {ApiKey, ClientAppDTO} from '../models';
 import {ApiKeyRepository} from '../repositories';
 import {UtilityService} from '../services/utility.service';
@@ -18,7 +19,7 @@ import {UtilityService} from '../services/utility.service';
 export class ApiKeyController {
   constructor(
     @service(UtilityService)
-    private readonly utilityService: UtilityService,
+    private readonly utilityService: UtilityServiceInterface,
     @repository(ApiKeyRepository)
     private readonly apiKeyRepo: ApiKeyRepository,
   ) {}

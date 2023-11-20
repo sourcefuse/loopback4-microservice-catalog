@@ -6,6 +6,8 @@
 
 import {AnyObject} from '@loopback/repository';
 import {
+  Variable,
+  WorflowManager,
   WorkflowCacheSourceName,
   WorkflowServiceBindings,
 } from '@sourceloop/bpmn-service';
@@ -93,6 +95,20 @@ export type ProccessorFunction = (
   payload: AnyObject;
   vars: AnyObject | null;
 };
+
+export interface WorkflowManagerExtended<S = AnyObject> extends WorflowManager {
+  getWorkflowTasksById(type: TaskType, id: string): Promise<S[]>;
+  completeWorkflowTask(
+    type: TaskType,
+    id: string,
+    variables?: Variable,
+  ): Promise<void>;
+}
+
+export enum TaskType {
+  External = 'external',
+  User = 'user',
+}
 
 export enum EventKey {}
 // Define your event keys as an enum

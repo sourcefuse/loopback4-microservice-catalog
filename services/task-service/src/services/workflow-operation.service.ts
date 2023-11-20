@@ -1,17 +1,30 @@
-import {BindingScope, injectable, service} from '@loopback/core';
-import {Workflow, WorkflowRepository} from '@sourceloop/bpmn-service';
-import {TaskServiceNames} from '../types';
-import {EventWorkflows, TaskWorkflows} from '../models';
+import {BindingScope, inject, injectable} from '@loopback/core';
 import {Filter, repository} from '@loopback/repository';
+import {HttpErrors} from '@loopback/rest';
+import {
+  Workflow,
+  WorkflowProvider,
+  WorkflowRepository,
+  WorkflowVersion,
+} from '@sourceloop/bpmn-service';
+import {WorkflowOperationServiceInterface} from '../interfaces';
+import {TaskServiceBindings} from '../keys';
+import {EventWorkflows, TaskWorkflows} from '../models';
 import {
   EventWorkflowMappingRepository,
   TaskWorkFlowMappingRepository,
 } from '../repositories';
-import {CamundaService} from './camunda.service';
-import {HttpErrors} from '@loopback/rest';
+import {TaskServiceNames} from '../types';
 
 @injectable({scope: BindingScope.TRANSIENT})
-export class WorkflowOperationService {
+export class WorkflowOperationService
+  implements WorkflowOperationServiceInterface
+{
+  private startWorkflow: <T, S>(
+    input: T,
+    workflow: Workflow,
+    version?: WorkflowVersion,
+  ) => Promise<S>;
   constructor(
     @repository(WorkflowRepository)
     private readonly workflowRepo: WorkflowRepository,
@@ -19,9 +32,12 @@ export class WorkflowOperationService {
     private readonly eventWorkflowMapping: EventWorkflowMappingRepository,
     @repository(TaskWorkFlowMappingRepository)
     private readonly taskWorkflowMapping: TaskWorkFlowMappingRepository,
-    @service(CamundaService)
-    private readonly camundaService: CamundaService,
-  ) {}
+    @inject(TaskServiceBindings.TASK_WORKFLOW_MANAGER)
+    private readonly taskWorkflowManager: WorkflowProvider,
+  ) {
+    const {startWorkflow} = this.taskWorkflowManager.value();
+    this.startWorkflow = startWorkflow;
+  }
 
   public async execWorkflow(
     keyVal: string,
@@ -44,7 +60,7 @@ export class WorkflowOperationService {
       );
       if (workflow) {
         try {
-          await this.camundaService.execute(workflow.externalIdentifier, {});
+          await this.startWorkflow({}, workflow);
           return workflow;
         } catch (e) {
           throw new HttpErrors.NotFound('Workflow not found');
