@@ -18,12 +18,12 @@ import {
 } from './repositories/sequelize';
 import {AuditLog, Job, MappingLog} from './sequelize.index';
 import {
+  AuditLogExportProvider,
   ColumnBuilderProvider,
   ExportHandlerProvider,
   ExportToCsvProvider,
   QuerySelectedFilesProvider,
 } from './services/sequelize';
-import {AuditLogExportProvider} from './services/sequelize/audit-log-export.service';
 import {JobProcessingService} from './services/sequelize/job-processing.service';
 import {IAuditServiceConfig} from './types';
 
