@@ -151,3 +151,4 @@ export const TaskDbSourceName = 'taskdb';
 export const WorkflowServiceSourceName = WorkflowCacheSourceName;
 export const ExportedWorkflowServiceBindingConfig =
   WorkflowServiceBindings.Config;
+export const ExportedWorkflowServiceBindings = WorkflowServiceBindings;

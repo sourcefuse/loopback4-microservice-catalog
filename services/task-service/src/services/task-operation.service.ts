@@ -2,7 +2,6 @@ import {BindingScope, inject, injectable, service} from '@loopback/core';
 import {AnyObject, DataObject, repository} from '@loopback/repository';
 import {
   BPMTask,
-  Variable,
   WorkerImplementationFn,
   WorkerRegisterFn,
   WorkflowServiceBindings,
@@ -18,7 +17,6 @@ import {
 } from '../interfaces';
 import {TaskServiceBindings} from '../keys';
 import {MessageDTO} from '../models';
-import {WorkflowProvider} from '../providers';
 import {TaskRepository} from '../repositories';
 import {
   Task,
@@ -26,6 +24,7 @@ import {
   TaskServiceNames,
   TaskStatus,
   TaskType,
+  WorkflowManagerExtended,
 } from '../types';
 import {UtilityService} from './utility.service';
 import {WebhookService} from './webhook.service';
@@ -33,13 +32,6 @@ import {WorkflowOperationService} from './workflow-operation.service';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class TaskOperationService implements TaskOperationServiceInterface {
-  private getWorkflowTasksById: <T>(type: TaskType, id: string) => Promise<T[]>;
-  private completeWorkflowTask: (
-    type: TaskType,
-    id: string,
-    variables?: Variable,
-  ) => Promise<void>;
-
   constructor(
     @service(WorkflowOperationService)
     private readonly workflowOpsService: WorkflowOperationServiceInterface,
@@ -56,13 +48,9 @@ export class TaskOperationService implements TaskOperationServiceInterface {
     @repository(TaskRepository)
     private readonly taskRepo: TaskRepository,
     @inject(TaskServiceBindings.TASK_WORKFLOW_MANAGER)
-    private readonly taskWorkflowManager: WorkflowProvider,
+    private readonly taskWorkflowManager: WorkflowManagerExtended<Task>,
   ) {
     this.clientBpmnRunner = this.customBpmnRunner;
-    const {getWorkflowTasksById, completeWorkflowTask} =
-      this.taskWorkflowManager.value();
-    this.getWorkflowTasksById = getWorkflowTasksById;
-    this.completeWorkflowTask = completeWorkflowTask;
   }
 
   clientBpmnRunner: TaskReturnMap = {
@@ -90,10 +78,11 @@ export class TaskOperationService implements TaskOperationServiceInterface {
     key: string,
     payload?: AnyObject,
   ) {
-    const tasks: AnyObject[] = await this.getWorkflowTasksById(
-      TaskType.External,
-      id,
-    );
+    const tasks: AnyObject[] =
+      await this.taskWorkflowManager.getWorkflowTasksById(
+        TaskType.External,
+        id,
+      );
     if (tasks && tasks.length > 0) {
       const tasksPromises = tasks.map(task =>
         this._registerOrUpdateCommand(task, {key, payload, name, id}),
@@ -135,27 +124,29 @@ export class TaskOperationService implements TaskOperationServiceInterface {
       );
       if (!workflow)
         throw new HttpErrors.NotFound('No workflow found with key');
-      const userTasks: Task[] = await this.getWorkflowTasksById(
-        TaskType.User,
-        workflow.externalIdentifier,
-      );
+      const userTasks: Task[] =
+        await this.taskWorkflowManager.getWorkflowTasksById(
+          TaskType.User,
+          workflow.externalIdentifier,
+        );
       if (!userTasks || userTasks.length === 0) return;
 
       const transformedPayload = this.utilityService.transformObject(payload);
 
       for (const ut of userTasks) {
         if (!ut.id) continue;
-        await this.completeWorkflowTask(
+        await this.taskWorkflowManager.completeWorkflowTask(
           TaskType.User,
           ut.id,
           transformedPayload,
         );
 
         // check if there are Task tasks left
-        const pendingTasks: Task[] = await this.getWorkflowTasksById(
-          TaskType.User,
-          workflow.externalIdentifier,
-        );
+        const pendingTasks: Task[] =
+          await this.taskWorkflowManager.getWorkflowTasksById(
+            TaskType.User,
+            workflow.externalIdentifier,
+          );
         ut.status =
           pendingTasks?.length > 0
             ? TaskStatus.in_progress

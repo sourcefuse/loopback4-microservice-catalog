@@ -10,6 +10,7 @@ import {ServiceMixin} from '@loopback/service-proxy';
 
 import {
   ExportedWorkflowServiceBindingConfig,
+  ExportedWorkflowServiceBindings,
   TaskServiceBindings,
   TaskServiceComponent,
 } from '@sourceloop/task-service';
@@ -58,6 +59,9 @@ export class TaskServiceUserApplication extends BootMixin(
       CustomBpmnRunner,
     );
     this.bind(TaskServiceBindings.TASK_WORKFLOW_MANAGER).toProvider(
+      BpmnProvider,
+    );
+    this.bind(ExportedWorkflowServiceBindings.WorkflowManager).toProvider(
       BpmnProvider,
     );
 

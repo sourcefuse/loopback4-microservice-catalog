@@ -117,12 +117,13 @@ export class BpmnProvider implements Provider<WorkflowManagerExtended> {
         return version;
       },
       getWorkflowTasksById: async (type: TaskType, id: string) => {
-        let tasks;
+        let tasks: AnyObject[] = [];
         if (type === TaskType.External) {
           tasks = await this.camunda.getCurrentExternalTask(id);
         } else {
           tasks = await this.camunda.getCurrentUserTask(id);
         }
+        return tasks;
       },
       completeWorkflowTask: async (
         type: TaskType,
