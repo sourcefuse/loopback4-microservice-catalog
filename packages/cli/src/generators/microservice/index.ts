@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import fs from 'fs';
-import {join} from 'path';
+import { join } from 'path';
 import AppGenerator from '../../app-generator';
 import {
   BASESERVICECOMPONENTLIST,
@@ -14,13 +14,14 @@ import {
   MIGRATION_CONNECTORS,
   SERVICES,
 } from '../../enum';
-import {AnyObject, MicroserviceOptions} from '../../types';
+import { AnyObject, MicroserviceOptions } from '../../types';
 import {
   JSON_SPACING,
   appendDependencies,
   getDependencyVersion,
 } from '../../utils';
 const chalk = require('chalk'); //NOSONAR
+const { promisify } = require('util');
 
 const DATASOURCE_TEMPLATE = join(
   '..',
@@ -120,7 +121,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     );
     this.projectInfo.datasourceConnector =
       DATASOURCE_CONNECTORS[
-        this.options.datasourceType ?? DATASOURCES.POSTGRES
+      this.options.datasourceType ?? DATASOURCES.POSTGRES
       ];
     this.projectInfo.datasourceConnectorName =
       this.projectInfo.datasourceConnector;
@@ -170,17 +171,17 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     }
   }
 
-  writing() {
+  async writing() {
     if (!this.shouldExit()) {
       if (this.options.baseService ?? this.options.datasourceName) {
-        this._createDataSource();
+        await this._createDataSourceAsync();
       } else {
-        this._createFacadeRedisDatasource();
+        await this._createFacadeRedisDatasourceAsync();
       }
     }
   }
 
-  install() {
+  async install() {
     if (!this.shouldExit()) {
       const packageJsonFile = join(this.destinationPath(), 'package.json');
       const packageJson = this.fs.readJSON(packageJsonFile) as AnyObject;
@@ -217,35 +218,36 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
             `@sourceloop/${this.options.baseService}`,
           );
       }
-
-      fs.writeFileSync(
+      const writeFileAsync = promisify(fs.writeFile);
+      await writeFileAsync(
         packageJsonFile,
         JSON.stringify(packageJson, undefined, JSON_SPACING),
       );
-      this.destinationRoot(join(this.destinationPath(), BACK_TO_ROOT));
-      this.spawnCommandSync('npx', ['lerna', 'clean']);
-      this.spawnCommandSync('npm', ['i']);
 
-      this.addMigrations();
+      this.destinationRoot(join(this.destinationPath(), BACK_TO_ROOT));
+      await this.spawnCommand('npx', ['lerna', 'clean']);
+      await this.spawnCommand('npm', ['i']);
+
+      await this.addMigrations();
       this._appendDockerScript();
       return true;
     }
     return false;
   }
 
-  private addMigrations() {
+  private async addMigrations() {
     if (this.options.migrations) {
-      if (!this._migrationExists()) {
-        this._createMigrationPackage();
+      if (!(await this._migrationExists())) {
+        await this._createMigrationPackageAsync();
       }
       if (this.options.customMigrations) {
-        this._createCustomMigration();
+        await this._createCustomMigrationAsync();
       } else if (this.options.includeMigrations) {
-        this._includeSourceloopMigrations();
+        await this._includeSourceloopMigrationsAsync();
       } else {
         // do nothing
       }
-      this._addMigrationScripts();
+      await this._addMigrationScriptsAsync();
     }
   }
 
@@ -281,7 +283,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
   _appendDockerScript() {
     const packageJsonFile = join(this.destinationRoot(), './package.json');
     const packageJson = this.fs.readJSON(packageJsonFile) as AnyObject;
-    const scripts = {...packageJson.scripts};
+    const scripts = { ...packageJson.scripts };
     scripts[
       `docker:build:${this.options.baseService}`
     ] = `docker build --build-arg SERVICE_NAME=${this.options.baseService} --build-arg FROM_FOLDER=services -t $REPOSITORY_URI-${this.options.baseService}:$CUSTOM_TAG -f ./services/${this.options.name}/Dockerfile .`;
@@ -306,7 +308,8 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     } else return undefined;
   }
 
-  private _createDataSource() {
+
+  private async _createDataSourceAsync() {
     const baseServiceDSList = this._setDataSourceName();
     if (this.options.datasourceName && baseServiceDSList.length === 0) {
       baseServiceDSList?.push({
@@ -320,14 +323,15 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     } else {
       //do nothing
     }
-    baseServiceDSList.forEach(ds => {
+    const promises = baseServiceDSList.map(async ds => {
       if (ds.type === 'store') {
         if (!ds.isNotBase) this.projectInfo.baseServiceStoreName = ds.name;
         this.projectInfo.datasourceName = ds.fileName;
         this.projectInfo.datasourceClassName = this._capitalizeFirstLetter(
           ds.fileName,
         );
-        this.fs.copyTpl(
+        //@ts-ignore
+        await this.fs.copyTplAsync(
           this.templatePath(DATASOURCE_TEMPLATE),
           this.destinationPath(
             join('src', 'datasources', `${ds.fileName}.datasource.ts`),
@@ -339,7 +343,8 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         this.projectInfo.baseServiceStoreName = undefined; //so that previous value is not used
       } else {
         this.projectInfo.baseServiceCacheName = ds.name;
-        this.fs.copyTpl(
+        //@ts-ignore
+        await this.fs.copyTplAsync(
           this.templatePath(REDIS_DATASOURCE),
           this.destinationPath(
             join('src', 'datasources', `${ds.fileName}.datasource.ts`),
@@ -350,8 +355,10 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         );
       }
     });
+    await Promise.all(promises);
 
-    this.fs.copyTpl(
+    //@ts-ignore
+    await this.fs.copyTplAsync(
       this.templatePath(DATASOURCE_INDEX),
       this.destinationPath(join('src', 'datasources', `index.ts`)),
       {
@@ -360,7 +367,9 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     );
   }
 
-  private _createFacadeRedisDatasource() {
+
+
+  private async _createFacadeRedisDatasourceAsync() {
     if (this.options.facade) {
       const nameArr = [
         {
@@ -369,14 +378,16 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
           fileName: 'redis',
         },
       ];
-      this.fs.copyTpl(
+      //@ts-ignore
+      await this.fs.copyTplAsync(
         this.templatePath(REDIS_DATASOURCE),
         this.destinationPath(join('src', 'datasources', 'redis.datasource.ts')),
         {
           project: this.projectInfo,
         },
       );
-      this.fs.copyTpl(
+      //@ts-ignore
+      await this.fs.copyTplAsync(
         this.templatePath(DATASOURCE_INDEX),
         this.destinationPath(join('src', 'datasources', `index.ts`)),
         {
@@ -392,8 +403,9 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     }
   }
 
-  private _createMigrationPackage() {
-    this.copyTemplatedFiles(
+  private async _createMigrationPackageAsync() {
+    //@ts-ignore
+    await this.fs.copyTplAsync(
       this.templatePath(MIGRATION_PACKAGE_TEMPLATE),
       this.destinationPath(),
       {
@@ -409,11 +421,12 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     const tplFilePath = this.templatePath(
       join(MIGRATION_PACKAGE_TEMPLATE, 'packages', 'migrations'),
     );
-    fs.readdirSync(
-      this.templatePath(
-        join(MIGRATION_PACKAGE_TEMPLATE, 'packages', 'migrations'),
-      ),
-    ).forEach(file => {
+
+    const readdriAsync = promisify(fs.readdir);
+    const files = await readdriAsync(this.templatePath(
+      join(MIGRATION_PACKAGE_TEMPLATE, 'packages', 'migrations'),
+    ));
+    const promises = files.map(async (file: string) => {
       if (file.includes('.tpl')) {
         const targetFileName = file.replace('.tpl', '');
         const sourcePath = join(tplFilePath, file);
@@ -422,22 +435,27 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
           MIGRATION_FOLDER,
           targetFileName,
         );
-        this.fs.copyTpl(sourcePath, destinationPath, {
+        //@ts-ignore
+        await this.fs.copyTplAsync(sourcePath, destinationPath, {
           name: this.options.name
             ? this.options.name.toUpperCase()
             : DEFAULT_NAME,
         });
       }
-    });
+    })
+
+    await Promise.all(promises);
+
   }
 
-  private _createCustomMigration() {
+  private async _createCustomMigrationAsync() {
     const name = this.options.name ?? DEFAULT_NAME;
     let connector = MIGRATION_CONNECTORS[DATASOURCES.POSTGRES]; // default
     if (this.options.datasourceType) {
       connector = MIGRATION_CONNECTORS[this.options.datasourceType];
     }
-    this.fs.copyTpl(
+    //@ts-ignore
+    await this.fs.copyTplAsync(
       this.templatePath(MIGRATION_TEMPLATE),
       this.destinationPath(join(MIGRATION_FOLDER, name, dbconfig)),
       {
@@ -447,25 +465,28 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     );
   }
 
-  private _includeSourceloopMigrations() {
+
+  private async _includeSourceloopMigrationsAsync() {
     const name = this.options.name ?? DEFAULT_NAME;
     if (!this.shouldExit() && this.options.baseService) {
-      if (
-        !fs.existsSync(
-          this.destinationPath(
-            sourceloopMigrationPath(this.options.baseService),
-          ),
-        )
-      ) {
+
+      const destinationPath = this.destinationPath(
+        sourceloopMigrationPath(this.options.baseService)
+      );
+
+      try {
+        await fs.promises.access(destinationPath);
+      } catch (error) {
+        // Handle the error or perform actions when the file/directory doesn't exist
         this.log(
           chalk.cyan(
-            `Since migrations does not exist in the base service generating without migrations`,
+            `Since migrations do not exist in the base service, generating without migrations`,
           ),
         );
         return;
       }
-
-      this.fs.copy(
+      //@ts-ignore
+      await this.fs.copyAsync(
         this.destinationPath(sourceloopMigrationPath(this.options.baseService)),
         this.destinationPath(join(MIGRATION_FOLDER, name, 'migrations')),
       );
@@ -473,7 +494,8 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       if (this.options.datasourceType) {
         connector = MIGRATION_CONNECTORS[this.options.datasourceType];
       }
-      this.fs.copyTpl(
+      //@ts-ignore
+      await this.fs.copyTplAsync(
         this.templatePath(MIGRATION_TEMPLATE),
         this.destinationPath(join(MIGRATION_FOLDER, name, dbconfig)),
         {
@@ -484,13 +506,18 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     }
   }
 
-  private _migrationExists() {
-    return this.fs.exists(
-      this.destinationPath(join('packages', 'migrations', 'package.json')),
-    );
+  private async _migrationExists() {
+    try {
+      await fs.promises.access(this.destinationPath(join('packages', 'migrations', 'package.json')));
+      // File exists
+      return true;
+    } catch (error) {
+      // File does not exist
+      return false;
+    }
   }
 
-  private _addMigrationScripts() {
+  private async _addMigrationScriptsAsync() {
     try {
       const packageJsFile = 'packages/migrations/package.json';
       const packageJs = this.fs.readJSON(packageJsFile) as AnyObject;
@@ -506,13 +533,17 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       ] = `./node_modules/.bin/db-migrate reset --config '${this.options.name}/database.json' -m '${this.options.name}/migrations'`;
 
       packageJs.scripts = script;
-      fs.writeFileSync(
+
+      const writeFileAsync = promisify(fs.writeFile);
+
+      await writeFileAsync(
         packageJsFile,
         JSON.stringify(packageJs, undefined, JSON_SPACING),
       );
       const name = this.options.name
         ? this.options.name.toUpperCase()
         : DEFAULT_NAME;
+
       let migEnv = this.fs.read(join(MIGRATION_FOLDER, '.env.example'));
       const envToAdd = `\n${name}_DB_HOST= \n${name}_DB_PORT= \n${name}_DB_USER= 
       \n${name}_DB_DATABASE= \n${name}_DB_PASSWORD=`;

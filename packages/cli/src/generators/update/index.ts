@@ -2,17 +2,18 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import fs, {readdirSync} from 'fs';
-import {join} from 'path';
-import {AnyObject} from '../../types';
+import fs, { Dirent } from 'fs';
+import { join } from 'path';
+import { AnyObject } from '../../types';
 import BaseUpdateGenerator from '../../update-generator';
-import {JSON_SPACING} from '../../utils';
-import {PackageDependencies, UpdateOptions} from './types/types';
+import { JSON_SPACING } from '../../utils';
+import { PackageDependencies, UpdateOptions } from './types/types';
 const chalk = require('chalk'); //NOSONAR
 const fse = require('fs-extra'); //NOSONAR
 
 const configJsonFile = require('../../../package.json');
 const tempDeps = configJsonFile.config.templateDependencies;
+const { promisify } = require('util');
 
 const packageJsonFile = 'package.json';
 
@@ -33,7 +34,7 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
 
     for (const type of types) {
       this.destinationRoot(monoRepo);
-      const folders = this._getDirectories(
+      const folders = await this._getDirectories(
         this.destinationRoot(join('.', type)),
       );
       for (const folder of folders) {
@@ -58,10 +59,19 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
     this.destinationRoot(monoRepo);
   }
 
-  private _getDirectories(folderPath: string) {
-    return readdirSync(folderPath, {withFileTypes: true})
-      .filter(dirent => dirent.isDirectory())
-      .map(dirent => dirent.name);
+
+  private async _getDirectories(folderPath: string) {
+    try {
+      const dirents: Dirent[] = await fs.promises.readdir(folderPath, { withFileTypes: true });
+
+      const directories: string[] = dirents
+        .filter(dirent => dirent.isDirectory())
+        .map(dirent => dirent.name);
+
+      return directories;
+    } catch (error) {
+      return [];
+    }
   }
 
   private async _updateSourceloopDep() {
@@ -75,12 +85,12 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
       join(this.destinationPath(), BACK_TO_ROOT),
     );
     if (currDir.includes('/packages/')) {
-      await this.spawnCommandSync('npm', ['i']);
+      await this.spawnCommand('npm', ['i']);
     }
   }
 
   private async _checkDependencies() {
-    const {pkgDeps, depsToUpdate} = await this._initialiseDependencies();
+    const { pkgDeps, depsToUpdate } = await this._initialiseDependencies();
 
     let found = false;
     // find the incompatable dependencies
@@ -167,18 +177,18 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
 
     const pkgDeps: PackageDependencies = packageJson
       ? {
-          dependencies: {...packageJson.dependencies},
-          devDependencies: {...packageJson.devDependencies},
-          peerDependencies: {...packageJson.peerDependencies},
-        }
-      : {dependencies: {}, devDependencies: {}, peerDependencies: {}};
+        dependencies: { ...packageJson.dependencies },
+        devDependencies: { ...packageJson.devDependencies },
+        peerDependencies: { ...packageJson.peerDependencies },
+      }
+      : { dependencies: {}, devDependencies: {}, peerDependencies: {} };
 
     const depsToUpdate: PackageDependencies = {
       dependencies: {},
       devDependencies: {},
       peerDependencies: {},
     };
-    return {pkgDeps, depsToUpdate};
+    return { pkgDeps, depsToUpdate };
   }
 
   private async _updateDependencies() {
@@ -211,14 +221,19 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
     this.log(
       chalk.red('Upgrading dependencies may break the current project.'),
     );
-    fs.writeFileSync(
+    const writeFileAsync = promisify(fs.writeFile);
+    await writeFileAsync(
       this.destinationPath(packageJsonFile),
       JSON.stringify(packageJs, undefined, JSON_SPACING),
-      {flag: 'w+'},
+      { flag: 'w+' },
     );
     //deleting the node modules and lock file
-    fse.removeSync(this.destinationPath('node_modules'));
-    fse.removeSync(join(this.destinationPath(), 'package-lock.json'));
+    fse.remove(this.destinationPath('node_modules'), (err: Error) => {
+      //nothing
+    });
+    fse.remove(join(this.destinationPath(), 'package-lock.json'), (err: Error) => {
+      //nothing
+    });
   }
 
   async end() {

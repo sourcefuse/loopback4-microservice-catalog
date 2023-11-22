@@ -19,7 +19,7 @@ declare module '@loopback/cli/generators/app' {
     promptYarnInstall(): Promise<void>;
     buildAppClassMixins(): Promise<void>;
     scaffold(): boolean;
-    install(): boolean;
+    install(): Promise<boolean>;
     end(): Promise<void>;
   }
   export = AppGenerator;
