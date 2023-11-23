@@ -21,6 +21,7 @@ export abstract class BaseGenerator<
       const targetFileName = file.replace('.tpl', '');
       const sourcePath = this.templatePath(file);
       const destinationPath = join(this.destinationRoot(), targetFileName);
+      /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
       //@ts-ignore
       await this.fs.copyTplAsync(sourcePath, destinationPath, this.options);
     });

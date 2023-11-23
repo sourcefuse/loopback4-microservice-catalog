@@ -330,6 +330,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         this.projectInfo.datasourceClassName = this._capitalizeFirstLetter(
           ds.fileName,
         );
+        /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
         //@ts-ignore
         await this.fs.copyTplAsync(
           this.templatePath(DATASOURCE_TEMPLATE),
@@ -340,9 +341,11 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
             project: this.projectInfo,
           },
         );
+
         this.projectInfo.baseServiceStoreName = undefined; //so that previous value is not used
       } else {
         this.projectInfo.baseServiceCacheName = ds.name;
+        /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
         //@ts-ignore
         await this.fs.copyTplAsync(
           this.templatePath(REDIS_DATASOURCE),
@@ -357,6 +360,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     });
     await Promise.all(promises);
 
+    /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
     //@ts-ignore
     await this.fs.copyTplAsync(
       this.templatePath(DATASOURCE_INDEX),
@@ -378,6 +382,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
           fileName: 'redis',
         },
       ];
+      /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
       //@ts-ignore
       await this.fs.copyTplAsync(
         this.templatePath(REDIS_DATASOURCE),
@@ -386,6 +391,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
           project: this.projectInfo,
         },
       );
+      /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
       //@ts-ignore
       await this.fs.copyTplAsync(
         this.templatePath(DATASOURCE_INDEX),
@@ -404,6 +410,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
   }
 
   private async _createMigrationPackageAsync() {
+    /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
     //@ts-ignore
     await this.fs.copyTplAsync(
       this.templatePath(MIGRATION_PACKAGE_TEMPLATE),
@@ -435,6 +442,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
           MIGRATION_FOLDER,
           targetFileName,
         );
+        /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
         //@ts-ignore
         await this.fs.copyTplAsync(sourcePath, destinationPath, {
           name: this.options.name
@@ -454,6 +462,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     if (this.options.datasourceType) {
       connector = MIGRATION_CONNECTORS[this.options.datasourceType];
     }
+    /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
     //@ts-ignore
     await this.fs.copyTplAsync(
       this.templatePath(MIGRATION_TEMPLATE),
@@ -485,6 +494,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         );
         return;
       }
+      /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
       //@ts-ignore
       await this.fs.copyAsync(
         this.destinationPath(sourceloopMigrationPath(this.options.baseService)),
@@ -494,6 +504,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       if (this.options.datasourceType) {
         connector = MIGRATION_CONNECTORS[this.options.datasourceType];
       }
+      /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
       //@ts-ignore
       await this.fs.copyTplAsync(
         this.templatePath(MIGRATION_TEMPLATE),
