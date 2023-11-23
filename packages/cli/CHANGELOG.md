@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>5.0.1 (2023-11-23)</small>
+
+* refactor(cli): make flow async (#1810) ([7b889b0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7b889b0)), closes [#1810](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1810) [#1792](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1792) [#1792](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1792)
+
+
+
+
+
 ## 5.0.0 (2023-11-10)
 
 * fix(cli): extra commit to bump version (#1802) ([592678e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/592678e)), closes [#1802](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1802) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
