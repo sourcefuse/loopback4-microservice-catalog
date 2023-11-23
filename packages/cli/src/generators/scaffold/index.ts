@@ -2,8 +2,8 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {BaseGenerator} from '../../base-generator';
-import {ScaffoldOptions} from '../../types';
+import { BaseGenerator } from '../../base-generator';
+import { ScaffoldOptions } from '../../types';
 import BackstageIntegrationGenerator from '../backstage-integration';
 export default class ScaffoldGenerator extends BaseGenerator<ScaffoldOptions> {
   cwd?: string;
@@ -13,13 +13,13 @@ export default class ScaffoldGenerator extends BaseGenerator<ScaffoldOptions> {
 
   async configuring() {
     this._setRoot();
-    this.spawnCommandSync('git', ['init']);
+    await this.spawnCommand('git', ['init']);
   }
 
   async writing() {
     this._setRoot();
     await this.createFolders([]);
-    this.copyTemplates();
+    await this.copyTemplateAsync();
     await this.createFolders(['facades', 'services', 'packages']);
     if (this.options.integrateWithBackstage) {
       this.composeWith(
@@ -33,7 +33,7 @@ export default class ScaffoldGenerator extends BaseGenerator<ScaffoldOptions> {
   }
 
   async install() {
-    this.spawnCommandSync('npm', ['i']);
+    await this.spawnCommand('npm', ['i']);
   }
 
   private _setRoot() {

@@ -18,7 +18,7 @@ declare module '@loopback/cli/generators/extension' {
     promptOptions(): Promise<void>;
     promptYarnInstall(): Promise<void>;
     scaffold(): boolean;
-    install(): boolean;
+    install(): Promise<boolean>;
     end(): Promise<void>;
   }
   export = ExtensionGenerator;

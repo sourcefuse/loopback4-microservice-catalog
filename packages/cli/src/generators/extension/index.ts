@@ -3,10 +3,12 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import fs from 'fs';
-import {join} from 'path';
+import { join } from 'path';
 import BaseExtensionGenerator from '../../extension-generator';
-import {AnyObject, ExtensionOptions} from '../../types';
-import {JSON_SPACING} from '../../utils';
+import { AnyObject, ExtensionOptions } from '../../types';
+import { JSON_SPACING } from '../../utils';
+const { promisify } = require('util');
+
 
 export default class ExtensionGenerator extends BaseExtensionGenerator<ExtensionOptions> {
   constructor(public args: string[], public opts: ExtensionOptions) {
@@ -48,7 +50,7 @@ export default class ExtensionGenerator extends BaseExtensionGenerator<Extension
     return super.scaffold();
   }
 
-  install() {
+  async install() {
     if (!this.shouldExit()) {
       const packageJsonFile = join(this.destinationPath(), 'package.json');
       const packageJson = this.fs.readJSON(packageJsonFile) as AnyObject;
@@ -58,7 +60,9 @@ export default class ExtensionGenerator extends BaseExtensionGenerator<Extension
       scripts.postinstall = 'npm run build';
       scripts.prune = 'npm prune --production';
       packageJson.scripts = scripts;
-      fs.writeFileSync(
+      const writeFileAsync = promisify(fs.writeFile);
+
+      await writeFileAsync(
         packageJsonFile,
         JSON.stringify(packageJson, undefined, JSON_SPACING),
       );
