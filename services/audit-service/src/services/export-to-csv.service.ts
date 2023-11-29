@@ -1,18 +1,17 @@
 import {PutObjectCommand, S3} from '@aws-sdk/client-s3';
 import {BindingScope, Provider, inject, injectable} from '@loopback/core';
-import {repository} from '@loopback/repository';
+import {EntityCrudRepository, repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {AuditLog, AuditLogRepository} from '@sourceloop/audit-log';
 import {AWSS3Bindings, AwsS3Config} from '../keys';
-import {AuditLogRepository as AuditLogSequelizeRepository} from '../repositories/sequelize';
 import {ExportToCsvFn} from '../types';
 @injectable({scope: BindingScope.TRANSIENT})
 export class ExportToCsvProvider implements Provider<ExportToCsvFn> {
   constructor(
     @inject(AWSS3Bindings.Config, {optional: true})
-    protected readonly config: AwsS3Config,
+    private readonly config: AwsS3Config,
     @repository(AuditLogRepository)
-    public auditLogRepository: AuditLogRepository | AuditLogSequelizeRepository,
+    public auditLogRepository: EntityCrudRepository<AuditLog, string, {}>,
   ) {}
   value(): ExportToCsvFn {
     return async (selectedAuditLogs: AuditLog[]) => {

@@ -7,10 +7,11 @@ import {BootMixin} from '@loopback/boot';
 import {ApplicationConfig} from '@loopback/core';
 import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
-import * as path from 'path';
-import {AuditServiceComponent} from '../../sequelize.component';
 import {SequelizeDataSource} from '@loopback/sequelize';
 import {AuditDbSourceName} from '@sourceloop/audit-log';
+import * as path from 'path';
+import {AuditServiceComponent} from '../../component';
+import {AuditServiceBindings} from '../../keys';
 
 export {ApplicationConfig};
 
@@ -28,6 +29,11 @@ export class SequelizeAuditServiceApplication extends BootMixin(
       database: 'test',
     });
     this.bind(`datasources.${AuditDbSourceName}`).to(ds);
+    this.bind(AuditServiceBindings.Config).to({
+      useCustomSequence: false,
+      useSequelize: true,
+    });
+
     this.component(AuditServiceComponent);
     this.projectRoot = __dirname;
     this.bootOptions = {

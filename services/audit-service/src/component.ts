@@ -44,12 +44,17 @@ import {
   MappingLogRepository,
 } from './repositories';
 import {
-  JobProcessingService,
-  ExportToCsvProvider,
-  QuerySelectedFilesProvider,
+  AuditLogRepository as AuditLogSequelizeRepository,
+  JobRepository as JobSequelizeRepository,
+  MappingLogRepository as MappingLogSequelizeRepository,
+} from './repositories/sequelize';
+import {
   AuditLogExportProvider,
   ColumnBuilderProvider,
   ExportHandlerProvider,
+  ExportToCsvProvider,
+  JobProcessingService,
+  QuerySelectedFilesProvider,
 } from './services';
 import {IAuditServiceConfig} from './types';
 
@@ -89,11 +94,19 @@ export class AuditServiceComponent implements Component {
       ColumnBuilderProvider,
     ];
 
-    this.repositories = [
-      AuditLogRepository,
-      MappingLogRepository,
-      JobRepository,
-    ];
+    if (this.notifConfig?.useSequelize) {
+      this.repositories = [
+        AuditLogSequelizeRepository,
+        MappingLogSequelizeRepository,
+        JobSequelizeRepository,
+      ];
+    } else {
+      this.repositories = [
+        AuditLogRepository,
+        MappingLogRepository,
+        JobRepository,
+      ];
+    }
 
     this.models = [AuditLog, MappingLog, Job];
 

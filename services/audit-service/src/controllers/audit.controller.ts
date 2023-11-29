@@ -5,6 +5,7 @@
 import {
   Count,
   CountSchema,
+  EntityCrudRepository,
   Filter,
   FilterExcludingWhere,
   repository,
@@ -42,13 +43,7 @@ import {
   JobRepository,
   MappingLogRepository,
 } from '../repositories';
-import {
-  AuditLogRepository as AuditLogSequelizeRepository,
-  JobRepository as JobSequelizeRepository,
-  MappingLogRepository as MappingLogSequelizeRepository,
-} from '../repositories/sequelize';
 import {JobProcessingService} from '../services';
-import {JobProcessingService as JobProcessingSequelizeService} from '../services/sequelize';
 import {
   ArchiveOutput,
   AuditLogExportFn,
@@ -62,17 +57,13 @@ const basePath = '/audit-logs';
 export class AuditController {
   constructor(
     @repository(AuditLogRepository)
-    public auditLogRepository: AuditLogRepository | AuditLogSequelizeRepository,
+    public auditLogRepository: EntityCrudRepository<AuditLog, string, {}>,
     @repository(JobRepository)
-    public jobRepository: JobRepository | JobSequelizeRepository,
+    public jobRepository: EntityCrudRepository<Job, string, {}>,
     @service(JobProcessingService)
-    public jobProcessingService:
-      | JobProcessingService
-      | JobProcessingSequelizeService,
+    public jobProcessingService: JobProcessingService,
     @repository(MappingLogRepository)
-    public mappingLogRepository:
-      | MappingLogRepository
-      | MappingLogSequelizeRepository,
+    public mappingLogRepository: EntityCrudRepository<MappingLog, string, {}>,
     @inject(ExportToCsvServiceBindings.EXPORT_LOGS)
     public exportToCsv: ExportToCsvFn,
     @inject(AuditLogExportServiceBindings.EXPORT_AUDIT_LOGS)

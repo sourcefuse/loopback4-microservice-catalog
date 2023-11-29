@@ -1,5 +1,5 @@
 import {BindingScope, inject, injectable} from '@loopback/core';
-import {Filter, repository} from '@loopback/repository';
+import {EntityCrudRepository, Filter, repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {AuditLog, AuditLogRepository} from '@sourceloop/audit-log';
 import {FileStatusKey} from '../enums/file-status-key.enum';
@@ -9,13 +9,8 @@ import {
   ColumnBuilderServiceBindings,
   QuerySelectedFilesServiceBindings,
 } from '../keys';
-import {CustomFilter, MappingLog} from '../models';
+import {CustomFilter, Job, MappingLog} from '../models';
 import {JobRepository, MappingLogRepository} from '../repositories';
-import {
-  AuditLogRepository as AuditLogSequelizeRepository,
-  JobRepository as JobSequelizeRepository,
-  MappingLogRepository as MappingLogSequelizeRepository,
-} from '../repositories/sequelize';
 import {
   AuditLogExportFn,
   ColumnBuilderFn,
@@ -32,13 +27,11 @@ export class JobProcessingService {
     @inject(ColumnBuilderServiceBindings.COLUMN_BUILDER)
     public columnBuilder: ColumnBuilderFn,
     @repository(MappingLogRepository)
-    public mappingLogRepository:
-      | MappingLogRepository
-      | MappingLogSequelizeRepository,
+    public mappingLogRepository: EntityCrudRepository<MappingLog, string, {}>,
     @repository(JobRepository)
-    public jobRepository: JobRepository | JobSequelizeRepository,
+    public jobRepository: EntityCrudRepository<Job, string, {}>,
     @repository(AuditLogRepository)
-    public auditLogRepository: AuditLogRepository | AuditLogSequelizeRepository,
+    public auditLogRepository: EntityCrudRepository<AuditLog, string, {}>,
   ) {}
 
   async start(jobId: string) {

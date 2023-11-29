@@ -5,18 +5,22 @@
 import {DefaultCrudRepository} from '@loopback/repository';
 import {ControllerInstance} from '@loopback/rest';
 import {expect} from '@loopback/testlab';
-import {AuditController} from '../../controllers/sequelize';
-import {MappingLogRepository} from '../../repositories/sequelize';
-import {JobRepository} from '../../repositories/sequelize/job.repository';
-import {AuditLogRepository as SequelizeAuditLogRepository} from '../../sequelize.index';
-import {SequelizeAuditServiceApplication} from '../fixtures/sequelize.application';
+import {AuditController} from '../../controllers';
+
+import {
+  AuditLogRepository,
+  JobRepository,
+  MappingLogRepository,
+} from '../../repositories/sequelize';
 import {getBaseClass} from '../utils/getBaseClass';
+import {SequelizeAuditServiceApplication} from './sequelize.application';
 let sequelizeApp: SequelizeAuditServiceApplication;
 
 const setup = async () => {
   sequelizeApp = new SequelizeAuditServiceApplication({
     name: 'SequelizeApp',
   });
+
   await sequelizeApp.boot();
 };
 
@@ -31,7 +35,6 @@ describe('Sequelize Component', () => {
       const boundRepositoryClasses = sequelizeApp
         .findByTag('repository')
         .map(e => e.source?.value);
-
       for (const repo of boundRepositoryClasses) {
         // No bound repository classes should extend `DefaultCrudRepository`
         expect(getBaseClass(repo)).to.not.be.eql(DefaultCrudRepository);
@@ -50,7 +53,7 @@ describe('Sequelize Component', () => {
       const expectedBindings = [
         {
           controller: AuditController,
-          repository: SequelizeAuditLogRepository,
+          repository: AuditLogRepository,
           prop: 'auditLogRepository',
         },
         {

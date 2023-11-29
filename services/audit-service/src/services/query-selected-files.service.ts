@@ -18,7 +18,7 @@ export class QuerySelectedFilesProvider
 {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
-    protected application: AuditServiceApplication,
+    private application: AuditServiceApplication,
   ) {}
 
   value(): QuerySelectedFilesFn {
