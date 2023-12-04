@@ -11,20 +11,6 @@
   "engines": {
     "node": "18 || 20"
   },
-  "exports": {
-    ".": "./dist/index.js",
-    "./sequelize": {
-      "types": "./dist/sequelize.index.d.ts",
-      "default": "./dist/sequelize.index.js"
-    }
-  },
-  "typesVersions": {
-    "*": {
-      "sequelize": [
-        "./dist/sequelize.index.d.ts"
-      ]
-    }
-  },
   "scripts": {
     "openapi-spec": "node ./dist/openapi-spec && npm run apidocs",
     "build": "npm run clean && lb-tsc && npm run openapi-spec",
@@ -78,7 +64,6 @@
     "@loopback/rest": "^13.1.0",
     "@loopback/rest-explorer": "^6.1.3",
     "@loopback/service-proxy": "^6.1.3",
-    "@loopback/sequelize": "^0.5.2",
     "@sourceloop/core": "^8.2.0",
     "dotenv": "^16.0.3",
     "dotenv-extended": "^2.9.0",
@@ -94,6 +79,7 @@
     "@loopback/eslint-config": "^14.0.4",
     "@loopback/testlab": "^6.1.3",
     "@types/jsonwebtoken": "^9.0.0",
+    "@loopback/sequelize": "^0.5.2",
     "@types/node": "^18.11.18",
     "@typescript-eslint/eslint-plugin": "^5.58.0",
     "@typescript-eslint/parser": "^5.58.0",
@@ -143,8 +129,7 @@
   "typedoc": {
     "config": {
       "entryPoints": [
-        "src/index.ts",
-        "src/sequelize.index.ts"
+        "src/index.ts"
       ],
       "out": "services/chat-service",
       "plugin": [

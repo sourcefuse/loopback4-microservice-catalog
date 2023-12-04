@@ -18,7 +18,8 @@ import {
   AuthorizationComponent,
 } from 'loopback4-authorization';
 import * as path from 'path';
-import {ChatServiceComponent} from '../../../sequelize.component';
+import {ChatServiceComponent} from '../../../component';
+import {ChatServiceBindings} from '../../../keys';
 import {BearerTokenVerifyProvider} from '../../bearer-token-verifier.provider';
 import {MySequence} from '../../sequence';
 
@@ -41,6 +42,10 @@ export class SequelizeChatApplication extends BootMixin(
       path: '/explorer',
     });
     this.component(RestExplorerComponent);
+    this.bind(ChatServiceBindings.Config).to({
+      useCustomSequence: false,
+      useSequelize: true,
+    });
     this.component(ChatServiceComponent);
     const ds = new SequelizeDataSource({
       name: 'ChatDbSourceName',

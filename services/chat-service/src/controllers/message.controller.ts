@@ -30,13 +30,12 @@ import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../enums';
 import {Message} from '../models';
 import {MessageRepository} from '../repositories';
-import {MessageRepository as SeqeulizeMessageRepository} from '../repositories/sequelize';
 const basePath = '/messages';
 
 export class MessageController {
   constructor(
     @repository(MessageRepository)
-    public messageRepository: MessageRepository | SeqeulizeMessageRepository,
+    public messageRepository: MessageRepository,
   ) {}
 
   @authenticate(STRATEGY.BEARER)

@@ -9,7 +9,7 @@ import {
   AttachmentFileController,
   MessageController,
   MessageRecipientMessageController,
-} from '../../../controllers/sequelize';
+} from '../../../controllers';
 import {
   AttachmentFileRepository as SequelizeAttachmentFileRepository,
   MessageRecipientRepository as SequelizeMessageRecipientRepository,

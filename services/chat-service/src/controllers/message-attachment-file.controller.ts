@@ -27,17 +27,12 @@ import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../enums';
 import {AttachmentFileDto} from '../models/attachment-file-dto.model';
 import {AttachmentFile} from '../models/attachment-file.model';
-import {
-  AttachmentFileRepository,
-  AttachmentFileRepository as SequelizeAttachmentFileRepository,
-} from '../repositories/sequelize';
+import {AttachmentFileRepository} from '../repositories/sequelize';
 const basePath = '/attach-files';
 export class AttachmentFileController {
   constructor(
     @repository(AttachmentFileRepository)
-    public attachmentFileRepository:
-      | AttachmentFileRepository
-      | SequelizeAttachmentFileRepository,
+    public attachmentFileRepository: AttachmentFileRepository,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {
