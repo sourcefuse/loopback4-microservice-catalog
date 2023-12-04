@@ -48,6 +48,11 @@ import {
   MessageRecipientController,
   MessageRecipientMessageController,
 } from './controllers';
+import {
+  AttachmentFileRepository as AttachmentFileSequelizeRepository,
+  MessageRecipientRepository as MessageRecipientSequelizeRepository,
+  MessageRepository as MessageSequelizeRepository,
+} from './repositories/sequelize';
 
 export class ChatServiceComponent implements Component {
   constructor(
@@ -79,11 +84,19 @@ export class ChatServiceComponent implements Component {
       // Mount default sequence if needed
       this.setupSequence();
     }
-    this.repositories = [
-      MessageRepository,
-      MessageRecipientRepository,
-      AttachmentFileRepository,
-    ];
+    if (this.chatConfig?.useSequelize) {
+      this.repositories = [
+        MessageSequelizeRepository,
+        MessageRecipientSequelizeRepository,
+        AttachmentFileSequelizeRepository,
+      ];
+    } else {
+      this.repositories = [
+        MessageRepository,
+        MessageRecipientRepository,
+        AttachmentFileRepository,
+      ];
+    }
 
     this.models = [
       Message,
