@@ -19,27 +19,21 @@ import {
   VerifyBindings,
 } from '../../../providers';
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
-import {
-  UserCredentialsRepository as SequelizeUserCredentialsRepository,
-  UserRepository as SequelizeUserRepository,
-} from '../../../repositories/sequelize';
 import {AuthUser} from '../models/auth-user.model';
 export class FacebookOauth2VerifyProvider
   implements Provider<VerifyFunction.FacebookAuthFn>
 {
   constructor(
     @repository(UserRepository)
-    public userRepository: UserRepository | SequelizeUserRepository,
+    public userRepository: UserRepository,
     @repository(UserCredentialsRepository)
-    public userCredsRepository:
-      | UserCredentialsRepository
-      | SequelizeUserCredentialsRepository,
+    public userCredsRepository: UserCredentialsRepository,
     @inject(SignUpBindings.FACEBOOK_SIGN_UP_PROVIDER)
-    protected readonly signupProvider: FacebookSignUpFn,
+    private readonly signupProvider: FacebookSignUpFn,
     @inject(VerifyBindings.FACEBOOK_PRE_VERIFY_PROVIDER)
-    protected readonly preVerifyProvider: FacebookPreVerifyFn,
+    private readonly preVerifyProvider: FacebookPreVerifyFn,
     @inject(VerifyBindings.FACEBOOK_POST_VERIFY_PROVIDER)
-    protected readonly postVerifyProvider: FacebookPostVerifyFn,
+    private readonly postVerifyProvider: FacebookPostVerifyFn,
   ) {}
 
   value(): VerifyFunction.FacebookAuthFn {

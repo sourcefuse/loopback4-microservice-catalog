@@ -1,5 +1,5 @@
-import { inject } from '@loopback/core';
-import { repository } from '@loopback/repository';
+import {inject} from '@loopback/core';
+import {repository} from '@loopback/repository';
 import {
   get,
   getModelSchemaRef,
@@ -26,13 +26,12 @@ import {
   AuthErrorKeys,
   STRATEGY,
 } from 'loopback4-authentication';
-import { authorize } from 'loopback4-authorization';
-import { AuthCodeBindings, AuthCodeGeneratorFn } from '../../providers';
-import { AuthClientRepository } from '../../repositories';
-import { AuthClientRepository as SequelizeAuthClientRepository } from '../../repositories/sequelize';
-import { AuthUser } from './models/auth-user.model';
-import { ClientAuthRequest } from './models/client-auth-request.dto';
-import { TokenResponse } from './models/token-response.dto';
+import {authorize} from 'loopback4-authorization';
+import {AuthCodeBindings, AuthCodeGeneratorFn} from '../../providers';
+import {AuthClientRepository} from '../../repositories';
+import {AuthUser} from './models/auth-user.model';
+import {ClientAuthRequest} from './models/client-auth-request.dto';
+import {TokenResponse} from './models/token-response.dto';
 const queryGen = (from: 'body' | 'query') => {
   return (req: Request) => {
     return {
@@ -47,10 +46,10 @@ const nonceCount = 10;
 export class AzureLoginController {
   constructor(
     @repository(AuthClientRepository)
-    public authClientRepository: AuthClientRepository |SequelizeAuthClientRepository,
+    public authClientRepository: AuthClientRepository,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @inject(AuthCodeBindings.AUTH_CODE_GENERATOR_PROVIDER)
-    protected readonly getAuthCode: AuthCodeGeneratorFn,
+    private readonly getAuthCode: AuthCodeGeneratorFn,
   ) {}
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)

@@ -6,12 +6,8 @@ import {Getter, inject} from '@loopback/core';
 import {BelongsToAccessor, repository} from '@loopback/repository';
 import {SequelizeDataSource} from '@loopback/sequelize';
 import {SequelizeSoftCrudRepository} from 'loopback4-soft-delete/sequelize';
-import {
-  AuthDbSourceName,
-  User,
-  UserCredentials,
-  UserCredentialsRelations,
-} from '../..';
+import {User, UserCredentials, UserCredentialsRelations} from '../..';
+import {AuthDbSourceName} from '../../types';
 import {UserRepository} from '../user.repository';
 
 export class UserCredentialsRepository extends SequelizeSoftCrudRepository<

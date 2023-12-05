@@ -8,9 +8,9 @@ import {SequelizeDataSource} from '@loopback/sequelize';
 import {IAuthUserWithPermissions} from '@sourceloop/core';
 import {SequelizeUserModifyCrudRepository} from '@sourceloop/core/sequelize';
 import {AuthenticationBindings} from 'loopback4-authentication';
-import {AuthDbSourceName, UserLevelPermission, UserTenant} from '../..';
+import {UserLevelPermission, UserTenant} from '../..';
+import {AuthDbSourceName} from '../../types';
 import {UserTenantRepository} from '../user-tenant.repository';
-
 export class UserLevelPermissionRepository extends SequelizeUserModifyCrudRepository<
   UserLevelPermission,
   typeof UserLevelPermission.prototype.id

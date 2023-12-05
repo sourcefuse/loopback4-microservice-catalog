@@ -4,9 +4,9 @@
 // https://opensource.org/licenses/MIT
 // Uncomment these imports to begin using these cool features!
 
-import { inject } from '@loopback/core';
-import { AnyObject } from '@loopback/repository';
-import { get, getModelSchemaRef, post, requestBody } from '@loopback/rest';
+import {inject} from '@loopback/core';
+import {AnyObject} from '@loopback/repository';
+import {get, getModelSchemaRef, post, requestBody} from '@loopback/rest';
 import {
   CONTENT_TYPE,
   ErrorCodes,
@@ -19,26 +19,26 @@ import {
   STRATEGY,
   authenticate,
 } from 'loopback4-authentication';
-import { authorize } from 'loopback4-authorization';
-import { LocalUserProfileDto } from '../models/local-user-profile';
-import { SignupRequestDto } from '../models/signup-request-dto.model';
-import { SignupRequest } from '../models/signup-request.model';
-import { SignupWithTokenReponseDto } from '../models/signup-with-token-response-dto.model';
+import {authorize} from 'loopback4-authorization';
+import {LocalUserProfileDto} from '../models/local-user-profile';
+import {SignupRequestDto} from '../models/signup-request-dto.model';
+import {SignupRequest} from '../models/signup-request.model';
+import {SignupWithTokenReponseDto} from '../models/signup-with-token-response-dto.model';
 import {
   SignUpBindings,
   SignupTokenHandlerFn,
-  VerifyBindings
+  VerifyBindings,
 } from '../providers';
-import { PreSignupFn, UserSignupFn } from '../types';
+import {PreSignupFn, UserSignupFn} from '../types';
 
 const successResponse = 'Sucess Response.';
 const basePath = '/auth/sign-up';
 export class SignupRequestController {
   constructor(
     @inject(SignUpBindings.PRE_LOCAL_SIGNUP_PROVIDER)
-    protected readonly preSignupFn: PreSignupFn<LocalUserProfileDto, AnyObject>,
+    private readonly preSignupFn: PreSignupFn<LocalUserProfileDto, AnyObject>,
     @inject(SignUpBindings.LOCAL_SIGNUP_PROVIDER)
-    protected readonly userSignupFn: UserSignupFn<LocalUserProfileDto, AnyObject>,
+    private readonly userSignupFn: UserSignupFn<LocalUserProfileDto, AnyObject>,
   ) {}
 
   @authorize({permissions: ['*']})

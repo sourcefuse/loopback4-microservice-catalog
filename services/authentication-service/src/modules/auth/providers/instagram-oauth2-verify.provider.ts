@@ -20,27 +20,21 @@ import {
   VerifyBindings,
 } from '../../../providers';
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
-import {
-  UserCredentialsRepository as SequelizeUserCredentialsRepository,
-  UserRepository as SequelizeUserRepository,
-} from '../../../repositories/sequelize';
 import {AuthUser} from '../models/auth-user.model';
 export class InstagramOauth2VerifyProvider
   implements Provider<VerifyFunction.InstagramAuthFn>
 {
   constructor(
     @repository(UserRepository)
-    public userRepository: UserRepository | SequelizeUserRepository,
+    public userRepository: UserRepository,
     @repository(UserCredentialsRepository)
-    public userCredsRepository:
-      | UserCredentialsRepository
-      | SequelizeUserCredentialsRepository,
+    public userCredsRepository: UserCredentialsRepository,
     @inject(SignUpBindings.INSTAGRAM_SIGN_UP_PROVIDER)
-    protected readonly signupProvider: InstagramSignUpFn,
+    private readonly signupProvider: InstagramSignUpFn,
     @inject(VerifyBindings.INSTAGRAM_PRE_VERIFY_PROVIDER)
-    protected readonly preVerifyProvider: InstagramPreVerifyFn,
+    private readonly preVerifyProvider: InstagramPreVerifyFn,
     @inject(VerifyBindings.INSTAGRAM_POST_VERIFY_PROVIDER)
-    protected readonly postVerifyProvider: InstagramPostVerifyFn,
+    private readonly postVerifyProvider: InstagramPostVerifyFn,
   ) {}
 
   value(): VerifyFunction.InstagramAuthFn {

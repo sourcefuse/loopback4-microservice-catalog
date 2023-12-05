@@ -23,16 +23,13 @@ import moment from 'moment';
 import {ActiveUsersRange, PermissionKey} from '../enums';
 import {LoginActivity} from '../models';
 import {LoginActivityRepository} from '../repositories';
-import {LoginActivityRepository as SequelizeLoginActivityRepository} from '../repositories/sequelize';
 import {ActiveUsersGroupData} from '../types';
 
 const baseUrl = '/login-activity';
 export class LoginActivityController {
   constructor(
     @repository(LoginActivityRepository)
-    protected readonly loginActivityRepo:
-      | LoginActivityRepository
-      | SequelizeLoginActivityRepository,
+    private readonly loginActivityRepo: LoginActivityRepository,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {

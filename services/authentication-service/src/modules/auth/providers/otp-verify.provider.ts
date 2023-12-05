@@ -14,20 +14,18 @@ import {
 import {totp} from 'otplib';
 import {AuthClient} from '../../../models';
 import {OtpCacheRepository, UserRepository} from '../../../repositories';
-import {UserRepository as SequelizeUserRepository} from '../../../repositories/sequelize';
 import {OtpService} from '../../../services';
-import {OtpService as SequelizeOtpService} from '../../../services/sequelize';
 export class OtpVerifyProvider implements Provider<VerifyFunction.OtpAuthFn> {
   constructor(
     @repository(UserRepository)
-    public userRepository: UserRepository | SequelizeUserRepository,
+    public userRepository: UserRepository,
     @repository(OtpCacheRepository)
     public otpCacheRepo: OtpCacheRepository,
-    @inject(LOGGER.LOGGER_INJECT) protected readonly logger: ILogger,
+    @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
     @inject(AuthenticationBindings.CURRENT_CLIENT)
-    protected readonly client: AuthClient,
+    private readonly client: AuthClient,
     @inject('services.otpService')
-    protected readonly otpService: OtpService | SequelizeOtpService,
+    private readonly otpService: OtpService,
   ) {}
 
   value(): VerifyFunction.OtpAuthFn {

@@ -6,6 +6,7 @@ import {Getter, inject} from '@loopback/core';
 import {
   BelongsToAccessor,
   DataObject,
+  Entity,
   HasManyRepositoryFactory,
   HasOneRepositoryFactory,
   repository,
@@ -73,8 +74,10 @@ export class UserRepository extends SequelizeUserModifyCrudRepository<
     @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
     @inject(AuthServiceBindings.PASSWORD_DECRYPTION_PROVIDER)
     private readonly passwordDecryptionFn: PasswordDecryptionFn,
+    @inject('models.User')
+    private readonly user: typeof Entity & {prototype: User},
   ) {
-    super(User, dataSource, getCurrentUser);
+    super(user, dataSource, getCurrentUser);
     this.userTenants = this.createHasManyRepositoryFactoryFor(
       'userTenants',
       userTenantRepositoryGetter,
@@ -162,7 +165,7 @@ export class UserRepository extends SequelizeUserModifyCrudRepository<
   ): Promise<User> {
     const user = await super.findOne({where: {username}});
     const creds = user && (await this.credentials(user.id).get());
-    if (!user || user.deleted || !creds || !creds.password) {
+    if ((!user || user.deleted) ?? !creds?.password) {
       throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
     } else if (creds.authProvider !== AuthProvider.INTERNAL) {
       throw new HttpErrors.BadRequest(
@@ -204,8 +207,7 @@ export class UserRepository extends SequelizeUserModifyCrudRepository<
         AuthenticateErrorKeys.PasswordCannotBeChanged,
       );
     }
-
-    if (!user || user.deleted || !creds || !creds.password) {
+    if ((!user || user.deleted) ?? !creds?.password) {
       throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
     } else if (await bcrypt.compare(newPassword, creds.password)) {
       throw new HttpErrors.Unauthorized(

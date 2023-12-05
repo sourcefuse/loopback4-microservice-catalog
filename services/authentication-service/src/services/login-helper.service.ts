@@ -2,22 +2,21 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import { inject } from '@loopback/context';
-import { BindingScope, injectable } from '@loopback/core';
-import { repository } from '@loopback/repository';
-import { HttpErrors } from '@loopback/rest';
-import { ILogger, LOGGER, UserStatus } from '@sourceloop/core';
-import { AuthErrorKeys } from 'loopback4-authentication';
-import { AuthClient, IAuthClientDTO, UserTenant } from '..';
-import { AuthUser } from '../modules/auth/models/auth-user.model';
-import { UserTenantRepository } from '../repositories';
-import { UserTenantRepository as SequelizeUserTenantRepository } from '../repositories/sequelize';
+import {inject} from '@loopback/context';
+import {BindingScope, injectable} from '@loopback/core';
+import {repository} from '@loopback/repository';
+import {HttpErrors} from '@loopback/rest';
+import {ILogger, LOGGER, UserStatus} from '@sourceloop/core';
+import {AuthErrorKeys} from 'loopback4-authentication';
+import {AuthClient, IAuthClientDTO, UserTenant} from '..';
+import {AuthUser} from '../modules/auth/models/auth-user.model';
+import {UserTenantRepository} from '../repositories';
 @injectable({scope: BindingScope.TRANSIENT})
 export class LoginHelperService {
   constructor(
     @repository(UserTenantRepository)
-    protected readonly userTenantRepo: UserTenantRepository|SequelizeUserTenantRepository,
-    @inject(LOGGER.LOGGER_INJECT) protected readonly logger: ILogger,
+    private readonly userTenantRepo: UserTenantRepository,
+    @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
   ) {}
 
   async verifyClientUserLogin(

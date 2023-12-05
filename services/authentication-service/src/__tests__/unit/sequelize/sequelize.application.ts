@@ -9,10 +9,11 @@ import {RepositoryMixin, juggler} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {SequelizeDataSource} from '@loopback/sequelize';
 import * as path from 'path';
-import {AuthenticationServiceComponent} from '../../../sequelize.component';
+import {AuthenticationServiceComponent} from '../../../component';
 
 import {AuthenticationBindings} from 'loopback4-authentication';
-import {AuthCacheSourceName} from '../../../types';
+import {AuthServiceBindings} from '../../../keys';
+import {AuthCacheSourceName, AuthDbSourceName} from '../../../types';
 export {ApplicationConfig};
 
 export class SequelizeAuthenticationServiceApplication extends BootMixin(
@@ -33,7 +34,7 @@ export class SequelizeAuthenticationServiceApplication extends BootMixin(
       connector: 'kv-memory',
     });
 
-    this.bind(`datasources.AuthDB`).to(ds);
+    this.bind(`datasources.${AuthDbSourceName}`).to(ds);
     this.bind(`datasources.${AuthCacheSourceName}`).to(redisDs);
     this.bind(AuthenticationBindings.CURRENT_CLIENT).to({
       clientId: 'test_client_id',
@@ -43,6 +44,10 @@ export class SequelizeAuthenticationServiceApplication extends BootMixin(
       id: 1,
       username: 'test_user',
       password: 'temp123!@',
+    });
+    this.bind(AuthServiceBindings.Config).to({
+      useCustomSequence: false,
+      useSequelize: true,
     });
     this.component(AuthenticationServiceComponent);
     this.projectRoot = __dirname;

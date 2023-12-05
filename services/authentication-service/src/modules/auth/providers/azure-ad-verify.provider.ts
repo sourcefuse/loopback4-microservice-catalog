@@ -15,27 +15,21 @@ import {
   VerifyBindings,
 } from '../../../providers';
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
-import {
-  UserCredentialsRepository as SequelizeUserCredentialsRepository,
-  UserRepository as SequelizeUserRepository,
-} from '../../../repositories/sequelize';
 import {AuthUser} from '../models/auth-user.model';
 export class AzureAdVerifyProvider
   implements Provider<VerifyFunction.AzureADAuthFn>
 {
   constructor(
     @repository(UserRepository)
-    public userRepository: UserRepository | SequelizeUserRepository,
+    public userRepository: UserRepository,
     @repository(UserCredentialsRepository)
-    public userCredsRepository:
-      | UserCredentialsRepository
-      | SequelizeUserCredentialsRepository,
+    public userCredsRepository: UserCredentialsRepository,
     @inject(SignUpBindings.AZURE_AD_SIGN_UP_PROVIDER)
-    protected readonly signupProvider: AzureAdSignUpFn,
+    private readonly signupProvider: AzureAdSignUpFn,
     @inject(VerifyBindings.AZURE_AD_PRE_VERIFY_PROVIDER)
-    protected readonly preVerifyProvider: AzureAdPreVerifyFn,
+    private readonly preVerifyProvider: AzureAdPreVerifyFn,
     @inject(VerifyBindings.AZURE_AD_POST_VERIFY_PROVIDER)
-    protected readonly postVerifyProvider: AzureAdPostVerifyFn,
+    private readonly postVerifyProvider: AzureAdPostVerifyFn,
   ) {}
 
   value(): VerifyFunction.AzureADAuthFn {

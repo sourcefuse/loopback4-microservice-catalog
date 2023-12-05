@@ -20,27 +20,21 @@ import {
   VerifyBindings,
 } from '../../../providers';
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
-import {
-  UserCredentialsRepository as SequelizeUserCredentialsRepository,
-  UserRepository as SequelizeUserRepository,
-} from '../../../repositories/sequelize';
 import {AuthUser} from '../models/auth-user.model';
 export class AppleOauth2VerifyProvider
   implements Provider<VerifyFunction.AppleAuthFn>
 {
   constructor(
     @repository(UserRepository)
-    public userRepository: UserRepository | SequelizeUserRepository,
+    public userRepository: UserRepository,
     @repository(UserCredentialsRepository)
-    public userCredsRepository:
-      | UserCredentialsRepository
-      | SequelizeUserCredentialsRepository,
+    public userCredsRepository: UserCredentialsRepository,
     @inject(SignUpBindings.APPLE_SIGN_UP_PROVIDER)
-    protected readonly signupProvider: AppleSignUpFn,
+    private readonly signupProvider: AppleSignUpFn,
     @inject(VerifyBindings.APPLE_PRE_VERIFY_PROVIDER)
-    protected readonly preVerifyProvider: ApplePreVerifyFn,
+    private readonly preVerifyProvider: ApplePreVerifyFn,
     @inject(VerifyBindings.APPLE_POST_VERIFY_PROVIDER)
-    protected readonly postVerifyProvider: ApplePostVerifyFn,
+    private readonly postVerifyProvider: ApplePostVerifyFn,
   ) {}
 
   value(): VerifyFunction.AppleAuthFn {

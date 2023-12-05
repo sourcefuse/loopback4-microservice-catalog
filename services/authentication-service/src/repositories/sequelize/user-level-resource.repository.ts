@@ -8,8 +8,8 @@ import {SequelizeDataSource} from '@loopback/sequelize';
 import {IAuthUserWithPermissions} from '@sourceloop/core';
 import {SequelizeUserModifyCrudRepository} from '@sourceloop/core/sequelize';
 import {AuthenticationBindings} from 'loopback4-authentication';
-import {AuthDbSourceName} from '../..';
 import {UserLevelResource, UserTenant} from '../../models';
+import {AuthDbSourceName} from '../../types';
 import {UserTenantRepository} from '../user-tenant.repository';
 
 export class UserLevelResourceRepository extends SequelizeUserModifyCrudRepository<

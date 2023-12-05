@@ -14,19 +14,15 @@ import {
   UserRepository,
   UserTenantRepository,
 } from '../../../repositories';
-import {
-  UserRepository as SequelizeUserRepository,
-  UserTenantRepository as SequelizeUserTenantRepository,
-} from '../../../repositories/sequelize';
 import {AuthUser} from '../models/auth-user.model';
 export class LocalPasswordVerifyProvider
   implements Provider<VerifyFunction.LocalPasswordFn>
 {
   constructor(
     @repository(UserRepository)
-    public userRepository: UserRepository | SequelizeUserRepository,
+    public userRepository: UserRepository,
     @repository(UserTenantRepository)
-    public utRepository: UserTenantRepository | SequelizeUserTenantRepository,
+    public utRepository: UserTenantRepository,
     @repository(OtpRepository)
     public otpRepository: OtpRepository,
   ) {}

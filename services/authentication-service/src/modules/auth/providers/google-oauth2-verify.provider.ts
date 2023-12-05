@@ -20,27 +20,21 @@ import {
   VerifyBindings,
 } from '../../../providers';
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
-import {
-  UserCredentialsRepository as SequelizeUserCredentialsRepository,
-  UserRepository as SequelizeUserRepository,
-} from '../../../repositories/sequelize';
 import {AuthUser} from '../models/auth-user.model';
 export class GoogleOauth2VerifyProvider
   implements Provider<VerifyFunction.GoogleAuthFn>
 {
   constructor(
     @repository(UserRepository)
-    public userRepository: UserRepository | SequelizeUserRepository,
+    public userRepository: UserRepository,
     @repository(UserCredentialsRepository)
-    public userCredsRepository:
-      | UserCredentialsRepository
-      | SequelizeUserCredentialsRepository,
+    public userCredsRepository: UserCredentialsRepository,
     @inject(SignUpBindings.GOOGLE_SIGN_UP_PROVIDER)
-    protected readonly signupProvider: GoogleSignUpFn,
+    private readonly signupProvider: GoogleSignUpFn,
     @inject(VerifyBindings.GOOGLE_PRE_VERIFY_PROVIDER)
-    protected readonly preVerifyProvider: GooglePreVerifyFn,
+    private readonly preVerifyProvider: GooglePreVerifyFn,
     @inject(VerifyBindings.GOOGLE_POST_VERIFY_PROVIDER)
-    protected readonly postVerifyProvider: GooglePostVerifyFn,
+    private readonly postVerifyProvider: GooglePostVerifyFn,
   ) {}
 
   value(): VerifyFunction.GoogleAuthFn {

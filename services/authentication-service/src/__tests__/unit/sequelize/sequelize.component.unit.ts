@@ -2,26 +2,28 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {DefaultCrudRepository} from '@loopback/repository';
+import {AnyObject, DefaultCrudRepository} from '@loopback/repository';
 import {ControllerInstance} from '@loopback/rest';
 import {expect} from '@loopback/testlab';
 import {
   LoginActivityController,
   LoginController,
   OtpController,
-} from '../../../controllers/sequelize';
+} from '../../../controllers';
 import {
-  AuthClientRepository as SequelizeAuthClientRepository,
-  LoginActivityRepository as SequelizeLoginActivityRepository,
-  RoleRepository as SequelizeRoleRepository,
-  TenantConfigRepository as SequelizeTenantConfigRepository,
-  UserCredentialsRepository as SequelizeUserCredentialsRepository,
-  UserLevelPermissionRepository as SequelizeUserLevelPermissionRepository,
-  UserLevelResourceRepository as SequelizeUserLevelResourceRepository,
-  UserRepository as SequelizeUserRepository,
-  UserTenantRepository as SequelizeUserTenantRepository,
+  AuthClientRepository,
+  LoginActivityRepository,
+  RoleRepository,
+  TenantConfigRepository,
+  UserCredentialsRepository,
+  UserLevelPermissionRepository,
+  UserLevelResourceRepository,
+  UserRepository,
+  UserTenantRepository,
 } from '../../../repositories/sequelize';
 
+import {AppleLoginController} from '../../../modules/auth/apple-login.controller';
+import {LoginHelperService, OtpService} from '../../../services';
 import {getBaseClass} from '../../utils/getBaseClass';
 import {SequelizeAuthenticationServiceApplication} from './sequelize.application';
 let sequelizeApp: SequelizeAuthenticationServiceApplication;
@@ -50,13 +52,12 @@ describe('Sequelize Component', () => {
         expect(getBaseClass(repo)).to.not.be.eql(DefaultCrudRepository);
       }
     });
-
     it('Uses the sequelize compatible repository in LoginActivity controller', async () => {
       const boundControllerClasses = sequelizeApp.findByTag('controller');
       const expectedBindings = [
         {
           controller: LoginActivityController,
-          repository: SequelizeLoginActivityRepository,
+          repository: LoginActivityRepository,
           prop: 'loginActivityRepo',
         },
       ];
@@ -65,22 +66,21 @@ describe('Sequelize Component', () => {
         const controllerInstance: ControllerInstance = sequelizeApp.getSync(
           sequelizeApp.controller(controller).key,
         );
-
         expect(sequelizeApp.controller(controller).source?.value).to.be.oneOf(
           boundControllerClasses.map(e => e.source?.value),
         );
         expect(controllerInstance[prop]).to.be.instanceOf(repository);
       }
     });
-    it('Uses the sequelize compatible artifacts in Otpcontroller', async () => {
+    it('Uses the sequelize compatible repository in Otpcontroller', async () => {
       const boundControllerClasses = sequelizeApp.findByTag('controller');
       const expectedBindings = [
         {
           controller: OtpController,
           repositories: [
-            SequelizeAuthClientRepository,
-            SequelizeUserRepository,
-            SequelizeUserCredentialsRepository,
+            AuthClientRepository,
+            UserRepository,
+            UserCredentialsRepository,
           ],
           props: ['authClientRepository', 'userRepo', 'userCredsRepository'],
         },
@@ -100,50 +100,101 @@ describe('Sequelize Component', () => {
         }
       }
     });
-    it('Uses the sequelize compatible artifacts in Login controller', async () => {
+    it('Uses the sequelize compatible repository in AppleLogincontroller', async () => {
       const boundControllerClasses = sequelizeApp.findByTag('controller');
       const expectedBindings = [
         {
-          controller: LoginController,
-
-          repositories: [
-            SequelizeAuthClientRepository,
-            SequelizeUserRepository,
-            SequelizeRoleRepository,
-            SequelizeTenantConfigRepository,
-            SequelizeUserCredentialsRepository,
-            SequelizeUserLevelResourceRepository,
-            SequelizeUserLevelPermissionRepository,
-            SequelizeUserTenantRepository,
-            SequelizeLoginActivityRepository,
-          ],
-          props: [
-            'authClientRepository',
-            'userRepo',
-            'roleRepo',
-            'tenantConfigRepo',
-            'userCredsRepository',
-            'userResourcesRepository',
-            'utPermsRepo',
-            'userTenantRepo',
-            'loginActivityRepo',
-          ],
+          controller: AppleLoginController,
+          repository: AuthClientRepository,
+          prop: 'authClientRepository',
         },
       ];
-      for (const {controller, repositories, props} of expectedBindings) {
+      for (const {controller, repository, prop} of expectedBindings) {
         const controllerInstance: ControllerInstance = sequelizeApp.getSync(
           sequelizeApp.controller(controller).key,
         );
         expect(sequelizeApp.controller(controller).source?.value).to.be.oneOf(
           boundControllerClasses.map(e => e.source?.value),
         );
-
-        for (let i = 0; i < repositories.length; i++) {
-          const repository = repositories[i];
-          const prop = props[i];
-          expect(controllerInstance[prop]).to.be.instanceOf(repository);
-        }
+        expect(controllerInstance[prop]).to.be.instanceOf(repository);
       }
     });
   });
+  it('Uses the sequelize compatible repository in Login controller', async () => {
+    const boundControllerClasses = sequelizeApp.findByTag('controller');
+    const expectedBindings = [
+      {
+        controller: LoginController,
+
+        repositories: [
+          AuthClientRepository,
+          UserRepository,
+          RoleRepository,
+          TenantConfigRepository,
+          UserCredentialsRepository,
+          UserLevelResourceRepository,
+          UserLevelPermissionRepository,
+          UserTenantRepository,
+          LoginActivityRepository,
+        ],
+        props: [
+          'authClientRepository',
+          'userRepo',
+          'roleRepo',
+          'tenantConfigRepo',
+          'userCredsRepository',
+          'userResourcesRepository',
+          'utPermsRepo',
+          'userTenantRepo',
+          'loginActivityRepo',
+        ],
+      },
+    ];
+    for (const {controller, repositories, props} of expectedBindings) {
+      const controllerInstance: ControllerInstance = sequelizeApp.getSync(
+        sequelizeApp.controller(controller).key,
+      );
+      expect(sequelizeApp.controller(controller).source?.value).to.be.oneOf(
+        boundControllerClasses.map(e => e.source?.value),
+      );
+
+      for (let i = 0; i < repositories.length; i++) {
+        const repository = repositories[i];
+        const prop = props[i];
+        expect(controllerInstance[prop]).to.be.instanceOf(repository);
+      }
+    }
+  });
+});
+
+it('Uses the sequelize compatible repository in LoginHelperService', async () => {
+  const expectedBindings = [
+    {
+      service: LoginHelperService,
+      repository: UserTenantRepository,
+      prop: 'userTenantRepo',
+    },
+  ];
+
+  for (const {service, repository, prop} of expectedBindings) {
+    const instance: AnyObject = sequelizeApp.getSync(
+      sequelizeApp.service(service).key,
+    );
+    expect(instance[prop]).to.be.instanceOf(repository);
+  }
+});
+it('Uses the sequelize compatible repository in OtpService', async () => {
+  const expectedBindings = [
+    {
+      service: OtpService,
+      repository: UserRepository,
+      prop: 'userRepository',
+    },
+  ];
+  for (const {service, repository, prop} of expectedBindings) {
+    const instance: AnyObject = sequelizeApp.getSync(
+      sequelizeApp.service(service).key,
+    );
+    expect(instance[prop]).to.be.instanceOf(repository);
+  }
 });

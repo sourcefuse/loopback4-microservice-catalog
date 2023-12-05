@@ -34,11 +34,6 @@ import {
   UserRepository,
 } from '../../repositories';
 import {
-  AuthClientRepository as SequelizeAuthClientRepository,
-  UserCredentialsRepository as SequelizeUserCredentialsRepository,
-  UserRepository as SequelizeUserRepository,
-} from '../../repositories/sequelize';
-import {
   AuthTokenRequest,
   CodeResponse,
   OtpLoginRequest,
@@ -50,17 +45,13 @@ import {OtpSendRequest} from './models/otp-send-request.dto';
 export class OtpController {
   constructor(
     @repository(AuthClientRepository)
-    public authClientRepository:
-      | AuthClientRepository
-      | SequelizeAuthClientRepository,
+    public authClientRepository: AuthClientRepository,
     @repository(UserRepository)
-    public userRepo: UserRepository | SequelizeUserRepository,
+    public userRepo: UserRepository,
     @repository(OtpCacheRepository)
     public otpCacheRepo: OtpCacheRepository,
     @repository(UserCredentialsRepository)
-    public userCredsRepository:
-      | UserCredentialsRepository
-      | SequelizeUserCredentialsRepository,
+    public userCredsRepository: UserCredentialsRepository,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
   ) {}
 

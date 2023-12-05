@@ -99,7 +99,9 @@ import {LocalPreSignupProvider} from './providers/local-presignup.provider';
 import {LocalSignupProvider} from './providers/local-signup.provider';
 import {MfaProvider} from './providers/mfa.provider';
 import {PasswordDecryptionProvider} from './providers/password-decryption.provider';
-import {repositories} from './repositories';
+
+import {repositories} from './repositories/index';
+import {repositories as sequelizeRepositories} from './repositories/sequelize';
 import {MySequence} from './sequence';
 import {LoginHelperService, OtpService} from './services';
 import {IAuthServiceConfig, IMfaConfig, IOtpConfig} from './types';
@@ -107,15 +109,15 @@ import {IAuthServiceConfig, IMfaConfig, IOtpConfig} from './types';
 export class AuthenticationServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
-    protected readonly application: RestApplication,
+    private readonly application: RestApplication,
     @inject(AuthServiceBindings.MfaConfig, {optional: true})
-    protected readonly mfaConfig: IMfaConfig,
+    private readonly mfaConfig: IMfaConfig,
     @inject(AuthServiceBindings.OtpConfig, {optional: true})
-    protected readonly otpConfig: IOtpConfig,
+    private readonly otpConfig: IOtpConfig,
     @inject(AuthServiceBindings.Config, {optional: true})
-    protected readonly authConfig?: IAuthServiceConfig,
+    private readonly authConfig?: IAuthServiceConfig,
     @inject(AuthenticationBindings.CONFIG, {optional: true})
-    protected readonly config?: AuthenticationConfig,
+    private readonly config?: AuthenticationConfig,
   ) {
     this.bindings = [];
     this.providers = {};
@@ -158,8 +160,12 @@ export class AuthenticationServiceComponent implements Component {
       // Mount default sequence if needed
       this.setupSequence();
     }
+    if (this.authConfig?.useSequelize) {
+      this.repositories = sequelizeRepositories;
+    } else {
+      this.repositories = repositories;
+    }
 
-    this.repositories = repositories;
     this.application
       .bind('services.LoginHelperService')
       .toClass(LoginHelperService);

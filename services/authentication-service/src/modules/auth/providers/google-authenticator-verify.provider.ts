@@ -14,23 +14,17 @@ import {
   UserCredentialsRepository,
   UserRepository,
 } from '../../../repositories';
-import {
-  UserCredentialsRepository as SequelizeUserCredentialsRepository,
-  UserRepository as SequelizeUserRepository,
-} from '../../../repositories/sequelize';
 export class GoogleAuthenticatorVerifyProvider
   implements Provider<VerifyFunction.OtpAuthFn>
 {
   constructor(
     @repository(UserRepository)
-    public userRepository: UserRepository | SequelizeUserRepository,
+    public userRepository: UserRepository,
     @repository(UserCredentialsRepository)
-    public userCredsRepository:
-      | UserCredentialsRepository
-      | SequelizeUserCredentialsRepository,
+    public userCredsRepository: UserCredentialsRepository,
     @repository(OtpCacheRepository)
     public otpCacheRepo: OtpCacheRepository,
-    @inject(LOGGER.LOGGER_INJECT) protected readonly logger: ILogger,
+    @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
   ) {}
 
   value(): VerifyFunction.OtpAuthFn {

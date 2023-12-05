@@ -19,23 +19,16 @@ import {
   UserRepository,
   UserTenantRepository,
 } from '../../../repositories';
-import {
-  AuthSecureClientRepository as SequelizeAuthSecureClientRepository,
-  UserRepository as SequelizeUserRepository,
-  UserTenantRepository as SequelizeUserTenantRepository,
-} from '../../../repositories/sequelize';
 export class SecureResourceOwnerVerifyProvider
   implements Provider<VerifyFunction.SecureResourceOwnerPasswordFn>
 {
   constructor(
     @repository(UserRepository)
-    public userRepository: UserRepository | SequelizeUserRepository,
+    public userRepository: UserRepository,
     @repository(UserTenantRepository)
-    public utRepository: UserTenantRepository | SequelizeUserTenantRepository,
+    public utRepository: UserTenantRepository,
     @repository(AuthSecureClientRepository)
-    public authSecureClientRepository:
-      | AuthSecureClientRepository
-      | SequelizeAuthSecureClientRepository,
+    public authSecureClientRepository: AuthSecureClientRepository,
     @repository(OtpRepository)
     public otpRepository: OtpRepository,
   ) {}

@@ -15,25 +15,19 @@ import {
   VerifyBindings,
 } from '../../../providers';
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
-import {
-  UserCredentialsRepository as SequelizeUserCredentialsRepository,
-  UserRepository as SequelizeUserRepository,
-} from '../../../repositories/sequelize';
 import {AuthUser} from '../models/auth-user.model';
 export class SamlVerifyProvider implements Provider<VerifyFunction.SamlFn> {
   constructor(
     @repository(UserRepository)
-    public userRepository: UserRepository | SequelizeUserRepository,
+    public userRepository: UserRepository,
     @repository(UserCredentialsRepository)
-    public userCredsRepository:
-      | UserCredentialsRepository
-      | SequelizeUserCredentialsRepository,
+    public userCredsRepository: UserCredentialsRepository,
     @inject(SignUpBindings.SAML_SIGN_UP_PROVIDER)
-    protected readonly signupProvider: SamlSignUpFn,
+    private readonly signupProvider: SamlSignUpFn,
     @inject(VerifyBindings.SAML_PRE_VERIFY_PROVIDER)
-    protected readonly preVerifyProvider: SamlPreVerifyFn,
+    private readonly preVerifyProvider: SamlPreVerifyFn,
     @inject(VerifyBindings.SAML_POST_VERIFY_PROVIDER)
-    protected readonly postVerifyProvider: SamlPostVerifyFn,
+    private readonly postVerifyProvider: SamlPostVerifyFn,
   ) {}
 
   value(): VerifyFunction.SamlFn {

@@ -26,32 +26,20 @@ import {
   UserLevelPermissionRepository,
   UserTenantRepository,
 } from '../repositories';
-import {
-  RoleRepository as SequelizeRoleRepository,
-  TenantConfigRepository as SequelizeTenantConfigRepository,
-  UserLevelPermissionRepository as SequelizeUserLevelPermissionRepository,
-  UserTenantRepository as SequelizeUserTenantRepository,
-} from '../repositories/sequelize';
 import {JwtPayloadFn} from './types';
 export class JwtPayloadProvider implements Provider<JwtPayloadFn> {
   constructor(
     @repository(RoleRepository)
-    protected readonly roleRepo: RoleRepository | SequelizeRoleRepository,
+    private readonly roleRepo: RoleRepository,
     @repository(UserLevelPermissionRepository)
-    protected readonly utPermsRepo:
-      | UserLevelPermissionRepository
-      | SequelizeUserLevelPermissionRepository,
+    private readonly utPermsRepo: UserLevelPermissionRepository,
     @repository(UserTenantRepository)
-    protected readonly userTenantRepo:
-      | UserTenantRepository
-      | SequelizeUserTenantRepository,
+    private readonly userTenantRepo: UserTenantRepository,
     @repository(TenantConfigRepository)
-    protected readonly tenantConfigRepo:
-      | TenantConfigRepository
-      | SequelizeTenantConfigRepository,
+    private readonly tenantConfigRepo: TenantConfigRepository,
     @inject(AuthorizationBindings.USER_PERMISSIONS)
-    protected readonly getUserPermissions: UserPermissionsFn<string>,
-    @inject(LOGGER.LOGGER_INJECT) protected readonly logger: ILogger,
+    private readonly getUserPermissions: UserPermissionsFn<string>,
+    @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
   ) {}
 
   value() {

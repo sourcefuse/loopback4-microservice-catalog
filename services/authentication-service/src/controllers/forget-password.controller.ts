@@ -35,19 +35,16 @@ import {
 
 import {ForgotPasswordHandlerFn} from '../providers';
 import {RevokedTokenRepository, UserRepository} from '../repositories';
-import {UserRepository as SequelizeUserRepository} from '../repositories/sequelize';
 import {LoginHelperService} from '../services';
-import {LoginHelperService as SequelizeLoginHelperService} from '../services/sequelize';
+
 export class ForgetPasswordController {
   constructor(
     @repository(UserRepository)
-    protected readonly userRepo: UserRepository | SequelizeUserRepository,
+    private readonly userRepo: UserRepository,
     @repository(RevokedTokenRepository)
-    protected readonly revokedTokensRepo: RevokedTokenRepository,
+    private readonly revokedTokensRepo: RevokedTokenRepository,
     @inject('services.LoginHelperService')
-    protected readonly loginHelperService:
-      | LoginHelperService
-      | SequelizeLoginHelperService,
+    private readonly loginHelperService: LoginHelperService,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
   ) {}
 
