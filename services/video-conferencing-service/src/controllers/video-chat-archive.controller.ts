@@ -4,19 +4,18 @@
 // https://opensource.org/licenses/MIT
 import {inject} from '@loopback/core';
 import {del, get, param, put, requestBody} from '@loopback/rest';
-import {authenticate, STRATEGY} from 'loopback4-authentication';
+import {STRATEGY, authenticate} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKeys} from '../enums/permission-keys.enum';
 
 import {
-  STATUS_CODE,
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
 } from '@sourceloop/core';
-import {ChatArchiveService} from '../services/chat-archive.service';
-import {ServiceBindings} from '../keys';
 import {ExternalStorageOptions} from '..';
-
+import {ServiceBindings} from '../keys';
+import {ChatArchiveService} from '../services';
 export class VideoChatArchiveController {
   constructor(
     @inject(ServiceBindings.ArchiveChatService)

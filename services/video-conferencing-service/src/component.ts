@@ -42,9 +42,18 @@ import {TwilioProvider} from './providers/twilio/twilio.provider';
 import {TwilioService} from './providers/twilio/twilio.service';
 import {VonageProvider} from './providers/vonage/vonage.provider';
 import {VonageService} from './providers/vonage/vonage.service';
-import {AuditLogRepository, SessionAttendeesRepository} from './repositories';
-import {AuditLogsRepository} from './repositories/audit-logs.repository';
-import {VideoChatSessionRepository} from './repositories/video-chat-session.repository';
+import {
+  AuditLogRepository,
+  AuditLogsRepository,
+  SessionAttendeesRepository,
+  VideoChatSessionRepository,
+} from './repositories';
+import {
+  AuditLogsRepository as AuditLogSequelizeRepository,
+  AuditLogRepository as AuditLogsSequelizeRepository,
+  VideoChatSessionRepository as SessionAttendeesSequelizeRepository,
+  SessionAttendeesRepository as VideoChatSequelizeSessionRepository,
+} from './repositories/sequelize';
 import {
   ChatArchiveService,
   ChatSessionService,
@@ -55,7 +64,7 @@ export class VideoConfServiceComponent implements Component {
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: RestApplication,
     @inject(VideoChatBindings.Config, {optional: true})
-    private readonly videChatConfig?: IServiceConfig,
+    private readonly videoChatConfig?: IServiceConfig,
   ) {
     this.bindings = [];
     this.providers = {};
@@ -88,18 +97,26 @@ export class VideoConfServiceComponent implements Component {
     this.application.service(VonageService);
     this.application.service(TwilioService);
 
-    if (!this.videChatConfig?.useCustomSequence) {
+    if (!this.videoChatConfig?.useCustomSequence) {
       // Mount default sequence if needed
       this.setupSequence(this.bindings);
     }
 
-    this.repositories = [
-      AuditLogsRepository, // the legacy (and now deprecated) repository for audit logs. To support projects using logs from default migrations (using sql triggers) provided by this service.
-      AuditLogRepository, // this is the new audit repository needed for `@sourceloop/audit-logs`.
-      VideoChatSessionRepository,
-      SessionAttendeesRepository,
-    ];
-
+    if (this.videoChatConfig?.useSequelize) {
+      this.repositories = [
+        AuditLogsSequelizeRepository, // the legacy (and now deprecated) repository for audit logs. To support projects using logs from default migrations (using sql triggers) provided by this service.
+        AuditLogSequelizeRepository, // this is the new audit repository needed for `@sourceloop/audit-logs`.
+        VideoChatSequelizeSessionRepository,
+        SessionAttendeesSequelizeRepository,
+      ];
+    } else {
+      this.repositories = [
+        AuditLogsRepository, // the legacy (and now deprecated) repository for audit logs. To support projects using logs from default migrations (using sql triggers) provided by this service.
+        AuditLogRepository, // this is the new audit repository needed for `@sourceloop/audit-logs`.
+        VideoChatSessionRepository,
+        SessionAttendeesRepository,
+      ];
+    }
     this.models = [AuditLogs, AuditLog, VideoChatSession];
     this.providers = {
       [VideoChatBindings.VideoChatProvider.key]: VonageProvider,
