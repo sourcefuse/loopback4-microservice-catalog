@@ -4,17 +4,17 @@
 // https://opensource.org/licenses/MIT
 import {repository} from '@loopback/repository';
 import {get, getModelSchemaRef, param} from '@loopback/rest';
-import {authenticate, STRATEGY} from 'loopback4-authentication';
+import {STRATEGY, authenticate} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 
-import {PermissionKey} from '../enums/permission-key.enum';
-import {Notification, NotificationUser} from '../models';
-import {NotificationUserRepository} from '../repositories';
 import {
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
+import {PermissionKey} from '../enums/permission-key.enum';
+import {Notification, NotificationUser} from '../models';
+import {NotificationUserRepository} from '../repositories';
 export class NotificationUserNotificationController {
   constructor(
     @repository(NotificationUserRepository)
