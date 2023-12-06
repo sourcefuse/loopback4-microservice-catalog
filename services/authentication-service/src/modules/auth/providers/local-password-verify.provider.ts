@@ -15,7 +15,6 @@ import {
   UserTenantRepository,
 } from '../../../repositories';
 import {AuthUser} from '../models/auth-user.model';
-
 export class LocalPasswordVerifyProvider
   implements Provider<VerifyFunction.LocalPasswordFn>
 {

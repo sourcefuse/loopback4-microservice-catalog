@@ -5,12 +5,12 @@
 import {inject, Provider} from '@loopback/context';
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
-import * as InstagramStrategy from 'passport-instagram';
 import {
   AuthErrorKeys,
   IAuthUser,
   VerifyFunction,
 } from 'loopback4-authentication';
+import * as InstagramStrategy from 'passport-instagram';
 
 import {
   InstagramPostVerifyFn,
@@ -21,7 +21,6 @@ import {
 } from '../../../providers';
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
 import {AuthUser} from '../models/auth-user.model';
-
 export class InstagramOauth2VerifyProvider
   implements Provider<VerifyFunction.InstagramAuthFn>
 {

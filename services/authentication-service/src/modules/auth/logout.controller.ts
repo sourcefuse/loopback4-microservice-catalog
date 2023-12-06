@@ -26,6 +26,7 @@ import {
   X_TS_TYPE,
 } from '@sourceloop/core';
 import {encode} from 'base-64';
+import crypto from 'crypto';
 import {HttpsProxyAgent} from 'https-proxy-agent';
 import {
   authenticate,
@@ -36,17 +37,6 @@ import {
 import {authorize} from 'loopback4-authorization';
 import fetch from 'node-fetch';
 import {URLSearchParams} from 'url';
-import {LoginActivity, RefreshTokenRequest} from '../../models';
-import {
-  LoginActivityRepository,
-  RefreshTokenRepository,
-  RevokedTokenRepository,
-  UserRepository,
-  UserTenantRepository,
-} from '../../repositories';
-import {AuthServiceBindings} from '../../keys';
-import {ActorId} from '../../types';
-import crypto from 'crypto';
 import {
   AuthClient,
   IUserActivity,
@@ -56,7 +46,16 @@ import {
   User,
   UserTenant,
 } from '../..';
-
+import {AuthServiceBindings} from '../../keys';
+import {LoginActivity, RefreshTokenRequest} from '../../models';
+import {
+  LoginActivityRepository,
+  RefreshTokenRepository,
+  RevokedTokenRepository,
+  UserRepository,
+  UserTenantRepository,
+} from '../../repositories';
+import {ActorId} from '../../types';
 const proxyUrl = process.env.HTTPS_PROXY ?? process.env.HTTP_PROXY;
 
 const getProxyAgent = () => {

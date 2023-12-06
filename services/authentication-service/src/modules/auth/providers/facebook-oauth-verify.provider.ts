@@ -20,7 +20,6 @@ import {
 } from '../../../providers';
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
 import {AuthUser} from '../models/auth-user.model';
-
 export class FacebookOauth2VerifyProvider
   implements Provider<VerifyFunction.FacebookAuthFn>
 {

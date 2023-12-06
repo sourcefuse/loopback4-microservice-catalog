@@ -12,7 +12,6 @@ import {AuthClient, User} from '../models';
 import {OtpResponse} from '../modules/auth';
 import {OtpFn, VerifyBindings} from '../providers';
 import {OtpCacheRepository, UserRepository} from '../repositories';
-
 @injectable({scope: BindingScope.TRANSIENT})
 export class OtpService {
   constructor(

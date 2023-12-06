@@ -3,14 +3,14 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {Getter, inject} from '@loopback/core';
-import {BelongsToAccessor, juggler, repository} from '@loopback/repository';
-import {DefaultSoftCrudRepository} from '@sourceloop/core';
+import {BelongsToAccessor, repository} from '@loopback/repository';
+import {SequelizeDataSource} from '@loopback/sequelize';
+import {SequelizeSoftCrudRepository} from 'loopback4-soft-delete/sequelize';
+import {User, UserCredentials, UserCredentialsRelations} from '../..';
+import {AuthDbSourceName} from '../../types';
+import {UserRepository} from '../user.repository';
 
-import {User, UserCredentials, UserCredentialsRelations} from '../models';
-import {AuthDbSourceName} from '../types';
-import {UserRepository} from './user.repository';
-
-export class UserCredentialsRepository extends DefaultSoftCrudRepository<
+export class UserCredentialsRepository extends SequelizeSoftCrudRepository<
   UserCredentials,
   typeof UserCredentials.prototype.id,
   UserCredentialsRelations
@@ -22,7 +22,7 @@ export class UserCredentialsRepository extends DefaultSoftCrudRepository<
 
   constructor(
     @inject(`datasources.${AuthDbSourceName}`)
-    dataSource: juggler.DataSource,
+    dataSource: SequelizeDataSource,
     @repository.getter('UserRepository')
     protected userRepositoryGetter: Getter<UserRepository>,
   ) {

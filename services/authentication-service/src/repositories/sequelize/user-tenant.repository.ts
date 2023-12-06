@@ -1,0 +1,81 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+import {Getter, inject} from '@loopback/core';
+import {
+  BelongsToAccessor,
+  Entity,
+  HasManyRepositoryFactory,
+  repository,
+} from '@loopback/repository';
+
+import {SequelizeDataSource} from '@loopback/sequelize';
+import {SequelizeSoftCrudRepository} from 'loopback4-soft-delete/sequelize';
+import {
+  Role,
+  Tenant,
+  User,
+  UserLevelPermission,
+  UserTenant,
+  UserTenantRelations,
+} from '../../models';
+import {AuthDbSourceName} from '../../types';
+import {UserRepository} from '../user.repository';
+import {RoleRepository} from './role.repository';
+import {TenantRepository} from './tenant.repository';
+import {UserLevelPermissionRepository} from './user-level-permission.repository';
+
+export class UserTenantRepository extends SequelizeSoftCrudRepository<
+  UserTenant,
+  typeof UserTenant.prototype.id,
+  UserTenantRelations
+> {
+  public readonly tenant: BelongsToAccessor<
+    Tenant,
+    typeof UserTenant.prototype.id
+  >;
+
+  public readonly user: BelongsToAccessor<User, typeof UserTenant.prototype.id>;
+
+  public readonly role: BelongsToAccessor<Role, typeof UserTenant.prototype.id>;
+
+  public readonly userLevelPermissions: HasManyRepositoryFactory<
+    UserLevelPermission,
+    typeof UserTenant.prototype.id
+  >;
+
+  constructor(
+    @inject(`datasources.${AuthDbSourceName}`)
+    dataSource: SequelizeDataSource,
+    @repository.getter('TenantRepository')
+    protected tenantRepositoryGetter: Getter<TenantRepository>,
+    @repository.getter('UserRepository')
+    protected userRepositoryGetter: Getter<UserRepository>,
+    @repository.getter('RoleRepository')
+    protected roleRepositoryGetter: Getter<RoleRepository>,
+    @repository.getter('UserLevelPermissionRepository')
+    protected userLevelPermissionRepositoryGetter: Getter<UserLevelPermissionRepository>,
+    @inject('models.UserTenant')
+    private readonly userTenant: typeof Entity & {prototype: UserTenant},
+  ) {
+    super(userTenant, dataSource);
+    this.userLevelPermissions = this.createHasManyRepositoryFactoryFor(
+      'userLevelPermissions',
+      userLevelPermissionRepositoryGetter,
+    );
+    this.registerInclusionResolver(
+      'userLevelPermissions',
+      this.userLevelPermissions.inclusionResolver,
+    );
+    this.role = this.createBelongsToAccessorFor('role', roleRepositoryGetter);
+    this.registerInclusionResolver('role', this.role.inclusionResolver);
+    this.user = this.createBelongsToAccessorFor('user', userRepositoryGetter);
+    this.registerInclusionResolver('user', this.user.inclusionResolver);
+    this.tenant = this.createBelongsToAccessorFor(
+      'tenant',
+      tenantRepositoryGetter,
+    );
+    this.registerInclusionResolver('tenant', this.tenant.inclusionResolver);
+  }
+}

@@ -42,7 +42,6 @@ import {
 } from './';
 import {AuthUser} from './models/auth-user.model';
 import {OtpSendRequest} from './models/otp-send-request.dto';
-
 export class OtpController {
   constructor(
     @repository(AuthClientRepository)
