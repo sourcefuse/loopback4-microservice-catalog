@@ -2,15 +2,15 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {hasMany, model, property} from '@loopback/repository';
-import {CoreEntity} from '@sourceloop/core';
+import { hasMany, model, property } from '@loopback/repository';
+import { CoreEntity } from '@sourceloop/core';
 import {
   Message,
   MessageOptions,
   MessageType,
   Receiver,
 } from 'loopback4-notifications';
-import {NotificationUser} from './notification-user.model';
+import { NotificationUser } from './notification-user.model';
 
 @model({
   name: 'notifications',
@@ -59,7 +59,28 @@ export class Notification extends CoreEntity<Notification> implements Message {
   })
   options?: MessageOptions;
 
-  @hasMany(() => NotificationUser, {keyTo: 'notificationId'})
+  @property({
+    name: "is_draft",
+  })
+  isDraft?: boolean;
+
+  @property({
+    name: "is_grouped",
+  })
+  isGrouped?: boolean;
+
+  @property({
+    name: "group_key",
+  })
+  groupKey?: string;
+
+  @property({
+    type: 'boolean',
+    name: "is_critical",
+  })
+  isCritical?: boolean;
+
+  @hasMany(() => NotificationUser, { keyTo: 'notificationId' })
   notificationUsers: NotificationUser[];
 }
 

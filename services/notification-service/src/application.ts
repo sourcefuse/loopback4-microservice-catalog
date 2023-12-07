@@ -2,14 +2,15 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {BootMixin} from '@loopback/boot';
-import {ApplicationConfig} from '@loopback/core';
-import {RepositoryMixin} from '@loopback/repository';
-import {RestApplication} from '@loopback/rest';
+import { BootMixin } from '@loopback/boot';
+import { ApplicationConfig } from '@loopback/core';
+import { RepositoryMixin } from '@loopback/repository';
+import { RestApplication } from '@loopback/rest';
 import * as path from 'path';
-import {NotificationServiceComponent} from './component';
+import { NotificationServiceComponent } from './component';
+import { ProcessNotificationService } from './services';
 
-export {ApplicationConfig};
+export { ApplicationConfig };
 
 export class NotificationServiceApplication extends BootMixin(
   RepositoryMixin(RestApplication),
@@ -27,5 +28,6 @@ export class NotificationServiceApplication extends BootMixin(
         nested: true,
       },
     };
+    const binding = this.service(ProcessNotificationService)
   }
 }

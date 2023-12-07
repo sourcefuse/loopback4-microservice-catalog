@@ -10,8 +10,8 @@ import {
   inject,
   ProviderMap,
 } from '@loopback/core';
-import {Class, Model, Repository} from '@loopback/repository';
-import {RestApplication} from '@loopback/rest';
+import { Class, Model, Repository } from '@loopback/repository';
+import { RestApplication } from '@loopback/rest';
 import {
   BearerVerifierBindings,
   BearerVerifierComponent,
@@ -21,7 +21,7 @@ import {
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
-import {AuthenticationComponent, Strategies} from 'loopback4-authentication';
+import { AuthenticationComponent, Strategies } from 'loopback4-authentication';
 import {
   BearerStrategyFactoryProvider,
   BearerTokenVerifyProvider,
@@ -30,34 +30,36 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import {NotificationsComponent} from 'loopback4-notifications';
+import { NotificationsComponent } from 'loopback4-notifications';
 import {
   NotificationController,
   NotificationNotificationUserController,
   NotificationUserController,
   NotificationUserNotificationController,
   PubnubNotificationController,
+  UserNotificationSettingsController,
 } from './controllers';
-import {NotifServiceBindings} from './keys';
-import {Notification, NotificationAccess, NotificationUser} from './models';
-import {ChannelManagerProvider, NotificationFilterProvider} from './providers';
-import {NotificationUserProvider} from './providers/notification-user.service';
+import { NotifServiceBindings } from './keys';
+import { Notification, NotificationAccess, NotificationUser } from './models';
+import { ChannelManagerProvider, NotificationFilterProvider, NotificationUserSettingsProvider } from './providers';
+import { NotificationUserProvider } from './providers/notification-user.service';
 import {
   NotificationAccessRepository,
   NotificationRepository,
-  NotificationUserRepository,
+  NotificationUserRepository
 } from './repositories';
+
 import {
   NotificationRepository as NotificationSequelizeRepository,
   NotificationUserRepository as NotificationUserSequelizeRepository,
 } from './repositories/sequelize';
-import {INotifServiceConfig} from './types';
-
+import { ProcessNotificationService } from './services';
+import { INotifServiceConfig } from './types';
 export class NotificationServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: RestApplication,
-    @inject(NotifServiceBindings.Config, {optional: true})
+    @inject(NotifServiceBindings.Config, { optional: true })
     private readonly notifConfig?: INotifServiceConfig,
   ) {
     this.bindings = [];
@@ -76,7 +78,7 @@ export class NotificationServiceComponent implements Component {
       components: {
         securitySchemes: SECURITY_SCHEME_SPEC,
       },
-      servers: [{url: '/'}],
+      servers: [{ url: '/' }],
     });
 
     // Mount notifications component
@@ -107,6 +109,7 @@ export class NotificationServiceComponent implements Component {
       [NotifServiceBindings.NotificationUserManager.key]:
         NotificationUserProvider,
       [NotifServiceBindings.NotificationFilter.key]: NotificationFilterProvider,
+      [NotifServiceBindings.NotificationSettingFilter.key]: NotificationUserSettingsProvider,
     };
 
     this.controllers = [
@@ -115,7 +118,12 @@ export class NotificationServiceComponent implements Component {
       PubnubNotificationController,
       NotificationNotificationUserController,
       NotificationUserNotificationController,
+      UserNotificationSettingsController,
     ];
+
+    this.application
+      .bind('services.ProcessNotificationService')
+      .toClass(ProcessNotificationService);
   }
 
   providers?: ProviderMap = {};
