@@ -3,8 +3,10 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 declare module '@loopback/cli/generators/app' {
+  /* eslint-disable  @typescript-eslint/naming-convention */
   import ProjectGenerator from '@loopback/cli/lib/project-generator';
   import Generator from 'yeoman-generator';
+  /* eslint-enable  @typescript-eslint/naming-convention */
   class AppGenerator<
     T extends Generator.GeneratorOptions,
   > extends ProjectGenerator<T> {

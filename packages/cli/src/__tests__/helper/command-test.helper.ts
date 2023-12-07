@@ -1,7 +1,9 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import Command from '@oclif/command';
 import {Config} from '@oclif/config';
 import {expect} from 'chai';
 import {createStubInstance, stub} from 'sinon';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import Environment from 'yeoman-environment';
 import {AnyObject, CommandTestCase} from '../../types';
 

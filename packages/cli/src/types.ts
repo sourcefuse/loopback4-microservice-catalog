@@ -2,9 +2,10 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import { Question } from 'inquirer';
+import {Question} from 'inquirer';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import Generator from 'yeoman-generator';
-import { DATASOURCES, IacList, SERVICES } from './enum';
+import {DATASOURCES, IacList, SERVICES} from './enum';
 
 export interface ProjectInfo {
   projectType: 'extension' | 'microservice' | 'application';

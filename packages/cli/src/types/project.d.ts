@@ -4,8 +4,10 @@
 
 // https://opensource.org/licenses/MIT
 declare module '@loopback/cli/lib/project-generator' {
+  /* eslint-disable  @typescript-eslint/naming-convention */
   import BaseGenerator from '@loopback/cli/lib/base-generator';
   import Generator from 'yeoman-generator';
+  /* eslint-enable  @typescript-eslint/naming-convention */
   type DataSourceMap = import('../enum').DataSourceMap;
   class ProjectGenerator<
     T extends Generator.GeneratorOptions,

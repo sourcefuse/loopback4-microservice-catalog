@@ -7,10 +7,12 @@ import {
   createStubInstance,
   expect,
 } from '@loopback/testlab';
-import {UserCredentialsRepository, UserRepository} from '../../../repositories';
+import {IAuthUser} from 'loopback4-authentication';
 import sinon from 'sinon';
 import {GoogleOauth2VerifyProvider} from '../../../modules/auth/providers/google-oauth2-verify.provider';
 import {GoogleSignUpFn} from '../../../providers';
+import {UserCredentialsRepository, UserRepository} from '../../../repositories';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import * as GoogleStrategy from 'passport-google-oauth20';
 import {
   User,
@@ -18,7 +20,6 @@ import {
   UserCredentialsWithRelations,
   UserWithRelations,
 } from '../../../models';
-import {IAuthUser} from 'loopback4-authentication';
 
 describe('Google Verify Provider', () => {
   let userRepo: StubbedInstanceWithSinonAccessor<UserRepository>;

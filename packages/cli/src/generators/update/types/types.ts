@@ -2,8 +2,9 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import Generator from 'yeoman-generator';
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import Generator from 'yeoman-generator';
 export interface UpdateOptions extends Generator.GeneratorOptions {
   help?: boolean;
 }

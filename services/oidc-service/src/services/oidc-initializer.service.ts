@@ -1,14 +1,15 @@
 import {
-  injectable,
-  inject,
-  asLifeCycleObserver,
   BindingScope,
   CoreBindings,
   LifeCycleObserver,
+  asLifeCycleObserver,
+  inject,
+  injectable,
 } from '@loopback/core';
+import {RestApplication} from '@loopback/rest';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import OidcProvider from 'oidc-provider';
 import {OIDCServiceBindings} from '../keys';
-import {RestApplication} from '@loopback/rest';
 
 @injectable(
   {

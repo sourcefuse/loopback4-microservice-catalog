@@ -2,10 +2,11 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import { flags } from '@oclif/command';
+import {flags} from '@oclif/command';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import Base from '../command-base';
-import { DATASOURCES, SERVICES } from '../enum';
-import { MicroserviceOptions } from '../types';
+import {DATASOURCES, SERVICES} from '../enum';
+import {MicroserviceOptions} from '../types';
 
 export class Microservice extends Base<MicroserviceOptions> {
   static description = 'add a microservice';
@@ -67,7 +68,7 @@ export class Microservice extends Base<MicroserviceOptions> {
     }),
   };
   static args = [
-    { name: 'name', description: 'Name of the microservice', required: false },
+    {name: 'name', description: 'Name of the microservice', required: false},
   ];
 
   async run() {
