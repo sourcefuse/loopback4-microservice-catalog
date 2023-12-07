@@ -1,6 +1,6 @@
 import {PutObjectCommand, S3} from '@aws-sdk/client-s3';
 import {BindingScope, Provider, inject, injectable} from '@loopback/core';
-import {repository} from '@loopback/repository';
+import {EntityCrudRepository, repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {AuditLog, AuditLogRepository} from '@sourceloop/audit-log';
 import {AWSS3Bindings, AwsS3Config} from '../keys';
@@ -12,7 +12,7 @@ export class ExportToCsvProvider implements Provider<ExportToCsvFn> {
     @inject(AWSS3Bindings.Config, {optional: true})
     private readonly config: AwsS3Config,
     @repository(AuditLogRepository)
-    public auditLogRepository: AuditLogRepository,
+    public auditLogRepository: EntityCrudRepository<AuditLog, string, {}>,
   ) {}
   value(): ExportToCsvFn {
     return async (selectedAuditLogs: AuditLog[]) => {
