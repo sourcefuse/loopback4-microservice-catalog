@@ -2,21 +2,21 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Getter, inject} from '@loopback/core';
+import { BindingScope, Getter, bind, inject } from '@loopback/core';
 import {
   Count,
   CountSchema,
   Filter,
-  repository,
   Where,
+  repository
 } from '@loopback/repository';
 import {
+  HttpErrors,
   del,
   get,
   getFilterSchemaFor,
   getModelSchemaRef,
   getWhereSchemaFor,
-  HttpErrors,
   param,
   patch,
   post,
@@ -24,24 +24,26 @@ import {
 } from '@loopback/rest';
 import {
   CONTENT_TYPE,
-  STATUS_CODE,
   OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
 } from '@sourceloop/core';
-import {authenticate, AuthErrorKeys, STRATEGY} from 'loopback4-authentication';
-import {authorize} from 'loopback4-authorization';
-import {INotification, NotificationBindings} from 'loopback4-notifications';
-import {ErrorKeys} from '../enums/error-keys.enum';
-import {PermissionKey} from '../enums/permission-key.enum';
-import {NotifServiceBindings} from '../keys';
-import {Notification, NotificationUser} from '../models';
+import { AuthErrorKeys, STRATEGY, authenticate } from 'loopback4-authentication';
+import { authorize } from 'loopback4-authorization';
+import { INotification, NotificationBindings } from 'loopback4-notifications';
+import { ErrorKeys } from '../enums';
+import { PermissionKey } from '../enums/permission-key.enum';
+import { NotifServiceBindings } from '../keys';
+import { Notification, NotificationUser } from '../models';
 import {
   NotificationRepository,
   NotificationUserRepository,
 } from '../repositories';
-import {INotificationFilterFunc, INotificationUserManager} from '../types';
+import { ProcessNotificationService } from '../services';
+import { INotificationFilterFunc, INotificationUserManager } from '../types';
 const basePath = '/notifications';
 
 const maxBodyLen = 1000;
+@bind({ scope: BindingScope.TRANSIENT })
 export class NotificationController {
   constructor(
     @repository(NotificationRepository)
@@ -54,7 +56,9 @@ export class NotificationController {
     private readonly notifUserService: INotificationUserManager,
     @inject(NotifServiceBindings.NotificationFilter)
     private readonly filterNotification: INotificationFilterFunc,
-  ) {}
+    @inject('services.ProcessNotificationService')
+    private readonly processNotif: ProcessNotificationService,
+  ) { }
 
   @authenticate(STRATEGY.BEARER)
   @authorize({
@@ -69,7 +73,7 @@ export class NotificationController {
       [STATUS_CODE.OK]: {
         description: 'Notification model instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Notification)},
+          [CONTENT_TYPE.JSON]: { schema: getModelSchemaRef(Notification) },
         },
       },
     },
@@ -78,26 +82,14 @@ export class NotificationController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Notification, {exclude: ['id']}),
+          schema: getModelSchemaRef(Notification, { exclude: ['id'] }),
         },
       },
     })
     notification: Omit<Notification, 'id'>,
   ): Promise<Notification> {
     notification = await this.filterNotification(notification);
-    const provider = await this.notifProvider();
-    await provider.publish(notification);
-    if (notification.body.length > maxBodyLen) {
-      notification.body = notification.body.substring(0, maxBodyLen - 1);
-    }
-    const notif = await this.notificationRepository.create(notification);
-    if (!notif?.id) {
-      throw new HttpErrors.UnprocessableEntity(AuthErrorKeys.UnknownError);
-    }
-
-    const receiversToCreate = await this.createNotifUsers(notif);
-    await this.notificationUserRepository.createAll(receiversToCreate);
-    return notif;
+    return this.processNotif.draftAndSendNotification(notification)
   }
 
   @authenticate(STRATEGY.BEARER)
@@ -127,7 +119,7 @@ export class NotificationController {
         [CONTENT_TYPE.JSON]: {
           schema: {
             type: 'array',
-            items: getModelSchemaRef(Notification, {exclude: ['id']}),
+            items: getModelSchemaRef(Notification, { exclude: ['id'] }),
           },
         },
       },
@@ -148,7 +140,6 @@ export class NotificationController {
       if (!notif?.id) {
         throw new HttpErrors.UnprocessableEntity(AuthErrorKeys.UnknownError);
       }
-
       const receiversToCreate = await this.createNotifUsers(notif);
       notifUsers.push(...receiversToCreate);
     }
@@ -168,7 +159,7 @@ export class NotificationController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Notification model count',
-        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
+        content: { [CONTENT_TYPE.JSON]: { schema: CountSchema } },
       },
     },
   })
@@ -180,7 +171,7 @@ export class NotificationController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: ['*']})
+  @authorize({ permissions: ['*'] })
   @get(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -188,7 +179,7 @@ export class NotificationController {
         description: 'Array of Notification model instances',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: {type: 'array', items: getModelSchemaRef(Notification)},
+            schema: { type: 'array', items: getModelSchemaRef(Notification) },
           },
         },
       },
@@ -213,7 +204,7 @@ export class NotificationController {
       [STATUS_CODE.OK]: {
         description: 'Notification model instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Notification)},
+          [CONTENT_TYPE.JSON]: { schema: getModelSchemaRef(Notification) },
         },
       },
     },
@@ -236,7 +227,7 @@ export class NotificationController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Notification PATCH success count',
-        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
+        content: { [CONTENT_TYPE.JSON]: { schema: CountSchema } },
       },
     },
   })
@@ -244,7 +235,7 @@ export class NotificationController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Notification, {partial: true}),
+          schema: getModelSchemaRef(Notification, { partial: true }),
         },
       },
     })
@@ -277,7 +268,7 @@ export class NotificationController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Notification, {partial: true}),
+          schema: getModelSchemaRef(Notification, { partial: true }),
         },
       },
     })

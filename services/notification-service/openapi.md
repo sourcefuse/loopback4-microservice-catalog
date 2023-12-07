@@ -1227,7 +1227,11 @@ fetch('/notification-users/{id}/notification',
     "receiver": {},
     "type": 0,
     "sentDate": "2019-08-24T14:15:22Z",
-    "options": {}
+    "options": {},
+    "isDraft": true,
+    "isGrouped": true,
+    "groupKey": "string",
+    "isCritical": true
   }
 ]
 ```
@@ -1253,6 +1257,10 @@ Status Code **200**
 |»» type|number|true|none|none|
 |»» sentDate|string(date-time)|false|none|none|
 |»» options|object|false|none|none|
+|»» isDraft|boolean|false|none|none|
+|»» isGrouped|boolean|false|none|none|
+|»» groupKey|string|false|none|none|
+|»» isCritical|boolean|false|none|none|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -1441,7 +1449,11 @@ const inputBody = '[
     "receiver": {},
     "type": 0,
     "sentDate": "2019-08-24T14:15:22Z",
-    "options": {}
+    "options": {},
+    "isDraft": true,
+    "isGrouped": true,
+    "groupKey": "string",
+    "isCritical": true
   }
 ]';
 const headers = {
@@ -1473,7 +1485,11 @@ const inputBody = [
     "receiver": {},
     "type": 0,
     "sentDate": "2019-08-24T14:15:22Z",
-    "options": {}
+    "options": {},
+    "isDraft": true,
+    "isGrouped": true,
+    "groupKey": "string",
+    "isCritical": true
   }
 ];
 const headers = {
@@ -1513,7 +1529,11 @@ fetch('/notifications/bulk',
     "receiver": {},
     "type": 0,
     "sentDate": "2019-08-24T14:15:22Z",
-    "options": {}
+    "options": {},
+    "isDraft": true,
+    "isGrouped": true,
+    "groupKey": "string",
+    "isCritical": true
   }
 ]
 ```
@@ -1636,7 +1656,11 @@ const inputBody = '{
   "receiver": {},
   "type": 0,
   "sentDate": "2019-08-24T14:15:22Z",
-  "options": {}
+  "options": {},
+  "isDraft": true,
+  "isGrouped": true,
+  "groupKey": "string",
+  "isCritical": true
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -1666,7 +1690,11 @@ const inputBody = {
   "receiver": {},
   "type": 0,
   "sentDate": "2019-08-24T14:15:22Z",
-  "options": {}
+  "options": {},
+  "isDraft": true,
+  "isGrouped": true,
+  "groupKey": "string",
+  "isCritical": true
 };
 const headers = {
   'Content-Type':'application/json',
@@ -1704,7 +1732,11 @@ fetch('/notifications/{id}',
   "receiver": {},
   "type": 0,
   "sentDate": "2019-08-24T14:15:22Z",
-  "options": {}
+  "options": {},
+  "isDraft": true,
+  "isGrouped": true,
+  "groupKey": "string",
+  "isCritical": true
 }
 ```
 
@@ -1798,7 +1830,11 @@ fetch('/notifications/{id}',
   "receiver": {},
   "type": 0,
   "sentDate": "2019-08-24T14:15:22Z",
-  "options": {}
+  "options": {},
+  "isDraft": true,
+  "isGrouped": true,
+  "groupKey": "string",
+  "isCritical": true
 }
 ```
 
@@ -1825,7 +1861,11 @@ const inputBody = '{
   "receiver": {},
   "type": 0,
   "sentDate": "2019-08-24T14:15:22Z",
-  "options": {}
+  "options": {},
+  "isDraft": true,
+  "isGrouped": true,
+  "groupKey": "string",
+  "isCritical": true
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -1855,7 +1895,11 @@ const inputBody = {
   "receiver": {},
   "type": 0,
   "sentDate": "2019-08-24T14:15:22Z",
-  "options": {}
+  "options": {},
+  "isDraft": true,
+  "isGrouped": true,
+  "groupKey": "string",
+  "isCritical": true
 };
 const headers = {
   'Content-Type':'application/json',
@@ -1893,7 +1937,11 @@ fetch('/notifications',
   "receiver": {},
   "type": 0,
   "sentDate": "2019-08-24T14:15:22Z",
-  "options": {}
+  "options": {},
+  "isDraft": true,
+  "isGrouped": true,
+  "groupKey": "string",
+  "isCritical": true
 }
 ```
 
@@ -1915,7 +1963,11 @@ fetch('/notifications',
   "receiver": {},
   "type": 0,
   "sentDate": "2019-08-24T14:15:22Z",
-  "options": {}
+  "options": {},
+  "isDraft": true,
+  "isGrouped": true,
+  "groupKey": "string",
+  "isCritical": true
 }
 ```
 
@@ -1944,7 +1996,11 @@ const inputBody = '{
   "receiver": {},
   "type": 0,
   "sentDate": "2019-08-24T14:15:22Z",
-  "options": {}
+  "options": {},
+  "isDraft": true,
+  "isGrouped": true,
+  "groupKey": "string",
+  "isCritical": true
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -1975,7 +2031,11 @@ const inputBody = {
   "receiver": {},
   "type": 0,
   "sentDate": "2019-08-24T14:15:22Z",
-  "options": {}
+  "options": {},
+  "isDraft": true,
+  "isGrouped": true,
+  "groupKey": "string",
+  "isCritical": true
 };
 const headers = {
   'Content-Type':'application/json',
@@ -2014,7 +2074,11 @@ fetch('/notifications',
   "receiver": {},
   "type": 0,
   "sentDate": "2019-08-24T14:15:22Z",
-  "options": {}
+  "options": {},
+  "isDraft": true,
+  "isGrouped": true,
+  "groupKey": "string",
+  "isCritical": true
 }
 ```
 
@@ -2116,7 +2180,11 @@ fetch('/notifications',
     "receiver": {},
     "type": 0,
     "sentDate": "2019-08-24T14:15:22Z",
-    "options": {}
+    "options": {},
+    "isDraft": true,
+    "isGrouped": true,
+    "groupKey": "string",
+    "isCritical": true
   }
 ]
 ```
@@ -2142,6 +2210,10 @@ Status Code **200**
 |»» type|number|true|none|none|
 |»» sentDate|string(date-time)|false|none|none|
 |»» options|object|false|none|none|
+|»» isDraft|boolean|false|none|none|
+|»» isGrouped|boolean|false|none|none|
+|»» groupKey|string|false|none|none|
+|»» isCritical|boolean|false|none|none|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -2676,6 +2748,877 @@ To perform this operation, you must be authenticated by means of one of the foll
 HTTPBearer
 </aside>
 
+<h1 id="notification-service-usernotificationsettingscontroller">UserNotificationSettingsController</h1>
+
+## UserNotificationSettingsController.count
+
+<a id="opIdUserNotificationSettingsController.count"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/user-notification-settings/count',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/user-notification-settings/count',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /user-notification-settings/count`
+
+| Permissions |
+| ------- |
+| ViewNotificationUserSettings   |
+
+<h3 id="usernotificationsettingscontroller.count-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|where|query|object|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "count": 0
+}
+```
+
+<h3 id="usernotificationsettingscontroller.count-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|UserNotificationSettings model count|[loopback.Count](#schemaloopback.count)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## UserNotificationSettingsController.replaceById
+
+<a id="opIdUserNotificationSettingsController.replaceById"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/user-notification-settings/{id}',
+{
+  method: 'PUT',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/user-notification-settings/{id}',
+{
+  method: 'PUT',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PUT /user-notification-settings/{id}`
+
+| Permissions |
+| ------- |
+| UpdateNotificationUserSettings   |
+
+> Body parameter
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+}
+```
+
+<h3 id="usernotificationsettingscontroller.replacebyid-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[UserNotificationSettings](#schemausernotificationsettings)|false|none|
+
+> Example responses
+
+> 204 Response
+
+```json
+null
+```
+
+<h3 id="usernotificationsettingscontroller.replacebyid-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Return value of UserNotificationSettingsController.replaceById|None|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content|Inline|
+
+<h3 id="usernotificationsettingscontroller.replacebyid-responseschema">Response Schema</h3>
+
+Status Code **204**
+
+*UserNotificationSettings PUT success*
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## UserNotificationSettingsController.updateById
+
+<a id="opIdUserNotificationSettingsController.updateById"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/user-notification-settings/{id}',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/user-notification-settings/{id}',
+{
+  method: 'PATCH',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PATCH /user-notification-settings/{id}`
+
+| Permissions |
+| ------- |
+| UpdateNotificationUserSettings   |
+
+> Body parameter
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+}
+```
+
+<h3 id="usernotificationsettingscontroller.updatebyid-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[UserNotificationSettingsPartial](#schemausernotificationsettingspartial)|false|none|
+
+> Example responses
+
+> 204 Response
+
+```json
+null
+```
+
+<h3 id="usernotificationsettingscontroller.updatebyid-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Return value of UserNotificationSettingsController.updateById|None|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content|Inline|
+
+<h3 id="usernotificationsettingscontroller.updatebyid-responseschema">Response Schema</h3>
+
+Status Code **204**
+
+*UserNotificationSettings PATCH success*
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## UserNotificationSettingsController.findById
+
+<a id="opIdUserNotificationSettingsController.findById"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/user-notification-settings/{id}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/user-notification-settings/{id}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /user-notification-settings/{id}`
+
+| Permissions |
+| ------- |
+| ViewNotificationUserSettings   |
+
+<h3 id="usernotificationsettingscontroller.findbyid-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|filter|query|[user_notification_settings.Filter](#schemauser_notification_settings.filter)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+}
+```
+
+<h3 id="usernotificationsettingscontroller.findbyid-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|UserNotificationSettings model instance|[UserNotificationSettingsWithRelations](#schemausernotificationsettingswithrelations)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## UserNotificationSettingsController.deleteById
+
+<a id="opIdUserNotificationSettingsController.deleteById"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/user-notification-settings/{id}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/user-notification-settings/{id}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`DELETE /user-notification-settings/{id}`
+
+| Permissions |
+| ------- |
+| DeleteNotificationUserSettings   |
+
+<h3 id="usernotificationsettingscontroller.deletebyid-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+
+> Example responses
+
+> 204 Response
+
+```json
+null
+```
+
+<h3 id="usernotificationsettingscontroller.deletebyid-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Return value of UserNotificationSettingsController.deleteById|None|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content|Inline|
+
+<h3 id="usernotificationsettingscontroller.deletebyid-responseschema">Response Schema</h3>
+
+Status Code **204**
+
+*UserNotificationSettings DELETE success*
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## UserNotificationSettingsController.create
+
+<a id="opIdUserNotificationSettingsController.create"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/user-notification-settings',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/user-notification-settings',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /user-notification-settings`
+
+| Permissions |
+| ------- |
+| CreateNotificationUserSettings   |
+
+> Body parameter
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+}
+```
+
+<h3 id="usernotificationsettingscontroller.create-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[NewUserNotificationSettings](#schemanewusernotificationsettings)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+}
+```
+
+<h3 id="usernotificationsettingscontroller.create-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|UserNotificationSettings model instance|[UserNotificationSettings](#schemausernotificationsettings)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## UserNotificationSettingsController.updateAll
+
+<a id="opIdUserNotificationSettingsController.updateAll"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/user-notification-settings',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/user-notification-settings',
+{
+  method: 'PATCH',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PATCH /user-notification-settings`
+
+| Permissions |
+| ------- |
+| UpdateNotificationUserSettings   |
+
+> Body parameter
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+}
+```
+
+<h3 id="usernotificationsettingscontroller.updateall-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|where|query|object|false|none|
+|body|body|[UserNotificationSettingsPartial](#schemausernotificationsettingspartial)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "count": 0
+}
+```
+
+<h3 id="usernotificationsettingscontroller.updateall-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|UserNotificationSettings PATCH success count|[loopback.Count](#schemaloopback.count)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## UserNotificationSettingsController.find
+
+<a id="opIdUserNotificationSettingsController.find"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/user-notification-settings',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/user-notification-settings',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /user-notification-settings`
+
+| Permissions |
+| ------- |
+| ViewNotificationUserSettings   |
+
+<h3 id="usernotificationsettingscontroller.find-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|filter|query|[user_notification_settings.Filter1](#schemauser_notification_settings.filter1)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "id": "string",
+    "userId": "string",
+    "sleepStartTime": "2019-08-24T14:15:22Z",
+    "sleepEndTime": "2019-08-24T14:15:22Z",
+    "type": 0
+  }
+]
+```
+
+<h3 id="usernotificationsettingscontroller.find-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of UserNotificationSettings model instances|Inline|
+
+<h3 id="usernotificationsettingscontroller.find-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[UserNotificationSettingsWithRelations](#schemausernotificationsettingswithrelations)]|false|none|[(tsType: UserNotificationSettingsWithRelations, schemaOptions: { includeRelations: true })]|
+|» UserNotificationSettingsWithRelations|[UserNotificationSettingsWithRelations](#schemausernotificationsettingswithrelations)|false|none|(tsType: UserNotificationSettingsWithRelations, schemaOptions: { includeRelations: true })|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|string(date-time)¦null|false|none|none|
+|»» deletedBy|string¦null|false|none|none|
+|»» createdOn|string(date-time)|false|none|none|
+|»» modifiedOn|string(date-time)|false|none|none|
+|»» id|string|false|none|none|
+|»» userId|string|true|none|none|
+|»» sleepStartTime|string(date-time)|true|none|none|
+|»» sleepEndTime|string(date-time)|true|none|none|
+|»» type|number|true|none|none|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
 # Schemas
 
 <h2 id="tocS_Notification">Notification</h2>
@@ -2693,7 +3636,11 @@ HTTPBearer
   "receiver": {},
   "type": 0,
   "sentDate": "2019-08-24T14:15:22Z",
-  "options": {}
+  "options": {},
+  "isDraft": true,
+  "isGrouped": true,
+  "groupKey": "string",
+  "isCritical": true
 }
 
 ```
@@ -2711,6 +3658,10 @@ Notification
 |type|number|true|none|none|
 |sentDate|string(date-time)|false|none|none|
 |options|object|false|none|none|
+|isDraft|boolean|false|none|none|
+|isGrouped|boolean|false|none|none|
+|groupKey|string|false|none|none|
+|isCritical|boolean|false|none|none|
 
 <h2 id="tocS_NotificationExcluding_id_">NotificationExcluding_id_</h2>
 <!-- backwards compatibility -->
@@ -2726,7 +3677,11 @@ Notification
   "receiver": {},
   "type": 0,
   "sentDate": "2019-08-24T14:15:22Z",
-  "options": {}
+  "options": {},
+  "isDraft": true,
+  "isGrouped": true,
+  "groupKey": "string",
+  "isCritical": true
 }
 
 ```
@@ -2743,6 +3698,10 @@ NotificationExcluding_id_
 |type|number|true|none|none|
 |sentDate|string(date-time)|false|none|none|
 |options|object|false|none|none|
+|isDraft|boolean|false|none|none|
+|isGrouped|boolean|false|none|none|
+|groupKey|string|false|none|none|
+|isCritical|boolean|false|none|none|
 
 <h2 id="tocS_NotificationPartial">NotificationPartial</h2>
 <!-- backwards compatibility -->
@@ -2759,7 +3718,11 @@ NotificationExcluding_id_
   "receiver": {},
   "type": 0,
   "sentDate": "2019-08-24T14:15:22Z",
-  "options": {}
+  "options": {},
+  "isDraft": true,
+  "isGrouped": true,
+  "groupKey": "string",
+  "isCritical": true
 }
 
 ```
@@ -2777,6 +3740,10 @@ NotificationPartial
 |type|number|false|none|none|
 |sentDate|string(date-time)|false|none|none|
 |options|object|false|none|none|
+|isDraft|boolean|false|none|none|
+|isGrouped|boolean|false|none|none|
+|groupKey|string|false|none|none|
+|isCritical|boolean|false|none|none|
 
 <h2 id="tocS_NotificationUser">NotificationUser</h2>
 <!-- backwards compatibility -->
@@ -2983,6 +3950,164 @@ NewNotificationUserInNotification
 |userId|string|true|none|none|
 |isRead|boolean|false|none|none|
 |actionMeta|object|false|none|none|
+
+<h2 id="tocS_UserNotificationSettings">UserNotificationSettings</h2>
+<!-- backwards compatibility -->
+<a id="schemausernotificationsettings"></a>
+<a id="schema_UserNotificationSettings"></a>
+<a id="tocSusernotificationsettings"></a>
+<a id="tocsusernotificationsettings"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+}
+
+```
+
+UserNotificationSettings
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|id|string|false|none|none|
+|userId|string|true|none|none|
+|sleepStartTime|string(date-time)|true|none|none|
+|sleepEndTime|string(date-time)|true|none|none|
+|type|number|true|none|none|
+
+<h2 id="tocS_NewUserNotificationSettings">NewUserNotificationSettings</h2>
+<!-- backwards compatibility -->
+<a id="schemanewusernotificationsettings"></a>
+<a id="schema_NewUserNotificationSettings"></a>
+<a id="tocSnewusernotificationsettings"></a>
+<a id="tocsnewusernotificationsettings"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+}
+
+```
+
+NewUserNotificationSettings
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|userId|string|true|none|none|
+|sleepStartTime|string(date-time)|true|none|none|
+|sleepEndTime|string(date-time)|true|none|none|
+|type|number|true|none|none|
+
+<h2 id="tocS_UserNotificationSettingsWithRelations">UserNotificationSettingsWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemausernotificationsettingswithrelations"></a>
+<a id="schema_UserNotificationSettingsWithRelations"></a>
+<a id="tocSusernotificationsettingswithrelations"></a>
+<a id="tocsusernotificationsettingswithrelations"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+}
+
+```
+
+UserNotificationSettingsWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|id|string|false|none|none|
+|userId|string|true|none|none|
+|sleepStartTime|string(date-time)|true|none|none|
+|sleepEndTime|string(date-time)|true|none|none|
+|type|number|true|none|none|
+
+<h2 id="tocS_UserNotificationSettingsPartial">UserNotificationSettingsPartial</h2>
+<!-- backwards compatibility -->
+<a id="schemausernotificationsettingspartial"></a>
+<a id="schema_UserNotificationSettingsPartial"></a>
+<a id="tocSusernotificationsettingspartial"></a>
+<a id="tocsusernotificationsettingspartial"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+}
+
+```
+
+UserNotificationSettingsPartial
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|id|string|false|none|none|
+|userId|string|false|none|none|
+|sleepStartTime|string(date-time)|false|none|none|
+|sleepEndTime|string(date-time)|false|none|none|
+|type|number|false|none|none|
 
 <h2 id="tocS_loopback.Count">loopback.Count</h2>
 <!-- backwards compatibility -->
@@ -3363,7 +4488,11 @@ notifications.IncludeFilter.Items
     "receiver": true,
     "type": true,
     "sentDate": true,
-    "options": true
+    "options": true,
+    "isDraft": true,
+    "isGrouped": true,
+    "groupKey": true,
+    "isCritical": true
   },
   "include": [
     {
@@ -3427,6 +4556,10 @@ oneOf
 |»» type|boolean|false|none|none|
 |»» sentDate|boolean|false|none|none|
 |»» options|boolean|false|none|none|
+|»» isDraft|boolean|false|none|none|
+|»» isGrouped|boolean|false|none|none|
+|»» groupKey|boolean|false|none|none|
+|»» isCritical|boolean|false|none|none|
 
 xor
 
@@ -3451,4 +4584,166 @@ or
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |» *anonymous*|string|false|none|none|
+
+<h2 id="tocS_user_notification_settings.Filter">user_notification_settings.Filter</h2>
+<!-- backwards compatibility -->
+<a id="schemauser_notification_settings.filter"></a>
+<a id="schema_user_notification_settings.Filter"></a>
+<a id="tocSuser_notification_settings.filter"></a>
+<a id="tocsuser_notification_settings.filter"></a>
+
+```json
+{
+  "offset": 0,
+  "limit": 100,
+  "skip": 0,
+  "order": "string",
+  "fields": {
+    "deleted": true,
+    "deletedOn": true,
+    "deletedBy": true,
+    "createdOn": true,
+    "modifiedOn": true,
+    "id": true,
+    "userId": true,
+    "sleepStartTime": true,
+    "sleepEndTime": true,
+    "type": true
+  }
+}
+
+```
+
+user_notification_settings.Filter
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|offset|integer|false|none|none|
+|limit|integer|false|none|none|
+|skip|integer|false|none|none|
+|order|any|false|none|none|
+
+oneOf
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
+
+xor
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
+
+continued
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|fields|any|false|none|none|
+
+oneOf
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|object|false|none|none|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|boolean|false|none|none|
+|»» deletedBy|boolean|false|none|none|
+|»» createdOn|boolean|false|none|none|
+|»» modifiedOn|boolean|false|none|none|
+|»» id|boolean|false|none|none|
+|»» userId|boolean|false|none|none|
+|»» sleepStartTime|boolean|false|none|none|
+|»» sleepEndTime|boolean|false|none|none|
+|»» type|boolean|false|none|none|
+
+xor
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
+
+<h2 id="tocS_user_notification_settings.Filter1">user_notification_settings.Filter1</h2>
+<!-- backwards compatibility -->
+<a id="schemauser_notification_settings.filter1"></a>
+<a id="schema_user_notification_settings.Filter1"></a>
+<a id="tocSuser_notification_settings.filter1"></a>
+<a id="tocsuser_notification_settings.filter1"></a>
+
+```json
+{
+  "offset": 0,
+  "limit": 100,
+  "skip": 0,
+  "order": "string",
+  "where": {},
+  "fields": {
+    "deleted": true,
+    "deletedOn": true,
+    "deletedBy": true,
+    "createdOn": true,
+    "modifiedOn": true,
+    "id": true,
+    "userId": true,
+    "sleepStartTime": true,
+    "sleepEndTime": true,
+    "type": true
+  }
+}
+
+```
+
+user_notification_settings.Filter
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|offset|integer|false|none|none|
+|limit|integer|false|none|none|
+|skip|integer|false|none|none|
+|order|any|false|none|none|
+
+oneOf
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
+
+xor
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
+
+continued
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|where|object|false|none|none|
+|fields|any|false|none|none|
+
+oneOf
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|object|false|none|none|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|boolean|false|none|none|
+|»» deletedBy|boolean|false|none|none|
+|»» createdOn|boolean|false|none|none|
+|»» modifiedOn|boolean|false|none|none|
+|»» id|boolean|false|none|none|
+|»» userId|boolean|false|none|none|
+|»» sleepStartTime|boolean|false|none|none|
+|»» sleepEndTime|boolean|false|none|none|
+|»» type|boolean|false|none|none|
+
+xor
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
 
