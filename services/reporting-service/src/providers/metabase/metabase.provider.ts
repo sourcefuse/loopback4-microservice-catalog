@@ -4,14 +4,15 @@
 // https://opensource.org/licenses/MIT
 import {Provider, inject} from '@loopback/core';
 import {DataObject, repository} from '@loopback/repository';
-import {v4 as uuidv4} from 'uuid';
-import {AuthenticationBindings} from 'loopback4-authentication';
-import {QueriesRepository, MetabaseTokenRepository} from '../../repositories';
-import axios from 'axios';
-import CircularJSON from 'circular-json';
-import moment from 'moment';
-import {MetabaseReports} from './types';
 import {ILogger, LOGGER} from '@sourceloop/core';
+import axios from 'axios';
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import CircularJSON from 'circular-json';
+import {AuthenticationBindings} from 'loopback4-authentication';
+import moment from 'moment';
+import {v4 as uuidv4} from 'uuid';
+import {MetabaseTokenRepository, QueriesRepository} from '../../repositories';
+import {MetabaseReports} from './types';
 const dotenvExt = require('dotenv-extended');
 const path = require('path');
 dotenvExt.load({

@@ -2,23 +2,27 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import fs, { Dirent } from 'fs';
-import { join } from 'path';
-import { AnyObject } from '../../types';
+import fs, {Dirent} from 'fs';
+import {join} from 'path';
+import {AnyObject} from '../../types';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import BaseUpdateGenerator from '../../update-generator';
-import { JSON_SPACING } from '../../utils';
-import { PackageDependencies, UpdateOptions } from './types/types';
+import {JSON_SPACING} from '../../utils';
+import {PackageDependencies, UpdateOptions} from './types/types';
 const chalk = require('chalk'); //NOSONAR
 const fse = require('fs-extra'); //NOSONAR
 
 const configJsonFile = require('../../../package.json');
 const tempDeps = configJsonFile.config.templateDependencies;
-const { promisify } = require('util');
+const {promisify} = require('util');
 
 const packageJsonFile = 'package.json';
 
 export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> {
-  constructor(public args: string[], public opts: UpdateOptions) {
+  constructor(
+    public args: string[],
+    public opts: UpdateOptions,
+  ) {
     super(args, opts);
   }
 
@@ -59,10 +63,11 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
     this.destinationRoot(monoRepo);
   }
 
-
   private async _getDirectories(folderPath: string) {
     try {
-      const dirents: Dirent[] = await fs.promises.readdir(folderPath, { withFileTypes: true });
+      const dirents: Dirent[] = await fs.promises.readdir(folderPath, {
+        withFileTypes: true,
+      });
 
       const directories: string[] = dirents
         .filter(dirent => dirent.isDirectory())
@@ -90,7 +95,7 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
   }
 
   private async _checkDependencies() {
-    const { pkgDeps, depsToUpdate } = await this._initialiseDependencies();
+    const {pkgDeps, depsToUpdate} = await this._initialiseDependencies();
 
     let found = false;
     // find the incompatable dependencies
@@ -177,18 +182,18 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
 
     const pkgDeps: PackageDependencies = packageJson
       ? {
-        dependencies: { ...packageJson.dependencies },
-        devDependencies: { ...packageJson.devDependencies },
-        peerDependencies: { ...packageJson.peerDependencies },
-      }
-      : { dependencies: {}, devDependencies: {}, peerDependencies: {} };
+          dependencies: {...packageJson.dependencies},
+          devDependencies: {...packageJson.devDependencies},
+          peerDependencies: {...packageJson.peerDependencies},
+        }
+      : {dependencies: {}, devDependencies: {}, peerDependencies: {}};
 
     const depsToUpdate: PackageDependencies = {
       dependencies: {},
       devDependencies: {},
       peerDependencies: {},
     };
-    return { pkgDeps, depsToUpdate };
+    return {pkgDeps, depsToUpdate};
   }
 
   private async _updateDependencies() {
@@ -225,15 +230,18 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
     await writeFileAsync(
       this.destinationPath(packageJsonFile),
       JSON.stringify(packageJs, undefined, JSON_SPACING),
-      { flag: 'w+' },
+      {flag: 'w+'},
     );
     //deleting the node modules and lock file
     fse.remove(this.destinationPath('node_modules'), (err: Error) => {
       //nothing
     });
-    fse.remove(join(this.destinationPath(), 'package-lock.json'), (err: Error) => {
-      //nothing
-    });
+    fse.remove(
+      join(this.destinationPath(), 'package-lock.json'),
+      (err: Error) => {
+        //nothing
+      },
+    );
   }
 
   async end() {

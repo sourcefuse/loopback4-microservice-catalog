@@ -3,6 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {flags} from '@oclif/command';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import Base from '../command-base';
 import {ScaffoldOptions} from '../types';
 

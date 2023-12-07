@@ -2,6 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+/* eslint-disable  @typescript-eslint/naming-convention */
 import Command from '@oclif/command';
 import {IFlag} from '@oclif/command/lib/flags';
 import {IConfig} from '@oclif/config';
@@ -13,7 +14,7 @@ import fetch from 'node-fetch';
 import Environment, {createEnv} from 'yeoman-environment';
 import {AnyObject, PromptFunction} from './types';
 const chalk = require('chalk'); //NOSONAR
-
+/* eslint-enable  @typescript-eslint/naming-convention */
 const IGNORED_FLAGS = ['help', 'cwd'];
 export default abstract class CommandBase<T extends object> extends Command {
   prompt: PromptFunction;

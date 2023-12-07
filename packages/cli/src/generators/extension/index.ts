@@ -3,15 +3,18 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import fs from 'fs';
-import { join } from 'path';
+import {join} from 'path';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import BaseExtensionGenerator from '../../extension-generator';
-import { AnyObject, ExtensionOptions } from '../../types';
-import { JSON_SPACING } from '../../utils';
-const { promisify } = require('util');
-
+import {AnyObject, ExtensionOptions} from '../../types';
+import {JSON_SPACING} from '../../utils';
+const {promisify} = require('util');
 
 export default class ExtensionGenerator extends BaseExtensionGenerator<ExtensionOptions> {
-  constructor(public args: string[], public opts: ExtensionOptions) {
+  constructor(
+    public args: string[],
+    public opts: ExtensionOptions,
+  ) {
     super(args, opts);
   }
 

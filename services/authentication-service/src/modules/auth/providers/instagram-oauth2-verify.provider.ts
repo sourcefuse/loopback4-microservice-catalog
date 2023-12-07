@@ -10,6 +10,7 @@ import {
   IAuthUser,
   VerifyFunction,
 } from 'loopback4-authentication';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import * as InstagramStrategy from 'passport-instagram';
 
 import {

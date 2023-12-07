@@ -1,19 +1,20 @@
 import {
-  Provider,
   BindingScope,
-  inject,
   ContextTags,
+  Provider,
+  inject,
   injectable,
 } from '@loopback/core';
 import {repository} from '@loopback/repository';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import OidcProvider, {
   Configuration,
   FindAccount,
   ResponseType,
 } from 'oidc-provider';
-import {AuthClientRepository, UserRepository} from '../repositories';
 import {FindAccountProvider} from '.';
 import {OIDCServiceBindings} from '../keys';
+import {AuthClientRepository, UserRepository} from '../repositories';
 
 const defaultClaims = ['firstName', 'lastName', 'email'];
 const claimsProfile =

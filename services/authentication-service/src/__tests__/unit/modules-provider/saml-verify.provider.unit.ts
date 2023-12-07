@@ -3,18 +3,19 @@ import {
   createStubInstance,
   expect,
 } from '@loopback/testlab';
-import {UserCredentialsRepository, UserRepository} from '../../../repositories';
 import sinon from 'sinon';
 import {SamlVerifyProvider} from '../../../modules/auth/providers/saml-verify.provider';
 import {SamlSignUpFn} from '../../../providers';
+import {UserCredentialsRepository, UserRepository} from '../../../repositories';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import * as SamlStrategy from '@node-saml/passport-saml';
+import {IAuthUser} from 'loopback4-authentication';
 import {
   User,
   UserCredentials,
   UserCredentialsWithRelations,
   UserWithRelations,
 } from '../../../models';
-import {IAuthUser} from 'loopback4-authentication';
 
 describe('Saml Verify Provider', () => {
   let userRepo: StubbedInstanceWithSinonAccessor<UserRepository>;

@@ -2,12 +2,16 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import { BaseGenerator } from '../../base-generator';
-import { ScaffoldOptions } from '../../types';
+import {BaseGenerator} from '../../base-generator';
+import {ScaffoldOptions} from '../../types';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import BackstageIntegrationGenerator from '../backstage-integration';
 export default class ScaffoldGenerator extends BaseGenerator<ScaffoldOptions> {
   cwd?: string;
-  constructor(public args: string[], public opts: ScaffoldOptions) {
+  constructor(
+    public args: string[],
+    public opts: ScaffoldOptions,
+  ) {
     super(args, opts);
   }
 

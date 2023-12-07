@@ -3,6 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 declare module '@loopback/cli/lib/base-generator' {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   import Generator, {Questions} from 'yeoman-generator';
   class BaseGenerator<
     T extends Generator.GeneratorOptions,

@@ -3,7 +3,8 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import fs from 'fs';
-import { join } from 'path';
+import {join} from 'path';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import AppGenerator from '../../app-generator';
 import {
   BASESERVICECOMPONENTLIST,
@@ -14,14 +15,14 @@ import {
   MIGRATION_CONNECTORS,
   SERVICES,
 } from '../../enum';
-import { AnyObject, MicroserviceOptions } from '../../types';
+import {AnyObject, MicroserviceOptions} from '../../types';
 import {
   JSON_SPACING,
   appendDependencies,
   getDependencyVersion,
 } from '../../utils';
 const chalk = require('chalk'); //NOSONAR
-const { promisify } = require('util');
+const {promisify} = require('util');
 
 const DATASOURCE_TEMPLATE = join(
   '..',
@@ -121,7 +122,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     );
     this.projectInfo.datasourceConnector =
       DATASOURCE_CONNECTORS[
-      this.options.datasourceType ?? DATASOURCES.POSTGRES
+        this.options.datasourceType ?? DATASOURCES.POSTGRES
       ];
     this.projectInfo.datasourceConnectorName =
       this.projectInfo.datasourceConnector;
@@ -283,7 +284,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
   _appendDockerScript() {
     const packageJsonFile = join(this.destinationRoot(), './package.json');
     const packageJson = this.fs.readJSON(packageJsonFile) as AnyObject;
-    const scripts = { ...packageJson.scripts };
+    const scripts = {...packageJson.scripts};
     scripts[
       `docker:build:${this.options.baseService}`
     ] = `docker build --build-arg SERVICE_NAME=${this.options.baseService} --build-arg FROM_FOLDER=services -t $REPOSITORY_URI-${this.options.baseService}:$CUSTOM_TAG -f ./services/${this.options.name}/Dockerfile .`;
@@ -307,7 +308,6 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       return BASESERVICECOMPONENTLIST[this.options.baseService];
     } else return undefined;
   }
-
 
   private async _createDataSourceAsync() {
     const baseServiceDSList = this._setDataSourceName();
@@ -371,8 +371,6 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     );
   }
 
-
-
   private async _createFacadeRedisDatasourceAsync() {
     if (this.options.facade) {
       const nameArr = [
@@ -430,9 +428,11 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     );
 
     const readdriAsync = promisify(fs.readdir);
-    const files = await readdriAsync(this.templatePath(
-      join(MIGRATION_PACKAGE_TEMPLATE, 'packages', 'migrations'),
-    ));
+    const files = await readdriAsync(
+      this.templatePath(
+        join(MIGRATION_PACKAGE_TEMPLATE, 'packages', 'migrations'),
+      ),
+    );
     const promises = files.map(async (file: string) => {
       if (file.includes('.tpl')) {
         const targetFileName = file.replace('.tpl', '');
@@ -450,10 +450,9 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
             : DEFAULT_NAME,
         });
       }
-    })
+    });
 
     await Promise.all(promises);
-
   }
 
   private async _createCustomMigrationAsync() {
@@ -474,13 +473,11 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     );
   }
 
-
   private async _includeSourceloopMigrationsAsync() {
     const name = this.options.name ?? DEFAULT_NAME;
     if (!this.shouldExit() && this.options.baseService) {
-
       const destinationPath = this.destinationPath(
-        sourceloopMigrationPath(this.options.baseService)
+        sourceloopMigrationPath(this.options.baseService),
       );
 
       try {
@@ -519,7 +516,9 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
 
   private async _migrationExists() {
     try {
-      await fs.promises.access(this.destinationPath(join('packages', 'migrations', 'package.json')));
+      await fs.promises.access(
+        this.destinationPath(join('packages', 'migrations', 'package.json')),
+      );
       // File exists
       return true;
     } catch (error) {
