@@ -5,6 +5,7 @@
 import {
   Count,
   CountSchema,
+  EntityCrudRepository,
   Filter,
   FilterExcludingWhere,
   repository,
@@ -56,13 +57,13 @@ const basePath = '/audit-logs';
 export class AuditController {
   constructor(
     @repository(AuditLogRepository)
-    public auditLogRepository: AuditLogRepository,
+    public auditLogRepository: EntityCrudRepository<AuditLog, string, {}>,
     @repository(JobRepository)
-    public jobRepository: JobRepository,
+    public jobRepository: EntityCrudRepository<Job, string, {}>,
     @service(JobProcessingService)
     public jobProcessingService: JobProcessingService,
     @repository(MappingLogRepository)
-    public mappingLogRepository: MappingLogRepository,
+    public mappingLogRepository: EntityCrudRepository<MappingLog, string, {}>,
     @inject(ExportToCsvServiceBindings.EXPORT_LOGS)
     public exportToCsv: ExportToCsvFn,
     @inject(AuditLogExportServiceBindings.EXPORT_AUDIT_LOGS)
