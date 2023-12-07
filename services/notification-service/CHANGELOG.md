@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 9.0.0 (2023-12-07)
+
+* feat(deps): update to latest loopback 4 authentication version (#1826) ([5b827fc](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5b827fc)), closes [#1826](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1826) [#1825](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1825) [#1825](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1825)
+
+
+### BREAKING CHANGE
+
+* breaking version update
+* optional dependencies need to bind required providers
+
+
+
+
 ## 8.1.0 (2023-12-07)
 
 * feat(notification-service): add sequelize support in notification service (#1784) ([7e381af](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7e381af)), closes [#1784](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1784) [#1350](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1350)
