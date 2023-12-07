@@ -1,14 +1,14 @@
 import {
-  Component,
-  CoreBindings,
-  inject,
-  ProviderMap,
-  ControllerClass,
   Binding,
+  Component,
+  ControllerClass,
+  CoreBindings,
+  ProviderMap,
   ServiceOrProviderClass,
+  inject,
 } from '@loopback/core';
+import {Class, Model, Repository} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
-import {ISurveyServiceConfig} from './types';
 import {
   BearerVerifierBindings,
   BearerVerifierComponent,
@@ -18,30 +18,29 @@ import {
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
-import {Class, Model, Repository} from '@loopback/repository';
-import {AuthenticationComponent} from 'loopback4-authentication';
+import {AuthenticationComponent, Strategies} from 'loopback4-authentication';
+import {
+  BearerStrategyFactoryProvider,
+  BearerTokenVerifyProvider,
+} from 'loopback4-authentication/passport-bearer';
 import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import {SurveyServiceBindings} from './keys';
 import {
   OptionController,
   QuestionController,
   SectionController,
   SurveyCycleController,
 } from './controllers';
-import {
-  QuestionRepository,
-  SectionRepository,
-  SurveyCycleRepository,
-  SurveyQuestionRepository,
-  SurveyResponderRepository,
-  SurveyResponseDetailRepository,
-  SurveyResponseRepository,
-} from './repositories';
-import {OptionsRepository} from './repositories/options.repository';
-import {QuestionDto} from './models/question-dto.model';
+import {TemplateController} from './controllers/question-template.controller';
+import {SurveyQuestionController} from './controllers/survey-question.controller';
+import {SurveyResponderController} from './controllers/survey-responder.controller';
+import {SurveyResponseDetailViewController} from './controllers/survey-response-detail.controller';
+import {SurveyResponseController} from './controllers/survey-response.controller';
+import {SurveyController} from './controllers/survey.controller';
+import {TemplateQuestionController} from './controllers/template-question.controller';
+import {SurveyServiceBindings} from './keys';
 import {
   Options,
   Question,
@@ -54,6 +53,24 @@ import {
   SurveyResponse,
   SurveyResponseDto,
 } from './models';
+import {QuestionDto} from './models/question-dto.model';
+import {QuestionTemplatesDto} from './models/question-template-dto.model';
+import {QuestionTemplate} from './models/question-template.model';
+import {SurveyResponseDetail} from './models/survey-response-detail.model';
+import {TemplateQuestion} from './models/template-questions.model';
+import {
+  QuestionRepository,
+  SectionRepository,
+  SurveyCycleRepository,
+  SurveyQuestionRepository,
+  SurveyResponderRepository,
+  SurveyResponseDetailRepository,
+  SurveyResponseRepository,
+} from './repositories';
+import {OptionsRepository} from './repositories/options.repository';
+import {QuestionTemplateRepository} from './repositories/question-template.repository';
+import {SurveyRepository} from './repositories/survey.repository';
+import {TemplateQuestionRepository} from './repositories/template-questions.repository';
 import {
   CreateSurveyHelperService,
   QuestionDuplicateHelperService,
@@ -66,20 +83,7 @@ import {
   SurveyService,
 } from './services';
 import {QuestionOptionService} from './services/question-option.service';
-import {TemplateQuestionRepository} from './repositories/template-questions.repository';
-import {QuestionTemplateRepository} from './repositories/question-template.repository';
-import {QuestionTemplate} from './models/question-template.model';
-import {QuestionTemplatesDto} from './models/question-template-dto.model';
-import {TemplateQuestion} from './models/template-questions.model';
-import {TemplateQuestionController} from './controllers/template-question.controller';
-import {TemplateController} from './controllers/question-template.controller';
-import {SurveyRepository} from './repositories/survey.repository';
-import {SurveyController} from './controllers/survey.controller';
-import {SurveyQuestionController} from './controllers/survey-question.controller';
-import {SurveyResponseDetail} from './models/survey-response-detail.model';
-import {SurveyResponderController} from './controllers/survey-responder.controller';
-import {SurveyResponseController} from './controllers/survey-response.controller';
-import {SurveyResponseDetailViewController} from './controllers/survey-response-detail.controller';
+import {ISurveyServiceConfig} from './types';
 
 export class SurveyServiceComponent implements Component {
   constructor(
@@ -202,6 +206,12 @@ export class SurveyServiceComponent implements Component {
     this.application.sequence(ServiceSequence);
 
     // Mount authentication component for default sequence
+    this.application
+      .bind(Strategies.Passport.BEARER_STRATEGY_FACTORY.key)
+      .toProvider(BearerStrategyFactoryProvider);
+    this.application
+      .bind(Strategies.Passport.BEARER_TOKEN_VERIFIER.key)
+      .toProvider(BearerTokenVerifyProvider);
     this.application.component(AuthenticationComponent);
     // Mount bearer verifier component
     this.application.bind(BearerVerifierBindings.Config).to({
