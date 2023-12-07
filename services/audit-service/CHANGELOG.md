@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 8.1.0 (2023-12-07)
+
+* feat(audit-service): add sequelize support in audit service (#1824) ([0f04e71](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0f04e71)), closes [#1824](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1824) [#1350](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1350)
+
+
+
+
+
 ## 8.0.0 (2023-11-09)
 
 * fix(audit-service): enable audit service to archive zero entries without error  (#1791) ([891b43f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/891b43f)), closes [#1791](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1791) [#1762](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1762)

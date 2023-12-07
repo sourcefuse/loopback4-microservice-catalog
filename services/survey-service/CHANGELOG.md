@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.3.1 (2023-12-07)</small>
+
+**Note:** Version bump only for package @sourceloop/survey-service
+
+
+
+
+
 ## 0.3.0 (2023-11-09)
 
 * fix(audit-service): enable audit service to archive zero entries without error  (#1791) ([891b43f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/891b43f)), closes [#1791](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1791) [#1762](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1762)
