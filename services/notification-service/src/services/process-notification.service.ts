@@ -32,7 +32,11 @@ export class ProcessNotificationService {
    * @returns notif which is of type Notification(Model)
    */
   async draftAndSendNotification(notification: Notification) {
-    notification = await this.filterNotificationSettings.checkUserNotificationSettings(notification);
+    //In case notification body has the critical flag as false then only system will check for the notification settings i.e. the sleep time of the user.
+    if (!notification.isCritical) {
+      //here the participants will be filtered based on the sleep time of the individual participant
+      notification = await this.filterNotificationSettings.checkUserNotificationSettings(notification);
+    }
     let notif: Notification;
     if (!notification.isDraft && (notification.isGrouped && !notification.groupKey)) {
       throw new HttpErrors.UnprocessableEntity("In case it is grouped notification, group key field is mandatory in request body.");
