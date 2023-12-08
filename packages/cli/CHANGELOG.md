@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>6.0.2 (2023-12-08)</small>
+
+* fix(cli): update the migration scripts and docker build (#1835) ([b23d969](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b23d969)), closes [#1835](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1835) [#1832](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1832) [#1834](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1834) [#1834](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1834)
+* fix(cli): update the migration scripts as per workspaces (#1833) ([cb7e236](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/cb7e236)), closes [#1833](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1833) [#1832](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1832) [#1834](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1834)
+
+
+
+
+
 ## <small>6.0.1 (2023-12-08)</small>
 
 * fix(cli): change the npm ci to npm i in docker file of microservice (#1831) ([0f3f14f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0f3f14f)), closes [#1831](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1831) [#1830](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1830)
