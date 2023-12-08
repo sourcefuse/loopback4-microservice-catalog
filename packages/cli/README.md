@@ -13,29 +13,32 @@ npm install @sourceloop/cli
 ## Usage
 
 <!-- usage -->
+
 ```sh-session
 $ npm install -g @sourceloop/cli
 $ sl COMMAND
 running command...
 $ sl (-v|--version|version)
-@sourceloop/cli/6.0.1 darwin-arm64 node-v18.16.0
+@sourceloop/cli/6.0.1 linux-x64 node-v18.18.2
 $ sl --help [COMMAND]
 USAGE
   $ sl COMMAND
 ...
 ```
+
 <!-- usagestop -->
 
 ## Commands
 
 <!-- commands -->
-* [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
-* [`sl cdk`](#sl-cdk)
-* [`sl extension [NAME]`](#sl-extension-name)
-* [`sl help [COMMAND]`](#sl-help-command)
-* [`sl microservice [NAME]`](#sl-microservice-name)
-* [`sl scaffold [NAME]`](#sl-scaffold-name)
-* [`sl update`](#sl-update)
+
+- [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
+- [`sl cdk`](#sl-cdk)
+- [`sl extension [NAME]`](#sl-extension-name)
+- [`sl help [COMMAND]`](#sl-help-command)
+- [`sl microservice [NAME]`](#sl-microservice-name)
+- [`sl scaffold [NAME]`](#sl-scaffold-name)
+- [`sl update`](#sl-update)
 
 ## `sl autocomplete [SHELL]`
 
@@ -198,4 +201,5 @@ OPTIONS
 ```
 
 _See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v6.0.1/src/commands/update.ts)_
+
 <!-- commandsstop -->
