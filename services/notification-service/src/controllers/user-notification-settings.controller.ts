@@ -6,7 +6,7 @@ import {
   FilterExcludingWhere,
   repository,
   Where,
-  WhereBuilder,
+  WhereBuilder
 } from '@loopback/repository';
 import {
   del,
@@ -18,7 +18,7 @@ import {
   post,
   put,
   requestBody,
-  response,
+  response
 } from '@loopback/rest';
 import { authenticate, AuthenticationBindings, STRATEGY } from 'loopback4-authentication';
 import { UserNotificationSettings } from '../models';
@@ -28,6 +28,7 @@ import { inject } from '@loopback/core';
 import { IAuthUserWithPermissions, STATUS_CODE } from '@sourceloop/core';
 import { authorize, AuthorizeErrorKeys } from 'loopback4-authorization';
 import { PermissionKey } from '../enums';
+const basePath = '/user-notification-settings';
 export class UserNotificationSettingsController {
   constructor(
     @repository(UserNotificationSettingsRepository)
@@ -39,7 +40,7 @@ export class UserNotificationSettingsController {
   @authorize({
     permissions: [PermissionKey.CreateNotificationUserSettings],
   })
-  @post('/user-notification-settings')
+  @post(`${basePath}`)
   @response(STATUS_CODE.OK, {
     description: 'UserNotificationSettings model instance',
     content: { 'application/json': { schema: getModelSchemaRef(UserNotificationSettings) } },
@@ -69,7 +70,7 @@ export class UserNotificationSettingsController {
   @authorize({
     permissions: [PermissionKey.ViewNotificationUserSettings],
   })
-  @get('/user-notification-settings/count')
+  @get(`${basePath}/count`)
   @response(STATUS_CODE.OK, {
     description: 'UserNotificationSettings model count',
     content: { 'application/json': { schema: CountSchema } },
@@ -88,7 +89,7 @@ export class UserNotificationSettingsController {
   @authorize({
     permissions: [PermissionKey.ViewNotificationUserSettings],
   })
-  @get('/user-notification-settings')
+  @get(`${basePath}`)
   @response(STATUS_CODE.OK, {
     description: 'Array of UserNotificationSettings model instances',
     content: {
@@ -114,7 +115,7 @@ export class UserNotificationSettingsController {
   @authorize({
     permissions: [PermissionKey.UpdateNotificationUserSettings],
   })
-  @patch('/user-notification-settings')
+  @patch(`${basePath}`)
   @response(STATUS_CODE.OK, {
     description: 'UserNotificationSettings PATCH success count',
     content: { 'application/json': { schema: CountSchema } },
@@ -142,7 +143,7 @@ export class UserNotificationSettingsController {
   @authorize({
     permissions: [PermissionKey.ViewNotificationUserSettings],
   })
-  @get('/user-notification-settings/{id}')
+  @get(`${basePath}/{id}`)
   @response(STATUS_CODE.OK, {
     description: 'UserNotificationSettings model instance',
     content: {
@@ -164,7 +165,7 @@ export class UserNotificationSettingsController {
   @authorize({
     permissions: [PermissionKey.UpdateNotificationUserSettings],
   })
-  @patch('/user-notification-settings/{id}')
+  @patch(`${basePath}/{id}`)
   @response(STATUS_CODE.NO_CONTENT, {
     description: 'UserNotificationSettings PATCH success',
   })
@@ -189,7 +190,7 @@ export class UserNotificationSettingsController {
   @authorize({
     permissions: [PermissionKey.UpdateNotificationUserSettings],
   })
-  @put('/user-notification-settings/{id}')
+  @put(`${basePath}/{id}`)
   @response(STATUS_CODE.NO_CONTENT, {
     description: 'UserNotificationSettings PUT success',
   })
@@ -207,7 +208,7 @@ export class UserNotificationSettingsController {
   @authorize({
     permissions: [PermissionKey.DeleteNotificationUserSettings],
   })
-  @del('/user-notification-settings/{id}')
+  @del(`${basePath}/{id}`)
   @response(STATUS_CODE.NO_CONTENT, {
     description: 'UserNotificationSettings DELETE success',
   })

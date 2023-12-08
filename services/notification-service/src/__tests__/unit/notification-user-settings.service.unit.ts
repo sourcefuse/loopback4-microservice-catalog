@@ -24,12 +24,6 @@ describe('Notification User Service', () => {
   describe('adds notification from user into receivers array and returns it', () => {
 
     it('returns exact sam e notification object after applying user  notification settings in case there is no sleep time for the given user.', async () => {
-      // const userNotificationSettingsToAdd = new UserNotificationSettings({
-      //   userId: '1',
-      //   type: 1,
-      //   sleepStartTime: currentDate,
-      //   sleepEndTime: currentDate,
-      // });
       const notification = new Notification({
         id: 'dummy',
         receiver: {
