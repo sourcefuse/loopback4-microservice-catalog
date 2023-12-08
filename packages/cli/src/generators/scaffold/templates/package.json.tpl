@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "prepare": "husky install",
-    "test": "lerna run test"
+    "test": "lerna run test",
+     "migrate": "npm run db:migrate --workspaces --if-present",
+     "build": "npm run build --workspaces --if-present"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.1.0",
