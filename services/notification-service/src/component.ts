@@ -46,12 +46,14 @@ import { NotificationUserProvider } from './providers/notification-user.service'
 import {
   NotificationAccessRepository,
   NotificationRepository,
-  NotificationUserRepository
+  NotificationUserRepository,
+  UserNotificationSettingsRepository
 } from './repositories';
 
 import {
   NotificationRepository as NotificationSequelizeRepository,
   NotificationUserRepository as NotificationUserSequelizeRepository,
+  UserNotificationSettingsRepository as UserNotificationSettingsSequelizeRepository
 } from './repositories/sequelize';
 import { ProcessNotificationService } from './services';
 import { INotifServiceConfig } from './types';
@@ -93,12 +95,14 @@ export class NotificationServiceComponent implements Component {
         NotificationAccessRepository,
         NotificationSequelizeRepository,
         NotificationUserSequelizeRepository,
+        UserNotificationSettingsSequelizeRepository
       ];
     } else {
       this.repositories = [
         NotificationAccessRepository,
         NotificationRepository,
         NotificationUserRepository,
+        UserNotificationSettingsRepository
       ];
     }
 

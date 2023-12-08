@@ -28,6 +28,6 @@ export class NotificationServiceApplication extends BootMixin(
         nested: true,
       },
     };
-    const binding = this.service(ProcessNotificationService)
+    this.service(ProcessNotificationService)
   }
 }
