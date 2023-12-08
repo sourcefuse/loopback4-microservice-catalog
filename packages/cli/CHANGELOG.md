@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>6.0.1 (2023-12-08)</small>
+
+* fix(cli): change the npm ci to npm i in docker file of microservice (#1831) ([0f3f14f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0f3f14f)), closes [#1831](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1831) [#1830](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1830)
+
+
+
+
+
 ## 6.0.0 (2023-12-07)
 
 * feat(deps): update to latest loopback 4 authentication version (#1826) ([5b827fc](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5b827fc)), closes [#1826](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1826) [#1825](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1825) [#1825](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1825)
