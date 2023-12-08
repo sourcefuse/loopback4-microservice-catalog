@@ -7,9 +7,9 @@
     "db:migrate": "run-s db:migrate:*",
     "db:migrate-down": "run-s db:migrate-down:*",
     "db:migrate-reset": "run-s db:migrate-reset:*",
-    "db:migrate:<%= project.name -%>": "./node_modules/.bin/db-migrate up --config '<%= project.name -%>/database.json' -m '<%= project.name -%>/migrations'",
-    "db:migrate-down:<%= project.name -%>": "./node_modules/.bin/db-migrate down --config '<%= project.name -%>/database.json' -m '<%= project.name -%>/migrations'",
-    "db:migrate-reset:<%= project.name -%>": "./node_modules/.bin/db-migrate reset --config '<%= project.name -%>/database.json' -m '<%= project.name -%>/migrations'"
+    "db:migrate:<%= project.name -%>": "db-migrate up --config '<%= project.name -%>/database.json' -m '<%= project.name -%>/migrations'",
+    "db:migrate-down:<%= project.name -%>": "db-migrate down --config '<%= project.name -%>/database.json' -m '<%= project.name -%>/migrations'",
+    "db:migrate-reset:<%= project.name -%>": "db-migrate reset --config '<%= project.name -%>/database.json' -m '<%= project.name -%>/migrations'"
 
   },
   "author": "",
