@@ -42,7 +42,7 @@ COPY --chown=node packages ./packages
 COPY --chown=node $FROM_FOLDER/$SERVICE_NAME ./$FROM_FOLDER/$SERVICE_NAME
 
 # Installing all dependencies
-RUN npm ci
+RUN npm install
 
 # Building the app
 # set the Working Directory to the service
