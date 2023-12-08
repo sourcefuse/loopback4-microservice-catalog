@@ -199,16 +199,16 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         'node -r ./dist/opentelemetry-registry.js -r source-map-support/register .';
       scripts[
         'docker:build'
-      ] = `DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $IMAGE_REPO_NAME/${this.options.uniquePrefix}-$npm_package_name:$npm_package_version .`;
+      ] = `DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $IMAGE_REPO_NAME/$npm_package_name:$npm_package_version .`;
       scripts[
         'docker:push'
-      ] = `sudo docker push $IMAGE_REPO_NAME/${this.options.uniquePrefix}-$npm_package_name:$npm_package_version`;
+      ] = `sudo docker push $IMAGE_REPO_NAME/$npm_package_name:$npm_package_version`;
       scripts[
         'docker:build:dev'
-      ] = `DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $IMAGE_REPO_NAME/${this.options.uniquePrefix}-$npm_package_name:$IMAGE_TAG_VERSION .`;
+      ] = `DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $IMAGE_REPO_NAME/$npm_package_name:$IMAGE_TAG_VERSION .`;
       scripts[
         'docker:push:dev'
-      ] = `sudo docker push $IMAGE_REPO_NAME/${this.options.uniquePrefix}-$npm_package_name:$IMAGE_TAG_VERSION`;
+      ] = `sudo docker push $IMAGE_REPO_NAME/$npm_package_name:$IMAGE_TAG_VERSION`;
       scripts['coverage'] = 'nyc npm run test';
 
       packageJson.scripts = scripts;
@@ -230,7 +230,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       await this.spawnCommand('npm', ['i']);
 
       await this.addMigrations();
-      this._appendDockerScript();
+      // this._appendDockerScript();
       return true;
     }
     return false;
