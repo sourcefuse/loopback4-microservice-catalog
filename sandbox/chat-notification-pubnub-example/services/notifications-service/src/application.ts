@@ -58,7 +58,6 @@ export class ChatAndNotifApplication extends BootMixin(
     });
 
     this.bind(SNSBindings.Config).to({});
-    // this.bind(SESBindings.Config).to({});
     this.bind(SESBindings.Config).to({
       secretAccessKey: process.env.SES_SECRET_ACCESS_KEY,
       accessKeyId: process.env.SES_ACCESS_KEY_ID,
