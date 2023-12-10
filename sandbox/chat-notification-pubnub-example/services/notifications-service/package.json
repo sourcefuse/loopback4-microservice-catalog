@@ -70,7 +70,7 @@
     "loopback4-notifications": "^7.0.1",
     "nodemailer": "^6.7.5",
     "prom-client": "^14.0.1",
-    "pubnub": "^7.2.1",
+    "pubnub": "^7.2.3",
     "socket.io-client": "^4.5.1",
     "tslib": "^2.5.3"
   },
