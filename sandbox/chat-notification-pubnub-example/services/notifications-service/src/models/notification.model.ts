@@ -1,7 +1,7 @@
-import {model, property, hasMany} from '@loopback/repository';
-import {Message} from 'loopback4-notifications';
-import {NotificationUser} from './notification-user.model';
-import {Notification as SourceloopNotification} from '@sourceloop/notification-service';
+import { hasMany, model, property } from '@loopback/repository';
+import { Notification as SourceloopNotification } from '@sourceloop/notification-service';
+import { Message } from 'loopback4-notifications';
+import { NotificationUser } from './notification-user.model';
 @model({
   name: 'notifications',
 })
@@ -12,12 +12,9 @@ export class Notification extends SourceloopNotification implements Message {
   })
   type: number;
 
-  @hasMany(() => NotificationUser, {keyTo: 'notificationId'})
+  @hasMany(() => NotificationUser, { keyTo: 'notificationId' })
   notificationUsers: NotificationUser[];
 
-  constructor(data?: Partial<Notification>) {
-    super(data);
-  }
 }
 
 export interface NotificationRelations {

@@ -40,3 +40,9 @@ export interface INotificationUserManager {
     notificationUsersData: NotificationUser[],
   ): Promise<NotificationUser[]>;
 }
+
+export interface INotificationUserSettingManager {
+  checkUserNotificationSettings(
+    notif: Notification,
+  ): Promise<Notification>;
+}

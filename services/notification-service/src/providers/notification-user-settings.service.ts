@@ -10,10 +10,10 @@ import { repository } from '@loopback/repository';
 import moment from 'moment';
 import { Notification } from '../models';
 import { NotificationRepository, UserNotificationSettingsRepository } from '../repositories';
-export type NotificationUserSettings = unknown;
+import { INotificationSettingFilterFunc } from '../types';
 
 @injectable({ scope: BindingScope.TRANSIENT })
-export class NotificationUserSettingsProvider implements Provider<NotificationUserSettings> {
+export class NotificationUserSettingsProvider implements Provider<INotificationSettingFilterFunc> {
   constructor(
     /* Add @inject to inject parameters */
     @repository(UserNotificationSettingsRepository)

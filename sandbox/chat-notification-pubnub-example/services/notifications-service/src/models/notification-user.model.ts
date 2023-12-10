@@ -1,6 +1,6 @@
-import {model, property} from '@loopback/repository';
-import {Notification} from './notification.model';
-import {NotificationUser as SourceloopNotificationUser} from '@sourceloop/notification-service';
+import { model, property } from '@loopback/repository';
+import { NotificationUser as SourceloopNotificationUser } from '@sourceloop/notification-service';
+import { Notification } from './notification.model';
 @model({
   name: 'notification_users',
   settings: {
@@ -26,12 +26,6 @@ export class NotificationUser extends SourceloopNotificationUser {
     name: 'group_id',
   })
   groupId?: string;
-
-  // Define well-known properties here
-  // Indexer property to allow additional data
-  constructor(data?: Partial<NotificationUser>) {
-    super(data);
-  }
 }
 export interface NotificationUserRelations {
   notificaTION: Notification;

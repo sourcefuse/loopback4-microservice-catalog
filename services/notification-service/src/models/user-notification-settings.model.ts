@@ -9,11 +9,6 @@ import { MessageType } from 'loopback4-notifications';
   },
 })
 export class UserNotificationSettings extends BaseEntity<UserNotificationSettings> {
-  constructor(data?: Partial<UserNotificationSettings>) {
-    //No Code Here
-    super(data);
-  }
-
   @property({
     type: 'string',
     id: true,
