@@ -2,14 +2,14 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import { BindingKey } from '@loopback/core';
-import { BINDING_PREFIX } from '@sourceloop/core';
+import {BindingKey} from '@loopback/core';
+import {BINDING_PREFIX} from '@sourceloop/core';
 import {
   IChannelManager,
   INotifServiceConfig,
   INotificationFilterFunc,
   INotificationSettingFilterFunc,
-  INotificationUserManager
+  INotificationUserManager,
 } from './types';
 
 export namespace NotifServiceBindings {

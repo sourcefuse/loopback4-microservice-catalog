@@ -6,7 +6,7 @@ import {
   FilterExcludingWhere,
   repository,
   Where,
-  WhereBuilder
+  WhereBuilder,
 } from '@loopback/repository';
 import {
   del,
@@ -18,23 +18,26 @@ import {
   post,
   put,
   requestBody,
-  response
+  response,
 } from '@loopback/rest';
-import { authenticate, AuthenticationBindings, STRATEGY } from 'loopback4-authentication';
-import { UserNotificationSettings } from '../models';
-import { UserNotificationSettingsRepository } from '../repositories';
+import {
+  authenticate,
+  AuthenticationBindings,
+  STRATEGY,
+} from 'loopback4-authentication';
+import {UserNotificationSettings} from '../models';
+import {UserNotificationSettingsRepository} from '../repositories';
 
-import { inject } from '@loopback/core';
-import { IAuthUserWithPermissions, STATUS_CODE } from '@sourceloop/core';
-import { authorize, AuthorizeErrorKeys } from 'loopback4-authorization';
-import { PermissionKey } from '../enums';
+import {inject} from '@loopback/core';
+import {IAuthUserWithPermissions, STATUS_CODE} from '@sourceloop/core';
+import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
+import {PermissionKey} from '../enums';
 const basePath = '/user-notification-settings';
 export class UserNotificationSettingsController {
   constructor(
     @repository(UserNotificationSettingsRepository)
     public userNotificationSettingsRepository: UserNotificationSettingsRepository,
-  ) { }
-
+  ) {}
 
   @authenticate(STRATEGY.BEARER)
   @authorize({
@@ -43,7 +46,9 @@ export class UserNotificationSettingsController {
   @post(`${basePath}`)
   @response(STATUS_CODE.OK, {
     description: 'UserNotificationSettings model instance',
-    content: { 'application/json': { schema: getModelSchemaRef(UserNotificationSettings) } },
+    content: {
+      'application/json': {schema: getModelSchemaRef(UserNotificationSettings)},
+    },
   })
   async create(
     @requestBody({
@@ -63,7 +68,9 @@ export class UserNotificationSettingsController {
     if (currentUser.id !== userNotificationSettings.userId) {
       throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
     }
-    return this.userNotificationSettingsRepository.create(userNotificationSettings);
+    return this.userNotificationSettingsRepository.create(
+      userNotificationSettings,
+    );
   }
 
   @authenticate(STRATEGY.BEARER)
@@ -73,12 +80,13 @@ export class UserNotificationSettingsController {
   @get(`${basePath}/count`)
   @response(STATUS_CODE.OK, {
     description: 'UserNotificationSettings model count',
-    content: { 'application/json': { schema: CountSchema } },
+    content: {'application/json': {schema: CountSchema}},
   })
   async count(
     @inject(AuthenticationBindings.CURRENT_USER)
     currentUser: IAuthUserWithPermissions,
-    @param.where(UserNotificationSettings) where?: Where<UserNotificationSettings>,
+    @param.where(UserNotificationSettings)
+    where?: Where<UserNotificationSettings>,
   ): Promise<Count> {
     return this.userNotificationSettingsRepository.count(
       this._createWhereBuilder(currentUser, where).build(),
@@ -96,7 +104,9 @@ export class UserNotificationSettingsController {
       'application/json': {
         schema: {
           type: 'array',
-          items: getModelSchemaRef(UserNotificationSettings, { includeRelations: true }),
+          items: getModelSchemaRef(UserNotificationSettings, {
+            includeRelations: true,
+          }),
         },
       },
     },
@@ -104,7 +114,8 @@ export class UserNotificationSettingsController {
   async find(
     @inject(AuthenticationBindings.CURRENT_USER)
     currentUser: IAuthUserWithPermissions,
-    @param.filter(UserNotificationSettings) filter?: Filter<UserNotificationSettings>,
+    @param.filter(UserNotificationSettings)
+    filter?: Filter<UserNotificationSettings>,
   ): Promise<UserNotificationSettings[]> {
     return this.userNotificationSettingsRepository.find(
       this._createFilterBuilder(currentUser, filter).build(),
@@ -118,20 +129,21 @@ export class UserNotificationSettingsController {
   @patch(`${basePath}`)
   @response(STATUS_CODE.OK, {
     description: 'UserNotificationSettings PATCH success count',
-    content: { 'application/json': { schema: CountSchema } },
+    content: {'application/json': {schema: CountSchema}},
   })
   async updateAll(
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(UserNotificationSettings, { partial: true }),
+          schema: getModelSchemaRef(UserNotificationSettings, {partial: true}),
         },
       },
     })
     userNotificationSettings: UserNotificationSettings,
     @inject(AuthenticationBindings.CURRENT_USER)
     currentUser: IAuthUserWithPermissions,
-    @param.where(UserNotificationSettings) where?: Where<UserNotificationSettings>,
+    @param.where(UserNotificationSettings)
+    where?: Where<UserNotificationSettings>,
   ): Promise<Count> {
     return this.userNotificationSettingsRepository.updateAll(
       userNotificationSettings,
@@ -148,7 +160,9 @@ export class UserNotificationSettingsController {
     description: 'UserNotificationSettings model instance',
     content: {
       'application/json': {
-        schema: getModelSchemaRef(UserNotificationSettings, { includeRelations: true }),
+        schema: getModelSchemaRef(UserNotificationSettings, {
+          includeRelations: true,
+        }),
       },
     },
   })
@@ -156,7 +170,8 @@ export class UserNotificationSettingsController {
     @inject(AuthenticationBindings.CURRENT_USER)
     currentUser: IAuthUserWithPermissions,
     @param.path.string('id') id: string,
-    @param.filter(UserNotificationSettings, { exclude: 'where' }) filter?: FilterExcludingWhere<UserNotificationSettings>
+    @param.filter(UserNotificationSettings, {exclude: 'where'})
+    filter?: FilterExcludingWhere<UserNotificationSettings>,
   ): Promise<UserNotificationSettings> {
     return this._verifyOwned(id, currentUser);
   }
@@ -174,7 +189,7 @@ export class UserNotificationSettingsController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(UserNotificationSettings, { partial: true }),
+          schema: getModelSchemaRef(UserNotificationSettings, {partial: true}),
         },
       },
     })
@@ -183,7 +198,10 @@ export class UserNotificationSettingsController {
     currentUser: IAuthUserWithPermissions,
   ): Promise<void> {
     await this._verifyOwned(id, currentUser);
-    await this.userNotificationSettingsRepository.updateById(id, userNotificationSettings);
+    await this.userNotificationSettingsRepository.updateById(
+      id,
+      userNotificationSettings,
+    );
   }
 
   @authenticate(STRATEGY.BEARER)
@@ -201,7 +219,10 @@ export class UserNotificationSettingsController {
     currentUser: IAuthUserWithPermissions,
   ): Promise<void> {
     await this._verifyOwned(id, currentUser);
-    await this.userNotificationSettingsRepository.replaceById(id, userNotificationSettings);
+    await this.userNotificationSettingsRepository.replaceById(
+      id,
+      userNotificationSettings,
+    );
   }
 
   @authenticate(STRATEGY.BEARER)
@@ -212,8 +233,11 @@ export class UserNotificationSettingsController {
   @response(STATUS_CODE.NO_CONTENT, {
     description: 'UserNotificationSettings DELETE success',
   })
-  async deleteById(@param.path.string('id') id: string, @inject(AuthenticationBindings.CURRENT_USER)
-  currentUser: IAuthUserWithPermissions,): Promise<void> {
+  async deleteById(
+    @param.path.string('id') id: string,
+    @inject(AuthenticationBindings.CURRENT_USER)
+    currentUser: IAuthUserWithPermissions,
+  ): Promise<void> {
     await this._verifyOwned(id, currentUser);
     await this.userNotificationSettingsRepository.deleteById(id);
   }
@@ -222,7 +246,8 @@ export class UserNotificationSettingsController {
     id: string,
     currentUser: IAuthUserWithPermissions,
   ) {
-    const notificationUser = await this.userNotificationSettingsRepository.findById(id);
+    const notificationUser =
+      await this.userNotificationSettingsRepository.findById(id);
     if (notificationUser.userId !== currentUser.id) {
       throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
     }

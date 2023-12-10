@@ -1,16 +1,22 @@
-import { BindingScope, Getter, inject, injectable } from '@loopback/core';
-import { repository } from '@loopback/repository';
-import { HttpErrors } from '@loopback/rest';
-import { AuthErrorKeys } from 'loopback4-authentication';
-import { INotification, NotificationBindings } from 'loopback4-notifications';
-import { ErrorKeys } from '../enums';
-import { NotifServiceBindings } from '../keys';
-import { Notification } from '../models';
-import { NotificationRepository, NotificationUserRepository } from '../repositories';
-import { INotificationSettingFilterFunc, INotificationUserManager } from '../types';
+import {BindingScope, Getter, inject, injectable} from '@loopback/core';
+import {repository} from '@loopback/repository';
+import {HttpErrors} from '@loopback/rest';
+import {AuthErrorKeys} from 'loopback4-authentication';
+import {INotification, NotificationBindings} from 'loopback4-notifications';
+import {ErrorKeys} from '../enums';
+import {NotifServiceBindings} from '../keys';
+import {Notification} from '../models';
+import {
+  NotificationRepository,
+  NotificationUserRepository,
+} from '../repositories';
+import {
+  INotificationSettingFilterFunc,
+  INotificationUserManager,
+} from '../types';
 const maxBodyLen = 1000;
 
-@injectable({ scope: BindingScope.TRANSIENT })
+@injectable({scope: BindingScope.TRANSIENT})
 export class ProcessNotificationService {
   constructor(
     @repository(NotificationRepository)
@@ -24,7 +30,7 @@ export class ProcessNotificationService {
 
     @inject(NotifServiceBindings.NotificationSettingFilter)
     private readonly filterNotificationSettings: INotificationSettingFilterFunc,
-  ) { }
+  ) {}
 
   /**
    *
@@ -33,13 +39,25 @@ export class ProcessNotificationService {
    */
   async draftAndSendNotification(notification: Notification) {
     //In case notification body has the critical flag as false then only system will check for the notification settings i.e. the sleep time of the user.
-    notification = await this.filterNotificationSettings.checkUserNotificationSettings(notification);
+    notification =
+      await this.filterNotificationSettings.checkUserNotificationSettings(
+        notification,
+      );
     let notif: Notification;
-    if (!notification.isDraft && (notification.isGrouped && !notification.groupKey)) {
-      throw new HttpErrors.UnprocessableEntity("In case it is grouped notification, group key field is mandatory in request body.");
+    if (
+      !notification.isDraft &&
+      notification.isGrouped &&
+      !notification.groupKey
+    ) {
+      throw new HttpErrors.UnprocessableEntity(
+        'In case it is grouped notification, group key field is mandatory in request body.',
+      );
     }
     //Cutting the length of the notification to predefined max length only in case if it is not a grouped notification
-    if ((!notification.isGrouped || !notification.groupKey) && notification.body.length > maxBodyLen) {
+    if (
+      (!notification.isGrouped || !notification.groupKey) &&
+      notification.body.length > maxBodyLen
+    ) {
       notification.body = notification.body.substring(0, maxBodyLen - 1);
     }
     notif = await this.insertDataInDb(notification);
@@ -51,15 +69,16 @@ export class ProcessNotificationService {
     return notif;
   }
 
-  async getAllGroupedNotifications(notification: Notification): Promise<Notification[]> {
-    const where = { where: { groupKey: notification.groupKey } }
+  async getAllGroupedNotifications(
+    notification: Notification,
+  ): Promise<Notification[]> {
+    const where = {where: {groupKey: notification.groupKey}};
     return this.notificationRepository.find(where);
-
   }
   async sendNotification(notification: Notification, notif: Notification) {
     if (notification.isGrouped && notification.groupKey) {
       const notifications = await this.getAllGroupedNotifications(notification);
-      let groupNotificationBody = "";
+      let groupNotificationBody = '';
       for (const element of notifications) {
         groupNotificationBody += element.body;
       }
@@ -85,5 +104,4 @@ export class ProcessNotificationService {
 
     return this.notifUserService.getNotifUsers(notif);
   }
-
 }

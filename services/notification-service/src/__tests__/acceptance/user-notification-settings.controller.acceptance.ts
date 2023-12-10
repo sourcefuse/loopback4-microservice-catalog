@@ -2,12 +2,12 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import { Client, expect } from '@loopback/testlab';
+import {Client, expect} from '@loopback/testlab';
 import * as jwt from 'jsonwebtoken';
-import { UserNotificationSettings } from '../../models';
-import { UserNotificationSettingsRepository } from '../../repositories';
-import { NotificationApplication } from '../application';
-import { setUpApplication } from './helper';
+import {UserNotificationSettings} from '../../models';
+import {UserNotificationSettingsRepository} from '../../repositories';
+import {NotificationApplication} from '../application';
+import {setUpApplication} from './helper';
 
 const currentDate = new Date();
 const nextDate = new Date();
@@ -26,7 +26,7 @@ describe('User Notification Settings Controller', () => {
       'CreateNotificationUserSettings',
       'ViewNotificationUserSettings',
       'UpdateNotificationUserSettings',
-      'DeleteNotificationUserSettings'
+      'DeleteNotificationUserSettings',
     ],
   };
 
@@ -36,7 +36,7 @@ describe('User Notification Settings Controller', () => {
   });
 
   before('setupApplication', async () => {
-    ({ app, client } = await setUpApplication());
+    ({app, client} = await setUpApplication());
   });
   after(async () => app.stop());
 
@@ -57,7 +57,8 @@ describe('User Notification Settings Controller', () => {
   });
 
   it('gives status 200 and check properties exist with response for particular id', async () => {
-    const reqToAddUserNotificationSettings = await addUserNotificationSettings();
+    const reqToAddUserNotificationSettings =
+      await addUserNotificationSettings();
     expect(reqToAddUserNotificationSettings.status).to.be.equal(200);
     const response = await client
       .get(`${basePath}`)
@@ -70,7 +71,7 @@ describe('User Notification Settings Controller', () => {
     const notificationToUpdate = {
       sleepStartTime: nextDate,
       sleepEndTime: nextDate,
-      type: 1
+      type: 1,
     };
 
     const response = await client
@@ -87,7 +88,7 @@ describe('User Notification Settings Controller', () => {
     const notificationToUpdate = {
       sleepStartTime: nextDate,
       sleepEndTime: nextDate,
-      type: 1
+      type: 1,
     };
     await client
       .patch(`${basePath}/${reqToAddNotificationUser.body.id}`)
@@ -154,6 +155,8 @@ describe('User Notification Settings Controller', () => {
   }
 
   async function givenRepositories() {
-    userNotificationSettingsRepo = await app.getRepository(UserNotificationSettingsRepository);
+    userNotificationSettingsRepo = await app.getRepository(
+      UserNotificationSettingsRepository,
+    );
   }
 });

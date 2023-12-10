@@ -1,4 +1,4 @@
-import { /* inject, */ BindingScope, Provider, injectable } from '@loopback/core';
+import {/* inject, */ BindingScope, Provider, injectable} from '@loopback/core';
 
 /*
  * Fix the service type. Possible options can be:
@@ -6,21 +6,26 @@ import { /* inject, */ BindingScope, Provider, injectable } from '@loopback/core
  * - export type NotificationUserSettings = string;
  * - export interface NotificationUserSettings {}
  */
-import { repository } from '@loopback/repository';
+import {repository} from '@loopback/repository';
 import moment from 'moment';
-import { Notification } from '../models';
-import { NotificationRepository, UserNotificationSettingsRepository } from '../repositories';
-import { INotificationSettingFilterFunc } from '../types';
+import {Notification} from '../models';
+import {
+  NotificationRepository,
+  UserNotificationSettingsRepository,
+} from '../repositories';
+import {INotificationSettingFilterFunc} from '../types';
 
-@injectable({ scope: BindingScope.TRANSIENT })
-export class NotificationUserSettingsProvider implements Provider<INotificationSettingFilterFunc> {
+@injectable({scope: BindingScope.TRANSIENT})
+export class NotificationUserSettingsProvider
+  implements Provider<INotificationSettingFilterFunc>
+{
   constructor(
     /* Add @inject to inject parameters */
     @repository(UserNotificationSettingsRepository)
     public userNotifSettingsRepository: UserNotificationSettingsRepository,
     @repository(NotificationRepository)
     public notificationRepository: NotificationRepository,
-  ) { }
+  ) {}
 
   value() {
     //Function to filter the recipients based on their respective sleep time to send notification or save it only as draft
@@ -34,21 +39,25 @@ export class NotificationUserSettingsProvider implements Provider<INotificationS
         if (notification.isCritical) {
           //here the participants will be filtered based on the sleep time of the individual participant
           return notification;
-        }
-        else {
+        } else {
           const recipientToSendNotif = [];
           const recipientToNotSendNotif = [];
           const toUsers = notification.receiver.to;
           for (const toUser of toUsers) {
             const element = toUser;
             const currentTime = new Date();
-            const sleepTime = await this.userNotifSettingsRepository.findOne({ where: { userId: element.id, sleepStartTime: { lte: currentTime }, sleepEndTime: { gte: currentTime } } });
+            const sleepTime = await this.userNotifSettingsRepository.findOne({
+              where: {
+                userId: element.id,
+                sleepStartTime: {lte: currentTime},
+                sleepEndTime: {gte: currentTime},
+              },
+            });
             element.isDraft = false;
             if (sleepTime) {
               element.isDraft = true;
               recipientToNotSendNotif.push(element);
-            }
-            else {
+            } else {
               element.isDraft = false;
               recipientToSendNotif.push(element);
             }
@@ -58,7 +67,7 @@ export class NotificationUserSettingsProvider implements Provider<INotificationS
             draftNotification.receiver.to = recipientToNotSendNotif;
             draftNotification.isDraft = true;
             draftNotification.isGrouped = true;
-            const currentDate = moment(new Date()).format("YYYY-MM-DD");
+            const currentDate = moment(new Date()).format('YYYY-MM-DD');
             draftNotification.groupKey = `sleep_${currentDate}`;
             //Draft notification for recipient To Whom Not Send Notificatuon
             await this.insertDataInDb(draftNotification);
@@ -68,7 +77,6 @@ export class NotificationUserSettingsProvider implements Provider<INotificationS
           }
           return notification;
         }
-
       },
     };
   }

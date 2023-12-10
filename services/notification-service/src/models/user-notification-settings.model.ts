@@ -1,6 +1,6 @@
-import { model, property } from '@loopback/repository';
-import { BaseEntity } from '@sourceloop/core';
-import { MessageType } from 'loopback4-notifications';
+import {model, property} from '@loopback/repository';
+import {BaseEntity} from '@sourceloop/core';
+import {MessageType} from 'loopback4-notifications';
 
 @model({
   name: 'user_notification_settings',

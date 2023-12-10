@@ -2,11 +2,18 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import { StubbedInstanceWithSinonAccessor, createStubInstance, expect } from '@loopback/testlab';
+import {
+  StubbedInstanceWithSinonAccessor,
+  createStubInstance,
+  expect,
+} from '@loopback/testlab';
 import sinon from 'sinon';
-import { Notification, UserNotificationSettings } from '../../models';
-import { NotificationUserSettingsProvider } from '../../providers';
-import { NotificationRepository, UserNotificationSettingsRepository } from '../../repositories';
+import {Notification, UserNotificationSettings} from '../../models';
+import {NotificationUserSettingsProvider} from '../../providers';
+import {
+  NotificationRepository,
+  UserNotificationSettingsRepository,
+} from '../../repositories';
 
 const previousDate = new Date();
 previousDate.setDate(previousDate.getDate() + 1);
@@ -22,7 +29,6 @@ describe('Notification User Service', () => {
   beforeEach(setUp);
 
   describe('adds notification from user into receivers array and returns it', () => {
-
     it('returns exact sam e notification object after applying user  notification settings in case there is no sleep time for the given user.', async () => {
       const notification = new Notification({
         id: 'dummy',
@@ -75,12 +81,16 @@ describe('Notification User Service', () => {
         .checkUserNotificationSettings(notification);
       expect(result).to.eql(notification);
     });
-
   });
 
   function setUp() {
-    userNotifSettingsRepository = createStubInstance(UserNotificationSettingsRepository);
+    userNotifSettingsRepository = createStubInstance(
+      UserNotificationSettingsRepository,
+    );
     notificationRepository = createStubInstance(NotificationRepository);
-    notificationUserSettingsProvider = new NotificationUserSettingsProvider(userNotifSettingsRepository, notificationRepository);
+    notificationUserSettingsProvider = new NotificationUserSettingsProvider(
+      userNotifSettingsRepository,
+      notificationRepository,
+    );
   }
 });

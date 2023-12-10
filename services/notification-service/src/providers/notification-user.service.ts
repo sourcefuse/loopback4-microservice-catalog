@@ -2,11 +2,11 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import { bind, /* inject, */ BindingScope, Provider } from '@loopback/core';
-import { Notification, NotificationUser } from '../models';
-import { INotificationUserManager } from '../types';
+import {bind, /* inject, */ BindingScope, Provider} from '@loopback/core';
+import {Notification, NotificationUser} from '../models';
+import {INotificationUserManager} from '../types';
 
-@bind({ scope: BindingScope.TRANSIENT })
+@bind({scope: BindingScope.TRANSIENT})
 export class NotificationUserProvider
   implements Provider<INotificationUserManager>
 {
