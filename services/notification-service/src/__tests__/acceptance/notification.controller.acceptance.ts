@@ -4,13 +4,13 @@
 // https://opensource.org/licenses/MIT
 import {Client, expect} from '@loopback/testlab';
 import * as jwt from 'jsonwebtoken';
+import {Notification} from '../../models';
 import {
   NotificationRepository,
   NotificationUserRepository,
 } from '../../repositories';
 import {NotificationApplication} from '../application';
 import {setUpApplication} from './helper';
-
 describe('Notification Controller', () => {
   let app: NotificationApplication;
   let client: Client;
@@ -57,7 +57,18 @@ describe('Notification Controller', () => {
   });
 
   it('gives status 200 and check properties exist with response for particular id', async () => {
-    const reqToAddNotificationUser = await addUser();
+    const reqToAddNotificationUser = await addNotifications(false, '');
+    expect(reqToAddNotificationUser.status).to.be.equal(200);
+
+    const response = await client
+      .get(`${basePath}/${reqToAddNotificationUser.body.id}`)
+      .set('authorization', `Bearer ${token}`)
+      .expect(200);
+    expect(response).to.have.properties(['res', 'req']);
+  });
+
+  it('gives status 200 and check properties exist with response for particular id in case isGrouped flag is true and groupedKey is given in request.', async () => {
+    const reqToAddNotificationUser = await addNotifications(true, 'testKey');
     expect(reqToAddNotificationUser.status).to.be.equal(200);
 
     const response = await client
@@ -87,7 +98,7 @@ describe('Notification Controller', () => {
   });
 
   it('updates notification successfully using PATCH request with id', async () => {
-    const reqToAddNotificationUser = await addUser();
+    const reqToAddNotificationUser = await addNotifications(false, '');
 
     const notificationToUpdate = {
       body: 'updated-body',
@@ -121,8 +132,8 @@ describe('Notification Controller', () => {
       .expect(200);
   });
 
-  async function addUser() {
-    const notificationToAdd = {
+  async function addNotifications(isGrouped = false, groupKey = '') {
+    const notificationToAdd = new Notification({
       body: 'test_body',
       receiver: {
         to: [
@@ -134,8 +145,12 @@ describe('Notification Controller', () => {
       },
       type: 0,
       sentDate: new Date(),
-    };
+    });
 
+    if (isGrouped) {
+      notificationToAdd.isGrouped = true;
+      notificationToAdd.groupKey = groupKey;
+    }
     return client
       .post(basePath)
       .set('authorization', `Bearer ${token}`)

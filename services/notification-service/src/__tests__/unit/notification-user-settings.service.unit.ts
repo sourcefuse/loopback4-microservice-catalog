@@ -20,7 +20,7 @@ previousDate.setDate(previousDate.getDate() + 1);
 const nextDate = new Date();
 nextDate.setDate(nextDate.getDate() + 1);
 
-describe('Notification User Service', () => {
+describe('Notification User Settings Service', () => {
   let userNotifSettingsRepository: StubbedInstanceWithSinonAccessor<UserNotificationSettingsRepository>;
   let notificationRepository: StubbedInstanceWithSinonAccessor<NotificationRepository>;
   let notificationUserSettingsProvider: NotificationUserSettingsProvider;

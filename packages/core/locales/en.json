@@ -187,5 +187,6 @@
 	"The key 'repositories.UserNotificationSettingsRepository' is not bound to any value in context RequestContext-F8HMy8rmRDOIV4dRkwcDYg-108 (context": " RequestContext-F8HMy8rmRDOIV4dRkwcDYg-108, binding: repositories.UserNotificationSettingsRepository, resolutionPath: controllers.NotificationController --> @NotificationController.constructor[5] --> services.ProcessNotificationService --> @ProcessNotificationService.constructor[4] --> sourceloop.services.notification.notificationSettingFilter --> @NotificationUserSettingsProvider.constructor[0])",
 	"The key 'repositories.UserNotificationSettingsRepository' is not bound to any value in context RequestContext-F8HMy8rmRDOIV4dRkwcDYg-111 (context": " RequestContext-F8HMy8rmRDOIV4dRkwcDYg-111, binding: repositories.UserNotificationSettingsRepository, resolutionPath: controllers.NotificationController --> @NotificationController.constructor[5] --> services.ProcessNotificationService --> @ProcessNotificationService.constructor[4] --> sourceloop.services.notification.notificationSettingFilter --> @NotificationUserSettingsProvider.constructor[0])",
 	"Missing uuid parameter. Provide a valid string uuid": "Missing uuid parameter. Provide a valid string uuid",
-	"ProviderNotFound": "ProviderNotFound"
+	"ProviderNotFound": "ProviderNotFound",
+	"In case it is grouped notification, group key field is mandatory in request body.": "In case it is grouped notification, group key field is mandatory in request body."
 }

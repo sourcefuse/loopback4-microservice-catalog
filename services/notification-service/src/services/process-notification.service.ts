@@ -27,7 +27,6 @@ export class ProcessNotificationService {
     public notificationUserRepository: NotificationUserRepository,
     @inject(NotifServiceBindings.NotificationUserManager)
     private readonly notifUserService: INotificationUserManager,
-
     @inject(NotifServiceBindings.NotificationSettingFilter)
     private readonly filterNotificationSettings: INotificationSettingFilterFunc,
   ) {}
@@ -68,7 +67,6 @@ export class ProcessNotificationService {
     }
     return notif;
   }
-
   async getAllGroupedNotifications(
     notification: Notification,
   ): Promise<Notification[]> {
