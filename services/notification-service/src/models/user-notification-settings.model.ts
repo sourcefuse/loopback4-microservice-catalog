@@ -43,9 +43,3 @@ export class UserNotificationSettings extends BaseEntity<UserNotificationSetting
   })
   type: MessageType;
 }
-
-export interface UserNotificationSettingsRelations {
-  // describe navigational properties here
-}
-
-export type UserNotificationSettingsWithRelations = UserNotificationSettings & UserNotificationSettingsRelations;
