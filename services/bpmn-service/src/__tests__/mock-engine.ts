@@ -84,17 +84,15 @@ export class MockEngine {
       } else {
         throw new HttpErrors.NotFound('Not Found');
       }
-    } else {
-      if (this.workflowList?.[name]) {
-        const latest = Object.keys(this.workflowList?.[name]).length - 1;
-        if (latest > -1) {
-          return this.workflowList[name][latest];
-        } else {
-          throw new HttpErrors.NotFound('Not Found');
-        }
+    } else if (this.workflowList?.[name]) {
+      const latest = Object.keys(this.workflowList?.[name]).length - 1;
+      if (latest > -1) {
+        return this.workflowList[name][latest];
       } else {
         throw new HttpErrors.NotFound('Not Found');
       }
+    } else {
+      throw new HttpErrors.NotFound('Data Not Found');
     }
   }
 

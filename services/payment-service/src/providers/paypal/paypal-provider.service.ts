@@ -117,21 +117,19 @@ export class PaypalProvider implements Provider<PayPalPaymentGateway> {
             orderId: payorder.id,
             payOrderId: order.id,
           };
-        } else {
+        } else if (transaction.status === Status.Paid) {
           // transaction exists check its status
-          if (transaction.status === Status.Paid) {
-            return {
-              res: 'Payment already Done for this Order',
-              status: Status.AlreadyPaid,
-              orderId: payorder.id,
-            };
-          } else {
-            return {
-              orderPayLink: transaction.res.gatewayOrderRes.paypalOrderPayLink,
-              orderId: payorder.id,
-              payOrderId: transaction.res.gatewayOrderRes.paypalOrderId,
-            };
-          }
+          return {
+            res: 'Payment already Done for this Order',
+            status: Status.AlreadyPaid,
+            orderId: payorder.id,
+          };
+        } else {
+          return {
+            orderPayLink: transaction.res.gatewayOrderRes.paypalOrderPayLink,
+            orderId: payorder.id,
+            payOrderId: transaction.res.gatewayOrderRes.paypalOrderId,
+          };
         }
       },
       charge: async (chargeResponse: {orderId: string}) => {
