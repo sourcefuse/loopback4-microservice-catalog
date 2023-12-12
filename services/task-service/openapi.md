@@ -30,30 +30,25 @@ Base URLs:
 
 - HTTP Authentication, scheme: bearer 
 
-<h1 id="bpmn-service-apikeycontroller">ApiKeyController</h1>
+<h1 id="bpmn-service-eventscontroller">EventsController</h1>
 
-## ApiKeyController.generateApiKeys
+## EventsController.count
 
-<a id="opIdApiKeyController.generateApiKeys"></a>
+<a id="opIdEventsController.count"></a>
 
 > Code samples
 
 ```javascript
-const inputBody = '{
-  "key": "string",
-  "secret": "string",
-  "id": "string"
-}';
+
 const headers = {
-  'Content-Type':'application/json',
   'Accept':'application/json',
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/api-keys',
+fetch('/events/count',
 {
-  method: 'POST',
-  body: inputBody,
+  method: 'GET',
+
   headers: headers
 })
 .then(function(res) {
@@ -66,21 +61,16 @@ fetch('/api-keys',
 
 ```javascript--nodejs
 const fetch = require('node-fetch');
-const inputBody = {
-  "key": "string",
-  "secret": "string",
-  "id": "string"
-};
+
 const headers = {
-  'Content-Type':'application/json',
   'Accept':'application/json',
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/api-keys',
+fetch('/events/count',
 {
-  method: 'POST',
-  body: JSON.stringify(inputBody),
+  method: 'GET',
+
   headers: headers
 })
 .then(function(res) {
@@ -91,27 +81,17 @@ fetch('/api-keys',
 
 ```
 
-`POST /api-keys`
+`GET /events/count`
 
 | Permissions |
 | ------- |
-| 4   |
+| 16002   |
 
-> Body parameter
-
-```json
-{
-  "key": "string",
-  "secret": "string",
-  "id": "string"
-}
-```
-
-<h3 id="apikeycontroller.generateapikeys-parameters">Parameters</h3>
+<h3 id="eventscontroller.count-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|body|body|[ClientApp](#schemaclientapp)|false|none|
+|where|query|object|false|none|
 
 > Example responses
 
@@ -119,206 +99,20 @@ fetch('/api-keys',
 
 ```json
 {
-  "apiKey": "string",
-  "apiSecret": "string"
+  "count": 0
 }
 ```
 
-<h3 id="apikeycontroller.generateapikeys-responses">Responses</h3>
+<h3 id="eventscontroller.count-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Generated API keys|[ApiKeyExcluding_id_](#schemaapikeyexcluding_id_)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Event model count|[loopback.Count](#schemaloopback.count)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
 HTTPBearer
 </aside>
-
-<h1 id="bpmn-service-eventqueuecontroller">EventQueueController</h1>
-
-## EventQueueController.enqueueEvent
-
-<a id="opIdEventQueueController.enqueueEvent"></a>
-
-> Code samples
-
-```javascript
-const inputBody = '{
-  "id": "string",
-  "key": "string",
-  "description": "string",
-  "source": "string",
-  "payload": {}
-}';
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json'
-};
-
-fetch('/event-queue/enqueue',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-const inputBody = {
-  "id": "string",
-  "key": "string",
-  "description": "string",
-  "source": "string",
-  "payload": {}
-};
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json'
-};
-
-fetch('/event-queue/enqueue',
-{
-  method: 'POST',
-  body: JSON.stringify(inputBody),
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`POST /event-queue/enqueue`
-
-| Permissions |
-| ------- |
-| 3   |
-
-> Body parameter
-
-```json
-{
-  "id": "string",
-  "key": "string",
-  "description": "string",
-  "source": "string",
-  "payload": {}
-}
-```
-
-<h3 id="eventqueuecontroller.enqueueevent-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|body|body|[Event](#schemaevent)|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "id": "string",
-  "key": "string",
-  "description": "string",
-  "source": "string",
-  "payload": {}
-}
-```
-
-<h3 id="eventqueuecontroller.enqueueevent-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Enque model instance|[Event](#schemaevent)|
-|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Event enqueued successfully|None|
-|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Failed to enqueue event|None|
-
-<aside class="success">
-This operation does not require authentication
-</aside>
-
-## EventQueueController.healthCheck
-
-<a id="opIdEventQueueController.healthCheck"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/event-queue/ping',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/event-queue/ping',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /event-queue/ping`
-
-> Example responses
-
-> 200 Response
-
-```json
-{}
-```
-
-<h3 id="eventqueuecontroller.healthcheck-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Health check response|Inline|
-|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Failed to perform health check|None|
-
-<h3 id="eventqueuecontroller.healthcheck-responseschema">Response Schema</h3>
-
-<aside class="success">
-This operation does not require authentication
-</aside>
-
-<h1 id="bpmn-service-eventscontroller">EventsController</h1>
 
 ## EventsController.mapTaskToWorkflow
 
@@ -426,11 +220,282 @@ To perform this operation, you must be authenticated by means of one of the foll
 HTTPBearer
 </aside>
 
-<h1 id="bpmn-service-taskservicecontroller">TaskServiceController</h1>
+## EventsController.findById
 
-## TaskServiceController.mapTaskToWorkflow
+<a id="opIdEventsController.findById"></a>
 
-<a id="opIdTaskServiceController.mapTaskToWorkflow"></a>
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/events/{id}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/events/{id}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /events/{id}`
+
+| Permissions |
+| ------- |
+| 16002   |
+
+<h3 id="eventscontroller.findbyid-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|filter|query|[events.Filter](#schemaevents.filter)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "id": "string",
+  "key": "string",
+  "description": "string",
+  "source": "string",
+  "payload": {}
+}
+```
+
+<h3 id="eventscontroller.findbyid-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Event model instance|[EventWithRelations](#schemaeventwithrelations)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
+## EventsController.find
+
+<a id="opIdEventsController.find"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/events',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/events',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /events`
+
+| Permissions |
+| ------- |
+| 16002   |
+
+<h3 id="eventscontroller.find-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|filter|query|[events.Filter1](#schemaevents.filter1)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  {
+    "id": "string",
+    "key": "string",
+    "description": "string",
+    "source": "string",
+    "payload": {}
+  }
+]
+```
+
+<h3 id="eventscontroller.find-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Event model instances|Inline|
+
+<h3 id="eventscontroller.find-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[EventWithRelations](#schemaeventwithrelations)]|false|none|[(tsType: EventWithRelations, schemaOptions: { includeRelations: true })]|
+|» EventWithRelations|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
+|»» id|string|false|none|none|
+|»» key|string|true|none|An identifier for a particular event queued by a service or a user|
+|»» description|string|true|none|A short description of an event|
+|»» source|string|true|none|Origination of an event- can be a service or from a user|
+|»» payload|object|true|none|A dynamic object that contains information to be run in the workers of a bpmn engine|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
+<h1 id="bpmn-service-taskcontroller">TaskController</h1>
+
+## TaskController.count
+
+<a id="opIdTaskController.count"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/tasks/count',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/tasks/count',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /tasks/count`
+
+| Permissions |
+| ------- |
+| 16003   |
+
+<h3 id="taskcontroller.count-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|where|query|object|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "count": 0
+}
+```
+
+<h3 id="taskcontroller.count-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Task model count|[loopback.Count](#schemaloopback.count)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
+## TaskController.mapTaskToWorkflow
+
+<a id="opIdTaskController.mapTaskToWorkflow"></a>
 
 > Code samples
 
@@ -487,6 +552,10 @@ fetch('/tasks/mapping',
 
 `POST /tasks/mapping`
 
+| Permissions |
+| ------- |
+| 16006   |
+
 > Body parameter
 
 ```json
@@ -497,13 +566,13 @@ fetch('/tasks/mapping',
 }
 ```
 
-<h3 id="taskservicecontroller.maptasktoworkflow-parameters">Parameters</h3>
+<h3 id="taskcontroller.maptasktoworkflow-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
 |body|body|[TaskWorkFlowMapping](#schemataskworkflowmapping)|false|none|
 
-<h3 id="taskservicecontroller.maptasktoworkflow-responses">Responses</h3>
+<h3 id="taskcontroller.maptasktoworkflow-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -513,27 +582,23 @@ To perform this operation, you must be authenticated by means of one of the foll
 HTTPBearer
 </aside>
 
-## TaskServiceController.subscribeToWebhook
+## TaskController.findById
 
-<a id="opIdTaskServiceController.subscribeToWebhook"></a>
+<a id="opIdTaskController.findById"></a>
 
 > Code samples
 
 ```javascript
-const inputBody = '{
-  "url": "string",
-  "key": "string",
-  "id": "string"
-}';
+
 const headers = {
-  'Content-Type':'application/json',
+  'Accept':'application/json',
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/tasks/subscribe',
+fetch('/tasks/{id}',
 {
-  method: 'POST',
-  body: inputBody,
+  method: 'GET',
+
   headers: headers
 })
 .then(function(res) {
@@ -546,20 +611,16 @@ fetch('/tasks/subscribe',
 
 ```javascript--nodejs
 const fetch = require('node-fetch');
-const inputBody = {
-  "url": "string",
-  "key": "string",
-  "id": "string"
-};
+
 const headers = {
-  'Content-Type':'application/json',
+  'Accept':'application/json',
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/tasks/subscribe',
+fetch('/tasks/{id}',
 {
-  method: 'POST',
-  body: JSON.stringify(inputBody),
+  method: 'GET',
+
   headers: headers
 })
 .then(function(res) {
@@ -570,55 +631,79 @@ fetch('/tasks/subscribe',
 
 ```
 
-`POST /tasks/subscribe`
+`GET /tasks/{id}`
 
-> Body parameter
+| Permissions |
+| ------- |
+| 16003   |
 
-```json
-{
-  "url": "string",
-  "key": "string",
-  "id": "string"
-}
-```
-
-<h3 id="taskservicecontroller.subscribetowebhook-parameters">Parameters</h3>
+<h3 id="taskcontroller.findbyid-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|body|body|[SubscriberDTO](#schemasubscriberdto)|false|none|
+|id|path|string|true|none|
+|filter|query|[tasks.Filter](#schematasks.filter)|false|none|
 
-<h3 id="taskservicecontroller.subscribetowebhook-responses">Responses</h3>
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "id": "string",
+  "key": "string",
+  "name": "string",
+  "description": "string",
+  "status": "string",
+  "priority": "string",
+  "severity": "string",
+  "type": "string",
+  "startDate": "2019-08-24T14:15:22Z",
+  "dueDate": "2019-08-24T14:15:22Z",
+  "endDate": "2019-08-24T14:15:22Z",
+  "assigneeId": "string",
+  "metadata": {},
+  "externalId": "string",
+  "subTasks": [
+    {
+      "id": "string",
+      "name": "string",
+      "taskId": "string",
+      "status": "string",
+      "externalId": "string"
+    }
+  ]
+}
+```
+
+<h3 id="taskcontroller.findbyid-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Task model instance|[TaskWithRelations](#schemataskwithrelations)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
 HTTPBearer
 </aside>
 
-## TaskServiceController.updateTask
+## TaskController.find
 
-<a id="opIdTaskServiceController.updateTask"></a>
+<a id="opIdTaskController.find"></a>
 
 > Code samples
 
 ```javascript
-const inputBody = '{
-  "taskKey": "string",
-  "payload": {},
-  "id": "string"
-}';
+
 const headers = {
-  'Content-Type':'application/json',
+  'Accept':'application/json',
   'Authorization':'Bearer {access-token}'
 };
 
 fetch('/tasks',
 {
-  method: 'POST',
-  body: inputBody,
+  method: 'GET',
+
   headers: headers
 })
 .then(function(res) {
@@ -631,20 +716,16 @@ fetch('/tasks',
 
 ```javascript--nodejs
 const fetch = require('node-fetch');
-const inputBody = {
-  "taskKey": "string",
-  "payload": {},
-  "id": "string"
-};
+
 const headers = {
-  'Content-Type':'application/json',
+  'Accept':'application/json',
   'Authorization':'Bearer {access-token}'
 };
 
 fetch('/tasks',
 {
-  method: 'POST',
-  body: JSON.stringify(inputBody),
+  method: 'GET',
+
   headers: headers
 })
 .then(function(res) {
@@ -655,28 +736,433 @@ fetch('/tasks',
 
 ```
 
-`POST /tasks`
+`GET /tasks`
 
-> Body parameter
+| Permissions |
+| ------- |
+| 16003   |
 
-```json
-{
-  "taskKey": "string",
-  "payload": {},
-  "id": "string"
-}
-```
-
-<h3 id="taskservicecontroller.updatetask-parameters">Parameters</h3>
+<h3 id="taskcontroller.find-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|body|body|[TaskDto](#schemataskdto)|false|none|
+|filter|query|[tasks.Filter1](#schematasks.filter1)|false|none|
 
-<h3 id="taskservicecontroller.updatetask-responses">Responses</h3>
+> Example responses
+
+> 200 Response
+
+```json
+[
+  {
+    "id": "string",
+    "key": "string",
+    "name": "string",
+    "description": "string",
+    "status": "string",
+    "priority": "string",
+    "severity": "string",
+    "type": "string",
+    "startDate": "2019-08-24T14:15:22Z",
+    "dueDate": "2019-08-24T14:15:22Z",
+    "endDate": "2019-08-24T14:15:22Z",
+    "assigneeId": "string",
+    "metadata": {},
+    "externalId": "string",
+    "subTasks": [
+      {
+        "id": "string",
+        "name": "string",
+        "taskId": "string",
+        "status": "string",
+        "externalId": "string"
+      }
+    ]
+  }
+]
+```
+
+<h3 id="taskcontroller.find-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Task model instances|Inline|
+
+<h3 id="taskcontroller.find-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[TaskWithRelations](#schemataskwithrelations)]|false|none|[(tsType: TaskWithRelations, schemaOptions: { includeRelations: true })]|
+|» TaskWithRelations|[TaskWithRelations](#schemataskwithrelations)|false|none|(tsType: TaskWithRelations, schemaOptions: { includeRelations: true })|
+|»» id|string|false|none|none|
+|»» key|string|true|none|An identifier for a particular task within an event|
+|»» name|string|true|none|A name given by the consumer service for this task|
+|»» description|string|false|none|A short description of this task|
+|»» status|string|false|none|A short message to indicate the progression of the task|
+|»» priority|string|true|none|none|
+|»» severity|string|true|none|none|
+|»» type|string|true|none|none|
+|»» startDate|string(date-time)|false|none|none|
+|»» dueDate|string(date-time)|false|none|none|
+|»» endDate|string(date-time)|false|none|none|
+|»» assigneeId|string|false|none|none|
+|»» metadata|object|true|none|none|
+|»» externalId|string|false|none|none|
+|»» subTasks|[[SubTaskWithRelations](#schemasubtaskwithrelations)]|false|none|[(tsType: SubTaskWithRelations, schemaOptions: { includeRelations: true })]|
+|»»» SubTaskWithRelations|[SubTaskWithRelations](#schemasubtaskwithrelations)|false|none|(tsType: SubTaskWithRelations, schemaOptions: { includeRelations: true })|
+|»»»» id|string|false|none|none|
+|»»»» name|string|true|none|none|
+|»»»» taskId|string|true|none|none|
+|»»»» status|string|true|none|none|
+|»»»» externalId|string|true|none|none|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
+<h1 id="bpmn-service-tasksubtaskcontroller">TaskSubTaskController</h1>
+
+## TaskSubTaskController.count
+
+<a id="opIdTaskSubTaskController.count"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/tasks/{taskId}/sub-tasks/count',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/tasks/{taskId}/sub-tasks/count',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /tasks/{taskId}/sub-tasks/count`
+
+| Permissions |
+| ------- |
+| 16004   |
+
+<h3 id="tasksubtaskcontroller.count-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|taskId|path|string|true|none|
+|where|query|object|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "count": 0
+}
+```
+
+<h3 id="tasksubtaskcontroller.count-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Task model count|[loopback.Count](#schemaloopback.count)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
+## TaskSubTaskController.completeTask
+
+<a id="opIdTaskSubTaskController.completeTask"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/tasks/{taskId}/sub-tasks/{subTaskId}/complete',
+{
+  method: 'PATCH',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/tasks/{taskId}/sub-tasks/{subTaskId}/complete',
+{
+  method: 'PATCH',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PATCH /tasks/{taskId}/sub-tasks/{subTaskId}/complete`
+
+| Permissions |
+| ------- |
+| 16005   |
+
+<h3 id="tasksubtaskcontroller.completetask-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|taskId|path|string|true|none|
+|subTaskId|path|string|true|none|
+
+<h3 id="tasksubtaskcontroller.completetask-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
+## TaskSubTaskController.findById
+
+<a id="opIdTaskSubTaskController.findById"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/tasks/{taskId}/sub-tasks/{subTaskId}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/tasks/{taskId}/sub-tasks/{subTaskId}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /tasks/{taskId}/sub-tasks/{subTaskId}`
+
+| Permissions |
+| ------- |
+| 16004   |
+
+<h3 id="tasksubtaskcontroller.findbyid-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|taskId|path|string|true|none|
+|subTaskId|path|string|true|none|
+|filter|query|[sub_tasks.Filter](#schemasub_tasks.filter)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "id": "string",
+  "name": "string",
+  "taskId": "string",
+  "status": "string",
+  "externalId": "string"
+}
+```
+
+<h3 id="tasksubtaskcontroller.findbyid-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|SubTask model instance|[SubTaskWithRelations](#schemasubtaskwithrelations)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
+## TaskSubTaskController.find
+
+<a id="opIdTaskSubTaskController.find"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/tasks/{taskId}/sub-tasks',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/tasks/{taskId}/sub-tasks',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /tasks/{taskId}/sub-tasks`
+
+| Permissions |
+| ------- |
+| 16003   |
+
+<h3 id="tasksubtaskcontroller.find-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|taskId|path|string|true|none|
+|filter|query|[sub_tasks.Filter1](#schemasub_tasks.filter1)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  {
+    "id": "string",
+    "name": "string",
+    "taskId": "string",
+    "status": "string",
+    "externalId": "string"
+  }
+]
+```
+
+<h3 id="tasksubtaskcontroller.find-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of SubTask model instances|Inline|
+
+<h3 id="tasksubtaskcontroller.find-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[SubTaskWithRelations](#schemasubtaskwithrelations)]|false|none|[(tsType: SubTaskWithRelations, schemaOptions: { includeRelations: true })]|
+|» SubTaskWithRelations|[SubTaskWithRelations](#schemasubtaskwithrelations)|false|none|(tsType: SubTaskWithRelations, schemaOptions: { includeRelations: true })|
+|»» id|string|false|none|none|
+|»» name|string|true|none|none|
+|»» taskId|string|true|none|none|
+|»» status|string|true|none|none|
+|»» externalId|string|true|none|none|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -1481,12 +1967,12 @@ ExecuteWorkflowDto
 |workflowVersion|number|false|none|none|
 |input|object|true|none|none|
 
-<h2 id="tocS_Event">Event</h2>
+<h2 id="tocS_EventWithRelations">EventWithRelations</h2>
 <!-- backwards compatibility -->
-<a id="schemaevent"></a>
-<a id="schema_Event"></a>
-<a id="tocSevent"></a>
-<a id="tocsevent"></a>
+<a id="schemaeventwithrelations"></a>
+<a id="schema_EventWithRelations"></a>
+<a id="tocSeventwithrelations"></a>
+<a id="tocseventwithrelations"></a>
 
 ```json
 {
@@ -1499,7 +1985,7 @@ ExecuteWorkflowDto
 
 ```
 
-Event
+EventWithRelations
 
 ### Properties
 
@@ -1510,160 +1996,6 @@ Event
 |description|string|true|none|A short description of an event|
 |source|string|true|none|Origination of an event- can be a service or from a user|
 |payload|object|true|none|A dynamic object that contains information to be run in the workers of a bpmn engine|
-
-<h2 id="tocS_TaskDto">TaskDto</h2>
-<!-- backwards compatibility -->
-<a id="schemataskdto"></a>
-<a id="schema_TaskDto"></a>
-<a id="tocStaskdto"></a>
-<a id="tocstaskdto"></a>
-
-```json
-{
-  "taskKey": "string",
-  "payload": {},
-  "id": "string"
-}
-
-```
-
-TaskDto
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|taskKey|string|true|none|An identifier for a particular task within an event|
-|payload|object|false|none|A dynamic object that contains information to be run in the user task of a bpmn engine|
-|id|string|false|none|none|
-
-<h2 id="tocS_SubscriberDTO">SubscriberDTO</h2>
-<!-- backwards compatibility -->
-<a id="schemasubscriberdto"></a>
-<a id="schema_SubscriberDTO"></a>
-<a id="tocSsubscriberdto"></a>
-<a id="tocssubscriberdto"></a>
-
-```json
-{
-  "url": "string",
-  "key": "string",
-  "id": "string"
-}
-
-```
-
-SubscriberDTO
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|url|string|true|none|url of the regsiterer who is subscribed to the webhook|
-|key|string|true|none|identifier of an event key or task key|
-|id|string|false|none|none|
-
-<h2 id="tocS_TaskWorkFlowMapping">TaskWorkFlowMapping</h2>
-<!-- backwards compatibility -->
-<a id="schemataskworkflowmapping"></a>
-<a id="schema_TaskWorkFlowMapping"></a>
-<a id="tocStaskworkflowmapping"></a>
-<a id="tocstaskworkflowmapping"></a>
-
-```json
-{
-  "id": "string",
-  "workflowKey": "string",
-  "taskKey": "string"
-}
-
-```
-
-TaskWorkFlowMapping
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|id|string|false|none|none|
-|workflowKey|string|true|none|An identifier for a particular workflow|
-|taskKey|string|true|none|An identifier for a particular task within an event|
-
-<h2 id="tocS_ApiKeyExcluding_id_">ApiKeyExcluding_id_</h2>
-<!-- backwards compatibility -->
-<a id="schemaapikeyexcluding_id_"></a>
-<a id="schema_ApiKeyExcluding_id_"></a>
-<a id="tocSapikeyexcluding_id_"></a>
-<a id="tocsapikeyexcluding_id_"></a>
-
-```json
-{
-  "apiKey": "string",
-  "apiSecret": "string"
-}
-
-```
-
-ApiKeyExcluding_id_
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|apiKey|string|true|none|API key generated by the task service|
-|apiSecret|string|true|none|API secret generated by the task service|
-
-<h2 id="tocS_ClientApp">ClientApp</h2>
-<!-- backwards compatibility -->
-<a id="schemaclientapp"></a>
-<a id="schema_ClientApp"></a>
-<a id="tocSclientapp"></a>
-<a id="tocsclientapp"></a>
-
-```json
-{
-  "key": "string",
-  "secret": "string",
-  "id": "string"
-}
-
-```
-
-ClientApp
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|key|string|true|none|An identifier for a client|
-|secret|string|false|none|An extra layer of auth|
-|id|string|false|none|none|
-
-<h2 id="tocS_ClientAppDTO">ClientAppDTO</h2>
-<!-- backwards compatibility -->
-<a id="schemaclientappdto"></a>
-<a id="schema_ClientAppDTO"></a>
-<a id="tocSclientappdto"></a>
-<a id="tocsclientappdto"></a>
-
-```json
-{
-  "key": "string",
-  "secret": "string",
-  "id": "string"
-}
-
-```
-
-ClientAppDTO
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|key|string|true|none|An identifier for a client|
-|secret|string|false|none|An extra layer of auth|
-|id|string|false|none|none|
 
 <h2 id="tocS_EventWorkflowMapping">EventWorkflowMapping</h2>
 <!-- backwards compatibility -->
@@ -1704,6 +2036,782 @@ EventWorkflowMapping
 |id|string|false|none|none|
 |eventKey|string|true|none|An identifier for a particular event queued by a service or a user|
 |workflowKey|string|true|none|An identifier for a particular workflow|
+
+<h2 id="tocS_SubTaskWithRelations">SubTaskWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemasubtaskwithrelations"></a>
+<a id="schema_SubTaskWithRelations"></a>
+<a id="tocSsubtaskwithrelations"></a>
+<a id="tocssubtaskwithrelations"></a>
+
+```json
+{
+  "id": "string",
+  "name": "string",
+  "taskId": "string",
+  "status": "string",
+  "externalId": "string"
+}
+
+```
+
+SubTaskWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|false|none|none|
+|name|string|true|none|none|
+|taskId|string|true|none|none|
+|status|string|true|none|none|
+|externalId|string|true|none|none|
+
+<h2 id="tocS_TaskWithRelations">TaskWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemataskwithrelations"></a>
+<a id="schema_TaskWithRelations"></a>
+<a id="tocStaskwithrelations"></a>
+<a id="tocstaskwithrelations"></a>
+
+```json
+{
+  "id": "string",
+  "key": "string",
+  "name": "string",
+  "description": "string",
+  "status": "string",
+  "priority": "string",
+  "severity": "string",
+  "type": "string",
+  "startDate": "2019-08-24T14:15:22Z",
+  "dueDate": "2019-08-24T14:15:22Z",
+  "endDate": "2019-08-24T14:15:22Z",
+  "assigneeId": "string",
+  "metadata": {},
+  "externalId": "string",
+  "subTasks": [
+    {
+      "id": "string",
+      "name": "string",
+      "taskId": "string",
+      "status": "string",
+      "externalId": "string"
+    }
+  ]
+}
+
+```
+
+TaskWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|false|none|none|
+|key|string|true|none|An identifier for a particular task within an event|
+|name|string|true|none|A name given by the consumer service for this task|
+|description|string|false|none|A short description of this task|
+|status|string|false|none|A short message to indicate the progression of the task|
+|priority|string|true|none|none|
+|severity|string|true|none|none|
+|type|string|true|none|none|
+|startDate|string(date-time)|false|none|none|
+|dueDate|string(date-time)|false|none|none|
+|endDate|string(date-time)|false|none|none|
+|assigneeId|string|false|none|none|
+|metadata|object|true|none|none|
+|externalId|string|false|none|none|
+|subTasks|[[SubTaskWithRelations](#schemasubtaskwithrelations)]|false|none|[(tsType: SubTaskWithRelations, schemaOptions: { includeRelations: true })]|
+
+<h2 id="tocS_TaskWorkFlowMapping">TaskWorkFlowMapping</h2>
+<!-- backwards compatibility -->
+<a id="schemataskworkflowmapping"></a>
+<a id="schema_TaskWorkFlowMapping"></a>
+<a id="tocStaskworkflowmapping"></a>
+<a id="tocstaskworkflowmapping"></a>
+
+```json
+{
+  "id": "string",
+  "workflowKey": "string",
+  "taskKey": "string"
+}
+
+```
+
+TaskWorkFlowMapping
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|false|none|none|
+|workflowKey|string|true|none|An identifier for a particular workflow|
+|taskKey|string|true|none|An identifier for a particular task within an event|
+
+<h2 id="tocS_loopback.Count">loopback.Count</h2>
+<!-- backwards compatibility -->
+<a id="schemaloopback.count"></a>
+<a id="schema_loopback.Count"></a>
+<a id="tocSloopback.count"></a>
+<a id="tocsloopback.count"></a>
+
+```json
+{
+  "count": 0
+}
+
+```
+
+loopback.Count
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|count|number|false|none|none|
+
+<h2 id="tocS_events.Filter">events.Filter</h2>
+<!-- backwards compatibility -->
+<a id="schemaevents.filter"></a>
+<a id="schema_events.Filter"></a>
+<a id="tocSevents.filter"></a>
+<a id="tocsevents.filter"></a>
+
+```json
+{
+  "offset": 0,
+  "limit": 100,
+  "skip": 0,
+  "order": "string",
+  "fields": {
+    "id": true,
+    "key": true,
+    "description": true,
+    "source": true,
+    "payload": true
+  }
+}
+
+```
+
+events.Filter
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|offset|integer|false|none|none|
+|limit|integer|false|none|none|
+|skip|integer|false|none|none|
+|order|any|false|none|none|
+
+oneOf
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
+
+xor
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
+
+continued
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|fields|any|false|none|none|
+
+oneOf
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|object|false|none|none|
+|»» id|boolean|false|none|none|
+|»» key|boolean|false|none|none|
+|»» description|boolean|false|none|none|
+|»» source|boolean|false|none|none|
+|»» payload|boolean|false|none|none|
+
+xor
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
+
+<h2 id="tocS_events.Filter1">events.Filter1</h2>
+<!-- backwards compatibility -->
+<a id="schemaevents.filter1"></a>
+<a id="schema_events.Filter1"></a>
+<a id="tocSevents.filter1"></a>
+<a id="tocsevents.filter1"></a>
+
+```json
+{
+  "offset": 0,
+  "limit": 100,
+  "skip": 0,
+  "order": "string",
+  "where": {},
+  "fields": {
+    "id": true,
+    "key": true,
+    "description": true,
+    "source": true,
+    "payload": true
+  }
+}
+
+```
+
+events.Filter
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|offset|integer|false|none|none|
+|limit|integer|false|none|none|
+|skip|integer|false|none|none|
+|order|any|false|none|none|
+
+oneOf
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
+
+xor
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
+
+continued
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|where|object|false|none|none|
+|fields|any|false|none|none|
+
+oneOf
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|object|false|none|none|
+|»» id|boolean|false|none|none|
+|»» key|boolean|false|none|none|
+|»» description|boolean|false|none|none|
+|»» source|boolean|false|none|none|
+|»» payload|boolean|false|none|none|
+
+xor
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
+
+<h2 id="tocS_sub_tasks.Filter">sub_tasks.Filter</h2>
+<!-- backwards compatibility -->
+<a id="schemasub_tasks.filter"></a>
+<a id="schema_sub_tasks.Filter"></a>
+<a id="tocSsub_tasks.filter"></a>
+<a id="tocssub_tasks.filter"></a>
+
+```json
+{
+  "offset": 0,
+  "limit": 100,
+  "skip": 0,
+  "order": "string",
+  "fields": {
+    "id": true,
+    "name": true,
+    "taskId": true,
+    "status": true,
+    "externalId": true
+  }
+}
+
+```
+
+sub_tasks.Filter
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|offset|integer|false|none|none|
+|limit|integer|false|none|none|
+|skip|integer|false|none|none|
+|order|any|false|none|none|
+
+oneOf
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
+
+xor
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
+
+continued
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|fields|any|false|none|none|
+
+oneOf
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|object|false|none|none|
+|»» id|boolean|false|none|none|
+|»» name|boolean|false|none|none|
+|»» taskId|boolean|false|none|none|
+|»» status|boolean|false|none|none|
+|»» externalId|boolean|false|none|none|
+
+xor
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
+
+<h2 id="tocS_sub_tasks.Filter1">sub_tasks.Filter1</h2>
+<!-- backwards compatibility -->
+<a id="schemasub_tasks.filter1"></a>
+<a id="schema_sub_tasks.Filter1"></a>
+<a id="tocSsub_tasks.filter1"></a>
+<a id="tocssub_tasks.filter1"></a>
+
+```json
+{
+  "offset": 0,
+  "limit": 100,
+  "skip": 0,
+  "order": "string",
+  "where": {},
+  "fields": {
+    "id": true,
+    "name": true,
+    "taskId": true,
+    "status": true,
+    "externalId": true
+  }
+}
+
+```
+
+sub_tasks.Filter
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|offset|integer|false|none|none|
+|limit|integer|false|none|none|
+|skip|integer|false|none|none|
+|order|any|false|none|none|
+
+oneOf
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
+
+xor
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
+
+continued
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|where|object|false|none|none|
+|fields|any|false|none|none|
+
+oneOf
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|object|false|none|none|
+|»» id|boolean|false|none|none|
+|»» name|boolean|false|none|none|
+|»» taskId|boolean|false|none|none|
+|»» status|boolean|false|none|none|
+|»» externalId|boolean|false|none|none|
+
+xor
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
+
+<h2 id="tocS_tasks.ScopeFilter">tasks.ScopeFilter</h2>
+<!-- backwards compatibility -->
+<a id="schematasks.scopefilter"></a>
+<a id="schema_tasks.ScopeFilter"></a>
+<a id="tocStasks.scopefilter"></a>
+<a id="tocstasks.scopefilter"></a>
+
+```json
+{
+  "offset": 0,
+  "limit": 100,
+  "skip": 0,
+  "order": "string",
+  "where": {},
+  "fields": {},
+  "include": [
+    {}
+  ]
+}
+
+```
+
+tasks.ScopeFilter
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|offset|integer|false|none|none|
+|limit|integer|false|none|none|
+|skip|integer|false|none|none|
+|order|any|false|none|none|
+
+oneOf
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
+
+xor
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
+
+continued
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|where|object|false|none|none|
+|fields|any|false|none|none|
+
+oneOf
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|object|false|none|none|
+
+xor
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
+
+continued
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|include|[object]|false|none|none|
+
+<h2 id="tocS_tasks.IncludeFilter.Items">tasks.IncludeFilter.Items</h2>
+<!-- backwards compatibility -->
+<a id="schematasks.includefilter.items"></a>
+<a id="schema_tasks.IncludeFilter.Items"></a>
+<a id="tocStasks.includefilter.items"></a>
+<a id="tocstasks.includefilter.items"></a>
+
+```json
+{
+  "relation": "subTasks",
+  "scope": {
+    "offset": 0,
+    "limit": 100,
+    "skip": 0,
+    "order": "string",
+    "where": {},
+    "fields": {},
+    "include": [
+      {}
+    ]
+  }
+}
+
+```
+
+tasks.IncludeFilter.Items
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|relation|string|false|none|none|
+|scope|[tasks.ScopeFilter](#schematasks.scopefilter)|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|relation|subTasks|
+
+<h2 id="tocS_tasks.Filter">tasks.Filter</h2>
+<!-- backwards compatibility -->
+<a id="schematasks.filter"></a>
+<a id="schema_tasks.Filter"></a>
+<a id="tocStasks.filter"></a>
+<a id="tocstasks.filter"></a>
+
+```json
+{
+  "offset": 0,
+  "limit": 100,
+  "skip": 0,
+  "order": "string",
+  "fields": {
+    "id": true,
+    "key": true,
+    "name": true,
+    "description": true,
+    "status": true,
+    "priority": true,
+    "severity": true,
+    "type": true,
+    "startDate": true,
+    "dueDate": true,
+    "endDate": true,
+    "assigneeId": true,
+    "metadata": true,
+    "externalId": true
+  },
+  "include": [
+    {
+      "relation": "subTasks",
+      "scope": {
+        "offset": 0,
+        "limit": 100,
+        "skip": 0,
+        "order": "string",
+        "where": {},
+        "fields": {},
+        "include": [
+          {}
+        ]
+      }
+    }
+  ]
+}
+
+```
+
+tasks.Filter
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|offset|integer|false|none|none|
+|limit|integer|false|none|none|
+|skip|integer|false|none|none|
+|order|any|false|none|none|
+
+oneOf
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
+
+xor
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
+
+continued
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|fields|any|false|none|none|
+
+oneOf
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|object|false|none|none|
+|»» id|boolean|false|none|none|
+|»» key|boolean|false|none|none|
+|»» name|boolean|false|none|none|
+|»» description|boolean|false|none|none|
+|»» status|boolean|false|none|none|
+|»» priority|boolean|false|none|none|
+|»» severity|boolean|false|none|none|
+|»» type|boolean|false|none|none|
+|»» startDate|boolean|false|none|none|
+|»» dueDate|boolean|false|none|none|
+|»» endDate|boolean|false|none|none|
+|»» assigneeId|boolean|false|none|none|
+|»» metadata|boolean|false|none|none|
+|»» externalId|boolean|false|none|none|
+
+xor
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
+
+continued
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|include|[anyOf]|false|none|none|
+
+anyOf
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[tasks.IncludeFilter.Items](#schematasks.includefilter.items)|false|none|none|
+
+or
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
+
+<h2 id="tocS_tasks.Filter1">tasks.Filter1</h2>
+<!-- backwards compatibility -->
+<a id="schematasks.filter1"></a>
+<a id="schema_tasks.Filter1"></a>
+<a id="tocStasks.filter1"></a>
+<a id="tocstasks.filter1"></a>
+
+```json
+{
+  "offset": 0,
+  "limit": 100,
+  "skip": 0,
+  "order": "string",
+  "where": {},
+  "fields": {
+    "id": true,
+    "key": true,
+    "name": true,
+    "description": true,
+    "status": true,
+    "priority": true,
+    "severity": true,
+    "type": true,
+    "startDate": true,
+    "dueDate": true,
+    "endDate": true,
+    "assigneeId": true,
+    "metadata": true,
+    "externalId": true
+  },
+  "include": [
+    {
+      "relation": "subTasks",
+      "scope": {
+        "offset": 0,
+        "limit": 100,
+        "skip": 0,
+        "order": "string",
+        "where": {},
+        "fields": {},
+        "include": [
+          {}
+        ]
+      }
+    }
+  ]
+}
+
+```
+
+tasks.Filter
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|offset|integer|false|none|none|
+|limit|integer|false|none|none|
+|skip|integer|false|none|none|
+|order|any|false|none|none|
+
+oneOf
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
+
+xor
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
+
+continued
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|where|object|false|none|none|
+|fields|any|false|none|none|
+
+oneOf
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|object|false|none|none|
+|»» id|boolean|false|none|none|
+|»» key|boolean|false|none|none|
+|»» name|boolean|false|none|none|
+|»» description|boolean|false|none|none|
+|»» status|boolean|false|none|none|
+|»» priority|boolean|false|none|none|
+|»» severity|boolean|false|none|none|
+|»» type|boolean|false|none|none|
+|»» startDate|boolean|false|none|none|
+|»» dueDate|boolean|false|none|none|
+|»» endDate|boolean|false|none|none|
+|»» assigneeId|boolean|false|none|none|
+|»» metadata|boolean|false|none|none|
+|»» externalId|boolean|false|none|none|
+
+xor
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
+
+continued
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|include|[anyOf]|false|none|none|
+
+anyOf
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[tasks.IncludeFilter.Items](#schematasks.includefilter.items)|false|none|none|
+
+or
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
 
 <h2 id="tocS_workflows.ScopeFilter">workflows.ScopeFilter</h2>
 <!-- backwards compatibility -->

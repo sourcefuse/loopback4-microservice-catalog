@@ -3,7 +3,6 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-export * from './event-queue.controller';
-export * from './task-service.controller';
-export * from './api-key.controller';
 export * from './events.controller';
+export * from './task-sub-task.controller';
+export * from './task.controller';

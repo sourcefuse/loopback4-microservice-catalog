@@ -7,8 +7,10 @@ import {
   Component,
   ControllerClass,
   CoreBindings,
+  createBindingFromClass,
   inject,
   ProviderMap,
+  ServiceOrProviderClass,
 } from '@loopback/core';
 import {Class, Model, Repository} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
@@ -24,26 +26,22 @@ import {Strategies} from 'loopback4-authentication';
 import {
   BearerStrategyFactoryProvider,
   BearerTokenVerifyProvider,
-} from 'loopback4-authentication/passport-bearer';
+} from 'loopback4-authentication/dist/strategies';
+import {TaskServiceBindings} from './keys';
+import {CommandObserver, EventStreamObserver} from './lifecycle-observers';
 import {
-  ApiKeyRepository,
   EventRepository,
+  EventWorkflowMappingRepository,
+  SubTaskRepository,
   TaskRepository,
   TaskWorkFlowMappingRepository,
-  WebhookSubscriptionsRepository,
 } from './repositories';
-import {EventWorkflowMappingRepository} from './repositories/event-workflow-mapping.repository';
 import {
-  ApiKeyVerificationService,
   CamundaService,
   EventProcessorService,
-  EventQueueServiceSQS,
   HttpClientService,
-  TaskDbService,
-  TaskOperationService,
+  SubTaskService,
   UtilityService,
-  WebhookService,
-  WorkflowOperationService,
 } from './services';
 
 export class TaskServiceComponent implements Component {
@@ -57,18 +55,7 @@ export class TaskServiceComponent implements Component {
 
   providers: ProviderMap = {};
 
-  services = [
-    CamundaService,
-    EventProcessorService,
-    EventQueueServiceSQS,
-    HttpClientService,
-    TaskOperationService,
-    UtilityService,
-    WorkflowOperationService,
-    WebhookService,
-    TaskDbService,
-    ApiKeyVerificationService,
-  ];
+  services?: ServiceOrProviderClass[] | undefined;
 
   /**
    * An array of controller classes
@@ -95,19 +82,33 @@ export class TaskServiceComponent implements Component {
     });
     this.application.component(WorkflowServiceComponent);
     this.controllers = [
-      controllers.EventQueueController,
-      controllers.TaskServiceController,
-      controllers.ApiKeyController,
       controllers.EventsController,
+      controllers.TaskController,
+      controllers.TaskSubTaskController,
     ];
     this.repositories = [
       EventRepository,
       TaskRepository,
       EventWorkflowMappingRepository,
       TaskWorkFlowMappingRepository,
-      WebhookSubscriptionsRepository,
-      ApiKeyRepository,
+      SubTaskRepository,
     ];
+    this.services = [
+      CamundaService,
+      UtilityService,
+      SubTaskService,
+      HttpClientService,
+    ];
+    this.bindings = [
+      createBindingFromClass(EventProcessorService, {
+        key: TaskServiceBindings.EVENT_PROCESSOR,
+      }),
+      createBindingFromClass(SubTaskService, {
+        key: TaskServiceBindings.SUB_TASK_SERVICE,
+      }),
+    ];
+    this.application.lifeCycleObserver(EventStreamObserver);
+    this.application.lifeCycleObserver(CommandObserver);
   }
 
   /**

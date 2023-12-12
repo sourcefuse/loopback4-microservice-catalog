@@ -1,24 +1,29 @@
-import {BindingKey} from '@loopback/core';
-import {EventQueueConnector} from '../src/types';
+import {BindingKey, Constructor} from '@loopback/core';
+import {ICommand} from '@sourceloop/bpmn-service';
 import {BINDING_PREFIX} from '@sourceloop/core';
+import {IIncomingConnector, IOutgoingConnector} from './interfaces';
 
 export namespace TaskServiceBindings {
-  export const TASK_PROVIDER =
-    BindingKey.create<EventQueueConnector>('sf.task.provider');
-
   export const CUSTOM_BPMN_RUNNER = BindingKey.create(
     `${BINDING_PREFIX}.task.custom_task.runner`,
   );
 
-  export const CONNECTOR_CONFIG = BindingKey.create(
-    `${BINDING_PREFIX}.task.connector.config`,
+  export const SUB_TASK_SERVICE = BindingKey.create(
+    `${BINDING_PREFIX}.subtask.service`,
   );
 
-  export const CONNECTOR_NAME = BindingKey.create(
-    `${BINDING_PREFIX}.task.connector.name`,
+  export const EVENT_PROCESSOR = BindingKey.create(
+    `${BINDING_PREFIX}.task.event.processor`,
   );
 
-  export const CAMUNDA_ENGINE_URL = BindingKey.create(
-    `${BINDING_PREFIX}.task.engine.camunda`,
+  export const INCOMING_CONNECTOR = BindingKey.create<IIncomingConnector>(
+    `${BINDING_PREFIX}.task.incoming.processor`,
+  );
+  export const OUTGOING_CONNECTOR = BindingKey.create<
+    IOutgoingConnector<unknown>
+  >(`${BINDING_PREFIX}.task.incoming.processor`);
+
+  export const COMMANDS = BindingKey.create<Constructor<ICommand>[]>(
+    `${BINDING_PREFIX}.task.commands`,
   );
 }

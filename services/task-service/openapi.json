@@ -9,12 +9,12 @@
     }
   },
   "paths": {
-    "/api-keys": {
-      "post": {
-        "x-controller-name": "ApiKeyController",
-        "x-operation-name": "generateApiKeys",
+    "/events/count": {
+      "get": {
+        "x-controller-name": "EventsController",
+        "x-operation-name": "count",
         "tags": [
-          "ApiKeyController"
+          "EventsController"
         ],
         "security": [
           {
@@ -23,91 +23,34 @@
         ],
         "responses": {
           "200": {
-            "description": "Generated API keys",
+            "description": "Event model count",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiKeyExcluding_id_"
+                  "$ref": "#/components/schemas/loopback.Count"
                 }
               }
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| 4   |\n",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ClientApp"
+        "description": "\n\n| Permissions |\n| ------- |\n| 16002   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "events.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<Event>"
+                }
               }
             }
           }
-        },
-        "operationId": "ApiKeyController.generateApiKeys"
-      }
-    },
-    "/event-queue/enqueue": {
-      "post": {
-        "x-controller-name": "EventQueueController",
-        "x-operation-name": "enqueueEvent",
-        "tags": [
-          "EventQueueController"
         ],
-        "responses": {
-          "200": {
-            "description": "Enque model instance",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Event"
-                }
-              }
-            }
-          },
-          "204": {
-            "description": "Event enqueued successfully"
-          },
-          "500": {
-            "description": "Failed to enqueue event"
-          }
-        },
-        "description": "\n\n| Permissions |\n| ------- |\n| 3   |\n",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Event"
-              }
-            }
-          }
-        },
-        "operationId": "EventQueueController.enqueueEvent"
-      }
-    },
-    "/event-queue/ping": {
-      "get": {
-        "x-controller-name": "EventQueueController",
-        "x-operation-name": "healthCheck",
-        "tags": [
-          "EventQueueController"
-        ],
-        "responses": {
-          "200": {
-            "description": "Health check response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Failed to perform health check"
-          }
-        },
-        "description": "",
-        "operationId": "EventQueueController.healthCheck"
+        "operationId": "EventsController.count"
       }
     },
     "/events/mapping": {
@@ -136,12 +79,149 @@
         "operationId": "EventsController.mapTaskToWorkflow"
       }
     },
+    "/events/{id}": {
+      "get": {
+        "x-controller-name": "EventsController",
+        "x-operation-name": "findById",
+        "tags": [
+          "EventsController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Event model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventWithRelations"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 16002   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/events.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "EventsController.findById"
+      }
+    },
+    "/events": {
+      "get": {
+        "x-controller-name": "EventsController",
+        "x-operation-name": "find",
+        "tags": [
+          "EventsController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of Event model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EventWithRelations"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 16002   |\n",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/events.Filter1"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "EventsController.find"
+      }
+    },
+    "/tasks/count": {
+      "get": {
+        "x-controller-name": "TaskController",
+        "x-operation-name": "count",
+        "tags": [
+          "TaskController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Task model count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 16003   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "tasks.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<Task>"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "TaskController.count"
+      }
+    },
     "/tasks/mapping": {
       "post": {
-        "x-controller-name": "TaskServiceController",
+        "x-controller-name": "TaskController",
         "x-operation-name": "mapTaskToWorkflow",
         "tags": [
-          "TaskServiceController"
+          "TaskController"
         ],
         "security": [
           {
@@ -149,7 +229,7 @@
           }
         ],
         "responses": {},
-        "description": "",
+        "description": "\n\n| Permissions |\n| ------- |\n| 16006   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -159,15 +239,67 @@
             }
           }
         },
-        "operationId": "TaskServiceController.mapTaskToWorkflow"
+        "operationId": "TaskController.mapTaskToWorkflow"
       }
     },
-    "/tasks/subscribe": {
-      "post": {
-        "x-controller-name": "TaskServiceController",
-        "x-operation-name": "subscribeToWebhook",
+    "/tasks/{taskId}/sub-tasks/count": {
+      "get": {
+        "x-controller-name": "TaskSubTaskController",
+        "x-operation-name": "count",
         "tags": [
-          "TaskServiceController"
+          "TaskSubTaskController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Task model count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 16004   |\n",
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "sub_tasks.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<SubTask>"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "TaskSubTaskController.count"
+      }
+    },
+    "/tasks/{taskId}/sub-tasks/{subTaskId}/complete": {
+      "patch": {
+        "x-controller-name": "TaskSubTaskController",
+        "x-operation-name": "completeTask",
+        "tags": [
+          "TaskSubTaskController"
         ],
         "security": [
           {
@@ -175,43 +307,228 @@
           }
         ],
         "responses": {},
-        "description": "",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SubscriberDTO"
+        "description": "\n\n| Permissions |\n| ------- |\n| 16005   |\n",
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "subTaskId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "TaskSubTaskController.completeTask"
+      }
+    },
+    "/tasks/{taskId}/sub-tasks/{subTaskId}": {
+      "get": {
+        "x-controller-name": "TaskSubTaskController",
+        "x-operation-name": "findById",
+        "tags": [
+          "TaskSubTaskController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "SubTask model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubTaskWithRelations"
+                }
               }
             }
           }
         },
-        "operationId": "TaskServiceController.subscribeToWebhook"
+        "description": "\n\n| Permissions |\n| ------- |\n| 16004   |\n",
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "subTaskId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/sub_tasks.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "TaskSubTaskController.findById"
+      }
+    },
+    "/tasks/{taskId}/sub-tasks": {
+      "get": {
+        "x-controller-name": "TaskSubTaskController",
+        "x-operation-name": "find",
+        "tags": [
+          "TaskSubTaskController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of SubTask model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubTaskWithRelations"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 16003   |\n",
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/sub_tasks.Filter1"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "TaskSubTaskController.find"
+      }
+    },
+    "/tasks/{id}": {
+      "get": {
+        "x-controller-name": "TaskController",
+        "x-operation-name": "findById",
+        "tags": [
+          "TaskController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Task model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskWithRelations"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 16003   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/tasks.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "TaskController.findById"
       }
     },
     "/tasks": {
-      "post": {
-        "x-controller-name": "TaskServiceController",
-        "x-operation-name": "updateTask",
+      "get": {
+        "x-controller-name": "TaskController",
+        "x-operation-name": "find",
         "tags": [
-          "TaskServiceController"
+          "TaskController"
         ],
         "security": [
           {
             "HTTPBearer": []
           }
         ],
-        "responses": {},
-        "description": "",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TaskDto"
+        "responses": {
+          "200": {
+            "description": "Array of Task model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TaskWithRelations"
+                  }
+                }
               }
             }
           }
         },
-        "operationId": "TaskServiceController.updateTask"
+        "description": "\n\n| Permissions |\n| ------- |\n| 16003   |\n",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/tasks.Filter1"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "TaskController.find"
       }
     },
     "/workflows/{id}/execute": {
@@ -634,9 +951,10 @@
         ],
         "additionalProperties": false
       },
-      "Event": {
-        "title": "Event",
+      "EventWithRelations": {
+        "title": "EventWithRelations",
         "type": "object",
+        "description": "(tsType: EventWithRelations, schemaOptions: { includeRelations: true })",
         "properties": {
           "id": {
             "type": "string"
@@ -664,139 +982,8 @@
           "source",
           "payload"
         ],
-        "additionalProperties": false
-      },
-      "TaskDto": {
-        "title": "TaskDto",
-        "type": "object",
-        "properties": {
-          "taskKey": {
-            "type": "string",
-            "description": "An identifier for a particular task within an event"
-          },
-          "payload": {
-            "type": "object",
-            "description": "A dynamic object that contains information to be run in the user task of a bpmn engine"
-          },
-          "id": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "taskKey"
-        ],
-        "additionalProperties": false
-      },
-      "SubscriberDTO": {
-        "title": "SubscriberDTO",
-        "type": "object",
-        "properties": {
-          "url": {
-            "type": "string",
-            "description": "url of the regsiterer who is subscribed to the webhook"
-          },
-          "key": {
-            "type": "string",
-            "description": "identifier of an event key or task key"
-          },
-          "id": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "url",
-          "key"
-        ],
-        "additionalProperties": false
-      },
-      "TaskWorkFlowMapping": {
-        "title": "TaskWorkFlowMapping",
-        "type": "object",
-        "description": "(tsType: TaskWorkflows, schemaOptions: { title: 'TaskWorkFlowMapping' })",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "workflowKey": {
-            "type": "string",
-            "description": "An identifier for a particular workflow"
-          },
-          "taskKey": {
-            "type": "string",
-            "description": "An identifier for a particular task within an event"
-          }
-        },
-        "required": [
-          "workflowKey",
-          "taskKey"
-        ],
         "additionalProperties": false,
-        "x-typescript-type": "TaskWorkflows"
-      },
-      "ApiKeyExcluding_id_": {
-        "title": "ApiKeyExcluding_id_",
-        "type": "object",
-        "description": "(tsType: Omit<ApiKey, 'id'>, schemaOptions: { exclude: [ 'id' ] })",
-        "properties": {
-          "apiKey": {
-            "type": "string",
-            "description": "API key generated by the task service"
-          },
-          "apiSecret": {
-            "type": "string",
-            "description": "API secret generated by the task service"
-          }
-        },
-        "required": [
-          "apiKey",
-          "apiSecret"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "Omit<ApiKey, 'id'>"
-      },
-      "ClientApp": {
-        "title": "ClientApp",
-        "type": "object",
-        "description": "(tsType: ClientAppDTO, schemaOptions: { title: 'ClientApp' })",
-        "properties": {
-          "key": {
-            "type": "string",
-            "description": "An identifier for a client"
-          },
-          "secret": {
-            "type": "string",
-            "description": "An extra layer of auth"
-          },
-          "id": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "key"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "ClientAppDTO"
-      },
-      "ClientAppDTO": {
-        "title": "ClientAppDTO",
-        "type": "object",
-        "properties": {
-          "key": {
-            "type": "string",
-            "description": "An identifier for a client"
-          },
-          "secret": {
-            "type": "string",
-            "description": "An extra layer of auth"
-          },
-          "id": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "key"
-        ],
-        "additionalProperties": false
+        "x-typescript-type": "EventWithRelations"
       },
       "EventWorkflowMapping": {
         "title": "EventWorkflowMapping",
@@ -847,6 +1034,783 @@
         ],
         "additionalProperties": false,
         "x-typescript-type": "EventWorkflows"
+      },
+      "SubTaskWithRelations": {
+        "title": "SubTaskWithRelations",
+        "type": "object",
+        "description": "(tsType: SubTaskWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "taskId": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "externalId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "taskId",
+          "status",
+          "externalId"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "SubTaskWithRelations"
+      },
+      "TaskWithRelations": {
+        "title": "TaskWithRelations",
+        "type": "object",
+        "description": "(tsType: TaskWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string",
+            "description": "An identifier for a particular task within an event"
+          },
+          "name": {
+            "type": "string",
+            "description": "A name given by the consumer service for this task"
+          },
+          "description": {
+            "type": "string",
+            "description": "A short description of this task"
+          },
+          "status": {
+            "type": "string",
+            "description": "A short message to indicate the progression of the task"
+          },
+          "priority": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dueDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "assigneeId": {
+            "type": "string"
+          },
+          "metadata": {
+            "type": "object"
+          },
+          "externalId": {
+            "type": "string"
+          },
+          "subTasks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SubTaskWithRelations"
+            }
+          }
+        },
+        "required": [
+          "key",
+          "name",
+          "priority",
+          "severity",
+          "type",
+          "metadata"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "TaskWithRelations"
+      },
+      "TaskWorkFlowMapping": {
+        "title": "TaskWorkFlowMapping",
+        "type": "object",
+        "description": "(tsType: TaskWorkflows, schemaOptions: { title: 'TaskWorkFlowMapping' })",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "workflowKey": {
+            "type": "string",
+            "description": "An identifier for a particular workflow"
+          },
+          "taskKey": {
+            "type": "string",
+            "description": "An identifier for a particular task within an event"
+          }
+        },
+        "required": [
+          "workflowKey",
+          "taskKey"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "TaskWorkflows"
+      },
+      "loopback.Count": {
+        "type": "object",
+        "title": "loopback.Count",
+        "x-typescript-type": "@loopback/repository#Count",
+        "properties": {
+          "count": {
+            "type": "number"
+          }
+        }
+      },
+      "events.Filter": {
+        "type": "object",
+        "title": "events.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "key": {
+                    "type": "boolean"
+                  },
+                  "description": {
+                    "type": "boolean"
+                  },
+                  "source": {
+                    "type": "boolean"
+                  },
+                  "payload": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "id",
+                    "key",
+                    "description",
+                    "source",
+                    "payload"
+                  ],
+                  "example": "id"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "events.Fields"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<Event>"
+      },
+      "events.Filter1": {
+        "type": "object",
+        "title": "events.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "title": "events.WhereFilter",
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "key": {
+                    "type": "boolean"
+                  },
+                  "description": {
+                    "type": "boolean"
+                  },
+                  "source": {
+                    "type": "boolean"
+                  },
+                  "payload": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "id",
+                    "key",
+                    "description",
+                    "source",
+                    "payload"
+                  ],
+                  "example": "id"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "events.Fields"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<Event>"
+      },
+      "sub_tasks.Filter": {
+        "type": "object",
+        "title": "sub_tasks.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "name": {
+                    "type": "boolean"
+                  },
+                  "taskId": {
+                    "type": "boolean"
+                  },
+                  "status": {
+                    "type": "boolean"
+                  },
+                  "externalId": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "id",
+                    "name",
+                    "taskId",
+                    "status",
+                    "externalId"
+                  ],
+                  "example": "id"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "sub_tasks.Fields"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<SubTask>"
+      },
+      "sub_tasks.Filter1": {
+        "type": "object",
+        "title": "sub_tasks.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "title": "sub_tasks.WhereFilter",
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "name": {
+                    "type": "boolean"
+                  },
+                  "taskId": {
+                    "type": "boolean"
+                  },
+                  "status": {
+                    "type": "boolean"
+                  },
+                  "externalId": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "id",
+                    "name",
+                    "taskId",
+                    "status",
+                    "externalId"
+                  ],
+                  "example": "id"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "sub_tasks.Fields"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<SubTask>"
+      },
+      "tasks.ScopeFilter": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "uniqueItems": true
+              }
+            ]
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true
+            }
+          }
+        },
+        "additionalProperties": false,
+        "title": "tasks.ScopeFilter"
+      },
+      "tasks.IncludeFilter.Items": {
+        "title": "tasks.IncludeFilter.Items",
+        "type": "object",
+        "properties": {
+          "relation": {
+            "type": "string",
+            "enum": [
+              "subTasks"
+            ]
+          },
+          "scope": {
+            "$ref": "#/components/schemas/tasks.ScopeFilter"
+          }
+        }
+      },
+      "tasks.Filter": {
+        "type": "object",
+        "title": "tasks.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "key": {
+                    "type": "boolean"
+                  },
+                  "name": {
+                    "type": "boolean"
+                  },
+                  "description": {
+                    "type": "boolean"
+                  },
+                  "status": {
+                    "type": "boolean"
+                  },
+                  "priority": {
+                    "type": "boolean"
+                  },
+                  "severity": {
+                    "type": "boolean"
+                  },
+                  "type": {
+                    "type": "boolean"
+                  },
+                  "startDate": {
+                    "type": "boolean"
+                  },
+                  "dueDate": {
+                    "type": "boolean"
+                  },
+                  "endDate": {
+                    "type": "boolean"
+                  },
+                  "assigneeId": {
+                    "type": "boolean"
+                  },
+                  "metadata": {
+                    "type": "boolean"
+                  },
+                  "externalId": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "id",
+                    "key",
+                    "name",
+                    "description",
+                    "status",
+                    "priority",
+                    "severity",
+                    "type",
+                    "startDate",
+                    "dueDate",
+                    "endDate",
+                    "assigneeId",
+                    "metadata",
+                    "externalId"
+                  ],
+                  "example": "id"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "tasks.Fields"
+          },
+          "include": {
+            "title": "tasks.IncludeFilter",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/tasks.IncludeFilter.Items"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<Task>"
+      },
+      "tasks.Filter1": {
+        "type": "object",
+        "title": "tasks.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "title": "tasks.WhereFilter",
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "key": {
+                    "type": "boolean"
+                  },
+                  "name": {
+                    "type": "boolean"
+                  },
+                  "description": {
+                    "type": "boolean"
+                  },
+                  "status": {
+                    "type": "boolean"
+                  },
+                  "priority": {
+                    "type": "boolean"
+                  },
+                  "severity": {
+                    "type": "boolean"
+                  },
+                  "type": {
+                    "type": "boolean"
+                  },
+                  "startDate": {
+                    "type": "boolean"
+                  },
+                  "dueDate": {
+                    "type": "boolean"
+                  },
+                  "endDate": {
+                    "type": "boolean"
+                  },
+                  "assigneeId": {
+                    "type": "boolean"
+                  },
+                  "metadata": {
+                    "type": "boolean"
+                  },
+                  "externalId": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "id",
+                    "key",
+                    "name",
+                    "description",
+                    "status",
+                    "priority",
+                    "severity",
+                    "type",
+                    "startDate",
+                    "dueDate",
+                    "endDate",
+                    "assigneeId",
+                    "metadata",
+                    "externalId"
+                  ],
+                  "example": "id"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "tasks.Fields"
+          },
+          "include": {
+            "title": "tasks.IncludeFilter",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/tasks.IncludeFilter.Items"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<Task>"
       },
       "workflows.ScopeFilter": {
         "type": "object",

@@ -5,9 +5,9 @@
 
 import './load-env';
 
+export * from './commands';
 export * from './component';
-export * from './types';
-export * from './keys';
 export * from './controllers';
+export * from './keys';
 export * from './services';
-export * from './providers';
+export * from './types';

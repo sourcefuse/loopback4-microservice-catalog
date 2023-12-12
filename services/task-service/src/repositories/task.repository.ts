@@ -1,25 +1,32 @@
-import {juggler} from '@loopback/repository';
-import {Task} from '../models';
 import {Getter, inject} from '@loopback/core';
-import {TaskDbSourceName} from '../types';
 import {
-  DefaultUserModifyCrudRepository,
-  IAuthUserWithPermissions,
-} from '@sourceloop/core';
-import {AuthenticationBindings} from 'loopback4-authentication';
+  DefaultCrudRepository,
+  HasManyRepositoryFactory,
+  juggler,
+  repository,
+} from '@loopback/repository';
+import {SubTask, Task} from '../models';
+import {TaskDbSourceName} from '../types';
+import {SubTaskRepository} from './sub-task.repository';
 
-export class TaskRepository extends DefaultUserModifyCrudRepository<
+export class TaskRepository extends DefaultCrudRepository<
   Task,
   typeof Task.prototype.id
 > {
+  public readonly subTasks: HasManyRepositoryFactory<
+    SubTask,
+    typeof SubTask.prototype.id
+  >;
   constructor(
     @inject(`datasources.${TaskDbSourceName}`)
     dataSource: juggler.DataSource,
-    @inject.getter(AuthenticationBindings.CURRENT_USER)
-    protected readonly getCurrentUser: Getter<
-      IAuthUserWithPermissions | undefined
-    >,
+    @repository.getter('SubTaskRepository')
+    subTaskRepo: Getter<SubTaskRepository>,
   ) {
-    super(Task, dataSource, getCurrentUser);
+    super(Task, dataSource);
+    this.subTasks = this.createHasManyRepositoryFactoryFor(
+      'subTasks',
+      subTaskRepo,
+    );
   }
 }

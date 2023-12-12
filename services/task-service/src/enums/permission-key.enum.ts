@@ -1,6 +1,8 @@
 export const enum TaskPermssionKey {
-  StartListening = '1',
-  StopListening = '2',
-  AddToQueue = '3',
-  APIAdmin = '4',
+  CreateApiKey = '16001',
+  ViewEvent = '16002',
+  ViewTask = '16003',
+  ViewSubTask = '16004',
+  CompleteSubTask = '16005',
+  MapTask = '16006',
 }
