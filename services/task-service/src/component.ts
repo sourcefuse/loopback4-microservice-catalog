@@ -32,9 +32,9 @@ import {CommandObserver, EventStreamObserver} from './lifecycle-observers';
 import {
   EventRepository,
   EventWorkflowMappingRepository,
-  SubTaskRepository,
   TaskRepository,
   TaskWorkFlowMappingRepository,
+  UserTaskRepository,
 } from './repositories';
 import {
   CamundaService,
@@ -55,7 +55,7 @@ export class TaskServiceComponent implements Component {
 
   providers: ProviderMap = {};
 
-  services?: ServiceOrProviderClass[] | undefined;
+  services?: ServiceOrProviderClass[];
 
   /**
    * An array of controller classes
@@ -91,7 +91,7 @@ export class TaskServiceComponent implements Component {
       TaskRepository,
       EventWorkflowMappingRepository,
       TaskWorkFlowMappingRepository,
-      SubTaskRepository,
+      UserTaskRepository,
     ];
     this.services = [
       CamundaService,

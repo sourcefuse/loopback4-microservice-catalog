@@ -4,9 +4,9 @@ import {SubTaskStatus} from '../types';
 import {Task} from './task.model';
 
 @model({
-  name: 'sub_tasks',
+  name: 'user_tasks',
 })
-export class SubTask extends CoreEntity<Task> {
+export class UserTask extends CoreEntity<Task> {
   @property({
     type: 'string',
     id: true,

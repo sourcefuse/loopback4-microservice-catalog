@@ -10,9 +10,9 @@ import {ApiKeyRepository, WebhookSubscriptionsRepository} from './repositories';
 import {ApiKeyVerificationService, WebhookService} from './services';
 
 export class TaskHttpComponent implements Component {
-  controllers?: ControllerClass[] | undefined;
+  controllers?: ControllerClass[];
   repositories?: Class<Repository<Model>>[];
-  services?: ServiceOrProviderClass[] | undefined;
+  services?: ServiceOrProviderClass[];
   constructor() {
     this.controllers = [ApiKeyController, WebhookSubscriptionController];
     this.repositories = [ApiKeyRepository, WebhookSubscriptionsRepository];

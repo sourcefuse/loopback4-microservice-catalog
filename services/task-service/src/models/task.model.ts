@@ -1,7 +1,7 @@
 import {AnyObject, hasMany, model, property} from '@loopback/repository';
 import {CoreEntity} from '@sourceloop/core';
 import {TaskStatus} from '../types';
-import {SubTask} from './sub-task.model';
+import {UserTask} from './user-task.model';
 
 @model({
   name: 'tasks',
@@ -93,10 +93,10 @@ export class Task<TS = TaskStatus> extends CoreEntity<Task> {
   })
   metadata: AnyObject;
 
-  @hasMany(() => SubTask, {
+  @hasMany(() => UserTask, {
     keyTo: 'taskId',
   })
-  subTasks?: SubTask[];
+  subTasks?: UserTask[];
 
   @property({
     name: 'external_id',

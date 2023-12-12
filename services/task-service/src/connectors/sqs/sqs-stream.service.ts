@@ -1,5 +1,6 @@
 import {inject} from '@loopback/core';
 import {HttpErrors} from '@loopback/rest';
+import {ILogger, LOGGER} from '@sourceloop/core';
 import {SQS} from 'aws-sdk';
 import {
   IEventAdapter,
@@ -19,6 +20,8 @@ export class SqsStreamService<T>
     private readonly settings: SQSConfig,
     @inject(TaskServiceSQSModule.ADAPTER)
     private readonly adapter: IEventAdapter<SQS.Message, IEvent>,
+    @inject(LOGGER.LOGGER_INJECT)
+    private readonly logger: ILogger,
   ) {}
   private connection?: SQS;
   async subscribe(handler: IEventStreamHandler): Promise<void> {
@@ -70,10 +73,14 @@ export class SqsStreamService<T>
   }
 
   async publish(message: T): Promise<void> {
+    if (!this.connection) {
+      this.logger.error('Output connection not found for sqs connector');
+      return;
+    }
     const params = {
       MessageBody: JSON.stringify(message),
       QueueUrl: this.settings.queueUrl,
     };
-    await this.connection!.sendMessage(params).promise();
+    await this.connection.sendMessage(params).promise();
   }
 }

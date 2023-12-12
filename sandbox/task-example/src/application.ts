@@ -9,7 +9,10 @@ import {
 import {ServiceMixin} from '@loopback/service-proxy';
 
 import {
+  CreateTaskCommand,
+  EndTaskCommand,
   ExportedWorkflowServiceBindingConfig,
+  TaskServiceBindings,
   TaskServiceComponent,
 } from '@sourceloop/task-service';
 
@@ -20,11 +23,6 @@ import {
   BearerVerifierConfig,
   BearerVerifierType,
 } from '@sourceloop/core';
-import {
-  CreateTaskCommand,
-  EndTaskCommand,
-  TaskServiceBindings,
-} from '@sourceloop/task-service';
 import {
   KafkaEventAdapter,
   KafkaStreamService,

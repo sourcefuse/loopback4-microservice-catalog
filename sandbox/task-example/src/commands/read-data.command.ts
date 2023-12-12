@@ -5,7 +5,6 @@ import {Variables} from 'camunda-external-task-client-js';
 export class ReadDataCommand implements ICommand {
   topic = 'read-data';
   parameters: AnyObject;
-  constructor() {}
   async execute(): Promise<void> {
     const job = this.parameters.taskService;
     const processVariables = new Variables();

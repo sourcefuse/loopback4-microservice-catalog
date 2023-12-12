@@ -1,13 +1,8 @@
 import {inject, service} from '@loopback/core';
 import {repository} from '@loopback/repository';
-import {ILogger, LOGGER} from '@sourceloop/core';
 import {IEvent, IOutgoingConnector, ISubTaskService} from '../interfaces';
 import {TaskServiceBindings} from '../keys';
-import {
-  SubTaskRepository,
-  TaskRepository,
-  TaskWorkFlowMappingRepository,
-} from '../repositories';
+import {TaskRepository, UserTaskRepository} from '../repositories';
 import {EventType, Source, SubTaskStatus} from '../types';
 import {CamundaService} from './camunda.service';
 
@@ -15,16 +10,12 @@ export class SubTaskService implements ISubTaskService {
   constructor(
     @repository(TaskRepository)
     private taskRepo: TaskRepository,
-    @repository(TaskWorkFlowMappingRepository)
-    private taskWorkflowMapping: TaskWorkFlowMappingRepository,
-    @repository(SubTaskRepository)
-    private subTaskRepo: SubTaskRepository,
+    @repository(UserTaskRepository)
+    private subTaskRepo: UserTaskRepository,
     @inject(TaskServiceBindings.OUTGOING_CONNECTOR)
     private readonly outgoing: IOutgoingConnector<IEvent>,
     @service(CamundaService)
     private readonly camundaService: CamundaService,
-    @inject(LOGGER.LOGGER_INJECT)
-    private readonly logger: ILogger,
   ) {}
 
   async complete(taskId: string, subtaskId: string): Promise<void> {

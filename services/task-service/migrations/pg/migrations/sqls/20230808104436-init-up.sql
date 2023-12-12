@@ -23,7 +23,7 @@ CREATE TABLE "main".tasks
     CONSTRAINT pk_tasks_id PRIMARY KEY (id)
 );
 
-CREATE TABLE "main".sub_tasks 
+CREATE TABLE "main".user_tasks 
 (
     id                  uuid DEFAULT md5(random()::text || clock_timestamp()::text)::uuid NOT NULL,
     task_id             uuid NOT NULL,

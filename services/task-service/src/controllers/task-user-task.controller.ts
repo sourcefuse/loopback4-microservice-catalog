@@ -19,10 +19,10 @@ import {authorize} from 'loopback4-authorization';
 import {TaskPermssionKey} from '../enums/permission-key.enum';
 import {ISubTaskService} from '../interfaces';
 import {TaskServiceBindings} from '../keys';
-import {SubTask} from '../models';
-import {SubTaskRepository, TaskRepository} from '../repositories';
+import {UserTask} from '../models';
+import {TaskRepository, UserTaskRepository} from '../repositories';
 
-const baseUrl = 'tasks/{taskId}/sub-tasks';
+const baseUrl = 'tasks/{taskId}/user-tasks';
 
 export class TaskSubTaskController {
   constructor(
@@ -30,37 +30,37 @@ export class TaskSubTaskController {
     private readonly userTaskService: ISubTaskService,
     @repository(TaskRepository)
     private readonly taskRepo: TaskRepository,
-    @repository(SubTaskRepository)
-    private readonly subTaskRepo: SubTaskRepository,
+    @repository(UserTaskRepository)
+    private readonly userTaskRepo: UserTaskRepository,
   ) {}
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [TaskPermssionKey.CompleteSubTask]})
-  @patch(`${baseUrl}/{subTaskId}/complete`, {
+  @patch(`${baseUrl}/{userTaskId}/complete`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {},
   })
   async completeTask(
     @param.path.string('taskId') id: string,
-    @param.path.string('subTaskId') subTaskId: string,
+    @param.path.string('userTaskId') userTaskId: string,
   ): Promise<void> {
     // need to maintain and validate mapping of task and user task
-    await this.userTaskService.complete(id, subTaskId);
+    await this.userTaskService.complete(id, userTaskId);
   }
 
   @authenticate(STRATEGY.BEARER)
   @authorize({
-    permissions: [TaskPermssionKey.ViewTask],
+    permissions: [TaskPermssionKey.ViewUserTask],
   })
   @get(baseUrl, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Array of SubTask model instances',
+        description: 'Array of UserTask model instances',
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(SubTask, {includeRelations: true}),
+              items: getModelSchemaRef(UserTask, {includeRelations: true}),
             },
           },
         },
@@ -69,23 +69,23 @@ export class TaskSubTaskController {
   })
   async find(
     @param.path.string('taskId') taskId: string,
-    @param.filter(SubTask) filter?: Filter<SubTask>,
+    @param.filter(UserTask) filter?: Filter<UserTask>,
   ) {
-    return this.taskRepo.subTasks(taskId).find(filter);
+    return this.taskRepo.userTasks(taskId).find(filter);
   }
 
   @authenticate(STRATEGY.BEARER)
   @authorize({
-    permissions: [TaskPermssionKey.ViewSubTask],
+    permissions: [TaskPermssionKey.ViewUserTask],
   })
-  @get(`${baseUrl}/{subTaskId}`, {
+  @get(`${baseUrl}/{userTaskId}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'SubTask model instance',
+        description: 'UserTask model instance',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(SubTask, {includeRelations: true}),
+            schema: getModelSchemaRef(UserTask, {includeRelations: true}),
           },
         },
       },
@@ -93,25 +93,25 @@ export class TaskSubTaskController {
   })
   async findById(
     @param.path.string('taskId') taskId: string,
-    @param.path.string('subTaskId') subTaskId: string,
-    @param.filter(SubTask, {exclude: 'where'})
-    filter?: FilterExcludingWhere<SubTask>,
-  ): Promise<SubTask> {
-    const subTask = await this.taskRepo.subTasks(taskId).find({
+    @param.path.string('userTaskId') subTaskId: string,
+    @param.filter(UserTask, {exclude: 'where'})
+    filter?: FilterExcludingWhere<UserTask>,
+  ): Promise<UserTask> {
+    const subTask = await this.taskRepo.userTasks(taskId).find({
       where: {
         id: subTaskId,
       },
       ...filter,
     });
     if (!subTask.length) {
-      throw new HttpErrors.NotFound('Sub Task not found');
+      throw new HttpErrors.NotFound('User Task not found');
     }
     return subTask[0];
   }
 
   @authenticate(STRATEGY.BEARER)
   @authorize({
-    permissions: [TaskPermssionKey.ViewSubTask],
+    permissions: [TaskPermssionKey.ViewUserTask],
   })
   @get(`${baseUrl}/count`, {
     security: OPERATION_SECURITY_SPEC,
@@ -124,10 +124,10 @@ export class TaskSubTaskController {
   })
   async count(
     @param.path.string('taskId') taskId: string,
-    @param.where(SubTask) where?: Where<SubTask>,
+    @param.where(UserTask) where?: Where<UserTask>,
   ): Promise<Count> {
-    const whereBuilder = new WhereBuilder<SubTask>();
+    const whereBuilder = new WhereBuilder<UserTask>();
     whereBuilder.and({taskId}).and({...where});
-    return this.subTaskRepo.count(whereBuilder.build());
+    return this.userTaskRepo.count(whereBuilder.build());
   }
 }

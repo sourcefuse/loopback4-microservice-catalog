@@ -5,26 +5,26 @@ import {
   juggler,
   repository,
 } from '@loopback/repository';
-import {SubTask, Task} from '../models';
+import {Task, UserTask} from '../models';
 import {TaskDbSourceName} from '../types';
-import {SubTaskRepository} from './sub-task.repository';
+import {UserTaskRepository} from './user-task.repository';
 
 export class TaskRepository extends DefaultCrudRepository<
   Task,
   typeof Task.prototype.id
 > {
-  public readonly subTasks: HasManyRepositoryFactory<
-    SubTask,
-    typeof SubTask.prototype.id
+  public readonly userTasks: HasManyRepositoryFactory<
+    UserTask,
+    typeof UserTask.prototype.id
   >;
   constructor(
     @inject(`datasources.${TaskDbSourceName}`)
     dataSource: juggler.DataSource,
     @repository.getter('SubTaskRepository')
-    subTaskRepo: Getter<SubTaskRepository>,
+    subTaskRepo: Getter<UserTaskRepository>,
   ) {
     super(Task, dataSource);
-    this.subTasks = this.createHasManyRepositoryFactoryFor(
+    this.userTasks = this.createHasManyRepositoryFactoryFor(
       'subTasks',
       subTaskRepo,
     );
