@@ -146,7 +146,8 @@
       "request": "2.88.0"
     },
     "twilio": {
-      "jsonwebtoken": "^9.0.0"
+      "jsonwebtoken": "^9.0.0",
+      "axios": "^1.6.0"
     }
   },
   "publishConfig": {
