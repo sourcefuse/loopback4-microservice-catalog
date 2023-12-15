@@ -1,6 +1,6 @@
-import { model, property } from '@loopback/repository';
-import { NotificationUser as SourceloopNotificationUser } from '@sourceloop/notification-service';
-import { Notification } from './notification.model';
+import {model, property} from '@loopback/repository';
+import {NotificationUser as SourceloopNotificationUser} from '@sourceloop/notification-service';
+import {Notification} from './notification.model';
 @model({
   name: 'notification_users',
   settings: {

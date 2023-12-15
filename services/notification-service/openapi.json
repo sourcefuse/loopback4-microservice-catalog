@@ -1260,17 +1260,6 @@
               "type": "string"
             },
             "required": true
-          },
-          {
-            "name": "filter",
-            "in": "query",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/user_notification_settings.Filter"
-                }
-              }
-            }
           }
         ],
         "operationId": "UserNotificationSettingsController.findById"
@@ -1361,22 +1350,6 @@
             }
           }
         },
-        "parameters": [
-          {
-            "name": "where",
-            "in": "query",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "title": "user_notification_settings.WhereFilter",
-                  "additionalProperties": true,
-                  "x-typescript-type": "@loopback/repository#Where<UserNotificationSettings>"
-                }
-              }
-            }
-          }
-        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -1417,7 +1390,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/user_notification_settings.Filter1"
+                  "$ref": "#/components/schemas/user_notification_settings.Filter"
                 }
               }
             }
@@ -1611,6 +1584,9 @@
           },
           "actionMeta": {
             "type": "object"
+          },
+          "isDraft": {
+            "type": "boolean"
           }
         },
         "required": [
@@ -1655,6 +1631,9 @@
           },
           "actionMeta": {
             "type": "object"
+          },
+          "isDraft": {
+            "type": "boolean"
           }
         },
         "required": [
@@ -1703,6 +1682,9 @@
           },
           "actionMeta": {
             "type": "object"
+          },
+          "isDraft": {
+            "type": "boolean"
           }
         },
         "additionalProperties": true,
@@ -1779,6 +1761,9 @@
           },
           "actionMeta": {
             "type": "object"
+          },
+          "isDraft": {
+            "type": "boolean"
           }
         },
         "required": [
@@ -2139,6 +2124,9 @@
                   },
                   "actionMeta": {
                     "type": "boolean"
+                  },
+                  "isDraft": {
+                    "type": "boolean"
                   }
                 },
                 "additionalProperties": true
@@ -2367,89 +2355,6 @@
         "x-typescript-type": "@loopback/repository#Filter<Notification>"
       },
       "user_notification_settings.Filter": {
-        "type": "object",
-        "title": "user_notification_settings.Filter",
-        "properties": {
-          "offset": {
-            "type": "integer",
-            "minimum": 0
-          },
-          "limit": {
-            "type": "integer",
-            "minimum": 1,
-            "example": 100
-          },
-          "skip": {
-            "type": "integer",
-            "minimum": 0
-          },
-          "order": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              }
-            ]
-          },
-          "fields": {
-            "oneOf": [
-              {
-                "type": "object",
-                "properties": {
-                  "deleted": {
-                    "type": "boolean"
-                  },
-                  "deletedOn": {
-                    "type": "boolean"
-                  },
-                  "deletedBy": {
-                    "type": "boolean"
-                  },
-                  "createdOn": {
-                    "type": "boolean"
-                  },
-                  "modifiedOn": {
-                    "type": "boolean"
-                  },
-                  "id": {
-                    "type": "boolean"
-                  },
-                  "userId": {
-                    "type": "boolean"
-                  },
-                  "sleepStartTime": {
-                    "type": "boolean"
-                  },
-                  "sleepEndTime": {
-                    "type": "boolean"
-                  },
-                  "type": {
-                    "type": "boolean"
-                  }
-                },
-                "additionalProperties": true
-              },
-              {
-                "type": "array",
-                "items": {
-                  "type": "string",
-                  "example": "deleted"
-                },
-                "uniqueItems": true
-              }
-            ],
-            "title": "user_notification_settings.Fields"
-          }
-        },
-        "additionalProperties": false,
-        "x-typescript-type": "@loopback/repository#Filter<UserNotificationSettings>"
-      },
-      "user_notification_settings.Filter1": {
         "type": "object",
         "title": "user_notification_settings.Filter",
         "properties": {

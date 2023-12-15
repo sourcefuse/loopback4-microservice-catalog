@@ -612,7 +612,8 @@ fetch('/attach-files/{id}',
         "isRead": true,
         "recipientId": "string",
         "messageId": "string",
-        "message": {}
+        "message": {},
+        "foreignKey": null
       }
     ],
     "attachmentFiles": [
@@ -629,14 +630,17 @@ fetch('/attach-files/{id}',
         "fileKey": "string",
         "messageId": "string",
         "metaData": {},
-        "message": {}
+        "message": {},
+        "foreignKey": null
       }
     ],
     "parentMessage": {},
+    "foreignKey": null,
     "messages": [
       {}
     ]
-  }
+  },
+  "foreignKey": null
 }
 ```
 
@@ -1118,17 +1122,20 @@ fetch('/attach-files',
           "isRead": true,
           "recipientId": "string",
           "messageId": "string",
-          "message": {}
+          "message": {},
+          "foreignKey": null
         }
       ],
       "attachmentFiles": [
         {}
       ],
       "parentMessage": {},
+      "foreignKey": null,
       "messages": [
         {}
       ]
-    }
+    },
+    "foreignKey": null
   }
 ]
 ```
@@ -1193,11 +1200,14 @@ Status Code **200**
 |»»»»» recipientId|string|true|none|none|
 |»»»»» messageId|string|true|none|none|
 |»»»»» message|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»» foreignKey|any|false|none|none|
 |»»» attachmentFiles|[[AttachmentFileWithRelations](#schemaattachmentfilewithrelations)]|false|none|(tsType: AttachmentFileWithRelations, schemaOptions: { includeRelations: true })|
 |»»»» AttachmentFileWithRelations|[AttachmentFileWithRelations](#schemaattachmentfilewithrelations)|false|none|(tsType: AttachmentFileWithRelations, schemaOptions: { includeRelations: true })|
 |»»» parentMessage|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
+|»»» foreignKey|any|false|none|none|
 |»»» messages|[[MessageWithRelations](#schemamessagewithrelations)]|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
 |»»»» MessageWithRelations|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
+|»» foreignKey|any|false|none|none|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -1662,7 +1672,8 @@ fetch('/message-recipients/{id}',
         "isRead": true,
         "recipientId": "string",
         "messageId": "string",
-        "message": {}
+        "message": {},
+        "foreignKey": null
       }
     ],
     "attachmentFiles": [
@@ -1679,14 +1690,17 @@ fetch('/message-recipients/{id}',
         "fileKey": "string",
         "messageId": "string",
         "metaData": {},
-        "message": {}
+        "message": {},
+        "foreignKey": null
       }
     ],
     "parentMessage": {},
+    "foreignKey": null,
     "messages": [
       {}
     ]
-  }
+  },
+  "foreignKey": null
 }
 ```
 
@@ -2179,14 +2193,17 @@ fetch('/message-recipients',
           "fileKey": "string",
           "messageId": "string",
           "metaData": {},
-          "message": {}
+          "message": {},
+          "foreignKey": null
         }
       ],
       "parentMessage": {},
+      "foreignKey": null,
       "messages": [
         {}
       ]
-    }
+    },
+    "foreignKey": null
   }
 ]
 ```
@@ -2253,9 +2270,12 @@ Status Code **200**
 |»»»»» messageId|string|false|none|none|
 |»»»»» metaData|object|false|none|none|
 |»»»»» message|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»» foreignKey|any|false|none|none|
 |»»» parentMessage|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
+|»»» foreignKey|any|false|none|none|
 |»»» messages|[[MessageWithRelations](#schemamessagewithrelations)]|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
 |»»»» MessageWithRelations|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
+|»» foreignKey|any|false|none|none|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -2860,14 +2880,17 @@ fetch('/messages/{id}',
             "fileKey": "string",
             "messageId": "string",
             "metaData": {},
-            "message": {}
+            "message": {},
+            "foreignKey": null
           }
         ],
         "parentMessage": {},
+        "foreignKey": null,
         "messages": [
           {}
         ]
-      }
+      },
+      "foreignKey": null
     }
   ],
   "attachmentFiles": [
@@ -2917,15 +2940,18 @@ fetch('/messages/{id}',
             "isRead": true,
             "recipientId": "string",
             "messageId": "string",
-            "message": {}
+            "message": {},
+            "foreignKey": null
           }
         ],
         "attachmentFiles": [],
         "parentMessage": {},
+        "foreignKey": null,
         "messages": [
           {}
         ]
-      }
+      },
+      "foreignKey": null
     }
   ],
   "parentMessage": {
@@ -2961,7 +2987,8 @@ fetch('/messages/{id}',
         "isRead": true,
         "recipientId": "string",
         "messageId": "string",
-        "message": {}
+        "message": {},
+        "foreignKey": null
       }
     ],
     "attachmentFiles": [
@@ -2978,14 +3005,17 @@ fetch('/messages/{id}',
         "fileKey": "string",
         "messageId": "string",
         "metaData": {},
-        "message": {}
+        "message": {},
+        "foreignKey": null
       }
     ],
     "parentMessage": {},
+    "foreignKey": null,
     "messages": [
       {}
     ]
   },
+  "foreignKey": null,
   "messages": [
     {
       "deleted": true,
@@ -3020,7 +3050,8 @@ fetch('/messages/{id}',
           "isRead": true,
           "recipientId": "string",
           "messageId": "string",
-          "message": {}
+          "message": {},
+          "foreignKey": null
         }
       ],
       "attachmentFiles": [
@@ -3037,10 +3068,12 @@ fetch('/messages/{id}',
           "fileKey": "string",
           "messageId": "string",
           "metaData": {},
-          "message": {}
+          "message": {},
+          "foreignKey": null
         }
       ],
       "parentMessage": {},
+      "foreignKey": null,
       "messages": []
     }
   ]
@@ -3520,7 +3553,8 @@ fetch('/messages',
         "isRead": true,
         "recipientId": "string",
         "messageId": "string",
-        "message": {}
+        "message": {},
+        "foreignKey": null
       }
     ],
     "attachmentFiles": [
@@ -3537,10 +3571,12 @@ fetch('/messages',
         "fileKey": "string",
         "messageId": "string",
         "metaData": {},
-        "message": {}
+        "message": {},
+        "foreignKey": null
       }
     ],
     "parentMessage": {},
+    "foreignKey": null,
     "messages": [
       {}
     ]
@@ -3595,6 +3631,7 @@ Status Code **200**
 |»»»» recipientId|string|true|none|none|
 |»»»» messageId|string|true|none|none|
 |»»»» message|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
+|»»»» foreignKey|any|false|none|none|
 |»» attachmentFiles|[[AttachmentFileWithRelations](#schemaattachmentfilewithrelations)]|false|none|(tsType: AttachmentFileWithRelations, schemaOptions: { includeRelations: true })|
 |»»» AttachmentFileWithRelations|[AttachmentFileWithRelations](#schemaattachmentfilewithrelations)|false|none|(tsType: AttachmentFileWithRelations, schemaOptions: { includeRelations: true })|
 |»»»» deleted|boolean|false|none|none|
@@ -3610,7 +3647,9 @@ Status Code **200**
 |»»»» messageId|string|false|none|none|
 |»»»» metaData|object|false|none|none|
 |»»»» message|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
+|»»»» foreignKey|any|false|none|none|
 |»» parentMessage|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
+|»» foreignKey|any|false|none|none|
 |»» messages|[[MessageWithRelations](#schemamessagewithrelations)]|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
 |»»» MessageWithRelations|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
 
@@ -4795,14 +4834,17 @@ NewMessage
             "fileKey": "string",
             "messageId": "string",
             "metaData": {},
-            "message": {}
+            "message": {},
+            "foreignKey": null
           }
         ],
         "parentMessage": {},
+        "foreignKey": null,
         "messages": [
           {}
         ]
-      }
+      },
+      "foreignKey": null
     }
   ],
   "attachmentFiles": [
@@ -4852,15 +4894,18 @@ NewMessage
             "isRead": true,
             "recipientId": "string",
             "messageId": "string",
-            "message": {}
+            "message": {},
+            "foreignKey": null
           }
         ],
         "attachmentFiles": [],
         "parentMessage": {},
+        "foreignKey": null,
         "messages": [
           {}
         ]
-      }
+      },
+      "foreignKey": null
     }
   ],
   "parentMessage": {
@@ -4896,7 +4941,8 @@ NewMessage
         "isRead": true,
         "recipientId": "string",
         "messageId": "string",
-        "message": {}
+        "message": {},
+        "foreignKey": null
       }
     ],
     "attachmentFiles": [
@@ -4913,14 +4959,17 @@ NewMessage
         "fileKey": "string",
         "messageId": "string",
         "metaData": {},
-        "message": {}
+        "message": {},
+        "foreignKey": null
       }
     ],
     "parentMessage": {},
+    "foreignKey": null,
     "messages": [
       {}
     ]
   },
+  "foreignKey": null,
   "messages": [
     {
       "deleted": true,
@@ -4955,7 +5004,8 @@ NewMessage
           "isRead": true,
           "recipientId": "string",
           "messageId": "string",
-          "message": {}
+          "message": {},
+          "foreignKey": null
         }
       ],
       "attachmentFiles": [
@@ -4972,10 +5022,12 @@ NewMessage
           "fileKey": "string",
           "messageId": "string",
           "metaData": {},
-          "message": {}
+          "message": {},
+          "foreignKey": null
         }
       ],
       "parentMessage": {},
+      "foreignKey": null,
       "messages": []
     }
   ]
@@ -5007,6 +5059,7 @@ MessageWithRelations
 |messageRecipients|[[MessageRecipientWithRelations](#schemamessagerecipientwithrelations)]|false|none|[(tsType: MessageRecipientWithRelations, schemaOptions: { includeRelations: true })]|
 |attachmentFiles|[[AttachmentFileWithRelations](#schemaattachmentfilewithrelations)]|false|none|[(tsType: AttachmentFileWithRelations, schemaOptions: { includeRelations: true })]|
 |parentMessage|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
+|foreignKey|any|false|none|none|
 |messages|[[MessageWithRelations](#schemamessagewithrelations)]|false|none|[(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })]|
 
 <h2 id="tocS_MessagePartial">MessagePartial</h2>
@@ -5214,7 +5267,8 @@ NewMessageRecipient
         "isRead": true,
         "recipientId": "string",
         "messageId": "string",
-        "message": {}
+        "message": {},
+        "foreignKey": null
       }
     ],
     "attachmentFiles": [
@@ -5231,14 +5285,17 @@ NewMessageRecipient
         "fileKey": "string",
         "messageId": "string",
         "metaData": {},
-        "message": {}
+        "message": {},
+        "foreignKey": null
       }
     ],
     "parentMessage": {},
+    "foreignKey": null,
     "messages": [
       {}
     ]
-  }
+  },
+  "foreignKey": null
 }
 
 ```
@@ -5265,6 +5322,7 @@ MessageRecipientWithRelations
 |recipientId|string|true|none|none|
 |messageId|string|true|none|none|
 |message|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
+|foreignKey|any|false|none|none|
 
 <h2 id="tocS_MessageRecipientPartial">MessageRecipientPartial</h2>
 <!-- backwards compatibility -->
@@ -5628,7 +5686,8 @@ New Attachment Files
         "isRead": true,
         "recipientId": "string",
         "messageId": "string",
-        "message": {}
+        "message": {},
+        "foreignKey": null
       }
     ],
     "attachmentFiles": [
@@ -5645,14 +5704,17 @@ New Attachment Files
         "fileKey": "string",
         "messageId": "string",
         "metaData": {},
-        "message": {}
+        "message": {},
+        "foreignKey": null
       }
     ],
     "parentMessage": {},
+    "foreignKey": null,
     "messages": [
       {}
     ]
-  }
+  },
+  "foreignKey": null
 }
 
 ```
@@ -5676,6 +5738,7 @@ AttachmentFileWithRelations
 |messageId|string|false|none|none|
 |metaData|object|false|none|none|
 |message|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
+|foreignKey|any|false|none|none|
 
 <h2 id="tocS_AttachmentFilePartial">AttachmentFilePartial</h2>
 <!-- backwards compatibility -->

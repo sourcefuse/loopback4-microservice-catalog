@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {IAuthUserWithPermissions, IServiceConfig} from '@sourceloop/core';
-import {Config} from 'loopback4-notifications';
+import {Config, Subscriber} from 'loopback4-notifications';
 import {Notification, NotificationUser} from './models';
 
 export interface IChannelManager {
@@ -26,7 +26,9 @@ export type INotificationFilterFunc = (
 export interface INotificationSettingFilterFunc {
   checkUserNotificationSettings(
     notification: Notification,
-  ): Promise<Notification>;
+  ): Promise<Subscriber[]>;
+  getNotificationSubscribers(subscribers: Subscriber[]): Promise<Subscriber[]>;
+  getDraftSubscribers(subscribers: Subscriber[]): Promise<Subscriber[]>;
 }
 
 export const NotifDbSourceName = 'NotifDb';

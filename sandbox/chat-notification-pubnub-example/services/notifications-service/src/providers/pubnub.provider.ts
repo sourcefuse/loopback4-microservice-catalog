@@ -1,7 +1,7 @@
-import { inject, Provider } from '@loopback/core';
-import { AnyObject } from '@loopback/repository';
-import { HttpErrors } from '@loopback/rest';
-import { SuccessResponse } from '@sourceloop/core';
+import {inject, Provider} from '@loopback/core';
+import {AnyObject} from '@loopback/repository';
+import {HttpErrors} from '@loopback/rest';
+import {SuccessResponse} from '@sourceloop/core';
 import {
   PubnubBindings,
   PubNubMessage,
@@ -9,7 +9,7 @@ import {
 } from 'loopback4-notifications/pubnub';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import Pubnub from 'pubnub';
-import { Config, PubNubNotification } from '../types';
+import {Config, PubNubNotification} from '../types';
 
 export class PubNubProvider implements Provider<PubNubNotification> {
   constructor(

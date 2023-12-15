@@ -2,7 +2,11 @@ import {BindingScope, Getter, inject, injectable} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {AuthErrorKeys} from 'loopback4-authentication';
-import {INotification, NotificationBindings} from 'loopback4-notifications';
+import {
+  INotification,
+  NotificationBindings,
+  Subscriber,
+} from 'loopback4-notifications';
 import {ErrorKeys} from '../enums';
 import {NotifServiceBindings} from '../keys';
 import {Notification} from '../models';
@@ -14,7 +18,7 @@ import {
   INotificationSettingFilterFunc,
   INotificationUserManager,
 } from '../types';
-const maxBodyLen = 1000;
+const maxBodyLen = parseInt(String(process.env.MAX_LENGTH)) ?? 1000;
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class ProcessNotificationService {
@@ -37,8 +41,13 @@ export class ProcessNotificationService {
    * @returns notif which is of type Notification(Model)
    */
   async draftAndSendNotification(notification: Notification) {
-    //In case notification body has the critical flag as false then only system will check for the notification settings i.e. the sleep time of the user.
-    notification =
+    if (notification?.receiver?.to.length < 1) {
+      //Throw error in case receiver does not exists in request
+      throw new HttpErrors.UnprocessableEntity(
+        `Receiver's to array should not be empty, at least one receiver is mandatory.`,
+      );
+    }
+    const categorizedSubscribers =
       await this.filterNotificationSettings.checkUserNotificationSettings(
         notification,
       );
@@ -61,36 +70,45 @@ export class ProcessNotificationService {
     }
     notif = await this.insertDataInDb(notification);
     if (!notification.isDraft) {
-      notif = await this.insertDataInDb(notification);
-      const notificationSent = await this.sendNotification(notification, notif);
+      const notificationSent = await this.sendNotification(
+        notif,
+        categorizedSubscribers,
+      );
       notif.body = notificationSent.body;
     }
     return notif;
   }
-  async getAllGroupedNotifications(
-    notification: Notification,
-  ): Promise<Notification[]> {
-    const where = {where: {groupKey: notification.groupKey}};
+  async getAllGroupedNotifications(groupKey: string): Promise<Notification[]> {
+    const where = {where: {groupKey: groupKey}};
     return this.notificationRepository.find(where);
   }
-  async sendNotification(notification: Notification, notif: Notification) {
-    if (notification.isGrouped && notification.groupKey) {
-      const notifications = await this.getAllGroupedNotifications(notification);
+  async sendNotification(
+    notif: Notification,
+    categorizedSubscribers: Subscriber[],
+  ) {
+    if (notif.isGrouped && notif.groupKey) {
+      const notifications = await this.getAllGroupedNotifications(
+        notif.groupKey,
+      );
       let groupNotificationBody = '';
       for (const element of notifications) {
         groupNotificationBody += element.body;
       }
-      groupNotificationBody += notification.body;
-      notification.body = groupNotificationBody;
+      notif.body = groupNotificationBody;
     }
+    notif.receiver.to =
+      await this.filterNotificationSettings.getNotificationSubscribers(
+        categorizedSubscribers,
+      );
     const provider = await this.notifProvider();
-    await provider.publish(notification);
+    await provider.publish(notif);
     if (!notif?.id) {
       throw new HttpErrors.UnprocessableEntity(AuthErrorKeys.UnknownError);
     }
+    notif.receiver.to = categorizedSubscribers;
     const receiversToCreate = await this.createNotifUsers(notif);
     await this.notificationUserRepository.createAll(receiversToCreate);
-    return notification;
+    return notif;
   }
   async insertDataInDb(notification: Notification) {
     return this.notificationRepository.create(notification);

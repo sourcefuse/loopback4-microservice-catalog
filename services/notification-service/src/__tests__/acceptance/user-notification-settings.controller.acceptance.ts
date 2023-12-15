@@ -102,12 +102,6 @@ describe('User Notification Settings Controller', () => {
     expect(response).to.have.properties(['res', 'req']);
   });
 
-  it('gives status 403 if current user is not same', async () => {
-    const reqToAddNotificationUser = await addIncorrectUser();
-    expect(reqToAddNotificationUser.status).to.be.equal(403);
-    expect(reqToAddNotificationUser).to.have.property('error');
-  });
-
   it('Deletes a user notification setting successfully', async () => {
     const reqToAddNotificationUser = await addUserNotificationSettings();
     await client

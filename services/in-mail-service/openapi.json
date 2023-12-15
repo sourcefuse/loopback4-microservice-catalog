@@ -1556,7 +1556,8 @@
           },
           "message": {
             "$ref": "#/components/schemas/MessageExcluding_deleted_WithRelations"
-          }
+          },
+          "foreignKey": {}
         },
         "required": [
           "name",
@@ -1616,6 +1617,7 @@
               "$ref": "#/components/schemas/MessageExcluding_deleted_WithRelations"
             }
           },
+          "foreignKey": {},
           "group": {
             "type": "array",
             "items": {
@@ -1711,6 +1713,7 @@
           "message": {
             "$ref": "#/components/schemas/MessageExcluding_deleted_WithRelations"
           },
+          "foreignKey": {},
           "thread": {
             "$ref": "#/components/schemas/ThreadExcluding_deleted_WithRelations"
           }
@@ -1770,7 +1773,8 @@
           },
           "message": {
             "$ref": "#/components/schemas/MessageExcluding_deleted_WithRelations"
-          }
+          },
+          "foreignKey": {}
         },
         "required": [
           "key"
@@ -1840,6 +1844,7 @@
               "$ref": "#/components/schemas/AttachmentExcluding_deleted_WithRelations"
             }
           },
+          "foreignKey": {},
           "group": {
             "type": "array",
             "items": {

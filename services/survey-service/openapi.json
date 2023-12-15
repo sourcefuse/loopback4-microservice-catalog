@@ -3453,7 +3453,8 @@
           },
           "survey": {
             "$ref": "#/components/schemas/SurveyWithRelations"
-          }
+          },
+          "foreignKey": {}
         },
         "additionalProperties": false,
         "x-typescript-type": "SurveyCycleWithRelations"
@@ -3684,6 +3685,7 @@
           "survey": {
             "$ref": "#/components/schemas/SurveyWithRelations"
           },
+          "foreignKey": {},
           "surveyCycle": {
             "$ref": "#/components/schemas/SurveyCycleWithRelations"
           }
@@ -3740,6 +3742,7 @@
           "surveyResponder": {
             "$ref": "#/components/schemas/SurveyResponderWithRelations"
           },
+          "foreignKey": {},
           "surveyCycle": {
             "$ref": "#/components/schemas/SurveyCycleWithRelations"
           },
@@ -3818,6 +3821,7 @@
           "question": {
             "$ref": "#/components/schemas/QuestionWithRelations"
           },
+          "foreignKey": {},
           "followupQuestion": {
             "$ref": "#/components/schemas/QuestionWithRelations"
           }
@@ -3899,6 +3903,7 @@
           "surveyResponse": {
             "$ref": "#/components/schemas/SurveyResponseWithRelations"
           },
+          "foreignKey": {},
           "question": {
             "$ref": "#/components/schemas/QuestionWithRelations"
           },
@@ -3997,6 +4002,7 @@
           "rootQuestion": {
             "$ref": "#/components/schemas/QuestionWithRelations"
           },
+          "foreignKey": {},
           "parentQuestion": {
             "$ref": "#/components/schemas/QuestionWithRelations"
           },
@@ -4560,6 +4566,7 @@
           "template": {
             "$ref": "#/components/schemas/QuestionTemplateWithRelations"
           },
+          "foreignKey": {},
           "question": {
             "$ref": "#/components/schemas/QuestionWithRelations"
           },
@@ -5714,6 +5721,7 @@
           "dependentOnQuestion": {
             "$ref": "#/components/schemas/SurveyQuestionWithRelations"
           },
+          "foreignKey": {},
           "survey": {
             "$ref": "#/components/schemas/SurveyWithRelations"
           },

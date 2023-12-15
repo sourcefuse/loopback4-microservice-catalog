@@ -42,7 +42,10 @@
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
     "coverage": "nyc npm run test",
     "prepublishOnly": "npm run test",
-    "postinstall": "node migration.js"
+    "postinstall": "node migration.js",
+    "db:migrate": "../../node_modules/db-migrate/bin/db-migrate up --config './database.json'",
+    "db:migrate:down": "../../node_modules/db-migrate/bin/db-migrate down --config './database.json'",
+    "db:migrate:reset": "../../node_modules/db-migrate/bin/db-migrate reset --config './database.json'"
   },
   "repository": {
     "type": "git",

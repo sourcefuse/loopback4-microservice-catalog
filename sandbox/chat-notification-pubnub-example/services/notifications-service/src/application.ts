@@ -2,29 +2,29 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import { BootMixin } from '@loopback/boot';
-import { ApplicationConfig } from '@loopback/core';
-import { RepositoryMixin } from '@loopback/repository';
-import { RestApplication } from '@loopback/rest';
+import {BootMixin} from '@loopback/boot';
+import {ApplicationConfig} from '@loopback/core';
+import {RepositoryMixin} from '@loopback/repository';
+import {RestApplication} from '@loopback/rest';
 import {
   RestExplorerBindings,
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
-import { ServiceMixin } from '@loopback/service-proxy';
-import { NotificationServiceComponent } from '@sourceloop/notification-service';
+import {ServiceMixin} from '@loopback/service-proxy';
+import {NotificationServiceComponent} from '@sourceloop/notification-service';
 // dotenv
 import * as dotenv from 'dotenv';
-import { NotificationBindings } from 'loopback4-notifications';
-import { PubNubProvider, PubnubBindings } from 'loopback4-notifications/pubnub';
-import { SESBindings, SesProvider } from 'loopback4-notifications/ses';
-import { SNSBindings } from 'loopback4-notifications/sns';
+import {NotificationBindings} from 'loopback4-notifications';
+import {PubNubProvider, PubnubBindings} from 'loopback4-notifications/pubnub';
+import {SESBindings, SesProvider} from 'loopback4-notifications/ses';
+import {SNSBindings} from 'loopback4-notifications/sns';
 import path from 'path';
-import { MySequence } from './sequence';
+import {MySequence} from './sequence';
 
 // dotenv
 dotenv.config();
 
-export { ApplicationConfig };
+export {ApplicationConfig};
 
 export class ChatAndNotifApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),

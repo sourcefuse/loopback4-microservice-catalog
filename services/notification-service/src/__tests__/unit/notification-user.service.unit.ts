@@ -4,8 +4,8 @@
 // https://opensource.org/licenses/MIT
 import {expect} from '@loopback/testlab';
 import sinon from 'sinon';
-import {NotificationUserProvider} from '../../providers/notification-user.service';
 import {Notification, NotificationUser} from '../../models';
+import {NotificationUserProvider} from '../../providers/notification-user.service';
 
 describe('Notification User Service', () => {
   let notificationUserProvider: NotificationUserProvider;
@@ -19,6 +19,7 @@ describe('Notification User Service', () => {
         new NotificationUser({
           notificationId: 'dummy',
           userId: 'dummy2',
+          isDraft: false,
         }),
       ];
       const notification = new Notification({

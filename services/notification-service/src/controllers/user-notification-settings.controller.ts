@@ -2,11 +2,8 @@ import {
   Count,
   CountSchema,
   Filter,
-  FilterBuilder,
-  FilterExcludingWhere,
   repository,
   Where,
-  WhereBuilder,
 } from '@loopback/repository';
 import {
   del,
@@ -20,17 +17,12 @@ import {
   requestBody,
   response,
 } from '@loopback/rest';
-import {
-  authenticate,
-  AuthenticationBindings,
-  STRATEGY,
-} from 'loopback4-authentication';
+import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {UserNotificationSettings} from '../models';
 import {UserNotificationSettingsRepository} from '../repositories';
 
-import {inject} from '@loopback/core';
-import {IAuthUserWithPermissions, STATUS_CODE} from '@sourceloop/core';
-import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
+import {STATUS_CODE} from '@sourceloop/core';
+import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../enums';
 const basePath = '/user-notification-settings';
 export class UserNotificationSettingsController {
@@ -62,11 +54,12 @@ export class UserNotificationSettingsController {
       },
     })
     userNotificationSettings: Omit<UserNotificationSettings, 'id'>,
-    @inject(AuthenticationBindings.CURRENT_USER)
-    currentUser: IAuthUserWithPermissions,
   ): Promise<UserNotificationSettings> {
-    if (currentUser.id !== userNotificationSettings.userId) {
-      throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
+    const isExists = await this.verifyIfAlreadyExists(
+      userNotificationSettings.userId,
+    );
+    if (isExists) {
+      throw new HttpErrors.Forbidden('Settings for this user already exists.');
     }
     return this.userNotificationSettingsRepository.create(
       userNotificationSettings,
@@ -83,14 +76,10 @@ export class UserNotificationSettingsController {
     content: {'application/json': {schema: CountSchema}},
   })
   async count(
-    @inject(AuthenticationBindings.CURRENT_USER)
-    currentUser: IAuthUserWithPermissions,
     @param.where(UserNotificationSettings)
     where?: Where<UserNotificationSettings>,
   ): Promise<Count> {
-    return this.userNotificationSettingsRepository.count(
-      this._createWhereBuilder(currentUser, where).build(),
-    );
+    return this.userNotificationSettingsRepository.count(where);
   }
 
   @authenticate(STRATEGY.BEARER)
@@ -112,14 +101,10 @@ export class UserNotificationSettingsController {
     },
   })
   async find(
-    @inject(AuthenticationBindings.CURRENT_USER)
-    currentUser: IAuthUserWithPermissions,
     @param.filter(UserNotificationSettings)
     filter?: Filter<UserNotificationSettings>,
   ): Promise<UserNotificationSettings[]> {
-    return this.userNotificationSettingsRepository.find(
-      this._createFilterBuilder(currentUser, filter).build(),
-    );
+    return this.userNotificationSettingsRepository.find(filter);
   }
 
   @authenticate(STRATEGY.BEARER)
@@ -140,14 +125,9 @@ export class UserNotificationSettingsController {
       },
     })
     userNotificationSettings: UserNotificationSettings,
-    @inject(AuthenticationBindings.CURRENT_USER)
-    currentUser: IAuthUserWithPermissions,
-    @param.where(UserNotificationSettings)
-    where?: Where<UserNotificationSettings>,
   ): Promise<Count> {
     return this.userNotificationSettingsRepository.updateAll(
       userNotificationSettings,
-      this._createWhereBuilder(currentUser, where).build(),
     );
   }
 
@@ -167,13 +147,9 @@ export class UserNotificationSettingsController {
     },
   })
   async findById(
-    @inject(AuthenticationBindings.CURRENT_USER)
-    currentUser: IAuthUserWithPermissions,
     @param.path.string('id') id: string,
-    @param.filter(UserNotificationSettings, {exclude: 'where'})
-    filter?: FilterExcludingWhere<UserNotificationSettings>,
   ): Promise<UserNotificationSettings> {
-    return this._verifyOwned(id, currentUser);
+    return this.userNotificationSettingsRepository.findById(id);
   }
 
   @authenticate(STRATEGY.BEARER)
@@ -194,10 +170,16 @@ export class UserNotificationSettingsController {
       },
     })
     userNotificationSettings: UserNotificationSettings,
-    @inject(AuthenticationBindings.CURRENT_USER)
-    currentUser: IAuthUserWithPermissions,
   ): Promise<void> {
-    await this._verifyOwned(id, currentUser);
+    const isExists = await this.verifyIfAlreadyExists(
+      userNotificationSettings.userId,
+      id,
+    );
+    if (isExists) {
+      throw new HttpErrors.Forbidden(
+        'Settings for this user already exists in DB.',
+      );
+    }
     await this.userNotificationSettingsRepository.updateById(
       id,
       userNotificationSettings,
@@ -215,10 +197,16 @@ export class UserNotificationSettingsController {
   async replaceById(
     @param.path.string('id') id: string,
     @requestBody() userNotificationSettings: UserNotificationSettings,
-    @inject(AuthenticationBindings.CURRENT_USER)
-    currentUser: IAuthUserWithPermissions,
   ): Promise<void> {
-    await this._verifyOwned(id, currentUser);
+    const isExists = await this.verifyIfAlreadyExists(
+      userNotificationSettings.userId,
+      id,
+    );
+    if (isExists) {
+      throw new HttpErrors.Forbidden(
+        'Settings for this user already exists in DB.',
+      );
+    }
     await this.userNotificationSettingsRepository.replaceById(
       id,
       userNotificationSettings,
@@ -233,54 +221,21 @@ export class UserNotificationSettingsController {
   @response(STATUS_CODE.NO_CONTENT, {
     description: 'UserNotificationSettings DELETE success',
   })
-  async deleteById(
-    @param.path.string('id') id: string,
-    @inject(AuthenticationBindings.CURRENT_USER)
-    currentUser: IAuthUserWithPermissions,
-  ): Promise<void> {
-    await this._verifyOwned(id, currentUser);
+  async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.userNotificationSettingsRepository.deleteById(id);
   }
 
-  private async _verifyOwned(
-    id: string,
-    currentUser: IAuthUserWithPermissions,
-  ) {
-    const notificationUser =
-      await this.userNotificationSettingsRepository.findById(id);
-    if (notificationUser.userId !== currentUser.id) {
-      throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
+  async verifyIfAlreadyExists(userId: string, id = '') {
+    let where = {};
+    if (id) {
+      where = {where: {userId: {eq: userId}, id: {neq: id}}};
+    } else {
+      where = {where: {userId: {eq: userId}}};
     }
-    return notificationUser;
-  }
-
-  private _createWhereBuilder(
-    currentUser: IAuthUserWithPermissions,
-    where?: Where<UserNotificationSettings>,
-  ) {
-    const whereBuilder = new WhereBuilder(where);
-    whereBuilder.and([
-      {
-        userId: currentUser.id,
-      },
-    ]);
-    return whereBuilder;
-  }
-
-  private _createFilterBuilder(
-    currentUser: IAuthUserWithPermissions,
-    filter: Filter<UserNotificationSettings> = {},
-  ) {
-    const filterBuilder = new FilterBuilder(filter);
-    if (filter) {
-      const whereBuilder = new WhereBuilder(filter.where);
-      whereBuilder.and([
-        {
-          userId: currentUser.id,
-        },
-      ]);
-      filterBuilder.where(whereBuilder.build());
+    const setting = await this.userNotificationSettingsRepository.find(where);
+    if (setting?.length > 0) {
+      return true;
     }
-    return filterBuilder;
+    return false;
   }
 }

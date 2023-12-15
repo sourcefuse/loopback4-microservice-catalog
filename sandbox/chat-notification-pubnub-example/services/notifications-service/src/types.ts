@@ -1,10 +1,10 @@
-import { AnyObject } from '@loopback/repository';
-import { SuccessResponse } from '@sourceloop/core';
-import { MessageOptions, MessageType, Receiver } from 'loopback4-notifications';
-import { PubNubMessage } from 'loopback4-notifications/dist/providers/push/pubnub/types';
-import { PushNotification } from 'loopback4-notifications/dist/providers/push/types';
+import {AnyObject} from '@loopback/repository';
+import {SuccessResponse} from '@sourceloop/core';
+import {MessageOptions, MessageType, Receiver} from 'loopback4-notifications';
+import {PubNubMessage} from 'loopback4-notifications/dist/providers/push/pubnub/types';
+import {PushNotification} from 'loopback4-notifications/dist/providers/push/types';
 import Pubnub from 'pubnub';
-import { Notification, NotificationUser } from './models';
+import {Notification, NotificationUser} from './models';
 export interface PubNubNotification extends PushNotification {
   publish(message: PubNubMessage): Promise<void>;
   subscribe(params: Pubnub.SubscribeParameters): Promise<SuccessResponse>;
@@ -42,7 +42,5 @@ export interface INotificationUserManager {
 }
 
 export interface INotificationUserSettingManager {
-  checkUserNotificationSettings(
-    notif: Notification,
-  ): Promise<Notification>;
+  checkUserNotificationSettings(notif: Notification): Promise<Notification>;
 }

@@ -84,7 +84,7 @@ describe('Process notification Service', () => {
       });
       const result =
         await processNotificationService.getAllGroupedNotifications(
-          notification,
+          String(notification.groupKey),
         );
       expect(result).to.eql(notificationFind);
     });

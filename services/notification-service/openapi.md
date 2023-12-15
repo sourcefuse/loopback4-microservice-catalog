@@ -49,7 +49,8 @@ const inputBody = '[
     "notificationId": "string",
     "userId": "string",
     "isRead": true,
-    "actionMeta": {}
+    "actionMeta": {},
+    "isDraft": true
   }
 ]';
 const headers = {
@@ -84,7 +85,8 @@ const inputBody = [
     "notificationId": "string",
     "userId": "string",
     "isRead": true,
-    "actionMeta": {}
+    "actionMeta": {},
+    "isDraft": true
   }
 ];
 const headers = {
@@ -127,7 +129,8 @@ fetch('/notification-users/bulk',
     "notificationId": "string",
     "userId": "string",
     "isRead": true,
-    "actionMeta": {}
+    "actionMeta": {},
+    "isDraft": true
   }
 ]
 ```
@@ -153,7 +156,8 @@ fetch('/notification-users/bulk',
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }
 ```
 
@@ -339,7 +343,8 @@ const inputBody = '{
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -372,7 +377,8 @@ const inputBody = {
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 };
 const headers = {
   'Content-Type':'application/json',
@@ -413,7 +419,8 @@ fetch('/notification-users/{id}',
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }
 ```
 
@@ -452,7 +459,8 @@ const inputBody = '{
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -485,7 +493,8 @@ const inputBody = {
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 };
 const headers = {
   'Content-Type':'application/json',
@@ -526,7 +535,8 @@ fetch('/notification-users/{id}',
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }
 ```
 
@@ -625,7 +635,8 @@ fetch('/notification-users/{id}',
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }
 ```
 
@@ -727,7 +738,8 @@ const inputBody = '{
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -760,7 +772,8 @@ const inputBody = {
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 };
 const headers = {
   'Content-Type':'application/json',
@@ -801,7 +814,8 @@ fetch('/notification-users',
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }
 ```
 
@@ -826,7 +840,8 @@ fetch('/notification-users',
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }
 ```
 
@@ -858,7 +873,8 @@ const inputBody = '{
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -892,7 +908,8 @@ const inputBody = {
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 };
 const headers = {
   'Content-Type':'application/json',
@@ -934,7 +951,8 @@ fetch('/notification-users',
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }
 ```
 
@@ -1044,7 +1062,8 @@ fetch('/notification-users',
     "notificationId": "string",
     "userId": "string",
     "isRead": true,
-    "actionMeta": {}
+    "actionMeta": {},
+    "isDraft": true
   }
 ]
 ```
@@ -1073,6 +1092,7 @@ Status Code **200**
 |»» userId|string|true|none|none|
 |»» isRead|boolean|false|none|none|
 |»» actionMeta|object|false|none|none|
+|»» isDraft|boolean|false|none|none|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -2309,7 +2329,8 @@ const inputBody = '{
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -2342,7 +2363,8 @@ const inputBody = {
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 };
 const headers = {
   'Content-Type':'application/json',
@@ -2383,7 +2405,8 @@ fetch('/notifications/{id}/notification-users',
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }
 ```
 
@@ -2409,7 +2432,8 @@ fetch('/notifications/{id}/notification-users',
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }
 ```
 
@@ -2441,7 +2465,8 @@ const inputBody = '{
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -2475,7 +2500,8 @@ const inputBody = {
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 };
 const headers = {
   'Content-Type':'application/json',
@@ -2517,7 +2543,8 @@ fetch('/notifications/{id}/notification-users',
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }
 ```
 
@@ -2629,7 +2656,8 @@ fetch('/notifications/{id}/notification-users',
     "notificationId": "string",
     "userId": "string",
     "isRead": true,
-    "actionMeta": {}
+    "actionMeta": {},
+    "isDraft": true
   }
 ]
 ```
@@ -2658,6 +2686,7 @@ Status Code **200**
 |»» userId|string|true|none|none|
 |»» isRead|boolean|false|none|none|
 |»» actionMeta|object|false|none|none|
+|»» isDraft|boolean|false|none|none|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -3145,7 +3174,6 @@ fetch('/user-notification-settings/{id}',
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
 |id|path|string|true|none|
-|filter|query|[user_notification_settings.Filter](#schemauser_notification_settings.filter)|false|none|
 
 > Example responses
 
@@ -3487,7 +3515,6 @@ fetch('/user-notification-settings',
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|where|query|object|false|none|
 |body|body|[UserNotificationSettingsPartial](#schemausernotificationsettingspartial)|false|none|
 
 > Example responses
@@ -3567,7 +3594,7 @@ fetch('/user-notification-settings',
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|filter|query|[user_notification_settings.Filter1](#schemauser_notification_settings.filter1)|false|none|
+|filter|query|[user_notification_settings.Filter](#schemauser_notification_settings.filter)|false|none|
 
 > Example responses
 
@@ -3763,7 +3790,8 @@ NotificationPartial
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }
 
 ```
@@ -3784,6 +3812,7 @@ NotificationUser
 |userId|string|true|none|none|
 |isRead|boolean|false|none|none|
 |actionMeta|object|false|none|none|
+|isDraft|boolean|false|none|none|
 
 <h2 id="tocS_NewNotificationUser">NewNotificationUser</h2>
 <!-- backwards compatibility -->
@@ -3802,7 +3831,8 @@ NotificationUser
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }
 
 ```
@@ -3822,6 +3852,7 @@ NewNotificationUser
 |userId|string|true|none|none|
 |isRead|boolean|false|none|none|
 |actionMeta|object|false|none|none|
+|isDraft|boolean|false|none|none|
 
 <h2 id="tocS_NotificationUserPartial">NotificationUserPartial</h2>
 <!-- backwards compatibility -->
@@ -3841,7 +3872,8 @@ NewNotificationUser
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }
 
 ```
@@ -3862,6 +3894,7 @@ NotificationUserPartial
 |userId|string|false|none|none|
 |isRead|boolean|false|none|none|
 |actionMeta|object|false|none|none|
+|isDraft|boolean|false|none|none|
 
 <h2 id="tocS_AccessResponseDto">AccessResponseDto</h2>
 <!-- backwards compatibility -->
@@ -3930,7 +3963,8 @@ NotificationAccess
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }
 
 ```
@@ -3950,6 +3984,7 @@ NewNotificationUserInNotification
 |userId|string|true|none|none|
 |isRead|boolean|false|none|none|
 |actionMeta|object|false|none|none|
+|isDraft|boolean|false|none|none|
 
 <h2 id="tocS_UserNotificationSettings">UserNotificationSettings</h2>
 <!-- backwards compatibility -->
@@ -4265,7 +4300,8 @@ notification_users.IncludeFilter.Items
     "notificationId": true,
     "userId": true,
     "isRead": true,
-    "actionMeta": true
+    "actionMeta": true,
+    "isDraft": true
   },
   "include": [
     {
@@ -4332,6 +4368,7 @@ oneOf
 |»» userId|boolean|false|none|none|
 |»» isRead|boolean|false|none|none|
 |»» actionMeta|boolean|false|none|none|
+|»» isDraft|boolean|false|none|none|
 
 xor
 
@@ -4591,86 +4628,6 @@ or
 <a id="schema_user_notification_settings.Filter"></a>
 <a id="tocSuser_notification_settings.filter"></a>
 <a id="tocsuser_notification_settings.filter"></a>
-
-```json
-{
-  "offset": 0,
-  "limit": 100,
-  "skip": 0,
-  "order": "string",
-  "fields": {
-    "deleted": true,
-    "deletedOn": true,
-    "deletedBy": true,
-    "createdOn": true,
-    "modifiedOn": true,
-    "id": true,
-    "userId": true,
-    "sleepStartTime": true,
-    "sleepEndTime": true,
-    "type": true
-  }
-}
-
-```
-
-user_notification_settings.Filter
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|offset|integer|false|none|none|
-|limit|integer|false|none|none|
-|skip|integer|false|none|none|
-|order|any|false|none|none|
-
-oneOf
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|string|false|none|none|
-
-xor
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|[string]|false|none|none|
-
-continued
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|fields|any|false|none|none|
-
-oneOf
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|object|false|none|none|
-|»» deleted|boolean|false|none|none|
-|»» deletedOn|boolean|false|none|none|
-|»» deletedBy|boolean|false|none|none|
-|»» createdOn|boolean|false|none|none|
-|»» modifiedOn|boolean|false|none|none|
-|»» id|boolean|false|none|none|
-|»» userId|boolean|false|none|none|
-|»» sleepStartTime|boolean|false|none|none|
-|»» sleepEndTime|boolean|false|none|none|
-|»» type|boolean|false|none|none|
-
-xor
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|[string]|false|none|none|
-
-<h2 id="tocS_user_notification_settings.Filter1">user_notification_settings.Filter1</h2>
-<!-- backwards compatibility -->
-<a id="schemauser_notification_settings.filter1"></a>
-<a id="schema_user_notification_settings.Filter1"></a>
-<a id="tocSuser_notification_settings.filter1"></a>
-<a id="tocsuser_notification_settings.filter1"></a>
 
 ```json
 {

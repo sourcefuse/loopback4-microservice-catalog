@@ -7,6 +7,7 @@ import {
   createStubInstance,
   expect,
 } from '@loopback/testlab';
+import {Subscriber} from 'loopback4-notifications';
 import sinon from 'sinon';
 import {Notification, UserNotificationSettings} from '../../models';
 import {NotificationUserSettingsProvider} from '../../providers';
@@ -30,6 +31,13 @@ describe('Notification User Settings Service', () => {
 
   describe('adds notification from user into receivers array and returns it', () => {
     it('returns exact sam e notification object after applying user  notification settings in case there is no sleep time for the given user.', async () => {
+      const subscriber: Subscriber[] = [
+        {
+          id: 'dummy2',
+          ['test']: 'test',
+          isDraft: false,
+        },
+      ];
       const notification = new Notification({
         id: 'dummy',
         receiver: {
@@ -47,18 +55,31 @@ describe('Notification User Settings Service', () => {
       const result = await notificationUserSettingsProvider
         .value()
         .checkUserNotificationSettings(notification);
-      expect(result).to.eql(notification);
+      expect(result).to.eql(subscriber);
     });
 
-    it('returns the filtered  notification object after applying user  notification settings in case there is no sleep time for the given user.', async () => {
+    it('returns the filtered  subscriber object with isDraft alue true after applying user  notification settings in case there is sleep time for the given user.', async () => {
       const userNotificationSettingsToAdd = new UserNotificationSettings({
         userId: '1',
         type: 1,
         sleepStartTime: previousDate,
         sleepEndTime: nextDate,
       });
+
       const findOne = userNotifSettingsRepository.stubs.findOne;
       findOne.resolves(userNotificationSettingsToAdd);
+      const subscriber: Subscriber[] = [
+        {
+          id: '1',
+          ['test']: 'test',
+          isDraft: true,
+        },
+        {
+          id: '2',
+          ['test']: 'test',
+          isDraft: true,
+        },
+      ];
       const notification = new Notification({
         id: 'dummy',
         receiver: {
@@ -79,7 +100,7 @@ describe('Notification User Settings Service', () => {
       const result = await notificationUserSettingsProvider
         .value()
         .checkUserNotificationSettings(notification);
-      expect(result).to.eql(notification);
+      expect(result).to.eql(subscriber);
     });
   });
 
