@@ -71,7 +71,4 @@ export class NotificationUserSettingsProvider
       },
     };
   }
-  async insertDataInDb(notification: Notification) {
-    return this.notificationRepository.create(notification);
-  }
 }

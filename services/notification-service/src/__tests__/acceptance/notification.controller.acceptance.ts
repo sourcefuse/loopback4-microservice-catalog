@@ -56,7 +56,7 @@ describe('Notification Controller', () => {
       .expect(200);
   });
 
-  it('gives status 200 and check properties exist with response for particular id', async () => {
+  it('Gives status 200 and check properties exist with response for particular id when called get API to get by id.', async () => {
     const reqToAddNotificationUser = await addNotifications(false, '');
     expect(reqToAddNotificationUser.status).to.be.equal(200);
 

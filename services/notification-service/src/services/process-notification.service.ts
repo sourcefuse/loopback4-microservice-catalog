@@ -1,5 +1,6 @@
 import {BindingScope, Getter, inject, injectable} from '@loopback/core';
 import {repository} from '@loopback/repository';
+import {Transaction} from '@loopback/repository/dist';
 import {HttpErrors} from '@loopback/rest';
 import {AuthErrorKeys} from 'loopback4-authentication';
 import {
@@ -68,13 +69,28 @@ export class ProcessNotificationService {
     ) {
       notification.body = notification.body.substring(0, maxBodyLen - 1);
     }
-    notif = await this.insertDataInDb(notification);
-    if (!notification.isDraft) {
-      const notificationSent = await this.sendNotification(
-        notif,
-        categorizedSubscribers,
+
+    const connectorName =
+      this.notificationRepository?.dataSource?.connector?.name;
+    const notifTx =
+      connectorName !== 'memory'
+        ? await this.notificationRepository.beginTransaction()
+        : null;
+    try {
+      notif = await this.insertDataInDb(notification, notifTx);
+      if (!notification.isDraft) {
+        const notificationSent = await this.sendNotification(
+          notif,
+          categorizedSubscribers,
+        );
+        notif.body = notificationSent.body;
+      }
+      await notifTx?.commit();
+    } catch (error) {
+      await notifTx?.rollback();
+      throw new HttpErrors.Forbidden(
+        `Error Occurred! ${error.message}, the request completed and transaction has been reverted due to error.`,
       );
-      notif.body = notificationSent.body;
     }
     return notif;
   }
@@ -110,8 +126,14 @@ export class ProcessNotificationService {
     await this.notificationUserRepository.createAll(receiversToCreate);
     return notif;
   }
-  async insertDataInDb(notification: Notification) {
-    return this.notificationRepository.create(notification);
+  async insertDataInDb(
+    notification: Notification,
+    notifTx: Transaction | null,
+  ) {
+    const notif = this.notificationRepository.create(notification, {
+      transaction: notifTx,
+    });
+    return notif;
   }
   createNotifUsers(notif: Notification) {
     if (!notif.receiver?.to) {
