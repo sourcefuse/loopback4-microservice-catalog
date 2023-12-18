@@ -3,30 +3,30 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {inject} from '@loopback/core';
-import {TwilioBindings} from './keys';
-import {TwilioConfig} from './types';
 import twilio, {Twilio as TwilioClient} from 'twilio';
 import {
   RoomInstance,
   RoomListInstanceCreateOptions,
 } from 'twilio/lib/rest/video/v1/room';
+import {TwilioBindings} from './keys';
+import {TwilioConfig} from './types';
 
+import {repository} from '@loopback/repository';
+import {HttpErrors} from '@loopback/rest';
 import AccessToken, {VideoGrant} from 'twilio/lib/jwt/AccessToken';
-import {DataObject, repository} from '@loopback/repository';
-import {ArchiveResponse, SessionResponse, VideoChatFeatures} from '../..';
-import {
-  SessionAttendeesRepository,
-  VideoChatSessionRepository,
-} from '../../repositories';
-import {TwilioMeetingOptions, TwilioSessonOptions} from '..';
+import {RecordingInstance} from 'twilio/lib/rest/video/v1/recording';
 import {
   TwilioMeetingResponse,
   TwilioS3TargetOptions,
   TwilioStatusCallbackEvents,
   TwilioWebhookPayload,
 } from '.';
-import {HttpErrors} from '@loopback/rest';
-import {RecordingInstance} from 'twilio/lib/rest/video/v1/recording';
+import {TwilioMeetingOptions, TwilioSessonOptions} from '..';
+import {ArchiveResponse, SessionResponse, VideoChatFeatures} from '../..';
+import {
+  SessionAttendeesRepository,
+  VideoChatSessionRepository,
+} from '../../repositories';
 export class TwilioService {
   twilioClient: TwilioClient;
   constructor(
@@ -58,6 +58,9 @@ export class TwilioService {
       this.twilioConfig.accountSid,
       this.twilioConfig.apiSid,
       this.twilioConfig.authToken,
+      {
+        identity: sessionId,
+      },
     );
     token.addGrant(new VideoGrant());
     return token.toJwt();
@@ -128,9 +131,8 @@ export class TwilioService {
       throw new HttpErrors.InternalServerError(`Missing Aws credential Sid`);
     }
     const {awsS3Url, bucket} = storageOptions;
-    const accountSid = this.twilioConfig.accountSid;
     if (awsS3Url) {
-      await this.twilioClient.video.recordingSettings(accountSid).create({
+      await this.twilioClient.video.v1.recordingSettings().create({
         awsS3Url,
         awsStorageEnabled: true,
         awsCredentialsSid,
@@ -216,7 +218,8 @@ export class TwilioService {
   // sonarignore:start
   createRoom(
     createRoomConfig: RoomListInstanceCreateOptions,
-    callback?: (error: Error | null, item: RoomInstance) => DataObject<{}>,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    callback?: (error: Error | null, item?: RoomInstance) => any,
   ): Promise<RoomInstance> {
     // sonarignore:end
     if (!createRoomConfig) {

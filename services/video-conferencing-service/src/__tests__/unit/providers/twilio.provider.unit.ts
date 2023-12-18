@@ -15,8 +15,8 @@ import {
   VideoChatSessionRepository,
 } from '../../..';
 import {
-  TwilioProvider,
   TwilioConfig,
+  TwilioProvider,
   TwilioS3TargetOptions,
 } from '../../../providers/twilio';
 import {TwilioService} from '../../../providers/twilio/twilio.service';
@@ -209,7 +209,9 @@ describe('TwilioProvider (unit)', () => {
           twilio: (accountSid: string, authToken: string) => {
             return {
               video: {
-                recordingSettings: recordingSettingsStub,
+                v1: {
+                  recordingSettings: recordingSettingsStub,
+                },
               },
             };
           },
