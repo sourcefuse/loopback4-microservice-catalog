@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "@sourceloop/payment-service",
-    "version": "10.0.0",
+    "version": "10.0.1",
     "description": "payment microservice.",
     "contact": {
       "name": "Sourcefuse"

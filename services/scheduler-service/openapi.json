@@ -4061,7 +4061,8 @@
           },
           "event": {
             "$ref": "#/components/schemas/EventWithRelations"
-          }
+          },
+          "foreignKey": {}
         },
         "required": [
           "identifier",
@@ -4174,6 +4175,7 @@
           "calendar": {
             "$ref": "#/components/schemas/CalendarWithRelations"
           },
+          "foreignKey": {},
           "parentEvent": {
             "$ref": "#/components/schemas/EventWithRelations"
           },
@@ -4255,7 +4257,8 @@
           },
           "event": {
             "$ref": "#/components/schemas/EventWithRelations"
-          }
+          },
+          "foreignKey": {}
         },
         "required": [
           "fileUrl",
@@ -5859,7 +5862,8 @@
           },
           "calendar": {
             "$ref": "#/components/schemas/CalendarWithRelations"
-          }
+          },
+          "foreignKey": {}
         },
         "required": [
           "identifier",
@@ -6308,7 +6312,8 @@
           },
           "calendar": {
             "$ref": "#/components/schemas/CalendarWithRelations"
-          }
+          },
+          "foreignKey": {}
         },
         "required": [
           "calendarId"

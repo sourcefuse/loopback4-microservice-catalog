@@ -1715,6 +1715,7 @@
           "parentMessage": {
             "$ref": "#/components/schemas/MessageWithRelations"
           },
+          "foreignKey": {},
           "messages": {
             "type": "array",
             "items": {
@@ -1969,7 +1970,8 @@
           },
           "message": {
             "$ref": "#/components/schemas/MessageWithRelations"
-          }
+          },
+          "foreignKey": {}
         },
         "required": [
           "channelId",
@@ -2384,7 +2386,8 @@
           },
           "message": {
             "$ref": "#/components/schemas/MessageWithRelations"
-          }
+          },
+          "foreignKey": {}
         },
         "additionalProperties": false,
         "x-typescript-type": "AttachmentFileWithRelations"
