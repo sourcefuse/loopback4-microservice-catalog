@@ -2,7 +2,6 @@ import {
   AnyObject,
   Count,
   DataObject,
-  DefaultCrudRepository,
   Filter,
   FilterExcludingWhere,
   Where,
@@ -11,6 +10,7 @@ import {HttpErrors} from '@loopback/rest';
 import {
   AbstractConstructorWithGuard,
   EntityWithTenantId,
+  ICrudRepository,
   ITenantGuard,
 } from '../types';
 
@@ -21,10 +21,8 @@ export function TenantGuardMixin<
   M extends EntityWithTenantId,
   ID,
   Relations extends object,
-  S extends AbstractConstructor<DefaultCrudRepository<M, ID, Relations>>,
->(
-  superClass: S & AbstractConstructor<DefaultCrudRepository<M, ID, Relations>>,
-) {
+  S extends AbstractConstructor<ICrudRepository<M, ID, Relations>>,
+>(superClass: S & AbstractConstructor<ICrudRepository<M, ID, Relations>>) {
   abstract class GuardedRepo extends superClass {
     @inject(TenantUtilitiesBindings.GuardService)
     public tenantGuardService: ITenantGuard<M, ID>;
