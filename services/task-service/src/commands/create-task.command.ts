@@ -1,22 +1,26 @@
 import {Context} from '@loopback/core';
-import {AnyObject} from '@loopback/repository';
 import {
   ExecuteWorkflowDto,
   WorkflowController,
   WorkflowRepository,
 } from '@sourceloop/bpmn-service';
-import {ICommand, ILogger, LOGGER} from '@sourceloop/core';
+import {ILogger, LOGGER} from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {SYSTEM_USER} from '../constant';
-import {IEvent, IOutgoingConnector, ISubTaskService} from '../interfaces';
+import {
+  ICommand,
+  IEvent,
+  IOutgoingConnector,
+  ISubTaskService,
+} from '../interfaces';
 import {TaskServiceBindings} from '../keys';
 import {Task} from '../models';
 import {TaskRepository, TaskWorkFlowMappingRepository} from '../repositories';
-import {EventType, Source} from '../types';
+import {CamundaTaskParameters, EventType, Source} from '../types';
 
 export class CreateTaskCommand implements ICommand {
   topic = 'create-tasks';
-  parameters: AnyObject;
+  parameters: CamundaTaskParameters;
   logger: ILogger;
   constructor(private context: Context) {
     this.logger = context.getSync(LOGGER.LOGGER_INJECT);
@@ -43,7 +47,8 @@ export class CreateTaskCommand implements ICommand {
       await job.complete(this.parameters.task);
     } catch (e) {
       await job.handleFailure(this.parameters.task, {
-        message: e.message,
+        errorMessage: e.message,
+        errorDetails: e.stack,
       });
     }
   }

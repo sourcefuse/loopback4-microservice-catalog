@@ -1,15 +1,13 @@
 import {Context} from '@loopback/context';
-import {AnyObject} from '@loopback/repository';
-import {ICommand} from '@sourceloop/bpmn-service';
 import {ILogger, LOGGER} from '@sourceloop/core';
-import {IEvent, IOutgoingConnector} from '../interfaces';
+import {ICommand, IEvent, IOutgoingConnector} from '../interfaces';
 import {TaskServiceBindings} from '../keys';
 import {TaskRepository} from '../repositories';
-import {EventType, Source, TaskStatus} from '../types';
+import {CamundaTaskParameters, EventType, Source, TaskStatus} from '../types';
 
 export class EndTaskCommand implements ICommand {
   topic = 'end-task';
-  parameters: AnyObject;
+  parameters: CamundaTaskParameters;
   logger: ILogger;
   constructor(private context: Context) {
     this.logger = context.getSync(LOGGER.LOGGER_INJECT);
@@ -39,7 +37,8 @@ export class EndTaskCommand implements ICommand {
       await await job.complete(this.parameters.task);
     } catch (err) {
       await job.handleFailure(this.parameters.task, {
-        message: err.message,
+        errorMessage: err.message,
+        errorDetails: err.stack,
       });
     }
   }

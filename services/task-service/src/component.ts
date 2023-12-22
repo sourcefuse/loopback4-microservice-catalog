@@ -26,7 +26,7 @@ import {Strategies} from 'loopback4-authentication';
 import {
   BearerStrategyFactoryProvider,
   BearerTokenVerifyProvider,
-} from 'loopback4-authentication/dist/strategies';
+} from 'loopback4-authentication/passport-bearer';
 import {TaskServiceBindings} from './keys';
 import {CommandObserver, EventStreamObserver} from './lifecycle-observers';
 import {
@@ -107,6 +107,8 @@ export class TaskServiceComponent implements Component {
         key: TaskServiceBindings.SUB_TASK_SERVICE,
       }),
     ];
+    // default filter does not skip any events
+    this.application.bind(TaskServiceBindings.EVENT_FILTER).to(() => true);
     this.application.lifeCycleObserver(EventStreamObserver);
     this.application.lifeCycleObserver(CommandObserver);
   }

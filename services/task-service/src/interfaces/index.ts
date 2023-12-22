@@ -1,3 +1,4 @@
+export * from './i-command';
 export * from './i-event';
 export * from './i-event-adapter';
 export * from './i-event-processor';

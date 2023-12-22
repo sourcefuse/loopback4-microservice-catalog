@@ -27,21 +27,14 @@ export class CommandObserver implements LifeCycleObserver {
   ) {}
 
   async start(): Promise<void> {
-    const registerFn = await this.ctx.getValueOrPromise(
-      WorkflowServiceBindings.RegisterWorkerFunction,
-    );
-    if (registerFn) {
-      for (const cmdCtor of this.commandsCtors) {
-        const command = new cmdCtor(this.ctx);
-        this.logger.debug(`Registering command ${command.topic}`);
-        await this.workerFn({
-          topic: command.topic,
-          command: new BPMTask(command),
-          running: false,
-        });
-      }
-    } else {
-      throw new Error('No worker register function in the context');
+    for (const cmdCtor of this.commandsCtors) {
+      const command = new cmdCtor(this.ctx);
+      this.logger.debug(`Registering command ${command.topic}`);
+      await this.workerFn({
+        topic: command.topic,
+        command: new BPMTask(command),
+        running: false,
+      });
     }
     this.logger.debug('Commands registered');
   }

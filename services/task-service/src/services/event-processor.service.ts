@@ -9,7 +9,9 @@ import {ILogger, LOGGER} from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {SYSTEM_USER} from '../constant';
 import {IEvent, IEventProcessor, IIncomingConnector} from '../interfaces';
+import {TaskServiceBindings} from '../keys';
 import {EventRepository, EventWorkflowMappingRepository} from '../repositories';
+import {EventFilter} from '../types';
 
 export class EventProcessorService implements IEventProcessor {
   incoming: IIncomingConnector;
@@ -20,11 +22,17 @@ export class EventProcessorService implements IEventProcessor {
     private eventWorkflowMappingRepo: EventWorkflowMappingRepository,
     @inject.context()
     private readonly ctx: Context,
+    @inject(TaskServiceBindings.EVENT_FILTER)
+    private readonly filter: EventFilter,
     @inject(LOGGER.LOGGER_INJECT)
     private readonly logger: ILogger,
   ) {}
 
   async handle(event: IEvent): Promise<void> {
+    if (!this.filter(event)) {
+      this.logger.debug(`Event ${event.type} filtered out`);
+      return;
+    }
     await this.repo.create({
       key: event.type,
       payload: event.payload,
