@@ -9,12 +9,6 @@ import {Question} from '../models';
 import {QuestionDto} from '../models/question-dto.model';
 import {QuestionRepository} from '../repositories';
 import {OptionsRepository} from '../repositories/options.repository';
-import {
-  OptionsRepository as OptionsSequelizeRepo,
-  QuestionRepository as QuestionSequelizeRepo,
-  SurveyQuestionRepository as SurveyQuestionSequelizeRepo,
-  TemplateQuestionRepository as TemplateQuestionSequelizeRepo,
-} from '../repositories/sequelize';
 import {SurveyQuestionRepository} from '../repositories/survey-question.repository';
 import {TemplateQuestionRepository} from '../repositories/template-questions.repository';
 import {SurveyService} from './survey.service';
@@ -26,17 +20,13 @@ const orderByCreatedOn = 'created_on DESC';
 export class QuestionHelperService {
   constructor(
     @repository(QuestionRepository)
-    public questionRepository: QuestionRepository | QuestionSequelizeRepo,
+    public questionRepository: QuestionRepository,
     @repository(OptionsRepository)
-    public optionsRepository: OptionsRepository | OptionsSequelizeRepo,
+    public optionsRepository: OptionsRepository,
     @repository(TemplateQuestionRepository)
-    public templateQuestionRepository:
-      | TemplateQuestionRepository
-      | TemplateQuestionSequelizeRepo,
+    public templateQuestionRepository: TemplateQuestionRepository,
     @repository(SurveyQuestionRepository)
-    public surveyQuestionRepository:
-      | SurveyQuestionRepository
-      | SurveyQuestionSequelizeRepo,
+    public surveyQuestionRepository: SurveyQuestionRepository,
     @service(SurveyService)
     public surveyService: SurveyService,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
