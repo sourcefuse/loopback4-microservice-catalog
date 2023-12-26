@@ -2,15 +2,15 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Client, expect} from '@loopback/testlab';
+import { Client, expect } from '@loopback/testlab';
 import * as jwt from 'jsonwebtoken';
-import {Notification} from '../../models';
+import { Notification } from '../../models';
 import {
   NotificationRepository,
   NotificationUserRepository,
 } from '../../repositories';
-import {NotificationApplication} from '../application';
-import {setUpApplication} from './helper';
+import { NotificationApplication } from '../application';
+import { setUpApplication } from './helper';
 describe('Notification Controller', () => {
   let app: NotificationApplication;
   let client: Client;
@@ -36,7 +36,7 @@ describe('Notification Controller', () => {
   });
 
   before('setupApplication', async () => {
-    ({app, client} = await setUpApplication());
+    ({ app, client } = await setUpApplication());
   });
   after(async () => app.stop());
 
@@ -147,8 +147,7 @@ describe('Notification Controller', () => {
       sentDate: new Date(),
     });
 
-    if (isGrouped) {
-      notificationToAdd.isGrouped = true;
+    if (groupKey) {
       notificationToAdd.groupKey = groupKey;
     }
     return client

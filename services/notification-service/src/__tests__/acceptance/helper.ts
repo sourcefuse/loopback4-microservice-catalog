@@ -20,7 +20,7 @@ export async function setUpApplication(): Promise<AppWithClient> {
   const app = new NotificationApplication({
     rest: givenHttpServerConfig(),
   });
-
+  setEnvVars();
   await app.boot();
 
   app.bind('datasources.config.notificationDb').to({
@@ -48,4 +48,8 @@ export async function setUpApplication(): Promise<AppWithClient> {
 export interface AppWithClient {
   app: NotificationApplication;
   client: Client;
+}
+
+export function setEnvVars() {
+  process.env.TEST_ENV = '1';
 }

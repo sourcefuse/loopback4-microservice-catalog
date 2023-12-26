@@ -33,7 +33,10 @@ import { INotification, NotificationBindings } from 'loopback4-notifications';
 import { ErrorKeys } from '../enums/error-keys.enum';
 import { PermissionKey } from '../enums/permission-key.enum';
 import { NotifServiceBindings } from '../keys';
-import { Notification, NotificationUser } from '../models';
+import {
+  Notification,
+  NotificationUser
+} from '../models';
 import {
   NotificationRepository,
   NotificationUserRepository,
@@ -42,7 +45,7 @@ import { ProcessNotificationService } from '../services';
 import { INotificationFilterFunc, INotificationUserManager } from '../types';
 const basePath = '/notifications';
 
-const maxBodyLen = 1000;
+const maxBodyLen = parseInt(String(process.env.MAX_LENGTH)) ?? 1000;
 @bind({ scope: BindingScope.TRANSIENT })
 export class NotificationController {
   constructor(
@@ -71,7 +74,8 @@ export class NotificationController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Notification model instance',
+        description:
+          'Notification model instance, This API end point will be used to send the notification to the user.',
         content: {
           [CONTENT_TYPE.JSON]: { schema: getModelSchemaRef(Notification) },
         },
@@ -80,9 +84,13 @@ export class NotificationController {
   })
   async create(
     @requestBody({
+      description:
+        'This API is used to send notifications, the request body contains the object of notification model.',
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Notification, { exclude: ['id'] }),
+          schema: getModelSchemaRef(Notification, {
+            exclude: ['id', 'isDraft'],
+          }),
         },
       },
     })
@@ -117,7 +125,7 @@ export class NotificationController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Array of Notifications',
+        description: 'Array of Notifications, to send notifications as bulk.',
         content: {
           [CONTENT_TYPE.JSON]: {
             type: 'array',
@@ -197,7 +205,8 @@ export class NotificationController {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Array of Notification model instances',
+        description:
+          'Array of Notification model instances, To get the notifications',
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: { type: 'array', items: getModelSchemaRef(Notification) },
@@ -223,7 +232,7 @@ export class NotificationController {
   @get(`${basePath}/{id}`, {
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Notification model instance',
+        description: ', to get the notification by ID',
         content: {
           [CONTENT_TYPE.JSON]: { schema: getModelSchemaRef(Notification) },
         },

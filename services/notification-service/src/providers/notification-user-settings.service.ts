@@ -37,11 +37,11 @@ export class NotificationUserSettingsProvider
        */
       checkUserNotificationSettings: async (notification: Notification) => {
         //In case notification body has the critical flag as false then only system will check for the notification settings i.e. the sleep time of the user.
-        if (notification.isCritical) {
+        const categorizedSubscribes: Subscriber[] = [];
+        if (notification.isCritical && notification.receiver) {
           return notification.receiver.to;
-        } else {
+        } else if (!notification.isCritical && notification.receiver) {
           //here the participants will be filtered based on the sleep time of the individual participant
-          const categorizedSubscribes: Subscriber[] = [];
           for (const toUser of notification.receiver.to) {
             const element = {...toUser};
             const currentTime = new Date();
@@ -58,8 +58,8 @@ export class NotificationUserSettingsProvider
             }
             categorizedSubscribes.push(element);
           }
-          return categorizedSubscribes;
         }
+        return categorizedSubscribes;
       },
       getNotificationSubscribers: async (
         categorzedSubscribes: Subscriber[],

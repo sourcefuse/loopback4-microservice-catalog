@@ -2,9 +2,6 @@ ALTER TABLE main.notifications
 ADD COLUMN IF NOT EXISTS  is_draft boolean default FALSE;
 
 ALTER TABLE main.notifications
-ADD COLUMN IF NOT EXISTS  is_grouped boolean default FALSE;
-
-ALTER TABLE main.notifications
 ADD COLUMN IF NOT EXISTS is_critical boolean default FALSE;
 
 ALTER TABLE main.notifications

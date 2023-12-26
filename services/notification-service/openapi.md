@@ -1249,7 +1249,6 @@ fetch('/notification-users/{id}/notification',
     "sentDate": "2019-08-24T14:15:22Z",
     "options": {},
     "isDraft": true,
-    "isGrouped": true,
     "groupKey": "string",
     "isCritical": true
   }
@@ -1273,12 +1272,11 @@ Status Code **200**
 |»» id|string|false|none|none|
 |»» subject|string¦null|false|none|none|
 |»» body|string|true|none|none|
-|»» receiver|object|true|none|none|
+|»» receiver|object|false|none|none|
 |»» type|number|true|none|none|
 |»» sentDate|string(date-time)|false|none|none|
 |»» options|object|false|none|none|
 |»» isDraft|boolean|false|none|none|
-|»» isGrouped|boolean|false|none|none|
 |»» groupKey|string|false|none|none|
 |»» isCritical|boolean|false|none|none|
 
@@ -1471,7 +1469,6 @@ const inputBody = '[
     "sentDate": "2019-08-24T14:15:22Z",
     "options": {},
     "isDraft": true,
-    "isGrouped": true,
     "groupKey": "string",
     "isCritical": true
   }
@@ -1507,7 +1504,6 @@ const inputBody = [
     "sentDate": "2019-08-24T14:15:22Z",
     "options": {},
     "isDraft": true,
-    "isGrouped": true,
     "groupKey": "string",
     "isCritical": true
   }
@@ -1551,7 +1547,6 @@ fetch('/notifications/bulk',
     "sentDate": "2019-08-24T14:15:22Z",
     "options": {},
     "isDraft": true,
-    "isGrouped": true,
     "groupKey": "string",
     "isCritical": true
   }
@@ -1570,7 +1565,7 @@ fetch('/notifications/bulk',
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Notifications|None|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Notifications, to send notifications as bulk.|None|
 
 <h3 id="notificationcontroller.createbulknotificaitions-responseschema">Response Schema</h3>
 
@@ -1662,6 +1657,485 @@ To perform this operation, you must be authenticated by means of one of the foll
 HTTPBearer
 </aside>
 
+## NotificationController.draftNotification
+
+<a id="opIdNotificationController.draftNotification"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "type": 0,
+  "sentDate": "2019-08-24T14:15:22Z",
+  "options": {},
+  "groupKey": "string",
+  "isCritical": true
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notifications/drafts',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "type": 0,
+  "sentDate": "2019-08-24T14:15:22Z",
+  "options": {},
+  "groupKey": "string",
+  "isCritical": true
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notifications/drafts',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /notifications/drafts`
+
+| Permissions |
+| ------- |
+| CreateNotification   |
+| 2   |
+
+> Body parameter
+
+```json
+{
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "type": 0,
+  "sentDate": "2019-08-24T14:15:22Z",
+  "options": {},
+  "groupKey": "string",
+  "isCritical": true
+}
+```
+
+<h3 id="notificationcontroller.draftnotification-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[NotificationExcluding_id-isDraft_](#schemanotificationexcluding_id-isdraft_)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "type": 0,
+  "sentDate": "2019-08-24T14:15:22Z",
+  "options": {},
+  "groupKey": "string",
+  "isCritical": true
+}
+```
+
+<h3 id="notificationcontroller.draftnotification-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|This API is used to draft notifications, here in case isDraft .|[NotificationExcluding_id-isDraft_](#schemanotificationexcluding_id-isdraft_)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
+## NotificationController.sendGroupedNotificationByGroupKey
+
+<a id="opIdNotificationController.sendGroupedNotificationByGroupKey"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "isCritical": true,
+  "type": 0,
+  "options": {},
+  "sentDate": "2019-08-24T14:15:22Z"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notifications/group/{groupKey}',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "isCritical": true,
+  "type": 0,
+  "options": {},
+  "sentDate": "2019-08-24T14:15:22Z"
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notifications/group/{groupKey}',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /notifications/group/{groupKey}`
+
+| Permissions |
+| ------- |
+| CreateNotification   |
+| 2   |
+
+> Body parameter
+
+```json
+{
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "isCritical": true,
+  "type": 0,
+  "options": {},
+  "sentDate": "2019-08-24T14:15:22Z"
+}
+```
+
+<h3 id="notificationcontroller.sendgroupednotificationbygroupkey-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|groupKey|path|string|true|none|
+|body|body|[NotificationDtoExcluding_id-groupKey_](#schemanotificationdtoexcluding_id-groupkey_)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "isCritical": true,
+  "type": 0,
+  "groupKey": "string",
+  "options": {},
+  "sentDate": "2019-08-24T14:15:22Z"
+}
+```
+
+<h3 id="notificationcontroller.sendgroupednotificationbygroupkey-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|This API is used to send notification by grouping by given key in the end point.|[NotificationDtoExcluding_id_](#schemanotificationdtoexcluding_id_)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
+## NotificationController.sendNotificationForSleepTimeUsers
+
+<a id="opIdNotificationController.sendNotificationForSleepTimeUsers"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "ids": [
+    "string"
+  ],
+  "userId": [
+    "string"
+  ],
+  "startTime": "2019-08-24T14:15:22Z",
+  "endTime": "2019-08-24T14:15:22Z"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notifications/send',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "ids": [
+    "string"
+  ],
+  "userId": [
+    "string"
+  ],
+  "startTime": "2019-08-24T14:15:22Z",
+  "endTime": "2019-08-24T14:15:22Z"
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notifications/send',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /notifications/send`
+
+| Permissions |
+| ------- |
+| CreateNotification   |
+| 2   |
+
+> Body parameter
+
+```json
+{
+  "ids": [
+    "string"
+  ],
+  "userId": [
+    "string"
+  ],
+  "startTime": "2019-08-24T14:15:22Z",
+  "endTime": "2019-08-24T14:15:22Z"
+}
+```
+
+<h3 id="notificationcontroller.sendnotificationforsleeptimeusers-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[NotificationSettingsDto](#schemanotificationsettingsdto)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "ids": [
+    "string"
+  ],
+  "userId": [
+    "string"
+  ],
+  "startTime": "2019-08-24T14:15:22Z",
+  "endTime": "2019-08-24T14:15:22Z"
+}
+```
+
+<h3 id="notificationcontroller.sendnotificationforsleeptimeusers-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|This API is used to send notifications for given search criteria.|[NotificationSettingsDto](#schemanotificationsettingsdto)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
+## NotificationController.sendNotificationById
+
+<a id="opIdNotificationController.sendNotificationById"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "isCritical": true,
+  "options": {},
+  "sentDate": "2019-08-24T14:15:22Z"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notifications/{id}/send',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "isCritical": true,
+  "options": {},
+  "sentDate": "2019-08-24T14:15:22Z"
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notifications/{id}/send',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /notifications/{id}/send`
+
+| Permissions |
+| ------- |
+| CreateNotification   |
+| 2   |
+
+> Body parameter
+
+```json
+{
+  "isCritical": true,
+  "options": {},
+  "sentDate": "2019-08-24T14:15:22Z"
+}
+```
+
+<h3 id="notificationcontroller.sendnotificationbyid-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[NotificationDtoExcluding_id-groupKey-receiver-subject-body-type_](#schemanotificationdtoexcluding_id-groupkey-receiver-subject-body-type_)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "isCritical": true,
+  "options": {},
+  "sentDate": "2019-08-24T14:15:22Z"
+}
+```
+
+<h3 id="notificationcontroller.sendnotificationbyid-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|This API is used to send notifications for given Notification Id.|[NotificationDtoExcluding_id-groupKey-receiver-subject-body-type_](#schemanotificationdtoexcluding_id-groupkey-receiver-subject-body-type_)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
 ## NotificationController.updateById
 
 <a id="opIdNotificationController.updateById"></a>
@@ -1678,7 +2152,6 @@ const inputBody = '{
   "sentDate": "2019-08-24T14:15:22Z",
   "options": {},
   "isDraft": true,
-  "isGrouped": true,
   "groupKey": "string",
   "isCritical": true
 }';
@@ -1712,7 +2185,6 @@ const inputBody = {
   "sentDate": "2019-08-24T14:15:22Z",
   "options": {},
   "isDraft": true,
-  "isGrouped": true,
   "groupKey": "string",
   "isCritical": true
 };
@@ -1754,7 +2226,6 @@ fetch('/notifications/{id}',
   "sentDate": "2019-08-24T14:15:22Z",
   "options": {},
   "isDraft": true,
-  "isGrouped": true,
   "groupKey": "string",
   "isCritical": true
 }
@@ -1852,7 +2323,6 @@ fetch('/notifications/{id}',
   "sentDate": "2019-08-24T14:15:22Z",
   "options": {},
   "isDraft": true,
-  "isGrouped": true,
   "groupKey": "string",
   "isCritical": true
 }
@@ -1862,7 +2332,7 @@ fetch('/notifications/{id}',
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Notification model instance|[Notification](#schemanotification)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|, to get the notification by ID|[Notification](#schemanotification)|
 
 <aside class="success">
 This operation does not require authentication
@@ -1882,8 +2352,6 @@ const inputBody = '{
   "type": 0,
   "sentDate": "2019-08-24T14:15:22Z",
   "options": {},
-  "isDraft": true,
-  "isGrouped": true,
   "groupKey": "string",
   "isCritical": true
 }';
@@ -1916,8 +2384,6 @@ const inputBody = {
   "type": 0,
   "sentDate": "2019-08-24T14:15:22Z",
   "options": {},
-  "isDraft": true,
-  "isGrouped": true,
   "groupKey": "string",
   "isCritical": true
 };
@@ -1958,8 +2424,6 @@ fetch('/notifications',
   "type": 0,
   "sentDate": "2019-08-24T14:15:22Z",
   "options": {},
-  "isDraft": true,
-  "isGrouped": true,
   "groupKey": "string",
   "isCritical": true
 }
@@ -1969,7 +2433,7 @@ fetch('/notifications',
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|body|body|[NotificationExcluding_id_](#schemanotificationexcluding_id_)|false|none|
+|body|body|[NotificationExcluding_id-isDraft_](#schemanotificationexcluding_id-isdraft_)|false|This API is used to send notifications, the request body contains the object of notification model.|
 
 > Example responses
 
@@ -1985,7 +2449,6 @@ fetch('/notifications',
   "sentDate": "2019-08-24T14:15:22Z",
   "options": {},
   "isDraft": true,
-  "isGrouped": true,
   "groupKey": "string",
   "isCritical": true
 }
@@ -1995,7 +2458,7 @@ fetch('/notifications',
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Notification model instance|[Notification](#schemanotification)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Notification model instance, This API end point will be used to send the notification to the user.|[Notification](#schemanotification)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -2018,7 +2481,6 @@ const inputBody = '{
   "sentDate": "2019-08-24T14:15:22Z",
   "options": {},
   "isDraft": true,
-  "isGrouped": true,
   "groupKey": "string",
   "isCritical": true
 }';
@@ -2053,7 +2515,6 @@ const inputBody = {
   "sentDate": "2019-08-24T14:15:22Z",
   "options": {},
   "isDraft": true,
-  "isGrouped": true,
   "groupKey": "string",
   "isCritical": true
 };
@@ -2096,7 +2557,6 @@ fetch('/notifications',
   "sentDate": "2019-08-24T14:15:22Z",
   "options": {},
   "isDraft": true,
-  "isGrouped": true,
   "groupKey": "string",
   "isCritical": true
 }
@@ -2202,7 +2662,6 @@ fetch('/notifications',
     "sentDate": "2019-08-24T14:15:22Z",
     "options": {},
     "isDraft": true,
-    "isGrouped": true,
     "groupKey": "string",
     "isCritical": true
   }
@@ -2213,7 +2672,7 @@ fetch('/notifications',
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Notification model instances|Inline|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Notification model instances, To get the notifications|Inline|
 
 <h3 id="notificationcontroller.find-responseschema">Response Schema</h3>
 
@@ -2226,12 +2685,11 @@ Status Code **200**
 |»» id|string|false|none|none|
 |»» subject|string¦null|false|none|none|
 |»» body|string|true|none|none|
-|»» receiver|object|true|none|none|
+|»» receiver|object|false|none|none|
 |»» type|number|true|none|none|
 |»» sentDate|string(date-time)|false|none|none|
 |»» options|object|false|none|none|
 |»» isDraft|boolean|false|none|none|
-|»» isGrouped|boolean|false|none|none|
 |»» groupKey|string|false|none|none|
 |»» isCritical|boolean|false|none|none|
 
@@ -3665,7 +4123,6 @@ This operation does not require authentication
   "sentDate": "2019-08-24T14:15:22Z",
   "options": {},
   "isDraft": true,
-  "isGrouped": true,
   "groupKey": "string",
   "isCritical": true
 }
@@ -3681,14 +4138,215 @@ Notification
 |id|string|false|none|none|
 |subject|string¦null|false|none|none|
 |body|string|true|none|none|
-|receiver|object|true|none|none|
+|receiver|object|false|none|none|
 |type|number|true|none|none|
 |sentDate|string(date-time)|false|none|none|
 |options|object|false|none|none|
 |isDraft|boolean|false|none|none|
-|isGrouped|boolean|false|none|none|
 |groupKey|string|false|none|none|
 |isCritical|boolean|false|none|none|
+
+<h2 id="tocS_NotificationExcluding_id-isDraft_">NotificationExcluding_id-isDraft_</h2>
+<!-- backwards compatibility -->
+<a id="schemanotificationexcluding_id-isdraft_"></a>
+<a id="schema_NotificationExcluding_id-isDraft_"></a>
+<a id="tocSnotificationexcluding_id-isdraft_"></a>
+<a id="tocsnotificationexcluding_id-isdraft_"></a>
+
+```json
+{
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "type": 0,
+  "sentDate": "2019-08-24T14:15:22Z",
+  "options": {},
+  "groupKey": "string",
+  "isCritical": true
+}
+
+```
+
+NotificationExcluding_id-isDraft_
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|subject|string¦null|false|none|none|
+|body|string|true|none|none|
+|receiver|object|false|none|none|
+|type|number|true|none|none|
+|sentDate|string(date-time)|false|none|none|
+|options|object|false|none|none|
+|groupKey|string|false|none|none|
+|isCritical|boolean|false|none|none|
+
+<h2 id="tocS_NotificationDtoExcluding_id_">NotificationDtoExcluding_id_</h2>
+<!-- backwards compatibility -->
+<a id="schemanotificationdtoexcluding_id_"></a>
+<a id="schema_NotificationDtoExcluding_id_"></a>
+<a id="tocSnotificationdtoexcluding_id_"></a>
+<a id="tocsnotificationdtoexcluding_id_"></a>
+
+```json
+{
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "isCritical": true,
+  "type": 0,
+  "groupKey": "string",
+  "options": {},
+  "sentDate": "2019-08-24T14:15:22Z"
+}
+
+```
+
+NotificationDtoExcluding_id_
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|subject|string¦null|false|none|none|
+|body|string|false|none|none|
+|receiver|object|false|none|none|
+|isCritical|boolean|false|none|none|
+|type|number|true|none|none|
+|groupKey|string|false|none|none|
+|options|object|false|none|none|
+|sentDate|string(date-time)|false|none|none|
+
+<h2 id="tocS_NotificationDtoExcluding_id-groupKey_">NotificationDtoExcluding_id-groupKey_</h2>
+<!-- backwards compatibility -->
+<a id="schemanotificationdtoexcluding_id-groupkey_"></a>
+<a id="schema_NotificationDtoExcluding_id-groupKey_"></a>
+<a id="tocSnotificationdtoexcluding_id-groupkey_"></a>
+<a id="tocsnotificationdtoexcluding_id-groupkey_"></a>
+
+```json
+{
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "isCritical": true,
+  "type": 0,
+  "options": {},
+  "sentDate": "2019-08-24T14:15:22Z"
+}
+
+```
+
+NotificationDtoExcluding_id-groupKey_
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|subject|string¦null|false|none|none|
+|body|string|false|none|none|
+|receiver|object|false|none|none|
+|isCritical|boolean|false|none|none|
+|type|number|true|none|none|
+|options|object|false|none|none|
+|sentDate|string(date-time)|false|none|none|
+
+<h2 id="tocS_NotificationDtoExcluding_id-groupKey-receiver-subject-body-type_">NotificationDtoExcluding_id-groupKey-receiver-subject-body-type_</h2>
+<!-- backwards compatibility -->
+<a id="schemanotificationdtoexcluding_id-groupkey-receiver-subject-body-type_"></a>
+<a id="schema_NotificationDtoExcluding_id-groupKey-receiver-subject-body-type_"></a>
+<a id="tocSnotificationdtoexcluding_id-groupkey-receiver-subject-body-type_"></a>
+<a id="tocsnotificationdtoexcluding_id-groupkey-receiver-subject-body-type_"></a>
+
+```json
+{
+  "isCritical": true,
+  "options": {},
+  "sentDate": "2019-08-24T14:15:22Z"
+}
+
+```
+
+NotificationDtoExcluding_id-groupKey-receiver-subject-body-type_
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|isCritical|boolean|false|none|none|
+|options|object|false|none|none|
+|sentDate|string(date-time)|false|none|none|
+
+<h2 id="tocS_NotificationDto">NotificationDto</h2>
+<!-- backwards compatibility -->
+<a id="schemanotificationdto"></a>
+<a id="schema_NotificationDto"></a>
+<a id="tocSnotificationdto"></a>
+<a id="tocsnotificationdto"></a>
+
+```json
+{
+  "id": "string",
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "isCritical": true,
+  "type": 0,
+  "groupKey": "string",
+  "options": {},
+  "sentDate": "2019-08-24T14:15:22Z"
+}
+
+```
+
+NotificationDto
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|false|none|none|
+|subject|string¦null|false|none|none|
+|body|string|false|none|none|
+|receiver|object|false|none|none|
+|isCritical|boolean|false|none|none|
+|type|number|true|none|none|
+|groupKey|string|false|none|none|
+|options|object|false|none|none|
+|sentDate|string(date-time)|false|none|none|
+
+<h2 id="tocS_NotificationSettingsDto">NotificationSettingsDto</h2>
+<!-- backwards compatibility -->
+<a id="schemanotificationsettingsdto"></a>
+<a id="schema_NotificationSettingsDto"></a>
+<a id="tocSnotificationsettingsdto"></a>
+<a id="tocsnotificationsettingsdto"></a>
+
+```json
+{
+  "ids": [
+    "string"
+  ],
+  "userId": [
+    "string"
+  ],
+  "startTime": "2019-08-24T14:15:22Z",
+  "endTime": "2019-08-24T14:15:22Z"
+}
+
+```
+
+NotificationSettingsDto
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|ids|[string]|false|none|none|
+|userId|[string]|false|none|none|
+|startTime|string(date-time)|false|none|none|
+|endTime|string(date-time)|false|none|none|
 
 <h2 id="tocS_NotificationExcluding_id_">NotificationExcluding_id_</h2>
 <!-- backwards compatibility -->
@@ -3706,7 +4364,6 @@ Notification
   "sentDate": "2019-08-24T14:15:22Z",
   "options": {},
   "isDraft": true,
-  "isGrouped": true,
   "groupKey": "string",
   "isCritical": true
 }
@@ -3721,12 +4378,11 @@ NotificationExcluding_id_
 |---|---|---|---|---|
 |subject|string¦null|false|none|none|
 |body|string|true|none|none|
-|receiver|object|true|none|none|
+|receiver|object|false|none|none|
 |type|number|true|none|none|
 |sentDate|string(date-time)|false|none|none|
 |options|object|false|none|none|
 |isDraft|boolean|false|none|none|
-|isGrouped|boolean|false|none|none|
 |groupKey|string|false|none|none|
 |isCritical|boolean|false|none|none|
 
@@ -3747,7 +4403,6 @@ NotificationExcluding_id_
   "sentDate": "2019-08-24T14:15:22Z",
   "options": {},
   "isDraft": true,
-  "isGrouped": true,
   "groupKey": "string",
   "isCritical": true
 }
@@ -3768,7 +4423,6 @@ NotificationPartial
 |sentDate|string(date-time)|false|none|none|
 |options|object|false|none|none|
 |isDraft|boolean|false|none|none|
-|isGrouped|boolean|false|none|none|
 |groupKey|string|false|none|none|
 |isCritical|boolean|false|none|none|
 
@@ -4527,7 +5181,6 @@ notifications.IncludeFilter.Items
     "sentDate": true,
     "options": true,
     "isDraft": true,
-    "isGrouped": true,
     "groupKey": true,
     "isCritical": true
   },
@@ -4594,7 +5247,6 @@ oneOf
 |»» sentDate|boolean|false|none|none|
 |»» options|boolean|false|none|none|
 |»» isDraft|boolean|false|none|none|
-|»» isGrouped|boolean|false|none|none|
 |»» groupKey|boolean|false|none|none|
 |»» isCritical|boolean|false|none|none|
 

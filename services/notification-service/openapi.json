@@ -581,7 +581,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Array of Notifications",
+            "description": "Array of Notifications, to send notifications as bulk.",
             "content": {
               "application/json": {
                 "type": "array",
@@ -655,6 +655,127 @@
           }
         ],
         "operationId": "NotificationController.count"
+      }
+    },
+    "/notifications/drafts": {
+      "post": {
+        "x-controller-name": "NotificationController",
+        "x-operation-name": "draftNotification",
+        "tags": [
+          "NotificationController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "This API is used to draft notifications, here in case isDraft .",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationExcluding_id-isDraft_"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateNotification   |\n| 2   |\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificationExcluding_id-isDraft_"
+              }
+            }
+          }
+        },
+        "operationId": "NotificationController.draftNotification"
+      }
+    },
+    "/notifications/group/{groupKey}": {
+      "post": {
+        "x-controller-name": "NotificationController",
+        "x-operation-name": "sendGroupedNotificationByGroupKey",
+        "tags": [
+          "NotificationController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "This API is used to send notification by grouping by given key in the end point.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationDtoExcluding_id_"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateNotification   |\n| 2   |\n",
+        "parameters": [
+          {
+            "name": "groupKey",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificationDtoExcluding_id-groupKey_"
+              }
+            }
+          }
+        },
+        "operationId": "NotificationController.sendGroupedNotificationByGroupKey"
+      }
+    },
+    "/notifications/send": {
+      "post": {
+        "x-controller-name": "NotificationController",
+        "x-operation-name": "sendNotificationForSleepTimeUsers",
+        "tags": [
+          "NotificationController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "This API is used to send notifications for given search criteria.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationSettingsDto"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateNotification   |\n| 2   |\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificationSettingsDto"
+              }
+            }
+          }
+        },
+        "operationId": "NotificationController.sendNotificationForSleepTimeUsers"
       }
     },
     "/notifications/{id}/notification-users": {
@@ -866,6 +987,53 @@
         "operationId": "NotificationNotificationUserController.delete"
       }
     },
+    "/notifications/{id}/send": {
+      "post": {
+        "x-controller-name": "NotificationController",
+        "x-operation-name": "sendNotificationById",
+        "tags": [
+          "NotificationController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "This API is used to send notifications for given Notification Id.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationDtoExcluding_id-groupKey-receiver-subject-body-type_"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateNotification   |\n| 2   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificationDtoExcluding_id-groupKey-receiver-subject-body-type_"
+              }
+            }
+          }
+        },
+        "operationId": "NotificationController.sendNotificationById"
+      }
+    },
     "/notifications/{id}": {
       "patch": {
         "x-controller-name": "NotificationController",
@@ -914,7 +1082,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Notification model instance",
+            "description": ", to get the notification by ID",
             "content": {
               "application/json": {
                 "schema": {
@@ -952,7 +1120,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Notification model instance",
+            "description": "Notification model instance, This API end point will be used to send the notification to the user.",
             "content": {
               "application/json": {
                 "schema": {
@@ -967,10 +1135,11 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NotificationExcluding_id_"
+                "$ref": "#/components/schemas/NotificationExcluding_id-isDraft_"
               }
             }
-          }
+          },
+          "description": "This API is used to send notifications, the request body contains the object of notification model."
         },
         "operationId": "NotificationController.create"
       },
@@ -1038,7 +1207,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Array of Notification model instances",
+            "description": "Array of Notification model instances, To get the notifications",
             "content": {
               "application/json": {
                 "schema": {
@@ -1439,8 +1608,43 @@
           "isDraft": {
             "type": "boolean"
           },
-          "isGrouped": {
+          "groupKey": {
+            "type": "string"
+          },
+          "isCritical": {
             "type": "boolean"
+          }
+        },
+        "required": [
+          "body",
+          "type"
+        ],
+        "additionalProperties": false
+      },
+      "NotificationExcluding_id-isDraft_": {
+        "title": "NotificationExcluding_id-isDraft_",
+        "type": "object",
+        "description": "(tsType: Omit<Notification, 'id' | 'isDraft'>, schemaOptions: { exclude: [ 'id', 'isDraft' ] })",
+        "properties": {
+          "subject": {
+            "type": "string",
+            "nullable": true
+          },
+          "body": {
+            "type": "string"
+          },
+          "receiver": {
+            "type": "object"
+          },
+          "type": {
+            "type": "number"
+          },
+          "sentDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "options": {
+            "type": "object"
           },
           "groupKey": {
             "type": "string"
@@ -1451,9 +1655,167 @@
         },
         "required": [
           "body",
-          "receiver",
           "type"
         ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<Notification, 'id' | 'isDraft'>"
+      },
+      "NotificationDtoExcluding_id_": {
+        "title": "NotificationDtoExcluding_id_",
+        "type": "object",
+        "description": "(tsType: Omit<NotificationDto, 'id'>, schemaOptions: { exclude: [ 'id' ] })",
+        "properties": {
+          "subject": {
+            "type": "string",
+            "nullable": true
+          },
+          "body": {
+            "type": "string"
+          },
+          "receiver": {
+            "type": "object"
+          },
+          "isCritical": {
+            "type": "boolean"
+          },
+          "type": {
+            "type": "number"
+          },
+          "groupKey": {
+            "type": "string"
+          },
+          "options": {
+            "type": "object"
+          },
+          "sentDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<NotificationDto, 'id'>"
+      },
+      "NotificationDtoExcluding_id-groupKey_": {
+        "title": "NotificationDtoExcluding_id-groupKey_",
+        "type": "object",
+        "description": "(tsType: Omit<NotificationDto, 'id' | 'groupKey'>, schemaOptions: { exclude: [ 'id', 'groupKey' ] })",
+        "properties": {
+          "subject": {
+            "type": "string",
+            "nullable": true
+          },
+          "body": {
+            "type": "string"
+          },
+          "receiver": {
+            "type": "object"
+          },
+          "isCritical": {
+            "type": "boolean"
+          },
+          "type": {
+            "type": "number"
+          },
+          "options": {
+            "type": "object"
+          },
+          "sentDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<NotificationDto, 'id' | 'groupKey'>"
+      },
+      "NotificationDtoExcluding_id-groupKey-receiver-subject-body-type_": {
+        "title": "NotificationDtoExcluding_id-groupKey-receiver-subject-body-type_",
+        "type": "object",
+        "description": "(tsType: Omit<NotificationDto, 'id' | 'groupKey' | 'receiver' | 'subject' | 'body' | 'type'>, schemaOptions: { exclude: [ 'id', 'groupKey', 'receiver', 'subject', 'body', 'type' ] })",
+        "properties": {
+          "isCritical": {
+            "type": "boolean"
+          },
+          "options": {
+            "type": "object"
+          },
+          "sentDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<NotificationDto, 'id' | 'groupKey' | 'receiver' | 'subject' | 'body' | 'type'>"
+      },
+      "NotificationDto": {
+        "title": "NotificationDto",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string",
+            "nullable": true
+          },
+          "body": {
+            "type": "string"
+          },
+          "receiver": {
+            "type": "object"
+          },
+          "isCritical": {
+            "type": "boolean"
+          },
+          "type": {
+            "type": "number"
+          },
+          "groupKey": {
+            "type": "string"
+          },
+          "options": {
+            "type": "object"
+          },
+          "sentDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false
+      },
+      "NotificationSettingsDto": {
+        "title": "NotificationSettingsDto",
+        "type": "object",
+        "properties": {
+          "ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "userId": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "startTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
         "additionalProperties": false
       },
       "NotificationExcluding_id_": {
@@ -1484,9 +1846,6 @@
           "isDraft": {
             "type": "boolean"
           },
-          "isGrouped": {
-            "type": "boolean"
-          },
           "groupKey": {
             "type": "string"
           },
@@ -1496,7 +1855,6 @@
         },
         "required": [
           "body",
-          "receiver",
           "type"
         ],
         "additionalProperties": false,
@@ -1531,9 +1889,6 @@
             "type": "object"
           },
           "isDraft": {
-            "type": "boolean"
-          },
-          "isGrouped": {
             "type": "boolean"
           },
           "groupKey": {
@@ -2300,9 +2655,6 @@
                   "isDraft": {
                     "type": "boolean"
                   },
-                  "isGrouped": {
-                    "type": "boolean"
-                  },
                   "groupKey": {
                     "type": "boolean"
                   },
@@ -2325,7 +2677,6 @@
                     "sentDate",
                     "options",
                     "isDraft",
-                    "isGrouped",
                     "groupKey",
                     "isCritical"
                   ],

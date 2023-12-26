@@ -2,21 +2,20 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Getter} from '@loopback/core';
+import { Getter } from '@loopback/core';
 import {
   StubbedInstanceWithSinonAccessor,
   createStubInstance,
   expect,
 } from '@loopback/testlab';
-import {INotification} from 'loopback4-notifications';
+import { INotification } from 'loopback4-notifications';
 import sinon from 'sinon';
-import {Notification} from '../../models';
+import { Notification } from '../../models';
 import {
   NotificationRepository,
   NotificationUserRepository,
-  UserNotificationSettingsRepository,
 } from '../../repositories';
-import {ProcessNotificationService} from '../../services';
+import { ProcessNotificationService } from '../../services';
 import {
   INotificationSettingFilterFunc,
   INotificationUserManager,
@@ -28,7 +27,7 @@ const nextDate = new Date();
 nextDate.setDate(nextDate.getDate() + 1);
 
 describe('Process notification Service', () => {
-  let userNotifSettingsRepository: StubbedInstanceWithSinonAccessor<UserNotificationSettingsRepository>;
+  // let userNotifSettingsRepository: StubbedInstanceWithSinonAccessor<UserNotificationSettingsRepository>;
   let notifProvider: Getter<INotification>;
   let filterNotificationSettings: INotificationSettingFilterFunc;
   let notifUserService: INotificationUserManager;
@@ -61,10 +60,8 @@ describe('Process notification Service', () => {
           type: 0,
         }),
       ];
-
       const find = notificationRepository.stubs.find;
       find.resolves(notificationFind);
-
       const notification = new Notification({
         id: 'dummy',
         receiver: {
@@ -85,14 +82,12 @@ describe('Process notification Service', () => {
       const result =
         await processNotificationService.getAllGroupedNotifications(
           String(notification.groupKey),
+          notification.type,
         );
       expect(result).to.eql(notificationFind);
     });
   });
   function setUp() {
-    userNotifSettingsRepository = createStubInstance(
-      UserNotificationSettingsRepository,
-    );
     notificationRepository = createStubInstance(NotificationRepository);
     notificationUserRepository = createStubInstance(NotificationUserRepository);
     processNotificationService = new ProcessNotificationService(
