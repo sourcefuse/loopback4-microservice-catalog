@@ -1,26 +1,22 @@
-import {Options, Question} from '../models';
-import {QuestionHelperService} from './question-helper.service';
-import {injectable, BindingScope, service, inject} from '@loopback/core';
+import {BindingScope, inject, injectable, service} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {ILogger, LOGGER} from '@sourceloop/core';
+import {QuestionStatus, QuestionType} from '../enum/question.enum';
+import {Options, Question} from '../models';
+import {QuestionDuplicateDto} from '../models/question-duplicate-dto.model';
 import {QuestionRepository} from '../repositories';
 import {OptionsRepository} from '../repositories/options.repository';
-import {QuestionStatus, QuestionType} from '../enum/question.enum';
-import {QuestionDuplicateDto} from '../models/question-duplicate-dto.model';
-import {
-  QuestionRepository as QuestionSequelizeRepo,
-  OptionsRepository as OptionsSequelizeRepo,
-} from '../repositories/sequelize';
+import {QuestionHelperService} from './question-helper.service';
 
 const orderByCreatedOn = 'created_on DESC';
 @injectable({scope: BindingScope.TRANSIENT})
 export class QuestionDuplicateHelperService {
   constructor(
     @repository(QuestionRepository)
-    public questionRepository: QuestionRepository | QuestionSequelizeRepo,
+    public questionRepository: QuestionRepository,
     @repository(OptionsRepository)
-    public optionsRepository: OptionsRepository | OptionsSequelizeRepo,
+    public optionsRepository: OptionsRepository,
     @service(QuestionHelperService)
     public questionHelperService: QuestionHelperService,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,

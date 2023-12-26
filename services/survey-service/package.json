@@ -11,20 +11,6 @@
   "engines": {
     "node": "18 || 20"
   },
-  "exports": {
-    ".": "./dist/index.js",
-    "./sequelize": {
-      "types": "./dist/sequelize.index.d.ts",
-      "default": "./dist/sequelize.index.js"
-    }
-  },
-  "typesVersions": {
-    "*": {
-      "sequelize": [
-        "./dist/sequelize.index.d.ts"
-      ]
-    }
-  },
   "scripts": {
     "build": "npm run clean && lb-tsc && npm run openapi-spec && npm run apidocs",
     "build:watch": "lb-tsc --watch",
@@ -147,8 +133,7 @@
   "typedoc": {
     "config": {
       "entryPoints": [
-        "src/index.ts",
-        "src/sequelize.index.ts"
+        "src/index.ts"
       ],
       "out": "services/survey-service",
       "plugin": [

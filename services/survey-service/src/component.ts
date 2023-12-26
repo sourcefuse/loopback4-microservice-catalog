@@ -69,6 +69,19 @@ import {
 } from './repositories';
 import {OptionsRepository} from './repositories/options.repository';
 import {QuestionTemplateRepository} from './repositories/question-template.repository';
+import {
+  OptionsRepository as OptionsSequelizeRepository,
+  QuestionRepository as QuestionSequelizeRepository,
+  QuestionTemplateRepository as QuestionTemplateSequelizeRepository,
+  SectionRepository as SectionSequelizeRepository,
+  SurveyCycleRepository as SurveyCycleSequelizeRepository,
+  SurveyQuestionRepository as SurveyQuestionSequelizeRepository,
+  SurveyResponderRepository as SurveyResponderSequelizeRepository,
+  SurveyResponseDetailRepository as SurveyResponseDetailSequelizeRepository,
+  SurveyResponseRepository as SurveyResponseSequelizeRepository,
+  SurveyRepository as SurveySequelizeRepository,
+  TemplateQuestionRepository as TemplateQuestionSequelizeRepository,
+} from './repositories/sequelize';
 import {SurveyRepository} from './repositories/survey.repository';
 import {TemplateQuestionRepository} from './repositories/template-questions.repository';
 import {
@@ -107,20 +120,35 @@ export class SurveyServiceComponent implements Component {
       SurveyResponseService,
       SurveyResponderService,
     ];
-
-    this.repositories = [
-      QuestionRepository,
-      OptionsRepository,
-      TemplateQuestionRepository,
-      QuestionTemplateRepository,
-      SurveyRepository,
-      SurveyQuestionRepository,
-      SurveyCycleRepository,
-      SurveyResponderRepository,
-      SectionRepository,
-      SurveyResponseRepository,
-      SurveyResponseDetailRepository,
-    ];
+    if (this.surveyConfig?.useSequelize) {
+      this.repositories = [
+        QuestionSequelizeRepository,
+        OptionsSequelizeRepository,
+        TemplateQuestionSequelizeRepository,
+        QuestionTemplateSequelizeRepository,
+        SurveySequelizeRepository,
+        SurveyQuestionSequelizeRepository,
+        SurveyCycleSequelizeRepository,
+        SurveyResponderSequelizeRepository,
+        SectionSequelizeRepository,
+        SurveyResponseSequelizeRepository,
+        SurveyResponseDetailSequelizeRepository,
+      ];
+    } else {
+      this.repositories = [
+        QuestionRepository,
+        OptionsRepository,
+        TemplateQuestionRepository,
+        QuestionTemplateRepository,
+        SurveyRepository,
+        SurveyQuestionRepository,
+        SurveyCycleRepository,
+        SurveyResponderRepository,
+        SectionRepository,
+        SurveyResponseRepository,
+        SurveyResponseDetailRepository,
+      ];
+    }
 
     this.models = [
       QuestionDto,

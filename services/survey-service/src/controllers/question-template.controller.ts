@@ -8,34 +8,31 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  HttpErrors,
+  param,
   patch,
-  del,
+  post,
   requestBody,
   response,
-  HttpErrors,
 } from '@loopback/rest';
 import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-import {QuestionTemplateRepository} from '../repositories/question-template.repository';
-import {QuestionTemplateService} from '../services/question-template.service';
 import {PermissionKey} from '../enum/permission-key.enum';
-import {QuestionTemplate} from '../models/question-template.model';
 import {QuestionTemplatesDto} from '../models/question-template-dto.model';
 import {QuestionTemplateResponse} from '../models/question-template-response.model';
-import {QuestionTemplateRepository as QuestionTemplateSequelizeRepo} from '../repositories/sequelize';
+import {QuestionTemplate} from '../models/question-template.model';
+import {QuestionTemplateRepository} from '../repositories/question-template.repository';
+import {QuestionTemplateService} from '../services/question-template.service';
 const basePath = '/templates';
 
 export class TemplateController {
   constructor(
     @repository(QuestionTemplateRepository)
-    public questionTemplateRepository:
-      | QuestionTemplateRepository
-      | QuestionTemplateSequelizeRepo,
+    public questionTemplateRepository: QuestionTemplateRepository,
     @service(QuestionTemplateService)
     public questionTemplateService: QuestionTemplateService,
   ) {}
