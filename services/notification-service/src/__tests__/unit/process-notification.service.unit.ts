@@ -2,20 +2,20 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import { Getter } from '@loopback/core';
+import {Getter} from '@loopback/core';
 import {
   StubbedInstanceWithSinonAccessor,
   createStubInstance,
   expect,
 } from '@loopback/testlab';
-import { INotification } from 'loopback4-notifications';
+import {INotification} from 'loopback4-notifications';
 import sinon from 'sinon';
-import { Notification } from '../../models';
+import {Notification} from '../../models';
 import {
   NotificationRepository,
   NotificationUserRepository,
 } from '../../repositories';
-import { ProcessNotificationService } from '../../services';
+import {ProcessNotificationService} from '../../services';
 import {
   INotificationSettingFilterFunc,
   INotificationUserManager,

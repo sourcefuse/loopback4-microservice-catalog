@@ -63,20 +63,26 @@ export class ProcessNotificationService {
       process.env.TEST_ENV !== '1'
         ? await this.notificationRepository.beginTransaction()
         : null;
-    //Checking user notification settings for sleep time
-    const categorizedSubscribers =
-      await this.filterNotificationSettings.checkUserNotificationSettings(
+    try {
+      //Checking user notification settings for sleep time
+      const categorizedSubscribers =
+        await this.filterNotificationSettings.checkUserNotificationSettings(
+          notification,
+        );
+      //Calling function to send notification to the subscriber which have not sleep time or if notification is critical
+      const notificationSent = await this.sendNotification(
         notification,
+        categorizedSubscribers,
+        notifTx,
       );
-    //Calling function to send notification to the subscriber which have not sleep time or if notification is critical
-    const notificationSent = await this.sendNotification(
-      notification,
-      categorizedSubscribers,
-      notifTx,
-    );
-    //Calling function to update isDraft status to false as the notification has been sent already for given Ids
-    await this.updateDraftStatus(groupedNotifIds, notifTx, false);
-    return notificationSent;
+      //Calling function to update isDraft status to false as the notification has been sent already for given Ids
+      await this.updateDraftStatus(groupedNotifIds, notifTx, false);
+      await notifTx?.commit();
+      return notificationSent;
+    } catch (error) {
+      await notifTx?.rollback();
+      throw new HttpErrors.UnprocessableEntity(error.message);
+    }
   }
 
   /**
@@ -121,7 +127,9 @@ export class ProcessNotificationService {
       try {
         notif.receiver.to = categorizedSubscribers;
         const receiversToCreate = await this.createNotifUsers(notif);
-        await this.notificationUserRepository.createAll(receiversToCreate);
+        await this.notificationUserRepository.createAll(receiversToCreate, {
+          transaction: notifTx,
+        });
       } catch (error) {
         throw new HttpErrors.UnprocessableEntity(
           'Error occurred while making entry in notification users table and the error is: ' +
@@ -151,7 +159,11 @@ export class ProcessNotificationService {
           id: notificationId,
           isDraft: isDraft,
         });
-        promises.push(this.notificationRepository.update(dataToUpdate));
+        promises.push(
+          this.notificationRepository.update(dataToUpdate, {
+            transaction: notifTx,
+          }),
+        );
       });
       await Promise.all(promises);
     } catch (error) {
@@ -173,7 +185,9 @@ export class ProcessNotificationService {
     notifTx: Transaction | null,
   ) {
     try {
-      return await this.notificationRepository.create(notification);
+      return await this.notificationRepository.create(notification, {
+        transaction: notifTx,
+      });
     } catch (error) {
       throw new HttpErrors.UnprocessableEntity(
         'Error occurred:' + error.message,
