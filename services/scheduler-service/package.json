@@ -11,6 +11,19 @@
   "engines": {
     "node": "18 || 20"
   },
+  "exports": {
+    ".": "./dist/index.js",
+    "./sequelize": {
+      "types": "./dist/repositories/sequelize/index.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "sequelize": [
+        "./dist/repositories/sequelize/index.d.ts"
+      ]
+    }
+  },
   "scripts": {
     "build": "npm run clean && lb-tsc && npm run openapi-spec && npm run apidocs",
     "build:watch": "lb-tsc --watch",
@@ -87,6 +100,9 @@
     "source-map-support": "^0.5.21",
     "typescript": "~4.9.5",
     "widdershins": "^4.0.1"
+  },
+  "optionalDependencies": {
+    "@loopback/sequelize": "^0.5.2"
   },
   "overrides": {
     "widdershins": {

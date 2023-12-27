@@ -47,7 +47,7 @@ import {
   WorkingHourController,
 } from './controllers';
 import {EventAttachmentController} from './controllers/event-attachment.controller';
-import {SchedulerBindings} from './keys';
+import {CoreSchedulerBindings, SchedulerBindings} from './keys';
 import {
   Attachment,
   Attendee,
@@ -71,6 +71,18 @@ import {
   ThemeRepository,
   WorkingHourRepository,
 } from './repositories';
+import {
+  AttachmentRepository as AttachmentSequelizeRepository,
+  AttendeeRepository as AttendeeSequelizeRepository,
+  AuditLogRepository as AuditLogSequelizeRepository,
+  CalendarRepository as CalendarSequelizeRepository,
+  EventAttendeeViewRepository as EventAttendeeViewSequelizeRepository,
+  EventRepository as EventSequelizeRepository,
+  SettingsRepository as SettingsSequelizeRepository,
+  SubscriptionRepository as SubscriptionSequelizeRepository,
+  ThemeRepository as ThemeSequelizeRepository,
+  WorkingHourRepository as WorkingHourSequelizeRepository,
+} from './repositories/sequelize';
 import {CalendarEventService, ValidatorService} from './services';
 import {CalendarService} from './services/calendar.service';
 import {EventService} from './services/event.service';
@@ -81,6 +93,8 @@ export class SchedulerServiceComponent implements Component {
     private readonly application: RestApplication,
     @inject(SchedulerBindings.Config, {optional: true})
     private readonly schedulerConfig?: IServiceConfig,
+    @inject(CoreSchedulerBindings.Config, {optional: true})
+    private readonly config?: IServiceConfig,
   ) {
     this.bindings = [
       createServiceBinding(ValidatorService),
@@ -111,19 +125,33 @@ export class SchedulerServiceComponent implements Component {
       this.setupSequence(this.bindings);
     }
 
-    this.repositories = [
-      AttachmentRepository,
-      AttendeeRepository,
-      CalendarRepository,
-      EventRepository,
-      SettingsRepository,
-      SubscriptionRepository,
-      ThemeRepository,
-      WorkingHourRepository,
-      EventAttendeeViewRepository,
-      AuditLogRepository,
-    ];
-
+    if (this.config?.useSequelize) {
+      this.repositories = [
+        AttachmentSequelizeRepository,
+        AttendeeSequelizeRepository,
+        CalendarSequelizeRepository,
+        EventSequelizeRepository,
+        SettingsSequelizeRepository,
+        SubscriptionSequelizeRepository,
+        ThemeSequelizeRepository,
+        WorkingHourSequelizeRepository,
+        EventAttendeeViewSequelizeRepository,
+        AuditLogSequelizeRepository,
+      ];
+    } else {
+      this.repositories = [
+        AttachmentRepository,
+        AttendeeRepository,
+        CalendarRepository,
+        EventRepository,
+        SettingsRepository,
+        SubscriptionRepository,
+        ThemeRepository,
+        WorkingHourRepository,
+        EventAttendeeViewRepository,
+        AuditLogRepository,
+      ];
+    }
     this.models = [
       Attachment,
       Attendee,
