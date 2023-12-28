@@ -10,7 +10,11 @@ import {
 } from '@loopback/testlab';
 import {INotification} from 'loopback4-notifications';
 import sinon from 'sinon';
-import {Notification} from '../../models';
+import {
+  Notification,
+  NotificationSettingsDto,
+  NotificationUser,
+} from '../../models';
 import {
   NotificationRepository,
   NotificationUserRepository,
@@ -22,7 +26,7 @@ import {
 } from '../../types';
 
 const previousDate = new Date();
-previousDate.setDate(previousDate.getDate() + 1);
+previousDate.setDate(previousDate.getDate() - 1);
 const nextDate = new Date();
 nextDate.setDate(nextDate.getDate() + 1);
 
@@ -85,6 +89,45 @@ describe('Process notification Service', () => {
           notification.type,
         );
       expect(result).to.eql(notificationFind);
+    });
+
+    it('returns the notification array after sending notifications by given search criteria.', async () => {
+      const notificationSettingFind = new NotificationSettingsDto({
+        startTime: previousDate,
+        endTime: nextDate,
+      });
+      const notificationUser = new NotificationUser({
+        userId: '1',
+        notificationId: '1',
+        isDraft: true,
+        isRead: false,
+      });
+      const notificationUsersAll = notificationUserRepository.stubs.find;
+      notificationUsersAll.resolves([notificationUser]);
+      const notificationFind = new Notification({
+        id: 'dummy',
+        receiver: {
+          to: [
+            {
+              id: '1',
+              ['test']: 'test',
+            },
+            {
+              id: '2',
+              ['test']: 'test',
+            },
+          ],
+        },
+        body: 'dummy body',
+        type: 0,
+      });
+      const find = notificationRepository.stubs.find;
+      find.resolves([notificationFind]);
+      const result =
+        await processNotificationService.processNotificationForSleptTimeUsers(
+          notificationSettingFind,
+        );
+      expect(result).to.eql([notificationFind]);
     });
   });
   function setUp() {

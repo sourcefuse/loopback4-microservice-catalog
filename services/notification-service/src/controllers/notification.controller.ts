@@ -96,6 +96,9 @@ export class NotificationController {
     })
     notification: Omit<Notification, 'id'>,
   ): Promise<Notification> {
+    if (!notification.receiver) {
+      throw new HttpErrors.UnprocessableEntity(ErrorKeys.ReceiverNotFound);
+    }
     notification = await this.filterNotification(notification);
     const provider = await this.notifProvider();
     await provider.publish(notification);
