@@ -11,6 +11,19 @@
   "engines": {
     "node": "18 || 20"
   },
+  "exports": {
+    ".": "./dist/index.js",
+    "./sequelize": {
+      "types": "./dist/repositories/sequelize/index.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "sequelize": [
+        "./dist/repositories/sequelize/index.d.ts"
+      ]
+    }
+  },
   "scripts": {
     "prebuild": "npm run clean",
     "build": "lb-tsc",
