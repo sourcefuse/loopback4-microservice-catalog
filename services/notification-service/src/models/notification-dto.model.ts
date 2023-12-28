@@ -61,6 +61,7 @@ export class NotificationDto extends Model {
   sentDate: Date;
 
   constructor(data?: Partial<NotificationDto>) {
+    //Constructor for model NotificationSettingsDto
     super(data);
   }
 }

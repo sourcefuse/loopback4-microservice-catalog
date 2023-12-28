@@ -29,9 +29,8 @@ const previousDate = new Date();
 previousDate.setDate(previousDate.getDate() - 1);
 const nextDate = new Date();
 nextDate.setDate(nextDate.getDate() + 1);
-
+const bodyText = 'dummy body';
 describe('Process notification Service', () => {
-  // let userNotifSettingsRepository: StubbedInstanceWithSinonAccessor<UserNotificationSettingsRepository>;
   let notifProvider: Getter<INotification>;
   let filterNotificationSettings: INotificationSettingFilterFunc;
   let notifUserService: INotificationUserManager;
@@ -60,7 +59,7 @@ describe('Process notification Service', () => {
               },
             ],
           },
-          body: 'dummy body',
+          body: bodyText,
           type: 0,
         }),
       ];
@@ -80,7 +79,7 @@ describe('Process notification Service', () => {
             },
           ],
         },
-        body: 'dummy body',
+        body: bodyText,
         type: 0,
       });
       const result =
@@ -118,7 +117,7 @@ describe('Process notification Service', () => {
             },
           ],
         },
-        body: 'dummy body',
+        body: bodyText,
         type: 0,
       });
       const find = notificationRepository.stubs.find;

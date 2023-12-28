@@ -150,7 +150,7 @@ export class ProcessNotificationService {
   async updateDraftStatus(
     notificationIds: string[],
     notifTx: Transaction | null,
-    isDraft: boolean = true,
+    isDraft = true,
   ) {
     try {
       const promises: Promise<void>[] = [];

@@ -18,8 +18,9 @@ describe('Notification Controller', () => {
   let notificationUserRepo: NotificationUserRepository;
   const basePath = '/notifications';
   const pass = 'test_password';
+  const testUserEmail = 'test@yopmail.com';
   const testUser = {
-    id: 'test@yopmail.com',
+    id: testUserEmail,
     username: 'test_user',
     password: pass,
     permissions: [
@@ -141,7 +142,7 @@ describe('Notification Controller', () => {
     const requestBody = new NotificationDto({
       body: reqToDraftNotification.body?.body,
       type: 1,
-      options: {from: 'test@yopmail.com'},
+      options: {from: testUserEmail},
     });
     await client
       .post(`${basePath}/group/${reqToDraftNotification.body.groupKey}`)
@@ -164,7 +165,7 @@ describe('Notification Controller', () => {
           },
         ],
       },
-      options: {from: 'test@yopmail.com'},
+      options: {from: testUserEmail},
     });
     await client
       .post(`${basePath}/group/${reqToDraftNotification.body.groupKey}`)
@@ -177,7 +178,7 @@ describe('Notification Controller', () => {
     const reqToDraftNotification = await draftNotifications();
     expect(reqToDraftNotification.status).to.be.equal(200);
     const requestBody = new NotificationDto({
-      options: {from: 'test@yopmail.com'},
+      options: {from: testUserEmail},
 
       isCritical: true,
     });
@@ -192,7 +193,7 @@ describe('Notification Controller', () => {
     const reqToDraftNotification = await draftNotifications(false);
     expect(reqToDraftNotification.status).to.be.equal(200);
     const requestBody = new NotificationDto({
-      options: {from: 'test@yopmail.com'},
+      options: {from: testUserEmail},
       isCritical: true,
     });
     await client
@@ -261,7 +262,7 @@ describe('Notification Controller', () => {
   }
 
   async function draftNotifications(isGrouped = true) {
-    let notificationToAdd = new Notification({});
+    let notificationToAdd: Notification;
     if (!isGrouped) {
       notificationToAdd = new Notification({
         body: 'test_body',
@@ -301,7 +302,7 @@ describe('Notification Controller', () => {
       isDraft: true,
       sentDate: new Date(),
       notificationId: 'testNotificationId',
-      userId: 'test@yopmail.com',
+      userId: testUserEmail,
     });
 
     return client

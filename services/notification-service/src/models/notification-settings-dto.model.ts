@@ -29,6 +29,7 @@ export class NotificationSettingsDto extends Model {
   endTime?: Date;
 
   constructor(data?: Partial<NotificationSettingsDto>) {
+    //Constructor for model NotificationSettingsDto
     super(data);
   }
 }
