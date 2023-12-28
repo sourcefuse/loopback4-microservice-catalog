@@ -124,6 +124,211 @@ export class NotificationController {
       PermissionKey.CreateNotificationNum,
     ],
   })
+  @post(`${basePath}/group/{groupKey}`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description:
+          'This API is used to send notification by grouping by given key in the end point.',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: getModelSchemaRef(NotificationDto, {
+              exclude: ['id'],
+            }),
+          },
+        },
+      },
+    },
+  })
+  async sendGroupedNotificationByGroupKey(
+    @requestBody({
+      content: {
+        [CONTENT_TYPE.JSON]: {
+          schema: getModelSchemaRef(NotificationDto, {
+            exclude: ['id', 'groupKey'],
+          }),
+        },
+      },
+    })
+    notificationRequest: Omit<NotificationDto, 'id'>,
+    @param.path.string('groupKey') groupKey: string,
+  ): Promise<Notification> {
+    groupKey = decodeURI(groupKey);
+    if (!groupKey) {
+      throw new HttpErrors.UnprocessableEntity(ErrorKeys.MandatoryGroupKey);
+    }
+    let notification = new Notification({
+      body: notificationRequest.body ?? '',
+      subject: notificationRequest.subject,
+      receiver: notificationRequest.receiver,
+      type: notificationRequest.type,
+      options: notificationRequest.options,
+      isCritical: notificationRequest.isCritical,
+      groupKey: groupKey,
+    });
+    notification = await this.filterNotification(notification);
+    return this.processNotif.sendGroupedNotification(notification, groupKey);
+  }
+
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [
+      PermissionKey.CreateNotification,
+      PermissionKey.CreateNotificationNum,
+    ],
+  })
+  @post(`${basePath}/drafts`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description:
+          'This API is used to draft notifications, here in case isDraft .',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: getModelSchemaRef(Notification, {
+              exclude: ['id', 'isDraft'],
+            }),
+          },
+        },
+      },
+    },
+  })
+  async draftNotification(
+    @requestBody({
+      content: {
+        [CONTENT_TYPE.JSON]: {
+          schema: getModelSchemaRef(Notification, {
+            exclude: ['id', 'isDraft'],
+          }),
+        },
+      },
+    })
+    notification: Omit<Notification, 'id'>,
+  ): Promise<Notification> {
+    notification.isDraft = true;
+    if (
+      notification.groupKey &&
+      (notification.subject ||
+        (notification.receiver && notification.receiver?.to.length > 0) ||
+        notification.options?.fromEmail)
+    ) {
+      throw new HttpErrors.UnprocessableEntity(ErrorKeys.GroupedDraftError);
+    } else if (
+      !notification.groupKey &&
+      !(
+        notification.subject ||
+        (notification.receiver && notification.receiver?.to.length > 0) ||
+        notification.options?.fromEmail
+      )
+    ) {
+      throw new HttpErrors.UnprocessableEntity(ErrorKeys.DraftError);
+    } else {
+      return this.notificationRepository.create(notification);
+    }
+  }
+
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [
+      PermissionKey.CreateNotification,
+      PermissionKey.CreateNotificationNum,
+    ],
+  })
+  @post(`${basePath}/{id}/send`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description:
+          'This API is used to send notifications for given Notification Id.',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: getModelSchemaRef(NotificationDto, {
+              exclude: [
+                'id',
+                'groupKey',
+                'receiver',
+                'subject',
+                'body',
+                'type',
+              ],
+            }),
+          },
+        },
+      },
+    },
+  })
+  async sendNotificationById(
+    @requestBody({
+      content: {
+        [CONTENT_TYPE.JSON]: {
+          schema: getModelSchemaRef(NotificationDto, {
+            exclude: ['id', 'groupKey', 'receiver', 'subject', 'body', 'type'],
+          }),
+        },
+      },
+    })
+    notificationDto: NotificationDto,
+    @param.path.string('id') id: string,
+  ): Promise<Notification> {
+    if (!id) {
+      throw new HttpErrors.UnprocessableEntity(ErrorKeys.MandatoryGroupKey);
+    }
+    const notificationData = await this.notificationRepository.find({
+      where: { id: id, isDraft: true },
+    });
+    if (notificationData.length > 0) {
+      let notification = notificationData[0];
+      notification.options = notificationDto.options;
+      notification = await this.filterNotification(notification);
+      return this.processNotif.processNotificationById(notification);
+    } else {
+      throw new HttpErrors.UnprocessableEntity(ErrorKeys.NoDraftFound);
+    }
+  }
+
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [
+      PermissionKey.CreateNotification,
+      PermissionKey.CreateNotificationNum,
+    ],
+  })
+  @post(`${basePath}/send`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description:
+          'This API is used to send notifications for given search criteria.',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: getModelSchemaRef(NotificationSettingsDto, {}),
+          },
+        },
+      },
+    },
+  })
+  async sendNotificationForSleepTimeUsers(
+    @requestBody({
+      content: {
+        [CONTENT_TYPE.JSON]: {
+          schema: getModelSchemaRef(NotificationSettingsDto, {}),
+        },
+      },
+    })
+    notificationSettingsDto: NotificationSettingsDto,
+  ): Promise<Notification[]> {
+    return this.processNotif.processNotificationForSleptTimeUsers(
+      notificationSettingsDto,
+    );
+  }
+
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [
+      PermissionKey.CreateNotification,
+      PermissionKey.CreateNotificationNum,
+    ],
+  })
   @post(`${basePath}/bulk`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {

@@ -58,17 +58,15 @@ export class NotificationUserSettingsProvider
             }
             categorizedSubscribes.push(element);
           }
+        } else {
+          return [];
         }
         return categorizedSubscribes;
       },
-      getNotificationSubscribers: async (
-        categorzedSubscribes: Subscriber[],
-      ) => {
-        return categorzedSubscribes.filter(subscriber => !subscriber.isDraft);
-      },
-      getDraftSubscribers: async (categorzedSubscribes: Subscriber[]) => {
-        return categorzedSubscribes.filter(subscriber => !subscriber.isDraft);
-      },
+      getNotificationSubscribers: async (categorizedSubscribes: Subscriber[]) =>
+        categorizedSubscribes.filter(subscriber => !subscriber.isDraft),
+      getDraftSubscribers: async (categorizedSubscribes: Subscriber[]) =>
+        categorizedSubscribes.filter(subscriber => !subscriber.isDraft),
     };
   }
 }
