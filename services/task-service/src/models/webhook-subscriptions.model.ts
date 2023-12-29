@@ -1,10 +1,10 @@
 import {model, property} from '@loopback/repository';
-import {CoreEntity} from '@sourceloop/core';
+import {UserModifiableEntity} from '@sourceloop/core';
 
 @model({
   name: 'webhook_subscriptions',
 })
-export class WebhookSubscriptions extends CoreEntity<WebhookSubscriptions> {
+export class WebhookSubscriptions extends UserModifiableEntity<WebhookSubscriptions> {
   @property({
     type: 'string',
     id: true,

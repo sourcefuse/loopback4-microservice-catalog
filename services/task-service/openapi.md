@@ -810,8 +810,8 @@ Status Code **200**
 |»» assigneeId|string|false|none|none|
 |»» metadata|object|true|none|none|
 |»» externalId|string|false|none|none|
-|»» subTasks|[[SubTaskWithRelations](#schemasubtaskwithrelations)]|false|none|[(tsType: SubTaskWithRelations, schemaOptions: { includeRelations: true })]|
-|»»» SubTaskWithRelations|[SubTaskWithRelations](#schemasubtaskwithrelations)|false|none|(tsType: SubTaskWithRelations, schemaOptions: { includeRelations: true })|
+|»» subTasks|[[UserTaskWithRelations](#schemausertaskwithrelations)]|false|none|[(tsType: UserTaskWithRelations, schemaOptions: { includeRelations: true })]|
+|»»» UserTaskWithRelations|[UserTaskWithRelations](#schemausertaskwithrelations)|false|none|(tsType: UserTaskWithRelations, schemaOptions: { includeRelations: true })|
 |»»»» id|string|false|none|none|
 |»»»» name|string|true|none|none|
 |»»»» taskId|string|true|none|none|
@@ -838,7 +838,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/tasks/{taskId}/sub-tasks/count',
+fetch('/tasks/{taskId}/user-tasks/count',
 {
   method: 'GET',
 
@@ -860,7 +860,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/tasks/{taskId}/sub-tasks/count',
+fetch('/tasks/{taskId}/user-tasks/count',
 {
   method: 'GET',
 
@@ -874,7 +874,7 @@ fetch('/tasks/{taskId}/sub-tasks/count',
 
 ```
 
-`GET /tasks/{taskId}/sub-tasks/count`
+`GET /tasks/{taskId}/user-tasks/count`
 
 | Permissions |
 | ------- |
@@ -920,7 +920,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/tasks/{taskId}/sub-tasks/{subTaskId}/complete',
+fetch('/tasks/{taskId}/user-tasks/{userTaskId}/complete',
 {
   method: 'PATCH',
 
@@ -941,7 +941,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/tasks/{taskId}/sub-tasks/{subTaskId}/complete',
+fetch('/tasks/{taskId}/user-tasks/{userTaskId}/complete',
 {
   method: 'PATCH',
 
@@ -955,7 +955,7 @@ fetch('/tasks/{taskId}/sub-tasks/{subTaskId}/complete',
 
 ```
 
-`PATCH /tasks/{taskId}/sub-tasks/{subTaskId}/complete`
+`PATCH /tasks/{taskId}/user-tasks/{userTaskId}/complete`
 
 | Permissions |
 | ------- |
@@ -966,7 +966,7 @@ fetch('/tasks/{taskId}/sub-tasks/{subTaskId}/complete',
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
 |taskId|path|string|true|none|
-|subTaskId|path|string|true|none|
+|userTaskId|path|string|true|none|
 
 <h3 id="tasksubtaskcontroller.completetask-responses">Responses</h3>
 
@@ -991,7 +991,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/tasks/{taskId}/sub-tasks/{subTaskId}',
+fetch('/tasks/{taskId}/user-tasks/{userTaskId}',
 {
   method: 'GET',
 
@@ -1013,7 +1013,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/tasks/{taskId}/sub-tasks/{subTaskId}',
+fetch('/tasks/{taskId}/user-tasks/{userTaskId}',
 {
   method: 'GET',
 
@@ -1027,7 +1027,7 @@ fetch('/tasks/{taskId}/sub-tasks/{subTaskId}',
 
 ```
 
-`GET /tasks/{taskId}/sub-tasks/{subTaskId}`
+`GET /tasks/{taskId}/user-tasks/{userTaskId}`
 
 | Permissions |
 | ------- |
@@ -1038,8 +1038,8 @@ fetch('/tasks/{taskId}/sub-tasks/{subTaskId}',
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
 |taskId|path|string|true|none|
-|subTaskId|path|string|true|none|
-|filter|query|[sub_tasks.Filter](#schemasub_tasks.filter)|false|none|
+|userTaskId|path|string|true|none|
+|filter|query|[user_tasks.Filter](#schemauser_tasks.filter)|false|none|
 
 > Example responses
 
@@ -1059,7 +1059,7 @@ fetch('/tasks/{taskId}/sub-tasks/{subTaskId}',
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|SubTask model instance|[SubTaskWithRelations](#schemasubtaskwithrelations)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|UserTask model instance|[UserTaskWithRelations](#schemausertaskwithrelations)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -1079,7 +1079,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/tasks/{taskId}/sub-tasks',
+fetch('/tasks/{taskId}/user-tasks',
 {
   method: 'GET',
 
@@ -1101,7 +1101,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/tasks/{taskId}/sub-tasks',
+fetch('/tasks/{taskId}/user-tasks',
 {
   method: 'GET',
 
@@ -1115,18 +1115,18 @@ fetch('/tasks/{taskId}/sub-tasks',
 
 ```
 
-`GET /tasks/{taskId}/sub-tasks`
+`GET /tasks/{taskId}/user-tasks`
 
 | Permissions |
 | ------- |
-| 16003   |
+| 16004   |
 
 <h3 id="tasksubtaskcontroller.find-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
 |taskId|path|string|true|none|
-|filter|query|[sub_tasks.Filter1](#schemasub_tasks.filter1)|false|none|
+|filter|query|[user_tasks.Filter1](#schemauser_tasks.filter1)|false|none|
 
 > Example responses
 
@@ -1148,7 +1148,7 @@ fetch('/tasks/{taskId}/sub-tasks',
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of SubTask model instances|Inline|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of UserTask model instances|Inline|
 
 <h3 id="tasksubtaskcontroller.find-responseschema">Response Schema</h3>
 
@@ -1156,8 +1156,8 @@ Status Code **200**
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|*anonymous*|[[SubTaskWithRelations](#schemasubtaskwithrelations)]|false|none|[(tsType: SubTaskWithRelations, schemaOptions: { includeRelations: true })]|
-|» SubTaskWithRelations|[SubTaskWithRelations](#schemasubtaskwithrelations)|false|none|(tsType: SubTaskWithRelations, schemaOptions: { includeRelations: true })|
+|*anonymous*|[[UserTaskWithRelations](#schemausertaskwithrelations)]|false|none|[(tsType: UserTaskWithRelations, schemaOptions: { includeRelations: true })]|
+|» UserTaskWithRelations|[UserTaskWithRelations](#schemausertaskwithrelations)|false|none|(tsType: UserTaskWithRelations, schemaOptions: { includeRelations: true })|
 |»» id|string|false|none|none|
 |»» name|string|true|none|none|
 |»» taskId|string|true|none|none|
@@ -2037,12 +2037,12 @@ EventWorkflowMapping
 |eventKey|string|true|none|An identifier for a particular event queued by a service or a user|
 |workflowKey|string|true|none|An identifier for a particular workflow|
 
-<h2 id="tocS_SubTaskWithRelations">SubTaskWithRelations</h2>
+<h2 id="tocS_UserTaskWithRelations">UserTaskWithRelations</h2>
 <!-- backwards compatibility -->
-<a id="schemasubtaskwithrelations"></a>
-<a id="schema_SubTaskWithRelations"></a>
-<a id="tocSsubtaskwithrelations"></a>
-<a id="tocssubtaskwithrelations"></a>
+<a id="schemausertaskwithrelations"></a>
+<a id="schema_UserTaskWithRelations"></a>
+<a id="tocSusertaskwithrelations"></a>
+<a id="tocsusertaskwithrelations"></a>
 
 ```json
 {
@@ -2055,7 +2055,7 @@ EventWorkflowMapping
 
 ```
 
-SubTaskWithRelations
+UserTaskWithRelations
 
 ### Properties
 
@@ -2123,7 +2123,7 @@ TaskWithRelations
 |assigneeId|string|false|none|none|
 |metadata|object|true|none|none|
 |externalId|string|false|none|none|
-|subTasks|[[SubTaskWithRelations](#schemasubtaskwithrelations)]|false|none|[(tsType: SubTaskWithRelations, schemaOptions: { includeRelations: true })]|
+|subTasks|[[UserTaskWithRelations](#schemausertaskwithrelations)]|false|none|[(tsType: UserTaskWithRelations, schemaOptions: { includeRelations: true })]|
 
 <h2 id="tocS_TaskWorkFlowMapping">TaskWorkFlowMapping</h2>
 <!-- backwards compatibility -->
@@ -2315,12 +2315,12 @@ xor
 |---|---|---|---|---|
 |» *anonymous*|[string]|false|none|none|
 
-<h2 id="tocS_sub_tasks.Filter">sub_tasks.Filter</h2>
+<h2 id="tocS_user_tasks.Filter">user_tasks.Filter</h2>
 <!-- backwards compatibility -->
-<a id="schemasub_tasks.filter"></a>
-<a id="schema_sub_tasks.Filter"></a>
-<a id="tocSsub_tasks.filter"></a>
-<a id="tocssub_tasks.filter"></a>
+<a id="schemauser_tasks.filter"></a>
+<a id="schema_user_tasks.Filter"></a>
+<a id="tocSuser_tasks.filter"></a>
+<a id="tocsuser_tasks.filter"></a>
 
 ```json
 {
@@ -2339,7 +2339,7 @@ xor
 
 ```
 
-sub_tasks.Filter
+user_tasks.Filter
 
 ### Properties
 
@@ -2385,12 +2385,12 @@ xor
 |---|---|---|---|---|
 |» *anonymous*|[string]|false|none|none|
 
-<h2 id="tocS_sub_tasks.Filter1">sub_tasks.Filter1</h2>
+<h2 id="tocS_user_tasks.Filter1">user_tasks.Filter1</h2>
 <!-- backwards compatibility -->
-<a id="schemasub_tasks.filter1"></a>
-<a id="schema_sub_tasks.Filter1"></a>
-<a id="tocSsub_tasks.filter1"></a>
-<a id="tocssub_tasks.filter1"></a>
+<a id="schemauser_tasks.filter1"></a>
+<a id="schema_user_tasks.Filter1"></a>
+<a id="tocSuser_tasks.filter1"></a>
+<a id="tocsuser_tasks.filter1"></a>
 
 ```json
 {
@@ -2410,7 +2410,7 @@ xor
 
 ```
 
-sub_tasks.Filter
+user_tasks.Filter
 
 ### Properties
 

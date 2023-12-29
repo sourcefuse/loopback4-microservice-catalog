@@ -1,5 +1,5 @@
 import {Context, inject} from '@loopback/core';
-import {AnyObject, repository} from '@loopback/repository';
+import {AnyObject} from '@loopback/repository';
 import {
   ExecuteWorkflowDto,
   WorkflowController,
@@ -16,10 +16,6 @@ import {EventFilter} from '../types';
 export class EventProcessorService implements IEventProcessor {
   incoming: IIncomingConnector;
   constructor(
-    @repository(EventRepository)
-    private repo: EventRepository,
-    @repository(EventWorkflowMappingRepository)
-    private eventWorkflowMappingRepo: EventWorkflowMappingRepository,
     @inject.context()
     private readonly ctx: Context,
     @inject(TaskServiceBindings.EVENT_FILTER)
@@ -33,13 +29,21 @@ export class EventProcessorService implements IEventProcessor {
       this.logger.debug(`Event ${event.type} filtered out`);
       return;
     }
-    await this.repo.create({
+    const tempContext = new Context(this.ctx);
+    const repo = await tempContext.get<EventRepository>(
+      `repositories.EventRepository`,
+    );
+    const eventWorkflowMappingRepo =
+      await tempContext.get<EventWorkflowMappingRepository>(
+        `repositories.EventWorkflowMappingRepository`,
+      );
+    await repo.create({
       key: event.type,
       payload: event.payload,
       source: event.payload.source ?? event.source,
       description: event.payload.description ?? `Task for ${event.type}`,
     });
-    const mapping = await this.eventWorkflowMappingRepo.find({
+    const mapping = await eventWorkflowMappingRepo.find({
       where: {
         eventKey: event.type,
       },

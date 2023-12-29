@@ -1,10 +1,10 @@
 import {model, property} from '@loopback/repository';
-import {CoreEntity} from '@sourceloop/core';
+import {UserModifiableEntity} from '@sourceloop/core';
 
 @model({
   name: 'task_workflows',
 })
-export class TaskWorkflows extends CoreEntity<TaskWorkflows> {
+export class TaskWorkflows extends UserModifiableEntity<TaskWorkflows> {
   @property({
     type: 'string',
     id: true,

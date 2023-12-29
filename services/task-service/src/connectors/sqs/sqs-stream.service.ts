@@ -8,23 +8,22 @@ import {
   IIncomingConnector,
   IOutgoingConnector,
 } from '../../interfaces';
-import {IEvent} from '../../interfaces/i-event';
 import {TaskServiceSQSModule} from './keys';
 import {SQSConfig} from './types';
 
 export class SqsStreamService<T>
-  implements IIncomingConnector, IOutgoingConnector<T>
+  implements IIncomingConnector<T>, IOutgoingConnector<T>
 {
   constructor(
     @inject(TaskServiceSQSModule.CONFIG)
     private readonly settings: SQSConfig,
     @inject(TaskServiceSQSModule.ADAPTER)
-    private readonly adapter: IEventAdapter<SQS.Message, IEvent>,
+    private readonly adapter: IEventAdapter<SQS.Message, T>,
     @inject(LOGGER.LOGGER_INJECT)
     private readonly logger: ILogger,
   ) {}
   private connection?: SQS;
-  async subscribe(handler: IEventStreamHandler): Promise<void> {
+  async subscribe(handler: IEventStreamHandler<T>): Promise<void> {
     this.connection = new SQS({
       region: this.settings.region,
       accessKeyId: this.settings.accessKeyId,
@@ -77,8 +76,9 @@ export class SqsStreamService<T>
       this.logger.error('Output connection not found for sqs connector');
       return;
     }
+    const adapted = await this.adapter.adaptFrom(message);
     const params = {
-      MessageBody: JSON.stringify(message),
+      MessageBody: JSON.stringify(adapted),
       QueueUrl: this.settings.queueUrl,
     };
     await this.connection.sendMessage(params).promise();

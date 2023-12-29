@@ -7,7 +7,10 @@ import {
   WorkflowCacheSourceName,
   WorkflowServiceBindings,
 } from '@sourceloop/bpmn-service';
-import {Task, TaskService} from 'camunda-external-task-client-js';
+import {
+  TaskService as CamundaTaskService,
+  Task,
+} from 'camunda-external-task-client-js';
 import {IEvent} from './interfaces';
 
 export const AuthDbSourceName = 'AuthDB';
@@ -89,5 +92,5 @@ export type EventFilter = (event: IEvent) => boolean;
 
 export type CamundaTaskParameters = {
   task: Task;
-  taskService: TaskService;
+  taskService: CamundaTaskService;
 };

@@ -242,7 +242,7 @@
         "operationId": "TaskController.mapTaskToWorkflow"
       }
     },
-    "/tasks/{taskId}/sub-tasks/count": {
+    "/tasks/{taskId}/user-tasks/count": {
       "get": {
         "x-controller-name": "TaskSubTaskController",
         "x-operation-name": "count",
@@ -283,9 +283,9 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "title": "sub_tasks.WhereFilter",
+                  "title": "user_tasks.WhereFilter",
                   "additionalProperties": true,
-                  "x-typescript-type": "@loopback/repository#Where<SubTask>"
+                  "x-typescript-type": "@loopback/repository#Where<UserTask>"
                 }
               }
             }
@@ -294,7 +294,7 @@
         "operationId": "TaskSubTaskController.count"
       }
     },
-    "/tasks/{taskId}/sub-tasks/{subTaskId}/complete": {
+    "/tasks/{taskId}/user-tasks/{userTaskId}/complete": {
       "patch": {
         "x-controller-name": "TaskSubTaskController",
         "x-operation-name": "completeTask",
@@ -318,7 +318,7 @@
             "required": true
           },
           {
-            "name": "subTaskId",
+            "name": "userTaskId",
             "in": "path",
             "schema": {
               "type": "string"
@@ -329,7 +329,7 @@
         "operationId": "TaskSubTaskController.completeTask"
       }
     },
-    "/tasks/{taskId}/sub-tasks/{subTaskId}": {
+    "/tasks/{taskId}/user-tasks/{userTaskId}": {
       "get": {
         "x-controller-name": "TaskSubTaskController",
         "x-operation-name": "findById",
@@ -343,11 +343,11 @@
         ],
         "responses": {
           "200": {
-            "description": "SubTask model instance",
+            "description": "UserTask model instance",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SubTaskWithRelations"
+                  "$ref": "#/components/schemas/UserTaskWithRelations"
                 }
               }
             }
@@ -364,7 +364,7 @@
             "required": true
           },
           {
-            "name": "subTaskId",
+            "name": "userTaskId",
             "in": "path",
             "schema": {
               "type": "string"
@@ -377,7 +377,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/sub_tasks.Filter"
+                  "$ref": "#/components/schemas/user_tasks.Filter"
                 }
               }
             }
@@ -386,7 +386,7 @@
         "operationId": "TaskSubTaskController.findById"
       }
     },
-    "/tasks/{taskId}/sub-tasks": {
+    "/tasks/{taskId}/user-tasks": {
       "get": {
         "x-controller-name": "TaskSubTaskController",
         "x-operation-name": "find",
@@ -400,20 +400,20 @@
         ],
         "responses": {
           "200": {
-            "description": "Array of SubTask model instances",
+            "description": "Array of UserTask model instances",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/SubTaskWithRelations"
+                    "$ref": "#/components/schemas/UserTaskWithRelations"
                   }
                 }
               }
             }
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| 16003   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| 16004   |\n",
         "parameters": [
           {
             "name": "taskId",
@@ -429,7 +429,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/sub_tasks.Filter1"
+                  "$ref": "#/components/schemas/user_tasks.Filter1"
                 }
               }
             }
@@ -1035,10 +1035,10 @@
         "additionalProperties": false,
         "x-typescript-type": "EventWorkflows"
       },
-      "SubTaskWithRelations": {
-        "title": "SubTaskWithRelations",
+      "UserTaskWithRelations": {
+        "title": "UserTaskWithRelations",
         "type": "object",
-        "description": "(tsType: SubTaskWithRelations, schemaOptions: { includeRelations: true })",
+        "description": "(tsType: UserTaskWithRelations, schemaOptions: { includeRelations: true })",
         "properties": {
           "id": {
             "type": "string"
@@ -1063,7 +1063,7 @@
           "externalId"
         ],
         "additionalProperties": false,
-        "x-typescript-type": "SubTaskWithRelations"
+        "x-typescript-type": "UserTaskWithRelations"
       },
       "TaskWithRelations": {
         "title": "TaskWithRelations",
@@ -1122,7 +1122,7 @@
           "subTasks": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/SubTaskWithRelations"
+              "$ref": "#/components/schemas/UserTaskWithRelations"
             }
           }
         },
@@ -1326,9 +1326,9 @@
         "additionalProperties": false,
         "x-typescript-type": "@loopback/repository#Filter<Event>"
       },
-      "sub_tasks.Filter": {
+      "user_tasks.Filter": {
         "type": "object",
-        "title": "sub_tasks.Filter",
+        "title": "user_tasks.Filter",
         "properties": {
           "offset": {
             "type": "integer",
@@ -1395,15 +1395,15 @@
                 "uniqueItems": true
               }
             ],
-            "title": "sub_tasks.Fields"
+            "title": "user_tasks.Fields"
           }
         },
         "additionalProperties": false,
-        "x-typescript-type": "@loopback/repository#Filter<SubTask>"
+        "x-typescript-type": "@loopback/repository#Filter<UserTask>"
       },
-      "sub_tasks.Filter1": {
+      "user_tasks.Filter1": {
         "type": "object",
-        "title": "sub_tasks.Filter",
+        "title": "user_tasks.Filter",
         "properties": {
           "offset": {
             "type": "integer",
@@ -1432,7 +1432,7 @@
             ]
           },
           "where": {
-            "title": "sub_tasks.WhereFilter",
+            "title": "user_tasks.WhereFilter",
             "type": "object",
             "additionalProperties": true
           },
@@ -1475,11 +1475,11 @@
                 "uniqueItems": true
               }
             ],
-            "title": "sub_tasks.Fields"
+            "title": "user_tasks.Fields"
           }
         },
         "additionalProperties": false,
-        "x-typescript-type": "@loopback/repository#Filter<SubTask>"
+        "x-typescript-type": "@loopback/repository#Filter<UserTask>"
       },
       "tasks.ScopeFilter": {
         "type": "object",

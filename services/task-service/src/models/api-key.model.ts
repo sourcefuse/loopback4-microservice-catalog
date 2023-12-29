@@ -1,10 +1,10 @@
 import {model, property} from '@loopback/repository';
-import {CoreEntity} from '@sourceloop/core';
+import {UserModifiableEntity} from '@sourceloop/core';
 
 @model({
   name: 'api_keys',
 })
-export class ApiKey extends CoreEntity<ApiKey> {
+export class ApiKey extends UserModifiableEntity<ApiKey> {
   @property({
     type: 'string',
     id: true,

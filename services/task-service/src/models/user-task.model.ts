@@ -1,12 +1,12 @@
 import {model, property} from '@loopback/repository';
-import {CoreEntity} from '@sourceloop/core';
+import {UserModifiableEntity} from '@sourceloop/core';
 import {SubTaskStatus} from '../types';
 import {Task} from './task.model';
 
 @model({
   name: 'user_tasks',
 })
-export class UserTask extends CoreEntity<Task> {
+export class UserTask extends UserModifiableEntity<Task> {
   @property({
     type: 'string',
     id: true,

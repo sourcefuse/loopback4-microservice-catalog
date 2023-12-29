@@ -12,4 +12,8 @@ export class KafkaEventAdapter<T>
     const payload = JSON.parse(event.message.value?.toString('utf8') ?? '{}');
     return Promise.resolve({type, timestamp, source, payload});
   }
+
+  async adaptFrom(event: IEvent) {
+    return event;
+  }
 }

@@ -1,5 +1,7 @@
-import {Context} from '@loopback/context';
+import {Context} from '@loopback/core';
 import {ILogger, LOGGER} from '@sourceloop/core';
+import {AuthenticationBindings} from 'loopback4-authentication';
+import {SYSTEM_USER} from '../constant';
 import {ICommand, IEvent, IOutgoingConnector} from '../interfaces';
 import {TaskServiceBindings} from '../keys';
 import {TaskRepository} from '../repositories';
@@ -16,11 +18,13 @@ export class EndTaskCommand implements ICommand {
     const job = this.parameters.taskService;
     const variables = this.parameters.task.variables.getAll();
     const taskId = variables.taskId;
+    const tempContext = new Context(this.context);
+    tempContext.bind(AuthenticationBindings.CURRENT_USER).to(SYSTEM_USER);
     try {
-      const taskRepo = this.context.getSync<TaskRepository>(
+      const taskRepo = tempContext.getSync<TaskRepository>(
         'repositories.TaskRepository',
       );
-      const outgoing = this.context.getSync<IOutgoingConnector<IEvent>>(
+      const outgoing = tempContext.getSync<IOutgoingConnector<IEvent>>(
         TaskServiceBindings.OUTGOING_CONNECTOR,
       );
       await taskRepo.updateById(taskId, {
@@ -34,12 +38,14 @@ export class EndTaskCommand implements ICommand {
         timestamp: Date.now(),
         source: Source.TaskService,
       });
-      await await job.complete(this.parameters.task);
+      await job.complete(this.parameters.task);
     } catch (err) {
       await job.handleFailure(this.parameters.task, {
         errorMessage: err.message,
         errorDetails: err.stack,
       });
+    } finally {
+      tempContext.close();
     }
   }
 }

@@ -7,24 +7,23 @@ import {
   IIncomingConnector,
   IOutgoingConnector,
 } from '../../interfaces';
-import {IEvent} from '../../interfaces/i-event';
 import {TaskServiceKafkaModule} from './keys';
 import {KafkaConfig} from './types';
 
 export class KafkaStreamService<T>
-  implements IIncomingConnector, IOutgoingConnector<T>
+  implements IIncomingConnector<T>, IOutgoingConnector<T>
 {
   constructor(
     @inject(TaskServiceKafkaModule.CONFIG)
     private readonly settings: KafkaConfig<T>,
     @inject(TaskServiceKafkaModule.ADAPTER)
-    private readonly adapter: IEventAdapter<EachMessagePayload, IEvent>,
+    private readonly adapter: IEventAdapter<EachMessagePayload, T>,
     @inject(LOGGER.LOGGER_INJECT)
     private readonly logger: ILogger,
   ) {}
   client: Kafka;
   consumer: Consumer;
-  async subscribe(handler: IEventStreamHandler): Promise<void> {
+  async subscribe(handler: IEventStreamHandler<T>): Promise<void> {
     this.client = new Kafka(this.settings.connection);
     this.consumer = this.client.consumer(this.settings.consumer);
     await this.consumer.connect();
@@ -61,13 +60,14 @@ export class KafkaStreamService<T>
     }
     const producer = this.client.producer(this.settings.producer);
     await producer.connect();
+    const adapted = await this.adapter.adaptFrom(event);
     await producer.send({
       topic: config.topic,
       compression: CompressionTypes.GZIP,
       messages: [
         {
-          key: this.buildKey(config.key, event),
-          value: JSON.stringify(event),
+          key: this.buildKey(config.key, adapted),
+          value: JSON.stringify(adapted),
         },
       ],
     });

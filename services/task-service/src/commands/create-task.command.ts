@@ -28,12 +28,14 @@ export class CreateTaskCommand implements ICommand {
   async execute(): Promise<void> {
     const job = this.parameters.taskService;
     const variables = this.parameters.task.variables.getAll();
+    const tempContext = new Context(this.context);
+    tempContext.bind(AuthenticationBindings.CURRENT_USER).to(SYSTEM_USER);
     try {
       const tasksWithWorkflow = JSON.parse(variables.tasks) as Task[];
 
       let createdTasks: Task[] = [];
       if (tasksWithWorkflow) {
-        createdTasks = await this._createTasks(tasksWithWorkflow);
+        createdTasks = await this._createTasks(tasksWithWorkflow, tempContext);
       }
       const outgoing = this.context.getSync<IOutgoingConnector<IEvent>>(
         TaskServiceBindings.OUTGOING_CONNECTOR,
@@ -50,15 +52,17 @@ export class CreateTaskCommand implements ICommand {
         errorMessage: e.message,
         errorDetails: e.stack,
       });
+    } finally {
+      tempContext.close();
     }
   }
 
-  private async _createTasks(tasks: Task[]): Promise<Task[]> {
-    const taskRepo = this.context.getSync<TaskRepository>(
+  private async _createTasks(tasks: Task[], context: Context): Promise<Task[]> {
+    const taskRepo = context.getSync<TaskRepository>(
       'repositories.TaskRepository',
     );
     const taskWorkflowMappingRepo =
-      this.context.getSync<TaskWorkFlowMappingRepository>(
+      context.getSync<TaskWorkFlowMappingRepository>(
         'repositories.TaskWorkFlowMappingRepository',
       );
     const createdTasks = await taskRepo.createAll(tasks ?? []);
@@ -84,26 +88,28 @@ export class CreateTaskCommand implements ICommand {
     });
     const promises = Array.from(workflowKeyMap.entries()).map(
       async ([workflowKey, tsks]) => {
-        await this._startWorkflowsForTasks(workflowKey, tsks ?? []);
+        await this._startWorkflowsForTasks(workflowKey, tsks ?? [], context);
       },
     );
     await Promise.all(promises);
     return createdTasks;
   }
 
-  private async _startWorkflowsForTasks(workflowKey: string, tasks: Task[]) {
-    const childContext = new Context(this.context, 'temp-ctx-for-task');
-    childContext.bind(AuthenticationBindings.CURRENT_USER).to(SYSTEM_USER);
-    const workflowCtrl = await childContext.get<WorkflowController>(
+  private async _startWorkflowsForTasks(
+    workflowKey: string,
+    tasks: Task[],
+    context: Context,
+  ) {
+    const workflowCtrl = await context.get<WorkflowController>(
       'controllers.WorkflowController',
     );
-    const workflowRepo = await childContext.get<WorkflowRepository>(
+    const workflowRepo = await context.get<WorkflowRepository>(
       'repositories.WorkflowRepository',
     );
-    const taskRepo = await childContext.get<TaskRepository>(
+    const taskRepo = await context.get<TaskRepository>(
       'repositories.TaskRepository',
     );
-    const subtaskService = await childContext.get<ISubTaskService>(
+    const subtaskService = await context.get<ISubTaskService>(
       TaskServiceBindings.SUB_TASK_SERVICE,
     );
     const workflow = await workflowRepo.findOne({
