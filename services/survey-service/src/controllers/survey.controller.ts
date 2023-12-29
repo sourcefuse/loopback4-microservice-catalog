@@ -3,32 +3,31 @@ import {
   Count,
   CountSchema,
   Filter,
-  repository,
   Where,
+  repository,
 } from '@loopback/repository';
 import {
-  param,
+  HttpErrors,
+  Request,
+  RestBindings,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
-  del,
+  post,
   requestBody,
   response,
-  post,
-  HttpErrors,
-  RestBindings,
-  Request,
 } from '@loopback/rest';
 import {CONTENT_TYPE, ILogger, LOGGER, STATUS_CODE} from '@sourceloop/core';
-import {authenticate, STRATEGY} from 'loopback4-authentication';
+import {JwtPayload, Secret, verify} from 'jsonwebtoken';
+import {STRATEGY, authenticate} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-import {SurveyRepository} from '../repositories/survey.repository';
-import {SurveyService} from '../services/survey.service';
+import {ErrorKeys} from '../enum';
 import {PermissionKey} from '../enum/permission-key.enum';
 import {Survey, SurveyDto} from '../models';
-import {JwtPayload, Secret, verify} from 'jsonwebtoken';
-import {ErrorKeys} from '../enum';
-import {SurveyRepository as SurveySequelizeRepo} from '../repositories/sequelize';
+import {SurveyRepository} from '../repositories/survey.repository';
+import {SurveyService} from '../services/survey.service';
 
 const basePath = '/surveys';
 export class SurveyController {
@@ -36,7 +35,7 @@ export class SurveyController {
     @inject(RestBindings.Http.REQUEST)
     public readonly request: Request,
     @repository(SurveyRepository)
-    public surveyRepository: SurveyRepository | SurveySequelizeRepo,
+    public surveyRepository: SurveyRepository,
     @service(SurveyService)
     public surveyService: SurveyService,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,

@@ -1,43 +1,26 @@
-import {
-  injectable,
-  /* inject, */
-  BindingScope,
-} from '@loopback/core';
+import {BindingScope, injectable} from '@loopback/core';
 import {AnyObject, Count, repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
-import {SurveyRepository} from '../repositories/survey.repository';
-import {SurveyQuestionRepository} from '../repositories/survey-question.repository';
-import {SurveyDto, SurveyQuestion, Section, Survey} from '../models';
+import {Section, Survey, SurveyDto, SurveyQuestion} from '../models';
 import {SectionRepository} from '../repositories/section.repository';
 import {SurveyCycleRepository} from '../repositories/survey-cycle.repository';
+import {SurveyQuestionRepository} from '../repositories/survey-question.repository';
 import {SurveyResponderRepository} from '../repositories/survey-responder.repository';
-import {
-  SurveyRepository as SurveySequelizeRepo,
-  SurveyQuestionRepository as SurveyQuestionSequelizeRepo,
-  SectionRepository as SectionsSequelizeRepo,
-  SurveyCycleRepository as SurveyCycleSequelizeRepo,
-  SurveyResponderRepository as SurveyResponderSequelizeRepo,
-} from '../repositories/sequelize';
+import {SurveyRepository} from '../repositories/survey.repository';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class CreateSurveyHelperService {
   constructor(
     @repository(SurveyRepository)
-    public surveyRepository: SurveyRepository | SurveySequelizeRepo,
+    public surveyRepository: SurveyRepository,
     @repository(SurveyQuestionRepository)
-    public surveyQuestionRepository:
-      | SurveyQuestionRepository
-      | SurveyQuestionSequelizeRepo,
+    public surveyQuestionRepository: SurveyQuestionRepository,
     @repository(SectionRepository)
-    public sectionRepository: SectionRepository | SectionsSequelizeRepo,
+    public sectionRepository: SectionRepository,
     @repository(SurveyCycleRepository)
-    public surveyCycleRepository:
-      | SurveyCycleRepository
-      | SurveyCycleSequelizeRepo,
+    public surveyCycleRepository: SurveyCycleRepository,
     @repository(SurveyResponderRepository)
-    protected surveyResponderRepository:
-      | SurveyResponderRepository
-      | SurveyResponderSequelizeRepo,
+    protected surveyResponderRepository: SurveyResponderRepository,
   ) {}
 
   async copyFromBaseSurvey(survey: Omit<SurveyDto, 'id'>) {
