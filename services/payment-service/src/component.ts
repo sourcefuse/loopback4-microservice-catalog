@@ -25,7 +25,7 @@ import {
   TransactionSubscriptionsController,
   TransactionsController,
 } from './controllers';
-import {PaymentServiceComponentBindings} from './keys';
+import {PaymentServiceBindings, PaymentServiceComponentBindings} from './keys';
 import {
   Orders,
   PaymentGateways,
@@ -50,8 +50,16 @@ import {
   TransactionsRepository,
 } from './repositories';
 import {
+  OrdersRepository as OrdersSequelizeRepository,
+  PaymentGatewaysRepository as PaymentGatewaysSequelizeRepository,
+  SubscriptionsRepository as SubscriptionsSequelizeRepository,
+  TemplatesRepository as TemplatesSequelizeRepository,
+  TransactionsRepository as TransactionsSequelizeRepository,
+} from './repositories/sequelize';
+import {
   DEFAULT_PAYMENT_SERVICE_OPTIONS,
   PaymentServiceComponentOptions,
+  PaymentServiceConfig,
 } from './types';
 
 // Configure the binding for PaymentServiceComponent
@@ -76,6 +84,8 @@ export class PaymentServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: Application,
+    @inject(PaymentServiceBindings.Config, {optional: true})
+    private readonly paymentConfig?: PaymentServiceConfig,
     @config()
     private readonly options: PaymentServiceComponentOptions = DEFAULT_PAYMENT_SERVICE_OPTIONS,
   ) {
@@ -101,13 +111,23 @@ export class PaymentServiceComponent implements Component {
       SubscriptionTransactionsController,
       TransactionSubscriptionsController,
     ];
-    this.repositories = [
-      OrdersRepository,
-      TransactionsRepository,
-      PaymentGatewaysRepository,
-      TemplatesRepository,
-      SubscriptionsRepository,
-    ];
+    if (this.paymentConfig?.useSequelize) {
+      this.repositories = [
+        OrdersSequelizeRepository,
+        TransactionsSequelizeRepository,
+        PaymentGatewaysSequelizeRepository,
+        TemplatesSequelizeRepository,
+        SubscriptionsSequelizeRepository,
+      ];
+    } else {
+      this.repositories = [
+        OrdersRepository,
+        TransactionsRepository,
+        PaymentGatewaysRepository,
+        TemplatesRepository,
+        SubscriptionsRepository,
+      ];
+    }
     this.providers = {
       [GatewayBindings.GatewayHelper.key]: GatewayProvider,
       [RazorpayBindings.RazorpayHelper.key]: RazorpayProvider,

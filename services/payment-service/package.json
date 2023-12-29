@@ -11,6 +11,19 @@
   "engines": {
     "node": "18 || 20"
   },
+  "exports": {
+    ".": "./dist/index.js",
+    "./sequelize": {
+      "types": "./dist/repositories/sequelize/index.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "sequelize": [
+        "./dist/repositories/sequelize/index.d.ts"
+      ]
+    }
+  },
   "scripts": {
     "apidocs": "npx widdershins --language_tabs 'javascript:JavaScript:request' 'javascript--nodejs:Node.JS' --summary openapi.json -o openapi.md",
     "prebuild": "npm run clean",
