@@ -5,42 +5,45 @@
 import {BindingKey} from '@loopback/core';
 import {VerifyFunction} from 'loopback4-authentication';
 import {SignupTokenHandlerFn} from '.';
-import {PreSignupFn, UserSignupFn} from '../types';
+import {PreSignupFn, UserSignupFn, UserValidationFn} from '../types';
 import {AuthCodeGeneratorProvider} from './auth-code-generator.provider';
 
+import {BINDING_PREFIX} from '@sourceloop/core';
 import {
+  ApplePostVerifyFn,
+  ApplePreVerifyFn,
+  AppleSignUpFn,
+  AzureAdPostVerifyFn,
+  AzureAdPreVerifyFn,
+  AzureAdSignUpFn,
+  CodeReaderFn,
+  CodeWriterFn,
+  CognitoPostVerifyFn,
+  CognitoPreVerifyFn,
+  CognitoSignUpFn,
+  FacebookPostVerifyFn,
+  FacebookPreVerifyFn,
+  FacebookSignUpFn,
+  GoogleAuthenticationProviderFn,
   GooglePostVerifyFn,
   GooglePreVerifyFn,
   GoogleSignUpFn,
   InstagramPostVerifyFn,
   InstagramPreVerifyFn,
   InstagramSignUpFn,
-  ApplePostVerifyFn,
-  ApplePreVerifyFn,
-  AppleSignUpFn,
-  FacebookSignUpFn,
-  FacebookPreVerifyFn,
-  FacebookPostVerifyFn,
+  JWTSignerFn,
+  JWTVerifierFn,
   KeyCloakPostVerifyFn,
   KeyCloakPreVerifyFn,
   KeyCloakSignUpFn,
-  CodeReaderFn,
-  CodeWriterFn,
+  KeycloakAuthenticationProviderFn,
+  MfaCheckFn,
+  OtpFn,
   OtpGenerateFn,
   OtpSenderFn,
-  OtpFn,
-  MfaCheckFn,
-  AzureAdSignUpFn,
-  AzureAdPreVerifyFn,
-  AzureAdPostVerifyFn,
-  CognitoSignUpFn,
-  CognitoPreVerifyFn,
-  CognitoPostVerifyFn,
-  JWTSignerFn,
-  JWTVerifierFn,
-  SamlSignUpFn,
   SamlPostVerifyFn,
   SamlPreVerifyFn,
+  SamlSignUpFn,
 } from './types';
 
 export namespace SignUpBindings {
@@ -153,4 +156,18 @@ export namespace AuthCodeBindings {
   export const JWT_VERIFIER = BindingKey.create<JWTVerifierFn<string>>(
     'sf.auth-payload.provider',
   );
+}
+
+export namespace UserValidationServiceBindings {
+  export const VALIDATE_USER = BindingKey.create<UserValidationFn | null>(
+    `${BINDING_PREFIX}.auth.validateUser`,
+  );
+  export const GOOGLE_AUTHENTICATION =
+    BindingKey.create<GoogleAuthenticationProviderFn>(
+      `${BINDING_PREFIX}.auth.authenticateGoogleUser`,
+    );
+  export const KEYCLOAK_AUTHENTICATION =
+    BindingKey.create<KeycloakAuthenticationProviderFn>(
+      `${BINDING_PREFIX}.auth.authenticateKeycloakUser`,
+    );
 }

@@ -89,6 +89,7 @@ import {
   SamlSignupProvider,
   SignUpBindings,
   SignupTokenHandlerProvider,
+  UserValidationServiceBindings,
   VerifyBindings,
 } from './providers';
 import {AuthCodeGeneratorProvider} from './providers/auth-code-generator.provider';
@@ -100,6 +101,9 @@ import {LocalSignupProvider} from './providers/local-signup.provider';
 import {MfaProvider} from './providers/mfa.provider';
 import {PasswordDecryptionProvider} from './providers/password-decryption.provider';
 
+import {GoogleAuthenticationProvider} from './providers/google-authentication.provider';
+import {KeycloakAuthenticationProvider} from './providers/keycloak-authentication.provider';
+import {UserValidationProvider} from './providers/user-validation.provider';
 import {repositories} from './repositories/index';
 import {repositories as sequelizeRepositories} from './repositories/sequelize';
 import {MySequence} from './sequence';
@@ -299,6 +303,12 @@ export class AuthenticationServiceComponent implements Component {
       CodeWriterProvider;
     this.providers[AuthCodeBindings.AUTH_CODE_GENERATOR_PROVIDER.key] =
       AuthCodeGeneratorProvider;
+    this.providers[UserValidationServiceBindings.VALIDATE_USER.key] =
+      UserValidationProvider;
+    this.providers[UserValidationServiceBindings.GOOGLE_AUTHENTICATION.key] =
+      GoogleAuthenticationProvider;
+    this.providers[UserValidationServiceBindings.KEYCLOAK_AUTHENTICATION.key] =
+      KeycloakAuthenticationProvider;
     this.application.bind(AuthenticationBindings.USER_MODEL.key).to(AuthUser);
 
     if (process.env.JWT_PRIVATE_KEY && process.env.JWT_PRIVATE_KEY !== '') {

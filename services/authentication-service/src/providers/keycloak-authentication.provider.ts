@@ -1,0 +1,55 @@
+import {Provider, inject} from '@loopback/context';
+import {ILogger, LOGGER} from '@sourceloop/core';
+import {encode} from 'base-64';
+import fetch from 'node-fetch';
+import {KeycloakAuthenticationProviderFn} from './types';
+
+export class KeycloakAuthenticationProvider
+  implements Provider<KeycloakAuthenticationProviderFn>
+{
+  constructor(@inject(LOGGER.LOGGER_INJECT) public logger: ILogger) {}
+  value(): KeycloakAuthenticationProviderFn {
+    return async (accessToken: string) => this.isAuthenticated(accessToken);
+  }
+  isAuthenticated(accessToken: string) {
+    let isAuthenticated = true;
+    const params = new URLSearchParams();
+    const strToEncode = `${process.env.KEYCLOAK_CLIENT_ID}:${process.env.KEYCLOAK_CLIENT_SECRET}`;
+    const keycloakApiUrl = `${process.env.KEYCLOAK_HOST}:${process.env.KEYCLOACK}/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/token/introspect`;
+
+    params.append('token', accessToken);
+    // Using fetch to make the API call
+    fetch(keycloakApiUrl, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: `Basic ${encode(strToEncode)}`, // Base64 encode client ID and client secret
+        Accept: 'application/json',
+      },
+      body: params,
+    })
+      .then(response => {
+        // Check if the response status is OK (200)
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        // Parse the JSON response
+        return response.json();
+      })
+      .then(data => {
+        if ('active' in data && data.active === false) {
+          isAuthenticated = false;
+        }
+      })
+      .catch(error => {
+        this.logger.error(
+          `Error while logging off from google. Error :: ${error} ${JSON.stringify(
+            error,
+          )}`,
+        );
+      });
+
+    return isAuthenticated;
+  }
+}
