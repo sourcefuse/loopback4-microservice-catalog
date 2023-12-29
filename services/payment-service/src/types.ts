@@ -5,6 +5,9 @@
 /**
  * Interface defining the component's options object
  */
+
+import {IServiceConfig} from '@sourceloop/core';
+
 // sonarignore:start
 export interface PaymentServiceComponentOptions {
   // Add the definitions here
@@ -17,3 +20,6 @@ export interface PaymentServiceComponentOptions {
 export const DEFAULT_PAYMENT_SERVICE_OPTIONS: PaymentServiceComponentOptions = {
   // Specify the values here
 };
+export interface PaymentServiceConfig extends IServiceConfig {
+  //do nothing
+}

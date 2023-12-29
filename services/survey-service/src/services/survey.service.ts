@@ -11,15 +11,6 @@ import {QuestionTemplateStatus} from '../enum/template.enum';
 import {Survey, SurveyDto, SurveyQuestion} from '../models';
 import {QuestionRepository} from '../repositories';
 import {QuestionTemplateRepository} from '../repositories/question-template.repository';
-import {
-  QuestionRepository as QuestionSequelizeRepo,
-  QuestionTemplateRepository as QuestionTemplateSequelizeRepo,
-  SurveyCycleRepository as SurveyCycleSequelizeRepo,
-  SurveyQuestionRepository as SurveyQuestionSequelizeRepo,
-  SurveyResponderRepository as SurveyResponderSequelizeRepo,
-  SurveyRepository as SurveySequelizeRepo,
-  TemplateQuestionRepository as TemplateQuestionSequelizeRepo,
-} from '../repositories/sequelize';
 import {SurveyCycleRepository} from '../repositories/survey-cycle.repository';
 import {SurveyQuestionRepository} from '../repositories/survey-question.repository';
 import {SurveyResponderRepository} from '../repositories/survey-responder.repository';
@@ -39,29 +30,19 @@ const DATE_FORMAT = 'YYYY-MM-DD';
 export class SurveyService {
   constructor(
     @repository(SurveyRepository)
-    public surveyRepository: SurveyRepository | SurveySequelizeRepo,
+    public surveyRepository: SurveyRepository,
     @repository(QuestionTemplateRepository)
-    public questionTemplateRepository:
-      | QuestionTemplateRepository
-      | QuestionTemplateSequelizeRepo,
+    public questionTemplateRepository: QuestionTemplateRepository,
     @repository(TemplateQuestionRepository)
-    public templateQuestionRepository:
-      | TemplateQuestionRepository
-      | TemplateQuestionSequelizeRepo,
+    public templateQuestionRepository: TemplateQuestionRepository,
     @repository(SurveyQuestionRepository)
-    public surveyQuestionRepository:
-      | SurveyQuestionRepository
-      | SurveyQuestionSequelizeRepo,
+    public surveyQuestionRepository: SurveyQuestionRepository,
     @repository(SurveyCycleRepository)
-    public surveyCycleRepository:
-      | SurveyCycleRepository
-      | SurveyCycleSequelizeRepo,
+    public surveyCycleRepository: SurveyCycleRepository,
     @repository(SurveyResponderRepository)
-    protected surveyResponderRepository:
-      | SurveyResponderRepository
-      | SurveyResponderSequelizeRepo,
+    protected surveyResponderRepository: SurveyResponderRepository,
     @repository(QuestionRepository)
-    protected questionRepository: QuestionRepository | QuestionSequelizeRepo,
+    protected questionRepository: QuestionRepository,
 
     @service(SurveyCycleService)
     public surveyCycleService: SurveyCycleService,

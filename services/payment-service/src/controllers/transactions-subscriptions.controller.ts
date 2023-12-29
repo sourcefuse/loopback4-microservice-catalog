@@ -6,10 +6,11 @@ import {inject} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {get, param, Response, RestBindings} from '@loopback/rest';
 
-import {GatewayBindings, IGateway} from '../providers';
-import {TemplatesRepository, SubscriptionsRepository} from '../repositories';
-import {TemplateName, TemplateType} from '../enums';
 import {CONTENT_TYPE} from '@sourceloop/core';
+import {TemplateName, TemplateType} from '../enums';
+import {GatewayBindings, IGateway} from '../providers';
+import {SubscriptionsRepository, TemplatesRepository} from '../repositories';
+
 const redirectStatusCode = 302;
 
 export class TransactionSubscriptionsController {

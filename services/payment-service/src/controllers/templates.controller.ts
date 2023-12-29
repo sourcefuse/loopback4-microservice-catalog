@@ -11,18 +11,18 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
 } from '@loopback/rest';
+import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
 import {Templates} from '../models';
 import {TemplatesRepository} from '../repositories';
-import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
 const templatesRoutePath = '/templates';
 const templatesIDRoutePath = '/templates/{id}';
 
