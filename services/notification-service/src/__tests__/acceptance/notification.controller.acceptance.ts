@@ -145,7 +145,7 @@ describe('Notification Controller', () => {
       options: {from: testUserEmail},
     });
     await client
-      .post(`${basePath}/group/${reqToDraftNotification.body.groupKey}`)
+      .post(`${basePath}/groups/${reqToDraftNotification.body.groupKey}`)
       .set('authorization', `Bearer ${token}`)
       .send(requestBody)
       .expect(422);
@@ -168,7 +168,7 @@ describe('Notification Controller', () => {
       options: {from: testUserEmail},
     });
     await client
-      .post(`${basePath}/group/${reqToDraftNotification.body.groupKey}`)
+      .post(`${basePath}/groups/${reqToDraftNotification.body.groupKey}`)
       .set('authorization', `Bearer ${token}`)
       .send(requestBody)
       .expect(200);

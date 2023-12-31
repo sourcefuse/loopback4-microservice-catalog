@@ -694,7 +694,7 @@
         "operationId": "NotificationController.draftNotification"
       }
     },
-    "/notifications/group/{groupKey}": {
+    "/notifications/groups/{groupKey}": {
       "post": {
         "x-controller-name": "NotificationController",
         "x-operation-name": "sendGroupedNotificationByGroupKey",

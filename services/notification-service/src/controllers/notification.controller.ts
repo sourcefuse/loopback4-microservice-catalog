@@ -124,7 +124,7 @@ export class NotificationController {
       PermissionKey.CreateNotificationNum,
     ],
   })
-  @post(`${basePath}/group/{groupKey}`, {
+  @post(`${basePath}/groups/{groupKey}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {

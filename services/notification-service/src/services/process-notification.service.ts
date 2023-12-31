@@ -60,7 +60,7 @@ export class ProcessNotificationService {
     }
     notification.body = groupNotificationBody;
     const notifTx =
-      process.env.TEST_ENV !== '1'
+      process.env.NODE_ENV !== 'test'
         ? await this.notificationRepository.beginTransaction()
         : null;
     try {

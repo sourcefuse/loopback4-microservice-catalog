@@ -51,5 +51,5 @@ export interface AppWithClient {
 }
 
 export function setEnvVars() {
-  process.env.TEST_ENV = '1';
+  process.env.NODE_ENV = 'test';
 }

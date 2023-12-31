@@ -1804,7 +1804,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/notifications/group/{groupKey}',
+fetch('/notifications/groups/{groupKey}',
 {
   method: 'POST',
   body: inputBody,
@@ -1835,7 +1835,7 @@ const headers = {
   'Authorization':'Bearer {access-token}'
 };
 
-fetch('/notifications/group/{groupKey}',
+fetch('/notifications/groups/{groupKey}',
 {
   method: 'POST',
   body: JSON.stringify(inputBody),
@@ -1849,7 +1849,7 @@ fetch('/notifications/group/{groupKey}',
 
 ```
 
-`POST /notifications/group/{groupKey}`
+`POST /notifications/groups/{groupKey}`
 
 | Permissions |
 | ------- |
