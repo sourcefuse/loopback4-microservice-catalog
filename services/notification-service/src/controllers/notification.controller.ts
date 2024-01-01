@@ -96,7 +96,9 @@ export class NotificationController {
     }
 
     const receiversToCreate = await this.createNotifUsers(notif);
-    await this.notificationUserRepository.createAll(receiversToCreate);
+    if (receiversToCreate.length) {
+      await this.notificationUserRepository.createAll(receiversToCreate);
+    }
     return notif;
   }
 
@@ -142,18 +144,24 @@ export class NotificationController {
         notification.body = notification.body.substring(0, maxBodyLen - 1);
       }
     });
-    const notifs = await this.notificationRepository.createAll(notifications);
-    const notifUsers: NotificationUser[] = [];
-    for (const notif of notifs) {
-      if (!notif?.id) {
-        throw new HttpErrors.UnprocessableEntity(AuthErrorKeys.UnknownError);
-      }
+    if (notifications.length) {
+      const notifs = await this.notificationRepository.createAll(notifications);
+      const notifUsers: NotificationUser[] = [];
+      for (const notif of notifs) {
+        if (!notif?.id) {
+          throw new HttpErrors.UnprocessableEntity(AuthErrorKeys.UnknownError);
+        }
 
-      const receiversToCreate = await this.createNotifUsers(notif);
-      notifUsers.push(...receiversToCreate);
+        const receiversToCreate = await this.createNotifUsers(notif);
+        notifUsers.push(...receiversToCreate);
+      }
+      if (notifUsers.length) {
+        await this.notificationUserRepository.createAll(notifUsers);
+      }
+      return notifs;
+    } else {
+      return [];
     }
-    await this.notificationUserRepository.createAll(notifUsers);
-    return notifs;
   }
 
   @authenticate(STRATEGY.BEARER)

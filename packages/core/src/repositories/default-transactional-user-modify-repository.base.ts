@@ -5,10 +5,10 @@
 import {
   Count,
   DataObject,
-  Getter,
-  juggler,
-  Where,
   Entity,
+  Getter,
+  Where,
+  juggler,
 } from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {Options} from 'loopback-datasource-juggler';
@@ -57,6 +57,10 @@ export abstract class DefaultTransactionalUserModifyRepository<
       entity.createdBy = uid ?? '';
       entity.modifiedBy = uid ?? '';
     });
+    if (!entities.length) {
+      throw new HttpErrors.BadRequest('Entity cannot be empty ');
+    }
+
     return super.createAll(entities, options);
   }
 
