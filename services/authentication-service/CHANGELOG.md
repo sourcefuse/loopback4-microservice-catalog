@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 14.1.0 (2024-01-01)
+
+* feat(authentication-service): provide support for authenticated issuance of access token using refre ([2afa6d8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2afa6d8)), closes [#1877](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1877) [#1263](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1263) [#1263](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1263)
+
+
+
+
+
 ## 14.0.0 (2024-01-01)
 
 * feat(authentication-service): add mysql db migrations (#1869) ([38ca2ea](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/38ca2ea)), closes [#1869](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1869) [#1836](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1836)

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 6.1.0 (2024-01-01)
+
+* feat(cli): support for mysql scripts based on connector selected (#1882) ([ca8f972](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ca8f972)), closes [#1882](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1882) [#1837](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1837)
+
+
+
+
+
 ## <small>6.0.3 (2023-12-19)</small>
 
 * fix(deps): update the cli template dependencies to latest (#1850) ([fad5e74](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/fad5e74)), closes [#1850](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1850) [#1849](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1849)

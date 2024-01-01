@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 11.1.0 (2024-01-01)
+
+* feat(cli): support for mysql scripts based on connector selected (#1882) ([ca8f972](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ca8f972)), closes [#1882](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1882) [#1837](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1837)
+
+
+
+
+
 ## 11.0.0 (2024-01-01)
 
 * feat(payment service): add mysql db migrations (#1856) ([9649313](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9649313)), closes [#1856](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1856) [#1836](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1836)

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.13.0 (2024-01-01)
+
+* feat(cli): support for mysql scripts based on connector selected (#1882) ([ca8f972](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ca8f972)), closes [#1882](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1882) [#1837](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1837)
+
+
+
+
+
 ## 0.12.0 (2024-01-01)
 
 * feat(user-tenant-service): add mysql db migrations (#1872) ([a4fa76d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a4fa76d)), closes [#1872](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1872) [#1836](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1836)
