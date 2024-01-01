@@ -225,14 +225,14 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       await this.spawnCommand('npx', ['lerna', 'clean']);
       await this.spawnCommand('npm', ['i']);
 
-      await this.addMigrations();
+      await this._addMigrations();
 
       return true;
     }
     return false;
   }
 
-  private async addMigrations() {
+  async _addMigrations() {
     if (this.options.migrations) {
       if (!(await this._migrationExists())) {
         await this._createMigrationPackageAsync();
@@ -402,7 +402,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     }
   }
 
-  private async _createMigrationPackageAsync() {
+  async _createMigrationPackageAsync() {
     /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
     //@ts-ignore
     await this.fs.copyTplAsync(
@@ -471,8 +471,12 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
   private async _includeSourceloopMigrationsAsync() {
     const name = this.options.name ?? DEFAULT_NAME;
     if (!this.shouldExit() && this.options.baseService) {
+      const dsType =
+        this.options.datasourceType === DATASOURCES.POSTGRES ? 'pg' : 'mysql';
       const destinationPath = this.destinationPath(
         sourceloopMigrationPath(this.options.baseService),
+        dsType,
+        'migrations',
       );
 
       try {
@@ -489,7 +493,11 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
       //@ts-ignore
       await this.fs.copyAsync(
-        this.destinationPath(sourceloopMigrationPath(this.options.baseService)),
+        this.destinationPath(
+          sourceloopMigrationPath(this.options.baseService),
+          dsType,
+          'migrations',
+        ),
         this.destinationPath(join(MIGRATION_FOLDER, name, 'migrations')),
       );
       let connector = MIGRATION_CONNECTORS[DATASOURCES.POSTGRES]; // default
