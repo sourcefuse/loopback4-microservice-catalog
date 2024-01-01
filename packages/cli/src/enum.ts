@@ -13,6 +13,7 @@ export enum SERVICES {
   PAYMENT = 'payment-service',
   SCHEDULER = 'scheduler-service',
   SEARCH = 'search-service',
+  SURVEY = 'survey-service',
   VIDEO_CONF = 'video-conferencing-service',
   USER_TENANT = 'user-tenant-service',
 }
@@ -85,6 +86,9 @@ export const BASESERVICEDSLIST: {
   'search-service': [
     {type: 'store', name: 'DATASOURCE_NAME', fileName: 'search'},
   ],
+  'survey-service': [
+    {type: 'store', name: 'SurveyDbSourceName', fileName: 'survey'},
+  ],
   'video-conferencing-service': [
     {type: 'store', name: 'VideoConfDatasource', fileName: 'videoConf'},
   ],
@@ -104,6 +108,7 @@ export const BASESERVICECOMPONENTLIST: {
   'payment-service': 'PaymentServiceComponent',
   'scheduler-service': 'SchedulerServiceComponent',
   'search-service': 'SearchServiceComponent',
+  'survey-service': 'SurveyServiceComponent',
   'video-conferencing-service': 'VideoConfServiceComponent',
   'chat-service': 'ChatServiceComponent',
   'user-tenant-service': 'UserTenantServiceComponent',

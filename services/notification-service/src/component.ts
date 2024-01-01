@@ -21,7 +21,11 @@ import {
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
-import {AuthenticationComponent} from 'loopback4-authentication';
+import {AuthenticationComponent, Strategies} from 'loopback4-authentication';
+import {
+  BearerStrategyFactoryProvider,
+  BearerTokenVerifyProvider,
+} from 'loopback4-authentication/passport-bearer';
 import {
   AuthorizationBindings,
   AuthorizationComponent,
@@ -36,13 +40,17 @@ import {
 } from './controllers';
 import {NotifServiceBindings} from './keys';
 import {Notification, NotificationAccess, NotificationUser} from './models';
-import {NotificationFilterProvider, ChannelManagerProvider} from './providers';
+import {ChannelManagerProvider, NotificationFilterProvider} from './providers';
 import {NotificationUserProvider} from './providers/notification-user.service';
 import {
   NotificationAccessRepository,
   NotificationRepository,
   NotificationUserRepository,
 } from './repositories';
+import {
+  NotificationRepository as NotificationSequelizeRepository,
+  NotificationUserRepository as NotificationUserSequelizeRepository,
+} from './repositories/sequelize';
 import {INotifServiceConfig} from './types';
 
 export class NotificationServiceComponent implements Component {
@@ -78,12 +86,19 @@ export class NotificationServiceComponent implements Component {
       // Mount default sequence if needed
       this.setupSequence();
     }
-
-    this.repositories = [
-      NotificationAccessRepository,
-      NotificationRepository,
-      NotificationUserRepository,
-    ];
+    if (this.notifConfig?.useSequelize) {
+      this.repositories = [
+        NotificationAccessRepository,
+        NotificationSequelizeRepository,
+        NotificationUserSequelizeRepository,
+      ];
+    } else {
+      this.repositories = [
+        NotificationAccessRepository,
+        NotificationRepository,
+        NotificationUserRepository,
+      ];
+    }
 
     this.models = [Notification, NotificationUser, NotificationAccess];
 
@@ -132,6 +147,12 @@ export class NotificationServiceComponent implements Component {
     this.application.sequence(ServiceSequence);
 
     // Mount authentication component for default sequence
+    this.application
+      .bind(Strategies.Passport.BEARER_STRATEGY_FACTORY.key)
+      .toProvider(BearerStrategyFactoryProvider);
+    this.application
+      .bind(Strategies.Passport.BEARER_TOKEN_VERIFIER.key)
+      .toProvider(BearerTokenVerifyProvider);
     this.application.component(AuthenticationComponent);
     // Mount bearer verifier component
     this.application.bind(BearerVerifierBindings.Config).to({

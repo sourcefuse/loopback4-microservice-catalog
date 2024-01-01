@@ -7,10 +7,12 @@ import {
   createStubInstance,
   expect,
 } from '@loopback/testlab';
-import {UserCredentialsRepository, UserRepository} from '../../../repositories';
+import {IAuthUser} from 'loopback4-authentication';
 import sinon from 'sinon';
 import {AppleOauth2VerifyProvider} from '../../../modules/auth/providers/apple-oauth2-verify.provider';
 import {AppleSignUpFn} from '../../../providers';
+import {UserCredentialsRepository, UserRepository} from '../../../repositories';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import * as AppleStrategy from 'passport-apple';
 import {
   User,
@@ -18,7 +20,6 @@ import {
   UserCredentialsWithRelations,
   UserWithRelations,
 } from '../../../models';
-import {IAuthUser} from 'loopback4-authentication';
 
 describe('Apple Verify Provider', () => {
   let userRepo: StubbedInstanceWithSinonAccessor<UserRepository>;

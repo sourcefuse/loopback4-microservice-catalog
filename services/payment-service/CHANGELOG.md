@@ -3,6 +3,59 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>10.0.2 (2023-12-22)</small>
+
+**Note:** Version bump only for package @sourceloop/payment-service
+
+
+
+
+
+## <small>10.0.1 (2023-12-19)</small>
+
+* chore(all-services): fix sonar code smell overall (#1841) ([0fe4492](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0fe4492)), closes [#1841](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1841) [#1840](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1840)
+
+
+
+
+
+## 10.0.0 (2023-12-07)
+
+* feat(deps): update to latest loopback 4 authentication version (#1826) ([5b827fc](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5b827fc)), closes [#1826](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1826) [#1825](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1825) [#1825](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1825)
+
+
+### BREAKING CHANGE
+
+* breaking version update
+* optional dependencies need to bind required providers
+
+
+
+
+## <small>9.0.1 (2023-12-07)</small>
+
+**Note:** Version bump only for package @sourceloop/payment-service
+
+
+
+
+
+## 9.0.0 (2023-11-09)
+
+* feat(chore): migrate to use npm workspaces (#1684) ([72d8f6e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/72d8f6e)), closes [#1684](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1684) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673)
+
+
+### BREAKING CHANGE
+
+* lerna bootstrap command will not be supported
+* lerna bootstrap command will not be supported
+* lerna bootstrap command will not be supported
+* lerna bootstrap will not be supported
+* lerna bootstrap will not be supported
+
+
+
+
 ## <small>8.0.8 (2023-10-05)</small>
 
 **Note:** Version bump only for package @sourceloop/payment-service

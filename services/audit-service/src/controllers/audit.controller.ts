@@ -5,6 +5,7 @@
 import {
   Count,
   CountSchema,
+  EntityCrudRepository,
   Filter,
   FilterExcludingWhere,
   repository,
@@ -26,22 +27,22 @@ import {
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 
+import {inject, service} from '@loopback/core';
+import {FileStatusKey} from '../enums/file-status-key.enum';
+import {OperationKey} from '../enums/operation-key.enum';
 import {PermissionKey} from '../enums/permission-key.enum';
+import {
+  AuditLogExportServiceBindings,
+  ColumnBuilderServiceBindings,
+  ExportToCsvServiceBindings,
+} from '../keys';
 import {AuditLog, CustomFilter, Job, MappingLog} from '../models';
 import {
   AuditLogRepository,
   JobRepository,
   MappingLogRepository,
 } from '../repositories';
-import {inject, service} from '@loopback/core';
 import {JobProcessingService} from '../services';
-import {FileStatusKey} from '../enums/file-status-key.enum';
-import {OperationKey} from '../enums/operation-key.enum';
-import {
-  AuditLogExportServiceBindings,
-  ColumnBuilderServiceBindings,
-  ExportToCsvServiceBindings,
-} from '../keys';
 import {
   ArchiveOutput,
   AuditLogExportFn,
@@ -56,13 +57,13 @@ const basePath = '/audit-logs';
 export class AuditController {
   constructor(
     @repository(AuditLogRepository)
-    public auditLogRepository: AuditLogRepository,
+    public auditLogRepository: EntityCrudRepository<AuditLog, string, {}>,
     @repository(JobRepository)
-    public jobRepository: JobRepository,
+    public jobRepository: EntityCrudRepository<Job, string, {}>,
     @service(JobProcessingService)
     public jobProcessingService: JobProcessingService,
     @repository(MappingLogRepository)
-    public mappingLogRepository: MappingLogRepository,
+    public mappingLogRepository: EntityCrudRepository<MappingLog, string, {}>,
     @inject(ExportToCsvServiceBindings.EXPORT_LOGS)
     public exportToCsv: ExportToCsvFn,
     @inject(AuditLogExportServiceBindings.EXPORT_AUDIT_LOGS)
@@ -264,7 +265,7 @@ export class AuditController {
     let selectedAuditLogs = await this.auditLogRepository.find({
       where: where,
     });
-    if (!selectedAuditLogs) {
+    if (!selectedAuditLogs.length) {
       return {
         message: `No entry selected`,
         numberOfEntriesArchived: 0,

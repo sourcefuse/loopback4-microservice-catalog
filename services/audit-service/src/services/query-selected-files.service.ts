@@ -1,15 +1,16 @@
 import {
-  injectable,
   BindingScope,
-  Provider,
   CoreBindings,
+  Provider,
   inject,
+  injectable,
 } from '@loopback/core';
-import AWS from 'aws-sdk';
-import {AuditLog} from '@sourceloop/audit-log';
 import {Filter, defineCrudRepositoryClass, juggler} from '@loopback/repository';
-import {AuditServiceApplication} from '../application';
+import {AuditLog} from '@sourceloop/audit-log';
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import AWS from 'aws-sdk';
 import csvtojson from 'csvtojson';
+import {AuditServiceApplication} from '../application';
 import {QuerySelectedFilesFn} from '../types';
 
 @injectable({scope: BindingScope.TRANSIENT})

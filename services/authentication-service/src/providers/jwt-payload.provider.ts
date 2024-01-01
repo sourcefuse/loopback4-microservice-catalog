@@ -27,7 +27,6 @@ import {
   UserTenantRepository,
 } from '../repositories';
 import {JwtPayloadFn} from './types';
-
 export class JwtPayloadProvider implements Provider<JwtPayloadFn> {
   constructor(
     @repository(RoleRepository)

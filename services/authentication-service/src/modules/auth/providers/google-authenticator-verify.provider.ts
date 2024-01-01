@@ -5,16 +5,15 @@
 import {inject, Provider} from '@loopback/context';
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
+import {ILogger, LOGGER} from '@sourceloop/core';
 import {AuthErrorKeys, VerifyFunction} from 'loopback4-authentication';
+import {authenticator} from 'otplib';
+import {UserCredentials} from '../../../models';
 import {
   OtpCacheRepository,
   UserCredentialsRepository,
   UserRepository,
 } from '../../../repositories';
-import {ILogger, LOGGER} from '@sourceloop/core';
-import {authenticator} from 'otplib';
-import {UserCredentials} from '../../../models';
-
 export class GoogleAuthenticatorVerifyProvider
   implements Provider<VerifyFunction.OtpAuthFn>
 {

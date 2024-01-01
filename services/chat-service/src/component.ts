@@ -23,12 +23,24 @@ import {
 import {ChatServiceBindings} from './keys';
 import {IChatServiceConfig} from './types';
 
-import {AuthenticationComponent} from 'loopback4-authentication';
+import {Class, Model, Repository} from '@loopback/repository';
+import {AuthenticationComponent, Strategies} from 'loopback4-authentication';
+import {
+  BearerStrategyFactoryProvider,
+  BearerTokenVerifyProvider,
+} from 'loopback4-authentication/passport-bearer';
 import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import {Class, Model, Repository} from '@loopback/repository';
+import {
+  AttachmentFileController,
+  MessageController,
+  MessageMessageController,
+  MessageMessageRecipientController,
+  MessageRecipientController,
+  MessageRecipientMessageController,
+} from './controllers';
 import {
   AttachmentFile,
   AttachmentFileDto,
@@ -41,13 +53,10 @@ import {
   MessageRepository,
 } from './repositories';
 import {
-  AttachmentFileController,
-  MessageController,
-  MessageMessageController,
-  MessageMessageRecipientController,
-  MessageRecipientController,
-  MessageRecipientMessageController,
-} from './controllers';
+  AttachmentFileRepository as AttachmentFileSequelizeRepository,
+  MessageRecipientRepository as MessageRecipientSequelizeRepository,
+  MessageRepository as MessageSequelizeRepository,
+} from './repositories/sequelize';
 
 export class ChatServiceComponent implements Component {
   constructor(
@@ -79,11 +88,19 @@ export class ChatServiceComponent implements Component {
       // Mount default sequence if needed
       this.setupSequence();
     }
-    this.repositories = [
-      MessageRepository,
-      MessageRecipientRepository,
-      AttachmentFileRepository,
-    ];
+    if (this.chatConfig?.useSequelize) {
+      this.repositories = [
+        MessageSequelizeRepository,
+        MessageRecipientSequelizeRepository,
+        AttachmentFileSequelizeRepository,
+      ];
+    } else {
+      this.repositories = [
+        MessageRepository,
+        MessageRecipientRepository,
+        AttachmentFileRepository,
+      ];
+    }
 
     this.models = [
       Message,
@@ -131,6 +148,12 @@ export class ChatServiceComponent implements Component {
     this.application.sequence(ServiceSequence);
 
     // Mount authentication component for default sequence
+    this.application
+      .bind(Strategies.Passport.BEARER_STRATEGY_FACTORY.key)
+      .toProvider(BearerStrategyFactoryProvider);
+    this.application
+      .bind(Strategies.Passport.BEARER_TOKEN_VERIFIER.key)
+      .toProvider(BearerTokenVerifyProvider);
     this.application.component(AuthenticationComponent);
     // Mount bearer verifier component
     this.application.bind(BearerVerifierBindings.Config).to({

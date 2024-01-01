@@ -5,7 +5,6 @@
 import {Provider} from '@loopback/context';
 import {repository} from '@loopback/repository';
 import {VerifyFunction} from 'loopback4-authentication';
-
 import {AuthClientRepository} from '../../../repositories';
 
 export class ClientPasswordVerifyProvider

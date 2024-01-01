@@ -99,7 +99,9 @@ import {LocalPreSignupProvider} from './providers/local-presignup.provider';
 import {LocalSignupProvider} from './providers/local-signup.provider';
 import {MfaProvider} from './providers/mfa.provider';
 import {PasswordDecryptionProvider} from './providers/password-decryption.provider';
-import {repositories} from './repositories';
+
+import {repositories} from './repositories/index';
+import {repositories as sequelizeRepositories} from './repositories/sequelize';
 import {MySequence} from './sequence';
 import {LoginHelperService, OtpService} from './services';
 import {IAuthServiceConfig, IMfaConfig, IOtpConfig} from './types';
@@ -158,8 +160,12 @@ export class AuthenticationServiceComponent implements Component {
       // Mount default sequence if needed
       this.setupSequence();
     }
+    if (this.authConfig?.useSequelize) {
+      this.repositories = sequelizeRepositories;
+    } else {
+      this.repositories = repositories;
+    }
 
-    this.repositories = repositories;
     this.application
       .bind('services.LoginHelperService')
       .toClass(LoginHelperService);

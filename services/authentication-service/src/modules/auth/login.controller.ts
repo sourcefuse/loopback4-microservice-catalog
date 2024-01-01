@@ -80,7 +80,6 @@ import {
 import {AuthUser} from './models/auth-user.model';
 import {ResetPassword} from './models/reset-password.dto';
 import {TokenResponse} from './models/token-response.dto';
-
 export class LoginController {
   constructor(
     @inject(AuthenticationBindings.CURRENT_CLIENT)

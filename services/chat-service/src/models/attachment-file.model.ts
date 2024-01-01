@@ -9,7 +9,7 @@ export class AttachmentFile extends UserModifiableEntity<AttachmentFile> {
   @property({
     type: 'string',
     id: true,
-    generated: false,
+    generated: true,
   })
   id?: string;
 

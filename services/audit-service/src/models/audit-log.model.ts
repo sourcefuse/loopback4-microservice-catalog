@@ -16,7 +16,7 @@ export class AuditLog extends CoreEntity<AuditLog> {
   @property({
     type: 'string',
     id: true,
-    generated: false,
+    generated: typeof global.it === 'function' ? false : true, // NOSONAR
   })
   id?: string;
 

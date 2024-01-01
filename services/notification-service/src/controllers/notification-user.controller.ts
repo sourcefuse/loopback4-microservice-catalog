@@ -2,45 +2,44 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {inject} from '@loopback/core';
 import {
   Count,
   CountSchema,
   Filter,
-  repository,
+  FilterBuilder,
   Where,
   WhereBuilder,
-  FilterBuilder,
+  repository,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  HttpErrors,
+  del,
   get,
   getFilterSchemaFor,
   getModelSchemaRef,
   getWhereSchemaFor,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
-  HttpErrors,
 } from '@loopback/rest';
-import {NotificationUser} from '../models';
-import {NotificationUserRepository} from '../repositories';
 import {
-  authenticate,
-  STRATEGY,
-  AuthenticationBindings,
-} from 'loopback4-authentication';
-import {
-  STATUS_CODE,
   CONTENT_TYPE,
   IAuthUserWithPermissions,
   OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
 } from '@sourceloop/core';
-import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
-import {inject} from '@loopback/core';
+import {
+  AuthenticationBindings,
+  STRATEGY,
+  authenticate,
+} from 'loopback4-authentication';
+import {AuthorizeErrorKeys, authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../enums/permission-key.enum';
-
+import {NotificationUser} from '../models';
+import {NotificationUserRepository} from '../repositories';
 const basePath = '/notification-users';
 
 export class NotificationUserController {
@@ -131,6 +130,9 @@ export class NotificationUserController {
     );
     if (invalidFound) {
       throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
+    }
+    if (!notificationUsers.length) {
+      throw new HttpErrors.BadRequest('Atleast one user needs to be present');
     }
     return this.notificationUserRepository.createAll(notificationUsers);
   }

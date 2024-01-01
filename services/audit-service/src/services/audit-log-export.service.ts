@@ -1,7 +1,8 @@
-import {injectable, BindingScope, Provider, inject} from '@loopback/core';
-import {AuditLogExportFn, ExportHandlerFn} from '../types';
-import * as XLSX from 'xlsx';
+import {BindingScope, Provider, inject, injectable} from '@loopback/core';
 import {AnyObject} from '@loopback/repository';
+import {AuditLogExportFn, ExportHandlerFn} from '../types';
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import * as XLSX from 'xlsx';
 import {ExportHandlerServiceBindings} from '../keys';
 
 @injectable({scope: BindingScope.TRANSIENT})

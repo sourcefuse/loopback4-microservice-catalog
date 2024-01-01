@@ -1,9 +1,4 @@
-import {
-  /* inject, */
-  BindingScope,
-  inject,
-  injectable,
-} from '@loopback/core';
+import {BindingScope, inject, injectable} from '@loopback/core';
 import {ILogger, LOGGER} from '@sourceloop/core';
 
 import {repository, Where} from '@loopback/repository';
@@ -21,13 +16,6 @@ import {
   SurveyResponseDto,
 } from '../models';
 import {SurveyResponseDetail} from '../models/survey-response-detail.model';
-import {
-  SurveyCycleRepository as SurveyCycleSequelizeRepo,
-  SurveyResponderRepository as SurveyResponderSequelizeRepo,
-  SurveyResponseDetailRepository as SurveyResponseDetailSequelizeRepo,
-  SurveyResponseRepository as SurveyResponseSequelizeRepo,
-  SurveyRepository as SurveySequelizeRepo,
-} from '../repositories/sequelize';
 import {SurveyCycleRepository} from '../repositories/survey-cycle.repository';
 import {SurveyResponderRepository} from '../repositories/survey-responder.repository';
 import {SurveyResponseDetailRepository} from '../repositories/survey-response-detail.repository';
@@ -40,24 +28,16 @@ const sqlDateFormat = 'YYYY-MM-DD';
 export class SurveyResponseService {
   constructor(
     @repository(SurveyResponseRepository)
-    public surveyResponseRepository:
-      | SurveyResponseRepository
-      | SurveyResponseSequelizeRepo,
+    public surveyResponseRepository: SurveyResponseRepository,
     @repository(SurveyResponseDetailRepository)
-    public surveyResponseDetailRepository:
-      | SurveyResponseDetailRepository
-      | SurveyResponseDetailSequelizeRepo,
+    public surveyResponseDetailRepository: SurveyResponseDetailRepository,
     @repository(SurveyRepository)
-    public surveyRepository: SurveyRepository | SurveySequelizeRepo,
+    public surveyRepository: SurveyRepository,
     @repository(SurveyCycleRepository)
-    protected surveyCycleRepository:
-      | SurveyCycleRepository
-      | SurveyCycleSequelizeRepo,
+    protected surveyCycleRepository: SurveyCycleRepository,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @repository(SurveyResponderRepository)
-    protected surveyResponderRepository:
-      | SurveyResponderRepository
-      | SurveyResponderSequelizeRepo,
+    protected surveyResponderRepository: SurveyResponderRepository,
   ) {}
 
   async createResponse(surveyId: string, surveyResponseDto: SurveyResponseDto) {

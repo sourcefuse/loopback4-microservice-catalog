@@ -7,34 +7,33 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  HttpErrors,
+  param,
   patch,
-  del,
+  post,
   requestBody,
   response,
-  HttpErrors,
 } from '@loopback/rest';
 import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-import {QuestionDto} from '../models/question-dto.model';
-import {Question} from '../models';
-import {QuestionHelperService} from '../services/question-helper.service';
-import {QuestionRepository} from '../repositories';
-import {BulkDeleteDto} from '../models/bulk-delete-dto.model';
-import {QuestionDuplicateHelperService} from '../services/question-duplicate-helper.service';
-import {QuestionDuplicateDto} from '../models/question-duplicate-dto.model';
 import {PermissionKey} from '../enum';
-import {QuestionRepository as QuestionSequelizeRepo} from '../repositories/sequelize';
+import {Question} from '../models';
+import {BulkDeleteDto} from '../models/bulk-delete-dto.model';
+import {QuestionDto} from '../models/question-dto.model';
+import {QuestionDuplicateDto} from '../models/question-duplicate-dto.model';
+import {QuestionRepository} from '../repositories';
+import {QuestionDuplicateHelperService} from '../services/question-duplicate-helper.service';
+import {QuestionHelperService} from '../services/question-helper.service';
 const basePath = '/questions';
 
 export class QuestionController {
   constructor(
     @repository(QuestionRepository)
-    public questionRepository: QuestionRepository | QuestionSequelizeRepo,
+    public questionRepository: QuestionRepository,
     @service(QuestionHelperService)
     public questionHelperService: QuestionHelperService,
     @service(QuestionDuplicateHelperService)

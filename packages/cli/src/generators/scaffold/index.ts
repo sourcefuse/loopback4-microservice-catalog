@@ -4,22 +4,26 @@
 // https://opensource.org/licenses/MIT
 import {BaseGenerator} from '../../base-generator';
 import {ScaffoldOptions} from '../../types';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import BackstageIntegrationGenerator from '../backstage-integration';
 export default class ScaffoldGenerator extends BaseGenerator<ScaffoldOptions> {
   cwd?: string;
-  constructor(public args: string[], public opts: ScaffoldOptions) {
+  constructor(
+    public args: string[],
+    public opts: ScaffoldOptions,
+  ) {
     super(args, opts);
   }
 
   async configuring() {
     this._setRoot();
-    this.spawnCommandSync('git', ['init']);
+    await this.spawnCommand('git', ['init']);
   }
 
   async writing() {
     this._setRoot();
     await this.createFolders([]);
-    this.copyTemplates();
+    await this.copyTemplateAsync();
     await this.createFolders(['facades', 'services', 'packages']);
     if (this.options.integrateWithBackstage) {
       this.composeWith(
@@ -33,7 +37,7 @@ export default class ScaffoldGenerator extends BaseGenerator<ScaffoldOptions> {
   }
 
   async install() {
-    this.spawnCommandSync('npm', ['i']);
+    await this.spawnCommand('npm', ['i']);
   }
 
   private _setRoot() {

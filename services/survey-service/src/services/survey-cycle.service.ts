@@ -3,21 +3,15 @@ import {repository} from '@loopback/repository';
 import {ILogger, LOGGER} from '@sourceloop/core';
 import moment from 'moment';
 import {SurveyCycleRepository} from '../repositories';
-import {
-  SurveyCycleRepository as SurveyCycleSequelizeRepo,
-  SurveyRepository as SurveySequelizeRepo,
-} from '../repositories/sequelize';
 import {SurveyRepository} from '../repositories/survey.repository';
 const sqlDateFormat = 'YYYY-MM-DD';
 @injectable({scope: BindingScope.TRANSIENT})
 export class SurveyCycleService {
   constructor(
     @repository(SurveyRepository)
-    public surveyRepository: SurveyRepository | SurveySequelizeRepo,
+    public surveyRepository: SurveyRepository,
     @repository(SurveyCycleRepository)
-    public surveyCycleRepository:
-      | SurveyCycleRepository
-      | SurveyCycleSequelizeRepo,
+    public surveyCycleRepository: SurveyCycleRepository,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
   ) {}
 

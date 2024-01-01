@@ -1,10 +1,13 @@
 import {inject, Provider} from '@loopback/core';
 import {repository} from '@loopback/repository';
+import {HttpErrors} from '@loopback/rest';
 import {
   AuthErrorKeys,
   IAuthUser,
   VerifyFunction,
 } from 'loopback4-authentication';
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import * as AzureADStrategy from 'passport-azure-ad';
 import {
   AzureAdPostVerifyFn,
   AzureAdPreVerifyFn,
@@ -13,10 +16,7 @@ import {
   VerifyBindings,
 } from '../../../providers';
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
-import * as AzureADStrategy from 'passport-azure-ad';
-import {HttpErrors} from '@loopback/rest';
 import {AuthUser} from '../models/auth-user.model';
-
 export class AzureAdVerifyProvider
   implements Provider<VerifyFunction.AzureADAuthFn>
 {

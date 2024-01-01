@@ -4,8 +4,8 @@
 // https://opensource.org/licenses/MIT
 import {Provider} from '@loopback/context';
 import {IAuthUser} from 'loopback4-authentication';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import * as AppleStrategy from 'passport-apple';
-
 import {ApplePreVerifyFn} from './types';
 
 export class ApplePreVerifyProvider implements Provider<ApplePreVerifyFn> {

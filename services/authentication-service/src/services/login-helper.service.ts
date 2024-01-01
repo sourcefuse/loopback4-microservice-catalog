@@ -11,7 +11,6 @@ import {AuthErrorKeys} from 'loopback4-authentication';
 import {AuthClient, IAuthClientDTO, UserTenant} from '..';
 import {AuthUser} from '../modules/auth/models/auth-user.model';
 import {UserTenantRepository} from '../repositories';
-
 @injectable({scope: BindingScope.TRANSIENT})
 export class LoginHelperService {
   constructor(

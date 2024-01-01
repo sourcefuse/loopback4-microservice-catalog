@@ -1,5 +1,8 @@
 import {inject, Provider} from '@loopback/core';
 import {repository} from '@loopback/repository';
+import {HttpErrors} from '@loopback/rest';
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import * as SamlStrategy from '@node-saml/passport-saml';
 import {
   AuthErrorKeys,
   IAuthUser,
@@ -13,10 +16,7 @@ import {
   VerifyBindings,
 } from '../../../providers';
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
-import * as SamlStrategy from '@node-saml/passport-saml';
-import {HttpErrors} from '@loopback/rest';
 import {AuthUser} from '../models/auth-user.model';
-
 export class SamlVerifyProvider implements Provider<VerifyFunction.SamlFn> {
   constructor(
     @repository(UserRepository)
