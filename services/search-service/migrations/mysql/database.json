@@ -1,7 +1,8 @@
 {
     "defaultEnv": "master",
     "master": {
-      "driver": "pg",
+      "driver": "mysql",
+      "mulitpleStatements": true,
       "host": {
         "ENV": "DB_HOST"
       },
@@ -20,4 +21,3 @@
     },
     "sql-file": true
   }
-  
