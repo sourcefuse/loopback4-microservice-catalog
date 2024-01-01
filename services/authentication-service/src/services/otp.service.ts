@@ -10,7 +10,9 @@ import {ILogger, LOGGER} from '@sourceloop/core';
 import {AuthErrorKeys} from 'loopback4-authentication';
 import {AuthClient, User} from '../models';
 import {OtpResponse} from '../modules/auth';
-import {OtpFn, VerifyBindings} from '../providers';
+import {OtpFn} from '../providers';
+import {VerifyBindings} from '../providers/keys';
+
 import {OtpCacheRepository, UserRepository} from '../repositories';
 @injectable({scope: BindingScope.TRANSIENT})
 export class OtpService {
