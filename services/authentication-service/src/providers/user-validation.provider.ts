@@ -1,23 +1,21 @@
 import {BindingScope, Provider, inject, injectable} from '@loopback/core';
 import {AnyObject} from '@loopback/repository';
 import {ILogger, LOGGER} from '@sourceloop/core';
-import {
-  GoogleAuthenticationProviderFn,
-  KeycloakAuthenticationProviderFn,
-  UserValidationFn,
-  UserValidationServiceBindings,
-} from '..';
+import {AuthenticationProviderFn, UserValidationFn} from '..';
 import {SignUpProviderKey} from '../enums/sign-up-provider.enum';
 import {AuthRefreshTokenRequest} from '../modules/auth';
+import {UserValidationServiceBindings} from './keys';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class UserValidationProvider implements Provider<UserValidationFn> {
   constructor(
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @inject(UserValidationServiceBindings.GOOGLE_AUTHENTICATION)
-    private googleAuthenticationProvider: GoogleAuthenticationProviderFn,
+    private googleAuthenticationProvider: AuthenticationProviderFn,
     @inject(UserValidationServiceBindings.KEYCLOAK_AUTHENTICATION)
-    private keycloakAuthenticationProvider: KeycloakAuthenticationProviderFn,
+    private keycloakAuthenticationProvider: AuthenticationProviderFn,
+    @inject(UserValidationServiceBindings.DEFAULT_AUTHENTICATION)
+    private defaultAuthneticationProvider: AuthenticationProviderFn,
   ) {}
 
   value(): UserValidationFn {
@@ -43,7 +41,8 @@ export class UserValidationProvider implements Provider<UserValidationFn> {
         isAuthenticated =
           await this.keycloakAuthenticationProvider(accessToken);
         break;
-
+      default:
+        isAuthenticated = await this.defaultAuthneticationProvider(accessToken);
       // If none of the cases apply, the default case will set isAuthenticated to true
     }
     return isAuthenticated;

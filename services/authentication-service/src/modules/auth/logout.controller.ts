@@ -67,6 +67,8 @@ const getProxyAgent = () => {
 
 const size = 16;
 const SUCCESS_RESPONSE = 'Success Response';
+const AUTHENTICATE_USER =
+  'This is the access token which is required to authenticate user.';
 export class LogoutController {
   constructor(
     @inject(RestBindings.Http.REQUEST) private readonly req: Request,
@@ -113,8 +115,7 @@ export class LogoutController {
   })
   async logout(
     @param.header.string('Authorization', {
-      description:
-        'This is the access token which is required to authenticate user.',
+      description: AUTHENTICATE_USER,
     })
     auth: string,
     @requestBody({
@@ -187,8 +188,7 @@ export class LogoutController {
   })
   async keycloakLogout(
     @param.header.string('Authorization', {
-      description:
-        'This is the access token which is required to authenticate user.',
+      description: AUTHENTICATE_USER,
     })
     auth: string,
     @requestBody({
@@ -279,8 +279,7 @@ export class LogoutController {
   })
   async googleLogout(
     @param.header.string('Authorization', {
-      description:
-        'This is the access token which is required to authenticate user.',
+      description: AUTHENTICATE_USER,
     })
     auth: string,
     @requestBody({

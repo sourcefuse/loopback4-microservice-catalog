@@ -2,13 +2,13 @@ import {Provider, inject} from '@loopback/context';
 import {ILogger, LOGGER} from '@sourceloop/core';
 import {encode} from 'base-64';
 import fetch from 'node-fetch';
-import {KeycloakAuthenticationProviderFn} from './types';
+import {AuthenticationProviderFn} from '..';
 
 export class KeycloakAuthenticationProvider
-  implements Provider<KeycloakAuthenticationProviderFn>
+  implements Provider<AuthenticationProviderFn>
 {
   constructor(@inject(LOGGER.LOGGER_INJECT) public logger: ILogger) {}
-  value(): KeycloakAuthenticationProviderFn {
+  value(): AuthenticationProviderFn {
     return async (accessToken: string) => this.isAuthenticated(accessToken);
   }
   isAuthenticated(accessToken: string) {

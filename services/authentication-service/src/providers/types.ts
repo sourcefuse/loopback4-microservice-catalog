@@ -41,10 +41,7 @@ export type GooglePostVerifyFn = (
   profile: GoogleStrategy.Profile,
   user: IAuthUser | null,
 ) => Promise<IAuthUser | null>;
-export type GoogleAuthenticationProviderFn = (
-  accessToken: string,
-) => Promise<boolean>;
-export type KeycloakAuthenticationProviderFn = (
+export type AuthenticationProviderFn = (
   accessToken: string,
 ) => Promise<boolean>;
 

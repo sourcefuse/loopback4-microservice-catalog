@@ -13,6 +13,7 @@ import {
   ApplePostVerifyFn,
   ApplePreVerifyFn,
   AppleSignUpFn,
+  AuthenticationProviderFn,
   AzureAdPostVerifyFn,
   AzureAdPreVerifyFn,
   AzureAdSignUpFn,
@@ -24,7 +25,6 @@ import {
   FacebookPostVerifyFn,
   FacebookPreVerifyFn,
   FacebookSignUpFn,
-  GoogleAuthenticationProviderFn,
   GooglePostVerifyFn,
   GooglePreVerifyFn,
   GoogleSignUpFn,
@@ -36,7 +36,6 @@ import {
   KeyCloakPostVerifyFn,
   KeyCloakPreVerifyFn,
   KeyCloakSignUpFn,
-  KeycloakAuthenticationProviderFn,
   MfaCheckFn,
   OtpFn,
   OtpGenerateFn,
@@ -163,11 +162,15 @@ export namespace UserValidationServiceBindings {
     `${BINDING_PREFIX}.auth.validateUser`,
   );
   export const GOOGLE_AUTHENTICATION =
-    BindingKey.create<GoogleAuthenticationProviderFn>(
+    BindingKey.create<AuthenticationProviderFn>(
       `${BINDING_PREFIX}.auth.authenticateGoogleUser`,
     );
   export const KEYCLOAK_AUTHENTICATION =
-    BindingKey.create<KeycloakAuthenticationProviderFn>(
+    BindingKey.create<AuthenticationProviderFn>(
       `${BINDING_PREFIX}.auth.authenticateKeycloakUser`,
+    );
+  export const DEFAULT_AUTHENTICATION =
+    BindingKey.create<AuthenticationProviderFn>(
+      `${BINDING_PREFIX}.auth.defaultAuthentication`,
     );
 }

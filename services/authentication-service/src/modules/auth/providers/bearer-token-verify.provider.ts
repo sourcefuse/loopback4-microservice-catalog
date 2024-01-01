@@ -8,7 +8,8 @@ import {HttpErrors, Request} from '@loopback/rest';
 import {AuthenticateErrorKeys, ILogger, LOGGER} from '@sourceloop/core';
 import {VerifyFunction} from 'loopback4-authentication';
 import moment from 'moment-timezone';
-import {AuthCodeBindings, JWTVerifierFn} from '../../../providers';
+import {JWTVerifierFn} from '../../../providers';
+import {AuthCodeBindings} from '../../../providers/keys';
 import {RevokedTokenRepository} from '../../../repositories';
 import {AuthUser} from '../models/auth-user.model';
 

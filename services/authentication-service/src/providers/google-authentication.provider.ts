@@ -1,13 +1,13 @@
 import {Provider, inject} from '@loopback/context';
 import {ILogger, LOGGER} from '@sourceloop/core';
 import fetch from 'node-fetch';
-import {GoogleAuthenticationProviderFn} from './types';
+import {AuthenticationProviderFn} from '..';
 
 export class GoogleAuthenticationProvider
-  implements Provider<GoogleAuthenticationProviderFn>
+  implements Provider<AuthenticationProviderFn>
 {
   constructor(@inject(LOGGER.LOGGER_INJECT) public logger: ILogger) {}
-  value(): GoogleAuthenticationProviderFn {
+  value(): AuthenticationProviderFn {
     return async (accessToken: string) => this.isAuthenticated(accessToken);
   }
   isAuthenticated(accessToken: string) {
