@@ -19,7 +19,6 @@ drop column deleted_on ,
 drop column deleted_by;
 
 ALTER TABLE main.feature_toggles
-drop column metadata,
 drop column created_by,
 drop column modified_by ,
 drop column created_on ,
