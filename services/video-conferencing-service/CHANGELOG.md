@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 9.0.0 (2024-01-01)
+
+* fix(all-services): add sequelize as optional dependency (#1878) ([772b4f8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/772b4f8)), closes [#1878](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1878) [#1866](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1866)
+* fix(all-services): change sequelize dependency to optional (#1868) ([bf3962f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bf3962f)), closes [#1868](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1868) [#1866](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1866)
+* feat(video-conferencing-service): add mysql db migrations (#1859) ([3b35394](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3b35394)), closes [#1859](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1859) [#1836](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1836)
+
+
+
+
+
 ## <small>8.0.1 (2023-12-22)</small>
 
 **Note:** Version bump only for package @sourceloop/video-conferencing-service

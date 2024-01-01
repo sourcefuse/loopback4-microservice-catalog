@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.12.0 (2024-01-01)
+
+* feat(user-tenant-service): add mysql db migrations (#1872) ([a4fa76d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a4fa76d)), closes [#1872](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1872) [#1836](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1836)
+* feat(user-tenant-service): add sequelize support in user tenant service (#1873) ([1cd19b3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1cd19b3)), closes [#1873](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1873) [#1350](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1350)
+* fix(all-services): add sequelize as optional dependency (#1878) ([772b4f8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/772b4f8)), closes [#1878](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1878) [#1866](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1866)
+
+
+
+
+
 ## <small>0.11.2 (2023-12-22)</small>
 
 **Note:** Version bump only for package @sourceloop/user-tenant-service

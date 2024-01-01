@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>6.0.4 (2024-01-01)</small>
+
+**Note:** Version bump only for package @sourceloop/notification-socket-example
+
+
+
+
+
 ## <small>6.0.3 (2023-12-22)</small>
 
 * chore(deps): fix the synk high issues (#1845) ([0a536b4](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0a536b4)), closes [#1845](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1845) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)

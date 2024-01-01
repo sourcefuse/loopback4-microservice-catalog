@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 11.0.0 (2024-01-01)
+
+* feat(all-services): add additional check for createAll method (#1881) ([9b51bc3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9b51bc3)), closes [#1881](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1881) [#1124](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1124)
+
+
+### BREAKING CHANGE
+
+* if the array is not passed for createall error will be thrown
+
+
+
+
 ## 10.1.0 (2023-12-22)
 
 * feat(core): add sequelize tenant guard in sourceloop core (#1854) ([71ff143](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/71ff143)), closes [#1854](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1854) [#1838](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1838)

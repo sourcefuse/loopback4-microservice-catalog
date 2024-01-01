@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 10.0.0 (2024-01-01)
+
+* test(bpmn-service): add test case for sequelize in workflow service (#1880) ([b49b315](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b49b315)), closes [#1880](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1880) [#1350](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1350)
+* feat(bpmn-service): add mysql db migrations (#1858) ([2337675](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2337675)), closes [#1858](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1858) [#1836](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1836)
+* feat(bpmn-service): add sequelize support in workflow service (#1874) ([efa8a06](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/efa8a06)), closes [#1874](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1874) [#1350](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1350)
+* fix(all-services): add sequelize as optional dependency (#1878) ([772b4f8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/772b4f8)), closes [#1878](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1878) [#1866](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1866)
+
+
+
+
+
 ## <small>9.0.1 (2023-12-22)</small>
 
 * chore(all-services): fix sonar code smell overall (#1841) ([0fe4492](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0fe4492)), closes [#1841](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1841) [#1840](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1840)

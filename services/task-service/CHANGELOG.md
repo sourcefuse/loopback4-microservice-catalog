@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.4.0 (2024-01-01)
+
+* feat(task-service): add mysql db migrations (#1864) ([5e52463](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5e52463)), closes [#1864](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1864) [#1836](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1836)
+
+
+
+
+
 ## <small>0.3.1 (2023-12-22)</small>
 
 **Note:** Version bump only for package @sourceloop/task-service

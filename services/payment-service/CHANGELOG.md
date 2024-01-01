@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 11.0.0 (2024-01-01)
+
+* feat(payment service): add mysql db migrations (#1856) ([9649313](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9649313)), closes [#1856](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1856) [#1836](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1836)
+* feat(payment-service): add sequelize support in payment service (#1818) ([7c7850c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7c7850c)), closes [#1818](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1818) [#1350](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1350)
+* fix(all-services): add sequelize as optional dependency (#1878) ([772b4f8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/772b4f8)), closes [#1878](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1878) [#1866](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1866)
+
+
+
+
+
 ## <small>10.0.2 (2023-12-22)</small>
 
 **Note:** Version bump only for package @sourceloop/payment-service

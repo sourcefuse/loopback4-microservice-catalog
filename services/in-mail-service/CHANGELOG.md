@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 8.0.0 (2024-01-01)
+
+* feat(in-mail-service): add mysql db migrations (#1876) ([0629b7e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0629b7e)), closes [#1876](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1876) [#1836](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1836)
+
+
+
+
+
 ## <small>7.0.1 (2023-12-22)</small>
 
 **Note:** Version bump only for package @sourceloop/in-mail-service

@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 9.0.0 (2024-01-01)
+
+* feat(scheduler-service): add mysql db migrations (#1879) ([5278b1c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5278b1c)), closes [#1879](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1879) [#1836](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1836)
+* feat(scheduler-service): add sequelize support in scheduler service (#1871) ([c36a2e3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c36a2e3)), closes [#1871](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1871) [#1350](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1350)
+
+
+
+
+
 ## <small>8.0.1 (2023-12-22)</small>
 
 **Note:** Version bump only for package @sourceloop/scheduler-service

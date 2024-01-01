@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 10.0.0 (2024-01-01)
+
+* feat(all-services): add additional check for createAll method (#1881) ([9b51bc3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9b51bc3)), closes [#1881](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1881) [#1124](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1124)
+* feat(notification-service): add mysql db migrations (#1855) ([3e14857](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3e14857)), closes [#1855](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1855) [#1836](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1836)
+* fix(all-services): add sequelize as optional dependency (#1878) ([772b4f8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/772b4f8)), closes [#1878](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1878) [#1866](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1866)
+* fix(all-services): change sequelize dependency to optional (#1868) ([bf3962f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bf3962f)), closes [#1868](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1868) [#1866](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1866)
+
+
+### BREAKING CHANGE
+
+* if the array is not passed for createall error will be thrown
+
+
+
+
 ## <small>9.0.1 (2023-12-22)</small>
 
 **Note:** Version bump only for package @sourceloop/notification-service

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.11.0 (2024-01-01)
+
+* feat(search-service): add mysql db migrations (#1857) ([6773263](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6773263)), closes [#1857](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1857) [#1836](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1836)
+
+
+
+
+
 ## <small>0.10.2 (2023-12-22)</small>
 
 **Note:** Version bump only for package @sourceloop/search-service
