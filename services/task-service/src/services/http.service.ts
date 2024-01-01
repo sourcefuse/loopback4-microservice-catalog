@@ -6,6 +6,7 @@ import {BindingScope, injectable} from '@loopback/core';
 import {AnyObject} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {STATUS_CODE} from '@sourceloop/core';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import FormData from 'form-data';
 import fetch, {Response} from 'node-fetch';
 

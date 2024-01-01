@@ -24,7 +24,11 @@ import {
   ServiceSequence,
   TenantUtilitiesComponent,
 } from '@sourceloop/core';
-import {AuthenticationComponent} from 'loopback4-authentication';
+import {AuthenticationComponent, Strategies} from 'loopback4-authentication';
+import {
+  BearerStrategyFactoryProvider,
+  BearerTokenVerifyProvider,
+} from 'loopback4-authentication/passport-bearer';
 import {
   AuthorizationBindings,
   AuthorizationComponent,
@@ -78,6 +82,21 @@ import {
   UserTenantRepository,
   UserViewRepository,
 } from './repositories';
+import {
+  AuthClientRepository as AuthClientSequelizeRepository,
+  GroupRepository as GroupSequelizeRepository,
+  RoleRepository as RoleSequelizeRepository,
+  TenantConfigRepository as TenantConfigSequelizeRepository,
+  TenantRepository as TenantSequelizeRepository,
+  UserCredentialsRepository as UserCredentialsSequelizeRepository,
+  UserGroupRepository as UserGroupSequelizeRepository,
+  UserInvitationRepository as UserInvitationSequelizeRepository,
+  UserLevelPermissionRepository as UserLevelPermissionSequelizeRepository,
+  UserRepository as UserSequelizeRepository,
+  UserTenantPrefsRepository as UserTenantPrefsSequelizeRepository,
+  UserTenantRepository as UserTenantSequelizeRepository,
+  UserViewRepository as UserViewSequelizeRepository,
+} from './repositories/sequelize';
 import {UserGroupService, UserOperationsService} from './services';
 import {IUserServiceConfig} from './types';
 
@@ -157,26 +176,50 @@ export class UserTenantServiceComponent implements Component {
       UserTenantUserGroupController,
       UserTenantUserLevelPermissionController,
     ];
-    this.repositories = [
-      RoleRepository,
-      UserTenantRepository,
-      TenantConfigRepository,
-      TenantRepository,
-      UserRepository,
-      UserCredentialsRepository,
-      UserViewRepository,
-      GroupRepository,
-      UserGroupRepository,
-      UserInvitationRepository,
-      UserTenantPrefsRepository,
-      UserLevelPermissionRepository,
-      AuthClientRepository,
-    ];
+    if (this.config?.useSequelize) {
+      this.repositories = [
+        RoleSequelizeRepository,
+        UserTenantSequelizeRepository,
+        TenantConfigSequelizeRepository,
+        TenantSequelizeRepository,
+        UserSequelizeRepository,
+        UserCredentialsSequelizeRepository,
+        UserViewSequelizeRepository,
+        GroupSequelizeRepository,
+        UserGroupSequelizeRepository,
+        UserInvitationSequelizeRepository,
+        UserTenantPrefsSequelizeRepository,
+        UserLevelPermissionSequelizeRepository,
+        AuthClientSequelizeRepository,
+      ];
+    } else {
+      this.repositories = [
+        RoleRepository,
+        UserTenantRepository,
+        TenantConfigRepository,
+        TenantRepository,
+        UserRepository,
+        UserCredentialsRepository,
+        UserViewRepository,
+        GroupRepository,
+        UserGroupRepository,
+        UserInvitationRepository,
+        UserTenantPrefsRepository,
+        UserLevelPermissionRepository,
+        AuthClientRepository,
+      ];
+    }
   }
   setupSequence() {
     this.application.sequence(ServiceSequence);
 
     // Mount authentication component for default sequence
+    this.application
+      .bind(Strategies.Passport.BEARER_STRATEGY_FACTORY.key)
+      .toProvider(BearerStrategyFactoryProvider);
+    this.application
+      .bind(Strategies.Passport.BEARER_TOKEN_VERIFIER.key)
+      .toProvider(BearerTokenVerifyProvider);
     this.application.component(AuthenticationComponent);
     // Mount bearer verifier component
     this.application.bind(BearerVerifierBindings.Config).to({

@@ -10,6 +10,7 @@ import {
   IAuthUser,
   VerifyFunction,
 } from 'loopback4-authentication';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import * as FacebookStrategy from 'passport-facebook';
 import {
   FacebookPostVerifyFn,
@@ -20,7 +21,6 @@ import {
 } from '../../../providers';
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
 import {AuthUser} from '../models/auth-user.model';
-
 export class FacebookOauth2VerifyProvider
   implements Provider<VerifyFunction.FacebookAuthFn>
 {

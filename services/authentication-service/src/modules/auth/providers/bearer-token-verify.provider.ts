@@ -9,7 +9,6 @@ import {AuthenticateErrorKeys, ILogger, LOGGER} from '@sourceloop/core';
 import {VerifyFunction} from 'loopback4-authentication';
 import moment from 'moment-timezone';
 import {AuthCodeBindings, JWTVerifierFn} from '../../../providers';
-
 import {RevokedTokenRepository} from '../../../repositories';
 import {AuthUser} from '../models/auth-user.model';
 

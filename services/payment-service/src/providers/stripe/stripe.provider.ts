@@ -5,21 +5,22 @@
 import {inject, Provider} from '@loopback/core';
 import {DataObject, repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import Handlebars from 'handlebars';
-import {Orders, Subscriptions} from '../../models';
 import {v4 as uuidv4} from 'uuid';
-import {StripeBindings} from './keys';
+import {ResponseMessage, Status} from '../../enums';
+import {Orders, Subscriptions} from '../../models';
+import {
+  OrdersRepository,
+  SubscriptionsRepository,
+  TransactionsRepository,
+} from '../../repositories';
 import {
   stripeCreateTemplate,
   stripeSubscriptionCreateTemplate,
 } from '../../templates';
-import {
-  OrdersRepository,
-  TransactionsRepository,
-  SubscriptionsRepository,
-} from '../../repositories';
+import {StripeBindings} from './keys';
 import {IStripeConfig, StripePaymentGateway} from './types';
-import {ResponseMessage, Status} from '../../enums';
 const Stripe = require('stripe');
 
 export class StripeProvider implements Provider<StripePaymentGateway> {

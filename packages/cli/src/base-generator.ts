@@ -2,24 +2,33 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {readdirSync} from 'fs';
+import {readdir} from 'fs';
 import {mkdir} from 'fs/promises';
 import {join} from 'path';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import Generator from 'yeoman-generator';
+const {promisify} = require('util');
 export abstract class BaseGenerator<
   T extends Generator.GeneratorOptions,
 > extends Generator<T> {
   root = '';
   private exitGeneration?: string;
 
-  copyTemplates() {
-    readdirSync(this.templatePath()).forEach(file => {
+  async copyTemplateAsync() {
+    const readdriAsync = promisify(readdir);
+    const files = await readdriAsync(this.templatePath());
+
+    const promises = files.map(async (file: string) => {
       const targetFileName = file.replace('.tpl', '');
       const sourcePath = this.templatePath(file);
       const destinationPath = join(this.destinationRoot(), targetFileName);
-      this.fs.copyTpl(sourcePath, destinationPath, this.options);
+      /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
+      //@ts-ignore
+      await this.fs.copyTplAsync(sourcePath, destinationPath, this.options);
     });
+    await Promise.all(promises);
   }
+
   name() {
     return this.options.namespace.split(':')[1];
   }

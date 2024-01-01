@@ -30,7 +30,6 @@ import {authorize} from 'loopback4-authorization';
 import {AppErrorCodes, ErrorKeys, PermissionKey} from '../enum';
 import {SurveyQuestion, SurveyQuestionDto} from '../models';
 import {SurveyQuestionRepository} from '../repositories';
-import {SurveyQuestionRepository as SurveyQuestionSequelizeRepo} from '../repositories/sequelize';
 import {SurveyService} from '../services';
 
 const basePath = '/surveys/{surveyId}/survey-questions';
@@ -39,9 +38,7 @@ const orderByCreatedOn = 'created_on DESC';
 export class SurveyQuestionController {
   constructor(
     @repository(SurveyQuestionRepository)
-    public surveyQuestionRepository:
-      | SurveyQuestionRepository
-      | SurveyQuestionSequelizeRepo,
+    public surveyQuestionRepository: SurveyQuestionRepository,
     @service(SurveyService)
     public surveyService: SurveyService,
   ) {}

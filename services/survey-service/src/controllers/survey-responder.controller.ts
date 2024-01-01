@@ -3,15 +3,15 @@ import {
   Count,
   CountSchema,
   Filter,
-  repository,
   Where,
+  repository,
 } from '@loopback/repository';
 import {
+  HttpErrors,
   del,
   get,
   getModelSchemaRef,
   getWhereSchemaFor,
-  HttpErrors,
   param,
   patch,
   post,
@@ -19,42 +19,30 @@ import {
   response,
 } from '@loopback/rest';
 import {CONTENT_TYPE, ILogger, LOGGER, STATUS_CODE} from '@sourceloop/core';
-import {authenticate, STRATEGY} from 'loopback4-authentication';
+import {STRATEGY, authenticate} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
+import {ErrorKeys} from '../enum/error-keys.enum';
 import {PermissionKey} from '../enum/permission-key.enum';
 import {SurveyResponder} from '../models';
+import {ResponderReminderDto} from '../models/responder-reminder-dto.model';
 import {SurveyCycleRepository} from '../repositories/survey-cycle.repository';
 import {SurveyResponderRepository} from '../repositories/survey-responder.repository';
-import {SurveyRepository} from '../repositories/survey.repository';
-import {SurveyService} from '../services/survey.service';
 import {SurveyResponseRepository} from '../repositories/survey-response.repository';
-import {ErrorKeys} from '../enum/error-keys.enum';
-import {ResponderReminderDto} from '../models/responder-reminder-dto.model';
+import {SurveyRepository} from '../repositories/survey.repository';
 import {SurveyResponderService} from '../services/survey-responder.service';
-import {
-  SurveyCycleRepository as SurveyCycleSequelizeRepo,
-  SurveyRepository as SurveySequelizeRepo,
-  SurveyResponderRepository as SurveyResponderSequelizeRepo,
-  SurveyResponseRepository as SurveyResponseSequelizeRepo,
-} from '../repositories/sequelize';
+import {SurveyService} from '../services/survey.service';
 const basePath = '/surveys/{surveyId}/survey-responders';
 
 export class SurveyResponderController {
   constructor(
     @repository(SurveyRepository)
-    protected surveyRepository: SurveyRepository | SurveySequelizeRepo,
+    protected surveyRepository: SurveyRepository,
     @repository(SurveyResponderRepository)
-    protected surveyResponderRepository:
-      | SurveyResponderRepository
-      | SurveyResponderSequelizeRepo,
+    protected surveyResponderRepository: SurveyResponderRepository,
     @repository(SurveyResponseRepository)
-    protected surveyResponseRepository:
-      | SurveyResponseRepository
-      | SurveyResponseSequelizeRepo,
+    protected surveyResponseRepository: SurveyResponseRepository,
     @repository(SurveyCycleRepository)
-    protected surveyCycleRepository:
-      | SurveyCycleRepository
-      | SurveyCycleSequelizeRepo,
+    protected surveyCycleRepository: SurveyCycleRepository,
     @service(SurveyService)
     public surveyService: SurveyService,
     @service(SurveyResponderService)

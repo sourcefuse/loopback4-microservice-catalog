@@ -26,22 +26,26 @@ import {
   CoreComponent,
   ServiceSequence,
 } from '@sourceloop/core';
-import {AuthenticationComponent} from 'loopback4-authentication';
+import {AuthenticationComponent, Strategies} from 'loopback4-authentication';
+import {
+  BearerStrategyFactoryProvider,
+  BearerTokenVerifyProvider,
+} from 'loopback4-authentication/passport-bearer';
 import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
+import {isSearchableModel, SearchControllerConfig} from '.';
+import {MySqlQueryBuilder, PsqlQueryBuilder} from './classes';
 import {DEFAULT_COLUMNS, Errors, THREE, TWO} from './const';
 import {defineSearchController} from './controllers';
 import {SearchControllerCtor} from './controllers/types';
 import {SearchServiceBindings} from './keys';
 import {SearchQuery, SearchResult} from './models';
-import {MySqlQueryBuilder, PsqlQueryBuilder} from './classes';
-import {SearchFilterProvider, SearchProvider} from './services';
-import {SearchServiceConfig} from './types';
 import {RecentSearchRepository} from './repositories/recent-search.repository';
 import {SearchQueryRepository} from './repositories/search-query.repository';
-import {isSearchableModel, SearchControllerConfig} from '.';
+import {SearchFilterProvider, SearchProvider} from './services';
+import {SearchServiceConfig} from './types';
 import {defineModelClass} from './utils';
 
 export class SearchServiceComponent<T extends Model> implements Component {
@@ -166,6 +170,12 @@ export class SearchServiceComponent<T extends Model> implements Component {
     this.application.sequence(ServiceSequence);
 
     // Mount authentication component for default sequence
+    this.application
+      .bind(Strategies.Passport.BEARER_STRATEGY_FACTORY.key)
+      .toProvider(BearerStrategyFactoryProvider);
+    this.application
+      .bind(Strategies.Passport.BEARER_TOKEN_VERIFIER.key)
+      .toProvider(BearerTokenVerifyProvider);
     this.application.component(AuthenticationComponent);
     // Mount bearer verifier component
     this.application.bind(BearerVerifierBindings.Config).to({

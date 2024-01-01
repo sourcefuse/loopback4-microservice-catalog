@@ -20,7 +20,11 @@ import {
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
-import {AuthenticationComponent} from 'loopback4-authentication';
+import {AuthenticationComponent, Strategies} from 'loopback4-authentication';
+import {
+  BearerStrategyFactoryProvider,
+  BearerTokenVerifyProvider,
+} from 'loopback4-authentication/passport-bearer';
 import {
   AuthorizationBindings,
   AuthorizationComponent,
@@ -30,6 +34,7 @@ import {
   OriginatorController,
   ReplyAndForwardController,
 } from './controllers';
+import {InMailBindings} from './keys';
 import {Attachment, Group, Message, Meta, Thread} from './models';
 import {
   AttachmentRepository,
@@ -39,7 +44,6 @@ import {
   ThreadRepository,
   ThreadViewRepository,
 } from './repositories';
-import {InMailBindings} from './keys';
 import {IInMailServiceConfig} from './types';
 
 export class InMailServiceComponent implements Component {
@@ -84,6 +88,12 @@ export class InMailServiceComponent implements Component {
     }
 
     // Set up default home page
+    this.application
+      .bind(Strategies.Passport.BEARER_STRATEGY_FACTORY.key)
+      .toProvider(BearerStrategyFactoryProvider);
+    this.application
+      .bind(Strategies.Passport.BEARER_TOKEN_VERIFIER.key)
+      .toProvider(BearerTokenVerifyProvider);
     this.application.component(AuthenticationComponent);
     this.application.bind(BearerVerifierBindings.Config).to({
       authServiceUrl: '',

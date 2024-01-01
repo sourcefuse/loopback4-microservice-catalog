@@ -8,6 +8,7 @@ import {SWStats} from 'swagger-stats';
 
 export interface IServiceConfig {
   useCustomSequence: boolean;
+  useSequelize?: boolean;
 }
 
 export type OASPathDefinition = AnyObject;

@@ -20,6 +20,11 @@ import {
 } from '@sourceloop/core';
 import * as controllers from './controllers';
 
+import {Strategies} from 'loopback4-authentication';
+import {
+  BearerStrategyFactoryProvider,
+  BearerTokenVerifyProvider,
+} from 'loopback4-authentication/passport-bearer';
 import {
   ApiKeyRepository,
   EventRepository,
@@ -29,16 +34,16 @@ import {
 } from './repositories';
 import {EventWorkflowMappingRepository} from './repositories/event-workflow-mapping.repository';
 import {
+  ApiKeyVerificationService,
   CamundaService,
   EventProcessorService,
   EventQueueServiceSQS,
   HttpClientService,
-  TaskOperationService,
-  WebhookService,
-  UtilityService,
-  WorkflowOperationService,
   TaskDbService,
-  ApiKeyVerificationService,
+  TaskOperationService,
+  UtilityService,
+  WebhookService,
+  WorkflowOperationService,
 } from './services';
 
 export class TaskServiceComponent implements Component {
@@ -110,5 +115,11 @@ export class TaskServiceComponent implements Component {
    */
   setupSequence() {
     this.application.sequence(ServiceSequence);
+    this.application
+      .bind(Strategies.Passport.BEARER_STRATEGY_FACTORY.key)
+      .toProvider(BearerStrategyFactoryProvider);
+    this.application
+      .bind(Strategies.Passport.BEARER_TOKEN_VERIFIER.key)
+      .toProvider(BearerTokenVerifyProvider);
   }
 }

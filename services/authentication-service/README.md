@@ -476,6 +476,21 @@ Its implemented through password decryption provider [here](https://github.com/s
 
 Note: When using `.env` file put your private key in single line with line breaks escaped with `\n`, one of the ways of doing so can be found [here](https://serverfault.com/questions/466683/can-an-ssl-certificate-be-on-a-single-line-in-a-file-no-line-breaks).
 
+### Using with Sequelize
+
+This service supports Sequelize as the underlying ORM using [@loopback/sequelize](https://www.npmjs.com/package/@loopback/sequelize) extension. And in order to use it, you'll need to do following changes.
+
+1.To use Sequelize in your application, add following to application.ts:
+
+```ts
+this.bind(AuthServiceBindings.Config).to({
+  useCustomSequence: false,
+  useSequelize: true,
+});
+```
+
+2. Use the `SequelizeDataSource` in your audit datasource as the parent class. Refer [this](https://www.npmjs.com/package/@loopback/sequelize#step-1-configure-datasource) for more details.
+
 #### Common Headers
 
 Authorization: Bearer <token> where <token> is a JWT token signed using JWT issuer and secret.

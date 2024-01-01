@@ -7,10 +7,12 @@ import {
   createStubInstance,
   expect,
 } from '@loopback/testlab';
-import {UserCredentialsRepository, UserRepository} from '../../../repositories';
+import {IAuthUser} from 'loopback4-authentication';
 import sinon from 'sinon';
 import {FacebookOauth2VerifyProvider} from '../../../modules/auth/providers/facebook-oauth-verify.provider';
 import {FacebookSignUpFn} from '../../../providers';
+import {UserCredentialsRepository, UserRepository} from '../../../repositories';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import * as FacebookStrategy from 'passport-facebook';
 import {
   User,
@@ -18,7 +20,6 @@ import {
   UserCredentialsWithRelations,
   UserWithRelations,
 } from '../../../models';
-import {IAuthUser} from 'loopback4-authentication';
 
 describe('Facebook Verify Provider', () => {
   let userRepo: StubbedInstanceWithSinonAccessor<UserRepository>;

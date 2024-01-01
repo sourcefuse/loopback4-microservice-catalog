@@ -3,6 +3,76 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>6.0.3 (2023-12-19)</small>
+
+* fix(deps): update the cli template dependencies to latest (#1850) ([fad5e74](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/fad5e74)), closes [#1850](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1850) [#1849](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1849)
+* chore(all-services): fix sonar code smell overall (#1841) ([0fe4492](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0fe4492)), closes [#1841](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1841) [#1840](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1840)
+
+
+
+
+
+## <small>6.0.2 (2023-12-08)</small>
+
+* fix(cli): update the migration scripts and docker build (#1835) ([b23d969](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b23d969)), closes [#1835](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1835) [#1832](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1832) [#1834](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1834) [#1834](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1834)
+* fix(cli): update the migration scripts as per workspaces (#1833) ([cb7e236](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/cb7e236)), closes [#1833](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1833) [#1832](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1832) [#1834](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1834)
+
+
+
+
+
+## <small>6.0.1 (2023-12-08)</small>
+
+* fix(cli): change the npm ci to npm i in docker file of microservice (#1831) ([0f3f14f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0f3f14f)), closes [#1831](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1831) [#1830](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1830)
+
+
+
+
+
+## 6.0.0 (2023-12-07)
+
+* feat(deps): update to latest loopback 4 authentication version (#1826) ([5b827fc](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5b827fc)), closes [#1826](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1826) [#1825](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1825) [#1825](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1825)
+
+
+### BREAKING CHANGE
+
+* breaking version update
+* optional dependencies need to bind required providers
+
+
+
+
+## <small>5.0.1 (2023-11-23)</small>
+
+* refactor(cli): make flow async (#1810) ([7b889b0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7b889b0)), closes [#1810](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1810) [#1792](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1792) [#1792](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1792)
+
+
+
+
+
+## 5.0.0 (2023-11-10)
+
+* fix(cli): extra commit to bump version (#1802) ([592678e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/592678e)), closes [#1802](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1802) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* feat(cli):make sourceloop cli compatible with npm workspaces (#1761) ([6026554](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6026554)), closes [#1761](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1761) [#1695](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1695)
+* feat(chore): migrate to use npm workspaces (#1684) ([72d8f6e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/72d8f6e)), closes [#1684](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1684) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673)
+* feat(cli): add survey-service in cli (#1788) ([abcec6d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/abcec6d)), closes [#1788](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1788) [#1782](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1782)
+* feat(cli): integrate git secrets in cli (#1800) ([69b1357](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/69b1357)), closes [#1800](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1800) [#1794](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1794)
+* feat(cli): upgrade survey-service version in cli (#1801) ([afccc32](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/afccc32)), closes [#1801](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1801) [#1797](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1797)
+
+
+### BREAKING CHANGE
+
+* lerna bootstrap command will not be supported
+* lerna bootstrap command will not be supported
+* lerna bootstrap command will not be supported
+* lerna bootstrap will not be supported
+* lerna bootstrap will not be supported
+* make workspaces compliant
+* microservice command will generate according to workspace
+
+
+
+
 ## <small>4.2.1 (2023-10-19)</small>
 
 * revert(cli): remove cdk flag from microservice command (#1721) ([bac0866](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bac0866)), closes [#1721](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1721) [#1710](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1710)

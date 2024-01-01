@@ -32,6 +32,7 @@ import {
   ResetPasswordWithClient,
   User,
 } from '../models';
+
 import {ForgotPasswordHandlerFn} from '../providers';
 import {RevokedTokenRepository, UserRepository} from '../repositories';
 import {LoginHelperService} from '../services';

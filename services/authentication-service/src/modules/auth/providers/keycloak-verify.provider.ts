@@ -20,7 +20,6 @@ import {
 } from '../../../providers/types';
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
 import {AuthUser} from '../models/auth-user.model';
-
 export class KeycloakVerifyProvider
   implements Provider<VerifyFunction.KeycloakAuthFn>
 {

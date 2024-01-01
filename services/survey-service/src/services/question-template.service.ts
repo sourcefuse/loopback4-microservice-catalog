@@ -1,17 +1,13 @@
 import {BindingScope, injectable} from '@loopback/core';
-import {QuestionTemplateRepository} from '../repositories/question-template.repository';
 import {AnyObject, Count, repository} from '@loopback/repository';
-import {TemplateQuestionRepository} from '../repositories/template-questions.repository';
-import {QuestionTemplatesDto} from '../models/question-template-dto.model';
-import {QuestionTemplateStatus} from '../enum/template.enum';
 import {HttpErrors} from '@loopback/rest';
-import {TemplateQuestion} from '../models/template-questions.model';
 import {ErrorKeys} from '../enum/error-keys.enum';
+import {QuestionTemplateStatus} from '../enum/template.enum';
+import {QuestionTemplatesDto} from '../models/question-template-dto.model';
 import {QuestionTemplate} from '../models/question-template.model';
-import {
-  TemplateQuestionRepository as TemplateQuestionSequelizeRepo,
-  QuestionTemplateRepository as QuestionTemplateSequelizeRepo,
-} from '../repositories/sequelize';
+import {TemplateQuestion} from '../models/template-questions.model';
+import {QuestionTemplateRepository} from '../repositories/question-template.repository';
+import {TemplateQuestionRepository} from '../repositories/template-questions.repository';
 
 const defaultLeadingZero = 6;
 const orderByCreatedOn = 'created_on DESC';
@@ -20,13 +16,9 @@ const orderByCreatedOn = 'created_on DESC';
 export class QuestionTemplateService {
   constructor(
     @repository(QuestionTemplateRepository)
-    public questionTemplateRepository:
-      | QuestionTemplateRepository
-      | QuestionTemplateSequelizeRepo,
+    public questionTemplateRepository: QuestionTemplateRepository,
     @repository(TemplateQuestionRepository)
-    public templateQuestionRepository:
-      | TemplateQuestionRepository
-      | TemplateQuestionSequelizeRepo,
+    public templateQuestionRepository: TemplateQuestionRepository,
   ) {}
 
   async createTemplate(questionTemplate: Omit<QuestionTemplatesDto, 'id'>) {

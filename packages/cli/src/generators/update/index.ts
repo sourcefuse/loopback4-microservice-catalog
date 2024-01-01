@@ -2,22 +2,27 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {AnyObject} from '../../types';
-import BaseUpdateGenerator from '../../update-generator';
+import fs, {Dirent} from 'fs';
 import {join} from 'path';
-import fs, {readdirSync} from 'fs';
-import {PackageDependencies, UpdateOptions} from './types/types';
+import {AnyObject} from '../../types';
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import BaseUpdateGenerator from '../../update-generator';
 import {JSON_SPACING} from '../../utils';
+import {PackageDependencies, UpdateOptions} from './types/types';
 const chalk = require('chalk'); //NOSONAR
 const fse = require('fs-extra'); //NOSONAR
 
 const configJsonFile = require('../../../package.json');
 const tempDeps = configJsonFile.config.templateDependencies;
+const {promisify} = require('util');
 
 const packageJsonFile = 'package.json';
 
 export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> {
-  constructor(public args: string[], public opts: UpdateOptions) {
+  constructor(
+    public args: string[],
+    public opts: UpdateOptions,
+  ) {
     super(args, opts);
   }
 
@@ -33,7 +38,7 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
 
     for (const type of types) {
       this.destinationRoot(monoRepo);
-      const folders = this._getDirectories(
+      const folders = await this._getDirectories(
         this.destinationRoot(join('.', type)),
       );
       for (const folder of folders) {
@@ -55,15 +60,23 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
       }
     }
 
-    // lerna bootstrap at the end
     this.destinationRoot(monoRepo);
-    await this.spawnCommandSync('lerna', ['bootstrap', '--force-local']);
   }
 
-  private _getDirectories(folderPath: string) {
-    return readdirSync(folderPath, {withFileTypes: true})
-      .filter(dirent => dirent.isDirectory())
-      .map(dirent => dirent.name);
+  private async _getDirectories(folderPath: string) {
+    try {
+      const dirents: Dirent[] = await fs.promises.readdir(folderPath, {
+        withFileTypes: true,
+      });
+
+      const directories: string[] = dirents
+        .filter(dirent => dirent.isDirectory())
+        .map(dirent => dirent.name);
+
+      return directories;
+    } catch (error) {
+      return [];
+    }
   }
 
   private async _updateSourceloopDep() {
@@ -72,9 +85,12 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
     if (incompatibleDeps) {
       await this._updateDependencies();
     }
-    const currDir = this.destinationPath();
+    const BACK_TO_ROOT = join('..', '..');
+    const currDir = this.destinationPath(
+      join(this.destinationPath(), BACK_TO_ROOT),
+    );
     if (currDir.includes('/packages/')) {
-      await this.spawnCommandSync('npm', ['i']);
+      await this.spawnCommand('npm', ['i']);
     }
   }
 
@@ -210,14 +226,22 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
     this.log(
       chalk.red('Upgrading dependencies may break the current project.'),
     );
-    fs.writeFileSync(
+    const writeFileAsync = promisify(fs.writeFile);
+    await writeFileAsync(
       this.destinationPath(packageJsonFile),
       JSON.stringify(packageJs, undefined, JSON_SPACING),
       {flag: 'w+'},
     );
     //deleting the node modules and lock file
-    fse.removeSync(this.destinationPath('node_modules'));
-    fse.removeSync(join(this.destinationPath(), 'package-lock.json'));
+    fse.remove(this.destinationPath('node_modules'), (err: Error) => {
+      //nothing
+    });
+    fse.remove(
+      join(this.destinationPath(), 'package-lock.json'),
+      (err: Error) => {
+        //nothing
+      },
+    );
   }
 
   async end() {

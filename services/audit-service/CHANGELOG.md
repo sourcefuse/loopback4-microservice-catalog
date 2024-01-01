@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>9.0.1 (2023-12-22)</small>
+
+* chore(deps): fix the synk issues (#1853) ([be24dfb](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/be24dfb)), closes [#1853](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1853) [#1851](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1851)
+
+
+
+
+
+## 9.0.0 (2023-12-07)
+
+* feat(deps): update to latest loopback 4 authentication version (#1826) ([5b827fc](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5b827fc)), closes [#1826](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1826) [#1825](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1825) [#1825](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1825)
+
+
+### BREAKING CHANGE
+
+* breaking version update
+* optional dependencies need to bind required providers
+
+
+
+
+## 8.1.0 (2023-12-07)
+
+* feat(audit-service): add sequelize support in audit service (#1824) ([0f04e71](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0f04e71)), closes [#1824](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1824) [#1350](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1350)
+
+
+
+
+
+## 8.0.0 (2023-11-09)
+
+* fix(audit-service): enable audit service to archive zero entries without error  (#1791) ([891b43f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/891b43f)), closes [#1791](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1791) [#1762](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1762)
+* feat(chore): migrate to use npm workspaces (#1684) ([72d8f6e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/72d8f6e)), closes [#1684](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1684) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673)
+
+
+### BREAKING CHANGE
+
+* lerna bootstrap command will not be supported
+* lerna bootstrap command will not be supported
+* lerna bootstrap command will not be supported
+* lerna bootstrap will not be supported
+* lerna bootstrap will not be supported
+
+
+
+
 ## <small>7.2.3 (2023-10-05)</small>
 
 * refactor(all-services): remove redundant `posttest` script (#1677) ([4b252cf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4b252cf)), closes [#1677](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1677) [#1657](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1657)

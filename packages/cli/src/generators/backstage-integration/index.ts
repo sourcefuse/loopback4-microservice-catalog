@@ -2,8 +2,8 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {BaseGenerator} from '../../base-generator';
-import {BackstageIntegrationOptions} from '../../types';
+import { BaseGenerator } from '../../base-generator';
+import { BackstageIntegrationOptions } from '../../types';
 export default class BackstageIntegrationGenerator extends BaseGenerator<BackstageIntegrationOptions> {
   cwd?: string;
   constructor(public args: string[], public opts: BackstageIntegrationOptions) {
@@ -11,6 +11,6 @@ export default class BackstageIntegrationGenerator extends BaseGenerator<Backsta
   }
 
   async writing() {
-    this.copyTemplates();
+    await this.copyTemplateAsync();
   }
 }

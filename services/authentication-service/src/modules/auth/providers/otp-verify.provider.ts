@@ -5,17 +5,16 @@
 import {inject, Provider} from '@loopback/context';
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
+import {ILogger, LOGGER} from '@sourceloop/core';
 import {
   AuthenticationBindings,
   AuthErrorKeys,
   VerifyFunction,
 } from 'loopback4-authentication';
-import {OtpCacheRepository, UserRepository} from '../../../repositories';
-import {ILogger, LOGGER} from '@sourceloop/core';
 import {totp} from 'otplib';
-import {OtpService} from '../../../services';
 import {AuthClient} from '../../../models';
-
+import {OtpCacheRepository, UserRepository} from '../../../repositories';
+import {OtpService} from '../../../services';
 export class OtpVerifyProvider implements Provider<VerifyFunction.OtpAuthFn> {
   constructor(
     @repository(UserRepository)

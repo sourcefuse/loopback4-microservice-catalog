@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>7.0.2 (2023-12-22)</small>
+
+* chore(deps): fix the synk high issues (#1845) ([0a536b4](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0a536b4)), closes [#1845](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1845) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* chore(deps): fix the synk issues (#1853) ([be24dfb](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/be24dfb)), closes [#1853](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1853) [#1851](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1851)
+
+
+
+
+
+## <small>7.0.1 (2023-12-07)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-multitenant-example
+
+
+
+
+
+## 7.0.0 (2023-12-07)
+
+* feat(chore): migrate to use npm workspaces (#1684) ([72d8f6e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/72d8f6e)), closes [#1684](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1684) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673) [#1673](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1673)
+
+
+### BREAKING CHANGE
+
+* lerna bootstrap command will not be supported
+* lerna bootstrap command will not be supported
+* lerna bootstrap command will not be supported
+* lerna bootstrap will not be supported
+* lerna bootstrap will not be supported
+
+
+
+
 ## <small>6.0.23 (2023-10-19)</small>
 
 **Note:** Version bump only for package @sourceloop/auth-multitenant-example

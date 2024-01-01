@@ -36,37 +36,34 @@ Our monorepo comes with few preconfigured
 
 1. Open root folder of this repo in VS Code.
 2. Install lerna globally `npm i -g lerna`
-3. Run `lerna bootstrap`
-4. Run `npm i`
-5. Create .env files for all the micro service packages.
-6. Run DB migrations using `lerna run db:migrate`.
-7. Build all microservices in one go - `lerna run build`.
-8. Run `lerna run start` to start all the micro services in one go.
+3. Run `npm i`
+4. Create .env files for all the micro service packages.
+5. Run DB migrations using `lerna run db:migrate`.
+6. Build all microservices in one go run from root folder - `npm run build`.
 
 ## Building the project
 
 Whenever you pull updates from GitHub or switch between feature branches, make
 sure to updated installed dependencies in all monorepo packages. The following
-command will install npm dependencies for all packages and create symbolic links
-for intra-dependencies:
+command will install npm dependencies for all packages. After updating to npm workspaces, npm will manage all the symbolic links and inter-dependencies.
 
 ```sh
-lerna bootstrap
+npm install
 ```
-
-As part of `lerna bootstrap`, TypeScript project references are automatically
-updated for each package with in the monorepo.
 
 The next step is to compile all packages from TypeScript to JavaScript:
+Run the following command from root folder
 
 ```sh
-lerna run build
+npm run build
 ```
+
+The --if-present flag is added in the build script so npm will ignore workspaces missing target script
 
 To force a clean build:
 
 ```sh
-lerna clean && lerna run build
+rm -rf node_modules/ && npm install
 ```
 
 Please note that `npm run clean` removes `dist`, `*.tsbuildinfo`, and other
@@ -115,16 +112,16 @@ lerna run lint:fix
 Use the following command to add or update dependency `dep` in a package `name`:
 
 ```sh
-$ npx lerna add --scope ${name} ${dep}
+npm install ${dep} -w ${name}
 ```
 
 For example:
 
 ```sh
-$ npx lerna add --scope @loopback/rest debug
+$ npm install @loopback/rest -w @sourceloop/core
 ```
 
-See [lerna add](https://github.com/lerna/lerna/blob/master/commands/add#readme)
+See [Add dependencies](https://docs.npmjs.com/cli/v8/using-npm/workspaces#adding-dependencies-to-a-workspace)
 for more details.
 
 ## File naming convention
@@ -223,7 +220,7 @@ src/__tests__/unit/application.unit.ts
 9. **Add Sourceloop core** - Add @sourceloop/core as dependency to the module
 
    ```sh
-   lerna add @sourceloop/core --scope={service name}
+   npm istall @sourceloop/core -w ${service_name}
    ```
 
 In application.ts,
@@ -240,8 +237,8 @@ this.sequence(ServiceSequence);
 10. **Bearer Verifier** - Add bearer verifier to your service
 
 ```sh
-lerna add loopback4-authentication --scope={service name}
-lerna add loopback4-authorization --scope={service name}
+npm istall loopback4-authentication -w ${service_name}
+npm istall loopback4-authorization -w ${service_name}
 ```
 
 Add below to application.ts
@@ -294,8 +291,8 @@ Use BearerVerifierType.facade for facades.
     Install nyc for coverage reporting
 
     ```sh
-      lerna add -D @istanbuljs/nyc-config-typescript --scope={service name}
-      lerna add -D nyc --scope={service name}
+      npm istall @istanbuljs/nyc-config-typescript -w ${service_name}
+      npm istall nyc -w ${service_name}
     ```
 
     then add these in scripts of package.json

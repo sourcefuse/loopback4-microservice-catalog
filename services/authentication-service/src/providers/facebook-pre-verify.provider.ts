@@ -4,6 +4,7 @@
 // https://opensource.org/licenses/MIT
 import {Provider} from '@loopback/context';
 import {IAuthUser} from 'loopback4-authentication';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import * as FacebookStrategy from 'passport-facebook';
 import {FacebookPreVerifyFn} from './types';
 

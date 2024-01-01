@@ -2,14 +2,19 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {AnyObject, ExtensionOptions} from '../../types';
-import BaseExtensionGenerator from '../../extension-generator';
-import {join} from 'path';
-import {JSON_SPACING} from '../../utils';
 import fs from 'fs';
+import {join} from 'path';
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import BaseExtensionGenerator from '../../extension-generator';
+import {AnyObject, ExtensionOptions} from '../../types';
+import {JSON_SPACING} from '../../utils';
+const {promisify} = require('util');
 
 export default class ExtensionGenerator extends BaseExtensionGenerator<ExtensionOptions> {
-  constructor(public args: string[], public opts: ExtensionOptions) {
+  constructor(
+    public args: string[],
+    public opts: ExtensionOptions,
+  ) {
     super(args, opts);
   }
 
@@ -48,17 +53,19 @@ export default class ExtensionGenerator extends BaseExtensionGenerator<Extension
     return super.scaffold();
   }
 
-  install() {
+  async install() {
     if (!this.shouldExit()) {
       const packageJsonFile = join(this.destinationPath(), 'package.json');
       const packageJson = this.fs.readJSON(packageJsonFile) as AnyObject;
       packageJson.name = `@local/${packageJson.name}`;
       packageJson.license = 'MIT';
       const scripts = packageJson.scripts;
-      scripts.preinstall = 'npm i @loopback/build --no-save && npm run build';
+      scripts.postinstall = 'npm run build';
       scripts.prune = 'npm prune --production';
       packageJson.scripts = scripts;
-      fs.writeFileSync(
+      const writeFileAsync = promisify(fs.writeFile);
+
+      await writeFileAsync(
         packageJsonFile,
         JSON.stringify(packageJson, undefined, JSON_SPACING),
       );

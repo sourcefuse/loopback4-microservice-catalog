@@ -5,31 +5,27 @@
 import {inject} from '@loopback/context';
 
 import {
+  get,
+  getModelSchemaRef,
   param,
   patch,
   post,
   requestBody,
-  get,
-  getModelSchemaRef,
 } from '@loopback/rest';
 import {authorize} from 'loopback4-authorization';
 import {MeetingOptions, SessionOptions, SessionResponse} from '../types';
 
-import {authenticate, STRATEGY} from 'loopback4-authentication';
-import {PermissionKeys} from '../enums/permission-keys.enum';
 import {
-  STATUS_CODE,
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
 } from '@sourceloop/core';
-
-import {VideoChatSession, SessionAttendees} from '../models';
-
-import {VonageSessionWebhookPayload} from '../providers/vonage';
-
-import {ChatSessionService} from '../services/chat-session.service';
+import {STRATEGY, authenticate} from 'loopback4-authentication';
+import {PermissionKeys} from '../enums/permission-keys.enum';
 import {ServiceBindings} from '../keys';
-
+import {SessionAttendees, VideoChatSession} from '../models';
+import {VonageSessionWebhookPayload} from '../providers/vonage';
+import {ChatSessionService} from '../services/chat-session.service';
 export class VideoChatSessionController {
   constructor(
     @inject(ServiceBindings.SessionChatService)
