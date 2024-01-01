@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>6.0.3 (2023-12-19)</small>
+
+* fix(deps): update the cli template dependencies to latest (#1850) ([fad5e74](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/fad5e74)), closes [#1850](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1850) [#1849](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1849)
+* chore(all-services): fix sonar code smell overall (#1841) ([0fe4492](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0fe4492)), closes [#1841](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1841) [#1840](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1840)
+
+
+
+
+
 ## <small>6.0.2 (2023-12-08)</small>
 
 * fix(cli): update the migration scripts and docker build (#1835) ([b23d969](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b23d969)), closes [#1835](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1835) [#1832](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1832) [#1834](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1834) [#1834](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1834)

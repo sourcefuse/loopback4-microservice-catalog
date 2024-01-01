@@ -26,6 +26,11 @@ export class WorkflowServiceApplication extends BootMixin(
         extensions: ['.controller.js'],
         nested: true,
       },
+      repositories: {
+        dirs: ['repos'],
+        extensions: ['.repos.js'],
+        nested: true,
+      },
     };
   }
 }

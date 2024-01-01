@@ -4,19 +4,19 @@ import {
   CountSchema,
   Filter,
   FilterExcludingWhere,
-  repository,
   Where,
+  repository,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  HttpErrors,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
-  del,
+  post,
   requestBody,
   response,
-  HttpErrors,
 } from '@loopback/rest';
 import {
   CONTENT_TYPE,
@@ -25,30 +25,24 @@ import {
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
-import {authenticate, STRATEGY} from 'loopback4-authentication';
+import {STRATEGY, authenticate} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-import {TemplateQuestionRepository} from '../repositories/template-questions.repository';
-import {QuestionRepository} from '../repositories';
-import {QuestionTemplateService} from '../services';
+import {AppErrorCodes} from '../enum/error-codes.enum';
+import {ErrorKeys} from '../enum/error-keys.enum';
 import {PermissionKey} from '../enum/permission-key.enum';
 import {TemplateQuestion} from '../models/template-questions.model';
-import {ErrorKeys} from '../enum/error-keys.enum';
-import {AppErrorCodes} from '../enum/error-codes.enum';
-import {
-  TemplateQuestionRepository as TemplateQuestionSequelizeRepo,
-  QuestionRepository as QuestionSequelizeRepo,
-} from '../repositories/sequelize';
+import {QuestionRepository} from '../repositories';
+import {TemplateQuestionRepository} from '../repositories/template-questions.repository';
+import {QuestionTemplateService} from '../services';
 const basePath = '/question-template/{templateId}/template-questions';
 const orderByCreatedOn = 'created_on DESC';
 
 export class TemplateQuestionController {
   constructor(
     @repository(TemplateQuestionRepository)
-    public templateQuestionRepository:
-      | TemplateQuestionRepository
-      | TemplateQuestionSequelizeRepo,
+    public templateQuestionRepository: TemplateQuestionRepository,
     @repository(QuestionRepository)
-    public questionRepository: QuestionRepository | QuestionSequelizeRepo,
+    public questionRepository: QuestionRepository,
     @service(QuestionTemplateService)
     public questionTemplateService: QuestionTemplateService,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,

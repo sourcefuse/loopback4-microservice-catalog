@@ -1,26 +1,20 @@
-import {injectable, BindingScope, inject} from '@loopback/context';
+import {BindingScope, inject, injectable} from '@loopback/context';
 import {repository} from '@loopback/repository';
-import {LOGGER, ILogger} from '@sourceloop/core';
+import {ILogger, LOGGER} from '@sourceloop/core';
 import {sign} from 'jsonwebtoken';
 import moment from 'moment';
+import {PermissionKey} from '../enum';
 import {SurveyResponder} from '../models';
 import {SurveyCycleRepository, SurveyRepository} from '../repositories';
-import {PermissionKey} from '../enum';
-import {
-  SurveyCycleRepository as SurveyCycleSequelizeRepo,
-  SurveyRepository as SurveySequelizeRepo,
-} from '../repositories/sequelize';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class SurveyResponderService {
   constructor(
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @repository(SurveyCycleRepository)
-    protected surveyCycleRepository:
-      | SurveyCycleRepository
-      | SurveyCycleSequelizeRepo,
+    protected surveyCycleRepository: SurveyCycleRepository,
     @repository(SurveyRepository)
-    protected surveyRepository: SurveyRepository | SurveySequelizeRepo,
+    protected surveyRepository: SurveyRepository,
   ) {}
 
   async getAccessToken(surveyResponders: SurveyResponder[], surveyId: string) {

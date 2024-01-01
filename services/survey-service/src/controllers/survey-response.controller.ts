@@ -1,3 +1,4 @@
+import {inject, service} from '@loopback/core';
 import {
   Count,
   CountSchema,
@@ -6,45 +7,38 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  param,
   get,
   getModelSchemaRef,
+  HttpErrors,
+  param,
+  post,
+  Request,
   requestBody,
   response,
-  post,
-  HttpErrors,
   RestBindings,
-  Request,
 } from '@loopback/rest';
 import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
+import {JwtPayload, Secret, verify} from 'jsonwebtoken';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
+import {ErrorKeys} from '../enum';
+import {PermissionKey} from '../enum/permission-key.enum';
 import {SurveyResponse, SurveyResponseDto} from '../models';
+import {SurveyRepository} from '../repositories';
 import {SurveyResponseRepository} from '../repositories/survey-response.repository';
 import {SurveyResponseService} from '../services/survey-response.service';
-import {PermissionKey} from '../enum/permission-key.enum';
-import {inject, service} from '@loopback/core';
-import {Secret, verify, JwtPayload} from 'jsonwebtoken';
-import {SurveyRepository} from '../repositories';
-import {ErrorKeys} from '../enum';
-import {
-  SurveyRepository as SurveySequelizeRepo,
-  SurveyResponseRepository as SurveyResponseSequelizeRepo,
-} from '../repositories/sequelize';
 const basePath = '/surveys/{surveyId}/survey-responses';
 
 export class SurveyResponseController {
   constructor(
     @repository(SurveyResponseRepository)
-    public surveyResponseRepository:
-      | SurveyResponseRepository
-      | SurveyResponseSequelizeRepo,
+    public surveyResponseRepository: SurveyResponseRepository,
     @service(SurveyResponseService)
     public surveyResponseService: SurveyResponseService,
     @inject(RestBindings.Http.REQUEST)
     public readonly request: Request,
     @repository(SurveyRepository)
-    public surveyRepository: SurveyRepository | SurveySequelizeRepo,
+    public surveyRepository: SurveyRepository,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {
