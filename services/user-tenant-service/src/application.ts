@@ -28,6 +28,11 @@ export class UserTenantServiceApplication extends BootMixin(
         extensions: ['.controller.js'],
         nested: true,
       },
+      repositories: {
+        dirs: ['repository'],
+        extensions: ['.repository.js'],
+        nested: true,
+      },
     };
   }
 }

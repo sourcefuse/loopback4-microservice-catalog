@@ -8,38 +8,34 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  HttpErrors,
+  param,
   patch,
-  del,
+  post,
   requestBody,
   response,
-  HttpErrors,
 } from '@loopback/rest';
 import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-import {OptionsRepository} from '../repositories/options.repository';
-import {QuestionRepository} from '../repositories';
-import {QuestionHelperService} from '../services';
 import {PermissionKey} from '../enum/permission-key.enum';
 import {Options} from '../models';
 import {BulkDeleteDto} from '../models/bulk-delete-dto.model';
+import {QuestionRepository} from '../repositories';
+import {OptionsRepository} from '../repositories/options.repository';
+import {QuestionHelperService} from '../services';
 import {QuestionOptionService} from '../services/question-option.service';
-import {
-  OptionsRepository as OptionsSequelizeRepo,
-  QuestionRepository as QuestionSequelizeRepo,
-} from '../repositories/sequelize';
 const basePath = '/question/{questionId}/options';
 
 export class OptionController {
   constructor(
     @repository(OptionsRepository)
-    public optionsRepository: OptionsRepository | OptionsSequelizeRepo,
+    public optionsRepository: OptionsRepository,
     @repository(QuestionRepository)
-    public questionRepository: QuestionRepository | QuestionSequelizeRepo,
+    public questionRepository: QuestionRepository,
     @service(QuestionHelperService)
     public questionHelperService: QuestionHelperService,
     @service(QuestionOptionService)

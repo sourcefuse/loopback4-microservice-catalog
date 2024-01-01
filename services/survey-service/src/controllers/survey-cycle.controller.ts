@@ -8,28 +8,24 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  param,
+  del,
   get,
   getModelSchemaRef,
+  HttpErrors,
+  param,
   patch,
-  del,
+  post,
   requestBody,
   response,
-  post,
-  HttpErrors,
 } from '@loopback/rest';
 import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../enum/permission-key.enum';
 import {SurveyCycle} from '../models';
+import {SurveyRepository} from '../repositories';
 import {SurveyCycleRepository} from '../repositories/survey-cycle.repository';
 import {SurveyService} from '../services/survey.service';
-import {SurveyRepository} from '../repositories';
-import {
-  SurveyCycleRepository as SurveyCycleSequelizeRepo,
-  SurveyRepository as SurveySequelizeRepo,
-} from '../repositories/sequelize';
 
 const basePath = '/surveys/{surveyId}/survey-cycles';
 const orderByCreatedOn = 'created_on DESC';
@@ -37,11 +33,9 @@ const orderByCreatedOn = 'created_on DESC';
 export class SurveyCycleController {
   constructor(
     @repository(SurveyCycleRepository)
-    public surveyCycleRepository:
-      | SurveyCycleRepository
-      | SurveyCycleSequelizeRepo,
+    public surveyCycleRepository: SurveyCycleRepository,
     @repository(SurveyRepository)
-    public surveyRepository: SurveyRepository | SurveySequelizeRepo,
+    public surveyRepository: SurveyRepository,
     @service(SurveyService)
     public surveyService: SurveyService,
   ) {}

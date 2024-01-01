@@ -4,44 +4,37 @@ import {
   CountSchema,
   Filter,
   FilterExcludingWhere,
-  repository,
   Where,
+  repository,
 } from '@loopback/repository';
 import {
-  param,
+  HttpErrors,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
-  del,
+  post,
   requestBody,
   response,
-  post,
-  HttpErrors,
 } from '@loopback/rest';
 import {CONTENT_TYPE, ILogger, LOGGER, STATUS_CODE} from '@sourceloop/core';
-import {authenticate, STRATEGY} from 'loopback4-authentication';
+import {STRATEGY, authenticate} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
+import {PermissionKey} from '../enum/permission-key.enum';
 import {Section} from '../models';
 import {SectionRepository} from '../repositories/section.repository';
 import {SurveyQuestionRepository} from '../repositories/survey-question.repository';
 import {SectionService} from '../services/section.service';
-import {PermissionKey} from '../enum/permission-key.enum';
-import {
-  SectionRepository as SectionSequelizeRepo,
-  SurveyQuestionRepository as SurveyQuestionSequelizeRepo,
-} from '../repositories/sequelize';
 const basePath = '/surveys/{surveyId}/sections';
 const orderByCreatedOn = 'created_on DESC';
 
 export class SectionController {
   constructor(
     @repository(SectionRepository)
-    public sectionRepository: SectionRepository | SectionSequelizeRepo,
+    public sectionRepository: SectionRepository,
     @repository(SurveyQuestionRepository)
-    public surveyQuestionRepository:
-      | SurveyQuestionRepository
-      | SurveyQuestionSequelizeRepo,
-
+    public surveyQuestionRepository: SurveyQuestionRepository,
     @service(SectionService)
     public sectionService: SectionService,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,

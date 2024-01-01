@@ -11,20 +11,19 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
 } from '@loopback/rest';
 import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
 import {Orders} from '../models';
 import {OrdersRepository} from '../repositories';
 const orderIdPath = '/orders/{id}';
-
 export class OrdersController {
   constructor(
     @repository(OrdersRepository)
