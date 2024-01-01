@@ -18,16 +18,13 @@ import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../enum/permission-key.enum';
 import {SurveyResponseDetail} from '../models/survey-response-detail.model';
-import {SurveyResponseDetailRepository as SurveyResponseDetailSequelizeRepo} from '../repositories/sequelize';
 import {SurveyResponseDetailRepository} from '../repositories/survey-response-detail.repository';
 const basePath = '/survey-cycles/{surveyCycleId}/survey-response-detail-view';
 
 export class SurveyResponseDetailViewController {
   constructor(
     @repository(SurveyResponseDetailRepository)
-    public surveyResponseDetailRepository:
-      | SurveyResponseDetailRepository
-      | SurveyResponseDetailSequelizeRepo,
+    public surveyResponseDetailRepository: SurveyResponseDetailRepository,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {

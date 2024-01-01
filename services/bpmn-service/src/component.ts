@@ -38,6 +38,10 @@ import {ExecutionInputValidationProvider} from './providers/execution-input-vali
 import {WorkerRegisterFnProvider} from './providers/register-worker.service';
 import {WorkerImplementationProvider} from './providers/worker-implementation.provider';
 import {WorkflowRepository, WorkflowVersionRepository} from './repositories';
+import {
+  WorkflowRepository as WorkflowSequelizeRepository,
+  WorkflowVersionRepository as WorkflowVersionSequelizeRepository,
+} from './repositories/sequelize';
 import {IWorkflowServiceConfig} from './types';
 
 export class WorkflowServiceComponent implements Component {
@@ -70,9 +74,14 @@ export class WorkflowServiceComponent implements Component {
       // Mount default sequence if needed
       this.setupSequence();
     }
-
-    this.repositories = [WorkflowRepository, WorkflowVersionRepository];
-
+    if (this.workflowSvcConfig?.useSequelize) {
+      this.repositories = [
+        WorkflowSequelizeRepository,
+        WorkflowVersionSequelizeRepository,
+      ];
+    } else {
+      this.repositories = [WorkflowRepository, WorkflowVersionRepository];
+    }
     this.models = [Workflow];
 
     this.providers = {

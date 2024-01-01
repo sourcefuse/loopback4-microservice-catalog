@@ -82,6 +82,21 @@ import {
   UserTenantRepository,
   UserViewRepository,
 } from './repositories';
+import {
+  AuthClientRepository as AuthClientSequelizeRepository,
+  GroupRepository as GroupSequelizeRepository,
+  RoleRepository as RoleSequelizeRepository,
+  TenantConfigRepository as TenantConfigSequelizeRepository,
+  TenantRepository as TenantSequelizeRepository,
+  UserCredentialsRepository as UserCredentialsSequelizeRepository,
+  UserGroupRepository as UserGroupSequelizeRepository,
+  UserInvitationRepository as UserInvitationSequelizeRepository,
+  UserLevelPermissionRepository as UserLevelPermissionSequelizeRepository,
+  UserRepository as UserSequelizeRepository,
+  UserTenantPrefsRepository as UserTenantPrefsSequelizeRepository,
+  UserTenantRepository as UserTenantSequelizeRepository,
+  UserViewRepository as UserViewSequelizeRepository,
+} from './repositories/sequelize';
 import {UserGroupService, UserOperationsService} from './services';
 import {IUserServiceConfig} from './types';
 
@@ -161,21 +176,39 @@ export class UserTenantServiceComponent implements Component {
       UserTenantUserGroupController,
       UserTenantUserLevelPermissionController,
     ];
-    this.repositories = [
-      RoleRepository,
-      UserTenantRepository,
-      TenantConfigRepository,
-      TenantRepository,
-      UserRepository,
-      UserCredentialsRepository,
-      UserViewRepository,
-      GroupRepository,
-      UserGroupRepository,
-      UserInvitationRepository,
-      UserTenantPrefsRepository,
-      UserLevelPermissionRepository,
-      AuthClientRepository,
-    ];
+    if (this.config?.useSequelize) {
+      this.repositories = [
+        RoleSequelizeRepository,
+        UserTenantSequelizeRepository,
+        TenantConfigSequelizeRepository,
+        TenantSequelizeRepository,
+        UserSequelizeRepository,
+        UserCredentialsSequelizeRepository,
+        UserViewSequelizeRepository,
+        GroupSequelizeRepository,
+        UserGroupSequelizeRepository,
+        UserInvitationSequelizeRepository,
+        UserTenantPrefsSequelizeRepository,
+        UserLevelPermissionSequelizeRepository,
+        AuthClientSequelizeRepository,
+      ];
+    } else {
+      this.repositories = [
+        RoleRepository,
+        UserTenantRepository,
+        TenantConfigRepository,
+        TenantRepository,
+        UserRepository,
+        UserCredentialsRepository,
+        UserViewRepository,
+        GroupRepository,
+        UserGroupRepository,
+        UserInvitationRepository,
+        UserTenantPrefsRepository,
+        UserLevelPermissionRepository,
+        AuthClientRepository,
+      ];
+    }
   }
   setupSequence() {
     this.application.sequence(ServiceSequence);

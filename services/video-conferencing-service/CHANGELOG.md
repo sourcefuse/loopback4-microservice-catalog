@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>8.0.1 (2023-12-22)</small>
+
+**Note:** Version bump only for package @sourceloop/video-conferencing-service
+
+
+
+
+
 ## 8.0.0 (2023-12-19)
 
 * fix(deps): upgrade twilio to latest ([c3e7fe9](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c3e7fe9)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

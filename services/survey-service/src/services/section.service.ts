@@ -1,33 +1,21 @@
-import {
-  injectable,
-  /* inject, */
-  BindingScope,
-  inject,
-} from '@loopback/core';
+import {BindingScope, inject, injectable} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {ILogger, LOGGER} from '@sourceloop/core';
+import {SurveyStatus} from '../enum';
+import {ErrorKeys} from '../enum/error-keys.enum';
 import {SectionRepository} from '../repositories/section.repository';
 import {SurveyQuestionRepository} from '../repositories/survey-question.repository';
 import {SurveyRepository} from '../repositories/survey.repository';
-import {ErrorKeys} from '../enum/error-keys.enum';
-import {SurveyStatus} from '../enum';
-import {
-  SectionRepository as SectionSequelizeRepo,
-  SurveyQuestionRepository as SurveyQuestionSequelizeRepo,
-  SurveyRepository as SurveySequelizeRepo,
-} from '../repositories/sequelize';
 @injectable({scope: BindingScope.TRANSIENT})
 export class SectionService {
   constructor(
     @repository(SectionRepository)
-    public sectionRepository: SectionRepository | SectionSequelizeRepo,
+    public sectionRepository: SectionRepository,
     @repository(SurveyQuestionRepository)
-    public surveyQuestionRepository:
-      | SurveyQuestionRepository
-      | SurveyQuestionSequelizeRepo,
+    public surveyQuestionRepository: SurveyQuestionRepository,
     @repository(SurveyRepository)
-    public surveyRepository: SurveyRepository | SurveySequelizeRepo,
+    public surveyRepository: SurveyRepository,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
   ) {}
 

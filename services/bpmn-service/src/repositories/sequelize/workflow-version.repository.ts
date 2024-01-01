@@ -1,0 +1,41 @@
+﻿// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+import {Getter, inject} from '@loopback/core';
+import {BelongsToAccessor, repository} from '@loopback/repository';
+import {
+  SequelizeCrudRepository,
+  SequelizeDataSource,
+} from '@loopback/sequelize';
+import {
+  Workflow,
+  WorkflowVersion,
+  WorkflowVersionRelations,
+} from '../../models';
+import {WorkflowCacheSourceName} from '../../types';
+import {WorkflowRepository} from './workflow.repository';
+
+export class WorkflowVersionRepository extends SequelizeCrudRepository<
+  WorkflowVersion,
+  typeof WorkflowVersion.prototype.id,
+  WorkflowVersionRelations
+> {
+  public readonly workflow: BelongsToAccessor<
+    Workflow,
+    typeof WorkflowVersion.prototype.id
+  >;
+  constructor(
+    @inject(`datasources.${WorkflowCacheSourceName}`)
+    dataSource: SequelizeDataSource,
+    @repository.getter('WorkflowRepository')
+    protected workflowRepositoryGetter: Getter<WorkflowRepository>,
+  ) {
+    super(WorkflowVersion, dataSource);
+    this.workflow = this.createBelongsToAccessorFor(
+      'workflow',
+      workflowRepositoryGetter,
+    );
+    this.registerInclusionResolver('workflow', this.workflow.inclusionResolver);
+  }
+}
