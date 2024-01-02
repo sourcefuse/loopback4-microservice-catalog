@@ -2,12 +2,13 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import { BindingScope, Getter, bind, inject } from '@loopback/core';
+import {BindingScope, Getter, bind, inject} from '@loopback/core';
 import {
+  Count,
   CountSchema,
   Filter,
   Where,
-  repository
+  repository,
 } from '@loopback/repository';
 import {
   HttpErrors,
@@ -26,26 +27,28 @@ import {
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
-import { AuthErrorKeys, STRATEGY, authenticate } from 'loopback4-authentication';
-import { authorize } from 'loopback4-authorization';
-import { INotification, NotificationBindings } from 'loopback4-notifications';
-import { ErrorKeys } from '../enums/error-keys.enum';
-import { PermissionKey } from '../enums/permission-key.enum';
-import { NotifServiceBindings } from '../keys';
+import {AuthErrorKeys, STRATEGY, authenticate} from 'loopback4-authentication';
+import {authorize} from 'loopback4-authorization';
+import {INotification, NotificationBindings} from 'loopback4-notifications';
+import {ErrorKeys} from '../enums/error-keys.enum';
+import {PermissionKey} from '../enums/permission-key.enum';
+import {NotifServiceBindings} from '../keys';
 import {
   Notification,
-  NotificationUser
+  NotificationDto,
+  NotificationSettingsDto,
+  NotificationUser,
 } from '../models';
 import {
   NotificationRepository,
   NotificationUserRepository,
 } from '../repositories';
-import { ProcessNotificationService } from '../services';
-import { INotificationFilterFunc, INotificationUserManager } from '../types';
+import {ProcessNotificationService} from '../services';
+import {INotificationFilterFunc, INotificationUserManager} from '../types';
 const basePath = '/notifications';
 
 const maxBodyLen = parseInt(String(process.env.MAX_LENGTH)) ?? 1000;
-@bind({ scope: BindingScope.TRANSIENT })
+@bind({scope: BindingScope.TRANSIENT})
 export class NotificationController {
   constructor(
     @repository(NotificationRepository)
@@ -60,7 +63,7 @@ export class NotificationController {
     private readonly filterNotification: INotificationFilterFunc,
     @inject('services.ProcessNotificationService')
     private readonly processNotif: ProcessNotificationService,
-  ) { }
+  ) {}
 
   @authenticate(STRATEGY.BEARER)
   @authorize({
@@ -76,7 +79,7 @@ export class NotificationController {
         description:
           'Notification model instance, This API end point will be used to send the notification to the user.',
         content: {
-          [CONTENT_TYPE.JSON]: { schema: getModelSchemaRef(Notification) },
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Notification)},
         },
       },
     },
@@ -272,7 +275,7 @@ export class NotificationController {
       throw new HttpErrors.UnprocessableEntity(ErrorKeys.MandatoryGroupKey);
     }
     const notificationData = await this.notificationRepository.find({
-      where: { id: id, isDraft: true },
+      where: {id: id, isDraft: true},
     });
     if (notificationData.length > 0) {
       let notification = notificationData[0];
@@ -347,7 +350,7 @@ export class NotificationController {
         [CONTENT_TYPE.JSON]: {
           schema: {
             type: 'array',
-            items: getModelSchemaRef(Notification, { exclude: ['id'] }),
+            items: getModelSchemaRef(Notification, {exclude: ['id']}),
           },
         },
       },
@@ -393,7 +396,7 @@ export class NotificationController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Notification model count',
-        content: { [CONTENT_TYPE.JSON]: { schema: CountSchema } },
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
@@ -405,7 +408,7 @@ export class NotificationController {
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({ permissions: ['*'] })
+  @authorize({permissions: ['*']})
   @get(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -414,7 +417,7 @@ export class NotificationController {
           'Array of Notification model instances, To get the notifications',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: { type: 'array', items: getModelSchemaRef(Notification) },
+            schema: {type: 'array', items: getModelSchemaRef(Notification)},
           },
         },
       },
@@ -439,7 +442,7 @@ export class NotificationController {
       [STATUS_CODE.OK]: {
         description: ', to get the notification by ID',
         content: {
-          [CONTENT_TYPE.JSON]: { schema: getModelSchemaRef(Notification) },
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Notification)},
         },
       },
     },
@@ -462,7 +465,7 @@ export class NotificationController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Notification PATCH success count',
-        content: { [CONTENT_TYPE.JSON]: { schema: CountSchema } },
+        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
       },
     },
   })
@@ -470,7 +473,7 @@ export class NotificationController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Notification, { partial: true }),
+          schema: getModelSchemaRef(Notification, {partial: true}),
         },
       },
     })
@@ -503,7 +506,7 @@ export class NotificationController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Notification, { partial: true }),
+          schema: getModelSchemaRef(Notification, {partial: true}),
         },
       },
     })
