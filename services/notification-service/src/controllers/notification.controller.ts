@@ -204,9 +204,8 @@ export class NotificationController {
     })
     notification: Omit<Notification, 'id'>,
   ): Promise<Notification> {
-    const groupKey = notification.groupKey ? true : false;
     if (
-      groupKey &&
+      notification.groupKey &&
       ((notification.receiver && notification.receiver?.to.length > 0) ??
         notification.subject ??
         notification.options?.fromEmail)
