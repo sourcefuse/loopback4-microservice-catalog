@@ -1,15 +1,16 @@
-﻿// Copyright (c) 2023 Sourcefuse Technologies
+// Copyright (c) 2023 Sourcefuse Technologies
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {BindingScope, inject, injectable, Provider} from '@loopback/core';
-import {juggler, Model} from '@loopback/repository';
+import {Model} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
-import {MySqlQueryBuilder, PsqlQueryBuilder} from '../classes';
-import {CONNECTORS, Errors} from '../const';
-import {SearchServiceBindings} from '../keys';
-import {SearchFunctionType, SearchServiceConfig} from '../types';
-import {ModelProviderFn} from './model.provider';
+import {SequelizeDataSource} from '@loopback/sequelize';
+import {MySqlQueryBuilder, PsqlQueryBuilder} from '../../classes';
+import {CONNECTORS, Errors} from '../../const';
+import {SearchServiceBindings} from '../../keys';
+import {SearchFunctionType, SearchServiceConfig} from '../../types';
+import {ModelProviderFn} from '../model.provider';
 
 @injectable({scope: BindingScope.SINGLETON})
 export class SearchProvider<T extends Model>
@@ -19,7 +20,7 @@ export class SearchProvider<T extends Model>
     @inject(SearchServiceBindings.Config)
     private readonly config: SearchServiceConfig<T>,
     @inject(`datasources.${SearchServiceBindings.DATASOURCE_NAME}`)
-    private readonly datasource: juggler.DataSource,
+    private readonly datasource: SequelizeDataSource,
     @inject(SearchServiceBindings.MySQLQueryBuilder)
     private readonly mySQLBuilder: typeof MySqlQueryBuilder,
     @inject(SearchServiceBindings.PostgreSQLQueryBuilder)
@@ -36,11 +37,11 @@ export class SearchProvider<T extends Model>
         throw new HttpErrors.BadRequest(Errors.MISSING_MATCH);
       }
 
-      switch (this.datasource.settings.connector) {
+      switch (this.datasource.config.connector) {
         case CONNECTORS.POSTGRESQL:
           queryBuilder = new this.psqlBuilder<T>(
             search,
-            this.datasource.settings.schema,
+            this.datasource.config.schema,
           );
           break;
         case CONNECTORS.MYSQL:
