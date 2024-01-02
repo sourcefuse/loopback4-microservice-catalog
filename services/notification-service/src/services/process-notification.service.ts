@@ -107,7 +107,7 @@ export class ProcessNotificationService {
     categorizedSubscribers: Subscriber[],
     notifTx: Transaction | null,
   ) {
-    if (!notification.body ?? notification.body === '') {
+    if (!notification.body) {
       //Throw Error if notification body is not present
       throw new HttpErrors.UnprocessableEntity(ErrorKeys.BodyNotFound);
     }
