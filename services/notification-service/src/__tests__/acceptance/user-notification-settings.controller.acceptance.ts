@@ -130,20 +130,6 @@ describe('User Notification Settings Controller', () => {
       .send(userNotificationSettingsToAdd);
   }
 
-  async function addIncorrectUser() {
-    const notificationUserToAdd = {
-      userId: 'incorrect',
-      type: 1,
-      sleepStartTime: currentDate,
-      sleepEndTime: currentDate,
-    };
-
-    return client
-      .post(basePath)
-      .set('authorization', `Bearer ${token}`)
-      .send(notificationUserToAdd);
-  }
-
   async function deleteMockData() {
     await userNotificationSettingsRepo.deleteAll();
   }

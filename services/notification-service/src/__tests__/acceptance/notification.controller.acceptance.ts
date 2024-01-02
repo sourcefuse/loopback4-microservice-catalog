@@ -4,7 +4,7 @@
 // https://opensource.org/licenses/MIT
 import {Client, expect} from '@loopback/testlab';
 import * as jwt from 'jsonwebtoken';
-import {Notification, NotificationDto, NotificationUser} from '../../models';
+import {Notification, NotificationDto} from '../../models';
 import {
   NotificationRepository,
   NotificationUserRepository,
@@ -290,23 +290,6 @@ describe('Notification Controller', () => {
     }
     return client
       .post(`${basePath}/drafts`)
-      .set('authorization', `Bearer ${token}`)
-      .send(notificationToAdd);
-  }
-
-  async function addNotificationUser() {
-    const notificationToAdd = new NotificationUser({
-      id: '1',
-      createdOn: new Date(),
-      type: 1,
-      isDraft: true,
-      sentDate: new Date(),
-      notificationId: 'testNotificationId',
-      userId: testUserEmail,
-    });
-
-    return client
-      .post(`/notification-users`)
       .set('authorization', `Bearer ${token}`)
       .send(notificationToAdd);
   }

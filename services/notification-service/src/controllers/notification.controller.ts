@@ -4,11 +4,10 @@
 // https://opensource.org/licenses/MIT
 import { BindingScope, Getter, bind, inject } from '@loopback/core';
 import {
-  Count,
   CountSchema,
   Filter,
   Where,
-  repository,
+  repository
 } from '@loopback/repository';
 import {
   HttpErrors,
@@ -383,7 +382,6 @@ export class NotificationController {
       return [];
     }
   }
-
   @authenticate(STRATEGY.BEARER)
   @authorize({
     permissions: [
