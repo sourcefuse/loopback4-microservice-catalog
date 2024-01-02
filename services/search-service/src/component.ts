@@ -40,10 +40,15 @@ import {SearchServiceBindings} from './keys';
 import {SearchQuery, SearchResult} from './models';
 import {RecentSearchRepository} from './repositories/recent-search.repository';
 import {SearchQueryRepository} from './repositories/search-query.repository';
+import {RecentSearchRepository as RecentSearchSequelizeRepository} from './repositories/sequelize/recent-search.repository';
+import {SearchQueryRepository as SearchQuerySequelizeRepository} from './repositories/sequelize/search-query.repository';
 import {SearchFilterProvider, SearchProvider} from './services';
+import {
+  SearchModelProvider,
+  SearchProvider as SearchSequelizeProvider,
+} from './services/sequelize';
 import {SearchServiceConfig} from './types';
 import {defineModelClass} from './utils';
-
 export class SearchServiceComponent<T extends Model> implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
@@ -64,11 +69,24 @@ export class SearchServiceComponent<T extends Model> implements Component {
     }
 
     this.models = [SearchQuery];
-
-    this.providers = {
-      [SearchServiceBindings.SearchFunction.key]: SearchProvider,
-      [SearchServiceBindings.SearchFilterFunction.key]: SearchFilterProvider,
-    };
+    if (this.config?.useSequelize) {
+      this.providers = {
+        [SearchServiceBindings.SearchFunction.key]: SearchSequelizeProvider,
+        [SearchServiceBindings.SearchFilterFunction.key]: SearchFilterProvider,
+        [SearchServiceBindings.modelProvider.key]: SearchModelProvider,
+      };
+      this.repositories = [
+        RecentSearchSequelizeRepository,
+        SearchQuerySequelizeRepository,
+      ];
+    } else {
+      this.providers = {
+        [SearchServiceBindings.SearchFunction.key]: SearchProvider,
+        [SearchServiceBindings.SearchFilterFunction.key]: SearchFilterProvider,
+        [SearchServiceBindings.modelProvider.key]: SearchModelProvider,
+      };
+      this.repositories = [RecentSearchRepository, SearchQueryRepository];
+    }
 
     this.application
       .bind(SearchServiceBindings.MySQLQueryBuilder)
@@ -87,13 +105,7 @@ export class SearchServiceComponent<T extends Model> implements Component {
       if (!this.config.useCustomSequence) {
         this.setupSequence();
       }
-      const models = this.config.models.map(model => {
-        if (isSearchableModel(model)) {
-          return model.identifier ?? model.model.modelName;
-        } else {
-          return model.modelName;
-        }
-      });
+      const models = this.getSearchableModelIdentifiers(this.config);
       const controllerConfig: SearchControllerConfig = {
         name: '',
         basePath: '/search',
@@ -126,7 +138,15 @@ export class SearchServiceComponent<T extends Model> implements Component {
     );
 
     this.controllers = [controllerCtor];
-    this.repositories = [RecentSearchRepository, SearchQueryRepository];
+  }
+  getSearchableModelIdentifiers(config: SearchServiceConfig<T>) {
+    return config.models.map(model => {
+      if (isSearchableModel(model)) {
+        return model.identifier ?? model.model.modelName;
+      } else {
+        return model.modelName;
+      }
+    });
   }
 
   providers: ProviderMap = {};
