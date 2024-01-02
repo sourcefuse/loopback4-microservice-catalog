@@ -189,8 +189,8 @@ describe('Notification Controller', () => {
       .expect(422);
   });
 
-  it('gives status 200 for the request to send notification by id, in case receiver is not provided.', async () => {
-    const reqToDraftNotification = await draftNotifications(false);
+  it('gives status 422 for the request to send notification by id, in case receiver is given provided.', async () => {
+    const reqToDraftNotification = await draftNotifications();
     expect(reqToDraftNotification.status).to.be.equal(200);
     const requestBody = new NotificationDto({
       options: {from: testUserEmail},
@@ -200,7 +200,7 @@ describe('Notification Controller', () => {
       .post(`${basePath}/${reqToDraftNotification.body.id}/send`)
       .set('authorization', `Bearer ${token}`)
       .send(requestBody)
-      .expect(200);
+      .expect(422);
   });
 
   it('gives status 422 for the request to send notification by search criteria, in case there is no match for search criteria was found.', async () => {
@@ -218,7 +218,7 @@ describe('Notification Controller', () => {
       .expect(422);
   });
 
-  it('gives status 200 for the request to send notification by search criteria, in case there is a match for search criteria was found.', async () => {
+  it('gives status 422 for the request to send notification by search criteria, in case there is a match for search criteria was not found.', async () => {
     const reqToDraftNotification = await draftNotifications(false);
     expect(reqToDraftNotification.status).to.be.equal(200);
     const previousDate = new Date();
@@ -268,7 +268,9 @@ describe('Notification Controller', () => {
         body: 'test_body',
         subject: 'subject',
         type: 1,
-        options: {},
+        options: {
+          fromEmail: 'test@test.com',
+        },
         sentDate: new Date(),
         receiver: {
           to: [

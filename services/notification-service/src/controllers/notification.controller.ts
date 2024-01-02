@@ -204,19 +204,19 @@ export class NotificationController {
     })
     notification: Omit<Notification, 'id'>,
   ): Promise<Notification> {
-    notification.isDraft = true;
+    const groupKey = notification.groupKey ? true : false;
     if (
-      notification.groupKey &&
-      (notification.subject ||
-        (notification.receiver && notification.receiver?.to.length > 0) ||
+      groupKey &&
+      ((notification.receiver && notification.receiver?.to.length > 0) ??
+        notification.subject ??
         notification.options?.fromEmail)
     ) {
       throw new HttpErrors.UnprocessableEntity(ErrorKeys.GroupedDraftError);
     } else if (
       !notification.groupKey &&
       !(
-        notification.subject ||
-        (notification.receiver && notification.receiver?.to.length > 0) ||
+        notification.subject &&
+        notification.receiver?.to.length > 0 &&
         notification.options?.fromEmail
       )
     ) {
