@@ -207,13 +207,18 @@ export class NotificationController {
     })
     notification: Omit<Notification, 'id'>,
   ): Promise<Notification> {
-    if (
-      notification.groupKey &&
-      ((notification.receiver && notification.receiver?.to.length > 0) ??
-        notification.subject ??
-        notification.options?.fromEmail)
-    ) {
-      throw new HttpErrors.UnprocessableEntity(ErrorKeys.GroupedDraftError);
+    if (notification.groupKey && notification.receiver?.to.length > 0) {
+      throw new HttpErrors.UnprocessableEntity(
+        ErrorKeys.GroupedDraftReceiverError,
+      );
+    } else if (notification.groupKey && notification.subject) {
+      throw new HttpErrors.UnprocessableEntity(
+        ErrorKeys.GroupedDraftSubjectError,
+      );
+    } else if (notification.groupKey && notification.options?.fromEmail) {
+      throw new HttpErrors.UnprocessableEntity(
+        ErrorKeys.GroupedDraftFromEmailError,
+      );
     } else if (
       !notification.groupKey &&
       !(
