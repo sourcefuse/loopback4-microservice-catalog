@@ -356,6 +356,15 @@ this.bind(NotifServiceBindings.NotificationFilter).toProvider(
 
 Note: One can modify the provider according to the requirements
 
+### Notification Grouping
+This service now support following features:
+1. Notification drafting i.e. draft notification to send it later. For this there is a new API to save notification as draft. One additional field in DB table `is_draft` is used to mark a notification as draft. The drafted notification could be based on a group key OR without a group key. In DB group key is saved in a column called `group_key`.
+2. Notification grouping i.e. send many notification as one notification by grouping those together using the `groupKey` OR `group_key` field from DB table.
+3. Sending drafted notification independently using `id` of already saved or drafted notification.
+4. Also, this service now provides a sleep time feature for user or receiver. This is a setting, using which user can save sleep time in database during which interval notifications would not be sent to respective receiver. But, if request body contains a field called `isCritical` (having it's value true) with respect to the column `is_critical` in the database table then even if sending notification time matches with sleep time interval, the notification will be sent to mentioned receiver(s) in the request body.
+5. To manage the sleep time, APIs has been added with respect to CRUD functionality.
+
+
 ### Migrations
 
 The migrations required for this service are processed during the installation automatically if you set the `NOTIF_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or databases, they may be affected. In such a scenario, it is advised that you copy the migration files in your project root, using the `NOTIF_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
