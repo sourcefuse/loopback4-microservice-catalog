@@ -386,7 +386,7 @@ Note: One can modify the provider according to the requirements
           }
         }
       ```
-- **Grouping Notification** -
+### - **Grouping Notification** -
   - Notification grouping i.e. send many notification as one notification by grouping those together using the `groupKey` OR `group_key` field from DB table.
   1. There is an API's to send already saved or already drafted notifications by grouping it using `groupKey`.
   2. The API end point looks like `/notifications/groups/{groupKey}`.
@@ -429,7 +429,7 @@ Note: One can modify the provider according to the requirements
           "type": "number"
       }
       ```
-- **Sending Drafted Notification** -
+### - **Sending Drafted Notification Independently** -
   - There is one API for sending drafted notification independently using `id` of already saved or drafted notification.
    1. This API has `id` (of an already drafted notification) in it's end point which looks like `/notifications/{draftedNotificationId}/send`  and it sends already saved or drafted notification to the receiver(s).
    2. The request body for this API looks like
@@ -441,7 +441,7 @@ Note: One can modify the provider according to the requirements
           "isCritical":"boolean",
       }
       ```
-- **User Notification Sleep Time Settings** -
+### - **User Notification Sleep Time Settings** -
   - User or receiver's sleep time settings will allow user to stop from getting notifications for any given time interval. There are API's as mentioned below which are used to manage User notification settings for sleep time
     1. There is a POST API with end url `/notifications/user-notification-settings` to add sleep time of user or receiver into DB. The request body for this looks like below:
       ```json
