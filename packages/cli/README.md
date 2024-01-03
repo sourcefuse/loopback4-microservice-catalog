@@ -18,7 +18,7 @@ $ npm install -g @sourceloop/cli
 $ sl COMMAND
 running command...
 $ sl (-v|--version|version)
-@sourceloop/cli/6.1.0 linux-x64 node-v18.19.0
+@sourceloop/cli/6.1.0 darwin-arm64 node-v16.15.0
 $ sl --help [COMMAND]
 USAGE
   $ sl COMMAND
@@ -29,16 +29,13 @@ USAGE
 ## Commands
 
 <!-- commands -->
-- [Building](#building)
-- [Usage](#usage)
-- [Commands](#commands)
-- [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
-- [`sl cdk`](#sl-cdk)
-- [`sl extension [NAME]`](#sl-extension-name)
-- [`sl help [COMMAND]`](#sl-help-command)
-- [`sl microservice [NAME]`](#sl-microservice-name)
-- [`sl scaffold [NAME]`](#sl-scaffold-name)
-- [`sl update`](#sl-update)
+* [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
+* [`sl cdk`](#sl-cdk)
+* [`sl extension [NAME]`](#sl-extension-name)
+* [`sl help [COMMAND]`](#sl-help-command)
+* [`sl microservice [NAME]`](#sl-microservice-name)
+* [`sl scaffold [NAME]`](#sl-scaffold-name)
+* [`sl update`](#sl-update)
 
 ## `sl autocomplete [SHELL]`
 
