@@ -8,6 +8,7 @@ import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import * as path from 'path';
 import {NotificationServiceComponent} from './component';
+import {ProcessNotificationService} from './services';
 
 export {ApplicationConfig};
 
@@ -27,5 +28,6 @@ export class NotificationServiceApplication extends BootMixin(
         nested: true,
       },
     };
+    this.service(ProcessNotificationService);
   }
 }

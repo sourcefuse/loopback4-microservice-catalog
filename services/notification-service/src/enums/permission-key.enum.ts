@@ -14,4 +14,9 @@ export const enum PermissionKey {
   UpdateNotificationNum = '3',
   DeleteNotificationNum = '4',
   CanGetNotificationAccessNum = '5',
+
+  ViewNotificationUserSettings = 'ViewNotificationUserSettings',
+  CreateNotificationUserSettings = 'CreateNotificationUserSettings',
+  UpdateNotificationUserSettings = 'UpdateNotificationUserSettings',
+  DeleteNotificationUserSettings = 'DeleteNotificationUserSettings',
 }

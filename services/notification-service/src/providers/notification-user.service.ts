@@ -18,6 +18,7 @@ export class NotificationUserProvider
             const notifUser = new NotificationUser();
             notifUser.notificationId = notif.id ?? '';
             notifUser.userId = to.id;
+            notifUser.isDraft = to.isDraft ?? false;
             return notifUser;
           }),
         );

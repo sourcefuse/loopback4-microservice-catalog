@@ -38,7 +38,7 @@ export class Notification extends CoreEntity<Notification> implements Message {
 
   @property({
     type: 'object',
-    required: true,
+    required: false,
   })
   receiver: Receiver;
 
@@ -58,6 +58,22 @@ export class Notification extends CoreEntity<Notification> implements Message {
     type: 'object',
   })
   options?: MessageOptions;
+
+  @property({
+    name: 'is_draft',
+  })
+  isDraft?: boolean;
+
+  @property({
+    name: 'group_key',
+  })
+  groupKey?: string;
+
+  @property({
+    type: 'boolean',
+    name: 'is_critical',
+  })
+  isCritical?: boolean;
 
   @hasMany(() => NotificationUser, {keyTo: 'notificationId'})
   notificationUsers: NotificationUser[];

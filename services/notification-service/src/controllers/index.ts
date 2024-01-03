@@ -7,3 +7,4 @@ export * from './notification-user.controller';
 export * from './notification.controller';
 export * from './notification-user-notification.controller';
 export * from './notification-notification-user.controller';
+export * from './user-notification-settings.controller';

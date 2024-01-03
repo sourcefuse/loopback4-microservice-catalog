@@ -4,13 +4,13 @@
 // https://opensource.org/licenses/MIT
 import {Client, expect} from '@loopback/testlab';
 import * as jwt from 'jsonwebtoken';
+import {Notification, NotificationDto} from '../../models';
 import {
   NotificationRepository,
   NotificationUserRepository,
 } from '../../repositories';
 import {NotificationApplication} from '../application';
 import {setUpApplication} from './helper';
-
 describe('Notification Controller', () => {
   let app: NotificationApplication;
   let client: Client;
@@ -18,8 +18,9 @@ describe('Notification Controller', () => {
   let notificationUserRepo: NotificationUserRepository;
   const basePath = '/notifications';
   const pass = 'test_password';
+  const testUserEmail = 'test@yopmail.com';
   const testUser = {
-    id: '1',
+    id: testUserEmail,
     username: 'test_user',
     password: pass,
     permissions: [
@@ -27,6 +28,12 @@ describe('Notification Controller', () => {
       'CreateNotification',
       'UpdateNotification',
       'DeleteNotification',
+      'ViewNotification',
+      'ViewNotificationNum',
+      '1',
+      '2',
+      '3',
+      '4',
     ],
   };
 
@@ -45,7 +52,6 @@ describe('Notification Controller', () => {
 
   it('gives status 401 when no token is passed', async () => {
     const response = await client.get(basePath).expect(401);
-
     expect(response).to.have.property('error');
   });
 
@@ -56,8 +62,19 @@ describe('Notification Controller', () => {
       .expect(200);
   });
 
-  it('gives status 200 and check properties exist with response for particular id', async () => {
-    const reqToAddNotificationUser = await addUser();
+  it('Gives status 200 and check properties exist with response for particular id when called get API to get by id.', async () => {
+    const reqToAddNotificationUser = await addNotifications(false, '');
+    expect(reqToAddNotificationUser.status).to.be.equal(200);
+
+    const response = await client
+      .get(`${basePath}/${reqToAddNotificationUser.body.id}`)
+      .set('authorization', `Bearer ${token}`)
+      .expect(200);
+    expect(response).to.have.properties(['res', 'req']);
+  });
+
+  it('gives status 200 and check properties exist with response for particular id in case isGrouped flag is true and groupedKey is given in request.', async () => {
+    const reqToAddNotificationUser = await addNotifications(true, 'testKey');
     expect(reqToAddNotificationUser.status).to.be.equal(200);
 
     const response = await client
@@ -87,12 +104,10 @@ describe('Notification Controller', () => {
   });
 
   it('updates notification successfully using PATCH request with id', async () => {
-    const reqToAddNotificationUser = await addUser();
-
+    const reqToAddNotificationUser = await addNotifications(false, '');
     const notificationToUpdate = {
       body: 'updated-body',
     };
-
     await client
       .patch(`${basePath}/${reqToAddNotificationUser.body.id}`)
       .set('authorization', `Bearer ${token}`)
@@ -121,8 +136,109 @@ describe('Notification Controller', () => {
       .expect(200);
   });
 
-  async function addUser() {
-    const notificationToAdd = {
+  it('gives status 422 for the request to send notification by groupKey, in case  receiver is not given in request.', async () => {
+    const reqToDraftNotification = await draftNotifications();
+    expect(reqToDraftNotification.status).to.be.equal(200);
+    const requestBody = new NotificationDto({
+      body: reqToDraftNotification.body?.body,
+      type: 1,
+      options: {from: testUserEmail},
+    });
+    await client
+      .post(`${basePath}/groups/${reqToDraftNotification.body.groupKey}`)
+      .set('authorization', `Bearer ${token}`)
+      .send(requestBody)
+      .expect(422);
+  });
+
+  it('gives status 200 for the request to send notification by groupKey, in case receiver is provided in request.', async () => {
+    const reqToDraftNotification = await draftNotifications();
+    expect(reqToDraftNotification.status).to.be.equal(200);
+    const requestBody = new NotificationDto({
+      body: reqToDraftNotification.body?.body,
+      type: 1,
+      receiver: {
+        to: [
+          {
+            type: 1,
+            id: 'testmail@yopmail.com',
+          },
+        ],
+      },
+      options: {from: testUserEmail},
+    });
+    await client
+      .post(`${basePath}/groups/${reqToDraftNotification.body.groupKey}`)
+      .set('authorization', `Bearer ${token}`)
+      .send(requestBody)
+      .expect(200);
+  });
+
+  it('gives status 422 for the request to send notification by id, in case receiver is not given.', async () => {
+    const reqToDraftNotification = await draftNotifications();
+    expect(reqToDraftNotification.status).to.be.equal(200);
+    const requestBody = new NotificationDto({
+      options: {from: testUserEmail},
+
+      isCritical: true,
+    });
+    await client
+      .post(`${basePath}/${reqToDraftNotification.body.id}/send`)
+      .set('authorization', `Bearer ${token}`)
+      .send(requestBody)
+      .expect(422);
+  });
+
+  it('gives status 422 for the request to send notification by id, in case receiver is given provided.', async () => {
+    const reqToDraftNotification = await draftNotifications();
+    expect(reqToDraftNotification.status).to.be.equal(200);
+    const requestBody = new NotificationDto({
+      options: {from: testUserEmail},
+      isCritical: true,
+    });
+    await client
+      .post(`${basePath}/${reqToDraftNotification.body.id}/send`)
+      .set('authorization', `Bearer ${token}`)
+      .send(requestBody)
+      .expect(422);
+  });
+
+  it('gives status 422 for the request to send notification by search criteria, in case there is no match for search criteria was found.', async () => {
+    const reqToDraftNotification = await draftNotifications();
+    expect(reqToDraftNotification.status).to.be.equal(200);
+    const previousDate = new Date();
+    previousDate.setDate(previousDate.getDate() + 1);
+    const requestBody = {
+      ids: ['1', '2', '5'],
+    };
+    await client
+      .post(`${basePath}/send`)
+      .set('authorization', `Bearer ${token}`)
+      .send(requestBody)
+      .expect(422);
+  });
+
+  it('gives status 422 for the request to send notification by search criteria, in case there is a match for search criteria was not found.', async () => {
+    const reqToDraftNotification = await draftNotifications(false);
+    expect(reqToDraftNotification.status).to.be.equal(200);
+    const previousDate = new Date();
+    previousDate.setDate(previousDate.getDate() - 1);
+
+    const nextDate = new Date();
+    nextDate.setDate(previousDate.getDate() + 1);
+    const requestBody = {
+      startTime: previousDate,
+      endTime: nextDate,
+    };
+    await client
+      .post(`${basePath}/send`)
+      .set('authorization', `Bearer ${token}`)
+      .send(requestBody)
+      .expect(422);
+  });
+
+  async function addNotifications(isGrouped = false, groupKey = '') {
+    const notificationToAdd = new Notification({
       body: 'test_body',
       receiver: {
         to: [
@@ -134,10 +250,48 @@ describe('Notification Controller', () => {
       },
       type: 0,
       sentDate: new Date(),
-    };
+    });
 
+    if (groupKey) {
+      notificationToAdd.groupKey = groupKey;
+    }
     return client
       .post(basePath)
+      .set('authorization', `Bearer ${token}`)
+      .send(notificationToAdd);
+  }
+
+  async function draftNotifications(isGrouped = true) {
+    let notificationToAdd: Notification;
+    if (!isGrouped) {
+      notificationToAdd = new Notification({
+        body: 'test_body',
+        subject: 'subject',
+        type: 1,
+        options: {
+          fromEmail: 'test@test.com',
+        },
+        sentDate: new Date(),
+        receiver: {
+          to: [
+            {
+              type: 1,
+              id: '1',
+            },
+          ],
+        },
+      });
+    } else {
+      notificationToAdd = new Notification({
+        body: 'test_body',
+        groupKey: 'GKTest',
+        type: 1,
+        options: {},
+        sentDate: new Date(),
+      });
+    }
+    return client
+      .post(`${basePath}/drafts`)
       .set('authorization', `Bearer ${token}`)
       .send(notificationToAdd);
   }

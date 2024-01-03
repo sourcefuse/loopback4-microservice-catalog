@@ -2717,9 +2717,11 @@ Attachment add response schema
         "extId": "string",
         "extMetadata": {},
         "messageId": "string",
-        "message": {}
+        "message": {},
+        "foreignKey": null
       }
     ],
+    "foreignKey": null,
     "group": [
       {
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -2739,6 +2741,7 @@ Attachment add response schema
         "messageId": "string",
         "threadId": "string",
         "message": {},
+        "foreignKey": null,
         "thread": {
           "deletedOn": "2019-08-24T14:15:22Z",
           "deletedBy": "string",
@@ -2754,6 +2757,7 @@ Attachment add response schema
           "message": [
             {}
           ],
+          "foreignKey": null,
           "group": [
             {}
           ]
@@ -2774,7 +2778,8 @@ Attachment add response schema
         "extId": "string",
         "extMetadata": {},
         "messageId": "string",
-        "message": {}
+        "message": {},
+        "foreignKey": null
       }
     ],
     "thread": {
@@ -2792,6 +2797,7 @@ Attachment add response schema
       "message": [
         {}
       ],
+      "foreignKey": null,
       "group": [
         {
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -2811,11 +2817,13 @@ Attachment add response schema
           "messageId": "string",
           "threadId": "string",
           "message": {},
+          "foreignKey": null,
           "thread": {}
         }
       ]
     }
-  }
+  },
+  "foreignKey": null
 }
 
 ```
@@ -2841,6 +2849,7 @@ AttachmentExcluding_deleted_WithRelations
 |extMetadata|object|false|none|none|
 |messageId|string|false|none|none|
 |message|[MessageExcluding_deleted_WithRelations](#schemamessageexcluding_deleted_withrelations)|false|none|(tsType: Omit<MessageWithRelations, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ], includeRelations: true })|
+|foreignKey|any|false|none|none|
 
 <h2 id="tocS_ThreadExcluding_deleted_WithRelations">ThreadExcluding_deleted_WithRelations</h2>
 <!-- backwards compatibility -->
@@ -2894,9 +2903,11 @@ AttachmentExcluding_deleted_WithRelations
           "extId": "string",
           "extMetadata": {},
           "messageId": "string",
-          "message": {}
+          "message": {},
+          "foreignKey": null
         }
       ],
+      "foreignKey": null,
       "group": [
         {
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -2916,6 +2927,7 @@ AttachmentExcluding_deleted_WithRelations
           "messageId": "string",
           "threadId": "string",
           "message": {},
+          "foreignKey": null,
           "thread": {
             "deletedOn": "2019-08-24T14:15:22Z",
             "deletedBy": "string",
@@ -2929,6 +2941,7 @@ AttachmentExcluding_deleted_WithRelations
             "extId": "string",
             "extMetadata": {},
             "message": [],
+            "foreignKey": null,
             "group": [
               {}
             ]
@@ -2949,7 +2962,8 @@ AttachmentExcluding_deleted_WithRelations
           "extId": "string",
           "extMetadata": {},
           "messageId": "string",
-          "message": {}
+          "message": {},
+          "foreignKey": null
         }
       ],
       "thread": {
@@ -2965,6 +2979,7 @@ AttachmentExcluding_deleted_WithRelations
         "extId": "string",
         "extMetadata": {},
         "message": [],
+        "foreignKey": null,
         "group": [
           {
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -2984,12 +2999,14 @@ AttachmentExcluding_deleted_WithRelations
             "messageId": "string",
             "threadId": "string",
             "message": {},
+            "foreignKey": null,
             "thread": {}
           }
         ]
       }
     }
   ],
+  "foreignKey": null,
   "group": [
     {
       "deletedOn": "2019-08-24T14:15:22Z",
@@ -3039,9 +3056,11 @@ AttachmentExcluding_deleted_WithRelations
             "extId": "string",
             "extMetadata": {},
             "messageId": "string",
-            "message": {}
+            "message": {},
+            "foreignKey": null
           }
         ],
+        "foreignKey": null,
         "group": [
           {}
         ],
@@ -3059,7 +3078,8 @@ AttachmentExcluding_deleted_WithRelations
             "extId": "string",
             "extMetadata": {},
             "messageId": "string",
-            "message": {}
+            "message": {},
+            "foreignKey": null
           }
         ],
         "thread": {
@@ -3077,9 +3097,11 @@ AttachmentExcluding_deleted_WithRelations
           "message": [
             {}
           ],
+          "foreignKey": null,
           "group": []
         }
       },
+      "foreignKey": null,
       "thread": {
         "deletedOn": "2019-08-24T14:15:22Z",
         "deletedBy": "string",
@@ -3124,9 +3146,11 @@ AttachmentExcluding_deleted_WithRelations
                 "extId": "string",
                 "extMetadata": {},
                 "messageId": "string",
-                "message": {}
+                "message": {},
+                "foreignKey": null
               }
             ],
+            "foreignKey": null,
             "group": [
               {}
             ],
@@ -3144,12 +3168,14 @@ AttachmentExcluding_deleted_WithRelations
                 "extId": "string",
                 "extMetadata": {},
                 "messageId": "string",
-                "message": {}
+                "message": {},
+                "foreignKey": null
               }
             ],
             "thread": {}
           }
         ],
+        "foreignKey": null,
         "group": []
       }
     }
@@ -3176,6 +3202,7 @@ ThreadExcluding_deleted_WithRelations
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
 |message|[[MessageExcluding_deleted_WithRelations](#schemamessageexcluding_deleted_withrelations)]|false|none|[(tsType: Omit<MessageWithRelations, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ], includeRelations: true })]|
+|foreignKey|any|false|none|none|
 |group|[[GroupExcluding_deleted_WithRelations](#schemagroupexcluding_deleted_withrelations)]|false|none|[(tsType: Omit<GroupWithRelations, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ], includeRelations: true })]|
 
 <h2 id="tocS_GroupExcluding_deleted_WithRelations">GroupExcluding_deleted_WithRelations</h2>
@@ -3234,9 +3261,11 @@ ThreadExcluding_deleted_WithRelations
         "extId": "string",
         "extMetadata": {},
         "messageId": "string",
-        "message": {}
+        "message": {},
+        "foreignKey": null
       }
     ],
+    "foreignKey": null,
     "group": [
       {
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -3256,6 +3285,7 @@ ThreadExcluding_deleted_WithRelations
         "messageId": "string",
         "threadId": "string",
         "message": {},
+        "foreignKey": null,
         "thread": {
           "deletedOn": "2019-08-24T14:15:22Z",
           "deletedBy": "string",
@@ -3271,6 +3301,7 @@ ThreadExcluding_deleted_WithRelations
           "message": [
             {}
           ],
+          "foreignKey": null,
           "group": [
             {}
           ]
@@ -3291,7 +3322,8 @@ ThreadExcluding_deleted_WithRelations
         "extId": "string",
         "extMetadata": {},
         "messageId": "string",
-        "message": {}
+        "message": {},
+        "foreignKey": null
       }
     ],
     "thread": {
@@ -3309,6 +3341,7 @@ ThreadExcluding_deleted_WithRelations
       "message": [
         {}
       ],
+      "foreignKey": null,
       "group": [
         {
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -3328,11 +3361,13 @@ ThreadExcluding_deleted_WithRelations
           "messageId": "string",
           "threadId": "string",
           "message": {},
+          "foreignKey": null,
           "thread": {}
         }
       ]
     }
   },
+  "foreignKey": null,
   "thread": {
     "deletedOn": "2019-08-24T14:15:22Z",
     "deletedBy": "string",
@@ -3377,9 +3412,11 @@ ThreadExcluding_deleted_WithRelations
             "extId": "string",
             "extMetadata": {},
             "messageId": "string",
-            "message": {}
+            "message": {},
+            "foreignKey": null
           }
         ],
+        "foreignKey": null,
         "group": [
           {
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -3399,6 +3436,7 @@ ThreadExcluding_deleted_WithRelations
             "messageId": "string",
             "threadId": "string",
             "message": {},
+            "foreignKey": null,
             "thread": {}
           }
         ],
@@ -3416,12 +3454,14 @@ ThreadExcluding_deleted_WithRelations
             "extId": "string",
             "extMetadata": {},
             "messageId": "string",
-            "message": {}
+            "message": {},
+            "foreignKey": null
           }
         ],
         "thread": {}
       }
     ],
+    "foreignKey": null,
     "group": [
       {
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -3471,9 +3511,11 @@ ThreadExcluding_deleted_WithRelations
               "extId": "string",
               "extMetadata": {},
               "messageId": "string",
-              "message": {}
+              "message": {},
+              "foreignKey": null
             }
           ],
+          "foreignKey": null,
           "group": [
             {}
           ],
@@ -3491,11 +3533,13 @@ ThreadExcluding_deleted_WithRelations
               "extId": "string",
               "extMetadata": {},
               "messageId": "string",
-              "message": {}
+              "message": {},
+              "foreignKey": null
             }
           ],
           "thread": {}
         },
+        "foreignKey": null,
         "thread": {}
       }
     ]
@@ -3527,6 +3571,7 @@ GroupExcluding_deleted_WithRelations
 |messageId|string|false|none|none|
 |threadId|string|false|none|none|
 |message|[MessageExcluding_deleted_WithRelations](#schemamessageexcluding_deleted_withrelations)|false|none|(tsType: Omit<MessageWithRelations, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ], includeRelations: true })|
+|foreignKey|any|false|none|none|
 |thread|[ThreadExcluding_deleted_WithRelations](#schemathreadexcluding_deleted_withrelations)|false|none|(tsType: Omit<ThreadWithRelations, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ], includeRelations: true })|
 
 #### Enumerated Values
@@ -3599,9 +3644,11 @@ GroupExcluding_deleted_WithRelations
         "extId": "string",
         "extMetadata": {},
         "messageId": "string",
-        "message": {}
+        "message": {},
+        "foreignKey": null
       }
     ],
+    "foreignKey": null,
     "group": [
       {
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -3621,6 +3668,7 @@ GroupExcluding_deleted_WithRelations
         "messageId": "string",
         "threadId": "string",
         "message": {},
+        "foreignKey": null,
         "thread": {
           "deletedOn": "2019-08-24T14:15:22Z",
           "deletedBy": "string",
@@ -3636,6 +3684,7 @@ GroupExcluding_deleted_WithRelations
           "message": [
             {}
           ],
+          "foreignKey": null,
           "group": [
             {}
           ]
@@ -3656,7 +3705,8 @@ GroupExcluding_deleted_WithRelations
         "extId": "string",
         "extMetadata": {},
         "messageId": "string",
-        "message": {}
+        "message": {},
+        "foreignKey": null
       }
     ],
     "thread": {
@@ -3674,6 +3724,7 @@ GroupExcluding_deleted_WithRelations
       "message": [
         {}
       ],
+      "foreignKey": null,
       "group": [
         {
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -3693,11 +3744,13 @@ GroupExcluding_deleted_WithRelations
           "messageId": "string",
           "threadId": "string",
           "message": {},
+          "foreignKey": null,
           "thread": {}
         }
       ]
     }
-  }
+  },
+  "foreignKey": null
 }
 
 ```
@@ -3721,6 +3774,7 @@ MetaExcluding_deleted_WithRelations
 |extMetadata|object|false|none|none|
 |messageId|string|false|none|none|
 |message|[MessageExcluding_deleted_WithRelations](#schemamessageexcluding_deleted_withrelations)|false|none|(tsType: Omit<MessageWithRelations, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ], includeRelations: true })|
+|foreignKey|any|false|none|none|
 
 <h2 id="tocS_MessageExcluding_deleted_WithRelations">MessageExcluding_deleted_WithRelations</h2>
 <!-- backwards compatibility -->
@@ -3777,6 +3831,7 @@ MetaExcluding_deleted_WithRelations
         "extMetadata": {},
         "threadId": "string",
         "attachment": [],
+        "foreignKey": null,
         "group": [
           {
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -3796,6 +3851,7 @@ MetaExcluding_deleted_WithRelations
             "messageId": "string",
             "threadId": "string",
             "message": {},
+            "foreignKey": null,
             "thread": {
               "deletedOn": "2019-08-24T14:15:22Z",
               "deletedBy": "string",
@@ -3811,6 +3867,7 @@ MetaExcluding_deleted_WithRelations
               "message": [
                 {}
               ],
+              "foreignKey": null,
               "group": [
                 {}
               ]
@@ -3831,7 +3888,8 @@ MetaExcluding_deleted_WithRelations
             "extId": "string",
             "extMetadata": {},
             "messageId": "string",
-            "message": {}
+            "message": {},
+            "foreignKey": null
           }
         ],
         "thread": {
@@ -3849,6 +3907,7 @@ MetaExcluding_deleted_WithRelations
           "message": [
             {}
           ],
+          "foreignKey": null,
           "group": [
             {
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -3868,13 +3927,16 @@ MetaExcluding_deleted_WithRelations
               "messageId": "string",
               "threadId": "string",
               "message": {},
+              "foreignKey": null,
               "thread": {}
             }
           ]
         }
-      }
+      },
+      "foreignKey": null
     }
   ],
+  "foreignKey": null,
   "group": [
     {
       "deletedOn": "2019-08-24T14:15:22Z",
@@ -3924,9 +3986,11 @@ MetaExcluding_deleted_WithRelations
             "extId": "string",
             "extMetadata": {},
             "messageId": "string",
-            "message": {}
+            "message": {},
+            "foreignKey": null
           }
         ],
+        "foreignKey": null,
         "group": [],
         "meta": [
           {
@@ -3942,7 +4006,8 @@ MetaExcluding_deleted_WithRelations
             "extId": "string",
             "extMetadata": {},
             "messageId": "string",
-            "message": {}
+            "message": {},
+            "foreignKey": null
           }
         ],
         "thread": {
@@ -3960,11 +4025,13 @@ MetaExcluding_deleted_WithRelations
           "message": [
             {}
           ],
+          "foreignKey": null,
           "group": [
             {}
           ]
         }
       },
+      "foreignKey": null,
       "thread": {
         "deletedOn": "2019-08-24T14:15:22Z",
         "deletedBy": "string",
@@ -4009,9 +4076,11 @@ MetaExcluding_deleted_WithRelations
                 "extId": "string",
                 "extMetadata": {},
                 "messageId": "string",
-                "message": {}
+                "message": {},
+                "foreignKey": null
               }
             ],
+            "foreignKey": null,
             "group": [],
             "meta": [
               {
@@ -4027,12 +4096,14 @@ MetaExcluding_deleted_WithRelations
                 "extId": "string",
                 "extMetadata": {},
                 "messageId": "string",
-                "message": {}
+                "message": {},
+                "foreignKey": null
               }
             ],
             "thread": {}
           }
         ],
+        "foreignKey": null,
         "group": [
           {}
         ]
@@ -4084,9 +4155,11 @@ MetaExcluding_deleted_WithRelations
             "extId": "string",
             "extMetadata": {},
             "messageId": "string",
-            "message": {}
+            "message": {},
+            "foreignKey": null
           }
         ],
+        "foreignKey": null,
         "group": [
           {
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -4106,6 +4179,7 @@ MetaExcluding_deleted_WithRelations
             "messageId": "string",
             "threadId": "string",
             "message": {},
+            "foreignKey": null,
             "thread": {
               "deletedOn": "2019-08-24T14:15:22Z",
               "deletedBy": "string",
@@ -4121,6 +4195,7 @@ MetaExcluding_deleted_WithRelations
               "message": [
                 {}
               ],
+              "foreignKey": null,
               "group": [
                 {}
               ]
@@ -4143,6 +4218,7 @@ MetaExcluding_deleted_WithRelations
           "message": [
             {}
           ],
+          "foreignKey": null,
           "group": [
             {
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -4162,11 +4238,13 @@ MetaExcluding_deleted_WithRelations
               "messageId": "string",
               "threadId": "string",
               "message": {},
+              "foreignKey": null,
               "thread": {}
             }
           ]
         }
-      }
+      },
+      "foreignKey": null
     }
   ],
   "thread": {
@@ -4213,9 +4291,11 @@ MetaExcluding_deleted_WithRelations
             "extId": "string",
             "extMetadata": {},
             "messageId": "string",
-            "message": {}
+            "message": {},
+            "foreignKey": null
           }
         ],
+        "foreignKey": null,
         "group": [
           {
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -4235,6 +4315,7 @@ MetaExcluding_deleted_WithRelations
             "messageId": "string",
             "threadId": "string",
             "message": {},
+            "foreignKey": null,
             "thread": {}
           }
         ],
@@ -4252,12 +4333,14 @@ MetaExcluding_deleted_WithRelations
             "extId": "string",
             "extMetadata": {},
             "messageId": "string",
-            "message": {}
+            "message": {},
+            "foreignKey": null
           }
         ],
         "thread": {}
       }
     ],
+    "foreignKey": null,
     "group": [
       {
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -4307,9 +4390,11 @@ MetaExcluding_deleted_WithRelations
               "extId": "string",
               "extMetadata": {},
               "messageId": "string",
-              "message": {}
+              "message": {},
+              "foreignKey": null
             }
           ],
+          "foreignKey": null,
           "group": [
             {}
           ],
@@ -4327,11 +4412,13 @@ MetaExcluding_deleted_WithRelations
               "extId": "string",
               "extMetadata": {},
               "messageId": "string",
-              "message": {}
+              "message": {},
+              "foreignKey": null
             }
           ],
           "thread": {}
         },
+        "foreignKey": null,
         "thread": {}
       }
     ]
@@ -4361,6 +4448,7 @@ MessageExcluding_deleted_WithRelations
 |extMetadata|object|false|none|none|
 |threadId|string|false|none|none|
 |attachment|[[AttachmentExcluding_deleted_WithRelations](#schemaattachmentexcluding_deleted_withrelations)]|false|none|[(tsType: Omit<AttachmentWithRelations, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ], includeRelations: true })]|
+|foreignKey|any|false|none|none|
 |group|[[GroupExcluding_deleted_WithRelations](#schemagroupexcluding_deleted_withrelations)]|false|none|[(tsType: Omit<GroupWithRelations, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ], includeRelations: true })]|
 |meta|[[MetaExcluding_deleted_WithRelations](#schemametaexcluding_deleted_withrelations)]|false|none|[(tsType: Omit<MetaWithRelations, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ], includeRelations: true })]|
 |thread|[ThreadExcluding_deleted_WithRelations](#schemathreadexcluding_deleted_withrelations)|false|none|(tsType: Omit<ThreadWithRelations, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ], includeRelations: true })|

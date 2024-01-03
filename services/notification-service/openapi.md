@@ -49,7 +49,8 @@ const inputBody = '[
     "notificationId": "string",
     "userId": "string",
     "isRead": true,
-    "actionMeta": {}
+    "actionMeta": {},
+    "isDraft": true
   }
 ]';
 const headers = {
@@ -84,7 +85,8 @@ const inputBody = [
     "notificationId": "string",
     "userId": "string",
     "isRead": true,
-    "actionMeta": {}
+    "actionMeta": {},
+    "isDraft": true
   }
 ];
 const headers = {
@@ -127,7 +129,8 @@ fetch('/notification-users/bulk',
     "notificationId": "string",
     "userId": "string",
     "isRead": true,
-    "actionMeta": {}
+    "actionMeta": {},
+    "isDraft": true
   }
 ]
 ```
@@ -153,7 +156,8 @@ fetch('/notification-users/bulk',
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }
 ```
 
@@ -339,7 +343,8 @@ const inputBody = '{
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -372,7 +377,8 @@ const inputBody = {
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 };
 const headers = {
   'Content-Type':'application/json',
@@ -413,7 +419,8 @@ fetch('/notification-users/{id}',
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }
 ```
 
@@ -452,7 +459,8 @@ const inputBody = '{
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -485,7 +493,8 @@ const inputBody = {
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 };
 const headers = {
   'Content-Type':'application/json',
@@ -526,7 +535,8 @@ fetch('/notification-users/{id}',
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }
 ```
 
@@ -625,7 +635,8 @@ fetch('/notification-users/{id}',
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }
 ```
 
@@ -727,7 +738,8 @@ const inputBody = '{
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -760,7 +772,8 @@ const inputBody = {
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 };
 const headers = {
   'Content-Type':'application/json',
@@ -801,7 +814,8 @@ fetch('/notification-users',
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }
 ```
 
@@ -826,7 +840,8 @@ fetch('/notification-users',
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }
 ```
 
@@ -858,7 +873,8 @@ const inputBody = '{
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -892,7 +908,8 @@ const inputBody = {
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 };
 const headers = {
   'Content-Type':'application/json',
@@ -934,7 +951,8 @@ fetch('/notification-users',
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }
 ```
 
@@ -1044,7 +1062,8 @@ fetch('/notification-users',
     "notificationId": "string",
     "userId": "string",
     "isRead": true,
-    "actionMeta": {}
+    "actionMeta": {},
+    "isDraft": true
   }
 ]
 ```
@@ -1073,6 +1092,7 @@ Status Code **200**
 |»» userId|string|true|none|none|
 |»» isRead|boolean|false|none|none|
 |»» actionMeta|object|false|none|none|
+|»» isDraft|boolean|false|none|none|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -1227,7 +1247,10 @@ fetch('/notification-users/{id}/notification',
     "receiver": {},
     "type": 0,
     "sentDate": "2019-08-24T14:15:22Z",
-    "options": {}
+    "options": {},
+    "isDraft": true,
+    "groupKey": "string",
+    "isCritical": true
   }
 ]
 ```
@@ -1249,10 +1272,13 @@ Status Code **200**
 |»» id|string|false|none|none|
 |»» subject|string¦null|false|none|none|
 |»» body|string|true|none|none|
-|»» receiver|object|true|none|none|
+|»» receiver|object|false|none|none|
 |»» type|number|true|none|none|
 |»» sentDate|string(date-time)|false|none|none|
 |»» options|object|false|none|none|
+|»» isDraft|boolean|false|none|none|
+|»» groupKey|string|false|none|none|
+|»» isCritical|boolean|false|none|none|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -1441,7 +1467,10 @@ const inputBody = '[
     "receiver": {},
     "type": 0,
     "sentDate": "2019-08-24T14:15:22Z",
-    "options": {}
+    "options": {},
+    "isDraft": true,
+    "groupKey": "string",
+    "isCritical": true
   }
 ]';
 const headers = {
@@ -1473,7 +1502,10 @@ const inputBody = [
     "receiver": {},
     "type": 0,
     "sentDate": "2019-08-24T14:15:22Z",
-    "options": {}
+    "options": {},
+    "isDraft": true,
+    "groupKey": "string",
+    "isCritical": true
   }
 ];
 const headers = {
@@ -1513,7 +1545,10 @@ fetch('/notifications/bulk',
     "receiver": {},
     "type": 0,
     "sentDate": "2019-08-24T14:15:22Z",
-    "options": {}
+    "options": {},
+    "isDraft": true,
+    "groupKey": "string",
+    "isCritical": true
   }
 ]
 ```
@@ -1530,7 +1565,7 @@ fetch('/notifications/bulk',
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Notifications|None|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Notifications, to send notifications as bulk.|None|
 
 <h3 id="notificationcontroller.createbulknotificaitions-responseschema">Response Schema</h3>
 
@@ -1622,6 +1657,485 @@ To perform this operation, you must be authenticated by means of one of the foll
 HTTPBearer
 </aside>
 
+## NotificationController.draftNotification
+
+<a id="opIdNotificationController.draftNotification"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "type": 0,
+  "sentDate": "2019-08-24T14:15:22Z",
+  "options": {},
+  "groupKey": "string",
+  "isCritical": true
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notifications/drafts',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "type": 0,
+  "sentDate": "2019-08-24T14:15:22Z",
+  "options": {},
+  "groupKey": "string",
+  "isCritical": true
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notifications/drafts',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /notifications/drafts`
+
+| Permissions |
+| ------- |
+| CreateNotification   |
+| 2   |
+
+> Body parameter
+
+```json
+{
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "type": 0,
+  "sentDate": "2019-08-24T14:15:22Z",
+  "options": {},
+  "groupKey": "string",
+  "isCritical": true
+}
+```
+
+<h3 id="notificationcontroller.draftnotification-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[NotificationExcluding_id-isDraft_](#schemanotificationexcluding_id-isdraft_)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "type": 0,
+  "sentDate": "2019-08-24T14:15:22Z",
+  "options": {},
+  "groupKey": "string",
+  "isCritical": true
+}
+```
+
+<h3 id="notificationcontroller.draftnotification-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|This API is used to draft notifications, here in case isDraft .|[NotificationExcluding_id-isDraft_](#schemanotificationexcluding_id-isdraft_)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
+## NotificationController.sendGroupedNotificationByGroupKey
+
+<a id="opIdNotificationController.sendGroupedNotificationByGroupKey"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "isCritical": true,
+  "type": 0,
+  "options": {},
+  "sentDate": "2019-08-24T14:15:22Z"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notifications/groups/{groupKey}',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "isCritical": true,
+  "type": 0,
+  "options": {},
+  "sentDate": "2019-08-24T14:15:22Z"
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notifications/groups/{groupKey}',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /notifications/groups/{groupKey}`
+
+| Permissions |
+| ------- |
+| CreateNotification   |
+| 2   |
+
+> Body parameter
+
+```json
+{
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "isCritical": true,
+  "type": 0,
+  "options": {},
+  "sentDate": "2019-08-24T14:15:22Z"
+}
+```
+
+<h3 id="notificationcontroller.sendgroupednotificationbygroupkey-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|groupKey|path|string|true|none|
+|body|body|[NotificationDtoExcluding_id-groupKey_](#schemanotificationdtoexcluding_id-groupkey_)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "isCritical": true,
+  "type": 0,
+  "groupKey": "string",
+  "options": {},
+  "sentDate": "2019-08-24T14:15:22Z"
+}
+```
+
+<h3 id="notificationcontroller.sendgroupednotificationbygroupkey-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|This API is used to send notification by grouping by given key in the end point.|[NotificationDtoExcluding_id_](#schemanotificationdtoexcluding_id_)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
+## NotificationController.sendNotificationForSleepTimeUsers
+
+<a id="opIdNotificationController.sendNotificationForSleepTimeUsers"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "ids": [
+    "string"
+  ],
+  "userId": [
+    "string"
+  ],
+  "startTime": "2019-08-24T14:15:22Z",
+  "endTime": "2019-08-24T14:15:22Z"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notifications/send',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "ids": [
+    "string"
+  ],
+  "userId": [
+    "string"
+  ],
+  "startTime": "2019-08-24T14:15:22Z",
+  "endTime": "2019-08-24T14:15:22Z"
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notifications/send',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /notifications/send`
+
+| Permissions |
+| ------- |
+| CreateNotification   |
+| 2   |
+
+> Body parameter
+
+```json
+{
+  "ids": [
+    "string"
+  ],
+  "userId": [
+    "string"
+  ],
+  "startTime": "2019-08-24T14:15:22Z",
+  "endTime": "2019-08-24T14:15:22Z"
+}
+```
+
+<h3 id="notificationcontroller.sendnotificationforsleeptimeusers-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[NotificationSettingsDto](#schemanotificationsettingsdto)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "ids": [
+    "string"
+  ],
+  "userId": [
+    "string"
+  ],
+  "startTime": "2019-08-24T14:15:22Z",
+  "endTime": "2019-08-24T14:15:22Z"
+}
+```
+
+<h3 id="notificationcontroller.sendnotificationforsleeptimeusers-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|This API is used to send notifications for given search criteria.|[NotificationSettingsDto](#schemanotificationsettingsdto)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
+## NotificationController.sendNotificationById
+
+<a id="opIdNotificationController.sendNotificationById"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "isCritical": true,
+  "options": {},
+  "sentDate": "2019-08-24T14:15:22Z"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notifications/{id}/send',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "isCritical": true,
+  "options": {},
+  "sentDate": "2019-08-24T14:15:22Z"
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/notifications/{id}/send',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /notifications/{id}/send`
+
+| Permissions |
+| ------- |
+| CreateNotification   |
+| 2   |
+
+> Body parameter
+
+```json
+{
+  "isCritical": true,
+  "options": {},
+  "sentDate": "2019-08-24T14:15:22Z"
+}
+```
+
+<h3 id="notificationcontroller.sendnotificationbyid-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[NotificationDtoExcluding_id-groupKey-receiver-subject-body-type_](#schemanotificationdtoexcluding_id-groupkey-receiver-subject-body-type_)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "isCritical": true,
+  "options": {},
+  "sentDate": "2019-08-24T14:15:22Z"
+}
+```
+
+<h3 id="notificationcontroller.sendnotificationbyid-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|This API is used to send notifications for given Notification Id.|[NotificationDtoExcluding_id-groupKey-receiver-subject-body-type_](#schemanotificationdtoexcluding_id-groupkey-receiver-subject-body-type_)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
 ## NotificationController.updateById
 
 <a id="opIdNotificationController.updateById"></a>
@@ -1636,7 +2150,10 @@ const inputBody = '{
   "receiver": {},
   "type": 0,
   "sentDate": "2019-08-24T14:15:22Z",
-  "options": {}
+  "options": {},
+  "isDraft": true,
+  "groupKey": "string",
+  "isCritical": true
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -1666,7 +2183,10 @@ const inputBody = {
   "receiver": {},
   "type": 0,
   "sentDate": "2019-08-24T14:15:22Z",
-  "options": {}
+  "options": {},
+  "isDraft": true,
+  "groupKey": "string",
+  "isCritical": true
 };
 const headers = {
   'Content-Type':'application/json',
@@ -1704,7 +2224,10 @@ fetch('/notifications/{id}',
   "receiver": {},
   "type": 0,
   "sentDate": "2019-08-24T14:15:22Z",
-  "options": {}
+  "options": {},
+  "isDraft": true,
+  "groupKey": "string",
+  "isCritical": true
 }
 ```
 
@@ -1798,7 +2321,10 @@ fetch('/notifications/{id}',
   "receiver": {},
   "type": 0,
   "sentDate": "2019-08-24T14:15:22Z",
-  "options": {}
+  "options": {},
+  "isDraft": true,
+  "groupKey": "string",
+  "isCritical": true
 }
 ```
 
@@ -1806,7 +2332,7 @@ fetch('/notifications/{id}',
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Notification model instance|[Notification](#schemanotification)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|, to get the notification by ID|[Notification](#schemanotification)|
 
 <aside class="success">
 This operation does not require authentication
@@ -1825,7 +2351,9 @@ const inputBody = '{
   "receiver": {},
   "type": 0,
   "sentDate": "2019-08-24T14:15:22Z",
-  "options": {}
+  "options": {},
+  "groupKey": "string",
+  "isCritical": true
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -1855,7 +2383,9 @@ const inputBody = {
   "receiver": {},
   "type": 0,
   "sentDate": "2019-08-24T14:15:22Z",
-  "options": {}
+  "options": {},
+  "groupKey": "string",
+  "isCritical": true
 };
 const headers = {
   'Content-Type':'application/json',
@@ -1893,7 +2423,9 @@ fetch('/notifications',
   "receiver": {},
   "type": 0,
   "sentDate": "2019-08-24T14:15:22Z",
-  "options": {}
+  "options": {},
+  "groupKey": "string",
+  "isCritical": true
 }
 ```
 
@@ -1901,7 +2433,7 @@ fetch('/notifications',
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|body|body|[NotificationExcluding_id_](#schemanotificationexcluding_id_)|false|none|
+|body|body|[NotificationExcluding_id-isDraft_](#schemanotificationexcluding_id-isdraft_)|false|This API is used to send notifications, the request body contains the object of notification model.|
 
 > Example responses
 
@@ -1915,7 +2447,10 @@ fetch('/notifications',
   "receiver": {},
   "type": 0,
   "sentDate": "2019-08-24T14:15:22Z",
-  "options": {}
+  "options": {},
+  "isDraft": true,
+  "groupKey": "string",
+  "isCritical": true
 }
 ```
 
@@ -1923,7 +2458,7 @@ fetch('/notifications',
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Notification model instance|[Notification](#schemanotification)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Notification model instance, This API end point will be used to send the notification to the user.|[Notification](#schemanotification)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -1944,7 +2479,10 @@ const inputBody = '{
   "receiver": {},
   "type": 0,
   "sentDate": "2019-08-24T14:15:22Z",
-  "options": {}
+  "options": {},
+  "isDraft": true,
+  "groupKey": "string",
+  "isCritical": true
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -1975,7 +2513,10 @@ const inputBody = {
   "receiver": {},
   "type": 0,
   "sentDate": "2019-08-24T14:15:22Z",
-  "options": {}
+  "options": {},
+  "isDraft": true,
+  "groupKey": "string",
+  "isCritical": true
 };
 const headers = {
   'Content-Type':'application/json',
@@ -2014,7 +2555,10 @@ fetch('/notifications',
   "receiver": {},
   "type": 0,
   "sentDate": "2019-08-24T14:15:22Z",
-  "options": {}
+  "options": {},
+  "isDraft": true,
+  "groupKey": "string",
+  "isCritical": true
 }
 ```
 
@@ -2116,7 +2660,10 @@ fetch('/notifications',
     "receiver": {},
     "type": 0,
     "sentDate": "2019-08-24T14:15:22Z",
-    "options": {}
+    "options": {},
+    "isDraft": true,
+    "groupKey": "string",
+    "isCritical": true
   }
 ]
 ```
@@ -2125,7 +2672,7 @@ fetch('/notifications',
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Notification model instances|Inline|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Notification model instances, To get the notifications|Inline|
 
 <h3 id="notificationcontroller.find-responseschema">Response Schema</h3>
 
@@ -2138,10 +2685,13 @@ Status Code **200**
 |»» id|string|false|none|none|
 |»» subject|string¦null|false|none|none|
 |»» body|string|true|none|none|
-|»» receiver|object|true|none|none|
+|»» receiver|object|false|none|none|
 |»» type|number|true|none|none|
 |»» sentDate|string(date-time)|false|none|none|
 |»» options|object|false|none|none|
+|»» isDraft|boolean|false|none|none|
+|»» groupKey|string|false|none|none|
+|»» isCritical|boolean|false|none|none|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -2237,7 +2787,8 @@ const inputBody = '{
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -2270,7 +2821,8 @@ const inputBody = {
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 };
 const headers = {
   'Content-Type':'application/json',
@@ -2311,7 +2863,8 @@ fetch('/notifications/{id}/notification-users',
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }
 ```
 
@@ -2337,7 +2890,8 @@ fetch('/notifications/{id}/notification-users',
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }
 ```
 
@@ -2369,7 +2923,8 @@ const inputBody = '{
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -2403,7 +2958,8 @@ const inputBody = {
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 };
 const headers = {
   'Content-Type':'application/json',
@@ -2445,7 +3001,8 @@ fetch('/notifications/{id}/notification-users',
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }
 ```
 
@@ -2557,7 +3114,8 @@ fetch('/notifications/{id}/notification-users',
     "notificationId": "string",
     "userId": "string",
     "isRead": true,
-    "actionMeta": {}
+    "actionMeta": {},
+    "isDraft": true
   }
 ]
 ```
@@ -2586,6 +3144,7 @@ Status Code **200**
 |»» userId|string|true|none|none|
 |»» isRead|boolean|false|none|none|
 |»» actionMeta|object|false|none|none|
+|»» isDraft|boolean|false|none|none|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -2676,6 +3235,875 @@ To perform this operation, you must be authenticated by means of one of the foll
 HTTPBearer
 </aside>
 
+<h1 id="notification-service-usernotificationsettingscontroller">UserNotificationSettingsController</h1>
+
+## UserNotificationSettingsController.count
+
+<a id="opIdUserNotificationSettingsController.count"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/user-notification-settings/count',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/user-notification-settings/count',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /user-notification-settings/count`
+
+| Permissions |
+| ------- |
+| ViewNotificationUserSettings   |
+
+<h3 id="usernotificationsettingscontroller.count-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|where|query|object|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "count": 0
+}
+```
+
+<h3 id="usernotificationsettingscontroller.count-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|UserNotificationSettings model count|[loopback.Count](#schemaloopback.count)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## UserNotificationSettingsController.replaceById
+
+<a id="opIdUserNotificationSettingsController.replaceById"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/user-notification-settings/{id}',
+{
+  method: 'PUT',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/user-notification-settings/{id}',
+{
+  method: 'PUT',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PUT /user-notification-settings/{id}`
+
+| Permissions |
+| ------- |
+| UpdateNotificationUserSettings   |
+
+> Body parameter
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+}
+```
+
+<h3 id="usernotificationsettingscontroller.replacebyid-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[UserNotificationSettings](#schemausernotificationsettings)|false|none|
+
+> Example responses
+
+> 204 Response
+
+```json
+null
+```
+
+<h3 id="usernotificationsettingscontroller.replacebyid-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Return value of UserNotificationSettingsController.replaceById|None|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content|Inline|
+
+<h3 id="usernotificationsettingscontroller.replacebyid-responseschema">Response Schema</h3>
+
+Status Code **204**
+
+*UserNotificationSettings PUT success*
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## UserNotificationSettingsController.updateById
+
+<a id="opIdUserNotificationSettingsController.updateById"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/user-notification-settings/{id}',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/user-notification-settings/{id}',
+{
+  method: 'PATCH',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PATCH /user-notification-settings/{id}`
+
+| Permissions |
+| ------- |
+| UpdateNotificationUserSettings   |
+
+> Body parameter
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+}
+```
+
+<h3 id="usernotificationsettingscontroller.updatebyid-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[UserNotificationSettingsPartial](#schemausernotificationsettingspartial)|false|none|
+
+> Example responses
+
+> 204 Response
+
+```json
+null
+```
+
+<h3 id="usernotificationsettingscontroller.updatebyid-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Return value of UserNotificationSettingsController.updateById|None|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content|Inline|
+
+<h3 id="usernotificationsettingscontroller.updatebyid-responseschema">Response Schema</h3>
+
+Status Code **204**
+
+*UserNotificationSettings PATCH success*
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## UserNotificationSettingsController.findById
+
+<a id="opIdUserNotificationSettingsController.findById"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/user-notification-settings/{id}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/user-notification-settings/{id}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /user-notification-settings/{id}`
+
+| Permissions |
+| ------- |
+| ViewNotificationUserSettings   |
+
+<h3 id="usernotificationsettingscontroller.findbyid-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+}
+```
+
+<h3 id="usernotificationsettingscontroller.findbyid-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|UserNotificationSettings model instance|[UserNotificationSettingsWithRelations](#schemausernotificationsettingswithrelations)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## UserNotificationSettingsController.deleteById
+
+<a id="opIdUserNotificationSettingsController.deleteById"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/user-notification-settings/{id}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/user-notification-settings/{id}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`DELETE /user-notification-settings/{id}`
+
+| Permissions |
+| ------- |
+| DeleteNotificationUserSettings   |
+
+<h3 id="usernotificationsettingscontroller.deletebyid-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+
+> Example responses
+
+> 204 Response
+
+```json
+null
+```
+
+<h3 id="usernotificationsettingscontroller.deletebyid-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Return value of UserNotificationSettingsController.deleteById|None|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content|Inline|
+
+<h3 id="usernotificationsettingscontroller.deletebyid-responseschema">Response Schema</h3>
+
+Status Code **204**
+
+*UserNotificationSettings DELETE success*
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## UserNotificationSettingsController.create
+
+<a id="opIdUserNotificationSettingsController.create"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/user-notification-settings',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/user-notification-settings',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /user-notification-settings`
+
+| Permissions |
+| ------- |
+| CreateNotificationUserSettings   |
+
+> Body parameter
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+}
+```
+
+<h3 id="usernotificationsettingscontroller.create-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[NewUserNotificationSettings](#schemanewusernotificationsettings)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+}
+```
+
+<h3 id="usernotificationsettingscontroller.create-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|UserNotificationSettings model instance|[UserNotificationSettings](#schemausernotificationsettings)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## UserNotificationSettingsController.updateAll
+
+<a id="opIdUserNotificationSettingsController.updateAll"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/user-notification-settings',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/user-notification-settings',
+{
+  method: 'PATCH',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PATCH /user-notification-settings`
+
+| Permissions |
+| ------- |
+| UpdateNotificationUserSettings   |
+
+> Body parameter
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+}
+```
+
+<h3 id="usernotificationsettingscontroller.updateall-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[UserNotificationSettingsPartial](#schemausernotificationsettingspartial)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "count": 0
+}
+```
+
+<h3 id="usernotificationsettingscontroller.updateall-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|UserNotificationSettings PATCH success count|[loopback.Count](#schemaloopback.count)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## UserNotificationSettingsController.find
+
+<a id="opIdUserNotificationSettingsController.find"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/user-notification-settings',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/user-notification-settings',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /user-notification-settings`
+
+| Permissions |
+| ------- |
+| ViewNotificationUserSettings   |
+
+<h3 id="usernotificationsettingscontroller.find-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|filter|query|[user_notification_settings.Filter](#schemauser_notification_settings.filter)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "id": "string",
+    "userId": "string",
+    "sleepStartTime": "2019-08-24T14:15:22Z",
+    "sleepEndTime": "2019-08-24T14:15:22Z",
+    "type": 0
+  }
+]
+```
+
+<h3 id="usernotificationsettingscontroller.find-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of UserNotificationSettings model instances|Inline|
+
+<h3 id="usernotificationsettingscontroller.find-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[UserNotificationSettingsWithRelations](#schemausernotificationsettingswithrelations)]|false|none|[(tsType: UserNotificationSettingsWithRelations, schemaOptions: { includeRelations: true })]|
+|» UserNotificationSettingsWithRelations|[UserNotificationSettingsWithRelations](#schemausernotificationsettingswithrelations)|false|none|(tsType: UserNotificationSettingsWithRelations, schemaOptions: { includeRelations: true })|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|string(date-time)¦null|false|none|none|
+|»» deletedBy|string¦null|false|none|none|
+|»» createdOn|string(date-time)|false|none|none|
+|»» modifiedOn|string(date-time)|false|none|none|
+|»» id|string|false|none|none|
+|»» userId|string|true|none|none|
+|»» sleepStartTime|string(date-time)|true|none|none|
+|»» sleepEndTime|string(date-time)|true|none|none|
+|»» type|number|true|none|none|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
 # Schemas
 
 <h2 id="tocS_Notification">Notification</h2>
@@ -2693,7 +4121,10 @@ HTTPBearer
   "receiver": {},
   "type": 0,
   "sentDate": "2019-08-24T14:15:22Z",
-  "options": {}
+  "options": {},
+  "isDraft": true,
+  "groupKey": "string",
+  "isCritical": true
 }
 
 ```
@@ -2707,10 +4138,215 @@ Notification
 |id|string|false|none|none|
 |subject|string¦null|false|none|none|
 |body|string|true|none|none|
-|receiver|object|true|none|none|
+|receiver|object|false|none|none|
 |type|number|true|none|none|
 |sentDate|string(date-time)|false|none|none|
 |options|object|false|none|none|
+|isDraft|boolean|false|none|none|
+|groupKey|string|false|none|none|
+|isCritical|boolean|false|none|none|
+
+<h2 id="tocS_NotificationExcluding_id-isDraft_">NotificationExcluding_id-isDraft_</h2>
+<!-- backwards compatibility -->
+<a id="schemanotificationexcluding_id-isdraft_"></a>
+<a id="schema_NotificationExcluding_id-isDraft_"></a>
+<a id="tocSnotificationexcluding_id-isdraft_"></a>
+<a id="tocsnotificationexcluding_id-isdraft_"></a>
+
+```json
+{
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "type": 0,
+  "sentDate": "2019-08-24T14:15:22Z",
+  "options": {},
+  "groupKey": "string",
+  "isCritical": true
+}
+
+```
+
+NotificationExcluding_id-isDraft_
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|subject|string¦null|false|none|none|
+|body|string|true|none|none|
+|receiver|object|false|none|none|
+|type|number|true|none|none|
+|sentDate|string(date-time)|false|none|none|
+|options|object|false|none|none|
+|groupKey|string|false|none|none|
+|isCritical|boolean|false|none|none|
+
+<h2 id="tocS_NotificationDtoExcluding_id_">NotificationDtoExcluding_id_</h2>
+<!-- backwards compatibility -->
+<a id="schemanotificationdtoexcluding_id_"></a>
+<a id="schema_NotificationDtoExcluding_id_"></a>
+<a id="tocSnotificationdtoexcluding_id_"></a>
+<a id="tocsnotificationdtoexcluding_id_"></a>
+
+```json
+{
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "isCritical": true,
+  "type": 0,
+  "groupKey": "string",
+  "options": {},
+  "sentDate": "2019-08-24T14:15:22Z"
+}
+
+```
+
+NotificationDtoExcluding_id_
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|subject|string¦null|false|none|none|
+|body|string|false|none|none|
+|receiver|object|false|none|none|
+|isCritical|boolean|false|none|none|
+|type|number|true|none|none|
+|groupKey|string|false|none|none|
+|options|object|false|none|none|
+|sentDate|string(date-time)|false|none|none|
+
+<h2 id="tocS_NotificationDtoExcluding_id-groupKey_">NotificationDtoExcluding_id-groupKey_</h2>
+<!-- backwards compatibility -->
+<a id="schemanotificationdtoexcluding_id-groupkey_"></a>
+<a id="schema_NotificationDtoExcluding_id-groupKey_"></a>
+<a id="tocSnotificationdtoexcluding_id-groupkey_"></a>
+<a id="tocsnotificationdtoexcluding_id-groupkey_"></a>
+
+```json
+{
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "isCritical": true,
+  "type": 0,
+  "options": {},
+  "sentDate": "2019-08-24T14:15:22Z"
+}
+
+```
+
+NotificationDtoExcluding_id-groupKey_
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|subject|string¦null|false|none|none|
+|body|string|false|none|none|
+|receiver|object|false|none|none|
+|isCritical|boolean|false|none|none|
+|type|number|true|none|none|
+|options|object|false|none|none|
+|sentDate|string(date-time)|false|none|none|
+
+<h2 id="tocS_NotificationDtoExcluding_id-groupKey-receiver-subject-body-type_">NotificationDtoExcluding_id-groupKey-receiver-subject-body-type_</h2>
+<!-- backwards compatibility -->
+<a id="schemanotificationdtoexcluding_id-groupkey-receiver-subject-body-type_"></a>
+<a id="schema_NotificationDtoExcluding_id-groupKey-receiver-subject-body-type_"></a>
+<a id="tocSnotificationdtoexcluding_id-groupkey-receiver-subject-body-type_"></a>
+<a id="tocsnotificationdtoexcluding_id-groupkey-receiver-subject-body-type_"></a>
+
+```json
+{
+  "isCritical": true,
+  "options": {},
+  "sentDate": "2019-08-24T14:15:22Z"
+}
+
+```
+
+NotificationDtoExcluding_id-groupKey-receiver-subject-body-type_
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|isCritical|boolean|false|none|none|
+|options|object|false|none|none|
+|sentDate|string(date-time)|false|none|none|
+
+<h2 id="tocS_NotificationDto">NotificationDto</h2>
+<!-- backwards compatibility -->
+<a id="schemanotificationdto"></a>
+<a id="schema_NotificationDto"></a>
+<a id="tocSnotificationdto"></a>
+<a id="tocsnotificationdto"></a>
+
+```json
+{
+  "id": "string",
+  "subject": "string",
+  "body": "string",
+  "receiver": {},
+  "isCritical": true,
+  "type": 0,
+  "groupKey": "string",
+  "options": {},
+  "sentDate": "2019-08-24T14:15:22Z"
+}
+
+```
+
+NotificationDto
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|false|none|none|
+|subject|string¦null|false|none|none|
+|body|string|false|none|none|
+|receiver|object|false|none|none|
+|isCritical|boolean|false|none|none|
+|type|number|true|none|none|
+|groupKey|string|false|none|none|
+|options|object|false|none|none|
+|sentDate|string(date-time)|false|none|none|
+
+<h2 id="tocS_NotificationSettingsDto">NotificationSettingsDto</h2>
+<!-- backwards compatibility -->
+<a id="schemanotificationsettingsdto"></a>
+<a id="schema_NotificationSettingsDto"></a>
+<a id="tocSnotificationsettingsdto"></a>
+<a id="tocsnotificationsettingsdto"></a>
+
+```json
+{
+  "ids": [
+    "string"
+  ],
+  "userId": [
+    "string"
+  ],
+  "startTime": "2019-08-24T14:15:22Z",
+  "endTime": "2019-08-24T14:15:22Z"
+}
+
+```
+
+NotificationSettingsDto
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|ids|[string]|false|none|none|
+|userId|[string]|false|none|none|
+|startTime|string(date-time)|false|none|none|
+|endTime|string(date-time)|false|none|none|
 
 <h2 id="tocS_NotificationExcluding_id_">NotificationExcluding_id_</h2>
 <!-- backwards compatibility -->
@@ -2726,7 +4362,10 @@ Notification
   "receiver": {},
   "type": 0,
   "sentDate": "2019-08-24T14:15:22Z",
-  "options": {}
+  "options": {},
+  "isDraft": true,
+  "groupKey": "string",
+  "isCritical": true
 }
 
 ```
@@ -2739,10 +4378,13 @@ NotificationExcluding_id_
 |---|---|---|---|---|
 |subject|string¦null|false|none|none|
 |body|string|true|none|none|
-|receiver|object|true|none|none|
+|receiver|object|false|none|none|
 |type|number|true|none|none|
 |sentDate|string(date-time)|false|none|none|
 |options|object|false|none|none|
+|isDraft|boolean|false|none|none|
+|groupKey|string|false|none|none|
+|isCritical|boolean|false|none|none|
 
 <h2 id="tocS_NotificationPartial">NotificationPartial</h2>
 <!-- backwards compatibility -->
@@ -2759,7 +4401,10 @@ NotificationExcluding_id_
   "receiver": {},
   "type": 0,
   "sentDate": "2019-08-24T14:15:22Z",
-  "options": {}
+  "options": {},
+  "isDraft": true,
+  "groupKey": "string",
+  "isCritical": true
 }
 
 ```
@@ -2777,6 +4422,9 @@ NotificationPartial
 |type|number|false|none|none|
 |sentDate|string(date-time)|false|none|none|
 |options|object|false|none|none|
+|isDraft|boolean|false|none|none|
+|groupKey|string|false|none|none|
+|isCritical|boolean|false|none|none|
 
 <h2 id="tocS_NotificationUser">NotificationUser</h2>
 <!-- backwards compatibility -->
@@ -2796,7 +4444,8 @@ NotificationPartial
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }
 
 ```
@@ -2817,6 +4466,7 @@ NotificationUser
 |userId|string|true|none|none|
 |isRead|boolean|false|none|none|
 |actionMeta|object|false|none|none|
+|isDraft|boolean|false|none|none|
 
 <h2 id="tocS_NewNotificationUser">NewNotificationUser</h2>
 <!-- backwards compatibility -->
@@ -2835,7 +4485,8 @@ NotificationUser
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }
 
 ```
@@ -2855,6 +4506,7 @@ NewNotificationUser
 |userId|string|true|none|none|
 |isRead|boolean|false|none|none|
 |actionMeta|object|false|none|none|
+|isDraft|boolean|false|none|none|
 
 <h2 id="tocS_NotificationUserPartial">NotificationUserPartial</h2>
 <!-- backwards compatibility -->
@@ -2874,7 +4526,8 @@ NewNotificationUser
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }
 
 ```
@@ -2895,6 +4548,7 @@ NotificationUserPartial
 |userId|string|false|none|none|
 |isRead|boolean|false|none|none|
 |actionMeta|object|false|none|none|
+|isDraft|boolean|false|none|none|
 
 <h2 id="tocS_AccessResponseDto">AccessResponseDto</h2>
 <!-- backwards compatibility -->
@@ -2963,7 +4617,8 @@ NotificationAccess
   "notificationId": "string",
   "userId": "string",
   "isRead": true,
-  "actionMeta": {}
+  "actionMeta": {},
+  "isDraft": true
 }
 
 ```
@@ -2983,6 +4638,165 @@ NewNotificationUserInNotification
 |userId|string|true|none|none|
 |isRead|boolean|false|none|none|
 |actionMeta|object|false|none|none|
+|isDraft|boolean|false|none|none|
+
+<h2 id="tocS_UserNotificationSettings">UserNotificationSettings</h2>
+<!-- backwards compatibility -->
+<a id="schemausernotificationsettings"></a>
+<a id="schema_UserNotificationSettings"></a>
+<a id="tocSusernotificationsettings"></a>
+<a id="tocsusernotificationsettings"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+}
+
+```
+
+UserNotificationSettings
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|id|string|false|none|none|
+|userId|string|true|none|none|
+|sleepStartTime|string(date-time)|true|none|none|
+|sleepEndTime|string(date-time)|true|none|none|
+|type|number|true|none|none|
+
+<h2 id="tocS_NewUserNotificationSettings">NewUserNotificationSettings</h2>
+<!-- backwards compatibility -->
+<a id="schemanewusernotificationsettings"></a>
+<a id="schema_NewUserNotificationSettings"></a>
+<a id="tocSnewusernotificationsettings"></a>
+<a id="tocsnewusernotificationsettings"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+}
+
+```
+
+NewUserNotificationSettings
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|userId|string|true|none|none|
+|sleepStartTime|string(date-time)|true|none|none|
+|sleepEndTime|string(date-time)|true|none|none|
+|type|number|true|none|none|
+
+<h2 id="tocS_UserNotificationSettingsWithRelations">UserNotificationSettingsWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemausernotificationsettingswithrelations"></a>
+<a id="schema_UserNotificationSettingsWithRelations"></a>
+<a id="tocSusernotificationsettingswithrelations"></a>
+<a id="tocsusernotificationsettingswithrelations"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+}
+
+```
+
+UserNotificationSettingsWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|id|string|false|none|none|
+|userId|string|true|none|none|
+|sleepStartTime|string(date-time)|true|none|none|
+|sleepEndTime|string(date-time)|true|none|none|
+|type|number|true|none|none|
+
+<h2 id="tocS_UserNotificationSettingsPartial">UserNotificationSettingsPartial</h2>
+<!-- backwards compatibility -->
+<a id="schemausernotificationsettingspartial"></a>
+<a id="schema_UserNotificationSettingsPartial"></a>
+<a id="tocSusernotificationsettingspartial"></a>
+<a id="tocsusernotificationsettingspartial"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+}
+
+```
+
+UserNotificationSettingsPartial
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|id|string|false|none|none|
+|userId|string|false|none|none|
+|sleepStartTime|string(date-time)|false|none|none|
+|sleepEndTime|string(date-time)|false|none|none|
+|type|number|false|none|none|
 
 <h2 id="tocS_loopback.Count">loopback.Count</h2>
 <!-- backwards compatibility -->
@@ -3140,7 +4954,8 @@ notification_users.IncludeFilter.Items
     "notificationId": true,
     "userId": true,
     "isRead": true,
-    "actionMeta": true
+    "actionMeta": true,
+    "isDraft": true
   },
   "include": [
     {
@@ -3207,6 +5022,7 @@ oneOf
 |»» userId|boolean|false|none|none|
 |»» isRead|boolean|false|none|none|
 |»» actionMeta|boolean|false|none|none|
+|»» isDraft|boolean|false|none|none|
 
 xor
 
@@ -3363,7 +5179,10 @@ notifications.IncludeFilter.Items
     "receiver": true,
     "type": true,
     "sentDate": true,
-    "options": true
+    "options": true,
+    "isDraft": true,
+    "groupKey": true,
+    "isCritical": true
   },
   "include": [
     {
@@ -3427,6 +5246,9 @@ oneOf
 |»» type|boolean|false|none|none|
 |»» sentDate|boolean|false|none|none|
 |»» options|boolean|false|none|none|
+|»» isDraft|boolean|false|none|none|
+|»» groupKey|boolean|false|none|none|
+|»» isCritical|boolean|false|none|none|
 
 xor
 
@@ -3451,4 +5273,86 @@ or
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |» *anonymous*|string|false|none|none|
+
+<h2 id="tocS_user_notification_settings.Filter">user_notification_settings.Filter</h2>
+<!-- backwards compatibility -->
+<a id="schemauser_notification_settings.filter"></a>
+<a id="schema_user_notification_settings.Filter"></a>
+<a id="tocSuser_notification_settings.filter"></a>
+<a id="tocsuser_notification_settings.filter"></a>
+
+```json
+{
+  "offset": 0,
+  "limit": 100,
+  "skip": 0,
+  "order": "string",
+  "where": {},
+  "fields": {
+    "deleted": true,
+    "deletedOn": true,
+    "deletedBy": true,
+    "createdOn": true,
+    "modifiedOn": true,
+    "id": true,
+    "userId": true,
+    "sleepStartTime": true,
+    "sleepEndTime": true,
+    "type": true
+  }
+}
+
+```
+
+user_notification_settings.Filter
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|offset|integer|false|none|none|
+|limit|integer|false|none|none|
+|skip|integer|false|none|none|
+|order|any|false|none|none|
+
+oneOf
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
+
+xor
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
+
+continued
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|where|object|false|none|none|
+|fields|any|false|none|none|
+
+oneOf
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|object|false|none|none|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|boolean|false|none|none|
+|»» deletedBy|boolean|false|none|none|
+|»» createdOn|boolean|false|none|none|
+|»» modifiedOn|boolean|false|none|none|
+|»» id|boolean|false|none|none|
+|»» userId|boolean|false|none|none|
+|»» sleepStartTime|boolean|false|none|none|
+|»» sleepEndTime|boolean|false|none|none|
+|»» type|boolean|false|none|none|
+
+xor
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
 

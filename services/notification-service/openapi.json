@@ -581,7 +581,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Array of Notifications",
+            "description": "Array of Notifications, to send notifications as bulk.",
             "content": {
               "application/json": {
                 "type": "array",
@@ -655,6 +655,127 @@
           }
         ],
         "operationId": "NotificationController.count"
+      }
+    },
+    "/notifications/drafts": {
+      "post": {
+        "x-controller-name": "NotificationController",
+        "x-operation-name": "draftNotification",
+        "tags": [
+          "NotificationController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "This API is used to draft notifications, here in case isDraft .",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationExcluding_id-isDraft_"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateNotification   |\n| 2   |\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificationExcluding_id-isDraft_"
+              }
+            }
+          }
+        },
+        "operationId": "NotificationController.draftNotification"
+      }
+    },
+    "/notifications/groups/{groupKey}": {
+      "post": {
+        "x-controller-name": "NotificationController",
+        "x-operation-name": "sendGroupedNotificationByGroupKey",
+        "tags": [
+          "NotificationController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "This API is used to send notification by grouping by given key in the end point.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationDtoExcluding_id_"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateNotification   |\n| 2   |\n",
+        "parameters": [
+          {
+            "name": "groupKey",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificationDtoExcluding_id-groupKey_"
+              }
+            }
+          }
+        },
+        "operationId": "NotificationController.sendGroupedNotificationByGroupKey"
+      }
+    },
+    "/notifications/send": {
+      "post": {
+        "x-controller-name": "NotificationController",
+        "x-operation-name": "sendNotificationForSleepTimeUsers",
+        "tags": [
+          "NotificationController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "This API is used to send notifications for given search criteria.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationSettingsDto"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateNotification   |\n| 2   |\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificationSettingsDto"
+              }
+            }
+          }
+        },
+        "operationId": "NotificationController.sendNotificationForSleepTimeUsers"
       }
     },
     "/notifications/{id}/notification-users": {
@@ -866,6 +987,53 @@
         "operationId": "NotificationNotificationUserController.delete"
       }
     },
+    "/notifications/{id}/send": {
+      "post": {
+        "x-controller-name": "NotificationController",
+        "x-operation-name": "sendNotificationById",
+        "tags": [
+          "NotificationController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "This API is used to send notifications for given Notification Id.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationDtoExcluding_id-groupKey-receiver-subject-body-type_"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateNotification   |\n| 2   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificationDtoExcluding_id-groupKey-receiver-subject-body-type_"
+              }
+            }
+          }
+        },
+        "operationId": "NotificationController.sendNotificationById"
+      }
+    },
     "/notifications/{id}": {
       "patch": {
         "x-controller-name": "NotificationController",
@@ -914,7 +1082,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Notification model instance",
+            "description": ", to get the notification by ID",
             "content": {
               "application/json": {
                 "schema": {
@@ -952,7 +1120,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Notification model instance",
+            "description": "Notification model instance, This API end point will be used to send the notification to the user.",
             "content": {
               "application/json": {
                 "schema": {
@@ -967,10 +1135,11 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NotificationExcluding_id_"
+                "$ref": "#/components/schemas/NotificationExcluding_id-isDraft_"
               }
             }
-          }
+          },
+          "description": "This API is used to send notifications, the request body contains the object of notification model."
         },
         "operationId": "NotificationController.create"
       },
@@ -1038,7 +1207,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Array of Notification model instances",
+            "description": "Array of Notification model instances, To get the notifications",
             "content": {
               "application/json": {
                 "schema": {
@@ -1102,6 +1271,302 @@
         ],
         "operationId": "NotificationController.deleteAll"
       }
+    },
+    "/user-notification-settings/count": {
+      "get": {
+        "x-controller-name": "UserNotificationSettingsController",
+        "x-operation-name": "count",
+        "tags": [
+          "UserNotificationSettingsController"
+        ],
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotificationUserSettings   |\n",
+        "responses": {
+          "200": {
+            "description": "UserNotificationSettings model count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "user_notification_settings.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<UserNotificationSettings>"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "UserNotificationSettingsController.count"
+      }
+    },
+    "/user-notification-settings/{id}": {
+      "put": {
+        "x-controller-name": "UserNotificationSettingsController",
+        "x-operation-name": "replaceById",
+        "tags": [
+          "UserNotificationSettingsController"
+        ],
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateNotificationUserSettings   |\n",
+        "responses": {
+          "200": {
+            "description": "Return value of UserNotificationSettingsController.replaceById",
+            "content": {}
+          },
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "UserNotificationSettings PUT success"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserNotificationSettings"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "UserNotificationSettingsController.replaceById"
+      },
+      "patch": {
+        "x-controller-name": "UserNotificationSettingsController",
+        "x-operation-name": "updateById",
+        "tags": [
+          "UserNotificationSettingsController"
+        ],
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateNotificationUserSettings   |\n",
+        "responses": {
+          "200": {
+            "description": "Return value of UserNotificationSettingsController.updateById",
+            "content": {}
+          },
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "UserNotificationSettings PATCH success"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserNotificationSettingsPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "UserNotificationSettingsController.updateById"
+      },
+      "get": {
+        "x-controller-name": "UserNotificationSettingsController",
+        "x-operation-name": "findById",
+        "tags": [
+          "UserNotificationSettingsController"
+        ],
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotificationUserSettings   |\n",
+        "responses": {
+          "200": {
+            "description": "UserNotificationSettings model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserNotificationSettingsWithRelations"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "UserNotificationSettingsController.findById"
+      },
+      "delete": {
+        "x-controller-name": "UserNotificationSettingsController",
+        "x-operation-name": "deleteById",
+        "tags": [
+          "UserNotificationSettingsController"
+        ],
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteNotificationUserSettings   |\n",
+        "responses": {
+          "200": {
+            "description": "Return value of UserNotificationSettingsController.deleteById",
+            "content": {}
+          },
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "UserNotificationSettings DELETE success"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "UserNotificationSettingsController.deleteById"
+      }
+    },
+    "/user-notification-settings": {
+      "post": {
+        "x-controller-name": "UserNotificationSettingsController",
+        "x-operation-name": "create",
+        "tags": [
+          "UserNotificationSettingsController"
+        ],
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateNotificationUserSettings   |\n",
+        "responses": {
+          "200": {
+            "description": "UserNotificationSettings model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserNotificationSettings"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewUserNotificationSettings"
+              }
+            }
+          }
+        },
+        "operationId": "UserNotificationSettingsController.create"
+      },
+      "patch": {
+        "x-controller-name": "UserNotificationSettingsController",
+        "x-operation-name": "updateAll",
+        "tags": [
+          "UserNotificationSettingsController"
+        ],
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateNotificationUserSettings   |\n",
+        "responses": {
+          "200": {
+            "description": "UserNotificationSettings PATCH success count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserNotificationSettingsPartial"
+              }
+            }
+          }
+        },
+        "operationId": "UserNotificationSettingsController.updateAll"
+      },
+      "get": {
+        "x-controller-name": "UserNotificationSettingsController",
+        "x-operation-name": "find",
+        "tags": [
+          "UserNotificationSettingsController"
+        ],
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewNotificationUserSettings   |\n",
+        "responses": {
+          "200": {
+            "description": "Array of UserNotificationSettings model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserNotificationSettingsWithRelations"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/user_notification_settings.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "UserNotificationSettingsController.find"
+      }
     }
   },
   "components": {
@@ -1139,13 +1604,218 @@
           },
           "options": {
             "type": "object"
+          },
+          "isDraft": {
+            "type": "boolean"
+          },
+          "groupKey": {
+            "type": "string"
+          },
+          "isCritical": {
+            "type": "boolean"
           }
         },
         "required": [
           "body",
-          "receiver",
           "type"
         ],
+        "additionalProperties": false
+      },
+      "NotificationExcluding_id-isDraft_": {
+        "title": "NotificationExcluding_id-isDraft_",
+        "type": "object",
+        "description": "(tsType: Omit<Notification, 'id' | 'isDraft'>, schemaOptions: { exclude: [ 'id', 'isDraft' ] })",
+        "properties": {
+          "subject": {
+            "type": "string",
+            "nullable": true
+          },
+          "body": {
+            "type": "string"
+          },
+          "receiver": {
+            "type": "object"
+          },
+          "type": {
+            "type": "number"
+          },
+          "sentDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "options": {
+            "type": "object"
+          },
+          "groupKey": {
+            "type": "string"
+          },
+          "isCritical": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "body",
+          "type"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<Notification, 'id' | 'isDraft'>"
+      },
+      "NotificationDtoExcluding_id_": {
+        "title": "NotificationDtoExcluding_id_",
+        "type": "object",
+        "description": "(tsType: Omit<NotificationDto, 'id'>, schemaOptions: { exclude: [ 'id' ] })",
+        "properties": {
+          "subject": {
+            "type": "string",
+            "nullable": true
+          },
+          "body": {
+            "type": "string"
+          },
+          "receiver": {
+            "type": "object"
+          },
+          "isCritical": {
+            "type": "boolean"
+          },
+          "type": {
+            "type": "number"
+          },
+          "groupKey": {
+            "type": "string"
+          },
+          "options": {
+            "type": "object"
+          },
+          "sentDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<NotificationDto, 'id'>"
+      },
+      "NotificationDtoExcluding_id-groupKey_": {
+        "title": "NotificationDtoExcluding_id-groupKey_",
+        "type": "object",
+        "description": "(tsType: Omit<NotificationDto, 'id' | 'groupKey'>, schemaOptions: { exclude: [ 'id', 'groupKey' ] })",
+        "properties": {
+          "subject": {
+            "type": "string",
+            "nullable": true
+          },
+          "body": {
+            "type": "string"
+          },
+          "receiver": {
+            "type": "object"
+          },
+          "isCritical": {
+            "type": "boolean"
+          },
+          "type": {
+            "type": "number"
+          },
+          "options": {
+            "type": "object"
+          },
+          "sentDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<NotificationDto, 'id' | 'groupKey'>"
+      },
+      "NotificationDtoExcluding_id-groupKey-receiver-subject-body-type_": {
+        "title": "NotificationDtoExcluding_id-groupKey-receiver-subject-body-type_",
+        "type": "object",
+        "description": "(tsType: Omit<NotificationDto, 'id' | 'groupKey' | 'receiver' | 'subject' | 'body' | 'type'>, schemaOptions: { exclude: [ 'id', 'groupKey', 'receiver', 'subject', 'body', 'type' ] })",
+        "properties": {
+          "isCritical": {
+            "type": "boolean"
+          },
+          "options": {
+            "type": "object"
+          },
+          "sentDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<NotificationDto, 'id' | 'groupKey' | 'receiver' | 'subject' | 'body' | 'type'>"
+      },
+      "NotificationDto": {
+        "title": "NotificationDto",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string",
+            "nullable": true
+          },
+          "body": {
+            "type": "string"
+          },
+          "receiver": {
+            "type": "object"
+          },
+          "isCritical": {
+            "type": "boolean"
+          },
+          "type": {
+            "type": "number"
+          },
+          "groupKey": {
+            "type": "string"
+          },
+          "options": {
+            "type": "object"
+          },
+          "sentDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false
+      },
+      "NotificationSettingsDto": {
+        "title": "NotificationSettingsDto",
+        "type": "object",
+        "properties": {
+          "ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "userId": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "startTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
         "additionalProperties": false
       },
       "NotificationExcluding_id_": {
@@ -1172,11 +1842,19 @@
           },
           "options": {
             "type": "object"
+          },
+          "isDraft": {
+            "type": "boolean"
+          },
+          "groupKey": {
+            "type": "string"
+          },
+          "isCritical": {
+            "type": "boolean"
           }
         },
         "required": [
           "body",
-          "receiver",
           "type"
         ],
         "additionalProperties": false,
@@ -1209,6 +1887,15 @@
           },
           "options": {
             "type": "object"
+          },
+          "isDraft": {
+            "type": "boolean"
+          },
+          "groupKey": {
+            "type": "string"
+          },
+          "isCritical": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false,
@@ -1252,6 +1939,9 @@
           },
           "actionMeta": {
             "type": "object"
+          },
+          "isDraft": {
+            "type": "boolean"
           }
         },
         "required": [
@@ -1296,6 +1986,9 @@
           },
           "actionMeta": {
             "type": "object"
+          },
+          "isDraft": {
+            "type": "boolean"
           }
         },
         "required": [
@@ -1344,6 +2037,9 @@
           },
           "actionMeta": {
             "type": "object"
+          },
+          "isDraft": {
+            "type": "boolean"
           }
         },
         "additionalProperties": true,
@@ -1420,6 +2116,9 @@
           },
           "actionMeta": {
             "type": "object"
+          },
+          "isDraft": {
+            "type": "boolean"
           }
         },
         "required": [
@@ -1427,6 +2126,203 @@
         ],
         "additionalProperties": true,
         "x-typescript-type": "@loopback/repository-json-schema#Optional<Omit<NotificationUser, 'id'>, 'notificationId'>"
+      },
+      "UserNotificationSettings": {
+        "title": "UserNotificationSettings",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sleepStartTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sleepEndTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "type": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "userId",
+          "sleepStartTime",
+          "sleepEndTime",
+          "type"
+        ],
+        "additionalProperties": true
+      },
+      "NewUserNotificationSettings": {
+        "title": "NewUserNotificationSettings",
+        "type": "object",
+        "description": "(tsType: Omit<UserNotificationSettings, 'id'>, schemaOptions: { title: 'NewUserNotificationSettings', exclude: [ 'id' ] })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sleepStartTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sleepEndTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "type": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "userId",
+          "sleepStartTime",
+          "sleepEndTime",
+          "type"
+        ],
+        "additionalProperties": true,
+        "x-typescript-type": "Omit<UserNotificationSettings, 'id'>"
+      },
+      "UserNotificationSettingsWithRelations": {
+        "title": "UserNotificationSettingsWithRelations",
+        "type": "object",
+        "description": "(tsType: UserNotificationSettingsWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sleepStartTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sleepEndTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "type": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "userId",
+          "sleepStartTime",
+          "sleepEndTime",
+          "type"
+        ],
+        "additionalProperties": true,
+        "x-typescript-type": "UserNotificationSettingsWithRelations"
+      },
+      "UserNotificationSettingsPartial": {
+        "title": "UserNotificationSettingsPartial",
+        "type": "object",
+        "description": "(tsType: Partial<UserNotificationSettings>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sleepStartTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sleepEndTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "type": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": true,
+        "x-typescript-type": "Partial<UserNotificationSettings>"
       },
       "loopback.Count": {
         "type": "object",
@@ -1582,6 +2478,9 @@
                     "type": "boolean"
                   },
                   "actionMeta": {
+                    "type": "boolean"
+                  },
+                  "isDraft": {
                     "type": "boolean"
                   }
                 },
@@ -1752,6 +2651,15 @@
                   },
                   "options": {
                     "type": "boolean"
+                  },
+                  "isDraft": {
+                    "type": "boolean"
+                  },
+                  "groupKey": {
+                    "type": "boolean"
+                  },
+                  "isCritical": {
+                    "type": "boolean"
                   }
                 },
                 "additionalProperties": false
@@ -1767,7 +2675,10 @@
                     "receiver",
                     "type",
                     "sentDate",
-                    "options"
+                    "options",
+                    "isDraft",
+                    "groupKey",
+                    "isCritical"
                   ],
                   "example": "id"
                 },
@@ -1793,6 +2704,94 @@
         },
         "additionalProperties": false,
         "x-typescript-type": "@loopback/repository#Filter<Notification>"
+      },
+      "user_notification_settings.Filter": {
+        "type": "object",
+        "title": "user_notification_settings.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "title": "user_notification_settings.WhereFilter",
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "userId": {
+                    "type": "boolean"
+                  },
+                  "sleepStartTime": {
+                    "type": "boolean"
+                  },
+                  "sleepEndTime": {
+                    "type": "boolean"
+                  },
+                  "type": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "example": "deleted"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "user_notification_settings.Fields"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<UserNotificationSettings>"
       }
     }
   },
