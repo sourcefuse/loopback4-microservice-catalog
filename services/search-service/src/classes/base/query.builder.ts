@@ -149,9 +149,15 @@ export abstract class SearchQueryBuilder<T extends Model> {
     const columnList = Object.keys(columns)
       .filter(
         column =>
-          column !== IGNORED_COLUMN && !filter.includes(column as keyof T),
+          columns[column as keyof ColumnMap<T>] !== IGNORED_COLUMN &&
+          !filter.includes(column as keyof T),
       )
-      .map(column => (columns as AnyObject)[column])
+      .map(column =>
+        this.getColumnName(
+          model,
+          columns[column as keyof ColumnMap<T>] as keyof T,
+        ),
+      )
       .join(', ');
     const selectors = Object.keys(columns)
       .map(column => {
