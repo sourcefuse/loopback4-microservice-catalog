@@ -26,6 +26,10 @@ const types = [
 const scopes = [
   {name: 'chore'},
   {name: 'deps'},
+  {name: 'all-services'},
+  {name: 'typedoc'},
+  {name: 'mkdocs'},
+  {name: 'workflows'},
   {name: 'core'},
   {name: 'cli'},
   {name: 'cache'},
@@ -45,10 +49,6 @@ const scopes = [
   {name: 'sandbox'},
   {name: 'ocr-parser'},
   {name: 'user-tenant-service'},
-  {name: 'all-services'},
-  {name: 'typedoc'},
-  {name: 'mkdocs'},
-  {name: 'workflows'},
   {name: 'task-service'},
 ];
 

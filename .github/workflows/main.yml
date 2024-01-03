@@ -6,9 +6,9 @@ on:
   pull_request:
     branches: [master]
 
-# This workflow contains a single job called "npm_audit"
+# This workflow contains a single job called "npm_test"
 jobs:
-  npm_audit:
+  npm_test:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -19,13 +19,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '18.x'
-      - run: node --version
-      - run: npm --version
 
       - name: Install Monorepo Deps
-        run: npm ci
-
-      - name: Bootstrap Monorepo
         run: npm ci
 
       - name: Run Test Cases
