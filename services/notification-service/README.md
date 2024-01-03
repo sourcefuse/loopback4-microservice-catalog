@@ -356,6 +356,136 @@ this.bind(NotifServiceBindings.NotificationFilter).toProvider(
 
 Note: One can modify the provider according to the requirements
 
+### **Drafting Notification** -
+  Notification drafting i.e. draft or save notification to send it later.
+  1. For this, there is a POST API to save notification as draft. There is one column in DB in `notifications` table `is_draft` which is used to mark a notification as draft.
+  2. The drafted notification could be `based on a group key` OR `without a group key`. In DB group key is saved in a column called `group_key`.
+   
+    - There is a POST API with end url `/notifications/drafts` to save notification(s) as draft.
+    - The draft notification request body `with group key` looks like:
+      
+      ```json
+        {
+          "body": "text",
+          "groupKey":"text",
+          "type": "number"
+      }
+      ```
+    - The draft notification request body `without group key` looks like, e.g. the  email notification draft:
+
+      ```json
+        {
+          "body": "text",
+          "body":"text",
+          "type": "number",
+          "receiver":
+          {
+            "to": [
+              {
+                "type": "number",
+                "id": "text"
+              }
+            ]
+          }
+        }
+      ```
+### **Grouping Notification** -
+  
+  Notification grouping i.e. send many notification as one notification by grouping those together using the `groupKey` OR `group_key` field from DB table.
+  1. There is an API's to send already saved or already drafted notifications by grouping it using `groupKey`.
+  2. The API end point looks like `/notifications/groups/{groupKey}`.
+  3. The request body of the API to send the grouped notification looks like below. Note that, this `example`  request body is for email notification.
+    ```json
+          {
+            "subject": "text",
+            "receiver": {
+                "to": [
+                    {
+                        "type": "number",
+                        "id": "text"
+                    }
+                ]
+            },
+            "options": {
+                "fromEmail": "string"
+            },
+            "isCritical":"boolean",
+            "type": "number"
+        }
+      ```
+    - In above request body one can add additional key to the json object in case they want to concatenate new thing in addition to saved drafts and then request body will look like below:
+     ```json
+          {
+            "subject": "text",
+            "body": "text",
+            "receiver": {
+                "to": [
+                    {
+                        "type": "number",
+                        "id": "text"
+                    }
+                ]
+            },
+            "options": {
+                "fromEmail": "string"
+            },
+            "isCritical":"boolean",
+            "type": "number"
+        }
+      ```
+### **Sending Drafted Notification Independently** -
+  There is one API for sending drafted notification independently using `id` of already saved or drafted notification.
+  1. This API has `id` (of an already drafted notification) in it's end point which looks like `/notifications/{draftedNotificationId}/send`  and it sends already saved or drafted notification to the receiver(s).
+  2. The request body for this API looks like
+    ```json
+        {
+          "options": {
+              "fromEmail": "string"
+          },
+          "isCritical":"boolean",
+        }
+      ```
+### **User Notification Sleep Time Settings** -
+  User or receiver's sleep time settings will allow user to stop from getting notifications for any given time interval. There are API's as mentioned below which are used to manage User notification settings for sleep time
+  1. There is a POST API with end url `/notifications/user-notification-settings` to add sleep time of user or receiver into DB. The request body for this looks like below:
+    ```json
+        {
+          "userId": "text",
+          "sleepStartTime": "timestamp",
+          "sleepEndTime": "timestamp",
+          "type":"number"
+        }
+      ```
+  2. There is a PATCH API with end url `/notifications/user-notification-settings/{id}` to update sleep time of user or receiver in DB. The request body for this looks like below:
+    ```json
+        {
+          "userId": "text",
+          "sleepStartTime": "timestamp",
+          "sleepEndTime": "timestamp",
+          "type":"number"
+        }
+      ```
+  3. There is a GET API with end url `/notifications/user-notification-settings` to get all sleep time settings of users or receivers from DB.
+  4. There is a GET API with end url `/notifications/user-notification-settings/{id}` to get sleep time setting of a user or a receiver from DB by given id.
+  5. There is a DELETE API with end url `/notifications/user-notification-settings/{id}` to delete sleep time setting of a user or a receiver from DB by given id.
+  - **Note:** *Sleep time is applicable for send grouped notification API as well as for send drafted notification by id except in case request body contains parameter `isCritical` and it's value is true. The value of field `isCritical` is saved in DB into the column named  `is_critical`.*
+  - **Send notification to users having sleep time in past:**
+    - There is one POST API with end url `/notifications/send` which sends notifications to users (with respect a given search criteria in the request body) who where having sleep time when notifications were being sent (in past). For this API the request body looks like:
+      ```json
+          {
+            "ids": [
+              "text"
+            ],
+            "userId": [
+                "text"
+            ],
+            "startTime": "timestamp",
+            "endTime": "timestamp"
+          }
+        ```
+    - Based on given search criteria in the request body, this API finds the receiver(s) and the respective notifications which could not be sent due to the receiver's sleep time interval and sends it.
+   - **Note:** To use this feature in your application, please run the required migrations. Also if one want to make some logical changes they can make changes in the provider.
+
 ### Migrations
 
 The migrations required for this service are processed during the installation automatically if you set the `NOTIF_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or databases, they may be affected. In such a scenario, it is advised that you copy the migration files in your project root, using the `NOTIF_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
