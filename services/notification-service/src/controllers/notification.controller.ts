@@ -229,6 +229,7 @@ export class NotificationController {
     ) {
       throw new HttpErrors.UnprocessableEntity(ErrorKeys.DraftError);
     } else {
+      notification.isDraft = true;
       return this.notificationRepository.create(notification);
     }
   }

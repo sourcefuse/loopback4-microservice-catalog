@@ -356,17 +356,131 @@ this.bind(NotifServiceBindings.NotificationFilter).toProvider(
 
 Note: One can modify the provider according to the requirements
 
-### Notification Grouping
-This service now support following features:
-1. Notification drafting i.e. draft notification to send it later. For this, there is a POST API to save notification as draft. One additional field in DB table (notifications table) `is_draft` is used to mark a notification as draft. The drafted notification could be `based on a group key` OR `without a group key`. In DB group key is saved in a column called `group_key`.
-2. Notification grouping i.e. send many notification as one notification by grouping those together using the `groupKey` OR `group_key` field from DB table. For this there is a POST API which has `group key` in it's end point. This API groups notification by given group key and send it to the receivers.
-3. Sending drafted notification independently using `id` of already saved or drafted notification. This API has `id` (of an already drafted notification) in it's end point and it sends already saved or drafted notification to the receivers.
-4. These APIs consider the sleep time of the user if it is a sleep time for the receiver(s) while sending the notification then it does not send the notification to the receiver(s).
-5. Also, this service now provides a sleep time feature for user or receivers. This is a setting, using which user can save sleep time in database during which interval notifications would not be sent to respective receiver. But, if request body contains a field called `isCritical` (having it's value true) with respect to the column `is_critical` in the database table then even if sending notification time matches with sleep time interval, the notification will be sent to mentioned receiver(s) in the request body. One provider has been added to support the sleep time functionality. Note that One can modify the provider according to the requirements.
-6. To manage the sleep time, APIs has been added with respect to CRUD functionality.
-7. There is an API which will send notification with respect a given search criteria  in the request body, this API will send notification to those receiver(s) who were having sleep time while notification(s) was sent in past.
-
-Note: As there are some migrations added which need to be run before start using this feature.
+- **Drafting Notification** -
+  - Notification drafting i.e. draft or save notification to send it later.
+   1. For this, there is a POST API to save notification as draft. There is one column in DB in `notifications` table `is_draft` which is used to mark a notification as draft.
+   2. The drafted notification could be `based on a group key` OR `without a group key`. In DB group key is saved in a column called `group_key`.
+    - There is a POST API with end url `/notifications/drafts` to save notification(s) as draft
+    - The draft notification request body `with group key` looks like
+      ```json
+        {
+          "body": "text",
+          "groupKey":"text",
+          "type": "number"
+      }
+      ```
+    - The draft notification request body `without group key` looks like, e.g. the  email notification draft
+      ```json
+        {
+          "body": "text",
+          "body":"text",
+          "type": "number",
+          "receiver":
+          {
+            "to": [
+              {
+                "type": "number",
+                "id": "text"
+              }
+            ]
+          }
+        }
+      ```
+- **Grouping Notification** -
+  - Notification grouping i.e. send many notification as one notification by grouping those together using the `groupKey` OR `group_key` field from DB table.
+  1. There is an API's to send already saved or already drafted notifications by grouping it using `groupKey`.
+  2. The API end point looks like `/notifications/groups/{groupKey}`.
+  3. The request body of the API to send the grouped notification looks like below. Note that, this `example`  request body is for email notification.
+    - ```json
+        {
+          "subject": "text",
+          "receiver": {
+              "to": [
+                  {
+                      "type": "number",
+                      "id": "text"
+                  }
+              ]
+          },
+          "options": {
+              "fromEmail": "string"
+          },
+          "isCritical":"boolean",
+          "type": "number"
+      }
+      ```
+  - In above request body one can add additional key to the json object in case they want to concatenate new thing in addition to saved drafts and then request body will look like below
+  - ```json
+        {
+          "subject": "text",
+          "body": "text",
+          "receiver": {
+              "to": [
+                  {
+                      "type": "number",
+                      "id": "text"
+                  }
+              ]
+          },
+          "options": {
+              "fromEmail": "string"
+          },
+          "isCritical":"boolean",
+          "type": "number"
+      }
+      ```
+- **Sending Drafted Notification** -
+  - There is one API for sending drafted notification independently using `id` of already saved or drafted notification.
+   1. This API has `id` (of an already drafted notification) in it's end point which looks like `/notifications/{draftedNotificationId}/send`  and it sends already saved or drafted notification to the receiver(s).
+   2. The request body for this API looks like
+    - ```json
+        {
+          "options": {
+              "fromEmail": "string"
+          },
+          "isCritical":"boolean",
+      }
+      ```
+- **User Notification Sleep Time Settings** -
+  - User or receiver's sleep time settings will allow user to stop from getting notifications for any given time interval. There are API's as mentioned below which are used to manage User notification settings for sleep time
+    1. There is a POST API with end url `/notifications/user-notification-settings` to add sleep time of user or receiver into DB. The request body for this looks like below:
+      ```json
+        {
+          "userId": "text",
+          "sleepStartTime": "timestamp",
+          "sleepEndTime": "timestamp",
+          "type":"number"
+        }
+      ```
+    2. There is a PATCH API with end url `/notifications/user-notification-settings/{id}` to update sleep time of user or receiver in DB. The request body for this looks like below:
+      ```json
+        {
+          "userId": "text",
+          "sleepStartTime": "timestamp",
+          "sleepEndTime": "timestamp",
+          "type":"number"
+        }
+      ```
+    3. There is a GET API with end url `/notifications/user-notification-settings` to get all sleep time settings of users or receivers from DB.
+    4. There is a GET API with end url `/notifications/user-notification-settings/{id}` to get sleep time setting of a user or a receiver from DB by given id.
+    5. There is a DELETE API with end url `/notifications/user-notification-settings/{id}` to delete sleep time setting of a user or a receiver from DB by given id.
+  - **Note:** *Sleep time is applicable for send grouped notification API as well as for send drafted notification by id except in case request body contains parameter `isCritical` and it's value is true. The value of field `isCritical` is saved in DB into the column named  `is_critical`.*
+  - **Send notification to users having sleep time in past:**
+    - There is one POST API with end url `/notifications/send` which sends notifications to users (with respect a given search criteria in the request body) who where having sleep time when notifications were being sent (in past). For this API the request body looks like:
+      - ```json
+          {
+            "ids": [
+              "text"
+            ],
+            "userId": [
+                "text"
+            ],
+            "startTime": "timestamp",
+            "endTime": "timestamp"
+          }
+        ```
+     - Based on given search criteria in the request body, this API finds the receiver(s) and the respective notifications which could not be sent due to the receiver's sleep time interval and sends it.
+ - **Note:** To use this feature in your application, please run the required migrations. Also if one want to make some logical changes they can make changes in the provider.
 
 ### Migrations
 
