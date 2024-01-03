@@ -396,42 +396,42 @@ Note: One can modify the provider according to the requirements
   2. The API end point looks like `/notifications/groups/{groupKey}`.
   3. The request body of the API to send the grouped notification looks like below. Note that, this `example`  request body is for email notification.
     ```json
-        {
-          "subject": "text",
-          "receiver": {
-              "to": [
-                  {
-                      "type": "number",
-                      "id": "text"
-                  }
-              ]
-          },
-          "options": {
-              "fromEmail": "string"
-          },
-          "isCritical":"boolean",
-          "type": "number"
-      }
+          {
+            "subject": "text",
+            "receiver": {
+                "to": [
+                    {
+                        "type": "number",
+                        "id": "text"
+                    }
+                ]
+            },
+            "options": {
+                "fromEmail": "string"
+            },
+            "isCritical":"boolean",
+            "type": "number"
+        }
       ```
     - In above request body one can add additional key to the json object in case they want to concatenate new thing in addition to saved drafts and then request body will look like below:
      ```json
-        {
-          "subject": "text",
-          "body": "text",
-          "receiver": {
-              "to": [
-                  {
-                      "type": "number",
-                      "id": "text"
-                  }
-              ]
-          },
-          "options": {
-              "fromEmail": "string"
-          },
-          "isCritical":"boolean",
-          "type": "number"
-      }
+          {
+            "subject": "text",
+            "body": "text",
+            "receiver": {
+                "to": [
+                    {
+                        "type": "number",
+                        "id": "text"
+                    }
+                ]
+            },
+            "options": {
+                "fromEmail": "string"
+            },
+            "isCritical":"boolean",
+            "type": "number"
+        }
       ```
 ### **Sending Drafted Notification Independently** -
   There is one API for sending drafted notification independently using `id` of already saved or drafted notification.
@@ -443,28 +443,28 @@ Note: One can modify the provider according to the requirements
               "fromEmail": "string"
           },
           "isCritical":"boolean",
-      }
-    ```
+        }
+      ```
 ### **User Notification Sleep Time Settings** -
   User or receiver's sleep time settings will allow user to stop from getting notifications for any given time interval. There are API's as mentioned below which are used to manage User notification settings for sleep time
   1. There is a POST API with end url `/notifications/user-notification-settings` to add sleep time of user or receiver into DB. The request body for this looks like below:
     ```json
-      {
-        "userId": "text",
-        "sleepStartTime": "timestamp",
-        "sleepEndTime": "timestamp",
-        "type":"number"
-      }
-    ```
+        {
+          "userId": "text",
+          "sleepStartTime": "timestamp",
+          "sleepEndTime": "timestamp",
+          "type":"number"
+        }
+      ```
   2. There is a PATCH API with end url `/notifications/user-notification-settings/{id}` to update sleep time of user or receiver in DB. The request body for this looks like below:
     ```json
-      {
-        "userId": "text",
-        "sleepStartTime": "timestamp",
-        "sleepEndTime": "timestamp",
-        "type":"number"
-      }
-    ```
+        {
+          "userId": "text",
+          "sleepStartTime": "timestamp",
+          "sleepEndTime": "timestamp",
+          "type":"number"
+        }
+      ```
   3. There is a GET API with end url `/notifications/user-notification-settings` to get all sleep time settings of users or receivers from DB.
   4. There is a GET API with end url `/notifications/user-notification-settings/{id}` to get sleep time setting of a user or a receiver from DB by given id.
   5. There is a DELETE API with end url `/notifications/user-notification-settings/{id}` to delete sleep time setting of a user or a receiver from DB by given id.
