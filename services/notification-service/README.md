@@ -358,12 +358,15 @@ Note: One can modify the provider according to the requirements
 
 ### Notification Grouping
 This service now support following features:
-1. Notification drafting i.e. draft notification to send it later. For this there is a new API to save notification as draft. One additional field in DB table `is_draft` is used to mark a notification as draft. The drafted notification could be based on a group key OR without a group key. In DB group key is saved in a column called `group_key`.
-2. Notification grouping i.e. send many notification as one notification by grouping those together using the `groupKey` OR `group_key` field from DB table.
-3. Sending drafted notification independently using `id` of already saved or drafted notification.
-4. Also, this service now provides a sleep time feature for user or receiver. This is a setting, using which user can save sleep time in database during which interval notifications would not be sent to respective receiver. But, if request body contains a field called `isCritical` (having it's value true) with respect to the column `is_critical` in the database table then even if sending notification time matches with sleep time interval, the notification will be sent to mentioned receiver(s) in the request body.
-5. To manage the sleep time, APIs has been added with respect to CRUD functionality.
+1. Notification drafting i.e. draft notification to send it later. For this, there is a POST API to save notification as draft. One additional field in DB table (notifications table) `is_draft` is used to mark a notification as draft. The drafted notification could be `based on a group key` OR `without a group key`. In DB group key is saved in a column called `group_key`.
+2. Notification grouping i.e. send many notification as one notification by grouping those together using the `groupKey` OR `group_key` field from DB table. For this there is a POST API which has `group key` in it's end point. This API groups notification by given group key and send it to the receivers.
+3. Sending drafted notification independently using `id` of already saved or drafted notification. This API has `id` (of an already drafted notification) in it's end point and it sends already saved or drafted notification to the receivers.
+4. These APIs consider the sleep time of the user if it is a sleep time for the receiver(s) while sending the notification then it does not send the notification to the receiver(s).
+5. Also, this service now provides a sleep time feature for user or receivers. This is a setting, using which user can save sleep time in database during which interval notifications would not be sent to respective receiver. But, if request body contains a field called `isCritical` (having it's value true) with respect to the column `is_critical` in the database table then even if sending notification time matches with sleep time interval, the notification will be sent to mentioned receiver(s) in the request body. One provider has been added to support the sleep time functionality. Note that One can modify the provider according to the requirements.
+6. To manage the sleep time, APIs has been added with respect to CRUD functionality.
+7. There is an API which will send notification with respect a given search criteria  in the request body, this API will send notification to those receiver(s) who were having sleep time while notification(s) was sent in past.
 
+Note: As there are some migrations added which need to be run before start using this feature.
 
 ### Migrations
 
