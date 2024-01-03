@@ -356,7 +356,7 @@ this.bind(NotifServiceBindings.NotificationFilter).toProvider(
 
 Note: One can modify the provider according to the requirements
 
-- **Drafting Notification** -
+### - **Drafting Notification** -
   - Notification drafting i.e. draft or save notification to send it later.
    1. For this, there is a POST API to save notification as draft. There is one column in DB in `notifications` table `is_draft` which is used to mark a notification as draft.
    2. The drafted notification could be `based on a group key` OR `without a group key`. In DB group key is saved in a column called `group_key`.
