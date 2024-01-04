@@ -131,9 +131,6 @@ export class NotificationUserController {
     if (invalidFound) {
       throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
     }
-    if (!notificationUsers.length) {
-      throw new HttpErrors.BadRequest('Atleast one user needs to be present');
-    }
     return this.notificationUserRepository.createAll(notificationUsers);
   }
 
