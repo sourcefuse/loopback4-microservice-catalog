@@ -57,10 +57,6 @@ export abstract class DefaultTransactionalUserModifyRepository<
       entity.createdBy = uid ?? '';
       entity.modifiedBy = uid ?? '';
     });
-    if (!entities.length) {
-      throw new HttpErrors.BadRequest('Entity cannot be empty ');
-    }
-
     return super.createAll(entities, options);
   }
 
