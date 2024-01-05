@@ -39,7 +39,8 @@ export class VideoChatSessionController {
      archive mode. 
       Note: Archiving Option cannot be enabled while using end to end encryption, otherwise 
       an Error will be thrown. Successful execution will send a meeting link 
-      id which can be used to amend in client url.`,
+      id which can be used to amend in client url.
+      To archive the session, use enableArchiving (a boolean value) in the request body with it's value as true.`,
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
