@@ -30,11 +30,11 @@ import {
   getDatePastThreshold,
   getFutureDate,
   getMeetingOptions,
-  getVonageMeetingResponse,
   getSessionAttendeesModel,
   getSessionOptions,
   getSessionResponse,
   getVideoChatSession,
+  getVonageMeetingResponse,
   getWebhookPayload,
   setUpMockProvider,
   stream,
@@ -43,6 +43,7 @@ import {
 describe('Session APIs', () => {
   const pastDate = getDate('October 01, 2019 00:00:00');
   const futureDate = getFutureDate();
+  const enableArchiving = true;
   const meetingLinkId = 'dummy-meeting-link-id';
   const timeToStart = 30;
   let videoChatSessionRepo: StubbedInstanceWithSinonAccessor<VideoChatSessionRepository>;
@@ -58,6 +59,21 @@ describe('Session APIs', () => {
   afterEach(() => sinon.restore());
 
   describe('POST /session', () => {
+    it('returns a meeting Id of type string, saves the session Id, schedules meeting with enabled archiving.', async () => {
+      setUp({
+        getMeetingLink: sinon.stub().returns(getVonageMeetingResponse({})),
+      });
+      const meetingOptions = getMeetingOptions({
+        isScheduled: true,
+        scheduleTime: futureDate,
+        enableArchiving: enableArchiving,
+      });
+      const save = videoChatSessionRepo.stubs.save;
+      save.resolves();
+      const result = await controller.getMeetingLink(meetingOptions);
+      expect(result).to.be.a.String();
+      sinon.assert.calledOnce(save);
+    });
     it('returns a meeting Id of type string, saves the session Id, schedules meeting', async () => {
       setUp({
         getMeetingLink: sinon.stub().returns(getVonageMeetingResponse({})),

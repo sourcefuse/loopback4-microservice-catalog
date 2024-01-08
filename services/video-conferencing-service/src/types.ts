@@ -148,6 +148,7 @@ export interface WebhookPayloadParameters {
 export interface MeetingOptions {
   isScheduled: boolean;
   scheduleTime?: Date;
+  enableArchiving?: boolean;
 }
 
 export interface MeetingResponse {
