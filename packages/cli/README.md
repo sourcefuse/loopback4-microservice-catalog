@@ -18,7 +18,7 @@ $ npm install -g @sourceloop/cli
 $ sl COMMAND
 running command...
 $ sl (-v|--version|version)
-@sourceloop/cli/6.1.0 linux-x64 node-v18.19.0
+@sourceloop/cli/7.0.0 linux-x64 node-v18.19.0
 $ sl --help [COMMAND]
 USAGE
   $ sl COMMAND
@@ -29,16 +29,13 @@ USAGE
 ## Commands
 
 <!-- commands -->
-- [Building](#building)
-- [Usage](#usage)
-- [Commands](#commands)
-- [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
-- [`sl cdk`](#sl-cdk)
-- [`sl extension [NAME]`](#sl-extension-name)
-- [`sl help [COMMAND]`](#sl-help-command)
-- [`sl microservice [NAME]`](#sl-microservice-name)
-- [`sl scaffold [NAME]`](#sl-scaffold-name)
-- [`sl update`](#sl-update)
+* [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
+* [`sl cdk`](#sl-cdk)
+* [`sl extension [NAME]`](#sl-extension-name)
+* [`sl help [COMMAND]`](#sl-help-command)
+* [`sl microservice [NAME]`](#sl-microservice-name)
+* [`sl scaffold [NAME]`](#sl-scaffold-name)
+* [`sl update`](#sl-update)
 
 ## `sl autocomplete [SHELL]`
 
@@ -86,7 +83,7 @@ OPTIONS
   --help                                           show manual pages
 ```
 
-_See code: [src/commands/cdk.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v6.1.0/src/commands/cdk.ts)_
+_See code: [src/commands/cdk.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v7.0.0/src/commands/cdk.ts)_
 
 ## `sl extension [NAME]`
 
@@ -103,7 +100,7 @@ OPTIONS
   --help  show manual pages
 ```
 
-_See code: [src/commands/extension.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v6.1.0/src/commands/extension.ts)_
+_See code: [src/commands/extension.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v7.0.0/src/commands/extension.ts)_
 
 ## `sl help [COMMAND]`
 
@@ -164,7 +161,7 @@ OPTIONS
       Include base microservice migrations
 ```
 
-_See code: [src/commands/microservice.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v6.1.0/src/commands/microservice.ts)_
+_See code: [src/commands/microservice.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v7.0.0/src/commands/microservice.ts)_
 
 ## `sl scaffold [NAME]`
 
@@ -186,7 +183,7 @@ OPTIONS
   --owner=owner              owner of the repo
 ```
 
-_See code: [src/commands/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v6.1.0/src/commands/scaffold.ts)_
+_See code: [src/commands/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v7.0.0/src/commands/scaffold.ts)_
 
 ## `sl update`
 
@@ -200,5 +197,5 @@ OPTIONS
   --help  show manual pages
 ```
 
-_See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v6.1.0/src/commands/update.ts)_
+_See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v7.0.0/src/commands/update.ts)_
 <!-- commandsstop -->
