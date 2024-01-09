@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.4.1 (2024-01-09)</small>
+
+**Note:** Version bump only for package @sourceloop/oidc-service
+
+
+
+
+
 ## 0.4.0 (2024-01-01)
 
 * feat(oidc-service): add mysql db migrations (#1870) ([bde9448](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bde9448)), closes [#1870](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1870) [#1836](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1836)

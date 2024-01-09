@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>10.0.1 (2024-01-09)</small>
+
+**Note:** Version bump only for package @sourceloop/audit-service
+
+
+
+
+
 ## 10.0.0 (2024-01-01)
 
 * feat(audit-service): add mysql db migrations (#1860) ([d61cf6c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d61cf6c)), closes [#1860](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1860) [#1836](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1836)

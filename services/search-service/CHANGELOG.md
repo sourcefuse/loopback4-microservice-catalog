@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.11.1 (2024-01-09)</small>
+
+* fix(search-service): allow model name to be different from the one present in db (#1888) ([8f321d2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8f321d2)), closes [#1888](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1888) [#1820](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1820)
+
+
+
+
+
 ## 0.11.0 (2024-01-01)
 
 * feat(search-service): add mysql db migrations (#1857) ([6773263](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6773263)), closes [#1857](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1857) [#1836](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1836)

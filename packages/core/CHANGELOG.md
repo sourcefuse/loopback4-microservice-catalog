@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>11.0.1 (2024-01-09)</small>
+
+* revert(all-services): revert the extra checks added for createall method (#1890) ([93f41dd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/93f41dd)), closes [#1890](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1890) [#1124](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1124)
+
+
+
+
+
 ## 11.0.0 (2024-01-01)
 
 * feat(all-services): add additional check for createAll method (#1881) ([9b51bc3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9b51bc3)), closes [#1881](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1881) [#1124](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1124)

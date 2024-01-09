@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>11.1.1 (2024-01-09)</small>
+
+**Note:** Version bump only for package @sourceloop/payment-service
+
+
+
+
+
 ## 11.1.0 (2024-01-01)
 
 * feat(cli): support for mysql scripts based on connector selected (#1882) ([ca8f972](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ca8f972)), closes [#1882](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1882) [#1837](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1837)

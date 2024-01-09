@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>11.0.2 (2024-01-09)</small>
+
+* fix(notification-service): rectify migration syntax error (#1895) ([4470375](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4470375)), closes [#1895](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1895) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* revert(all-services): revert the extra checks added for createall method (#1890) ([93f41dd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/93f41dd)), closes [#1890](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1890) [#1124](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1124)
+
+
+
+
+
 ## <small>11.0.1 (2024-01-03)</small>
 
 * chore(chore): modified readme file and fix for draft API issue (#1887) ([a7f6580](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a7f6580)), closes [#1887](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1887) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806)

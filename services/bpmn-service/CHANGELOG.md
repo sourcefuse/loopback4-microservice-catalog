@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>10.0.1 (2024-01-09)</small>
+
+**Note:** Version bump only for package @sourceloop/bpmn-service
+
+
+
+
+
 ## 10.0.0 (2024-01-01)
 
 * test(bpmn-service): add test case for sequelize in workflow service (#1880) ([b49b315](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b49b315)), closes [#1880](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1880) [#1350](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1350)
