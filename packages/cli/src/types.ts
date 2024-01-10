@@ -5,7 +5,7 @@
 import {Question} from 'inquirer';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import Generator from 'yeoman-generator';
-import {DATASOURCES, IacList, SERVICES} from './enum';
+import {DATASOURCES, IacList, SEQUELIZESERVICES, SERVICES} from './enum';
 
 export interface ProjectInfo {
   projectType: 'extension' | 'microservice' | 'application';
@@ -25,6 +25,8 @@ export interface MicroserviceOptions extends Generator.GeneratorOptions {
   datasourceType?: DATASOURCES;
   includeMigrations?: boolean;
   customMigrations?: boolean;
+  sequelize?: boolean;
+  sequelizeServices?: SEQUELIZESERVICES;
 }
 
 export interface ExtensionOptions extends Generator.GeneratorOptions {

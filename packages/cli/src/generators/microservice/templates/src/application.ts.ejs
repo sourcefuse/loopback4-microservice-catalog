@@ -36,6 +36,9 @@ import {
 <% if (project.serviceDependency && project.baseServiceComponentName) { -%>
 import {<%= project.baseServiceComponentName %>} from '@sourceloop/<%= project.serviceDependency -%>'
 <% } -%>
+<% if (project.serviceDependency && project.baseServiceComponentName && project.sequelize) { -%>
+  import {<%= project.baseServiceBindingName %>} from '@sourceloop/<%= project.serviceDependency -%>'
+  <% } -%>
 <% if (project.repositories) { -%>
 import {RepositoryMixin} from '@loopback/repository';
 <% } -%>
@@ -102,9 +105,6 @@ export class <%= project.applicationName %> extends BootMixin(RestApplication) {
         
       }
     this.bind(SFCoreBindings.config).to(obj);
-    
-    
-
 <% if(!project.serviceDependency) { -%>
     this.component(CoreComponent);
 <% } -%>
@@ -141,7 +141,12 @@ export class <%= project.applicationName %> extends BootMixin(RestApplication) {
 
     // Add authentication component
     this.component(AuthenticationComponent);
-
+<% if (project.serviceDependency && project.baseServiceComponentName && project.sequelize) { -%>
+this.bind(<%= project.baseServiceBindingName %>.Config).to({
+useCustomSequence:false,
+useSequelize:true
+});
+<% }-%>
 <% if (project.serviceDependency && project.baseServiceComponentName) { -%>
   this.component(<%= project.baseServiceComponentName %>);
 <% } -%>

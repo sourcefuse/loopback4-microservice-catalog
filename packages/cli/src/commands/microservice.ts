@@ -55,6 +55,13 @@ export class Microservice extends Base<MicroserviceOptions> {
       options: Object.values(DATASOURCES),
       exclusive: ['facade'],
     }),
+    sequelize: flags.boolean({
+      name: 'sequelize',
+      description: 'Include sequelize as ORM in service',
+      required: false,
+      exclusive: ['facade'],
+    }),
+
     includeMigrations: flags.boolean({
       name: 'includeMigrations',
       description: 'Include base microservice migrations',
