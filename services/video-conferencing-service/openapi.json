@@ -314,7 +314,7 @@
         "tags": [
           "VideoChatSessionController"
         ],
-        "description": "Used for Creating a session with options such as end to end encryption,\n     archive mode. \n      Note: Archiving Option cannot be enabled while using end to end encryption, otherwise \n      an Error will be thrown. Successful execution will send a meeting link \n      id which can be used to amend in client url.\n\n| Permissions |\n| ------- |\n| CreateMeetingSession   |\n",
+        "description": "Used for Creating a session with options such as end to end encryption,\n     archive mode. \n      Note: Archiving Option cannot be enabled while using end to end encryption, otherwise \n      an Error will be thrown. Successful execution will send a meeting link \n      id which can be used to amend in client url.\n      To archive the session, use enableArchiving (a boolean value) in the request body with it's value as true.\n\n| Permissions |\n| ------- |\n| CreateMeetingSession   |\n",
         "security": [
           {
             "HTTPBearer": []
