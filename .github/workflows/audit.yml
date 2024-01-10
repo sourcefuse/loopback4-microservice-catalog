@@ -1,0 +1,31 @@
+name: Audit
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  npm_audit:
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+
+      - name: Install Monorepo Deps
+        run: npm ci
+
+      - name: Run npm audit
+        run: >
+          npm audit --json |
+          node -e '
+            const fs = require("fs");
+            const auditLevel = (process.argv[1] || "critical").toLowerCase();
+            const { vulnerabilities } = JSON.parse(fs.readFileSync(0).toString("utf-8"));
+            const result = Object.values(vulnerabilities).filter((i) => i.severity.toLowerCase() === auditLevel);
+            console.table(JSON.stringify(result, null, 2));
+          ' high
