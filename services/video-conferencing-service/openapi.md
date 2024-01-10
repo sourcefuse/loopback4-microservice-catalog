@@ -823,6 +823,7 @@ Used for Creating a session with options such as end to end encryption,
       Note: Archiving Option cannot be enabled while using end to end encryption, otherwise 
       an Error will be thrown. Successful execution will send a meeting link 
       id which can be used to amend in client url.
+      To archive the session, use enableArchiving (a boolean value) in the request body with it's value as true.
 
 | Permissions |
 | ------- |

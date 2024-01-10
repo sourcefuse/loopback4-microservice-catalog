@@ -2,33 +2,33 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {inject} from '@loopback/core';
+import {repository} from '@loopback/repository';
+import {HttpErrors} from '@loopback/rest';
+import axios from 'axios';
+import {sign} from 'jsonwebtoken';
+import moment from 'moment';
+import OpenTok from 'opentok';
+import {promisify} from 'util';
 import {
-  VonageVideoChat,
-  VonageSessionOptions,
-  VonageS3TargetOptions,
   VonageAzureTargetOptions,
+  VonageConfig,
   VonageMeetingOptions,
   VonageMeetingResponse,
-  VonageConfig,
+  VonageS3TargetOptions,
+  VonageSessionOptions,
   VonageSessionWebhookPayload,
+  VonageVideoChat,
 } from '.';
-import {
-  SessionResponse,
-  ArchiveResponseList,
-  ArchiveResponse,
-} from '../../types';
-import OpenTok from 'opentok';
-import moment from 'moment';
-import {HttpErrors} from '@loopback/rest';
-import {promisify} from 'util';
-import {sign} from 'jsonwebtoken';
-import axios from 'axios';
-import {VonageEnums} from '../../enums';
-import {VonageBindings} from './keys';
-import {inject} from '@loopback/core';
 import {ExternalStorageName, SessionAttendees, VideoChatFeatures} from '../..';
+import {VonageEnums} from '../../enums';
 import {SessionAttendeesRepository} from '../../repositories';
-import {repository} from '@loopback/repository';
+import {
+  ArchiveResponse,
+  ArchiveResponseList,
+  SessionResponse,
+} from '../../types';
+import {VonageBindings} from './keys';
 
 export class VonageService implements VonageVideoChat {
   VonageClient: OpenTok;
@@ -94,7 +94,7 @@ export class VonageService implements VonageVideoChat {
       mediaMode: sessionCreationOptions.mediaMode,
       archiveMode: sessionCreationOptions.archiveMode,
       sessionId: sessionResponse.sessionId,
-      isArchived: Boolean(sessionCreationOptions.archiveMode),
+      isArchived: enableArchiving,
     };
   }
   async getToken(

@@ -11,12 +11,12 @@ import {
   SessionResponse,
 } from '../../types';
 import {
-  VonageVideoChat,
+  VonageAzureTargetOptions,
   VonageMeetingOptions,
   VonageMeetingResponse,
-  VonageSessionOptions,
   VonageS3TargetOptions,
-  VonageAzureTargetOptions,
+  VonageSessionOptions,
+  VonageVideoChat,
 } from './types';
 
 import {VonageService} from './vonage.service';
