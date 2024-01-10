@@ -3,6 +3,56 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.6.2 (2024-01-09)</small>
+
+**Note:** Version bump only for package @sourceloop/chat-notif-example_notif-service
+
+
+
+
+
+## <small>0.6.1 (2024-01-03)</small>
+
+**Note:** Version bump only for package @sourceloop/chat-notif-example_notif-service
+
+
+
+
+
+## 0.6.0 (2024-01-03)
+
+* feat(notification-service): Implementation of notification grouping feature (#1829) ([6cd37dd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6cd37dd)), closes [#1829](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1829) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806)
+
+
+### BREAKING CHANGE
+
+* Change
+rebasing with master branch
+
+MIGRATION CHANGE:
+migration-20231128083406- rebasing with master branch
+* rebasing with master
+* rebasing with master
+
+
+
+
+## <small>0.5.4 (2024-01-01)</small>
+
+**Note:** Version bump only for package @sourceloop/chat-notif-example_notif-service
+
+
+
+
+
+## <small>0.5.3 (2023-12-22)</small>
+
+**Note:** Version bump only for package @sourceloop/chat-notif-example_notif-service
+
+
+
+
+
 ## <small>0.5.2 (2023-12-07)</small>
 
 **Note:** Version bump only for package @sourceloop/chat-notif-example_notif-service

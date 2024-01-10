@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>9.0.1 (2024-01-09)</small>
+
+**Note:** Version bump only for package @sourceloop/in-mail-service
+
+
+
+
+
+## 9.0.0 (2024-01-03)
+
+* feat(notification-service): Implementation of notification grouping feature (#1829) ([6cd37dd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6cd37dd)), closes [#1829](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1829) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806)
+
+
+### BREAKING CHANGE
+
+* Change
+rebasing with master branch
+
+MIGRATION CHANGE:
+migration-20231128083406- rebasing with master branch
+* rebasing with master
+* rebasing with master
+
+
+
+
+## 8.0.0 (2024-01-01)
+
+* feat(in-mail-service): add mysql db migrations (#1876) ([0629b7e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0629b7e)), closes [#1876](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1876) [#1836](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1836)
+
+
+
+
+
+## <small>7.0.1 (2023-12-22)</small>
+
+**Note:** Version bump only for package @sourceloop/in-mail-service
+
+
+
+
+
 ## 7.0.0 (2023-12-07)
 
 * feat(deps): update to latest loopback 4 authentication version (#1826) ([5b827fc](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5b827fc)), closes [#1826](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1826) [#1825](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1825) [#1825](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1825)

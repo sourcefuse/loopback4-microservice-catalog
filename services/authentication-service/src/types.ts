@@ -7,8 +7,9 @@ import {AnyObject} from '@loopback/repository';
 import {IServiceConfig} from '@sourceloop/core';
 import {STRATEGY} from 'loopback4-authentication';
 import {OtpMethodType} from './enums';
-import {LocalUserProfileDto, UserTenant, LoginActivity} from './models';
+import {LocalUserProfileDto, LoginActivity, UserTenant} from './models';
 import {SignupRequestDto} from './models/signup-request-dto.model';
+import {AuthRefreshTokenRequest} from './modules/auth';
 
 // sonarignore:start
 export interface IAuthServiceConfig extends IServiceConfig {
@@ -31,7 +32,12 @@ export interface IOtpConfig {
 }
 
 export type PreSignupFn<T, S> = (request: SignupRequestDto<T>) => Promise<S>;
-
+export type UserValidationFn = (
+  req: AuthRefreshTokenRequest,
+  payload: AnyObject,
+  signUpProvider: string,
+  token?: string,
+) => Promise<boolean>;
 export type UserSignupFn<T, S> = (
   model: T & LocalUserProfileDto,
   tokenInfo?: AnyObject,

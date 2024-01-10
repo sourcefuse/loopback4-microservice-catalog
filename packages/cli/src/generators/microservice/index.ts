@@ -197,18 +197,14 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       scripts['rebuild'] = 'npm run clean && npm run build';
       scripts['start'] =
         'node -r ./dist/opentelemetry-registry.js -r source-map-support/register .';
-      scripts[
-        'docker:build'
-      ] = `DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $IMAGE_REPO_NAME/$npm_package_name:$npm_package_version .`;
-      scripts[
-        'docker:push'
-      ] = `sudo docker push $IMAGE_REPO_NAME/$npm_package_name:$npm_package_version`;
-      scripts[
-        'docker:build:dev'
-      ] = `DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $IMAGE_REPO_NAME/$npm_package_name:$IMAGE_TAG_VERSION .`;
-      scripts[
-        'docker:push:dev'
-      ] = `sudo docker push $IMAGE_REPO_NAME/$npm_package_name:$IMAGE_TAG_VERSION`;
+      scripts['docker:build'] =
+        `DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $IMAGE_REPO_NAME/$npm_package_name:$npm_package_version .`;
+      scripts['docker:push'] =
+        `sudo docker push $IMAGE_REPO_NAME/$npm_package_name:$npm_package_version`;
+      scripts['docker:build:dev'] =
+        `DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $IMAGE_REPO_NAME/$npm_package_name:$IMAGE_TAG_VERSION .`;
+      scripts['docker:push:dev'] =
+        `sudo docker push $IMAGE_REPO_NAME/$npm_package_name:$IMAGE_TAG_VERSION`;
       scripts['coverage'] = 'nyc npm run test';
 
       packageJson.scripts = scripts;
@@ -229,14 +225,14 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       await this.spawnCommand('npx', ['lerna', 'clean']);
       await this.spawnCommand('npm', ['i']);
 
-      await this.addMigrations();
-      // this._appendDockerScript();
+      await this._addMigrations();
+
       return true;
     }
     return false;
   }
 
-  private async addMigrations() {
+  async _addMigrations() {
     if (this.options.migrations) {
       if (!(await this._migrationExists())) {
         await this._createMigrationPackageAsync();
@@ -285,9 +281,8 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     const packageJsonFile = join(this.destinationRoot(), './package.json');
     const packageJson = this.fs.readJSON(packageJsonFile) as AnyObject;
     const scripts = {...packageJson.scripts};
-    scripts[
-      `docker:build:${this.options.baseService}`
-    ] = `docker build --build-arg SERVICE_NAME=${this.options.baseService} --build-arg FROM_FOLDER=services -t $REPOSITORY_URI-${this.options.baseService}:$CUSTOM_TAG -f ./services/${this.options.name}/Dockerfile .`;
+    scripts[`docker:build:${this.options.baseService}`] =
+      `docker build --build-arg SERVICE_NAME=${this.options.baseService} --build-arg FROM_FOLDER=services -t $REPOSITORY_URI-${this.options.baseService}:$CUSTOM_TAG -f ./services/${this.options.name}/Dockerfile .`;
     packageJson.scripts = scripts;
     fs.writeFile(
       packageJsonFile,
@@ -407,7 +402,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     }
   }
 
-  private async _createMigrationPackageAsync() {
+  async _createMigrationPackageAsync() {
     /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
     //@ts-ignore
     await this.fs.copyTplAsync(
@@ -476,8 +471,12 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
   private async _includeSourceloopMigrationsAsync() {
     const name = this.options.name ?? DEFAULT_NAME;
     if (!this.shouldExit() && this.options.baseService) {
+      const dsType =
+        this.options.datasourceType === DATASOURCES.POSTGRES ? 'pg' : 'mysql';
       const destinationPath = this.destinationPath(
         sourceloopMigrationPath(this.options.baseService),
+        dsType,
+        'migrations',
       );
 
       try {
@@ -494,7 +493,11 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
       //@ts-ignore
       await this.fs.copyAsync(
-        this.destinationPath(sourceloopMigrationPath(this.options.baseService)),
+        this.destinationPath(
+          sourceloopMigrationPath(this.options.baseService),
+          dsType,
+          'migrations',
+        ),
         this.destinationPath(join(MIGRATION_FOLDER, name, 'migrations')),
       );
       let connector = MIGRATION_CONNECTORS[DATASOURCES.POSTGRES]; // default
@@ -532,15 +535,12 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       const packageJsFile = 'packages/migrations/package.json';
       const packageJs = this.fs.readJSON(packageJsFile) as AnyObject;
       const script = packageJs.scripts;
-      script[
-        `db:migrate:${this.options.name}`
-      ] = `db-migrate up --config '${this.options.name}/database.json' -m '${this.options.name}/migrations'`;
-      script[
-        `db:migrate-down:${this.options.name}`
-      ] = `db-migrate down --config '${this.options.name}/database.json' -m '${this.options.name}/migrations'`;
-      script[
-        `db:migrate-reset:${this.options.name}`
-      ] = `db-migrate reset --config '${this.options.name}/database.json' -m '${this.options.name}/migrations'`;
+      script[`db:migrate:${this.options.name}`] =
+        `db-migrate up --config '${this.options.name}/database.json' -m '${this.options.name}/migrations'`;
+      script[`db:migrate-down:${this.options.name}`] =
+        `db-migrate down --config '${this.options.name}/database.json' -m '${this.options.name}/migrations'`;
+      script[`db:migrate-reset:${this.options.name}`] =
+        `db-migrate reset --config '${this.options.name}/database.json' -m '${this.options.name}/migrations'`;
 
       packageJs.scripts = script;
 

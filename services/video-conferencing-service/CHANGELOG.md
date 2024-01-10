@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 10.0.0 (2024-01-09)
+
+* feat(video-conferencing-service): added missing migrations (#1891) ([229179c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/229179c)), closes [#1891](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1891) [#1821](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1821) [#1821](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1821)
+
+
+
+
+
+## 9.0.0 (2024-01-01)
+
+* fix(all-services): add sequelize as optional dependency (#1878) ([772b4f8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/772b4f8)), closes [#1878](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1878) [#1866](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1866)
+* fix(all-services): change sequelize dependency to optional (#1868) ([bf3962f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bf3962f)), closes [#1868](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1868) [#1866](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1866)
+* feat(video-conferencing-service): add mysql db migrations (#1859) ([3b35394](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3b35394)), closes [#1859](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1859) [#1836](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1836)
+
+
+
+
+
+## <small>8.0.1 (2023-12-22)</small>
+
+**Note:** Version bump only for package @sourceloop/video-conferencing-service
+
+
+
+
+
+## 8.0.0 (2023-12-19)
+
+* fix(deps): upgrade twilio to latest ([c3e7fe9](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c3e7fe9)), closes [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* chore(all-services): fix sonar code smell overall (#1841) ([0fe4492](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0fe4492)), closes [#1841](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1841) [#1840](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1840)
+* chore(deps): fix synk issues (#1846) ([67e5103](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/67e5103)), closes [#1846](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1846) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* chore(deps): fix the synk high issues (#1845) ([0a536b4](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0a536b4)), closes [#1845](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1845) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+### BREAKING CHANGE
+
+* Twilio package breaking changes
+
+
+
+
 ## 7.0.0 (2023-12-07)
 
 * feat(deps): update to latest loopback 4 authentication version (#1826) ([5b827fc](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5b827fc)), closes [#1826](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1826) [#1825](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1825) [#1825](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1825)

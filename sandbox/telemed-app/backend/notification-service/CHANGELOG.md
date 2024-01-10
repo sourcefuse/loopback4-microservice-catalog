@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.1.7 (2024-01-09)</small>
+
+**Note:** Version bump only for package @sourceloop/telemed-notification-api
+
+
+
+
+
+## <small>0.1.6 (2024-01-03)</small>
+
+**Note:** Version bump only for package @sourceloop/telemed-notification-api
+
+
+
+
+
+## <small>0.1.5 (2024-01-03)</small>
+
+**Note:** Version bump only for package @sourceloop/telemed-notification-api
+
+
+
+
+
+## <small>0.1.4 (2024-01-01)</small>
+
+**Note:** Version bump only for package @sourceloop/telemed-notification-api
+
+
+
+
+
+## <small>0.1.3 (2023-12-22)</small>
+
+**Note:** Version bump only for package @sourceloop/telemed-notification-api
+
+
+
+
+
 ## <small>0.1.2 (2023-12-07)</small>
 
 **Note:** Version bump only for package @sourceloop/telemed-notification-api

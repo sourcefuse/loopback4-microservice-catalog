@@ -3,6 +3,66 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.14.1 (2024-01-09)</small>
+
+**Note:** Version bump only for package @sourceloop/user-tenant-service
+
+
+
+
+
+## 0.14.0 (2024-01-03)
+
+* feat(notification-service): Implementation of notification grouping feature (#1829) ([6cd37dd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6cd37dd)), closes [#1829](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1829) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806)
+
+
+### BREAKING CHANGE
+
+* Change
+rebasing with master branch
+
+MIGRATION CHANGE:
+migration-20231128083406- rebasing with master branch
+* rebasing with master
+* rebasing with master
+
+
+
+
+## 0.13.0 (2024-01-01)
+
+* feat(cli): support for mysql scripts based on connector selected (#1882) ([ca8f972](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ca8f972)), closes [#1882](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1882) [#1837](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1837)
+
+
+
+
+
+## 0.12.0 (2024-01-01)
+
+* feat(user-tenant-service): add mysql db migrations (#1872) ([a4fa76d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a4fa76d)), closes [#1872](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1872) [#1836](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1836)
+* feat(user-tenant-service): add sequelize support in user tenant service (#1873) ([1cd19b3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1cd19b3)), closes [#1873](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1873) [#1350](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1350)
+* fix(all-services): add sequelize as optional dependency (#1878) ([772b4f8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/772b4f8)), closes [#1878](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1878) [#1866](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1866)
+
+
+
+
+
+## <small>0.11.2 (2023-12-22)</small>
+
+**Note:** Version bump only for package @sourceloop/user-tenant-service
+
+
+
+
+
+## <small>0.11.1 (2023-12-19)</small>
+
+* chore(all-services): fix sonar code smell overall (#1841) ([0fe4492](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0fe4492)), closes [#1841](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1841) [#1840](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1840)
+
+
+
+
+
 ## 0.11.0 (2023-12-07)
 
 * feat(deps): update to latest loopback 4 authentication version (#1826) ([5b827fc](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5b827fc)), closes [#1826](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1826) [#1825](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1825) [#1825](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1825)

@@ -3,6 +3,64 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>11.0.2 (2024-01-09)</small>
+
+* fix(notification-service): rectify migration syntax error (#1895) ([4470375](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4470375)), closes [#1895](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1895) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* revert(all-services): revert the extra checks added for createall method (#1890) ([93f41dd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/93f41dd)), closes [#1890](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1890) [#1124](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1124)
+
+
+
+
+
+## <small>11.0.1 (2024-01-03)</small>
+
+* chore(chore): modified readme file and fix for draft API issue (#1887) ([a7f6580](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a7f6580)), closes [#1887](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1887) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806)
+
+
+
+
+
+## 11.0.0 (2024-01-03)
+
+* feat(notification-service): Implementation of notification grouping feature (#1829) ([6cd37dd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6cd37dd)), closes [#1829](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1829) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806)
+
+
+### BREAKING CHANGE
+
+* Change
+rebasing with master branch
+
+MIGRATION CHANGE:
+migration-20231128083406- rebasing with master branch
+* rebasing with master
+* rebasing with master
+
+
+
+
+## 10.0.0 (2024-01-01)
+
+* feat(all-services): add additional check for createAll method (#1881) ([9b51bc3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9b51bc3)), closes [#1881](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1881) [#1124](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1124)
+* feat(notification-service): add mysql db migrations (#1855) ([3e14857](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3e14857)), closes [#1855](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1855) [#1836](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1836)
+* fix(all-services): add sequelize as optional dependency (#1878) ([772b4f8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/772b4f8)), closes [#1878](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1878) [#1866](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1866)
+* fix(all-services): change sequelize dependency to optional (#1868) ([bf3962f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bf3962f)), closes [#1868](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1868) [#1866](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1866)
+
+
+### BREAKING CHANGE
+
+* if the array is not passed for createall error will be thrown
+
+
+
+
+## <small>9.0.1 (2023-12-22)</small>
+
+**Note:** Version bump only for package @sourceloop/notification-service
+
+
+
+
+
 ## 9.0.0 (2023-12-07)
 
 * feat(deps): update to latest loopback 4 authentication version (#1826) ([5b827fc](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5b827fc)), closes [#1826](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1826) [#1825](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1825) [#1825](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1825)

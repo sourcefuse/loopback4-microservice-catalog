@@ -15,9 +15,8 @@ import {
   CognitoPostVerifyFn,
   CognitoPreVerifyFn,
   CognitoSignUpFn,
-  SignUpBindings,
-  VerifyBindings,
 } from '../../../providers';
+import {SignUpBindings, VerifyBindings} from '../../../providers/keys';
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
 import {AuthUser} from '../models/auth-user.model';
 

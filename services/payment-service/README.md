@@ -140,6 +140,21 @@ JWT_ISSUER=https://authentication.service
 | `JWT_SECRET`  | Y        |               | Symmetric signing key of the JWT token.                                                                                            |
 | `JWT_ISSUER`  | Y        |               | Issuer of the JWT token.                                                                                                           |
 
+### Using with Sequelize
+
+This service supports Sequelize as the underlying ORM using [@loopback/sequelize](https://www.npmjs.com/package/@loopback/sequelize) extension. And in order to use it, you'll need to do following changes.
+
+1.To use Sequelize in your application, add following to application.ts:
+
+```ts
+this.bind(PaymentServiceBindings.Config).to({
+  useCustomSequence: false,
+  useSequelize: true,
+});
+```
+
+2. Use the `SequelizeDataSource` in your datasource as the parent class. Refer [this](https://www.npmjs.com/package/@loopback/sequelize#step-1-configure-datasource) for more.
+
 ### API Documentation
 
 Visit the [OpenAPI spec docs](./openapi.md)

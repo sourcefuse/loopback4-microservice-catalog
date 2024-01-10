@@ -14,6 +14,7 @@ import {
   UserCredentialsRepository,
   UserRepository,
 } from '../../../repositories';
+
 export class GoogleAuthenticatorVerifyProvider
   implements Provider<VerifyFunction.OtpAuthFn>
 {

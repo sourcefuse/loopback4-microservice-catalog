@@ -11,18 +11,18 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
 } from '@loopback/rest';
+import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
 import {PaymentGateways} from '../models';
 import {PaymentGatewaysRepository} from '../repositories';
-import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
 const paymentGatewayRoutePath = '/payment-gateways';
 const paymentGatewayIDRoutePath = '/payment-gateways/{id}';
 

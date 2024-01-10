@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/authentication-service",
-  "version": "13.0.0",
+  "version": "14.1.1",
   "description": "Authentication microservice",
   "keywords": [
     "loopback-extension",
@@ -10,6 +10,19 @@
   "types": "dist/index.d.ts",
   "engines": {
     "node": "18 || 20"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./sequelize": {
+      "types": "./dist/repositories/sequelize/index.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "sequelize": [
+        "./dist/repositories/sequelize/index.d.ts"
+      ]
+    }
   },
   "scripts": {
     "prebuild": "npm run clean",
@@ -63,7 +76,7 @@
     "@loopback/rest-explorer": "^6.1.3",
     "@loopback/service-proxy": "^6.1.3",
     "@node-saml/passport-saml": "^4.0.2",
-    "@sourceloop/core": "^10.0.0",
+    "@sourceloop/core": "^11.0.1",
     "base-64": "^1.0.0",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.20.2",
@@ -94,7 +107,6 @@
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@loopback/build": "^10.1.3",
     "@loopback/eslint-config": "^14.0.4",
-    "@loopback/sequelize": "0.5.2",
     "@loopback/testlab": "^6.1.3",
     "@types/base-64": "^1.0.0",
     "@types/bcrypt": "^5.0.0",
@@ -122,6 +134,9 @@
     "source-map-support": "^0.5.21",
     "typescript": "~4.9.5",
     "widdershins": "^4.0.1"
+  },
+  "optionalDependencies": {
+    "@loopback/sequelize": "^0.5.2"
   },
   "overrides": {
     "check-code-coverage": {

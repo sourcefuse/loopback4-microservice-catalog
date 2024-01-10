@@ -41,6 +41,10 @@ export type GooglePostVerifyFn = (
   profile: GoogleStrategy.Profile,
   user: IAuthUser | null,
 ) => Promise<IAuthUser | null>;
+export type AuthenticationProviderFn = (
+  accessToken: string,
+) => Promise<boolean>;
+
 export type PasswordDecryptionFn = (password: string) => Promise<string>;
 export type InstagramSignUpFn = (
   profile: InstagramStrategy.Profile,

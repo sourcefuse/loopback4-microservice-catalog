@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.16.1 (2024-01-09)</small>
+
+**Note:** Version bump only for package @sourceloop/feature-toggle-service
+
+
+
+
+
+## 0.16.0 (2024-01-01)
+
+* feat(feature-toggle): add mysql db migrations (#1863) ([ac67e08](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ac67e08)), closes [#1863](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1863) [#1836](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1836)
+
+
+
+
+
+## <small>0.15.1 (2023-12-22)</small>
+
+**Note:** Version bump only for package @sourceloop/feature-toggle-service
+
+
+
+
+
 ## 0.15.0 (2023-12-07)
 
 * feat(deps): update to latest loopback 4 authentication version (#1826) ([5b827fc](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5b827fc)), closes [#1826](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1826) [#1825](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1825) [#1825](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1825)

@@ -5,10 +5,10 @@
 import {
   Count,
   DataObject,
-  Getter,
-  juggler,
-  Where,
   Entity,
+  Getter,
+  Where,
+  juggler,
 } from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {Options} from 'loopback-datasource-juggler';

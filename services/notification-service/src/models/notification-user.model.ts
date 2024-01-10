@@ -50,6 +50,12 @@ export class NotificationUser extends BaseEntity<NotificationUser> {
   })
   actionMeta?: AnyObject;
 
+  @property({
+    type: 'boolean',
+    default: false,
+    name: 'is_draft',
+  })
+  isDraft?: boolean;
   // Define well-known properties here
 
   // Indexer property to allow additional data

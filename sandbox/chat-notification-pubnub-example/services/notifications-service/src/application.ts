@@ -16,7 +16,7 @@ import {NotificationServiceComponent} from '@sourceloop/notification-service';
 import * as dotenv from 'dotenv';
 import {NotificationBindings} from 'loopback4-notifications';
 import {PubNubProvider, PubnubBindings} from 'loopback4-notifications/pubnub';
-import {SESBindings} from 'loopback4-notifications/ses';
+import {SESBindings, SesProvider} from 'loopback4-notifications/ses';
 import {SNSBindings} from 'loopback4-notifications/sns';
 import path from 'path';
 import {MySequence} from './sequence';
@@ -58,8 +58,13 @@ export class ChatAndNotifApplication extends BootMixin(
     });
 
     this.bind(SNSBindings.Config).to({});
-    this.bind(SESBindings.Config).to({});
+    this.bind(SESBindings.Config).to({
+      secretAccessKey: process.env.SES_SECRET_ACCESS_KEY,
+      accessKeyId: process.env.SES_ACCESS_KEY_ID,
+      region: process.env.SES_REGION,
+    });
     this.bind(NotificationBindings.PushProvider).toProvider(PubNubProvider);
+    this.bind(NotificationBindings.EmailProvider).toProvider(SesProvider);
 
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here

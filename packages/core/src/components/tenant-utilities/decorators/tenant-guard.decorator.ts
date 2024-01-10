@@ -1,7 +1,6 @@
-import {DefaultCrudRepository} from '@loopback/repository';
 import {AbstractConstructor} from '../../../mixins/types';
 import {TenantGuardMixin} from '../mixins';
-import {EntityWithTenantId, ITenantGuard} from '../types';
+import {EntityWithTenantId, ICrudRepository, ITenantGuard} from '../types';
 
 /**
  * This function returns a class decorator that adds a tenant guard mixin
@@ -14,10 +13,9 @@ export function tenantGuard() {
     M extends EntityWithTenantId,
     ID,
     Relations extends object,
-    S extends AbstractConstructor<DefaultCrudRepository<M, ID, Relations>>,
+    S extends AbstractConstructor<ICrudRepository<M, ID, Relations>>,
   >(
-    constructor: S &
-      AbstractConstructor<DefaultCrudRepository<M, ID, Relations>>,
+    constructor: S & AbstractConstructor<ICrudRepository<M, ID, Relations>>,
   ) => {
     class GuardedRepo extends TenantGuardMixin(constructor) {
       public tenantGuardService: ITenantGuard<M, ID>;

@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.0.0 (2024-01-09)
+
+* fix(cli): update the deps to latest (#1900) ([b56ee7a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b56ee7a)), closes [#1900](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1900) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* feat(notification-service): Implementation of notification grouping feature (#1829) ([6cd37dd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6cd37dd)), closes [#1829](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1829) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806)
+
+
+### BREAKING CHANGE
+
+* Change
+rebasing with master branch
+
+MIGRATION CHANGE:
+migration-20231128083406- rebasing with master branch
+* rebasing with master
+* rebasing with master
+
+
+
+
+## 6.1.0 (2024-01-01)
+
+* feat(cli): support for mysql scripts based on connector selected (#1882) ([ca8f972](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ca8f972)), closes [#1882](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1882) [#1837](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1837)
+
+
+
+
+
+## <small>6.0.3 (2023-12-19)</small>
+
+* fix(deps): update the cli template dependencies to latest (#1850) ([fad5e74](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/fad5e74)), closes [#1850](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1850) [#1849](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1849)
+* chore(all-services): fix sonar code smell overall (#1841) ([0fe4492](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0fe4492)), closes [#1841](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1841) [#1840](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1840)
+
+
+
+
+
 ## <small>6.0.2 (2023-12-08)</small>
 
 * fix(cli): update the migration scripts and docker build (#1835) ([b23d969](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b23d969)), closes [#1835](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1835) [#1832](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1832) [#1834](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1834) [#1834](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1834)

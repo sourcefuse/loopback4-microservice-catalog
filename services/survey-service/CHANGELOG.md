@@ -3,6 +3,51 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.6.1 (2024-01-09)</small>
+
+**Note:** Version bump only for package @sourceloop/survey-service
+
+
+
+
+
+## 0.6.0 (2024-01-03)
+
+* feat(notification-service): Implementation of notification grouping feature (#1829) ([6cd37dd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6cd37dd)), closes [#1829](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1829) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806) [#1806](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1806)
+
+
+### BREAKING CHANGE
+
+* Change
+rebasing with master branch
+
+MIGRATION CHANGE:
+migration-20231128083406- rebasing with master branch
+* rebasing with master
+* rebasing with master
+
+
+
+
+## 0.5.0 (2024-01-01)
+
+* feat(survey-service): add changes to sequelize support in survey service (#1865) ([900a9b3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/900a9b3)), closes [#1865](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1865) [#1350](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1350)
+* feat(survey-service): add mysql db migrations (#1875) ([8dbe3ea](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8dbe3ea)), closes [#1875](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1875) [#1836](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1836)
+* fix(all-services): add sequelize as optional dependency (#1878) ([772b4f8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/772b4f8)), closes [#1878](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1878) [#1866](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1866)
+* fix(all-services): change sequelize dependency to optional (#1868) ([bf3962f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bf3962f)), closes [#1868](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1868) [#1866](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1866)
+
+
+
+
+
+## <small>0.4.1 (2023-12-22)</small>
+
+**Note:** Version bump only for package @sourceloop/survey-service
+
+
+
+
+
 ## 0.4.0 (2023-12-07)
 
 * feat(deps): update to latest loopback 4 authentication version (#1826) ([5b827fc](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5b827fc)), closes [#1826](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1826) [#1825](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1825) [#1825](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1825)

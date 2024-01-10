@@ -15,13 +15,18 @@ import {
   IMfaConfig,
   IOtpConfig,
   IUserActivity,
+  UserValidationFn,
 } from './types';
 
 export namespace AuthServiceBindings {
   export const Config = BindingKey.create<IAuthServiceConfig | null>(
     `${BINDING_PREFIX}.auth.config`,
   );
-
+  export namespace UserValidationServiceBindings {
+    export const VALIDATE_USER = BindingKey.create<UserValidationFn | null>(
+      `${BINDING_PREFIX}.auth.validateUser`,
+    );
+  }
   export const MfaConfig = BindingKey.create<IMfaConfig | null>(
     `${BINDING_PREFIX}.auth.mfa.config`,
   );

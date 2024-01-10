@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>11.1.1 (2024-01-09)</small>
+
+**Note:** Version bump only for package @sourceloop/payment-service
+
+
+
+
+
+## 11.1.0 (2024-01-01)
+
+* feat(cli): support for mysql scripts based on connector selected (#1882) ([ca8f972](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ca8f972)), closes [#1882](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1882) [#1837](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1837)
+
+
+
+
+
+## 11.0.0 (2024-01-01)
+
+* feat(payment service): add mysql db migrations (#1856) ([9649313](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9649313)), closes [#1856](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1856) [#1836](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1836)
+* feat(payment-service): add sequelize support in payment service (#1818) ([7c7850c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7c7850c)), closes [#1818](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1818) [#1350](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1350)
+* fix(all-services): add sequelize as optional dependency (#1878) ([772b4f8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/772b4f8)), closes [#1878](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1878) [#1866](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1866)
+
+
+
+
+
+## <small>10.0.2 (2023-12-22)</small>
+
+**Note:** Version bump only for package @sourceloop/payment-service
+
+
+
+
+
+## <small>10.0.1 (2023-12-19)</small>
+
+* chore(all-services): fix sonar code smell overall (#1841) ([0fe4492](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0fe4492)), closes [#1841](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1841) [#1840](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1840)
+
+
+
+
+
 ## 10.0.0 (2023-12-07)
 
 * feat(deps): update to latest loopback 4 authentication version (#1826) ([5b827fc](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5b827fc)), closes [#1826](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1826) [#1825](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1825) [#1825](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1825)

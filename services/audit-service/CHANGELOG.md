@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>10.0.1 (2024-01-09)</small>
+
+**Note:** Version bump only for package @sourceloop/audit-service
+
+
+
+
+
+## 10.0.0 (2024-01-01)
+
+* feat(audit-service): add mysql db migrations (#1860) ([d61cf6c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d61cf6c)), closes [#1860](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1860) [#1836](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1836)
+* fix(all-services): add sequelize as optional dependency (#1878) ([772b4f8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/772b4f8)), closes [#1878](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1878) [#1866](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1866)
+* fix(all-services): change sequelize dependency to optional (#1868) ([bf3962f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bf3962f)), closes [#1868](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1868) [#1866](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1866)
+
+
+
+
+
+## <small>9.0.1 (2023-12-22)</small>
+
+* chore(deps): fix the synk issues (#1853) ([be24dfb](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/be24dfb)), closes [#1853](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1853) [#1851](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1851)
+
+
+
+
+
 ## 9.0.0 (2023-12-07)
 
 * feat(deps): update to latest loopback 4 authentication version (#1826) ([5b827fc](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5b827fc)), closes [#1826](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1826) [#1825](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1825) [#1825](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1825)

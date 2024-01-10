@@ -4,17 +4,17 @@
 // https://opensource.org/licenses/MIT
 import {Getter, inject} from '@loopback/core';
 import {
-  DefaultCrudRepository,
   HasManyRepositoryFactory,
   juggler,
   repository,
 } from '@loopback/repository';
 
+import {DefaultTransactionalRepository} from '@loopback/repository/dist';
 import {Notification, NotificationUser} from '../models';
 import {NotifDbSourceName} from '../types';
 import {NotificationUserRepository} from './notification-user.repository';
 
-export class NotificationRepository extends DefaultCrudRepository<
+export class NotificationRepository extends DefaultTransactionalRepository<
   Notification,
   typeof Notification.prototype.id
 > {

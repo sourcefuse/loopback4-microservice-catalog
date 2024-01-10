@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>14.1.1 (2024-01-09)</small>
+
+**Note:** Version bump only for package @sourceloop/authentication-service
+
+
+
+
+
+## 14.1.0 (2024-01-01)
+
+* feat(authentication-service): provide support for authenticated issuance of access token using refre ([2afa6d8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2afa6d8)), closes [#1877](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1877) [#1263](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1263) [#1263](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1263)
+
+
+
+
+
+## 14.0.0 (2024-01-01)
+
+* feat(authentication-service): add mysql db migrations (#1869) ([38ca2ea](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/38ca2ea)), closes [#1869](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1869) [#1836](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1836)
+* fix(all-services): add sequelize as optional dependency (#1878) ([772b4f8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/772b4f8)), closes [#1878](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1878) [#1866](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1866)
+* fix(all-services): change sequelize dependency to optional (#1868) ([bf3962f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bf3962f)), closes [#1868](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1868) [#1866](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1866)
+
+
+
+
+
+## <small>13.0.1 (2023-12-22)</small>
+
+**Note:** Version bump only for package @sourceloop/authentication-service
+
+
+
+
+
 ## 13.0.0 (2023-12-07)
 
 * feat(deps): update to latest loopback 4 authentication version (#1826) ([5b827fc](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5b827fc)), closes [#1826](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1826) [#1825](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1825) [#1825](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1825)

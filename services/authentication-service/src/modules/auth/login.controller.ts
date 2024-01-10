@@ -27,6 +27,7 @@ import {
   UserStatus,
   X_TS_TYPE,
 } from '@sourceloop/core';
+
 import crypto from 'crypto';
 import * as jwt from 'jsonwebtoken';
 import {
@@ -54,6 +55,7 @@ import {
   CodeReaderFn,
   JWTSignerFn,
   JwtPayloadFn,
+  UserValidationServiceBindings,
 } from '../../providers';
 import {
   AuthClientRepository,
@@ -70,7 +72,12 @@ import {
 } from '../../repositories';
 import {TenantConfigRepository} from '../../repositories/tenant-config.repository';
 import {LoginHelperService} from '../../services';
-import {ActorId, ExternalTokens, IUserActivity} from '../../types';
+import {
+  ActorId,
+  ExternalTokens,
+  IUserActivity,
+  UserValidationFn,
+} from '../../types';
 import {
   AuthRefreshTokenRequest,
   AuthTokenRequest,
@@ -122,6 +129,8 @@ export class LoginController {
     @inject(AuthServiceBindings.ActorIdKey)
     private readonly actorKey: ActorId,
     @inject.context() private readonly ctx: RequestContext,
+    @inject(UserValidationServiceBindings.VALIDATE_USER)
+    private userValidationProvider: UserValidationFn,
     @inject(AuthServiceBindings.MarkUserActivity, {optional: true})
     private readonly userActivity?: IUserActivity,
   ) {}
@@ -310,17 +319,33 @@ export class LoginController {
     @param.header.string('Authorization') token?: string,
   ): Promise<TokenResponse> {
     const payload = await this.createTokenPayload(req, token);
-    return this.createJWT(
-      {
-        clientId: payload.refreshPayload.clientId,
-        userId: payload.refreshPayload.userId,
-        externalAuthToken: payload.refreshPayload.externalAuthToken,
-        externalRefreshToken: payload.refreshPayload.externalRefreshToken,
-      },
-      payload.authClient,
-      LoginType.RELOGIN,
-      payload.refreshPayload.tenantId,
+    const signUpProvider =
+      (
+        await this.userCredsRepository.findOne({
+          where: {userId: payload.refreshPayload.userId},
+        })
+      )?.authProvider ?? '';
+    const isAuthenticated = await this.userValidationProvider(
+      req,
+      payload,
+      signUpProvider,
+      token,
     );
+
+    if (isAuthenticated) {
+      return this.createJWT(
+        {
+          clientId: payload.refreshPayload.clientId,
+          userId: payload.refreshPayload.userId,
+          externalAuthToken: payload.refreshPayload.externalAuthToken,
+          externalRefreshToken: payload.refreshPayload.externalRefreshToken,
+        },
+        payload.authClient,
+        LoginType.RELOGIN,
+        payload.refreshPayload.tenantId,
+      );
+    }
+    throw new HttpErrors.Forbidden();
   }
 
   @authenticate(STRATEGY.BEARER, {passReqToCallback: true})

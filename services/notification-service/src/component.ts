@@ -37,22 +37,30 @@ import {
   NotificationUserController,
   NotificationUserNotificationController,
   PubnubNotificationController,
+  UserNotificationSettingsController,
 } from './controllers';
 import {NotifServiceBindings} from './keys';
 import {Notification, NotificationAccess, NotificationUser} from './models';
-import {ChannelManagerProvider, NotificationFilterProvider} from './providers';
+import {
+  ChannelManagerProvider,
+  NotificationFilterProvider,
+  NotificationUserSettingsProvider,
+} from './providers';
 import {NotificationUserProvider} from './providers/notification-user.service';
 import {
   NotificationAccessRepository,
   NotificationRepository,
   NotificationUserRepository,
+  UserNotificationSettingsRepository,
 } from './repositories';
+
 import {
   NotificationRepository as NotificationSequelizeRepository,
   NotificationUserRepository as NotificationUserSequelizeRepository,
+  UserNotificationSettingsRepository as UserNotificationSettingsSequelizeRepository,
 } from './repositories/sequelize';
+import {ProcessNotificationService} from './services';
 import {INotifServiceConfig} from './types';
-
 export class NotificationServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
@@ -91,12 +99,14 @@ export class NotificationServiceComponent implements Component {
         NotificationAccessRepository,
         NotificationSequelizeRepository,
         NotificationUserSequelizeRepository,
+        UserNotificationSettingsSequelizeRepository,
       ];
     } else {
       this.repositories = [
         NotificationAccessRepository,
         NotificationRepository,
         NotificationUserRepository,
+        UserNotificationSettingsRepository,
       ];
     }
 
@@ -107,6 +117,8 @@ export class NotificationServiceComponent implements Component {
       [NotifServiceBindings.NotificationUserManager.key]:
         NotificationUserProvider,
       [NotifServiceBindings.NotificationFilter.key]: NotificationFilterProvider,
+      [NotifServiceBindings.NotificationSettingFilter.key]:
+        NotificationUserSettingsProvider,
     };
 
     this.controllers = [
@@ -115,7 +127,12 @@ export class NotificationServiceComponent implements Component {
       PubnubNotificationController,
       NotificationNotificationUserController,
       NotificationUserNotificationController,
+      UserNotificationSettingsController,
     ];
+
+    this.application
+      .bind('services.ProcessNotificationService')
+      .toClass(ProcessNotificationService);
   }
 
   providers?: ProviderMap = {};

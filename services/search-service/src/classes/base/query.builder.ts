@@ -9,21 +9,21 @@ import {
   Type,
 } from '@loopback/repository';
 import {HttpErrors, Model} from '@loopback/rest';
-import {QueryList} from '../query-list';
+import {IGNORED_COLUMN, ModelProperties} from '../..';
 import {Errors, TWO} from '../../const';
 import {SearchQuery, SearchResult} from '../../models';
 import {
   ColumnMap,
-  isSearchableModel,
   PredicateComparison,
-  SearchableModel,
   PredicateValueType,
   Queries,
   Query,
   SearchWhereFilter,
+  SearchableModel,
   ShortHandEqualType,
+  isSearchableModel,
 } from '../../types';
-import {IGNORED_COLUMN, ModelProperties} from '../..';
+import {QueryList} from '../query-list';
 
 export abstract class SearchQueryBuilder<T extends Model> {
   protected baseQueryList: Query[];
@@ -149,9 +149,15 @@ export abstract class SearchQueryBuilder<T extends Model> {
     const columnList = Object.keys(columns)
       .filter(
         column =>
-          column !== IGNORED_COLUMN && !filter.includes(column as keyof T),
+          columns[column as keyof ColumnMap<T>] !== IGNORED_COLUMN &&
+          !filter.includes(column as keyof T),
       )
-      .map(column => (columns as AnyObject)[column])
+      .map(column =>
+        this.getColumnName(
+          model,
+          columns[column as keyof ColumnMap<T>] as keyof T,
+        ),
+      )
       .join(', ');
     const selectors = Object.keys(columns)
       .map(column => {
@@ -350,10 +356,10 @@ export abstract class SearchQueryBuilder<T extends Model> {
     if (['inq', 'nin', 'between'].includes(operator)) {
       if (operator === 'between' && columnValue.length !== TWO) {
         throw new HttpErrors.BadRequest(Errors.EXACTLY_TWO_VALUES_FOR_BETWEEN);
+      } else if (columnValue.length === 0) {
+        return;
       } else {
-        if (columnValue.length === 0) {
-          return;
-        }
+        //do nothing
       }
     }
     return this.buildExpression(key, p, operator, columnValue, model);
@@ -447,12 +453,10 @@ export abstract class SearchQueryBuilder<T extends Model> {
       } else {
         return JSON.stringify(val);
       }
+    } else if (isArrayDataType && typeof val === 'string') {
+      return JSON.parse(val);
     } else {
-      if (isArrayDataType && typeof val === 'string') {
-        return JSON.parse(val);
-      } else {
-        return val;
-      }
+      return val;
     }
   }
 
@@ -546,15 +550,13 @@ export abstract class SearchQueryBuilder<T extends Model> {
         sql,
         params,
       };
+    } else if (this._isQuery(values)) {
+      return values;
     } else {
-      if (this._isQuery(values)) {
-        return values;
-      } else {
-        return {
-          sql: getPlaceholder(),
-          params: [values],
-        };
-      }
+      return {
+        sql: getPlaceholder(),
+        params: [values],
+      };
     }
   }
 

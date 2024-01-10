@@ -5,14 +5,14 @@
 import {inject} from '@loopback/context';
 import {repository} from '@loopback/repository';
 import {
-  getModelSchemaRef,
   HttpErrors,
-  param,
-  post,
   Request,
-  requestBody,
   RequestContext,
   RestBindings,
+  getModelSchemaRef,
+  param,
+  post,
+  requestBody,
 } from '@loopback/rest';
 import {
   AuthenticateErrorKeys,
@@ -29,10 +29,10 @@ import {encode} from 'base-64';
 import crypto from 'crypto';
 import {HttpsProxyAgent} from 'https-proxy-agent';
 import {
-  authenticate,
-  AuthenticationBindings,
   AuthErrorKeys,
+  AuthenticationBindings,
   STRATEGY,
+  authenticate,
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import fetch from 'node-fetch';
@@ -66,7 +66,9 @@ const getProxyAgent = () => {
 };
 
 const size = 16;
-
+const SUCCESS_RESPONSE = 'Success Response';
+const AUTHENTICATE_USER =
+  'This is the access token which is required to authenticate user.';
 export class LogoutController {
   constructor(
     @inject(RestBindings.Http.REQUEST) private readonly req: Request,
@@ -101,7 +103,7 @@ export class LogoutController {
     description: 'To logout',
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Success Response',
+        description: SUCCESS_RESPONSE,
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {[X_TS_TYPE]: SuccessResponse},
@@ -113,8 +115,7 @@ export class LogoutController {
   })
   async logout(
     @param.header.string('Authorization', {
-      description:
-        'This is the access token which is required to authenticate user.',
+      description: AUTHENTICATE_USER,
     })
     auth: string,
     @requestBody({
@@ -175,7 +176,7 @@ export class LogoutController {
       'This API will log out the user from application as well as keycloak',
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Success Response',
+        description: SUCCESS_RESPONSE,
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {[X_TS_TYPE]: SuccessResponse},
@@ -187,8 +188,7 @@ export class LogoutController {
   })
   async keycloakLogout(
     @param.header.string('Authorization', {
-      description:
-        'This is the access token which is required to authenticate user.',
+      description: AUTHENTICATE_USER,
     })
     auth: string,
     @requestBody({
@@ -235,6 +235,96 @@ export class LogoutController {
         .catch(err => {
           this.logger.error(
             `Error while logging off from keycloak. Error :: ${err} ${JSON.stringify(
+              err,
+            )}`,
+          );
+        });
+    }
+
+    if (refreshTokenModel.accessToken !== token) {
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenInvalid);
+    }
+    await this.revokedTokens.set(token, {token});
+    await this.refreshTokenRepo.delete(req.refreshToken);
+    if (refreshTokenModel.pubnubToken) {
+      await this.refreshTokenRepo.delete(refreshTokenModel.pubnubToken);
+    }
+
+    return new SuccessResponse({
+      success: true,
+
+      key: refreshTokenModel.userId,
+    });
+  }
+
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: ['*']})
+  @post('/google/logout', {
+    security: OPERATION_SECURITY_SPEC,
+    description:
+      'This API will log out the user from application as well as google',
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: SUCCESS_RESPONSE,
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {[X_TS_TYPE]: SuccessResponse},
+          },
+        },
+      },
+      ...ErrorCodes,
+    },
+  })
+  async googleLogout(
+    @param.header.string('Authorization', {
+      description: AUTHENTICATE_USER,
+    })
+    auth: string,
+    @requestBody({
+      content: {
+        [CONTENT_TYPE.JSON]: {
+          schema: getModelSchemaRef(RefreshTokenRequest, {
+            partial: true,
+          }),
+        },
+      },
+    })
+    req: RefreshTokenRequest,
+  ): Promise<SuccessResponse> {
+    const token = auth?.replace(/bearer /i, '');
+    if (!token || !req.refreshToken) {
+      throw new HttpErrors.UnprocessableEntity(
+        AuthenticateErrorKeys.TokenMissing,
+      );
+    }
+
+    const refreshTokenModel = await this.refreshTokenRepo.get(req.refreshToken);
+    if (!refreshTokenModel) {
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenExpired);
+    }
+
+    if (refreshTokenModel.externalRefreshToken) {
+      const params = new URLSearchParams();
+      const logoutUrl = `https://oauth2.googleapis.com/revoke?token=${refreshTokenModel.externalAuthToken}`;
+      params.append('refresh_token', refreshTokenModel.externalRefreshToken);
+      fetch(logoutUrl, {
+        agent: getProxyAgent(),
+        method: 'post',
+        body: params,
+        headers: {
+          'Content-type': 'application/x-www-form-urlencoded',
+        },
+      })
+        .then(() => {
+          this.logger.info(
+            `User ${refreshTokenModel.username} logged off successfully from google.`,
+          );
+        })
+        .catch(err => {
+          this.logger.error(
+            `Error while logging off from google. Error :: ${err} ${JSON.stringify(
               err,
             )}`,
           );
