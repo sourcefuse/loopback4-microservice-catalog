@@ -142,10 +142,10 @@ export class <%= project.applicationName %> extends BootMixin(RestApplication) {
     // Add authentication component
     this.component(AuthenticationComponent);
 <% if (project.serviceDependency && project.baseServiceComponentName && project.sequelize) { -%>
-this.bind(<%= project.baseServiceBindingName %>.Config).to({
-useCustomSequence:false,
-useSequelize:true
-});
+    this.bind(<%= project.baseServiceBindingName %>.Config).to({
+    useCustomSequence:false,
+    useSequelize:true
+    });
 <% }-%>
 <% if (project.serviceDependency && project.baseServiceComponentName) { -%>
   this.component(<%= project.baseServiceComponentName %>);

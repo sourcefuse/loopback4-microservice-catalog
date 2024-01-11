@@ -149,8 +149,10 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         return false;
       });
       if (missingServices.includes(this.options.baseService)) {
-        console.error(
-          `"${this.options.baseService}" SERVICE does not support Sequelize.`,
+        this.log(
+          chalk.yellow(
+            `"${this.options.baseService}" will be supporting sequelize soon.`,
+          ),
         );
         process.exit(1);
       } else {

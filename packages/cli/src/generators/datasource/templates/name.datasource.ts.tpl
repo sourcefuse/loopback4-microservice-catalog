@@ -1,5 +1,9 @@
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
+<% if (project.sequelize) { -%>
+import {SequelizeDataSource} from '@loopback/sequelize';
+ <% }else{ -%>
 import {juggler} from '@loopback/repository';
+<% } -%>
 <% if (project.serviceDependency && project.baseServiceStoreName) { -%>
 import {<%= project.baseServiceStoreName %>} from '@sourceloop/<%= project.serviceDependency -%>'
 <% } -%>
@@ -26,8 +30,11 @@ const config = {
 // gracefully. The `stop()` method is inherited from `juggler.DataSource`.
 // Learn more at https://loopback.io/doc/en/lb4/Life-cycle.html
 @lifeCycleObserver('datasource')
-export class <%= project.datasourceClassName %>DataSource extends juggler.DataSource
-  implements LifeCycleObserver { 
+export class <%= project.datasourceClassName %>DataSource extends <% if (project.sequelize ) { -%>
+SequelizeDataSource
+ <% }else{ -%>
+juggler.DataSource
+ <% } -%>	 implements LifeCycleObserver { 
   
   <% if (project.serviceDependency && project.baseServiceStoreName ) { -%>
     static dataSourceName = <%= project.baseServiceStoreName %>;
