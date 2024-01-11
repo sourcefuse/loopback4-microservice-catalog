@@ -27,7 +27,7 @@
     "@cdktf/provider-random": "^5.0.0",
     "arc-cdk": "^0.0.8",
     "cdktf": "^0.15.0",
-    "cdktf-cli": "^0.15.5",
+    "cdktf-cli": "^0.20.0",
     "constructs": "^10.1.229",
     "dotenv": "^16.0.3",
     "dotenv-extended": "^2.9.0"
