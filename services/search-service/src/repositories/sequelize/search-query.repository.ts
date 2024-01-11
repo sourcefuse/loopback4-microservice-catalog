@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {Getter, inject} from '@loopback/core';
-import {AnyObject, Count, Where} from '@loopback/repository';
+import {AnyObject, Count, Options, Where} from '@loopback/repository';
 import {SequelizeDataSource} from '@loopback/sequelize';
 import {IAuthUserWithPermissions} from '@sourceloop/core';
 import {SequelizeUserModifyCrudRepository} from '@sourceloop/core/sequelize';
@@ -11,6 +11,7 @@ import {AuthenticationBindings} from 'loopback4-authentication';
 import {SearchServiceConfig} from '../..';
 import {SearchServiceBindings} from '../../keys';
 import {SearchQuery} from '../../models';
+import {DataObject} from '@loopback/repository/src/common-types';
 
 export class SearchQueryRepository extends SequelizeUserModifyCrudRepository<
   SearchQuery,
@@ -31,5 +32,14 @@ export class SearchQueryRepository extends SequelizeUserModifyCrudRepository<
 
   deleteAll(where?: Where<SearchQuery>, options?: AnyObject): Promise<Count> {
     return super.deleteAllHard(where, options);
+  }
+  create(
+    entity: DataObject<SearchQuery>,
+    options?: Options | undefined,
+  ): Promise<SearchQuery> {
+    if (entity.where) {
+      delete entity.where;
+    }
+    return super.create(entity, options);
   }
 }
