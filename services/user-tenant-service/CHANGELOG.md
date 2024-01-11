@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.14.2 (2024-01-11)</small>
+
+* fix(user-tenant-service): add missing exports in user tenant service (#1902) ([d53bd6a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d53bd6a)), closes [#1902](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1902)
+
+
+
+
+
 ## <small>0.14.1 (2024-01-09)</small>
 
 **Note:** Version bump only for package @sourceloop/user-tenant-service
