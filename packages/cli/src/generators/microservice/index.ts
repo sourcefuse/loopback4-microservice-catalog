@@ -154,7 +154,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
             `"${this.options.baseService}" will be supporting sequelize soon.`,
           ),
         );
-        process.exit(1);
+        this.projectInfo.sequelize = false;
       } else {
         return BASESERVICEBINDINGLIST[this.options.baseService];
       }
