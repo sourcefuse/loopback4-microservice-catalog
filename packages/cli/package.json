@@ -217,7 +217,7 @@
       "@sourceloop/scheduler-service": "^10.0.1",
       "@sourceloop/search-service": "^0.11.1",
       "@sourceloop/survey-service": "^0.6.1",
-      "@sourceloop/user-tenant-service": "^0.14.1",
+      "@sourceloop/user-tenant-service": "^0.14.2",
       "@sourceloop/video-conferencing-service": "^10.0.1",
       "@sourceloop/audit-log": "^5.3.0",
       "@sourceloop/vault": "^6.0.0",

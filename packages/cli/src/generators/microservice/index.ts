@@ -7,12 +7,14 @@ import {join} from 'path';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import AppGenerator from '../../app-generator';
 import {
+  BASESERVICEBINDINGLIST,
   BASESERVICECOMPONENTLIST,
   BASESERVICEDSLIST,
   DATASOURCES,
   DATASOURCE_CONNECTORS,
   MIGRATIONS,
   MIGRATION_CONNECTORS,
+  SEQUELIZESERVICES,
   SERVICES,
 } from '../../enum';
 import {AnyObject, MicroserviceOptions} from '../../types';
@@ -128,6 +130,36 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       this.projectInfo.datasourceConnector;
     this.projectInfo.datasourceType = this.options.datasourceType;
   }
+  async setSequelize() {
+    this.projectInfo.sequelize = this.options.sequelize;
+    if (this.projectInfo.sequelize) {
+      this.projectInfo.baseServiceBindingName =
+        this._setBaseServiceBindingName();
+    }
+  }
+  private _setBaseServiceBindingName() {
+    if (this.options.baseService) {
+      const missingServices = Object.values(SERVICES).filter(service => {
+        if (
+          !Object.values(SEQUELIZESERVICES).includes(
+            service as unknown as SEQUELIZESERVICES,
+          )
+        )
+          return true;
+        return false;
+      });
+      if (missingServices.includes(this.options.baseService)) {
+        this.log(
+          chalk.yellow(
+            `"${this.options.baseService}" will be supporting sequelize soon.`,
+          ),
+        );
+        this.projectInfo.sequelize = false;
+      } else {
+        return BASESERVICEBINDINGLIST[this.options.baseService];
+      }
+    }
+  }
 
   async setMigrationType() {
     if (this.options.customMigrations) {
@@ -151,7 +183,6 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         this.projectInfo.baseServiceDSList = baseServiceDSList.filter(
           ds => ds.type === 'store',
         );
-
         const redisDsPresent = baseServiceDSList.filter(
           ds => ds.type === 'cache',
         );

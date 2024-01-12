@@ -113,3 +113,33 @@ export const BASESERVICECOMPONENTLIST: {
   'chat-service': 'ChatServiceComponent',
   'user-tenant-service': 'UserTenantServiceComponent',
 };
+
+export const BASESERVICEBINDINGLIST: {
+  [key in SERVICES]: string;
+} = {
+  'authentication-service': 'AuthServiceBindings',
+  'audit-service': 'AuditServiceBindings',
+  'notification-service': 'NotifServiceBindings',
+  'bpmn-service': 'WorkflowServiceBindings',
+  'feature-toggle-service': 'FeatureToggleBindings',
+  'in-mail-service': 'InMailBindings',
+  'payment-service': 'PaymentServiceBindings',
+  'scheduler-service': 'CoreSchedulerBindings',
+  'search-service': 'SearchServiceBindings',
+  'survey-service': 'SurveyServiceBindings',
+  'video-conferencing-service': 'VideoChatBindings',
+  'chat-service': 'ChatServiceBindings',
+  'user-tenant-service': 'UserTenantServiceComponentBindings',
+};
+export enum SEQUELIZESERVICES {
+  AUTH = 'authentication-service',
+  AUDIT = 'audit-service',
+  CHAT = 'chat-service',
+  NOTIFICATION = 'notification-service',
+  BPMN = 'bpmn-service',
+  PAYMENT = 'payment-service',
+  SCHEDULER = 'scheduler-service',
+  SURVEY = 'survey-service',
+  VIDEO_CONF = 'video-conferencing-service',
+  USER_TENANT = 'user-tenant-service',
+}
