@@ -1,5 +1,6 @@
 import {Getter, inject} from '@loopback/core';
 import {
+  Entity,
   HasManyRepositoryFactory,
   juggler,
   repository,
@@ -24,15 +25,17 @@ export class TaskRepository extends DefaultUserModifyCrudRepository<
   constructor(
     @inject(`datasources.${TaskDbSourceName}`)
     dataSource: juggler.DataSource,
-    @repository.getter('SubTaskRepository')
-    subTaskRepo: Getter<UserTaskRepository>,
+    @repository.getter('UserTaskRepository')
+    userTaskRepo: Getter<UserTaskRepository>,
     @inject.getter(AuthenticationBindings.CURRENT_USER)
     private userGetter: Getter<IAuthUserWithPermissions>,
+    @inject('models.Task')
+    private readonly task: typeof Entity & {prototype: Task},
   ) {
-    super(Task, dataSource, userGetter);
+    super(task, dataSource, userGetter);
     this.userTasks = this.createHasManyRepositoryFactoryFor(
-      'subTasks',
-      subTaskRepo,
+      'userTasks',
+      userTaskRepo,
     );
   }
 }

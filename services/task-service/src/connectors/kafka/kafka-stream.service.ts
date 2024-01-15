@@ -20,11 +20,17 @@ export class KafkaStreamService<T>
     private readonly adapter: IEventAdapter<EachMessagePayload, T>,
     @inject(LOGGER.LOGGER_INJECT)
     private readonly logger: ILogger,
-  ) {}
+    @inject(TaskServiceKafkaModule.KAFKA_CLIENT, {optional: true})
+    private readonly kafkaContructor: typeof Kafka,
+  ) {
+    if (!this.kafkaContructor) {
+      this.kafkaContructor = Kafka;
+    }
+  }
   client: Kafka;
-  consumer: Consumer;
+  consumer?: Consumer;
   async subscribe(handler: IEventStreamHandler<T>): Promise<void> {
-    this.client = new Kafka(this.settings.connection);
+    this.client = new this.kafkaContructor(this.settings.connection);
     this.consumer = this.client.consumer(this.settings.consumer);
     await this.consumer.connect();
     await this.consumer.subscribe({
@@ -50,13 +56,16 @@ export class KafkaStreamService<T>
     });
   }
   async unsubscribe(): Promise<void> {
-    await this.consumer.disconnect();
+    await this.consumer?.disconnect();
   }
   async publish(event: T): Promise<void> {
     const config = this.settings.output;
     if (!config) {
       this.logger.error('No output config found for kafka connector');
       return;
+    }
+    if (!this.client) {
+      this.client = new this.kafkaContructor(this.settings.connection);
     }
     const producer = this.client.producer(this.settings.producer);
     await producer.connect();

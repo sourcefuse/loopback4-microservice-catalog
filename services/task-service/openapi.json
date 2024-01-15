@@ -11,10 +11,10 @@
   "paths": {
     "/events/count": {
       "get": {
-        "x-controller-name": "EventsController",
+        "x-controller-name": "EventController",
         "x-operation-name": "count",
         "tags": [
-          "EventsController"
+          "EventController"
         ],
         "security": [
           {
@@ -50,15 +50,15 @@
             }
           }
         ],
-        "operationId": "EventsController.count"
+        "operationId": "EventController.count"
       }
     },
     "/events/mapping": {
       "post": {
-        "x-controller-name": "EventsController",
-        "x-operation-name": "mapTaskToWorkflow",
+        "x-controller-name": "EventController",
+        "x-operation-name": "mapEventToWorkflow",
         "tags": [
-          "EventsController"
+          "EventController"
         ],
         "security": [
           {
@@ -76,15 +76,15 @@
             }
           }
         },
-        "operationId": "EventsController.mapTaskToWorkflow"
+        "operationId": "EventController.mapEventToWorkflow"
       }
     },
     "/events/{id}": {
       "get": {
-        "x-controller-name": "EventsController",
+        "x-controller-name": "EventController",
         "x-operation-name": "findById",
         "tags": [
-          "EventsController"
+          "EventController"
         ],
         "security": [
           {
@@ -125,15 +125,15 @@
             }
           }
         ],
-        "operationId": "EventsController.findById"
+        "operationId": "EventController.findById"
       }
     },
     "/events": {
       "get": {
-        "x-controller-name": "EventsController",
+        "x-controller-name": "EventController",
         "x-operation-name": "find",
         "tags": [
-          "EventsController"
+          "EventController"
         ],
         "security": [
           {
@@ -169,7 +169,7 @@
             }
           }
         ],
-        "operationId": "EventsController.find"
+        "operationId": "EventController.find"
       }
     },
     "/tasks/count": {
@@ -244,10 +244,10 @@
     },
     "/tasks/{taskId}/user-tasks/count": {
       "get": {
-        "x-controller-name": "TaskSubTaskController",
+        "x-controller-name": "TaskUserTaskController",
         "x-operation-name": "count",
         "tags": [
-          "TaskSubTaskController"
+          "TaskUserTaskController"
         ],
         "security": [
           {
@@ -291,15 +291,15 @@
             }
           }
         ],
-        "operationId": "TaskSubTaskController.count"
+        "operationId": "TaskUserTaskController.count"
       }
     },
     "/tasks/{taskId}/user-tasks/{userTaskId}/complete": {
       "patch": {
-        "x-controller-name": "TaskSubTaskController",
+        "x-controller-name": "TaskUserTaskController",
         "x-operation-name": "completeTask",
         "tags": [
-          "TaskSubTaskController"
+          "TaskUserTaskController"
         ],
         "security": [
           {
@@ -326,15 +326,15 @@
             "required": true
           }
         ],
-        "operationId": "TaskSubTaskController.completeTask"
+        "operationId": "TaskUserTaskController.completeTask"
       }
     },
     "/tasks/{taskId}/user-tasks/{userTaskId}": {
       "get": {
-        "x-controller-name": "TaskSubTaskController",
+        "x-controller-name": "TaskUserTaskController",
         "x-operation-name": "findById",
         "tags": [
-          "TaskSubTaskController"
+          "TaskUserTaskController"
         ],
         "security": [
           {
@@ -383,15 +383,46 @@
             }
           }
         ],
-        "operationId": "TaskSubTaskController.findById"
+        "operationId": "TaskUserTaskController.findById"
+      }
+    },
+    "/tasks/{taskId}/user-tasks/{id}": {
+      "delete": {
+        "x-controller-name": "TaskUserTaskController",
+        "x-operation-name": "deleteById",
+        "tags": [
+          "TaskUserTaskController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "UserTasks DELETE by id success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 16009   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "TaskUserTaskController.deleteById"
       }
     },
     "/tasks/{taskId}/user-tasks": {
       "get": {
-        "x-controller-name": "TaskSubTaskController",
+        "x-controller-name": "TaskUserTaskController",
         "x-operation-name": "find",
         "tags": [
-          "TaskSubTaskController"
+          "TaskUserTaskController"
         ],
         "security": [
           {
@@ -435,7 +466,42 @@
             }
           }
         ],
-        "operationId": "TaskSubTaskController.find"
+        "operationId": "TaskUserTaskController.find"
+      },
+      "delete": {
+        "x-controller-name": "TaskUserTaskController",
+        "x-operation-name": "delete",
+        "tags": [
+          "TaskUserTaskController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "UserTasks DELETE success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 16009   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "user_tasks.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<UserTask>"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "TaskUserTaskController.delete"
       }
     },
     "/tasks/{id}": {
@@ -485,6 +551,35 @@
           }
         ],
         "operationId": "TaskController.findById"
+      },
+      "delete": {
+        "x-controller-name": "TaskController",
+        "x-operation-name": "deleteById",
+        "tags": [
+          "TaskController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Task DELETE by id success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 16008   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "TaskController.deleteById"
       }
     },
     "/tasks": {
@@ -529,6 +624,41 @@
           }
         ],
         "operationId": "TaskController.find"
+      },
+      "delete": {
+        "x-controller-name": "TaskController",
+        "x-operation-name": "delete",
+        "tags": [
+          "TaskController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Tasks DELETE success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 16008   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "tasks.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<Task>"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "TaskController.delete"
       }
     },
     "/workflows/{id}/execute": {
@@ -956,6 +1086,32 @@
         "type": "object",
         "description": "(tsType: EventWithRelations, schemaOptions: { includeRelations: true })",
         "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
           "id": {
             "type": "string"
           },
@@ -974,13 +1130,18 @@
           "payload": {
             "type": "object",
             "description": "A dynamic object that contains information to be run in the workers of a bpmn engine"
+          },
+          "timestamp": {
+            "type": "number",
+            "description": "A short message to indicate the progression of the event"
           }
         },
         "required": [
           "key",
           "description",
           "source",
-          "payload"
+          "payload",
+          "timestamp"
         ],
         "additionalProperties": false,
         "x-typescript-type": "EventWithRelations"
@@ -988,7 +1149,7 @@
       "EventWorkflowMapping": {
         "title": "EventWorkflowMapping",
         "type": "object",
-        "description": "(tsType: EventWorkflows, schemaOptions: { title: 'EventWorkflowMapping' })",
+        "description": "(tsType: EventWorkflow, schemaOptions: { title: 'EventWorkflowMapping' })",
         "properties": {
           "deleted": {
             "type": "boolean"
@@ -1033,13 +1194,39 @@
           "workflowKey"
         ],
         "additionalProperties": false,
-        "x-typescript-type": "EventWorkflows"
+        "x-typescript-type": "EventWorkflow"
       },
       "UserTaskWithRelations": {
         "title": "UserTaskWithRelations",
         "type": "object",
         "description": "(tsType: UserTaskWithRelations, schemaOptions: { includeRelations: true })",
         "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
           "id": {
             "type": "string"
           },
@@ -1070,6 +1257,32 @@
         "type": "object",
         "description": "(tsType: TaskWithRelations, schemaOptions: { includeRelations: true })",
         "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
           "id": {
             "type": "string"
           },
@@ -1119,7 +1332,7 @@
           "externalId": {
             "type": "string"
           },
-          "subTasks": {
+          "userTasks": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/UserTaskWithRelations"
@@ -1140,8 +1353,34 @@
       "TaskWorkFlowMapping": {
         "title": "TaskWorkFlowMapping",
         "type": "object",
-        "description": "(tsType: TaskWorkflows, schemaOptions: { title: 'TaskWorkFlowMapping' })",
+        "description": "(tsType: TaskWorkflow, schemaOptions: { title: 'TaskWorkFlowMapping' })",
         "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
           "id": {
             "type": "string"
           },
@@ -1159,7 +1398,7 @@
           "taskKey"
         ],
         "additionalProperties": false,
-        "x-typescript-type": "TaskWorkflows"
+        "x-typescript-type": "TaskWorkflow"
       },
       "loopback.Count": {
         "type": "object",
@@ -1206,6 +1445,27 @@
               {
                 "type": "object",
                 "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
                   "id": {
                     "type": "boolean"
                   },
@@ -1220,6 +1480,9 @@
                   },
                   "payload": {
                     "type": "boolean"
+                  },
+                  "timestamp": {
+                    "type": "boolean"
                   }
                 },
                 "additionalProperties": false
@@ -1229,13 +1492,21 @@
                 "items": {
                   "type": "string",
                   "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
                     "id",
                     "key",
                     "description",
                     "source",
-                    "payload"
+                    "payload",
+                    "timestamp"
                   ],
-                  "example": "id"
+                  "example": "deleted"
                 },
                 "uniqueItems": true
               }
@@ -1286,6 +1557,27 @@
               {
                 "type": "object",
                 "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
                   "id": {
                     "type": "boolean"
                   },
@@ -1300,6 +1592,9 @@
                   },
                   "payload": {
                     "type": "boolean"
+                  },
+                  "timestamp": {
+                    "type": "boolean"
                   }
                 },
                 "additionalProperties": false
@@ -1309,13 +1604,21 @@
                 "items": {
                   "type": "string",
                   "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
                     "id",
                     "key",
                     "description",
                     "source",
-                    "payload"
+                    "payload",
+                    "timestamp"
                   ],
-                  "example": "id"
+                  "example": "deleted"
                 },
                 "uniqueItems": true
               }
@@ -1361,6 +1664,27 @@
               {
                 "type": "object",
                 "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
                   "id": {
                     "type": "boolean"
                   },
@@ -1384,13 +1708,20 @@
                 "items": {
                   "type": "string",
                   "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
                     "id",
                     "name",
                     "taskId",
                     "status",
                     "externalId"
                   ],
-                  "example": "id"
+                  "example": "deleted"
                 },
                 "uniqueItems": true
               }
@@ -1441,6 +1772,27 @@
               {
                 "type": "object",
                 "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
                   "id": {
                     "type": "boolean"
                   },
@@ -1464,13 +1816,20 @@
                 "items": {
                   "type": "string",
                   "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
                     "id",
                     "name",
                     "taskId",
                     "status",
                     "externalId"
                   ],
-                  "example": "id"
+                  "example": "deleted"
                 },
                 "uniqueItems": true
               }
@@ -1549,7 +1908,7 @@
           "relation": {
             "type": "string",
             "enum": [
-              "subTasks"
+              "userTasks"
             ]
           },
           "scope": {
@@ -1592,6 +1951,27 @@
               {
                 "type": "object",
                 "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
                   "id": {
                     "type": "boolean"
                   },
@@ -1642,6 +2022,13 @@
                 "items": {
                   "type": "string",
                   "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
                     "id",
                     "key",
                     "name",
@@ -1657,7 +2044,7 @@
                     "metadata",
                     "externalId"
                   ],
-                  "example": "id"
+                  "example": "deleted"
                 },
                 "uniqueItems": true
               }
@@ -1722,6 +2109,27 @@
               {
                 "type": "object",
                 "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
                   "id": {
                     "type": "boolean"
                   },
@@ -1772,6 +2180,13 @@
                 "items": {
                   "type": "string",
                   "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
                     "id",
                     "key",
                     "name",
@@ -1787,7 +2202,7 @@
                     "metadata",
                     "externalId"
                   ],
-                  "example": "id"
+                  "example": "deleted"
                 },
                 "uniqueItems": true
               }

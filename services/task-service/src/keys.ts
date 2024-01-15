@@ -5,17 +5,17 @@ import {
   IEventProcessor,
   IIncomingConnector,
   IOutgoingConnector,
-  ISubTaskService,
+  IUserTaskService,
 } from './interfaces';
-import {EventFilter} from './types';
+import {EventFilter, TaskServiceConfig, User} from './types';
 
 export namespace TaskServiceBindings {
   export const CUSTOM_BPMN_RUNNER = BindingKey.create(
     `${BINDING_PREFIX}.task.custom_task.runner`,
   );
 
-  export const SUB_TASK_SERVICE = BindingKey.create<ISubTaskService>(
-    `${BINDING_PREFIX}.subtask.service`,
+  export const SUB_TASK_SERVICE = BindingKey.create<IUserTaskService>(
+    `${BINDING_PREFIX}.usertask.service`,
   );
 
   export const EVENT_PROCESSOR = BindingKey.create<IEventProcessor>(
@@ -35,5 +35,13 @@ export namespace TaskServiceBindings {
 
   export const COMMANDS = BindingKey.create<Constructor<ICommand>[]>(
     `${BINDING_PREFIX}.task.commands`,
+  );
+
+  export const CONFIG = BindingKey.create<TaskServiceConfig>(
+    `${BINDING_PREFIX}.task.config`,
+  );
+
+  export const SYSTEM_USER = BindingKey.create<User>(
+    `${BINDING_PREFIX}.task.system.user`,
   );
 }

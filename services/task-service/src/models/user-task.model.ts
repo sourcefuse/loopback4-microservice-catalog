@@ -1,6 +1,6 @@
 import {model, property} from '@loopback/repository';
 import {UserModifiableEntity} from '@sourceloop/core';
-import {SubTaskStatus} from '../types';
+import {UserTaskStatus} from '../types';
 import {Task} from './task.model';
 
 @model({
@@ -31,7 +31,7 @@ export class UserTask extends UserModifiableEntity<Task> {
     required: true,
     type: 'string',
   })
-  status: SubTaskStatus;
+  status: UserTaskStatus;
 
   @property({
     type: 'string',

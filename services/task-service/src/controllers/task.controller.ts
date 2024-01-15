@@ -6,7 +6,14 @@ import {
   Where,
   repository,
 } from '@loopback/repository';
-import {get, getModelSchemaRef, param, post, requestBody} from '@loopback/rest';
+import {
+  del,
+  get,
+  getModelSchemaRef,
+  param,
+  post,
+  requestBody,
+} from '@loopback/rest';
 import {
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
@@ -15,8 +22,8 @@ import {
 import {STRATEGY, authenticate} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {TaskPermssionKey} from '../enums/permission-key.enum';
-import {Task, TaskWorkflows} from '../models';
-import {TaskRepository, TaskWorkFlowMappingRepository} from '../repositories';
+import {Task, TaskWorkflow} from '../models';
+import {TaskRepository, TaskWorkFlowRepository} from '../repositories';
 
 const baseUrl = 'tasks';
 
@@ -24,8 +31,8 @@ export class TaskController {
   constructor(
     @repository(TaskRepository)
     private readonly taskRepo: TaskRepository,
-    @repository(TaskWorkFlowMappingRepository)
-    private readonly taskWorkflowMapping: TaskWorkFlowMappingRepository,
+    @repository(TaskWorkFlowRepository)
+    private readonly taskWorkflowMapping: TaskWorkFlowRepository,
   ) {}
 
   @authenticate(STRATEGY.BEARER)
@@ -104,14 +111,50 @@ export class TaskController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(TaskWorkflows, {
+          schema: getModelSchemaRef(TaskWorkflow, {
             title: 'TaskWorkFlowMapping',
           }),
         },
       },
     })
-    taskWorkflowMapping: Omit<TaskWorkflows, 'id'>,
+    taskWorkflowMapping: Omit<TaskWorkflow, 'id'>,
   ) {
     await this.taskWorkflowMapping.create(taskWorkflowMapping);
+  }
+
+  @authorize({
+    permissions: [TaskPermssionKey.DeleteTask],
+  })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @del(`${baseUrl}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Task DELETE by id success',
+      },
+    },
+  })
+  async deleteById(@param.path.string('id') id: string): Promise<void> {
+    await this.taskRepo.deleteByIdHard(id);
+  }
+
+  @authorize({
+    permissions: [TaskPermssionKey.DeleteTask],
+  })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @del(`${baseUrl}`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Tasks DELETE success',
+      },
+    },
+  })
+  async delete(@param.where(Task) where?: Where<Task>): Promise<void> {
+    await this.taskRepo.deleteAllHard(where);
   }
 }

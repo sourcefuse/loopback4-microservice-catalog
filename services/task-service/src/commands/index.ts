@@ -1,2 +1,2 @@
-export * from './create-task.command';
-export * from './end-task.command';
+export * from './create-task';
+export * from './end-task';

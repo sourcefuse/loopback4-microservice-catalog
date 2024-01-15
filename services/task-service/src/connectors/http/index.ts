@@ -3,3 +3,4 @@ export * from './http-stream.service';
 export * from './repositories';
 export * from './services';
 export * from './task-http.component';
+export * from './models';

@@ -7,11 +7,10 @@ import {
 } from '@sourceloop/bpmn-service';
 import {ILogger, LOGGER} from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
-import {SYSTEM_USER} from '../constant';
 import {IEvent, IEventProcessor, IIncomingConnector} from '../interfaces';
 import {TaskServiceBindings} from '../keys';
-import {EventRepository, EventWorkflowMappingRepository} from '../repositories';
-import {EventFilter} from '../types';
+import {EventRepository, EventWorkflowRepository} from '../repositories';
+import {EventFilter, User} from '../types';
 
 export class EventProcessorService implements IEventProcessor {
   incoming: IIncomingConnector;
@@ -26,45 +25,55 @@ export class EventProcessorService implements IEventProcessor {
 
   async handle(event: IEvent): Promise<void> {
     if (!this.filter(event)) {
-      this.logger.debug(`Event ${event.type} filtered out`);
+      this.logger.debug(`Event ${event.key} filtered out`);
       return;
     }
-    const tempContext = new Context(this.ctx);
+    const tempContext = new Context(this.ctx, 'tempContext');
+    const systemUser = await tempContext.get<User>(
+      TaskServiceBindings.SYSTEM_USER,
+    );
+    tempContext.bind(AuthenticationBindings.CURRENT_USER).to(systemUser);
+
     const repo = await tempContext.get<EventRepository>(
       `repositories.EventRepository`,
     );
     const eventWorkflowMappingRepo =
-      await tempContext.get<EventWorkflowMappingRepository>(
-        `repositories.EventWorkflowMappingRepository`,
+      await tempContext.get<EventWorkflowRepository>(
+        `repositories.EventWorkflowRepository`,
       );
+    // need to add logic for event handling status
     await repo.create({
-      key: event.type,
+      key: event.key,
       payload: event.payload,
       source: event.payload.source ?? event.source,
-      description: event.payload.description ?? `Task for ${event.type}`,
+      description: event.payload.description ?? `Task for ${event.key}`,
+      timestamp: event.timestamp,
     });
     const mapping = await eventWorkflowMappingRepo.find({
       where: {
-        eventKey: event.type,
+        eventKey: event.key,
       },
     });
-    if (!mapping) {
-      this.logger.debug(`No mapping found for event ${event.type}`);
+    if (!mapping.length) {
+      this.logger.debug(`No mapping found for event ${event.key}`);
       return;
     }
     const promises = mapping.map(async map => {
-      await this._triggerWorkflow(map.workflowKey, event.payload);
+      await this._triggerWorkflow(map.workflowKey, event.payload, tempContext);
     });
     await Promise.all(promises);
+    tempContext.close();
   }
 
-  private async _triggerWorkflow(workflowKey: string, payload: AnyObject) {
-    const childContext = new Context(this.ctx, 'temp-ctx');
-    childContext.bind(AuthenticationBindings.CURRENT_USER).to(SYSTEM_USER);
-    const workflowCtrl = await childContext.get<WorkflowController>(
+  private async _triggerWorkflow(
+    workflowKey: string,
+    payload: AnyObject,
+    context: Context,
+  ) {
+    const workflowCtrl = await context.get<WorkflowController>(
       'controllers.WorkflowController',
     );
-    const workflowRepo = await childContext.get<WorkflowRepository>(
+    const workflowRepo = await context.get<WorkflowRepository>(
       'repositories.WorkflowRepository',
     );
     const workflow = await workflowRepo.findOne({
@@ -82,6 +91,5 @@ export class EventProcessorService implements IEventProcessor {
         }),
       );
     }
-    childContext.close();
   }
 }

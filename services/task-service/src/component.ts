@@ -14,7 +14,10 @@ import {
 } from '@loopback/core';
 import {Class, Model, Repository} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
-import {WorkflowServiceComponent} from '@sourceloop/bpmn-service';
+import {
+  WorkflowServiceBindings,
+  WorkflowServiceComponent,
+} from '@sourceloop/bpmn-service';
 import {
   CoreComponent,
   SECURITY_SCHEME_SPEC,
@@ -22,27 +25,32 @@ import {
 } from '@sourceloop/core';
 import * as controllers from './controllers';
 
-import {Strategies} from 'loopback4-authentication';
+import {AuthenticationComponent, Strategies} from 'loopback4-authentication';
 import {
   BearerStrategyFactoryProvider,
   BearerTokenVerifyProvider,
 } from 'loopback4-authentication/passport-bearer';
+import {AuthorizationComponent} from 'loopback4-authorization';
 import {TaskServiceBindings} from './keys';
 import {CommandObserver, EventStreamObserver} from './lifecycle-observers';
+import {Event, EventWorkflow, Task, TaskWorkflow, UserTask} from './models';
+import {BpmnProvider} from './providers';
+import {SystemUserProvider} from './providers/system-user.provider';
 import {
   EventRepository,
-  EventWorkflowMappingRepository,
+  EventWorkflowRepository,
   TaskRepository,
-  TaskWorkFlowMappingRepository,
+  TaskWorkFlowRepository,
   UserTaskRepository,
 } from './repositories';
 import {
   CamundaService,
   EventProcessorService,
   HttpClientService,
-  SubTaskService,
+  UserTaskService,
   UtilityService,
 } from './services';
+import {TaskServiceConfig} from './types';
 
 export class TaskServiceComponent implements Component {
   repositories?: Class<Repository<Model>>[];
@@ -65,6 +73,8 @@ export class TaskServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: RestApplication,
+    @inject(TaskServiceBindings.CONFIG, {optional: true})
+    private readonly config?: TaskServiceConfig,
   ) {
     this.application.component(CoreComponent);
 
@@ -82,31 +92,34 @@ export class TaskServiceComponent implements Component {
     });
     this.application.component(WorkflowServiceComponent);
     this.controllers = [
-      controllers.EventsController,
+      controllers.EventController,
       controllers.TaskController,
-      controllers.TaskSubTaskController,
+      controllers.TaskUserTaskController,
     ];
     this.repositories = [
       EventRepository,
       TaskRepository,
-      EventWorkflowMappingRepository,
-      TaskWorkFlowMappingRepository,
+      EventWorkflowRepository,
+      TaskWorkFlowRepository,
       UserTaskRepository,
     ];
-    this.services = [
-      CamundaService,
-      UtilityService,
-      SubTaskService,
-      HttpClientService,
-    ];
+    this.providers = {
+      [TaskServiceBindings.SYSTEM_USER.key]: SystemUserProvider,
+      [WorkflowServiceBindings.WorkflowManager.key]: BpmnProvider,
+    };
+    this.models = [EventWorkflow, Event, TaskWorkflow, Task, UserTask];
+    this.services = [CamundaService, UtilityService, HttpClientService];
     this.bindings = [
       createBindingFromClass(EventProcessorService, {
         key: TaskServiceBindings.EVENT_PROCESSOR,
       }),
-      createBindingFromClass(SubTaskService, {
+      createBindingFromClass(UserTaskService, {
         key: TaskServiceBindings.SUB_TASK_SERVICE,
       }),
     ];
+    if (!this.config?.useCustomSequence) {
+      this.setupSequence();
+    }
     // default filter does not skip any events
     this.application.bind(TaskServiceBindings.EVENT_FILTER).to(() => true);
     this.application.lifeCycleObserver(EventStreamObserver);
@@ -117,6 +130,8 @@ export class TaskServiceComponent implements Component {
    * Setup ServiceSequence by default if no other sequnce provided
    */
   setupSequence() {
+    this.application.component(AuthenticationComponent);
+    this.application.component(AuthorizationComponent);
     this.application.sequence(ServiceSequence);
     this.application
       .bind(Strategies.Passport.BEARER_STRATEGY_FACTORY.key)

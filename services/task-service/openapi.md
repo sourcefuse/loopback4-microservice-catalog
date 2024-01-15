@@ -30,11 +30,11 @@ Base URLs:
 
 - HTTP Authentication, scheme: bearer 
 
-<h1 id="bpmn-service-eventscontroller">EventsController</h1>
+<h1 id="bpmn-service-eventcontroller">EventController</h1>
 
-## EventsController.count
+## EventController.count
 
-<a id="opIdEventsController.count"></a>
+<a id="opIdEventController.count"></a>
 
 > Code samples
 
@@ -87,7 +87,7 @@ fetch('/events/count',
 | ------- |
 | 16002   |
 
-<h3 id="eventscontroller.count-parameters">Parameters</h3>
+<h3 id="eventcontroller.count-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -103,7 +103,7 @@ fetch('/events/count',
 }
 ```
 
-<h3 id="eventscontroller.count-responses">Responses</h3>
+<h3 id="eventcontroller.count-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -114,9 +114,9 @@ To perform this operation, you must be authenticated by means of one of the foll
 HTTPBearer
 </aside>
 
-## EventsController.mapTaskToWorkflow
+## EventController.mapEventToWorkflow
 
-<a id="opIdEventsController.mapTaskToWorkflow"></a>
+<a id="opIdEventController.mapEventToWorkflow"></a>
 
 > Code samples
 
@@ -204,13 +204,13 @@ fetch('/events/mapping',
 }
 ```
 
-<h3 id="eventscontroller.maptasktoworkflow-parameters">Parameters</h3>
+<h3 id="eventcontroller.mapeventtoworkflow-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
 |body|body|[EventWorkflowMapping](#schemaeventworkflowmapping)|false|none|
 
-<h3 id="eventscontroller.maptasktoworkflow-responses">Responses</h3>
+<h3 id="eventcontroller.mapeventtoworkflow-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -220,9 +220,9 @@ To perform this operation, you must be authenticated by means of one of the foll
 HTTPBearer
 </aside>
 
-## EventsController.findById
+## EventController.findById
 
-<a id="opIdEventsController.findById"></a>
+<a id="opIdEventController.findById"></a>
 
 > Code samples
 
@@ -275,7 +275,7 @@ fetch('/events/{id}',
 | ------- |
 | 16002   |
 
-<h3 id="eventscontroller.findbyid-parameters">Parameters</h3>
+<h3 id="eventcontroller.findbyid-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -288,15 +288,23 @@ fetch('/events/{id}',
 
 ```json
 {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
   "id": "string",
   "key": "string",
   "description": "string",
   "source": "string",
-  "payload": {}
+  "payload": {},
+  "timestamp": 0
 }
 ```
 
-<h3 id="eventscontroller.findbyid-responses">Responses</h3>
+<h3 id="eventcontroller.findbyid-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -307,9 +315,9 @@ To perform this operation, you must be authenticated by means of one of the foll
 HTTPBearer
 </aside>
 
-## EventsController.find
+## EventController.find
 
-<a id="opIdEventsController.find"></a>
+<a id="opIdEventController.find"></a>
 
 > Code samples
 
@@ -362,7 +370,7 @@ fetch('/events',
 | ------- |
 | 16002   |
 
-<h3 id="eventscontroller.find-parameters">Parameters</h3>
+<h3 id="eventcontroller.find-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -375,22 +383,30 @@ fetch('/events',
 ```json
 [
   {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
     "id": "string",
     "key": "string",
     "description": "string",
     "source": "string",
-    "payload": {}
+    "payload": {},
+    "timestamp": 0
   }
 ]
 ```
 
-<h3 id="eventscontroller.find-responses">Responses</h3>
+<h3 id="eventcontroller.find-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Event model instances|Inline|
 
-<h3 id="eventscontroller.find-responseschema">Response Schema</h3>
+<h3 id="eventcontroller.find-responseschema">Response Schema</h3>
 
 Status Code **200**
 
@@ -398,11 +414,19 @@ Status Code **200**
 |---|---|---|---|---|
 |*anonymous*|[[EventWithRelations](#schemaeventwithrelations)]|false|none|[(tsType: EventWithRelations, schemaOptions: { includeRelations: true })]|
 |» EventWithRelations|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|string(date-time)¦null|false|none|none|
+|»» deletedBy|string¦null|false|none|none|
+|»» createdOn|string(date-time)|false|none|none|
+|»» modifiedOn|string(date-time)|false|none|none|
+|»» createdBy|string|false|none|none|
+|»» modifiedBy|string|false|none|none|
 |»» id|string|false|none|none|
 |»» key|string|true|none|An identifier for a particular event queued by a service or a user|
 |»» description|string|true|none|A short description of an event|
 |»» source|string|true|none|Origination of an event- can be a service or from a user|
 |»» payload|object|true|none|A dynamic object that contains information to be run in the workers of a bpmn engine|
+|»» timestamp|number|true|none|A short message to indicate the progression of the event|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -501,6 +525,13 @@ HTTPBearer
 
 ```javascript
 const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
   "id": "string",
   "workflowKey": "string",
   "taskKey": "string"
@@ -527,6 +558,13 @@ fetch('/tasks/mapping',
 ```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
   "id": "string",
   "workflowKey": "string",
   "taskKey": "string"
@@ -560,6 +598,13 @@ fetch('/tasks/mapping',
 
 ```json
 {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
   "id": "string",
   "workflowKey": "string",
   "taskKey": "string"
@@ -650,6 +695,13 @@ fetch('/tasks/{id}',
 
 ```json
 {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
   "id": "string",
   "key": "string",
   "name": "string",
@@ -664,8 +716,15 @@ fetch('/tasks/{id}',
   "assigneeId": "string",
   "metadata": {},
   "externalId": "string",
-  "subTasks": [
+  "userTasks": [
     {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
       "id": "string",
       "name": "string",
       "taskId": "string",
@@ -681,6 +740,76 @@ fetch('/tasks/{id}',
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Task model instance|[TaskWithRelations](#schemataskwithrelations)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
+## TaskController.deleteById
+
+<a id="opIdTaskController.deleteById"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/tasks/{id}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/tasks/{id}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`DELETE /tasks/{id}`
+
+| Permissions |
+| ------- |
+| 16008   |
+
+<h3 id="taskcontroller.deletebyid-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+
+<h3 id="taskcontroller.deletebyid-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Task DELETE by id success|None|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -755,6 +884,13 @@ fetch('/tasks',
 ```json
 [
   {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
     "id": "string",
     "key": "string",
     "name": "string",
@@ -769,8 +905,15 @@ fetch('/tasks',
     "assigneeId": "string",
     "metadata": {},
     "externalId": "string",
-    "subTasks": [
+    "userTasks": [
       {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
         "id": "string",
         "name": "string",
         "taskId": "string",
@@ -796,6 +939,13 @@ Status Code **200**
 |---|---|---|---|---|
 |*anonymous*|[[TaskWithRelations](#schemataskwithrelations)]|false|none|[(tsType: TaskWithRelations, schemaOptions: { includeRelations: true })]|
 |» TaskWithRelations|[TaskWithRelations](#schemataskwithrelations)|false|none|(tsType: TaskWithRelations, schemaOptions: { includeRelations: true })|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|string(date-time)¦null|false|none|none|
+|»» deletedBy|string¦null|false|none|none|
+|»» createdOn|string(date-time)|false|none|none|
+|»» modifiedOn|string(date-time)|false|none|none|
+|»» createdBy|string|false|none|none|
+|»» modifiedBy|string|false|none|none|
 |»» id|string|false|none|none|
 |»» key|string|true|none|An identifier for a particular task within an event|
 |»» name|string|true|none|A name given by the consumer service for this task|
@@ -810,8 +960,15 @@ Status Code **200**
 |»» assigneeId|string|false|none|none|
 |»» metadata|object|true|none|none|
 |»» externalId|string|false|none|none|
-|»» subTasks|[[UserTaskWithRelations](#schemausertaskwithrelations)]|false|none|[(tsType: UserTaskWithRelations, schemaOptions: { includeRelations: true })]|
+|»» userTasks|[[UserTaskWithRelations](#schemausertaskwithrelations)]|false|none|[(tsType: UserTaskWithRelations, schemaOptions: { includeRelations: true })]|
 |»»» UserTaskWithRelations|[UserTaskWithRelations](#schemausertaskwithrelations)|false|none|(tsType: UserTaskWithRelations, schemaOptions: { includeRelations: true })|
+|»»»» deleted|boolean|false|none|none|
+|»»»» deletedOn|string(date-time)¦null|false|none|none|
+|»»»» deletedBy|string¦null|false|none|none|
+|»»»» createdOn|string(date-time)|false|none|none|
+|»»»» modifiedOn|string(date-time)|false|none|none|
+|»»»» createdBy|string|false|none|none|
+|»»»» modifiedBy|string|false|none|none|
 |»»»» id|string|false|none|none|
 |»»»» name|string|true|none|none|
 |»»»» taskId|string|true|none|none|
@@ -823,11 +980,81 @@ To perform this operation, you must be authenticated by means of one of the foll
 HTTPBearer
 </aside>
 
-<h1 id="bpmn-service-tasksubtaskcontroller">TaskSubTaskController</h1>
+## TaskController.delete
 
-## TaskSubTaskController.count
+<a id="opIdTaskController.delete"></a>
 
-<a id="opIdTaskSubTaskController.count"></a>
+> Code samples
+
+```javascript
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/tasks',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/tasks',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`DELETE /tasks`
+
+| Permissions |
+| ------- |
+| 16008   |
+
+<h3 id="taskcontroller.delete-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|where|query|object|false|none|
+
+<h3 id="taskcontroller.delete-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Tasks DELETE success|None|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
+<h1 id="bpmn-service-taskusertaskcontroller">TaskUserTaskController</h1>
+
+## TaskUserTaskController.count
+
+<a id="opIdTaskUserTaskController.count"></a>
 
 > Code samples
 
@@ -880,7 +1107,7 @@ fetch('/tasks/{taskId}/user-tasks/count',
 | ------- |
 | 16004   |
 
-<h3 id="tasksubtaskcontroller.count-parameters">Parameters</h3>
+<h3 id="taskusertaskcontroller.count-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -897,7 +1124,7 @@ fetch('/tasks/{taskId}/user-tasks/count',
 }
 ```
 
-<h3 id="tasksubtaskcontroller.count-responses">Responses</h3>
+<h3 id="taskusertaskcontroller.count-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -908,9 +1135,9 @@ To perform this operation, you must be authenticated by means of one of the foll
 HTTPBearer
 </aside>
 
-## TaskSubTaskController.completeTask
+## TaskUserTaskController.completeTask
 
-<a id="opIdTaskSubTaskController.completeTask"></a>
+<a id="opIdTaskUserTaskController.completeTask"></a>
 
 > Code samples
 
@@ -961,14 +1188,14 @@ fetch('/tasks/{taskId}/user-tasks/{userTaskId}/complete',
 | ------- |
 | 16005   |
 
-<h3 id="tasksubtaskcontroller.completetask-parameters">Parameters</h3>
+<h3 id="taskusertaskcontroller.completetask-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
 |taskId|path|string|true|none|
 |userTaskId|path|string|true|none|
 
-<h3 id="tasksubtaskcontroller.completetask-responses">Responses</h3>
+<h3 id="taskusertaskcontroller.completetask-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -978,9 +1205,9 @@ To perform this operation, you must be authenticated by means of one of the foll
 HTTPBearer
 </aside>
 
-## TaskSubTaskController.findById
+## TaskUserTaskController.findById
 
-<a id="opIdTaskSubTaskController.findById"></a>
+<a id="opIdTaskUserTaskController.findById"></a>
 
 > Code samples
 
@@ -1033,7 +1260,7 @@ fetch('/tasks/{taskId}/user-tasks/{userTaskId}',
 | ------- |
 | 16004   |
 
-<h3 id="tasksubtaskcontroller.findbyid-parameters">Parameters</h3>
+<h3 id="taskusertaskcontroller.findbyid-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -1047,6 +1274,13 @@ fetch('/tasks/{taskId}/user-tasks/{userTaskId}',
 
 ```json
 {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
   "id": "string",
   "name": "string",
   "taskId": "string",
@@ -1055,7 +1289,7 @@ fetch('/tasks/{taskId}/user-tasks/{userTaskId}',
 }
 ```
 
-<h3 id="tasksubtaskcontroller.findbyid-responses">Responses</h3>
+<h3 id="taskusertaskcontroller.findbyid-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -1066,9 +1300,79 @@ To perform this operation, you must be authenticated by means of one of the foll
 HTTPBearer
 </aside>
 
-## TaskSubTaskController.find
+## TaskUserTaskController.deleteById
 
-<a id="opIdTaskSubTaskController.find"></a>
+<a id="opIdTaskUserTaskController.deleteById"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/tasks/{taskId}/user-tasks/{id}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/tasks/{taskId}/user-tasks/{id}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`DELETE /tasks/{taskId}/user-tasks/{id}`
+
+| Permissions |
+| ------- |
+| 16009   |
+
+<h3 id="taskusertaskcontroller.deletebyid-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+
+<h3 id="taskusertaskcontroller.deletebyid-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|UserTasks DELETE by id success|None|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
+## TaskUserTaskController.find
+
+<a id="opIdTaskUserTaskController.find"></a>
 
 > Code samples
 
@@ -1121,7 +1425,7 @@ fetch('/tasks/{taskId}/user-tasks',
 | ------- |
 | 16004   |
 
-<h3 id="tasksubtaskcontroller.find-parameters">Parameters</h3>
+<h3 id="taskusertaskcontroller.find-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -1135,6 +1439,13 @@ fetch('/tasks/{taskId}/user-tasks',
 ```json
 [
   {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
     "id": "string",
     "name": "string",
     "taskId": "string",
@@ -1144,13 +1455,13 @@ fetch('/tasks/{taskId}/user-tasks',
 ]
 ```
 
-<h3 id="tasksubtaskcontroller.find-responses">Responses</h3>
+<h3 id="taskusertaskcontroller.find-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of UserTask model instances|Inline|
 
-<h3 id="tasksubtaskcontroller.find-responseschema">Response Schema</h3>
+<h3 id="taskusertaskcontroller.find-responseschema">Response Schema</h3>
 
 Status Code **200**
 
@@ -1158,11 +1469,88 @@ Status Code **200**
 |---|---|---|---|---|
 |*anonymous*|[[UserTaskWithRelations](#schemausertaskwithrelations)]|false|none|[(tsType: UserTaskWithRelations, schemaOptions: { includeRelations: true })]|
 |» UserTaskWithRelations|[UserTaskWithRelations](#schemausertaskwithrelations)|false|none|(tsType: UserTaskWithRelations, schemaOptions: { includeRelations: true })|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|string(date-time)¦null|false|none|none|
+|»» deletedBy|string¦null|false|none|none|
+|»» createdOn|string(date-time)|false|none|none|
+|»» modifiedOn|string(date-time)|false|none|none|
+|»» createdBy|string|false|none|none|
+|»» modifiedBy|string|false|none|none|
 |»» id|string|false|none|none|
 |»» name|string|true|none|none|
 |»» taskId|string|true|none|none|
 |»» status|string|true|none|none|
 |»» externalId|string|true|none|none|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
+## TaskUserTaskController.delete
+
+<a id="opIdTaskUserTaskController.delete"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/tasks/{taskId}/user-tasks',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/tasks/{taskId}/user-tasks',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`DELETE /tasks/{taskId}/user-tasks`
+
+| Permissions |
+| ------- |
+| 16009   |
+
+<h3 id="taskusertaskcontroller.delete-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|where|query|object|false|none|
+
+<h3 id="taskusertaskcontroller.delete-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|UserTasks DELETE success|None|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -1976,11 +2364,19 @@ ExecuteWorkflowDto
 
 ```json
 {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
   "id": "string",
   "key": "string",
   "description": "string",
   "source": "string",
-  "payload": {}
+  "payload": {},
+  "timestamp": 0
 }
 
 ```
@@ -1991,11 +2387,19 @@ EventWithRelations
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
 |id|string|false|none|none|
 |key|string|true|none|An identifier for a particular event queued by a service or a user|
 |description|string|true|none|A short description of an event|
 |source|string|true|none|Origination of an event- can be a service or from a user|
 |payload|object|true|none|A dynamic object that contains information to be run in the workers of a bpmn engine|
+|timestamp|number|true|none|A short message to indicate the progression of the event|
 
 <h2 id="tocS_EventWorkflowMapping">EventWorkflowMapping</h2>
 <!-- backwards compatibility -->
@@ -2046,6 +2450,13 @@ EventWorkflowMapping
 
 ```json
 {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
   "id": "string",
   "name": "string",
   "taskId": "string",
@@ -2061,6 +2472,13 @@ UserTaskWithRelations
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
 |id|string|false|none|none|
 |name|string|true|none|none|
 |taskId|string|true|none|none|
@@ -2076,6 +2494,13 @@ UserTaskWithRelations
 
 ```json
 {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
   "id": "string",
   "key": "string",
   "name": "string",
@@ -2090,8 +2515,15 @@ UserTaskWithRelations
   "assigneeId": "string",
   "metadata": {},
   "externalId": "string",
-  "subTasks": [
+  "userTasks": [
     {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
       "id": "string",
       "name": "string",
       "taskId": "string",
@@ -2109,6 +2541,13 @@ TaskWithRelations
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
 |id|string|false|none|none|
 |key|string|true|none|An identifier for a particular task within an event|
 |name|string|true|none|A name given by the consumer service for this task|
@@ -2123,7 +2562,7 @@ TaskWithRelations
 |assigneeId|string|false|none|none|
 |metadata|object|true|none|none|
 |externalId|string|false|none|none|
-|subTasks|[[UserTaskWithRelations](#schemausertaskwithrelations)]|false|none|[(tsType: UserTaskWithRelations, schemaOptions: { includeRelations: true })]|
+|userTasks|[[UserTaskWithRelations](#schemausertaskwithrelations)]|false|none|[(tsType: UserTaskWithRelations, schemaOptions: { includeRelations: true })]|
 
 <h2 id="tocS_TaskWorkFlowMapping">TaskWorkFlowMapping</h2>
 <!-- backwards compatibility -->
@@ -2134,6 +2573,13 @@ TaskWithRelations
 
 ```json
 {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
   "id": "string",
   "workflowKey": "string",
   "taskKey": "string"
@@ -2147,6 +2593,13 @@ TaskWorkFlowMapping
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
 |id|string|false|none|none|
 |workflowKey|string|true|none|An identifier for a particular workflow|
 |taskKey|string|true|none|An identifier for a particular task within an event|
@@ -2187,11 +2640,19 @@ loopback.Count
   "skip": 0,
   "order": "string",
   "fields": {
+    "deleted": true,
+    "deletedOn": true,
+    "deletedBy": true,
+    "createdOn": true,
+    "modifiedOn": true,
+    "createdBy": true,
+    "modifiedBy": true,
     "id": true,
     "key": true,
     "description": true,
     "source": true,
-    "payload": true
+    "payload": true,
+    "timestamp": true
   }
 }
 
@@ -2231,11 +2692,19 @@ oneOf
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |» *anonymous*|object|false|none|none|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|boolean|false|none|none|
+|»» deletedBy|boolean|false|none|none|
+|»» createdOn|boolean|false|none|none|
+|»» modifiedOn|boolean|false|none|none|
+|»» createdBy|boolean|false|none|none|
+|»» modifiedBy|boolean|false|none|none|
 |»» id|boolean|false|none|none|
 |»» key|boolean|false|none|none|
 |»» description|boolean|false|none|none|
 |»» source|boolean|false|none|none|
 |»» payload|boolean|false|none|none|
+|»» timestamp|boolean|false|none|none|
 
 xor
 
@@ -2258,11 +2727,19 @@ xor
   "order": "string",
   "where": {},
   "fields": {
+    "deleted": true,
+    "deletedOn": true,
+    "deletedBy": true,
+    "createdOn": true,
+    "modifiedOn": true,
+    "createdBy": true,
+    "modifiedBy": true,
     "id": true,
     "key": true,
     "description": true,
     "source": true,
-    "payload": true
+    "payload": true,
+    "timestamp": true
   }
 }
 
@@ -2303,11 +2780,19 @@ oneOf
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |» *anonymous*|object|false|none|none|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|boolean|false|none|none|
+|»» deletedBy|boolean|false|none|none|
+|»» createdOn|boolean|false|none|none|
+|»» modifiedOn|boolean|false|none|none|
+|»» createdBy|boolean|false|none|none|
+|»» modifiedBy|boolean|false|none|none|
 |»» id|boolean|false|none|none|
 |»» key|boolean|false|none|none|
 |»» description|boolean|false|none|none|
 |»» source|boolean|false|none|none|
 |»» payload|boolean|false|none|none|
+|»» timestamp|boolean|false|none|none|
 
 xor
 
@@ -2329,6 +2814,13 @@ xor
   "skip": 0,
   "order": "string",
   "fields": {
+    "deleted": true,
+    "deletedOn": true,
+    "deletedBy": true,
+    "createdOn": true,
+    "modifiedOn": true,
+    "createdBy": true,
+    "modifiedBy": true,
     "id": true,
     "name": true,
     "taskId": true,
@@ -2373,6 +2865,13 @@ oneOf
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |» *anonymous*|object|false|none|none|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|boolean|false|none|none|
+|»» deletedBy|boolean|false|none|none|
+|»» createdOn|boolean|false|none|none|
+|»» modifiedOn|boolean|false|none|none|
+|»» createdBy|boolean|false|none|none|
+|»» modifiedBy|boolean|false|none|none|
 |»» id|boolean|false|none|none|
 |»» name|boolean|false|none|none|
 |»» taskId|boolean|false|none|none|
@@ -2400,6 +2899,13 @@ xor
   "order": "string",
   "where": {},
   "fields": {
+    "deleted": true,
+    "deletedOn": true,
+    "deletedBy": true,
+    "createdOn": true,
+    "modifiedOn": true,
+    "createdBy": true,
+    "modifiedBy": true,
     "id": true,
     "name": true,
     "taskId": true,
@@ -2445,6 +2951,13 @@ oneOf
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |» *anonymous*|object|false|none|none|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|boolean|false|none|none|
+|»» deletedBy|boolean|false|none|none|
+|»» createdOn|boolean|false|none|none|
+|»» modifiedOn|boolean|false|none|none|
+|»» createdBy|boolean|false|none|none|
+|»» modifiedBy|boolean|false|none|none|
 |»» id|boolean|false|none|none|
 |»» name|boolean|false|none|none|
 |»» taskId|boolean|false|none|none|
@@ -2536,7 +3049,7 @@ continued
 
 ```json
 {
-  "relation": "subTasks",
+  "relation": "userTasks",
   "scope": {
     "offset": 0,
     "limit": 100,
@@ -2565,7 +3078,7 @@ tasks.IncludeFilter.Items
 
 |Property|Value|
 |---|---|
-|relation|subTasks|
+|relation|userTasks|
 
 <h2 id="tocS_tasks.Filter">tasks.Filter</h2>
 <!-- backwards compatibility -->
@@ -2581,6 +3094,13 @@ tasks.IncludeFilter.Items
   "skip": 0,
   "order": "string",
   "fields": {
+    "deleted": true,
+    "deletedOn": true,
+    "deletedBy": true,
+    "createdOn": true,
+    "modifiedOn": true,
+    "createdBy": true,
+    "modifiedBy": true,
     "id": true,
     "key": true,
     "name": true,
@@ -2598,7 +3118,7 @@ tasks.IncludeFilter.Items
   },
   "include": [
     {
-      "relation": "subTasks",
+      "relation": "userTasks",
       "scope": {
         "offset": 0,
         "limit": 100,
@@ -2650,6 +3170,13 @@ oneOf
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |» *anonymous*|object|false|none|none|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|boolean|false|none|none|
+|»» deletedBy|boolean|false|none|none|
+|»» createdOn|boolean|false|none|none|
+|»» modifiedOn|boolean|false|none|none|
+|»» createdBy|boolean|false|none|none|
+|»» modifiedBy|boolean|false|none|none|
 |»» id|boolean|false|none|none|
 |»» key|boolean|false|none|none|
 |»» name|boolean|false|none|none|
@@ -2704,6 +3231,13 @@ or
   "order": "string",
   "where": {},
   "fields": {
+    "deleted": true,
+    "deletedOn": true,
+    "deletedBy": true,
+    "createdOn": true,
+    "modifiedOn": true,
+    "createdBy": true,
+    "modifiedBy": true,
     "id": true,
     "key": true,
     "name": true,
@@ -2721,7 +3255,7 @@ or
   },
   "include": [
     {
-      "relation": "subTasks",
+      "relation": "userTasks",
       "scope": {
         "offset": 0,
         "limit": 100,
@@ -2774,6 +3308,13 @@ oneOf
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |» *anonymous*|object|false|none|none|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|boolean|false|none|none|
+|»» deletedBy|boolean|false|none|none|
+|»» createdOn|boolean|false|none|none|
+|»» modifiedOn|boolean|false|none|none|
+|»» createdBy|boolean|false|none|none|
+|»» modifiedBy|boolean|false|none|none|
 |»» id|boolean|false|none|none|
 |»» key|boolean|false|none|none|
 |»» name|boolean|false|none|none|

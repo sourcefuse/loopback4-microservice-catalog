@@ -11,7 +11,7 @@ import FormData from 'form-data';
 import fetch, {Response} from 'node-fetch';
 import {HttpOptions} from '../types';
 
-@injectable({scope: BindingScope.TRANSIENT})
+@injectable({scope: BindingScope.SINGLETON})
 export class HttpClientService {
   get<T>(url: string, options?: HttpOptions) {
     const processed = this.processOptions(url, options);

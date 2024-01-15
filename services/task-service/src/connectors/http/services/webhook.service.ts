@@ -1,27 +1,32 @@
-import {BindingScope, injectable} from '@loopback/core';
+import {BindingScope, injectable, service} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
-import fetch from 'node-fetch';
 import {IEvent} from '../../../interfaces';
-import {WebhookSubscriptionsRepository} from '../repositories';
+import {WebhookSubscriptionRepository} from '../repositories';
+import {ApiKeyService} from './api-key.service';
+import {HttpClientService} from '../../../services';
 
 @injectable({scope: BindingScope.SINGLETON})
 export class WebhookService {
   constructor(
-    @repository(WebhookSubscriptionsRepository)
-    private readonly webhookSubscriptionsRepo: WebhookSubscriptionsRepository,
+    @repository(WebhookSubscriptionRepository)
+    private readonly webhookSubscriptionRepo: WebhookSubscriptionRepository,
+    @service(ApiKeyService)
+    private readonly apiKeyService: ApiKeyService,
+    @service(HttpClientService)
+    private readonly httpClientService: HttpClientService,
   ) {}
 
   public async addToSubscription(url: string, key: string) {
     try {
-      const webhookSubscriptions = await this.webhookSubscriptionsRepo.find({
+      const webhookSubscriptions = await this.webhookSubscriptionRepo.find({
         where: {
           url,
           key,
         },
       });
       if (webhookSubscriptions.length === 0) {
-        await this.webhookSubscriptionsRepo.create({
+        await this.webhookSubscriptionRepo.create({
           key,
           url,
         });
@@ -32,7 +37,7 @@ export class WebhookService {
   }
 
   public async getUrlOfSubscritption(key: string) {
-    const webhookSubscriptions = await this.webhookSubscriptionsRepo.find({
+    const webhookSubscriptions = await this.webhookSubscriptionRepo.find({
       where: {
         key,
       },
@@ -45,17 +50,22 @@ export class WebhookService {
 
   public async triggerWebhook(event: IEvent) {
     try {
-      const subscribers = await this.webhookSubscriptionsRepo.find({
-        where: {key: event.type},
+      const subscribers = await this.webhookSubscriptionRepo.find({
+        where: {key: event.key},
       });
 
       if (subscribers.length > 0) {
+        const timestamp = Date.now();
+        const signature = await this.apiKeyService.generateSignature(
+          event,
+          timestamp,
+        );
         const postPromises = subscribers.map(subscriber =>
-          fetch(subscriber.url, {
-            method: 'post',
-            body: JSON.stringify(event),
+          this.httpClientService.post(subscriber.url, event, {
             headers: {
               'content-type': 'application/json',
+              'x-task-signature': signature,
+              'x-task-timestamp': timestamp.toString(),
             },
           }),
         );

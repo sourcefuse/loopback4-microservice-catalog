@@ -1,5 +1,5 @@
-export interface ISubTaskService {
-  complete(taskId: string, subtaskId: string): Promise<void>;
-  // update pending subtasks list for a task
+export interface IUserTaskService {
+  complete(taskId: string, userTaskId: string): Promise<void>;
+  // update pending usertasks list for a task
   updateList(taskId: string, processInstanceId: string): Promise<void>;
 }

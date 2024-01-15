@@ -45,7 +45,7 @@ export type HttpOptions = {
 };
 
 export enum EventType {
-  SubTaskCompleted = 'sub-task-completed',
+  UserTaskCompleted = 'user-task-completed',
   TaskCreated = 'task-created',
   TaskCompleted = 'task-completed',
 }
@@ -56,21 +56,21 @@ export enum TaskStatus {
   Completed = 'completed',
 }
 
-export enum SubTaskStatus {
+export enum UserTaskStatus {
   Pending = 'pending',
   Completed = 'completed',
 }
 
 export enum TaskPriority {
-  low = 'low',
-  medium = 'medium',
-  high = 'high',
+  Low = 'low',
+  Medium = 'medium',
+  High = 'high',
 }
 
 export enum TaskSeverity {
-  high = 'high',
-  medium = 'medium',
-  low = 'low',
+  High = 'high',
+  Medium = 'medium',
+  Low = 'low',
 }
 
 export interface CamundaTask {
@@ -93,4 +93,13 @@ export type EventFilter = (event: IEvent) => boolean;
 export type CamundaTaskParameters = {
   task: Task;
   taskService: CamundaTaskService;
+};
+
+export type TaskServiceConfig = {
+  useCustomSequence: boolean;
+};
+
+export type User = {
+  username: string;
+  userTenantId: string;
 };

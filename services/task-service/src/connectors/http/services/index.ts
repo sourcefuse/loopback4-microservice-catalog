@@ -1,2 +1,2 @@
-export * from './api-key-verification.service';
+export * from './api-key.service';
 export * from './webhook.service';

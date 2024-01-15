@@ -10,4 +10,5 @@ export namespace TaskServiceKafkaModule {
   export const ADAPTER = BindingKey.create<
     IEventAdapter<EachMessagePayload, unknown>
   >('sf.task.kafka.adapter');
+  export const KAFKA_CLIENT = BindingKey.create('sf.task.kafka.client');
 }

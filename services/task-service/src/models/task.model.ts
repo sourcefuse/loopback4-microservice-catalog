@@ -96,7 +96,7 @@ export class Task<TS = TaskStatus> extends UserModifiableEntity<Task> {
   @hasMany(() => UserTask, {
     keyTo: 'taskId',
   })
-  subTasks?: UserTask[];
+  userTasks?: UserTask[];
 
   @property({
     name: 'external_id',
