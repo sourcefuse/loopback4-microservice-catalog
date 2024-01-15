@@ -577,6 +577,13 @@
               "type": "string"
             },
             "required": true
+          },
+          {
+            "name": "cascade",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
           }
         ],
         "operationId": "TaskController.deleteById"
@@ -655,6 +662,13 @@
                   "x-typescript-type": "@loopback/repository#Where<Task>"
                 }
               }
+            }
+          },
+          {
+            "name": "cascade",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
             }
           }
         ],
@@ -1086,32 +1100,6 @@
         "type": "object",
         "description": "(tsType: EventWithRelations, schemaOptions: { includeRelations: true })",
         "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
           "id": {
             "type": "string"
           },
@@ -1445,27 +1433,6 @@
               {
                 "type": "object",
                 "properties": {
-                  "deleted": {
-                    "type": "boolean"
-                  },
-                  "deletedOn": {
-                    "type": "boolean"
-                  },
-                  "deletedBy": {
-                    "type": "boolean"
-                  },
-                  "createdOn": {
-                    "type": "boolean"
-                  },
-                  "modifiedOn": {
-                    "type": "boolean"
-                  },
-                  "createdBy": {
-                    "type": "boolean"
-                  },
-                  "modifiedBy": {
-                    "type": "boolean"
-                  },
                   "id": {
                     "type": "boolean"
                   },
@@ -1492,13 +1459,6 @@
                 "items": {
                   "type": "string",
                   "enum": [
-                    "deleted",
-                    "deletedOn",
-                    "deletedBy",
-                    "createdOn",
-                    "modifiedOn",
-                    "createdBy",
-                    "modifiedBy",
                     "id",
                     "key",
                     "description",
@@ -1506,7 +1466,7 @@
                     "payload",
                     "timestamp"
                   ],
-                  "example": "deleted"
+                  "example": "id"
                 },
                 "uniqueItems": true
               }
@@ -1557,27 +1517,6 @@
               {
                 "type": "object",
                 "properties": {
-                  "deleted": {
-                    "type": "boolean"
-                  },
-                  "deletedOn": {
-                    "type": "boolean"
-                  },
-                  "deletedBy": {
-                    "type": "boolean"
-                  },
-                  "createdOn": {
-                    "type": "boolean"
-                  },
-                  "modifiedOn": {
-                    "type": "boolean"
-                  },
-                  "createdBy": {
-                    "type": "boolean"
-                  },
-                  "modifiedBy": {
-                    "type": "boolean"
-                  },
                   "id": {
                     "type": "boolean"
                   },
@@ -1604,13 +1543,6 @@
                 "items": {
                   "type": "string",
                   "enum": [
-                    "deleted",
-                    "deletedOn",
-                    "deletedBy",
-                    "createdOn",
-                    "modifiedOn",
-                    "createdBy",
-                    "modifiedBy",
                     "id",
                     "key",
                     "description",
@@ -1618,7 +1550,7 @@
                     "payload",
                     "timestamp"
                   ],
-                  "example": "deleted"
+                  "example": "id"
                 },
                 "uniqueItems": true
               }

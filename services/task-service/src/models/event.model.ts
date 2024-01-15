@@ -1,11 +1,11 @@
 import {AnyObject, model, property} from '@loopback/repository';
-import {UserModifiableEntity} from '@sourceloop/core';
+import {CoreEntity} from '@sourceloop/core';
 import {IEvent} from '../interfaces';
 
 @model({
   name: 'events',
 })
-export class Event extends UserModifiableEntity<Event> implements IEvent {
+export class Event extends CoreEntity<Event> implements IEvent {
   @property({
     type: 'string',
     id: true,

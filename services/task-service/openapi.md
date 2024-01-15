@@ -288,13 +288,6 @@ fetch('/events/{id}',
 
 ```json
 {
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
   "id": "string",
   "key": "string",
   "description": "string",
@@ -383,13 +376,6 @@ fetch('/events',
 ```json
 [
   {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
     "id": "string",
     "key": "string",
     "description": "string",
@@ -414,13 +400,6 @@ Status Code **200**
 |---|---|---|---|---|
 |*anonymous*|[[EventWithRelations](#schemaeventwithrelations)]|false|none|[(tsType: EventWithRelations, schemaOptions: { includeRelations: true })]|
 |» EventWithRelations|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|»» deleted|boolean|false|none|none|
-|»» deletedOn|string(date-time)¦null|false|none|none|
-|»» deletedBy|string¦null|false|none|none|
-|»» createdOn|string(date-time)|false|none|none|
-|»» modifiedOn|string(date-time)|false|none|none|
-|»» createdBy|string|false|none|none|
-|»» modifiedBy|string|false|none|none|
 |»» id|string|false|none|none|
 |»» key|string|true|none|An identifier for a particular event queued by a service or a user|
 |»» description|string|true|none|A short description of an event|
@@ -804,6 +783,7 @@ fetch('/tasks/{id}',
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
 |id|path|string|true|none|
+|cascade|query|boolean|false|none|
 
 <h3 id="taskcontroller.deletebyid-responses">Responses</h3>
 
@@ -1038,6 +1018,7 @@ fetch('/tasks',
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
 |where|query|object|false|none|
+|cascade|query|boolean|false|none|
 
 <h3 id="taskcontroller.delete-responses">Responses</h3>
 
@@ -2364,13 +2345,6 @@ ExecuteWorkflowDto
 
 ```json
 {
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
   "id": "string",
   "key": "string",
   "description": "string",
@@ -2387,13 +2361,6 @@ EventWithRelations
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
 |id|string|false|none|none|
 |key|string|true|none|An identifier for a particular event queued by a service or a user|
 |description|string|true|none|A short description of an event|
@@ -2640,13 +2607,6 @@ loopback.Count
   "skip": 0,
   "order": "string",
   "fields": {
-    "deleted": true,
-    "deletedOn": true,
-    "deletedBy": true,
-    "createdOn": true,
-    "modifiedOn": true,
-    "createdBy": true,
-    "modifiedBy": true,
     "id": true,
     "key": true,
     "description": true,
@@ -2692,13 +2652,6 @@ oneOf
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |» *anonymous*|object|false|none|none|
-|»» deleted|boolean|false|none|none|
-|»» deletedOn|boolean|false|none|none|
-|»» deletedBy|boolean|false|none|none|
-|»» createdOn|boolean|false|none|none|
-|»» modifiedOn|boolean|false|none|none|
-|»» createdBy|boolean|false|none|none|
-|»» modifiedBy|boolean|false|none|none|
 |»» id|boolean|false|none|none|
 |»» key|boolean|false|none|none|
 |»» description|boolean|false|none|none|
@@ -2727,13 +2680,6 @@ xor
   "order": "string",
   "where": {},
   "fields": {
-    "deleted": true,
-    "deletedOn": true,
-    "deletedBy": true,
-    "createdOn": true,
-    "modifiedOn": true,
-    "createdBy": true,
-    "modifiedBy": true,
     "id": true,
     "key": true,
     "description": true,
@@ -2780,13 +2726,6 @@ oneOf
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |» *anonymous*|object|false|none|none|
-|»» deleted|boolean|false|none|none|
-|»» deletedOn|boolean|false|none|none|
-|»» deletedBy|boolean|false|none|none|
-|»» createdOn|boolean|false|none|none|
-|»» modifiedOn|boolean|false|none|none|
-|»» createdBy|boolean|false|none|none|
-|»» modifiedBy|boolean|false|none|none|
 |»» id|boolean|false|none|none|
 |»» key|boolean|false|none|none|
 |»» description|boolean|false|none|none|

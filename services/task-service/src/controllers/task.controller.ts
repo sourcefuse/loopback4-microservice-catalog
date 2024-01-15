@@ -23,7 +23,11 @@ import {STRATEGY, authenticate} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {TaskPermssionKey} from '../enums/permission-key.enum';
 import {Task, TaskWorkflow} from '../models';
-import {TaskRepository, TaskWorkFlowRepository} from '../repositories';
+import {
+  TaskRepository,
+  TaskWorkFlowRepository,
+  UserTaskRepository,
+} from '../repositories';
 
 const baseUrl = 'tasks';
 
@@ -31,6 +35,8 @@ export class TaskController {
   constructor(
     @repository(TaskRepository)
     private readonly taskRepo: TaskRepository,
+    @repository(UserTaskRepository)
+    private readonly userTaskRepository: UserTaskRepository,
     @repository(TaskWorkFlowRepository)
     private readonly taskWorkflowMapping: TaskWorkFlowRepository,
   ) {}
@@ -136,7 +142,15 @@ export class TaskController {
       },
     },
   })
-  async deleteById(@param.path.string('id') id: string): Promise<void> {
+  async deleteById(
+    @param.path.string('id') id: string,
+    @param.query.boolean('cascade') cascade = true,
+  ): Promise<void> {
+    if (cascade) {
+      await this.userTaskRepository.deleteAllHard({
+        taskId: id,
+      });
+    }
     await this.taskRepo.deleteByIdHard(id);
   }
 
@@ -154,7 +168,23 @@ export class TaskController {
       },
     },
   })
-  async delete(@param.where(Task) where?: Where<Task>): Promise<void> {
+  async delete(
+    @param.where(Task) where?: Where<Task>,
+    @param.query.boolean('cascade') cascade = true,
+  ): Promise<void> {
+    if (cascade) {
+      const tasks = await this.taskRepo.find({
+        where,
+        fields: ['id', 'deleted'],
+      });
+      if (tasks.length) {
+        await this.userTaskRepository.deleteAllHard({
+          taskId: {
+            inq: tasks.map(task => task.id!),
+          },
+        });
+      }
+    }
     await this.taskRepo.deleteAllHard(where);
   }
 }

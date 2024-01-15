@@ -67,7 +67,7 @@ CREATE TABLE "main".events
     "description"        varchar,
     source               varchar,
     payload              json,
-    created_on           timestamptz DEFAULT current_timestamp NOT NULL,
+    "timestamp"          number,
     CONSTRAINT pk_events_id PRIMARY KEY (id)
 );
 
