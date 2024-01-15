@@ -148,7 +148,7 @@ A Loopback Component that adds an authenticating middleware for Rest Explorer
     swaggerPassword: '<password>',
   });
   ```
-- Bind the `HttpAuthenticationVerifier` to override the basic authentication logic provided by [default](/providers/http-authentication.verifier.ts).
+- Bind the `HttpAuthenticationVerifier` to override the basic authentication logic provided by [default](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/packages/core/src/components/swagger-authentication/providers/http-authentication.verifier.ts).
 - Start the application
   `npm start`
 
@@ -172,6 +172,30 @@ this.bind(SFCoreBindings.config).to({
   swaggerPassword: process.env.SWAGGER_PASSWORD,
 });
 ```
+
+The above specification will show all the API by default, but if you wish to hide certain APIs on swagger stats you can pass the 'modifyPathDefinition' callback method to the above bindings as shown below. [Refer](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/packages/core/src/types.ts) for more details.
+
+```typescript
+import {OASPathDefinition} from '@sourceloop/core';
+
+this.bind(SFCoreBindings.config).to({
+  enableObf,
+  obfPath: process.env.OBF_PATH ?? '/obf',
+  openapiSpec: openapi,
+  modifyPathDefinition(apiPath: string, pathDefinition: OASPathDefinition) {
+    if (apiPath.startsWith('/auth')) {
+      delete pathDefinition.post;
+      return pathDefinition;
+    }
+    return pathDefinition;
+  },
+  authentication: authentication,
+  swaggerUsername: process.env.SWAGGER_USER,
+  swaggerPassword: process.env.SWAGGER_PASSWORD,
+});
+```
+
+### OAS
 
 Open ApiSpecification:The OpenAPI Specification (OAS) defines a standard, language-agnostic interface to RESTful APIs which allows us to discover and understand the capabilities of the service without access to source code, documentation, or through network traffic inspection. When properly defined,user can understand and interact with the remote service with a minimal amount of implementation logic.It is a self-contained or composite resource which defines or describes an API or elements of an API.
 
@@ -204,6 +228,23 @@ constructor(options: ApplicationConfig = {}) {
       },
       servers: [{url: '/'}],
     });
+```
+
+Similarly to hide APIs from swagger we have a custom OASEnhancer extension that is binded to the CoreComponent. This extension requires a list of APIs to be passed via a binding to hide the APIs. The binding can be provided like this
+
+```typescript
+import {OASBindings, HttpMethod} from '@sourceloop/core';
+
+this.bind(OASBindings.HiddenEndpoint).to([
+  {
+    path: '/auth/facebook',
+    httpMethod: HttpMethod.POST,
+  },
+  {
+    path: '/auth/facebook-auth-redirect',
+    httpMethod: HttpMethod.GET,
+  },
+]);
 ```
 
 # Tenant Utilities
