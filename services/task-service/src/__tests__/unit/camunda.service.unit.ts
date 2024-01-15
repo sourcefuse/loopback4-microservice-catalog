@@ -89,20 +89,31 @@ describe('CamundaService: Unit', () => {
     );
   });
 
-  it('should start process', async () => {
-    // const id = '123';
-    // const variables = {
-    //   test: 'test',
-    // };
-    // await service.startProcess(id, variables);
-    // httpClientService.stubs.post.calledOnceWith(
-    //   `${camundaUrl}/process-definition/key/${id}/start`,
-    //   variables,
-    // );
-    // sinon.assert.calledOnceWithExactly(
-    //   httpClientService.stubs.post,
-    //   `${camundaUrl}/process-definition/key/${id}/start`,
-    //   {variables},
-    // );
+  it('should start a process', async () => {
+    const id = '123';
+    const variables = {
+      test: 'test',
+    };
+    await service.execute(id, variables);
+    sinon.assert.calledOnceWithExactly(
+      httpClientService.stubs.post,
+      `${camundaUrl}/process-definition/${id}/start`,
+      // structure build by the camunda service for execute input
+      {
+        variables: {
+          test: {value: variables.test},
+          customHeaders: {
+            value: JSON.stringify({
+              method: 'GET',
+            }),
+            type: 'object',
+            valueInfo: {
+              objectTypeName: 'java.util.LinkedHashMap',
+              serializationDataFormat: 'application/json',
+            },
+          },
+        },
+      },
+    );
   });
 });

@@ -24,6 +24,7 @@ describe('CreateTaskCommand: Acceptance', () => {
   let sandbox: sinon.SinonSandbox;
   let command: CreateTaskCommand;
   let stubCommand: sinon.SinonStub;
+  let repo: TaskRepository;
   const taskWithoutWorkflow = 'task-without-workflow';
   const nonExistantWorkflow = 'non-existant-workflow';
 
@@ -37,6 +38,8 @@ describe('CreateTaskCommand: Acceptance', () => {
     stubCommand = sandbox.stub();
     stubCommand.returns({});
     engine.subscribe('stub-command', stubCommand);
+    // expect tasks are created in DB
+    repo = await getRepo<TaskRepository>(app, 'repositories.TaskRepository');
   });
 
   after(async () => {
@@ -58,11 +61,6 @@ describe('CreateTaskCommand: Acceptance', () => {
     });
     await command.execute();
 
-    // expect tasks are created in DB
-    const repo = await getRepo<TaskRepository>(
-      app,
-      'repositories.TaskRepository',
-    );
     const tasks = await repo.find();
     expect(tasks.length).to.eql(mockTasks.length);
     expect(tasks[0].key).to.eql(mockTasks[0].key);
@@ -92,11 +90,6 @@ describe('CreateTaskCommand: Acceptance', () => {
     });
     await command.execute();
 
-    // expect tasks are created in DB
-    const repo = await getRepo<TaskRepository>(
-      app,
-      'repositories.TaskRepository',
-    );
     const tasks = await repo.find();
     expect(tasks.length).to.eql(mockTasks.length);
     expect(tasks[0].key).to.eql(unknownKey);
@@ -120,11 +113,6 @@ describe('CreateTaskCommand: Acceptance', () => {
     });
     await command.execute();
 
-    // expect tasks are created in DB
-    const repo = await getRepo<TaskRepository>(
-      app,
-      'repositories.TaskRepository',
-    );
     const tasks = await repo.find();
     expect(tasks.length).to.eql(mockTasks.length);
     expect(tasks[0].key).to.eql(taskWithoutWorkflow);
@@ -155,17 +143,17 @@ describe('CreateTaskCommand: Acceptance', () => {
         inputSchema: {},
       });
 
-    const repo = await getRepo<TaskWorkFlowRepository>(
+    const taskWorkflowRepo = await getRepo<TaskWorkFlowRepository>(
       app,
       'repositories.TaskWorkFlowRepository',
     );
-    await repo.create({
+    await taskWorkflowRepo.create({
       workflowKey: workflow.externalIdentifier,
       taskKey: mockTasks[0].key,
     });
 
     // mapping for a non existant workflow
-    await repo.create({
+    await taskWorkflowRepo.create({
       workflowKey: nonExistantWorkflow,
       taskKey: taskWithoutWorkflow,
     });

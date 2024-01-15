@@ -1,7 +1,11 @@
 import {Client, expect, sinon} from '@loopback/testlab';
 import {PermissionKey} from '@sourceloop/bpmn-service';
+import {ClientApp, ClientAppRepository} from '../../../connectors/http';
 import {TaskPermssionKey} from '../../../enums/permission-key.enum';
+import {IEvent, IOutgoingConnector} from '../../../interfaces';
+import {TaskServiceBindings} from '../../../keys';
 import {EventRepository, EventWorkflowRepository} from '../../../repositories';
+import {HttpClientService} from '../../../services';
 import {MockEngine} from '../../fixtures/camunda';
 import {
   mockEvent,
@@ -16,10 +20,6 @@ import {
 } from '../../fixtures/test-helper';
 import {TestTaskServiceApplication} from '../../fixtures/test.application';
 import {MOCK_BPMN_ENGINE_KEY} from '../../fixtures/types';
-import {ClientApp, ClientAppRepository} from '../../../connectors/http';
-import {TaskServiceBindings} from '../../../keys';
-import {IEvent, IOutgoingConnector} from '../../../interfaces';
-import {HttpClientService} from '../../../services';
 
 describe('HttpComponent: Acceptance', () => {
   let app: TestTaskServiceApplication;
@@ -32,6 +32,9 @@ describe('HttpComponent: Acceptance', () => {
     apiSecret: 'test-secret',
     name: 'test-key',
   });
+  const stubCommandTopic = 'stub-command';
+  const baseUrl = '/events/trigger';
+  const eventRepoKey = 'repositories.EventRepository';
 
   before('setupApplication', async () => {
     sandbox = sinon.createSandbox();
@@ -53,18 +56,15 @@ describe('HttpComponent: Acceptance', () => {
     const token = getToken([TaskPermssionKey.TriggerEvent]);
     const stubCommand = sinon.stub();
     stubCommand.returns({});
-    engine.subscribe('stub-command', stubCommand);
+    engine.subscribe(stubCommandTopic, stubCommand);
 
     // trigger event using the /events/trigger endpoint
     await client
-      .post('/events/trigger')
+      .post(baseUrl)
       .set('Authorization', token)
       .send(mockEvent)
       .expect(204);
-    const repo = await getRepo<EventRepository>(
-      app,
-      'repositories.EventRepository',
-    );
+    const repo = await getRepo<EventRepository>(app, eventRepoKey);
     const event = await repo.findOne({
       where: {
         key: mockEvent.key,
@@ -80,18 +80,15 @@ describe('HttpComponent: Acceptance', () => {
     const token = getToken([TaskPermssionKey.TriggerEvent]);
     const stubCommand = sinon.stub();
     stubCommand.returns({});
-    engine.subscribe('stub-command', stubCommand);
+    engine.subscribe(stubCommandTopic, stubCommand);
 
     // trigger event using the /events/trigger endpoint
     await client
-      .post('/events/trigger')
+      .post(baseUrl)
       .set('Authorization', token)
       .send(mockUnexpectedEvent)
       .expect(204);
-    const repo = await getRepo<EventRepository>(
-      app,
-      'repositories.EventRepository',
-    );
+    const repo = await getRepo<EventRepository>(app, eventRepoKey);
     const event = await repo.findOne({
       where: {
         key: mockUnexpectedEvent.key,
@@ -107,18 +104,15 @@ describe('HttpComponent: Acceptance', () => {
     const token = getToken([TaskPermssionKey.TriggerEvent]);
     const stubCommand = sinon.stub();
     stubCommand.returns({});
-    engine.subscribe('stub-command', stubCommand);
+    engine.subscribe(stubCommandTopic, stubCommand);
 
     // trigger event using the /events/trigger endpoint
     await client
-      .post('/events/trigger')
+      .post(baseUrl)
       .set('Authorization', token)
       .send(mockUnmappedEvent)
       .expect(204);
-    const repo = await getRepo<EventRepository>(
-      app,
-      'repositories.EventRepository',
-    );
+    const repo = await getRepo<EventRepository>(app, eventRepoKey);
     const event = await repo.findOne({
       where: {
         key: mockUnmappedEvent.key,
@@ -141,7 +135,7 @@ describe('HttpComponent: Acceptance', () => {
     const token = getToken([TaskPermssionKey.TriggerEvent]);
     const stubCommand = sinon.stub();
     stubCommand.returns({});
-    engine.subscribe('stub-command', stubCommand);
+    engine.subscribe(stubCommandTopic, stubCommand);
     const workflowKey = 'non-existant-workflow';
     // seed mapping for non-existant workflow
     const mappingRepo = await getRepo<EventWorkflowRepository>(
@@ -155,14 +149,11 @@ describe('HttpComponent: Acceptance', () => {
 
     // trigger event using the /events/trigger endpoint
     await client
-      .post('/events/trigger')
+      .post(baseUrl)
       .set('Authorization', token)
       .send(mockUnmappedEvent)
       .expect(204);
-    const repo = await getRepo<EventRepository>(
-      app,
-      'repositories.EventRepository',
-    );
+    const repo = await getRepo<EventRepository>(app, eventRepoKey);
     const event = await repo.findOne({
       where: {
         key: mockUnmappedEvent.key,
@@ -225,7 +216,7 @@ describe('HttpComponent: Acceptance', () => {
       .send({
         name: 'workflow',
         description: 'test',
-        bpmnFile: JSON.stringify(['stub-command']),
+        bpmnFile: JSON.stringify([stubCommandTopic]),
         inputSchema: {},
       });
 

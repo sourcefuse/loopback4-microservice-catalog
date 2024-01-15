@@ -153,7 +153,7 @@ export class MockEngine {
       }
     };
     if (!this.subscriptions[topic]) {
-      console.log(`No subscription found for topic: ${topic}`);
+      // do nothing
     } else {
       this.subscriptions[topic](data, finish);
     }
