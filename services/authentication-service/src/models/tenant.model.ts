@@ -37,6 +37,11 @@ export class Tenant extends UserModifiableEntity<Tenant> {
   @property({
     type: 'string',
   })
+  website?: string;
+
+  @property({
+    type: 'string',
+  })
   city?: string;
 
   @property({

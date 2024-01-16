@@ -89,6 +89,17 @@ export class User<T = DataObject<Model>>
   lastLogin?: Date;
 
   @property({
+    name: 'photo_url',
+    type: 'string',
+  })
+  photoUrl?: string;
+
+  @property({
+    type: 'string',
+  })
+  designation?: string;
+
+  @property({
     type: 'date',
   })
   dob: Date;

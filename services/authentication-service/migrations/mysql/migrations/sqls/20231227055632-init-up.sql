@@ -1,5 +1,5 @@
 -- creating table for storing Auth clients
-CREATE TABLE auth_clients (
+CREATE TABLE IF NOT EXISTS auth_clients (
   id                         INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
   client_id                  VARCHAR(50) NOT NULL,
   client_secret              VARCHAR(50) NOT NULL,
@@ -15,13 +15,13 @@ CREATE TABLE auth_clients (
   deleted_by                 VARCHAR(36)
 );
 
-CREATE TRIGGER mdt_auth_clients
+CREATE TRIGGER IF NOT EXISTS mdt_auth_clients
 BEFORE UPDATE ON auth_clients 
 FOR EACH ROW
 SET NEW.modified_on = now();
 
 -- creating table for storing Roles
-CREATE TABLE roles (
+CREATE TABLE IF NOT EXISTS roles (
   id                   VARCHAR(36) NOT NULL PRIMARY KEY,
   name                 VARCHAR(100) NOT NULL,
   created_on           TIMESTAMP DEFAULT current_timestamp NOT NULL,
@@ -36,18 +36,18 @@ CREATE TABLE roles (
 );
 
 -- adding triggers
-CREATE TRIGGER before_insert_trigger_roles
+CREATE TRIGGER IF NOT EXISTS before_insert_trigger_roles
 BEFORE INSERT ON roles 
 FOR EACH ROW
 SET NEW.id = IFNULL(NEW.id, uuid());
 
-CREATE TRIGGER mdt_roles
+CREATE TRIGGER IF NOT EXISTS mdt_roles
 BEFORE UPDATE ON roles 
 FOR EACH ROW
 SET NEW.modified_on = now();
 
 -- creating table for storing Tenant configs
-CREATE TABLE tenant_configs (
+CREATE TABLE IF NOT EXISTS tenant_configs (
   id                   VARCHAR(36) NOT NULL PRIMARY KEY,
   config_key           VARCHAR(100) NOT NULL,
   config_value         JSON NOT NULL,
@@ -62,19 +62,19 @@ CREATE TABLE tenant_configs (
 );
 
 -- adding triggers
-CREATE TRIGGER before_insert_trigger_tenant_configs
+CREATE TRIGGER IF NOT EXISTS before_insert_trigger_tenant_configs
 BEFORE INSERT ON tenant_configs 
 FOR EACH ROW
 SET NEW.id = IFNULL(NEW.id, uuid());
 
-CREATE TRIGGER mdt_tenant_configs
+CREATE TRIGGER IF NOT EXISTS mdt_tenant_configs
 BEFORE UPDATE ON tenant_configs 
 FOR EACH ROW
 SET NEW.modified_on = now();
 
 
 -- creating table for storing Tenants
-CREATE TABLE tenants (
+CREATE TABLE IF NOT EXISTS tenants (
   id                   VARCHAR(36) NOT NULL PRIMARY KEY,
   name                 VARCHAR(100) NOT NULL,
   status               INTEGER DEFAULT 0 NOT NULL,
@@ -94,18 +94,18 @@ CREATE TABLE tenants (
 );
 
 -- adding triggers
-CREATE TRIGGER before_insert_trigger_tenants
+CREATE TRIGGER IF NOT EXISTS before_insert_trigger_tenants
 BEFORE INSERT ON tenants 
 FOR EACH ROW
 SET NEW.id = IFNULL(NEW.id, uuid());
 
-CREATE TRIGGER mdt_tenants
+CREATE TRIGGER IF NOT EXISTS mdt_tenants
 BEFORE UPDATE ON tenants 
 FOR EACH ROW
 SET NEW.modified_on = now();
 
 -- creating table for storing for credentials of users
-CREATE TABLE user_credentials (
+CREATE TABLE IF NOT EXISTS user_credentials (
   id                   VARCHAR(36) NOT NULL PRIMARY KEY,
   user_id              VARCHAR(36) NOT NULL UNIQUE,
   auth_provider        VARCHAR(50) DEFAULT 'internal' NOT NULL,
@@ -116,23 +116,25 @@ CREATE TABLE user_credentials (
   modified_on          TIMESTAMP DEFAULT current_timestamp NOT NULL,
   deleted              BOOL DEFAULT false NOT NULL,
   deleted_on           TIMESTAMP,
-  deleted_by           VARCHAR(36)
+  deleted_by           VARCHAR(36),
+  CONSTRAINT idx_user_credentials_uniq UNIQUE (auth_provider, auth_id, auth_token, `password`),
+  CONSTRAINT fk_user_credentials_users FOREIGN KEY (user_id) REFERENCES users(id)   
 );
 
 -- adding triggers
-CREATE TRIGGER before_insert_trigger_user_credentials
+CREATE TRIGGER IF NOT EXISTS before_insert_trigger_user_credentials
 BEFORE INSERT ON user_credentials 
 FOR EACH ROW
 SET NEW.id = IFNULL(NEW.id, uuid());
 
-CREATE TRIGGER mdt_user_credentials
+CREATE TRIGGER IF NOT EXISTS mdt_user_credentials
 BEFORE UPDATE ON user_credentials 
 FOR EACH ROW
 SET NEW.modified_on = now();
 
 
 -- creating table for storing for permissions of user
-CREATE TABLE user_permissions (
+CREATE TABLE IF NOT EXISTS user_permissions (
   id                   VARCHAR(36) NOT NULL PRIMARY KEY,
   user_tenant_id       VARCHAR(36) NOT NULL,
   permission           VARCHAR(50) NOT NULL,
@@ -147,18 +149,18 @@ CREATE TABLE user_permissions (
 );
 
 -- adding triggers
-CREATE TRIGGER before_insert_trigger_user_permissions
+CREATE TRIGGER IF NOT EXISTS before_insert_trigger_user_permissions
 BEFORE INSERT ON user_permissions 
 FOR EACH ROW
 SET NEW.id = IFNULL(NEW.id, uuid());
 
-CREATE TRIGGER mdt_user_permissions
+CREATE TRIGGER IF NOT EXISTS mdt_user_permissions
 BEFORE UPDATE ON user_permissions 
 FOR EACH ROW
 SET NEW.modified_on = now();
 
 -- creating table for storing for resources of user
-CREATE TABLE user_resources ( 
+CREATE TABLE IF NOT EXISTS user_resources ( 
   id                   VARCHAR(36) NOT NULL PRIMARY KEY,
   deleted              BOOL DEFAULT false NOT NULL,
   deleted_on           TIMESTAMP,
@@ -174,19 +176,19 @@ CREATE TABLE user_resources (
 );
 
 -- adding triggers
-CREATE TRIGGER before_insert_trigger_user_resources
+CREATE TRIGGER IF NOT EXISTS before_insert_trigger_user_resources
 BEFORE INSERT ON user_resources 
 FOR EACH ROW
 SET NEW.id = IFNULL(NEW.id, uuid());
 
-CREATE TRIGGER mdt_user_resources
+CREATE TRIGGER IF NOT EXISTS mdt_user_resources
 BEFORE UPDATE ON user_resources 
 FOR EACH ROW
 SET NEW.modified_on = now();
 
 
 -- creating table for storing for tenants of user
-CREATE TABLE user_tenants (
+CREATE TABLE IF NOT EXISTS user_tenants (
   id                   VARCHAR(36) NOT NULL PRIMARY KEY,
   user_id              VARCHAR(36) NOT NULL,
   tenant_id            VARCHAR(36) NOT NULL,
@@ -201,19 +203,19 @@ CREATE TABLE user_tenants (
 );
 
 -- adding triggers
-CREATE TRIGGER before_insert_trigger_user_tenants
+CREATE TRIGGER IF NOT EXISTS before_insert_trigger_user_tenants
 BEFORE INSERT ON user_tenants 
 FOR EACH ROW
 SET NEW.id = IFNULL(NEW.id, uuid());
 
-CREATE TRIGGER mdt_user_tenants
+CREATE TRIGGER IF NOT EXISTS mdt_user_tenants
 BEFORE UPDATE ON user_tenants 
 FOR EACH ROW
 SET NEW.modified_on = now();
 
 
 -- creating table for storing for users
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
   id                   VARCHAR(36) NOT NULL PRIMARY KEY,
   first_name           VARCHAR(50) NOT NULL,
   middle_name          VARCHAR(50),
@@ -236,12 +238,12 @@ CREATE TABLE users (
 );
 
 -- adding triggers
-CREATE TRIGGER before_insert_trigger_users
+CREATE TRIGGER IF NOT EXISTS before_insert_trigger_users
 BEFORE INSERT ON users 
 FOR EACH ROW
 SET NEW.id = IFNULL(NEW.id, uuid());
 
-CREATE TRIGGER mdt_users
+CREATE TRIGGER IF NOT EXISTS mdt_users
 BEFORE UPDATE ON users 
 FOR EACH ROW
 SET NEW.modified_on = now();
@@ -249,40 +251,40 @@ SET NEW.modified_on = now();
 -- adding all foreign keys for referential integrity between tables
 -- adding foreign keys for tenant config and tenant
 ALTER TABLE tenant_configs 
-ADD CONSTRAINT fk_tenant_configs_tenants 
+ADD CONSTRAINT IF NOT EXISTS fk_tenant_configs_tenants 
 FOREIGN KEY (tenant_id) 
 REFERENCES tenants(id);
 
 -- adding foreign keys for credentials and user
 ALTER TABLE user_credentials 
-ADD CONSTRAINT fk_user_credentials_users 
+ADD CONSTRAINT IF NOT EXISTS fk_user_credentials_users 
 FOREIGN KEY (user_id) 
 REFERENCES users(id);
 
 -- adding foreign keys for permissions and user
 ALTER TABLE user_permissions 
-ADD CONSTRAINT fk_user_permissions 
+ADD CONSTRAINT IF NOT EXISTS fk_user_permissions 
 FOREIGN KEY (user_tenant_id) 
 REFERENCES user_tenants(id);
 
 -- adding foreign keys for resources and user
 ALTER TABLE user_resources 
-ADD CONSTRAINT fk_user_resources 
+ADD CONSTRAINT IF NOT EXISTS fk_user_resources 
 FOREIGN KEY (user_tenant_id) 
 REFERENCES user_tenants(id);
 
 -- adding foreign keys multi-tenanancy
 ALTER TABLE user_tenants 
-ADD CONSTRAINT fk_user_tenants_users 
+ADD CONSTRAINT IF NOT EXISTS fk_user_tenants_users 
 FOREIGN KEY (user_id) 
 REFERENCES users(id);
 
 ALTER TABLE user_tenants 
-ADD CONSTRAINT fk_user_tenants_tenants 
+ADD CONSTRAINT IF NOT EXISTS fk_user_tenants_tenants 
 FOREIGN KEY (tenant_id) 
 REFERENCES tenants(id);
 
 ALTER TABLE user_tenants 
-ADD CONSTRAINT fk_user_tenants_roles 
+ADD CONSTRAINT IF NOT EXISTS fk_user_tenants_roles 
 FOREIGN KEY (role_id) 
 REFERENCES roles(id);

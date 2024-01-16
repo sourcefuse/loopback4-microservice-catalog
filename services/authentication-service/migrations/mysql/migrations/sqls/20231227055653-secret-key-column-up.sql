@@ -1,2 +1,2 @@
 ALTER TABLE user_credentials
-ADD secret_key VARCHAR(100);
+ADD IF NOT EXISTS secret_key VARCHAR(100);
