@@ -1,5 +1,5 @@
 ---
-title: "@sourceloop/user-tenant-service v0.11.2"
+title: "@sourceloop/user-tenant-service v0.14.2"
 language_tabs:
   - javascript: JavaScript
   - javascript--nodejs: Node.JS
@@ -16,7 +16,7 @@ headingLevel: 2
 
 <!-- Generator: Widdershins v4.0.1 -->
 
-<h1 id="-sourceloop-user-tenant-service">@sourceloop/user-tenant-service v0.11.2</h1>
+<h1 id="-sourceloop-user-tenant-service">@sourceloop/user-tenant-service v0.14.2</h1>
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
@@ -983,7 +983,6 @@ fetch('/tenants/{id}',
               "dob": "2019-08-24T14:15:22Z",
               "defaultTenantId": "string",
               "defaultTenant": {},
-              "foreignKey": null,
               "credentials": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -999,14 +998,12 @@ fetch('/tenants/{id}',
                 "secretKey": "string",
                 "password": "string",
                 "userId": "string",
-                "user": {},
-                "foreignKey": null
+                "user": {}
               },
               "userTenants": [
                 {}
               ]
             },
-            "foreignKey": null,
             "tenant": {},
             "role": {
               "deleted": true,
@@ -1060,7 +1057,6 @@ fetch('/tenants/{id}',
                 "roleName": "string",
                 "userTenantId": "string"
               },
-              "foreignKey": null,
               "modifiedByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -1105,8 +1101,7 @@ fetch('/tenants/{id}',
                 "permission": "string",
                 "allowed": true,
                 "userTenantId": "string",
-                "userTenant": {},
-                "foreignKey": null
+                "userTenant": {}
               }
             ],
             "userGroups": [
@@ -1138,7 +1133,6 @@ fetch('/tenants/{id}',
                     {}
                   ]
                 },
-                "foreignKey": null,
                 "userTenant": {}
               }
             ],
@@ -1155,8 +1149,7 @@ fetch('/tenants/{id}',
                 "expiresOn": "2019-08-24T14:15:22Z",
                 "token": "string",
                 "userTenantId": "string",
-                "userTenant": {},
-                "foreignKey": null
+                "userTenant": {}
               }
             ]
           }
@@ -1185,7 +1178,6 @@ fetch('/tenants/{id}',
             "dob": "2019-08-24T14:15:22Z",
             "defaultTenantId": "string",
             "defaultTenant": {},
-            "foreignKey": null,
             "credentials": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -1201,8 +1193,7 @@ fetch('/tenants/{id}',
               "secretKey": "string",
               "password": "string",
               "userId": "string",
-              "user": {},
-              "foreignKey": null
+              "user": {}
             },
             "userTenants": [
               {
@@ -1220,7 +1211,6 @@ fetch('/tenants/{id}',
                 "tenantId": "string",
                 "roleId": "string",
                 "user": {},
-                "foreignKey": null,
                 "tenant": {},
                 "role": {
                   "deleted": true,
@@ -1274,7 +1264,6 @@ fetch('/tenants/{id}',
                     "roleName": "string",
                     "userTenantId": "string"
                   },
-                  "foreignKey": null,
                   "modifiedByUser": {
                     "deleted": true,
                     "deletedOn": "2019-08-24T14:15:22Z",
@@ -1319,8 +1308,7 @@ fetch('/tenants/{id}',
                     "permission": "string",
                     "allowed": true,
                     "userTenantId": "string",
-                    "userTenant": {},
-                    "foreignKey": null
+                    "userTenant": {}
                   }
                 ],
                 "userGroups": [
@@ -1336,7 +1324,6 @@ fetch('/tenants/{id}',
                     "groupId": "string",
                     "userTenantId": "string",
                     "group": {},
-                    "foreignKey": null,
                     "userTenant": {}
                   }
                 ],
@@ -1353,8 +1340,7 @@ fetch('/tenants/{id}',
                     "expiresOn": "2019-08-24T14:15:22Z",
                     "token": "string",
                     "userTenantId": "string",
-                    "userTenant": {},
-                    "foreignKey": null
+                    "userTenant": {}
                   }
                 ]
               }
@@ -1419,7 +1405,6 @@ fetch('/tenants/{id}',
                   "dob": "2019-08-24T14:15:22Z",
                   "defaultTenantId": "string",
                   "defaultTenant": {},
-                  "foreignKey": null,
                   "credentials": {
                     "deleted": true,
                     "deletedOn": "2019-08-24T14:15:22Z",
@@ -1435,14 +1420,12 @@ fetch('/tenants/{id}',
                     "secretKey": "string",
                     "password": "string",
                     "userId": "string",
-                    "user": {},
-                    "foreignKey": null
+                    "user": {}
                   },
                   "userTenants": [
                     {}
                   ]
                 },
-                "foreignKey": null,
                 "tenant": {},
                 "role": {},
                 "userLevelPermissions": [
@@ -1458,8 +1441,7 @@ fetch('/tenants/{id}',
                     "permission": "string",
                     "allowed": true,
                     "userTenantId": "string",
-                    "userTenant": {},
-                    "foreignKey": null
+                    "userTenant": {}
                   }
                 ],
                 "userGroups": [
@@ -1475,7 +1457,6 @@ fetch('/tenants/{id}',
                     "groupId": "string",
                     "userTenantId": "string",
                     "group": {},
-                    "foreignKey": null,
                     "userTenant": {}
                   }
                 ],
@@ -1492,8 +1473,7 @@ fetch('/tenants/{id}',
                     "expiresOn": "2019-08-24T14:15:22Z",
                     "token": "string",
                     "userTenantId": "string",
-                    "userTenant": {},
-                    "foreignKey": null
+                    "userTenant": {}
                   }
                 ]
               }
@@ -1528,7 +1508,6 @@ fetch('/tenants/{id}',
               "roleName": "string",
               "userTenantId": "string"
             },
-            "foreignKey": null,
             "modifiedByUser": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -1588,7 +1567,6 @@ fetch('/tenants/{id}',
                 "groupId": "string",
                 "userTenantId": "string",
                 "group": {},
-                "foreignKey": null,
                 "userTenant": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -1626,11 +1604,9 @@ fetch('/tenants/{id}',
                     "dob": "2019-08-24T14:15:22Z",
                     "defaultTenantId": "string",
                     "defaultTenant": {},
-                    "foreignKey": null,
                     "credentials": {},
                     "userTenants": []
                   },
-                  "foreignKey": null,
                   "tenant": {},
                   "role": {
                     "deleted": true,
@@ -1649,7 +1625,6 @@ fetch('/tenants/{id}',
                     "tenantId": "string",
                     "userTenants": [],
                     "createdByUser": {},
-                    "foreignKey": null,
                     "modifiedByUser": {}
                   },
                   "userLevelPermissions": [
@@ -1666,8 +1641,7 @@ fetch('/tenants/{id}',
             ]
           }
         ]
-      },
-      "foreignKey": null
+      }
     }
   ],
   "userTenants": [
@@ -1738,8 +1712,7 @@ fetch('/tenants/{id}',
               "configKey": "string",
               "configValue": {},
               "tenantId": "string",
-              "tenant": {},
-              "foreignKey": null
+              "tenant": {}
             }
           ],
           "userTenants": [],
@@ -1799,7 +1772,6 @@ fetch('/tenants/{id}',
                 "roleName": "string",
                 "userTenantId": "string"
               },
-              "foreignKey": null,
               "modifiedByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -1859,14 +1831,12 @@ fetch('/tenants/{id}',
                   "groupId": "string",
                   "userTenantId": "string",
                   "group": {},
-                  "foreignKey": null,
                   "userTenant": {}
                 }
               ]
             }
           ]
         },
-        "foreignKey": null,
         "credentials": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -1882,14 +1852,12 @@ fetch('/tenants/{id}',
           "secretKey": "string",
           "password": "string",
           "userId": "string",
-          "user": {},
-          "foreignKey": null
+          "user": {}
         },
         "userTenants": [
           {}
         ]
       },
-      "foreignKey": null,
       "tenant": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -1921,8 +1889,7 @@ fetch('/tenants/{id}',
             "configKey": "string",
             "configValue": {},
             "tenantId": "string",
-            "tenant": {},
-            "foreignKey": null
+            "tenant": {}
           }
         ],
         "userTenants": [],
@@ -1950,7 +1917,6 @@ fetch('/tenants/{id}',
             "dob": "2019-08-24T14:15:22Z",
             "defaultTenantId": "string",
             "defaultTenant": {},
-            "foreignKey": null,
             "credentials": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -1966,8 +1932,7 @@ fetch('/tenants/{id}',
               "secretKey": "string",
               "password": "string",
               "userId": "string",
-              "user": {},
-              "foreignKey": null
+              "user": {}
             },
             "userTenants": [
               {}
@@ -2027,7 +1992,6 @@ fetch('/tenants/{id}',
               "roleName": "string",
               "userTenantId": "string"
             },
-            "foreignKey": null,
             "modifiedByUser": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -2087,7 +2051,6 @@ fetch('/tenants/{id}',
                 "groupId": "string",
                 "userTenantId": "string",
                 "group": {},
-                "foreignKey": null,
                 "userTenant": {}
               }
             ]
@@ -2146,7 +2109,6 @@ fetch('/tenants/{id}',
           "roleName": "string",
           "userTenantId": "string"
         },
-        "foreignKey": null,
         "modifiedByUser": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -2191,8 +2153,7 @@ fetch('/tenants/{id}',
           "permission": "string",
           "allowed": true,
           "userTenantId": "string",
-          "userTenant": {},
-          "foreignKey": null
+          "userTenant": {}
         }
       ],
       "userGroups": [
@@ -2224,7 +2185,6 @@ fetch('/tenants/{id}',
               {}
             ]
           },
-          "foreignKey": null,
           "userTenant": {}
         }
       ],
@@ -2241,8 +2201,7 @@ fetch('/tenants/{id}',
           "expiresOn": "2019-08-24T14:15:22Z",
           "token": "string",
           "userTenantId": "string",
-          "userTenant": {},
-          "foreignKey": null
+          "userTenant": {}
         }
       ]
     }
@@ -2301,8 +2260,7 @@ fetch('/tenants/{id}',
             "configKey": "string",
             "configValue": {},
             "tenantId": "string",
-            "tenant": {},
-            "foreignKey": null
+            "tenant": {}
           }
         ],
         "userTenants": [
@@ -2321,7 +2279,6 @@ fetch('/tenants/{id}',
             "tenantId": "string",
             "roleId": "string",
             "user": {},
-            "foreignKey": null,
             "tenant": {},
             "role": {
               "deleted": true,
@@ -2375,7 +2332,6 @@ fetch('/tenants/{id}',
                 "roleName": "string",
                 "userTenantId": "string"
               },
-              "foreignKey": null,
               "modifiedByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -2420,8 +2376,7 @@ fetch('/tenants/{id}',
                 "permission": "string",
                 "allowed": true,
                 "userTenantId": "string",
-                "userTenant": {},
-                "foreignKey": null
+                "userTenant": {}
               }
             ],
             "userGroups": [
@@ -2453,7 +2408,6 @@ fetch('/tenants/{id}',
                     {}
                   ]
                 },
-                "foreignKey": null,
                 "userTenant": {}
               }
             ],
@@ -2470,8 +2424,7 @@ fetch('/tenants/{id}',
                 "expiresOn": "2019-08-24T14:15:22Z",
                 "token": "string",
                 "userTenantId": "string",
-                "userTenant": {},
-                "foreignKey": null
+                "userTenant": {}
               }
             ]
           }
@@ -2513,7 +2466,6 @@ fetch('/tenants/{id}',
                 "tenantId": "string",
                 "roleId": "string",
                 "user": {},
-                "foreignKey": null,
                 "tenant": {},
                 "role": {},
                 "userLevelPermissions": [
@@ -2529,8 +2481,7 @@ fetch('/tenants/{id}',
                     "permission": "string",
                     "allowed": true,
                     "userTenantId": "string",
-                    "userTenant": {},
-                    "foreignKey": null
+                    "userTenant": {}
                   }
                 ],
                 "userGroups": [
@@ -2546,7 +2497,6 @@ fetch('/tenants/{id}',
                     "groupId": "string",
                     "userTenantId": "string",
                     "group": {},
-                    "foreignKey": null,
                     "userTenant": {}
                   }
                 ],
@@ -2563,8 +2513,7 @@ fetch('/tenants/{id}',
                     "expiresOn": "2019-08-24T14:15:22Z",
                     "token": "string",
                     "userTenantId": "string",
-                    "userTenant": {},
-                    "foreignKey": null
+                    "userTenant": {}
                   }
                 ]
               }
@@ -2599,7 +2548,6 @@ fetch('/tenants/{id}',
               "roleName": "string",
               "userTenantId": "string"
             },
-            "foreignKey": null,
             "modifiedByUser": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -2659,7 +2607,6 @@ fetch('/tenants/{id}',
                 "groupId": "string",
                 "userTenantId": "string",
                 "group": {},
-                "foreignKey": null,
                 "userTenant": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -2675,7 +2622,6 @@ fetch('/tenants/{id}',
                   "tenantId": "string",
                   "roleId": "string",
                   "user": {},
-                  "foreignKey": null,
                   "tenant": {},
                   "role": {
                     "deleted": true,
@@ -2694,7 +2640,6 @@ fetch('/tenants/{id}',
                     "tenantId": "string",
                     "userTenants": [],
                     "createdByUser": {},
-                    "foreignKey": null,
                     "modifiedByUser": {}
                   },
                   "userLevelPermissions": [
@@ -2712,7 +2657,6 @@ fetch('/tenants/{id}',
           }
         ]
       },
-      "foreignKey": null,
       "credentials": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -2728,8 +2672,7 @@ fetch('/tenants/{id}',
         "secretKey": "string",
         "password": "string",
         "userId": "string",
-        "user": {},
-        "foreignKey": null
+        "user": {}
       },
       "userTenants": [
         {
@@ -2747,7 +2690,6 @@ fetch('/tenants/{id}',
           "tenantId": "string",
           "roleId": "string",
           "user": {},
-          "foreignKey": null,
           "tenant": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -2779,8 +2721,7 @@ fetch('/tenants/{id}',
                 "configKey": "string",
                 "configValue": {},
                 "tenantId": "string",
-                "tenant": {},
-                "foreignKey": null
+                "tenant": {}
               }
             ],
             "userTenants": [
@@ -2840,7 +2781,6 @@ fetch('/tenants/{id}',
                   "roleName": "string",
                   "userTenantId": "string"
                 },
-                "foreignKey": null,
                 "modifiedByUser": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -2900,7 +2840,6 @@ fetch('/tenants/{id}',
                     "groupId": "string",
                     "userTenantId": "string",
                     "group": {},
-                    "foreignKey": null,
                     "userTenant": {}
                   }
                 ]
@@ -2959,7 +2898,6 @@ fetch('/tenants/{id}',
               "roleName": "string",
               "userTenantId": "string"
             },
-            "foreignKey": null,
             "modifiedByUser": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -3004,8 +2942,7 @@ fetch('/tenants/{id}',
               "permission": "string",
               "allowed": true,
               "userTenantId": "string",
-              "userTenant": {},
-              "foreignKey": null
+              "userTenant": {}
             }
           ],
           "userGroups": [
@@ -3037,7 +2974,6 @@ fetch('/tenants/{id}',
                   {}
                 ]
               },
-              "foreignKey": null,
               "userTenant": {}
             }
           ],
@@ -3054,8 +2990,7 @@ fetch('/tenants/{id}',
               "expiresOn": "2019-08-24T14:15:22Z",
               "token": "string",
               "userTenantId": "string",
-              "userTenant": {},
-              "foreignKey": null
+              "userTenant": {}
             }
           ]
         }
@@ -3150,8 +3085,7 @@ fetch('/tenants/{id}',
                   "configKey": "string",
                   "configValue": {},
                   "tenantId": "string",
-                  "tenant": {},
-                  "foreignKey": null
+                  "tenant": {}
                 }
               ],
               "userTenants": [
@@ -3181,7 +3115,6 @@ fetch('/tenants/{id}',
                 }
               ]
             },
-            "foreignKey": null,
             "credentials": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -3197,14 +3130,12 @@ fetch('/tenants/{id}',
               "secretKey": "string",
               "password": "string",
               "userId": "string",
-              "user": {},
-              "foreignKey": null
+              "user": {}
             },
             "userTenants": [
               {}
             ]
           },
-          "foreignKey": null,
           "tenant": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -3236,8 +3167,7 @@ fetch('/tenants/{id}',
                 "configKey": "string",
                 "configValue": {},
                 "tenantId": "string",
-                "tenant": {},
-                "foreignKey": null
+                "tenant": {}
               }
             ],
             "userTenants": [
@@ -3267,7 +3197,6 @@ fetch('/tenants/{id}',
                 "dob": "2019-08-24T14:15:22Z",
                 "defaultTenantId": "string",
                 "defaultTenant": {},
-                "foreignKey": null,
                 "credentials": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -3283,8 +3212,7 @@ fetch('/tenants/{id}',
                   "secretKey": "string",
                   "password": "string",
                   "userId": "string",
-                  "user": {},
-                  "foreignKey": null
+                  "user": {}
                 },
                 "userTenants": [
                   {}
@@ -3319,7 +3247,6 @@ fetch('/tenants/{id}',
                     "groupId": "string",
                     "userTenantId": "string",
                     "group": {},
-                    "foreignKey": null,
                     "userTenant": {}
                   }
                 ]
@@ -3340,8 +3267,7 @@ fetch('/tenants/{id}',
               "permission": "string",
               "allowed": true,
               "userTenantId": "string",
-              "userTenant": {},
-              "foreignKey": null
+              "userTenant": {}
             }
           ],
           "userGroups": [
@@ -3373,7 +3299,6 @@ fetch('/tenants/{id}',
                   {}
                 ]
               },
-              "foreignKey": null,
               "userTenant": {}
             }
           ],
@@ -3390,8 +3315,7 @@ fetch('/tenants/{id}',
               "expiresOn": "2019-08-24T14:15:22Z",
               "token": "string",
               "userTenantId": "string",
-              "userTenant": {},
-              "foreignKey": null
+              "userTenant": {}
             }
           ]
         }
@@ -3426,7 +3350,6 @@ fetch('/tenants/{id}',
         "roleName": "string",
         "userTenantId": "string"
       },
-      "foreignKey": null,
       "modifiedByUser": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -3486,7 +3409,6 @@ fetch('/tenants/{id}',
           "groupId": "string",
           "userTenantId": "string",
           "group": {},
-          "foreignKey": null,
           "userTenant": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -3554,8 +3476,7 @@ fetch('/tenants/{id}',
                     "configKey": "string",
                     "configValue": {},
                     "tenantId": "string",
-                    "tenant": {},
-                    "foreignKey": null
+                    "tenant": {}
                   }
                 ],
                 "userTenants": [
@@ -3582,13 +3503,11 @@ fetch('/tenants/{id}',
                     "tenantId": "string",
                     "userTenants": [],
                     "createdByUser": {},
-                    "foreignKey": null,
                     "modifiedByUser": {}
                   }
                 ],
                 "groups": []
               },
-              "foreignKey": null,
               "credentials": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -3604,14 +3523,12 @@ fetch('/tenants/{id}',
                 "secretKey": "string",
                 "password": "string",
                 "userId": "string",
-                "user": {},
-                "foreignKey": null
+                "user": {}
               },
               "userTenants": [
                 {}
               ]
             },
-            "foreignKey": null,
             "tenant": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -3643,8 +3560,7 @@ fetch('/tenants/{id}',
                   "configKey": "string",
                   "configValue": {},
                   "tenantId": "string",
-                  "tenant": {},
-                  "foreignKey": null
+                  "tenant": {}
                 }
               ],
               "userTenants": [
@@ -3674,7 +3590,6 @@ fetch('/tenants/{id}',
                   "dob": "2019-08-24T14:15:22Z",
                   "defaultTenantId": "string",
                   "defaultTenant": {},
-                  "foreignKey": null,
                   "credentials": {
                     "deleted": true,
                     "deletedOn": "2019-08-24T14:15:22Z",
@@ -3690,8 +3605,7 @@ fetch('/tenants/{id}',
                     "secretKey": "string",
                     "password": "string",
                     "userId": "string",
-                    "user": {},
-                    "foreignKey": null
+                    "user": {}
                   },
                   "userTenants": [
                     {}
@@ -3751,7 +3665,6 @@ fetch('/tenants/{id}',
                     "roleName": "string",
                     "userTenantId": "string"
                   },
-                  "foreignKey": null,
                   "modifiedByUser": {
                     "deleted": true,
                     "deletedOn": "2019-08-24T14:15:22Z",
@@ -3838,7 +3751,6 @@ fetch('/tenants/{id}',
                 "roleName": "string",
                 "userTenantId": "string"
               },
-              "foreignKey": null,
               "modifiedByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -3883,8 +3795,7 @@ fetch('/tenants/{id}',
                 "permission": "string",
                 "allowed": true,
                 "userTenantId": "string",
-                "userTenant": {},
-                "foreignKey": null
+                "userTenant": {}
               }
             ],
             "userGroups": [
@@ -3903,8 +3814,7 @@ fetch('/tenants/{id}',
                 "expiresOn": "2019-08-24T14:15:22Z",
                 "token": "string",
                 "userTenantId": "string",
-                "userTenant": {},
-                "foreignKey": null
+                "userTenant": {}
               }
             ]
           }
@@ -4384,8 +4294,7 @@ fetch('/tenants',
         "configKey": "string",
         "configValue": {},
         "tenantId": "string",
-        "tenant": {},
-        "foreignKey": null
+        "tenant": {}
       }
     ],
     "userTenants": [
@@ -4426,7 +4335,6 @@ fetch('/tenants',
           "dob": "2019-08-24T14:15:22Z",
           "defaultTenantId": "string",
           "defaultTenant": {},
-          "foreignKey": null,
           "credentials": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -4442,14 +4350,12 @@ fetch('/tenants',
             "secretKey": "string",
             "password": "string",
             "userId": "string",
-            "user": {},
-            "foreignKey": null
+            "user": {}
           },
           "userTenants": [
             {}
           ]
         },
-        "foreignKey": null,
         "tenant": {},
         "role": {
           "deleted": true,
@@ -4503,7 +4409,6 @@ fetch('/tenants',
             "roleName": "string",
             "userTenantId": "string"
           },
-          "foreignKey": null,
           "modifiedByUser": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -4548,8 +4453,7 @@ fetch('/tenants',
             "permission": "string",
             "allowed": true,
             "userTenantId": "string",
-            "userTenant": {},
-            "foreignKey": null
+            "userTenant": {}
           }
         ],
         "userGroups": [
@@ -4581,7 +4485,6 @@ fetch('/tenants',
                 {}
               ]
             },
-            "foreignKey": null,
             "userTenant": {}
           }
         ],
@@ -4598,8 +4501,7 @@ fetch('/tenants',
             "expiresOn": "2019-08-24T14:15:22Z",
             "token": "string",
             "userTenantId": "string",
-            "userTenant": {},
-            "foreignKey": null
+            "userTenant": {}
           }
         ]
       }
@@ -4628,7 +4530,6 @@ fetch('/tenants',
         "dob": "2019-08-24T14:15:22Z",
         "defaultTenantId": "string",
         "defaultTenant": {},
-        "foreignKey": null,
         "credentials": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -4644,8 +4545,7 @@ fetch('/tenants',
           "secretKey": "string",
           "password": "string",
           "userId": "string",
-          "user": {},
-          "foreignKey": null
+          "user": {}
         },
         "userTenants": [
           {
@@ -4663,7 +4563,6 @@ fetch('/tenants',
             "tenantId": "string",
             "roleId": "string",
             "user": {},
-            "foreignKey": null,
             "tenant": {},
             "role": {
               "deleted": true,
@@ -4717,7 +4616,6 @@ fetch('/tenants',
                 "roleName": "string",
                 "userTenantId": "string"
               },
-              "foreignKey": null,
               "modifiedByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -4762,8 +4660,7 @@ fetch('/tenants',
                 "permission": "string",
                 "allowed": true,
                 "userTenantId": "string",
-                "userTenant": {},
-                "foreignKey": null
+                "userTenant": {}
               }
             ],
             "userGroups": [
@@ -4795,7 +4692,6 @@ fetch('/tenants',
                     {}
                   ]
                 },
-                "foreignKey": null,
                 "userTenant": {}
               }
             ],
@@ -4812,8 +4708,7 @@ fetch('/tenants',
                 "expiresOn": "2019-08-24T14:15:22Z",
                 "token": "string",
                 "userTenantId": "string",
-                "userTenant": {},
-                "foreignKey": null
+                "userTenant": {}
               }
             ]
           }
@@ -4878,7 +4773,6 @@ fetch('/tenants',
               "dob": "2019-08-24T14:15:22Z",
               "defaultTenantId": "string",
               "defaultTenant": {},
-              "foreignKey": null,
               "credentials": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -4894,14 +4788,12 @@ fetch('/tenants',
                 "secretKey": "string",
                 "password": "string",
                 "userId": "string",
-                "user": {},
-                "foreignKey": null
+                "user": {}
               },
               "userTenants": [
                 {}
               ]
             },
-            "foreignKey": null,
             "tenant": {},
             "role": {},
             "userLevelPermissions": [
@@ -4917,8 +4809,7 @@ fetch('/tenants',
                 "permission": "string",
                 "allowed": true,
                 "userTenantId": "string",
-                "userTenant": {},
-                "foreignKey": null
+                "userTenant": {}
               }
             ],
             "userGroups": [
@@ -4950,7 +4841,6 @@ fetch('/tenants',
                     {}
                   ]
                 },
-                "foreignKey": null,
                 "userTenant": {}
               }
             ],
@@ -4967,8 +4857,7 @@ fetch('/tenants',
                 "expiresOn": "2019-08-24T14:15:22Z",
                 "token": "string",
                 "userTenantId": "string",
-                "userTenant": {},
-                "foreignKey": null
+                "userTenant": {}
               }
             ]
           }
@@ -5003,7 +4892,6 @@ fetch('/tenants',
           "roleName": "string",
           "userTenantId": "string"
         },
-        "foreignKey": null,
         "modifiedByUser": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -5063,7 +4951,6 @@ fetch('/tenants',
             "groupId": "string",
             "userTenantId": "string",
             "group": {},
-            "foreignKey": null,
             "userTenant": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -5101,7 +4988,6 @@ fetch('/tenants',
                 "dob": "2019-08-24T14:15:22Z",
                 "defaultTenantId": "string",
                 "defaultTenant": {},
-                "foreignKey": null,
                 "credentials": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -5117,14 +5003,12 @@ fetch('/tenants',
                   "secretKey": "string",
                   "password": "string",
                   "userId": "string",
-                  "user": {},
-                  "foreignKey": null
+                  "user": {}
                 },
                 "userTenants": [
                   {}
                 ]
               },
-              "foreignKey": null,
               "tenant": {},
               "role": {
                 "deleted": true,
@@ -5178,7 +5062,6 @@ fetch('/tenants',
                   "roleName": "string",
                   "userTenantId": "string"
                 },
-                "foreignKey": null,
                 "modifiedByUser": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -5223,8 +5106,7 @@ fetch('/tenants',
                   "permission": "string",
                   "allowed": true,
                   "userTenantId": "string",
-                  "userTenant": {},
-                  "foreignKey": null
+                  "userTenant": {}
                 }
               ],
               "userGroups": [
@@ -5243,8 +5125,7 @@ fetch('/tenants',
                   "expiresOn": "2019-08-24T14:15:22Z",
                   "token": "string",
                   "userTenantId": "string",
-                  "userTenant": {},
-                  "foreignKey": null
+                  "userTenant": {}
                 }
               ]
             }
@@ -5301,7 +5182,6 @@ Status Code **200**
 |»»»» configValue|object|false|none|none|
 |»»»» tenantId|string|true|none|none|
 |»»»» tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» foreignKey|any|false|none|none|
 |»» userTenants|[[UserTenantWithRelations](#schemausertenantwithrelations)]|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
 |»»» UserTenantWithRelations|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
 |»»»» deleted|boolean|false|none|none|
@@ -5340,7 +5220,6 @@ Status Code **200**
 |»»»»» dob|string(date-time)|false|none|none|
 |»»»»» defaultTenantId|string|false|none|none|
 |»»»»» defaultTenant|[TenantWithRelations](#schematenantwithrelations)|false|none|signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» foreignKey|any|false|none|none|
 |»»»»» credentials|[UserCredentialsWithRelations](#schemausercredentialswithrelations)|false|none|(tsType: UserCredentialsWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»» deleted|boolean|false|none|none|
 |»»»»»» deletedOn|string(date-time)¦null|false|none|none|
@@ -5357,10 +5236,8 @@ Status Code **200**
 |»»»»»» password|string|false|none|none|
 |»»»»»» userId|string|true|none|none|
 |»»»»»» user|[UserWithRelations](#schemauserwithrelations)|false|none|This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»» foreignKey|any|false|none|none|
 |»»»»» userTenants|[[UserTenantWithRelations](#schemausertenantwithrelations)]|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»» UserTenantWithRelations|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» foreignKey|any|false|none|none|
 |»»»» tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
 |»»»» role|[RoleWithRelations](#schemarolewithrelations)|false|none|(tsType: RoleWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»» deleted|boolean|false|none|none|
@@ -5408,7 +5285,6 @@ Status Code **200**
 |»»»»»» tenantKey|string|false|none|none|
 |»»»»»» roleName|string|false|none|none|
 |»»»»»» userTenantId|string|true|none|none|
-|»»»»» foreignKey|any|false|none|none|
 |»»»»» modifiedByUser|[UserViewWithRelations](#schemauserviewwithrelations)|false|none|User details view in DB (tsType: UserViewWithRelations, schemaOptions: { includeRelations: true })|
 |»»»» userLevelPermissions|[[UserLevelPermissionWithRelations](#schemauserlevelpermissionwithrelations)]|false|none|(tsType: UserLevelPermissionWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»» UserLevelPermissionWithRelations|[UserLevelPermissionWithRelations](#schemauserlevelpermissionwithrelations)|false|none|(tsType: UserLevelPermissionWithRelations, schemaOptions: { includeRelations: true })|
@@ -5424,7 +5300,6 @@ Status Code **200**
 |»»»»»» allowed|boolean|true|none|none|
 |»»»»»» userTenantId|string|true|none|none|
 |»»»»»» userTenant|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»» foreignKey|any|false|none|none|
 |»»»» userGroups|[[UserGroupWithRelations](#schemausergroupwithrelations)]|false|none|(tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»» UserGroupWithRelations|[UserGroupWithRelations](#schemausergroupwithrelations)|false|none|(tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»» deleted|boolean|false|none|none|
@@ -5452,7 +5327,6 @@ Status Code **200**
 |»»»»»»» tenantId|string|true|none|none|
 |»»»»»»» userGroups|[[UserGroupWithRelations](#schemausergroupwithrelations)]|false|none|(tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»»»» UserGroupWithRelations|[UserGroupWithRelations](#schemausergroupwithrelations)|false|none|(tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»» foreignKey|any|false|none|none|
 |»»»»»» userTenant|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
 |»»»» userInvitations|[[UserInvitationWithRelations](#schemauserinvitationwithrelations)]|false|none|(tsType: UserInvitationWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»» UserInvitationWithRelations|[UserInvitationWithRelations](#schemauserinvitationwithrelations)|false|none|(tsType: UserInvitationWithRelations, schemaOptions: { includeRelations: true })|
@@ -5468,7 +5342,6 @@ Status Code **200**
 |»»»»»» token|string|false|none|none|
 |»»»»»» userTenantId|string|true|none|none|
 |»»»»»» userTenant|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»» foreignKey|any|false|none|none|
 |»» users|[[UserWithRelations](#schemauserwithrelations)]|false|none|This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true })|
 |»»» UserWithRelations|[UserWithRelations](#schemauserwithrelations)|false|none|This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true })|
 |»» roles|[[RoleWithRelations](#schemarolewithrelations)]|false|none|(tsType: RoleWithRelations, schemaOptions: { includeRelations: true })|
@@ -8024,8 +7897,7 @@ fetch('/user-tenant-prefs',
               "configKey": "string",
               "configValue": {},
               "tenantId": "string",
-              "tenant": {},
-              "foreignKey": null
+              "tenant": {}
             }
           ],
           "userTenants": [
@@ -8087,7 +7959,6 @@ fetch('/user-tenant-prefs',
                 "roleName": "string",
                 "userTenantId": "string"
               },
-              "foreignKey": null,
               "modifiedByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -8147,14 +8018,12 @@ fetch('/user-tenant-prefs',
                   "groupId": "string",
                   "userTenantId": "string",
                   "group": {},
-                  "foreignKey": null,
                   "userTenant": {}
                 }
               ]
             }
           ]
         },
-        "foreignKey": null,
         "credentials": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -8170,14 +8039,12 @@ fetch('/user-tenant-prefs',
           "secretKey": "string",
           "password": "string",
           "userId": "string",
-          "user": {},
-          "foreignKey": null
+          "user": {}
         },
         "userTenants": [
           {}
         ]
       },
-      "foreignKey": null,
       "tenant": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -8209,8 +8076,7 @@ fetch('/user-tenant-prefs',
             "configKey": "string",
             "configValue": {},
             "tenantId": "string",
-            "tenant": {},
-            "foreignKey": null
+            "tenant": {}
           }
         ],
         "userTenants": [
@@ -8240,7 +8106,6 @@ fetch('/user-tenant-prefs',
             "dob": "2019-08-24T14:15:22Z",
             "defaultTenantId": "string",
             "defaultTenant": {},
-            "foreignKey": null,
             "credentials": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -8256,8 +8121,7 @@ fetch('/user-tenant-prefs',
               "secretKey": "string",
               "password": "string",
               "userId": "string",
-              "user": {},
-              "foreignKey": null
+              "user": {}
             },
             "userTenants": [
               {}
@@ -8317,7 +8181,6 @@ fetch('/user-tenant-prefs',
               "roleName": "string",
               "userTenantId": "string"
             },
-            "foreignKey": null,
             "modifiedByUser": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -8377,7 +8240,6 @@ fetch('/user-tenant-prefs',
                 "groupId": "string",
                 "userTenantId": "string",
                 "group": {},
-                "foreignKey": null,
                 "userTenant": {}
               }
             ]
@@ -8436,7 +8298,6 @@ fetch('/user-tenant-prefs',
           "roleName": "string",
           "userTenantId": "string"
         },
-        "foreignKey": null,
         "modifiedByUser": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -8481,8 +8342,7 @@ fetch('/user-tenant-prefs',
           "permission": "string",
           "allowed": true,
           "userTenantId": "string",
-          "userTenant": {},
-          "foreignKey": null
+          "userTenant": {}
         }
       ],
       "userGroups": [
@@ -8514,7 +8374,6 @@ fetch('/user-tenant-prefs',
               {}
             ]
           },
-          "foreignKey": null,
           "userTenant": {}
         }
       ],
@@ -8531,12 +8390,10 @@ fetch('/user-tenant-prefs',
           "expiresOn": "2019-08-24T14:15:22Z",
           "token": "string",
           "userTenantId": "string",
-          "userTenant": {},
-          "foreignKey": null
+          "userTenant": {}
         }
       ]
-    },
-    "foreignKey": null
+    }
   }
 ]
 ```
@@ -8634,7 +8491,6 @@ Status Code **200**
 |»»»»»»» configValue|object|false|none|none|
 |»»»»»»» tenantId|string|true|none|none|
 |»»»»»»» tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»»» foreignKey|any|false|none|none|
 |»»»»» userTenants|[[UserTenantWithRelations](#schemausertenantwithrelations)]|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»» UserTenantWithRelations|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»» users|[[UserWithRelations](#schemauserwithrelations)]|false|none|This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true })|
@@ -8686,7 +8542,6 @@ Status Code **200**
 |»»»»»»»» tenantKey|string|false|none|none|
 |»»»»»»»» roleName|string|false|none|none|
 |»»»»»»»» userTenantId|string|true|none|none|
-|»»»»»»» foreignKey|any|false|none|none|
 |»»»»»»» modifiedByUser|[UserViewWithRelations](#schemauserviewwithrelations)|false|none|User details view in DB (tsType: UserViewWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»» groups|[[GroupWithRelations](#schemagroupwithrelations)]|false|none|(tsType: GroupWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»»» GroupWithRelations|[GroupWithRelations](#schemagroupwithrelations)|false|none|(tsType: GroupWithRelations, schemaOptions: { includeRelations: true })|
@@ -8715,9 +8570,7 @@ Status Code **200**
 |»»»»»»»»» groupId|string|true|none|none|
 |»»»»»»»»» userTenantId|string|true|none|none|
 |»»»»»»»»» group|[GroupWithRelations](#schemagroupwithrelations)|false|none|(tsType: GroupWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»»»»» foreignKey|any|false|none|none|
 |»»»»»»»»» userTenant|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» foreignKey|any|false|none|none|
 |»»»» credentials|[UserCredentialsWithRelations](#schemausercredentialswithrelations)|false|none|(tsType: UserCredentialsWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»» deleted|boolean|false|none|none|
 |»»»»» deletedOn|string(date-time)¦null|false|none|none|
@@ -8734,10 +8587,8 @@ Status Code **200**
 |»»»»» password|string|false|none|none|
 |»»»»» userId|string|true|none|none|
 |»»»»» user|[UserWithRelations](#schemauserwithrelations)|false|none|This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» foreignKey|any|false|none|none|
 |»»»» userTenants|[[UserTenantWithRelations](#schemausertenantwithrelations)]|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
 |»»»»» UserTenantWithRelations|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»» foreignKey|any|false|none|none|
 |»»» tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
 |»»» role|[RoleWithRelations](#schemarolewithrelations)|false|none|(tsType: RoleWithRelations, schemaOptions: { includeRelations: true })|
 |»»» userLevelPermissions|[[UserLevelPermissionWithRelations](#schemauserlevelpermissionwithrelations)]|false|none|(tsType: UserLevelPermissionWithRelations, schemaOptions: { includeRelations: true })|
@@ -8754,7 +8605,6 @@ Status Code **200**
 |»»»»» allowed|boolean|true|none|none|
 |»»»»» userTenantId|string|true|none|none|
 |»»»»» userTenant|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» foreignKey|any|false|none|none|
 |»»» userGroups|[[UserGroupWithRelations](#schemausergroupwithrelations)]|false|none|(tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })|
 |»»»» UserGroupWithRelations|[UserGroupWithRelations](#schemausergroupwithrelations)|false|none|(tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })|
 |»»» userInvitations|[[UserInvitationWithRelations](#schemauserinvitationwithrelations)]|false|none|(tsType: UserInvitationWithRelations, schemaOptions: { includeRelations: true })|
@@ -8771,8 +8621,6 @@ Status Code **200**
 |»»»»» token|string|false|none|none|
 |»»»»» userTenantId|string|true|none|none|
 |»»»»» userTenant|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» foreignKey|any|false|none|none|
-|»» foreignKey|any|false|none|none|
 
 #### Enumerated Values
 
@@ -9679,7 +9527,6 @@ NewTenant
         "tenantId": "string",
         "userGroups": []
       },
-      "foreignKey": null,
       "userTenant": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -9747,8 +9594,7 @@ NewTenant
                 "configKey": "string",
                 "configValue": {},
                 "tenantId": "string",
-                "tenant": {},
-                "foreignKey": null
+                "tenant": {}
               }
             ],
             "userTenants": [
@@ -9810,7 +9656,6 @@ NewTenant
                   "roleName": "string",
                   "userTenantId": "string"
                 },
-                "foreignKey": null,
                 "modifiedByUser": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -9861,7 +9706,6 @@ NewTenant
               }
             ]
           },
-          "foreignKey": null,
           "credentials": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -9877,14 +9721,12 @@ NewTenant
             "secretKey": "string",
             "password": "string",
             "userId": "string",
-            "user": {},
-            "foreignKey": null
+            "user": {}
           },
           "userTenants": [
             {}
           ]
         },
-        "foreignKey": null,
         "tenant": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -9916,8 +9758,7 @@ NewTenant
               "configKey": "string",
               "configValue": {},
               "tenantId": "string",
-              "tenant": {},
-              "foreignKey": null
+              "tenant": {}
             }
           ],
           "userTenants": [
@@ -9947,7 +9788,6 @@ NewTenant
               "dob": "2019-08-24T14:15:22Z",
               "defaultTenantId": "string",
               "defaultTenant": {},
-              "foreignKey": null,
               "credentials": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -9963,8 +9803,7 @@ NewTenant
                 "secretKey": "string",
                 "password": "string",
                 "userId": "string",
-                "user": {},
-                "foreignKey": null
+                "user": {}
               },
               "userTenants": [
                 {}
@@ -10024,7 +9863,6 @@ NewTenant
                 "roleName": "string",
                 "userTenantId": "string"
               },
-              "foreignKey": null,
               "modifiedByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -10127,7 +9965,6 @@ NewTenant
             "roleName": "string",
             "userTenantId": "string"
           },
-          "foreignKey": null,
           "modifiedByUser": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -10172,8 +10009,7 @@ NewTenant
             "permission": "string",
             "allowed": true,
             "userTenantId": "string",
-            "userTenant": {},
-            "foreignKey": null
+            "userTenant": {}
           }
         ],
         "userGroups": [
@@ -10192,8 +10028,7 @@ NewTenant
             "expiresOn": "2019-08-24T14:15:22Z",
             "token": "string",
             "userTenantId": "string",
-            "userTenant": {},
-            "foreignKey": null
+            "userTenant": {}
           }
         ]
       }
@@ -10274,8 +10109,7 @@ GroupWithRelations
         "configKey": "string",
         "configValue": {},
         "tenantId": "string",
-        "tenant": {},
-        "foreignKey": null
+        "tenant": {}
       }
     ],
     "userTenants": [
@@ -10316,7 +10150,6 @@ GroupWithRelations
           "dob": "2019-08-24T14:15:22Z",
           "defaultTenantId": "string",
           "defaultTenant": {},
-          "foreignKey": null,
           "credentials": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -10332,14 +10165,12 @@ GroupWithRelations
             "secretKey": "string",
             "password": "string",
             "userId": "string",
-            "user": {},
-            "foreignKey": null
+            "user": {}
           },
           "userTenants": [
             {}
           ]
         },
-        "foreignKey": null,
         "tenant": {},
         "role": {
           "deleted": true,
@@ -10393,7 +10224,6 @@ GroupWithRelations
             "roleName": "string",
             "userTenantId": "string"
           },
-          "foreignKey": null,
           "modifiedByUser": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -10438,8 +10268,7 @@ GroupWithRelations
             "permission": "string",
             "allowed": true,
             "userTenantId": "string",
-            "userTenant": {},
-            "foreignKey": null
+            "userTenant": {}
           }
         ],
         "userGroups": [
@@ -10471,7 +10300,6 @@ GroupWithRelations
                 {}
               ]
             },
-            "foreignKey": null,
             "userTenant": {}
           }
         ],
@@ -10488,8 +10316,7 @@ GroupWithRelations
             "expiresOn": "2019-08-24T14:15:22Z",
             "token": "string",
             "userTenantId": "string",
-            "userTenant": {},
-            "foreignKey": null
+            "userTenant": {}
           }
         ]
       }
@@ -10518,7 +10345,6 @@ GroupWithRelations
         "dob": "2019-08-24T14:15:22Z",
         "defaultTenantId": "string",
         "defaultTenant": {},
-        "foreignKey": null,
         "credentials": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -10534,8 +10360,7 @@ GroupWithRelations
           "secretKey": "string",
           "password": "string",
           "userId": "string",
-          "user": {},
-          "foreignKey": null
+          "user": {}
         },
         "userTenants": [
           {
@@ -10553,7 +10378,6 @@ GroupWithRelations
             "tenantId": "string",
             "roleId": "string",
             "user": {},
-            "foreignKey": null,
             "tenant": {},
             "role": {
               "deleted": true,
@@ -10607,7 +10431,6 @@ GroupWithRelations
                 "roleName": "string",
                 "userTenantId": "string"
               },
-              "foreignKey": null,
               "modifiedByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -10652,8 +10475,7 @@ GroupWithRelations
                 "permission": "string",
                 "allowed": true,
                 "userTenantId": "string",
-                "userTenant": {},
-                "foreignKey": null
+                "userTenant": {}
               }
             ],
             "userGroups": [
@@ -10685,7 +10507,6 @@ GroupWithRelations
                     {}
                   ]
                 },
-                "foreignKey": null,
                 "userTenant": {}
               }
             ],
@@ -10702,8 +10523,7 @@ GroupWithRelations
                 "expiresOn": "2019-08-24T14:15:22Z",
                 "token": "string",
                 "userTenantId": "string",
-                "userTenant": {},
-                "foreignKey": null
+                "userTenant": {}
               }
             ]
           }
@@ -10768,7 +10588,6 @@ GroupWithRelations
               "dob": "2019-08-24T14:15:22Z",
               "defaultTenantId": "string",
               "defaultTenant": {},
-              "foreignKey": null,
               "credentials": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -10784,14 +10603,12 @@ GroupWithRelations
                 "secretKey": "string",
                 "password": "string",
                 "userId": "string",
-                "user": {},
-                "foreignKey": null
+                "user": {}
               },
               "userTenants": [
                 {}
               ]
             },
-            "foreignKey": null,
             "tenant": {},
             "role": {},
             "userLevelPermissions": [
@@ -10807,8 +10624,7 @@ GroupWithRelations
                 "permission": "string",
                 "allowed": true,
                 "userTenantId": "string",
-                "userTenant": {},
-                "foreignKey": null
+                "userTenant": {}
               }
             ],
             "userGroups": [
@@ -10840,7 +10656,6 @@ GroupWithRelations
                     {}
                   ]
                 },
-                "foreignKey": null,
                 "userTenant": {}
               }
             ],
@@ -10857,8 +10672,7 @@ GroupWithRelations
                 "expiresOn": "2019-08-24T14:15:22Z",
                 "token": "string",
                 "userTenantId": "string",
-                "userTenant": {},
-                "foreignKey": null
+                "userTenant": {}
               }
             ]
           }
@@ -10893,7 +10707,6 @@ GroupWithRelations
           "roleName": "string",
           "userTenantId": "string"
         },
-        "foreignKey": null,
         "modifiedByUser": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -10953,7 +10766,6 @@ GroupWithRelations
             "groupId": "string",
             "userTenantId": "string",
             "group": {},
-            "foreignKey": null,
             "userTenant": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -10991,7 +10803,6 @@ GroupWithRelations
                 "dob": "2019-08-24T14:15:22Z",
                 "defaultTenantId": "string",
                 "defaultTenant": {},
-                "foreignKey": null,
                 "credentials": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -11007,14 +10818,12 @@ GroupWithRelations
                   "secretKey": "string",
                   "password": "string",
                   "userId": "string",
-                  "user": {},
-                  "foreignKey": null
+                  "user": {}
                 },
                 "userTenants": [
                   {}
                 ]
               },
-              "foreignKey": null,
               "tenant": {},
               "role": {
                 "deleted": true,
@@ -11068,7 +10877,6 @@ GroupWithRelations
                   "roleName": "string",
                   "userTenantId": "string"
                 },
-                "foreignKey": null,
                 "modifiedByUser": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -11113,8 +10921,7 @@ GroupWithRelations
                   "permission": "string",
                   "allowed": true,
                   "userTenantId": "string",
-                  "userTenant": {},
-                  "foreignKey": null
+                  "userTenant": {}
                 }
               ],
               "userGroups": [
@@ -11133,8 +10940,7 @@ GroupWithRelations
                   "expiresOn": "2019-08-24T14:15:22Z",
                   "token": "string",
                   "userTenantId": "string",
-                  "userTenant": {},
-                  "foreignKey": null
+                  "userTenant": {}
                 }
               ]
             }
@@ -11142,8 +10948,7 @@ GroupWithRelations
         ]
       }
     ]
-  },
-  "foreignKey": null
+  }
 }
 
 ```
@@ -11166,7 +10971,6 @@ TenantConfigWithRelations
 |configValue|object|false|none|none|
 |tenantId|string|true|none|none|
 |tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
-|foreignKey|any|false|none|none|
 
 <h2 id="tocS_UserCredentialsWithRelations">UserCredentialsWithRelations</h2>
 <!-- backwards compatibility -->
@@ -11244,8 +11048,7 @@ TenantConfigWithRelations
           "configKey": "string",
           "configValue": {},
           "tenantId": "string",
-          "tenant": {},
-          "foreignKey": null
+          "tenant": {}
         }
       ],
       "userTenants": [
@@ -11264,7 +11067,6 @@ TenantConfigWithRelations
           "tenantId": "string",
           "roleId": "string",
           "user": {},
-          "foreignKey": null,
           "tenant": {},
           "role": {
             "deleted": true,
@@ -11318,7 +11120,6 @@ TenantConfigWithRelations
               "roleName": "string",
               "userTenantId": "string"
             },
-            "foreignKey": null,
             "modifiedByUser": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -11363,8 +11164,7 @@ TenantConfigWithRelations
               "permission": "string",
               "allowed": true,
               "userTenantId": "string",
-              "userTenant": {},
-              "foreignKey": null
+              "userTenant": {}
             }
           ],
           "userGroups": [
@@ -11396,7 +11196,6 @@ TenantConfigWithRelations
                   {}
                 ]
               },
-              "foreignKey": null,
               "userTenant": {}
             }
           ],
@@ -11413,8 +11212,7 @@ TenantConfigWithRelations
               "expiresOn": "2019-08-24T14:15:22Z",
               "token": "string",
               "userTenantId": "string",
-              "userTenant": {},
-              "foreignKey": null
+              "userTenant": {}
             }
           ]
         }
@@ -11458,7 +11256,6 @@ TenantConfigWithRelations
               "tenantId": "string",
               "roleId": "string",
               "user": {},
-              "foreignKey": null,
               "tenant": {},
               "role": {},
               "userLevelPermissions": [
@@ -11474,8 +11271,7 @@ TenantConfigWithRelations
                   "permission": "string",
                   "allowed": true,
                   "userTenantId": "string",
-                  "userTenant": {},
-                  "foreignKey": null
+                  "userTenant": {}
                 }
               ],
               "userGroups": [
@@ -11505,7 +11301,6 @@ TenantConfigWithRelations
                     "tenantId": "string",
                     "userGroups": []
                   },
-                  "foreignKey": null,
                   "userTenant": {}
                 }
               ],
@@ -11522,8 +11317,7 @@ TenantConfigWithRelations
                   "expiresOn": "2019-08-24T14:15:22Z",
                   "token": "string",
                   "userTenantId": "string",
-                  "userTenant": {},
-                  "foreignKey": null
+                  "userTenant": {}
                 }
               ]
             }
@@ -11558,7 +11352,6 @@ TenantConfigWithRelations
             "roleName": "string",
             "userTenantId": "string"
           },
-          "foreignKey": null,
           "modifiedByUser": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -11618,7 +11411,6 @@ TenantConfigWithRelations
               "groupId": "string",
               "userTenantId": "string",
               "group": {},
-              "foreignKey": null,
               "userTenant": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -11634,7 +11426,6 @@ TenantConfigWithRelations
                 "tenantId": "string",
                 "roleId": "string",
                 "user": {},
-                "foreignKey": null,
                 "tenant": {},
                 "role": {
                   "deleted": true,
@@ -11688,7 +11479,6 @@ TenantConfigWithRelations
                     "roleName": "string",
                     "userTenantId": "string"
                   },
-                  "foreignKey": null,
                   "modifiedByUser": {
                     "deleted": true,
                     "deletedOn": "2019-08-24T14:15:22Z",
@@ -11733,8 +11523,7 @@ TenantConfigWithRelations
                     "permission": "string",
                     "allowed": true,
                     "userTenantId": "string",
-                    "userTenant": {},
-                    "foreignKey": null
+                    "userTenant": {}
                   }
                 ],
                 "userGroups": [
@@ -11753,8 +11542,7 @@ TenantConfigWithRelations
                     "expiresOn": "2019-08-24T14:15:22Z",
                     "token": "string",
                     "userTenantId": "string",
-                    "userTenant": {},
-                    "foreignKey": null
+                    "userTenant": {}
                   }
                 ]
               }
@@ -11763,7 +11551,6 @@ TenantConfigWithRelations
         }
       ]
     },
-    "foreignKey": null,
     "credentials": {
       "deleted": true,
       "deletedOn": "2019-08-24T14:15:22Z",
@@ -11779,8 +11566,7 @@ TenantConfigWithRelations
       "secretKey": "string",
       "password": "string",
       "userId": "string",
-      "user": {},
-      "foreignKey": null
+      "user": {}
     },
     "userTenants": [
       {
@@ -11798,7 +11584,6 @@ TenantConfigWithRelations
         "tenantId": "string",
         "roleId": "string",
         "user": {},
-        "foreignKey": null,
         "tenant": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -11830,8 +11615,7 @@ TenantConfigWithRelations
               "configKey": "string",
               "configValue": {},
               "tenantId": "string",
-              "tenant": {},
-              "foreignKey": null
+              "tenant": {}
             }
           ],
           "userTenants": [
@@ -11893,7 +11677,6 @@ TenantConfigWithRelations
                 "roleName": "string",
                 "userTenantId": "string"
               },
-              "foreignKey": null,
               "modifiedByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -11953,7 +11736,6 @@ TenantConfigWithRelations
                   "groupId": "string",
                   "userTenantId": "string",
                   "group": {},
-                  "foreignKey": null,
                   "userTenant": {}
                 }
               ]
@@ -12012,7 +11794,6 @@ TenantConfigWithRelations
             "roleName": "string",
             "userTenantId": "string"
           },
-          "foreignKey": null,
           "modifiedByUser": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -12057,8 +11838,7 @@ TenantConfigWithRelations
             "permission": "string",
             "allowed": true,
             "userTenantId": "string",
-            "userTenant": {},
-            "foreignKey": null
+            "userTenant": {}
           }
         ],
         "userGroups": [
@@ -12090,7 +11870,6 @@ TenantConfigWithRelations
                 {}
               ]
             },
-            "foreignKey": null,
             "userTenant": {}
           }
         ],
@@ -12107,14 +11886,12 @@ TenantConfigWithRelations
             "expiresOn": "2019-08-24T14:15:22Z",
             "token": "string",
             "userTenantId": "string",
-            "userTenant": {},
-            "foreignKey": null
+            "userTenant": {}
           }
         ]
       }
     ]
-  },
-  "foreignKey": null
+  }
 }
 
 ```
@@ -12140,7 +11917,6 @@ UserCredentialsWithRelations
 |password|string|false|none|none|
 |userId|string|true|none|none|
 |user|[UserWithRelations](#schemauserwithrelations)|false|none|This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true })|
-|foreignKey|any|false|none|none|
 
 <h2 id="tocS_UserWithRelations">UserWithRelations</h2>
 <!-- backwards compatibility -->
@@ -12203,8 +11979,7 @@ UserCredentialsWithRelations
         "configKey": "string",
         "configValue": {},
         "tenantId": "string",
-        "tenant": {},
-        "foreignKey": null
+        "tenant": {}
       }
     ],
     "userTenants": [
@@ -12245,7 +12020,6 @@ UserCredentialsWithRelations
           "dob": "2019-08-24T14:15:22Z",
           "defaultTenantId": "string",
           "defaultTenant": {},
-          "foreignKey": null,
           "credentials": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -12261,14 +12035,12 @@ UserCredentialsWithRelations
             "secretKey": "string",
             "password": "string",
             "userId": "string",
-            "user": {},
-            "foreignKey": null
+            "user": {}
           },
           "userTenants": [
             {}
           ]
         },
-        "foreignKey": null,
         "tenant": {},
         "role": {
           "deleted": true,
@@ -12322,7 +12094,6 @@ UserCredentialsWithRelations
             "roleName": "string",
             "userTenantId": "string"
           },
-          "foreignKey": null,
           "modifiedByUser": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -12367,8 +12138,7 @@ UserCredentialsWithRelations
             "permission": "string",
             "allowed": true,
             "userTenantId": "string",
-            "userTenant": {},
-            "foreignKey": null
+            "userTenant": {}
           }
         ],
         "userGroups": [
@@ -12400,7 +12170,6 @@ UserCredentialsWithRelations
                 {}
               ]
             },
-            "foreignKey": null,
             "userTenant": {}
           }
         ],
@@ -12417,8 +12186,7 @@ UserCredentialsWithRelations
             "expiresOn": "2019-08-24T14:15:22Z",
             "token": "string",
             "userTenantId": "string",
-            "userTenant": {},
-            "foreignKey": null
+            "userTenant": {}
           }
         ]
       }
@@ -12447,7 +12215,6 @@ UserCredentialsWithRelations
         "dob": "2019-08-24T14:15:22Z",
         "defaultTenantId": "string",
         "defaultTenant": {},
-        "foreignKey": null,
         "credentials": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -12463,8 +12230,7 @@ UserCredentialsWithRelations
           "secretKey": "string",
           "password": "string",
           "userId": "string",
-          "user": {},
-          "foreignKey": null
+          "user": {}
         },
         "userTenants": [
           {
@@ -12482,7 +12248,6 @@ UserCredentialsWithRelations
             "tenantId": "string",
             "roleId": "string",
             "user": {},
-            "foreignKey": null,
             "tenant": {},
             "role": {
               "deleted": true,
@@ -12536,7 +12301,6 @@ UserCredentialsWithRelations
                 "roleName": "string",
                 "userTenantId": "string"
               },
-              "foreignKey": null,
               "modifiedByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -12581,8 +12345,7 @@ UserCredentialsWithRelations
                 "permission": "string",
                 "allowed": true,
                 "userTenantId": "string",
-                "userTenant": {},
-                "foreignKey": null
+                "userTenant": {}
               }
             ],
             "userGroups": [
@@ -12614,7 +12377,6 @@ UserCredentialsWithRelations
                     {}
                   ]
                 },
-                "foreignKey": null,
                 "userTenant": {}
               }
             ],
@@ -12631,8 +12393,7 @@ UserCredentialsWithRelations
                 "expiresOn": "2019-08-24T14:15:22Z",
                 "token": "string",
                 "userTenantId": "string",
-                "userTenant": {},
-                "foreignKey": null
+                "userTenant": {}
               }
             ]
           }
@@ -12697,7 +12458,6 @@ UserCredentialsWithRelations
               "dob": "2019-08-24T14:15:22Z",
               "defaultTenantId": "string",
               "defaultTenant": {},
-              "foreignKey": null,
               "credentials": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -12713,14 +12473,12 @@ UserCredentialsWithRelations
                 "secretKey": "string",
                 "password": "string",
                 "userId": "string",
-                "user": {},
-                "foreignKey": null
+                "user": {}
               },
               "userTenants": [
                 {}
               ]
             },
-            "foreignKey": null,
             "tenant": {},
             "role": {},
             "userLevelPermissions": [
@@ -12736,8 +12494,7 @@ UserCredentialsWithRelations
                 "permission": "string",
                 "allowed": true,
                 "userTenantId": "string",
-                "userTenant": {},
-                "foreignKey": null
+                "userTenant": {}
               }
             ],
             "userGroups": [
@@ -12769,7 +12526,6 @@ UserCredentialsWithRelations
                     {}
                   ]
                 },
-                "foreignKey": null,
                 "userTenant": {}
               }
             ],
@@ -12786,8 +12542,7 @@ UserCredentialsWithRelations
                 "expiresOn": "2019-08-24T14:15:22Z",
                 "token": "string",
                 "userTenantId": "string",
-                "userTenant": {},
-                "foreignKey": null
+                "userTenant": {}
               }
             ]
           }
@@ -12822,7 +12577,6 @@ UserCredentialsWithRelations
           "roleName": "string",
           "userTenantId": "string"
         },
-        "foreignKey": null,
         "modifiedByUser": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -12882,7 +12636,6 @@ UserCredentialsWithRelations
             "groupId": "string",
             "userTenantId": "string",
             "group": {},
-            "foreignKey": null,
             "userTenant": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -12920,7 +12673,6 @@ UserCredentialsWithRelations
                 "dob": "2019-08-24T14:15:22Z",
                 "defaultTenantId": "string",
                 "defaultTenant": {},
-                "foreignKey": null,
                 "credentials": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -12936,14 +12688,12 @@ UserCredentialsWithRelations
                   "secretKey": "string",
                   "password": "string",
                   "userId": "string",
-                  "user": {},
-                  "foreignKey": null
+                  "user": {}
                 },
                 "userTenants": [
                   {}
                 ]
               },
-              "foreignKey": null,
               "tenant": {},
               "role": {
                 "deleted": true,
@@ -12997,7 +12747,6 @@ UserCredentialsWithRelations
                   "roleName": "string",
                   "userTenantId": "string"
                 },
-                "foreignKey": null,
                 "modifiedByUser": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -13042,8 +12791,7 @@ UserCredentialsWithRelations
                   "permission": "string",
                   "allowed": true,
                   "userTenantId": "string",
-                  "userTenant": {},
-                  "foreignKey": null
+                  "userTenant": {}
                 }
               ],
               "userGroups": [
@@ -13062,8 +12810,7 @@ UserCredentialsWithRelations
                   "expiresOn": "2019-08-24T14:15:22Z",
                   "token": "string",
                   "userTenantId": "string",
-                  "userTenant": {},
-                  "foreignKey": null
+                  "userTenant": {}
                 }
               ]
             }
@@ -13072,7 +12819,6 @@ UserCredentialsWithRelations
       }
     ]
   },
-  "foreignKey": null,
   "credentials": {
     "deleted": true,
     "deletedOn": "2019-08-24T14:15:22Z",
@@ -13141,8 +12887,7 @@ UserCredentialsWithRelations
             "configKey": "string",
             "configValue": {},
             "tenantId": "string",
-            "tenant": {},
-            "foreignKey": null
+            "tenant": {}
           }
         ],
         "userTenants": [
@@ -13161,7 +12906,6 @@ UserCredentialsWithRelations
             "tenantId": "string",
             "roleId": "string",
             "user": {},
-            "foreignKey": null,
             "tenant": {},
             "role": {
               "deleted": true,
@@ -13215,7 +12959,6 @@ UserCredentialsWithRelations
                 "roleName": "string",
                 "userTenantId": "string"
               },
-              "foreignKey": null,
               "modifiedByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -13260,8 +13003,7 @@ UserCredentialsWithRelations
                 "permission": "string",
                 "allowed": true,
                 "userTenantId": "string",
-                "userTenant": {},
-                "foreignKey": null
+                "userTenant": {}
               }
             ],
             "userGroups": [
@@ -13293,7 +13035,6 @@ UserCredentialsWithRelations
                     {}
                   ]
                 },
-                "foreignKey": null,
                 "userTenant": {}
               }
             ],
@@ -13310,8 +13051,7 @@ UserCredentialsWithRelations
                 "expiresOn": "2019-08-24T14:15:22Z",
                 "token": "string",
                 "userTenantId": "string",
-                "userTenant": {},
-                "foreignKey": null
+                "userTenant": {}
               }
             ]
           }
@@ -13355,7 +13095,6 @@ UserCredentialsWithRelations
                 "tenantId": "string",
                 "roleId": "string",
                 "user": {},
-                "foreignKey": null,
                 "tenant": {},
                 "role": {},
                 "userLevelPermissions": [
@@ -13371,8 +13110,7 @@ UserCredentialsWithRelations
                     "permission": "string",
                     "allowed": true,
                     "userTenantId": "string",
-                    "userTenant": {},
-                    "foreignKey": null
+                    "userTenant": {}
                   }
                 ],
                 "userGroups": [
@@ -13388,7 +13126,6 @@ UserCredentialsWithRelations
                     "groupId": "string",
                     "userTenantId": "string",
                     "group": {},
-                    "foreignKey": null,
                     "userTenant": {}
                   }
                 ],
@@ -13405,8 +13142,7 @@ UserCredentialsWithRelations
                     "expiresOn": "2019-08-24T14:15:22Z",
                     "token": "string",
                     "userTenantId": "string",
-                    "userTenant": {},
-                    "foreignKey": null
+                    "userTenant": {}
                   }
                 ]
               }
@@ -13441,7 +13177,6 @@ UserCredentialsWithRelations
               "roleName": "string",
               "userTenantId": "string"
             },
-            "foreignKey": null,
             "modifiedByUser": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -13501,7 +13236,6 @@ UserCredentialsWithRelations
                 "groupId": "string",
                 "userTenantId": "string",
                 "group": {},
-                "foreignKey": null,
                 "userTenant": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -13517,7 +13251,6 @@ UserCredentialsWithRelations
                   "tenantId": "string",
                   "roleId": "string",
                   "user": {},
-                  "foreignKey": null,
                   "tenant": {},
                   "role": {
                     "deleted": true,
@@ -13536,7 +13269,6 @@ UserCredentialsWithRelations
                     "tenantId": "string",
                     "userTenants": [],
                     "createdByUser": {},
-                    "foreignKey": null,
                     "modifiedByUser": {}
                   },
                   "userLevelPermissions": [
@@ -13554,7 +13286,6 @@ UserCredentialsWithRelations
           }
         ]
       },
-      "foreignKey": null,
       "credentials": {},
       "userTenants": [
         {
@@ -13572,7 +13303,6 @@ UserCredentialsWithRelations
           "tenantId": "string",
           "roleId": "string",
           "user": {},
-          "foreignKey": null,
           "tenant": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -13604,8 +13334,7 @@ UserCredentialsWithRelations
                 "configKey": "string",
                 "configValue": {},
                 "tenantId": "string",
-                "tenant": {},
-                "foreignKey": null
+                "tenant": {}
               }
             ],
             "userTenants": [
@@ -13667,7 +13396,6 @@ UserCredentialsWithRelations
                   "roleName": "string",
                   "userTenantId": "string"
                 },
-                "foreignKey": null,
                 "modifiedByUser": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -13727,7 +13455,6 @@ UserCredentialsWithRelations
                     "groupId": "string",
                     "userTenantId": "string",
                     "group": {},
-                    "foreignKey": null,
                     "userTenant": {}
                   }
                 ]
@@ -13786,7 +13513,6 @@ UserCredentialsWithRelations
               "roleName": "string",
               "userTenantId": "string"
             },
-            "foreignKey": null,
             "modifiedByUser": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -13831,8 +13557,7 @@ UserCredentialsWithRelations
               "permission": "string",
               "allowed": true,
               "userTenantId": "string",
-              "userTenant": {},
-              "foreignKey": null
+              "userTenant": {}
             }
           ],
           "userGroups": [
@@ -13864,7 +13589,6 @@ UserCredentialsWithRelations
                   {}
                 ]
               },
-              "foreignKey": null,
               "userTenant": {}
             }
           ],
@@ -13881,14 +13605,12 @@ UserCredentialsWithRelations
               "expiresOn": "2019-08-24T14:15:22Z",
               "token": "string",
               "userTenantId": "string",
-              "userTenant": {},
-              "foreignKey": null
+              "userTenant": {}
             }
           ]
         }
       ]
-    },
-    "foreignKey": null
+    }
   },
   "userTenants": [
     {
@@ -13958,8 +13680,7 @@ UserCredentialsWithRelations
               "configKey": "string",
               "configValue": {},
               "tenantId": "string",
-              "tenant": {},
-              "foreignKey": null
+              "tenant": {}
             }
           ],
           "userTenants": [
@@ -14021,7 +13742,6 @@ UserCredentialsWithRelations
                 "roleName": "string",
                 "userTenantId": "string"
               },
-              "foreignKey": null,
               "modifiedByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -14081,14 +13801,12 @@ UserCredentialsWithRelations
                   "groupId": "string",
                   "userTenantId": "string",
                   "group": {},
-                  "foreignKey": null,
                   "userTenant": {}
                 }
               ]
             }
           ]
         },
-        "foreignKey": null,
         "credentials": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -14104,12 +13822,10 @@ UserCredentialsWithRelations
           "secretKey": "string",
           "password": "string",
           "userId": "string",
-          "user": {},
-          "foreignKey": null
+          "user": {}
         },
         "userTenants": []
       },
-      "foreignKey": null,
       "tenant": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -14141,8 +13857,7 @@ UserCredentialsWithRelations
             "configKey": "string",
             "configValue": {},
             "tenantId": "string",
-            "tenant": {},
-            "foreignKey": null
+            "tenant": {}
           }
         ],
         "userTenants": [
@@ -14172,7 +13887,6 @@ UserCredentialsWithRelations
             "dob": "2019-08-24T14:15:22Z",
             "defaultTenantId": "string",
             "defaultTenant": {},
-            "foreignKey": null,
             "credentials": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -14188,8 +13902,7 @@ UserCredentialsWithRelations
               "secretKey": "string",
               "password": "string",
               "userId": "string",
-              "user": {},
-              "foreignKey": null
+              "user": {}
             },
             "userTenants": []
           }
@@ -14247,7 +13960,6 @@ UserCredentialsWithRelations
               "roleName": "string",
               "userTenantId": "string"
             },
-            "foreignKey": null,
             "modifiedByUser": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -14307,7 +14019,6 @@ UserCredentialsWithRelations
                 "groupId": "string",
                 "userTenantId": "string",
                 "group": {},
-                "foreignKey": null,
                 "userTenant": {}
               }
             ]
@@ -14366,7 +14077,6 @@ UserCredentialsWithRelations
           "roleName": "string",
           "userTenantId": "string"
         },
-        "foreignKey": null,
         "modifiedByUser": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -14411,8 +14121,7 @@ UserCredentialsWithRelations
           "permission": "string",
           "allowed": true,
           "userTenantId": "string",
-          "userTenant": {},
-          "foreignKey": null
+          "userTenant": {}
         }
       ],
       "userGroups": [
@@ -14444,7 +14153,6 @@ UserCredentialsWithRelations
               {}
             ]
           },
-          "foreignKey": null,
           "userTenant": {}
         }
       ],
@@ -14461,8 +14169,7 @@ UserCredentialsWithRelations
           "expiresOn": "2019-08-24T14:15:22Z",
           "token": "string",
           "userTenantId": "string",
-          "userTenant": {},
-          "foreignKey": null
+          "userTenant": {}
         }
       ]
     }
@@ -14499,7 +14206,6 @@ UserWithRelations
 |dob|string(date-time)|false|none|none|
 |defaultTenantId|string|false|none|none|
 |defaultTenant|[TenantWithRelations](#schematenantwithrelations)|false|none|signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
-|foreignKey|any|false|none|none|
 |credentials|[UserCredentialsWithRelations](#schemausercredentialswithrelations)|false|none|(tsType: UserCredentialsWithRelations, schemaOptions: { includeRelations: true })|
 |userTenants|[[UserTenantWithRelations](#schemausertenantwithrelations)]|false|none|[(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })]|
 
@@ -14690,8 +14396,7 @@ UserViewWithRelations
               "configKey": "string",
               "configValue": {},
               "tenantId": "string",
-              "tenant": {},
-              "foreignKey": null
+              "tenant": {}
             }
           ],
           "userTenants": [
@@ -14751,7 +14456,6 @@ UserViewWithRelations
                 "roleName": "string",
                 "userTenantId": "string"
               },
-              "foreignKey": null,
               "modifiedByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -14811,14 +14515,12 @@ UserViewWithRelations
                   "groupId": "string",
                   "userTenantId": "string",
                   "group": {},
-                  "foreignKey": null,
                   "userTenant": {}
                 }
               ]
             }
           ]
         },
-        "foreignKey": null,
         "credentials": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -14834,14 +14536,12 @@ UserViewWithRelations
           "secretKey": "string",
           "password": "string",
           "userId": "string",
-          "user": {},
-          "foreignKey": null
+          "user": {}
         },
         "userTenants": [
           {}
         ]
       },
-      "foreignKey": null,
       "tenant": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -14873,8 +14573,7 @@ UserViewWithRelations
             "configKey": "string",
             "configValue": {},
             "tenantId": "string",
-            "tenant": {},
-            "foreignKey": null
+            "tenant": {}
           }
         ],
         "userTenants": [
@@ -14904,7 +14603,6 @@ UserViewWithRelations
             "dob": "2019-08-24T14:15:22Z",
             "defaultTenantId": "string",
             "defaultTenant": {},
-            "foreignKey": null,
             "credentials": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -14920,8 +14618,7 @@ UserViewWithRelations
               "secretKey": "string",
               "password": "string",
               "userId": "string",
-              "user": {},
-              "foreignKey": null
+              "user": {}
             },
             "userTenants": [
               {}
@@ -14979,7 +14676,6 @@ UserViewWithRelations
               "roleName": "string",
               "userTenantId": "string"
             },
-            "foreignKey": null,
             "modifiedByUser": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -15039,7 +14735,6 @@ UserViewWithRelations
                 "groupId": "string",
                 "userTenantId": "string",
                 "group": {},
-                "foreignKey": null,
                 "userTenant": {}
               }
             ]
@@ -15096,7 +14791,6 @@ UserViewWithRelations
           "roleName": "string",
           "userTenantId": "string"
         },
-        "foreignKey": null,
         "modifiedByUser": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -15141,8 +14835,7 @@ UserViewWithRelations
           "permission": "string",
           "allowed": true,
           "userTenantId": "string",
-          "userTenant": {},
-          "foreignKey": null
+          "userTenant": {}
         }
       ],
       "userGroups": [
@@ -15174,7 +14867,6 @@ UserViewWithRelations
               {}
             ]
           },
-          "foreignKey": null,
           "userTenant": {}
         }
       ],
@@ -15191,8 +14883,7 @@ UserViewWithRelations
           "expiresOn": "2019-08-24T14:15:22Z",
           "token": "string",
           "userTenantId": "string",
-          "userTenant": {},
-          "foreignKey": null
+          "userTenant": {}
         }
       ]
     }
@@ -15227,7 +14918,6 @@ UserViewWithRelations
     "roleName": "string",
     "userTenantId": "string"
   },
-  "foreignKey": null,
   "modifiedByUser": {
     "deleted": true,
     "deletedOn": "2019-08-24T14:15:22Z",
@@ -15284,7 +14974,6 @@ RoleWithRelations
 |tenantId|string|true|none|none|
 |userTenants|[[UserTenantWithRelations](#schemausertenantwithrelations)]|false|none|[(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })]|
 |createdByUser|[UserViewWithRelations](#schemauserviewwithrelations)|false|none|User details view in DB (tsType: UserViewWithRelations, schemaOptions: { includeRelations: true })|
-|foreignKey|any|false|none|none|
 |modifiedByUser|[UserViewWithRelations](#schemauserviewwithrelations)|false|none|User details view in DB (tsType: UserViewWithRelations, schemaOptions: { includeRelations: true })|
 
 <h2 id="tocS_UserLevelPermissionWithRelations">UserLevelPermissionWithRelations</h2>
@@ -15374,8 +15063,7 @@ RoleWithRelations
             "configKey": "string",
             "configValue": {},
             "tenantId": "string",
-            "tenant": {},
-            "foreignKey": null
+            "tenant": {}
           }
         ],
         "userTenants": [
@@ -15437,7 +15125,6 @@ RoleWithRelations
               "roleName": "string",
               "userTenantId": "string"
             },
-            "foreignKey": null,
             "modifiedByUser": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -15497,14 +15184,12 @@ RoleWithRelations
                 "groupId": "string",
                 "userTenantId": "string",
                 "group": {},
-                "foreignKey": null,
                 "userTenant": {}
               }
             ]
           }
         ]
       },
-      "foreignKey": null,
       "credentials": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -15520,14 +15205,12 @@ RoleWithRelations
         "secretKey": "string",
         "password": "string",
         "userId": "string",
-        "user": {},
-        "foreignKey": null
+        "user": {}
       },
       "userTenants": [
         {}
       ]
     },
-    "foreignKey": null,
     "tenant": {
       "deleted": true,
       "deletedOn": "2019-08-24T14:15:22Z",
@@ -15559,8 +15242,7 @@ RoleWithRelations
           "configKey": "string",
           "configValue": {},
           "tenantId": "string",
-          "tenant": {},
-          "foreignKey": null
+          "tenant": {}
         }
       ],
       "userTenants": [
@@ -15590,7 +15272,6 @@ RoleWithRelations
           "dob": "2019-08-24T14:15:22Z",
           "defaultTenantId": "string",
           "defaultTenant": {},
-          "foreignKey": null,
           "credentials": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -15606,8 +15287,7 @@ RoleWithRelations
             "secretKey": "string",
             "password": "string",
             "userId": "string",
-            "user": {},
-            "foreignKey": null
+            "user": {}
           },
           "userTenants": [
             {}
@@ -15667,7 +15347,6 @@ RoleWithRelations
             "roleName": "string",
             "userTenantId": "string"
           },
-          "foreignKey": null,
           "modifiedByUser": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -15727,7 +15406,6 @@ RoleWithRelations
               "groupId": "string",
               "userTenantId": "string",
               "group": {},
-              "foreignKey": null,
               "userTenant": {}
             }
           ]
@@ -15786,7 +15464,6 @@ RoleWithRelations
         "roleName": "string",
         "userTenantId": "string"
       },
-      "foreignKey": null,
       "modifiedByUser": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -15831,8 +15508,7 @@ RoleWithRelations
         "permission": "string",
         "allowed": true,
         "userTenantId": "string",
-        "userTenant": {},
-        "foreignKey": null
+        "userTenant": {}
       }
     ],
     "userGroups": [
@@ -15864,7 +15540,6 @@ RoleWithRelations
             {}
           ]
         },
-        "foreignKey": null,
         "userTenant": {}
       }
     ],
@@ -15881,12 +15556,10 @@ RoleWithRelations
         "expiresOn": "2019-08-24T14:15:22Z",
         "token": "string",
         "userTenantId": "string",
-        "userTenant": {},
-        "foreignKey": null
+        "userTenant": {}
       }
     ]
-  },
-  "foreignKey": null
+  }
 }
 
 ```
@@ -15909,7 +15582,6 @@ UserLevelPermissionWithRelations
 |allowed|boolean|true|none|none|
 |userTenantId|string|true|none|none|
 |userTenant|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
-|foreignKey|any|false|none|none|
 
 <h2 id="tocS_UserGroupWithRelations">UserGroupWithRelations</h2>
 <!-- backwards compatibility -->
@@ -15956,7 +15628,6 @@ UserLevelPermissionWithRelations
         "groupId": "string",
         "userTenantId": "string",
         "group": {},
-        "foreignKey": null,
         "userTenant": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -16024,8 +15695,7 @@ UserLevelPermissionWithRelations
                   "configKey": "string",
                   "configValue": {},
                   "tenantId": "string",
-                  "tenant": {},
-                  "foreignKey": null
+                  "tenant": {}
                 }
               ],
               "userTenants": [
@@ -16087,7 +15757,6 @@ UserLevelPermissionWithRelations
                     "roleName": "string",
                     "userTenantId": "string"
                   },
-                  "foreignKey": null,
                   "modifiedByUser": {
                     "deleted": true,
                     "deletedOn": "2019-08-24T14:15:22Z",
@@ -16124,7 +15793,6 @@ UserLevelPermissionWithRelations
                 {}
               ]
             },
-            "foreignKey": null,
             "credentials": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -16140,14 +15808,12 @@ UserLevelPermissionWithRelations
               "secretKey": "string",
               "password": "string",
               "userId": "string",
-              "user": {},
-              "foreignKey": null
+              "user": {}
             },
             "userTenants": [
               {}
             ]
           },
-          "foreignKey": null,
           "tenant": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -16179,8 +15845,7 @@ UserLevelPermissionWithRelations
                 "configKey": "string",
                 "configValue": {},
                 "tenantId": "string",
-                "tenant": {},
-                "foreignKey": null
+                "tenant": {}
               }
             ],
             "userTenants": [
@@ -16210,7 +15875,6 @@ UserLevelPermissionWithRelations
                 "dob": "2019-08-24T14:15:22Z",
                 "defaultTenantId": "string",
                 "defaultTenant": {},
-                "foreignKey": null,
                 "credentials": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -16226,8 +15890,7 @@ UserLevelPermissionWithRelations
                   "secretKey": "string",
                   "password": "string",
                   "userId": "string",
-                  "user": {},
-                  "foreignKey": null
+                  "user": {}
                 },
                 "userTenants": [
                   {}
@@ -16287,7 +15950,6 @@ UserLevelPermissionWithRelations
                   "roleName": "string",
                   "userTenantId": "string"
                 },
-                "foreignKey": null,
                 "modifiedByUser": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -16376,7 +16038,6 @@ UserLevelPermissionWithRelations
               "roleName": "string",
               "userTenantId": "string"
             },
-            "foreignKey": null,
             "modifiedByUser": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -16421,8 +16082,7 @@ UserLevelPermissionWithRelations
               "permission": "string",
               "allowed": true,
               "userTenantId": "string",
-              "userTenant": {},
-              "foreignKey": null
+              "userTenant": {}
             }
           ],
           "userGroups": [
@@ -16441,15 +16101,13 @@ UserLevelPermissionWithRelations
               "expiresOn": "2019-08-24T14:15:22Z",
               "token": "string",
               "userTenantId": "string",
-              "userTenant": {},
-              "foreignKey": null
+              "userTenant": {}
             }
           ]
         }
       }
     ]
   },
-  "foreignKey": null,
   "userTenant": {
     "deleted": true,
     "deletedOn": "2019-08-24T14:15:22Z",
@@ -16517,8 +16175,7 @@ UserLevelPermissionWithRelations
             "configKey": "string",
             "configValue": {},
             "tenantId": "string",
-            "tenant": {},
-            "foreignKey": null
+            "tenant": {}
           }
         ],
         "userTenants": [
@@ -16580,7 +16237,6 @@ UserLevelPermissionWithRelations
               "roleName": "string",
               "userTenantId": "string"
             },
-            "foreignKey": null,
             "modifiedByUser": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -16640,14 +16296,12 @@ UserLevelPermissionWithRelations
                 "groupId": "string",
                 "userTenantId": "string",
                 "group": {},
-                "foreignKey": null,
                 "userTenant": {}
               }
             ]
           }
         ]
       },
-      "foreignKey": null,
       "credentials": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -16663,14 +16317,12 @@ UserLevelPermissionWithRelations
         "secretKey": "string",
         "password": "string",
         "userId": "string",
-        "user": {},
-        "foreignKey": null
+        "user": {}
       },
       "userTenants": [
         {}
       ]
     },
-    "foreignKey": null,
     "tenant": {
       "deleted": true,
       "deletedOn": "2019-08-24T14:15:22Z",
@@ -16702,8 +16354,7 @@ UserLevelPermissionWithRelations
           "configKey": "string",
           "configValue": {},
           "tenantId": "string",
-          "tenant": {},
-          "foreignKey": null
+          "tenant": {}
         }
       ],
       "userTenants": [
@@ -16733,7 +16384,6 @@ UserLevelPermissionWithRelations
           "dob": "2019-08-24T14:15:22Z",
           "defaultTenantId": "string",
           "defaultTenant": {},
-          "foreignKey": null,
           "credentials": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -16749,8 +16399,7 @@ UserLevelPermissionWithRelations
             "secretKey": "string",
             "password": "string",
             "userId": "string",
-            "user": {},
-            "foreignKey": null
+            "user": {}
           },
           "userTenants": [
             {}
@@ -16810,7 +16459,6 @@ UserLevelPermissionWithRelations
             "roleName": "string",
             "userTenantId": "string"
           },
-          "foreignKey": null,
           "modifiedByUser": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -16870,7 +16518,6 @@ UserLevelPermissionWithRelations
               "groupId": "string",
               "userTenantId": "string",
               "group": {},
-              "foreignKey": null,
               "userTenant": {}
             }
           ]
@@ -16929,7 +16576,6 @@ UserLevelPermissionWithRelations
         "roleName": "string",
         "userTenantId": "string"
       },
-      "foreignKey": null,
       "modifiedByUser": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -16974,8 +16620,7 @@ UserLevelPermissionWithRelations
         "permission": "string",
         "allowed": true,
         "userTenantId": "string",
-        "userTenant": {},
-        "foreignKey": null
+        "userTenant": {}
       }
     ],
     "userGroups": [
@@ -17007,7 +16652,6 @@ UserLevelPermissionWithRelations
             {}
           ]
         },
-        "foreignKey": null,
         "userTenant": {}
       }
     ],
@@ -17024,8 +16668,7 @@ UserLevelPermissionWithRelations
         "expiresOn": "2019-08-24T14:15:22Z",
         "token": "string",
         "userTenantId": "string",
-        "userTenant": {},
-        "foreignKey": null
+        "userTenant": {}
       }
     ]
   }
@@ -17050,7 +16693,6 @@ UserGroupWithRelations
 |groupId|string|true|none|none|
 |userTenantId|string|true|none|none|
 |group|[GroupWithRelations](#schemagroupwithrelations)|false|none|(tsType: GroupWithRelations, schemaOptions: { includeRelations: true })|
-|foreignKey|any|false|none|none|
 |userTenant|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
 
 <h2 id="tocS_UserInvitationWithRelations">UserInvitationWithRelations</h2>
@@ -17140,8 +16782,7 @@ UserGroupWithRelations
             "configKey": "string",
             "configValue": {},
             "tenantId": "string",
-            "tenant": {},
-            "foreignKey": null
+            "tenant": {}
           }
         ],
         "userTenants": [
@@ -17203,7 +16844,6 @@ UserGroupWithRelations
               "roleName": "string",
               "userTenantId": "string"
             },
-            "foreignKey": null,
             "modifiedByUser": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -17263,14 +16903,12 @@ UserGroupWithRelations
                 "groupId": "string",
                 "userTenantId": "string",
                 "group": {},
-                "foreignKey": null,
                 "userTenant": {}
               }
             ]
           }
         ]
       },
-      "foreignKey": null,
       "credentials": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -17286,14 +16924,12 @@ UserGroupWithRelations
         "secretKey": "string",
         "password": "string",
         "userId": "string",
-        "user": {},
-        "foreignKey": null
+        "user": {}
       },
       "userTenants": [
         {}
       ]
     },
-    "foreignKey": null,
     "tenant": {
       "deleted": true,
       "deletedOn": "2019-08-24T14:15:22Z",
@@ -17325,8 +16961,7 @@ UserGroupWithRelations
           "configKey": "string",
           "configValue": {},
           "tenantId": "string",
-          "tenant": {},
-          "foreignKey": null
+          "tenant": {}
         }
       ],
       "userTenants": [
@@ -17356,7 +16991,6 @@ UserGroupWithRelations
           "dob": "2019-08-24T14:15:22Z",
           "defaultTenantId": "string",
           "defaultTenant": {},
-          "foreignKey": null,
           "credentials": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -17372,8 +17006,7 @@ UserGroupWithRelations
             "secretKey": "string",
             "password": "string",
             "userId": "string",
-            "user": {},
-            "foreignKey": null
+            "user": {}
           },
           "userTenants": [
             {}
@@ -17433,7 +17066,6 @@ UserGroupWithRelations
             "roleName": "string",
             "userTenantId": "string"
           },
-          "foreignKey": null,
           "modifiedByUser": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -17493,7 +17125,6 @@ UserGroupWithRelations
               "groupId": "string",
               "userTenantId": "string",
               "group": {},
-              "foreignKey": null,
               "userTenant": {}
             }
           ]
@@ -17552,7 +17183,6 @@ UserGroupWithRelations
         "roleName": "string",
         "userTenantId": "string"
       },
-      "foreignKey": null,
       "modifiedByUser": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -17597,8 +17227,7 @@ UserGroupWithRelations
         "permission": "string",
         "allowed": true,
         "userTenantId": "string",
-        "userTenant": {},
-        "foreignKey": null
+        "userTenant": {}
       }
     ],
     "userGroups": [
@@ -17630,7 +17259,6 @@ UserGroupWithRelations
             {}
           ]
         },
-        "foreignKey": null,
         "userTenant": {}
       }
     ],
@@ -17647,12 +17275,10 @@ UserGroupWithRelations
         "expiresOn": "2019-08-24T14:15:22Z",
         "token": "string",
         "userTenantId": "string",
-        "userTenant": {},
-        "foreignKey": null
+        "userTenant": {}
       }
     ]
-  },
-  "foreignKey": null
+  }
 }
 
 ```
@@ -17675,7 +17301,6 @@ UserInvitationWithRelations
 |token|string|false|none|none|
 |userTenantId|string|true|none|none|
 |userTenant|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
-|foreignKey|any|false|none|none|
 
 <h2 id="tocS_UserTenantWithRelations">UserTenantWithRelations</h2>
 <!-- backwards compatibility -->
@@ -17752,8 +17377,7 @@ UserInvitationWithRelations
           "configKey": "string",
           "configValue": {},
           "tenantId": "string",
-          "tenant": {},
-          "foreignKey": null
+          "tenant": {}
         }
       ],
       "userTenants": [
@@ -17772,7 +17396,6 @@ UserInvitationWithRelations
           "tenantId": "string",
           "roleId": "string",
           "user": {},
-          "foreignKey": null,
           "tenant": {},
           "role": {
             "deleted": true,
@@ -17826,7 +17449,6 @@ UserInvitationWithRelations
               "roleName": "string",
               "userTenantId": "string"
             },
-            "foreignKey": null,
             "modifiedByUser": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -17871,8 +17493,7 @@ UserInvitationWithRelations
               "permission": "string",
               "allowed": true,
               "userTenantId": "string",
-              "userTenant": {},
-              "foreignKey": null
+              "userTenant": {}
             }
           ],
           "userGroups": [
@@ -17904,7 +17525,6 @@ UserInvitationWithRelations
                   {}
                 ]
               },
-              "foreignKey": null,
               "userTenant": {}
             }
           ],
@@ -17921,8 +17541,7 @@ UserInvitationWithRelations
               "expiresOn": "2019-08-24T14:15:22Z",
               "token": "string",
               "userTenantId": "string",
-              "userTenant": {},
-              "foreignKey": null
+              "userTenant": {}
             }
           ]
         }
@@ -17966,7 +17585,6 @@ UserInvitationWithRelations
               "tenantId": "string",
               "roleId": "string",
               "user": {},
-              "foreignKey": null,
               "tenant": {},
               "role": {},
               "userLevelPermissions": [
@@ -17982,8 +17600,7 @@ UserInvitationWithRelations
                   "permission": "string",
                   "allowed": true,
                   "userTenantId": "string",
-                  "userTenant": {},
-                  "foreignKey": null
+                  "userTenant": {}
                 }
               ],
               "userGroups": [
@@ -18013,7 +17630,6 @@ UserInvitationWithRelations
                     "tenantId": "string",
                     "userGroups": []
                   },
-                  "foreignKey": null,
                   "userTenant": {}
                 }
               ],
@@ -18030,8 +17646,7 @@ UserInvitationWithRelations
                   "expiresOn": "2019-08-24T14:15:22Z",
                   "token": "string",
                   "userTenantId": "string",
-                  "userTenant": {},
-                  "foreignKey": null
+                  "userTenant": {}
                 }
               ]
             }
@@ -18066,7 +17681,6 @@ UserInvitationWithRelations
             "roleName": "string",
             "userTenantId": "string"
           },
-          "foreignKey": null,
           "modifiedByUser": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -18126,7 +17740,6 @@ UserInvitationWithRelations
               "groupId": "string",
               "userTenantId": "string",
               "group": {},
-              "foreignKey": null,
               "userTenant": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -18142,7 +17755,6 @@ UserInvitationWithRelations
                 "tenantId": "string",
                 "roleId": "string",
                 "user": {},
-                "foreignKey": null,
                 "tenant": {},
                 "role": {
                   "deleted": true,
@@ -18196,7 +17808,6 @@ UserInvitationWithRelations
                     "roleName": "string",
                     "userTenantId": "string"
                   },
-                  "foreignKey": null,
                   "modifiedByUser": {
                     "deleted": true,
                     "deletedOn": "2019-08-24T14:15:22Z",
@@ -18241,8 +17852,7 @@ UserInvitationWithRelations
                     "permission": "string",
                     "allowed": true,
                     "userTenantId": "string",
-                    "userTenant": {},
-                    "foreignKey": null
+                    "userTenant": {}
                   }
                 ],
                 "userGroups": [
@@ -18261,8 +17871,7 @@ UserInvitationWithRelations
                     "expiresOn": "2019-08-24T14:15:22Z",
                     "token": "string",
                     "userTenantId": "string",
-                    "userTenant": {},
-                    "foreignKey": null
+                    "userTenant": {}
                   }
                 ]
               }
@@ -18271,7 +17880,6 @@ UserInvitationWithRelations
         }
       ]
     },
-    "foreignKey": null,
     "credentials": {
       "deleted": true,
       "deletedOn": "2019-08-24T14:15:22Z",
@@ -18287,8 +17895,7 @@ UserInvitationWithRelations
       "secretKey": "string",
       "password": "string",
       "userId": "string",
-      "user": {},
-      "foreignKey": null
+      "user": {}
     },
     "userTenants": [
       {
@@ -18306,7 +17913,6 @@ UserInvitationWithRelations
         "tenantId": "string",
         "roleId": "string",
         "user": {},
-        "foreignKey": null,
         "tenant": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -18338,8 +17944,7 @@ UserInvitationWithRelations
               "configKey": "string",
               "configValue": {},
               "tenantId": "string",
-              "tenant": {},
-              "foreignKey": null
+              "tenant": {}
             }
           ],
           "userTenants": [
@@ -18401,7 +18006,6 @@ UserInvitationWithRelations
                 "roleName": "string",
                 "userTenantId": "string"
               },
-              "foreignKey": null,
               "modifiedByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -18461,7 +18065,6 @@ UserInvitationWithRelations
                   "groupId": "string",
                   "userTenantId": "string",
                   "group": {},
-                  "foreignKey": null,
                   "userTenant": {}
                 }
               ]
@@ -18520,7 +18123,6 @@ UserInvitationWithRelations
             "roleName": "string",
             "userTenantId": "string"
           },
-          "foreignKey": null,
           "modifiedByUser": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -18565,8 +18167,7 @@ UserInvitationWithRelations
             "permission": "string",
             "allowed": true,
             "userTenantId": "string",
-            "userTenant": {},
-            "foreignKey": null
+            "userTenant": {}
           }
         ],
         "userGroups": [
@@ -18598,7 +18199,6 @@ UserInvitationWithRelations
                 {}
               ]
             },
-            "foreignKey": null,
             "userTenant": {}
           }
         ],
@@ -18615,14 +18215,12 @@ UserInvitationWithRelations
             "expiresOn": "2019-08-24T14:15:22Z",
             "token": "string",
             "userTenantId": "string",
-            "userTenant": {},
-            "foreignKey": null
+            "userTenant": {}
           }
         ]
       }
     ]
   },
-  "foreignKey": null,
   "tenant": {
     "deleted": true,
     "deletedOn": "2019-08-24T14:15:22Z",
@@ -18654,8 +18252,7 @@ UserInvitationWithRelations
         "configKey": "string",
         "configValue": {},
         "tenantId": "string",
-        "tenant": {},
-        "foreignKey": null
+        "tenant": {}
       }
     ],
     "userTenants": [
@@ -18696,7 +18293,6 @@ UserInvitationWithRelations
           "dob": "2019-08-24T14:15:22Z",
           "defaultTenantId": "string",
           "defaultTenant": {},
-          "foreignKey": null,
           "credentials": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -18712,14 +18308,12 @@ UserInvitationWithRelations
             "secretKey": "string",
             "password": "string",
             "userId": "string",
-            "user": {},
-            "foreignKey": null
+            "user": {}
           },
           "userTenants": [
             {}
           ]
         },
-        "foreignKey": null,
         "tenant": {},
         "role": {
           "deleted": true,
@@ -18773,7 +18367,6 @@ UserInvitationWithRelations
             "roleName": "string",
             "userTenantId": "string"
           },
-          "foreignKey": null,
           "modifiedByUser": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -18818,8 +18411,7 @@ UserInvitationWithRelations
             "permission": "string",
             "allowed": true,
             "userTenantId": "string",
-            "userTenant": {},
-            "foreignKey": null
+            "userTenant": {}
           }
         ],
         "userGroups": [
@@ -18851,7 +18443,6 @@ UserInvitationWithRelations
                 {}
               ]
             },
-            "foreignKey": null,
             "userTenant": {}
           }
         ],
@@ -18868,8 +18459,7 @@ UserInvitationWithRelations
             "expiresOn": "2019-08-24T14:15:22Z",
             "token": "string",
             "userTenantId": "string",
-            "userTenant": {},
-            "foreignKey": null
+            "userTenant": {}
           }
         ]
       }
@@ -18898,7 +18488,6 @@ UserInvitationWithRelations
         "dob": "2019-08-24T14:15:22Z",
         "defaultTenantId": "string",
         "defaultTenant": {},
-        "foreignKey": null,
         "credentials": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -18914,8 +18503,7 @@ UserInvitationWithRelations
           "secretKey": "string",
           "password": "string",
           "userId": "string",
-          "user": {},
-          "foreignKey": null
+          "user": {}
         },
         "userTenants": [
           {
@@ -18933,7 +18521,6 @@ UserInvitationWithRelations
             "tenantId": "string",
             "roleId": "string",
             "user": {},
-            "foreignKey": null,
             "tenant": {},
             "role": {
               "deleted": true,
@@ -18987,7 +18574,6 @@ UserInvitationWithRelations
                 "roleName": "string",
                 "userTenantId": "string"
               },
-              "foreignKey": null,
               "modifiedByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -19032,8 +18618,7 @@ UserInvitationWithRelations
                 "permission": "string",
                 "allowed": true,
                 "userTenantId": "string",
-                "userTenant": {},
-                "foreignKey": null
+                "userTenant": {}
               }
             ],
             "userGroups": [
@@ -19065,7 +18650,6 @@ UserInvitationWithRelations
                     {}
                   ]
                 },
-                "foreignKey": null,
                 "userTenant": {}
               }
             ],
@@ -19082,8 +18666,7 @@ UserInvitationWithRelations
                 "expiresOn": "2019-08-24T14:15:22Z",
                 "token": "string",
                 "userTenantId": "string",
-                "userTenant": {},
-                "foreignKey": null
+                "userTenant": {}
               }
             ]
           }
@@ -19148,7 +18731,6 @@ UserInvitationWithRelations
               "dob": "2019-08-24T14:15:22Z",
               "defaultTenantId": "string",
               "defaultTenant": {},
-              "foreignKey": null,
               "credentials": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -19164,14 +18746,12 @@ UserInvitationWithRelations
                 "secretKey": "string",
                 "password": "string",
                 "userId": "string",
-                "user": {},
-                "foreignKey": null
+                "user": {}
               },
               "userTenants": [
                 {}
               ]
             },
-            "foreignKey": null,
             "tenant": {},
             "role": {},
             "userLevelPermissions": [
@@ -19187,8 +18767,7 @@ UserInvitationWithRelations
                 "permission": "string",
                 "allowed": true,
                 "userTenantId": "string",
-                "userTenant": {},
-                "foreignKey": null
+                "userTenant": {}
               }
             ],
             "userGroups": [
@@ -19220,7 +18799,6 @@ UserInvitationWithRelations
                     {}
                   ]
                 },
-                "foreignKey": null,
                 "userTenant": {}
               }
             ],
@@ -19237,8 +18815,7 @@ UserInvitationWithRelations
                 "expiresOn": "2019-08-24T14:15:22Z",
                 "token": "string",
                 "userTenantId": "string",
-                "userTenant": {},
-                "foreignKey": null
+                "userTenant": {}
               }
             ]
           }
@@ -19273,7 +18850,6 @@ UserInvitationWithRelations
           "roleName": "string",
           "userTenantId": "string"
         },
-        "foreignKey": null,
         "modifiedByUser": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -19333,7 +18909,6 @@ UserInvitationWithRelations
             "groupId": "string",
             "userTenantId": "string",
             "group": {},
-            "foreignKey": null,
             "userTenant": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -19371,7 +18946,6 @@ UserInvitationWithRelations
                 "dob": "2019-08-24T14:15:22Z",
                 "defaultTenantId": "string",
                 "defaultTenant": {},
-                "foreignKey": null,
                 "credentials": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -19387,14 +18961,12 @@ UserInvitationWithRelations
                   "secretKey": "string",
                   "password": "string",
                   "userId": "string",
-                  "user": {},
-                  "foreignKey": null
+                  "user": {}
                 },
                 "userTenants": [
                   {}
                 ]
               },
-              "foreignKey": null,
               "tenant": {},
               "role": {
                 "deleted": true,
@@ -19448,7 +19020,6 @@ UserInvitationWithRelations
                   "roleName": "string",
                   "userTenantId": "string"
                 },
-                "foreignKey": null,
                 "modifiedByUser": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -19493,8 +19064,7 @@ UserInvitationWithRelations
                   "permission": "string",
                   "allowed": true,
                   "userTenantId": "string",
-                  "userTenant": {},
-                  "foreignKey": null
+                  "userTenant": {}
                 }
               ],
               "userGroups": [
@@ -19513,8 +19083,7 @@ UserInvitationWithRelations
                   "expiresOn": "2019-08-24T14:15:22Z",
                   "token": "string",
                   "userTenantId": "string",
-                  "userTenant": {},
-                  "foreignKey": null
+                  "userTenant": {}
                 }
               ]
             }
@@ -19610,8 +19179,7 @@ UserInvitationWithRelations
                 "configKey": "string",
                 "configValue": {},
                 "tenantId": "string",
-                "tenant": {},
-                "foreignKey": null
+                "tenant": {}
               }
             ],
             "userTenants": [
@@ -19650,14 +19218,12 @@ UserInvitationWithRelations
                     "groupId": "string",
                     "userTenantId": "string",
                     "group": {},
-                    "foreignKey": null,
                     "userTenant": {}
                   }
                 ]
               }
             ]
           },
-          "foreignKey": null,
           "credentials": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -19673,14 +19239,12 @@ UserInvitationWithRelations
             "secretKey": "string",
             "password": "string",
             "userId": "string",
-            "user": {},
-            "foreignKey": null
+            "user": {}
           },
           "userTenants": [
             {}
           ]
         },
-        "foreignKey": null,
         "tenant": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -19712,8 +19276,7 @@ UserInvitationWithRelations
               "configKey": "string",
               "configValue": {},
               "tenantId": "string",
-              "tenant": {},
-              "foreignKey": null
+              "tenant": {}
             }
           ],
           "userTenants": [
@@ -19743,7 +19306,6 @@ UserInvitationWithRelations
               "dob": "2019-08-24T14:15:22Z",
               "defaultTenantId": "string",
               "defaultTenant": {},
-              "foreignKey": null,
               "credentials": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -19759,8 +19321,7 @@ UserInvitationWithRelations
                 "secretKey": "string",
                 "password": "string",
                 "userId": "string",
-                "user": {},
-                "foreignKey": null
+                "user": {}
               },
               "userTenants": [
                 {}
@@ -19797,7 +19358,6 @@ UserInvitationWithRelations
                   "groupId": "string",
                   "userTenantId": "string",
                   "group": {},
-                  "foreignKey": null,
                   "userTenant": {}
                 }
               ]
@@ -19818,8 +19378,7 @@ UserInvitationWithRelations
             "permission": "string",
             "allowed": true,
             "userTenantId": "string",
-            "userTenant": {},
-            "foreignKey": null
+            "userTenant": {}
           }
         ],
         "userGroups": [
@@ -19851,7 +19410,6 @@ UserInvitationWithRelations
                 {}
               ]
             },
-            "foreignKey": null,
             "userTenant": {}
           }
         ],
@@ -19868,8 +19426,7 @@ UserInvitationWithRelations
             "expiresOn": "2019-08-24T14:15:22Z",
             "token": "string",
             "userTenantId": "string",
-            "userTenant": {},
-            "foreignKey": null
+            "userTenant": {}
           }
         ]
       }
@@ -19904,7 +19461,6 @@ UserInvitationWithRelations
       "roleName": "string",
       "userTenantId": "string"
     },
-    "foreignKey": null,
     "modifiedByUser": {
       "deleted": true,
       "deletedOn": "2019-08-24T14:15:22Z",
@@ -20016,8 +19572,7 @@ UserInvitationWithRelations
                 "configKey": "string",
                 "configValue": {},
                 "tenantId": "string",
-                "tenant": {},
-                "foreignKey": null
+                "tenant": {}
               }
             ],
             "userTenants": [
@@ -20079,7 +19634,6 @@ UserInvitationWithRelations
                   "roleName": "string",
                   "userTenantId": "string"
                 },
-                "foreignKey": null,
                 "modifiedByUser": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -20139,14 +19693,12 @@ UserInvitationWithRelations
                     "groupId": "string",
                     "userTenantId": "string",
                     "group": {},
-                    "foreignKey": null,
                     "userTenant": {}
                   }
                 ]
               }
             ]
           },
-          "foreignKey": null,
           "credentials": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -20162,14 +19714,12 @@ UserInvitationWithRelations
             "secretKey": "string",
             "password": "string",
             "userId": "string",
-            "user": {},
-            "foreignKey": null
+            "user": {}
           },
           "userTenants": [
             {}
           ]
         },
-        "foreignKey": null,
         "tenant": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -20201,8 +19751,7 @@ UserInvitationWithRelations
               "configKey": "string",
               "configValue": {},
               "tenantId": "string",
-              "tenant": {},
-              "foreignKey": null
+              "tenant": {}
             }
           ],
           "userTenants": [
@@ -20232,7 +19781,6 @@ UserInvitationWithRelations
               "dob": "2019-08-24T14:15:22Z",
               "defaultTenantId": "string",
               "defaultTenant": {},
-              "foreignKey": null,
               "credentials": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -20248,8 +19796,7 @@ UserInvitationWithRelations
                 "secretKey": "string",
                 "password": "string",
                 "userId": "string",
-                "user": {},
-                "foreignKey": null
+                "user": {}
               },
               "userTenants": [
                 {}
@@ -20309,7 +19856,6 @@ UserInvitationWithRelations
                 "roleName": "string",
                 "userTenantId": "string"
               },
-              "foreignKey": null,
               "modifiedByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -20369,7 +19915,6 @@ UserInvitationWithRelations
                   "groupId": "string",
                   "userTenantId": "string",
                   "group": {},
-                  "foreignKey": null,
                   "userTenant": {}
                 }
               ]
@@ -20428,7 +19973,6 @@ UserInvitationWithRelations
             "roleName": "string",
             "userTenantId": "string"
           },
-          "foreignKey": null,
           "modifiedByUser": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -20490,7 +20034,6 @@ UserInvitationWithRelations
                 {}
               ]
             },
-            "foreignKey": null,
             "userTenant": {}
           }
         ],
@@ -20507,12 +20050,10 @@ UserInvitationWithRelations
             "expiresOn": "2019-08-24T14:15:22Z",
             "token": "string",
             "userTenantId": "string",
-            "userTenant": {},
-            "foreignKey": null
+            "userTenant": {}
           }
         ]
-      },
-      "foreignKey": null
+      }
     }
   ],
   "userGroups": [
@@ -20544,7 +20085,6 @@ UserInvitationWithRelations
           {}
         ]
       },
-      "foreignKey": null,
       "userTenant": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -20612,8 +20152,7 @@ UserInvitationWithRelations
                 "configKey": "string",
                 "configValue": {},
                 "tenantId": "string",
-                "tenant": {},
-                "foreignKey": null
+                "tenant": {}
               }
             ],
             "userTenants": [
@@ -20675,7 +20214,6 @@ UserInvitationWithRelations
                   "roleName": "string",
                   "userTenantId": "string"
                 },
-                "foreignKey": null,
                 "modifiedByUser": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -20728,7 +20266,6 @@ UserInvitationWithRelations
               }
             ]
           },
-          "foreignKey": null,
           "credentials": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -20744,14 +20281,12 @@ UserInvitationWithRelations
             "secretKey": "string",
             "password": "string",
             "userId": "string",
-            "user": {},
-            "foreignKey": null
+            "user": {}
           },
           "userTenants": [
             {}
           ]
         },
-        "foreignKey": null,
         "tenant": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -20783,8 +20318,7 @@ UserInvitationWithRelations
               "configKey": "string",
               "configValue": {},
               "tenantId": "string",
-              "tenant": {},
-              "foreignKey": null
+              "tenant": {}
             }
           ],
           "userTenants": [
@@ -20814,7 +20348,6 @@ UserInvitationWithRelations
               "dob": "2019-08-24T14:15:22Z",
               "defaultTenantId": "string",
               "defaultTenant": {},
-              "foreignKey": null,
               "credentials": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -20830,8 +20363,7 @@ UserInvitationWithRelations
                 "secretKey": "string",
                 "password": "string",
                 "userId": "string",
-                "user": {},
-                "foreignKey": null
+                "user": {}
               },
               "userTenants": [
                 {}
@@ -20891,7 +20423,6 @@ UserInvitationWithRelations
                 "roleName": "string",
                 "userTenantId": "string"
               },
-              "foreignKey": null,
               "modifiedByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -20996,7 +20527,6 @@ UserInvitationWithRelations
             "roleName": "string",
             "userTenantId": "string"
           },
-          "foreignKey": null,
           "modifiedByUser": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -21041,8 +20571,7 @@ UserInvitationWithRelations
             "permission": "string",
             "allowed": true,
             "userTenantId": "string",
-            "userTenant": {},
-            "foreignKey": null
+            "userTenant": {}
           }
         ],
         "userGroups": [],
@@ -21059,8 +20588,7 @@ UserInvitationWithRelations
             "expiresOn": "2019-08-24T14:15:22Z",
             "token": "string",
             "userTenantId": "string",
-            "userTenant": {},
-            "foreignKey": null
+            "userTenant": {}
           }
         ]
       }
@@ -21146,8 +20674,7 @@ UserInvitationWithRelations
                 "configKey": "string",
                 "configValue": {},
                 "tenantId": "string",
-                "tenant": {},
-                "foreignKey": null
+                "tenant": {}
               }
             ],
             "userTenants": [
@@ -21209,7 +20736,6 @@ UserInvitationWithRelations
                   "roleName": "string",
                   "userTenantId": "string"
                 },
-                "foreignKey": null,
                 "modifiedByUser": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -21269,14 +20795,12 @@ UserInvitationWithRelations
                     "groupId": "string",
                     "userTenantId": "string",
                     "group": {},
-                    "foreignKey": null,
                     "userTenant": {}
                   }
                 ]
               }
             ]
           },
-          "foreignKey": null,
           "credentials": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -21292,14 +20816,12 @@ UserInvitationWithRelations
             "secretKey": "string",
             "password": "string",
             "userId": "string",
-            "user": {},
-            "foreignKey": null
+            "user": {}
           },
           "userTenants": [
             {}
           ]
         },
-        "foreignKey": null,
         "tenant": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -21331,8 +20853,7 @@ UserInvitationWithRelations
               "configKey": "string",
               "configValue": {},
               "tenantId": "string",
-              "tenant": {},
-              "foreignKey": null
+              "tenant": {}
             }
           ],
           "userTenants": [
@@ -21362,7 +20883,6 @@ UserInvitationWithRelations
               "dob": "2019-08-24T14:15:22Z",
               "defaultTenantId": "string",
               "defaultTenant": {},
-              "foreignKey": null,
               "credentials": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -21378,8 +20898,7 @@ UserInvitationWithRelations
                 "secretKey": "string",
                 "password": "string",
                 "userId": "string",
-                "user": {},
-                "foreignKey": null
+                "user": {}
               },
               "userTenants": [
                 {}
@@ -21439,7 +20958,6 @@ UserInvitationWithRelations
                 "roleName": "string",
                 "userTenantId": "string"
               },
-              "foreignKey": null,
               "modifiedByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -21499,7 +21017,6 @@ UserInvitationWithRelations
                   "groupId": "string",
                   "userTenantId": "string",
                   "group": {},
-                  "foreignKey": null,
                   "userTenant": {}
                 }
               ]
@@ -21558,7 +21075,6 @@ UserInvitationWithRelations
             "roleName": "string",
             "userTenantId": "string"
           },
-          "foreignKey": null,
           "modifiedByUser": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -21603,8 +21119,7 @@ UserInvitationWithRelations
             "permission": "string",
             "allowed": true,
             "userTenantId": "string",
-            "userTenant": {},
-            "foreignKey": null
+            "userTenant": {}
           }
         ],
         "userGroups": [
@@ -21636,13 +21151,11 @@ UserInvitationWithRelations
                 {}
               ]
             },
-            "foreignKey": null,
             "userTenant": {}
           }
         ],
         "userInvitations": []
-      },
-      "foreignKey": null
+      }
     }
   ]
 }
@@ -21669,7 +21182,6 @@ UserTenantWithRelations
 |tenantId|string|true|none|none|
 |roleId|string|true|none|none|
 |user|[UserWithRelations](#schemauserwithrelations)|false|none|This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true })|
-|foreignKey|any|false|none|none|
 |tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
 |role|[RoleWithRelations](#schemarolewithrelations)|false|none|(tsType: RoleWithRelations, schemaOptions: { includeRelations: true })|
 |userLevelPermissions|[[UserLevelPermissionWithRelations](#schemauserlevelpermissionwithrelations)]|false|none|[(tsType: UserLevelPermissionWithRelations, schemaOptions: { includeRelations: true })]|
@@ -21772,7 +21284,6 @@ UserTenantWithRelations
               "dob": "2019-08-24T14:15:22Z",
               "defaultTenantId": "string",
               "defaultTenant": {},
-              "foreignKey": null,
               "credentials": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -21788,14 +21299,12 @@ UserTenantWithRelations
                 "secretKey": "string",
                 "password": "string",
                 "userId": "string",
-                "user": {},
-                "foreignKey": null
+                "user": {}
               },
               "userTenants": [
                 {}
               ]
             },
-            "foreignKey": null,
             "tenant": {},
             "role": {
               "deleted": true,
@@ -21849,7 +21358,6 @@ UserTenantWithRelations
                 "roleName": "string",
                 "userTenantId": "string"
               },
-              "foreignKey": null,
               "modifiedByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -21894,8 +21402,7 @@ UserTenantWithRelations
                 "permission": "string",
                 "allowed": true,
                 "userTenantId": "string",
-                "userTenant": {},
-                "foreignKey": null
+                "userTenant": {}
               }
             ],
             "userGroups": [
@@ -21927,7 +21434,6 @@ UserTenantWithRelations
                     {}
                   ]
                 },
-                "foreignKey": null,
                 "userTenant": {}
               }
             ],
@@ -21944,8 +21450,7 @@ UserTenantWithRelations
                 "expiresOn": "2019-08-24T14:15:22Z",
                 "token": "string",
                 "userTenantId": "string",
-                "userTenant": {},
-                "foreignKey": null
+                "userTenant": {}
               }
             ]
           }
@@ -21974,7 +21479,6 @@ UserTenantWithRelations
             "dob": "2019-08-24T14:15:22Z",
             "defaultTenantId": "string",
             "defaultTenant": {},
-            "foreignKey": null,
             "credentials": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -21990,8 +21494,7 @@ UserTenantWithRelations
               "secretKey": "string",
               "password": "string",
               "userId": "string",
-              "user": {},
-              "foreignKey": null
+              "user": {}
             },
             "userTenants": [
               {
@@ -22009,7 +21512,6 @@ UserTenantWithRelations
                 "tenantId": "string",
                 "roleId": "string",
                 "user": {},
-                "foreignKey": null,
                 "tenant": {},
                 "role": {
                   "deleted": true,
@@ -22063,7 +21565,6 @@ UserTenantWithRelations
                     "roleName": "string",
                     "userTenantId": "string"
                   },
-                  "foreignKey": null,
                   "modifiedByUser": {
                     "deleted": true,
                     "deletedOn": "2019-08-24T14:15:22Z",
@@ -22108,8 +21609,7 @@ UserTenantWithRelations
                     "permission": "string",
                     "allowed": true,
                     "userTenantId": "string",
-                    "userTenant": {},
-                    "foreignKey": null
+                    "userTenant": {}
                   }
                 ],
                 "userGroups": [
@@ -22125,7 +21625,6 @@ UserTenantWithRelations
                     "groupId": "string",
                     "userTenantId": "string",
                     "group": {},
-                    "foreignKey": null,
                     "userTenant": {}
                   }
                 ],
@@ -22142,8 +21641,7 @@ UserTenantWithRelations
                     "expiresOn": "2019-08-24T14:15:22Z",
                     "token": "string",
                     "userTenantId": "string",
-                    "userTenant": {},
-                    "foreignKey": null
+                    "userTenant": {}
                   }
                 ]
               }
@@ -22208,7 +21706,6 @@ UserTenantWithRelations
                   "dob": "2019-08-24T14:15:22Z",
                   "defaultTenantId": "string",
                   "defaultTenant": {},
-                  "foreignKey": null,
                   "credentials": {
                     "deleted": true,
                     "deletedOn": "2019-08-24T14:15:22Z",
@@ -22224,14 +21721,12 @@ UserTenantWithRelations
                     "secretKey": "string",
                     "password": "string",
                     "userId": "string",
-                    "user": {},
-                    "foreignKey": null
+                    "user": {}
                   },
                   "userTenants": [
                     {}
                   ]
                 },
-                "foreignKey": null,
                 "tenant": {},
                 "role": {},
                 "userLevelPermissions": [
@@ -22247,8 +21742,7 @@ UserTenantWithRelations
                     "permission": "string",
                     "allowed": true,
                     "userTenantId": "string",
-                    "userTenant": {},
-                    "foreignKey": null
+                    "userTenant": {}
                   }
                 ],
                 "userGroups": [
@@ -22264,7 +21758,6 @@ UserTenantWithRelations
                     "groupId": "string",
                     "userTenantId": "string",
                     "group": {},
-                    "foreignKey": null,
                     "userTenant": {}
                   }
                 ],
@@ -22281,8 +21774,7 @@ UserTenantWithRelations
                     "expiresOn": "2019-08-24T14:15:22Z",
                     "token": "string",
                     "userTenantId": "string",
-                    "userTenant": {},
-                    "foreignKey": null
+                    "userTenant": {}
                   }
                 ]
               }
@@ -22317,7 +21809,6 @@ UserTenantWithRelations
               "roleName": "string",
               "userTenantId": "string"
             },
-            "foreignKey": null,
             "modifiedByUser": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -22377,7 +21868,6 @@ UserTenantWithRelations
                 "groupId": "string",
                 "userTenantId": "string",
                 "group": {},
-                "foreignKey": null,
                 "userTenant": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -22415,11 +21905,9 @@ UserTenantWithRelations
                     "dob": "2019-08-24T14:15:22Z",
                     "defaultTenantId": "string",
                     "defaultTenant": {},
-                    "foreignKey": null,
                     "credentials": {},
                     "userTenants": []
                   },
-                  "foreignKey": null,
                   "tenant": {},
                   "role": {
                     "deleted": true,
@@ -22438,7 +21926,6 @@ UserTenantWithRelations
                     "tenantId": "string",
                     "userTenants": [],
                     "createdByUser": {},
-                    "foreignKey": null,
                     "modifiedByUser": {}
                   },
                   "userLevelPermissions": [
@@ -22455,8 +21942,7 @@ UserTenantWithRelations
             ]
           }
         ]
-      },
-      "foreignKey": null
+      }
     }
   ],
   "userTenants": [
@@ -22527,8 +22013,7 @@ UserTenantWithRelations
               "configKey": "string",
               "configValue": {},
               "tenantId": "string",
-              "tenant": {},
-              "foreignKey": null
+              "tenant": {}
             }
           ],
           "userTenants": [],
@@ -22588,7 +22073,6 @@ UserTenantWithRelations
                 "roleName": "string",
                 "userTenantId": "string"
               },
-              "foreignKey": null,
               "modifiedByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -22648,14 +22132,12 @@ UserTenantWithRelations
                   "groupId": "string",
                   "userTenantId": "string",
                   "group": {},
-                  "foreignKey": null,
                   "userTenant": {}
                 }
               ]
             }
           ]
         },
-        "foreignKey": null,
         "credentials": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -22671,14 +22153,12 @@ UserTenantWithRelations
           "secretKey": "string",
           "password": "string",
           "userId": "string",
-          "user": {},
-          "foreignKey": null
+          "user": {}
         },
         "userTenants": [
           {}
         ]
       },
-      "foreignKey": null,
       "tenant": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -22710,8 +22190,7 @@ UserTenantWithRelations
             "configKey": "string",
             "configValue": {},
             "tenantId": "string",
-            "tenant": {},
-            "foreignKey": null
+            "tenant": {}
           }
         ],
         "userTenants": [],
@@ -22739,7 +22218,6 @@ UserTenantWithRelations
             "dob": "2019-08-24T14:15:22Z",
             "defaultTenantId": "string",
             "defaultTenant": {},
-            "foreignKey": null,
             "credentials": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -22755,8 +22233,7 @@ UserTenantWithRelations
               "secretKey": "string",
               "password": "string",
               "userId": "string",
-              "user": {},
-              "foreignKey": null
+              "user": {}
             },
             "userTenants": [
               {}
@@ -22816,7 +22293,6 @@ UserTenantWithRelations
               "roleName": "string",
               "userTenantId": "string"
             },
-            "foreignKey": null,
             "modifiedByUser": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -22876,7 +22352,6 @@ UserTenantWithRelations
                 "groupId": "string",
                 "userTenantId": "string",
                 "group": {},
-                "foreignKey": null,
                 "userTenant": {}
               }
             ]
@@ -22935,7 +22410,6 @@ UserTenantWithRelations
           "roleName": "string",
           "userTenantId": "string"
         },
-        "foreignKey": null,
         "modifiedByUser": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -22980,8 +22454,7 @@ UserTenantWithRelations
           "permission": "string",
           "allowed": true,
           "userTenantId": "string",
-          "userTenant": {},
-          "foreignKey": null
+          "userTenant": {}
         }
       ],
       "userGroups": [
@@ -23013,7 +22486,6 @@ UserTenantWithRelations
               {}
             ]
           },
-          "foreignKey": null,
           "userTenant": {}
         }
       ],
@@ -23030,8 +22502,7 @@ UserTenantWithRelations
           "expiresOn": "2019-08-24T14:15:22Z",
           "token": "string",
           "userTenantId": "string",
-          "userTenant": {},
-          "foreignKey": null
+          "userTenant": {}
         }
       ]
     }
@@ -23090,8 +22561,7 @@ UserTenantWithRelations
             "configKey": "string",
             "configValue": {},
             "tenantId": "string",
-            "tenant": {},
-            "foreignKey": null
+            "tenant": {}
           }
         ],
         "userTenants": [
@@ -23110,7 +22580,6 @@ UserTenantWithRelations
             "tenantId": "string",
             "roleId": "string",
             "user": {},
-            "foreignKey": null,
             "tenant": {},
             "role": {
               "deleted": true,
@@ -23164,7 +22633,6 @@ UserTenantWithRelations
                 "roleName": "string",
                 "userTenantId": "string"
               },
-              "foreignKey": null,
               "modifiedByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -23209,8 +22677,7 @@ UserTenantWithRelations
                 "permission": "string",
                 "allowed": true,
                 "userTenantId": "string",
-                "userTenant": {},
-                "foreignKey": null
+                "userTenant": {}
               }
             ],
             "userGroups": [
@@ -23242,7 +22709,6 @@ UserTenantWithRelations
                     {}
                   ]
                 },
-                "foreignKey": null,
                 "userTenant": {}
               }
             ],
@@ -23259,8 +22725,7 @@ UserTenantWithRelations
                 "expiresOn": "2019-08-24T14:15:22Z",
                 "token": "string",
                 "userTenantId": "string",
-                "userTenant": {},
-                "foreignKey": null
+                "userTenant": {}
               }
             ]
           }
@@ -23302,7 +22767,6 @@ UserTenantWithRelations
                 "tenantId": "string",
                 "roleId": "string",
                 "user": {},
-                "foreignKey": null,
                 "tenant": {},
                 "role": {},
                 "userLevelPermissions": [
@@ -23318,8 +22782,7 @@ UserTenantWithRelations
                     "permission": "string",
                     "allowed": true,
                     "userTenantId": "string",
-                    "userTenant": {},
-                    "foreignKey": null
+                    "userTenant": {}
                   }
                 ],
                 "userGroups": [
@@ -23335,7 +22798,6 @@ UserTenantWithRelations
                     "groupId": "string",
                     "userTenantId": "string",
                     "group": {},
-                    "foreignKey": null,
                     "userTenant": {}
                   }
                 ],
@@ -23352,8 +22814,7 @@ UserTenantWithRelations
                     "expiresOn": "2019-08-24T14:15:22Z",
                     "token": "string",
                     "userTenantId": "string",
-                    "userTenant": {},
-                    "foreignKey": null
+                    "userTenant": {}
                   }
                 ]
               }
@@ -23388,7 +22849,6 @@ UserTenantWithRelations
               "roleName": "string",
               "userTenantId": "string"
             },
-            "foreignKey": null,
             "modifiedByUser": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -23448,7 +22908,6 @@ UserTenantWithRelations
                 "groupId": "string",
                 "userTenantId": "string",
                 "group": {},
-                "foreignKey": null,
                 "userTenant": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -23464,7 +22923,6 @@ UserTenantWithRelations
                   "tenantId": "string",
                   "roleId": "string",
                   "user": {},
-                  "foreignKey": null,
                   "tenant": {},
                   "role": {
                     "deleted": true,
@@ -23483,7 +22941,6 @@ UserTenantWithRelations
                     "tenantId": "string",
                     "userTenants": [],
                     "createdByUser": {},
-                    "foreignKey": null,
                     "modifiedByUser": {}
                   },
                   "userLevelPermissions": [
@@ -23501,7 +22958,6 @@ UserTenantWithRelations
           }
         ]
       },
-      "foreignKey": null,
       "credentials": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -23517,8 +22973,7 @@ UserTenantWithRelations
         "secretKey": "string",
         "password": "string",
         "userId": "string",
-        "user": {},
-        "foreignKey": null
+        "user": {}
       },
       "userTenants": [
         {
@@ -23536,7 +22991,6 @@ UserTenantWithRelations
           "tenantId": "string",
           "roleId": "string",
           "user": {},
-          "foreignKey": null,
           "tenant": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -23568,8 +23022,7 @@ UserTenantWithRelations
                 "configKey": "string",
                 "configValue": {},
                 "tenantId": "string",
-                "tenant": {},
-                "foreignKey": null
+                "tenant": {}
               }
             ],
             "userTenants": [
@@ -23629,7 +23082,6 @@ UserTenantWithRelations
                   "roleName": "string",
                   "userTenantId": "string"
                 },
-                "foreignKey": null,
                 "modifiedByUser": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -23689,7 +23141,6 @@ UserTenantWithRelations
                     "groupId": "string",
                     "userTenantId": "string",
                     "group": {},
-                    "foreignKey": null,
                     "userTenant": {}
                   }
                 ]
@@ -23748,7 +23199,6 @@ UserTenantWithRelations
               "roleName": "string",
               "userTenantId": "string"
             },
-            "foreignKey": null,
             "modifiedByUser": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -23793,8 +23243,7 @@ UserTenantWithRelations
               "permission": "string",
               "allowed": true,
               "userTenantId": "string",
-              "userTenant": {},
-              "foreignKey": null
+              "userTenant": {}
             }
           ],
           "userGroups": [
@@ -23826,7 +23275,6 @@ UserTenantWithRelations
                   {}
                 ]
               },
-              "foreignKey": null,
               "userTenant": {}
             }
           ],
@@ -23843,8 +23291,7 @@ UserTenantWithRelations
               "expiresOn": "2019-08-24T14:15:22Z",
               "token": "string",
               "userTenantId": "string",
-              "userTenant": {},
-              "foreignKey": null
+              "userTenant": {}
             }
           ]
         }
@@ -23939,8 +23386,7 @@ UserTenantWithRelations
                   "configKey": "string",
                   "configValue": {},
                   "tenantId": "string",
-                  "tenant": {},
-                  "foreignKey": null
+                  "tenant": {}
                 }
               ],
               "userTenants": [
@@ -23970,7 +23416,6 @@ UserTenantWithRelations
                 }
               ]
             },
-            "foreignKey": null,
             "credentials": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -23986,14 +23431,12 @@ UserTenantWithRelations
               "secretKey": "string",
               "password": "string",
               "userId": "string",
-              "user": {},
-              "foreignKey": null
+              "user": {}
             },
             "userTenants": [
               {}
             ]
           },
-          "foreignKey": null,
           "tenant": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -24025,8 +23468,7 @@ UserTenantWithRelations
                 "configKey": "string",
                 "configValue": {},
                 "tenantId": "string",
-                "tenant": {},
-                "foreignKey": null
+                "tenant": {}
               }
             ],
             "userTenants": [
@@ -24056,7 +23498,6 @@ UserTenantWithRelations
                 "dob": "2019-08-24T14:15:22Z",
                 "defaultTenantId": "string",
                 "defaultTenant": {},
-                "foreignKey": null,
                 "credentials": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -24072,8 +23513,7 @@ UserTenantWithRelations
                   "secretKey": "string",
                   "password": "string",
                   "userId": "string",
-                  "user": {},
-                  "foreignKey": null
+                  "user": {}
                 },
                 "userTenants": [
                   {}
@@ -24108,7 +23548,6 @@ UserTenantWithRelations
                     "groupId": "string",
                     "userTenantId": "string",
                     "group": {},
-                    "foreignKey": null,
                     "userTenant": {}
                   }
                 ]
@@ -24129,8 +23568,7 @@ UserTenantWithRelations
               "permission": "string",
               "allowed": true,
               "userTenantId": "string",
-              "userTenant": {},
-              "foreignKey": null
+              "userTenant": {}
             }
           ],
           "userGroups": [
@@ -24162,7 +23600,6 @@ UserTenantWithRelations
                   {}
                 ]
               },
-              "foreignKey": null,
               "userTenant": {}
             }
           ],
@@ -24179,8 +23616,7 @@ UserTenantWithRelations
               "expiresOn": "2019-08-24T14:15:22Z",
               "token": "string",
               "userTenantId": "string",
-              "userTenant": {},
-              "foreignKey": null
+              "userTenant": {}
             }
           ]
         }
@@ -24215,7 +23651,6 @@ UserTenantWithRelations
         "roleName": "string",
         "userTenantId": "string"
       },
-      "foreignKey": null,
       "modifiedByUser": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -24275,7 +23710,6 @@ UserTenantWithRelations
           "groupId": "string",
           "userTenantId": "string",
           "group": {},
-          "foreignKey": null,
           "userTenant": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -24343,8 +23777,7 @@ UserTenantWithRelations
                     "configKey": "string",
                     "configValue": {},
                     "tenantId": "string",
-                    "tenant": {},
-                    "foreignKey": null
+                    "tenant": {}
                   }
                 ],
                 "userTenants": [
@@ -24371,13 +23804,11 @@ UserTenantWithRelations
                     "tenantId": "string",
                     "userTenants": [],
                     "createdByUser": {},
-                    "foreignKey": null,
                     "modifiedByUser": {}
                   }
                 ],
                 "groups": []
               },
-              "foreignKey": null,
               "credentials": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -24393,14 +23824,12 @@ UserTenantWithRelations
                 "secretKey": "string",
                 "password": "string",
                 "userId": "string",
-                "user": {},
-                "foreignKey": null
+                "user": {}
               },
               "userTenants": [
                 {}
               ]
             },
-            "foreignKey": null,
             "tenant": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -24432,8 +23861,7 @@ UserTenantWithRelations
                   "configKey": "string",
                   "configValue": {},
                   "tenantId": "string",
-                  "tenant": {},
-                  "foreignKey": null
+                  "tenant": {}
                 }
               ],
               "userTenants": [
@@ -24463,7 +23891,6 @@ UserTenantWithRelations
                   "dob": "2019-08-24T14:15:22Z",
                   "defaultTenantId": "string",
                   "defaultTenant": {},
-                  "foreignKey": null,
                   "credentials": {
                     "deleted": true,
                     "deletedOn": "2019-08-24T14:15:22Z",
@@ -24479,8 +23906,7 @@ UserTenantWithRelations
                     "secretKey": "string",
                     "password": "string",
                     "userId": "string",
-                    "user": {},
-                    "foreignKey": null
+                    "user": {}
                   },
                   "userTenants": [
                     {}
@@ -24540,7 +23966,6 @@ UserTenantWithRelations
                     "roleName": "string",
                     "userTenantId": "string"
                   },
-                  "foreignKey": null,
                   "modifiedByUser": {
                     "deleted": true,
                     "deletedOn": "2019-08-24T14:15:22Z",
@@ -24627,7 +24052,6 @@ UserTenantWithRelations
                 "roleName": "string",
                 "userTenantId": "string"
               },
-              "foreignKey": null,
               "modifiedByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -24672,8 +24096,7 @@ UserTenantWithRelations
                 "permission": "string",
                 "allowed": true,
                 "userTenantId": "string",
-                "userTenant": {},
-                "foreignKey": null
+                "userTenant": {}
               }
             ],
             "userGroups": [
@@ -24692,8 +24115,7 @@ UserTenantWithRelations
                 "expiresOn": "2019-08-24T14:15:22Z",
                 "token": "string",
                 "userTenantId": "string",
-                "userTenant": {},
-                "foreignKey": null
+                "userTenant": {}
               }
             ]
           }
@@ -25537,8 +24959,7 @@ NewUserTenantPrefs
             "configKey": "string",
             "configValue": {},
             "tenantId": "string",
-            "tenant": {},
-            "foreignKey": null
+            "tenant": {}
           }
         ],
         "userTenants": [
@@ -25600,7 +25021,6 @@ NewUserTenantPrefs
               "roleName": "string",
               "userTenantId": "string"
             },
-            "foreignKey": null,
             "modifiedByUser": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -25660,14 +25080,12 @@ NewUserTenantPrefs
                 "groupId": "string",
                 "userTenantId": "string",
                 "group": {},
-                "foreignKey": null,
                 "userTenant": {}
               }
             ]
           }
         ]
       },
-      "foreignKey": null,
       "credentials": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -25683,14 +25101,12 @@ NewUserTenantPrefs
         "secretKey": "string",
         "password": "string",
         "userId": "string",
-        "user": {},
-        "foreignKey": null
+        "user": {}
       },
       "userTenants": [
         {}
       ]
     },
-    "foreignKey": null,
     "tenant": {
       "deleted": true,
       "deletedOn": "2019-08-24T14:15:22Z",
@@ -25722,8 +25138,7 @@ NewUserTenantPrefs
           "configKey": "string",
           "configValue": {},
           "tenantId": "string",
-          "tenant": {},
-          "foreignKey": null
+          "tenant": {}
         }
       ],
       "userTenants": [
@@ -25753,7 +25168,6 @@ NewUserTenantPrefs
           "dob": "2019-08-24T14:15:22Z",
           "defaultTenantId": "string",
           "defaultTenant": {},
-          "foreignKey": null,
           "credentials": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -25769,8 +25183,7 @@ NewUserTenantPrefs
             "secretKey": "string",
             "password": "string",
             "userId": "string",
-            "user": {},
-            "foreignKey": null
+            "user": {}
           },
           "userTenants": [
             {}
@@ -25830,7 +25243,6 @@ NewUserTenantPrefs
             "roleName": "string",
             "userTenantId": "string"
           },
-          "foreignKey": null,
           "modifiedByUser": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -25890,7 +25302,6 @@ NewUserTenantPrefs
               "groupId": "string",
               "userTenantId": "string",
               "group": {},
-              "foreignKey": null,
               "userTenant": {}
             }
           ]
@@ -25949,7 +25360,6 @@ NewUserTenantPrefs
         "roleName": "string",
         "userTenantId": "string"
       },
-      "foreignKey": null,
       "modifiedByUser": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -25994,8 +25404,7 @@ NewUserTenantPrefs
         "permission": "string",
         "allowed": true,
         "userTenantId": "string",
-        "userTenant": {},
-        "foreignKey": null
+        "userTenant": {}
       }
     ],
     "userGroups": [
@@ -26027,7 +25436,6 @@ NewUserTenantPrefs
             {}
           ]
         },
-        "foreignKey": null,
         "userTenant": {}
       }
     ],
@@ -26044,12 +25452,10 @@ NewUserTenantPrefs
         "expiresOn": "2019-08-24T14:15:22Z",
         "token": "string",
         "userTenantId": "string",
-        "userTenant": {},
-        "foreignKey": null
+        "userTenant": {}
       }
     ]
-  },
-  "foreignKey": null
+  }
 }
 
 ```
@@ -26072,7 +25478,6 @@ UserTenantPrefsWithRelations
 |configValue|object|true|none|none|
 |userTenantId|string|false|none|none|
 |userTenant|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
-|foreignKey|any|false|none|none|
 
 <h2 id="tocS_UserLevelPermission">UserLevelPermission</h2>
 <!-- backwards compatibility -->
