@@ -37,8 +37,8 @@
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
     "dev": "nodemon src/index.ts",
     "rebuild": "npm run clean && npm run build",
-    "db-migrate": "./node_modules/db-migrate/bin/db-migrate up --config './database.json'",
-    "db-migrate:down": "./node_modules/db-migrate/bin/db-migrate down --config './database.json'"
+    "db-migrate": "db-migrate up --config './database.json'",
+    "db-migrate:down": "db-migrate down --config './database.json'"
   },
   "nodemonConfig": {
     "verbose": true,

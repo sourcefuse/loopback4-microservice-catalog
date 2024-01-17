@@ -1,12 +1,9 @@
 import {inject} from '@loopback/core';
-import {AnyObject} from '@loopback/repository';
 import {
   Request,
   ResponseObject,
   RestBindings,
   get,
-  post,
-  requestBody,
   response,
 } from '@loopback/rest';
 import {STATUS_CODE} from '@sourceloop/core';
@@ -56,16 +53,5 @@ export class PingController {
       url: this.req.url,
       headers: {...this.req.headers},
     };
-  }
-
-  // Map to `GET /ping`
-  @authorize({permissions: ['*']})
-  @post('/webhook')
-  getHook(
-    @requestBody()
-    messageEvent: AnyObject,
-  ) {
-    // Reply with a greeting, the current time, the url, and request headers
-    console.log(messageEvent); // NOSONAR
   }
 }

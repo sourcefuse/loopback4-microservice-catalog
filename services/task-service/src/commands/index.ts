@@ -1,1 +1,2 @@
-export * from './task-processor.command';
+export * from './create-task';
+export * from './end-task';
