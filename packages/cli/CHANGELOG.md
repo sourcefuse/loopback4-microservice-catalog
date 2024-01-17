@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>7.1.1 (2024-01-17)</small>
+
+* fix(cli): github action failing in microservice scaffold - backstage (#1909) ([fc20b44](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/fc20b44)), closes [#1909](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1909)
+
+
+
+
+
 ## 7.1.0 (2024-01-12)
 
 * feat(cli): add sequelize flag in cli (#1904) ([33cf422](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/33cf422)), closes [#1904](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1904) [#1815](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1815) [#1815](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1815) [#1815](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1815)

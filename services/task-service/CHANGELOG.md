@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.5.0 (2024-01-17)
+
+* feat(task-service): complete reimplementation of task service (#1839) ([e79c28a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e79c28a)), closes [#1839](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1839) [#1785](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1785) [#1785](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1785) [#1785](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1785) [#1785](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1785) [#1785](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1785)
+
+
+
+
+
 ## <small>0.4.1 (2024-01-09)</small>
 
 **Note:** Version bump only for package @sourceloop/task-service
