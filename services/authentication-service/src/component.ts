@@ -101,6 +101,7 @@ import {LocalSignupProvider} from './providers/local-signup.provider';
 import {MfaProvider} from './providers/mfa.provider';
 import {PasswordDecryptionProvider} from './providers/password-decryption.provider';
 
+import {AzureAuthenticationProvider} from './providers/azure-authentication.provider';
 import {DeafultAuthenticationProvider} from './providers/default-authentication.provider';
 import {GoogleAuthenticationProvider} from './providers/google-authentication.provider';
 import {KeycloakAuthenticationProvider} from './providers/keycloak-authentication.provider';
@@ -310,6 +311,8 @@ export class AuthenticationServiceComponent implements Component {
       GoogleAuthenticationProvider;
     this.providers[UserValidationServiceBindings.KEYCLOAK_AUTHENTICATION.key] =
       KeycloakAuthenticationProvider;
+    this.providers[UserValidationServiceBindings.AZURE_AD_AUTHENTICATION.key] =
+      AzureAuthenticationProvider;
     this.providers[UserValidationServiceBindings.DEFAULT_AUTHENTICATION.key] =
       DeafultAuthenticationProvider;
     this.application.bind(AuthenticationBindings.USER_MODEL.key).to(AuthUser);
