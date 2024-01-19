@@ -43,12 +43,12 @@
     "version": {
       "conventionalCommits": true,
       "message": "chore: publish release",
-      "allowBranch": "master"
+      "allowBranch": "cli-v4"
     },
     "publish": {
       "conventionalCommits": true,
       "message": "chore: publish release",
-      "allowBranch": "master",
+      "allowBranch": "cli-v4",
       "noPrivate": true,
       "graphType": "all"
     },
