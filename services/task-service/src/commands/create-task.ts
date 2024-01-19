@@ -79,8 +79,9 @@ export class CreateTaskCommand implements ICommand {
     });
     const workflowKeyMap = new Map<string, Task[] | undefined>();
     createdTasks.forEach(task => {
-      const workflowKey = workflowKeys.find(key => key.taskKey === task.key)
-        ?.workflowKey;
+      const workflowKey = workflowKeys.find(
+        key => key.taskKey === task.key,
+      )?.workflowKey;
       if (workflowKey) {
         const mappedTasks = workflowKeyMap.get(workflowKey);
         if (mappedTasks) {
