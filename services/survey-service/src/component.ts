@@ -3,9 +3,9 @@ import {
   Component,
   ControllerClass,
   CoreBindings,
+  inject,
   ProviderMap,
   ServiceOrProviderClass,
-  inject,
 } from '@loopback/core';
 import {Class, Model, Repository} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
@@ -18,11 +18,7 @@ import {
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
-import {AuthenticationComponent, Strategies} from 'loopback4-authentication';
-import {
-  BearerStrategyFactoryProvider,
-  BearerTokenVerifyProvider,
-} from 'loopback4-authentication/passport-bearer';
+import {AuthenticationComponent} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
   AuthorizationComponent,
@@ -76,10 +72,10 @@ import {
   SectionRepository as SectionSequelizeRepository,
   SurveyCycleRepository as SurveyCycleSequelizeRepository,
   SurveyQuestionRepository as SurveyQuestionSequelizeRepository,
+  SurveyRepository as SurveySequelizeRepository,
   SurveyResponderRepository as SurveyResponderSequelizeRepository,
   SurveyResponseDetailRepository as SurveyResponseDetailSequelizeRepository,
   SurveyResponseRepository as SurveyResponseSequelizeRepository,
-  SurveyRepository as SurveySequelizeRepository,
   TemplateQuestionRepository as TemplateQuestionSequelizeRepository,
 } from './repositories/sequelize';
 import {SurveyRepository} from './repositories/survey.repository';
@@ -234,12 +230,6 @@ export class SurveyServiceComponent implements Component {
     this.application.sequence(ServiceSequence);
 
     // Mount authentication component for default sequence
-    this.application
-      .bind(Strategies.Passport.BEARER_STRATEGY_FACTORY.key)
-      .toProvider(BearerStrategyFactoryProvider);
-    this.application
-      .bind(Strategies.Passport.BEARER_TOKEN_VERIFIER.key)
-      .toProvider(BearerTokenVerifyProvider);
     this.application.component(AuthenticationComponent);
     // Mount bearer verifier component
     this.application.bind(BearerVerifierBindings.Config).to({

@@ -23,14 +23,9 @@ import {
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
-import * as controllers from './controllers';
-
-import {AuthenticationComponent, Strategies} from 'loopback4-authentication';
-import {
-  BearerStrategyFactoryProvider,
-  BearerTokenVerifyProvider,
-} from 'loopback4-authentication/passport-bearer';
+import {AuthenticationComponent} from 'loopback4-authentication';
 import {AuthorizationComponent} from 'loopback4-authorization';
+import * as controllers from './controllers';
 import {TaskServiceBindings} from './keys';
 import {CommandObserver, EventStreamObserver} from './lifecycle-observers';
 import {Event, EventWorkflow, Task, TaskWorkflow, UserTask} from './models';
@@ -133,11 +128,5 @@ export class TaskServiceComponent implements Component {
     this.application.component(AuthenticationComponent);
     this.application.component(AuthorizationComponent);
     this.application.sequence(ServiceSequence);
-    this.application
-      .bind(Strategies.Passport.BEARER_STRATEGY_FACTORY.key)
-      .toProvider(BearerStrategyFactoryProvider);
-    this.application
-      .bind(Strategies.Passport.BEARER_TOKEN_VERIFIER.key)
-      .toProvider(BearerTokenVerifyProvider);
   }
 }

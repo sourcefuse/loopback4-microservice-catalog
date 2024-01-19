@@ -65,7 +65,7 @@ export class JwtPayloadProvider implements Provider<JwtPayloadFn> {
       if (
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        user.authClientIds.indexOf(authClient.id || 0) < 0
+        user.authClientIds.indexOf(authClient.id ?? 0) < 0
       ) {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
       }
