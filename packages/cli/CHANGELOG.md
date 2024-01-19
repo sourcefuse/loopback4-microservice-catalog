@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.3.0 (2024-01-19)
+
+* chore(cli): update the template deps in v4 of cli (#1931) ([d14e8ab](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d14e8ab)), closes [#1931](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1931) [#1929](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1929)
+* feat(cli): add support for survey service in v4 as well (#1812) ([2265b3d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2265b3d)), closes [#1812](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1812) [#1805](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1805)
+
+
+
+
+
 ## <small>4.2.1 (2023-10-19)</small>
 
 * revert(cli): remove cdk flag from microservice command (#1721) ([bac0866](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bac0866)), closes [#1721](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1721) [#1710](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1710)
