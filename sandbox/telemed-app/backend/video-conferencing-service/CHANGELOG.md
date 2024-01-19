@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.1.8 (2024-01-19)</small>
+
+**Note:** Version bump only for package @sourceloop/telemed-video-conferencing-api
+
+
+
+
+
 ## <small>0.1.7 (2024-01-11)</small>
 
 * chore(deps): combine dependabot updates (#1906) ([398d05c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/398d05c)), closes [#1906](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1906)
