@@ -14,6 +14,7 @@ export enum SERVICES {
   SCHEDULER = 'scheduler-service',
   SEARCH = 'search-service',
   SURVEY = 'survey-service',
+  TASK = 'task-service',
   VIDEO_CONF = 'video-conferencing-service',
   USER_TENANT = 'user-tenant-service',
 }
@@ -89,6 +90,7 @@ export const BASESERVICEDSLIST: {
   'survey-service': [
     {type: 'store', name: 'SurveyDbSourceName', fileName: 'survey'},
   ],
+  'task-service': [{type: 'store', name: 'TaskDbSourceName', fileName: 'task'}],
   'video-conferencing-service': [
     {type: 'store', name: 'VideoConfDatasource', fileName: 'videoConf'},
   ],
@@ -109,6 +111,7 @@ export const BASESERVICECOMPONENTLIST: {
   'scheduler-service': 'SchedulerServiceComponent',
   'search-service': 'SearchServiceComponent',
   'survey-service': 'SurveyServiceComponent',
+  'task-service': 'TaskServiceComponent',
   'video-conferencing-service': 'VideoConfServiceComponent',
   'chat-service': 'ChatServiceComponent',
   'user-tenant-service': 'UserTenantServiceComponent',
@@ -127,10 +130,12 @@ export const BASESERVICEBINDINGLIST: {
   'scheduler-service': 'CoreSchedulerBindings',
   'search-service': 'SearchServiceBindings',
   'survey-service': 'SurveyServiceBindings',
+  'task-service': 'TaskServiceBindings',
   'video-conferencing-service': 'VideoChatBindings',
   'chat-service': 'ChatServiceBindings',
   'user-tenant-service': 'UserTenantServiceComponentBindings',
 };
+
 export enum SEQUELIZESERVICES {
   AUTH = 'authentication-service',
   AUDIT = 'audit-service',
