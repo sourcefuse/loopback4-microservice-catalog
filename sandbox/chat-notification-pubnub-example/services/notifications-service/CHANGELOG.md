@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.6.3 (2024-01-19)</small>
+
+* fix(video-conferencing-service): fixed archiving issue while creating session (#1892) ([03624a8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/03624a8)), closes [#1892](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1892) [#1822](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1822) [#1822](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1822) [#1822](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1822)
+
+
+
+
+
 ## <small>0.6.2 (2024-01-09)</small>
 
 **Note:** Version bump only for package @sourceloop/chat-notif-example_notif-service

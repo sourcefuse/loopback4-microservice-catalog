@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>11.0.2 (2024-01-19)</small>
+
+* chore(deps): update sourceloop and loopback packages version (#1928) ([d9d1b20](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d9d1b20)), closes [#1928](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1928) [#1903](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1903)
+* docs(core): update the docs to write about hiding apis (#1911) ([a243dd0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a243dd0)), closes [#1911](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1911) [#1910](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1910)
+* fix(video-conferencing-service): fixed archiving issue while creating session (#1892) ([03624a8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/03624a8)), closes [#1892](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1892) [#1822](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1822) [#1822](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1822) [#1822](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1822)
+
+
+
+
+
 ## <small>11.0.1 (2024-01-09)</small>
 
 * revert(all-services): revert the extra checks added for createall method (#1890) ([93f41dd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/93f41dd)), closes [#1890](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1890) [#1124](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1124)

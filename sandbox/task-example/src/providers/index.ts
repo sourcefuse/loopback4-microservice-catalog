@@ -1,2 +1,1 @@
-export * from './sqs.provider';
-export * from './bpmn-runner.provider';
+export * from './bpmn.provider';

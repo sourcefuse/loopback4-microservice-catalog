@@ -390,7 +390,7 @@ export abstract class SearchQueryBuilder<T extends Model> {
 
   getColumnName(model: typeof Model, name: keyof T) {
     if (model.definition.properties[name as string]) {
-      return model.definition.properties[name as string].name || name;
+      return model.definition.properties[name as string].name ?? name;
     }
     return undefined;
   }

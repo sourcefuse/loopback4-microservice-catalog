@@ -12,8 +12,6 @@ import {
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
 import {Strategies} from 'loopback4-authentication';
-import {BearerStrategyFactoryProvider} from 'loopback4-authentication/passport-bearer';
-import {ClientPasswordStrategyFactoryProvider} from 'loopback4-authentication/passport-client-password';
 import {LocalPasswordStrategyFactoryProvider} from 'loopback4-authentication/passport-local';
 import {PassportOtpStrategyFactoryProvider} from 'loopback4-authentication/passport-otp';
 import * as path from 'path';
@@ -55,14 +53,8 @@ export class TestingApplication extends BootMixin(
     this.bind(AuthServiceBindings.ForgotPasswordHandler).toProvider(
       TestForgotPasswordTokenHandlerProvider,
     );
-    this.bind(
-      Strategies.Passport.CLIENT_PASSWORD_STRATEGY_FACTORY.key,
-    ).toProvider(ClientPasswordStrategyFactoryProvider);
     this.bind(Strategies.Passport.LOCAL_STRATEGY_FACTORY.key).toProvider(
       LocalPasswordStrategyFactoryProvider,
-    );
-    this.bind(Strategies.Passport.BEARER_STRATEGY_FACTORY.key).toProvider(
-      BearerStrategyFactoryProvider,
     );
     this.bind(Strategies.Passport.OTP_AUTH_STRATEGY_FACTORY.key).toProvider(
       PassportOtpStrategyFactoryProvider,
