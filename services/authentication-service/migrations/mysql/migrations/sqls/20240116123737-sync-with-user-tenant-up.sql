@@ -1,15 +1,10 @@
-/* Replace with your SQL commands */
+CALL add_columns_if_not_exists('roles', 'tenant_id', 'VARCHAR(36) NOT NULL');
+CALL add_columns_if_not_exists('roles', 'allowed_clients', 'JSON');
+CALL add_columns_if_not_exists('roles', 'description', 'VARCHAR(500)');
 
-ALTER TABLE main.roles
-ADD IF NOT EXISTS tenant_id uuid  NOT NULL,
-ADD IF NOT EXISTS allowed_clients text[],
-ADD IF NOT EXISTS description varchar(500);
+-- ALTER TABLE for tenants
+CALL add_columns_if_not_exists('tenants', 'website', 'VARCHAR(100)');
 
-ALTER TABLE main.tenants
-ADD IF NOT EXISTS website varchar(100);
-
-ALTER TABLE main.users
-ADD IF NOT EXISTS photo_url varchar(250),
-ADD IF NOT EXISTS designation  varchar(50);
-
-
+-- ALTER TABLE for users
+CALL add_columns_if_not_exists('users', 'photo_url', 'VARCHAR(250)');
+CALL add_columns_if_not_exists('users', 'designation', 'VARCHAR(50)');

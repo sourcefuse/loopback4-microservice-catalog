@@ -1,2 +1,1 @@
-ALTER TABLE user_credentials
-ADD IF NOT EXISTS secret_key VARCHAR(100);
+CALL add_columns_if_not_exists('user_credentials', 'secret_key', 'VARCHAR(100)');

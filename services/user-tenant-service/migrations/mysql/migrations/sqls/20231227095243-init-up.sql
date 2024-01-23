@@ -324,7 +324,7 @@ BEFORE INSERT ON user_tenant_prefs
 FOR EACH ROW
 SET NEW.id = IFNULL(NEW.id, uuid());
 
-CREATE TABLE audit_logs ( 
+CREATE TABLE IF NOT EXISTS audit_logs ( 
   id                   VARCHAR(36) PRIMARY KEY,
   operation_name       VARCHAR(10) NOT NULL,
   operation_time       TIMESTAMP NOT NULL,
@@ -344,7 +344,7 @@ SET NEW.id = IFNULL(NEW.id, uuid());
 
 
 -- creating an generic AUDIT procedure
-CREATE PROCEDURE generic_audit_procedure( op_name VARCHAR(10), tb_name VARCHAR(60),
+CREATE PROCEDURE IF NOT EXISTS generic_audit_procedure( op_name VARCHAR(10), tb_name VARCHAR(60),
   `type` VARCHAR(100), ent_id VARCHAR(36), u_id VARCHAR(36),
   before_state JSON, after_state JSON)
 BEGIN
@@ -778,6 +778,7 @@ CALL generic_audit_procedure('DELETE','users','USER_LOGS',
 );
 
 -- creating VIEW for multi tenant architecture with roles
+DROP VIEW IF EXISTS v_users;
 CREATE VIEW v_users AS
 SELECT
     u.id,
