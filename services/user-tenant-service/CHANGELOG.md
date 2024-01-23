@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.15.0 (2024-01-23)
+
+* fix(authentication-service): sync the models of auth and user tenant service (#1913) ([c3a15b0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c3a15b0)), closes [#1913](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1913) [#1899](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1899) [#1899](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1899) [#1899](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1899) [#1899](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1899) [#1899](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1899)
+
+
+
+
+
 ## <small>0.14.3 (2024-01-19)</small>
 
 * chore(deps): update sourceloop and loopback packages version (#1928) ([d9d1b20](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d9d1b20)), closes [#1928](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1928) [#1903](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1903)

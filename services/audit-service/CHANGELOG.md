@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>10.0.3 (2024-01-23)</small>
+
+* fix(audit service):provide aws-sdk as a peer dependency in audit service (#1938) ([4ffdf0a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4ffdf0a)), closes [#1938](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1938)
+
+
+
+
+
 ## <small>10.0.2 (2024-01-19)</small>
 
 * chore(deps): update sourceloop and loopback packages version (#1928) ([d9d1b20](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d9d1b20)), closes [#1928](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1928) [#1903](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1903)
