@@ -30,3 +30,6 @@ DROP TABLE IF EXISTS user_permissions;
 DROP TABLE IF EXISTS user_resources;
 DROP TABLE IF EXISTS user_tenants;
 DROP TABLE IF EXISTS users;
+
+-- dropping procedure
+DROP PROCEDURE IF EXISTS add_columns_if_not_exists;

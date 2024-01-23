@@ -32,7 +32,7 @@ export class FindAccountProvider implements Provider<FindAccountProviderFn> {
       const userClaims: {[key: string]: User[keyof User] | undefined} = {};
 
       claimsProfile.forEach(claim => {
-        if (newUser && newUser[claim as keyof User]) {
+        if (newUser?.[claim as keyof User]) {
           userClaims[claim] = newUser[claim as keyof User];
         }
       });

@@ -199,11 +199,13 @@ describe('OTP Controller', () => {
         id: '1',
         name: 'admin',
         roleType: RoleTypes.Admin,
+        tenantId: '200',
         permissions: [],
       },
       {
         id: '2',
         name: 'others',
+        tenantId: '200',
         roleType: RoleTypes.Others,
         permissions: [],
       },

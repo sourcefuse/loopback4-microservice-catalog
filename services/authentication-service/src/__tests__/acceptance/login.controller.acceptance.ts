@@ -4,7 +4,7 @@
 // https://opensource.org/licenses/MIT
 'use strict';
 import {Client, createRestAppClient, expect} from '@loopback/testlab';
-import {AuthenticateErrorKeys, AuthProvider, RoleTypes} from '@sourceloop/core';
+import {AuthProvider, AuthenticateErrorKeys, RoleTypes} from '@sourceloop/core';
 import {AuthErrorKeys} from 'loopback4-authentication';
 import {
   AuthClientRepository,
@@ -644,6 +644,7 @@ describe('Authentication microservice', () => {
         id: '1',
         name: 'admin',
         roleType: RoleTypes.Admin,
+        tenantId: '200',
         permissions: [
           'canLoginToIPS',
           'ViewOwnUser',
@@ -674,6 +675,7 @@ describe('Authentication microservice', () => {
         id: '2',
         name: 'others',
         roleType: RoleTypes.Others,
+        tenantId: '200',
         permissions: [
           'ViewOwnUser',
           'ViewTenantUser',
