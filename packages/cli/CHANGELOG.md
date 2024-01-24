@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.3.3 (2024-01-24)</small>
+
+* chore(deps): update cliv4 to latest template deps (#1947) ([4b08e2e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4b08e2e)), closes [#1947](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1947) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
 ## <small>4.3.2 (2024-01-19)</small>
 
 * chore(cli): bump version for release ([1382ab4](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1382ab4))
