@@ -18,9 +18,9 @@ import {
 } from '@loopback/rest';
 import {isString} from 'lodash';
 import {
+  AuthErrorKeys,
   AuthenticateFn,
   AuthenticationBindings,
-  AuthErrorKeys,
 } from 'loopback4-authentication';
 import {
   AuthorizationBindings,
@@ -28,9 +28,12 @@ import {
   AuthorizeFn,
 } from 'loopback4-authorization';
 
+import {
+  DynamicDatasourceBindings,
+  SetupDatasourceFn,
+} from 'loopback4-dynamic-datasource';
 import {IAuthUserWithPermissions, ILogger, LOGGER} from './components';
 import {SFCoreBindings} from './keys';
-
 const SequenceActions = RestBindings.SequenceActions;
 const isJsonString = (str: string) => {
   try {
@@ -51,6 +54,8 @@ export class ServiceSequence implements SequenceHandler {
   @inject(SFCoreBindings.EXPRESS_MIDDLEWARES, {optional: true})
   protected expressMiddlewares: ExpressRequestHandler[] = [];
 
+  @inject(DynamicDatasourceBindings.DYNAMIC_DATASOURCE_ACTION)
+  protected applyDynamicDataSource: SetupDatasourceFn;
   constructor(
     // sonarignore:start
     @inject(SequenceActions.FIND_ROUTE) protected findRoute: FindRoute,
@@ -97,7 +102,10 @@ export class ServiceSequence implements SequenceHandler {
       if (finished) return;
       const route = this.findRoute(request);
       const args = await this.parseParams(request, route);
-
+      if (process.env.SAAS_MODEL == 'silo storage') {
+        // @ts-ignore
+        await this.applyDynamicDataSource(context);
+      }
       const authUser: IAuthUserWithPermissions = await this.authenticateRequest(
         request,
         response,

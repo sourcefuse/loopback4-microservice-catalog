@@ -4,6 +4,7 @@
 // https://opensource.org/licenses/MIT
 import {BindingKey} from '@loopback/core';
 import {ExpressRequestHandler} from '@loopback/rest';
+import {SetupDatasourceFn} from 'loopback4-dynamic-datasource';
 import {BINDING_PREFIX} from './constants';
 import {HttpMethod} from './enums';
 import {CoreConfig, TenantIdEncryptionFn} from './types';
@@ -22,6 +23,10 @@ export namespace SFCoreBindings {
     BindingKey.create<TenantIdEncryptionFn>(
       `sf.auth.tenantid.encryption.provider`,
     );
+  export const DYNAMIC_DATASOURCE_MIDDLEWARES =
+    BindingKey.create<SetupDatasourceFn>(
+      `sf.packages.core.dynamicDatasourceMiddleware`,
+    );
 }
 
 const hiddenKey = 'sf.oas.hiddenEndpoints';
@@ -33,4 +38,18 @@ export type OasHiddenApi = {
 
 export namespace OASBindings {
   export const HiddenEndpoint = BindingKey.create<OasHiddenApi[]>(hiddenKey);
+}
+
+import {SSMClientConfig} from '@aws-sdk/client-ssm';
+
+export namespace AWSSSMBindings {
+  export const Config = BindingKey.create<AwsSSMConfig>(
+    `${BINDING_PREFIX}.core.ssm.config`,
+  );
+}
+
+export interface AwsSSMConfig extends SSMClientConfig {
+  accessKeyId: string;
+  secretAccessKey: string;
+  region?: string;
 }
