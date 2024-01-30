@@ -11,7 +11,8 @@
   "exports": {
     ".": "./dist/index.js",
     "./sequelize": {
-      "types": "./dist/repositories/sequelize/index.d.ts"
+      "types": "./dist/repositories/sequelize/index.d.ts",
+      "default": "./dist/repositories/sequelize/index.js"
     }
   },
   "typesVersions": {
