@@ -14,6 +14,15 @@ import {AnyObject} from '@loopback/repository';
 import {ExpressRequestHandler, RestApplication} from '@loopback/rest';
 import {configure} from 'i18n';
 import {cloneDeep} from 'lodash';
+import {
+  DynamicDatasourceBindings,
+  Loopback4DynamicDatasourceComponent,
+} from 'loopback4-dynamic-datasource';
+import {
+  CustomDatasourceIdentifierProvider,
+  CustomDatasourceProvider,
+} from './providers';
+
 import {Loopback4HelmetComponent} from 'loopback4-helmet';
 import {RateLimiterComponent} from 'loopback4-ratelimiter';
 import * as swstats from 'swagger-stats';
@@ -45,6 +54,17 @@ export class CoreComponent implements Component {
       middlewares.push(...this.expressMiddlewares);
     }
     this.providers = {};
+
+    this.application.component(Loopback4DynamicDatasourceComponent);
+    if (process.env.SAAS_MODEL == 'silo storage') {
+      this.application
+        .bind(DynamicDatasourceBindings.DATASOURCE_PROVIDER)
+        .toProvider(CustomDatasourceProvider);
+      this.application
+        .bind(DynamicDatasourceBindings.DATASOURCE_IDENTIFIER_PROVIDER)
+        .toProvider(CustomDatasourceIdentifierProvider);
+    }
+
     // Mount logger component
     this.application.component(LoggerExtensionComponent);
 

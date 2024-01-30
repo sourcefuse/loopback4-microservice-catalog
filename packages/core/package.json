@@ -54,6 +54,7 @@
     "!*/__tests__"
   ],
   "dependencies": {
+    "@aws-sdk/client-ssm": "^3.501.0",
     "@loopback/boot": "^6.1.5",
     "@loopback/context": "^6.1.5",
     "@loopback/core": "^5.1.5",
@@ -70,6 +71,7 @@
     "loopback-datasource-juggler": "^5.0.5",
     "loopback4-authentication": "^11.0.2",
     "loopback4-authorization": "^6.2.1",
+    "loopback4-dynamic-datasource": "^1.0.0",
     "loopback4-helmet": "^6.0.1",
     "loopback4-ratelimiter": "^6.0.1",
     "loopback4-soft-delete": "^9.1.1",

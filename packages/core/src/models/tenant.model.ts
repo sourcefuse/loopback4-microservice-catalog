@@ -2,24 +2,16 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {hasMany, model, property} from '@loopback/repository';
-import {TenantStatus, UserModifiableEntity} from '@sourceloop/core';
+import {Entity, hasMany, model, property} from '@loopback/repository';
 
-import {
-  TenantConfig,
-  TenantConfigWithRelations,
-  UserTenant,
-  UserTenantWithRelations,
-} from '../models';
-import {Group} from './group.model';
-import {Role} from './role.model';
-import {User} from './user.model';
+import {TenantConfig, TenantConfigWithRelations} from '.';
+import {TenantStatus} from '../enums';
 
 @model({
   name: 'tenants',
   description: 'signature for all tenants',
 })
-export class Tenant extends UserModifiableEntity<Tenant> {
+export class Tenant extends Entity {
   @property({
     type: 'string',
     id: true,
@@ -80,23 +72,10 @@ export class Tenant extends UserModifiableEntity<Tenant> {
 
   @hasMany(() => TenantConfig, {keyTo: 'tenantId'})
   tenantConfigs: TenantConfig[];
-
-  @hasMany(() => UserTenant, {keyTo: 'tenantId'})
-  userTenants: UserTenant[];
-
-  @hasMany(() => User, {keyTo: 'defaultTenantId'})
-  users: User[];
-
-  @hasMany(() => Role, {keyTo: 'tenantId'})
-  roles: Role[];
-
-  @hasMany(() => Group, {keyTo: 'tenantId'})
-  groups: Group[];
 }
 
 export interface TenantRelations {
   tenantConfigs: TenantConfigWithRelations[];
-  userTenants: UserTenantWithRelations[];
 }
 
 export type TenantWithRelations = Tenant & TenantRelations;
