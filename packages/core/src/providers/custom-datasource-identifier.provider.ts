@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken');
 export class CustomDatasourceIdentifierProvider
   implements Provider<DatasourceIdentifierFn>
 {
-  constructor() {}
   value(): DatasourceIdentifierFn {
     return async requestCtx => {
       const tokenWithBearerString = String(

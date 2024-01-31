@@ -3,8 +3,6 @@ import * as AWS from 'aws-sdk';
 
 @bind({scope: BindingScope.TRANSIENT})
 export class AwsSsmHelperService {
-  constructor() {}
-
   /**
    *
    * @param ssmKeyParamName string (the key) for which value to be fetched from AWS ssm
