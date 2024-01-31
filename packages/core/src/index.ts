@@ -17,5 +17,6 @@ export * from './repositories';
 export * from './secure-sequence';
 export * from './security-specs';
 export * from './service-sequence';
+export * from './services';
 export * from './types';
 export * from './utils';
