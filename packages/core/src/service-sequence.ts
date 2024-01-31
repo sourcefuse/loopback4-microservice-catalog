@@ -102,10 +102,6 @@ export class ServiceSequence implements SequenceHandler {
       if (finished) return;
       const route = this.findRoute(request);
       const args = await this.parseParams(request, route);
-      if (process.env.SAAS_MODEL == 'silo storage') {
-        // @ts-ignore
-        await this.applyDynamicDataSource(context);
-      }
       const authUser: IAuthUserWithPermissions = await this.authenticateRequest(
         request,
         response,
@@ -117,7 +113,10 @@ export class ServiceSequence implements SequenceHandler {
       if (!isAccessAllowed) {
         throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
       }
-
+      if (process.env.SAAS_MODEL == 'silo storage') {
+        // @ts-ignore
+        await this.applyDynamicDataSource(context);
+      }
       const result = await this.invoke(route, args);
       this.send(response, result);
     } catch (err) {
