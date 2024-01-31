@@ -1,5 +1,5 @@
 import {bind, BindingScope} from '@loopback/core';
-import * as AWS from 'aws-sdk';
+import * as AWS from 'aws-sdk'; //NOSONAR
 
 @bind({scope: BindingScope.TRANSIENT})
 export class AwsSsmHelperService {

@@ -19,7 +19,7 @@ export class CustomDatasourceIdentifierProvider
       const token = tokenArr[1];
       let tenantId = null;
       if (token) {
-        let payload = jwt.verify(token, process.env.JWT_SECRET as string, {
+        const payload = jwt.verify(token, process.env.JWT_SECRET as string, {
           issuer: process.env.JWT_ISSUER,
           algorithms: ['HS256'],
         });

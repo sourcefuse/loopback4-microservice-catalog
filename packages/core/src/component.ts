@@ -112,7 +112,7 @@ export class CoreComponent implements Component {
     this.application.bind('AwsSsmHelperService').toClass(AwsSsmHelperService);
 
     this.application.component(Loopback4DynamicDatasourceComponent);
-    if (process.env.SAAS_MODEL == 'silo storage') {
+    if (process.env.SAAS_MODEL === 'silo storage') {
       this.application
         .bind(DynamicDatasourceBindings.DATASOURCE_PROVIDER)
         .toProvider(CustomDatasourceProvider);
