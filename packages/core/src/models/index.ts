@@ -7,8 +7,7 @@ export * from './core-entity';
 export * from './core-model';
 export * from './ext-identifier-enabled-entity.interface';
 export * from './success-response.dto';
-export * from './tenant-config.model';
-export * from './tenant.model';
 export * from './upsert-response.dto';
 export * from './user-modifiable-entity.model';
 export * from './value-response.model';
+

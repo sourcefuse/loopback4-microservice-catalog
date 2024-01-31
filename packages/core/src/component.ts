@@ -38,6 +38,7 @@ import {IncomingMessage, ServerResponse} from 'http';
 
 import {TenantContextMiddlewareInterceptorProvider} from './middlewares';
 import {TenantIdEncryptionProvider} from './providers';
+import {AwsSsmHelperService} from './services';
 import {CoreConfig, addTenantId} from './types';
 
 export class CoreComponent implements Component {
@@ -108,6 +109,7 @@ export class CoreComponent implements Component {
     this.bindings.push(Binding.bind(OASBindings.HiddenEndpoint).to([]));
     this.bindings.push(Binding.bind(SFCoreBindings.i18n).to(this.localeObj));
     this.application.add(createBindingFromClass(OperationSpecEnhancer));
+    this.application.bind('AwsSsmHelperService').toClass(AwsSsmHelperService);
 
     this.application.component(Loopback4DynamicDatasourceComponent);
     if (process.env.SAAS_MODEL == 'silo storage') {
