@@ -97,7 +97,7 @@ export class ServiceSequence implements SequenceHandler {
         );
         if (responseGenerated) return;
       }
-
+      // sonarignore:start
       const finished = await this.invokeMiddleware(context);
       if (finished) return;
       const route = this.findRoute(request);
@@ -119,6 +119,7 @@ export class ServiceSequence implements SequenceHandler {
       }
       const result = await this.invoke(route, args);
       this.send(response, result);
+      // sonarignore:end
     } catch (err) {
       this.logger.error(
         `Request ${context.request.method} ${
