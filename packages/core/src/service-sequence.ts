@@ -113,13 +113,7 @@ export class ServiceSequence implements SequenceHandler {
       if (!isAccessAllowed) {
         throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
       }
-      // sonarignore:end
-      // sonarignore:start
-      if (process.env.SAAS_MODEL == 'silo storage') {
-        //NOSONAR
-        // @ts-ignore
-        await this.applyDynamicDataSource(context);
-      }
+      this.processSiloStorage();
       const result = await this.invoke(route, args);
       this.send(response, result);
       // sonarignore:end
@@ -166,6 +160,12 @@ export class ServiceSequence implements SequenceHandler {
     }
   }
 
+  async processSiloStorage() {
+    if (process.env.SAAS_MODEL == 'silo storage') {
+      // @ts-ignore
+      await this.applyDynamicDataSource(context);
+    }
+  }
   // sonarignore:start
   /* eslint-disable @typescript-eslint/no-explicit-any */
   private _rejectErrors(err: any) {
