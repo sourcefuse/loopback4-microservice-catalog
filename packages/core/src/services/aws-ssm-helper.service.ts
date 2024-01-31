@@ -1,4 +1,5 @@
 import {bind, BindingScope} from '@loopback/core';
+// @typescript-eslint/naming-convention
 import * as AWS from 'aws-sdk'; //NOSONAR
 
 @bind({scope: BindingScope.TRANSIENT})
@@ -14,6 +15,7 @@ export class AwsSsmHelperService {
       region: process.env.AWS_REGION,
       secretAccessKey: process.env.AWS_SECRET_KEY,
     });
+    // @typescript-eslint/return-await
     return await ssm
       .getParameter({
         Name: ssmKeyParamName,

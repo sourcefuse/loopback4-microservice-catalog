@@ -162,7 +162,7 @@ export class ServiceSequence implements SequenceHandler {
 
   async processSiloStorage(context: RequestContext) {
     if (process.env.SAAS_MODEL === 'silo storage') {
-      // @ts-ignore
+      // @ts-expect-error
       await this.applyDynamicDataSource(context);
     }
   }
