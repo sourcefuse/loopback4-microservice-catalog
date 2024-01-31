@@ -1,0 +1,22 @@
+{
+    "defaultEnv": "master",
+    "master": {
+      "driver": "pg",
+      "host": {
+        "ENV": "USER-TENANT-SERVICE_DB_HOST"
+      },
+      "port": {
+        "ENV": "USER-TENANT-SERVICE_DB_PORT"
+      },
+      "user": {
+        "ENV": "USER-TENANT-SERVICE_DB_USER"
+      },
+      "password": {
+        "ENV": "USER-TENANT-SERVICE_DB_PASSWORD"
+      },
+      "database": {
+        "ENV": "USER-TENANT-SERVICE_DB_DATABASE"
+      }
+    },
+    "sql-file": true
+}
