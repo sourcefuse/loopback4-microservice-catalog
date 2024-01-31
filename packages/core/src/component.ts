@@ -55,16 +55,6 @@ export class CoreComponent implements Component {
     }
     this.providers = {};
 
-    this.application.component(Loopback4DynamicDatasourceComponent);
-    if (process.env.SAAS_MODEL == 'silo storage') {
-      this.application
-        .bind(DynamicDatasourceBindings.DATASOURCE_PROVIDER)
-        .toProvider(CustomDatasourceProvider);
-      this.application
-        .bind(DynamicDatasourceBindings.DATASOURCE_IDENTIFIER_PROVIDER)
-        .toProvider(CustomDatasourceIdentifierProvider);
-    }
-
     // Mount logger component
     this.application.component(LoggerExtensionComponent);
 
@@ -118,6 +108,16 @@ export class CoreComponent implements Component {
     this.bindings.push(Binding.bind(OASBindings.HiddenEndpoint).to([]));
     this.bindings.push(Binding.bind(SFCoreBindings.i18n).to(this.localeObj));
     this.application.add(createBindingFromClass(OperationSpecEnhancer));
+
+    this.application.component(Loopback4DynamicDatasourceComponent);
+    if (process.env.SAAS_MODEL == 'silo storage') {
+      this.application
+        .bind(DynamicDatasourceBindings.DATASOURCE_PROVIDER)
+        .toProvider(CustomDatasourceProvider);
+      this.application
+        .bind(DynamicDatasourceBindings.DATASOURCE_IDENTIFIER_PROVIDER)
+        .toProvider(CustomDatasourceIdentifierProvider);
+    }
   }
 
   private _setupSwaggerStats(): ExpressRequestHandler | undefined {
