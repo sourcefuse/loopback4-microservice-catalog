@@ -4,14 +4,14 @@ import {
   CountSchema,
   Filter,
   FilterExcludingWhere,
-  Where,
   repository,
+  Where,
 } from '@loopback/repository';
 import {
-  HttpErrors,
   del,
   get,
   getModelSchemaRef,
+  HttpErrors,
   param,
   patch,
   post,
@@ -19,7 +19,7 @@ import {
   response,
 } from '@loopback/rest';
 import {CONTENT_TYPE, ILogger, LOGGER, STATUS_CODE} from '@sourceloop/core';
-import {STRATEGY, authenticate} from 'loopback4-authentication';
+import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../enum/permission-key.enum';
 import {Section} from '../models';
@@ -27,7 +27,6 @@ import {SectionRepository} from '../repositories/section.repository';
 import {SurveyQuestionRepository} from '../repositories/survey-question.repository';
 import {SectionService} from '../services/section.service';
 const basePath = '/surveys/{surveyId}/sections';
-const orderByCreatedOn = 'created_on DESC';
 
 export class SectionController {
   constructor(
@@ -65,33 +64,7 @@ export class SectionController {
     section: Omit<Section, 'id'>,
     @param.path.string('surveyId') surveyId: string,
   ): Promise<Section> {
-    await this.sectionService.checkBasicSectionValidation(surveyId);
-    const existingSections = await this.sectionRepository.count({
-      surveyId,
-    });
-    section.surveyId = surveyId;
-    section.name = section.name ?? 'Untitled Section';
-    section.displayOrder = existingSections.count + 1;
-    await this.sectionRepository.create(section);
-
-    // fetch createdSection with id
-    const createdSection = await this.sectionRepository.findOne({
-      order: [orderByCreatedOn],
-      where: {surveyId},
-    });
-    if (!createdSection) {
-      throw new HttpErrors.NotFound();
-    }
-
-    if (!existingSections.count) {
-      this.surveyQuestionRepository
-        .updateAll({sectionId: createdSection.id}, {surveyId})
-        .then()
-        .catch(error => {
-          throw new Error(error);
-        });
-    }
-    return createdSection;
+    return this.sectionService.createSection(surveyId, section);
   }
 
   @authenticate(STRATEGY.BEARER, {

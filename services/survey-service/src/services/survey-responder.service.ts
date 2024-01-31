@@ -1,21 +1,75 @@
 import {BindingScope, inject, injectable} from '@loopback/context';
+import {service} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {ILogger, LOGGER} from '@sourceloop/core';
 import {sign} from 'jsonwebtoken';
 import moment from 'moment';
 import {PermissionKey} from '../enum';
 import {SurveyResponder} from '../models';
-import {SurveyCycleRepository, SurveyRepository} from '../repositories';
+import {
+  SurveyCycleRepository,
+  SurveyRepository,
+  SurveyResponderRepository,
+} from '../repositories';
+import {SurveyCycleService} from './survey-cycle.service';
+import {SurveyService} from './survey.service';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class SurveyResponderService {
   constructor(
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
+    @repository(SurveyResponderRepository)
+    protected surveyResponderRepository: SurveyResponderRepository,
     @repository(SurveyCycleRepository)
     protected surveyCycleRepository: SurveyCycleRepository,
     @repository(SurveyRepository)
     protected surveyRepository: SurveyRepository,
+    @service(SurveyService)
+    public surveyService: SurveyService,
+    @service(SurveyCycleService)
+    public surveyCycleService: SurveyCycleService,
   ) {}
+
+  async createSurveyResponder(
+    surveyId: string,
+    surveyResponder: Omit<SurveyResponder, 'id'>,
+  ) {
+    await this.surveyService.checkIfAllowedToUpdateSurvey(surveyId);
+
+    if (surveyResponder.surveyCycleId) {
+      await this.surveyCycleService.validateSurveyCycle(
+        surveyResponder.surveyCycleId,
+        surveyId,
+      );
+    }
+    surveyResponder.surveyId = surveyId;
+    surveyResponder.firstName =
+      surveyResponder.firstName ??
+      surveyResponder.email?.substring(0, surveyResponder.email.indexOf('@'));
+    const resp = await this.surveyRepository
+      .surveyResponders(surveyId)
+      .create(surveyResponder);
+
+    // fetch createdSurveyCycle with id
+    const createdSurveyResponder = await this.surveyResponderRepository.findOne(
+      {
+        where: {surveyId},
+        order: ['created_on DESC'],
+      },
+    );
+
+    if (createdSurveyResponder) {
+      if (createdSurveyResponder.surveyCycleId) {
+        this.surveyCycleService
+          .checkIfResponderAddedInActiveCycle(createdSurveyResponder)
+          .catch(error => {
+            throw new Error(error);
+          });
+      }
+    }
+
+    return resp;
+  }
 
   async getAccessToken(surveyResponders: SurveyResponder[], surveyId: string) {
     try {

@@ -87,6 +87,7 @@ import {
   QuestionTemplateService,
   SectionService,
   SurveyCycleService,
+  SurveyQuestionService,
   SurveyResponderService,
   SurveyResponseService,
   SurveyService,
@@ -113,6 +114,7 @@ export class SurveyServiceComponent implements Component {
       SurveyService,
       SectionService,
       SurveyCycleService,
+      SurveyQuestionService,
       SurveyResponseService,
       SurveyResponderService,
     ];
