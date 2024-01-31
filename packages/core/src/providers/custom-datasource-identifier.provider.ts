@@ -12,7 +12,7 @@ export class CustomDatasourceIdentifierProvider
         requestCtx.request.headers?.authorization,
       );
       /* Driver code */
-      var bearerStr = 'Bearer';
+      const bearerStr = 'Bearer';
       const isBearer = tokenWithBearerString.includes(bearerStr);
       const tokenArr = isBearer
         ? tokenWithBearerString.split(' ')
