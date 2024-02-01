@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 16.0.0 (2024-02-01)
+
+* refactor(authentication-service): remove current user requirement fro… (#1958) ([3974acf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3974acf)), closes [#1958](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1958) [#1957](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1957)
+* fix(authentication-service): export all artifacts of modules from root (#1951) ([d842b81](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d842b81)), closes [#1951](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1951) [#1950](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1950)
+
+
+### BREAKING CHANGE
+
+* current user is not required in repository
+* this will affect the projects where imports are from dist
+
+
+
+
 ## 15.0.0 (2024-01-23)
 
 * fix(authentication-service): missing exports in modules (#1940) ([9a0ae6f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9a0ae6f)), closes [#1940](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1940) [#1935](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1935)
