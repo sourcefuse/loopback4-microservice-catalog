@@ -25,23 +25,26 @@ import {
 import {authorize} from 'loopback4-authorization';
 import {authenticator} from 'otplib';
 import qrcode from 'qrcode';
-import {User, UserCredentials} from '../../models';
-import {AuthCodeBindings, CodeReaderFn, CodeWriterFn} from '../../providers';
+import {User, UserCredentials} from '../../../models';
+import {AuthCodeBindings, CodeReaderFn, CodeWriterFn} from '../../../providers';
 import {
   AuthClientRepository,
   OtpCacheRepository,
   UserCredentialsRepository,
   UserRepository,
-} from '../../repositories';
+} from '../../../repositories';
 import {
   AuthTokenRequest,
-  CodeResponse,
+  AuthUser,
   OtpLoginRequest,
+  OtpSendRequest,
+} from '../models';
+import {
+  CodeResponse,
   QrCodeCheckResponse,
   QrCodeCreateResponse,
-} from './';
-import {AuthUser} from './models/auth-user.model';
-import {OtpSendRequest} from './models/otp-send-request.dto';
+} from '../types';
+
 export class OtpController {
   constructor(
     @repository(AuthClientRepository)

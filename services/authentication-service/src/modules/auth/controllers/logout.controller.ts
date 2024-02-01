@@ -5,14 +5,14 @@
 import {inject} from '@loopback/context';
 import {repository} from '@loopback/repository';
 import {
-  HttpErrors,
-  Request,
-  RequestContext,
-  RestBindings,
   getModelSchemaRef,
+  HttpErrors,
   param,
   post,
+  Request,
   requestBody,
+  RequestContext,
+  RestBindings,
 } from '@loopback/rest';
 import {
   AuthenticateErrorKeys,
@@ -29,33 +29,34 @@ import {encode} from 'base-64';
 import crypto from 'crypto';
 import {HttpsProxyAgent} from 'https-proxy-agent';
 import {
-  AuthErrorKeys,
-  AuthenticationBindings,
-  STRATEGY,
   authenticate,
+  AuthenticationBindings,
+  AuthErrorKeys,
+  STRATEGY,
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import fetch from 'node-fetch';
 import {URLSearchParams} from 'url';
+import {LoginType} from '../../../enums';
+import {AuthServiceBindings} from '../../../keys';
 import {
   AuthClient,
-  IUserActivity,
-  JwtPayloadFn,
-  LoginType,
+  LoginActivity,
   RefreshToken,
+  RefreshTokenRequest,
   User,
   UserTenant,
-} from '../..';
-import {AuthServiceBindings} from '../../keys';
-import {LoginActivity, RefreshTokenRequest} from '../../models';
+} from '../../../models';
+import {JwtPayloadFn} from '../../../providers';
 import {
   LoginActivityRepository,
   RefreshTokenRepository,
   RevokedTokenRepository,
   UserRepository,
   UserTenantRepository,
-} from '../../repositories';
-import {ActorId} from '../../types';
+} from '../../../repositories';
+import {ActorId, IUserActivity} from '../../../types';
+
 const proxyUrl = process.env.HTTPS_PROXY ?? process.env.HTTP_PROXY;
 
 const getProxyAgent = () => {

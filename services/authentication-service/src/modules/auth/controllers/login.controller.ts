@@ -5,14 +5,14 @@
 import {inject} from '@loopback/context';
 import {AnyObject, DataObject, Model, repository} from '@loopback/repository';
 import {
-  HttpErrors,
-  RequestContext,
   get,
   getModelSchemaRef,
+  HttpErrors,
   param,
   patch,
   post,
   requestBody,
+  RequestContext,
 } from '@loopback/rest';
 import {
   AuthenticateErrorKeys,
@@ -27,36 +27,35 @@ import {
   UserStatus,
   X_TS_TYPE,
 } from '@sourceloop/core';
-
 import crypto from 'crypto';
 import * as jwt from 'jsonwebtoken';
 import {
-  AuthErrorKeys,
-  AuthenticationBindings,
-  ClientAuthCode,
-  STRATEGY,
   authenticate,
   authenticateClient,
+  AuthenticationBindings,
+  AuthErrorKeys,
+  ClientAuthCode,
+  STRATEGY,
 } from 'loopback4-authentication';
-import {AuthorizeErrorKeys, authorize} from 'loopback4-authorization';
+import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
 import moment from 'moment-timezone';
-import {LoginType} from '../../enums/login-type.enum';
-import {AuthServiceBindings} from '../../keys';
+import {LoginType} from '../../../enums';
+import {AuthServiceBindings} from '../../../keys';
 import {
   AuthClient,
   LoginActivity,
   RefreshToken,
   User,
   UserTenant,
-} from '../../models';
+} from '../../../models';
 import {
   AuthCodeBindings,
   AuthCodeGeneratorFn,
   CodeReaderFn,
-  JWTSignerFn,
   JwtPayloadFn,
+  JWTSignerFn,
   UserValidationServiceBindings,
-} from '../../providers';
+} from '../../../providers';
 import {
   AuthClientRepository,
   LoginActivityRepository,
@@ -64,29 +63,30 @@ import {
   RefreshTokenRepository,
   RevokedTokenRepository,
   RoleRepository,
+  TenantConfigRepository,
   UserCredentialsRepository,
   UserLevelPermissionRepository,
   UserLevelResourceRepository,
   UserRepository,
   UserTenantRepository,
-} from '../../repositories';
-import {TenantConfigRepository} from '../../repositories/tenant-config.repository';
-import {LoginHelperService} from '../../services';
+} from '../../../repositories';
+import {LoginHelperService} from '../../../services';
 import {
   ActorId,
   ExternalTokens,
   IUserActivity,
   UserValidationFn,
-} from '../../types';
+} from '../../../types';
 import {
   AuthRefreshTokenRequest,
   AuthTokenRequest,
-  CodeResponse,
+  AuthUser,
   LoginRequest,
-} from './';
-import {AuthUser} from './models/auth-user.model';
-import {ResetPassword} from './models/reset-password.dto';
-import {TokenResponse} from './models/token-response.dto';
+  ResetPassword,
+  TokenResponse,
+} from '../models';
+import {CodeResponse} from '../types';
+
 export class LoginController {
   constructor(
     @inject(AuthenticationBindings.CURRENT_CLIENT)
