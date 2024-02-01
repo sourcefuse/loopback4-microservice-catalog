@@ -8,7 +8,6 @@ import {
   get,
   getModelSchemaRef,
   HttpErrors,
-  oas,
   param,
   post,
   Request,
@@ -32,11 +31,10 @@ import {
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {URLSearchParams} from 'url';
-import {AuthCodeBindings, AuthCodeGeneratorFn} from '../../providers';
-import {AuthClientRepository} from '../../repositories';
-import {AuthUser} from './models/auth-user.model';
-import {ClientAuthRequest} from './models/client-auth-request.dto';
-import {TokenResponse} from './models/token-response.dto';
+import {AuthCodeBindings, AuthCodeGeneratorFn} from '../../../providers';
+import {AuthClientRepository} from '../../../repositories';
+import {AuthUser, ClientAuthRequest, TokenResponse} from '../models';
+
 const queryGen = (from: 'body' | 'query') => {
   return (req: Request) => {
     return {
@@ -45,7 +43,7 @@ const queryGen = (from: 'body' | 'query') => {
   };
 };
 
-export class GoogleLoginController {
+export class InstagramLoginController {
   constructor(
     @repository(AuthClientRepository)
     public authClientRepository: AuthClientRepository,
@@ -56,67 +54,22 @@ export class GoogleLoginController {
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
   @authenticate(
-    STRATEGY.GOOGLE_OAUTH2,
+    STRATEGY.INSTAGRAM_OAUTH2,
     {
       accessType: 'offline',
-      scope: ['profile', 'email'],
-      authorizationURL: process.env.GOOGLE_AUTH_URL,
-      callbackURL: process.env.GOOGLE_AUTH_CALLBACK_URL,
-      clientID: process.env.GOOGLE_AUTH_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_AUTH_CLIENT_SECRET,
-      tokenURL: process.env.GOOGLE_AUTH_TOKEN_URL,
-    },
-    queryGen('query'),
-  )
-  @authorize({permissions: ['*']})
-  @oas.deprecated()
-  @get('/auth/google', {
-    responses: {
-      [STATUS_CODE.OK]: {
-        description: `Google Token Response,
-         (Deprecated: Possible security issue if secret is passed via query params, 
-          please use the post endpoint)`,
-        content: {
-          [CONTENT_TYPE.JSON]: {
-            schema: {[X_TS_TYPE]: TokenResponse},
-          },
-        },
-      },
-    },
-  })
-  /**
-   * @deprecated
-   *  This method should not be used, possible security issue
-   *  if secret is passed via query params, please use the post endpoint
-   */
-  async loginViaGoogle(
-    @param.query.string('client_id')
-    clientId?: string,
-    @param.query.string('client_secret')
-    clientSecret?: string,
-  ): Promise<void> {
-    //do nothing
-  }
-
-  @authenticateClient(STRATEGY.CLIENT_PASSWORD)
-  @authenticate(
-    STRATEGY.GOOGLE_OAUTH2,
-    {
-      accessType: 'offline',
-      scope: ['profile', 'email'],
-      authorizationURL: process.env.GOOGLE_AUTH_URL,
-      callbackURL: process.env.GOOGLE_AUTH_CALLBACK_URL,
-      clientID: process.env.GOOGLE_AUTH_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_AUTH_CLIENT_SECRET,
-      tokenURL: process.env.GOOGLE_AUTH_TOKEN_URL,
+      authorizationURL: process.env.INSTAGRAM_AUTH_URL,
+      callbackURL: process.env.INSTAGRAM_AUTH_CALLBACK_URL,
+      clientID: process.env.INSTAGRAM_AUTH_CLIENT_ID,
+      clientSecret: process.env.INSTAGRAM_AUTH_CLIENT_SECRET,
+      tokenURL: process.env.INSTAGRAM_AUTH_TOKEN_URL,
     },
     queryGen('body'),
   )
   @authorize({permissions: ['*']})
-  @post('/auth/google', {
+  @post('/auth/instagram', {
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'POST Call for Google based login',
+        description: 'POST Call for Instagram based login',
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {[X_TS_TYPE]: TokenResponse},
@@ -125,7 +78,7 @@ export class GoogleLoginController {
       },
     },
   })
-  async postLoginViaGoogle(
+  async postLoginViaInstagram(
     @requestBody({
       content: {
         [CONTENT_TYPE.FORM_URLENCODED]: {
@@ -139,23 +92,22 @@ export class GoogleLoginController {
   }
 
   @authenticate(
-    STRATEGY.GOOGLE_OAUTH2,
+    STRATEGY.INSTAGRAM_OAUTH2,
     {
       accessType: 'offline',
-      scope: ['profile', 'email'],
-      authorizationURL: process.env.GOOGLE_AUTH_URL,
-      callbackURL: process.env.GOOGLE_AUTH_CALLBACK_URL,
-      clientID: process.env.GOOGLE_AUTH_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_AUTH_CLIENT_SECRET,
-      tokenURL: process.env.GOOGLE_AUTH_TOKEN_URL,
+      authorizationURL: process.env.INSTAGRAM_AUTH_URL,
+      callbackURL: process.env.INSTAGRAM_AUTH_CALLBACK_URL,
+      clientID: process.env.INSTAGRAM_AUTH_CLIENT_ID,
+      clientSecret: process.env.INSTAGRAM_AUTH_CLIENT_SECRET,
+      tokenURL: process.env.INSTAGRAM_AUTH_TOKEN_URL,
     },
     queryGen('query'),
   )
   @authorize({permissions: ['*']})
-  @get('/auth/google-auth-redirect', {
+  @get('/auth/instagram-auth-redirect', {
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Google Redirect Token Response',
+        description: 'Instagram Redirect Token Response',
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {[X_TS_TYPE]: TokenResponse},
@@ -164,7 +116,7 @@ export class GoogleLoginController {
       },
     },
   })
-  async googleCallback(
+  async instagramCallback(
     @param.query.string('code') code: string,
     @param.query.string('state') state: string,
     @inject(RestBindings.Http.RESPONSE) response: Response,

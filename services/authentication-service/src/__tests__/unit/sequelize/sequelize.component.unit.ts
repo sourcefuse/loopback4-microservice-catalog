@@ -10,6 +10,7 @@ import {
   LoginController,
   OtpController,
 } from '../../../controllers';
+import {AppleLoginController} from '../../../modules/auth/controllers';
 import {
   AuthClientRepository,
   LoginActivityRepository,
@@ -21,8 +22,6 @@ import {
   UserRepository,
   UserTenantRepository,
 } from '../../../repositories/sequelize';
-
-import {AppleLoginController} from '../../../modules/auth/apple-login.controller';
 import {LoginHelperService, OtpService} from '../../../services';
 import {getBaseClass} from '../../utils/getBaseClass';
 import {SequelizeAuthenticationServiceApplication} from './sequelize.application';

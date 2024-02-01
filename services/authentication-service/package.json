@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/authentication-service",
-  "version": "15.0.0",
+  "version": "16.0.0",
   "description": "Authentication microservice",
   "keywords": [
     "loopback-extension",

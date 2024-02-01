@@ -8,6 +8,7 @@ import {
   get,
   getModelSchemaRef,
   HttpErrors,
+  oas,
   param,
   post,
   Request,
@@ -31,11 +32,10 @@ import {
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {URLSearchParams} from 'url';
-import {AuthCodeBindings, AuthCodeGeneratorFn} from '../../providers';
-import {AuthClientRepository} from '../../repositories';
-import {AuthUser} from './models/auth-user.model';
-import {ClientAuthRequest} from './models/client-auth-request.dto';
-import {TokenResponse} from './models/token-response.dto';
+import {AuthCodeBindings, AuthCodeGeneratorFn} from '../../../providers';
+import {AuthClientRepository} from '../../../repositories';
+import {AuthUser, ClientAuthRequest, TokenResponse} from '../models';
+
 const queryGen = (from: 'body' | 'query') => {
   return (req: Request) => {
     return {
@@ -44,7 +44,7 @@ const queryGen = (from: 'body' | 'query') => {
   };
 };
 
-export class AppleLoginController {
+export class GoogleLoginController {
   constructor(
     @repository(AuthClientRepository)
     public authClientRepository: AuthClientRepository,
@@ -55,58 +55,26 @@ export class AppleLoginController {
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
   @authenticate(
-    STRATEGY.APPLE_OAUTH2,
+    STRATEGY.GOOGLE_OAUTH2,
     {
       accessType: 'offline',
-      scope: ['name', 'email'],
-      callbackURL: process.env.APPLE_AUTH_CALLBACK_URL,
-      clientID: process.env.APPLE_AUTH_CLIENT_ID,
-      teamID: process.env.APPLE_AUTH_TEAM_ID,
-      keyID: process.env.APPLE_AUTH_KEY_ID,
-      privateKeyLocation: process.env.APPLE_AUTH_PRIVATE_KEY_LOCATION,
-    },
-    queryGen('body'),
-  )
-  @authorize({permissions: ['*']})
-  @post('/auth/oauth-apple', {
-    responses: {
-      [STATUS_CODE.OK]: {
-        description: 'POST Call for Apple based login',
-        content: {},
-      },
-    },
-  })
-  postLoginViaApple(
-    @requestBody({
-      content: {
-        [CONTENT_TYPE.FORM_URLENCODED]: {
-          schema: getModelSchemaRef(ClientAuthRequest),
-        },
-      },
-    })
-    clientCreds: ClientAuthRequest,
-  ): void {
-    //do nothing
-  }
-
-  @authenticate(
-    STRATEGY.APPLE_OAUTH2,
-    {
-      accessType: 'offline',
-      scope: ['name', 'email'],
-      callbackURL: process.env.APPLE_AUTH_CALLBACK_URL,
-      clientID: process.env.APPLE_AUTH_CLIENT_ID,
-      teamID: process.env.APPLE_AUTH_TEAM_ID,
-      keyID: process.env.APPLE_AUTH_KEY_ID,
-      privateKeyLocation: process.env.APPLE_AUTH_PRIVATE_KEY_LOCATION,
+      scope: ['profile', 'email'],
+      authorizationURL: process.env.GOOGLE_AUTH_URL,
+      callbackURL: process.env.GOOGLE_AUTH_CALLBACK_URL,
+      clientID: process.env.GOOGLE_AUTH_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_AUTH_CLIENT_SECRET,
+      tokenURL: process.env.GOOGLE_AUTH_TOKEN_URL,
     },
     queryGen('query'),
   )
   @authorize({permissions: ['*']})
-  @get('/auth/apple-oauth-redirect', {
+  @oas.deprecated()
+  @get('/auth/google', {
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Apple Redirect Token Response',
+        description: `Google Token Response,
+         (Deprecated: Possible security issue if secret is passed via query params, 
+          please use the post endpoint)`,
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {[X_TS_TYPE]: TokenResponse},
@@ -115,7 +83,87 @@ export class AppleLoginController {
       },
     },
   })
-  async appleCallback(
+  /**
+   * @deprecated
+   *  This method should not be used, possible security issue
+   *  if secret is passed via query params, please use the post endpoint
+   */
+  async loginViaGoogle(
+    @param.query.string('client_id')
+    clientId?: string,
+    @param.query.string('client_secret')
+    clientSecret?: string,
+  ): Promise<void> {
+    //do nothing
+  }
+
+  @authenticateClient(STRATEGY.CLIENT_PASSWORD)
+  @authenticate(
+    STRATEGY.GOOGLE_OAUTH2,
+    {
+      accessType: 'offline',
+      scope: ['profile', 'email'],
+      authorizationURL: process.env.GOOGLE_AUTH_URL,
+      callbackURL: process.env.GOOGLE_AUTH_CALLBACK_URL,
+      clientID: process.env.GOOGLE_AUTH_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_AUTH_CLIENT_SECRET,
+      tokenURL: process.env.GOOGLE_AUTH_TOKEN_URL,
+    },
+    queryGen('body'),
+  )
+  @authorize({permissions: ['*']})
+  @post('/auth/google', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'POST Call for Google based login',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {[X_TS_TYPE]: TokenResponse},
+          },
+        },
+      },
+    },
+  })
+  async postLoginViaGoogle(
+    @requestBody({
+      content: {
+        [CONTENT_TYPE.FORM_URLENCODED]: {
+          schema: getModelSchemaRef(ClientAuthRequest),
+        },
+      },
+    })
+    clientCreds?: ClientAuthRequest,
+  ): Promise<void> {
+    //do nothing
+  }
+
+  @authenticate(
+    STRATEGY.GOOGLE_OAUTH2,
+    {
+      accessType: 'offline',
+      scope: ['profile', 'email'],
+      authorizationURL: process.env.GOOGLE_AUTH_URL,
+      callbackURL: process.env.GOOGLE_AUTH_CALLBACK_URL,
+      clientID: process.env.GOOGLE_AUTH_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_AUTH_CLIENT_SECRET,
+      tokenURL: process.env.GOOGLE_AUTH_TOKEN_URL,
+    },
+    queryGen('query'),
+  )
+  @authorize({permissions: ['*']})
+  @get('/auth/google-auth-redirect', {
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Google Redirect Token Response',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {[X_TS_TYPE]: TokenResponse},
+          },
+        },
+      },
+    },
+  })
+  async googleCallback(
     @param.query.string('code') code: string,
     @param.query.string('state') state: string,
     @inject(RestBindings.Http.RESPONSE) response: Response,
@@ -123,7 +171,6 @@ export class AppleLoginController {
     user: AuthUser | undefined,
   ): Promise<void> {
     const clientId = new URLSearchParams(state).get('client_id');
-
     if (!clientId || !user) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
     }
@@ -137,12 +184,7 @@ export class AppleLoginController {
     }
     try {
       const token = await this.getAuthCode(client, user);
-      const role = user.role;
-      response.redirect(
-        `${process.env.WEBAPP_URL ?? ''}${
-          client.redirectUrl
-        }?code=${token}&role=${role}`,
-      );
+      response.redirect(`${client.redirectUrl}?code=${token}`);
     } catch (error) {
       this.logger.error(error);
       throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);

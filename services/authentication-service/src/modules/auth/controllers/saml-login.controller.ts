@@ -1,14 +1,14 @@
 import {inject} from '@loopback/context';
 import {AnyObject, repository} from '@loopback/repository';
 import {
-  HttpErrors,
-  Request,
-  Response,
-  RestBindings,
   getModelSchemaRef,
+  HttpErrors,
   param,
   post,
+  Request,
   requestBody,
+  Response,
+  RestBindings,
 } from '@loopback/rest';
 import {
   CONTENT_TYPE,
@@ -18,19 +18,17 @@ import {
   X_TS_TYPE,
 } from '@sourceloop/core';
 import {
-  AuthErrorKeys,
-  AuthenticationBindings,
-  STRATEGY,
   authenticate,
   authenticateClient,
+  AuthenticationBindings,
+  AuthErrorKeys,
+  STRATEGY,
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-import {AuthCodeBindings} from '../../providers/keys';
-import {AuthCodeGeneratorFn} from '../../providers/types';
-import {AuthClientRepository} from '../../repositories';
-import {AuthUser} from './models/auth-user.model';
-import {ClientAuthRequest} from './models/client-auth-request.dto';
-import {TokenResponse} from './models/token-response.dto';
+import {AuthCodeBindings, AuthCodeGeneratorFn} from '../../../providers';
+import {AuthClientRepository} from '../../../repositories';
+import {AuthUser, ClientAuthRequest, TokenResponse} from '../models';
+
 export class SamlLoginController {
   constructor(
     @repository(AuthClientRepository)
