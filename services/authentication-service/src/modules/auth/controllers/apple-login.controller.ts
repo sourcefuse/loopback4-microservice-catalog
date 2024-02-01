@@ -31,11 +31,9 @@ import {
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {URLSearchParams} from 'url';
-import {AuthCodeBindings, AuthCodeGeneratorFn} from '../../providers';
-import {AuthClientRepository} from '../../repositories';
-import {AuthUser} from './models/auth-user.model';
-import {ClientAuthRequest} from './models/client-auth-request.dto';
-import {TokenResponse} from './models/token-response.dto';
+import {AuthCodeBindings, AuthCodeGeneratorFn} from '../../../providers';
+import {AuthClientRepository} from '../../../repositories';
+import {AuthUser, ClientAuthRequest, TokenResponse} from '../models';
 
 const queryGen = (from: 'body' | 'query') => {
   return (req: Request) => {
@@ -45,7 +43,7 @@ const queryGen = (from: 'body' | 'query') => {
   };
 };
 
-export class FacebookLoginController {
+export class AppleLoginController {
   constructor(
     @repository(AuthClientRepository)
     public authClientRepository: AuthClientRepository,
@@ -56,31 +54,28 @@ export class FacebookLoginController {
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
   @authenticate(
-    STRATEGY.FACEBOOK_OAUTH2,
+    STRATEGY.APPLE_OAUTH2,
     {
       accessType: 'offline',
-      authorizationURL: process.env.FACEBOOK_AUTH_URL,
-      callbackURL: process.env.FACEBOOK_AUTH_CALLBACK_URL,
-      clientID: process.env.FACEBOOK_AUTH_CLIENT_ID,
-      clientSecret: process.env.FACEBOOK_AUTH_CLIENT_SECRET,
-      tokenURL: process.env.FACEBOOK_AUTH_TOKEN_URL,
+      scope: ['name', 'email'],
+      callbackURL: process.env.APPLE_AUTH_CALLBACK_URL,
+      clientID: process.env.APPLE_AUTH_CLIENT_ID,
+      teamID: process.env.APPLE_AUTH_TEAM_ID,
+      keyID: process.env.APPLE_AUTH_KEY_ID,
+      privateKeyLocation: process.env.APPLE_AUTH_PRIVATE_KEY_LOCATION,
     },
     queryGen('body'),
   )
   @authorize({permissions: ['*']})
-  @post('/auth/facebook', {
+  @post('/auth/oauth-apple', {
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'POST Call for Facebook based login',
-        content: {
-          [CONTENT_TYPE.JSON]: {
-            schema: {[X_TS_TYPE]: TokenResponse},
-          },
-        },
+        description: 'POST Call for Apple based login',
+        content: {},
       },
     },
   })
-  async postLoginViaFacebook(
+  postLoginViaApple(
     @requestBody({
       content: {
         [CONTENT_TYPE.FORM_URLENCODED]: {
@@ -88,28 +83,29 @@ export class FacebookLoginController {
         },
       },
     })
-    clientCreds?: ClientAuthRequest,
-  ): Promise<void> {
+    clientCreds: ClientAuthRequest,
+  ): void {
     //do nothing
   }
 
   @authenticate(
-    STRATEGY.FACEBOOK_OAUTH2,
+    STRATEGY.APPLE_OAUTH2,
     {
       accessType: 'offline',
-      authorizationURL: process.env.FACEBOOK_AUTH_URL,
-      callbackURL: process.env.FACEBOOK_AUTH_CALLBACK_URL,
-      clientID: process.env.FACEBOOK_AUTH_CLIENT_ID,
-      clientSecret: process.env.FACEBOOK_AUTH_CLIENT_SECRET,
-      tokenURL: process.env.FACEBOOK_AUTH_TOKEN_URL,
+      scope: ['name', 'email'],
+      callbackURL: process.env.APPLE_AUTH_CALLBACK_URL,
+      clientID: process.env.APPLE_AUTH_CLIENT_ID,
+      teamID: process.env.APPLE_AUTH_TEAM_ID,
+      keyID: process.env.APPLE_AUTH_KEY_ID,
+      privateKeyLocation: process.env.APPLE_AUTH_PRIVATE_KEY_LOCATION,
     },
     queryGen('query'),
   )
   @authorize({permissions: ['*']})
-  @get('/auth/facebook-auth-redirect', {
+  @get('/auth/apple-oauth-redirect', {
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Facebook Redirect Token Response',
+        description: 'Apple Redirect Token Response',
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {[X_TS_TYPE]: TokenResponse},
@@ -118,7 +114,7 @@ export class FacebookLoginController {
       },
     },
   })
-  async facebookCallback(
+  async appleCallback(
     @param.query.string('code') code: string,
     @param.query.string('state') state: string,
     @inject(RestBindings.Http.RESPONSE) response: Response,
@@ -126,6 +122,7 @@ export class FacebookLoginController {
     user: AuthUser | undefined,
   ): Promise<void> {
     const clientId = new URLSearchParams(state).get('client_id');
+
     if (!clientId || !user) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
     }
@@ -139,7 +136,12 @@ export class FacebookLoginController {
     }
     try {
       const token = await this.getAuthCode(client, user);
-      response.redirect(`${client.redirectUrl}?code=${token}`);
+      const role = user.role;
+      response.redirect(
+        `${process.env.WEBAPP_URL ?? ''}${
+          client.redirectUrl
+        }?code=${token}&role=${role}`,
+      );
     } catch (error) {
       this.logger.error(error);
       throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);

@@ -27,11 +27,10 @@ import {
   STRATEGY,
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-import {AuthCodeBindings, AuthCodeGeneratorFn} from '../../providers';
-import {AuthClientRepository} from '../../repositories';
-import {AuthUser} from './models/auth-user.model';
-import {ClientAuthRequest} from './models/client-auth-request.dto';
-import {TokenResponse} from './models/token-response.dto';
+import {AuthCodeBindings, AuthCodeGeneratorFn} from '../../../providers';
+import {AuthClientRepository} from '../../../repositories';
+import {AuthUser, ClientAuthRequest, TokenResponse} from '../models';
+
 const queryGen = (from: 'body' | 'query') => {
   return (req: Request) => {
     return {

@@ -31,11 +31,9 @@ import {
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {URLSearchParams} from 'url';
-import {AuthCodeBindings, AuthCodeGeneratorFn} from '../../providers';
-import {AuthClientRepository} from '../../repositories';
-import {AuthUser} from './models/auth-user.model';
-import {ClientAuthRequest} from './models/client-auth-request.dto';
-import {TokenResponse} from './models/token-response.dto';
+import {AuthCodeBindings, AuthCodeGeneratorFn} from '../../../providers';
+import {AuthClientRepository} from '../../../repositories';
+import {AuthUser, ClientAuthRequest, TokenResponse} from '../models';
 
 const queryGen = (from: 'body' | 'query') => {
   return (req: Request) => {
@@ -45,7 +43,7 @@ const queryGen = (from: 'body' | 'query') => {
   };
 };
 
-export class InstagramLoginController {
+export class FacebookLoginController {
   constructor(
     @repository(AuthClientRepository)
     public authClientRepository: AuthClientRepository,
@@ -56,22 +54,22 @@ export class InstagramLoginController {
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
   @authenticate(
-    STRATEGY.INSTAGRAM_OAUTH2,
+    STRATEGY.FACEBOOK_OAUTH2,
     {
       accessType: 'offline',
-      authorizationURL: process.env.INSTAGRAM_AUTH_URL,
-      callbackURL: process.env.INSTAGRAM_AUTH_CALLBACK_URL,
-      clientID: process.env.INSTAGRAM_AUTH_CLIENT_ID,
-      clientSecret: process.env.INSTAGRAM_AUTH_CLIENT_SECRET,
-      tokenURL: process.env.INSTAGRAM_AUTH_TOKEN_URL,
+      authorizationURL: process.env.FACEBOOK_AUTH_URL,
+      callbackURL: process.env.FACEBOOK_AUTH_CALLBACK_URL,
+      clientID: process.env.FACEBOOK_AUTH_CLIENT_ID,
+      clientSecret: process.env.FACEBOOK_AUTH_CLIENT_SECRET,
+      tokenURL: process.env.FACEBOOK_AUTH_TOKEN_URL,
     },
     queryGen('body'),
   )
   @authorize({permissions: ['*']})
-  @post('/auth/instagram', {
+  @post('/auth/facebook', {
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'POST Call for Instagram based login',
+        description: 'POST Call for Facebook based login',
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {[X_TS_TYPE]: TokenResponse},
@@ -80,7 +78,7 @@ export class InstagramLoginController {
       },
     },
   })
-  async postLoginViaInstagram(
+  async postLoginViaFacebook(
     @requestBody({
       content: {
         [CONTENT_TYPE.FORM_URLENCODED]: {
@@ -94,22 +92,22 @@ export class InstagramLoginController {
   }
 
   @authenticate(
-    STRATEGY.INSTAGRAM_OAUTH2,
+    STRATEGY.FACEBOOK_OAUTH2,
     {
       accessType: 'offline',
-      authorizationURL: process.env.INSTAGRAM_AUTH_URL,
-      callbackURL: process.env.INSTAGRAM_AUTH_CALLBACK_URL,
-      clientID: process.env.INSTAGRAM_AUTH_CLIENT_ID,
-      clientSecret: process.env.INSTAGRAM_AUTH_CLIENT_SECRET,
-      tokenURL: process.env.INSTAGRAM_AUTH_TOKEN_URL,
+      authorizationURL: process.env.FACEBOOK_AUTH_URL,
+      callbackURL: process.env.FACEBOOK_AUTH_CALLBACK_URL,
+      clientID: process.env.FACEBOOK_AUTH_CLIENT_ID,
+      clientSecret: process.env.FACEBOOK_AUTH_CLIENT_SECRET,
+      tokenURL: process.env.FACEBOOK_AUTH_TOKEN_URL,
     },
     queryGen('query'),
   )
   @authorize({permissions: ['*']})
-  @get('/auth/instagram-auth-redirect', {
+  @get('/auth/facebook-auth-redirect', {
     responses: {
       [STATUS_CODE.OK]: {
-        description: 'Instagram Redirect Token Response',
+        description: 'Facebook Redirect Token Response',
         content: {
           [CONTENT_TYPE.JSON]: {
             schema: {[X_TS_TYPE]: TokenResponse},
@@ -118,7 +116,7 @@ export class InstagramLoginController {
       },
     },
   })
-  async instagramCallback(
+  async facebookCallback(
     @param.query.string('code') code: string,
     @param.query.string('state') state: string,
     @inject(RestBindings.Http.RESPONSE) response: Response,
