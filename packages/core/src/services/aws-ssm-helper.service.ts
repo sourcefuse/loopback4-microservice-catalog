@@ -1,6 +1,6 @@
 import {bind, BindingScope} from '@loopback/core';
-// @typescript-eslint/naming-convention
-import * as AWS from 'aws-sdk'; //NOSONAR
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import * as AWS from 'aws-sdk';
 
 @bind({scope: BindingScope.TRANSIENT})
 export class AwsSsmHelperService {
@@ -15,7 +15,7 @@ export class AwsSsmHelperService {
       region: process.env.AWS_REGION,
       secretAccessKey: process.env.AWS_SECRET_KEY,
     });
-    // @typescript-eslint/return-await
+    // eslint-disable-next-line @typescript-eslint/return-await
     return await ssm
       .getParameter({
         Name: ssmKeyParamName,
