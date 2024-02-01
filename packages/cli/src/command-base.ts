@@ -153,7 +153,7 @@ export default abstract class CommandBase<T extends object> extends Command {
     if (currentVersion !== latestVersion) {
       this.log(
         chalk.yellow(
-          'Current Sourceloop CLI version is v%s. To use latest features, please update to v%s',
+          'Current ARC CLI version is v%s. To use latest features, please update to v%s',
         ),
         currentVersion,
         latestVersion,

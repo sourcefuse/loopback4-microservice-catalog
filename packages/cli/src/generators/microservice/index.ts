@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import fs from 'fs';
-import { join } from 'path';
+import {join} from 'path';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import AppGenerator from '../../app-generator';
 import {
@@ -17,14 +17,14 @@ import {
   SEQUELIZESERVICES,
   SERVICES,
 } from '../../enum';
-import { AnyObject, MicroserviceOptions } from '../../types';
+import {AnyObject, MicroserviceOptions} from '../../types';
 import {
   JSON_SPACING,
   appendDependencies,
   getDependencyVersion,
 } from '../../utils';
 const chalk = require('chalk'); //NOSONAR
-const { promisify } = require('util');
+const {promisify} = require('util');
 
 const DATASOURCE_TEMPLATE = join(
   '..',
@@ -69,6 +69,9 @@ const MIGRATION_FOLDER = join('packages', 'migrations');
 const sourceloopMigrationPath = (packageName: SERVICES) =>
   join('node_modules', `@sourceloop/${packageName}`, 'migrations');
 
+const baseServicePath = (servicename: SERVICES) =>
+  join('node_modules', `@sourceloop/${servicename}`);
+
 const BACK_TO_ROOT = join('..', '..');
 
 const DEFAULT_NAME = 'microservice';
@@ -87,14 +90,17 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
   }
 
   async setOptions() {
+    if (this.shouldExit()) return;
     return super.setOptions();
   }
 
   async setFacade() {
+    if (this.shouldExit()) return false;
     this.projectInfo.facade = this.options.facade;
   }
 
   async setBaseService() {
+    if (this.shouldExit()) return false;
     if (this.options.baseService) {
       this.projectInfo.serviceDependency = this.options.baseService;
     }
@@ -102,35 +108,41 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
 
   //Loopback4 prompts
   async promptProjectName() {
+    if (this.shouldExit()) return;
     return super.promptProjectName();
   }
 
   async promptApplication() {
+    if (this.shouldExit()) return;
     return super.promptApplication();
   }
 
   async promptOptions() {
+    if (this.shouldExit()) return;
     return super.promptOptions();
   }
 
   async buildAppClassMixins() {
+    if (this.shouldExit()) return;
     return super.buildAppClassMixins();
   }
 
   async setDatasource() {
+    if (this.shouldExit()) return false;
     this.projectInfo.datasourceName = this.options.datasourceName;
     this.projectInfo.datasourceClassName = this._capitalizeFirstLetter(
       this.options.datasourceName,
     );
     this.projectInfo.datasourceConnector =
       DATASOURCE_CONNECTORS[
-      this.options.datasourceType ?? DATASOURCES.POSTGRES
+        this.options.datasourceType ?? DATASOURCES.POSTGRES
       ];
     this.projectInfo.datasourceConnectorName =
       this.projectInfo.datasourceConnector;
     this.projectInfo.datasourceType = this.options.datasourceType;
   }
   async setSequelize() {
+    if (this.shouldExit()) return false;
     this.projectInfo.sequelize = this.options.sequelize;
     if (this.projectInfo.sequelize) {
       this.projectInfo.baseServiceBindingName =
@@ -162,6 +174,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
   }
 
   async setMigrationType() {
+    if (this.shouldExit()) return false;
     if (this.options.customMigrations) {
       this.options.migrations = true;
       this.projectInfo.migrationType = MIGRATIONS.CUSTOM;
@@ -174,6 +187,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
   }
 
   scaffold() {
+    if (this.shouldExit()) return false;
     const type = this.options.facade ? 'facades' : 'services';
     if (!this.shouldExit()) {
       if (type === 'services') {
@@ -204,6 +218,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
   }
 
   async writing() {
+    if (this.shouldExit()) return false;
     if (!this.shouldExit()) {
       if (this.options.baseService ?? this.options.datasourceName) {
         await this._createDataSourceAsync();
@@ -214,6 +229,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
   }
 
   async install() {
+    if (this.shouldExit()) return false;
     if (!this.shouldExit()) {
       const packageJsonFile = join(this.destinationPath(), 'package.json');
       const packageJson = this.fs.readJSON(packageJsonFile) as AnyObject;
@@ -258,6 +274,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
 
       await this._addMigrations();
       await this._appendDockerScript();
+      await this._updateEnvFiles();
       return true;
     }
     return false;
@@ -280,6 +297,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
   }
 
   addScope() {
+    if (this.shouldExit()) return false;
     let czConfig = this.fs.read(
       join(this.destinationPath(), '../../', '.cz-config.js'),
     );
@@ -311,7 +329,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
   async _appendDockerScript() {
     const packageJsonFile = join(this.destinationRoot(), './package.json');
     const packageJson = this.fs.readJSON(packageJsonFile) as AnyObject;
-    const scripts = { ...packageJson.scripts };
+    const scripts = {...packageJson.scripts};
     scripts[`docker:build:${this.options.baseService}`] =
       `docker build --build-arg SERVICE_NAME=${this.options.baseService} --build-arg FROM_FOLDER=services -t $REPOSITORY_URI:${this.options.baseService} -f ./services/${this.options.name}/Dockerfile .`;
     packageJson.scripts = scripts;
@@ -603,6 +621,66 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       );
     } catch {
       //do nothing
+    }
+  }
+
+  async _updateEnvFiles() {
+    //if env.example present in base service then copy that
+    if (this.options.baseService) {
+      const envExists = this.fs.exists(
+        join(
+          this.destinationPath(),
+          baseServicePath(this.options.baseService),
+          '.env.example',
+        ),
+      );
+      if (envExists) {
+        const example = this.fs.read(
+          join(
+            this.destinationPath(),
+            baseServicePath(this.options.baseService),
+            '.env.example',
+          ),
+        );
+        const defaults = this.fs.read(
+          join(
+            this.destinationPath(),
+            baseServicePath(this.options.baseService),
+            '.env.defaults',
+          ),
+        );
+
+        fs.writeFile(
+          join(
+            this.destinationPath(),
+            'services',
+            this.options.name ?? DEFAULT_NAME,
+            '.env.example',
+          ),
+          example,
+          {
+            flag: 'w',
+          },
+          function () {
+            //This is intentional.
+          },
+        );
+        fs.writeFile(
+          join(
+            this.destinationPath(),
+            'services',
+            this.options.name ?? DEFAULT_NAME,
+            '.env.defaults',
+          ),
+          defaults,
+          {
+            flag: 'w',
+          },
+          function () {
+            //This is intentional.
+          },
+        );
+      }
     }
   }
 
