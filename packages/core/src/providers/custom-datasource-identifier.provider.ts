@@ -1,34 +1,25 @@
-import {Provider} from '@loopback/core';
+import {Provider, service} from '@loopback/core';
 import {DatasourceIdentifierFn} from 'loopback4-dynamic-datasource';
-const jwt = require('jsonwebtoken');
+import {TenantIdentifierHelperService} from '../services';
 
 export class CustomDatasourceIdentifierProvider
   implements Provider<DatasourceIdentifierFn>
 {
+  constructor(
+    @service(TenantIdentifierHelperService)
+    public getTenantIdHelper: TenantIdentifierHelperService,
+  ) {}
   value(): DatasourceIdentifierFn {
     return async requestCtx => {
       const tokenWithBearerString = String(
         requestCtx.request.headers?.authorization,
       );
-      /* Driver code */
-      const bearerStr = 'Bearer';
-      const isBearer = tokenWithBearerString.includes(bearerStr);
-      const tokenArr = isBearer
-        ? tokenWithBearerString.split(' ')
-        : tokenWithBearerString.split('');
-      const token = tokenArr[1];
-      let tenantId = null;
-      if (token) {
-        const payload = jwt.verify(token, process.env.JWT_SECRET as string, {
-          issuer: process.env.JWT_ISSUER,
-          algorithms: ['HS256'],
-        });
-
-        if (payload?.tenantId) {
-          tenantId = payload['tenantId'] as string;
-        }
+      if (tokenWithBearerString) {
+        return this.getTenantIdHelper.getTenantIdFromToken(
+          tokenWithBearerString,
+        );
       }
-      return tenantId == null ? null : {id: tenantId};
+      return null;
     };
   }
 }
