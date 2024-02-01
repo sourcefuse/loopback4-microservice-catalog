@@ -2,31 +2,23 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Getter, inject} from '@loopback/core';
+import {inject} from '@loopback/core';
 import {Entity, juggler} from '@loopback/repository';
-import {
-  DefaultUserModifyCrudRepository,
-  IAuthUserWithPermissions,
-} from '@sourceloop/core';
-import {AuthenticationBindings} from 'loopback4-authentication';
 
+import {DefaultSoftCrudRepository} from '@sourceloop/core';
 import {Role} from '../models';
 import {AuthDbSourceName} from '../types';
 
-export class RoleRepository extends DefaultUserModifyCrudRepository<
+export class RoleRepository extends DefaultSoftCrudRepository<
   Role,
   typeof Role.prototype.id
 > {
   constructor(
     @inject(`datasources.${AuthDbSourceName}`)
     dataSource: juggler.DataSource,
-    @inject.getter(AuthenticationBindings.CURRENT_USER)
-    protected readonly getCurrentUser: Getter<
-      IAuthUserWithPermissions | undefined
-    >,
     @inject('models.Role')
     private readonly role: typeof Entity & {prototype: Role},
   ) {
-    super(role, dataSource, getCurrentUser);
+    super(role, dataSource);
   }
 }

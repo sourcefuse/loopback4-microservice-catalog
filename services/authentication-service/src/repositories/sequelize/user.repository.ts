@@ -17,14 +17,13 @@ import {SequelizeDataSource} from '@loopback/sequelize';
 import {
   AuthProvider,
   AuthenticateErrorKeys,
-  IAuthUserWithPermissions,
   ILogger,
   LOGGER,
   UserStatus,
 } from '@sourceloop/core';
-import {SequelizeUserModifyCrudRepository} from '@sourceloop/core/sequelize';
 import * as bcrypt from 'bcrypt';
-import {AuthErrorKeys, AuthenticationBindings} from 'loopback4-authentication';
+import {AuthErrorKeys} from 'loopback4-authentication';
+import {SequelizeSoftCrudRepository} from 'loopback4-soft-delete/sequelize';
 import {AuthServiceBindings} from '../../keys';
 import {
   Tenant,
@@ -40,7 +39,7 @@ import {TenantRepository} from './tenant.repository';
 import {UserCredentialsRepository} from './user-credentials.repository';
 import {UserTenantRepository} from './user-tenant.repository';
 const saltRounds = 10;
-export class UserRepository extends SequelizeUserModifyCrudRepository<
+export class UserRepository extends SequelizeSoftCrudRepository<
   User,
   typeof User.prototype.id,
   UserRelations
@@ -63,10 +62,6 @@ export class UserRepository extends SequelizeUserModifyCrudRepository<
     getUserCredsRepository: Getter<UserCredentialsRepository>,
     @repository.getter(OtpRepository)
     public getOtpRepository: Getter<OtpRepository>,
-    @inject.getter(AuthenticationBindings.CURRENT_USER)
-    protected readonly getCurrentUser: Getter<
-      IAuthUserWithPermissions | undefined
-    >,
     @repository.getter('TenantRepository')
     protected tenantRepositoryGetter: Getter<TenantRepository>,
     @repository.getter('UserTenantRepository')
@@ -77,7 +72,7 @@ export class UserRepository extends SequelizeUserModifyCrudRepository<
     @inject('models.User')
     private readonly user: typeof Entity & {prototype: User},
   ) {
-    super(user, dataSource, getCurrentUser);
+    super(user, dataSource);
     this.userTenants = this.createHasManyRepositoryFactoryFor(
       'userTenants',
       userTenantRepositoryGetter,
