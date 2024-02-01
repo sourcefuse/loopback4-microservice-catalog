@@ -17,14 +17,13 @@ import {HttpErrors} from '@loopback/rest';
 import {
   AuthProvider,
   AuthenticateErrorKeys,
-  DefaultUserModifyCrudRepository,
-  IAuthUserWithPermissions,
+  DefaultSoftCrudRepository,
   ILogger,
   LOGGER,
   UserStatus,
 } from '@sourceloop/core';
 import * as bcrypt from 'bcrypt';
-import {AuthErrorKeys, AuthenticationBindings} from 'loopback4-authentication';
+import {AuthErrorKeys} from 'loopback4-authentication';
 import {AuthServiceBindings} from '../keys';
 import {
   Tenant,
@@ -40,7 +39,7 @@ import {TenantRepository} from './tenant.repository';
 import {UserCredentialsRepository} from './user-credentials.repository';
 import {UserTenantRepository} from './user-tenant.repository';
 const saltRounds = 10;
-export class UserRepository extends DefaultUserModifyCrudRepository<
+export class UserRepository extends DefaultSoftCrudRepository<
   User,
   typeof User.prototype.id,
   UserRelations
@@ -63,10 +62,6 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
     getUserCredsRepository: Getter<UserCredentialsRepository>,
     @repository.getter(OtpRepository)
     public getOtpRepository: Getter<OtpRepository>,
-    @inject.getter(AuthenticationBindings.CURRENT_USER)
-    protected readonly getCurrentUser: Getter<
-      IAuthUserWithPermissions | undefined
-    >,
     @repository.getter('TenantRepository')
     protected tenantRepositoryGetter: Getter<TenantRepository>,
     @repository.getter('UserTenantRepository')
@@ -77,7 +72,7 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
     @inject('models.User')
     private readonly user: typeof Entity & {prototype: User},
   ) {
-    super(user, dataSource, getCurrentUser);
+    super(user, dataSource);
     this.userTenants = this.createHasManyRepositoryFactoryFor(
       'userTenants',
       userTenantRepositoryGetter,

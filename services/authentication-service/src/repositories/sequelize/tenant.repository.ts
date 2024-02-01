@@ -8,16 +8,14 @@ import {
   HasManyRepositoryFactory,
   repository,
 } from '@loopback/repository';
-import {IAuthUserWithPermissions} from '@sourceloop/core';
-import {AuthenticationBindings} from 'loopback4-authentication';
 
 import {SequelizeDataSource} from '@loopback/sequelize';
-import {SequelizeUserModifyCrudRepository} from '@sourceloop/core/sequelize';
+import {SequelizeSoftCrudRepository} from 'loopback4-soft-delete/sequelize';
 import {Tenant, TenantConfig} from '../../models';
 import {AuthDbSourceName} from '../../types';
 import {TenantConfigRepository} from './tenant-config.repository';
 
-export class TenantRepository extends SequelizeUserModifyCrudRepository<
+export class TenantRepository extends SequelizeSoftCrudRepository<
   Tenant,
   typeof Tenant.prototype.id
 > {
@@ -28,16 +26,12 @@ export class TenantRepository extends SequelizeUserModifyCrudRepository<
 
   constructor(
     @inject(`datasources.${AuthDbSourceName}`) dataSource: SequelizeDataSource,
-    @inject.getter(AuthenticationBindings.CURRENT_USER)
-    protected readonly getCurrentUser: Getter<
-      IAuthUserWithPermissions | undefined
-    >,
     @repository.getter('TenantConfigRepository')
     protected tenantConfigRepositoryGetter: Getter<TenantConfigRepository>,
     @inject('models.Tenant')
     private readonly tenant: typeof Entity & {prototype: Tenant},
   ) {
-    super(tenant, dataSource, getCurrentUser);
+    super(tenant, dataSource);
     this.tenantConfigs = this.createHasManyRepositoryFactoryFor(
       'tenantConfigs',
       tenantConfigRepositoryGetter,

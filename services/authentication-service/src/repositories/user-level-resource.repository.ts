@@ -3,19 +3,15 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {Getter, inject} from '@loopback/core';
-import {BelongsToAccessor, repository, juggler} from '@loopback/repository';
-import {AuthenticationBindings} from 'loopback4-authentication';
-import {
-  DefaultUserModifyCrudRepository,
-  IAuthUserWithPermissions,
-} from '@sourceloop/core';
+import {BelongsToAccessor, juggler, repository} from '@loopback/repository';
 
 import {UserLevelResource, UserTenant} from '../models';
 
-import {UserTenantRepository} from './user-tenant.repository';
+import {DefaultSoftCrudRepository} from '@sourceloop/core';
 import {AuthDbSourceName} from '../types';
+import {UserTenantRepository} from './user-tenant.repository';
 
-export class UserLevelResourceRepository extends DefaultUserModifyCrudRepository<
+export class UserLevelResourceRepository extends DefaultSoftCrudRepository<
   UserLevelResource,
   typeof UserLevelResource.prototype.id
 > {
@@ -27,14 +23,10 @@ export class UserLevelResourceRepository extends DefaultUserModifyCrudRepository
   constructor(
     @inject(`datasources.${AuthDbSourceName}`)
     dataSource: juggler.DataSource,
-    @inject.getter(AuthenticationBindings.CURRENT_USER)
-    protected readonly getCurrentUser: Getter<
-      IAuthUserWithPermissions | undefined
-    >,
     @repository.getter('UserTenantRepository')
     protected userTenantRepositoryGetter: Getter<UserTenantRepository>,
   ) {
-    super(UserLevelResource, dataSource, getCurrentUser);
+    super(UserLevelResource, dataSource);
     this.userTenant = this.createBelongsToAccessorFor(
       'userTenant',
       userTenantRepositoryGetter,
