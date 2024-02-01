@@ -82,7 +82,7 @@
     "jsonwebtoken": "^9.0.0",
     "lodash": "^4.17.21",
     "loopback-connector-postgresql": "^7.0.2",
-    "loopback4-authentication": "^11.0.1",
+    "loopback4-authentication": "^11.0.2",
     "loopback4-authorization": "^6.2.1",
     "loopback4-soft-delete": "^9.1.1",
     "on-finished": "^2.4.1",
