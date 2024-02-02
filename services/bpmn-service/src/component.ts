@@ -10,8 +10,8 @@ import {
   inject,
   ProviderMap,
 } from '@loopback/core';
-import {Class, Model, Repository} from '@loopback/repository';
-import {RestApplication} from '@loopback/rest';
+import { Class, Model, Repository } from '@loopback/repository';
+import { RestApplication } from '@loopback/rest';
 import {
   BearerVerifierBindings,
   BearerVerifierComponent,
@@ -21,30 +21,30 @@ import {
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
-import {AuthenticationComponent} from 'loopback4-authentication';
+import { AuthenticationComponent } from 'loopback4-authentication';
 import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import {WorkflowController} from './controllers';
-import {WorkflowServiceBindings} from './keys';
-import {Workflow} from './models';
-import {WorkflowProvider} from './providers';
-import {ExecutionInputValidationProvider} from './providers/execution-input-validator.provider';
-import {WorkerRegisterFnProvider} from './providers/register-worker.service';
-import {WorkerImplementationProvider} from './providers/worker-implementation.provider';
-import {WorkflowRepository, WorkflowVersionRepository} from './repositories';
+import { WorkflowController } from './controllers';
+import { WorkflowServiceBindings } from './keys';
+import { Workflow } from './models';
+import { WorkflowProvider } from './providers';
+import { ExecutionInputValidationProvider } from './providers/execution-input-validator.provider';
+import { WorkerRegisterFnProvider } from './providers/register-worker.service';
+import { WorkerImplementationProvider } from './providers/worker-implementation.provider';
+import { WorkflowRepository, WorkflowVersionRepository } from './repositories';
 import {
   WorkflowRepository as WorkflowSequelizeRepository,
   WorkflowVersionRepository as WorkflowVersionSequelizeRepository,
 } from './repositories/sequelize';
-import {IWorkflowServiceConfig} from './types';
+import { IWorkflowServiceConfig } from './types';
 
 export class WorkflowServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: RestApplication,
-    @inject(WorkflowServiceBindings.Config, {optional: true})
+    @inject(WorkflowServiceBindings.Config, { optional: true })
     private readonly workflowSvcConfig?: IWorkflowServiceConfig,
   ) {
     this.bindings = [];
@@ -63,7 +63,7 @@ export class WorkflowServiceComponent implements Component {
       components: {
         securitySchemes: SECURITY_SCHEME_SPEC,
       },
-      servers: [{url: '/'}],
+      servers: [{ url: '/' }],
     });
 
     if (!this.workflowSvcConfig?.useCustomSequence) {

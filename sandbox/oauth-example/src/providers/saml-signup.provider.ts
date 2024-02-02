@@ -13,10 +13,6 @@ import {
 } from '@sourceloop/authentication-service';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {RoleRepository} from '../repositories';
-// import {
-//     TenantsAuthClientsRepository,
-//     UserSignupRepository,
-// } from '../repositories';
 
 export class SamlSignupProvider implements Provider<SamlSignUpFn> {
   constructor(
