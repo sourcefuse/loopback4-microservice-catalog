@@ -70,7 +70,7 @@
     "dotenv": "^16.0.3",
     "dotenv-extended": "^2.9.0",
     "handlebars": "^4.7.7",
-    "loopback4-authentication": "^11.0.1",
+    "loopback4-authentication": "^11.0.2",
     "loopback4-authorization": "^6.2.1",
     "loopback4-soft-delete": "^9.1.1",
     "moment": "^2.29.3",

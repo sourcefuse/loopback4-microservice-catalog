@@ -15,8 +15,10 @@ import {
 import {Class, Model, Repository} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {
+  WorkflowRepository,
   WorkflowServiceBindings,
   WorkflowServiceComponent,
+  WorkflowVersionRepository,
 } from '@sourceloop/bpmn-service';
 import {
   CoreComponent,
@@ -39,6 +41,13 @@ import {
   UserTaskRepository,
 } from './repositories';
 import {
+  EventRepository as EventSequelizeRepository,
+  EventWorkflowRepository as EventWorkflowSequelizeRepository,
+  TaskRepository as TaskSequelizeRepository,
+  TaskWorkFlowRepository as TaskWorkFlowSequelizeRepository,
+  UserTaskRepository as UserTaskSequelizeRepository,
+} from './repositories/sequelize';
+import {
   CamundaService,
   EventProcessorService,
   HttpClientService,
@@ -46,6 +55,11 @@ import {
   UtilityService,
 } from './services';
 import {TaskServiceConfig} from './types';
+
+import {
+  WorkflowRepository as WorkflowSequelizeRepository,
+  WorkflowVersionRepository as WorkflowVersionSequelizeRepository,
+} from '@sourceloop/bpmn-service/sequelize';
 
 export class TaskServiceComponent implements Component {
   repositories?: Class<Repository<Model>>[];
@@ -91,13 +105,27 @@ export class TaskServiceComponent implements Component {
       controllers.TaskController,
       controllers.TaskUserTaskController,
     ];
-    this.repositories = [
-      EventRepository,
-      TaskRepository,
-      EventWorkflowRepository,
-      TaskWorkFlowRepository,
-      UserTaskRepository,
-    ];
+    if (config?.useSequelize) {
+      this.repositories = [
+        EventSequelizeRepository,
+        TaskSequelizeRepository,
+        EventWorkflowSequelizeRepository,
+        TaskWorkFlowSequelizeRepository,
+        UserTaskSequelizeRepository,
+        WorkflowSequelizeRepository,
+        WorkflowVersionSequelizeRepository,
+      ];
+    } else {
+      this.repositories = [
+        EventRepository,
+        TaskRepository,
+        EventWorkflowRepository,
+        TaskWorkFlowRepository,
+        UserTaskRepository,
+        WorkflowRepository,
+        WorkflowVersionRepository,
+      ];
+    }
     this.providers = {
       [TaskServiceBindings.SYSTEM_USER.key]: SystemUserProvider,
       [WorkflowServiceBindings.WorkflowManager.key]: BpmnProvider,

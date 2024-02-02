@@ -97,6 +97,7 @@ export type CamundaTaskParameters = {
 
 export type TaskServiceConfig = {
   useCustomSequence: boolean;
+  useSequelize?: boolean;
 };
 
 export type User = {
