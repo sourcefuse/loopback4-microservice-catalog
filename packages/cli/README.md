@@ -13,6 +13,7 @@ npm install @sourceloop/cli
 ## Usage
 
 <!-- usage -->
+
 ```sh-session
 $ npm install -g @sourceloop/cli
 $ sl COMMAND
@@ -24,6 +25,7 @@ USAGE
   $ sl COMMAND
 ...
 ```
+
 <!-- usagestop -->
 
 ## Commands
@@ -135,7 +137,7 @@ OPTIONS
       Unique prefix to be used for docker images
 
   -s, --baseService=(authentication-service|audit-service|chat-service|notification-service|bpmn-service|feature-toggle-
-  service|in-mail-service|payment-service|scheduler-service|search-service|survey-service|video-conferencing-service|use
+  service|in-mail-service|payment-service|scheduler-service|search-service|survey-service|task-service|video-conferencing-service|use
   r-tenant-service)
       Base sourceloop microservice
 

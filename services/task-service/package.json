@@ -92,6 +92,9 @@
     "tslib": "^2.6.2",
     "uuid": "^9.0.0"
   },
+  "optionalDependencies": {
+    "@loopback/sequelize": "^0.5.2"
+  },
   "peerDependencies": {
     "@loopback/boot": "^6.1.5",
     "@loopback/context": "^6.1.5",

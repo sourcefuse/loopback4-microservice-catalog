@@ -19,7 +19,12 @@ import {
   ClientAppRepository,
   WebhookSubscriptionRepository,
 } from './repositories';
+import {
+  ClientAppRepository as ClientAppSequelizeRepository,
+  WebhookSubscriptionRepository as WebhookSubscriptionSequelizeRepository,
+} from './repositories/sequelize';
 import {ApiKeyService, WebhookService} from './services';
+import {TaskServiceConfig} from '../../types';
 
 export class TaskHttpComponent implements Component {
   controllers?: ControllerClass[];
@@ -28,13 +33,22 @@ export class TaskHttpComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private app: RestApplication,
+    @inject(TaskServiceBindings.CONFIG, {optional: true})
+    private readonly config?: TaskServiceConfig,
   ) {
     this.controllers = [
       ClientAppController,
       WebhookSubscriptionController,
       EventTriggerController,
     ];
-    this.repositories = [ClientAppRepository, WebhookSubscriptionRepository];
+    if (config?.useSequelize) {
+      this.repositories = [
+        ClientAppSequelizeRepository,
+        WebhookSubscriptionSequelizeRepository,
+      ];
+    } else {
+      this.repositories = [ClientAppRepository, WebhookSubscriptionRepository];
+    }
     this.services = [ApiKeyService, WebhookService];
     this.app
       .bind(TaskServiceBindings.INCOMING_CONNECTOR)
