@@ -72,7 +72,7 @@ export const microservicePromptsSuite = [
       {
         input: {
           name: 'baseOnService',
-          message: 'Base on sourceloop microservice or not',
+          message: 'Base on ARC microservice or not',
           type: 'confirm',
           default: false,
         },
@@ -81,7 +81,7 @@ export const microservicePromptsSuite = [
       {
         input: {
           name: 'baseService',
-          message: 'Base sourceloop microservice',
+          message: 'Base ARC microservice',
           type: 'list',
           choices: Object.values(SERVICES),
         },
@@ -168,7 +168,7 @@ export const microservicePromptsSuite = [
       {
         input: {
           name: 'baseOnService',
-          message: 'Base on sourceloop microservice or not',
+          message: 'Base on ARC microservice or not',
           type: 'confirm',
           default: false,
         },
@@ -177,7 +177,7 @@ export const microservicePromptsSuite = [
       {
         input: {
           name: 'baseService',
-          message: 'Base sourceloop microservice',
+          message: 'Base ARC microservice',
           type: 'list',
           choices: Object.values(SERVICES),
         },

@@ -24,13 +24,13 @@ export class Microservice extends Base<MicroserviceOptions> {
     baseOnService: flags.boolean({
       name: 'baseOnService',
       exclusive: ['facade'],
-      description: 'Base on sourceloop microservice or not',
+      description: 'Base on ARC microservice or not',
       allowNo: true,
     }),
     baseService: flags.enum({
       name: 'service',
       char: 's',
-      description: 'Base sourceloop microservice',
+      description: 'Base ARC microservice',
       options: Object.values(SERVICES),
       required: false,
       exclusive: ['facade'],

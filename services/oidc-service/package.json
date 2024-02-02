@@ -46,7 +46,9 @@
     "migration.js",
     "migrations",
     "database.json",
-    "!*/__tests__"
+    "!*/__tests__",
+    ".env.defaults",
+    ".env.example"
   ],
   "peerDependencies": {
     "db-migrate": "^1.0.0-beta.21",

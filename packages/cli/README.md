@@ -19,7 +19,7 @@ $ npm install -g @sourceloop/cli
 $ sl COMMAND
 running command...
 $ sl (-v|--version|version)
-@sourceloop/cli/7.1.4 linux-x64 node-v18.19.0
+@sourceloop/cli/7.1.4 darwin-arm64 node-v18.16.0
 $ sl --help [COMMAND]
 USAGE
   $ sl COMMAND
@@ -139,10 +139,10 @@ OPTIONS
   -s, --baseService=(authentication-service|audit-service|chat-service|notification-service|bpmn-service|feature-toggle-
   service|in-mail-service|payment-service|scheduler-service|search-service|survey-service|task-service|video-conferencing-service|use
   r-tenant-service)
-      Base sourceloop microservice
+      Base ARC microservice
 
   --[no-]baseOnService
-      Base on sourceloop microservice or not
+      Base on ARC microservice or not
 
   --customMigrations
       Setup custom migration for this microservice
