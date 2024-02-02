@@ -3,15 +3,15 @@ import {
   Count,
   CountSchema,
   Filter,
-  Where,
   repository,
+  Where,
 } from '@loopback/repository';
 import {
-  HttpErrors,
   del,
   get,
   getModelSchemaRef,
   getWhereSchemaFor,
+  HttpErrors,
   param,
   patch,
   post,
@@ -19,7 +19,7 @@ import {
   response,
 } from '@loopback/rest';
 import {CONTENT_TYPE, ILogger, LOGGER, STATUS_CODE} from '@sourceloop/core';
-import {STRATEGY, authenticate} from 'loopback4-authentication';
+import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {ErrorKeys} from '../enum/error-keys.enum';
 import {PermissionKey} from '../enum/permission-key.enum';
@@ -30,7 +30,6 @@ import {SurveyResponderRepository} from '../repositories/survey-responder.reposi
 import {SurveyResponseRepository} from '../repositories/survey-response.repository';
 import {SurveyRepository} from '../repositories/survey.repository';
 import {SurveyResponderService} from '../services/survey-responder.service';
-import {SurveyService} from '../services/survey.service';
 const basePath = '/surveys/{surveyId}/survey-responders';
 
 export class SurveyResponderController {
@@ -43,8 +42,6 @@ export class SurveyResponderController {
     protected surveyResponseRepository: SurveyResponseRepository,
     @repository(SurveyCycleRepository)
     protected surveyCycleRepository: SurveyCycleRepository,
-    @service(SurveyService)
-    public surveyService: SurveyService,
     @service(SurveyResponderService)
     public surveyResponderService: SurveyResponderService,
     @inject(LOGGER.LOGGER_INJECT)
@@ -80,71 +77,11 @@ export class SurveyResponderController {
     if (surveyResponder.surveyId !== surveyId) {
       throw new HttpErrors.BadRequest(ErrorKeys.SurveyIdDoesNotMatch);
     }
-    await this.surveyService.checkIfAllowedToUpdateSurvey(surveyId);
 
-    if (surveyResponder.surveyCycleId) {
-      await this.validateSurveyCycle(surveyResponder.surveyCycleId, surveyId);
-    }
-    surveyResponder.surveyId = surveyId;
-    surveyResponder.firstName =
-      surveyResponder.firstName ??
-      surveyResponder.email?.substring(0, surveyResponder.email.indexOf('@'));
-    const resp = await this.surveyRepository
-      .surveyResponders(surveyId)
-      .create(surveyResponder);
-
-    // fetch createdSurveyCycle with id
-    const createdSurveyResponder = await this.surveyResponderRepository.findOne(
-      {
-        where: {surveyId},
-        order: ['created_on DESC'],
-      },
-    );
-
-    if (createdSurveyResponder) {
-      if (createdSurveyResponder.surveyCycleId) {
-        this.checkIfResponderAddedInActiveCycle(createdSurveyResponder).catch(
-          error => {
-            throw new Error(error);
-          },
-        );
-      }
-    }
-
-    return resp;
-  }
-
-  public async checkIfResponderAddedInActiveCycle(
-    surveyResponder: SurveyResponder,
-  ) {
-    const surveyCycle = await this.surveyCycleRepository.findById(
-      surveyResponder.surveyCycleId,
-      {
-        include: [
-          {
-            relation: 'survey',
-            scope: {
-              fields: {name: true, id: true, createdBy: true},
-            },
-          },
-        ],
-      },
-    );
-
-    if (!surveyCycle?.isActivated) {
-      return;
-    }
-  }
-
-  async validateSurveyCycle(surveyCycleId: string, surveyId: string) {
-    const surveyCycle = await this.surveyCycleRepository.count({
-      id: surveyCycleId,
+    return this.surveyResponderService.createSurveyResponder(
       surveyId,
-    });
-
-    if (!surveyCycle) {
-      throw new HttpErrors.BadRequest('Invalid surveyCycle Id');
-    }
+      surveyResponder,
+    );
   }
 
   @authenticate(STRATEGY.BEARER, {

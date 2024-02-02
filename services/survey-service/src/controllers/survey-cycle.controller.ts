@@ -25,10 +25,10 @@ import {PermissionKey} from '../enum/permission-key.enum';
 import {SurveyCycle} from '../models';
 import {SurveyRepository} from '../repositories';
 import {SurveyCycleRepository} from '../repositories/survey-cycle.repository';
+import {SurveyCycleService} from '../services';
 import {SurveyService} from '../services/survey.service';
 
 const basePath = '/surveys/{surveyId}/survey-cycles';
-const orderByCreatedOn = 'created_on DESC';
 
 export class SurveyCycleController {
   constructor(
@@ -38,6 +38,8 @@ export class SurveyCycleController {
     public surveyRepository: SurveyRepository,
     @service(SurveyService)
     public surveyService: SurveyService,
+    @service(SurveyCycleService)
+    public surveyCycleService: SurveyCycleService,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {
@@ -66,20 +68,7 @@ export class SurveyCycleController {
     @param.path.string('surveyId') surveyId: string,
   ): Promise<SurveyCycle> {
     await this.surveyService.validateAndGetSurvey(surveyId);
-    surveyCycle.surveyId = surveyId;
-    await this.surveyCycleRepository.create(surveyCycle);
-
-    // fetch createdSurveyCycle with id
-    const createdSurveyCycle = await this.surveyCycleRepository.findOne({
-      order: [orderByCreatedOn],
-      where: {
-        surveyId,
-      },
-    });
-    if (!createdSurveyCycle) {
-      throw new HttpErrors.NotFound();
-    }
-    return createdSurveyCycle;
+    return this.surveyCycleService.createSurveyCycle(surveyId, surveyCycle);
   }
 
   @authenticate(STRATEGY.BEARER, {

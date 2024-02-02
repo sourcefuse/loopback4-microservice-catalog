@@ -4,9 +4,11 @@ import {HttpErrors} from '@loopback/rest';
 import {ILogger, LOGGER} from '@sourceloop/core';
 import {SurveyStatus} from '../enum';
 import {ErrorKeys} from '../enum/error-keys.enum';
+import {Section} from '../models';
 import {SectionRepository} from '../repositories/section.repository';
 import {SurveyQuestionRepository} from '../repositories/survey-question.repository';
 import {SurveyRepository} from '../repositories/survey.repository';
+
 @injectable({scope: BindingScope.TRANSIENT})
 export class SectionService {
   constructor(
@@ -18,6 +20,40 @@ export class SectionService {
     public surveyRepository: SurveyRepository,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
   ) {}
+
+  async createSection(
+    surveyId: string,
+    section: Omit<Section, 'id'>,
+  ): Promise<Section> {
+    await this.checkBasicSectionValidation(surveyId);
+    const existingSections = await this.sectionRepository.count({
+      surveyId,
+    });
+    section.surveyId = surveyId;
+    section.name = section.name ?? 'Untitled Section';
+    section.displayOrder = existingSections.count + 1;
+    await this.sectionRepository.create(section);
+
+    // fetch createdSection with id
+    const orderByCreatedOn = 'created_on DESC';
+    const createdSection = await this.sectionRepository.findOne({
+      order: [orderByCreatedOn],
+      where: {surveyId},
+    });
+    if (!createdSection) {
+      throw new HttpErrors.NotFound();
+    }
+
+    if (!existingSections.count) {
+      this.surveyQuestionRepository
+        .updateAll({sectionId: createdSection.id}, {surveyId})
+        .then()
+        .catch(error => {
+          throw new Error(error);
+        });
+    }
+    return createdSection;
+  }
 
   async handleDeleteSection(surveyId: string, sectionId: string) {
     const existingSections = await this.sectionRepository.find({
