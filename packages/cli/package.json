@@ -216,7 +216,7 @@
       "@sourceloop/reporting-service": "^0.7.6",
       "@sourceloop/scheduler-service": "^10.0.3",
       "@sourceloop/search-service": "^0.11.3",
-      "@sourceloop/survey-service": "^0.6.3",
+      "@sourceloop/survey-service": "^0.6.4",
       "@sourceloop/task-service": "^0.6.0",
       "@sourceloop/user-tenant-service": "^0.15.1",
       "@sourceloop/video-conferencing-service": "^10.0.3",
