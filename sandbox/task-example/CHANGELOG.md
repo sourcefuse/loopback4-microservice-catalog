@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.3.2 (2024-02-02)</small>
+
+**Note:** Version bump only for package @sourceloop/task-service-example
+
+
+
+
+
 ## <small>0.3.1 (2024-01-19)</small>
 
 **Note:** Version bump only for package @sourceloop/task-service-example

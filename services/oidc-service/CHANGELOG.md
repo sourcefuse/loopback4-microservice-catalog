@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.5.1 (2024-02-02)</small>
+
+* fix(cli): proper error message when microservice command not run from root folder (#1961) ([3ea4325](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3ea4325)), closes [#1961](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1961) [#1956](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1956)
+* chore(deps): update authentication component version in all services (#1962) ([eeac7f6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/eeac7f6)), closes [#1962](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1962) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
 ## 0.5.0 (2024-01-23)
 
 * fix(authentication-service): sync the models of auth and user tenant service (#1913) ([c3a15b0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c3a15b0)), closes [#1913](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1913) [#1899](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1899) [#1899](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1899) [#1899](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1899) [#1899](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1899) [#1899](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1899)

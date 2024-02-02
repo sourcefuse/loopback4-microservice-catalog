@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>10.0.3 (2024-02-02)</small>
+
+* fix(cli): proper error message when microservice command not run from root folder (#1961) ([3ea4325](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3ea4325)), closes [#1961](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1961) [#1956](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1956)
+* chore(deps): update authentication component version in all services (#1962) ([eeac7f6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/eeac7f6)), closes [#1962](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1962) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
 ## <small>10.0.2 (2024-01-19)</small>
 
 * chore(deps): update sourceloop and loopback packages version (#1928) ([d9d1b20](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d9d1b20)), closes [#1928](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1928) [#1903](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1903)
