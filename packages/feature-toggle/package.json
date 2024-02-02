@@ -57,7 +57,7 @@
     "@loopback/service-proxy": "^6.1.5",
     "@sourceloop/core": "^11.0.2",
     "lodash": "^4.17.21",
-    "loopback4-authentication": "^11.0.1",
+    "loopback4-authentication": "^11.0.2",
     "sinon": "^14.0.0",
     "tslib": "^2.6.2"
   },
