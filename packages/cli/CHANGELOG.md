@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.2.0 (2024-02-02)
+
+* fix(cli): proper error message when microservice command not run from root folder (#1961) ([3ea4325](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3ea4325)), closes [#1961](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1961) [#1956](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1956)
+* feat(cli): add task service (#1933) ([6144832](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6144832)), closes [#1933](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1933) [#1932](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1932)
+
+
+
+
+
 ## <small>7.1.4 (2024-01-24)</small>
 
 * chore(deps): update cli to latest template deps (#1946) ([bb68b29](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bb68b29)), closes [#1946](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1946) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)

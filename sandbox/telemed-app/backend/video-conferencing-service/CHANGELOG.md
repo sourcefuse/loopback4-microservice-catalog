@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.1.9 (2024-02-02)</small>
+
+**Note:** Version bump only for package @sourceloop/telemed-video-conferencing-api
+
+
+
+
+
 ## <small>0.1.8 (2024-01-19)</small>
 
 **Note:** Version bump only for package @sourceloop/telemed-video-conferencing-api
