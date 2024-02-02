@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>7.2.1 (2024-02-02)</small>
+
+* chore(deps): update cli template version  (#1959) ([b33186d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b33186d)), closes [#1959](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1959) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* chore(deps): update survey sevice in cli template (#1964) ([dd8c9ce](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/dd8c9ce)), closes [#1964](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1964) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
 ## 7.2.0 (2024-02-02)
 
 * fix(cli): proper error message when microservice command not run from root folder (#1961) ([3ea4325](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3ea4325)), closes [#1961](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1961) [#1956](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1956)
