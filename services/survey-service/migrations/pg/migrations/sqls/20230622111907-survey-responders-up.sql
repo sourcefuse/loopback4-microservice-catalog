@@ -39,14 +39,3 @@ ALTER TABLE
 ADD
     CONSTRAINT fk_survey_responders_survey_id FOREIGN KEY (survey_id) REFERENCES main.surveys (id) ON DELETE NO ACTION ON UPDATE NO ACTION;
 ;
-CREATE TRIGGER survey_responders_before_update BEFORE UPDATE ON main.survey_responders FOR EACH ROW
-EXECUTE FUNCTION moddatetime();
-
-CREATE INDEX idx_survey_responders_survey_id ON main.survey_responders (survey_id);
-
-CREATE INDEX idx_survey_responders_survey_cycle_id ON main.survey_responders (survey_cycle_id);
-
-ALTER TABLE
-    main.survey_responders
-ADD
-    CONSTRAINT fk_survey_responders_survey_id FOREIGN KEY (survey_id) REFERENCES main.surveys (id) ON DELETE NO ACTION ON UPDATE NO ACTION;
