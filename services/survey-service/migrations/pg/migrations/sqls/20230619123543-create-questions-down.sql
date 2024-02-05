@@ -7,3 +7,5 @@ ALTER TABLE
     main.questions DROP CONSTRAINT fk_question_parent;
 
 DROP TABLE IF EXISTS main.questions;
+
+DROP SCHEMA IF EXISTS main CASCADE;
