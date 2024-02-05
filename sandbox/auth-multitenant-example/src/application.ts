@@ -5,30 +5,30 @@
 import {BootMixin} from '@loopback/boot';
 import {ApplicationConfig} from '@loopback/core';
 import {RepositoryMixin} from '@loopback/repository';
-import {RestApplication, Request} from '@loopback/rest';
+import {RestApplication} from '@loopback/rest';
 import {
   RestExplorerBindings,
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
-import {SFCoreBindings} from '@sourceloop/core';
 import {AuthenticationServiceComponent} from '@sourceloop/authentication-service';
-import {HelmetSecurityBindings} from 'loopback4-helmet';
-import {RateLimitSecurityBindings} from 'loopback4-ratelimiter';
+import {rateLimitKeyGen, SFCoreBindings} from '@sourceloop/core';
 import * as dotenv from 'dotenv';
 import * as dotenvExt from 'dotenv-extended';
-import path from 'path';
-import {RedisDataSource} from './datasources/redis.datasource';
 import {
   AuthorizationBindings,
   UserPermissionsProvider,
 } from 'loopback4-authorization';
+import {HelmetSecurityBindings} from 'loopback4-helmet';
+import {RateLimitSecurityBindings} from 'loopback4-ratelimiter';
+import path from 'path';
+import {RedisDataSource} from './datasources/redis.datasource';
+import * as openapi from './openapi.json';
 import {
+  CasbinAuthorizationProvider,
   CasbinEnforcerConfigProvider,
   CasbinResValModifierProvider,
-  CasbinAuthorizationProvider,
 } from './providers';
-import * as openapi from './openapi.json';
 
 export {ApplicationConfig};
 
@@ -77,9 +77,7 @@ export class AuthMultitenantExampleApplication extends BootMixin(
       name: 'redis',
       max: parseInt(process.env.RATE_LIMITER_MAX_REQS as string),
       windowMs: parseInt(process.env.RATE_LIMITER_WINDOW_MS as string),
-      keyGenerator: function (req: Request) {
-        return req.ip;
-      },
+      keyGenerator: rateLimitKeyGen,
     });
     this.bind(HelmetSecurityBindings.CONFIG).to({
       frameguard: {action: process.env.X_FRAME_OPTIONS},
