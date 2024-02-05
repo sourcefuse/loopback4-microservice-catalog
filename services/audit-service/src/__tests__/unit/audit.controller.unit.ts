@@ -10,14 +10,15 @@ import {
   StubbedInstanceWithSinonAccessor,
 } from '@loopback/testlab';
 
-import {Filter} from '@loopback/repository';
+import {AnyObject, Filter} from '@loopback/repository';
 import {AuditLog, AuditLogRepository} from '@sourceloop/audit-log';
 import {AuditController} from '../../controllers';
 import {FileStatusKey} from '../../enums/file-status-key.enum';
 import {Job} from '../../models';
 import {JobRepository, MappingLogRepository} from '../../repositories';
 import {ColumnBuilderProvider, JobProcessingService} from '../../services';
-import {getTestAuditController} from '../helpers/db.helper';
+import {AuditLogExportFn, ExportToCsvFn} from '../../types';
+import {testUser} from '../helpers/db.helper';
 import {dummyLog} from '../sample-data/dummy-log';
 import {filterAppliedActedAt} from '../sample-data/filters';
 
@@ -27,13 +28,17 @@ let jobProcessingService: StubbedInstanceWithSinonAccessor<JobProcessingService>
 let mappingLogRepository: StubbedInstanceWithSinonAccessor<MappingLogRepository>;
 
 let controller: AuditController;
+
 const setUpStub = () => {
   auditLogRepository = createStubInstance(AuditLogRepository);
   jobRepository = createStubInstance(JobRepository);
   jobProcessingService = createStubInstance(JobProcessingService);
   mappingLogRepository = createStubInstance(MappingLogRepository);
   const columnBuilderProvider = new ColumnBuilderProvider();
-  const {auditLogExport, exportToCsvService} = getTestAuditController();
+  const exportToCsvService: ExportToCsvFn = () =>
+    Promise.resolve('demoResponse');
+  const auditLogExport: AuditLogExportFn = (data: AnyObject[]) =>
+    Promise.resolve();
   controller = new AuditController(
     auditLogRepository,
     jobRepository,
@@ -42,6 +47,7 @@ const setUpStub = () => {
     exportToCsvService,
     auditLogExport,
     columnBuilderProvider.value(),
+    testUser,
   );
 };
 beforeEach(setUpStub);
