@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.6.5 (2024-02-05)</small>
+
+* fix(survey-service): rectify the pg migrations in survey service (#1966) ([72b789d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/72b789d)), closes [#1966](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1966) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
 ## <small>0.6.4 (2024-02-02)</small>
 
 * refactor(survey-service): move api logic from controllers to respective services (#1955) ([608c619](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/608c619)), closes [#1955](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1955) [#1949](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1949)
