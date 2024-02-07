@@ -72,7 +72,7 @@
     "@loopback/openapi-v3": "^9.1.5",
     "@loopback/repository": "^6.1.5",
     "@loopback/rest": "^13.1.5",
-    "@sourceloop/audit-log": "^5.3.1",
+    "@sourceloop/audit-log": "^6.0.0",
     "@sourceloop/core": "^11.0.3",
     "csvtojson": "^2.0.10",
     "dotenv": "^16.0.3",
