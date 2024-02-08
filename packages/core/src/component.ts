@@ -19,7 +19,7 @@ import {IncomingMessage, ServerResponse} from 'http';
 import {
   DynamicDatasourceBindings,
   Loopback4DynamicDatasourceComponent,
-  SetupDataSourceMiddlewareFunction,
+  setupDataSourceMiddlewareFunction,
 } from 'loopback4-dynamic-datasource';
 import {Loopback4HelmetComponent} from 'loopback4-helmet';
 import {RateLimiterComponent} from 'loopback4-ratelimiter';
@@ -106,7 +106,7 @@ export class CoreComponent implements Component {
       //Bind loopback4-dynamic-datasource component
       this.application.component(Loopback4DynamicDatasourceComponent);
       //add middleware to express middleware array
-      middlewares.push(SetupDataSourceMiddlewareFunction);
+      middlewares.push(setupDataSourceMiddlewareFunction);
       //Bind Providers
       this.application
         .bind(DynamicDatasourceBindings.DATASOURCE_PROVIDER)
