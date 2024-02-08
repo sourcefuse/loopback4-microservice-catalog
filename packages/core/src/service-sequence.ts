@@ -28,10 +28,6 @@ import {
   AuthorizeFn,
 } from 'loopback4-authorization';
 
-import {
-  DynamicDatasourceBindings,
-  SetupDatasourceFn,
-} from 'loopback4-dynamic-datasource';
 import {IAuthUserWithPermissions, ILogger, LOGGER} from './components';
 import {SFCoreBindings} from './keys';
 const SequenceActions = RestBindings.SequenceActions;
@@ -53,9 +49,6 @@ export class ServiceSequence implements SequenceHandler {
   protected invokeMiddleware: InvokeMiddleware = () => false;
   @inject(SFCoreBindings.EXPRESS_MIDDLEWARES, {optional: true})
   protected expressMiddlewares: ExpressRequestHandler[] = [];
-
-  @inject(DynamicDatasourceBindings.DYNAMIC_DATASOURCE_ACTION)
-  protected applyDynamicDataSource: SetupDatasourceFn;
   constructor(
     // sonarignore:start
     @inject(SequenceActions.FIND_ROUTE) protected findRoute: FindRoute,
@@ -113,7 +106,6 @@ export class ServiceSequence implements SequenceHandler {
       if (!isAccessAllowed) {
         throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
       }
-      await this.processSiloStorage(context);
       const result = await this.invoke(route, args);
       this.send(response, result);
       // sonarignore:end
@@ -157,13 +149,6 @@ export class ServiceSequence implements SequenceHandler {
           context.request.url
         } Completed in ${Date.now() - requestTime}ms`,
       );
-    }
-  }
-
-  async processSiloStorage(context: RequestContext) {
-    if (process.env.SAAS_MODEL === 'silo storage') {
-      // @ts-expect-error ignore error for type compatibility
-      await this.applyDynamicDataSource(context);
     }
   }
   // sonarignore:start

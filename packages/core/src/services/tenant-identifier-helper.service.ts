@@ -14,7 +14,7 @@ export class TenantIdentifierHelperService {
     const isBearer = tokenWithBearerString.includes(bearerStr);
     const tokenArr = isBearer
       ? tokenWithBearerString.split(' ')
-      : tokenWithBearerString.split('');
+      : ['Bearer', tokenWithBearerString];
     const token = tokenArr[1];
     let tenantId = null;
     if (token) {

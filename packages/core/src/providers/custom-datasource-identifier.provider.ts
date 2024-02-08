@@ -11,10 +11,8 @@ export class CustomDatasourceIdentifierProvider
   ) {}
   value(): DatasourceIdentifierFn {
     return async requestCtx => {
-      const tokenWithBearerString = String(
-        requestCtx.request.headers?.authorization,
-      );
-      if (tokenWithBearerString) {
+      const tokenWithBearerString = requestCtx.request.headers?.authorization;
+      if (requestCtx.request.headers && tokenWithBearerString) {
         return this.getTenantIdHelper.getTenantIdFromToken(
           tokenWithBearerString,
         );

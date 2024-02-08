@@ -14,15 +14,13 @@ import {AnyObject} from '@loopback/repository';
 import {ExpressRequestHandler, RestApplication} from '@loopback/rest';
 import {configure} from 'i18n';
 import {cloneDeep} from 'lodash';
+
+import {IncomingMessage, ServerResponse} from 'http';
 import {
   DynamicDatasourceBindings,
   Loopback4DynamicDatasourceComponent,
+  SetupDataSourceMiddlewareFunction,
 } from 'loopback4-dynamic-datasource';
-import {
-  CustomDatasourceIdentifierProvider,
-  CustomDatasourceProvider,
-} from './providers';
-
 import {Loopback4HelmetComponent} from 'loopback4-helmet';
 import {RateLimiterComponent} from 'loopback4-ratelimiter';
 import * as swstats from 'swagger-stats';
@@ -31,13 +29,14 @@ import {
   SwaggerAuthenticationComponent,
 } from './components';
 import {OperationSpecEnhancer} from './enhancer/operation-spec-enhancer';
-import {LocaleKey} from './enums';
+import {DataSourceModel, LocaleKey} from './enums';
 import {OASBindings, SFCoreBindings} from './keys';
-
-import {IncomingMessage, ServerResponse} from 'http';
-
 import {TenantContextMiddlewareInterceptorProvider} from './middlewares';
-import {TenantIdEncryptionProvider} from './providers';
+import {
+  CustomDatasourceIdentifierProvider,
+  CustomDatasourceProvider,
+  TenantIdEncryptionProvider,
+} from './providers';
 import {AwsSsmHelperService, TenantIdentifierHelperService} from './services';
 import {CoreConfig, addTenantId} from './types';
 export class CoreComponent implements Component {
@@ -75,7 +74,6 @@ export class CoreComponent implements Component {
     if (this.coreConfig?.authenticateSwaggerUI) {
       this.application.component(SwaggerAuthenticationComponent);
     }
-
     // Configure locale provider
     if (this.coreConfig?.configObject) {
       configure({...this.coreConfig.configObject, register: this.localeObj});
@@ -104,6 +102,20 @@ export class CoreComponent implements Component {
       });
     }
 
+    if (process.env.SAAS_MODEL === DataSourceModel.SILOED) {
+      //Bind loopback4-dynamic-datasource component
+      this.application.component(Loopback4DynamicDatasourceComponent);
+      //add middleware to express middleware array
+      middlewares.push(SetupDataSourceMiddlewareFunction);
+      //Bind Providers
+      this.application
+        .bind(DynamicDatasourceBindings.DATASOURCE_PROVIDER)
+        .toProvider(CustomDatasourceProvider);
+      this.application
+        .bind(DynamicDatasourceBindings.DATASOURCE_IDENTIFIER_PROVIDER)
+        .toProvider(CustomDatasourceIdentifierProvider);
+    }
+
     this.application.bind(SFCoreBindings.EXPRESS_MIDDLEWARES).to(middlewares);
     this.bindings.push(Binding.bind(OASBindings.HiddenEndpoint).to([]));
     this.bindings.push(Binding.bind(SFCoreBindings.i18n).to(this.localeObj));
@@ -112,16 +124,6 @@ export class CoreComponent implements Component {
     this.application
       .bind('TenantIdentifierHelperService')
       .toClass(TenantIdentifierHelperService);
-
-    this.application.component(Loopback4DynamicDatasourceComponent);
-    if (process.env.SAAS_MODEL === 'silo storage') {
-      this.application
-        .bind(DynamicDatasourceBindings.DATASOURCE_PROVIDER)
-        .toProvider(CustomDatasourceProvider);
-      this.application
-        .bind(DynamicDatasourceBindings.DATASOURCE_IDENTIFIER_PROVIDER)
-        .toProvider(CustomDatasourceIdentifierProvider);
-    }
   }
 
   private _setupSwaggerStats(): ExpressRequestHandler | undefined {

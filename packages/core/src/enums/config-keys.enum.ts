@@ -7,3 +7,8 @@ export const enum ConfigKey {
   DateTimeFormat = 'date-time format',
   Profile = 'profile',
 }
+
+export const enum DataSourceModel {
+  POOLED = 'POOLED',
+  SILOED = 'SILOED',
+}
