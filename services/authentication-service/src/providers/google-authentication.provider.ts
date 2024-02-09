@@ -1,26 +1,16 @@
 import {Provider, inject} from '@loopback/context';
-import {AnyObject} from '@loopback/repository';
 import {ILogger, LOGGER} from '@sourceloop/core';
 import fetch from 'node-fetch';
 import {AuthenticationProviderFn} from '..';
-import {AuthRefreshTokenRequest} from '../modules/auth';
 
 export class GoogleAuthenticationProvider
   implements Provider<AuthenticationProviderFn>
 {
   constructor(@inject(LOGGER.LOGGER_INJECT) public logger: ILogger) {}
   value(): AuthenticationProviderFn {
-    return async (
-      accessToken: string,
-      req?: AuthRefreshTokenRequest,
-      payload?: AnyObject,
-    ) => this.isAuthenticated(accessToken, req, payload);
+    return async (accessToken: string) => this.isAuthenticated(accessToken);
   }
-  isAuthenticated(
-    accessToken: string,
-    req?: AuthRefreshTokenRequest,
-    payload?: AnyObject,
-  ) {
+  isAuthenticated(accessToken: string) {
     let isAuthenticated = true;
     const googleApiUrl = `https://oauth2.googleapis.com/tokeninfo?access_token=${accessToken}`;
     // Using fetch to make the API call
