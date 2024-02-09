@@ -33,7 +33,6 @@ export * from './auth-secure-client.model';
 export * from './forget-password-dto.model';
 export * from './forget-password-response-dto.model';
 export * from './local-user-profile';
-export * from './login-activity.model';
 export * from './otp-cache.model';
 export * from './otp.model';
 export * from './refresh-token-request.model';
@@ -52,6 +51,7 @@ export * from './user-level-permission.model';
 export * from './user-level-resource.model';
 export * from './user-tenant.model';
 export * from './user.model';
+export * from './login-activity.model';
 
 export const models = [
   User,
