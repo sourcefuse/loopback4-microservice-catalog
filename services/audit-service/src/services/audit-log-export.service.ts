@@ -1,15 +1,15 @@
-import { BindingScope, Provider, inject, injectable } from '@loopback/core';
-import { AnyObject } from '@loopback/repository';
-import * as ExcelJS from 'exceljs';
-import { ExportHandlerServiceBindings } from '../keys';
-import { AuditLogExportFn, ExportHandlerFn } from '../types';
+import {BindingScope, Provider, inject, injectable} from '@loopback/core';
+import {AnyObject} from '@loopback/repository';
+import * as excelJs from 'exceljs';
+import {ExportHandlerServiceBindings} from '../keys';
+import {AuditLogExportFn, ExportHandlerFn} from '../types';
 
-@injectable({ scope: BindingScope.TRANSIENT })
+@injectable({scope: BindingScope.TRANSIENT})
 export class AuditLogExportProvider implements Provider<AuditLogExportFn> {
   constructor(
     @inject(ExportHandlerServiceBindings.PROCESS_FILE)
     public exportHandler: ExportHandlerFn,
-  ) { }
+  ) {}
 
   value(): AuditLogExportFn {
     return async (data: AnyObject[]) => this.auditLogExport(data);
@@ -33,7 +33,7 @@ export class AuditLogExportProvider implements Provider<AuditLogExportFn> {
       return updatedValues;
     });
 
-    const workbook = new ExcelJS.Workbook();
+    const workbook = new excelJs.Workbook();
     const worksheet = workbook.addWorksheet(worksheetName);
 
     // Add column headers
