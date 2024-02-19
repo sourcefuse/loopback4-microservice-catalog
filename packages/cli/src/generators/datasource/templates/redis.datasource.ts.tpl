@@ -16,11 +16,12 @@ const config = {
   db: process.env.REDIS_DATABASE,
   url: process.env.REDIS_URL,
   tls:
-    +process.env.REDIS_TLS_ENABLED! && process.env.REDIS_TLS_CERT
+    +process.env.REDIS_TLS_ENABLED! ||
+    (process.env.REDIS_TLS_CERT
       ? {
           ca: readFileSync(process.env.REDIS_TLS_CERT),
         }
-      : undefined,
+      : undefined),
   sentinels:
     +process.env.REDIS_HAS_SENTINELS! && process.env.REDIS_SENTINELS
       ? JSON.parse(process.env.REDIS_SENTINELS)
