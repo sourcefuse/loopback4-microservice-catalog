@@ -8,6 +8,8 @@
 
 ![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/video-conferencing-service/@loopback/core)
 
+## Overview
+
 Various features of Video Conferencing Services:
 
 1. Schedule Meetings and Generate a Token
@@ -33,6 +35,11 @@ To get started with a basic implementation of this service, see [/sandbox/video-
 ```sh
 npm i @sourceloop/video-conferencing-service
 ```
+
+## Working and Flow
+
+![video](https://user-images.githubusercontent.com/82804130/126984338-754c0788-270a-40df-b601-ff66dcd3d5f8.jpg)
+
 
 ## Usage
 
@@ -75,27 +82,84 @@ npm i @sourceloop/video-conferencing-service
   ```
 
 - Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to `VideoConfDatasource`. You can see an example datasource [here](#setting-up-a-datasource).
+- **Using with Sequelize**
+
+  This service supports Sequelize as the underlying ORM using [@loopback/sequelize](https://www.npmjs.com/package/@loopback/sequelize) extension. And in order to use it, you'll need to do following changes.
+
+  - To use Sequelize in your application, add following to application.ts:
+
+    ```ts
+    this.bind(VideoChatBindings.Config).to({
+      useCustomSequence: false,
+      useSequelize: true,
+    });
+    ```
+
+  - Use the `SequelizeDataSource` in your audit datasource as the parent class. Refer [this](https://www.npmjs.com/package/@loopback/sequelize#step-1-configure-datasource) for more details.
+
+- **Configurable Audit Logs**
+
+  To generate audit logs for video conferencing service, you'll have to set the env var `ADD_AUDIT_LOG_MIXIN` to `true` and configure a datasource for it like below:
+
+  ```ts
+  import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
+  import {juggler} from '@loopback/repository';
+  import {AuditDbSourceName} from '@sourceloop/audit-log';
+
+  const config = {
+    name: 'audit',
+    connector: 'postgresql',
+    url: '',
+    host: '',
+    port: 0,
+    user: '',
+    password: '',
+    database: '',
+  };
+
+  @lifeCycleObserver('datasource')
+  export class AuditDataSource
+    extends juggler.DataSource
+    implements LifeCycleObserver
+  {
+    static dataSourceName = AuditDbSourceName;
+    static readonly defaultConfig = config;
+
+    constructor(
+      @inject('datasources.config.audit', {optional: true})
+      dsConfig: object = config,
+    ) {
+      const auditEnvConfig = {
+        host: process.env.AUDIT_DB_HOST,
+        port: process.env.AUDIT_DB_PORT,
+        user: process.env.AUDIT_DB_USER,
+        password: process.env.AUDIT_DB_PASSWORD,
+        database: process.env.AUDIT_DB_DATABASE,
+        schema: process.env.AUDIT_DB_SCHEMA,
+      };
+      Object.assign(dsConfig, auditEnvConfig);
+      super(dsConfig);
+    }
+  }
+  ```
+
+  Configure .env of application in index.ts before exporting application like follows
+
+  ```ts
+  import * as dotenv from 'dotenv';
+  dotenv.config();
+
+  import {
+    ApplicationConfig,
+    VideoConferencingExampleApplication,
+  } from './application';
+  export * from './application';
+  //...
+  ```
+
 - Start the application
   `npm start`
 
-## Working and Flow
-
-![video](https://user-images.githubusercontent.com/82804130/126984338-754c0788-270a-40df-b601-ff66dcd3d5f8.jpg)
-
-### Using with Sequelize
-
-This service supports Sequelize as the underlying ORM using [@loopback/sequelize](https://www.npmjs.com/package/@loopback/sequelize) extension. And in order to use it, you'll need to do following changes.
-
-1.To use Sequelize in your application, add following to application.ts:
-
-```ts
-this.bind(VideoChatBindings.Config).to({
-  useCustomSequence: false,
-  useSequelize: true,
-});
-```
-
-2. Use the `SequelizeDataSource` in your audit datasource as the parent class. Refer [this](https://www.npmjs.com/package/@loopback/sequelize#step-1-configure-datasource) for more details.
 
 ### Environment Variables
 
@@ -289,65 +353,9 @@ export class VideoDbDataSource
 
 The migrations required for this service are processed during the installation automatically if you set the `VIDEOCONF_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or databases, they may be affected. In such a scenario, it is advised that you copy the migration files in your project root, using the `VIDEOCONF_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
 
-## Audit Logs
+Additionally, there is now an option to choose between SQL migration or PostgreSQL migration.
+NOTE : For @sourceloop/cli users, this choice can be specified during the scaffolding process by selecting the "type of datasource" option.
 
-To generate audit logs for video conferencing service, you'll have to set the env var `ADD_AUDIT_LOG_MIXIN` to `true` and configure a datasource for it like below:
-
-```ts
-import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
-import {juggler} from '@loopback/repository';
-import {AuditDbSourceName} from '@sourceloop/audit-log';
-
-const config = {
-  name: 'audit',
-  connector: 'postgresql',
-  url: '',
-  host: '',
-  port: 0,
-  user: '',
-  password: '',
-  database: '',
-};
-
-@lifeCycleObserver('datasource')
-export class AuditDataSource
-  extends juggler.DataSource
-  implements LifeCycleObserver
-{
-  static dataSourceName = AuditDbSourceName;
-  static readonly defaultConfig = config;
-
-  constructor(
-    @inject('datasources.config.audit', {optional: true})
-    dsConfig: object = config,
-  ) {
-    const auditEnvConfig = {
-      host: process.env.AUDIT_DB_HOST,
-      port: process.env.AUDIT_DB_PORT,
-      user: process.env.AUDIT_DB_USER,
-      password: process.env.AUDIT_DB_PASSWORD,
-      database: process.env.AUDIT_DB_DATABASE,
-      schema: process.env.AUDIT_DB_SCHEMA,
-    };
-    Object.assign(dsConfig, auditEnvConfig);
-    super(dsConfig);
-  }
-}
-```
-
-Configure .env of application in index.ts before exporting application like follows
-
-```ts
-import * as dotenv from 'dotenv';
-dotenv.config();
-
-import {
-  ApplicationConfig,
-  VideoConferencingExampleApplication,
-} from './application';
-export * from './application';
-//...
-```
 
 ## API's Details
 
