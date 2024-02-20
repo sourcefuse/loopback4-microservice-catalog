@@ -10,7 +10,9 @@
 
 ## Overview
 
-A Loopback Microservice for handling BPMN workflows using engines like [Camunda](https://camunda.com/products/cloud/). NOTE: The microservice currently works with only one workflow definition for a single diagram. It provides -
+A Microservice for handling BPMN workflows using engines like [Camunda](https://camunda.com/products/cloud/).
+
+NOTE: The microservice currently works with only one workflow definition for a single diagram. It provides -
 
 - Deployment and management of Workflows in a BPMN engine.
 - Process Versioning.
@@ -62,6 +64,21 @@ npm i @sourceloop/bpmn-service
   `WorkflowCacheSourceName`. You can see an example datasource [here](#setting-up-a-datasource).
 - Start the application
   `npm start`
+
+#### Using with Sequelize
+
+This service supports Sequelize as the underlying ORM using [@loopback/sequelize](https://www.npmjs.com/package/@loopback/sequelize) extension. And in order to use it, you'll need to do following changes.
+
+- To use Sequelize in your application, add following to application.ts along with other config specific to the service:
+
+  ```ts
+  this.bind(WorkflowServiceBindings.Config).to({
+    useCustomSequence: false,
+    useSequelize: true,
+  });
+  ```
+
+- Use the `SequelizeDataSource` in your audit datasource as the parent class. Refer [this](https://www.npmjs.com/package/@loopback/sequelize#step-1-configure-datasource) for more.
 
 ### Setting up a `DataSource`
 
@@ -123,56 +140,56 @@ A sample implementation of a `DataSource` using environment variables and Postgr
 
 ### Providers
 
-#### BPMNProvider
+- BPMNProvider
 
-To use the services, you need to implement a provider and bind it to the `BPMNBindings.BPMNProvider` key. The provider returns a value containing the 5 methods - `getWorkflowById`, `startWorkflow`, `createWorkflow`, `updateWorkflow` and `deleteWorkflowById`. These methods are responsible for performing their respective tasks in the workflow engine. Here is the default implementation of this provider -
+  To use the services, you need to implement a provider and bind it to the `BPMNBindings.BPMNProvider` key. The provider returns a value containing the 5 methods - `getWorkflowById`, `startWorkflow`, `createWorkflow`, `updateWorkflow` and `deleteWorkflowById`. These methods are responsible for performing their respective tasks in the workflow engine. Here is the default implementation of this provider -
 
-```ts
-import {bind, /* inject, */ BindingScope, Provider} from '@loopback/core';
-import {HttpErrors} from '@loopback/rest';
-import {WorflowManager} from '../types';
+  ```ts
+  import {bind, /* inject, */ BindingScope, Provider} from '@loopback/core';
+  import {HttpErrors} from '@loopback/rest';
+  import {WorflowManager} from '../types';
 
-@bind({scope: BindingScope.TRANSIENT})
-export class WorkflowProvider implements Provider<WorflowManager> {
-  value() {
-    return {
-      getWorkflowById: async () => {
-        throw new HttpErrors.BadRequest(
-          'getWorkflowId function not implemented',
-        );
-      },
-      startWorkflow: async () => {
-        throw new HttpErrors.BadRequest(
-          'startWorkflow function not implemented',
-        );
-      },
-      createWorkflow: async () => {
-        throw new HttpErrors.BadRequest(
-          'createWorkflow function not implemented',
-        );
-      },
-      updateWorkflow: async () => {
-        throw new HttpErrors.BadRequest(
-          'updateWorkflow function not implemented',
-        );
-      },
-      deleteWorkflowById: async () => {
-        throw new HttpErrors.BadRequest(
-          'deleteWorkflowById function not implemented',
-        );
-      },
-    };
+  @bind({scope: BindingScope.TRANSIENT})
+  export class WorkflowProvider implements Provider<WorflowManager> {
+    value() {
+      return {
+        getWorkflowById: async () => {
+          throw new HttpErrors.BadRequest(
+            'getWorkflowId function not implemented',
+          );
+        },
+        startWorkflow: async () => {
+          throw new HttpErrors.BadRequest(
+            'startWorkflow function not implemented',
+          );
+        },
+        createWorkflow: async () => {
+          throw new HttpErrors.BadRequest(
+            'createWorkflow function not implemented',
+          );
+        },
+        updateWorkflow: async () => {
+          throw new HttpErrors.BadRequest(
+            'updateWorkflow function not implemented',
+          );
+        },
+        deleteWorkflowById: async () => {
+          throw new HttpErrors.BadRequest(
+            'deleteWorkflowById function not implemented',
+          );
+        },
+      };
+    }
   }
-}
-```
+  ```
 
-#### WorkerImplementationProvider
+- WorkerImplementationProvider
 
-Your workers are automatically initiated once a workflow is executed, to provide the implementation details of workers, you need to give an implementation template of one such worker using the `WorkflowServiceBindings.WorkerImplementationFunction`, a default implementation is provided [here](/src/providers/worker-implementation.provider.ts). You also need to register individual worker commands using the `WorkflowServiceBindings.RegisterWorkerFunction` function;
+  Your workers are automatically initiated once a workflow is executed, to provide the implementation details of workers, you need to give an implementation template of one such worker using the `WorkflowServiceBindings.WorkerImplementationFunction`, a default implementation is provided [here](/src/providers/worker-implementation.provider.ts). You also need to register individual worker commands using the `WorkflowServiceBindings.RegisterWorkerFunction` function;
 
-#### ExecutionInputValidationProvider
+- ExecutionInputValidationProvider
 
-If you need to validate the inputs of a workflow execution, you can bind a custom validation provider using `WorkflowServiceBindings.ExecutionInputValidatorFn` key. The microservice comes with a default implementation using [AJV](https://www.npmjs.com/package/ajv).
+  If you need to validate the inputs of a workflow execution, you can bind a custom validation provider using `WorkflowServiceBindings.ExecutionInputValidatorFn` key. The microservice comes with a default implementation using [AJV](https://www.npmjs.com/package/ajv).
 
 ### Migrations
 
@@ -180,20 +197,8 @@ The migrations required for this service are processed during the installation a
 
 This project includes no migrations to seed your BPMN engine. If you are using Camunda BPM Run, you can use either the `resources` folder to seed a model, or you can config it to use a custom DB where you can seed your data. The steps to config Platform Run are given [here](https://camunda.com/blog/2020/03/introducing-camunda-bpm-run/).
 
-### Using with Sequelize
-
-This service supports Sequelize as the underlying ORM using [@loopback/sequelize](https://www.npmjs.com/package/@loopback/sequelize) extension. And in order to use it, you'll need to do following changes.
-
-1.To use Sequelize in your application, add following to application.ts along with other config specific to the service:
-
-```ts
-this.bind(WorkflowServiceBindings.Config).to({
-  useCustomSequence: false,
-  useSequelize: true,
-});
-```
-
-2. Use the `SequelizeDataSource` in your audit datasource as the parent class. Refer [this](https://www.npmjs.com/package/@loopback/sequelize#step-1-configure-datasource) for more.
+Additionally, there is now an option to choose between SQL migration or PostgreSQL migration.
+NOTE: For [`@sourceloop/cli`](https://www.npmjs.com/package/@sourceloop/cli?activeTab=readme) users, this choice can be specified during the scaffolding process by selecting the "type of datasource" option.
 
 ### API Documentation
 

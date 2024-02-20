@@ -8,6 +8,8 @@
 
 ![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/search-service/@loopback/core)
 
+## Overview
+
 A LoopBack microservice used for searching over configured models. It uses in-build Full Text Search support in PostgreSQL and MySQL databases to perform searches.
 
 ## Installation
@@ -63,17 +65,17 @@ npm i @sourceloop/search-service
 - Start the application
   `npm start`
 
-### Configurations
+## Configurations
 
-#### useCustomSequence
+**useCustomSequence**
 
 The service comes with a default sequence with inbuilt authentication and authorization using the [loopback4-authentication](https://github.com/sourcefuse/loopback4-authentication) and [loopback4-authorization](https://github.com/sourcefuse/loopback4-authorization). If you want to use your custom sequence instead, set this option as true.
 
-#### type
+**type**
 
 Type of the result set, by default it is a model with two properties - `name` and `description`;
 
-#### models
+**models**
 
 It sets the models and columns over which the search is performed. It's value is a list with two types of values -
 
@@ -82,7 +84,7 @@ It sets the models and columns over which the search is performed. It's value is
   - model - A class that extends the Loopback Model
   - columns - A key-value map that maps the keys of the database model to the keys in the result set.
 
-#### controller
+**controller**
 
 Configuration for the controller, it accepts three properties -
 
@@ -145,7 +147,14 @@ CREATE INDEX tbl_fts_idx ON main.<TABLENAME> USING GIN (
        to_tsvector('english', f_concat_ws(' ', <COLUMN1>, <COLUMN2>)));
 ```
 
-### API Documentation
+## Migrations
+
+The migrations required for this service are processed during the installation automatically if you set the `CHAT_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or databasea, they may be affected. In such a scenario, it is advised that you copy the migration files in your project root, using the `CHAT_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
+
+Additionally, there is now an option to choose between SQL migration or PostgreSQL migration.
+NOTE: For [`@sourceloop/cli`](https://www.npmjs.com/package/@sourceloop/cli?activeTab=readme) users, this choice can be specified during the scaffolding process by selecting the "type of datasource" option.
+
+## API Documentation
 
 #### Common Headers
 
