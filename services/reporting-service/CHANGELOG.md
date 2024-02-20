@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.8.0 (2024-02-20)
+
+* feat(reporting service): complete reimplementation (#1843) ([e4da8bb](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e4da8bb)), closes [#1843](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1843)
+
+
+
+
+
 ## <small>0.7.5 (2024-01-19)</small>
 
 * chore(deps): update sourceloop and loopback packages version (#1928) ([d9d1b20](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d9d1b20)), closes [#1928](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1928) [#1903](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1903)
