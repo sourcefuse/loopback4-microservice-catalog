@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/reporting-service",
-  "version": "0.7.6",
-  "description": "Reporting Microservice",
+  "version": "0.8.0",
+  "description": "reporting-service",
   "keywords": [
     "loopback-extension",
     "loopback"
@@ -12,8 +12,8 @@
     "node": "18 || 20"
   },
   "scripts": {
+    "apidocs": "npx widdershins --language_tabs 'javascript:JavaScript:request' 'javascript--nodejs:Node.JS' --summary openapi.json -o openapi.md",
     "prebuild": "npm run clean",
-    "build": "lb-tsc",
     "build:watch": "lb-tsc --watch",
     "lint": "npm run eslint && npm run prettier:check",
     "lint:fix": "npm run eslint:fix && npm run prettier:fix",
@@ -23,31 +23,37 @@
     "eslint": "eslint --report-unused-disable-directives .",
     "eslint:fix": "npm run eslint -- --fix",
     "pretest": "npm run rebuild",
-    "test": "echo \"No tests !\"",
+    "test": "lb-mocha --allow-console-logs \"dist/__tests__\" --timeout 5000",
     "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js",
     "docker:build": "docker build -t reporting-service .",
     "docker:run": "docker run -p 3000:3000 -d reporting-service",
     "premigrate": "npm run build",
     "migrate": "node ./dist/migrate",
-    "preopenapi-spec": "npm run build",
-    "openapi-spec": "node ./dist/openapi-spec",
+    "openapi-spec": "node ./dist/openapi-spec && npm run apidocs",
     "prestart": "npm run rebuild",
     "start": "node -r source-map-support/register .",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
-    "rebuild": "npm run clean && npm run build"
+    "rebuild": "npm run clean && npm run build",
+    "postinstall": "node migration.js",
+    "build": "lb-tsc",
+    "prepublishOnly": "npm run test",
+    "postbuild": "npm run openapi-spec"
   },
-  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
     "directory": "services/reporting-service"
   },
-  "author": "Sourcefuse",
+  "author": "Sourav Bhargava <sourav.bhargava@sourcefuse.com>",
   "license": "MIT",
   "files": [
     "README.md",
+    "index.js",
+    "index.d.ts",
     "dist",
     "src",
+    "migration.js",
+    "migrations",
     "database.json",
     "!*/__tests__"
   ],
@@ -56,41 +62,32 @@
     "db-migrate-pg": "^1.3.0"
   },
   "dependencies": {
-    "@loopback/boot": "^6.1.5",
-    "@loopback/context": "^6.1.5",
     "@loopback/core": "^5.1.5",
     "@loopback/openapi-v3": "^9.1.5",
     "@loopback/repository": "^6.1.5",
     "@loopback/rest": "^13.1.5",
-    "@loopback/rest-explorer": "^6.1.5",
-    "@loopback/service-proxy": "^6.1.5",
     "@sourceloop/core": "^11.0.3",
-    "axios": "^1.6.0",
-    "circular-json": "^0.5.9",
-    "dotenv": "^16.0.3",
+    "crypto-js": "^4.2.0",
+    "dotenv": "^16.3.1",
     "dotenv-extended": "^2.9.0",
-    "handlebars": "^4.7.7",
-    "loopback4-authentication": "^11.0.2",
-    "loopback4-authorization": "^6.2.1",
-    "loopback4-soft-delete": "^9.1.1",
-    "moment": "^2.29.3",
+    "joi": "^17.11.0",
+    "loopback-connector-postgresql": "^5.5.2",
+    "sequelize": "^6.32.1",
     "tslib": "^2.6.2",
-    "uuid": "^8.3.2"
+    "validator": "^13.11.0"
   },
   "devDependencies": {
     "@loopback/build": "^10.1.5",
     "@loopback/eslint-config": "^14.0.4",
     "@loopback/testlab": "^6.1.5",
-    "@types/circular-json": "^0.4.0",
-    "@types/lodash": "^4.14.182",
-    "@types/node": "^18.11.9",
-    "@types/uuid": "^8.3.4",
+    "@types/crypto-js": "^4.1.1",
+    "@types/json-stable-stringify": "^1.0.34",
+    "@types/node": "^18.11.18",
     "db-migrate": "^1.0.0-beta.21",
     "db-migrate-pg": "^1.3.0",
     "eslint": "^8.44.0",
     "source-map-support": "^0.5.21",
-    "typescript": "~4.9.5",
-    "widdershins": "^4.0.1"
+    "typescript": "~4.9.5"
   },
   "overrides": {
     "widdershins": {
@@ -133,6 +130,9 @@
       "plugin": [
         "typedoc-plugin-markdown"
       ]
+    },
+    "settings": {
+      "includeOpenAPIDoc": true
     }
   }
 }

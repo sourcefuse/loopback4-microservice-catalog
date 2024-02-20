@@ -26,7 +26,7 @@ which exports this provider with a binding key of `extension-starter.timer`. You
 can learn more about components in the
 [related resources section](#related-resources).
 
-This provider makes availble to your application a timer function which given a
+This provider makes available to your application a timer function which given a
 start time _(given as an array [seconds, nanoseconds])_ can give you a total
 time elapsed since the start in milliseconds. The timer can also start timing if
 no start time is given. This is used by LogComponent to allow a user to time a
@@ -58,7 +58,7 @@ import {ExtensionStarterBindings} from 'HelloExtensions';
 const key = ExtensionStarterBindings.LOG_ACTION;
 ```
 
-LogProvider gives us a seuqence action and a `startTimer` function. In order to
+LogProvider gives us a sequence action and a `startTimer` function. In order to
 use the sequence action, you must define your own sequence as shown below.
 
 **Example: Sequence**
