@@ -4,10 +4,9 @@
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "src",
-    "composite": true
+    "composite": true,
+    "experimentalDecorators": true
   },
-  "include": [
-    "src"
-  ],
+  "include": ["src"],
   "references": []
 }

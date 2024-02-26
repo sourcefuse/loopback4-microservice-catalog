@@ -309,8 +309,9 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
       },
 
       refund: async (transactionId: string) => {
-        const transaction =
-          await this.transactionsRepository.findById(transactionId);
+        const transaction = await this.transactionsRepository.findById(
+          transactionId,
+        );
         const paymentId = transaction?.res?.chargeResponse?.id;
         const refund = await this.instance.payments.refund(paymentId);
         transaction.res.refundDetails = refund;
