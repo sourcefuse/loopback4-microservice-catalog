@@ -13,9 +13,7 @@
       "post": {
         "x-controller-name": "GroupUserController",
         "x-operation-name": "createBulkUserGroups",
-        "tags": [
-          "GroupUserController"
-        ],
+        "tags": ["GroupUserController"],
         "security": [
           {
             "HTTPBearer": []
@@ -67,9 +65,7 @@
       "delete": {
         "x-controller-name": "GroupUserController",
         "x-operation-name": "delete",
-        "tags": [
-          "GroupUserController"
-        ],
+        "tags": ["GroupUserController"],
         "security": [
           {
             "HTTPBearer": []
@@ -120,9 +116,7 @@
       "post": {
         "x-controller-name": "GroupUserController",
         "x-operation-name": "create",
-        "tags": [
-          "GroupUserController"
-        ],
+        "tags": ["GroupUserController"],
         "security": [
           {
             "HTTPBearer": []
@@ -166,9 +160,7 @@
       "get": {
         "x-controller-name": "GroupUserController",
         "x-operation-name": "find",
-        "tags": [
-          "GroupUserController"
-        ],
+        "tags": ["GroupUserController"],
         "security": [
           {
             "HTTPBearer": []
@@ -219,9 +211,7 @@
       "get": {
         "x-controller-name": "TenantController",
         "x-operation-name": "count",
-        "tags": [
-          "TenantController"
-        ],
+        "tags": ["TenantController"],
         "security": [
           {
             "HTTPBearer": []
@@ -263,9 +253,7 @@
       "delete": {
         "x-controller-name": "TenantGroupController",
         "x-operation-name": "delete",
-        "tags": [
-          "TenantGroupController"
-        ],
+        "tags": ["TenantGroupController"],
         "security": [
           {
             "HTTPBearer": []
@@ -323,9 +311,7 @@
       "post": {
         "x-controller-name": "TenantGroupController",
         "x-operation-name": "create",
-        "tags": [
-          "TenantGroupController"
-        ],
+        "tags": ["TenantGroupController"],
         "security": [
           {
             "HTTPBearer": []
@@ -369,9 +355,7 @@
       "patch": {
         "x-controller-name": "TenantGroupController",
         "x-operation-name": "patch",
-        "tags": [
-          "TenantGroupController"
-        ],
+        "tags": ["TenantGroupController"],
         "security": [
           {
             "HTTPBearer": []
@@ -429,9 +413,7 @@
       "get": {
         "x-controller-name": "TenantGroupController",
         "x-operation-name": "find",
-        "tags": [
-          "TenantGroupController"
-        ],
+        "tags": ["TenantGroupController"],
         "security": [
           {
             "HTTPBearer": []
@@ -482,9 +464,7 @@
       "delete": {
         "x-controller-name": "TenantRoleController",
         "x-operation-name": "delete",
-        "tags": [
-          "TenantRoleController"
-        ],
+        "tags": ["TenantRoleController"],
         "security": [
           {
             "HTTPBearer": []
@@ -542,9 +522,7 @@
       "post": {
         "x-controller-name": "TenantRoleController",
         "x-operation-name": "create",
-        "tags": [
-          "TenantRoleController"
-        ],
+        "tags": ["TenantRoleController"],
         "security": [
           {
             "HTTPBearer": []
@@ -588,9 +566,7 @@
       "patch": {
         "x-controller-name": "TenantRoleController",
         "x-operation-name": "patch",
-        "tags": [
-          "TenantRoleController"
-        ],
+        "tags": ["TenantRoleController"],
         "security": [
           {
             "HTTPBearer": []
@@ -648,9 +624,7 @@
       "get": {
         "x-controller-name": "TenantRoleController",
         "x-operation-name": "find",
-        "tags": [
-          "TenantRoleController"
-        ],
+        "tags": ["TenantRoleController"],
         "security": [
           {
             "HTTPBearer": []
@@ -701,9 +675,7 @@
       "post": {
         "x-controller-name": "TenantTenantConfigController",
         "x-operation-name": "create",
-        "tags": [
-          "TenantTenantConfigController"
-        ],
+        "tags": ["TenantTenantConfigController"],
         "security": [
           {
             "HTTPBearer": []
@@ -747,9 +719,7 @@
       "patch": {
         "x-controller-name": "TenantTenantConfigController",
         "x-operation-name": "patch",
-        "tags": [
-          "TenantTenantConfigController"
-        ],
+        "tags": ["TenantTenantConfigController"],
         "security": [
           {
             "HTTPBearer": []
@@ -807,9 +777,7 @@
       "get": {
         "x-controller-name": "TenantTenantConfigController",
         "x-operation-name": "find",
-        "tags": [
-          "TenantTenantConfigController"
-        ],
+        "tags": ["TenantTenantConfigController"],
         "security": [
           {
             "HTTPBearer": []
@@ -858,9 +826,7 @@
       "delete": {
         "x-controller-name": "TenantTenantConfigController",
         "x-operation-name": "delete",
-        "tags": [
-          "TenantTenantConfigController"
-        ],
+        "tags": ["TenantTenantConfigController"],
         "security": [
           {
             "HTTPBearer": []
@@ -910,9 +876,7 @@
       "patch": {
         "x-controller-name": "TenantUserController",
         "x-operation-name": "patch",
-        "tags": [
-          "TenantUserController"
-        ],
+        "tags": ["TenantUserController"],
         "security": [
           {
             "HTTPBearer": []
@@ -971,9 +935,7 @@
       "delete": {
         "x-controller-name": "TenantUserController",
         "x-operation-name": "delete",
-        "tags": [
-          "TenantUserController"
-        ],
+        "tags": ["TenantUserController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1024,9 +986,7 @@
       "post": {
         "x-controller-name": "TenantUserController",
         "x-operation-name": "create",
-        "tags": [
-          "TenantUserController"
-        ],
+        "tags": ["TenantUserController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1070,9 +1030,7 @@
       "get": {
         "x-controller-name": "TenantUserController",
         "x-operation-name": "find",
-        "tags": [
-          "TenantUserController"
-        ],
+        "tags": ["TenantUserController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1123,9 +1081,7 @@
       "put": {
         "x-controller-name": "TenantController",
         "x-operation-name": "replaceById",
-        "tags": [
-          "TenantController"
-        ],
+        "tags": ["TenantController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1162,9 +1118,7 @@
       "patch": {
         "x-controller-name": "TenantController",
         "x-operation-name": "updateById",
-        "tags": [
-          "TenantController"
-        ],
+        "tags": ["TenantController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1201,9 +1155,7 @@
       "get": {
         "x-controller-name": "TenantController",
         "x-operation-name": "findById",
-        "tags": [
-          "TenantController"
-        ],
+        "tags": ["TenantController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1248,9 +1200,7 @@
       "delete": {
         "x-controller-name": "TenantController",
         "x-operation-name": "deleteById",
-        "tags": [
-          "TenantController"
-        ],
+        "tags": ["TenantController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1279,9 +1229,7 @@
       "post": {
         "x-controller-name": "TenantController",
         "x-operation-name": "create",
-        "tags": [
-          "TenantController"
-        ],
+        "tags": ["TenantController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1314,9 +1262,7 @@
       "patch": {
         "x-controller-name": "TenantController",
         "x-operation-name": "updateAll",
-        "tags": [
-          "TenantController"
-        ],
+        "tags": ["TenantController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1365,9 +1311,7 @@
       "get": {
         "x-controller-name": "TenantController",
         "x-operation-name": "find",
-        "tags": [
-          "TenantController"
-        ],
+        "tags": ["TenantController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1409,9 +1353,7 @@
       "get": {
         "x-controller-name": "UserTenantController",
         "x-operation-name": "find",
-        "tags": [
-          "UserTenantController"
-        ],
+        "tags": ["UserTenantController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1462,9 +1404,7 @@
       "get": {
         "x-controller-name": "UserTenantPrefsController",
         "x-operation-name": "count",
-        "tags": [
-          "UserTenantPrefsController"
-        ],
+        "tags": ["UserTenantPrefsController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1506,9 +1446,7 @@
       "delete": {
         "x-controller-name": "UserTenantPrefsController",
         "x-operation-name": "deleteById",
-        "tags": [
-          "UserTenantPrefsController"
-        ],
+        "tags": ["UserTenantPrefsController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1544,9 +1482,7 @@
       "post": {
         "x-controller-name": "UserTenantPrefsController",
         "x-operation-name": "create",
-        "tags": [
-          "UserTenantPrefsController"
-        ],
+        "tags": ["UserTenantPrefsController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1579,9 +1515,7 @@
       "get": {
         "x-controller-name": "UserTenantPrefsController",
         "x-operation-name": "find",
-        "tags": [
-          "UserTenantPrefsController"
-        ],
+        "tags": ["UserTenantPrefsController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1623,9 +1557,7 @@
       "get": {
         "x-controller-name": "UserTenantUserGroupController",
         "x-operation-name": "find",
-        "tags": [
-          "UserTenantUserGroupController"
-        ],
+        "tags": ["UserTenantUserGroupController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1676,9 +1608,7 @@
       "post": {
         "x-controller-name": "UserTenantUserLevelPermissionController",
         "x-operation-name": "create",
-        "tags": [
-          "UserTenantUserLevelPermissionController"
-        ],
+        "tags": ["UserTenantUserLevelPermissionController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1722,9 +1652,7 @@
       "patch": {
         "x-controller-name": "UserTenantUserLevelPermissionController",
         "x-operation-name": "patch",
-        "tags": [
-          "UserTenantUserLevelPermissionController"
-        ],
+        "tags": ["UserTenantUserLevelPermissionController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1782,9 +1710,7 @@
       "get": {
         "x-controller-name": "UserTenantUserLevelPermissionController",
         "x-operation-name": "find",
-        "tags": [
-          "UserTenantUserLevelPermissionController"
-        ],
+        "tags": ["UserTenantUserLevelPermissionController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1833,9 +1759,7 @@
       "delete": {
         "x-controller-name": "UserTenantUserLevelPermissionController",
         "x-operation-name": "delete",
-        "tags": [
-          "UserTenantUserLevelPermissionController"
-        ],
+        "tags": ["UserTenantUserLevelPermissionController"],
         "security": [
           {
             "HTTPBearer": []
@@ -1949,10 +1873,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "name",
-          "tenantId"
-        ],
+        "required": ["name", "tenantId"],
         "additionalProperties": false
       },
       "NewRoleInTenant": {
@@ -2010,9 +1931,7 @@
             }
           }
         },
-        "required": [
-          "name"
-        ],
+        "required": ["name"],
         "additionalProperties": false,
         "x-typescript-type": "Omit<Role, 'id' | 'tenantId'>"
       },
@@ -2114,10 +2033,7 @@
           "status": {
             "type": "number",
             "description": "Tenant status - Active or Inactive",
-            "enum": [
-              1,
-              0
-            ],
+            "enum": [1, 0],
             "nullable": true
           },
           "key": {
@@ -2142,10 +2058,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "name",
-          "status"
-        ],
+        "required": ["name", "status"],
         "additionalProperties": false
       },
       "NewTenant": {
@@ -2185,10 +2098,7 @@
           "status": {
             "type": "number",
             "description": "Tenant status - Active or Inactive",
-            "enum": [
-              1,
-              0
-            ],
+            "enum": [1, 0],
             "nullable": true
           },
           "key": {
@@ -2213,10 +2123,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "name",
-          "status"
-        ],
+        "required": ["name", "status"],
         "additionalProperties": false
       },
       "GroupWithRelations": {
@@ -2272,9 +2179,7 @@
             }
           }
         },
-        "required": [
-          "tenantId"
-        ],
+        "required": ["tenantId"],
         "additionalProperties": false,
         "x-typescript-type": "GroupWithRelations"
       },
@@ -2326,10 +2231,7 @@
           },
           "foreignKey": {}
         },
-        "required": [
-          "configKey",
-          "tenantId"
-        ],
+        "required": ["configKey", "tenantId"],
         "additionalProperties": false,
         "x-typescript-type": "TenantConfigWithRelations"
       },
@@ -2391,10 +2293,7 @@
           },
           "foreignKey": {}
         },
-        "required": [
-          "authProvider",
-          "userId"
-        ],
+        "required": ["authProvider", "userId"],
         "additionalProperties": false,
         "x-typescript-type": "UserCredentialsWithRelations"
       },
@@ -2467,11 +2366,7 @@
           "gender": {
             "type": "string",
             "description": "This field takes a single character as input in database.\n    'M' for male and 'F' for female.",
-            "enum": [
-              "M",
-              "F",
-              "O"
-            ]
+            "enum": ["M", "F", "O"]
           },
           "dob": {
             "type": "string",
@@ -2494,11 +2389,7 @@
             }
           }
         },
-        "required": [
-          "firstName",
-          "username",
-          "email"
-        ],
+        "required": ["firstName", "username", "email"],
         "additionalProperties": false
       },
       "UserViewWithRelations": {
@@ -2568,11 +2459,7 @@
           "gender": {
             "type": "string",
             "description": "This field takes a single character as input in database.\n    'M' for male and 'F' for female.",
-            "enum": [
-              "M",
-              "F",
-              "O"
-            ]
+            "enum": ["M", "F", "O"]
           },
           "dob": {
             "type": "string",
@@ -2692,10 +2579,7 @@
             "$ref": "#/components/schemas/UserViewWithRelations"
           }
         },
-        "required": [
-          "name",
-          "tenantId"
-        ],
+        "required": ["name", "tenantId"],
         "additionalProperties": false,
         "x-typescript-type": "RoleWithRelations"
       },
@@ -2747,11 +2631,7 @@
           },
           "foreignKey": {}
         },
-        "required": [
-          "permission",
-          "allowed",
-          "userTenantId"
-        ],
+        "required": ["permission", "allowed", "userTenantId"],
         "additionalProperties": false,
         "x-typescript-type": "UserLevelPermissionWithRelations"
       },
@@ -2803,10 +2683,7 @@
             "$ref": "#/components/schemas/UserTenantWithRelations"
           }
         },
-        "required": [
-          "groupId",
-          "userTenantId"
-        ],
+        "required": ["groupId", "userTenantId"],
         "additionalProperties": false,
         "x-typescript-type": "UserGroupWithRelations"
       },
@@ -2859,9 +2736,7 @@
           },
           "foreignKey": {}
         },
-        "required": [
-          "userTenantId"
-        ],
+        "required": ["userTenantId"],
         "additionalProperties": false,
         "x-typescript-type": "UserInvitationWithRelations"
       },
@@ -2945,11 +2820,7 @@
             }
           }
         },
-        "required": [
-          "userId",
-          "tenantId",
-          "roleId"
-        ],
+        "required": ["userId", "tenantId", "roleId"],
         "additionalProperties": false,
         "x-typescript-type": "UserTenantWithRelations"
       },
@@ -2993,10 +2864,7 @@
           "status": {
             "type": "number",
             "description": "Tenant status - Active or Inactive",
-            "enum": [
-              1,
-              0
-            ],
+            "enum": [1, 0],
             "nullable": true
           },
           "key": {
@@ -3051,10 +2919,7 @@
             }
           }
         },
-        "required": [
-          "name",
-          "status"
-        ],
+        "required": ["name", "status"],
         "additionalProperties": false
       },
       "TenantPartial": {
@@ -3097,10 +2962,7 @@
           "status": {
             "type": "number",
             "description": "Tenant status - Active or Inactive",
-            "enum": [
-              1,
-              0
-            ],
+            "enum": [1, 0],
             "nullable": true
           },
           "key": {
@@ -3167,10 +3029,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "groupId",
-          "userTenantId"
-        ],
+        "required": ["groupId", "userTenantId"],
         "additionalProperties": false
       },
       "NewUserGroupInGroup": {
@@ -3208,9 +3067,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "userTenantId"
-        ],
+        "required": ["userTenantId"],
         "additionalProperties": false,
         "x-typescript-type": "Omit<UserGroup, 'id' | 'groupId'>"
       },
@@ -3257,10 +3114,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "configKey",
-          "tenantId"
-        ],
+        "required": ["configKey", "tenantId"],
         "additionalProperties": false
       },
       "NewTenantConfigInTenant": {
@@ -3301,9 +3155,7 @@
             "type": "object"
           }
         },
-        "required": [
-          "configKey"
-        ],
+        "required": ["configKey"],
         "additionalProperties": false,
         "x-typescript-type": "Omit<TenantConfig, 'id' | 'tenantId'>"
       },
@@ -3353,9 +3205,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "tenantId"
-        ],
+        "required": ["tenantId"],
         "additionalProperties": false
       },
       "NewGroupInTenant": {
@@ -3521,11 +3371,7 @@
           "gender": {
             "type": "string",
             "description": "This field takes a single character as input in database.\n    'M' for male and 'F' for female.",
-            "enum": [
-              "M",
-              "F",
-              "O"
-            ]
+            "enum": ["M", "F", "O"]
           },
           "dob": {
             "type": "string",
@@ -3535,11 +3381,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "firstName",
-          "username",
-          "email"
-        ],
+        "required": ["firstName", "username", "email"],
         "additionalProperties": false
       },
       "NewUserInTenant": {
@@ -3608,11 +3450,7 @@
           "gender": {
             "type": "string",
             "description": "This field takes a single character as input in database.\n    'M' for male and 'F' for female.",
-            "enum": [
-              "M",
-              "F",
-              "O"
-            ]
+            "enum": ["M", "F", "O"]
           },
           "dob": {
             "type": "string",
@@ -3625,12 +3463,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "firstName",
-          "username",
-          "email",
-          "roleId"
-        ],
+        "required": ["firstName", "username", "email", "roleId"],
         "additionalProperties": false
       },
       "UserDto": {
@@ -3702,11 +3535,7 @@
           "gender": {
             "type": "string",
             "description": "This field takes a single character as input in database.\n    'M' for male and 'F' for female.",
-            "enum": [
-              "M",
-              "F",
-              "O"
-            ]
+            "enum": ["M", "F", "O"]
           },
           "dob": {
             "type": "string",
@@ -3722,12 +3551,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "firstName",
-          "username",
-          "email",
-          "roleId"
-        ],
+        "required": ["firstName", "username", "email", "roleId"],
         "additionalProperties": false
       },
       "UserViewPartialExcluding_id-authClientIds-lastLogin-tenantId-tenantName-tenantKey-roleName-userTenantId_": {
@@ -3788,11 +3612,7 @@
           "gender": {
             "type": "string",
             "description": "This field takes a single character as input in database.\n    'M' for male and 'F' for female.",
-            "enum": [
-              "M",
-              "F",
-              "O"
-            ]
+            "enum": ["M", "F", "O"]
           },
           "dob": {
             "type": "string",
@@ -3856,10 +3676,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "configKey",
-          "configValue"
-        ],
+        "required": ["configKey", "configValue"],
         "additionalProperties": false
       },
       "NewUserTenantPrefs": {
@@ -3900,10 +3717,7 @@
             "type": "object"
           }
         },
-        "required": [
-          "configKey",
-          "configValue"
-        ],
+        "required": ["configKey", "configValue"],
         "additionalProperties": false,
         "x-typescript-type": "Omit<UserTenantPrefs, 'id' | 'userTenantId'>"
       },
@@ -3955,10 +3769,7 @@
           },
           "foreignKey": {}
         },
-        "required": [
-          "configKey",
-          "configValue"
-        ],
+        "required": ["configKey", "configValue"],
         "additionalProperties": false,
         "x-typescript-type": "UserTenantPrefsWithRelations"
       },
@@ -4005,11 +3816,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "permission",
-          "allowed",
-          "userTenantId"
-        ],
+        "required": ["permission", "allowed", "userTenantId"],
         "additionalProperties": false
       },
       "NewUserLevelPermissionInUserTenant": {
@@ -4053,10 +3860,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "permission",
-          "allowed"
-        ],
+        "required": ["permission", "allowed"],
         "additionalProperties": false,
         "x-typescript-type": "@loopback/repository-json-schema#Optional<Omit<UserLevelPermission, 'id'>, 'userTenantId'>"
       },
@@ -4184,13 +3988,7 @@
         "properties": {
           "relation": {
             "type": "string",
-            "enum": [
-              "tenantConfigs",
-              "userTenants",
-              "users",
-              "roles",
-              "groups"
-            ]
+            "enum": ["tenantConfigs", "userTenants", "users", "roles", "groups"]
           },
           "scope": {
             "$ref": "#/components/schemas/tenants.ScopeFilter"
@@ -4543,9 +4341,7 @@
         "properties": {
           "relation": {
             "type": "string",
-            "enum": [
-              "userTenant"
-            ]
+            "enum": ["userTenant"]
           },
           "scope": {
             "$ref": "#/components/schemas/user_tenant_prefs.ScopeFilter"
