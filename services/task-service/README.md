@@ -79,6 +79,9 @@ export class PgDbDataSource
 
 - To run the migrations provided by the task service (available in the migrations folder of both the source code and the packed version in your `node_modules`), use the [db-migrate](https://db-migrate.readthedocs.io/en/latest/) package.
 - Run the HTTP migrations only if you plan to use the Http Outgoing connector.
+- Additionally, there is now an option to choose between SQL migration or PostgreSQL migration.
+NOTE : For @sourceloop/cli users, this choice can be specified during the scaffolding process by selecting the "type of datasource" option.
+
 
 ## Commands
 

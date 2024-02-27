@@ -324,6 +324,31 @@ Detailed description for above keys here: https://openid.net/specs/openid-connec
 
 The migrations required for this service are processed during the installation automatically if you set the `OIDC_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or databasea, they may be affected. In such a scenario, it is advised that you copy the migration files in your project root, using the `OIDC_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
 
+Additionally, there is now an option to choose between SQL migration or PostgreSQL migration.
+NOTE : For @sourceloop/cli users, this choice can be specified during the scaffolding process by selecting the "type of datasource" option.
+
+
+### API Documentation
+
+#### Common Headers
+
+Authorization: Bearer <token> where <token> is a JWT token signed using JWT issuer and secret.
+`Content-Type: application/json` in the response and in request if the API method is NOT GET
+
+#### Common Request path Parameters
+
+{version}: Defines the API Version
+
+### Common Responses
+
+200: Successful Response. Response body varies w.r.t API
+401: Unauthorized: The JWT token is missing or invalid
+403: Forbidden : Not allowed to execute the concerned API
+404: Entity Not Found
+400: Bad Request (Error message varies w.r.t API)
+201: No content: Empty Response
+
+
 #### API Details
 
 Visit the [OpenAPI spec docs](./openapi.md)

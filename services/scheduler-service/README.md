@@ -8,6 +8,7 @@
 
 ![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/scheduler-service/@loopback/core)
 
+## Overview
 This is a loopback4 component for scheduling events in calendar (scheduler/calendar server).
 
 Various features of Scheduler Service:
@@ -43,6 +44,13 @@ To get started with a basic implementation of this service, see [/sandbox/schedu
 npm install @sourceloop/scheduler-service
 ```
 
+### Workflow Diagrams
+
+![Schedular](https://user-images.githubusercontent.com/82804130/127480876-7dad27cf-11c6-4dbc-9988-f7af6f91c5b8.jpg)
+
+![event](https://user-images.githubusercontent.com/82804130/127480906-3c70d4e0-03b8-426f-bb63-ec726eb39353.jpg)
+
+
 ### Usage
 
 - Create a new Loopback4 Application (If you don't have one already)
@@ -75,14 +83,80 @@ npm install @sourceloop/scheduler-service
   `SchedulerDatasourceName`. You can see an example datasource [here](#setting-up-a-datasource).
 - Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to
   `AuthCacheDatasourceName`. You can see an example datasource [here](#setting-up-a-datasource).
+- **Audit Logs**
+
+  To generate audit logs for video conferencing service, you'll have to set the env var `ADD_AUDIT_LOG_MIXIN` to `true` and configure a datasource for it like below:
+
+  ```ts
+  import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
+  import {juggler} from '@loopback/repository';
+  import {AuditDbSourceName} from '@sourceloop/audit-log';
+
+  const config = {
+    name: 'audit',
+    connector: 'postgresql',
+    url: '',
+    host: '',
+    port: 0,
+    user: '',
+    password: '',
+    database: '',
+  };
+
+  @lifeCycleObserver('datasource')
+  export class AuditDataSource
+    extends juggler.DataSource
+    implements LifeCycleObserver
+  {
+    static dataSourceName = AuditDbSourceName;
+    static readonly defaultConfig = config;
+
+    constructor(
+      @inject('datasources.config.audit', {optional: true})
+      dsConfig: object = config,
+    ) {
+      const auditEnvConfig = {
+        host: process.env.AUDIT_DB_HOST,
+        port: process.env.AUDIT_DB_PORT,
+        user: process.env.AUDIT_DB_USER,
+        password: process.env.AUDIT_DB_PASSWORD,
+        database: process.env.AUDIT_DB_DATABASE,
+        schema: process.env.AUDIT_DB_SCHEMA,
+      };
+      Object.assign(dsConfig, auditEnvConfig);
+      super(dsConfig);
+    }
+  }
+  ```
+
+  Configure .env of application in index.ts before exporting application like follows
+
+  ```ts
+  import * as dotenv from 'dotenv';
+  dotenv.config();
+
+  import {ApplicationConfig, SchedulerExampleApplication} from './application';
+  export * from './application';
+  //...
+  ```
+
+- **Using with Sequelize**
+
+  This service supports Sequelize as the underlying ORM using [@loopback/sequelize](https://www.npmjs.com/package/@loopback/sequelize) extension. And in order to use it, you'll need to do following changes.
+
+  - To use Sequelize in your application, add following to application.ts:
+
+  ```ts
+  this.bind(CoreSchedulerBindings.Config).to({
+    useCustomSequence: false,
+    useSequelize: true,
+  });
+  ```
+
+  - Use the `SequelizeDataSource` in your datasource as the parent class. Refer [this](https://www.npmjs.com/package/@loopback/sequelize#step-1-configure-datasource) for more.
+
 - Start the application
   `npm start`
-
-### Workflow Diagrams
-
-![Schedular](https://user-images.githubusercontent.com/82804130/127480876-7dad27cf-11c6-4dbc-9988-f7af6f91c5b8.jpg)
-
-![event](https://user-images.githubusercontent.com/82804130/127480906-3c70d4e0-03b8-426f-bb63-ec726eb39353.jpg)
 
 ### Environment Variables
 
@@ -203,81 +277,12 @@ export class AuthCacheDataSource
 
 The migrations required for this service are processed during the installation automatically if you set the `SCHEDULER_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or databases, they may be affected. In such a scenario, it is advised that you copy the migration files in your project root, using the `SCHEDULER_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
 
+Additionally, there is now an option to choose between SQL migration or PostgreSQL migration.
+NOTE : For @sourceloop/cli users, this choice can be specified during the scaffolding process by selecting the "type of datasource" option.
+
 ## Database Schema
 
 ![db-schema](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/services/scheduler-service/migrations/scheduler_db_schema.png?raw=true)
-
-## Audit Logs
-
-To generate audit logs for video conferencing service, you'll have to set the env var `ADD_AUDIT_LOG_MIXIN` to `true` and configure a datasource for it like below:
-
-```ts
-import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
-import {juggler} from '@loopback/repository';
-import {AuditDbSourceName} from '@sourceloop/audit-log';
-
-const config = {
-  name: 'audit',
-  connector: 'postgresql',
-  url: '',
-  host: '',
-  port: 0,
-  user: '',
-  password: '',
-  database: '',
-};
-
-@lifeCycleObserver('datasource')
-export class AuditDataSource
-  extends juggler.DataSource
-  implements LifeCycleObserver
-{
-  static dataSourceName = AuditDbSourceName;
-  static readonly defaultConfig = config;
-
-  constructor(
-    @inject('datasources.config.audit', {optional: true})
-    dsConfig: object = config,
-  ) {
-    const auditEnvConfig = {
-      host: process.env.AUDIT_DB_HOST,
-      port: process.env.AUDIT_DB_PORT,
-      user: process.env.AUDIT_DB_USER,
-      password: process.env.AUDIT_DB_PASSWORD,
-      database: process.env.AUDIT_DB_DATABASE,
-      schema: process.env.AUDIT_DB_SCHEMA,
-    };
-    Object.assign(dsConfig, auditEnvConfig);
-    super(dsConfig);
-  }
-}
-```
-
-Configure .env of application in index.ts before exporting application like follows
-
-```ts
-import * as dotenv from 'dotenv';
-dotenv.config();
-
-import {ApplicationConfig, SchedulerExampleApplication} from './application';
-export * from './application';
-//...
-```
-
-### Using with Sequelize
-
-This service supports Sequelize as the underlying ORM using [@loopback/sequelize](https://www.npmjs.com/package/@loopback/sequelize) extension. And in order to use it, you'll need to do following changes.
-
-1.To use Sequelize in your application, add following to application.ts:
-
-```ts
-this.bind(CoreSchedulerBindings.Config).to({
-  useCustomSequence: false,
-  useSequelize: true,
-});
-```
-
-2. Use the `SequelizeDataSource` in your datasource as the parent class. Refer [this](https://www.npmjs.com/package/@loopback/sequelize#step-1-configure-datasource) for more.
 
 ## API's Details
 
