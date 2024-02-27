@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import fs from 'fs';
-import {join} from 'path';
+import { join } from 'path';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import AppGenerator from '../../app-generator';
 import {
@@ -17,14 +17,14 @@ import {
   SEQUELIZESERVICES,
   SERVICES,
 } from '../../enum';
-import {AnyObject, MicroserviceOptions} from '../../types';
+import { AnyObject, MicroserviceOptions } from '../../types';
 import {
   JSON_SPACING,
   appendDependencies,
   getDependencyVersion,
 } from '../../utils';
 const chalk = require('chalk'); //NOSONAR
-const {promisify} = require('util');
+const { promisify } = require('util');
 
 const DATASOURCE_TEMPLATE = join(
   '..',
@@ -135,7 +135,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     );
     this.projectInfo.datasourceConnector =
       DATASOURCE_CONNECTORS[
-        this.options.datasourceType ?? DATASOURCES.POSTGRES
+      this.options.datasourceType ?? DATASOURCES.POSTGRES
       ];
     this.projectInfo.datasourceConnectorName =
       this.projectInfo.datasourceConnector;
@@ -245,13 +245,14 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       scripts['start'] =
         'node -r ./dist/opentelemetry-registry.js -r source-map-support/register .';
       scripts['docker:build'] =
-        `DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $REPOSITORY_URI:${this.options.baseService} .`;
+        `DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE --build-arg FROM_FOLDER=services --build-arg SERVICE_NAME=${this.options.baseService} -t $IMAGE_REPO_NAME/$npm_package_name:$npm_package_version ../../. -f ./Dockerfile`;
+
       scripts['docker:push'] =
-        ` docker push $REPOSITORY_URI:${this.options.baseService}`;
+        ` docker push $IMAGE_REPO_NAME/$npm_package_name:$npm_package_version`;
       scripts['docker:build:dev'] =
-        `DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $REPOSITORY_URI:${this.options.baseService} .`;
+        `DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE --build-arg FROM_FOLDER=services --build-arg SERVICE_NAME=${this.options.baseService} -t $IMAGE_REPO_NAME/$npm_package_name:$npm_package_version ../../. -f ./Dockerfile`;
       scripts['docker:push:dev'] =
-        `docker push $REPOSITORY_URI:${this.options.baseService}`;
+        ` docker push $IMAGE_REPO_NAME/$npm_package_name:$npm_package_version`;
       scripts['coverage'] = 'nyc npm run test';
 
       packageJson.scripts = scripts;
@@ -273,7 +274,6 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       await this.spawnCommand('npm', ['i']);
 
       await this._addMigrations();
-      await this._appendDockerScript();
       await this._updateEnvFiles();
       return true;
     }
@@ -329,7 +329,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
   async _appendDockerScript() {
     const packageJsonFile = join(this.destinationRoot(), './package.json');
     const packageJson = this.fs.readJSON(packageJsonFile) as AnyObject;
-    const scripts = {...packageJson.scripts};
+    const scripts = { ...packageJson.scripts };
     scripts[`docker:build:${this.options.baseService}`] =
       `docker build --build-arg SERVICE_NAME=${this.options.baseService} --build-arg FROM_FOLDER=services -t $REPOSITORY_URI:${this.options.baseService} -f ./services/${this.options.name}/Dockerfile .`;
     packageJson.scripts = scripts;

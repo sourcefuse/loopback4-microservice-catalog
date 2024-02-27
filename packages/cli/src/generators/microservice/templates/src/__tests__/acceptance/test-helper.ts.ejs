@@ -24,8 +24,8 @@ export async function setupApplication(): Promise<AppWithClient> {
 
   <% if(project.baseServiceDSList) { -%>
   <% for(let i=0; i< project.baseServiceDSList.length; i++) {-%>
-    app.bind('datasources.config.<%= project.baseServiceDSList[i].fileName %>').to({
-      name: '<%= project.baseServiceDSList[i].fileName %>',
+    app.bind('datasources.config.db').to({
+      name: 'db',
       connector: 'memory',
     });
     <% } -%>
