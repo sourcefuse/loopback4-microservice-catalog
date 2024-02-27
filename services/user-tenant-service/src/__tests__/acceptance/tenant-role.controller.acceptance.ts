@@ -7,14 +7,17 @@ import * as jwt from 'jsonwebtoken';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {UserTenantServiceApplication} from '../../application';
 import {PermissionKey} from '../../enums';
-import {Role} from '../../models';
-import {RoleRepository} from '../../repositories';
+import {UserTenantServiceKey} from '../../keys';
+import {Role, UserTenant} from '../../models';
+import {RoleRepository, UserTenantRepository} from '../../repositories';
+import {TenantOperationsService} from '../../services';
 import {issuer, secret, setupApplication} from './test-helper';
 
 describe('Role Controller', function (this: Mocha.Suite) {
   this.timeout(10000);
   let app: UserTenantServiceApplication;
   let roleRepo: RoleRepository;
+  let userTenantRepo: UserTenantRepository;
   const basePath = '/tenants';
   let client: Client;
   let token: string;
@@ -76,6 +79,18 @@ describe('Role Controller', function (this: Mocha.Suite) {
       .send(role)
       .expect(200);
   });
+  it('gives status 403 when user try to create role with permission that user itself does not has', async () => {
+    const role = {
+      name: 'test_role',
+      roleType: 0 as unknown as undefined,
+      permissions: [PermissionKey.CreateGroup],
+    };
+    await client
+      .post(`${basePath}/${id}/roles`)
+      .set('authorization', `Bearer ${token}`)
+      .send(role)
+      .expect(403);
+  });
 
   it('gives status 200 when a role is updated ', async () => {
     const role = await roleRepo.create(
@@ -91,6 +106,41 @@ describe('Role Controller', function (this: Mocha.Suite) {
       .expect(200);
   });
 
+  it('gives status 403 when user tries to update role permissions that user itself does not has', async () => {
+    const role = {
+      name: 'test_role',
+      roleType: 0 as unknown as undefined,
+      permissions: [PermissionKey.CreateGroup],
+    };
+    await client
+      .patch(`${basePath}/${id}/roles`)
+      .set('authorization', `Bearer ${token}`)
+      .send(role)
+      .expect(403);
+  });
+
+  it('gives status 403 when user try to delete his own role', async () => {
+    const role = await roleRepo.create(
+      new Role({
+        name: 'test_admin',
+        roleType: 0 as unknown as undefined,
+      }),
+    );
+    const userTenant = await userTenantRepo.create(
+      new UserTenant({
+        userId: id,
+        tenantId: id,
+        roleId: role.id,
+      }),
+    );
+    testUser.userTenantId = userTenant.id ?? '';
+    setCurrentUser();
+    await client
+      .del(`${`${basePath}/${id}/roles`}/${role.id}`)
+      .set('authorization', `Bearer ${token}`)
+      .expect(403);
+  });
+
   it('gives status 204 when a role is deleted ', async () => {
     const role = await roleRepo.create(
       new Role({
@@ -98,6 +148,15 @@ describe('Role Controller', function (this: Mocha.Suite) {
         roleType: 0 as unknown as undefined,
       }),
     );
+    const userTenant = await userTenantRepo.create(
+      new UserTenant({
+        userId: id,
+        tenantId: id,
+        roleId: '2',
+      }),
+    );
+    testUser.userTenantId = userTenant.id ?? '';
+    setCurrentUser();
     await client
       .del(`${`${basePath}/${id}/roles`}/${role.id}`)
       .set('authorization', `Bearer ${token}`)
@@ -132,10 +191,14 @@ describe('Role Controller', function (this: Mocha.Suite) {
 
   async function givenRepositories() {
     roleRepo = await app.getRepository(RoleRepository);
+    userTenantRepo = await app.getRepository(UserTenantRepository);
   }
 
   function setCurrentUser() {
     app.bind(AuthenticationBindings.CURRENT_USER).to(testUser);
+    app
+      .bind(UserTenantServiceKey.TenantOperationsService)
+      .toClass(TenantOperationsService);
     token = jwt.sign(testUser, secret, {
       expiresIn: 180000,
       issuer: issuer,

@@ -121,13 +121,31 @@ export class TenantUserController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(User, {partial: true}),
+          schema: getModelSchemaRef(UserView, {
+            partial: true,
+            exclude: [
+              'id',
+              'authClientIds',
+              'lastLogin',
+              'tenantId',
+              'tenantName',
+              'tenantKey',
+              'roleName',
+              'userTenantId',
+            ],
+          }),
         },
       },
     })
     user: Omit<
       UserView,
-      'id' | 'authClientIds' | 'lastLogin' | 'status' | 'tenantId'
+      | 'id'
+      | 'authClientIds'
+      | 'lastLogin'
+      | 'tenantId'
+      | 'tenantKey'
+      | 'roleName'
+      | 'userTenantId'
     >,
     @param.query.object('where', getWhereSchemaFor(User)) where?: Where<User>,
   ): Promise<void> {
