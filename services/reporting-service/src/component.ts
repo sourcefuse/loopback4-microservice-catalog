@@ -1,71 +1,104 @@
-﻿// Copyright (c) 2023 Sourcefuse Technologies
-//
-// This software is released under the MIT License.
-// https://opensource.org/licenses/MIT
 import {
-  Application,
-  injectable,
-  Component,
-  config,
-  ContextTags,
-  CoreBindings,
-  inject,
-  ControllerClass,
   Binding,
+  ContextTags,
+  ControllerClass,
+  CoreBindings,
   ProviderMap,
+  inject,
+  injectable,
 } from '@loopback/core';
-import {ReportingServiceComponentBindings} from './keys';
-import {CoreComponent} from '@sourceloop/core';
-import {Class, Model, Repository} from '@loopback/repository';
-import {
-  DEFAULT_REPORTING_SERVICE_OPTIONS,
-  ReportingServiceComponentOptions,
-} from './types';
-import {Queries, MetabaseToken} from './models';
-import {
-  QueriesController,
-  QueryDataController,
-  MetabaseTokenController,
-} from './controllers';
-import {MetabaseTokenRepository, QueriesRepository} from './repositories';
-import {ReportingProvider, ReportingBindings} from './providers';
 
-// Configure the binding for ReportingServiceComponent
+import {RestApplication} from '@loopback/rest';
+import {
+  DashboardRepository,
+  DashboardWidgetRepository,
+  DataSetsRepository,
+  IngestionMappingsRepository,
+  StateTrackingRepository,
+  WidgetsRepository,
+} from './repositories';
+import {
+  DataSetsService,
+  IngestionMappingsService,
+  StateTrackingService,
+} from './services';
+
+import {Class, Model, Repository} from '@loopback/repository';
+import {CoreComponent, ILogger} from '@sourceloop/core';
+import {
+  DashboardController,
+  DataSetsController,
+  DataSourcesController,
+  IngestionMappingsController,
+  StateTrackingController,
+  WidgetController,
+} from './controllers';
+import {ReportingServiceComponentBindings} from './keys';
+import {ReportingServiceInitializer} from './observers';
+import {DataStoreObjectProvider} from './providers/data-store-object.provider';
+import {S3ObjectProvider} from './providers/data-store-objects/s3-object.provider';
+import {SequelizeObjectProvider} from './providers/data-store-objects/sequelize-object.provider';
+import {DefaultListenerService} from './services/default-listener.service';
+import {GenericConversionUtils} from './utils/generic-data-type-conversion.utils';
+
+import {SequelizeQueryUtility} from './utils/sequelize-query.utils';
+
 @injectable({
   tags: {[ContextTags.KEY]: ReportingServiceComponentBindings.COMPONENT},
 })
-export class ReportingServiceComponent implements Component {
-  repositories?: Class<Repository<Model>>[];
-
-  /**
-   * An optional list of Model classes to bind for dependency injection
-   * via `app.model()` API.
-   */
-  models?: Class<Model>[];
-
-  /**
-   * An array of controller classes
-   */
-  controllers?: ControllerClass[];
+export class ReportingServiceComponent {
+  controllers?: ControllerClass[] = [
+    DataSetsController,
+    IngestionMappingsController,
+    DataSourcesController,
+    StateTrackingController,
+    WidgetController,
+    DashboardController,
+  ];
+  models?: Class<Model>[] = [];
+  repositories: Class<Repository<Model>>[] = [
+    IngestionMappingsRepository,
+    StateTrackingRepository,
+    DataSetsRepository,
+    WidgetsRepository,
+    DashboardRepository,
+    DashboardWidgetRepository,
+  ];
+  services = [
+    IngestionMappingsService,
+    DataSetsService,
+    DefaultListenerService,
+    StateTrackingService,
+  ];
   bindings?: Binding[] = [];
   providers?: ProviderMap = {};
+  logger: ILogger;
+
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
-    private readonly application: Application,
-    @config()
-    private readonly options: ReportingServiceComponentOptions = DEFAULT_REPORTING_SERVICE_OPTIONS,
+    private readonly application: RestApplication,
   ) {
-    this.bindings = [];
     this.application.component(CoreComponent);
-    this.models = [Queries, MetabaseToken];
-    this.controllers = [
-      QueriesController,
-      MetabaseTokenController,
-      QueryDataController,
-    ];
-    this.repositories = [MetabaseTokenRepository, QueriesRepository];
-    this.providers = {
-      [ReportingBindings.ReportingHelper.key]: ReportingProvider,
-    };
+    this.application
+      .bind(
+        ReportingServiceComponentBindings.GENERIC_DATA_TYPE_CONVERSION_FUNCTIONS,
+      )
+      .toClass(GenericConversionUtils);
+
+    this.application
+      .bind(ReportingServiceComponentBindings.S3_OBJECT_PROVIDER)
+      .toProvider(S3ObjectProvider);
+    this.application
+      .bind(ReportingServiceComponentBindings.SEQUELIZE_OBJECT_PROVIDER)
+      .toProvider(SequelizeObjectProvider);
+
+    this.application
+      .bind(ReportingServiceComponentBindings.DATA_STORE_SERVICE_PROVIDER)
+      .toProvider(DataStoreObjectProvider);
+    this.application
+      .bind(ReportingServiceComponentBindings.QUERY_UTILITY)
+      .toClass(SequelizeQueryUtility);
+
+    this.application.lifeCycleObserver(ReportingServiceInitializer);
   }
 }

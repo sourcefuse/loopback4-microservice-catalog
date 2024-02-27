@@ -8,8 +8,10 @@ import {
   SequelizeDataSource,
 } from '@loopback/sequelize';
 import {AuditDbSourceName} from '@sourceloop/audit-log';
+import {tenantGuard} from '@sourceloop/core';
 import {AuditLog} from '../../models';
 
+@tenantGuard()
 export class AuditLogRepository extends SequelizeCrudRepository<
   AuditLog,
   typeof AuditLog.prototype.id

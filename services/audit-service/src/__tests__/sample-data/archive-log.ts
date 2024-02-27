@@ -1,6 +1,6 @@
 import {JSONObject} from '@loopback/core';
 import {Action, AuditLog} from '@sourceloop/audit-log';
-
+const tenantId = 'fac65aad-3f01-dd25-3ea0-ee6563fbe02b';
 export const archiveLogs: AuditLog[] = [
   new AuditLog({
     id: '1',
@@ -10,6 +10,7 @@ export const archiveLogs: AuditLog[] = [
     actionKey: 'Product_logs',
     entityId: '143f43',
     actor: 'testUser',
+    tenantId: tenantId,
     after: {
       id: 'efafcea',
       name: 'string',
@@ -26,6 +27,7 @@ export const archiveLogs: AuditLog[] = [
     actionKey: 'Product_logs',
     entityId: '143f43',
     actor: 'testUser',
+    tenantId: tenantId,
     before: {
       id: 'efafcea',
       name: 'stringssss',
@@ -46,6 +48,7 @@ export const archiveLogs: AuditLog[] = [
     action: Action.INSERT_ONE,
     actedAt: new Date('2023-05-11T12:00:32.225Z'),
     actedOn: 'Product',
+    tenantId: tenantId,
     actionKey: 'Product_logs',
     entityId: '14dvvds5',
     actor: 'testUser',
@@ -64,6 +67,7 @@ export const archiveLogs: AuditLog[] = [
     actedOn: 'Product',
     actionKey: 'Product_logs',
     entityId: '143f43',
+    tenantId: tenantId,
     actor: 'testUser',
     after: {
       id: 'efafcea',
@@ -81,6 +85,7 @@ export const archiveLogs: AuditLog[] = [
     actionKey: 'Product_logs',
     entityId: '143f43',
     actor: 'testUser',
+    tenantId: tenantId,
     before: {
       id: 'efafcea',
       name: 'string',
@@ -95,6 +100,7 @@ export const archiveLogs: AuditLog[] = [
     actedAt: new Date('2023-05-08T12:00:32.227Z'),
     actedOn: 'Collection',
     actionKey: 'Collection_logs',
+    tenantId: tenantId,
     entityId: '143f42',
     actor: 'testUser',
     after: {
@@ -113,6 +119,7 @@ export const archive1: AuditLog[] = [
     action: Action.INSERT_ONE,
     actedAt: new Date('2023-05-07T12:00:32.225Z'),
     actedOn: 'Product',
+    tenantId: tenantId,
     actionKey: 'Product_logs',
     entityId: '143f43',
     actor: 'testUser',
@@ -132,6 +139,7 @@ export const archive1: AuditLog[] = [
     actionKey: 'Product_logs',
     entityId: '143f43',
     actor: 'testUser',
+    tenantId: tenantId,
     before: {
       id: 'efafcea',
       name: 'stringssss',
@@ -150,6 +158,7 @@ export const archive1: AuditLog[] = [
   new AuditLog({
     id: '13',
     action: Action.INSERT_ONE,
+    tenantId: tenantId,
     actedAt: new Date('2023-05-11T12:00:32.225Z'),
     actedOn: 'Product',
     actionKey: 'Product_logs',
@@ -170,6 +179,7 @@ export const archive2: AuditLog[] = [
     action: Action.INSERT_ONE,
     actedAt: new Date('2023-05-08T12:00:32.228Z'),
     actedOn: 'Product',
+    tenantId: tenantId,
     actionKey: 'Product_logs',
     entityId: '143f43',
     actor: 'testUser',
@@ -187,6 +197,7 @@ export const archive2: AuditLog[] = [
     actedAt: new Date('2023-05-10T12:00:32.225Z'),
     actedOn: 'Product',
     actionKey: 'Product_logs',
+    tenantId: tenantId,
     entityId: '143f43',
     actor: 'testUser',
     before: {

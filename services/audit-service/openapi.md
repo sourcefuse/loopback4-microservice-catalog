@@ -408,6 +408,7 @@ fetch('/audit-logs/jobs/{jobId}',
     "id": "string",
     "status": "string",
     "operation": "string",
+    "tenantId": "string",
     "filterUsed": {},
     "result": "string"
   }
@@ -431,6 +432,7 @@ Status Code **200**
 |»» id|string|false|none|none|
 |»» status|string|true|none|none|
 |»» operation|string|false|none|none|
+|»» tenantId|string|true|none|none|
 |»» filterUsed|object|false|none|none|
 |»» result|string|false|none|none|
 
@@ -515,6 +517,7 @@ fetch('/audit-logs/{id}',
   "actionKey": "string",
   "entityId": "string",
   "actor": "string",
+  "tenantId": "string",
   "before": {},
   "after": {},
   "actionGroup": "string"
@@ -645,6 +648,7 @@ fetch('/audit-logs',
   "actionKey": "string",
   "entityId": "string",
   "actor": "string",
+  "tenantId": "string",
   "before": {},
   "after": {},
   "actionGroup": "string"
@@ -739,6 +743,7 @@ fetch('/audit-logs',
     "actionKey": "string",
     "entityId": "string",
     "actor": "string",
+    "tenantId": "string",
     "before": {},
     "after": {},
     "actionGroup": "string"
@@ -767,6 +772,7 @@ Status Code **200**
 |»» actionKey|string|true|none|none|
 |»» entityId|string|true|none|none|
 |»» actor|string|true|none|none|
+|»» tenantId|string|true|none|none|
 |»» before|object|false|none|none|
 |»» after|object|false|none|none|
 |»» actionGroup|string|false|none|none|
@@ -794,6 +800,7 @@ HTTPBearer
   "actionKey": "string",
   "entityId": "string",
   "actor": "string",
+  "tenantId": "string",
   "before": {},
   "after": {},
   "actionGroup": "string"
@@ -814,6 +821,7 @@ AuditLog
 |actionKey|string|true|none|none|
 |entityId|string|true|none|none|
 |actor|string|true|none|none|
+|tenantId|string|true|none|none|
 |before|object|false|none|none|
 |after|object|false|none|none|
 |actionGroup|string|false|none|none|
@@ -868,6 +876,7 @@ NewAuditLog
   "id": "string",
   "status": "string",
   "operation": "string",
+  "tenantId": "string",
   "filterUsed": {},
   "result": "string"
 }
@@ -883,6 +892,7 @@ JobWithRelations
 |id|string|false|none|none|
 |status|string|true|none|none|
 |operation|string|false|none|none|
+|tenantId|string|true|none|none|
 |filterUsed|object|false|none|none|
 |result|string|false|none|none|
 
@@ -902,6 +912,7 @@ JobWithRelations
   "actionKey": "string",
   "entityId": "string",
   "actor": "string",
+  "tenantId": "string",
   "before": {},
   "after": {},
   "actionGroup": "string"
@@ -922,6 +933,7 @@ AuditLogWithRelations
 |actionKey|string|true|none|none|
 |entityId|string|true|none|none|
 |actor|string|true|none|none|
+|tenantId|string|true|none|none|
 |before|object|false|none|none|
 |after|object|false|none|none|
 |actionGroup|string|false|none|none|
@@ -1003,6 +1015,7 @@ loopback.Count
     "actionKey": true,
     "entityId": true,
     "actor": true,
+    "tenantId": true,
     "before": true,
     "after": true,
     "actionGroup": true
@@ -1053,6 +1066,7 @@ oneOf
 |»» actionKey|boolean|false|none|none|
 |»» entityId|boolean|false|none|none|
 |»» actor|boolean|false|none|none|
+|»» tenantId|boolean|false|none|none|
 |»» before|boolean|false|none|none|
 |»» after|boolean|false|none|none|
 |»» actionGroup|boolean|false|none|none|
@@ -1084,6 +1098,7 @@ xor
     "actionKey": true,
     "entityId": true,
     "actor": true,
+    "tenantId": true,
     "before": true,
     "after": true,
     "actionGroup": true
@@ -1133,6 +1148,7 @@ oneOf
 |»» actionKey|boolean|false|none|none|
 |»» entityId|boolean|false|none|none|
 |»» actor|boolean|false|none|none|
+|»» tenantId|boolean|false|none|none|
 |»» before|boolean|false|none|none|
 |»» after|boolean|false|none|none|
 |»» actionGroup|boolean|false|none|none|

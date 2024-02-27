@@ -3,6 +3,8 @@ CREATE TABLE jobs (
     id           VARCHAR(36) NOT NULL PRIMARY KEY,
     filter_used  json,
     status       text COLLATE utf8mb4_general_ci NOT NULL,
+	tenant_id				VARCHAR(36) NOT NULL,
+    operation   text COLLATE utf8mb4_general_ci,
     result       text COLLATE utf8mb4_general_ci
 );
 

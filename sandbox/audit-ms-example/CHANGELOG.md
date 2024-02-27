@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.7.9 (2024-02-12)</small>
+
+* chore(deps): update versions in sandbox and fix vulnerabilities  (#1941) ([5e37add](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5e37add)), closes [#1941](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1941) [#1934](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1934)
+
+
+
+
+
 ## <small>0.7.8 (2024-02-02)</small>
 
 **Note:** Version bump only for package @sourceloop/audit-ms-example

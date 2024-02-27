@@ -1,0 +1,22 @@
+{
+    "defaultEnv": "master",
+    "master": {
+      "driver": "pg",
+      "host": {
+        "ENV": "REPORT_DB_HOST"
+      },
+      "port": {
+        "ENV": "REPORT_DB_PORT"
+      },
+      "user": {
+        "ENV": "REPORT_DB_USER"
+      },
+      "password": {
+        "ENV": "REPORT_DB_PASSWORD"
+      },
+      "database": {
+        "ENV": "REPORT_DB_DATABASE"
+      }
+    },
+    "sql-file": true
+  }

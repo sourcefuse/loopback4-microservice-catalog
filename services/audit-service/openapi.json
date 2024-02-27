@@ -369,6 +369,9 @@
           "actor": {
             "type": "string"
           },
+          "tenantId": {
+            "type": "string"
+          },
           "before": {
             "type": "object"
           },
@@ -384,14 +387,15 @@
           "actedAt",
           "actionKey",
           "entityId",
-          "actor"
+          "actor",
+          "tenantId"
         ],
         "additionalProperties": true
       },
       "NewAuditLog": {
         "title": "NewAuditLog",
         "type": "object",
-        "description": "(tsType: Omit<AuditLog, 'id'>, schemaOptions: { title: 'NewAuditLog', exclude: [ 'id' ] })",
+        "description": "(tsType: Omit<AuditLog, 'id' | 'tenantId'>, schemaOptions: { title: 'NewAuditLog', exclude: [ 'id', 'tenantId' ] })",
         "properties": {
           "action": {
             "type": "string"
@@ -430,7 +434,7 @@
           "actor"
         ],
         "additionalProperties": true,
-        "x-typescript-type": "Omit<AuditLog, 'id'>"
+        "x-typescript-type": "Omit<AuditLog, 'id' | 'tenantId'>"
       },
       "JobWithRelations": {
         "title": "JobWithRelations",
@@ -446,6 +450,9 @@
           "operation": {
             "type": "string"
           },
+          "tenantId": {
+            "type": "string"
+          },
           "filterUsed": {
             "type": "object"
           },
@@ -454,7 +461,8 @@
           }
         },
         "required": [
-          "status"
+          "status",
+          "tenantId"
         ],
         "additionalProperties": true,
         "x-typescript-type": "JobWithRelations"
@@ -486,6 +494,9 @@
           "actor": {
             "type": "string"
           },
+          "tenantId": {
+            "type": "string"
+          },
           "before": {
             "type": "object"
           },
@@ -501,7 +512,8 @@
           "actedAt",
           "actionKey",
           "entityId",
-          "actor"
+          "actor",
+          "tenantId"
         ],
         "additionalProperties": true,
         "x-typescript-type": "AuditLogWithRelations"
@@ -608,6 +620,9 @@
                   "actor": {
                     "type": "boolean"
                   },
+                  "tenantId": {
+                    "type": "boolean"
+                  },
                   "before": {
                     "type": "boolean"
                   },
@@ -689,6 +704,9 @@
                     "type": "boolean"
                   },
                   "actor": {
+                    "type": "boolean"
+                  },
+                  "tenantId": {
                     "type": "boolean"
                   },
                   "before": {

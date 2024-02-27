@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 11.0.0 (2024-02-12)
+
+* fix(audit-service): remove xlsx dependecy from audit service (#1971) ([ee6b642](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ee6b642)), closes [#1971](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1971) [#1970](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1970) [#1970](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1970)
+* feat(audit-service): Provision to get tenant wise logs (#1960) ([710b5bc](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/710b5bc)), closes [#1960](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1960)
+
+
+### BREAKING CHANGE
+
+* Provision to get tenant wise logs
+
+1942
+
+* feat(audit-service): update audit-log version to latest
+
+update audit-log version to latest
+* update audit-log version to latest
+
+1942
+
+
+
+
 ## <small>10.0.4 (2024-02-02)</small>
 
 * chore(deps): update authentication component version in all services (#1962) ([eeac7f6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/eeac7f6)), closes [#1962](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1962) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)

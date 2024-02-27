@@ -21,6 +21,7 @@ import {
   CoreComponent,
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
+  TenantUtilitiesComponent,
 } from '@sourceloop/core';
 import {AuthenticationComponent} from 'loopback4-authentication';
 import {
@@ -44,19 +45,19 @@ import {
   MappingLogRepository,
 } from './repositories';
 import {
-  JobProcessingService,
-  ExportToCsvProvider,
-  QuerySelectedFilesProvider,
-  AuditLogExportProvider,
-  ColumnBuilderProvider,
-  ExportHandlerProvider,
-} from './services';
-import {IAuditServiceConfig} from './types';
-import {
   AuditLogRepository as AuditLogSequelizeRepository,
   JobRepository as JobSequelizeRepository,
   MappingLogRepository as MappingLogSequelizeRepository,
 } from './repositories/sequelize';
+import {
+  AuditLogExportProvider,
+  ColumnBuilderProvider,
+  ExportHandlerProvider,
+  ExportToCsvProvider,
+  JobProcessingService,
+  QuerySelectedFilesProvider,
+} from './services';
+import {IAuditServiceConfig} from './types';
 
 export class AuditServiceComponent implements Component {
   constructor(
@@ -69,6 +70,8 @@ export class AuditServiceComponent implements Component {
 
     // Mount core component
     this.application.component(CoreComponent);
+
+    this.application.component(TenantUtilitiesComponent);
 
     this.application.api({
       openapi: '3.0.0',
