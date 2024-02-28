@@ -38,8 +38,9 @@ export class UserValidationProvider implements Provider<UserValidationFn> {
         isAuthenticated = await this.googleAuthenticationProvider(accessToken);
         break;
       case SignUpProviderKey.Keycloak:
-        isAuthenticated =
-          await this.keycloakAuthenticationProvider(accessToken);
+        isAuthenticated = await this.keycloakAuthenticationProvider(
+          accessToken,
+        );
         break;
       default:
         isAuthenticated = await this.defaultAuthneticationProvider(accessToken);

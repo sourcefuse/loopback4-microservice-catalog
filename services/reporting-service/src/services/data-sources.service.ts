@@ -42,8 +42,9 @@ export class DataSourcesService {
   async listDataSourceColumns(
     dataSource: string,
   ): Promise<ColumnForDataSourceModel[]> {
-    const columns =
-      await this.dataStoreAdapter.listDataSourceColumns(dataSource);
+    const columns = await this.dataStoreAdapter.listDataSourceColumns(
+      dataSource,
+    );
 
     if (this.dataTypeMap) {
       return columns.map(column => {
