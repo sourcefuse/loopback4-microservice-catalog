@@ -78,6 +78,9 @@ const DEFAULT_NAME = 'microservice';
 
 const dbconfig = 'database.json';
 
+const ENV_EXAMPLE = '.env.example';
+const ENV_DEFAULT = '.env.defaults'
+
 export default class MicroserviceGenerator extends AppGenerator<MicroserviceOptions> {
   initializing() {
     if (!this.fs.exists(join(this.destinationPath(), 'lerna.json'))) {
@@ -605,12 +608,12 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         ? this.options.name.toUpperCase()
         : DEFAULT_NAME;
 
-      let migEnv = this.fs.read(join(MIGRATION_FOLDER, '.env.example'));
+      let migEnv = this.fs.read(join(MIGRATION_FOLDER, ENV_EXAMPLE));
       const envToAdd = `\n${name}_DB_HOST= \n${name}_DB_PORT= \n${name}_DB_USER= 
       \n${name}_DB_DATABASE= \n${name}_DB_PASSWORD=`;
       migEnv = migEnv + envToAdd;
       fs.writeFile(
-        join(MIGRATION_FOLDER, '.env.example'),
+        join(MIGRATION_FOLDER, ENV_EXAMPLE),
         migEnv,
         {
           flag: 'w',
@@ -631,7 +634,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         join(
           this.destinationPath(),
           baseServicePath(this.options.baseService),
-          '.env.example',
+          ENV_EXAMPLE,
         ),
       );
       if (envExists) {
@@ -639,14 +642,14 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
           join(
             this.destinationPath(),
             baseServicePath(this.options.baseService),
-            '.env.example',
+            ENV_EXAMPLE,
           ),
         );
         const defaults = this.fs.read(
           join(
             this.destinationPath(),
             baseServicePath(this.options.baseService),
-            '.env.defaults',
+            ENV_DEFAULT,
           ),
         );
 
@@ -655,7 +658,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
             this.destinationPath(),
             'services',
             this.options.name ?? DEFAULT_NAME,
-            '.env.example',
+            ENV_EXAMPLE,
           ),
           example,
           {
@@ -670,7 +673,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
             this.destinationPath(),
             'services',
             this.options.name ?? DEFAULT_NAME,
-            '.env.defaults',
+            ENV_DEFAULT,
           ),
           defaults,
           {
