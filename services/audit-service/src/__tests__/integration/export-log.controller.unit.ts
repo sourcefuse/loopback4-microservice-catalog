@@ -19,7 +19,11 @@ import {filterAppliedActedAt} from '../sample-data/filters';
 describe('POST /audit-logs/export', () => {
   let app: DummyAuditServiceApplication;
   beforeEach(async () => {
-    app = new DummyAuditServiceApplication();
+    app = new DummyAuditServiceApplication({
+      rest: {
+        port: 3001,
+      },
+    });
     const ds = new juggler.DataSource({
       name: 'AuditDB',
       connector: 'memory',

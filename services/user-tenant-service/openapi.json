@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "@sourceloop/user-tenant-service",
-    "version": "0.14.2",
+    "version": "0.15.1",
     "description": "Sourceloop User Tenant Service.",
     "contact": {
       "name": "SourceFuse"
@@ -2323,7 +2323,8 @@
           },
           "tenant": {
             "$ref": "#/components/schemas/TenantWithRelations"
-          }
+          },
+          "foreignKey": {}
         },
         "required": [
           "configKey",
@@ -2387,7 +2388,8 @@
           },
           "user": {
             "$ref": "#/components/schemas/UserWithRelations"
-          }
+          },
+          "foreignKey": {}
         },
         "required": [
           "authProvider",
@@ -2481,6 +2483,7 @@
           "defaultTenant": {
             "$ref": "#/components/schemas/TenantWithRelations"
           },
+          "foreignKey": {},
           "credentials": {
             "$ref": "#/components/schemas/UserCredentialsWithRelations"
           },
@@ -2684,6 +2687,7 @@
           "createdByUser": {
             "$ref": "#/components/schemas/UserViewWithRelations"
           },
+          "foreignKey": {},
           "modifiedByUser": {
             "$ref": "#/components/schemas/UserViewWithRelations"
           }
@@ -2740,7 +2744,8 @@
           },
           "userTenant": {
             "$ref": "#/components/schemas/UserTenantWithRelations"
-          }
+          },
+          "foreignKey": {}
         },
         "required": [
           "permission",
@@ -2793,6 +2798,7 @@
           "group": {
             "$ref": "#/components/schemas/GroupWithRelations"
           },
+          "foreignKey": {},
           "userTenant": {
             "$ref": "#/components/schemas/UserTenantWithRelations"
           }
@@ -2850,7 +2856,8 @@
           },
           "userTenant": {
             "$ref": "#/components/schemas/UserTenantWithRelations"
-          }
+          },
+          "foreignKey": {}
         },
         "required": [
           "userTenantId"
@@ -2912,6 +2919,7 @@
           "user": {
             "$ref": "#/components/schemas/UserWithRelations"
           },
+          "foreignKey": {},
           "tenant": {
             "$ref": "#/components/schemas/TenantWithRelations"
           },
@@ -3946,7 +3954,8 @@
           },
           "userTenant": {
             "$ref": "#/components/schemas/UserTenantWithRelations"
-          }
+          },
+          "foreignKey": {}
         },
         "required": [
           "configKey",

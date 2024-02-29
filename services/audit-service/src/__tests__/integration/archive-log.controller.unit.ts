@@ -21,7 +21,11 @@ const testToDate = new Date('2023-05-10T09:35:07.826Z');
 describe('POST /audit-logs/archive', () => {
   let app: DummyAuditServiceApplication;
   beforeEach(async () => {
-    app = new DummyAuditServiceApplication();
+    app = new DummyAuditServiceApplication({
+      rest: {
+        port: 3001,
+      },
+    });
     const ds = new juggler.DataSource({
       name: 'AuditDB',
       connector: 'memory',
