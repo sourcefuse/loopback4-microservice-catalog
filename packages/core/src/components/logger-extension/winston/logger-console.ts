@@ -2,15 +2,17 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {createLogger, transports, format} from 'winston';
+import {AnyObject} from '@loopback/repository';
+import {TransformableInfo} from 'logform';
+import {createLogger, format, transports} from 'winston';
 import {LOGGER} from '../keys';
 import {WinstonLoggerBase} from './logger-base';
-import {TransformableInfo} from 'logform';
 
 interface LogEntry extends TransformableInfo {
   level: string;
   message: string;
   timestamp?: Date;
+  context?: AnyObject;
 }
 
 export class WinstonConsoleLogger extends WinstonLoggerBase {
@@ -20,7 +22,8 @@ export class WinstonConsoleLogger extends WinstonLoggerBase {
       format.uncolorize(),
       format.timestamp(),
       format.printf(
-        (log: LogEntry) => `[${log.timestamp}] ${log.level} :: ${log.message}`,
+        (log: LogEntry) =>
+          `[${log.timestamp}] ${log.level} :: ${log.message} :: Context -> ${log.context ?? '{}'}`,
       ),
     );
 
