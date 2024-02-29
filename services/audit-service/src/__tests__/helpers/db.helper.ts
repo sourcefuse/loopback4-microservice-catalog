@@ -1,7 +1,7 @@
-import {AnyObject} from '@loopback/repository';
-import {IAuthUserWithPermissions} from '@sourceloop/core';
-import {AuditController} from '../../controllers';
-import {PermissionKey} from '../../enums';
+import { AnyObject } from '@loopback/repository';
+import { IAuthUserWithPermissions } from '@sourceloop/core';
+import { AuditController } from '../../controllers';
+import { PermissionKey } from '../../enums';
 import {
   AuditLogRepository,
   JobRepository,
@@ -12,16 +12,16 @@ import {
   JobProcessingService,
   QuerySelectedFilesProvider,
 } from '../../services';
-import {AuditLogExportFn, ExportHandlerFn, ExportToCsvFn} from '../../types';
-import {connector} from '../fixtures/datasources/db.datasource';
-import {DummyAuditServiceApplication} from '../fixtures/dummy-application';
-import {ColumnBuilderProvider} from '../fixtures/providers/column-builder.service';
-import {archiveLogs} from '../sample-data/archive-log';
-import {listMappingLogs} from '../sample-data/mapping-log';
+import { AuditLogExportFn, ExportHandlerFn, ExportToCsvFn } from '../../types';
+import { connector } from '../fixtures/datasources/db.datasource';
+import { DummyAuditServiceApplication } from '../fixtures/dummy-application';
+import { ColumnBuilderProvider } from '../fixtures/providers/column-builder.service';
+import { archiveLogs } from '../sample-data/archive-log';
+import { listMappingLogs } from '../sample-data/mapping-log';
 
-let auditLogRepository: AuditLogRepository;
-let mappingLogRepository: MappingLogRepository;
-let jobRepository: JobRepository;
+let auditLogRepository: AuditLogRepository; //NOSONAR
+let mappingLogRepository: MappingLogRepository; //NOSONAR
+let jobRepository: JobRepository; //NOSONAR
 
 const pass = 'test_password';
 const id = '9640864d-a84a-e6b4-f20e-918ff280cdaa';
@@ -126,4 +126,5 @@ export function getTestJobProcessingService(app: DummyAuditServiceApplication) {
   };
 }
 
-export {auditLogRepository, jobRepository, mappingLogRepository};
+export { auditLogRepository, jobRepository, mappingLogRepository };
+
