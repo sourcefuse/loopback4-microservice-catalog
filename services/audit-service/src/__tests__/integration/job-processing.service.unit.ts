@@ -24,7 +24,11 @@ const arch2 = 'archive2.csv';
 describe('job processing service', () => {
   let app: DummyAuditServiceApplication;
   beforeEach(async () => {
-    app = new DummyAuditServiceApplication();
+    app = new DummyAuditServiceApplication({
+      rest: {
+        port: 3001,
+      },
+    });
     const ds = new juggler.DataSource({
       name: 'AuditDB',
       connector: 'memory',

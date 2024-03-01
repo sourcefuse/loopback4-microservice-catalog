@@ -19,9 +19,9 @@ import {ColumnBuilderProvider} from '../fixtures/providers/column-builder.servic
 import {archiveLogs} from '../sample-data/archive-log';
 import {listMappingLogs} from '../sample-data/mapping-log';
 
-let auditLogRepository: AuditLogRepository;
-let mappingLogRepository: MappingLogRepository;
-let jobRepository: JobRepository;
+let auditLogRepository: AuditLogRepository; //NOSONAR
+let mappingLogRepository: MappingLogRepository; //NOSONAR
+let jobRepository: JobRepository; //NOSONAR
 
 const pass = 'test_password';
 const id = '9640864d-a84a-e6b4-f20e-918ff280cdaa';
