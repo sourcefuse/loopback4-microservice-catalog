@@ -2,7 +2,6 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {AnyObject} from '@loopback/repository';
 import {Logger as WinstonLogger} from 'winston';
 import {LOGGER} from '../keys';
 import {ILogger} from '../logger.interface';
@@ -27,16 +26,16 @@ export class WinstonLoggerBase implements ILogger {
         break;
     }
   }
-  info(message: string, key = 'App_Log', context?: AnyObject): void {
+  info(message: string, key = 'App_Log', context?: string): void {
     this.logger.info(`${key} -> ${message}`);
   }
-  warn(message: string, key = 'App_Log', context?: AnyObject): void {
+  warn(message: string, key = 'App_Log', context?: string): void {
     this.logger.warn(`${key} -> ${message}`);
   }
-  error(message: string, key = 'App_Log', context?: AnyObject): void {
+  error(message: string, key = 'App_Log', context?: string): void {
     this.logger.error(`${key} -> ${message}`);
   }
-  debug(message: string, key = 'App_Log', context?: AnyObject): void {
+  debug(message: string, key = 'App_Log', context?: string): void {
     this.logger.debug(`${key} -> ${message}`);
   }
 }

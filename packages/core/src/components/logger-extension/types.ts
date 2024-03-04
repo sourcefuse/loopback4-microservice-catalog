@@ -4,7 +4,6 @@
 // https://opensource.org/licenses/MIT
 // Types and interfaces exposed by the extension go here
 
-import {AnyObject} from '@loopback/repository';
 import {OperationArgs, Request} from '@loopback/rest';
 
 /**
@@ -22,5 +21,5 @@ export interface LogMessage {
   message: string;
   level: number;
   timestamp?: Date;
-  context?: AnyObject;
+  context?: string;
 }
