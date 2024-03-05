@@ -23,7 +23,7 @@ export class PgDbDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
-  static dataSourceName = TaskDbSourceName;
+  static readonly dataSourceName = TaskDbSourceName;
   static readonly defaultConfig = config;
 
   constructor(

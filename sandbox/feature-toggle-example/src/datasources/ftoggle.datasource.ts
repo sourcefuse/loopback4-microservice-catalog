@@ -27,7 +27,7 @@ export class FtoggleDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
-  static dataSourceName = FeatureToggleDbName;
+  static readonly dataSourceName = FeatureToggleDbName;
   static readonly defaultConfig = config;
 
   constructor(

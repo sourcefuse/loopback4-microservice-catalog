@@ -26,7 +26,7 @@ export class VideoDbDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
-  static dataSourceName = VideoConfDatasource;
+  static readonly dataSourceName = VideoConfDatasource;
 
   static readonly defaultConfig = config;
 

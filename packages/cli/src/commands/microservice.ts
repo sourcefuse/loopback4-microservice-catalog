@@ -9,9 +9,9 @@ import {DATASOURCES, SERVICES} from '../enum';
 import {MicroserviceOptions} from '../types';
 
 export class Microservice extends Base<MicroserviceOptions> {
-  static description = 'add a microservice';
+  static readonly description = 'add a microservice';
 
-  static flags = {
+  static readonly flags = {
     help: flags.boolean({
       name: 'help',
       description: 'show manual pages',
@@ -74,7 +74,7 @@ export class Microservice extends Base<MicroserviceOptions> {
       exclusive: ['facade', 'includeMigrations'],
     }),
   };
-  static args = [
+  static readonly args = [
     {name: 'name', description: 'Name of the microservice', required: false},
   ];
 

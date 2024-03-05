@@ -13,9 +13,9 @@ import {CdkOptions} from '../types';
 
 const DEFAULT_APP_PATH = 'src/application.ts';
 export class Cdk extends Base<CdkOptions> {
-  static description = 'add arc-cdk';
+  static readonly description = 'add arc-cdk';
 
-  static flags = {
+  static readonly flags = {
     help: flags.boolean({
       name: 'help',
       description: 'show manual pages',

@@ -15,7 +15,7 @@ export class MessageDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
-  static dataSourceName = 'message';
+  static readonly dataSourceName = 'message';
   static readonly defaultConfig = config;
 
   constructor(

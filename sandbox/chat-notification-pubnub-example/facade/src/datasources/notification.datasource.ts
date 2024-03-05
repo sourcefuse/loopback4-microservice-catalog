@@ -15,7 +15,7 @@ export class NotificationDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
-  static dataSourceName = 'notification';
+  static readonly dataSourceName = 'notification';
   static readonly defaultConfig = config;
 
   constructor(

@@ -8,9 +8,9 @@ import Base from '../command-base';
 import {UpdateOptions} from '../generators/update/types/types';
 
 export class Update extends Base<UpdateOptions> {
-  static description = 'update the dependencies of a loopback project';
+  static readonly description = 'update the dependencies of a loopback project';
 
-  static flags = {
+  static readonly flags = {
     help: flags.boolean({
       name: 'help',
       description: 'show manual pages',

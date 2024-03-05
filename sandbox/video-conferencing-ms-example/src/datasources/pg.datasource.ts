@@ -22,7 +22,7 @@ export class VideoConferecingDbDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
-  static dataSourceName = 'videochatDb';
+  static readonly dataSourceName = 'videochatDb';
   static readonly defaultConfig = config;
 
   constructor(
