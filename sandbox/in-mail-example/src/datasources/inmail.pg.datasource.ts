@@ -22,7 +22,7 @@ export class InmailDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
-  static dataSourceName = InMailDatasourceName;
+  static readonly dataSourceName = InMailDatasourceName;
   static readonly defaultConfig = config;
 
   constructor(

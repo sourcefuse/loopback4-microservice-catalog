@@ -8,9 +8,9 @@ import Base from '../command-base';
 import {ScaffoldOptions} from '../types';
 
 export class Scaffold extends Base<ScaffoldOptions> {
-  static description = 'create a project scaffold';
+  static readonly description = 'create a project scaffold';
 
-  static flags = {
+  static readonly flags = {
     help: flags.boolean({
       name: 'help',
       description: 'show manual pages',
@@ -38,7 +38,7 @@ export class Scaffold extends Base<ScaffoldOptions> {
       description: 'description of the repo',
     }),
   };
-  static args = [
+  static readonly args = [
     {name: 'name', description: 'name of the project', required: false},
   ];
 

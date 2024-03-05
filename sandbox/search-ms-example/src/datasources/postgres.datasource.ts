@@ -27,7 +27,7 @@ export class DynamicDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
-  static dataSourceName = SearchServiceBindings.DATASOURCE_NAME;
+  static readonly dataSourceName = SearchServiceBindings.DATASOURCE_NAME;
   static readonly defaultConfig = config;
 
   constructor(

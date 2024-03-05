@@ -24,7 +24,7 @@ export class NotifAccessCacheDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
-  static dataSourceName = 'NotifAccessCache';
+  static readonly dataSourceName = 'NotifAccessCache';
   static readonly defaultConfig = config;
 
   constructor(

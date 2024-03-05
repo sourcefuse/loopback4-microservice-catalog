@@ -23,7 +23,7 @@ export class DbDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
-  static dataSourceName = AuthDbSourceName;
+  static readonly dataSourceName = AuthDbSourceName;
 
   static readonly defaultConfig = config;
 

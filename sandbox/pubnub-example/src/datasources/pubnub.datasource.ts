@@ -27,7 +27,7 @@ export class PubnubDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
-  static dataSourceName = NotifDbSourceName;
+  static readonly dataSourceName = NotifDbSourceName;
   static readonly defaultConfig = config;
 
   constructor(

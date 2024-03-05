@@ -26,7 +26,7 @@ export class ChatDbDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
-  static dataSourceName = 'chatDb';
+  static readonly dataSourceName = 'chatDb';
   static readonly defaultConfig = config;
 
   constructor(
