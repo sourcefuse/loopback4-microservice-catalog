@@ -5,6 +5,7 @@
 // Types and interfaces exposed by the extension go here
 
 import {OperationArgs, Request} from '@loopback/rest';
+import {STATUS_CODE} from '../../enums';
 
 /**
  * A function to perform REST req/res logging action
@@ -22,4 +23,5 @@ export interface LogMessage {
   level: number;
   timestamp?: Date;
   context?: string;
+  statusCode?: STATUS_CODE;
 }
