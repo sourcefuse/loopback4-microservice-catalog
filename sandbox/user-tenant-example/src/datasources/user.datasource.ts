@@ -25,7 +25,7 @@ export class UserDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
-  static dataSourceName = 'user';
+  static readonly dataSourceName = 'user';
 
   static readonly defaultConfig = config;
 

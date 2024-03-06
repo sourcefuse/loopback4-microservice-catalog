@@ -1,9 +1,22 @@
 import {BootMixin} from '@loopback/boot';
 import {ApplicationConfig} from '@loopback/core';
+import {RepositoryMixin} from '@loopback/repository';
+import {RestApplication} from '@loopback/rest';
 import {
   RestExplorerBindings,
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
+import {ServiceMixin} from '@loopback/service-proxy';
+import {
+  BearerVerifierBindings,
+  BearerVerifierComponent,
+  BearerVerifierConfig,
+  BearerVerifierType,
+  SECURITY_SCHEME_SPEC,
+  SFCoreBindings,
+  ServiceSequence,
+} from '@sourceloop/core';
+import {UserTenantServiceComponent} from '@sourceloop/user-tenant-service';
 import * as dotenv from 'dotenv';
 import * as dotenvExt from 'dotenv-extended';
 import {AuthenticationComponent} from 'loopback4-authentication';
@@ -11,19 +24,6 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import {
-  ServiceSequence,
-  SFCoreBindings,
-  BearerVerifierBindings,
-  BearerVerifierComponent,
-  BearerVerifierConfig,
-  BearerVerifierType,
-  SECURITY_SCHEME_SPEC,
-} from '@sourceloop/core';
-import {UserTenantServiceComponent} from '@sourceloop/user-tenant-service'
-import {RepositoryMixin} from '@loopback/repository';
-import {RestApplication} from '@loopback/rest';
-import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
 import * as openapi from './openapi.json';
 
@@ -58,17 +58,18 @@ export class UserTenantExampleApplication extends BootMixin(
     // To check if monitoring is enabled from env or not
     const enableObf = !!+(process.env.ENABLE_OBF ?? 0);
     // To check if authorization is enabled for swagger stats or not
+    // sonarignore:start
     const authentication =
       process.env.SWAGGER_USER && process.env.SWAGGER_PASSWORD ? true : false;
-      const obj={
-        enableObf,
-        obfPath: process.env.OBF_PATH ?? '/obf',
-        openapiSpec: openapi,
-        authentication: authentication,
-        swaggerUsername: process.env.SWAGGER_USER,
-        swaggerPassword: process.env.SWAGGER_PASSWORD,
-        
-      }
+    // sonarignore:end
+    const obj = {
+      enableObf,
+      obfPath: process.env.OBF_PATH ?? '/obf',
+      openapiSpec: openapi,
+      authentication: authentication,
+      swaggerUsername: process.env.SWAGGER_USER,
+      swaggerPassword: process.env.SWAGGER_PASSWORD,
+    };
     this.bind(SFCoreBindings.config).to(obj);
 
     // Set up the custom sequence
@@ -76,7 +77,7 @@ export class UserTenantExampleApplication extends BootMixin(
 
     // Add authentication component
     this.component(AuthenticationComponent);
-  this.component(UserTenantServiceComponent);
+    this.component(UserTenantServiceComponent);
 
     // Add bearer verifier component
     this.bind(BearerVerifierBindings.Config).to({
@@ -98,7 +99,6 @@ export class UserTenantExampleApplication extends BootMixin(
     });
 
     this.component(RestExplorerComponent);
-
 
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here
