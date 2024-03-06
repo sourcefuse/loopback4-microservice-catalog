@@ -22,7 +22,7 @@ export class NotificationDbCacheDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
-  static dataSourceName = 'NotifAccessCache';
+  static readonly dataSourceName = 'NotifAccessCache';
 
   constructor(
     @inject('datasources.config.NotifAccessCache', {optional: true})

@@ -12,7 +12,7 @@ const config = {
 };
 
 export class SurveyeMockDataSource extends juggler.DataSource {
-  static dataSourceName = SurveyDbSourceName;
+  static readonly dataSourceName = SurveyDbSourceName;
 
   constructor(
     @inject('datasources.config.SurveyDb', {optional: true})

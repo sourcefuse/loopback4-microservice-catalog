@@ -14,7 +14,7 @@ const config = {
 };
 
 export class FeatureToggleMockDataSource extends juggler.DataSource {
-  static dataSourceName = FeatureToggleDbName;
+  static readonly dataSourceName = FeatureToggleDbName;
 
   constructor(
     @inject('datasources.config.FeatureToggleDB', {optional: true})

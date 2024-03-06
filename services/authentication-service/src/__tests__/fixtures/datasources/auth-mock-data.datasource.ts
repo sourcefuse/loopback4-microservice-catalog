@@ -13,7 +13,7 @@ const config = {
 };
 
 export class AuthMockDataDataSource extends juggler.DataSource {
-  static dataSourceName = 'AuthDB';
+  static readonly dataSourceName = 'AuthDB';
 
   constructor(
     @inject('datasources.config.AuthDB', {optional: true})

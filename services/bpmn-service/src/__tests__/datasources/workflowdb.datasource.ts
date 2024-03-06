@@ -23,7 +23,7 @@ export class WorkflowDbDatasource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
-  static dataSourceName = WorkflowCacheSourceName;
+  static readonly dataSourceName = WorkflowCacheSourceName;
 
   constructor(
     @inject(`datasources.config.${WorkflowCacheSourceName}`, {optional: true})

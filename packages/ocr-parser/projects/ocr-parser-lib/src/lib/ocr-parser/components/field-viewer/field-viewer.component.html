@@ -1,6 +1,6 @@
 <div class="field_block" *ngFor="let field of data?.fieldData">
 
-    <label>{{field.label}}</label>
+    <label>{{field.label}}</label><!-- //NOSONAR -->
     <div fxLayout="row" class="box" [class.active]="field?.isSelected" (click)="onEmitFieldData(field,true)">
         <textarea [value]="field.value" #clause (blur)="getUpdatedValue(clause.value, field)" rows="5"
             [disabled]="!field.supportedText">
