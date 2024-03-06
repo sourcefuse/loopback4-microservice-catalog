@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>11.1.4 (2024-03-06)</small>
+
+* chore(all-services): sonar fix (#2014) ([55c5b02](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/55c5b02)), closes [#2014](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2014) [#2013](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2013) [#2013](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2013)
+* docs(all-services): update services readme (#2000) ([93a7f91](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/93a7f91)), closes [#2000](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2000)
+
+
+
+
+
 ## <small>11.1.3 (2024-02-02)</small>
 
 * chore(deps): update authentication component version in all services (#1962) ([eeac7f6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/eeac7f6)), closes [#1962](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1962) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)

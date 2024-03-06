@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.8.1 (2024-03-06)</small>
+
+* chore(all-services): sonar fix (#2014) ([55c5b02](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/55c5b02)), closes [#2014](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2014) [#2013](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2013) [#2013](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2013)
+
+
+
+
+
 ## 0.8.0 (2024-02-20)
 
 * feat(reporting service): complete reimplementation (#1843) ([e4da8bb](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e4da8bb)), closes [#1843](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1843)

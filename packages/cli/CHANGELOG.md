@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>7.2.2 (2024-03-06)</small>
+
+* fix(all-services): fix sonar issues in all services (#2018) ([33dfa77](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/33dfa77)), closes [#2018](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2018) [#2013](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2013)
+* fix(all-services): fix the pending sonar issues in all services (#2025) ([b2f6dc3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b2f6dc3)), closes [#2025](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2025) [#2013](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2013)
+* fix(cli): make cicd operational while scaffolding via cli (#1975) ([2bcadcf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2bcadcf)), closes [#1975](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1975)
+* chore(all-services): sonar fix (#2014) ([55c5b02](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/55c5b02)), closes [#2014](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2014) [#2013](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2013) [#2013](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2013)
+* chore(cli): update template dependencies (#2009) ([0936c62](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0936c62)), closes [#2009](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2009) [#1929](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1929)
+
+
+
+
+
 ## <small>7.2.1 (2024-02-02)</small>
 
 * chore(deps): update cli template version  (#1959) ([b33186d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b33186d)), closes [#1959](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1959) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)

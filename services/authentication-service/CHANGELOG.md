@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>16.0.2 (2024-03-06)</small>
+
+* fix(all-services): fix the pending sonar issues in all services (#2025) ([b2f6dc3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b2f6dc3)), closes [#2025](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2025) [#2013](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2013)
+* fix(authentication-service): remove extra env for keycloack (#2016) ([780175c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/780175c)), closes [#2016](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2016) [#2011](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2011)
+* docs(all-services): update services readme (#2000) ([93a7f91](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/93a7f91)), closes [#2000](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2000)
+
+
+
+
+
 ## <small>16.0.1 (2024-02-02)</small>
 
 * fix(cli): proper error message when microservice command not run from root folder (#1961) ([3ea4325](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3ea4325)), closes [#1961](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1961) [#1956](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1956)
