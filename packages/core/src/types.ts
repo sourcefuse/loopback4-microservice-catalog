@@ -2,10 +2,9 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {IncomingMessage} from 'http';
+import {IncomingMessage, ServerResponse} from 'http';
 import {AnyObject} from 'loopback-datasource-juggler';
 import {SWStats} from 'swagger-stats';
-
 export interface IServiceConfig {
   useCustomSequence: boolean;
   useSequelize?: boolean;
@@ -19,6 +18,7 @@ export interface CoreConfig {
   enableObf?: boolean;
   obfPath?: string;
   openapiSpec?: Record<string, unknown>;
+  addTenantIdmiddleware?: boolean;
   /**
    * In order to hide or alter some path from the definition provided by swagger stats, `modifyPathDefinition`
    * callback can be used. It'll get called for each of the path specified in the `openapiSpec` provided.
@@ -30,6 +30,7 @@ export interface CoreConfig {
     path: string,
     pathDefinition: OASPathDefinition,
   ) => OASPathDefinition | null;
+
   authentication?: boolean;
   swaggerUsername?: string;
   swaggerPassword?: string;
@@ -45,4 +46,21 @@ export interface CoreConfig {
     username?: string,
     password?: string,
   ) => boolean;
+}
+/**
+ * The function `addTenantId` adds the `tenantId` from the request headers to the `reqResponse` object.
+ * @param {IncomingMessage} req - The `req` parameter is an object representing the incoming HTTP
+ * request.
+ * @param res - The `res` parameter in the `addTenantId` function is of type
+ * `ServerResponse<IncomingMessage>`.
+ * @param {AnyObject} reqResponse - In the provided function `addTenantId`, the function is
+ * adding a `tenantId` property to the `reqResponse` object based on the value of the `tenant-id`
+ * header
+ */
+export function addTenantId(
+  req: IncomingMessage,
+  res: ServerResponse<IncomingMessage>,
+  reqResponse: AnyObject,
+) {
+  reqResponse.tenantId = req.headers['tenant-id'];
 }

@@ -24,7 +24,9 @@ import {
 import {OperationSpecEnhancer} from './enhancer/operation-spec-enhancer';
 import {LocaleKey} from './enums';
 import {OASBindings, SFCoreBindings} from './keys';
+
 import {CoreConfig} from './types';
+import {AddTenantActionMiddlewareInterceptor} from './middlewares';
 
 export class CoreComponent implements Component {
   constructor(
@@ -51,7 +53,9 @@ export class CoreComponent implements Component {
     if (swaggerStatsMiddleware) {
       middlewares.push(swaggerStatsMiddleware);
     }
-
+    if (this.coreConfig?.addTenantIdmiddleware) {
+      this.application.middleware(AddTenantActionMiddlewareInterceptor);
+    }
     if (this.coreConfig?.authenticateSwaggerUI) {
       this.application.component(SwaggerAuthenticationComponent);
     }

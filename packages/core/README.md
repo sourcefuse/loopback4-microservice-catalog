@@ -234,6 +234,44 @@ this.bind(SFCoreBindings.config).to({
 });
 ```
 
+### Integrate addTenantId with Swagger Stats Configuration:
+
+The addTenantId function retrieves the Tenant ID from the request headers and appends it to the reqResponse object. This customization allows for more detailed statistics tracking based on the Tenant ID.
+
+```typescript
+export function addTenantId(
+  req: IncomingMessage,
+  res: ServerResponse<IncomingMessage>,
+  reqResponse: AnyObject,
+) {
+  reqResponse.tenantId = req.headers['tenant-id'];
+}
+```
+
+In your Swagger Stats configuration, incorporate the addTenantId function within the onResponseFinish hook. This ensures that Tenant ID is processed and added to the response.
+
+```typescript
+this.bind(SFCoreBindings.config).to({
+  enableObf,
+  obfPath: process.env.OBF_PATH ?? '/obf',
+  openapiSpec: openapi,
+  authentication: authentication,
+  swaggerUsername: process.env.SWAGGER_USER,
+  swaggerPassword: process.env.SWAGGER_PASSWORD,
+  authenticateSwaggerUI: authentication,
+  swaggerStatsConfig: {
+    basePath: process.env.BASE_PATH ?? '',
+    onResponseFinish: (
+      req: IncomingMessage,
+      res: ServerResponse<IncomingMessage>,
+      reqResponse: AnyObject,
+    ) => {
+      addTenantId(req, res, reqResponse);
+    },
+  },
+});
+```
+
 ### OAS
 
 Open ApiSpecification:The OpenAPI Specification (OAS) defines a standard, language-agnostic interface to RESTful APIs which allows us to discover and understand the capabilities of the service without access to source code, documentation, or through network traffic inspection. When properly defined,user can understand and interact with the remote service with a minimal amount of implementation logic.It is a self-contained or composite resource which defines or describes an API or elements of an API.
