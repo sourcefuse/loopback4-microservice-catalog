@@ -272,6 +272,25 @@ this.bind(SFCoreBindings.config).to({
 });
 ```
 
+### Multitenancy Middleware
+
+The AddTenantActionMiddlewareInterceptor is a middleware designed to modify the HTTP request by adding encrypted tenantId from the current user and sets it as a header in the outgoing request. This middleware is typically used for multitenancy scenarios where the tenant ID needs to be communicated in the HTTP headers.
+
+For enabling this we need to provide its configuration as follows:
+
+```typescript
+this.bind(SFCoreBindings.config).to({
+  enableObf,
+  obfPath: process.env.OBF_PATH ?? '/obf',
+  openapiSpec: openapi,
+  authentication: authentication,
+  swaggerUsername: process.env.SWAGGER_USER,
+  swaggerPassword: process.env.SWAGGER_PASSWORD,
+  authenticateSwaggerUI: authentication,
+  addTenantIdmiddleware: true,
+});
+```
+
 ### OAS
 
 Open ApiSpecification:The OpenAPI Specification (OAS) defines a standard, language-agnostic interface to RESTful APIs which allows us to discover and understand the capabilities of the service without access to source code, documentation, or through network traffic inspection. When properly defined,user can understand and interact with the remote service with a minimal amount of implementation logic.It is a self-contained or composite resource which defines or describes an API or elements of an API.

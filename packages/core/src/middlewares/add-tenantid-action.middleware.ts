@@ -12,13 +12,16 @@ import {
   inject,
 } from '@loopback/core';
 import {
+  HttpErrors,
   Middleware,
   MiddlewareContext,
   Request,
   RequestContext,
   RestBindings,
 } from '@loopback/rest';
-import {AuthenticationBindings} from 'loopback4-authentication';
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import * as CryptoJS from 'crypto-js';
+import {AuthErrorKeys, AuthenticationBindings} from 'loopback4-authentication';
 import {IAuthUserWithPermissions} from '../components/bearer-verifier';
 @globalInterceptor()
 export class AddTenantActionMiddlewareInterceptor
@@ -43,8 +46,17 @@ export class AddTenantActionMiddlewareInterceptor
       request = context.parent.request;
       response = context.parent.response;
     }
-    if (request && response) {
-      request.headers['tenant-id'] = this.currentUser.tenantId;
+    if (request && response && this.currentUser?.tenantId) {
+      if (!process.env.TENANT_SECRET_KEY) {
+        throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
+      }
+      const secretKey = process.env.TENANT_SECRET_KEY as string;
+      const tenantId = this.currentUser.tenantId;
+      const encryptedTenantId = CryptoJS.AES.encrypt(
+        tenantId,
+        secretKey,
+      ).toString();
+      request.headers['tenant-id'] = encryptedTenantId;
     }
 
     return next();

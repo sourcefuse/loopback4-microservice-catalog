@@ -2,8 +2,12 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {HttpErrors} from '@loopback/rest';
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import CryptoJS from 'crypto-js';
 import {IncomingMessage, ServerResponse} from 'http';
 import {AnyObject} from 'loopback-datasource-juggler';
+import {AuthErrorKeys} from 'loopback4-authentication';
 import {SWStats} from 'swagger-stats';
 export interface IServiceConfig {
   useCustomSequence: boolean;
@@ -62,5 +66,14 @@ export function addTenantId(
   res: ServerResponse<IncomingMessage>,
   reqResponse: AnyObject,
 ) {
-  reqResponse.tenantId = req.headers['tenant-id'];
+  if (!process.env.TENANT_SECRET_KEY) {
+    throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
+  }
+  const encryptedTenantId = req.headers['tenant-id'];
+  const secretKey = process.env.TENANT_SECRET_KEY as string;
+  const decryptedTenantId = CryptoJS.AES.decrypt(
+    encryptedTenantId as string,
+    secretKey,
+  ).toString(CryptoJS.enc.Utf8);
+  reqResponse['tenant-id'] = decryptedTenantId;
 }

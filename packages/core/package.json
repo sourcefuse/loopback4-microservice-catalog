@@ -95,6 +95,7 @@
     "@loopback/eslint-config": "^14.0.4",
     "@loopback/sequelize": "^0.5.4",
     "@loopback/testlab": "^6.1.5",
+    "@types/crypto-js": "^4.2.2",
     "@types/i18n": "^0.13.6",
     "@types/jsonwebtoken": "^9.0.0",
     "@types/lodash": "^4.14.182",
