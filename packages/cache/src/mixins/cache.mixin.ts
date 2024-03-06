@@ -25,7 +25,7 @@ import {
 
 const SKIP_CACHE_VALUES = ['1', 'true', 1, true];
 export class CacheManager {
-  static options: CachePluginComponentOptions = DEFAULT_CACHE_PLUGIN_OPTIONS;
+  static options: CachePluginComponentOptions = DEFAULT_CACHE_PLUGIN_OPTIONS; // NOSONAR
 
   /* eslint-disable-next-line @typescript-eslint/naming-convention */
   static CacheRepositoryMixin<

@@ -22,7 +22,7 @@ export class AuthenticationDbDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
-  static dataSourceName = 'AuthDB';
+  static readonly dataSourceName = 'AuthDB';
 
   constructor(
     @inject('datasources.config.AuthDB', {optional: true})

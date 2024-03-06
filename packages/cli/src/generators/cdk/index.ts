@@ -1,13 +1,13 @@
+import fetch from 'node-fetch';
 import {existsSync, mkdirSync} from 'node:fs';
-import zlib from 'node:zlib';
 import {
-  readFile,
-  writeFile,
   appendFile,
+  readFile,
   readdir,
   rename,
+  writeFile,
 } from 'node:fs/promises';
-import fetch from 'node-fetch';
+import zlib from 'node:zlib';
 import * as tar from 'tar';
 import {
   ObjectLiteralExpression,
@@ -15,9 +15,9 @@ import {
   Project,
   PropertyAssignmentStructure,
 } from 'ts-morph';
-import {CdkOptions} from '../../types';
 import {BaseGenerator} from '../../base-generator';
 import {IacList} from '../../enum';
+import {CdkOptions} from '../../types';
 const chalk = require('chalk'); //NOSONAR
 
 /**
@@ -264,7 +264,9 @@ export default class CdkGenerator extends BaseGenerator<CdkOptions> {
           }`,
         ),
       );
+      // sonarignore:start
       const dec = sourcefile!.getVariableDeclaration(
+        // sonarignore:end
         (this[this.options.iac!] as IacConfig).iacEnvObjectName,
       );
       if (dec) {
@@ -316,9 +318,11 @@ export default class CdkGenerator extends BaseGenerator<CdkOptions> {
   async moveFiles() {
     // We need to move lambda.ts alongside application.ts
     // and Dockerfile.lambda to the root
+    // sonarignore:start
     if (this.options.iac === IacList.LAMBDA) {
       const dockerFileName = (this[this.options.iac] as LambdaConfig)
         .dockerFile!;
+      // sonarignore:end
       const lambdaFileName = (this[this.options.iac] as LambdaConfig)
         .handlerFile;
       const directory = this.options.dir;

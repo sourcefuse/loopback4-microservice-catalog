@@ -22,7 +22,7 @@ export class NotificationDbDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
-  static dataSourceName = 'NotifDb';
+  static readonly dataSourceName = 'NotifDb';
 
   constructor(
     @inject('datasources.config.NotifDb', {optional: true})
