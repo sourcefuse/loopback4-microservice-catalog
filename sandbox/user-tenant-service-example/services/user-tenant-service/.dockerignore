@@ -1,5 +1,0 @@
-coverage
-npm-debug.log
-/dist
-# Cache used by TypeScript's incremental build
-*.tsbuildinfo
