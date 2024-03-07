@@ -129,6 +129,45 @@ setupSequence() {
   ```
 - Start the application
   `npm start`
+- Log Format Update
+
+  The logger has been updated to provide a more detailed and structured log format. The new log format is as follows:
+
+  ```typescript
+  (log: LogEntry) =>
+    `[${log.timestamp}] ${log.level} :: ${log.context} :: ${log.key} ->[${log.statusCode}] ${log.message}`;
+  ```
+
+  This format includes the timestamp, log level, context, log key, status code, and the log message.
+
+  ```ts
+
+  [2024-03-05T07:43:16.991Z] info :: gg-444-hh :: App_Log -> [200] Request GET /audit-logs Completed in 37ms`
+
+  ```
+
+- Logging Usage
+
+  For example,To log information using the updated format, the info method can be used.
+
+  ```typescript
+  info(
+    message: string,
+    context?: string,
+    statusCode?: STATUS_CODE,
+    key?: string,
+  ): void
+  ```
+
+  ```typescript
+  this.logger.info(
+    `Request ${context.request.method} ${
+      context.request.url
+    } Completed in ${Date.now() - requestTime}ms`,
+    `${context.request.headers.tenantId}`,
+    `${context.request.res.statusCode}`,
+  );
+  ```
 
 ## Swagger Authentication Component
 
