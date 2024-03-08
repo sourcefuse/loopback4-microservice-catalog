@@ -236,7 +236,7 @@ this.bind(SFCoreBindings.config).to({
 
 ### Integrate addTenantId with Swagger Stats Configuration:
 
-The addTenantId function retrieves the Tenant ID from the request headers and appends it to the reqResponse object. This customization allows for more detailed statistics tracking based on the Tenant ID.
+The function `addTenantId` decrypts a tenant ID from the request headers using a secret key and appends it to the reqResponse object.This customization allows for more detailed statistics tracking based on the Tenant ID.
 
 ```typescript
 export function addTenantId(
@@ -244,7 +244,16 @@ export function addTenantId(
   res: ServerResponse<IncomingMessage>,
   reqResponse: AnyObject,
 ) {
-  reqResponse.tenantId = req.headers['tenant-id'];
+  if (!process.env.TENANT_SECRET_KEY) {
+    throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
+  }
+  const encryptedTenantId = req.headers['tenant-id'];
+  const secretKey = process.env.TENANT_SECRET_KEY as string;
+  const decryptedTenantId = CryptoJS.AES.decrypt(
+    encryptedTenantId as string,
+    secretKey,
+  ).toString(CryptoJS.enc.Utf8);
+  reqResponse['tenant-id'] = decryptedTenantId;
 }
 ```
 
@@ -274,7 +283,7 @@ this.bind(SFCoreBindings.config).to({
 
 ### Multitenancy Middleware
 
-The AddTenantActionMiddlewareInterceptor is a middleware designed to modify the HTTP request by adding encrypted tenantId from the current user and sets it as a header in the outgoing request. This middleware is typically used for multitenancy scenarios where the tenant ID needs to be communicated in the HTTP headers.
+The AddTenantActionMiddlewareInterceptor [here](/packages/core/src/middlewares/add-tenantid-action.middleware.ts) is a middleware designed to modify the HTTP request by encrypting tenantId from the current user if the current user has a tenant ID and a `TENANT_SECRET_KEY` is available. and sets it as a header in the outgoing request. This middleware is typically used for multitenancy scenarios where the tenant ID needs to be communicated in the HTTP headers.
 
 For enabling this we need to provide its configuration as follows:
 

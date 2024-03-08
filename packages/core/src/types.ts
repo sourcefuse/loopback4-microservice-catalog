@@ -52,14 +52,17 @@ export interface CoreConfig {
   ) => boolean;
 }
 /**
+ * The function `addTenantId` decrypts a tenant ID from the request headers using a secret key and adds
+ * it to the response object.
  * The function `addTenantId` adds the `tenantId` from the request headers to the `reqResponse` object.
  * @param {IncomingMessage} req - The `req` parameter is an object representing the incoming HTTP
  * request.
  * @param res - The `res` parameter in the `addTenantId` function is of type
  * `ServerResponse<IncomingMessage>`.
- * @param {AnyObject} reqResponse - In the provided function `addTenantId`, the function is
- * adding a `tenantId` property to the `reqResponse` object based on the value of the `tenant-id`
- * header
+ * @param {AnyObject} reqResponse - The `reqResponse` parameter in the `addTenantId` function is an
+ * object that will be modified to include the decrypted tenant ID. The function extracts the encrypted
+ * tenant ID from the `tenant-id` header in the incoming request, decrypts it using the
+ * `TENANT_SECRET_KEY` environment
  */
 export function addTenantId(
   req: IncomingMessage,

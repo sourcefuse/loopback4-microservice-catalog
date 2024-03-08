@@ -37,6 +37,10 @@ export class AddTenantActionMiddlewareInterceptor
     return this.intercept.bind(this);
   }
 
+  /**
+   * The intercept function checks for a request context, encrypts the tenant ID, and adds it to the
+   * request headers if the current user has a tenant ID and a secret key is available.
+   */
   async intercept(
     context: MiddlewareContext,
     next: () => ValueOrPromise<InvocationResult>,
