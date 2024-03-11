@@ -154,9 +154,19 @@ export class TaskController {
     @param.query.boolean('cascade') cascade = true,
   ): Promise<void> {
     if (cascade) {
+      const task = await this.taskRepo.findById(id);
+
       await this.userTaskRepository.deleteAllHard({
         taskId: id,
       });
+
+      this.camundaService
+        .deleteProcessInstances([task.externalId])
+        .catch(error => {
+          this.logger.error(
+            `Failed to delete process instances on Camunda: ${error}`,
+          );
+        });
     }
     await this.taskRepo.deleteByIdHard(id);
   }
@@ -193,6 +203,7 @@ export class TaskController {
             inq: tasks.map(task => task.id!),
           },
         });
+
         this.camundaService
           .deleteProcessInstances(processInstanceIds)
           .catch(error => {

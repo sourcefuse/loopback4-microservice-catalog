@@ -37,16 +37,18 @@ export class CamundaService {
     );
   }
 
-  async deleteProcessInstances(ids: string[]) {
-    return Promise.all(
-      ids.map(id =>
-        this.http.delete(`${this.baseUrl}/process-instance/${id}`, {
-          query: {
-            cascade: true,
-          },
-        }),
-      ),
-    );
+  async deleteProcessInstances(ids: (string | undefined)[]) {
+    if (ids) {
+      return Promise.all(
+        ids.map(id =>
+          this.http.delete(`${this.baseUrl}/process-instance/${id}`, {
+            query: {
+              cascade: true,
+            },
+          }),
+        ),
+      );
+    }
   }
 
   async create<T>(name: string, file: Buffer) {

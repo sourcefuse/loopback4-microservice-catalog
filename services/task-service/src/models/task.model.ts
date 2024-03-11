@@ -102,5 +102,5 @@ export class Task<TS = TaskStatus> extends UserModifiableEntity<Task> {
     name: 'external_id',
     type: 'string',
   })
-  externalId: string;
+  externalId?: string;
 }
