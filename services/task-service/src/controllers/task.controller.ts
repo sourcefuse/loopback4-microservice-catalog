@@ -14,6 +14,8 @@ import {
   param,
   post,
   requestBody,
+  patch,
+  HttpErrors,
 } from '@loopback/rest';
 import {
   CONTENT_TYPE,
@@ -25,13 +27,14 @@ import {
 import {STRATEGY, authenticate} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {TaskPermssionKey} from '../enums/permission-key.enum';
-import {Task, TaskWorkflow} from '../models';
+import {Task, TaskWorkflow, UserTask} from '../models';
 import {
   TaskRepository,
   TaskWorkFlowRepository,
   UserTaskRepository,
 } from '../repositories';
 import {CamundaService} from '../services';
+import {TaskStatus} from '../types';
 
 const baseUrl = 'tasks';
 
@@ -133,6 +136,92 @@ export class TaskController {
     taskWorkflowMapping: Omit<TaskWorkflow, 'id'>,
   ) {
     await this.taskWorkflowMapping.create(taskWorkflowMapping);
+  }
+
+  @authorize({
+    permissions: [TaskPermssionKey.UpdateTask],
+  })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @patch(`${baseUrl}/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.NO_CONTENT]: {
+        description: 'Task UPDATE by id success',
+      },
+    },
+  })
+  async updateById(
+    @param.path.string('id') id: string,
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: getModelSchemaRef(Task, {partial: true}),
+        },
+      },
+    })
+    task: Task,
+  ): Promise<void> {
+    if (task.status) {
+      if (task.status === TaskStatus.Completed) {
+        throw HttpErrors.BadRequest(
+          'Task completion cannot be done through the PATCH API.',
+        );
+      }
+      const updatedUserTask = new UserTask({status: task.status});
+      await this.userTaskRepository.updateAll(updatedUserTask, {
+        taskId: id,
+      });
+    }
+    await this.taskRepo.updateById(id, task);
+  }
+
+  @authorize({
+    permissions: [TaskPermssionKey.UpdateTask],
+  })
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @patch(`${baseUrl}`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Tasks UPDATE success',
+      },
+    },
+  })
+  async updateAll(
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: getModelSchemaRef(Task, {partial: true}),
+        },
+      },
+    })
+    tasks: Task,
+    @param.where(Task) where?: Where<Task>,
+  ): Promise<Count> {
+    if (tasks.status) {
+      if (tasks.status === TaskStatus.Completed) {
+        throw HttpErrors.BadRequest(
+          'Task completion cannot be done through the PATCH API.',
+        );
+      }
+      const existingTasks = await this.taskRepo.find({
+        where,
+        fields: ['id'],
+      });
+      if (existingTasks.length) {
+        const updatedUserTask = new UserTask({status: tasks.status});
+        await this.userTaskRepository.updateAll(updatedUserTask, {
+          taskId: {
+            inq: existingTasks.map(task => task.id!),
+          },
+        });
+      }
+    }
+    return this.taskRepo.updateAll(tasks, where);
   }
 
   @authorize({
