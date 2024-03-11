@@ -37,5 +37,6 @@ export const mockTasks: Task[] = [
     severity: TaskSeverity.High,
     type: 'task-1',
     metadata: {},
+    externalId: 'processInstanceId1',
   }),
 ];

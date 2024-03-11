@@ -93,6 +93,7 @@ describe('TaskController: Acceptance', () => {
       ...mockTasks[0],
       key: 'test2',
       name: 'test2',
+      externalId: 'processInstanceId2',
     });
   }
 });
