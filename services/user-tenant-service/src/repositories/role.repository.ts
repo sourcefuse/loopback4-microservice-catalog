@@ -4,6 +4,7 @@
 // https://opensource.org/licenses/MIT
 import {Getter, inject} from '@loopback/core';
 import {
+  Entity,
   HasManyRepositoryFactory,
   HasOneRepositoryFactory,
   juggler,
@@ -52,8 +53,10 @@ export class RoleRepository extends DefaultUserModifyCrudRepository<
     protected readonly getCurrentUser: Getter<
       IAuthUserWithPermissions | undefined
     >,
+    @inject('models.Role')
+    private readonly role: typeof Entity & {prototype: Role},
   ) {
-    super(Role, dataSource, getCurrentUser);
+    super(role, dataSource, getCurrentUser);
     this.modifiedByUser = this.createHasOneRepositoryFactoryFor(
       'modifiedByUser',
       userViewRepositoryGetter,

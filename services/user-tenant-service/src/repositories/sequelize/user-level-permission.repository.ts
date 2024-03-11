@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {Getter, inject} from '@loopback/core';
-import {BelongsToAccessor, repository} from '@loopback/repository';
+import {BelongsToAccessor, Entity, repository} from '@loopback/repository';
 import {SequelizeDataSource} from '@loopback/sequelize';
 import {IAuthUserWithPermissions} from '@sourceloop/core';
 import {SequelizeUserModifyCrudRepository} from '@sourceloop/core/sequelize';
@@ -30,8 +30,12 @@ export class UserLevelPermissionRepository extends SequelizeUserModifyCrudReposi
     protected readonly getCurrentUser: Getter<
       IAuthUserWithPermissions | undefined
     >,
+    @inject('models.UserLevelPermission')
+    private readonly userLevelPermission: typeof Entity & {
+      prototype: UserLevelPermission;
+    },
   ) {
-    super(UserLevelPermission, dataSource, getCurrentUser);
+    super(userLevelPermission, dataSource, getCurrentUser);
     this.userTenant = this.createBelongsToAccessorFor(
       'userTenant',
       userTenantRepositoryGetter,

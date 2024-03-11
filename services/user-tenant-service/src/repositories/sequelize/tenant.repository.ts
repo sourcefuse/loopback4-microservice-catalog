@@ -3,7 +3,11 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {Getter, inject} from '@loopback/core';
-import {HasManyRepositoryFactory, repository} from '@loopback/repository';
+import {
+  Entity,
+  HasManyRepositoryFactory,
+  repository,
+} from '@loopback/repository';
 import {SequelizeDataSource} from '@loopback/sequelize';
 import {IAuthUserWithPermissions} from '@sourceloop/core';
 import {SequelizeUserModifyCrudRepository} from '@sourceloop/core/sequelize';
@@ -71,8 +75,10 @@ export class TenantRepository extends SequelizeUserModifyCrudRepository<
     protected readonly getCurrentUser: Getter<
       IAuthUserWithPermissions | undefined
     >,
+    @inject('models.Tenant')
+    private readonly tenant: typeof Entity & {prototype: Tenant},
   ) {
-    super(Tenant, dataSource, getCurrentUser);
+    super(tenant, dataSource, getCurrentUser);
     this.groups = this.createHasManyRepositoryFactoryFor(
       'groups',
       groupRepositoryGetter,

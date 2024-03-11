@@ -3,6 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {Getter, inject} from '@loopback/core';
+import {Entity} from '@loopback/repository';
 import {SequelizeDataSource} from '@loopback/sequelize';
 import {IAuthUserWithPermissions, tenantGuard} from '@sourceloop/core';
 import {SequelizeUserModifyCrudRepository} from '@sourceloop/core/sequelize';
@@ -22,7 +23,9 @@ export class UserViewRepository extends SequelizeUserModifyCrudRepository<
     protected readonly getCurrentUser: Getter<
       IAuthUserWithPermissions | undefined
     >,
+    @inject('models.UserView')
+    private readonly userView: typeof Entity & {prototype: UserView},
   ) {
-    super(UserView, dataSource, getCurrentUser);
+    super(userView, dataSource, getCurrentUser);
   }
 }
