@@ -35,8 +35,8 @@ export class WinstonLoggerBase implements ILogger {
   ): void {
     this.logger.info({
       message: `${message}`,
-      context: `${context ?? '-'}`,
-      statusCode: `${statusCode ?? '-'}`,
+      context: context,
+      statusCode: statusCode,
       key: key,
     });
   }
@@ -48,8 +48,8 @@ export class WinstonLoggerBase implements ILogger {
   ): void {
     this.logger.warn({
       message: `${message}`,
-      context: `${context ?? '-'}`,
-      statusCode: `${statusCode ?? '-'}`,
+      context: context,
+      statusCode: statusCode,
       key: key,
     });
   }
@@ -61,8 +61,8 @@ export class WinstonLoggerBase implements ILogger {
   ): void {
     this.logger.error({
       message: `${message}`,
-      context: `${context ?? '-'}`,
-      statusCode: `${statusCode ?? '-'}`,
+      context: context,
+      statusCode: statusCode,
       key: key,
     });
   }
@@ -74,8 +74,8 @@ export class WinstonLoggerBase implements ILogger {
   ): void {
     this.logger.debug({
       message: `${message}`,
-      context: `${context ?? '-'}`,
-      statusCode: `${statusCode ?? '-'}`,
+      context: context,
+      statusCode: statusCode,
       key: key,
     });
   }

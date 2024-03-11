@@ -129,22 +129,22 @@ setupSequence() {
   ```
 - Start the application
   `npm start`
-- Log Format Update
+- Latest Log Format
 
-  The logger has been updated to provide a more detailed and structured log format. The new log format is as follows:
-
-  ```typescript
-  (log: LogEntry) =>
-    `[${log.timestamp}] ${log.level} :: ${log.context} :: ${log.key} ->[${log.statusCode}] ${log.message}`;
-  ```
-
-  This format includes the timestamp, log level, context, log key, status code, and the log message.
+  The latest log format that will be generated is as follows:
 
   ```ts
 
   [2024-03-05T07:43:16.991Z] info :: gg-444-hh :: App_Log -> [200] Request GET /audit-logs Completed in 37ms`
 
   ```
+
+  This format includes the timestamp, log level, context, log key, status code, and the log message.
+
+```typescript
+(log: LogEntry) =>
+  `[${log.timestamp}] ${log.level} :: ${log.context} :: ${log.key} ->[${log.statusCode}] ${log.message}`;
+```
 
 - Logging Usage
 
