@@ -136,7 +136,7 @@ describe('Role Controller', function (this: Mocha.Suite) {
     testUser.userTenantId = userTenant.id ?? '';
     setCurrentUser();
     await client
-      .del(`${`${basePath}/${id}/roles`}/${role.id}`)
+      .del(`${basePath}/${id}/roles/${role.id}`)
       .set('authorization', `Bearer ${token}`)
       .expect(403);
   });
