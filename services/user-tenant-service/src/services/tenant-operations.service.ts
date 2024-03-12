@@ -59,7 +59,7 @@ export class TenantOperationsService {
     return this.roleRepository.deleteById(roleId);
   }
   // it check whether user has all the permission that he/she is trying to Edit/Create/Delete
-  private _isAllowed(role: Partial<Role>): Boolean {
+  private _isAllowed(role: Partial<Role>): boolean {
     const isAllowed =
       role.permissions?.every(permission =>
         this.currentUser.permissions.includes(permission),
