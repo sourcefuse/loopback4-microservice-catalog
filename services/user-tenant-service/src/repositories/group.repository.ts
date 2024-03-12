@@ -4,6 +4,7 @@
 // https://opensource.org/licenses/MIT
 import {Getter, inject} from '@loopback/core';
 import {
+  Entity,
   HasManyRepositoryFactory,
   juggler,
   repository,
@@ -38,8 +39,10 @@ export class GroupRepository extends DefaultUserModifyCrudRepository<
     protected readonly getCurrentUser: Getter<
       IAuthUserWithPermissions | undefined
     >,
+    @inject('models.Group')
+    private readonly group: typeof Entity & {prototype: Group},
   ) {
-    super(Group, dataSource, getCurrentUser);
+    super(group, dataSource, getCurrentUser);
     this.userGroups = this.createHasManyRepositoryFactoryFor(
       'userGroups',
       userGroupRepositoryGetter,

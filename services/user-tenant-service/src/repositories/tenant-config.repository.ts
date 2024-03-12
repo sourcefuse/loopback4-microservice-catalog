@@ -3,7 +3,12 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {Getter, inject} from '@loopback/core';
-import {BelongsToAccessor, juggler, repository} from '@loopback/repository';
+import {
+  BelongsToAccessor,
+  Entity,
+  juggler,
+  repository,
+} from '@loopback/repository';
 import {
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
@@ -34,8 +39,10 @@ export class TenantConfigRepository extends DefaultUserModifyCrudRepository<
     protected readonly getCurrentUser: Getter<
       IAuthUserWithPermissions | undefined
     >,
+    @inject('models.TenantConfig')
+    private readonly tenantConfig: typeof Entity & {prototype: TenantConfig},
   ) {
-    super(TenantConfig, dataSource, getCurrentUser);
+    super(tenantConfig, dataSource, getCurrentUser);
     this.tenant = this.createBelongsToAccessorFor(
       'tenant',
       tenantRepositoryGetter,

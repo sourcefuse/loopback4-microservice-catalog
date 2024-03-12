@@ -3,7 +3,12 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {Getter, inject} from '@loopback/core';
-import {BelongsToAccessor, juggler, repository} from '@loopback/repository';
+import {
+  BelongsToAccessor,
+  Entity,
+  juggler,
+  repository,
+} from '@loopback/repository';
 import {
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
@@ -32,8 +37,12 @@ export class UserCredentialsRepository extends DefaultUserModifyCrudRepository<
     protected readonly getCurrentUser: Getter<
       IAuthUserWithPermissions | undefined
     >,
+    @inject('models.UserCredentials')
+    private readonly userCredentials: typeof Entity & {
+      prototype: UserCredentials;
+    },
   ) {
-    super(UserCredentials, dataSource, getCurrentUser);
+    super(userCredentials, dataSource, getCurrentUser);
     this.user = this.createBelongsToAccessorFor('user', userRepositoryGetter);
     this.registerInclusionResolver('user', this.user.inclusionResolver);
   }

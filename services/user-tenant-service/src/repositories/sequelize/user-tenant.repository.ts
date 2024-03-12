@@ -5,6 +5,7 @@
 import {Getter, inject} from '@loopback/core';
 import {
   BelongsToAccessor,
+  Entity,
   HasManyRepositoryFactory,
   repository,
 } from '@loopback/repository';
@@ -79,8 +80,10 @@ export class UserTenantRepository extends SequelizeUserModifyCrudRepository<
     protected readonly getCurrentUser: Getter<
       IAuthUserWithPermissions | undefined
     >,
+    @inject('models.UserTenant')
+    private readonly userTenant: typeof Entity & {prototype: UserTenant},
   ) {
-    super(UserTenant, dataSource, getCurrentUser);
+    super(userTenant, dataSource, getCurrentUser);
     this.userInvitations = this.createHasManyRepositoryFactoryFor(
       'userInvitations',
       userInvitationRepositoryGetter,

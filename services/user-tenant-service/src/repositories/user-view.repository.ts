@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {Getter, inject} from '@loopback/core';
-import {juggler} from '@loopback/repository';
+import {Entity, juggler} from '@loopback/repository';
 import {
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
@@ -25,7 +25,9 @@ export class UserViewRepository extends DefaultUserModifyCrudRepository<
     protected readonly getCurrentUser: Getter<
       IAuthUserWithPermissions | undefined
     >,
+    @inject('models.UserView')
+    private readonly userView: typeof Entity & {prototype: UserView},
   ) {
-    super(UserView, dataSource, getCurrentUser);
+    super(userView, dataSource, getCurrentUser);
   }
 }
