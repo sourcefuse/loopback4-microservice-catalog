@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/survey-service",
-  "version": "0.6.5",
+  "version": "0.6.6",
   "description": "Survey microservice",
   "keywords": [
     "loopback-extension",
@@ -75,7 +75,7 @@
     "@loopback/rest": "^13.1.5",
     "@loopback/rest-explorer": "^6.1.5",
     "@loopback/service-proxy": "^6.1.5",
-    "@sourceloop/core": "^11.0.3",
+    "@sourceloop/core": "^12.0.0",
     "dotenv": "^16.0.3",
     "dotenv-extended": "^2.9.0",
     "jsdom": "^19.0.0",

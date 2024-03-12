@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 12.0.0 (2024-03-12)
+
+* feat(core): generate application logs in proper format (#2015) ([8b784be](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8b784be)), closes [#2015](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2015) [#1918](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1918) [#1918](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1918) [#1918](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1918) [#1918](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1918) [#1918](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1918)
+* feat(sandbox): added example for user tenant service (#2024) ([9356678](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9356678)), closes [#2024](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2024) [#1954](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1954) [#1954](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1954) [#1954](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1954) [#1954](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1954)
+* fix(all-services): fix sonar issues in all services (#2018) ([33dfa77](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/33dfa77)), closes [#2018](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2018) [#2013](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2013)
+* chore(all-services): sonar fix (#2014) ([55c5b02](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/55c5b02)), closes [#2014](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2014) [#2013](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2013) [#2013](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2013)
+
+
+
+
+
 ## <small>11.0.3 (2024-02-02)</small>
 
 * chore(deps): update authentication component version in all services (#1962) ([eeac7f6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/eeac7f6)), closes [#1962](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1962) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)

@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.15.3 (2024-03-12)</small>
+
+* fix(user-tenant-service): enable the ability to override the model (#2031) ([27f32fd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/27f32fd)), closes [#2031](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2031)
+* fix(user-tenant-service): remove sonar issues of pr 2005 (#2040) ([32cede2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/32cede2)), closes [#2040](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2040)
+* fix(user-tenant-service): secure PATCH and PUT users API (#2005) ([c8110f3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c8110f3)), closes [#2005](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2005)
+
+
+
+
+
 ## <small>0.15.2 (2024-03-06)</small>
 
 * fix(all-services): fix the pending sonar issues in all services (#2025) ([b2f6dc3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b2f6dc3)), closes [#2025](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2025) [#2013](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2013)

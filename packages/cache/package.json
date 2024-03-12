@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/cache",
-  "version": "0.7.8",
+  "version": "0.7.9",
   "description": "This package provides a mixin which works with redis to cache GET request responses",
   "keywords": [
     "cache",
@@ -59,7 +59,7 @@
     "@loopback/repository": "^6.1.5",
     "@loopback/rest": "^13.1.5",
     "@loopback/testlab": "^6.1.5",
-    "@sourceloop/core": "^11.0.3",
+    "@sourceloop/core": "^12.0.0",
     "@types/node": "^18.11.9",
     "dotenv": "^16.0.3",
     "dotenv-extended": "^2.9.0",
