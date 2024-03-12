@@ -1,3 +1,4 @@
+import {inject, service} from '@loopback/core';
 import {
   Count,
   CountSchema,
@@ -16,6 +17,8 @@ import {
 } from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  ILogger,
+  LOGGER,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
@@ -28,6 +31,7 @@ import {
   TaskWorkFlowRepository,
   UserTaskRepository,
 } from '../repositories';
+import {CamundaService} from '../services';
 
 const baseUrl = 'tasks';
 
@@ -39,6 +43,9 @@ export class TaskController {
     private readonly userTaskRepository: UserTaskRepository,
     @repository(TaskWorkFlowRepository)
     private readonly taskWorkflowMapping: TaskWorkFlowRepository,
+    @service(CamundaService)
+    private readonly camundaService: CamundaService,
+    @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
   ) {}
 
   @authenticate(STRATEGY.BEARER)
@@ -147,9 +154,19 @@ export class TaskController {
     @param.query.boolean('cascade') cascade = true,
   ): Promise<void> {
     if (cascade) {
+      const task = await this.taskRepo.findById(id);
+
       await this.userTaskRepository.deleteAllHard({
         taskId: id,
       });
+
+      this.camundaService
+        .deleteProcessInstances([task.externalId])
+        .catch(error => {
+          this.logger.error(
+            `Failed to delete process instances on Camunda: ${error}`,
+          );
+        });
     }
     await this.taskRepo.deleteByIdHard(id);
   }
@@ -175,16 +192,28 @@ export class TaskController {
     if (cascade) {
       const tasks = await this.taskRepo.find({
         where,
-        fields: ['id', 'deleted'],
+        fields: ['id', 'deleted', 'externalId'],
       });
+
+      const processInstanceIds = tasks.map(task => task.externalId);
+
       if (tasks.length) {
         await this.userTaskRepository.deleteAllHard({
           taskId: {
             inq: tasks.map(task => task.id!),
           },
         });
+
+        this.camundaService
+          .deleteProcessInstances(processInstanceIds)
+          .catch(error => {
+            this.logger.error(
+              `Failed to delete process instances on Camunda: ${error}`,
+            );
+          });
       }
     }
+
     await this.taskRepo.deleteAllHard(where);
   }
 }
