@@ -44,6 +44,7 @@ export class CamundaService {
           this.http.delete(`${this.baseUrl}/process-instance/${id}`, {
             query: {
               cascade: true,
+              skipCustomListeners: true,
             },
           }),
         ),
