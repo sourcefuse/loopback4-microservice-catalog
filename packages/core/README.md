@@ -129,6 +129,45 @@ setupSequence() {
   ```
 - Start the application
   `npm start`
+- Latest Log Format
+
+  The latest log format that will be generated is as follows:
+
+  ```ts
+
+  [2024-03-05T07:43:16.991Z] info :: gg-444-hh :: App_Log -> [200] Request GET /audit-logs Completed in 37ms`
+
+  ```
+
+  This format includes the timestamp, log level, context, log key, status code, and the log message.
+
+```typescript
+(log: LogEntry) =>
+  `[${log.timestamp}] ${log.level} :: ${log.context} :: ${log.key} ->[${log.statusCode}] ${log.message}`;
+```
+
+- Logging Usage
+
+  For example,To log information using the updated format, the info method can be used.
+
+  ```typescript
+  info(
+    message: string,
+    context?: string,
+    statusCode?: STATUS_CODE,
+    key?: string,
+  ): void
+  ```
+
+  ```typescript
+  this.logger.info(
+    `Request ${context.request.method} ${
+      context.request.url
+    } Completed in ${Date.now() - requestTime}ms`,
+    `${context.request.headers.tenantId}`,
+    `${context.request.res.statusCode}`,
+  );
+  ```
 
 ## Swagger Authentication Component
 
