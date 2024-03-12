@@ -25,6 +25,7 @@ export const UserTenantCacheSourceName = 'AuthCache';
 export namespace UserTenantServiceKey {
   export const UserGroupService = 'services.UserGroupService';
   export const UserOperationsService = 'services.UserOperationsService';
+  export const TenantOperationsService = 'services.TenantOperationsService';
   export const GroupTenantInterceptor = 'interceptors.GroupTenantInterceptor';
   export const TenantInterceptorInterceptor =
     'interceptors.TenantInterceptorInterceptor';

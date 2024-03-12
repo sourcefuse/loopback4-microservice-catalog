@@ -93,7 +93,11 @@ import {
   UserTenantRepository as UserTenantSequelizeRepository,
   UserViewRepository as UserViewSequelizeRepository,
 } from './repositories/sequelize';
-import {UserGroupService, UserOperationsService} from './services';
+import {
+  TenantOperationsService,
+  UserGroupService,
+  UserOperationsService,
+} from './services';
 import {IUserServiceConfig} from './types';
 
 // Configure the binding for UserTenantServiceComponent
@@ -128,6 +132,7 @@ export class UserTenantServiceComponent implements Component {
     this.bindings = [
       createServiceBinding(UserGroupService),
       createServiceBinding(UserOperationsService),
+      createServiceBinding(TenantOperationsService),
       Binding.bind(UserTenantServiceKey.GroupTenantInterceptor).toProvider(
         GroupTenantInterceptor,
       ),
