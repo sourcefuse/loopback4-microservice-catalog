@@ -43,8 +43,8 @@ export type GooglePostVerifyFn = (
 ) => Promise<IAuthUser | null>;
 export type AuthenticationProviderFn = (
   accessToken: string,
-  req: AuthRefreshTokenRequest,
-  payload: AnyObject,
+  req?: AuthRefreshTokenRequest,
+  payload?: AnyObject,
 ) => Promise<boolean>;
 
 export type PasswordDecryptionFn = (password: string) => Promise<string>;

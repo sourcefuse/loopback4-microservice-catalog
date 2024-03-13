@@ -1,6 +1,6 @@
 import {Provider, inject} from '@loopback/context';
 import {AnyObject, repository} from '@loopback/repository';
-import {ILogger, LOGGER} from '@sourceloop/core';
+import {CONTENT_TYPE, ILogger, LOGGER} from '@sourceloop/core';
 import crypto from 'crypto';
 import fetch from 'node-fetch';
 import {AuthenticationProviderFn} from '..';
@@ -18,9 +18,14 @@ export class AzureAuthenticationProvider
   value(): AuthenticationProviderFn {
     return async (
       refreshToken: string,
-      req: AuthRefreshTokenRequest,
-      payload: AnyObject,
-    ) => this.isAuthenticated(refreshToken, req, payload);
+      req?: AuthRefreshTokenRequest,
+      payload?: AnyObject,
+    ) => {
+      if (!req || !payload) {
+        throw new Error('Payload information not provided');
+      }
+      return this.isAuthenticated(refreshToken, req, payload);
+    };
   }
   async isAuthenticated(
     refreshToken: string,
@@ -37,7 +42,7 @@ export class AzureAuthenticationProvider
     fetch(url, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': CONTENT_TYPE.JSON,
       },
       body: requestBody,
     })

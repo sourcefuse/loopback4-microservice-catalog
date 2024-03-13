@@ -12,7 +12,7 @@ export class GoogleAuthenticationProvider
   }
   isAuthenticated(accessToken: string) {
     let isAuthenticated = true;
-    const googleApiUrl = `https://oauth2.googleapis.com/tokeninfo?access_token=${accessToken}`;
+    const googleApiUrl = `${process.env.GOOGLE_TOKEN_INFO_URL}?access_token=${accessToken}`;
     // Using fetch to make the API call
     fetch(googleApiUrl, {
       method: 'post',
