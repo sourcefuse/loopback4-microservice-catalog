@@ -1,8 +1,8 @@
-import {bind, BindingScope} from '@loopback/core';
+import {BindingScope, injectable} from '@loopback/core';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import * as AWS from 'aws-sdk';
 
-@bind({scope: BindingScope.TRANSIENT})
+@injectable({scope: BindingScope.TRANSIENT})
 export class AwsSsmHelperService {
   /**
    *

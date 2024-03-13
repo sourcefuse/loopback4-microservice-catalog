@@ -7,19 +7,24 @@ import {
   Component,
   CoreBindings,
   ProviderMap,
+  ServiceOrProviderClass,
   createBindingFromClass,
   inject,
 } from '@loopback/core';
 import {AnyObject} from '@loopback/repository';
-import {ExpressRequestHandler, RestApplication} from '@loopback/rest';
+import {
+  ExpressRequestHandler,
+  RestApplication,
+  createMiddlewareBinding,
+} from '@loopback/rest';
 import {configure} from 'i18n';
 import {cloneDeep} from 'lodash';
 
 import {IncomingMessage, ServerResponse} from 'http';
 import {
   DynamicDatasourceBindings,
+  DynamicDatasourceMiddlewareProvider,
   Loopback4DynamicDatasourceComponent,
-  setupDataSourceMiddlewareFunction,
 } from 'loopback4-dynamic-datasource';
 import {Loopback4HelmetComponent} from 'loopback4-helmet';
 import {RateLimiterComponent} from 'loopback4-ratelimiter';
@@ -29,16 +34,18 @@ import {
   SwaggerAuthenticationComponent,
 } from './components';
 import {OperationSpecEnhancer} from './enhancer/operation-spec-enhancer';
-import {DataSourceModel, LocaleKey} from './enums';
-import {OASBindings, SFCoreBindings} from './keys';
+import {DataSourceTier, LocaleKey} from './enums';
+import {DynamicDataSourceBinding, OASBindings, SFCoreBindings} from './keys';
 import {TenantContextMiddlewareInterceptorProvider} from './middlewares';
 import {
-  CustomDatasourceIdentifierProvider,
-  CustomDatasourceProvider,
-  TenantIdEncryptionProvider,
+  DataSourceConfigProvider,
+  DatasourceIdentifierProvider,
+  DatasourceProvider,
 } from './providers';
-import {AwsSsmHelperService, TenantIdentifierHelperService} from './services';
+import {TenantIdEncryptionProvider} from './providers/tenantid-encryption.provider';
+import {AwsSsmHelperService} from './services';
 import {CoreConfig, addTenantId} from './types';
+
 export class CoreComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
@@ -53,7 +60,6 @@ export class CoreComponent implements Component {
       middlewares.push(...this.expressMiddlewares);
     }
     this.providers = {};
-
     // Mount logger component
     this.application.component(LoggerExtensionComponent);
 
@@ -102,28 +108,27 @@ export class CoreComponent implements Component {
       });
     }
 
-    if (process.env.SAAS_MODEL === DataSourceModel.SILOED) {
+    if (this.coreConfig?.storageTier === DataSourceTier.SILOED) {
       //Bind loopback4-dynamic-datasource component
       this.application.component(Loopback4DynamicDatasourceComponent);
-      //add middleware to express middleware array
-      middlewares.push(setupDataSourceMiddlewareFunction);
+      this.bindings.push(
+        createMiddlewareBinding(DynamicDatasourceMiddlewareProvider),
+      );
       //Bind Providers
-      this.application
-        .bind(DynamicDatasourceBindings.DATASOURCE_PROVIDER)
-        .toProvider(CustomDatasourceProvider);
-      this.application
-        .bind(DynamicDatasourceBindings.DATASOURCE_IDENTIFIER_PROVIDER)
-        .toProvider(CustomDatasourceIdentifierProvider);
+      this.providers[DynamicDatasourceBindings.DATASOURCE_PROVIDER.key] =
+        DatasourceProvider;
+      this.providers[
+        DynamicDatasourceBindings.DATASOURCE_IDENTIFIER_PROVIDER.key
+      ] = DatasourceIdentifierProvider;
+      this.providers[DynamicDataSourceBinding.DATA_SOURCE_CONFIG_PROVIDER.key] =
+        DataSourceConfigProvider;
+      this.services = [AwsSsmHelperService];
     }
 
     this.application.bind(SFCoreBindings.EXPRESS_MIDDLEWARES).to(middlewares);
     this.bindings.push(Binding.bind(OASBindings.HiddenEndpoint).to([]));
     this.bindings.push(Binding.bind(SFCoreBindings.i18n).to(this.localeObj));
     this.application.add(createBindingFromClass(OperationSpecEnhancer));
-    this.application.bind('AwsSsmHelperService').toClass(AwsSsmHelperService);
-    this.application
-      .bind('TenantIdentifierHelperService')
-      .toClass(TenantIdentifierHelperService);
   }
 
   private _setupSwaggerStats(): ExpressRequestHandler | undefined {
@@ -191,4 +196,6 @@ export class CoreComponent implements Component {
   providers?: ProviderMap = {};
 
   bindings: Binding[] = [];
+
+  services?: ServiceOrProviderClass[];
 }
