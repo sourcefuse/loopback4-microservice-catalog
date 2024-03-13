@@ -8,7 +8,7 @@ export const enum ConfigKey {
   Profile = 'profile',
 }
 
-export const enum DataSourceModel {
+export const enum DataSourceTier {
   POOLED = 'POOLED',
   SILOED = 'SILOED',
 }

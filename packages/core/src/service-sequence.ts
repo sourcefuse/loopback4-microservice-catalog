@@ -90,8 +90,7 @@ export class ServiceSequence implements SequenceHandler {
         );
         if (responseGenerated) return;
       }
-      // sonarignore:start
-      const finished = await this.invokeMiddleware(context);
+      let finished = await this.invokeMiddleware(context);
       if (finished) return;
       const route = this.findRoute(request);
       const args = await this.parseParams(request, route);
@@ -106,9 +105,12 @@ export class ServiceSequence implements SequenceHandler {
       if (!isAccessAllowed) {
         throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
       }
+      finished = await this.invokeMiddleware(context, {
+        chain: 'middleware.pre_invoke',
+      });
+
       const result = await this.invoke(route, args);
       this.send(response, result);
-      // sonarignore:end
     } catch (err) {
       this.logger.error(
         `Request ${context.request.method} ${

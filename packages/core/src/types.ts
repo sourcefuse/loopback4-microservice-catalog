@@ -7,6 +7,8 @@ import CryptoJS from 'crypto-js';
 import {IncomingMessage, ServerResponse} from 'http';
 import {AnyObject} from 'loopback-datasource-juggler';
 import {SWStats} from 'swagger-stats';
+import {DataSourceTier} from './enums';
+
 export interface IServiceConfig {
   useCustomSequence: boolean;
   useSequelize?: boolean;
@@ -50,6 +52,18 @@ export interface CoreConfig {
     username?: string,
     password?: string,
   ) => boolean;
+  /**
+   * @param storageTier The property that lets us know what is the storage tier in saas environment
+   */
+  storageTier?: DataSourceTier;
+  /**
+   * @param dataSourceName The property is used while setting the datasource name property
+   */
+  dataSourceName?: string;
+}
+
+export interface DataSourceConfigProviderFn {
+  (tenantId: string): Promise<AnyObject>;
 }
 
 /**
