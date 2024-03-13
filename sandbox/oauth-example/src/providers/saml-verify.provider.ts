@@ -3,13 +3,13 @@ import {repository} from '@loopback/repository';
 import {HttpErrors, Request} from '@loopback/rest';
 import * as samlStrategy from '@node-saml/passport-saml';
 import {
+  AuthUser,
   SamlSignUpFn,
   SignUpBindings,
   UserCredentialsRepository,
   UserRepository,
 } from '@sourceloop/authentication-service';
 import {AuthErrorKeys, VerifyFunction} from 'loopback4-authentication';
-import {AuthUser} from '../models';
 
 export class SamlVerifyProvider implements Provider<VerifyFunction.SamlFn> {
   constructor(
