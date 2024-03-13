@@ -6,7 +6,7 @@ import {BindingKey} from '@loopback/core';
 import {ExpressRequestHandler} from '@loopback/rest';
 import {BINDING_PREFIX} from './constants';
 import {HttpMethod} from './enums';
-import {CoreConfig} from './types';
+import {CoreConfig, TenantIdEncryptionFn} from './types';
 
 export namespace SFCoreBindings {
   export const i18n = BindingKey.create<i18nAPI>(`${BINDING_PREFIX}.i18n`);
@@ -18,6 +18,10 @@ export namespace SFCoreBindings {
   export const EXPRESS_MIDDLEWARES = BindingKey.create<ExpressRequestHandler[]>(
     `sf.packages.core.expressMiddlewares`,
   );
+  export const TENANTID_ENCRYPTION_PROVIDER =
+    BindingKey.create<TenantIdEncryptionFn>(
+      `sf.auth.tenantid.encryption.provider`,
+    );
 }
 
 const hiddenKey = 'sf.oas.hiddenEndpoints';

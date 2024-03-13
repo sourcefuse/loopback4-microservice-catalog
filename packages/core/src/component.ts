@@ -25,8 +25,11 @@ import {OperationSpecEnhancer} from './enhancer/operation-spec-enhancer';
 import {LocaleKey} from './enums';
 import {OASBindings, SFCoreBindings} from './keys';
 
-import {CoreConfig} from './types';
-import {AddTenantActionMiddlewareInterceptor} from './middlewares';
+import {IncomingMessage, ServerResponse} from 'http';
+
+import {TenantContextMiddlewareInterceptorProvider} from './middlewares';
+import {TenantIdEncryptionProvider} from './providers';
+import {CoreConfig, addTenantId} from './types';
 
 export class CoreComponent implements Component {
   constructor(
@@ -41,7 +44,7 @@ export class CoreComponent implements Component {
     if (this.expressMiddlewares) {
       middlewares.push(...this.expressMiddlewares);
     }
-
+    this.providers = {};
     // Mount logger component
     this.application.component(LoggerExtensionComponent);
 
@@ -53,9 +56,12 @@ export class CoreComponent implements Component {
     if (swaggerStatsMiddleware) {
       middlewares.push(swaggerStatsMiddleware);
     }
-    if (this.coreConfig?.addTenantIdmiddleware) {
-      this.application.middleware(AddTenantActionMiddlewareInterceptor);
+    if (this.coreConfig?.tenantContextMiddleware) {
+      this.application.middleware(TenantContextMiddlewareInterceptorProvider);
+      this.providers[SFCoreBindings.TENANTID_ENCRYPTION_PROVIDER.key] =
+        TenantIdEncryptionProvider;
     }
+
     if (this.coreConfig?.authenticateSwaggerUI) {
       this.application.component(SwaggerAuthenticationComponent);
     }
@@ -126,6 +132,20 @@ export class CoreComponent implements Component {
         authentication: this.coreConfig.authentication ?? false,
       },
     );
+    if (this.coreConfig?.tenantContextMiddleware) {
+      middlewareConfig.onResponseFinish = (
+        req: IncomingMessage,
+        res: ServerResponse<IncomingMessage>,
+        reqResponse: AnyObject,
+      ) => {
+        addTenantId(
+          req,
+          res,
+          reqResponse,
+          this.coreConfig?.tenantContextEncryptionKey,
+        );
+      };
+    }
     const swStatsMiddleware = swstats.getMiddleware({
       ...middlewareConfig,
       onAuthenticate: this.coreConfig.swaggerAuthenticate

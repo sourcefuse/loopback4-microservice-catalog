@@ -4,34 +4,29 @@
 // https://opensource.org/licenses/MIT
 import {
   Context,
-  Getter,
   InvocationResult,
   Provider,
   ValueOrPromise,
   globalInterceptor,
   inject,
 } from '@loopback/core';
-import {
-  HttpErrors,
-  Middleware,
-  MiddlewareContext,
-  Request,
-  RequestContext,
-  RestBindings,
-} from '@loopback/rest';
-// eslint-disable-next-line @typescript-eslint/naming-convention
-import * as CryptoJS from 'crypto-js';
-import {AuthErrorKeys, AuthenticationBindings} from 'loopback4-authentication';
+import {Middleware, MiddlewareContext, RequestContext} from '@loopback/rest';
+
+import {AuthenticationBindings} from 'loopback4-authentication';
 import {IAuthUserWithPermissions} from '../components/bearer-verifier';
+import {SFCoreBindings} from '../keys';
+import {CoreConfig, TenantIdEncryptionFn} from '../types';
 @globalInterceptor()
-export class AddTenantActionMiddlewareInterceptor
+export class TenantContextMiddlewareInterceptorProvider
   implements Provider<Middleware>
 {
   constructor(
     @inject(AuthenticationBindings.CURRENT_USER)
     protected currentUser: IAuthUserWithPermissions,
-    @inject.getter(RestBindings.Http.REQUEST)
-    private readonly getRequest: Getter<Request>,
+    @inject(SFCoreBindings.config, {optional: true})
+    private readonly coreConfig: CoreConfig,
+    @inject(SFCoreBindings.TENANTID_ENCRYPTION_PROVIDER)
+    private readonly tenantIdEncryptionProvider: TenantIdEncryptionFn,
   ) {}
   value() {
     return this.intercept.bind(this);
@@ -51,16 +46,15 @@ export class AddTenantActionMiddlewareInterceptor
       response = context.parent.response;
     }
     if (request && response && this.currentUser?.tenantId) {
-      if (!process.env.TENANT_SECRET_KEY) {
-        throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
+      if (!this.coreConfig.tenantContextEncryptionKey) {
+        request.headers['tenant-id'] = this.currentUser.tenantId;
+      } else {
+        const encryptedTenantId = await this.tenantIdEncryptionProvider(
+          this.coreConfig.tenantContextEncryptionKey,
+          this.currentUser.tenantId,
+        );
+        request.headers['tenant-id'] = encryptedTenantId;
       }
-      const secretKey = process.env.TENANT_SECRET_KEY as string;
-      const tenantId = this.currentUser.tenantId;
-      const encryptedTenantId = CryptoJS.AES.encrypt(
-        tenantId,
-        secretKey,
-      ).toString();
-      request.headers['tenant-id'] = encryptedTenantId;
     }
 
     return next();

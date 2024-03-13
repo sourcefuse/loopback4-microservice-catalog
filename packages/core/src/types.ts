@@ -2,12 +2,10 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {HttpErrors} from '@loopback/rest';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import CryptoJS from 'crypto-js';
 import {IncomingMessage, ServerResponse} from 'http';
 import {AnyObject} from 'loopback-datasource-juggler';
-import {AuthErrorKeys} from 'loopback4-authentication';
 import {SWStats} from 'swagger-stats';
 export interface IServiceConfig {
   useCustomSequence: boolean;
@@ -21,8 +19,10 @@ export interface CoreConfig {
   configObject?: i18n.ConfigurationOptions;
   enableObf?: boolean;
   obfPath?: string;
+  tenantContextEncryptionKey?: string;
   openapiSpec?: Record<string, unknown>;
-  addTenantIdmiddleware?: boolean;
+  tenantContextMiddleware?: boolean;
+
   /**
    * In order to hide or alter some path from the definition provided by swagger stats, `modifyPathDefinition`
    * callback can be used. It'll get called for each of the path specified in the `openapiSpec` provided.
@@ -51,32 +51,38 @@ export interface CoreConfig {
     password?: string,
   ) => boolean;
 }
+
 /**
- * The function `addTenantId` decrypts a tenant ID from the request headers using a secret key and adds
- * it to the response object.
- * The function `addTenantId` adds the `tenantId` from the request headers to the `reqResponse` object.
- * @param {IncomingMessage} req - The `req` parameter is an object representing the incoming HTTP
+ * The function `addTenantId` extracts and decrypts a tenant ID from the request headers and adds it to
+ * the response object.
+ * @param {IncomingMessage} req - The `req` parameter is of type `IncomingMessage`, which represents an
+ * incoming HTTP request.
+ * @param res - The `res` parameter is used to send the response back to the client after processing the
  * request.
- * @param res - The `res` parameter in the `addTenantId` function is of type
- * `ServerResponse<IncomingMessage>`.
- * @param {AnyObject} reqResponse - The `reqResponse` parameter in the `addTenantId` function is an
- * object that will be modified to include the decrypted tenant ID. The function extracts the encrypted
- * tenant ID from the `tenant-id` header in the incoming request, decrypts it using the
- * `TENANT_SECRET_KEY` environment
+ * @param {AnyObject} reqResponse -  In the provided function, the 'tenant-id' property of reqResponse is being set based on the
+ * 'tenant-id' header value from the incoming request.
+ * @param {string} [secretKey] - The `secretKey` parameter in the `addTenantId` function is an optional
+ * parameter of type `string`. It is used for decrypting the `tenant-id` value if provided. If the
+ * `secretKey` is not provided, the `tenant-id` value is directly assigned to `req
  */
 export function addTenantId(
   req: IncomingMessage,
   res: ServerResponse<IncomingMessage>,
   reqResponse: AnyObject,
+  secretKey?: string,
 ) {
-  if (!process.env.TENANT_SECRET_KEY) {
-    throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
+  if (!secretKey) {
+    reqResponse['tenant-id'] = req.headers['tenant-id'];
+  } else {
+    const encryptedTenantId = req.headers['tenant-id'];
+    const decryptedTenantId = CryptoJS.AES.decrypt(
+      encryptedTenantId as string,
+      secretKey as string,
+    ).toString(CryptoJS.enc.Utf8);
+    reqResponse['tenant-id'] = decryptedTenantId;
   }
-  const encryptedTenantId = req.headers['tenant-id'];
-  const secretKey = process.env.TENANT_SECRET_KEY as string;
-  const decryptedTenantId = CryptoJS.AES.decrypt(
-    encryptedTenantId as string,
-    secretKey,
-  ).toString(CryptoJS.enc.Utf8);
-  reqResponse['tenant-id'] = decryptedTenantId;
 }
+export type TenantIdEncryptionFn = (
+  secretKey: string,
+  tenantId: string,
+) => Promise<string>;

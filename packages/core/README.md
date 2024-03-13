@@ -234,71 +234,53 @@ this.bind(SFCoreBindings.config).to({
 });
 ```
 
-### Integrate addTenantId with Swagger Stats Configuration:
+### Tenant Context
 
-The function `addTenantId` decrypts a tenant ID from the request headers using a secret key and appends it to the reqResponse object.This customization allows for more detailed statistics tracking based on the Tenant ID.
+- TenantContextMiddlewareInterceptorProvider
 
-```typescript
-export function addTenantId(
-  req: IncomingMessage,
-  res: ServerResponse<IncomingMessage>,
-  reqResponse: AnyObject,
-) {
-  if (!process.env.TENANT_SECRET_KEY) {
-    throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
+  The TenantContextMiddlewareInterceptorProvider [here](/packages/core/src/middlewares/tenant-context.middleware.ts) is a middleware designed to modify the HTTP request by adding tenantId from the current user and sets it as a header in the outgoing request. This middleware is typically used for multitenancy scenarios where the tenant ID needs to be communicated in the HTTP headers.
+
+  For enabling this we need to provide its configuration as follows:
+
+  ```typescript
+  this.bind(SFCoreBindings.config).to({
+    enableObf,
+    obfPath: process.env.OBF_PATH ?? '/obf',
+    openapiSpec: openapi,
+    authentication: authentication,
+    swaggerUsername: process.env.SWAGGER_USER,
+    swaggerPassword: process.env.SWAGGER_PASSWORD,
+    authenticateSwaggerUI: authentication,
+    tenantContextMiddleware: true,
+    tenantContextEncryptionKey: 'Secret_Key',
+  });
+  ```
+
+  This middleware uses TenantIdEncryptionProvider [here](/packages/core/src/providers/tenantid-encryption.provider.ts) which is responsible for encrypting tenant ID using CryptoJS library to encrypt the provided tenantId when `tenantContextEncryptionKey` is added to to core configuration.If the key exists, it encrypts the tenant ID before adding it to the request headers; otherwise, it adds the ID without encryption.
+
+- OBF LOGS
+
+  Also,If `tenantContextMiddleware` is enabled in the coreConfig, it adds an `onResponseFinish callback` to the middlewareConfig that incorporates the `addTenantId` function to append tenant ID information to responses.The `addTenantId` function adds a tenant ID to the response object based on whether a `tenantContextEncryptionKey` is provided for decryption. If no key is provided, it assigns the tenant ID directly from the request header; otherwise, it decrypts the encrypted tenant ID and assigns the decrypted value to the response object.
+
+  ```typescript
+  export function addTenantId(
+    req: IncomingMessage,
+    res: ServerResponse<IncomingMessage>,
+    reqResponse: AnyObject,
+    secretKey?: string,
+  ) {
+    if (!secretKey) {
+      reqResponse['tenant-id'] = req.headers['tenant-id'];
+    } else {
+      const encryptedTenantId = req.headers['tenant-id'];
+      const decryptedTenantId = CryptoJS.AES.decrypt(
+        encryptedTenantId as string,
+        secretKey as string,
+      ).toString(CryptoJS.enc.Utf8);
+      reqResponse['tenant-id'] = decryptedTenantId;
+    }
   }
-  const encryptedTenantId = req.headers['tenant-id'];
-  const secretKey = process.env.TENANT_SECRET_KEY as string;
-  const decryptedTenantId = CryptoJS.AES.decrypt(
-    encryptedTenantId as string,
-    secretKey,
-  ).toString(CryptoJS.enc.Utf8);
-  reqResponse['tenant-id'] = decryptedTenantId;
-}
-```
-
-In your Swagger Stats configuration, incorporate the addTenantId function within the onResponseFinish hook. This ensures that Tenant ID is processed and added to the response.
-
-```typescript
-this.bind(SFCoreBindings.config).to({
-  enableObf,
-  obfPath: process.env.OBF_PATH ?? '/obf',
-  openapiSpec: openapi,
-  authentication: authentication,
-  swaggerUsername: process.env.SWAGGER_USER,
-  swaggerPassword: process.env.SWAGGER_PASSWORD,
-  authenticateSwaggerUI: authentication,
-  swaggerStatsConfig: {
-    basePath: process.env.BASE_PATH ?? '',
-    onResponseFinish: (
-      req: IncomingMessage,
-      res: ServerResponse<IncomingMessage>,
-      reqResponse: AnyObject,
-    ) => {
-      addTenantId(req, res, reqResponse);
-    },
-  },
-});
-```
-
-### Multitenancy Middleware
-
-The AddTenantActionMiddlewareInterceptor [here](/packages/core/src/middlewares/add-tenantid-action.middleware.ts) is a middleware designed to modify the HTTP request by encrypting tenantId from the current user if the current user has a tenant ID and a `TENANT_SECRET_KEY` is available. and sets it as a header in the outgoing request. This middleware is typically used for multitenancy scenarios where the tenant ID needs to be communicated in the HTTP headers.
-
-For enabling this we need to provide its configuration as follows:
-
-```typescript
-this.bind(SFCoreBindings.config).to({
-  enableObf,
-  obfPath: process.env.OBF_PATH ?? '/obf',
-  openapiSpec: openapi,
-  authentication: authentication,
-  swaggerUsername: process.env.SWAGGER_USER,
-  swaggerPassword: process.env.SWAGGER_PASSWORD,
-  authenticateSwaggerUI: authentication,
-  addTenantIdmiddleware: true,
-});
-```
+  ```
 
 ### OAS
 
