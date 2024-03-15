@@ -234,6 +234,54 @@ this.bind(SFCoreBindings.config).to({
 });
 ```
 
+### Tenant Context
+
+- TenantContextMiddlewareInterceptorProvider
+
+  The TenantContextMiddlewareInterceptorProvider [here](/packages/core/src/middlewares/tenant-context.middleware.ts) is a middleware designed to modify the HTTP request by adding tenantId from the current user and sets it as a header in the outgoing request. This middleware is typically used for multitenancy scenarios where the tenant ID needs to be communicated in the HTTP headers.
+
+  For enabling this we need to provide its configuration as follows:
+
+  ```typescript
+  this.bind(SFCoreBindings.config).to({
+    enableObf,
+    obfPath: process.env.OBF_PATH ?? '/obf',
+    openapiSpec: openapi,
+    authentication: authentication,
+    swaggerUsername: process.env.SWAGGER_USER,
+    swaggerPassword: process.env.SWAGGER_PASSWORD,
+    authenticateSwaggerUI: authentication,
+    tenantContextMiddleware: true,
+    tenantContextEncryptionKey: 'Secret_Key',
+  });
+  ```
+
+  This middleware uses TenantIdEncryptionProvider [here](/packages/core/src/providers/tenantid-encryption.provider.ts) which is responsible for encrypting tenant ID using CryptoJS library to encrypt the provided tenantId when `tenantContextEncryptionKey` is added to to core configuration.If the key exists, it encrypts the tenant ID before adding it to the request headers; otherwise, it adds the ID without encryption.
+
+- OBF LOGS
+
+  Also,If `tenantContextMiddleware` is enabled in the coreConfig, it adds an `onResponseFinish callback` to the middlewareConfig that incorporates the `addTenantId` function to append tenant ID information to responses.The `addTenantId` function adds a tenant ID to the response object based on whether a `tenantContextEncryptionKey` is provided for decryption. If no key is provided, it assigns the tenant ID directly from the request header; otherwise, it decrypts the encrypted tenant ID and assigns the decrypted value to the response object.
+
+  ```typescript
+  export function addTenantId(
+    req: IncomingMessage,
+    res: ServerResponse<IncomingMessage>,
+    reqResponse: AnyObject,
+    secretKey?: string,
+  ) {
+    if (!secretKey) {
+      reqResponse['tenant-id'] = req.headers['tenant-id'];
+    } else {
+      const encryptedTenantId = req.headers['tenant-id'];
+      const decryptedTenantId = CryptoJS.AES.decrypt(
+        encryptedTenantId as string,
+        secretKey as string,
+      ).toString(CryptoJS.enc.Utf8);
+      reqResponse['tenant-id'] = decryptedTenantId;
+    }
+  }
+  ```
+
 ### OAS
 
 Open ApiSpecification:The OpenAPI Specification (OAS) defines a standard, language-agnostic interface to RESTful APIs which allows us to discover and understand the capabilities of the service without access to source code, documentation, or through network traffic inspection. When properly defined,user can understand and interact with the remote service with a minimal amount of implementation logic.It is a self-contained or composite resource which defines or describes an API or elements of an API.

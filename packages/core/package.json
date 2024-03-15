@@ -90,6 +90,9 @@
       "optional": true
     }
   },
+  "optionalDependencies": {
+    "crypto-js": "^4.2.0"
+  },
   "devDependencies": {
     "@loopback/build": "^10.1.5",
     "@loopback/eslint-config": "^14.0.4",
