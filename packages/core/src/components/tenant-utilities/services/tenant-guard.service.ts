@@ -179,7 +179,7 @@ export class TenantGuardService<T extends EntityWithTenantId, ID>
     throw new HttpErrors.Unauthorized(TenantUtilitiesErrorKeys.TenantIdMissing);
   }
 
-  private buildWhere(user: UserInToken, where?: Where<T>, id?: ID): Where<T> {
+  buildWhere(user: UserInToken, where?: Where<T>, id?: ID): Where<T> {
     const whereBuilder = new WhereBuilder<AnyObject>();
     const extraFilter: AnyObject = {
       tenantId: user.tenantId,
