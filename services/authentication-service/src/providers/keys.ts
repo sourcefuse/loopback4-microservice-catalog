@@ -169,6 +169,10 @@ export namespace UserValidationServiceBindings {
     BindingKey.create<AuthenticationProviderFn>(
       `${BINDING_PREFIX}.auth.authenticateKeycloakUser`,
     );
+  export const AZURE_AD_AUTHENTICATION =
+    BindingKey.create<AuthenticationProviderFn>(
+      `${BINDING_PREFIX}.auth.authenticateAzureADUser`,
+    );
   export const DEFAULT_AUTHENTICATION =
     BindingKey.create<AuthenticationProviderFn>(
       `${BINDING_PREFIX}.auth.defaultAuthentication`,

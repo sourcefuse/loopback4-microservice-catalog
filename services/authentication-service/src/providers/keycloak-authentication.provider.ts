@@ -1,5 +1,5 @@
 import {Provider, inject} from '@loopback/context';
-import {ILogger, LOGGER} from '@sourceloop/core';
+import {CONTENT_TYPE, ILogger, LOGGER} from '@sourceloop/core';
 import {encode} from 'base-64';
 import fetch from 'node-fetch';
 import {AuthenticationProviderFn} from '..';
@@ -22,7 +22,7 @@ export class KeycloakAuthenticationProvider
     fetch(keycloakApiUrl, {
       method: 'post',
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': CONTENT_TYPE.JSON,
         Authorization: `Basic ${encode(strToEncode)}`, // Base64 encode client ID and client secret
         Accept: 'application/json',
       },
@@ -44,7 +44,7 @@ export class KeycloakAuthenticationProvider
       })
       .catch(error => {
         this.logger.error(
-          `Error while logging off from google. Error :: ${error} ${JSON.stringify(
+          `Error while logging off from keycloak. Error :: ${error} ${JSON.stringify(
             error,
           )}`,
         );

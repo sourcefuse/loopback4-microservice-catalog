@@ -6,6 +6,7 @@ export * from './apple-oauth2-signup.provider';
 export * from './apple-post-verify.provider';
 export * from './apple-pre-verify.provider';
 export * from './azure-ad-signup.provider';
+export * from './azure-authentication.provider';
 export * from './azure-post-verify.provider';
 export * from './azure-pre-verify.provider';
 export * from './bearer-verify.provider';
