@@ -8,7 +8,6 @@ export const enum ConfigKey {
   Profile = 'profile',
 }
 
-export const enum DataSourceTier {
-  POOLED = 'POOLED',
-  SILOED = 'SILOED',
+export enum MiddlewareChain {
+  PreInvoke = 'middleware.pre-invoke',
 }

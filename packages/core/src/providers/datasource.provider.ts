@@ -29,9 +29,8 @@ export class DatasourceProvider implements Provider<DatasourceProviderFn> {
       const dataSourceConfig = await this.configProvider(tenantId);
       const dataSourceName = this.coreConfig.dataSourceName ?? 'db';
       return {
-        [dataSourceName]: async () => {
-          return new juggler.DataSource({...dataSourceConfig});
-        },
+        [dataSourceName]: async () =>
+          new juggler.DataSource({...dataSourceConfig}),
       };
     };
   }

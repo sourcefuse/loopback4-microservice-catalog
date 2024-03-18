@@ -34,7 +34,7 @@ import {
   SwaggerAuthenticationComponent,
 } from './components';
 import {OperationSpecEnhancer} from './enhancer/operation-spec-enhancer';
-import {DataSourceTier, LocaleKey} from './enums';
+import {LocaleKey} from './enums';
 import {DynamicDataSourceBinding, OASBindings, SFCoreBindings} from './keys';
 import {TenantContextMiddlewareInterceptorProvider} from './middlewares';
 import {
@@ -108,7 +108,7 @@ export class CoreComponent implements Component {
       });
     }
 
-    if (this.coreConfig?.storageTier === DataSourceTier.SILOED) {
+    if (this.coreConfig?.dynamicDataSource) {
       //Bind loopback4-dynamic-datasource component
       this.application.component(Loopback4DynamicDatasourceComponent);
       this.bindings.push(

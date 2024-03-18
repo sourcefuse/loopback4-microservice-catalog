@@ -7,7 +7,6 @@ import CryptoJS from 'crypto-js';
 import {IncomingMessage, ServerResponse} from 'http';
 import {AnyObject} from 'loopback-datasource-juggler';
 import {SWStats} from 'swagger-stats';
-import {DataSourceTier} from './enums';
 
 export interface IServiceConfig {
   useCustomSequence: boolean;
@@ -53,9 +52,9 @@ export interface CoreConfig {
     password?: string,
   ) => boolean;
   /**
-   * @param storageTier The property that lets us know what is the storage tier in saas environment
+   * @param dynamicDataSource The property that lets us know if we want to dynamically switch datasouce
    */
-  storageTier?: DataSourceTier;
+  dynamicDataSource?: boolean;
   /**
    * @param dataSourceName The property is used while setting the datasource name property
    */
