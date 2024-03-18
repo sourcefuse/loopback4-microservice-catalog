@@ -9,6 +9,7 @@ import {
   sinon,
   StubbedInstanceWithSinonAccessor,
 } from '@loopback/testlab';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import Sinon from 'sinon';
 
 import {VideoChatSessionController} from '../../../controllers';

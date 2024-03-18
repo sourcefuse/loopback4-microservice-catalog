@@ -9,6 +9,7 @@ import {
   StubbedInstanceWithSinonAccessor,
 } from '@loopback/testlab';
 import axios from 'axios';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import MockAdapter from 'axios-mock-adapter';
 import {ExternalStorageName} from '../../..';
 import {VonageEnums} from '../../../enums';

@@ -8,6 +8,7 @@ import {HttpErrors} from '@loopback/rest';
 import axios from 'axios';
 import {sign} from 'jsonwebtoken';
 import moment from 'moment';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import OpenTok from 'opentok';
 import {promisify} from 'util';
 import {

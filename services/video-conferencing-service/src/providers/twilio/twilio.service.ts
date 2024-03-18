@@ -13,6 +13,7 @@ import {TwilioConfig} from './types';
 
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import AccessToken, {VideoGrant} from 'twilio/lib/jwt/AccessToken';
 import {RecordingInstance} from 'twilio/lib/rest/video/v1/recording';
 import {
