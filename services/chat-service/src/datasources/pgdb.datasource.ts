@@ -26,7 +26,7 @@ export class PgdbDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
-  static dataSourceName = 'chatDb';
+  static readonly dataSourceName = 'chatDb';
 
   constructor(
     @inject('datasources.config.Chat', {optional: true})

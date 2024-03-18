@@ -24,7 +24,7 @@ export class AuthCacheDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
-  static dataSourceName = 'AuthCache';
+  static readonly dataSourceName = 'AuthCache';
   static readonly defaultConfig = config;
 
   constructor(

@@ -1,0 +1,2280 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "@sourceloop/reporting-service",
+    "version": "0.8.0",
+    "description": "reporting-service",
+    "contact": {
+      "name": "Sourav Bhargava",
+      "email": "sourav.bhargava@sourcefuse.com"
+    }
+  },
+  "paths": {
+    "/dashboards/count": {
+      "get": {
+        "x-controller-name": "DashboardController",
+        "x-operation-name": "count",
+        "tags": [
+          "DashboardController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Count Dashboard",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewDashboardList   |\n",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/dashboards.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "DashboardController.count"
+      }
+    },
+    "/dashboards/{id}": {
+      "patch": {
+        "x-controller-name": "DashboardController",
+        "x-operation-name": "updateById",
+        "tags": [
+          "DashboardController"
+        ],
+        "responses": {
+          "204": {
+            "description": "Dashboard PATCH success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateDashboard   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "DashboardController.updateById"
+      },
+      "get": {
+        "x-controller-name": "DashboardController",
+        "x-operation-name": "findById",
+        "tags": [
+          "DashboardController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Dashboard model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Dashboard"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewDashboard   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "DashboardController.findById"
+      },
+      "delete": {
+        "x-controller-name": "DashboardController",
+        "x-operation-name": "deleteById",
+        "tags": [
+          "DashboardController"
+        ],
+        "responses": {
+          "204": {
+            "description": "Dashboard DELETE success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteDashboard   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "DashboardController.deleteById"
+      }
+    },
+    "/dashboards": {
+      "post": {
+        "x-controller-name": "DashboardController",
+        "x-operation-name": "create",
+        "tags": [
+          "DashboardController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Dashboard model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Dashboard"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateDashboard   |\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewDashboard"
+              }
+            }
+          }
+        },
+        "operationId": "DashboardController.create"
+      },
+      "get": {
+        "x-controller-name": "DashboardController",
+        "x-operation-name": "find",
+        "tags": [
+          "DashboardController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of Dashboard model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DashboardWithRelations"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewDashboardList   |\n",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/dashboards.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "DashboardController.find"
+      }
+    },
+    "/data-sets/count": {
+      "get": {
+        "x-controller-name": "DataSetsController",
+        "x-operation-name": "count",
+        "tags": [
+          "DataSetsController"
+        ],
+        "responses": {
+          "200": {
+            "description": "API to get the count of DataSets",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewDataSetsList   |\n",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/data_sets.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "DataSetsController.count"
+      }
+    },
+    "/data-sets/{id}/fetch-data/count": {
+      "get": {
+        "x-controller-name": "DataSetsController",
+        "x-operation-name": "fetchDataByIdCount",
+        "tags": [
+          "DataSetsController"
+        ],
+        "responses": {
+          "200": {
+            "description": "API to fetch count of data from a data set based on ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| FetchDataFromDataSet   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "DataSetsController.fetchDataByIdCount"
+      }
+    },
+    "/data-sets/{id}/fetch-data": {
+      "get": {
+        "x-controller-name": "DataSetsController",
+        "x-operation-name": "fetchDataById",
+        "tags": [
+          "DataSetsController"
+        ],
+        "responses": {
+          "200": {
+            "description": "API to fetch data from a data set based on ID",
+            "content": {
+              "application/json": {}
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| FetchDataFromDataSet   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "DataSetsController.fetchDataById"
+      }
+    },
+    "/data-sets/{id}": {
+      "patch": {
+        "x-controller-name": "DataSetsController",
+        "x-operation-name": "updateById",
+        "tags": [
+          "DataSetsController"
+        ],
+        "responses": {
+          "200": {
+            "description": "API to update Data Set based on ID",
+            "content": {
+              "application/json": {}
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateDataSets   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateDataSet"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "DataSetsController.updateById"
+      },
+      "get": {
+        "x-controller-name": "DataSetsController",
+        "x-operation-name": "findById",
+        "tags": [
+          "DataSetsController"
+        ],
+        "responses": {
+          "200": {
+            "description": "API to fetch info for a particular data set based on ID",
+            "content": {
+              "application/json": {}
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewDataSets   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "DataSetsController.findById"
+      },
+      "delete": {
+        "x-controller-name": "DataSetsController",
+        "x-operation-name": "deleteById",
+        "tags": [
+          "DataSetsController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Delete a given Data Set based on ID",
+            "content": {
+              "application/json": {}
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteDataSets   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "DataSetsController.deleteById"
+      }
+    },
+    "/data-sets": {
+      "post": {
+        "x-controller-name": "DataSetsController",
+        "x-operation-name": "create",
+        "tags": [
+          "DataSetsController"
+        ],
+        "responses": {
+          "200": {
+            "description": "API to create a new DataSet",
+            "content": {
+              "application/json": {}
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateDataSets   |\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewDataSet"
+              }
+            }
+          }
+        },
+        "operationId": "DataSetsController.create"
+      },
+      "get": {
+        "x-controller-name": "DataSetsController",
+        "x-operation-name": "getDataSets",
+        "tags": [
+          "DataSetsController"
+        ],
+        "responses": {
+          "200": {
+            "description": "API to get list of all data sets",
+            "content": {
+              "application/json": {}
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewDataSetsList   |\n",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/data_sets.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "DataSetsController.getDataSets"
+      }
+    },
+    "/data-sources/count": {
+      "get": {
+        "x-controller-name": "DataSourcesController",
+        "x-operation-name": "count",
+        "tags": [
+          "DataSourcesController"
+        ],
+        "responses": {
+          "200": {
+            "description": "data sources model count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewDataSources   |\n",
+        "operationId": "DataSourcesController.count"
+      }
+    },
+    "/data-sources/{dataSource}/columns": {
+      "get": {
+        "x-controller-name": "DataSourcesController",
+        "x-operation-name": "findBydataSourceName",
+        "tags": [
+          "DataSourcesController"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of columns for the specified data source",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ColumnForDataSourceModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewDataSourcesColumns   |\n",
+        "parameters": [
+          {
+            "name": "dataSource",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "DataSourcesController.findBydataSourceName"
+      }
+    },
+    "/data-sources": {
+      "get": {
+        "x-controller-name": "DataSourcesController",
+        "x-operation-name": "find",
+        "tags": [
+          "DataSourcesController"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of data-sources",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "dataSourceName": {
+                        "type": "string"
+                      },
+                      "displayName": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewDataSources   |\n",
+        "operationId": "DataSourcesController.find"
+      }
+    },
+    "/ingestion-mapping/count": {
+      "get": {
+        "x-controller-name": "IngestionMappingsController",
+        "x-operation-name": "count",
+        "tags": [
+          "IngestionMappingsController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ingestion mapping model count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewIngestionMappings   |\n",
+        "operationId": "IngestionMappingsController.count"
+      }
+    },
+    "/ingestion-mapping/{dataSource}": {
+      "patch": {
+        "x-controller-name": "IngestionMappingsController",
+        "x-operation-name": "update",
+        "tags": [
+          "IngestionMappingsController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Update a mapping for data ingestion",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IngestionMapping"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateIngestionMappings   |\n",
+        "parameters": [
+          {
+            "name": "dataSource",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IngestionMappingPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "IngestionMappingsController.update"
+      },
+      "get": {
+        "x-controller-name": "IngestionMappingsController",
+        "x-operation-name": "get",
+        "tags": [
+          "IngestionMappingsController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Get a mapping for data ingestion",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IngestionMapping"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewIngestionMapping   |\n",
+        "parameters": [
+          {
+            "name": "dataSource",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "IngestionMappingsController.get"
+      },
+      "delete": {
+        "x-controller-name": "IngestionMappingsController",
+        "x-operation-name": "delete",
+        "tags": [
+          "IngestionMappingsController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Delete a mapping for data ingestion",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IngestionMapping"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteIngestionMappings   |\n",
+        "parameters": [
+          {
+            "name": "dataSource",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "IngestionMappingsController.delete"
+      }
+    },
+    "/ingestion-mapping": {
+      "post": {
+        "x-controller-name": "IngestionMappingsController",
+        "x-operation-name": "create",
+        "tags": [
+          "IngestionMappingsController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Create a new mapping for data ingestion",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IngestionMapping"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateIngestionMappings   |\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IngestionMapping"
+              }
+            }
+          }
+        },
+        "operationId": "IngestionMappingsController.create"
+      },
+      "get": {
+        "x-controller-name": "IngestionMappingsController",
+        "x-operation-name": "getAll",
+        "tags": [
+          "IngestionMappingsController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Get a list of mapping for data ingestion",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IngestionMapping"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewIngestionMappings   |\n",
+        "operationId": "IngestionMappingsController.getAll"
+      }
+    },
+    "/state-tracking/all/{recordType}": {
+      "get": {
+        "x-controller-name": "StateTrackingController",
+        "x-operation-name": "findAllRecords",
+        "tags": [
+          "StateTrackingController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Find all StateTracking by recordType",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StateTracking"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteIngestionMappings   |\n",
+        "parameters": [
+          {
+            "name": "recordType",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "recordId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "StateTrackingController.findAllRecords"
+      }
+    },
+    "/state-tracking/count/{recordType}": {
+      "get": {
+        "x-controller-name": "StateTrackingController",
+        "x-operation-name": "countRecords",
+        "tags": [
+          "StateTrackingController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Count StateTracking by recordType",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteIngestionMappings   |\n",
+        "parameters": [
+          {
+            "name": "recordType",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "recordId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "StateTrackingController.countRecords"
+      }
+    },
+    "/state-tracking/latest/{recordType}": {
+      "get": {
+        "x-controller-name": "StateTrackingController",
+        "x-operation-name": "findLatestRecord",
+        "tags": [
+          "StateTrackingController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Find latest StateTracking by recordType",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StateTracking"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteIngestionMappings   |\n",
+        "parameters": [
+          {
+            "name": "recordType",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "recordId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "StateTrackingController.findLatestRecord"
+      }
+    },
+    "/widgets/count": {
+      "get": {
+        "x-controller-name": "WidgetController",
+        "x-operation-name": "count",
+        "tags": [
+          "WidgetController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Count Widgets",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewWidgetList   |\n",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/widgets.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "WidgetController.count"
+      }
+    },
+    "/widgets/{id}": {
+      "patch": {
+        "x-controller-name": "WidgetController",
+        "x-operation-name": "updateById",
+        "tags": [
+          "WidgetController"
+        ],
+        "responses": {
+          "204": {
+            "description": "Widget PATCH success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateWidget   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "WidgetController.updateById"
+      },
+      "get": {
+        "x-controller-name": "WidgetController",
+        "x-operation-name": "findById",
+        "tags": [
+          "WidgetController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Widget model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Widget"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewWidget   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "WidgetController.findById"
+      },
+      "delete": {
+        "x-controller-name": "WidgetController",
+        "x-operation-name": "deleteById",
+        "tags": [
+          "WidgetController"
+        ],
+        "responses": {
+          "204": {
+            "description": "Widget DELETE success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteWidget   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "WidgetController.deleteById"
+      }
+    },
+    "/widgets": {
+      "post": {
+        "x-controller-name": "WidgetController",
+        "x-operation-name": "create",
+        "tags": [
+          "WidgetController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Widget model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Widget"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateWidget   |\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/new Widget"
+              }
+            }
+          }
+        },
+        "operationId": "WidgetController.create"
+      },
+      "get": {
+        "x-controller-name": "WidgetController",
+        "x-operation-name": "find",
+        "tags": [
+          "WidgetController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of Widget model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Widget"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewWidgetList   |\n",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/widgets.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "WidgetController.find"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "NewDataSet": {
+        "title": "NewDataSet",
+        "type": "object",
+        "description": "This model represents a data set (tsType: Omit<DataSet, 'id'>, schemaOptions: { title: 'NewDataSet', exclude: [ 'id' ] })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the data set"
+          },
+          "dataSetQuery": {
+            "type": "object",
+            "description": "The query for the data set refer to StructuredQueryInterface"
+          },
+          "dataSetQueryHash": {
+            "type": "string",
+            "description": "The hash of the query for the data set"
+          },
+          "extId": {
+            "type": "string",
+            "description": "The external id of the data set"
+          },
+          "extMetadata": {
+            "type": "object",
+            "description": "The external metadata of the data set"
+          }
+        },
+        "required": [
+          "name",
+          "dataSetQuery"
+        ],
+        "additionalProperties": false
+      },
+      "updateDataSet": {
+        "title": "updateDataSet",
+        "type": "object",
+        "description": "This model represents a data set (tsType: Partial<DataSet>, schemaOptions: { title: 'updateDataSet', partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for a data set"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the data set"
+          },
+          "dataSetQuery": {
+            "type": "object",
+            "description": "The query for the data set refer to StructuredQueryInterface"
+          },
+          "dataSetQueryHash": {
+            "type": "string",
+            "description": "The hash of the query for the data set"
+          },
+          "extId": {
+            "type": "string",
+            "description": "The external id of the data set"
+          },
+          "extMetadata": {
+            "type": "object",
+            "description": "The external metadata of the data set"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DataSet": {
+        "title": "DataSet",
+        "type": "object",
+        "description": "This model represents a data set",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for a data set"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the data set"
+          },
+          "dataSetQuery": {
+            "type": "object",
+            "description": "The query for the data set refer to StructuredQueryInterface"
+          },
+          "dataSetQueryHash": {
+            "type": "string",
+            "description": "The hash of the query for the data set"
+          },
+          "extId": {
+            "type": "string",
+            "description": "The external id of the data set"
+          },
+          "extMetadata": {
+            "type": "object",
+            "description": "The external metadata of the data set"
+          }
+        },
+        "required": [
+          "name",
+          "dataSetQuery"
+        ],
+        "additionalProperties": false
+      },
+      "IngestionMapping": {
+        "title": "IngestionMapping",
+        "type": "object",
+        "description": "This model represents a ingestion mapping, it maps the datasource to the record type",
+        "properties": {
+          "dataSourceName": {
+            "type": "string",
+            "description": "The datasource name for the ingestion mapping"
+          },
+          "recordType": {
+            "type": "string",
+            "description": "The record type for the ingestion mapping"
+          },
+          "primaryColumn": {
+            "type": "string",
+            "description": "The primary column for the ingestion mapping"
+          },
+          "columnTransformations": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "typeConversion": {
+                  "type": "object",
+                  "properties": {
+                    "expectedType": {
+                      "type": "string"
+                    },
+                    "dataStoreKey": {
+                      "type": "string"
+                    },
+                    "customHandler": {
+                      "type": "string"
+                    },
+                    "ConversionOptions": {
+                      "type": "object"
+                    }
+                  }
+                },
+                "dataStoreKey": {
+                  "type": "string"
+                },
+                "skip": {
+                  "type": "boolean"
+                }
+              }
+            },
+            "description": "The column transformations for the ingestion mapping, refer to ColumnMappings interface"
+          },
+          "permissions": {
+            "type": "object",
+            "description": "The permissions for the ingestion mapping"
+          }
+        },
+        "required": [
+          "dataSourceName",
+          "recordType",
+          "primaryColumn"
+        ],
+        "additionalProperties": false
+      },
+      "IngestionMappingPartial": {
+        "title": "IngestionMappingPartial",
+        "type": "object",
+        "description": "This model represents a ingestion mapping, it maps the datasource to the record type (tsType: Partial<IngestionMapping>, schemaOptions: { partial: true })",
+        "properties": {
+          "dataSourceName": {
+            "type": "string",
+            "description": "The datasource name for the ingestion mapping"
+          },
+          "recordType": {
+            "type": "string",
+            "description": "The record type for the ingestion mapping"
+          },
+          "primaryColumn": {
+            "type": "string",
+            "description": "The primary column for the ingestion mapping"
+          },
+          "columnTransformations": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "typeConversion": {
+                  "type": "object",
+                  "properties": {
+                    "expectedType": {
+                      "type": "string"
+                    },
+                    "dataStoreKey": {
+                      "type": "string"
+                    },
+                    "customHandler": {
+                      "type": "string"
+                    },
+                    "ConversionOptions": {
+                      "type": "object"
+                    }
+                  }
+                },
+                "dataStoreKey": {
+                  "type": "string"
+                },
+                "skip": {
+                  "type": "boolean"
+                }
+              }
+            },
+            "description": "The column transformations for the ingestion mapping, refer to ColumnMappings interface"
+          },
+          "permissions": {
+            "type": "object",
+            "description": "The permissions for the ingestion mapping"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ColumnForDataSourceModel": {
+        "title": "ColumnForDataSourceModel",
+        "type": "object",
+        "description": "Schema for ColumnForDataSource",
+        "properties": {
+          "columnName": {
+            "type": "string",
+            "description": "The name of the column"
+          },
+          "dataSourceName": {
+            "type": "string",
+            "description": "Name of the data source"
+          },
+          "displayName": {
+            "type": "string",
+            "description": "Display name of the column"
+          },
+          "originalDataType": {
+            "type": "string",
+            "description": "Original data type of the column"
+          },
+          "dataType": {
+            "type": "string",
+            "description": "Data type of the column",
+            "enum": [
+              "String",
+              "Number",
+              "Boolean",
+              "Array",
+              "Object",
+              "Json",
+              "Date",
+              "Unknown"
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "StateTracking": {
+        "title": "StateTracking",
+        "type": "object",
+        "description": "This model represents a state tracking for the ingested data",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for a state tracking"
+          },
+          "state": {
+            "type": "string",
+            "description": "The state of the ingested data"
+          },
+          "payload": {
+            "type": "string",
+            "description": "The payload of the ingested data"
+          },
+          "recordType": {
+            "type": "string",
+            "description": "The type of the ingested data"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp of the ingested data"
+          },
+          "error": {
+            "type": "string",
+            "description": "The error of the ingested data if any"
+          },
+          "recordId": {
+            "type": "string",
+            "description": "The id of the ingested data"
+          }
+        },
+        "required": [
+          "state",
+          "recordType",
+          "timestamp",
+          "recordId"
+        ],
+        "additionalProperties": false
+      },
+      "Widget": {
+        "title": "Widget",
+        "type": "object",
+        "description": "This model represents a widget",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for a widget"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the widget"
+          },
+          "datasetId": {
+            "type": "string",
+            "description": "The id of the dataset that is to be used for the widget"
+          },
+          "visualizationType": {
+            "type": "string",
+            "description": "The type of visualization to be used for the widget"
+          },
+          "extId": {
+            "type": "string",
+            "description": "The external id of the widget"
+          },
+          "extMetadata": {
+            "type": "object",
+            "description": "The external metadata of the widget"
+          }
+        },
+        "required": [
+          "datasetId"
+        ],
+        "additionalProperties": false
+      },
+      "new Widget": {
+        "title": "new Widget",
+        "type": "object",
+        "description": "This model represents a widget (tsType: Omit<Widget, 'id'>, schemaOptions: { title: 'new Widget', exclude: [ 'id' ] })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the widget"
+          },
+          "datasetId": {
+            "type": "string",
+            "description": "The id of the dataset that is to be used for the widget"
+          },
+          "visualizationType": {
+            "type": "string",
+            "description": "The type of visualization to be used for the widget"
+          },
+          "extId": {
+            "type": "string",
+            "description": "The external id of the widget"
+          },
+          "extMetadata": {
+            "type": "object",
+            "description": "The external metadata of the widget"
+          }
+        },
+        "required": [
+          "datasetId"
+        ],
+        "additionalProperties": false
+      },
+      "Dashboard": {
+        "title": "Dashboard",
+        "type": "object",
+        "description": "This model represents a dashboard",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for a dashboard"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the dashboard"
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the dashboard"
+          },
+          "layout": {
+            "type": "object",
+            "description": "The layout of the dashboard"
+          },
+          "extId": {
+            "type": "string",
+            "description": "The external id of the dashboard"
+          },
+          "extMetadata": {
+            "type": "object",
+            "description": "The external metadata of the dashboard"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false
+      },
+      "NewDashboard": {
+        "title": "NewDashboard",
+        "type": "object",
+        "description": "This model represents a dashboard (tsType: CreateDashboardDto, schemaOptions: { title: 'NewDashboard' })",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the dashboard"
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the dashboard"
+          },
+          "layout": {
+            "type": "object",
+            "description": "The layout of the dashboard"
+          },
+          "widgetIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false
+      },
+      "CreateDashboardDto": {
+        "title": "CreateDashboardDto",
+        "type": "object",
+        "description": "This model represents a dashboard",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the dashboard"
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the dashboard"
+          },
+          "layout": {
+            "type": "object",
+            "description": "The layout of the dashboard"
+          },
+          "widgetIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false
+      },
+      "WidgetWithRelations": {
+        "title": "WidgetWithRelations",
+        "type": "object",
+        "description": "This model represents a widget (tsType: WidgetWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for a widget"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the widget"
+          },
+          "datasetId": {
+            "type": "string",
+            "description": "The id of the dataset that is to be used for the widget"
+          },
+          "visualizationType": {
+            "type": "string",
+            "description": "The type of visualization to be used for the widget"
+          },
+          "extId": {
+            "type": "string",
+            "description": "The external id of the widget"
+          },
+          "extMetadata": {
+            "type": "object",
+            "description": "The external metadata of the widget"
+          }
+        },
+        "required": [
+          "datasetId"
+        ],
+        "additionalProperties": false
+      },
+      "DashboardWithRelations": {
+        "title": "DashboardWithRelations",
+        "type": "object",
+        "description": "This model represents a dashboard (tsType: DashboardWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for a dashboard"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the dashboard"
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the dashboard"
+          },
+          "layout": {
+            "type": "object",
+            "description": "The layout of the dashboard"
+          },
+          "extId": {
+            "type": "string",
+            "description": "The external id of the dashboard"
+          },
+          "extMetadata": {
+            "type": "object",
+            "description": "The external metadata of the dashboard"
+          },
+          "widgets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WidgetWithRelations"
+            }
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false
+      },
+      "dashboards.ScopeFilter": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "uniqueItems": true
+              }
+            ]
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true
+            }
+          }
+        },
+        "additionalProperties": false,
+        "title": "dashboards.ScopeFilter"
+      },
+      "dashboards.IncludeFilter.Items": {
+        "title": "dashboards.IncludeFilter.Items",
+        "type": "object",
+        "properties": {
+          "relation": {
+            "type": "string",
+            "enum": [
+              "widgets"
+            ]
+          },
+          "scope": {
+            "$ref": "#/components/schemas/dashboards.ScopeFilter"
+          }
+        }
+      },
+      "dashboards.Filter": {
+        "type": "object",
+        "title": "dashboards.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "title": "dashboards.WhereFilter",
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "name": {
+                    "type": "boolean"
+                  },
+                  "description": {
+                    "type": "boolean"
+                  },
+                  "layout": {
+                    "type": "boolean"
+                  },
+                  "extId": {
+                    "type": "boolean"
+                  },
+                  "extMetadata": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
+                    "id",
+                    "name",
+                    "description",
+                    "layout",
+                    "extId",
+                    "extMetadata"
+                  ],
+                  "example": "deleted"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "dashboards.Fields"
+          },
+          "include": {
+            "title": "dashboards.IncludeFilter",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/dashboards.IncludeFilter.Items"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<Dashboard>"
+      },
+      "loopback.Count": {
+        "type": "object",
+        "title": "loopback.Count",
+        "x-typescript-type": "@loopback/repository#Count",
+        "properties": {
+          "count": {
+            "type": "number"
+          }
+        }
+      },
+      "data_sets.Filter": {
+        "type": "object",
+        "title": "data_sets.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "title": "data_sets.WhereFilter",
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "name": {
+                    "type": "boolean"
+                  },
+                  "dataSetQuery": {
+                    "type": "boolean"
+                  },
+                  "dataSetQueryHash": {
+                    "type": "boolean"
+                  },
+                  "extId": {
+                    "type": "boolean"
+                  },
+                  "extMetadata": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
+                    "id",
+                    "name",
+                    "dataSetQuery",
+                    "dataSetQueryHash",
+                    "extId",
+                    "extMetadata"
+                  ],
+                  "example": "deleted"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "data_sets.Fields"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<DataSet>"
+      },
+      "widgets.Filter": {
+        "type": "object",
+        "title": "widgets.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "title": "widgets.WhereFilter",
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "name": {
+                    "type": "boolean"
+                  },
+                  "datasetId": {
+                    "type": "boolean"
+                  },
+                  "visualizationType": {
+                    "type": "boolean"
+                  },
+                  "extId": {
+                    "type": "boolean"
+                  },
+                  "extMetadata": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
+                    "id",
+                    "name",
+                    "datasetId",
+                    "visualizationType",
+                    "extId",
+                    "extMetadata"
+                  ],
+                  "example": "deleted"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "widgets.Fields"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<Widget>"
+      }
+    }
+  }
+}

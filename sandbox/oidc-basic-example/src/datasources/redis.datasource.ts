@@ -21,7 +21,7 @@ export class RedisDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
-  static dataSourceName = AuthCacheSourceName;
+  static readonly dataSourceName = AuthCacheSourceName;
   static readonly defaultConfig = {};
 
   constructor(

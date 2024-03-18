@@ -7,11 +7,13 @@ import {ControllerInstance} from '@loopback/rest';
 import {expect} from '@loopback/testlab';
 import {AuditController} from '../../controllers';
 
+import {AuthenticationBindings} from 'loopback4-authentication';
 import {
   AuditLogRepository,
   JobRepository,
   MappingLogRepository,
 } from '../../repositories/sequelize';
+import {testUser} from '../helpers/db.helper';
 import {getBaseClass} from '../utils/getBaseClass';
 import {SequelizeAuditServiceApplication} from './sequelize.application';
 let sequelizeApp: SequelizeAuditServiceApplication;
@@ -20,6 +22,7 @@ const setup = async () => {
   sequelizeApp = new SequelizeAuditServiceApplication({
     name: 'SequelizeApp',
   });
+  sequelizeApp.bind(AuthenticationBindings.CURRENT_USER).to(testUser);
 
   await sequelizeApp.boot();
 };

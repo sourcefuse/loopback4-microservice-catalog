@@ -8,7 +8,7 @@ export const user: IAuthUserWithPermissions = {
   id: 'random-id',
   firstName: 'random',
   lastName: 'user',
-  tenantId: '1234-5678',
+  tenantId: 'fac65aad-3f01-dd25-3ea0-ee6563fbe02b',
   username: 'random',
   email: 'random@random',
   permissions: [],

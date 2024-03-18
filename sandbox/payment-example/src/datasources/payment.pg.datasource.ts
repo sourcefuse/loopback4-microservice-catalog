@@ -23,7 +23,7 @@ export class PaymentDbDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
-  static dataSourceName = 'payment';
+  static readonly dataSourceName = 'payment';
   static readonly defaultConfig = config;
 
   constructor(

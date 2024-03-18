@@ -3,6 +3,76 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>7.2.2 (2024-03-06)</small>
+
+* fix(all-services): fix sonar issues in all services (#2018) ([33dfa77](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/33dfa77)), closes [#2018](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2018) [#2013](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2013)
+* fix(all-services): fix the pending sonar issues in all services (#2025) ([b2f6dc3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b2f6dc3)), closes [#2025](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2025) [#2013](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2013)
+* fix(cli): make cicd operational while scaffolding via cli (#1975) ([2bcadcf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2bcadcf)), closes [#1975](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1975)
+* chore(all-services): sonar fix (#2014) ([55c5b02](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/55c5b02)), closes [#2014](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2014) [#2013](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2013) [#2013](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2013)
+* chore(cli): update template dependencies (#2009) ([0936c62](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0936c62)), closes [#2009](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2009) [#1929](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1929)
+
+
+
+
+
+## <small>7.2.1 (2024-02-02)</small>
+
+* chore(deps): update cli template version  (#1959) ([b33186d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b33186d)), closes [#1959](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1959) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* chore(deps): update survey sevice in cli template (#1964) ([dd8c9ce](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/dd8c9ce)), closes [#1964](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1964) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
+## 7.2.0 (2024-02-02)
+
+* fix(cli): proper error message when microservice command not run from root folder (#1961) ([3ea4325](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3ea4325)), closes [#1961](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1961) [#1956](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1956)
+* feat(cli): add task service (#1933) ([6144832](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6144832)), closes [#1933](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1933) [#1932](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1932)
+
+
+
+
+
+## <small>7.1.4 (2024-01-24)</small>
+
+* chore(deps): update cli to latest template deps (#1946) ([bb68b29](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bb68b29)), closes [#1946](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1946) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
+## <small>7.1.3 (2024-01-19)</small>
+
+* chore(cli): update cli templete deps to latest (#1930) ([95a6698](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/95a6698)), closes [#1930](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1930) [#1929](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1929)
+
+
+
+
+
+## <small>7.1.2 (2024-01-19)</small>
+
+* chore(deps): update sourceloop and loopback packages version (#1928) ([d9d1b20](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d9d1b20)), closes [#1928](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1928) [#1903](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1903)
+
+
+
+
+
+## <small>7.1.1 (2024-01-17)</small>
+
+* fix(cli): github action failing in microservice scaffold - backstage (#1909) ([fc20b44](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/fc20b44)), closes [#1909](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1909)
+
+
+
+
+
+## 7.1.0 (2024-01-12)
+
+* feat(cli): add sequelize flag in cli (#1904) ([33cf422](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/33cf422)), closes [#1904](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1904) [#1815](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1815) [#1815](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1815) [#1815](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1815)
+
+
+
+
+
 ## 7.0.0 (2024-01-09)
 
 * fix(cli): update the deps to latest (#1900) ([b56ee7a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b56ee7a)), closes [#1900](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1900) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)

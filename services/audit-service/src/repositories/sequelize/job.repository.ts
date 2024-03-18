@@ -5,6 +5,10 @@ import {
 } from '@loopback/sequelize';
 import {AuditDbSourceName} from '@sourceloop/audit-log';
 import {Job} from '../../models';
+
+import {tenantGuard} from '@sourceloop/core';
+
+@tenantGuard()
 export class JobRepository extends SequelizeCrudRepository<
   Job,
   typeof Job.prototype.id

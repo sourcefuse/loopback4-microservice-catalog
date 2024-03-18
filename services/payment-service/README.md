@@ -8,9 +8,14 @@
 
 ![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/payment-service/@loopback/core)
 
+## Overview
+
 A Loopback Microservice primarily used for payment implementation to charge the payments for
 any client application.
 
+- Users can seamlessly integrate PayPal for payment transactions.
+- The microservice supports Stripe as a preferred payment gateway option.
+- Razorpay integration is also available for users seeking diverse payment methods.
 ## Installation
 
 ```bash
@@ -32,32 +37,68 @@ npm i @sourceloop/payment-service
   // add Component for PaymentServiceComponent
   this.component(PaymentServiceComponent);
   ```
-  **Binding the Providers**
-
-```typescript
-//import Providers
-import {
-  GatewayBindings,
-  GatewayProvider,
-  RazorpayBindings,
-  RazorpayProvider,
-  StripeBindings,
-  StripeProvider,
-} from 'payment-service/dist/providers';
-//Bind the providers
-this.bind(StripeBindings.Config).to({dataKey: '', publishKey: ''});
-this.bind(StripeBindings.StripeHelper).toProvider(StripeProvider);
-this.bind(RazorpayBindings.RazorpayConfig).to({dataKey: '', publishKey: ''});
-this.bind(RazorpayBindings.RazorpayHelper).toProvider(RazorpayProvider);
-this.bind(GatewayBindings.GatewayHelper).toProvider(GatewayProvider);
-this.bind(PayPalBindings.PayPalHelper.key).toProvider(PaypalProvider);
-this.bind(PayPalBindings.PayPalConfig).to({
-  clientId: process.env.PAYPAL_CLIENT_ID ?? '',
-  clientSecret: process.env.PAYPAL_CLIENT_SECRET ?? '',
-});
-```
-
 - Set up a [Loopback4 Datasource](https://loopback.io/doc/en/lb4/DataSource.html) with `dataSourceName` property set to `PaymentDatasourceName`. You can see an example datasource [here](#setting-up-a-datasource).
+- Bind any of the custom [providers](#providers) you need.
+- **Using Paypal payment Gateway**
+  Bind the PayPalHelper and PayPalConfig as shown below
+  ```typescript
+  //import Providers
+  import {
+    PayPalBindings,
+    PaypalProvider
+  } from 'payment-service/dist/providers';
+  //Bind the providers
+  this.bind(PayPalBindings.PayPalHelper.key).toProvider(PaypalProvider);
+  this.bind(PayPalBindings.PayPalConfig).to({
+    clientId: process.env.PAYPAL_CLIENT_ID ?? '',
+    clientSecret: process.env.PAYPAL_CLIENT_SECRET ?? '',
+  });
+  ```
+
+- **Using Stripe payment Gateway**
+    Bind the StripeHelper and Config as shown below
+
+
+  ```typescript
+  //import Providers
+  import {
+    StripeBindings,
+    StripeProvider,
+  } from 'payment-service/dist/providers';
+  //Bind the providers
+  this.bind(StripeBindings.Config).to({dataKey: '', publishKey: ''});
+  this.bind(StripeBindings.StripeHelper).toProvider(StripeProvider);
+  ```
+
+- **Using RazorPay payment Gateway**
+  Bind the RazorPayHelper and RazorPayConfig as shown below
+  
+  ```typescript
+  //import Providers
+  import {
+    RazorpayBindings,
+    RazorpayProvider,
+  } from 'payment-service/dist/providers';
+  //Bind the providers
+  this.bind(RazorpayBindings.RazorpayConfig).to({dataKey: '', publishKey: ''});
+  this.bind(RazorpayBindings.RazorpayHelper).toProvider(RazorpayProvider);
+  ```
+
+- **Using with Sequelize**
+
+  This service supports Sequelize as the underlying ORM using [@loopback/sequelize](https://www.npmjs.com/package/@loopback/sequelize) extension. And in order to use it, you'll need to do following changes.
+
+  - To use Sequelize in your application, add following to application.ts:
+
+    ```ts
+    this.bind(PaymentServiceBindings.Config).to({
+      useCustomSequence: false,
+      useSequelize: true,
+    });
+    ```
+
+  - Use the `SequelizeDataSource` in your datasource as the parent class. Refer [this](https://www.npmjs.com/package/@loopback/sequelize#step-1-configure-datasource) for more.
+
 - Start the application
   `npm start`
 
@@ -102,6 +143,9 @@ export class InmailDataSource
 
 The migrations required for this service are processed during the installation automatically if you set the `PAYMENT_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or databases, they may be affected. In such a scenario, it is advised that you copy the migration files in your project root, using the `PAYMENT_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
 
+Additionally, there is now an option to choose between SQL migration or PostgreSQL migration.
+NOTE : For @sourceloop/cli users, this choice can be specified during the scaffolding process by selecting the "type of datasource" option.
+
 ### Database Schema
 
 ![Database Schema](https://user-images.githubusercontent.com/98279679/186740482-496cd283-8073-4db5-b9d1-cd066d85d313.png)
@@ -139,21 +183,9 @@ JWT_ISSUER=https://authentication.service
 | `DB_SCHEMA`   | Y        | `public`      | Database schema used for the data source. In PostgreSQL, this will be `public` unless a schema is made explicitly for the service. |
 | `JWT_SECRET`  | Y        |               | Symmetric signing key of the JWT token.                                                                                            |
 | `JWT_ISSUER`  | Y        |               | Issuer of the JWT token.                                                                                                           |
+### Providers
 
-### Using with Sequelize
-
-This service supports Sequelize as the underlying ORM using [@loopback/sequelize](https://www.npmjs.com/package/@loopback/sequelize) extension. And in order to use it, you'll need to do following changes.
-
-1.To use Sequelize in your application, add following to application.ts:
-
-```ts
-this.bind(PaymentServiceBindings.Config).to({
-  useCustomSequence: false,
-  useSequelize: true,
-});
-```
-
-2. Use the `SequelizeDataSource` in your datasource as the parent class. Refer [this](https://www.npmjs.com/package/@loopback/sequelize#step-1-configure-datasource) for more.
+You can find documentation for some of the providers available in this service [here](./src/providers/README.md)
 
 ### API Documentation
 

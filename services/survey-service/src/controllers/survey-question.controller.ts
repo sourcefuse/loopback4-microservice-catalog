@@ -30,10 +30,9 @@ import {authorize} from 'loopback4-authorization';
 import {AppErrorCodes, ErrorKeys, PermissionKey} from '../enum';
 import {SurveyQuestion, SurveyQuestionDto} from '../models';
 import {SurveyQuestionRepository} from '../repositories';
-import {SurveyService} from '../services';
+import {SurveyQuestionService, SurveyService} from '../services';
 
 const basePath = '/surveys/{surveyId}/survey-questions';
-const orderByCreatedOn = 'created_on DESC';
 
 export class SurveyQuestionController {
   constructor(
@@ -41,6 +40,8 @@ export class SurveyQuestionController {
     public surveyQuestionRepository: SurveyQuestionRepository,
     @service(SurveyService)
     public surveyService: SurveyService,
+    @service(SurveyQuestionService)
+    public surveyQuestionService: SurveyQuestionService,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {
@@ -72,26 +73,10 @@ export class SurveyQuestionController {
   ): Promise<SurveyQuestion> {
     try {
       await this.surveyService.checkIfAllowedToUpdateSurvey(surveyId);
-
-      const {...surveyQuestion} = surveyQuestionDto;
-
-      surveyQuestion.surveyId = surveyId;
-      await this.surveyQuestionRepository.create(surveyQuestion);
-
-      // fetch createdSurveyQuestion with id
-      const createdSurveyQuestion = await this.surveyQuestionRepository.findOne(
-        {
-          order: [orderByCreatedOn],
-          where: {
-            surveyId,
-          },
-        },
+      return await this.surveyQuestionService.createSurveyQuestion(
+        surveyId,
+        surveyQuestionDto,
       );
-      if (!createdSurveyQuestion) {
-        throw new HttpErrors.NotFound();
-      }
-
-      return createdSurveyQuestion;
     } catch (error) {
       if (error.code === AppErrorCodes.ER_DUP_ENTRY) {
         throw new HttpErrors.BadRequest(ErrorKeys.DuplicateSurveyQuestionEntry);

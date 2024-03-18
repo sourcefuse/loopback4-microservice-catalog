@@ -3,6 +3,7 @@ import {ILogger, LOGGER} from '@sourceloop/core';
 
 import {repository, Where} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
+import {JwtPayload, Secret, verify} from 'jsonwebtoken';
 import {isArray} from 'lodash';
 import {AuthorizeErrorKeys} from 'loopback4-authorization';
 import moment from 'moment';
@@ -40,7 +41,34 @@ export class SurveyResponseService {
     protected surveyResponderRepository: SurveyResponderRepository,
   ) {}
 
-  async createResponse(surveyId: string, surveyResponseDto: SurveyResponseDto) {
+  async createResponse(
+    token: string,
+    surveyId: string,
+    surveyResponseDto: SurveyResponseDto,
+  ) {
+    const secret = process.env.JWT_SECRET as Secret;
+    const decodedToken = verify(token, secret) as JwtPayload;
+
+    if (decodedToken.surveyCycleId) {
+      const responders = await this.surveyRepository
+        .surveyResponders(surveyId)
+        .find({
+          where: {
+            surveyCycleId: decodedToken.surveyCycleId,
+          },
+        });
+      const responderEmails: string[] = [];
+      responders?.forEach(responder => {
+        if (responder.email) {
+          responderEmails.push(responder.email);
+        }
+      });
+      const validUser = responderEmails.includes(decodedToken.email);
+      if (!validUser) {
+        throw new HttpErrors.Unauthorized(ErrorKeys.NotAuthorised);
+      }
+    }
+
     const surveyResponseDetailsDto =
       surveyResponseDto.surveyResponseDetailArray;
     if (!surveyResponseDetailsDto) {

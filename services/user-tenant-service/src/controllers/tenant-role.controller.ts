@@ -2,7 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {inject, intercept} from '@loopback/core';
+import {inject, intercept, service} from '@loopback/core';
 import {
   Count,
   CountSchema,
@@ -11,7 +11,6 @@ import {
   repository,
 } from '@loopback/repository';
 import {
-  HttpErrors,
   del,
   get,
   getModelSchemaRef,
@@ -33,8 +32,13 @@ import {
 import {authorize} from 'loopback4-authorization';
 import {PermissionKey, STATUS_CODE} from '../enums';
 import {UserTenantServiceKey} from '../keys';
-import {Role, Tenant} from '../models';
-import {RoleRepository, TenantRepository} from '../repositories';
+import {Role} from '../models';
+import {
+  RoleRepository,
+  TenantRepository,
+  UserTenantRepository,
+} from '../repositories';
+import {TenantOperationsService} from '../services';
 
 const baseUrl = '/tenants/{id}/roles';
 
@@ -45,6 +49,10 @@ export class TenantRoleController {
     @repository(RoleRepository) protected roleRepository: RoleRepository,
     @inject(AuthenticationBindings.CURRENT_USER)
     protected currentUser: IAuthUserWithPermissions,
+    @repository(UserTenantRepository)
+    readonly userTenantRepository: UserTenantRepository,
+    @service(TenantOperationsService)
+    protected tenantOperationService: TenantOperationsService,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {
@@ -89,7 +97,7 @@ export class TenantRoleController {
     },
   })
   async create(
-    @param.path.string('id') id: typeof Tenant.prototype.id,
+    @param.path.string('id') id: string,
     @requestBody({
       content: {
         'application/json': {
@@ -102,16 +110,7 @@ export class TenantRoleController {
     })
     role: Omit<Role, 'id'>,
   ): Promise<Role> {
-    const roleInDb = await this.roleRepository.findOne({
-      where: {
-        name: role.name,
-      },
-    });
-    if (roleInDb) {
-      throw new HttpErrors.Forbidden(' Role with same name already exist');
-    }
-    role.tenantId = id ?? '';
-    return this.roleRepository.create(role);
+    return this.tenantOperationService.createRole(id, role);
   }
 
   @authenticate(STRATEGY.BEARER, {
@@ -144,8 +143,7 @@ export class TenantRoleController {
     role: Partial<Role>,
     @param.query.object('where', getWhereSchemaFor(Role)) where?: Where<Role>,
   ): Promise<Count> {
-    role.tenantId = id;
-    return this.roleRepository.updateAll(role, where);
+    return this.tenantOperationService.updateRole(id, role, where);
   }
 
   @authenticate(STRATEGY.BEARER, {
@@ -168,6 +166,6 @@ export class TenantRoleController {
     @param.path.string('roleId') roleId: string,
     @param.query.object('where', getWhereSchemaFor(Role)) where?: Where<Role>,
   ): Promise<void> {
-    return this.roleRepository.deleteById(roleId);
+    return this.tenantOperationService.deleteRole(id, roleId);
   }
 }

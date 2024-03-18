@@ -22,7 +22,7 @@ export class AuthenticationCacheDbDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
-  static dataSourceName = 'AuthCache';
+  static readonly dataSourceName = 'AuthCache';
 
   constructor(
     @inject('datasources.config.AuthCache', {optional: true})

@@ -15,7 +15,7 @@ export class KeycloakAuthenticationProvider
     let isAuthenticated = true;
     const params = new URLSearchParams();
     const strToEncode = `${process.env.KEYCLOAK_CLIENT_ID}:${process.env.KEYCLOAK_CLIENT_SECRET}`;
-    const keycloakApiUrl = `${process.env.KEYCLOAK_HOST}:${process.env.KEYCLOACK}/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/token/introspect`;
+    const keycloakApiUrl = `${process.env.KEYCLOAK_HOST}/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/token/introspect`;
 
     params.append('token', accessToken);
     // Using fetch to make the API call

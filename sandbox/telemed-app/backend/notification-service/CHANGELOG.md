@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.1.11 (2024-03-12)</small>
+
+* fix(all-services): fix sonar issues in all services (#2018) ([33dfa77](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/33dfa77)), closes [#2018](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2018) [#2013](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2013)
+
+
+
+
+
+## <small>0.1.10 (2024-02-05)</small>
+
+* chore(deps): update versions in sandbox and fix vulnerabilities  (#1941) ([5e37add](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5e37add)), closes [#1941](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1941) [#1934](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1934)
+
+
+
+
+
+## <small>0.1.9 (2024-02-02)</small>
+
+**Note:** Version bump only for package @sourceloop/telemed-notification-api
+
+
+
+
+
+## <small>0.1.8 (2024-01-19)</small>
+
+* chore(deps): combine dependabot updates (#1906) ([398d05c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/398d05c)), closes [#1906](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1906)
+
+
+
+
+
 ## <small>0.1.7 (2024-01-09)</small>
 
 **Note:** Version bump only for package @sourceloop/telemed-notification-api

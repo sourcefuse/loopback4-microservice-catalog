@@ -1,10 +1,12 @@
-import {model, property} from '@loopback/repository';
-import {CoreEntity} from '@sourceloop/core';
+import {AnyObject, hasMany, model, property} from '@loopback/repository';
+import {UserModifiableEntity} from '@sourceloop/core';
+import {TaskStatus} from '../types';
+import {UserTask} from './user-task.model';
 
 @model({
   name: 'tasks',
 })
-export class Task extends CoreEntity<Task> {
+export class Task<TS = TaskStatus> extends UserModifiableEntity<Task> {
   @property({
     type: 'string',
     id: true,
@@ -35,10 +37,10 @@ export class Task extends CoreEntity<Task> {
 
   @property({
     type: 'string',
-    required: true,
+    default: TaskStatus.Pending,
     description: 'A short message to indicate the progression of the task',
   })
-  status: string;
+  status: TS;
 
   @property({
     type: 'string',
@@ -81,8 +83,24 @@ export class Task extends CoreEntity<Task> {
 
   @property({
     type: 'string',
-    required: true,
     name: 'assignee_id',
   })
-  assigneeId: string;
+  assigneeId?: string;
+
+  @property({
+    type: 'object',
+    required: true,
+  })
+  metadata: AnyObject;
+
+  @hasMany(() => UserTask, {
+    keyTo: 'taskId',
+  })
+  userTasks?: UserTask[];
+
+  @property({
+    name: 'external_id',
+    type: 'string',
+  })
+  externalId?: string;
 }

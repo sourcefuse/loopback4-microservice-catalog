@@ -22,16 +22,11 @@ import {
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
-import {AuthenticationComponent, Strategies} from 'loopback4-authentication';
+import {AuthenticationComponent} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-
-import {
-  BearerStrategyFactoryProvider,
-  BearerTokenVerifyProvider,
-} from 'loopback4-authentication/passport-bearer';
 import {VideoChatArchiveController} from './controllers/video-chat-archive.controller';
 import {VideoChatSessionController} from './controllers/video-chat-session.controller';
 import {
@@ -52,14 +47,15 @@ import {
 } from './repositories';
 import {
   AuditLogRepository as AuditLogSequelizeRepository,
-  VideoChatSessionRepository as SessionAttendeesSequelizeRepository,
   SessionAttendeesRepository as VideoChatSequelizeSessionRepository,
+  VideoChatSessionRepository as SessionAttendeesSequelizeRepository,
 } from './repositories/sequelize';
 import {
   ChatArchiveService,
   ChatSessionService,
   MeetingLinkIdGeneratorProvider,
 } from './services';
+
 export class VideoConfServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
@@ -156,12 +152,6 @@ export class VideoConfServiceComponent implements Component {
     this.application.sequence(ServiceSequence);
 
     // Mount authentication component for default sequence
-    this.application
-      .bind(Strategies.Passport.BEARER_STRATEGY_FACTORY.key)
-      .toProvider(BearerStrategyFactoryProvider);
-    this.application
-      .bind(Strategies.Passport.BEARER_TOKEN_VERIFIER.key)
-      .toProvider(BearerTokenVerifyProvider);
     this.application.component(AuthenticationComponent);
     // Mount bearer verifier component
     this.application.bind(BearerVerifierBindings.Config).to({

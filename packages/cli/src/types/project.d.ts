@@ -43,6 +43,8 @@ declare module '@loopback/cli/lib/project-generator' {
       datasourceConnectorName?: string;
       datasourceType?: string;
       facade?: boolean;
+      sequelize?: boolean;
+      baseServiceBindingName?: string;
       baseServiceStoreName?: string;
       baseServiceCacheName?: string;
       baseServiceDSList?: DataSourceMap[];

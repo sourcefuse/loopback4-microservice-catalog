@@ -8,16 +8,16 @@ import Base from '../command-base';
 import {ExtensionOptions} from '../types';
 
 export class Extension extends Base<ExtensionOptions> {
-  static description = 'add an extension';
+  static readonly description = 'add an extension';
 
-  static flags = {
+  static readonly flags = {
     help: flags.boolean({
       name: 'help',
       description: 'show manual pages',
       type: 'boolean',
     }),
   };
-  static args = [
+  static readonly args = [
     {name: 'name', description: 'Name of the extension', required: false},
   ];
 

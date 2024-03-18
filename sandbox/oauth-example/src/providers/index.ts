@@ -5,3 +5,5 @@
 export * from './azure-ad-signup.provider';
 export * from './facebook-oauth2-signup.provider';
 export * from './google-oauth2-signup.provider';
+export * from './saml-signup.provider';
+export * from './saml-verify.provider';

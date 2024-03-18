@@ -27,91 +27,215 @@ npm i @sourceloop/task-service
 
 You can start using `@sourceloop/task-service` in just 4 steps:
 
-1. [Configure Bindings](#bind-component)
-2. [Set the environment variables](#set-the-environment-variables)
-3. [Configure DataSource](#configure-datasource)
-4. [Run the Migrations](#migrations)
+1. [Configure and bind TaskServiceComponent](#bind-component)
+2. [Configure DataSources](#configure-datasources)
+3. [Run the Migrations](#migrations)
 
-Bind the `TaskServiceComponent` to your application constructor as shown below, this will load all controllers, repositories or any other artifact provided by this service in your application to use.
+## Bind Component
+
+- choose and bind an incoming connector and an outgoing connector. refer [Incoming and Outgoing connectors section for more details](#incoming-and-outgoing-connectors)
+- bind the config for task service (optional) -
 
 ```ts
-import {TaskServiceComponent} from '@sourceloop/task-service';
-// ...
-export class MyApplication extends BootMixin(
-  ServiceMixin(RepositoryMixin(RestApplication)),
-) {
-  constructor(options: ApplicationConfig = {}) {
-    // STEP 1: Bind the component
-    this.component(TaskServiceComponent);
+this.bind(TaskServingBindings.Config).to({
+  useCustomSequence: true, // enable this if you want to use your own sequence instead of one provided by the task service
+  // though note that using a custom sequence may break or completely disable the authentication and authorization implemenation of task service
+});
+```
 
-    // STEP 2: Bind a connector, in this case, we are using AWS SQS
-    this.bind(TaskServiceBindings.CONNECTOR_CONFIG).to({
-      accessKeyId: process.env.AWS_SQS_ACCESS_KEY,
-      secretAccessKey: process.env.AWS_SQS_SECRET_KEY,
-      region: process.env.AWS_SQS_REGION,
-      queueUrl: process.env.AWS_QUEUE_URL,
-    });
+## Configure datasources
 
-    // STEP 3: Bind the name of the connector
-    this.bind(TaskServiceBindings.CONNECTOR_NAME).to('myConn');
+- to use the task service you need to bind atleast two datasources (though both could connect to the same db)
+- the `dataSourceName` property of these two should be `WorkflowServiceSourceName` and `TaskDbSourceName` variables exported by the task service. For example, one of the datasources would look something like this -
 
-    // STEP 4: Bind the BPMN Engine rest url, in this case, we are using
-    // Camunda version 7
-    this.bind(ExportedWorkflowServiceBindingConfig).to({
-      useCustomSequence: true,
-      workflowEngineBaseUrl: process.env.CAMUNDA_URL,
-    });
+```ts
+import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
+import {juggler} from '@loopback/repository';
+import {TaskDbSourceName} from '@sourceloop/task-service';
+import {config} from './config';
 
-    // STEP 5: Bind a provider for the event queue, more info can be found
-    // in the sandbox/task-ms-example
-    this.bind(TaskServiceBindings.TASK_PROVIDER).toProvider(SQSConnector);
+// Observe application's life cycle to disconnect the datasource when
+// application is stopped. This allows the application to be shut down
+// gracefully. The `stop()` method is inherited from `juggler.DataSource`.
+// Learn more at https://loopback.io/doc/en/lb4/Life-cycle.html
+@lifeCycleObserver('datasource')
+export class PgDbDataSource
+  extends juggler.DataSource
+  implements LifeCycleObserver
+{
+  static dataSourceName = TaskDbSourceName; // this is the line that should variable from task service
+  static readonly defaultConfig = config;
 
-    // STEP 6: Bind a provider to write custom logic for node workers in a BPMN Engine
-    // in this case we are using camunda external tasks, which are configured
-    // as service tasks. More info availabe in the sandbox/task-ms-example
-    this.bind(TaskServiceBindings.CUSTOM_BPMN_RUNNER).toProvider(
-      CustomBpmnRunner,
-    );
+  constructor(
+    @inject(`datasources.config.${TaskDbSourceName}`, {optional: true})
+    dsConfig: object = config,
+  ) {
+    super(dsConfig);
   }
 }
 ```
 
-## Example Usage
+## Run the migrations
 
-1. ### Generate API key and secret for webhook subscription
+- To run the migrations provided by the task service (available in the migrations folder of both the source code and the packed version in your `node_modules`), use the [db-migrate](https://db-migrate.readthedocs.io/en/latest/) package.
+- Run the HTTP migrations only if you plan to use the Http Outgoing connector.
+- Additionally, there is now an option to choose between SQL migration or PostgreSQL migration.
+NOTE : For @sourceloop/cli users, this choice can be specified during the scaffolding process by selecting the "type of datasource" option.
 
-   Currently, this service broadcasts messages through a secured webhook, which requires api key and secret, to subscribe in the next step.
 
-   `POST: /api-keys` with your unique client key and secret
+## Commands
 
-2. ### Subscribe to the webhook
-   `POST: /tasks/subscribe` with your post URL and an event key to listen for broadcast messages. Include the previously generated apiKey and apiSecret in the headers
-3. ### Setup Mappings
+The workflows run by the task service could have service tasks for various actions, but the task service provides two common service-tasks-
 
-   `POST: /events/mapping` - with a particular eventKey and workflowKey, to map an event to a bpmn workflow
+#### Create Tasks
 
-   `POST: /tasks/mapping` - with a particular taskKey and workflowKey, to map a task to a bpmn workflow
+This command expects an input variable holding a list of tasks. This command creates all the tasks in this variable and triggers an outgoing event with the created tasks. To trigger this command at a node, use the topic - `create-tasks` and provide a variable with structure -
 
-   These keys are required to dynamically map workflows and execute them.
+```json
+{
+  "tasks": {
+    "values": [
+      {
+        // task data
+        ...
+      }
+    ]
+  }
+}
 
-4. ### Send Events
-   `POST: /enque-event` with your dynamic payload according to your custom bpmn to start the task service!  
-   The task ms will create tasks according to the payload and configuration of your bpmn.
-5. ### Listen for messages
-   The task ms will send a broadcast message once the event has been processed. You can verify various bpmn instances in the camunda cockpit.
-6. ### Move the BPMN process through API
-   `POST: /tasks` with your particular task key and required variables to move the bpmn process forward
+```
 
-### Environment Variables
+#### End Task
 
-The service comes with a default `DataSource` using PostgreSQL, if you intend to use this, you have to provide the following variables in the environment -
+This command is expected to be used as a topic for the end event of a task workflow. For example, in case of camunda, it would be topic for [Message End Event](https://docs.camunda.org/manual/7.20/reference/bpmn20/events/message-events/#message-end-event) node. To use this command, use the topic - `end-task`
 
-| Name          | Required | Default Value | Description                                                                                                                      |
-| ------------- | -------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| `DB_HOST`     | Y        |               | Hostname for the database server.                                                                                                |
-| `DB_PORT`     | Y        |               | Port for the database server.                                                                                                    |
-| `DB_USER`     | Y        |               | User for the database.                                                                                                           |
-| `DB_PASSWORD` | Y        |               | Password for the database user.                                                                                                  |
-| `DB_DATABASE` | Y        |               | Database to connect to on the database server.                                                                                   |
-| `DB_SCHEMA`   | Y        |               | Database schema used for the data source. In PostgreSQL, this will be `main` unless a schema is made explicitly for the service. |
-| `CAMUNDA_URL` | Y        |               | Camunda REST Engine URL.                                                                                                         |
+## Incoming and Outgoing Connectors
+
+Task service needs an `IIncomingConnector` and an `IOutgoingConnectors` implementation to send and receive events from and to an external source. By default, task service comes with 2 different sets of connectors. Note that you can use different types of incoming and outgoing connectors (For e.g. Incoming events are received through Kafka but outgoing events go to a webhook subcriptions using Http)
+
+#### Kafka
+
+This set of connectors implements connectors to receive and send events through Kafka. It can be bound as both incoming and outgoing connector and needs an extra binding of an adapter for adapting kafka events to the type expected by the task service. You need to install [kafkajs](https://kafka.js.org/) to use these connectors - `npm i kafkajs`
+
+```ts
+// Bind the config for Kafka connectors
+this.bind(TaskServiceKafkaModule.CONFIG).to({
+  // this part is required for both incoming and outgoing connectors
+  connection: {
+    clientId: process.env.KAFKA_CLIENT_ID,
+    brokers: [...(process.env.KAFKA_SERVER?.split(',') ?? ['localhost:9092'])],
+    ...(process.env.KAFKA_SSL === 'true'
+      ? {
+          ssl: true,
+        }
+      : {}),
+  },
+  // this part is required only if you use it as an incoming connector
+  consumer: {
+    groupId: process.env.KAFKA_GROUP_ID ?? 'task-service',
+  },
+  topics: ['sow.update'], // topics for receiving events
+  // this part is required only if you use it as an outgoing connector
+  producer: {},
+  output: {
+    topic: 'test', // topic for output events
+  },
+});
+
+// bind the connector as an incoming connector if required
+this.bind(TaskServiceBindings.INCOMING_CONNECTOR).toClass(KafkaStreamService);
+// bind the connector as an outgoing connector if required
+this.bind(TaskServiceBindings.OUTGOING_CONNECTOR).toClass(KafkaStreamService);
+// bind the default adapter (it is available in `@sourceloop/task-service/kafka`)
+this.bind(TaskServiceKafkaModule.ADAPTER).toClass(KafkaEventAdapter);
+```
+
+#### HTTP
+
+This set of connector implement code to send and receive events through HTTP calls.
+
+```ts
+// this line binds both the incoming and outgoing connectors plus some controllers required by the both
+this.component(TaskHttpComponent);
+// you can override either of the connectors by adding a new binding for them after the above
+```
+
+##### Incoming connector
+
+- it receives events through the endpoint - `/events/trigger`
+- the payload for this endpoint looks something like this -
+
+```json
+{
+  "key": "event",
+  "payload": {
+    "name": "test",
+    "description": "description"
+  },
+  "source": "test-source",
+  "description": "description"
+}
+```
+
+##### Outgoing connector
+
+- The outgoing connector publishes events to all the webhook subcriptions
+- A webhook subscription is created by hitting the `/webhooks/subscribe` endpoint with a payload that looks something like this -
+
+```json
+{
+  "url": "http://localhost:3000", // the url that will hit with the payload for every outgoing event
+  "key": "event-key" // the event keys for which this url would be hit
+}
+```
+
+and a couple of required request headers - `x-api-key` and `x-api-secret`.
+
+- values for these headers are generated through another endpoint - `/client-apps`. This endpoint is supposed to be hit once by each new client and returns newly generated key and secret that are used for sending and verifying webhook calls. The call to the `/client-apps`
+  expects following body -
+
+```json
+{
+  "clientName": "dummyName"
+}
+```
+
+- each webhook call also sends two headers - `x-task-signature` and `x-task-timestamp` to help validate the authenticity of the webhook calls by the client. This signature can be validated by the client by generating an HMAC using the event payload and the timestamp. A sample node.js code on how to do this is given below -
+
+```js
+function validateSignature(request) {
+  const signature = request.headers['x-task-signature'];
+  const timestamp = request.headers['x-task-timestampt'];
+  const payload = request.body;
+  // the secret in this line is the one generated by the /client-apps endpoint
+  const hmac = createHmac('sha256', yourApiSecret);
+  hmac.update(`${JSON.stringify(event)}:${timestamp}`);
+  const expectedSignature = hmac.digest('hex');
+  if (
+    // compare both the strings
+    !crypto.timingSafeEqual(
+      Buffer.from(expectedSignature),
+      Buffer.from(signature),
+    )
+  ) {
+    // throw an error if signature does not match
+    throw new HttpErrors.Unauthorized(INVALID_WEBHOOK_SIGNATURE);
+  }
+  return true;
+}
+```
+
+### Using with Sequelize
+
+This service supports Sequelize as the underlying ORM using [@loopback/sequelize](https://www.npmjs.com/package/@loopback/sequelize) extension. And in order to use it, you'll need to do following changes.
+
+1.To use Sequelize in your application, add following to application.ts:
+
+```ts
+this.bind(TaskServiceBindings.CONFIG).to({
+  useCustomSequence: false,
+  useSequelize: true,
+});
+```
+
+2. Use the `SequelizeDataSource` in your audit datasource as the parent class. Refer [this](https://www.npmjs.com/package/@loopback/sequelize#step-1-configure-datasource) for more details.

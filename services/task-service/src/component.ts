@@ -7,44 +7,59 @@ import {
   Component,
   ControllerClass,
   CoreBindings,
+  createBindingFromClass,
   inject,
   ProviderMap,
+  ServiceOrProviderClass,
 } from '@loopback/core';
 import {Class, Model, Repository} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
-import {WorkflowServiceComponent} from '@sourceloop/bpmn-service';
+import {
+  WorkflowRepository,
+  WorkflowServiceBindings,
+  WorkflowServiceComponent,
+  WorkflowVersionRepository,
+} from '@sourceloop/bpmn-service';
 import {
   CoreComponent,
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
+import {AuthenticationComponent} from 'loopback4-authentication';
+import {AuthorizationComponent} from 'loopback4-authorization';
 import * as controllers from './controllers';
-
-import {Strategies} from 'loopback4-authentication';
+import {TaskServiceBindings} from './keys';
+import {CommandObserver, EventStreamObserver} from './lifecycle-observers';
+import {Event, EventWorkflow, Task, TaskWorkflow, UserTask} from './models';
+import {BpmnProvider} from './providers';
+import {SystemUserProvider} from './providers/system-user.provider';
 import {
-  BearerStrategyFactoryProvider,
-  BearerTokenVerifyProvider,
-} from 'loopback4-authentication/passport-bearer';
-import {
-  ApiKeyRepository,
   EventRepository,
+  EventWorkflowRepository,
   TaskRepository,
-  TaskWorkFlowMappingRepository,
-  WebhookSubscriptionsRepository,
+  TaskWorkFlowRepository,
+  UserTaskRepository,
 } from './repositories';
-import {EventWorkflowMappingRepository} from './repositories/event-workflow-mapping.repository';
 import {
-  ApiKeyVerificationService,
+  EventRepository as EventSequelizeRepository,
+  EventWorkflowRepository as EventWorkflowSequelizeRepository,
+  TaskRepository as TaskSequelizeRepository,
+  TaskWorkFlowRepository as TaskWorkFlowSequelizeRepository,
+  UserTaskRepository as UserTaskSequelizeRepository,
+} from './repositories/sequelize';
+import {
   CamundaService,
   EventProcessorService,
-  EventQueueServiceSQS,
   HttpClientService,
-  TaskDbService,
-  TaskOperationService,
+  UserTaskService,
   UtilityService,
-  WebhookService,
-  WorkflowOperationService,
 } from './services';
+import {TaskServiceConfig} from './types';
+
+import {
+  WorkflowRepository as WorkflowSequelizeRepository,
+  WorkflowVersionRepository as WorkflowVersionSequelizeRepository,
+} from '@sourceloop/bpmn-service/sequelize';
 
 export class TaskServiceComponent implements Component {
   repositories?: Class<Repository<Model>>[];
@@ -57,18 +72,7 @@ export class TaskServiceComponent implements Component {
 
   providers: ProviderMap = {};
 
-  services = [
-    CamundaService,
-    EventProcessorService,
-    EventQueueServiceSQS,
-    HttpClientService,
-    TaskOperationService,
-    UtilityService,
-    WorkflowOperationService,
-    WebhookService,
-    TaskDbService,
-    ApiKeyVerificationService,
-  ];
+  services?: ServiceOrProviderClass[];
 
   /**
    * An array of controller classes
@@ -78,6 +82,8 @@ export class TaskServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: RestApplication,
+    @inject(TaskServiceBindings.CONFIG, {optional: true})
+    private readonly config?: TaskServiceConfig,
   ) {
     this.application.component(CoreComponent);
 
@@ -95,31 +101,60 @@ export class TaskServiceComponent implements Component {
     });
     this.application.component(WorkflowServiceComponent);
     this.controllers = [
-      controllers.EventQueueController,
-      controllers.TaskServiceController,
-      controllers.ApiKeyController,
-      controllers.EventsController,
+      controllers.EventController,
+      controllers.TaskController,
+      controllers.TaskUserTaskController,
     ];
-    this.repositories = [
-      EventRepository,
-      TaskRepository,
-      EventWorkflowMappingRepository,
-      TaskWorkFlowMappingRepository,
-      WebhookSubscriptionsRepository,
-      ApiKeyRepository,
+    if (config?.useSequelize) {
+      this.repositories = [
+        EventSequelizeRepository,
+        TaskSequelizeRepository,
+        EventWorkflowSequelizeRepository,
+        TaskWorkFlowSequelizeRepository,
+        UserTaskSequelizeRepository,
+        WorkflowSequelizeRepository,
+        WorkflowVersionSequelizeRepository,
+      ];
+    } else {
+      this.repositories = [
+        EventRepository,
+        TaskRepository,
+        EventWorkflowRepository,
+        TaskWorkFlowRepository,
+        UserTaskRepository,
+        WorkflowRepository,
+        WorkflowVersionRepository,
+      ];
+    }
+    this.providers = {
+      [TaskServiceBindings.SYSTEM_USER.key]: SystemUserProvider,
+      [WorkflowServiceBindings.WorkflowManager.key]: BpmnProvider,
+    };
+    this.models = [EventWorkflow, Event, TaskWorkflow, Task, UserTask];
+    this.services = [CamundaService, UtilityService, HttpClientService];
+    this.bindings = [
+      createBindingFromClass(EventProcessorService, {
+        key: TaskServiceBindings.EVENT_PROCESSOR,
+      }),
+      createBindingFromClass(UserTaskService, {
+        key: TaskServiceBindings.SUB_TASK_SERVICE,
+      }),
     ];
+    if (!this.config?.useCustomSequence) {
+      this.setupSequence();
+    }
+    // default filter does not skip any events
+    this.application.bind(TaskServiceBindings.EVENT_FILTER).to(() => true);
+    this.application.lifeCycleObserver(EventStreamObserver);
+    this.application.lifeCycleObserver(CommandObserver);
   }
 
   /**
    * Setup ServiceSequence by default if no other sequnce provided
    */
   setupSequence() {
+    this.application.component(AuthenticationComponent);
+    this.application.component(AuthorizationComponent);
     this.application.sequence(ServiceSequence);
-    this.application
-      .bind(Strategies.Passport.BEARER_STRATEGY_FACTORY.key)
-      .toProvider(BearerStrategyFactoryProvider);
-    this.application
-      .bind(Strategies.Passport.BEARER_TOKEN_VERIFIER.key)
-      .toProvider(BearerTokenVerifyProvider);
   }
 }

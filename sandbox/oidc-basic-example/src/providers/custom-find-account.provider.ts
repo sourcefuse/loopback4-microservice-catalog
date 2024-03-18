@@ -1,10 +1,10 @@
-import {Provider, injectable, BindingScope} from '@loopback/core';
+import {BindingScope, Provider, injectable} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {
   FindAccountProviderFn,
-  UserRepository,
-  User,
   FindAccountResult,
+  User,
+  UserRepository,
 } from '@sourceloop/oidc-service';
 
 const defaultClaims = ['email'];
@@ -35,7 +35,7 @@ export class CustomFindAccountProvider
       const userClaims: {[key: string]: User[keyof User] | undefined} = {};
 
       claimsProfile.forEach(claim => {
-        if (newUser && newUser[claim as keyof User]) {
+        if (newUser?.[claim as keyof User]) {
           userClaims[claim] = newUser[claim as keyof User];
         }
       });

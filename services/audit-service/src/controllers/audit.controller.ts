@@ -21,10 +21,15 @@ import {
 } from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  IAuthUserWithPermissions,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
-import {authenticate, STRATEGY} from 'loopback4-authentication';
+import {
+  authenticate,
+  AuthenticationBindings,
+  STRATEGY,
+} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 
 import {inject, service} from '@loopback/core';
@@ -70,6 +75,8 @@ export class AuditController {
     public auditLogExportService: AuditLogExportFn,
     @inject(ColumnBuilderServiceBindings.COLUMN_BUILDER)
     public columnBuilderService: ColumnBuilderFn,
+    @inject(AuthenticationBindings.CURRENT_USER)
+    private readonly currentUser: IAuthUserWithPermissions,
   ) {}
 
   @authenticate(STRATEGY.BEARER)
@@ -91,13 +98,14 @@ export class AuditController {
         [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(AuditLog, {
             title: 'NewAuditLog',
-            exclude: ['id'],
+            exclude: ['id', 'tenantId'],
           }),
         },
       },
     })
-    auditLog: Omit<AuditLog, 'id'>,
+    auditLog: Omit<AuditLog, 'id' | 'tenantId'>,
   ): Promise<AuditLog> {
+    auditLog.tenantId = this.currentUser.tenantId;
     return this.auditLogRepository.create(auditLog);
   }
 
@@ -178,6 +186,7 @@ export class AuditController {
         filterUsed: filter,
         status: FileStatusKey.PENDING,
         operation: OperationKey.QUERY,
+        tenantId: this.currentUser.tenantId,
       });
 
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
@@ -372,6 +381,7 @@ export class AuditController {
         filterUsed: filter,
         status: FileStatusKey.PENDING,
         operation: OperationKey.EXPORT,
+        tenantId: this.currentUser.tenantId,
       });
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
       this.jobProcessingService.start(job.getId());

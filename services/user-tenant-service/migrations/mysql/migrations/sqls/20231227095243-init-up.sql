@@ -1,4 +1,4 @@
-CREATE TABLE auth_clients ( 
+CREATE TABLE IF NOT EXISTS auth_clients ( 
   id                        INTEGER AUTO_INCREMENT PRIMARY KEY,
   client_id                 VARCHAR(50) NOT NULL,
   client_secret             VARCHAR(50) NOT NULL,
@@ -18,12 +18,12 @@ CREATE TABLE auth_clients (
 );
 
 -- adding triggers
-CREATE TRIGGER mdt_auth_clients
+CREATE TRIGGER IF NOT EXISTS mdt_auth_clients
 BEFORE UPDATE ON auth_clients 
 FOR EACH ROW
 SET NEW.modified_on = now();
 
-CREATE TABLE `groups` ( 
+CREATE TABLE IF NOT EXISTS `groups` ( 
   id                   VARCHAR(36) PRIMARY KEY,
   name                 VARCHAR(200) NOT NULL,
   description          VARCHAR(500),
@@ -39,12 +39,12 @@ CREATE TABLE `groups` (
 );
 
 -- adding triggers
-CREATE TRIGGER before_insert_trigger_groups
+CREATE TRIGGER IF NOT EXISTS before_insert_trigger_groups
 BEFORE INSERT ON `groups` 
 FOR EACH ROW
 SET NEW.id = IFNULL(NEW.id, uuid());
 
-CREATE TABLE roles ( 
+CREATE TABLE IF NOT EXISTS roles ( 
   id                   VARCHAR(36) PRIMARY KEY,
   name                 VARCHAR(100) NOT NULL,
   tenant_id            VARCHAR(36) NOT NULL,
@@ -62,18 +62,18 @@ CREATE TABLE roles (
 );
 
 -- adding triggers
-CREATE TRIGGER before_insert_trigger_roles
+CREATE TRIGGER IF NOT EXISTS before_insert_trigger_roles
 BEFORE INSERT ON roles 
 FOR EACH ROW
 SET NEW.id = IFNULL(NEW.id, uuid());
 
 -- adding triggers
-CREATE TRIGGER mdt_roles
+CREATE TRIGGER IF NOT EXISTS mdt_roles
 BEFORE UPDATE ON roles 
 FOR EACH ROW
 SET NEW.modified_on = now();
 
-CREATE TABLE tenants ( 
+CREATE TABLE IF NOT EXISTS tenants ( 
   id                   VARCHAR(36) PRIMARY KEY,
   name                 VARCHAR(100) NOT NULL,
   status               INTEGER DEFAULT 0 NOT NULL,
@@ -94,18 +94,18 @@ CREATE TABLE tenants (
 );
 
 -- adding triggers
-CREATE TRIGGER before_insert_trigger_tenants
+CREATE TRIGGER IF NOT EXISTS before_insert_trigger_tenants
 BEFORE INSERT ON tenants 
 FOR EACH ROW
 SET NEW.id = IFNULL(NEW.id, uuid());
 
 -- adding triggers
-CREATE TRIGGER mdt_tenants
+CREATE TRIGGER IF NOT EXISTS mdt_tenants
 BEFORE UPDATE ON tenants 
 FOR EACH ROW
 SET NEW.modified_on = now();
 
-CREATE TABLE users ( 
+CREATE TABLE IF NOT EXISTS users ( 
   id                   VARCHAR(36) PRIMARY KEY,
   first_name           VARCHAR(50) NOT NULL,
   middle_name          VARCHAR(50),
@@ -130,18 +130,18 @@ CREATE TABLE users (
 );
 
 -- adding triggers
-CREATE TRIGGER before_insert_trigger_users
+CREATE TRIGGER IF NOT EXISTS before_insert_trigger_users
 BEFORE INSERT ON users 
 FOR EACH ROW
 SET NEW.id = IFNULL(NEW.id, uuid());
 
 -- adding triggers
-CREATE TRIGGER mdt_users
+CREATE TRIGGER IF NOT EXISTS mdt_users
 BEFORE UPDATE ON users 
 FOR EACH ROW
 SET NEW.modified_on = now();
 
-CREATE TABLE tenant_configs ( 
+CREATE TABLE IF NOT EXISTS tenant_configs ( 
   id                   VARCHAR(36) PRIMARY KEY,
   config_key           VARCHAR(100) NOT NULL,
   config_value         JSON NOT NULL,
@@ -157,18 +157,18 @@ CREATE TABLE tenant_configs (
 );
 
 -- adding triggers
-CREATE TRIGGER before_insert_trigger_tenant_configs
+CREATE TRIGGER IF NOT EXISTS before_insert_trigger_tenant_configs
 BEFORE INSERT ON tenant_configs
 FOR EACH ROW
 SET NEW.id = IFNULL(NEW.id, uuid());
 
 -- adding triggers
-CREATE TRIGGER mdt_tenant_configs
+CREATE TRIGGER IF NOT EXISTS mdt_tenant_configs
 BEFORE UPDATE ON tenant_configs 
 FOR EACH ROW
 SET NEW.modified_on = now();
 
-CREATE TABLE user_credentials ( 
+CREATE TABLE IF NOT EXISTS user_credentials ( 
   id                   VARCHAR(36) PRIMARY KEY,
   user_id              VARCHAR(36) NOT NULL UNIQUE,
   auth_provider        VARCHAR(50) DEFAULT 'internal' NOT NULL,
@@ -188,18 +188,18 @@ CREATE TABLE user_credentials (
 );
 
 -- adding triggers
-CREATE TRIGGER before_insert_trigger_user_credentials
+CREATE TRIGGER IF NOT EXISTS before_insert_trigger_user_credentials
 BEFORE INSERT ON user_credentials
 FOR EACH ROW
 SET NEW.id = IFNULL(NEW.id, uuid());
 
 -- adding triggers
-CREATE TRIGGER mdt_user_credentials
+CREATE TRIGGER IF NOT EXISTS mdt_user_credentials
 BEFORE UPDATE ON user_credentials 
 FOR EACH ROW
 SET NEW.modified_on = now();
 
-CREATE TABLE user_tenants ( 
+CREATE TABLE IF NOT EXISTS user_tenants ( 
   id                   VARCHAR(36) PRIMARY KEY,
   user_id              VARCHAR(36) NOT NULL,
   tenant_id            VARCHAR(36) NOT NULL,
@@ -219,18 +219,18 @@ CREATE TABLE user_tenants (
 );
 
 -- adding triggers
-CREATE TRIGGER before_insert_trigger_user_tenants
+CREATE TRIGGER IF NOT EXISTS before_insert_trigger_user_tenants
 BEFORE INSERT ON user_tenants 
 FOR EACH ROW
 SET NEW.id = IFNULL(NEW.id, uuid());
 
 -- adding triggers
-CREATE TRIGGER mdt_user_tenants
+CREATE TRIGGER IF NOT EXISTS mdt_user_tenants
 BEFORE UPDATE ON user_tenants 
 FOR EACH ROW
 SET NEW.modified_on = now();
 
-CREATE TABLE user_groups ( 
+CREATE TABLE IF NOT EXISTS user_groups ( 
   id                   VARCHAR(36) PRIMARY KEY,
   user_tenant_id       VARCHAR(36) NOT NULL,
   group_id             VARCHAR(36) NOT NULL,
@@ -246,12 +246,12 @@ CREATE TABLE user_groups (
 );
 
 -- adding triggers
-CREATE TRIGGER before_insert_trigger_user_groups
+CREATE TRIGGER IF NOT EXISTS before_insert_trigger_user_groups
 BEFORE INSERT ON user_groups 
 FOR EACH ROW
 SET NEW.id = IFNULL(NEW.id, uuid());
 
-CREATE TABLE user_invitations ( 
+CREATE TABLE IF NOT EXISTS user_invitations ( 
   id                   VARCHAR(36) PRIMARY KEY,
   created_by           VARCHAR(36),
   created_on           TIMESTAMP DEFAULT current_timestamp NOT NULL,
@@ -267,7 +267,7 @@ CREATE TABLE user_invitations (
 );
 
 -- adding triggers
-CREATE TRIGGER before_insert_trigger_user_invitations
+CREATE TRIGGER IF NOT EXISTS before_insert_trigger_user_invitations
 BEFORE INSERT ON user_invitations 
 FOR EACH ROW
 SET NEW.id = IFNULL(NEW.id, uuid());
@@ -276,7 +276,7 @@ SET NEW.id = IFNULL(NEW.id, uuid());
 ALTER TABLE user_invitations
 COMMENT = 'user link expire';
 
-CREATE TABLE user_permissions ( 
+CREATE TABLE IF NOT EXISTS user_permissions ( 
   id                   VARCHAR(36) PRIMARY KEY,
   user_tenant_id       VARCHAR(36) NOT NULL,
   permission           VARCHAR(50) NOT NULL,
@@ -292,18 +292,18 @@ CREATE TABLE user_permissions (
 );
 
 -- adding triggers
-CREATE TRIGGER before_insert_trigger_user_permissions
+CREATE TRIGGER IF NOT EXISTS before_insert_trigger_user_permissions
 BEFORE INSERT ON user_permissions 
 FOR EACH ROW
 SET NEW.id = IFNULL(NEW.id, uuid());
 
 -- adding triggers
-CREATE TRIGGER mdt_user_permissions
+CREATE TRIGGER IF NOT EXISTS mdt_user_permissions
 BEFORE UPDATE ON user_permissions 
 FOR EACH ROW
 SET NEW.modified_on = now();
 
-CREATE TABLE user_tenant_prefs ( 
+CREATE TABLE IF NOT EXISTS user_tenant_prefs ( 
   id                   VARCHAR(36) PRIMARY KEY,
   config_key           VARCHAR(100) NOT NULL,
   config_value         JSON NOT NULL,
@@ -319,12 +319,12 @@ CREATE TABLE user_tenant_prefs (
 );
 
 -- adding triggers
-CREATE TRIGGER before_insert_trigger_user_tenant_prefs
+CREATE TRIGGER IF NOT EXISTS before_insert_trigger_user_tenant_prefs
 BEFORE INSERT ON user_tenant_prefs 
 FOR EACH ROW
 SET NEW.id = IFNULL(NEW.id, uuid());
 
-CREATE TABLE audit_logs ( 
+CREATE TABLE IF NOT EXISTS audit_logs ( 
   id                   VARCHAR(36) PRIMARY KEY,
   operation_name       VARCHAR(10) NOT NULL,
   operation_time       TIMESTAMP NOT NULL,
@@ -337,14 +337,14 @@ CREATE TABLE audit_logs (
 );
 
 -- adding triggers
-CREATE TRIGGER before_insert_trigger_audit_logs
+CREATE TRIGGER IF NOT EXISTS before_insert_trigger_audit_logs
 BEFORE INSERT ON audit_logs 
 FOR EACH ROW
 SET NEW.id = IFNULL(NEW.id, uuid());
 
 
 -- creating an generic AUDIT procedure
-CREATE PROCEDURE generic_audit_procedure( op_name VARCHAR(10), tb_name VARCHAR(60),
+CREATE PROCEDURE IF NOT EXISTS generic_audit_procedure( op_name VARCHAR(10), tb_name VARCHAR(60),
   `type` VARCHAR(100), ent_id VARCHAR(36), u_id VARCHAR(36),
   before_state JSON, after_state JSON)
 BEGIN
@@ -354,7 +354,7 @@ BEGIN
 END;
 
 -- adding INSERT audit_triggers
-CREATE TRIGGER insert_roles_audit_trigger
+CREATE TRIGGER IF NOT EXISTS insert_roles_audit_trigger
 AFTER INSERT ON roles
 FOR EACH ROW
 CALL generic_audit_procedure('INSERT','roles','ROLES_LOGS', 
@@ -376,7 +376,7 @@ CALL generic_audit_procedure('INSERT','roles','ROLES_LOGS',
   )
 );
 
-CREATE TRIGGER insert_tenant_configs_audit_trigger
+CREATE TRIGGER IF NOT EXISTS insert_tenant_configs_audit_trigger
 AFTER INSERT ON tenant_configs
 FOR EACH ROW
 CALL generic_audit_procedure('INSERT','tenant_configs','TENANT_CONFIG_LOGS', 
@@ -395,7 +395,7 @@ CALL generic_audit_procedure('INSERT','tenant_configs','TENANT_CONFIG_LOGS',
   )
 );
 
-CREATE TRIGGER insert_tenants_audit_trigger
+CREATE TRIGGER IF NOT EXISTS insert_tenants_audit_trigger
 AFTER INSERT ON tenants
 FOR EACH ROW
 CALL generic_audit_procedure('INSERT','tenants','TENANT_LOGS', 
@@ -420,7 +420,7 @@ CALL generic_audit_procedure('INSERT','tenants','TENANT_LOGS',
   )
 );
 
-CREATE TRIGGER insert_user_permissions_audit_trigger
+CREATE TRIGGER IF NOT EXISTS insert_user_permissions_audit_trigger
 AFTER INSERT ON user_permissions
 FOR EACH ROW
 CALL generic_audit_procedure('INSERT','user_permissions','USER_PERMISSION_LOGS', 
@@ -439,7 +439,7 @@ CALL generic_audit_procedure('INSERT','user_permissions','USER_PERMISSION_LOGS',
   )
 );
 
-CREATE TRIGGER insert_users_audit_trigger
+CREATE TRIGGER IF NOT EXISTS insert_users_audit_trigger
 AFTER INSERT ON users
 FOR EACH ROW
 CALL generic_audit_procedure('INSERT','users','USER_LOGS', 
@@ -469,7 +469,7 @@ CALL generic_audit_procedure('INSERT','users','USER_LOGS',
 );
 
 -- adding UPDATE audit_triggers
-CREATE TRIGGER update_roles_audit_trigger
+CREATE TRIGGER IF NOT EXISTS update_roles_audit_trigger
 AFTER UPDATE ON roles
 FOR EACH ROW
 CALL generic_audit_procedure('UPDATE','roles','ROLES_LOGS', 
@@ -506,7 +506,7 @@ CALL generic_audit_procedure('UPDATE','roles','ROLES_LOGS',
   )
 );
 
-CREATE TRIGGER update_tenant_configs_audit_trigger
+CREATE TRIGGER IF NOT EXISTS update_tenant_configs_audit_trigger
 AFTER UPDATE ON tenant_configs
 FOR EACH ROW
 CALL generic_audit_procedure('UPDATE','tenant_configs','TENANT_CONFIG_LOGS', 
@@ -537,7 +537,7 @@ CALL generic_audit_procedure('UPDATE','tenant_configs','TENANT_CONFIG_LOGS',
   )
 );
 
-CREATE TRIGGER update_tenants_audit_trigger
+CREATE TRIGGER IF NOT EXISTS update_tenants_audit_trigger
 AFTER UPDATE ON tenants
 FOR EACH ROW
 CALL generic_audit_procedure('UPDATE','tenants','TENANT_LOGS', 
@@ -580,7 +580,7 @@ CALL generic_audit_procedure('UPDATE','tenants','TENANT_LOGS',
   )
 );
 
-CREATE TRIGGER update_user_permissions_audit_trigger
+CREATE TRIGGER IF NOT EXISTS update_user_permissions_audit_trigger
 AFTER UPDATE ON user_permissions
 FOR EACH ROW
 CALL generic_audit_procedure('UPDATE','user_permissions','USER_PERMISSION_LOGS', 
@@ -611,7 +611,7 @@ CALL generic_audit_procedure('UPDATE','user_permissions','USER_PERMISSION_LOGS',
   )
 );
 
-CREATE TRIGGER update_users_audit_trigger
+CREATE TRIGGER IF NOT EXISTS update_users_audit_trigger
 AFTER UPDATE ON users
 FOR EACH ROW
 CALL generic_audit_procedure('UPDATE','users','USER_LOGS', 
@@ -663,7 +663,7 @@ CALL generic_audit_procedure('UPDATE','users','USER_LOGS',
 );
 
 -- adding DELETE audit_triggers
-CREATE TRIGGER delete_roles_audit_trigger
+CREATE TRIGGER IF NOT EXISTS delete_roles_audit_trigger
 AFTER DELETE ON roles
 FOR EACH ROW
 CALL generic_audit_procedure('DELETE','roles','ROLES_LOGS', 
@@ -685,7 +685,7 @@ CALL generic_audit_procedure('DELETE','roles','ROLES_LOGS',
   ), NULL
 );
 
-CREATE TRIGGER delete_tenant_configs_audit_trigger
+CREATE TRIGGER IF NOT EXISTS delete_tenant_configs_audit_trigger
 AFTER DELETE ON tenant_configs
 FOR EACH ROW
 CALL generic_audit_procedure('DELETE','tenant_configs','TENANT_CONFIG_LOGS', 
@@ -704,7 +704,7 @@ CALL generic_audit_procedure('DELETE','tenant_configs','TENANT_CONFIG_LOGS',
   ), NULL
 );
 
-CREATE TRIGGER delete_tenants_audit_trigger
+CREATE TRIGGER IF NOT EXISTS delete_tenants_audit_trigger
 AFTER DELETE ON tenants
 FOR EACH ROW
 CALL generic_audit_procedure('DELETE','tenants','TENANT_LOGS', 
@@ -729,7 +729,7 @@ CALL generic_audit_procedure('DELETE','tenants','TENANT_LOGS',
   ), NULL
 );
 
-CREATE TRIGGER delete_user_permissions_audit_trigger
+CREATE TRIGGER IF NOT EXISTS delete_user_permissions_audit_trigger
 AFTER DELETE ON user_permissions
 FOR EACH ROW
 CALL generic_audit_procedure('DELETE','user_permissions','USER_PERMISSION_LOGS', 
@@ -748,7 +748,7 @@ CALL generic_audit_procedure('DELETE','user_permissions','USER_PERMISSION_LOGS',
   ), NULL
 );
 
-CREATE TRIGGER delete_users_audit_trigger
+CREATE TRIGGER IF NOT EXISTS delete_users_audit_trigger
 AFTER DELETE ON users
 FOR EACH ROW
 CALL generic_audit_procedure('DELETE','users','USER_LOGS', 
@@ -778,6 +778,7 @@ CALL generic_audit_procedure('DELETE','users','USER_LOGS',
 );
 
 -- creating VIEW for multi tenant architecture with roles
+DROP VIEW IF EXISTS v_users;
 CREATE VIEW v_users AS
 SELECT
     u.id,

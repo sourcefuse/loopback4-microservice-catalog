@@ -1,4 +1,4 @@
-// Copyright (c) 2023 Sourcefuse Technologies
+﻿// Copyright (c) 2023 Sourcefuse Technologies
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
@@ -9,14 +9,9 @@ import {STATUS_CODE} from '@sourceloop/core';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import FormData from 'form-data';
 import fetch, {Response} from 'node-fetch';
+import {HttpOptions} from '../types';
 
-type HttpOptions = {
-  query?: AnyObject;
-  urlParams?: AnyObject;
-  headers?: AnyObject;
-};
-
-@injectable({scope: BindingScope.TRANSIENT})
+@injectable({scope: BindingScope.SINGLETON})
 export class HttpClientService {
   get<T>(url: string, options?: HttpOptions) {
     const processed = this.processOptions(url, options);

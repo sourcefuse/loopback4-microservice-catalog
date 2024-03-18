@@ -1,9 +1,8 @@
 import {BindingScope, Provider, inject, injectable} from '@loopback/core';
 import {AnyObject} from '@loopback/repository';
-import {AuditLogExportFn, ExportHandlerFn} from '../types';
-// eslint-disable-next-line @typescript-eslint/naming-convention
-import * as XLSX from 'xlsx';
+import * as excelJs from 'exceljs';
 import {ExportHandlerServiceBindings} from '../keys';
+import {AuditLogExportFn, ExportHandlerFn} from '../types';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class AuditLogExportProvider implements Provider<AuditLogExportFn> {
@@ -15,6 +14,7 @@ export class AuditLogExportProvider implements Provider<AuditLogExportFn> {
   value(): AuditLogExportFn {
     return async (data: AnyObject[]) => this.auditLogExport(data);
   }
+
   async auditLogExport(data: AnyObject[]) {
     if (data.length === 0) {
       return;
@@ -33,11 +33,18 @@ export class AuditLogExportProvider implements Provider<AuditLogExportFn> {
       return updatedValues;
     });
 
-    const worksheetData = [worksheetColumnNames, ...dataValues];
-    const workBook = XLSX.utils.book_new();
-    const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
-    XLSX.utils.book_append_sheet(workBook, worksheet, worksheetName);
-    const fileBuffer = XLSX.write(workBook, {type: 'buffer'});
-    await this.exportHandler(fileBuffer);
+    const workbook = new excelJs.Workbook();
+    const worksheet = workbook.addWorksheet(worksheetName);
+
+    // Add column headers
+    worksheet.addRow(worksheetColumnNames);
+
+    // Add data rows
+    dataValues.forEach(values => {
+      worksheet.addRow(values);
+    });
+
+    const buffer = Buffer.from(await workbook.xlsx.writeBuffer());
+    await this.exportHandler(buffer);
   }
 }

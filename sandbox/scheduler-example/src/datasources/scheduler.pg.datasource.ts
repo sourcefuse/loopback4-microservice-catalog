@@ -22,7 +22,7 @@ export class SchedulerDbDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
-  static dataSourceName = 'schedulerDb';
+  static readonly dataSourceName = 'schedulerDb';
   static readonly defaultConfig = config;
 
   constructor(

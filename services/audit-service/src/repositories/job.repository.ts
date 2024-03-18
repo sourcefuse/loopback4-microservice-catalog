@@ -4,6 +4,9 @@ import {AuditDbSourceName} from '@sourceloop/audit-log';
 
 import {Job} from '../models';
 
+import {tenantGuard} from '@sourceloop/core';
+
+@tenantGuard()
 export class JobRepository extends DefaultCrudRepository<
   Job,
   typeof Job.prototype.id

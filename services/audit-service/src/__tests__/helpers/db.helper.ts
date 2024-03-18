@@ -1,29 +1,54 @@
-import {connector, testDB} from '../fixtures/datasources/db.datasource';
-import {
-  MappingLogRepository,
-  JobRepository,
-  AuditLogRepository,
-} from '../../repositories';
-import {archiveLogs} from '../sample-data/archive-log';
+import {AnyObject} from '@loopback/repository';
+import {IAuthUserWithPermissions} from '@sourceloop/core';
 import {AuditController} from '../../controllers';
+import {PermissionKey} from '../../enums';
+import {
+  AuditLogRepository,
+  JobRepository,
+  MappingLogRepository,
+} from '../../repositories/index';
 import {
   AuditLogExportProvider,
   JobProcessingService,
   QuerySelectedFilesProvider,
 } from '../../services';
-import {createStubInstance} from '@loopback/testlab';
-import {listMappingLogs} from '../sample-data/mapping-log';
-import {AuditServiceApplication} from '../../application';
-import {ExportToCsvFn, AuditLogExportFn, ExportHandlerFn} from '../../types';
-import {AnyObject} from '@loopback/repository';
+import {AuditLogExportFn, ExportHandlerFn, ExportToCsvFn} from '../../types';
+import {connector} from '../fixtures/datasources/db.datasource';
+import {DummyAuditServiceApplication} from '../fixtures/dummy-application';
 import {ColumnBuilderProvider} from '../fixtures/providers/column-builder.service';
+import {archiveLogs} from '../sample-data/archive-log';
+import {listMappingLogs} from '../sample-data/mapping-log';
 
+let auditLogRepository: AuditLogRepository; //NOSONAR
+let mappingLogRepository: MappingLogRepository; //NOSONAR
+let jobRepository: JobRepository; //NOSONAR
+
+const pass = 'test_password';
+const id = '9640864d-a84a-e6b4-f20e-918ff280cdaa';
+const tenantId = 'fac65aad-3f01-dd25-3ea0-ee6563fbe02b';
+export const testUser: IAuthUserWithPermissions = {
+  id: id,
+  userTenantId: id,
+  username: 'test_user',
+  tenantId: tenantId,
+  authClientId: 1,
+  role: 'test-role',
+  firstName: 'testuser',
+  lastName: 'sf',
+  password: pass,
+  permissions: [
+    PermissionKey.ViewAudit,
+    PermissionKey.CreateAudit,
+    PermissionKey.ArchiveLogs,
+    PermissionKey.ExportLogs,
+  ],
+};
 export async function givenEmptyTestDB() {
   // clear the DB and set sequence counter to default 1
   connector.reset();
 }
-export async function populateTestDB() {
-  const {auditLogRepository, mappingLogRepository} = getTestDBRepositories();
+export async function populateTestDB(app: DummyAuditServiceApplication) {
+  await getTestDBRepositories(app);
 
   await auditLogRepository.createAll(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -33,31 +58,28 @@ export async function populateTestDB() {
   await mappingLogRepository.createAll(listMappingLogs);
 }
 
-export function getTestDBRepositories() {
-  const auditLogRepository = new AuditLogRepository(testDB);
-  const mappingLogRepository = new MappingLogRepository(testDB);
-  const jobRepository = new JobRepository(testDB);
+export async function getTestDBRepositories(app: DummyAuditServiceApplication) {
+  auditLogRepository = await app.getRepository(AuditLogRepository);
+  mappingLogRepository = await app.getRepository(MappingLogRepository);
+  jobRepository = await app.getRepository(JobRepository);
   return {auditLogRepository, mappingLogRepository, jobRepository};
 }
 
-export function getTestAuditController() {
+export function getTestAuditController(app: DummyAuditServiceApplication) {
   let auditLogExportParam: AnyObject[];
   function getAuditLogExportParameter() {
     return auditLogExportParam;
   }
   const exportToCsvService: ExportToCsvFn = () =>
     Promise.resolve('demoResponse');
-  const jobRepository = createStubInstance(JobRepository);
-  const mappingLogRepository = createStubInstance(MappingLogRepository);
-
-  const auditLogRepository = new AuditLogRepository(testDB);
-  const {jobProcessingService} = getTestJobProcessingService();
+  const {jobProcessingService} = getTestJobProcessingService(app);
   const columnBuilderProvider = new ColumnBuilderProvider();
 
   const auditLogExport: AuditLogExportFn = (data: AnyObject[]) => {
     auditLogExportParam = data;
     return Promise.resolve();
   };
+
   const auditLogController = new AuditController(
     auditLogRepository,
     jobRepository,
@@ -66,6 +88,7 @@ export function getTestAuditController() {
     exportToCsvService,
     auditLogExport,
     columnBuilderProvider.value(),
+    testUser,
   );
   return {
     auditLogController,
@@ -78,18 +101,14 @@ export function getTestAuditController() {
   };
 }
 
-export function getTestJobProcessingService() {
-  const myApplication = new AuditServiceApplication();
-  const querySelectedFilesProvider = new QuerySelectedFilesProvider(
-    myApplication,
-  );
+export function getTestJobProcessingService(app: DummyAuditServiceApplication) {
+  const querySelectedFilesProvider = new QuerySelectedFilesProvider(app);
   const excelProcessingService: ExportHandlerFn = (fileBuffer: Buffer) =>
     Promise.resolve();
+
   const columnBuilderProvider = new ColumnBuilderProvider();
   const auditLogExport = new AuditLogExportProvider(excelProcessingService);
-  const auditLogRepository = new AuditLogRepository(testDB);
-  const mappingLogRepository = new MappingLogRepository(testDB);
-  const jobRepository = new JobRepository(testDB);
+
   const jobProcessingService = new JobProcessingService(
     querySelectedFilesProvider.value(),
     auditLogExport.value(),
@@ -106,3 +125,5 @@ export function getTestJobProcessingService() {
     jobProcessingService,
   };
 }
+
+export {auditLogRepository, jobRepository, mappingLogRepository};

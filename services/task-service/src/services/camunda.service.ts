@@ -10,6 +10,7 @@ import {
 } from '@sourceloop/bpmn-service';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import FormData from 'form-data';
+import {CamundaTask} from '../types';
 import {HttpClientService} from './http.service';
 
 @injectable({scope: BindingScope.TRANSIENT})
@@ -22,6 +23,33 @@ export class CamundaService {
     private readonly config: IWorkflowServiceConfig,
   ) {
     this.baseUrl = config?.workflowEngineBaseUrl;
+  }
+
+  async completeUserTask(id: string, variables?: AnyObject) {
+    return this.http.post<void>(`${this.baseUrl}/task/${id}/complete`, {
+      variables,
+    });
+  }
+
+  async getPendingUserTasks(processDefinitionId: string) {
+    return this.http.get<CamundaTask[]>(
+      `${this.baseUrl}/task?processInstanceId=${processDefinitionId}`,
+    );
+  }
+
+  async deleteProcessInstances(ids: (string | undefined)[]) {
+    if (ids) {
+      return Promise.all(
+        ids.map(id =>
+          this.http.delete(`${this.baseUrl}/process-instance/${id}`, {
+            query: {
+              cascade: true,
+              skipCustomListeners: true,
+            },
+          }),
+        ),
+      );
+    }
   }
 
   async create<T>(name: string, file: Buffer) {
@@ -52,24 +80,6 @@ export class CamundaService {
 
   async get<T>(id: string) {
     return this.http.get<T>(`${this.baseUrl}/process-definition/${id}`);
-  }
-
-  async getCurrentExternalTask<T>(id: string) {
-    return this.http.post<T>(`${this.baseUrl}/external-task`, {
-      processDefinitionId: id,
-    });
-  }
-
-  async getCurrentUserTask<T>(id: string) {
-    return this.http.post<T>(`${this.baseUrl}/task`, {
-      processDefinitionId: id,
-    });
-  }
-
-  async completeUserTask(id: string, variables?: AnyObject) {
-    return this.http.post(`${this.baseUrl}/task/${id}/complete`, {
-      variables,
-    });
   }
 
   async execute<T>(id: string, input: AnyObject) {

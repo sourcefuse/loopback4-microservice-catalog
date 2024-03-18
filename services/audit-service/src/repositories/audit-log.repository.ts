@@ -8,6 +8,9 @@ import {AuditDbSourceName} from '@sourceloop/audit-log';
 
 import {AuditLog} from '../models';
 
+import {tenantGuard} from '@sourceloop/core';
+
+@tenantGuard()
 export class AuditLogRepository extends DefaultCrudRepository<
   AuditLog,
   typeof AuditLog.prototype.id

@@ -3,6 +3,64 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>16.0.3 (2024-03-12)</small>
+
+**Note:** Version bump only for package @sourceloop/authentication-service
+
+
+
+
+
+## <small>16.0.2 (2024-03-06)</small>
+
+* fix(all-services): fix the pending sonar issues in all services (#2025) ([b2f6dc3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b2f6dc3)), closes [#2025](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2025) [#2013](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2013)
+* fix(authentication-service): remove extra env for keycloack (#2016) ([780175c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/780175c)), closes [#2016](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2016) [#2011](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2011)
+* docs(all-services): update services readme (#2000) ([93a7f91](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/93a7f91)), closes [#2000](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2000)
+
+
+
+
+
+## <small>16.0.1 (2024-02-02)</small>
+
+* fix(cli): proper error message when microservice command not run from root folder (#1961) ([3ea4325](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3ea4325)), closes [#1961](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1961) [#1956](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1956)
+* chore(deps): update authentication component version in all services (#1962) ([eeac7f6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/eeac7f6)), closes [#1962](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1962) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
+## 16.0.0 (2024-02-01)
+
+* refactor(authentication-service): remove current user requirement fro… (#1958) ([3974acf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3974acf)), closes [#1958](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1958) [#1957](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1957)
+* fix(authentication-service): export all artifacts of modules from root (#1951) ([d842b81](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d842b81)), closes [#1951](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1951) [#1950](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1950)
+
+
+### BREAKING CHANGE
+
+* current user is not required in repository
+* this will affect the projects where imports are from dist
+
+
+
+
+## 15.0.0 (2024-01-23)
+
+* fix(authentication-service): missing exports in modules (#1940) ([9a0ae6f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9a0ae6f)), closes [#1940](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1940) [#1935](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1935)
+* fix(authentication-service): sync the models of auth and user tenant service (#1913) ([c3a15b0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c3a15b0)), closes [#1913](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1913) [#1899](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1899) [#1899](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1899) [#1899](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1899) [#1899](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1899) [#1899](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1899)
+
+
+
+
+
+## <small>14.1.2 (2024-01-19)</small>
+
+* chore(deps): update sourceloop and loopback packages version (#1928) ([d9d1b20](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d9d1b20)), closes [#1928](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1928) [#1903](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1903)
+
+
+
+
+
 ## <small>14.1.1 (2024-01-09)</small>
 
 **Note:** Version bump only for package @sourceloop/authentication-service

@@ -22,7 +22,7 @@ export class AuditDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
-  static dataSourceName = AuditDbSourceName;
+  static readonly dataSourceName = AuditDbSourceName;
   static readonly defaultConfig = config;
 
   constructor(

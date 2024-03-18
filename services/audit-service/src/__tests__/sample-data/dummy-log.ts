@@ -10,4 +10,5 @@ export const dummyLog: AuditLog = new AuditLog({
   actionKey: 'insertone',
   entityId: '1',
   actor: 'testUser',
+  tenantId: 'fac65aad-3f01-dd25-3ea0-ee6563fbe02b',
 });

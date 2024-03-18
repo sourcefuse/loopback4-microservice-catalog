@@ -22,6 +22,28 @@ export class Role extends UserModifiableEntity<Role> {
   name: string;
 
   @property({
+    type: 'string',
+  })
+  description?: string;
+
+  @property({
+    type: 'string',
+    name: 'tenant_id',
+    required: true,
+  })
+  tenantId: string;
+
+  @property({
+    name: 'allowed_clients',
+    type: 'array',
+    itemType: 'string',
+    postgresql: {
+      dataType: 'varchar[]',
+    },
+  })
+  allowedClients?: string[];
+
+  @property({
     type: 'number',
     required: true,
     name: 'role_type',

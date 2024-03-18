@@ -24,6 +24,13 @@ export class MappingLog extends CoreEntity<MappingLog> {
     required: true,
   })
   fileName: string;
+
+  @property({
+    name: 'tenant_id',
+    type: 'string',
+    required: true,
+  })
+  tenantId: string;
 }
 
 export type MappingLogsWithRelations = MappingLog;

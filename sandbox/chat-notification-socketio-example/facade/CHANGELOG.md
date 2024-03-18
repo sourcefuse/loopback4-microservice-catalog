@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.2.7 (2024-03-12)</small>
+
+* fix(all-services): fix sonar issues in all services (#2018) ([33dfa77](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/33dfa77)), closes [#2018](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2018) [#2013](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2013)
+* chore(deps): update versions in sandbox and fix vulnerabilities  (#1941) ([5e37add](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5e37add)), closes [#1941](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1941) [#1934](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1934)
+
+
+
+
+
+## <small>0.2.6 (2024-02-02)</small>
+
+**Note:** Version bump only for package @sourceloop/chat-notif-example-facade-socket
+
+
+
+
+
+## <small>0.2.5 (2024-01-19)</small>
+
+**Note:** Version bump only for package @sourceloop/chat-notif-example-facade-socket
+
+
+
+
+
 ## <small>0.2.4 (2024-01-09)</small>
 
 **Note:** Version bump only for package @sourceloop/chat-notif-example-facade-socket

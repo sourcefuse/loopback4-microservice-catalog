@@ -129,6 +129,45 @@ setupSequence() {
   ```
 - Start the application
   `npm start`
+- Latest Log Format
+
+  The latest log format that will be generated is as follows:
+
+  ```ts
+
+  [2024-03-05T07:43:16.991Z] info :: gg-444-hh :: App_Log -> [200] Request GET /audit-logs Completed in 37ms`
+
+  ```
+
+  This format includes the timestamp, log level, context, log key, status code, and the log message.
+
+```typescript
+(log: LogEntry) =>
+  `[${log.timestamp}] ${log.level} :: ${log.context} :: ${log.key} ->[${log.statusCode}] ${log.message}`;
+```
+
+- Logging Usage
+
+  For example,To log information using the updated format, the info method can be used.
+
+  ```typescript
+  info(
+    message: string,
+    context?: string,
+    statusCode?: STATUS_CODE,
+    key?: string,
+  ): void
+  ```
+
+  ```typescript
+  this.logger.info(
+    `Request ${context.request.method} ${
+      context.request.url
+    } Completed in ${Date.now() - requestTime}ms`,
+    `${context.request.headers.tenantId}`,
+    `${context.request.res.statusCode}`,
+  );
+  ```
 
 ## Swagger Authentication Component
 
@@ -148,7 +187,7 @@ A Loopback Component that adds an authenticating middleware for Rest Explorer
     swaggerPassword: '<password>',
   });
   ```
-- Bind the `HttpAuthenticationVerifier` to override the basic authentication logic provided by [default](/providers/http-authentication.verifier.ts).
+- Bind the `HttpAuthenticationVerifier` to override the basic authentication logic provided by [default](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/packages/core/src/components/swagger-authentication/providers/http-authentication.verifier.ts).
 - Start the application
   `npm start`
 
@@ -172,6 +211,78 @@ this.bind(SFCoreBindings.config).to({
   swaggerPassword: process.env.SWAGGER_PASSWORD,
 });
 ```
+
+The above specification will show all the API by default, but if you wish to hide certain APIs on swagger stats you can pass the 'modifyPathDefinition' callback method to the above bindings as shown below. [Refer](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/packages/core/src/types.ts) for more details.
+
+```typescript
+import {OASPathDefinition} from '@sourceloop/core';
+
+this.bind(SFCoreBindings.config).to({
+  enableObf,
+  obfPath: process.env.OBF_PATH ?? '/obf',
+  openapiSpec: openapi,
+  modifyPathDefinition(apiPath: string, pathDefinition: OASPathDefinition) {
+    if (apiPath.startsWith('/auth')) {
+      delete pathDefinition.post;
+      return pathDefinition;
+    }
+    return pathDefinition;
+  },
+  authentication: authentication,
+  swaggerUsername: process.env.SWAGGER_USER,
+  swaggerPassword: process.env.SWAGGER_PASSWORD,
+});
+```
+
+### Tenant Context
+
+- TenantContextMiddlewareInterceptorProvider
+
+  The TenantContextMiddlewareInterceptorProvider [here](/packages/core/src/middlewares/tenant-context.middleware.ts) is a middleware designed to modify the HTTP request by adding tenantId from the current user and sets it as a header in the outgoing request. This middleware is typically used for multitenancy scenarios where the tenant ID needs to be communicated in the HTTP headers.
+
+  For enabling this we need to provide its configuration as follows:
+
+  ```typescript
+  this.bind(SFCoreBindings.config).to({
+    enableObf,
+    obfPath: process.env.OBF_PATH ?? '/obf',
+    openapiSpec: openapi,
+    authentication: authentication,
+    swaggerUsername: process.env.SWAGGER_USER,
+    swaggerPassword: process.env.SWAGGER_PASSWORD,
+    authenticateSwaggerUI: authentication,
+    tenantContextMiddleware: true,
+    tenantContextEncryptionKey: 'Secret_Key',
+  });
+  ```
+
+  This middleware uses TenantIdEncryptionProvider [here](/packages/core/src/providers/tenantid-encryption.provider.ts) which is responsible for encrypting tenant ID using CryptoJS library to encrypt the provided tenantId when `tenantContextEncryptionKey` is added to to core configuration.If the key exists, it encrypts the tenant ID before adding it to the request headers; otherwise, it adds the ID without encryption.
+
+- OBF LOGS
+
+  Also,If `tenantContextMiddleware` is enabled in the coreConfig, it adds an `onResponseFinish callback` to the middlewareConfig that incorporates the `addTenantId` function to append tenant ID information to responses.The `addTenantId` function adds a tenant ID to the response object based on whether a `tenantContextEncryptionKey` is provided for decryption. If no key is provided, it assigns the tenant ID directly from the request header; otherwise, it decrypts the encrypted tenant ID and assigns the decrypted value to the response object.
+
+  ```typescript
+  export function addTenantId(
+    req: IncomingMessage,
+    res: ServerResponse<IncomingMessage>,
+    reqResponse: AnyObject,
+    secretKey?: string,
+  ) {
+    if (!secretKey) {
+      reqResponse['tenant-id'] = req.headers['tenant-id'];
+    } else {
+      const encryptedTenantId = req.headers['tenant-id'];
+      const decryptedTenantId = CryptoJS.AES.decrypt(
+        encryptedTenantId as string,
+        secretKey as string,
+      ).toString(CryptoJS.enc.Utf8);
+      reqResponse['tenant-id'] = decryptedTenantId;
+    }
+  }
+  ```
+
+### OAS
 
 Open ApiSpecification:The OpenAPI Specification (OAS) defines a standard, language-agnostic interface to RESTful APIs which allows us to discover and understand the capabilities of the service without access to source code, documentation, or through network traffic inspection. When properly defined,user can understand and interact with the remote service with a minimal amount of implementation logic.It is a self-contained or composite resource which defines or describes an API or elements of an API.
 
@@ -204,6 +315,23 @@ constructor(options: ApplicationConfig = {}) {
       },
       servers: [{url: '/'}],
     });
+```
+
+Similarly to hide APIs from swagger we have a custom OASEnhancer extension that is binded to the CoreComponent. This extension requires a list of APIs to be passed via a binding to hide the APIs. The binding can be provided like this
+
+```typescript
+import {OASBindings, HttpMethod} from '@sourceloop/core';
+
+this.bind(OASBindings.HiddenEndpoint).to([
+  {
+    path: '/auth/facebook',
+    httpMethod: HttpMethod.POST,
+  },
+  {
+    path: '/auth/facebook-auth-redirect',
+    httpMethod: HttpMethod.GET,
+  },
+]);
 ```
 
 # Tenant Utilities

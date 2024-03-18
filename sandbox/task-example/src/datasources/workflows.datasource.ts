@@ -22,7 +22,7 @@ export class WorkflowsDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
-  static dataSourceName = WorkflowServiceSourceName;
+  static readonly dataSourceName = WorkflowServiceSourceName;
   static readonly defaultConfig = config;
 
   constructor(

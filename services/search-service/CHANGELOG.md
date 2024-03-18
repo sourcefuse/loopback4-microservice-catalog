@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.11.4 (2024-03-12)</small>
+
+* docs(all-services): update services readme (#2000) ([93a7f91](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/93a7f91)), closes [#2000](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2000)
+
+
+
+
+
+## <small>0.11.3 (2024-02-02)</small>
+
+* chore(deps): update authentication component version in all services (#1962) ([eeac7f6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/eeac7f6)), closes [#1962](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1962) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
+## <small>0.11.2 (2024-01-19)</small>
+
+* chore(deps): update sourceloop and loopback packages version (#1928) ([d9d1b20](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d9d1b20)), closes [#1928](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1928) [#1903](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1903)
+
+
+
+
+
 ## <small>0.11.1 (2024-01-09)</small>
 
 * fix(search-service): allow model name to be different from the one present in db (#1888) ([8f321d2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8f321d2)), closes [#1888](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1888) [#1820](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1820)

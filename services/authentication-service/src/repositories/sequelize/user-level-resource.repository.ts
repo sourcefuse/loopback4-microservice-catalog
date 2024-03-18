@@ -5,14 +5,12 @@
 import {Getter, inject} from '@loopback/core';
 import {BelongsToAccessor, repository} from '@loopback/repository';
 import {SequelizeDataSource} from '@loopback/sequelize';
-import {IAuthUserWithPermissions} from '@sourceloop/core';
-import {SequelizeUserModifyCrudRepository} from '@sourceloop/core/sequelize';
-import {AuthenticationBindings} from 'loopback4-authentication';
+import {SequelizeSoftCrudRepository} from 'loopback4-soft-delete/sequelize';
 import {UserLevelResource, UserTenant} from '../../models';
 import {AuthDbSourceName} from '../../types';
 import {UserTenantRepository} from '../user-tenant.repository';
 
-export class UserLevelResourceRepository extends SequelizeUserModifyCrudRepository<
+export class UserLevelResourceRepository extends SequelizeSoftCrudRepository<
   UserLevelResource,
   typeof UserLevelResource.prototype.id
 > {
@@ -24,14 +22,10 @@ export class UserLevelResourceRepository extends SequelizeUserModifyCrudReposito
   constructor(
     @inject(`datasources.${AuthDbSourceName}`)
     dataSource: SequelizeDataSource,
-    @inject.getter(AuthenticationBindings.CURRENT_USER)
-    protected readonly getCurrentUser: Getter<
-      IAuthUserWithPermissions | undefined
-    >,
     @repository.getter('UserTenantRepository')
     protected userTenantRepositoryGetter: Getter<UserTenantRepository>,
   ) {
-    super(UserLevelResource, dataSource, getCurrentUser);
+    super(UserLevelResource, dataSource);
     this.userTenant = this.createBelongsToAccessorFor(
       'userTenant',
       userTenantRepositoryGetter,

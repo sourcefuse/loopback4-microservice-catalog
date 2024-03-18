@@ -1,6 +1,12 @@
 export const enum TaskPermssionKey {
-  StartListening = '1',
-  StopListening = '2',
-  AddToQueue = '3',
-  APIAdmin = '4',
+  CreateApiKey = '16001',
+  ViewEvent = '16002',
+  ViewTask = '16003',
+  DeleteTask = '16008',
+  ViewUserTask = '16004',
+  DeleteUserTask = '16009',
+  CompleteUserTask = '16005',
+  MapTask = '16006',
+  TriggerEvent = '16007',
+  SubscribeToWebhook = '16010',
 }

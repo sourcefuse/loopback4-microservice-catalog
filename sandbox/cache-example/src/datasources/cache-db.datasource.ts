@@ -24,7 +24,7 @@ export class CacheDbDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
-  static dataSourceName = 'cacheDb';
+  static readonly dataSourceName = 'cacheDb';
   static readonly defaultConfig = config;
 
   constructor(

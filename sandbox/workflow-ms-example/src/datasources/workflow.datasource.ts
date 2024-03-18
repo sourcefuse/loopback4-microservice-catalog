@@ -26,7 +26,7 @@ export class PgdbDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
-  static dataSourceName = WorkflowCacheSourceName;
+  static readonly dataSourceName = WorkflowCacheSourceName;
   static readonly defaultConfig = config;
 
   constructor(

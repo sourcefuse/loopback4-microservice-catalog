@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>11.1.1 (2024-03-12)</small>
+
+* fix(all-services): fix the pending sonar issues in all services (#2025) ([b2f6dc3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b2f6dc3)), closes [#2025](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2025) [#2013](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2013)
+* docs(all-services): update services readme (#2000) ([93a7f91](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/93a7f91)), closes [#2000](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2000)
+
+
+
+
+
+## 11.1.0 (2024-02-02)
+
+* chore(deps): update authentication component version in all services (#1962) ([eeac7f6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/eeac7f6)), closes [#1962](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1962) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* feat(task-service): add sequelize support in task service (#1952) ([5c66e01](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5c66e01)), closes [#1952](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1952) [#1350](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1350) [#1350](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1350)
+
+
+
+
+
+## <small>11.0.1 (2024-01-19)</small>
+
+* chore(deps): update sourceloop and loopback packages version (#1928) ([d9d1b20](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d9d1b20)), closes [#1928](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1928) [#1903](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1903)
+
+
+
+
+
+## 11.0.0 (2024-01-17)
+
+* feat(task-service): complete reimplementation of task service (#1839) ([e79c28a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e79c28a)), closes [#1839](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1839) [#1785](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1785) [#1785](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1785) [#1785](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1785) [#1785](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1785) [#1785](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1785)
+
+
+
+
+
 ## <small>10.0.1 (2024-01-09)</small>
 
 **Note:** Version bump only for package @sourceloop/bpmn-service

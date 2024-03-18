@@ -11,7 +11,11 @@ describe('TenantGuardDecorator', () => {
   let app: DummyApp;
   let repo: TestWithoutGuardRepo;
   beforeEach(async () => {
-    app = new DummyApp();
+    app = new DummyApp({
+      rest: {
+        port: 3001,
+      },
+    });
     const ds = new juggler.DataSource({
       name: 'db',
       connector: 'memory',
@@ -26,7 +30,7 @@ describe('TenantGuardDecorator', () => {
     await app.stop();
   });
 
-  it('should be able use existing guard service provided by the componentF', async () => {
+  it('should be able use existing guard service provided by the component', async () => {
     const result = await repo.create({name: 'test'});
     expect(result).to.have.property('tenantId', mockUser1.tenantId);
   });

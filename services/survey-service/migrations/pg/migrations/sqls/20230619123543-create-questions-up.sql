@@ -1,3 +1,8 @@
+CREATE SCHEMA IF NOT EXISTS main;
+
+SET search_path TO main,public;
+GRANT ALL ON SCHEMA main TO public;
+
 CREATE TYPE question_type_enum AS ENUM ('Drop Down','Multi Selection','Scale','Single Selection','Text');
 
 CREATE TABLE main.questions (

@@ -12,7 +12,7 @@
 
 ## Overview
 
-A Loopback Microservice for handling authentications. It provides -
+A Microservice for handling authentications. It provides -
 
 - Multi-Tenant support, you can see the database schema [here](#database-schema).
 - External Identity Provider integration.
@@ -129,6 +129,101 @@ npm i @sourceloop/authentication-service
 
   - It works for almost all authentication methods provided by this service.
   - Use `/verify-otp` to enter otp or code from authenticator app.
+
+- **OAuth- using Azure AD** -
+  - Passport strategy for authenticating via Azure Ad using [passport-azure-ad](https://www.npmjs.com/package/passport-azure-ad).
+  Make sure you have an account on Azure and have your application registered. Follow the steps [here](https://docs.microsoft.com/en-us/azure/active-directory-b2c/configure-a-sample-node-web-app).
+  - Refer the .env.example file to add all the relevant env variables for Azure Auth. Note - For boolean values that need to passed as false keep them blank. 
+  We are using cookie based approach instead of session based, so the library requires a cookie-parser middleware. To bind the middleware to you application set AZURE_AUTH_ENABLED=true in env file so the middleware will be added to the sequence.
+  Also the verifier function uses Signup provider whose implementation needs to be added by the user.
+  Bind the provider key to its corresponding value.
+
+    ```ts
+    this.providers[SignUpBindings.AZURE_AD_SIGN_UP_PROVIDER.key] =
+      AzureAdSignupProvider;
+    ```
+
+    ```ts
+    export class AzureAdSignupProvider implements Provider<AzureAdSignUpFn> {
+      value(): AzureAdSignUpFn {
+        // sonarignore:start
+        return async profile => {
+          // sonarignore:end
+          throw new HttpErrors.NotImplemented(
+            `AzureAdSignupProvider not implemented`,
+          );
+        };
+      }
+    }
+    ```
+
+    Also bind `VerifyBindings.AZURE_AD_PRE_VERIFY_PROVIDER` and `VerifyBindings.AZURE_AD_POST_VERIFY_PROVIDER` to override the basic implementation provided by [default](https://github.com/sourcefuse/loopback4-microservice-catalog/tree/master/services/authentication-service/src/providers).
+
+- **Authorizing Public & Private Clients** -
+
+  - In order to authorize public and private clients separately in your application, add the following to application.ts before binding AuthenticationComponent
+
+    ```typescript
+    import { AuthenticationBindings, AuthenticationConfig} from 'loopback4-authentication';
+    this.bind(AuthenticationBindings.CONFIG).to({
+    secureClient: true,
+    } as Authentication Config);
+    ```
+
+  - Authorizing Public & Private Clients-Migrations :
+
+    add client_type column to auth_clients table with values public/private
+
+    ```sql
+    ALTER TABLE main.auth_clients
+    ADD client_type varchar(100) DEFAULT 'public';
+    ```
+
+- **Authenticating JWT using RSA Encryption**
+
+  In order to authenticate JWT token using RSA encrytion, we need to provide JWT_PUBLIC_KEY and JWT_PRIVATE_KEY where the JWT_PUBLIC_KEY and JWT_PRIVATE_KEY are the paths to your public and private keys(.pem files).Steps to create Public key and private key are as follows:
+
+  -For creating RSA key pair,use the following command:
+  To generate private key of length 2048:
+
+  ```bash
+  openssl genrsa -out private.pem 2048
+  ```
+
+  To generate public key:
+
+  ```bash
+  openssl rsa -in private.pem -pubout -out public.pem
+  ```
+
+  Both the files should be in (.pem) format.
+  for example: private.pem file for private key and public.pem file for public key.
+  (refer [this](https://cryptotools.net/rsagen))
+
+- **Authenticating Password using RSA Encryption**
+
+  In order to authenticate password using RSA encrytion we need to provide private key through an env variable called `PRIVATE_DECRYPTION_KEY`.
+  By employing RSA encryption and the private key through the environment variable, this approach enhances the security of password authentication, ensuring that passwords are transmitted and stored in an encrypted manner, and can only be deciphered using the designated private key.
+
+  Its implemented through password decryption provider [here](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/services/authentication-service/src/providers/password-decryption.provider.ts) which accepts password in encrypted format.It uses node-forge as default for decryption but can be overriden through this password decryption provider for using any other library.
+
+  Note: When using `.env` file put your private key in single line with line breaks escaped with `\n`, one of the ways of doing so can be found [here](https://serverfault.com/questions/466683/can-an-ssl-certificate-be-on-a-single-line-in-a-file-no-line-breaks).
+
+
+- **Using with Sequelize**
+
+  This service supports Sequelize as the underlying ORM using [@loopback/sequelize](https://www.npmjs.com/package/@loopback/sequelize) extension. And in order to use it, you'll need to do following changes.
+
+  - To use Sequelize in your application, add following to application.ts:
+
+  ```ts
+  this.bind(AuthServiceBindings.Config).to({
+    useCustomSequence: false,
+    useSequelize: true,
+  });
+  ```
+
+  - Use the `SequelizeDataSource` in your audit datasource as the parent class. Refer [this](https://www.npmjs.com/package/@loopback/sequelize#step-1-configure-datasource) for more details.
 
 - Start the application
   `npm start`
@@ -370,6 +465,9 @@ export class AuthenticationDbDataSource
 
 The migrations required for this service are processed during the installation automatically if you set the `AUTH_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or databases, they may be affected. In such a scenario, it is advised that you copy the migration files in your project root, using the `AUTH_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
 
+Additionally, there is now an option to choose between SQL migration or PostgreSQL migration.
+NOTE : For [`@sourceloop/cli`](https://www.npmjs.com/package/@sourceloop/cli?activeTab=readme) users, this choice can be specified during the scaffolding process by selecting the "type of datasource" option.
+
 ### Database Schema
 
 ![Auth DB Schema](https://user-images.githubusercontent.com/77672713/126612271-3ce065aa-9f87-45d4-bf9a-c5cc8ad21764.jpg)
@@ -377,119 +475,6 @@ The migrations required for this service are processed during the installation a
 ### Providers
 
 You can find documentation for some of the providers available in this service [here](./src/providers/README.md)
-
-# **Using AZURE AD for OAuth**
-
-Passport strategy for authenticating via Azure Ad using [passport-azure-ad](https://www.npmjs.com/package/passport-azure-ad).
-Make sure you have an account on Azure and have your application registered. Follow the steps [here](https://docs.microsoft.com/en-us/azure/active-directory-b2c/configure-a-sample-node-web-app).
-
-### Application Binding
-
-To use this in your application bind `AuthenticationServiceComponent` the component in your appliation.
-
-```ts
-import {AuthenticationServiceComponent} from '@sourceloop/authentication-service';
-
-this.component(AuthenticationServiceComponent);
-```
-
-### Set the environment variables
-
-Refer the .env.example file to add all the relevant env variables for Azure Auth.
-Note - For boolean values that need to passed as false keep them blank.
-
-We are using cookie based approach instead of session based, so the library requires a cookie-parser middleware. To bind the middleware to you application set
-AZURE_AUTH_ENABLED=true in env file so the middleware will be added to the sequence.
-
-Also the verifier function uses Signup provider whose implementation needs to be added by the user.
-
-Bind the provider key to its corresponding value.
-
-```ts
-this.providers[SignUpBindings.AZURE_AD_SIGN_UP_PROVIDER.key] =
-  AzureAdSignupProvider;
-```
-
-```ts
-export class AzureAdSignupProvider implements Provider<AzureAdSignUpFn> {
-  value(): AzureAdSignUpFn {
-    // sonarignore:start
-    return async profile => {
-      // sonarignore:end
-      throw new HttpErrors.NotImplemented(
-        `AzureAdSignupProvider not implemented`,
-      );
-    };
-  }
-}
-```
-
-Also bind `VerifyBindings.AZURE_AD_PRE_VERIFY_PROVIDER` and `VerifyBindings.AZURE_AD_POST_VERIFY_PROVIDER` to override the basic implementation provided by [default](https://github.com/sourcefuse/loopback4-microservice-catalog/tree/master/services/authentication-service/src/providers).
-
-### Authorizing Public & Private Clients
-
-In order to authorize public and private clients separately in your application, add the following to application.ts before binding AuthenticationComponent
-
-```typescript
-import { AuthenticationBindings, AuthenticationConfig} from 'loopback4-authentication';
-this.bind(AuthenticationBindings.CONFIG).to({
-secureClient: true,
-} as Authentication Config);
-```
-
-#### Authorizing Public & Private Clients-Migrations
-
-add client_type column to auth_clients table with values public/private
-
-```sql
-ALTER TABLE main.auth_clients
-ADD client_type varchar(100) DEFAULT 'public';
-```
-
-### Authenticating JWT using RSA Encryption
-
-In order to authenticate JWT token using RSA encrytion, we need to provide JWT_PUBLIC_KEY and JWT_PRIVATE_KEY where the JWT_PUBLIC_KEY and JWT_PRIVATE_KEY are the paths to your public and private keys(.pem files).Steps to create Public key and private key are as follows:
-
--For creating RSA key pair,use the following command:
-To generate private key of length 2048:
-
-```bash
-openssl genrsa -out private.pem 2048
-```
-
-To generate public key:
-
-```bash
-openssl rsa -in private.pem -pubout -out public.pem
-```
-
-- Both the files should be in (.pem) format.
-  for example: private.pem file for private key and public.pem file for public key.
-  (refer [this](https://cryptotools.net/rsagen))
-
-### Authenticating Password using RSA Encryption
-
-In order to authenticate password using RSA encrytion we need to provide private key through an env variable called `PRIVATE_DECRYPTION_KEY`.
-By employing RSA encryption and the private key through the environment variable, this approach enhances the security of password authentication, ensuring that passwords are transmitted and stored in an encrypted manner, and can only be deciphered using the designated private key.
-
-Its implemented through password decryption provider [here](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/services/authentication-service/src/providers/password-decryption.provider.ts) which accepts password in encrypted format.It uses node-forge as default for decryption but can be overriden through this password decryption provider for using any other library.
-
-Note: When using `.env` file put your private key in single line with line breaks escaped with `\n`, one of the ways of doing so can be found [here](https://serverfault.com/questions/466683/can-an-ssl-certificate-be-on-a-single-line-in-a-file-no-line-breaks).
-
-### Using with Sequelize
-
-This service supports Sequelize as the underlying ORM using [@loopback/sequelize](https://www.npmjs.com/package/@loopback/sequelize) extension. And in order to use it, you'll need to do following changes.
-
-1.To use Sequelize in your application, add following to application.ts:
-
-```ts
-this.bind(AuthServiceBindings.Config).to({
-  useCustomSequence: false,
-  useSequelize: true,
-});
-```
-
-2. Use the `SequelizeDataSource` in your audit datasource as the parent class. Refer [this](https://www.npmjs.com/package/@loopback/sequelize#step-1-configure-datasource) for more details.
 
 #### Common Headers
 

@@ -3,6 +3,56 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.5.4 (2024-03-12)</small>
+
+**Note:** Version bump only for package @sourceloop/oidc-service
+
+
+
+
+
+## <small>0.5.3 (2024-03-06)</small>
+
+* fix(all-services): fix the pending sonar issues in all services (#2025) ([b2f6dc3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b2f6dc3)), closes [#2025](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2025) [#2013](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2013)
+* docs(all-services): update services readme (#2000) ([93a7f91](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/93a7f91)), closes [#2000](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2000)
+
+
+
+
+
+## <small>0.5.2 (2024-02-05)</small>
+
+* chore(deps): update versions in sandbox and fix vulnerabilities  (#1941) ([5e37add](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5e37add)), closes [#1941](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1941) [#1934](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1934)
+
+
+
+
+
+## <small>0.5.1 (2024-02-02)</small>
+
+* fix(cli): proper error message when microservice command not run from root folder (#1961) ([3ea4325](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3ea4325)), closes [#1961](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1961) [#1956](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1956)
+* chore(deps): update authentication component version in all services (#1962) ([eeac7f6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/eeac7f6)), closes [#1962](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1962) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
+## 0.5.0 (2024-01-23)
+
+* fix(authentication-service): sync the models of auth and user tenant service (#1913) ([c3a15b0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c3a15b0)), closes [#1913](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1913) [#1899](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1899) [#1899](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1899) [#1899](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1899) [#1899](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1899) [#1899](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1899)
+
+
+
+
+
+## <small>0.4.2 (2024-01-19)</small>
+
+* chore(deps): update sourceloop and loopback packages version (#1928) ([d9d1b20](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d9d1b20)), closes [#1928](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1928) [#1903](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1903)
+
+
+
+
+
 ## <small>0.4.1 (2024-01-09)</small>
 
 **Note:** Version bump only for package @sourceloop/oidc-service

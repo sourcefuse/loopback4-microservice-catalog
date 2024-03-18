@@ -7,5 +7,7 @@ CREATE TABLE main.jobs
     filter_used jsonb,
     status text COLLATE pg_catalog."default" NOT NULL,
     result text COLLATE pg_catalog."default",
+    tenant_id				uuid NOT NULL,
+    operation text COLLATE pg_catalog."default",
     CONSTRAINT jobs_pkey PRIMARY KEY (id)
 )

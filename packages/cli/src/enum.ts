@@ -14,6 +14,7 @@ export enum SERVICES {
   SCHEDULER = 'scheduler-service',
   SEARCH = 'search-service',
   SURVEY = 'survey-service',
+  TASK = 'task-service',
   VIDEO_CONF = 'video-conferencing-service',
   USER_TENANT = 'user-tenant-service',
 }
@@ -89,6 +90,7 @@ export const BASESERVICEDSLIST: {
   'survey-service': [
     {type: 'store', name: 'SurveyDbSourceName', fileName: 'survey'},
   ],
+  'task-service': [{type: 'store', name: 'TaskDbSourceName', fileName: 'task'}],
   'video-conferencing-service': [
     {type: 'store', name: 'VideoConfDatasource', fileName: 'videoConf'},
   ],
@@ -109,7 +111,40 @@ export const BASESERVICECOMPONENTLIST: {
   'scheduler-service': 'SchedulerServiceComponent',
   'search-service': 'SearchServiceComponent',
   'survey-service': 'SurveyServiceComponent',
+  'task-service': 'TaskServiceComponent',
   'video-conferencing-service': 'VideoConfServiceComponent',
   'chat-service': 'ChatServiceComponent',
   'user-tenant-service': 'UserTenantServiceComponent',
 };
+
+export const BASESERVICEBINDINGLIST: {
+  [key in SERVICES]: string;
+} = {
+  'authentication-service': 'AuthServiceBindings',
+  'audit-service': 'AuditServiceBindings',
+  'notification-service': 'NotifServiceBindings',
+  'bpmn-service': 'WorkflowServiceBindings',
+  'feature-toggle-service': 'FeatureToggleBindings',
+  'in-mail-service': 'InMailBindings',
+  'payment-service': 'PaymentServiceBindings',
+  'scheduler-service': 'CoreSchedulerBindings',
+  'search-service': 'SearchServiceBindings',
+  'survey-service': 'SurveyServiceBindings',
+  'task-service': 'TaskServiceBindings',
+  'video-conferencing-service': 'VideoChatBindings',
+  'chat-service': 'ChatServiceBindings',
+  'user-tenant-service': 'UserTenantServiceComponentBindings',
+};
+
+export enum SEQUELIZESERVICES {
+  AUTH = 'authentication-service',
+  AUDIT = 'audit-service',
+  CHAT = 'chat-service',
+  NOTIFICATION = 'notification-service',
+  BPMN = 'bpmn-service',
+  PAYMENT = 'payment-service',
+  SCHEDULER = 'scheduler-service',
+  SURVEY = 'survey-service',
+  VIDEO_CONF = 'video-conferencing-service',
+  USER_TENANT = 'user-tenant-service',
+}

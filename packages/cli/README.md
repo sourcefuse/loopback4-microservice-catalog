@@ -18,7 +18,7 @@ $ npm install -g @sourceloop/cli
 $ sl COMMAND
 running command...
 $ sl (-v|--version|version)
-@sourceloop/cli/7.0.0 linux-x64 node-v18.19.0
+@sourceloop/cli/7.2.2 linux-x64 node-v18.19.1
 $ sl --help [COMMAND]
 USAGE
   $ sl COMMAND
@@ -83,7 +83,7 @@ OPTIONS
   --help                                           show manual pages
 ```
 
-_See code: [src/commands/cdk.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v7.0.0/src/commands/cdk.ts)_
+_See code: [src/commands/cdk.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v7.2.2/src/commands/cdk.ts)_
 
 ## `sl extension [NAME]`
 
@@ -100,7 +100,7 @@ OPTIONS
   --help  show manual pages
 ```
 
-_See code: [src/commands/extension.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v7.0.0/src/commands/extension.ts)_
+_See code: [src/commands/extension.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v7.2.2/src/commands/extension.ts)_
 
 ## `sl help [COMMAND]`
 
@@ -135,12 +135,12 @@ OPTIONS
       Unique prefix to be used for docker images
 
   -s, --baseService=(authentication-service|audit-service|chat-service|notification-service|bpmn-service|feature-toggle-
-  service|in-mail-service|payment-service|scheduler-service|search-service|survey-service|video-conferencing-service|use
-  r-tenant-service)
-      Base sourceloop microservice
+  service|in-mail-service|payment-service|scheduler-service|search-service|survey-service|task-service|video-conferencin
+  g-service|user-tenant-service)
+      Base ARC microservice
 
   --[no-]baseOnService
-      Base on sourceloop microservice or not
+      Base on ARC microservice or not
 
   --customMigrations
       Setup custom migration for this microservice
@@ -159,9 +159,12 @@ OPTIONS
 
   --includeMigrations
       Include base microservice migrations
+
+  --sequelize
+      Include sequelize as ORM in service
 ```
 
-_See code: [src/commands/microservice.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v7.0.0/src/commands/microservice.ts)_
+_See code: [src/commands/microservice.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v7.2.2/src/commands/microservice.ts)_
 
 ## `sl scaffold [NAME]`
 
@@ -183,7 +186,7 @@ OPTIONS
   --owner=owner              owner of the repo
 ```
 
-_See code: [src/commands/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v7.0.0/src/commands/scaffold.ts)_
+_See code: [src/commands/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v7.2.2/src/commands/scaffold.ts)_
 
 ## `sl update`
 
@@ -197,5 +200,5 @@ OPTIONS
   --help  show manual pages
 ```
 
-_See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v7.0.0/src/commands/update.ts)_
+_See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v7.2.2/src/commands/update.ts)_
 <!-- commandsstop -->

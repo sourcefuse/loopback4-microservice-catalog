@@ -12,7 +12,7 @@ import {
   VerifyFunction,
 } from 'loopback4-authentication';
 
-import {SignUpBindings, VerifyBindings} from '../../../providers';
+import {SignUpBindings, VerifyBindings} from '../../../providers/keys';
 import {
   KeyCloakPostVerifyFn,
   KeyCloakPreVerifyFn,

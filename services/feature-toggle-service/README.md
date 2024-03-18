@@ -20,12 +20,11 @@ This feature is an extension of the feature-toggle package -- @sourceloop/featur
 Initial implementation for system level, tenant level and user level feature flag is provided.
 
 ## Installation
+```bash
 
 npm i @sourceloop/feature-toggle-service
-
+```
 ## Usage
-
-### Service Setup
 
 - Create a new Loopback4 Application (If you don't have one already) lb4 testapp
 - Install the service - npm i @sourceloop/feature-toggle-service
@@ -104,6 +103,10 @@ export class FeatureToggleDbDataSource
 ### Migrations
 
 The migrations required for this service are processed during the installation automatically if you set the `FEATURETOGGLE_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or database, they may be effected. In such scenario, it is advised that you copy the migration files in your project root, using the `FEATURETOGGLE_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
+
+
+Additionally, there is now an option to choose between SQL migration or PostgreSQL migration.
+NOTE : For [`@sourceloop/cli`](https://www.npmjs.com/package/@sourceloop/cli?activeTab=readme) users, this choice can be specified during the scaffolding process by selecting the "type of datasource" option.
 
 ### API Documentation
 

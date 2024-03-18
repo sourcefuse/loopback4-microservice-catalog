@@ -1,4 +1,4 @@
-import { DATASOURCES, SERVICES } from '../../enum';
+import {DATASOURCES, SERVICES} from '../../enum';
 
 export const microservicePromptsSuite = [
   {
@@ -47,6 +47,7 @@ export const microservicePromptsSuite = [
       baseService: SERVICES.AUTH,
       datasourceName: 'pg',
       datasourceType: DATASOURCES.POSTGRES,
+      sequelize: false,
       includeMigrations: true,
     },
     prompts: [
@@ -71,7 +72,7 @@ export const microservicePromptsSuite = [
       {
         input: {
           name: 'baseOnService',
-          message: 'Base on sourceloop microservice or not',
+          message: 'Base on ARC microservice or not',
           type: 'confirm',
           default: false,
         },
@@ -80,7 +81,7 @@ export const microservicePromptsSuite = [
       {
         input: {
           name: 'baseService',
-          message: 'Base sourceloop microservice',
+          message: 'Base ARC microservice',
           type: 'list',
           choices: Object.values(SERVICES),
         },
@@ -113,6 +114,15 @@ export const microservicePromptsSuite = [
       },
       {
         input: {
+          default: false,
+          name: 'sequelize',
+          message: 'Include sequelize as ORM in service',
+          type: 'confirm',
+        },
+        output: false,
+      },
+      {
+        input: {
           name: 'includeMigrations',
           message: 'Include base microservice migrations',
           type: 'confirm',
@@ -132,6 +142,7 @@ export const microservicePromptsSuite = [
       baseService: SERVICES.AUTH,
       datasourceName: 'pg',
       datasourceType: DATASOURCES.POSTGRES,
+      sequelize: false,
       includeMigrations: false,
       customMigrations: true,
     },
@@ -157,7 +168,7 @@ export const microservicePromptsSuite = [
       {
         input: {
           name: 'baseOnService',
-          message: 'Base on sourceloop microservice or not',
+          message: 'Base on ARC microservice or not',
           type: 'confirm',
           default: false,
         },
@@ -166,7 +177,7 @@ export const microservicePromptsSuite = [
       {
         input: {
           name: 'baseService',
-          message: 'Base sourceloop microservice',
+          message: 'Base ARC microservice',
           type: 'list',
           choices: Object.values(SERVICES),
         },
@@ -196,6 +207,15 @@ export const microservicePromptsSuite = [
           choices: Object.values(DATASOURCES),
         },
         output: DATASOURCES.POSTGRES,
+      },
+      {
+        input: {
+          default: false,
+          name: 'sequelize',
+          message: 'Include sequelize as ORM in service',
+          type: 'confirm',
+        },
+        output: false,
       },
       {
         input: {

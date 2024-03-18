@@ -1,16 +1,17 @@
 import {AnyObject, model, property} from '@loopback/repository';
 import {CoreEntity} from '@sourceloop/core';
+import {IEvent} from '../interfaces';
 
 @model({
   name: 'events',
 })
-export class Event extends CoreEntity<Event> {
+export class Event extends CoreEntity<Event> implements IEvent {
   @property({
     type: 'string',
     id: true,
     generated: true,
   })
-  id?: string;
+  id: string;
 
   @property({
     type: 'string',
@@ -41,4 +42,11 @@ export class Event extends CoreEntity<Event> {
       'A dynamic object that contains information to be run in the workers of a bpmn engine',
   })
   payload: AnyObject;
+
+  @property({
+    type: 'number',
+    required: true,
+    description: 'A short message to indicate the progression of the event',
+  })
+  timestamp: number;
 }

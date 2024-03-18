@@ -9,9 +9,9 @@ import {DATASOURCES, SERVICES} from '../enum';
 import {MicroserviceOptions} from '../types';
 
 export class Microservice extends Base<MicroserviceOptions> {
-  static description = 'add a microservice';
+  static readonly description = 'add a microservice';
 
-  static flags = {
+  static readonly flags = {
     help: flags.boolean({
       name: 'help',
       description: 'show manual pages',
@@ -24,13 +24,13 @@ export class Microservice extends Base<MicroserviceOptions> {
     baseOnService: flags.boolean({
       name: 'baseOnService',
       exclusive: ['facade'],
-      description: 'Base on sourceloop microservice or not',
+      description: 'Base on ARC microservice or not',
       allowNo: true,
     }),
     baseService: flags.enum({
       name: 'service',
       char: 's',
-      description: 'Base sourceloop microservice',
+      description: 'Base ARC microservice',
       options: Object.values(SERVICES),
       required: false,
       exclusive: ['facade'],
@@ -55,6 +55,13 @@ export class Microservice extends Base<MicroserviceOptions> {
       options: Object.values(DATASOURCES),
       exclusive: ['facade'],
     }),
+    sequelize: flags.boolean({
+      name: 'sequelize',
+      description: 'Include sequelize as ORM in service',
+      required: false,
+      exclusive: ['facade'],
+    }),
+
     includeMigrations: flags.boolean({
       name: 'includeMigrations',
       description: 'Include base microservice migrations',
@@ -67,7 +74,7 @@ export class Microservice extends Base<MicroserviceOptions> {
       exclusive: ['facade', 'includeMigrations'],
     }),
   };
-  static args = [
+  static readonly args = [
     {name: 'name', description: 'Name of the microservice', required: false},
   ];
 

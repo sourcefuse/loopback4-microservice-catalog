@@ -63,6 +63,24 @@ describe('TenantUser Controller', function (this: Mocha.Suite) {
     expect(response).to.have.property('error');
   });
 
+  it('give status 403 when user try to change its own role', async () => {
+    const userTenant = await userTenantRepo.create({
+      userId: id,
+      roleId: '1',
+      tenantId: id,
+    });
+    testUser.userTenantId = userTenant.id ?? '';
+    setCurrentUser();
+    const userDataToUpdate = {
+      roleId: '2',
+    };
+    await client
+      .patch(`${basePath}/${id}/users/${userTenant.userId}`)
+      .set('authorization', `Bearer ${token}`)
+      .send(userDataToUpdate)
+      .expect(403);
+  });
+
   it('gives status 200 when token is passed ', async () => {
     await client
       .get(`${basePath}/${id}/users`)

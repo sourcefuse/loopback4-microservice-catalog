@@ -1,4 +1,4 @@
-import { DATASOURCES, SERVICES } from '../../enum';
+import {DATASOURCES, SERVICES} from '../../enum';
 
 export const microserviceOptionsSuite = [
   {
@@ -21,6 +21,7 @@ export const microserviceOptionsSuite = [
       baseService: SERVICES.AUTH,
       datasourceName: 'pg',
       datasourceType: DATASOURCES.POSTGRES,
+      sequelize: true,
       includeMigrations: true,
     },
     prompts: [],
@@ -36,6 +37,7 @@ export const microserviceOptionsSuite = [
       'pg',
       '--datasourceType',
       DATASOURCES.POSTGRES,
+      '--sequelize',
       '--includeMigrations',
     ],
   },
@@ -49,6 +51,7 @@ export const microserviceOptionsSuite = [
       baseService: SERVICES.AUTH,
       datasourceName: 'pg',
       datasourceType: DATASOURCES.POSTGRES,
+      sequelize: true,
       customMigrations: true,
     },
     prompts: [],
@@ -64,6 +67,7 @@ export const microserviceOptionsSuite = [
       'pg',
       '--datasourceType',
       DATASOURCES.POSTGRES,
+      '--sequelize',
       '--customMigrations',
     ],
   },

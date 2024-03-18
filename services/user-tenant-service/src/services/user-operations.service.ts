@@ -138,7 +138,13 @@ export class UserOperationsService {
   async updateById(
     userData: Omit<
       UserView,
-      'id' | 'authClientIds' | 'lastLogin' | 'status' | 'tenantId'
+      | 'id'
+      | 'authClientIds'
+      | 'lastLogin'
+      | 'tenantId'
+      | 'tenantKey'
+      | 'roleName'
+      | 'userTenantId'
     >,
     userId: string,
     tenantId: string,
@@ -176,8 +182,12 @@ export class UserOperationsService {
     currentUser: IAuthUserWithPermissions,
   ) {
     const utData: Partial<UserTenant> = {};
-    if (userData.roleId) {
+    if (userData.roleId && id === currentUser.id) {
+      throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
+    } else if (userData.roleId) {
       utData.roleId = userData.roleId;
+    } else {
+      //nothing
     }
     if (userData.status) {
       utData.status = userData.status;

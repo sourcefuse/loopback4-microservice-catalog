@@ -1,7 +1,8 @@
-import {microservicePromptsSuite} from '../suite/microservice-prompts';
-import {microserviceOptionsSuite} from '../suite/microservice-options';
-import {commandTest} from '../helper/command-test.helper';
+// sonarignore:start
 import {Microservice} from '../../commands/microservice';
+import {commandTest} from '../helper/command-test.helper';
+import {microserviceOptionsSuite} from '../suite/microservice-options';
+import {microservicePromptsSuite} from '../suite/microservice-prompts';
 
 describe('microservice', () => {
   describe('with options', () => {
@@ -15,3 +16,4 @@ describe('microservice', () => {
     });
   });
 });
+// sonarignore:end

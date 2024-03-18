@@ -2,24 +2,26 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {AppleLoginController} from '../modules/auth/apple-login.controller';
-import {FacebookLoginController} from '../modules/auth/facebook-login.controller';
-import {GoogleLoginController} from '../modules/auth/google-login.controller';
-import {InstagramLoginController} from '../modules/auth/instagram-login.controller';
-import {KeycloakLoginController} from '../modules/auth/keycloak-login.controller';
-import {LoginController} from '../modules/auth/login.controller';
-import {LogoutController} from '../modules/auth/logout.controller';
 import {ForgetPasswordController} from './forget-password.controller';
-import {OtpController} from '../modules/auth/otp.controller';
 import {SignupRequestController} from './signup-request.controller';
-import {AzureLoginController} from '../modules/auth/azure-login.controller';
-import {CognitoLoginController} from '../modules/auth/cognito-login.controller';
-import {SamlLoginController} from '../modules/auth/saml-login.controller';
 import {LoginActivityController} from './login-activity.controller';
+import {
+  AppleLoginController,
+  FacebookLoginController,
+  GoogleLoginController,
+  InstagramLoginController,
+  KeycloakLoginController,
+  LoginController,
+  LogoutController,
+  OtpController,
+  AzureLoginController,
+  CognitoLoginController,
+  SamlLoginController,
+} from '../modules/auth/controllers';
 
-export * from '../modules/auth/login.controller';
-export * from '../modules/auth/logout.controller';
-export * from '../modules/auth/otp.controller';
+export * from '../modules/auth/controllers/login.controller';
+export * from '../modules/auth/controllers/logout.controller';
+export * from '../modules/auth/controllers/otp.controller';
 export * from './forget-password.controller';
 export * from './signup-request.controller';
 export * from './login-activity.controller';

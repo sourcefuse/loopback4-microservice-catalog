@@ -3,6 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {inject} from '@loopback/core';
+import {Entity} from '@loopback/repository';
 import {
   SequelizeCrudRepository,
   SequelizeDataSource,
@@ -17,7 +18,9 @@ export class AuthClientRepository extends SequelizeCrudRepository<
   constructor(
     @inject(`datasources.${UserTenantDataSourceName}`)
     dataSource: SequelizeDataSource,
+    @inject('models.AuthClient')
+    private readonly authClient: typeof Entity & {prototype: AuthClient},
   ) {
-    super(AuthClient, dataSource);
+    super(authClient, dataSource);
   }
 }

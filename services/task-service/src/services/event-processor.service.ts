@@ -1,53 +1,95 @@
-import {BindingScope, injectable, service} from '@loopback/core';
-import {AnyObject, repository} from '@loopback/repository';
-import {HttpErrors} from '@loopback/rest';
-import {Event} from '../models';
-import {EventRepository} from '../repositories/event.repository';
-import {TaskServiceNames} from '../types';
-import {TaskOperationService} from './task-operation.service';
-import {WorkflowOperationService} from './workflow-operation.service';
-import {WebhookService} from './webhook.service';
+import {Context, inject} from '@loopback/core';
+import {AnyObject} from '@loopback/repository';
+import {
+  ExecuteWorkflowDto,
+  WorkflowController,
+  WorkflowRepository,
+} from '@sourceloop/bpmn-service';
+import {ILogger, LOGGER} from '@sourceloop/core';
+import {AuthenticationBindings} from 'loopback4-authentication';
+import {IEvent, IEventProcessor, IIncomingConnector} from '../interfaces';
+import {TaskServiceBindings} from '../keys';
+import {EventRepository, EventWorkflowRepository} from '../repositories';
+import {EventFilter, User} from '../types';
 
-@injectable({
-  scope: BindingScope.TRANSIENT,
-})
-export class EventProcessorService {
+export class EventProcessorService implements IEventProcessor {
+  incoming: IIncomingConnector;
   constructor(
-    @repository(EventRepository)
-    private readonly eventRepo: EventRepository,
-    @service(TaskOperationService)
-    private readonly taskOpsService: TaskOperationService,
-    @service(WorkflowOperationService)
-    private readonly workflowOpsService: WorkflowOperationService,
-    @service(WebhookService)
-    private readonly webhookService: WebhookService,
+    @inject.context()
+    private readonly ctx: Context,
+    @inject(TaskServiceBindings.EVENT_FILTER)
+    private readonly filter: EventFilter,
+    @inject(LOGGER.LOGGER_INJECT)
+    private readonly logger: ILogger,
   ) {}
-  public async processEvent(event: Event): Promise<void> {
-    await this.eventRepo.create(event);
 
-    const workflow = await this.workflowOpsService.execWorkflow(
-      event.key,
-      TaskServiceNames.EVENT,
+  async handle(event: IEvent): Promise<void> {
+    if (!this.filter(event)) {
+      this.logger.debug(`Event ${event.key} filtered out`);
+      return;
+    }
+    const tempContext = new Context(this.ctx, 'tempContext');
+    const systemUser = await tempContext.get<User>(
+      TaskServiceBindings.SYSTEM_USER,
     );
+    tempContext.bind(AuthenticationBindings.CURRENT_USER).to(systemUser);
 
-    if (workflow) {
-      // subscribe to tasks
-      const url = await this.webhookService.getUrlOfSubscritption(event.key);
-      if (url && event.payload.tasks) {
-        const tasksPromises = event.payload.tasks.map((task: AnyObject) =>
-          this.webhookService.addToSubscription(url, task.key),
-        );
-        await Promise.all(tasksPromises);
-      }
-
-      await this.taskOpsService.processTask(
-        workflow.externalIdentifier,
-        workflow.name,
-        event.key,
-        event.payload,
+    const repo = await tempContext.get<EventRepository>(
+      `repositories.EventRepository`,
+    );
+    const eventWorkflowMappingRepo =
+      await tempContext.get<EventWorkflowRepository>(
+        `repositories.EventWorkflowRepository`,
       );
+    // need to add logic for event handling status
+    await repo.create({
+      key: event.key,
+      payload: event.payload,
+      source: event.payload.source ?? event.source,
+      description: event.payload.description ?? `Task for ${event.key}`,
+      timestamp: event.timestamp,
+    });
+    const mapping = await eventWorkflowMappingRepo.find({
+      where: {
+        eventKey: event.key,
+      },
+    });
+    if (!mapping.length) {
+      this.logger.debug(`No mapping found for event ${event.key}`);
+      return;
+    }
+    const promises = mapping.map(async map => {
+      await this._triggerWorkflow(map.workflowKey, event.payload, tempContext);
+    });
+    await Promise.all(promises);
+    tempContext.close();
+  }
+
+  private async _triggerWorkflow(
+    workflowKey: string,
+    payload: AnyObject,
+    context: Context,
+  ) {
+    const workflowCtrl = await context.get<WorkflowController>(
+      'controllers.WorkflowController',
+    );
+    const workflowRepo = await context.get<WorkflowRepository>(
+      'repositories.WorkflowRepository',
+    );
+    const workflow = await workflowRepo.findOne({
+      where: {
+        externalIdentifier: workflowKey,
+      },
+    });
+    if (!workflow) {
+      this.logger.debug(`No workflow found for key ${workflowKey}`);
     } else {
-      throw new HttpErrors.NotFound('Workflow not found');
+      await workflowCtrl.startWorkflow(
+        workflow.id!,
+        new ExecuteWorkflowDto({
+          input: payload,
+        }),
+      );
     }
   }
 }
