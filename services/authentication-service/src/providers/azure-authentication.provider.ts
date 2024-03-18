@@ -52,7 +52,11 @@ export class AzureAuthenticationProvider
       })
       .catch(error => {
         isAuthenticated = false;
-        console.error('Error while generating access token:', error.message);
+        this.logger.error(
+          `Error while generating access token. Error :: ${error} ${JSON.stringify(
+            error,
+          )}`,
+        );
         return isAuthenticated;
       });
     const refreshTokenKey: string = crypto.randomBytes(32).toString('hex');

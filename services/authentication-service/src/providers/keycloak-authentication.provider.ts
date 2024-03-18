@@ -44,7 +44,7 @@ export class KeycloakAuthenticationProvider
       })
       .catch(error => {
         this.logger.error(
-          `Error while logging off from google. Error :: ${error} ${JSON.stringify(
+          `Error while logging off from keycloak. Error :: ${error} ${JSON.stringify(
             error,
           )}`,
         );
