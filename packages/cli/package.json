@@ -201,7 +201,7 @@
       "@types/js-yaml": "^4.0.5",
       "js-yaml": "^4.1.0",
       "lodash": "^4.17.21",
-      "@sourceloop/core": "^12.0.0",
+      "@sourceloop/core": "^12.1.0",
       "@sourceloop/cache": "^0.7.9",
       "@sourceloop/feature-toggle": "^0.8.6",
       "@sourceloop/audit-service": "^11.0.0",

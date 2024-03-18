@@ -7,7 +7,7 @@ import sinon from 'sinon';
 import {SamlVerifyProvider} from '../../../modules/auth/providers/saml-verify.provider';
 import {SamlSignUpFn} from '../../../providers';
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 import * as SamlStrategy from '@node-saml/passport-saml';
 import {IAuthUser} from 'loopback4-authentication';
 import {

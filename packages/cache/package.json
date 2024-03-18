@@ -43,22 +43,22 @@
     "!*/__tests__"
   ],
   "peerDependencies": {
-    "@loopback/core": "^5.1.5",
-    "@loopback/repository": "^6.1.5",
-    "@loopback/rest": "^13.1.5",
+    "@loopback/core": "^6.0.0",
+    "@loopback/repository": "^7.0.0",
+    "@loopback/rest": "^14.0.0",
     "loopback-connector-kv-redis": "^4.0.0"
   },
   "dependencies": {
-    "@loopback/sequelize": "^0.5.4",
+    "@loopback/sequelize": "^0.6.0",
     "tslib": "^2.6.2"
   },
   "devDependencies": {
-    "@loopback/build": "^10.1.5",
-    "@loopback/core": "^5.1.5",
-    "@loopback/eslint-config": "^14.0.4",
-    "@loopback/repository": "^6.1.5",
-    "@loopback/rest": "^13.1.5",
-    "@loopback/testlab": "^6.1.5",
+    "@loopback/build": "^11.0.0",
+    "@loopback/core": "^6.0.0",
+    "@loopback/eslint-config": "^15.0.0",
+    "@loopback/repository": "^7.0.0",
+    "@loopback/rest": "^14.0.0",
+    "@loopback/testlab": "^7.0.0",
     "@sourceloop/core": "^12.1.0",
     "@types/node": "^18.11.9",
     "dotenv": "^16.0.3",

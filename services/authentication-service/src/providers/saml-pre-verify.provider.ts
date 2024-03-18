@@ -1,6 +1,6 @@
 import {Provider} from '@loopback/context';
 import {IAuthUser} from 'loopback4-authentication';
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 import * as SamlStrategy from '@node-saml/passport-saml';
 import {SamlPreVerifyFn} from './types';
 

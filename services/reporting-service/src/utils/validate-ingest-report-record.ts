@@ -1,5 +1,5 @@
 import {AnyObject} from '@loopback/repository';
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 import Joi from 'joi';
 import {IngestReportRecord} from '../interfaces';
 

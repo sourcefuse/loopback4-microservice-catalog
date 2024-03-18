@@ -10,7 +10,7 @@ import {
 import {STATUS_CODE} from '@sourceloop/core';
 import ejs from 'ejs';
 import {UserRepository} from '../repositories/user.repository';
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 import OidcProvider from 'oidc-provider';
 import {OIDCServiceBindings} from '../keys';
 

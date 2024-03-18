@@ -1,7 +1,7 @@
 import {inject, Provider} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 import * as SamlStrategy from '@node-saml/passport-saml';
 import {
   AuthErrorKeys,

@@ -2,7 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-/* eslint-disable  @typescript-eslint/naming-convention */
+
 import {AnyObject, DataObject} from '@loopback/repository';
 import * as SamlStrategy from '@node-saml/passport-saml';
 import {SignOptions, VerifyOptions} from 'jsonwebtoken';
@@ -25,7 +25,7 @@ import {
   UserRelations,
 } from '../models';
 import {AuthRefreshTokenRequest, AuthUser, OtpResponse} from '../modules/auth';
-/* eslint-enable  @typescript-eslint/naming-convention */
+
 export type GoogleSignUpFn = (
   profile: GoogleStrategy.Profile,
 ) => Promise<(User & UserRelations) | null>;

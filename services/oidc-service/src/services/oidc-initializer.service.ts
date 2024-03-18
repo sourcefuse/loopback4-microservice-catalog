@@ -7,7 +7,7 @@ import {
   injectable,
 } from '@loopback/core';
 import {RestApplication} from '@loopback/rest';
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 import OidcProvider from 'oidc-provider';
 import {OIDCServiceBindings} from '../keys';
 

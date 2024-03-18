@@ -1,5 +1,5 @@
 import {Provider, inject} from '@loopback/core';
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 import AWS from 'aws-sdk';
 import {S3DataStoreConfiguration} from '../../interfaces';
 import {ReportingServiceComponentBindings} from '../../keys';

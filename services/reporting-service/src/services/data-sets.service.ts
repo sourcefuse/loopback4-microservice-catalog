@@ -1,7 +1,7 @@
 import {BindingScope, inject, injectable} from '@loopback/core';
 import {AnyObject, Count, Filter, repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 import * as CryptoJS from 'crypto-js';
 import {
   ColumnEntityPair,

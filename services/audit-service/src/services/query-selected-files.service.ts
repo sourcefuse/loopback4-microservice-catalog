@@ -7,7 +7,7 @@ import {
 } from '@loopback/core';
 import {Filter, defineCrudRepositoryClass, juggler} from '@loopback/repository';
 import {AuditLog} from '@sourceloop/audit-log';
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 import AWS from 'aws-sdk';
 import csvtojson from 'csvtojson';
 import {AuditServiceApplication} from '../application';
