@@ -108,7 +108,7 @@ export class ServiceSequence implements SequenceHandler {
       }
       //this middleware will only be invoked when
       finished = await this.invokeMiddleware(context, {
-        chain: MiddlewareChain.PreInvoke,
+        chain: MiddlewareChain.PRE_INVOKE,
       });
 
       const result = await this.invoke(route, args);
