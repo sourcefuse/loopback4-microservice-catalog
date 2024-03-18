@@ -29,6 +29,7 @@ import {
 } from 'loopback4-authorization';
 
 import {IAuthUserWithPermissions, ILogger, LOGGER} from './components';
+import {MiddlewareChain} from './enums';
 import {SFCoreBindings} from './keys';
 const SequenceActions = RestBindings.SequenceActions;
 const isJsonString = (str: string) => {
@@ -105,8 +106,9 @@ export class ServiceSequence implements SequenceHandler {
       if (!isAccessAllowed) {
         throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
       }
+      //this middleware will only be invoked when
       finished = await this.invokeMiddleware(context, {
-        chain: 'middleware.pre_invoke',
+        chain: MiddlewareChain.PreInvoke,
       });
 
       const result = await this.invoke(route, args);
