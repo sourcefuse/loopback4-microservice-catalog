@@ -9,5 +9,5 @@ export const enum ConfigKey {
 }
 
 export enum MiddlewareChain {
-  PreInvoke = 'middleware.pre-invoke',
+  PRE_INVOKE = 'preInvoke',
 }
