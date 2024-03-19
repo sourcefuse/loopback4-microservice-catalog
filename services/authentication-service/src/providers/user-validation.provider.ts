@@ -16,6 +16,8 @@ export class UserValidationProvider implements Provider<UserValidationFn> {
     private keycloakAuthenticationProvider: AuthenticationProviderFn,
     @inject(UserValidationServiceBindings.AZURE_AD_AUTHENTICATION)
     private azureAuthenticationProvider: AuthenticationProviderFn,
+    @inject(UserValidationServiceBindings.COGNITO_AUTHENTICATION)
+    private cognitoAuthenticationProvider: AuthenticationProviderFn,
     @inject(UserValidationServiceBindings.DEFAULT_AUTHENTICATION)
     private defaultAuthneticationProvider: AuthenticationProviderFn,
   ) {}
@@ -54,6 +56,13 @@ export class UserValidationProvider implements Provider<UserValidationFn> {
         break;
       case SignUpProviderKey.Azure:
         isAuthenticated = await this.azureAuthenticationProvider(
+          refreshToken,
+          req,
+          payload,
+        );
+        break;
+      case SignUpProviderKey.Cognito:
+        isAuthenticated = await this.cognitoAuthenticationProvider(
           refreshToken,
           req,
           payload,

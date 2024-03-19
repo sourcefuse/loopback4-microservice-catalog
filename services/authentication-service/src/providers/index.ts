@@ -12,6 +12,7 @@ export * from './azure-pre-verify.provider';
 export * from './bearer-verify.provider';
 export * from './code-reader.provider';
 export * from './code-writer.provider';
+export * from './cognito-authentication.provider';
 export * from './cognito-oauth2-signup.provider';
 export * from './cognito-post-verify.provider';
 export * from './cognito-pre-verify.provider';

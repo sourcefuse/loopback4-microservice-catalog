@@ -173,6 +173,10 @@ export namespace UserValidationServiceBindings {
     BindingKey.create<AuthenticationProviderFn>(
       `${BINDING_PREFIX}.auth.authenticateAzureADUser`,
     );
+  export const COGNITO_AUTHENTICATION =
+    BindingKey.create<AuthenticationProviderFn>(
+      `${BINDING_PREFIX}.auth.authenticateCognitoUser`,
+    );
   export const DEFAULT_AUTHENTICATION =
     BindingKey.create<AuthenticationProviderFn>(
       `${BINDING_PREFIX}.auth.defaultAuthentication`,
