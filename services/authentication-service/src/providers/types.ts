@@ -48,6 +48,11 @@ export type AuthenticationProviderFn = (
 ) => Promise<boolean>;
 
 export type PasswordDecryptionFn = (password: string) => Promise<string>;
+export type PasswordHashingFn = (password?: string) => Promise<string>;
+export type PasswordVerifyFn = (
+  plainPassword: string,
+  hashedPassword: string,
+) => Promise<boolean>;
 export type InstagramSignUpFn = (
   profile: InstagramStrategy.Profile,
 ) => Promise<(User & UserRelations) | null>;
