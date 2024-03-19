@@ -54,6 +54,18 @@
               "type": "string",
               "format": "date-time"
             }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
           }
         ],
         "operationId": "LoginActivityController.getActiveUsers"
@@ -2296,6 +2308,27 @@
         "additionalProperties": false
       },
       "Date": {},
+      "ActiveUsersFilter": {
+        "title": "ActiveUsersFilter",
+        "type": "object",
+        "properties": {
+          "inclusion": {
+            "type": "boolean"
+          },
+          "userIdentity": {
+            "type": "string"
+          },
+          "userIdentifier": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "inclusion",
+          "userIdentity",
+          "userIdentifier"
+        ],
+        "additionalProperties": false
+      },
       "loopback.Count": {
         "type": "object",
         "title": "loopback.Count",

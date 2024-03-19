@@ -2,6 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {ActiveUsersFilter} from './active-users-filter.model';
 import {AuthClient} from './auth-client.model';
 import {AuthSecureClient} from './auth-secure-client.model';
 import {ForgetPasswordDto} from './forget-password-dto.model';
@@ -28,11 +29,13 @@ import {UserTenant} from './user-tenant.model';
 import {User} from './user.model';
 
 export * from './';
+export * from './active-users-filter.model';
 export * from './auth-client.model';
 export * from './auth-secure-client.model';
 export * from './forget-password-dto.model';
 export * from './forget-password-response-dto.model';
 export * from './local-user-profile';
+export * from './login-activity.model';
 export * from './otp-cache.model';
 export * from './otp.model';
 export * from './refresh-token-request.model';
@@ -51,7 +54,6 @@ export * from './user-level-permission.model';
 export * from './user-level-resource.model';
 export * from './user-tenant.model';
 export * from './user.model';
-export * from './login-activity.model';
 
 export const models = [
   User,
@@ -78,4 +80,5 @@ export const models = [
   SignupWithTokenReponseDto,
   LocalUserProfileDto,
   LoginActivity,
+  ActiveUsersFilter,
 ];

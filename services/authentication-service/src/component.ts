@@ -112,7 +112,11 @@ import {UserValidationProvider} from './providers/user-validation.provider';
 import {repositories} from './repositories/index';
 import {repositories as sequelizeRepositories} from './repositories/sequelize';
 import {MySequence} from './sequence';
-import {LoginHelperService, OtpService} from './services';
+import {
+  ActiveUserFilterBuilderService,
+  LoginHelperService,
+  OtpService,
+} from './services';
 import {IAuthServiceConfig, IMfaConfig, IOtpConfig} from './types';
 
 export class AuthenticationServiceComponent implements Component {
@@ -179,11 +183,16 @@ export class AuthenticationServiceComponent implements Component {
       .bind('services.LoginHelperService')
       .toClass(LoginHelperService);
     this.application.bind('services.otpService').toClass(OtpService);
-    this.application.bind(AuthServiceBindings.ActorIdKey).to('userId');
+
+    //set the userActivity to false by default
     this.application
       .bind(AuthServiceBindings.MarkUserActivity)
       .to({markUserActivity: false});
     this.models = models;
+    this.application
+      .bind('services.ActiveUserFilterBuilderService')
+      .toClass(ActiveUserFilterBuilderService);
+    this.application.bind(AuthServiceBindings.ActorIdKey).to('userId');
 
     this.controllers = controllers;
   }
