@@ -4,4 +4,5 @@ export const enum SignUpProviderKey {
   Facebook = 'facebook',
   Azure = 'azure',
   Apple = 'apple',
+  Cognito = 'aws-cognito',
 }

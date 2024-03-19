@@ -61,6 +61,7 @@ import {
   AzurePostVerifyProvider,
   AzurePreVerifyProvider,
   CodeWriterProvider,
+  CognitoAuthenticationProvider,
   CognitoOauth2SignupProvider,
   CognitoPostVerifyProvider,
   CognitoPreVerifyProvider,
@@ -313,6 +314,8 @@ export class AuthenticationServiceComponent implements Component {
       KeycloakAuthenticationProvider;
     this.providers[UserValidationServiceBindings.AZURE_AD_AUTHENTICATION.key] =
       AzureAuthenticationProvider;
+    this.providers[UserValidationServiceBindings.COGNITO_AUTHENTICATION.key] =
+      CognitoAuthenticationProvider;
     this.providers[UserValidationServiceBindings.DEFAULT_AUTHENTICATION.key] =
       DeafultAuthenticationProvider;
     this.application.bind(AuthenticationBindings.USER_MODEL.key).to(AuthUser);
