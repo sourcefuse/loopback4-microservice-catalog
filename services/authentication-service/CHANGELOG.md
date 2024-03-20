@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>16.0.4 (2024-03-20)</small>
+
+* fix(authentication-service):provide support to manage tokens for user logging in and logging out via ([c19cc9d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c19cc9d)), closes [#1943](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1943) [#1924](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1924) [#1939](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1939)
+* fix(authentication-service): provide support to manage tokens for user logging in via Azure (#1925) ([1c9a713](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1c9a713)), closes [#1925](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1925) [#1924](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1924) [#1924](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1924) [#1924](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1924)
+
+
+
+
+
 ## <small>16.0.3 (2024-03-12)</small>
 
 **Note:** Version bump only for package @sourceloop/authentication-service

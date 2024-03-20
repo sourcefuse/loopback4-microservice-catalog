@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>9.0.5 (2024-03-20)</small>
+
+**Note:** Version bump only for package @sourceloop/in-mail-service
+
+
+
+
+
 ## <small>9.0.4 (2024-03-12)</small>
 
 * docs(all-services): update services readme (#2000) ([93a7f91](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/93a7f91)), closes [#2000](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2000)

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>11.1.6 (2024-03-20)</small>
+
+**Note:** Version bump only for package @sourceloop/payment-service
+
+
+
+
+
 ## <small>11.1.5 (2024-03-12)</small>
 
 **Note:** Version bump only for package @sourceloop/payment-service

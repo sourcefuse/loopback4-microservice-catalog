@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.7.1 (2024-03-20)</small>
+
+**Note:** Version bump only for package @sourceloop/task-service
+
+
+
+
+
 ## 0.7.0 (2024-03-12)
 
 * feat(task-service): delete process instances on Camunda for deleted tasks (#2028) ([e5d8540](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e5d8540)), closes [#2028](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2028) [#1972](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1972)

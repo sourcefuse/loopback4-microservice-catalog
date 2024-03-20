@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 12.1.0 (2024-03-20)
+
+* feat(core): add provision in logs to save tenant information (#1967) ([e079034](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e079034)), closes [#1967](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1967) [#1918](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1918) [#1918](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1918) [#1918](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1918) [#1918](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1918)
+
+
+
+
+
 ## 12.0.0 (2024-03-12)
 
 * feat(core): generate application logs in proper format (#2015) ([8b784be](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8b784be)), closes [#2015](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2015) [#1918](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1918) [#1918](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1918) [#1918](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1918) [#1918](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1918) [#1918](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1918)

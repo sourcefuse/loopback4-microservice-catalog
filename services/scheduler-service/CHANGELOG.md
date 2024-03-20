@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>10.0.5 (2024-03-20)</small>
+
+**Note:** Version bump only for package @sourceloop/scheduler-service
+
+
+
+
+
 ## <small>10.0.4 (2024-03-12)</small>
 
 * fix(all-services): fix the pending sonar issues in all services (#2025) ([b2f6dc3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b2f6dc3)), closes [#2025](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2025) [#2013](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2013)

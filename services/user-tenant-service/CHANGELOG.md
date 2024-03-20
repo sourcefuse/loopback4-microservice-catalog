@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.15.4 (2024-03-20)</small>
+
+**Note:** Version bump only for package @sourceloop/user-tenant-service
+
+
+
+
+
 ## <small>0.15.3 (2024-03-12)</small>
 
 * fix(user-tenant-service): enable the ability to override the model (#2031) ([27f32fd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/27f32fd)), closes [#2031](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2031)
