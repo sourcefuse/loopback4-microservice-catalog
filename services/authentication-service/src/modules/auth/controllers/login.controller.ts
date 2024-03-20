@@ -5,14 +5,14 @@
 import {inject} from '@loopback/context';
 import {AnyObject, DataObject, Model, repository} from '@loopback/repository';
 import {
+  HttpErrors,
+  RequestContext,
   get,
   getModelSchemaRef,
-  HttpErrors,
   param,
   patch,
   post,
   requestBody,
-  RequestContext,
 } from '@loopback/rest';
 import {
   AuthenticateErrorKeys,
@@ -30,14 +30,14 @@ import {
 import crypto from 'crypto';
 import * as jwt from 'jsonwebtoken';
 import {
-  authenticate,
-  authenticateClient,
-  AuthenticationBindings,
   AuthErrorKeys,
+  AuthenticationBindings,
   ClientAuthCode,
   STRATEGY,
+  authenticate,
+  authenticateClient,
 } from 'loopback4-authentication';
-import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
+import {AuthorizeErrorKeys, authorize} from 'loopback4-authorization';
 import moment from 'moment-timezone';
 import {LoginType} from '../../../enums';
 import {AuthServiceBindings} from '../../../keys';
@@ -52,8 +52,8 @@ import {
   AuthCodeBindings,
   AuthCodeGeneratorFn,
   CodeReaderFn,
-  JwtPayloadFn,
   JWTSignerFn,
+  JwtPayloadFn,
   UserValidationServiceBindings,
 } from '../../../providers';
 import {
@@ -70,7 +70,7 @@ import {
   UserRepository,
   UserTenantRepository,
 } from '../../../repositories';
-import {LoginHelperService} from '../../../services';
+import {LoginHelperService, UserHelperService} from '../../../services';
 import {
   ActorId,
   ExternalTokens,
@@ -120,6 +120,8 @@ export class LoginController {
     private readonly getJwtPayload: JwtPayloadFn,
     @inject('services.LoginHelperService')
     private readonly loginHelperService: LoginHelperService,
+    @inject('services.UserHelperService')
+    private readonly userHelperService: UserHelperService,
     @inject(AuthCodeBindings.AUTH_CODE_GENERATOR_PROVIDER)
     private readonly getAuthCode: AuthCodeGeneratorFn,
     @inject(AuthCodeBindings.JWT_SIGNER)
@@ -222,9 +224,9 @@ export class LoginController {
 
       if (
         payload.user?.id &&
-        !(await this.userRepo.firstTimeUser(payload.user.id))
+        !(await this.userHelperService.firstTimeUser(payload.user.id))
       ) {
-        await this.userRepo.updateLastLogin(payload.user.id);
+        await this.userHelperService.updateLastLogin(payload.user.id);
       }
 
       return await this.createJWT(payload, this.client, LoginType.ACCESS);
@@ -277,9 +279,9 @@ export class LoginController {
 
       if (
         payload.userId &&
-        !(await this.userRepo.firstTimeUser(payload.userId))
+        !(await this.userHelperService.firstTimeUser(payload.userId))
       ) {
-        await this.userRepo.updateLastLogin(payload.userId);
+        await this.userHelperService.updateLastLogin(payload.userId);
       }
 
       return await this.createJWT(payload, authClient, LoginType.ACCESS);
@@ -443,20 +445,25 @@ export class LoginController {
       let newPassword = password;
       if (process.env.PRIVATE_DECRYPTION_KEY) {
         const decryptedOldPassword =
-          await this.userRepo.decryptPassword(oldPassword);
+          await this.userHelperService.decryptPassword(oldPassword);
         const decryptedNewPassword =
-          await this.userRepo.decryptPassword(password);
+          await this.userHelperService.decryptPassword(password);
         oldPassword = decryptedOldPassword;
         newPassword = decryptedNewPassword;
       }
-      return this.userRepo.updatePassword(userName, oldPassword, newPassword);
+      return this.userHelperService.updatePassword(
+        userName,
+        oldPassword,
+        newPassword,
+      );
     } else {
       let newPassword = password;
       if (process.env.PRIVATE_DECRYPTION_KEY) {
-        const decryptedPassword = await this.userRepo.decryptPassword(password);
+        const decryptedPassword =
+          await this.userHelperService.decryptPassword(password);
         newPassword = decryptedPassword;
       }
-      return this.userRepo.changePassword(userName, newPassword);
+      return this.userHelperService.changePassword(userName, newPassword);
     }
   }
   @authenticate(STRATEGY.BEARER, {

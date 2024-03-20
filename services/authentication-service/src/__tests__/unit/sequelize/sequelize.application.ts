@@ -13,6 +13,7 @@ import {AuthenticationServiceComponent} from '../../../component';
 
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {AuthServiceBindings} from '../../../keys';
+import {UserHelperService} from '../../../services';
 import {AuthCacheSourceName, AuthDbSourceName} from '../../../types';
 export {ApplicationConfig};
 
@@ -49,6 +50,7 @@ export class SequelizeAuthenticationServiceApplication extends BootMixin(
       useCustomSequence: false,
       useSequelize: true,
     });
+    this.bind('services.userHelperService').toClass(UserHelperService);
     this.component(AuthenticationServiceComponent);
     this.projectRoot = __dirname;
     this.bootOptions = {
