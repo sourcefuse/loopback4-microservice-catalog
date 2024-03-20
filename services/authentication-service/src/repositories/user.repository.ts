@@ -41,7 +41,6 @@ import {OtpRepository} from './otp.repository';
 import {TenantRepository} from './tenant.repository';
 import {UserCredentialsRepository} from './user-credentials.repository';
 import {UserTenantRepository} from './user-tenant.repository';
-const saltRounds = 10;
 export class UserRepository extends DefaultSoftCrudRepository<
   User,
   typeof User.prototype.id,

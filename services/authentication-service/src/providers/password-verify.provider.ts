@@ -4,7 +4,11 @@ import {PasswordVerifyFn} from './types';
 
 export class PasswordVerifyProvider implements Provider<PasswordVerifyFn> {
   value(): PasswordVerifyFn {
-    return async (plainPassword: string, hashedPassword: string) => {
+    return async (
+      plainPassword: string,
+      hashedPassword: string,
+      key?: string,
+    ) => {
       return bcrypt.compare(plainPassword, hashedPassword);
     };
   }
