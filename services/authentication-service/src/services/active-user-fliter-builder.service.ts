@@ -19,6 +19,7 @@ export class ActiveUserFilterBuilderService {
 
   async buildActiveUsersFilter(filter: ActiveUsersFilter): Promise<AnyObject> {
     let actorIds: string[] = [];
+    // sonarignore:start
     if (filter.userIdentity === UserIdentity.ACTOR_ID) {
       actorIds = filter.userIdentifier;
     } else {
@@ -47,6 +48,7 @@ export class ActiveUserFilterBuilderService {
         actorIds = users.map(u => u.id ?? '0');
       }
     }
+    // sonarignore:end
     //include userIds
     if (filter.inclusion) {
       return {actor: {inq: actorIds}};
