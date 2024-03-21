@@ -369,9 +369,6 @@
           "actor": {
             "type": "string"
           },
-          "tenantId": {
-            "type": "string"
-          },
           "before": {
             "type": "object"
           },
@@ -379,6 +376,9 @@
             "type": "object"
           },
           "actionGroup": {
+            "type": "string"
+          },
+          "tenantId": {
             "type": "string"
           }
         },
@@ -450,13 +450,13 @@
           "operation": {
             "type": "string"
           },
-          "tenantId": {
-            "type": "string"
-          },
           "filterUsed": {
             "type": "object"
           },
           "result": {
+            "type": "string"
+          },
+          "tenantId": {
             "type": "string"
           }
         },
@@ -494,9 +494,6 @@
           "actor": {
             "type": "string"
           },
-          "tenantId": {
-            "type": "string"
-          },
           "before": {
             "type": "object"
           },
@@ -504,6 +501,9 @@
             "type": "object"
           },
           "actionGroup": {
+            "type": "string"
+          },
+          "tenantId": {
             "type": "string"
           }
         },
@@ -620,9 +620,6 @@
                   "actor": {
                     "type": "boolean"
                   },
-                  "tenantId": {
-                    "type": "boolean"
-                  },
                   "before": {
                     "type": "boolean"
                   },
@@ -630,6 +627,9 @@
                     "type": "boolean"
                   },
                   "actionGroup": {
+                    "type": "boolean"
+                  },
+                  "tenantId": {
                     "type": "boolean"
                   }
                 },
@@ -706,9 +706,6 @@
                   "actor": {
                     "type": "boolean"
                   },
-                  "tenantId": {
-                    "type": "boolean"
-                  },
                   "before": {
                     "type": "boolean"
                   },
@@ -716,6 +713,9 @@
                     "type": "boolean"
                   },
                   "actionGroup": {
+                    "type": "boolean"
+                  },
+                  "tenantId": {
                     "type": "boolean"
                   }
                 },

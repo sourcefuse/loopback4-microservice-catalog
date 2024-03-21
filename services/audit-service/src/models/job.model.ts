@@ -28,13 +28,6 @@ export class Job extends CoreEntity<Job> {
   operation: OperationKey;
 
   @property({
-    name: 'tenant_id',
-    type: 'string',
-    required: true,
-  })
-  tenantId: string;
-
-  @property({
     name: 'filter_used',
     type: 'object',
   })

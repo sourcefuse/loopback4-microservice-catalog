@@ -1,7 +1,6 @@
 import {BindingScope, inject, injectable} from '@loopback/core';
 import {EntityCrudRepository, Filter, repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
-import {AuditLog, AuditLogRepository} from '@sourceloop/audit-log';
 import {FileStatusKey} from '../enums/file-status-key.enum';
 import {OperationKey} from '../enums/operation-key.enum';
 import {
@@ -9,8 +8,17 @@ import {
   ColumnBuilderServiceBindings,
   QuerySelectedFilesServiceBindings,
 } from '../keys';
-import {CustomFilter, Job, MappingLog} from '../models';
-import {JobRepository, MappingLogRepository} from '../repositories';
+import {AuditLog, CustomFilter} from '../models';
+import {
+  Job,
+  MappingLog,
+  AuditLog as TenantAuditLog,
+} from '../models/tenant-support';
+import {
+  AuditLogRepository,
+  JobRepository,
+  MappingLogRepository,
+} from '../repositories';
 import {
   AuditLogExportFn,
   ColumnBuilderFn,
@@ -31,7 +39,7 @@ export class JobProcessingService {
     @repository(JobRepository)
     public jobRepository: EntityCrudRepository<Job, string, {}>,
     @repository(AuditLogRepository)
-    public auditLogRepository: EntityCrudRepository<AuditLog, string, {}>,
+    public auditLogRepository: EntityCrudRepository<TenantAuditLog, string, {}>,
   ) {}
 
   async start(jobId: string) {

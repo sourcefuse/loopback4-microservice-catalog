@@ -1,6 +1,6 @@
 import {BindingKey} from '@loopback/core';
 import {TenantUtilitiesComponent} from './component';
-import {EntityWithTenantId, ITenantGuard} from './types';
+import {EntityWithTenantId, IDisableTenantGuard, ITenantGuard} from './types';
 
 export const TenantUtilitiesNamespace = 'sourceloop.tenant.utilities';
 export namespace TenantUtilitiesBindings {
@@ -10,4 +10,9 @@ export namespace TenantUtilitiesBindings {
   export const GuardService = BindingKey.create<
     ITenantGuard<EntityWithTenantId, string | number>
   >(`${TenantUtilitiesNamespace}.TenantGuardService`);
+
+  export const DisableTenantGuard =
+    BindingKey.create<IDisableTenantGuard | null>(
+      `${TenantUtilitiesNamespace}.DisableTenantGuard`,
+    );
 }
