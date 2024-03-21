@@ -4,6 +4,7 @@
 // https://opensource.org/licenses/MIT
 import {BindingKey} from '@loopback/core';
 import {ExpressRequestHandler} from '@loopback/rest';
+import {SetupDatasourceFn} from 'loopback4-dynamic-datasource';
 import {BINDING_PREFIX} from './constants';
 import {HttpMethod} from './enums';
 import {
