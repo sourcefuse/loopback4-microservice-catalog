@@ -3,7 +3,7 @@ import {createStubInstance, expect} from '@loopback/testlab';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {FileStatusKey} from '../../enums/file-status-key.enum';
 import {OperationKey} from '../../enums/operation-key.enum';
-import {Job} from '../../models';
+import {Job} from '../../models/tenant-support';
 import {JobRepository} from '../../repositories';
 import {AuditLogExportProvider} from '../../services';
 import {DummyAuditServiceApplication} from '../fixtures/dummy-application';

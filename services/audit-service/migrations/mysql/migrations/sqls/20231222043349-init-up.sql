@@ -7,7 +7,6 @@ CREATE TABLE audit_logs (
 	action_key              TEXT NOT NULL,
 	entity_id               TEXT NOT NULL,
 	actor                   TEXT NOT NULL,
-	tenant_id				VARCHAR(36) NOT NULL,
 	`before`                TEXT NULL,
 	`after`                 TEXT NULL,
 	action_group            TEXT NULL

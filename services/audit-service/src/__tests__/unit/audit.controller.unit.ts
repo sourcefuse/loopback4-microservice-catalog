@@ -14,7 +14,7 @@ import {AnyObject, Filter} from '@loopback/repository';
 import {AuditLog, AuditLogRepository} from '@sourceloop/audit-log';
 import {AuditController} from '../../controllers';
 import {FileStatusKey} from '../../enums/file-status-key.enum';
-import {Job} from '../../models';
+import {Job} from '../../models/tenant-support';
 import {JobRepository, MappingLogRepository} from '../../repositories';
 import {ColumnBuilderProvider, JobProcessingService} from '../../services';
 import {AuditLogExportFn, ExportToCsvFn} from '../../types';

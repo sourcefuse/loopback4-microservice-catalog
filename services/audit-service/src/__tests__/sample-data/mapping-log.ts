@@ -1,7 +1,6 @@
 import {JSONObject} from '@loopback/core';
-import {MappingLog} from '../../models';
+import {MappingLog} from '../../models/tenant-support';
 
-const tenantId = 'fac65aad-3f01-dd25-3ea0-ee6563fbe02b';
 export const mappingLog: MappingLog = new MappingLog({
   id: '1',
   filterUsed: {
@@ -12,7 +11,6 @@ export const mappingLog: MappingLog = new MappingLog({
     actedOn: 'Product',
     deleted: false,
   },
-  tenantId: tenantId,
   fileName: 'alpha.csv',
 });
 
@@ -27,7 +25,6 @@ export const listMappingLogs: MappingLog[] = [
       deleted: false,
     } as JSONObject,
     fileName: 'archive1.csv',
-    tenantId: tenantId,
   }),
   new MappingLog({
     filterUsed: {
@@ -39,6 +36,5 @@ export const listMappingLogs: MappingLog[] = [
       deleted: true,
     } as JSONObject,
     fileName: 'archive2.csv',
-    tenantId: tenantId,
   }),
 ];

@@ -2,7 +2,8 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Action, AuditLog} from '@sourceloop/audit-log';
+import {Action} from '@sourceloop/audit-log';
+import {AuditLog} from '../../models/tenant-support';
 
 export const dummyLog: AuditLog = new AuditLog({
   action: Action.INSERT_ONE,

@@ -30,24 +30,25 @@ import {
   AuthenticationBindings,
   STRATEGY,
 } from 'loopback4-authentication';
-import {authorize} from 'loopback4-authorization';
+import { authorize } from 'loopback4-authorization';
 
-import {inject, service} from '@loopback/core';
-import {FileStatusKey} from '../enums/file-status-key.enum';
-import {OperationKey} from '../enums/operation-key.enum';
-import {PermissionKey} from '../enums/permission-key.enum';
+import { inject, service } from '@loopback/core';
+import { FileStatusKey } from '../enums/file-status-key.enum';
+import { OperationKey } from '../enums/operation-key.enum';
+import { PermissionKey } from '../enums/permission-key.enum';
 import {
   AuditLogExportServiceBindings,
   ColumnBuilderServiceBindings,
   ExportToCsvServiceBindings,
 } from '../keys';
-import {AuditLog, CustomFilter, Job, MappingLog} from '../models';
+import { CustomFilter } from '../models';
+import { AuditLog, Job, MappingLog } from '../models/tenant-support';
 import {
   AuditLogRepository,
   JobRepository,
   MappingLogRepository,
 } from '../repositories';
-import {JobProcessingService} from '../services';
+import { JobProcessingService } from '../services';
 import {
   ArchiveOutput,
   AuditLogExportFn,
@@ -55,7 +56,7 @@ import {
   ExportResponse,
   ExportToCsvFn,
 } from '../types';
-import {constructWhere} from '../utils/construct-where';
+import { constructWhere } from '../utils/construct-where';
 
 const basePath = '/audit-logs';
 
@@ -77,7 +78,7 @@ export class AuditController {
     public columnBuilderService: ColumnBuilderFn,
     @inject(AuthenticationBindings.CURRENT_USER)
     private readonly currentUser: IAuthUserWithPermissions,
-  ) {}
+  ) { }
 
   @authenticate(STRATEGY.BEARER)
   @authorize({
@@ -88,7 +89,7 @@ export class AuditController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'AuditLog model instance',
-        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(AuditLog)}},
+        content: { [CONTENT_TYPE.JSON]: { schema: getModelSchemaRef(AuditLog) } },
       },
     },
   })
@@ -118,7 +119,7 @@ export class AuditController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'AuditLog model count',
-        content: {[CONTENT_TYPE.JSON]: {schema: CountSchema}},
+        content: { [CONTENT_TYPE.JSON]: { schema: CountSchema } },
       },
     },
   })
@@ -139,7 +140,7 @@ export class AuditController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Job, {includeRelations: true}),
+              items: getModelSchemaRef(Job, { includeRelations: true }),
             },
           },
         },
@@ -169,7 +170,7 @@ export class AuditController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(AuditLog, {includeRelations: true}),
+              items: getModelSchemaRef(AuditLog, { includeRelations: true }),
             },
           },
         },
@@ -186,13 +187,12 @@ export class AuditController {
         filterUsed: filter,
         status: FileStatusKey.PENDING,
         operation: OperationKey.QUERY,
-        tenantId: this.currentUser.tenantId,
       });
 
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
       this.jobProcessingService.start(job.getId());
 
-      return {jobId: job.getId()};
+      return { jobId: job.getId() };
     } else {
       const result = await this.auditLogRepository.find(filter);
       return result;
@@ -210,7 +210,7 @@ export class AuditController {
         description: 'AuditLog model instance',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(AuditLog, {includeRelations: true}),
+            schema: getModelSchemaRef(AuditLog, { includeRelations: true }),
           },
         },
       },
@@ -218,7 +218,7 @@ export class AuditController {
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(AuditLog, {exclude: 'where'})
+    @param.filter(AuditLog, { exclude: 'where' })
     filter?: FilterExcludingWhere<AuditLog>,
   ): Promise<AuditLog> {
     return this.auditLogRepository.findById(id, filter);
@@ -249,9 +249,9 @@ export class AuditController {
         schema: {
           type: 'object',
           properties: {
-            message: {type: 'string'},
-            numberOfEntriesArchived: {type: 'number'},
-            file: {type: 'string'},
+            message: { type: 'string' },
+            numberOfEntriesArchived: { type: 'number' },
+            file: { type: 'string' },
           },
         },
       },
@@ -289,12 +289,12 @@ export class AuditController {
       for (const selectedAuditLog of selectedAuditLogsOld) {
         const noDuplicateCondition: Where = {
           and: [
-            {entityId: selectedAuditLog.entityId},
-            {id: {neq: selectedAuditLog.id}},
+            { entityId: selectedAuditLog.entityId },
+            { id: { neq: selectedAuditLog.id } },
           ],
         };
         selectedAuditLogs = selectedAuditLogs.concat(
-          await this.auditLogRepository.find({where: noDuplicateCondition}),
+          await this.auditLogRepository.find({ where: noDuplicateCondition }),
         );
       }
     }
@@ -333,8 +333,8 @@ export class AuditController {
       for (const selectedAuditLog of selectedAuditLogsOld) {
         const deleteCondition: Where = {
           and: [
-            {entityId: selectedAuditLog.entityId},
-            {id: {neq: selectedAuditLog.id}},
+            { entityId: selectedAuditLog.entityId },
+            { id: { neq: selectedAuditLog.id } },
           ],
         };
         await this.auditLogRepository.deleteAll(deleteCondition);
@@ -362,8 +362,8 @@ export class AuditController {
             schema: {
               type: 'object',
               properties: {
-                jobId: {type: 'string'},
-                message: {type: 'string'},
+                jobId: { type: 'string' },
+                message: { type: 'string' },
               },
             },
           },
@@ -381,20 +381,19 @@ export class AuditController {
         filterUsed: filter,
         status: FileStatusKey.PENDING,
         operation: OperationKey.EXPORT,
-        tenantId: this.currentUser.tenantId,
       });
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
       this.jobProcessingService.start(job.getId());
 
-      return {jobId: job.getId()};
+      return { jobId: job.getId() };
     } else {
       const result = await this.auditLogRepository.find(filter);
       if (result.length === 0) {
-        return {message: 'No data to be exported'};
+        return { message: 'No data to be exported' };
       }
       const customColumnData = await this.columnBuilderService(result);
       await this.auditLogExportService(customColumnData);
-      return {message: 'Audit logs exported successfully.'};
+      return { message: 'Audit logs exported successfully.' };
     }
   }
 }

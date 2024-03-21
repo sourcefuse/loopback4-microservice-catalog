@@ -1,9 +1,9 @@
 import {inject} from '@loopback/core';
-import {DefaultCrudRepository, juggler} from '@loopback/repository';
+import {DefaultCrudRepository, Entity, juggler} from '@loopback/repository';
 import {AuditDbSourceName} from '@sourceloop/audit-log';
 
 import {tenantGuard} from '@sourceloop/core';
-import {MappingLog} from '../models';
+import {MappingLog} from '../models/tenant-support';
 
 @tenantGuard()
 export class MappingLogRepository extends DefaultCrudRepository<
@@ -12,7 +12,9 @@ export class MappingLogRepository extends DefaultCrudRepository<
 > {
   constructor(
     @inject(`datasources.${AuditDbSourceName}`) dataSource: juggler.DataSource,
+    @inject('models.MappingLog')
+    private readonly mappingLog: typeof Entity & {prototype: MappingLog},
   ) {
-    super(MappingLog, dataSource);
+    super(mappingLog, dataSource);
   }
 }
