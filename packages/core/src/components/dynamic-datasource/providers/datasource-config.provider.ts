@@ -27,9 +27,9 @@ export class DataSourceConfigProvider
         const parameterStr = data.Parameter.Value
           ? data.Parameter.Value.replace(/\n/gm, '')
           : '';
-        return JSON.parse(parameterStr);
+        return [JSON.parse(parameterStr)];
       }
-      return {};
+      return [];
     };
   }
 }

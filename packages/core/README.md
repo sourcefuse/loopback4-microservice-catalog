@@ -397,6 +397,29 @@ export class TestWithoutGuardRepo extends DefaultTransactionalRepository<
 }
 ```
 
+### Dynamic DataSource Component
+
+There can be scenariors where you wish to dynamicaly switch your datasources based on certain conditions or configurations. Our `DynamicDatasourceComponent` will be of great use in such cases. This component internally uses [loopback4-dynamic-datasource](https://github.com/sourcefuse/loopback4-dynamic-datasource). Our component binds this parent component, uses the middleware provider and provides default implementation where we identify the datasource based on the current users tenantId and fetch the datasource config values through AWS SSM.
+
+All you need to do is
+bind the component in your application.ts file
+
+```ts
+import {DynamicDatasourceComponent} from '@sourceloop/core';
+
+this.component(DynamicDatasourceComponent);
+```
+
+and provide the list of datasource binding key for each datasource needed in your application.
+
+```ts
+import {DynamicDataSourceBinding} from '@sourceloop/core';
+
+this.bind(DynamicDataSourceBinding.CONFIG).to({dataSourceNames: ['authDb']});
+```
+
+This key will be one that we use in repository class through `datasources.authDb`
+
 ### Service
 
 #### With Mixin

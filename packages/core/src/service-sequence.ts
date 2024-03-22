@@ -110,7 +110,7 @@ export class ServiceSequence implements SequenceHandler {
       finished = await this.invokeMiddleware(context, {
         chain: MiddlewareChain.PRE_INVOKE,
       });
-
+      if (finished) return;
       const result = await this.invoke(route, args);
       this.send(response, result);
     } catch (err) {

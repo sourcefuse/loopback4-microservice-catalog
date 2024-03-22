@@ -12,20 +12,12 @@ import {
   inject,
 } from '@loopback/core';
 import {AnyObject} from '@loopback/repository';
-import {
-  ExpressRequestHandler,
-  RestApplication,
-  createMiddlewareBinding,
-} from '@loopback/rest';
+import {ExpressRequestHandler, RestApplication} from '@loopback/rest';
 import {configure} from 'i18n';
 import {cloneDeep} from 'lodash';
 
 import {IncomingMessage, ServerResponse} from 'http';
-import {
-  DynamicDatasourceBindings,
-  DynamicDatasourceMiddlewareProvider,
-  Loopback4DynamicDatasourceComponent,
-} from 'loopback4-dynamic-datasource';
+
 import {Loopback4HelmetComponent} from 'loopback4-helmet';
 import {RateLimiterComponent} from 'loopback4-ratelimiter';
 import * as swstats from 'swagger-stats';
@@ -35,15 +27,9 @@ import {
 } from './components';
 import {OperationSpecEnhancer} from './enhancer/operation-spec-enhancer';
 import {LocaleKey} from './enums';
-import {DynamicDataSourceBinding, OASBindings, SFCoreBindings} from './keys';
+import {OASBindings, SFCoreBindings} from './keys';
 import {TenantContextMiddlewareInterceptorProvider} from './middlewares';
-import {
-  DataSourceConfigProvider,
-  DatasourceIdentifierProvider,
-  DatasourceProvider,
-} from './providers';
 import {TenantIdEncryptionProvider} from './providers/tenantid-encryption.provider';
-import {AwsSsmHelperService} from './services';
 import {CoreConfig, addTenantId} from './types';
 
 export class CoreComponent implements Component {
@@ -106,23 +92,6 @@ export class CoreComponent implements Component {
         objectNotation: '->' as any,
         // sonarignore:end
       });
-    }
-
-    if (this.coreConfig?.dynamicDataSource) {
-      //Bind loopback4-dynamic-datasource component
-      this.application.component(Loopback4DynamicDatasourceComponent);
-      this.bindings.push(
-        createMiddlewareBinding(DynamicDatasourceMiddlewareProvider),
-      );
-      //Bind Providers
-      this.providers[DynamicDatasourceBindings.DATASOURCE_PROVIDER.key] =
-        DatasourceProvider;
-      this.providers[
-        DynamicDatasourceBindings.DATASOURCE_IDENTIFIER_PROVIDER.key
-      ] = DatasourceIdentifierProvider;
-      this.providers[DynamicDataSourceBinding.DATA_SOURCE_CONFIG_PROVIDER.key] =
-        DataSourceConfigProvider;
-      this.services = [AwsSsmHelperService];
     }
 
     this.application.bind(SFCoreBindings.EXPRESS_MIDDLEWARES).to(middlewares);
