@@ -1,3 +1,4 @@
+import {inject} from '@loopback/core';
 import {
   Count,
   CountSchema,
@@ -21,8 +22,9 @@ import {STRATEGY, authenticate} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import moment from 'moment';
 import {ActiveUsersRange, PermissionKey} from '../enums';
-import {LoginActivity} from '../models';
+import {ActiveUsersFilter, LoginActivity} from '../models';
 import {LoginActivityRepository} from '../repositories';
+import {ActiveUserFilterBuilderService} from '../services';
 import {ActiveUsersGroupData} from '../types';
 
 const baseUrl = '/login-activity';
@@ -30,6 +32,8 @@ export class LoginActivityController {
   constructor(
     @repository(LoginActivityRepository)
     private readonly loginActivityRepo: LoginActivityRepository,
+    @inject('services.ActiveUserFilterBuilderService')
+    private readonly filterBuilder: ActiveUserFilterBuilderService,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {
@@ -134,10 +138,17 @@ export class LoginActivityController {
     @param.query.dateTime('startDate')
     startDate: Date,
     @param.query.dateTime('endDate') endDate: Date,
+    @param.query.object('filter')
+    filter?: ActiveUsersFilter,
   ): Promise<ActiveUsersGroupData> {
+    let optionalWhere = {};
+    if (filter) {
+      optionalWhere = await this.filterBuilder.buildActiveUsersFilter(filter);
+    }
     const activeUsersForTime = await this.loginActivityRepo.find({
       where: {
         loginTime: {between: [startDate, endDate]},
+        ...optionalWhere,
       },
     });
 
