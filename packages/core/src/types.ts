@@ -51,18 +51,6 @@ export interface CoreConfig {
     username?: string,
     password?: string,
   ) => boolean;
-  /**
-   * @param dynamicDataSource The property that lets us know if we want to dynamically switch datasouce
-   */
-  dynamicDataSource?: boolean;
-  /**
-   * @param dataSourceName The property is used while setting the datasource name property
-   */
-  dataSourceName?: string;
-}
-
-export interface DataSourceConfigProviderFn {
-  (tenantId: string): Promise<AnyObject>;
 }
 
 /**

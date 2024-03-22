@@ -15,8 +15,7 @@ export class AwsSsmHelperService {
       region: process.env.AWS_REGION,
       secretAccessKey: process.env.AWS_SECRET_KEY,
     });
-    // eslint-disable-next-line @typescript-eslint/return-await
-    return await ssm
+    return ssm
       .getParameter({
         Name: ssmKeyParamName,
         WithDecryption: true,

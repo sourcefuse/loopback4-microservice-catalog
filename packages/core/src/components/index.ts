@@ -3,6 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 export * from './bearer-verifier';
+export * from './dynamic-datasource';
 export * from './logger-extension';
 export * from './proxy-builder';
 export * from './swagger-authentication';
