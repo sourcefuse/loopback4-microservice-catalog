@@ -8,6 +8,8 @@ import {
   ForgotPasswordHandlerFn,
   JwtPayloadFn,
   PasswordDecryptionFn,
+  PasswordHashingFn,
+  PasswordVerifyFn,
 } from './providers';
 import {
   ActorId,
@@ -42,6 +44,12 @@ export namespace AuthServiceBindings {
     BindingKey.create<PasswordDecryptionFn>(
       `sf.auth.password.decryption.provider`,
     );
+  export const PASSWORD_HASHING_PROVIDER = BindingKey.create<PasswordHashingFn>(
+    `sf.auth.password.hashing.provider`,
+  );
+  export const PASSWORD_VERIFY_PROVIDER = BindingKey.create<PasswordVerifyFn>(
+    `sf.auth.password.verify.provider`,
+  );
   export const ForgotPasswordHandler =
     BindingKey.create<ForgotPasswordHandlerFn>(
       `${BINDING_PREFIX}.forgetpassword.handler.provider`,

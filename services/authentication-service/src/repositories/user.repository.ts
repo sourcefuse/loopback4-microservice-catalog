@@ -22,7 +22,6 @@ import {
   LOGGER,
   UserStatus,
 } from '@sourceloop/core';
-import * as bcrypt from 'bcrypt';
 import {AuthErrorKeys} from 'loopback4-authentication';
 import {AuthServiceBindings} from '../keys';
 import {
@@ -32,13 +31,16 @@ import {
   UserRelations,
   UserTenant,
 } from '../models';
-import {PasswordDecryptionFn} from '../providers';
+import {
+  PasswordDecryptionFn,
+  PasswordHashingFn,
+  PasswordVerifyFn,
+} from '../providers';
 import {AuthDbSourceName} from '../types';
 import {OtpRepository} from './otp.repository';
 import {TenantRepository} from './tenant.repository';
 import {UserCredentialsRepository} from './user-credentials.repository';
 import {UserTenantRepository} from './user-tenant.repository';
-const saltRounds = 10;
 export class UserRepository extends DefaultSoftCrudRepository<
   User,
   typeof User.prototype.id,
@@ -69,6 +71,10 @@ export class UserRepository extends DefaultSoftCrudRepository<
     @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
     @inject(AuthServiceBindings.PASSWORD_DECRYPTION_PROVIDER)
     private readonly passwordDecryptionFn: PasswordDecryptionFn,
+    @inject(AuthServiceBindings.PASSWORD_HASHING_PROVIDER)
+    private readonly passwordHashingFn: PasswordHashingFn,
+    @inject(AuthServiceBindings.PASSWORD_VERIFY_PROVIDER)
+    private readonly passwordVerifyFn: PasswordVerifyFn,
     @inject('models.User')
     private readonly user: typeof Entity & {prototype: User},
   ) {
@@ -104,10 +110,7 @@ export class UserRepository extends DefaultSoftCrudRepository<
     const user = await super.create(entity, options);
     try {
       // Add temporary password for first time
-      const password = (await bcrypt.hash(
-        process.env.USER_TEMP_PASSWORD as string,
-        saltRounds,
-      )) as string;
+      const password = await this.passwordHashingFn();
       const creds = new UserCredentials({
         authProvider: 'internal',
         password,
@@ -141,7 +144,7 @@ export class UserRepository extends DefaultSoftCrudRepository<
     } else if (
       !creds?.password ||
       creds.authProvider !== AuthProvider.INTERNAL ||
-      !(await bcrypt.compare(newPassword, creds.password))
+      !(await this.passwordVerifyFn(newPassword, creds.password))
     ) {
       this.logger.error('User creds not found in DB or is invalid');
       throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
@@ -166,9 +169,9 @@ export class UserRepository extends DefaultSoftCrudRepository<
       throw new HttpErrors.BadRequest(
         AuthenticateErrorKeys.PasswordCannotBeChanged,
       );
-    } else if (!(await bcrypt.compare(password, creds.password))) {
+    } else if (!(await this.passwordVerifyFn(password, creds.password))) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.WrongPassword);
-    } else if (await bcrypt.compare(newPassword, creds.password)) {
+    } else if (await this.passwordVerifyFn(newPassword, creds.password)) {
       throw new HttpErrors.Unauthorized(
         'Password cannot be same as previous password!',
       );
@@ -176,7 +179,7 @@ export class UserRepository extends DefaultSoftCrudRepository<
       // Do nothing
     }
     await this.credentials(user.id).patch({
-      password: await bcrypt.hash(newPassword, saltRounds),
+      password: await this.passwordHashingFn(newPassword),
     });
     return user;
   }
@@ -204,7 +207,7 @@ export class UserRepository extends DefaultSoftCrudRepository<
     }
     if ((!user || user.deleted) ?? !creds?.password) {
       throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
-    } else if (await bcrypt.compare(newPassword, creds.password)) {
+    } else if (await this.passwordVerifyFn(newPassword, creds.password)) {
       throw new HttpErrors.Unauthorized(
         'Password cannot be same as previous password!',
       );
@@ -212,7 +215,7 @@ export class UserRepository extends DefaultSoftCrudRepository<
       // DO nothing
     }
     await this.credentials(user.id).patch({
-      password: await bcrypt.hash(newPassword, saltRounds),
+      password: await this.passwordHashingFn(newPassword),
     });
     return user;
   }

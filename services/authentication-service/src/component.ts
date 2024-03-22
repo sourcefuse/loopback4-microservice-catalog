@@ -106,6 +106,8 @@ import {AzureAuthenticationProvider} from './providers/azure-authentication.prov
 import {DeafultAuthenticationProvider} from './providers/default-authentication.provider';
 import {GoogleAuthenticationProvider} from './providers/google-authentication.provider';
 import {KeycloakAuthenticationProvider} from './providers/keycloak-authentication.provider';
+import {PasswordHashingProvider} from './providers/password-hashing.provider';
+import {PasswordVerifyProvider} from './providers/password-verify.provider';
 import {UserValidationProvider} from './providers/user-validation.provider';
 import {repositories} from './repositories/index';
 import {repositories as sequelizeRepositories} from './repositories/sequelize';
@@ -266,6 +268,10 @@ export class AuthenticationServiceComponent implements Component {
       LocalSignupProvider;
     this.providers[AuthServiceBindings.PASSWORD_DECRYPTION_PROVIDER.key] =
       PasswordDecryptionProvider;
+    this.providers[AuthServiceBindings.PASSWORD_HASHING_PROVIDER.key] =
+      PasswordHashingProvider;
+    this.providers[AuthServiceBindings.PASSWORD_VERIFY_PROVIDER.key] =
+      PasswordVerifyProvider;
     this.providers[SignUpBindings.PRE_LOCAL_SIGNUP_PROVIDER.key] =
       LocalPreSignupProvider;
     this.providers[SignUpBindings.SIGNUP_HANDLER_PROVIDER.key] =
