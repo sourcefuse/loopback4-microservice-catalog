@@ -98,13 +98,14 @@ describe('', () => {
     await loginActivityRepo.deleteAll();
   }
   async function setMockData() {
+    const tokenPayload = 'encrypted payload';
     await loginActivityRepo.createAll([
       {
         id: '1',
         actor: 'user1',
         tenantId: 'tenant1',
         loginTime: new Date('2024-03-22T13:28:51.596Z'),
-        tokenPayload: '{encrypted payload}',
+        tokenPayload,
         loginType: LoginType.ACCESS,
         deviceInfo: 'chrome',
         ipAddress: 'ipaddress',
@@ -114,7 +115,7 @@ describe('', () => {
         actor: 'user1',
         tenantId: 'tenant1',
         loginTime: new Date('2024-03-22T14:28:51.596Z'),
-        tokenPayload: '{encrypted payload}',
+        tokenPayload,
         loginType: LoginType.RELOGIN,
         deviceInfo: 'chrome',
         ipAddress: 'ipaddress',
@@ -124,7 +125,7 @@ describe('', () => {
         actor: 'user1',
         tenantId: 'tenant1',
         loginTime: new Date('2024-03-22T15:28:51.596Z'),
-        tokenPayload: '{encrypted payload}',
+        tokenPayload,
         loginType: LoginType.LOGOUT,
         deviceInfo: 'chrome',
         ipAddress: 'ipaddress',
@@ -134,7 +135,7 @@ describe('', () => {
         actor: 'user1',
         tenantId: 'tenant1',
         loginTime: new Date('2024-03-23T13:28:51.596Z'),
-        tokenPayload: '{encrypted payload}',
+        tokenPayload,
         loginType: LoginType.ACCESS,
         deviceInfo: 'chrome',
         ipAddress: 'ipaddress',
@@ -144,7 +145,7 @@ describe('', () => {
         actor: 'user1',
         tenantId: 'tenant1',
         loginTime: new Date('2024-04-22T13:28:51.596Z'),
-        tokenPayload: '{encrypted payload}',
+        tokenPayload,
         loginType: LoginType.ACCESS,
         deviceInfo: 'chrome',
         ipAddress: 'ipaddress',
