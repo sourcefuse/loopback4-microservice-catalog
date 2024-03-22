@@ -9,7 +9,7 @@ import {ActorId} from '../types';
 @injectable({scope: BindingScope.TRANSIENT})
 export class ActiveUserFilterBuilderService {
   constructor(
-    @inject(AuthServiceBindings.ActorIdKey, {optional: true})
+    @inject(AuthServiceBindings.ActorIdKey)
     private readonly actorKey: ActorId,
     @repository(UserRepository)
     public userRepo: UserRepository,
