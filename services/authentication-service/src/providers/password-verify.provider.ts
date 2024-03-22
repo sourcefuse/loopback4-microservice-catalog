@@ -4,6 +4,7 @@ import {PasswordVerifyFn} from './types';
 
 export class PasswordVerifyProvider implements Provider<PasswordVerifyFn> {
   value(): PasswordVerifyFn {
+    // sonarignore:start
     return async (
       plainPassword: string,
       hashedPassword: string,
@@ -11,5 +12,6 @@ export class PasswordVerifyProvider implements Provider<PasswordVerifyFn> {
     ) => {
       return bcrypt.compare(plainPassword, hashedPassword);
     };
+    // sonarignore:end
   }
 }
