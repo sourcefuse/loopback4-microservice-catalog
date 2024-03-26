@@ -11,9 +11,9 @@ import {
   UserTenant,
   UserTenantWithRelations,
 } from '../models';
-import {User} from './user.model';
-import {Role} from './role.model';
 import {Group} from './group.model';
+import {Role} from './role.model';
+import {User} from './user.model';
 
 @model({
   name: 'tenants',

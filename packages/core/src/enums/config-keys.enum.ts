@@ -7,3 +7,7 @@ export const enum ConfigKey {
   DateTimeFormat = 'date-time format',
   Profile = 'profile',
 }
+
+export enum MiddlewareChain {
+  PRE_INVOKE = 'preInvoke',
+}
