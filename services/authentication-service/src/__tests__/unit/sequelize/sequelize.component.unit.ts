@@ -22,7 +22,12 @@ import {
   UserRepository,
   UserTenantRepository,
 } from '../../../repositories/sequelize';
-import {LoginHelperService, OtpService} from '../../../services';
+import {
+  ActiveUserFilterBuilderService,
+  LoginActivityHelperService,
+  LoginHelperService,
+  OtpService,
+} from '../../../services';
 import {getBaseClass} from '../../utils/getBaseClass';
 import {SequelizeAuthenticationServiceApplication} from './sequelize.application';
 let sequelizeApp: SequelizeAuthenticationServiceApplication;
@@ -56,19 +61,24 @@ describe('Sequelize Component', () => {
       const expectedBindings = [
         {
           controller: LoginActivityController,
-          repository: LoginActivityRepository,
-          prop: 'loginActivityRepo',
+          services: [
+            LoginActivityHelperService,
+            ActiveUserFilterBuilderService,
+          ],
+          props: ['loginActivityHelperService', 'filterBuilder'],
         },
       ];
 
-      for (const {controller, repository, prop} of expectedBindings) {
+      for (const {controller, services, props} of expectedBindings) {
         const controllerInstance: ControllerInstance = sequelizeApp.getSync(
           sequelizeApp.controller(controller).key,
         );
         expect(sequelizeApp.controller(controller).source?.value).to.be.oneOf(
           boundControllerClasses.map(e => e.source?.value),
         );
-        expect(controllerInstance[prop]).to.be.instanceOf(repository);
+        for (let i = 0; i < props.length; i++) {
+          expect(controllerInstance[props[i]]).to.be.instanceOf(services[i]);
+        }
       }
     });
     it('Uses the sequelize compatible repository in Otpcontroller', async () => {

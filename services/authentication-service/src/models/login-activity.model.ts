@@ -23,7 +23,7 @@ export class LoginActivity extends CoreEntity<LoginActivity> {
     type: 'string',
     name: 'tenant_id',
   })
-  tenantId?: string;
+  tenantId: string;
 
   @property({
     type: 'date',

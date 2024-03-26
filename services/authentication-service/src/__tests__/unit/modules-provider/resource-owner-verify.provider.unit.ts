@@ -2,35 +2,36 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {HttpErrors} from '@loopback/rest';
 import {
   StubbedInstanceWithSinonAccessor,
   createStubInstance,
   expect,
 } from '@loopback/testlab';
-import {
-  UserTenantRepository,
-  UserRepository,
-  OtpRepository,
-  AuthClientRepository,
-} from '../../../repositories';
+import {UserStatus} from '@sourceloop/core';
 import sinon from 'sinon';
-import {ResourceOwnerVerifyProvider} from '../../../modules/auth/providers/resource-owner-verify.provider';
 import {
   AuthClient,
   Otp,
-  User,
   UserTenant,
   UserTenantWithRelations,
-  UserWithRelations,
 } from '../../../models';
-import {UserStatus} from '@sourceloop/core';
-import {HttpErrors} from '@loopback/rest';
+import {UserView} from '../../../models/user-view.model';
+import {ResourceOwnerVerifyProvider} from '../../../modules/auth/providers/resource-owner-verify.provider';
+import {
+  AuthClientRepository,
+  OtpRepository,
+  UserTenantRepository,
+} from '../../../repositories';
+import {UserViewRepository} from '../../../repositories/user-view.repository';
+import {UserViewService} from '../../../services';
 
 describe('Resource Owner Verify Provider', () => {
-  let userRepo: StubbedInstanceWithSinonAccessor<UserRepository>;
   let userTenantRepo: StubbedInstanceWithSinonAccessor<UserTenantRepository>;
   let otpRepo: StubbedInstanceWithSinonAccessor<OtpRepository>;
   let authClientRepo: StubbedInstanceWithSinonAccessor<AuthClientRepository>;
+  let userViewRepo: StubbedInstanceWithSinonAccessor<UserViewRepository>;
+  let userViewService: StubbedInstanceWithSinonAccessor<UserViewService>;
   let resourceOwnerVerifyProvider: ResourceOwnerVerifyProvider;
 
   afterEach(() => sinon.restore());
@@ -43,7 +44,7 @@ describe('Resource Owner Verify Provider', () => {
     });
 
     it('return user and client if both are present', async () => {
-      const user = new User({
+      const user = new UserView({
         id: '1',
         firstName: 'test',
         lastName: 'test',
@@ -52,6 +53,7 @@ describe('Resource Owner Verify Provider', () => {
         authClientIds: '{1}',
         defaultTenantId: '1',
         dob: new Date(),
+        tenantId: '1',
       });
       const userTenant = new UserTenant({
         id: '1',
@@ -73,8 +75,8 @@ describe('Resource Owner Verify Provider', () => {
       const password = 'test123!@';
       const clientId = 'web';
       const clientSecret = 'test';
-      const findOne = userRepo.stubs.verifyPassword;
-      findOne.resolves(user as UserWithRelations);
+      const findOne = userViewService.stubs.verifyPassword;
+      findOne.resolves(user);
       const findThree = userTenantRepo.stubs.findOne;
       findThree.resolves(userTenant as UserTenantWithRelations);
       const findFour = authClientRepo.stubs.findOne;
@@ -85,7 +87,7 @@ describe('Resource Owner Verify Provider', () => {
     });
 
     it('return user and client if verification for password is not done', async () => {
-      const user = new User({
+      const user = new UserView({
         id: '1',
         firstName: 'test',
         lastName: 'test',
@@ -94,6 +96,7 @@ describe('Resource Owner Verify Provider', () => {
         authClientIds: '{1}',
         defaultTenantId: '1',
         dob: new Date(),
+        tenantId: '1',
       });
       const userTenant = new UserTenant({
         id: '1',
@@ -120,10 +123,10 @@ describe('Resource Owner Verify Provider', () => {
       const password = 'test123!@';
       const clientId = 'web';
       const clientSecret = 'test';
-      const findFive = userRepo.stubs.verifyPassword;
+      const findFive = userViewService.stubs.verifyPassword;
       findFive.throws(err);
-      const findOne = userRepo.stubs.findOne;
-      findOne.resolves(user as UserWithRelations);
+      const findOne = userViewRepo.stubs.findOne;
+      findOne.resolves(user);
       const findTwo = otpRepo.stubs.get;
       findTwo.resolves(otpCreds);
       const findThree = userTenantRepo.stubs.findOne;
@@ -137,12 +140,14 @@ describe('Resource Owner Verify Provider', () => {
   });
 
   function setUp() {
-    userRepo = createStubInstance(UserRepository);
     userTenantRepo = createStubInstance(UserTenantRepository);
     otpRepo = createStubInstance(OtpRepository);
     authClientRepo = createStubInstance(AuthClientRepository);
+    userViewRepo = createStubInstance(UserViewRepository);
+    userViewService = createStubInstance(UserViewService);
     resourceOwnerVerifyProvider = new ResourceOwnerVerifyProvider(
-      userRepo,
+      userViewRepo,
+      userViewService,
       userTenantRepo,
       authClientRepo,
       otpRepo,
