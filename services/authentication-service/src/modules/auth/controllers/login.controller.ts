@@ -5,14 +5,14 @@
 import {inject} from '@loopback/context';
 import {AnyObject, DataObject, Model, repository} from '@loopback/repository';
 import {
+  HttpErrors,
+  RequestContext,
   get,
   getModelSchemaRef,
-  HttpErrors,
   param,
   patch,
   post,
   requestBody,
-  RequestContext,
 } from '@loopback/rest';
 import {
   AuthenticateErrorKeys,
@@ -30,14 +30,14 @@ import {
 import crypto from 'crypto';
 import * as jwt from 'jsonwebtoken';
 import {
-  authenticate,
-  authenticateClient,
-  AuthenticationBindings,
   AuthErrorKeys,
+  AuthenticationBindings,
   ClientAuthCode,
   STRATEGY,
+  authenticate,
+  authenticateClient,
 } from 'loopback4-authentication';
-import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
+import {AuthorizeErrorKeys, authorize} from 'loopback4-authorization';
 import moment from 'moment-timezone';
 import {LoginType} from '../../../enums';
 import {AuthServiceBindings} from '../../../keys';
@@ -52,8 +52,8 @@ import {
   AuthCodeBindings,
   AuthCodeGeneratorFn,
   CodeReaderFn,
-  JwtPayloadFn,
   JWTSignerFn,
+  JwtPayloadFn,
   UserValidationServiceBindings,
 } from '../../../providers';
 import {

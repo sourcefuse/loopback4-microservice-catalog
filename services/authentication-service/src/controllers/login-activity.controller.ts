@@ -1,11 +1,5 @@
-import {inject} from '@loopback/core';
-import {
-  Count,
-  CountSchema,
-  Filter,
-  Where,
-  repository,
-} from '@loopback/repository';
+import {inject} from '@loopback/context';
+import {Count, CountSchema, Filter, Where} from '@loopback/repository';
 import {
   get,
   getFilterSchemaFor,
@@ -23,15 +17,15 @@ import {authorize} from 'loopback4-authorization';
 import moment from 'moment';
 import {ActiveUsersRange, PermissionKey} from '../enums';
 import {ActiveUsersFilter, LoginActivity} from '../models';
-import {LoginActivityRepository} from '../repositories';
 import {ActiveUserFilterBuilderService} from '../services';
+import {LoginActivityHelperService} from '../services/login-activity-helper.service';
 import {ActiveUsersGroupData} from '../types';
 
 const baseUrl = '/login-activity';
 export class LoginActivityController {
   constructor(
-    @repository(LoginActivityRepository)
-    private readonly loginActivityRepo: LoginActivityRepository,
+    @inject('services.loginActivityHelperService')
+    private readonly loginActivityHelperService: LoginActivityHelperService,
     @inject('services.ActiveUserFilterBuilderService')
     private readonly filterBuilder: ActiveUserFilterBuilderService,
   ) {}
@@ -55,7 +49,7 @@ export class LoginActivityController {
     @param.query.object('where', getWhereSchemaFor(LoginActivity))
     where?: Where<LoginActivity>,
   ): Promise<Count> {
-    return this.loginActivityRepo.count(where);
+    return this.loginActivityHelperService.count(where);
   }
 
   @authenticate(STRATEGY.BEARER, {
@@ -84,7 +78,7 @@ export class LoginActivityController {
     @param.query.object('filter', getFilterSchemaFor(LoginActivity))
     filter?: Filter<LoginActivity>,
   ): Promise<LoginActivity[]> {
-    return this.loginActivityRepo.find(filter);
+    return this.loginActivityHelperService.find(filter);
   }
 
   @authenticate(STRATEGY.BEARER, {
@@ -111,7 +105,7 @@ export class LoginActivityController {
     @param.query.object('filter', getFilterSchemaFor(LoginActivity))
     filter?: Filter<LoginActivity>,
   ): Promise<LoginActivity> {
-    return this.loginActivityRepo.findById(id, filter);
+    return this.loginActivityHelperService.findById(id, filter);
   }
 
   @authenticate(STRATEGY.BEARER, {
@@ -145,7 +139,7 @@ export class LoginActivityController {
     if (filter) {
       optionalWhere = await this.filterBuilder.buildActiveUsersFilter(filter);
     }
-    const activeUsersForTime = await this.loginActivityRepo.find({
+    const activeUsersForTime = await this.loginActivityHelperService.find({
       where: {
         loginTime: {between: [startDate, endDate]},
         ...optionalWhere,
