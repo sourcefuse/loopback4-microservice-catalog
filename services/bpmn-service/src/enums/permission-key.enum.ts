@@ -11,4 +11,5 @@ export const enum PermissionKey {
   CreateWorkflowNum = '2',
   UpdateWorkflowNum = '3',
   DeleteWorkflowNum = '4',
+  ExecuteWorkflow = '5',
 }
