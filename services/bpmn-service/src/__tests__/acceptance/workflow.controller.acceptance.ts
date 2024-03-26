@@ -2,17 +2,17 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {WorkflowServiceApplication} from '../../application';
 import {Client, expect} from '@loopback/testlab';
 import * as jwt from 'jsonwebtoken';
-import {setUpApplication} from './helper';
-import {firstTestBpmnInput, firstTestBpmn} from '../const';
-import {MockEngine} from '../mock-engine';
-import {MOCK_BPMN_ENGINE_KEY} from '../types';
+import {WorkflowServiceApplication} from '../../application';
 import {
   WorkflowRepository,
   WorkflowVersionRepository,
 } from '../../repositories';
+import {firstTestBpmn, firstTestBpmnInput} from '../const';
+import {MockEngine} from '../mock-engine';
+import {MOCK_BPMN_ENGINE_KEY} from '../types';
+import {setUpApplication} from './helper';
 
 describe('Workflow Controller', () => {
   let app: WorkflowServiceApplication;
@@ -31,6 +31,7 @@ describe('Workflow Controller', () => {
       'CreateWorkflow',
       'UpdateWorkflow',
       'DeleteWorkflow',
+      'ExecuteWorkflow',
     ],
   };
 
