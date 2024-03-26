@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 13.0.0 (2024-03-26)
+
+* feat(deps): update template dependencies (#2047) ([75fc35e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/75fc35e)), closes [#2047](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2047) [#2045](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2045) [#2045](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2045)
+
+
+### BREAKING CHANGE
+
+* loopback and sourceloop versions update
+* major version updates
+
+
+
+
 ## 12.1.0 (2024-03-20)
 
 * feat(core): add provision in logs to save tenant information (#1967) ([e079034](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e079034)), closes [#1967](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1967) [#1918](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1918) [#1918](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1918) [#1918](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1918) [#1918](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1918)

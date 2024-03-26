@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 17.0.0 (2024-03-26)
+
+* feat(authentication-service): filtering option in activity logs (#2049) ([aa60b14](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/aa60b14)), closes [#2049](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2049) [#1517](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1517) [#1517](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1517) [#1517](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1517) [#1517](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1517)
+* feat(authentication-service): implement configurable hashing (#2048) ([d849562](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d849562)), closes [#2048](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2048) [#2038](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2038) [#2038](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2038) [#2038](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2038)
+* feat(deps): update template dependencies (#2047) ([75fc35e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/75fc35e)), closes [#2047](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2047) [#2045](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2045) [#2045](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2045)
+
+
+### BREAKING CHANGE
+
+* loopback and sourceloop versions update
+* major version updates
+
+
+
+
 ## <small>16.0.4 (2024-03-20)</small>
 
 * fix(authentication-service):provide support to manage tokens for user logging in and logging out via ([c19cc9d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c19cc9d)), closes [#1943](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1943) [#1924](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1924) [#1939](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1939)
