@@ -606,6 +606,151 @@ To perform this operation, you must be authenticated by means of one of the foll
 HTTPBearer
 </aside>
 
+## TaskController.updateById
+
+<a id="opIdTaskController.updateById"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "key": "string",
+  "name": "string",
+  "description": "string",
+  "status": "string",
+  "priority": "string",
+  "severity": "string",
+  "type": "string",
+  "startDate": "2019-08-24T14:15:22Z",
+  "dueDate": "2019-08-24T14:15:22Z",
+  "endDate": "2019-08-24T14:15:22Z",
+  "assigneeId": "string",
+  "metadata": {},
+  "externalId": "string"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/tasks/{id}',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "key": "string",
+  "name": "string",
+  "description": "string",
+  "status": "string",
+  "priority": "string",
+  "severity": "string",
+  "type": "string",
+  "startDate": "2019-08-24T14:15:22Z",
+  "dueDate": "2019-08-24T14:15:22Z",
+  "endDate": "2019-08-24T14:15:22Z",
+  "assigneeId": "string",
+  "metadata": {},
+  "externalId": "string"
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/tasks/{id}',
+{
+  method: 'PATCH',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PATCH /tasks/{id}`
+
+| Permissions |
+| ------- |
+| 16011   |
+
+> Body parameter
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "key": "string",
+  "name": "string",
+  "description": "string",
+  "status": "string",
+  "priority": "string",
+  "severity": "string",
+  "type": "string",
+  "startDate": "2019-08-24T14:15:22Z",
+  "dueDate": "2019-08-24T14:15:22Z",
+  "endDate": "2019-08-24T14:15:22Z",
+  "assigneeId": "string",
+  "metadata": {},
+  "externalId": "string"
+}
+```
+
+<h3 id="taskcontroller.updatebyid-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[TaskPartial](#schemataskpartial)|false|none|
+
+<h3 id="taskcontroller.updatebyid-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Task UPDATE by id success|None|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
 ## TaskController.findById
 
 <a id="opIdTaskController.findById"></a>
@@ -790,6 +935,151 @@ fetch('/tasks/{id}',
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Task DELETE by id success|None|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
+## TaskController.updateAll
+
+<a id="opIdTaskController.updateAll"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "key": "string",
+  "name": "string",
+  "description": "string",
+  "status": "string",
+  "priority": "string",
+  "severity": "string",
+  "type": "string",
+  "startDate": "2019-08-24T14:15:22Z",
+  "dueDate": "2019-08-24T14:15:22Z",
+  "endDate": "2019-08-24T14:15:22Z",
+  "assigneeId": "string",
+  "metadata": {},
+  "externalId": "string"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/tasks',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "key": "string",
+  "name": "string",
+  "description": "string",
+  "status": "string",
+  "priority": "string",
+  "severity": "string",
+  "type": "string",
+  "startDate": "2019-08-24T14:15:22Z",
+  "dueDate": "2019-08-24T14:15:22Z",
+  "endDate": "2019-08-24T14:15:22Z",
+  "assigneeId": "string",
+  "metadata": {},
+  "externalId": "string"
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/tasks',
+{
+  method: 'PATCH',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PATCH /tasks`
+
+| Permissions |
+| ------- |
+| 16011   |
+
+> Body parameter
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "key": "string",
+  "name": "string",
+  "description": "string",
+  "status": "string",
+  "priority": "string",
+  "severity": "string",
+  "type": "string",
+  "startDate": "2019-08-24T14:15:22Z",
+  "dueDate": "2019-08-24T14:15:22Z",
+  "endDate": "2019-08-24T14:15:22Z",
+  "assigneeId": "string",
+  "metadata": {},
+  "externalId": "string"
+}
+```
+
+<h3 id="taskcontroller.updateall-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|where|query|object|false|none|
+|body|body|[TaskPartial](#schemataskpartial)|false|none|
+
+<h3 id="taskcontroller.updateall-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Tasks UPDATE success|None|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -2570,6 +2860,130 @@ TaskWorkFlowMapping
 |id|string|false|none|none|
 |workflowKey|string|true|none|An identifier for a particular workflow|
 |taskKey|string|true|none|An identifier for a particular task within an event|
+
+<h2 id="tocS_TaskPartial">TaskPartial</h2>
+<!-- backwards compatibility -->
+<a id="schemataskpartial"></a>
+<a id="schema_TaskPartial"></a>
+<a id="tocStaskpartial"></a>
+<a id="tocstaskpartial"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "key": "string",
+  "name": "string",
+  "description": "string",
+  "status": "string",
+  "priority": "string",
+  "severity": "string",
+  "type": "string",
+  "startDate": "2019-08-24T14:15:22Z",
+  "dueDate": "2019-08-24T14:15:22Z",
+  "endDate": "2019-08-24T14:15:22Z",
+  "assigneeId": "string",
+  "metadata": {},
+  "externalId": "string"
+}
+
+```
+
+TaskPartial
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|key|string|false|none|An identifier for a particular task within an event|
+|name|string|false|none|A name given by the consumer service for this task|
+|description|string|false|none|A short description of this task|
+|status|string|false|none|A short message to indicate the progression of the task|
+|priority|string|false|none|none|
+|severity|string|false|none|none|
+|type|string|false|none|none|
+|startDate|string(date-time)|false|none|none|
+|dueDate|string(date-time)|false|none|none|
+|endDate|string(date-time)|false|none|none|
+|assigneeId|string|false|none|none|
+|metadata|object|false|none|none|
+|externalId|string|false|none|none|
+
+<h2 id="tocS_Task">Task</h2>
+<!-- backwards compatibility -->
+<a id="schematask"></a>
+<a id="schema_Task"></a>
+<a id="tocStask"></a>
+<a id="tocstask"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "key": "string",
+  "name": "string",
+  "description": "string",
+  "status": "string",
+  "priority": "string",
+  "severity": "string",
+  "type": "string",
+  "startDate": "2019-08-24T14:15:22Z",
+  "dueDate": "2019-08-24T14:15:22Z",
+  "endDate": "2019-08-24T14:15:22Z",
+  "assigneeId": "string",
+  "metadata": {},
+  "externalId": "string"
+}
+
+```
+
+Task
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|key|string|true|none|An identifier for a particular task within an event|
+|name|string|true|none|A name given by the consumer service for this task|
+|description|string|false|none|A short description of this task|
+|status|string|false|none|A short message to indicate the progression of the task|
+|priority|string|true|none|none|
+|severity|string|true|none|none|
+|type|string|true|none|none|
+|startDate|string(date-time)|false|none|none|
+|dueDate|string(date-time)|false|none|none|
+|endDate|string(date-time)|false|none|none|
+|assigneeId|string|false|none|none|
+|metadata|object|true|none|none|
+|externalId|string|false|none|none|
 
 <h2 id="tocS_loopback.Count">loopback.Count</h2>
 <!-- backwards compatibility -->

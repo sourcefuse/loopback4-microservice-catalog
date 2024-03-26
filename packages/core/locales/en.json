@@ -40,5 +40,6 @@
 	"Survey can not be activated without a start date": "Survey can not be activated without a start date",
 	"Invalid value entered in name": "Invalid value entered in name",
 	"API not found !": "API not found !",
-	"User Task not found": "User Task not found"
+	"User Task not found": "User Task not found",
+	"Task completion cannot be done through the PATCH API.": "Task completion cannot be done through the PATCH API."
 }
