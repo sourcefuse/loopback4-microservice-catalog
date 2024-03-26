@@ -12,7 +12,7 @@ import sinon from 'sinon';
 import {AppleOauth2VerifyProvider} from '../../../modules/auth/providers/apple-oauth2-verify.provider';
 import {AppleSignUpFn} from '../../../providers';
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 import * as AppleStrategy from 'passport-apple';
 import {
   User,

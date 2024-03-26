@@ -5,7 +5,7 @@
 import {Provider} from '@loopback/context';
 import {HttpErrors} from '@loopback/rest';
 import {ExecutionInputValidator} from '../types';
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 import Ajv from 'ajv';
 
 export class ExecutionInputValidationProvider

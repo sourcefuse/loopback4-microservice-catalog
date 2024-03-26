@@ -44,28 +44,28 @@
     "!*/__tests__"
   ],
   "peerDependencies": {
-    "@loopback/core": "^5.1.5"
+    "@loopback/core": "^6.0.0"
   },
   "dependencies": {
-    "@loopback/boot": "^6.1.5",
-    "@loopback/context": "^6.1.5",
-    "@loopback/core": "^5.1.5",
-    "@loopback/express": "^6.1.5",
-    "@loopback/repository": "^6.1.5",
-    "@loopback/rest": "^13.1.5",
-    "@loopback/rest-explorer": "^6.1.5",
-    "@loopback/service-proxy": "^6.1.5",
+    "@loopback/boot": "^7.0.0",
+    "@loopback/context": "^7.0.0",
+    "@loopback/core": "^6.0.0",
+    "@loopback/express": "^7.0.0",
+    "@loopback/repository": "^7.0.0",
+    "@loopback/rest": "^14.0.0",
+    "@loopback/rest-explorer": "^7.0.0",
+    "@loopback/service-proxy": "^7.0.0",
     "@sourceloop/core": "^12.1.0",
     "lodash": "^4.17.21",
-    "loopback4-authentication": "^11.0.2",
+    "loopback4-authentication": "^12.0.0",
     "sinon": "^14.0.0",
     "tslib": "^2.6.2"
   },
   "devDependencies": {
-    "@loopback/build": "^10.1.5",
-    "@loopback/core": "^5.1.5",
-    "@loopback/eslint-config": "^14.0.4",
-    "@loopback/testlab": "^6.1.5",
+    "@loopback/build": "^11.0.0",
+    "@loopback/core": "^6.0.0",
+    "@loopback/eslint-config": "^15.0.0",
+    "@loopback/testlab": "^7.0.0",
     "@types/lodash": "^4.14.182",
     "@types/node": "^18.11.9",
     "eslint": "^8.44.0",

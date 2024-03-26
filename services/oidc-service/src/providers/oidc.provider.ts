@@ -6,7 +6,7 @@ import {
   injectable,
 } from '@loopback/core';
 import {repository} from '@loopback/repository';
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 import OidcProvider, {
   Configuration,
   FindAccount,

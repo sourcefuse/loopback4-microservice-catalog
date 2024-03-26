@@ -2,7 +2,7 @@ import {Context, Provider, inject} from '@loopback/core';
 import {Sequelize} from 'sequelize';
 import {DataStoreConfiguration} from '../interfaces';
 import {ReportingServiceComponentBindings} from '../keys';
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 import * as AWS from 'aws-sdk';
 export type DataStoreObjectInterface = Sequelize | AWS.S3;
 /* The `DataStoreObjectProvider` class is a TypeScript class that provides a data store object based on

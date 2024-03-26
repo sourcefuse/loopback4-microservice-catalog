@@ -1,6 +1,6 @@
 import {BindingKey} from '@loopback/core';
 import {BINDING_PREFIX} from '@sourceloop/core';
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 import OidcProvider from 'oidc-provider';
 import {FindAccountProviderFn} from './types';
 export namespace OIDCServiceBindings {

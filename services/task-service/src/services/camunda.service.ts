@@ -8,7 +8,6 @@ import {
   IWorkflowServiceConfig,
   WorkflowServiceBindings,
 } from '@sourceloop/bpmn-service';
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import FormData from 'form-data';
 import {CamundaTask} from '../types';
 import {HttpClientService} from './http.service';
