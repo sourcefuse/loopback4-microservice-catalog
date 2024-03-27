@@ -30,7 +30,11 @@ import {authorize} from 'loopback4-authorization';
 import {AppErrorCodes, ErrorKeys, PermissionKey} from '../enum';
 import {SurveyQuestion, SurveyQuestionDto} from '../models';
 import {SurveyQuestionRepository} from '../repositories';
-import {SurveyQuestionService, SurveyService} from '../services';
+import {
+  SurveyQuestionHelperService,
+  SurveyQuestionService,
+  SurveyService,
+} from '../services';
 
 const basePath = '/surveys/{surveyId}/survey-questions';
 
@@ -42,6 +46,8 @@ export class SurveyQuestionController {
     public surveyService: SurveyService,
     @service(SurveyQuestionService)
     public surveyQuestionService: SurveyQuestionService,
+    @service(SurveyQuestionHelperService)
+    public surveyQuestionHelperService: SurveyQuestionHelperService,
   ) {}
 
   @authenticate(STRATEGY.BEARER, {
@@ -290,7 +296,7 @@ export class SurveyQuestionController {
     if (!surveyQuestion.displayOrder) {
       throw new HttpErrors.BadRequest(ErrorKeys.DisplayOrderMissing);
     }
-    this.surveyQuestionRepository
+    this.surveyQuestionHelperService
       .reorder(surveyId, surveyQuestion.displayOrder)
       .then()
       .catch(error => {

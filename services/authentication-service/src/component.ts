@@ -119,6 +119,7 @@ import {
   LoginActivityHelperService,
   LoginHelperService,
   OtpService,
+  UserHelperService,
 } from './services';
 import {IAuthServiceConfig, IMfaConfig, IOtpConfig} from './types';
 
@@ -186,6 +187,9 @@ export class AuthenticationServiceComponent implements Component {
       .bind('services.LoginHelperService')
       .toClass(LoginHelperService);
     this.application.bind('services.otpService').toClass(OtpService);
+    this.application
+      .bind('services.userHelperService')
+      .toClass(UserHelperService);
     this.application
       .bind('services.loginActivityHelperService')
       .toClass(LoginActivityHelperService);

@@ -72,10 +72,10 @@ import {
   SectionRepository as SectionSequelizeRepository,
   SurveyCycleRepository as SurveyCycleSequelizeRepository,
   SurveyQuestionRepository as SurveyQuestionSequelizeRepository,
-  SurveyRepository as SurveySequelizeRepository,
   SurveyResponderRepository as SurveyResponderSequelizeRepository,
   SurveyResponseDetailRepository as SurveyResponseDetailSequelizeRepository,
   SurveyResponseRepository as SurveyResponseSequelizeRepository,
+  SurveyRepository as SurveySequelizeRepository,
   TemplateQuestionRepository as TemplateQuestionSequelizeRepository,
 } from './repositories/sequelize';
 import {SurveyRepository} from './repositories/survey.repository';
@@ -85,9 +85,12 @@ import {
   QuestionDuplicateHelperService,
   QuestionHelperService,
   QuestionTemplateService,
+  SectionHelperService,
   SectionService,
   SurveyCycleService,
+  SurveyQuestionHelperService,
   SurveyQuestionService,
+  SurveyResponderHelperService,
   SurveyResponderService,
   SurveyResponseService,
   SurveyService,
@@ -117,6 +120,9 @@ export class SurveyServiceComponent implements Component {
       SurveyQuestionService,
       SurveyResponseService,
       SurveyResponderService,
+      SectionHelperService,
+      SurveyQuestionHelperService,
+      SurveyResponderHelperService,
     ];
     if (this.surveyConfig?.useSequelize) {
       this.repositories = [

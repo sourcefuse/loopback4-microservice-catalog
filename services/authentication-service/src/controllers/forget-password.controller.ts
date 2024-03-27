@@ -39,7 +39,7 @@ import {
   JWTVerifierFn,
 } from '../providers';
 import {RevokedTokenRepository, UserRepository} from '../repositories';
-import {LoginHelperService} from '../services';
+import {LoginHelperService, UserHelperService} from '../services';
 
 export class ForgetPasswordController {
   constructor(
@@ -49,6 +49,8 @@ export class ForgetPasswordController {
     private readonly revokedTokensRepo: RevokedTokenRepository,
     @inject('services.LoginHelperService')
     private readonly loginHelperService: LoginHelperService,
+    @service(UserHelperService)
+    private readonly userHelperService: UserHelperService,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @inject(AuthCodeBindings.JWT_SIGNER.key)
     private readonly jwtSigner: JWTSignerFn<AnyObject>,
@@ -211,7 +213,10 @@ export class ForgetPasswordController {
     });
     await this.loginHelperService.verifyClientUserLogin(req, client, user);
 
-    await this.userRepo.changePassword(payload.user.username, req.password);
+    await this.userHelperService.changePassword(
+      payload.user.username,
+      req.password,
+    );
 
     await this.revokedTokensRepo.set(req.token, {
       token: req.token,
