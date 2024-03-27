@@ -2,18 +2,14 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {HttpErrors} from '@loopback/rest';
 import {
   StubbedInstanceWithSinonAccessor,
   createStubInstance,
   expect,
 } from '@loopback/testlab';
-import {
-  UserTenantRepository,
-  UserRepository,
-  OtpRepository,
-} from '../../../repositories';
+import {UserStatus} from '@sourceloop/core';
 import sinon from 'sinon';
-import {LocalPasswordVerifyProvider} from '../../../modules/auth/providers/local-password-verify.provider';
 import {
   Otp,
   User,
@@ -21,14 +17,20 @@ import {
   UserTenantWithRelations,
   UserWithRelations,
 } from '../../../models';
-import {HttpErrors} from '@loopback/rest';
-import {UserStatus} from '@sourceloop/core';
+import {LocalPasswordVerifyProvider} from '../../../modules/auth/providers/local-password-verify.provider';
+import {
+  OtpRepository,
+  UserRepository,
+  UserTenantRepository,
+} from '../../../repositories';
+import {UserHelperService} from '../../../services';
 
 describe('Local Password Verify Provider', () => {
   let userRepo: StubbedInstanceWithSinonAccessor<UserRepository>;
   let userTenantRepo: StubbedInstanceWithSinonAccessor<UserTenantRepository>;
   let otpRepo: StubbedInstanceWithSinonAccessor<OtpRepository>;
   let localPasswordVerifyProvider: LocalPasswordVerifyProvider;
+  let userHelperService: StubbedInstanceWithSinonAccessor<UserHelperService>;
 
   afterEach(() => sinon.restore());
   beforeEach(setUp);
@@ -51,7 +53,7 @@ describe('Local Password Verify Provider', () => {
       });
       const username = 'test_user';
       const password = 'test123!@';
-      const findOne = userRepo.stubs.verifyPassword;
+      const findOne = userHelperService.stubs.verifyPassword;
       findOne.resolves(user as UserWithRelations);
       const func = localPasswordVerifyProvider.value();
       const result = await func(username, password);
@@ -89,7 +91,7 @@ describe('Local Password Verify Provider', () => {
       const err = new HttpErrors[400]();
       const username = 'test';
       const password = 'test123!@';
-      const findOne = userRepo.stubs.verifyPassword;
+      const findOne = userHelperService.stubs.verifyPassword;
       findOne.throws(err);
       const findTwo = otpRepo.stubs.get;
       findTwo.resolves(otpCreds);
@@ -114,10 +116,12 @@ describe('Local Password Verify Provider', () => {
     userRepo = createStubInstance(UserRepository);
     userTenantRepo = createStubInstance(UserTenantRepository);
     otpRepo = createStubInstance(OtpRepository);
+    userHelperService = createStubInstance(UserHelperService);
     localPasswordVerifyProvider = new LocalPasswordVerifyProvider(
       userRepo,
       userTenantRepo,
       otpRepo,
+      userHelperService,
     );
   }
 });

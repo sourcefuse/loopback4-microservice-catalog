@@ -2,19 +2,14 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {HttpErrors} from '@loopback/rest';
 import {
   StubbedInstanceWithSinonAccessor,
   createStubInstance,
   expect,
 } from '@loopback/testlab';
-import {
-  UserTenantRepository,
-  UserRepository,
-  OtpRepository,
-  AuthClientRepository,
-} from '../../../repositories';
+import {UserStatus} from '@sourceloop/core';
 import sinon from 'sinon';
-import {ResourceOwnerVerifyProvider} from '../../../modules/auth/providers/resource-owner-verify.provider';
 import {
   AuthClient,
   Otp,
@@ -23,8 +18,14 @@ import {
   UserTenantWithRelations,
   UserWithRelations,
 } from '../../../models';
-import {UserStatus} from '@sourceloop/core';
-import {HttpErrors} from '@loopback/rest';
+import {ResourceOwnerVerifyProvider} from '../../../modules/auth/providers/resource-owner-verify.provider';
+import {
+  AuthClientRepository,
+  OtpRepository,
+  UserRepository,
+  UserTenantRepository,
+} from '../../../repositories';
+import {UserHelperService} from '../../../services';
 
 describe('Resource Owner Verify Provider', () => {
   let userRepo: StubbedInstanceWithSinonAccessor<UserRepository>;
@@ -32,6 +33,7 @@ describe('Resource Owner Verify Provider', () => {
   let otpRepo: StubbedInstanceWithSinonAccessor<OtpRepository>;
   let authClientRepo: StubbedInstanceWithSinonAccessor<AuthClientRepository>;
   let resourceOwnerVerifyProvider: ResourceOwnerVerifyProvider;
+  let userHelperService: StubbedInstanceWithSinonAccessor<UserHelperService>;
 
   afterEach(() => sinon.restore());
   beforeEach(setUp);
@@ -73,7 +75,7 @@ describe('Resource Owner Verify Provider', () => {
       const password = 'test123!@';
       const clientId = 'web';
       const clientSecret = 'test';
-      const findOne = userRepo.stubs.verifyPassword;
+      const findOne = userHelperService.stubs.verifyPassword;
       findOne.resolves(user as UserWithRelations);
       const findThree = userTenantRepo.stubs.findOne;
       findThree.resolves(userTenant as UserTenantWithRelations);
@@ -120,7 +122,7 @@ describe('Resource Owner Verify Provider', () => {
       const password = 'test123!@';
       const clientId = 'web';
       const clientSecret = 'test';
-      const findFive = userRepo.stubs.verifyPassword;
+      const findFive = userHelperService.stubs.verifyPassword;
       findFive.throws(err);
       const findOne = userRepo.stubs.findOne;
       findOne.resolves(user as UserWithRelations);
@@ -141,11 +143,13 @@ describe('Resource Owner Verify Provider', () => {
     userTenantRepo = createStubInstance(UserTenantRepository);
     otpRepo = createStubInstance(OtpRepository);
     authClientRepo = createStubInstance(AuthClientRepository);
+    userHelperService = createStubInstance(UserHelperService);
     resourceOwnerVerifyProvider = new ResourceOwnerVerifyProvider(
       userRepo,
       userTenantRepo,
       authClientRepo,
       otpRepo,
+      userHelperService,
     );
   }
 });

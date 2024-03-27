@@ -3,6 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {inject} from '@loopback/context';
+import {service} from '@loopback/core';
 import {
   getModelSchemaRef,
   param,
@@ -10,17 +11,17 @@ import {
   requestBody,
 } from '@loopback/openapi-v3';
 import {Filter, repository} from '@loopback/repository';
-import {api, HttpErrors, ResponseObject} from '@loopback/rest';
+import {HttpErrors, ResponseObject, api} from '@loopback/rest';
 import {
   CONTENT_TYPE,
   IAuthUserWithPermissions,
-  STATUS_CODE,
   OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
 } from '@sourceloop/core';
 import {
-  authenticate,
   AuthenticationBindings,
   STRATEGY,
+  authenticate,
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {Attachment, Group, IdResponse, Message, Meta} from '../models';
@@ -30,6 +31,7 @@ import {
   MessageRepository,
   ThreadRepository,
 } from '../repositories';
+import {MessageHelperService, ThreadHelperService} from '../services';
 import {PartyTypeMarker, PermissionsEnums, StorageMarker} from '../types';
 import {
   ComposeMailBody,
@@ -103,6 +105,10 @@ export class ReplyAndForwardController {
     public attachmentRepository: AttachmentRepository,
     @inject(AuthenticationBindings.CURRENT_USER)
     public user: IAuthUserWithPermissions,
+    @service(ThreadHelperService)
+    private readonly threadHelperService: ThreadHelperService,
+    @service(MessageHelperService)
+    private readonly messageHelperService: MessageHelperService,
   ) {}
   getInMailIdentifierType(type: string | undefined): string {
     return String(type === 'user' ? this.user.id : this.user.email);
@@ -196,7 +202,7 @@ export class ReplyAndForwardController {
     }
     const transaction = await this.messageRepository.beginTransaction();
     try {
-      const newMessage = await this.messageRepository.createRelational(
+      const newMessage = await this.messageHelperService.createRelational(
         {
           sender: this.getInMailIdentifierType(
             process.env.INMAIL_IDENTIFIER_TYPE,
@@ -411,7 +417,7 @@ export class ReplyAndForwardController {
           }),
         );
       }
-      await this.threadRepository.incrementOrCreate(
+      await this.threadHelperService.incrementOrCreate(
         thread.id,
         {},
         {transaction},

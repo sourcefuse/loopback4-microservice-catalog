@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {Getter, inject} from '@loopback/core';
-import {AnyObject, Count, juggler, Where} from '@loopback/repository';
+import {juggler} from '@loopback/repository';
 import {
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
@@ -28,9 +28,5 @@ export class SearchQueryRepository extends DefaultUserModifyCrudRepository<
     >,
   ) {
     super(SearchQuery, dataSource, getCurrentUser);
-  }
-
-  deleteAll(where?: Where<SearchQuery>, options?: AnyObject): Promise<Count> {
-    return super.deleteAllHard(where, options);
   }
 }

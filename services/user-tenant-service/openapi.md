@@ -1,5 +1,5 @@
 ---
-title: "@sourceloop/user-tenant-service v0.15.1"
+title: "@sourceloop/user-tenant-service v0.15.3"
 language_tabs:
   - javascript: JavaScript
   - javascript--nodejs: Node.JS
@@ -16,7 +16,7 @@ headingLevel: 2
 
 <!-- Generator: Widdershins v4.0.1 -->
 
-<h1 id="-sourceloop-user-tenant-service">@sourceloop/user-tenant-service v0.15.1</h1>
+<h1 id="-sourceloop-user-tenant-service">@sourceloop/user-tenant-service v0.15.3</h1>
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
@@ -6933,7 +6933,6 @@ const inputBody = '{
   "modifiedOn": "2019-08-24T14:15:22Z",
   "createdBy": "string",
   "modifiedBy": "string",
-  "id": "string",
   "firstName": "string",
   "lastName": "string",
   "middleName": "string",
@@ -6941,12 +6940,12 @@ const inputBody = '{
   "email": "string",
   "designation": "string",
   "phone": "string",
-  "authClientIds": "string",
-  "lastLogin": "2019-08-24T14:15:22Z",
   "photoUrl": "string",
   "gender": "M",
   "dob": "2019-08-24T14:15:22Z",
-  "defaultTenantId": "string"
+  "defaultTenantId": "string",
+  "status": 11,
+  "roleId": "string"
 }';
 const headers = {
   'Content-Type':'application/json'
@@ -6976,7 +6975,6 @@ const inputBody = {
   "modifiedOn": "2019-08-24T14:15:22Z",
   "createdBy": "string",
   "modifiedBy": "string",
-  "id": "string",
   "firstName": "string",
   "lastName": "string",
   "middleName": "string",
@@ -6984,12 +6982,12 @@ const inputBody = {
   "email": "string",
   "designation": "string",
   "phone": "string",
-  "authClientIds": "string",
-  "lastLogin": "2019-08-24T14:15:22Z",
   "photoUrl": "string",
   "gender": "M",
   "dob": "2019-08-24T14:15:22Z",
-  "defaultTenantId": "string"
+  "defaultTenantId": "string",
+  "status": 11,
+  "roleId": "string"
 };
 const headers = {
   'Content-Type':'application/json'
@@ -7027,7 +7025,6 @@ fetch('/tenants/{id}/users/{userId}',
   "modifiedOn": "2019-08-24T14:15:22Z",
   "createdBy": "string",
   "modifiedBy": "string",
-  "id": "string",
   "firstName": "string",
   "lastName": "string",
   "middleName": "string",
@@ -7035,12 +7032,12 @@ fetch('/tenants/{id}/users/{userId}',
   "email": "string",
   "designation": "string",
   "phone": "string",
-  "authClientIds": "string",
-  "lastLogin": "2019-08-24T14:15:22Z",
   "photoUrl": "string",
   "gender": "M",
   "dob": "2019-08-24T14:15:22Z",
-  "defaultTenantId": "string"
+  "defaultTenantId": "string",
+  "status": 11,
+  "roleId": "string"
 }
 ```
 
@@ -7051,7 +7048,7 @@ fetch('/tenants/{id}/users/{userId}',
 |id|path|string|true|none|
 |userId|path|string|true|none|
 |where|query|object|false|none|
-|body|body|[UserPartial](#schemauserpartial)|false|none|
+|body|body|[UserViewPartialExcluding_id-authClientIds-lastLogin-tenantId-tenantName-tenantKey-roleName-userTenantId_](#schemauserviewpartialexcluding_id-authclientids-lastlogin-tenantid-tenantname-tenantkey-rolename-usertenantid_)|false|none|
 
 <h3 id="tenantusercontroller.patch-responses">Responses</h3>
 
@@ -25300,12 +25297,12 @@ UserDto
 |gender|F|
 |gender|O|
 
-<h2 id="tocS_UserPartial">UserPartial</h2>
+<h2 id="tocS_UserViewPartialExcluding_id-authClientIds-lastLogin-tenantId-tenantName-tenantKey-roleName-userTenantId_">UserViewPartialExcluding_id-authClientIds-lastLogin-tenantId-tenantName-tenantKey-roleName-userTenantId_</h2>
 <!-- backwards compatibility -->
-<a id="schemauserpartial"></a>
-<a id="schema_UserPartial"></a>
-<a id="tocSuserpartial"></a>
-<a id="tocsuserpartial"></a>
+<a id="schemauserviewpartialexcluding_id-authclientids-lastlogin-tenantid-tenantname-tenantkey-rolename-usertenantid_"></a>
+<a id="schema_UserViewPartialExcluding_id-authClientIds-lastLogin-tenantId-tenantName-tenantKey-roleName-userTenantId_"></a>
+<a id="tocSuserviewpartialexcluding_id-authclientids-lastlogin-tenantid-tenantname-tenantkey-rolename-usertenantid_"></a>
+<a id="tocsuserviewpartialexcluding_id-authclientids-lastlogin-tenantid-tenantname-tenantkey-rolename-usertenantid_"></a>
 
 ```json
 {
@@ -25316,7 +25313,6 @@ UserDto
   "modifiedOn": "2019-08-24T14:15:22Z",
   "createdBy": "string",
   "modifiedBy": "string",
-  "id": "string",
   "firstName": "string",
   "lastName": "string",
   "middleName": "string",
@@ -25324,17 +25320,17 @@ UserDto
   "email": "string",
   "designation": "string",
   "phone": "string",
-  "authClientIds": "string",
-  "lastLogin": "2019-08-24T14:15:22Z",
   "photoUrl": "string",
   "gender": "M",
   "dob": "2019-08-24T14:15:22Z",
-  "defaultTenantId": "string"
+  "defaultTenantId": "string",
+  "status": 11,
+  "roleId": "string"
 }
 
 ```
 
-UserPartial
+UserViewPartialExcluding_id-authClientIds-lastLogin-tenantId-tenantName-tenantKey-roleName-userTenantId_
 
 ### Properties
 
@@ -25347,7 +25343,6 @@ UserPartial
 |modifiedOn|string(date-time)|false|none|none|
 |createdBy|string|false|none|none|
 |modifiedBy|string|false|none|none|
-|id|string|false|none|none|
 |firstName|string|false|none|none|
 |lastName|string|false|none|none|
 |middleName|string|false|none|none|
@@ -25355,12 +25350,12 @@ UserPartial
 |email|string|false|none|none|
 |designation|string|false|none|none|
 |phone|string|false|none|none|
-|authClientIds|string|false|none|none|
-|lastLogin|string(date-time)|false|none|none|
 |photoUrl|string|false|none|none|
 |gender|string|false|none|This field takes a single character as input in database.<br>    'M' for male and 'F' for female.|
-|dob|string(date-time)|false|none|none|
+|dob|string(date-time)¦null|false|none|none|
 |defaultTenantId|string|false|none|none|
+|status|number|false|none|none|
+|roleId|string|false|none|none|
 
 #### Enumerated Values
 

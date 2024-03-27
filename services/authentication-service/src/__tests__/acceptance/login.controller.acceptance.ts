@@ -3,9 +3,9 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 'use strict';
-import {Client, createRestAppClient, expect} from '@loopback/testlab';
-import {AuthProvider, AuthenticateErrorKeys, RoleTypes} from '@sourceloop/core';
-import {AuthErrorKeys} from 'loopback4-authentication';
+import { Client, createRestAppClient, expect } from '@loopback/testlab';
+import { AuthProvider, AuthenticateErrorKeys, RoleTypes } from '@sourceloop/core';
+import { AuthErrorKeys } from 'loopback4-authentication';
 import {
   AuthClientRepository,
   RefreshTokenRepository,
@@ -15,16 +15,18 @@ import {
   UserRepository,
   UserTenantRepository,
 } from '../../repositories';
-import {TestingApplication} from '../fixtures/application';
-import {TestHelperKey} from '../fixtures/keys';
-import {TestHelperService} from '../fixtures/services';
-import {setupApplication} from './test-helper';
+import { UserHelperService } from '../../services';
+import { TestingApplication } from '../fixtures/application';
+import { TestHelperKey } from '../fixtures/keys';
+import { TestHelperService } from '../fixtures/services';
+import { setupApplication } from './test-helper';
 
 describe('Authentication microservice', () => {
   let app: TestingApplication;
   let client: Client;
   let helper: TestHelperService;
   let userRepo: UserRepository;
+  let userHelperService: UserHelperService;
   let userTenantRepo: UserTenantRepository;
   let authClientRepository: AuthClientRepository;
   let userPermissionRepository: UserLevelPermissionRepository;
@@ -40,6 +42,7 @@ describe('Authentication microservice', () => {
   });
   after(async () => app.stop());
   before(givenUserRepository);
+  before(givenUserHelperService);
   before(givenUserTenantRepository);
   before(givenAuthClientRepository);
   before(givenUserPermissionRepository);
@@ -608,6 +611,9 @@ describe('Authentication microservice', () => {
   async function givenUserRepository() {
     userRepo = await app.getRepository(UserRepository);
   }
+  async function givenUserHelperService() {
+    userHelperService = await app.get('services.userHelperService');
+  }
   async function givenUserTenantRepository() {
     userTenantRepo = await app.getRepository(UserTenantRepository);
   }
@@ -689,7 +695,7 @@ describe('Authentication microservice', () => {
       },
     ]);
     process.env.USER_TEMP_PASSWORD = 'temp123!@';
-    await userRepo.create({
+    await userHelperService.create({
       id: '1',
       firstName: 'Test',
       lastName: 'User',

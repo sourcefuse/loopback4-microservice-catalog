@@ -1,24 +1,18 @@
-import {SurveyCycleRepository} from './survey-cycle.repository';
-import {SurveyRepository} from './survey.repository';
 import {Getter, inject} from '@loopback/core';
+import {BelongsToAccessor, repository} from '@loopback/repository';
+import {SequelizeDataSource} from '@loopback/sequelize';
+import {IAuthUserWithPermissions} from '@sourceloop/core';
+import {SequelizeUserModifyCrudRepository} from '@sourceloop/core/sequelize';
+import {AuthenticationBindings} from 'loopback4-authentication';
 import {
-  repository,
-  BelongsToAccessor,
-  DataObject,
-  Options,
-} from '@loopback/repository';
-import {HttpErrors} from '@loopback/rest';
-import {
-  SurveyResponder,
-  SurveyResponderRelations,
   Survey,
   SurveyCycle,
+  SurveyResponder,
+  SurveyResponderRelations,
 } from '../../models';
 import {SurveyDbSourceName} from '../../types';
-import {IAuthUserWithPermissions} from '@sourceloop/core';
-import {AuthenticationBindings} from 'loopback4-authentication';
-import {SequelizeDataSource} from '@loopback/sequelize';
-import {SequelizeUserModifyCrudRepository} from '@sourceloop/core/sequelize';
+import {SurveyCycleRepository} from './survey-cycle.repository';
+import {SurveyRepository} from './survey.repository';
 
 export class SurveyResponderRepository extends SequelizeUserModifyCrudRepository<
   SurveyResponder,
@@ -59,20 +53,5 @@ export class SurveyResponderRepository extends SequelizeUserModifyCrudRepository
       surveyRepositoryGetter,
     );
     this.registerInclusionResolver('survey', this.survey.inclusionResolver);
-  }
-
-  async create(
-    entity: DataObject<SurveyResponder>,
-    options?: Options | undefined,
-  ): Promise<SurveyResponder> {
-    const existingResponderCount = await super.count({
-      surveyCycleId: entity.surveyCycleId,
-      surveyId: entity.surveyId,
-      email: entity.email,
-    });
-    if (existingResponderCount.count) {
-      throw new HttpErrors.BadRequest('Responder Already Added');
-    }
-    return super.create(entity);
   }
 }

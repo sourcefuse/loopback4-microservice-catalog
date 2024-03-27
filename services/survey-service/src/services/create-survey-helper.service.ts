@@ -1,4 +1,4 @@
-import {BindingScope, injectable} from '@loopback/core';
+import {BindingScope, injectable, service} from '@loopback/core';
 import {AnyObject, Count, repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {Section, Survey, SurveyDto, SurveyQuestion} from '../models';
@@ -7,6 +7,7 @@ import {SurveyCycleRepository} from '../repositories/survey-cycle.repository';
 import {SurveyQuestionRepository} from '../repositories/survey-question.repository';
 import {SurveyResponderRepository} from '../repositories/survey-responder.repository';
 import {SurveyRepository} from '../repositories/survey.repository';
+import {SectionHelperService} from './section-helper.service';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class CreateSurveyHelperService {
@@ -21,6 +22,8 @@ export class CreateSurveyHelperService {
     public surveyCycleRepository: SurveyCycleRepository,
     @repository(SurveyResponderRepository)
     protected surveyResponderRepository: SurveyResponderRepository,
+    @service(SectionHelperService)
+    private readonly sectionHelperService: SectionHelperService,
   ) {}
 
   async copyFromBaseSurvey(survey: Omit<SurveyDto, 'id'>) {
@@ -128,7 +131,7 @@ export class CreateSurveyHelperService {
   }
 
   async createSection(section: Section) {
-    await this.sectionRepository.create(section);
+    await this.sectionHelperService.create(section);
     return this.sectionRepository.findOne({
       where: {
         name: section.name,

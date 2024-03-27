@@ -108,7 +108,7 @@ import {UserValidationProvider} from './providers/user-validation.provider';
 import {repositories} from './repositories/index';
 import {repositories as sequelizeRepositories} from './repositories/sequelize';
 import {MySequence} from './sequence';
-import {LoginHelperService, OtpService} from './services';
+import {LoginHelperService, OtpService, UserHelperService} from './services';
 import {IAuthServiceConfig, IMfaConfig, IOtpConfig} from './types';
 
 export class AuthenticationServiceComponent implements Component {
@@ -175,6 +175,9 @@ export class AuthenticationServiceComponent implements Component {
       .bind('services.LoginHelperService')
       .toClass(LoginHelperService);
     this.application.bind('services.otpService').toClass(OtpService);
+    this.application
+      .bind('services.userHelperService')
+      .toClass(UserHelperService);
     this.application.bind(AuthServiceBindings.ActorIdKey).to('userId');
     this.application
       .bind(AuthServiceBindings.MarkUserActivity)
