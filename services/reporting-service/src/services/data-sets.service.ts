@@ -87,16 +87,13 @@ export class DataSetsService {
   private generateHash(dataSet: DataSet, fields: string[]): string | undefined {
     if (fields.length === 0) return undefined;
 
-    const hashData = fields.reduce(
-      (acc: {[key: string]: AnyObject}, field) => {
-        const value = (dataSet as AnyObject)[field];
-        if (value !== undefined) {
-          acc[field] = value;
-        }
-        return acc;
-      },
-      {} as {[key: string]: AnyObject},
-    );
+    const hashData = fields.reduce((acc: {[key: string]: AnyObject}, field) => {
+      const value = (dataSet as AnyObject)[field];
+      if (value !== undefined) {
+        acc[field] = value;
+      }
+      return acc;
+    }, {} as {[key: string]: AnyObject});
 
     return CryptoJS.SHA256(JSON.stringify(hashData)).toString(CryptoJS.enc.Hex);
   }
@@ -252,8 +249,9 @@ export class DataSetsService {
 
     const columnEntityPairs = this.getcolumnEntityPairs(dataSetQuery.select);
 
-    const columnsExist =
-      await this.dataStoreAdapter.checkIfColumnsExists(columnEntityPairs);
+    const columnsExist = await this.dataStoreAdapter.checkIfColumnsExists(
+      columnEntityPairs,
+    );
 
     if (!columnsExist) {
       throw HttpErrors(BAD_REQUEST, 'Invalid columns');

@@ -85,8 +85,9 @@ export class WorkflowController {
     workflowDto: WorkflowDto,
   ): Promise<Workflow> {
     try {
-      const workflowResponse =
-        await this.workflowManagerService.createWorkflow(workflowDto);
+      const workflowResponse = await this.workflowManagerService.createWorkflow(
+        workflowDto,
+      );
 
       const entity = new Workflow({
         workflowVersion: workflowResponse.version,
@@ -140,8 +141,9 @@ export class WorkflowController {
     workflowDto: WorkflowDto,
     @param.path.string('id') id: string,
   ): Promise<void> {
-    const workflowResponse =
-      await this.workflowManagerService.updateWorkflow(workflowDto);
+    const workflowResponse = await this.workflowManagerService.updateWorkflow(
+      workflowDto,
+    );
 
     const entity = new Workflow({
       workflowVersion: workflowResponse.version,

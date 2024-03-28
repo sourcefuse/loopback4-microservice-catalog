@@ -41,8 +41,9 @@ export class UserTaskService implements IUserTaskService {
   }
 
   async updateList(taskId: string, instanceId: string): Promise<void> {
-    const pendingTasks =
-      await this.camundaService.getPendingUserTasks(instanceId);
+    const pendingTasks = await this.camundaService.getPendingUserTasks(
+      instanceId,
+    );
     if (pendingTasks.length > 0) {
       await this.userTaskRepo.createAll(
         pendingTasks.map(camundaTask => ({

@@ -99,8 +99,9 @@ export class CalendarEventController {
       timeMin,
       timeMax,
     );
-    const subscription =
-      await this.calendarEventService.primarySubscription(calendarId);
+    const subscription = await this.calendarEventService.primarySubscription(
+      calendarId,
+    );
     if (!subscription) {
       throw new HttpErrors.NotFound(ErrorKeys.SubscriptionNotExist);
     }
