@@ -1,21 +1,22 @@
 ---
-title: '@sourceloop/user-tenant-service v0.15.3'
+title: "@sourceloop/user-tenant-service v0.16.0"
 language_tabs:
   - javascript: JavaScript
   - javascript--nodejs: Node.JS
 language_clients:
   - javascript: request
-  - javascript--nodejs: ''
+  - javascript--nodejs: ""
 toc_footers: []
 includes: []
 search: true
 highlight_theme: darkula
 headingLevel: 2
+
 ---
 
 <!-- Generator: Widdershins v4.0.1 -->
 
-<h1 id="-sourceloop-user-tenant-service">@sourceloop/user-tenant-service v0.15.3</h1>
+<h1 id="-sourceloop-user-tenant-service">@sourceloop/user-tenant-service v0.16.0</h1>
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
@@ -23,7 +24,7 @@ Sourceloop User Tenant Service.
 
 Base URLs:
 
-- <a href="/">/</a>
+* <a href="/">/</a>
 
 <h1 id="-sourceloop-user-tenant-service-groupusercontroller">GroupUserController</h1>
 
@@ -100,10 +101,10 @@ fetch('/groups/{id}/user/bulk',
 
 `POST /groups/{id}/user/bulk`
 
-| Permissions             |
-| ----------------------- |
-| CreateMultipleUserGroup |
-| 31                      |
+| Permissions |
+| ------- |
+| CreateMultipleUserGroup   |
+| 31   |
 
 > Body parameter
 
@@ -124,10 +125,10 @@ fetch('/groups/{id}/user/bulk',
 
 <h3 id="groupusercontroller.createbulkusergroups-parameters">Parameters</h3>
 
-| Name | In   | Type                                              | Required | Description |
-| ---- | ---- | ------------------------------------------------- | -------- | ----------- |
-| id   | path | string                                            | true     | none        |
-| body | body | [NewUserGroupInGroup](#schemanewusergroupingroup) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[NewUserGroupInGroup](#schemanewusergroupingroup)|false|none|
 
 > Example responses
 
@@ -152,28 +153,28 @@ fetch('/groups/{id}/user/bulk',
 
 <h3 id="groupusercontroller.createbulkusergroups-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description              | Schema |
-| ------ | ------------------------------------------------------- | ------------------------ | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | UserGroup model instance | Inline |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|UserGroup model instance|Inline|
 
 <h3 id="groupusercontroller.createbulkusergroups-responseschema">Response Schema</h3>
 
 Status Code **200**
 
-| Name            | Type                            | Required | Restrictions | Description |
-| --------------- | ------------------------------- | -------- | ------------ | ----------- |
-| _anonymous_     | [[UserGroup](#schemausergroup)] | false    | none         | none        |
-| » UserGroup     | [UserGroup](#schemausergroup)   | false    | none         | none        |
-| »» deleted      | boolean                         | false    | none         | none        |
-| »» deletedOn    | string(date-time)¦null          | false    | none         | none        |
-| »» deletedBy    | string¦null                     | false    | none         | none        |
-| »» createdOn    | string(date-time)               | false    | none         | none        |
-| »» modifiedOn   | string(date-time)               | false    | none         | none        |
-| »» createdBy    | string                          | false    | none         | none        |
-| »» modifiedBy   | string                          | false    | none         | none        |
-| »» id           | string                          | false    | none         | none        |
-| »» groupId      | string                          | true     | none         | none        |
-| »» userTenantId | string                          | true     | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[UserGroup](#schemausergroup)]|false|none|none|
+|» UserGroup|[UserGroup](#schemausergroup)|false|none|none|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|string(date-time)¦null|false|none|none|
+|»» deletedBy|string¦null|false|none|none|
+|»» createdOn|string(date-time)|false|none|none|
+|»» modifiedOn|string(date-time)|false|none|none|
+|»» createdBy|string|false|none|none|
+|»» modifiedBy|string|false|none|none|
+|»» id|string|false|none|none|
+|»» groupId|string|true|none|none|
+|»» userTenantId|string|true|none|none|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -187,15 +188,18 @@ None
 > Code samples
 
 ```javascript
-fetch('/groups/{id}/user/{userId}', {
-  method: 'DELETE',
+
+fetch('/groups/{id}/user/{userId}',
+{
+  method: 'DELETE'
+
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -216,24 +220,24 @@ fetch('/groups/{id}/user/{userId}',
 
 `DELETE /groups/{id}/user/{userId}`
 
-| Permissions               |
-| ------------------------- |
-| RemoveMemberFromUserGroup |
-| 22                        |
+| Permissions |
+| ------- |
+| RemoveMemberFromUserGroup   |
+| 22   |
 
 <h3 id="groupusercontroller.delete-parameters">Parameters</h3>
 
-| Name   | In    | Type   | Required | Description |
-| ------ | ----- | ------ | -------- | ----------- |
-| id     | path  | string | true     | none        |
-| userId | path  | string | true     | none        |
-| where  | query | object | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|userId|path|string|true|none|
+|where|query|object|false|none|
 
 <h3 id="groupusercontroller.delete-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description            | Schema |
-| ------ | ------------------------------------------------------- | ---------------------- | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | DELETE Group.UserGroup | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|DELETE Group.UserGroup|None|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -309,10 +313,10 @@ fetch('/groups/{id}/user',
 
 `POST /groups/{id}/user`
 
-| Permissions     |
-| --------------- |
-| CreateUserGroup |
-| 1               |
+| Permissions |
+| ------- |
+| CreateUserGroup   |
+| 1   |
 
 > Body parameter
 
@@ -331,10 +335,10 @@ fetch('/groups/{id}/user',
 
 <h3 id="groupusercontroller.create-parameters">Parameters</h3>
 
-| Name | In   | Type                                              | Required | Description |
-| ---- | ---- | ------------------------------------------------- | -------- | ----------- |
-| id   | path | string                                            | true     | none        |
-| body | body | [NewUserGroupInGroup](#schemanewusergroupingroup) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[NewUserGroupInGroup](#schemanewusergroupingroup)|false|none|
 
 > Example responses
 
@@ -357,9 +361,9 @@ fetch('/groups/{id}/user',
 
 <h3 id="groupusercontroller.create-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description              | Schema                        |
-| ------ | ------------------------------------------------------- | ------------------------ | ----------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | UserGroup model instance | [UserGroup](#schemausergroup) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|UserGroup model instance|[UserGroup](#schemausergroup)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -373,21 +377,23 @@ None
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/groups/{id}/user', {
+fetch('/groups/{id}/user',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -413,17 +419,17 @@ fetch('/groups/{id}/user',
 
 `GET /groups/{id}/user`
 
-| Permissions       |
-| ----------------- |
-| ViewUserGroupList |
-| 2                 |
+| Permissions |
+| ------- |
+| ViewUserGroupList   |
+| 2   |
 
 <h3 id="groupusercontroller.find-parameters">Parameters</h3>
 
-| Name   | In    | Type   | Required | Description |
-| ------ | ----- | ------ | -------- | ----------- |
-| id     | path  | string | true     | none        |
-| filter | query | object | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|filter|query|object|false|none|
 
 > Example responses
 
@@ -448,28 +454,28 @@ fetch('/groups/{id}/user',
 
 <h3 id="groupusercontroller.find-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                   | Schema |
-| ------ | ------------------------------------------------------- | ----------------------------- | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Array of UserGroup of a Group | Inline |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of UserGroup of a Group|Inline|
 
 <h3 id="groupusercontroller.find-responseschema">Response Schema</h3>
 
 Status Code **200**
 
-| Name            | Type                            | Required | Restrictions | Description |
-| --------------- | ------------------------------- | -------- | ------------ | ----------- |
-| _anonymous_     | [[UserGroup](#schemausergroup)] | false    | none         | none        |
-| » UserGroup     | [UserGroup](#schemausergroup)   | false    | none         | none        |
-| »» deleted      | boolean                         | false    | none         | none        |
-| »» deletedOn    | string(date-time)¦null          | false    | none         | none        |
-| »» deletedBy    | string¦null                     | false    | none         | none        |
-| »» createdOn    | string(date-time)               | false    | none         | none        |
-| »» modifiedOn   | string(date-time)               | false    | none         | none        |
-| »» createdBy    | string                          | false    | none         | none        |
-| »» modifiedBy   | string                          | false    | none         | none        |
-| »» id           | string                          | false    | none         | none        |
-| »» groupId      | string                          | true     | none         | none        |
-| »» userTenantId | string                          | true     | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[UserGroup](#schemausergroup)]|false|none|none|
+|» UserGroup|[UserGroup](#schemausergroup)|false|none|none|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|string(date-time)¦null|false|none|none|
+|»» deletedBy|string¦null|false|none|none|
+|»» createdOn|string(date-time)|false|none|none|
+|»» modifiedOn|string(date-time)|false|none|none|
+|»» createdBy|string|false|none|none|
+|»» modifiedBy|string|false|none|none|
+|»» id|string|false|none|none|
+|»» groupId|string|true|none|none|
+|»» userTenantId|string|true|none|none|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -485,21 +491,23 @@ None
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/tenants/count', {
+fetch('/tenants/count',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -526,15 +534,15 @@ fetch('/tenants/count',
 `GET /tenants/count`
 
 | Permissions |
-| ----------- |
-| ViewTenant  |
-| 17          |
+| ------- |
+| ViewTenant   |
+| 17   |
 
 <h3 id="tenantcontroller.count-parameters">Parameters</h3>
 
-| Name  | In    | Type   | Required | Description |
-| ----- | ----- | ------ | -------- | ----------- |
-| where | query | object | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|where|query|object|false|none|
 
 > Example responses
 
@@ -548,9 +556,9 @@ fetch('/tenants/count',
 
 <h3 id="tenantcontroller.count-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description        | Schema                                  |
-| ------ | ------------------------------------------------------- | ------------------ | --------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Tenant model count | [loopback.Count](#schemaloopback.count) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Tenant model count|[loopback.Count](#schemaloopback.count)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -642,10 +650,10 @@ fetch('/tenants/{id}',
 
 `PUT /tenants/{id}`
 
-| Permissions  |
-| ------------ |
-| UpdateTenant |
-| 18           |
+| Permissions |
+| ------- |
+| UpdateTenant   |
+| 18   |
 
 > Body parameter
 
@@ -673,16 +681,16 @@ fetch('/tenants/{id}',
 
 <h3 id="tenantcontroller.replacebyid-parameters">Parameters</h3>
 
-| Name | In   | Type                    | Required | Description |
-| ---- | ---- | ----------------------- | -------- | ----------- |
-| id   | path | string                  | true     | none        |
-| body | body | [Tenant](#schematenant) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[Tenant](#schematenant)|false|none|
 
 <h3 id="tenantcontroller.replacebyid-responses">Responses</h3>
 
-| Status | Meaning                                                         | Description        | Schema |
-| ------ | --------------------------------------------------------------- | ------------------ | ------ |
-| 204    | [No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5) | Tenant PUT success | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Tenant PUT success|None|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -774,10 +782,10 @@ fetch('/tenants/{id}',
 
 `PATCH /tenants/{id}`
 
-| Permissions  |
-| ------------ |
-| UpdateTenant |
-| 18           |
+| Permissions |
+| ------- |
+| UpdateTenant   |
+| 18   |
 
 > Body parameter
 
@@ -805,16 +813,16 @@ fetch('/tenants/{id}',
 
 <h3 id="tenantcontroller.updatebyid-parameters">Parameters</h3>
 
-| Name | In   | Type                                  | Required | Description |
-| ---- | ---- | ------------------------------------- | -------- | ----------- |
-| id   | path | string                                | true     | none        |
-| body | body | [TenantPartial](#schematenantpartial) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[TenantPartial](#schematenantpartial)|false|none|
 
 <h3 id="tenantcontroller.updatebyid-responses">Responses</h3>
 
-| Status | Meaning                                                         | Description          | Schema |
-| ------ | --------------------------------------------------------------- | -------------------- | ------ |
-| 204    | [No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5) | Tenant PATCH success | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Tenant PATCH success|None|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -828,21 +836,23 @@ None
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/tenants/{id}', {
+fetch('/tenants/{id}',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -869,16 +879,16 @@ fetch('/tenants/{id}',
 `GET /tenants/{id}`
 
 | Permissions |
-| ----------- |
-| ViewTenant  |
-| 17          |
+| ------- |
+| ViewTenant   |
+| 17   |
 
 <h3 id="tenantcontroller.findbyid-parameters">Parameters</h3>
 
-| Name   | In    | Type                                    | Required | Description |
-| ------ | ----- | --------------------------------------- | -------- | ----------- |
-| id     | path  | string                                  | true     | none        |
-| filter | query | [tenants.Filter](#schematenants.filter) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|filter|query|[tenants.Filter](#schematenants.filter)|false|none|
 
 > Example responses
 
@@ -992,7 +1002,9 @@ fetch('/tenants/{id}',
                 "user": {},
                 "foreignKey": null
               },
-              "userTenants": [{}]
+              "userTenants": [
+                {}
+              ]
             },
             "foreignKey": null,
             "tenant": {},
@@ -1008,10 +1020,16 @@ fetch('/tenants/{id}',
               "name": "string",
               "roleType": 15,
               "description": "string",
-              "permissions": ["string"],
-              "allowedClients": ["string"],
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
               "tenantId": "string",
-              "userTenants": [{}],
+              "userTenants": [
+                {}
+              ],
               "createdByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -1116,7 +1134,9 @@ fetch('/tenants/{id}',
                   "description": "string",
                   "photoUrl": "string",
                   "tenantId": "string",
-                  "userGroups": [{}]
+                  "userGroups": [
+                    {}
+                  ]
                 },
                 "foreignKey": null,
                 "userTenant": {}
@@ -1214,10 +1234,16 @@ fetch('/tenants/{id}',
                   "name": "string",
                   "roleType": 15,
                   "description": "string",
-                  "permissions": ["string"],
-                  "allowedClients": ["string"],
+                  "permissions": [
+                    "string"
+                  ],
+                  "allowedClients": [
+                    "string"
+                  ],
                   "tenantId": "string",
-                  "userTenants": [{}],
+                  "userTenants": [
+                    {}
+                  ],
                   "createdByUser": {
                     "deleted": true,
                     "deletedOn": "2019-08-24T14:15:22Z",
@@ -1348,8 +1374,12 @@ fetch('/tenants/{id}',
             "name": "string",
             "roleType": 15,
             "description": "string",
-            "permissions": ["string"],
-            "allowedClients": ["string"],
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
             "tenantId": "string",
             "userTenants": [
               {
@@ -1408,7 +1438,9 @@ fetch('/tenants/{id}',
                     "user": {},
                     "foreignKey": null
                   },
-                  "userTenants": [{}]
+                  "userTenants": [
+                    {}
+                  ]
                 },
                 "foreignKey": null,
                 "tenant": {},
@@ -1620,9 +1652,15 @@ fetch('/tenants/{id}',
                     "foreignKey": null,
                     "modifiedByUser": {}
                   },
-                  "userLevelPermissions": [{}],
-                  "userGroups": [{}],
-                  "userInvitations": [{}]
+                  "userLevelPermissions": [
+                    {}
+                  ],
+                  "userGroups": [
+                    {}
+                  ],
+                  "userInvitations": [
+                    {}
+                  ]
                 }
               }
             ]
@@ -1705,7 +1743,9 @@ fetch('/tenants/{id}',
             }
           ],
           "userTenants": [],
-          "users": [{}],
+          "users": [
+            {}
+          ],
           "roles": [
             {
               "deleted": true,
@@ -1719,10 +1759,16 @@ fetch('/tenants/{id}',
               "name": "string",
               "roleType": 15,
               "description": "string",
-              "permissions": ["string"],
-              "allowedClients": ["string"],
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
               "tenantId": "string",
-              "userTenants": [{}],
+              "userTenants": [
+                {}
+              ],
               "createdByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -1839,7 +1885,9 @@ fetch('/tenants/{id}',
           "user": {},
           "foreignKey": null
         },
-        "userTenants": [{}]
+        "userTenants": [
+          {}
+        ]
       },
       "foreignKey": null,
       "tenant": {
@@ -1921,7 +1969,9 @@ fetch('/tenants/{id}',
               "user": {},
               "foreignKey": null
             },
-            "userTenants": [{}]
+            "userTenants": [
+              {}
+            ]
           }
         ],
         "roles": [
@@ -1937,10 +1987,16 @@ fetch('/tenants/{id}',
             "name": "string",
             "roleType": 15,
             "description": "string",
-            "permissions": ["string"],
-            "allowedClients": ["string"],
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
             "tenantId": "string",
-            "userTenants": [{}],
+            "userTenants": [
+              {}
+            ],
             "createdByUser": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -2050,10 +2106,16 @@ fetch('/tenants/{id}',
         "name": "string",
         "roleType": 15,
         "description": "string",
-        "permissions": ["string"],
-        "allowedClients": ["string"],
+        "permissions": [
+          "string"
+        ],
+        "allowedClients": [
+          "string"
+        ],
         "tenantId": "string",
-        "userTenants": [{}],
+        "userTenants": [
+          {}
+        ],
         "createdByUser": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -2158,7 +2220,9 @@ fetch('/tenants/{id}',
             "description": "string",
             "photoUrl": "string",
             "tenantId": "string",
-            "userGroups": [{}]
+            "userGroups": [
+              {}
+            ]
           },
           "foreignKey": null,
           "userTenant": {}
@@ -2271,10 +2335,16 @@ fetch('/tenants/{id}',
               "name": "string",
               "roleType": 15,
               "description": "string",
-              "permissions": ["string"],
-              "allowedClients": ["string"],
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
               "tenantId": "string",
-              "userTenants": [{}],
+              "userTenants": [
+                {}
+              ],
               "createdByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -2379,7 +2449,9 @@ fetch('/tenants/{id}',
                   "description": "string",
                   "photoUrl": "string",
                   "tenantId": "string",
-                  "userGroups": [{}]
+                  "userGroups": [
+                    {}
+                  ]
                 },
                 "foreignKey": null,
                 "userTenant": {}
@@ -2418,8 +2490,12 @@ fetch('/tenants/{id}',
             "name": "string",
             "roleType": 15,
             "description": "string",
-            "permissions": ["string"],
-            "allowedClients": ["string"],
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
             "tenantId": "string",
             "userTenants": [
               {
@@ -2621,9 +2697,15 @@ fetch('/tenants/{id}',
                     "foreignKey": null,
                     "modifiedByUser": {}
                   },
-                  "userLevelPermissions": [{}],
-                  "userGroups": [{}],
-                  "userInvitations": [{}]
+                  "userLevelPermissions": [
+                    {}
+                  ],
+                  "userGroups": [
+                    {}
+                  ],
+                  "userInvitations": [
+                    {}
+                  ]
                 }
               }
             ]
@@ -2701,7 +2783,9 @@ fetch('/tenants/{id}',
                 "foreignKey": null
               }
             ],
-            "userTenants": [{}],
+            "userTenants": [
+              {}
+            ],
             "users": [],
             "roles": [
               {
@@ -2716,10 +2800,16 @@ fetch('/tenants/{id}',
                 "name": "string",
                 "roleType": 15,
                 "description": "string",
-                "permissions": ["string"],
-                "allowedClients": ["string"],
+                "permissions": [
+                  "string"
+                ],
+                "allowedClients": [
+                  "string"
+                ],
                 "tenantId": "string",
-                "userTenants": [{}],
+                "userTenants": [
+                  {}
+                ],
                 "createdByUser": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -2829,10 +2919,16 @@ fetch('/tenants/{id}',
             "name": "string",
             "roleType": 15,
             "description": "string",
-            "permissions": ["string"],
-            "allowedClients": ["string"],
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
             "tenantId": "string",
-            "userTenants": [{}],
+            "userTenants": [
+              {}
+            ],
             "createdByUser": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -2937,7 +3033,9 @@ fetch('/tenants/{id}',
                 "description": "string",
                 "photoUrl": "string",
                 "tenantId": "string",
-                "userGroups": [{}]
+                "userGroups": [
+                  {}
+                ]
               },
               "foreignKey": null,
               "userTenant": {}
@@ -2977,8 +3075,12 @@ fetch('/tenants/{id}',
       "name": "string",
       "roleType": 15,
       "description": "string",
-      "permissions": ["string"],
-      "allowedClients": ["string"],
+      "permissions": [
+        "string"
+      ],
+      "allowedClients": [
+        "string"
+      ],
       "tenantId": "string",
       "userTenants": [
         {
@@ -3052,8 +3154,12 @@ fetch('/tenants/{id}',
                   "foreignKey": null
                 }
               ],
-              "userTenants": [{}],
-              "users": [{}],
+              "userTenants": [
+                {}
+              ],
+              "users": [
+                {}
+              ],
               "roles": [],
               "groups": [
                 {
@@ -3069,7 +3175,9 @@ fetch('/tenants/{id}',
                   "description": "string",
                   "photoUrl": "string",
                   "tenantId": "string",
-                  "userGroups": [{}]
+                  "userGroups": [
+                    {}
+                  ]
                 }
               ]
             },
@@ -3092,7 +3200,9 @@ fetch('/tenants/{id}',
               "user": {},
               "foreignKey": null
             },
-            "userTenants": [{}]
+            "userTenants": [
+              {}
+            ]
           },
           "foreignKey": null,
           "tenant": {
@@ -3130,7 +3240,9 @@ fetch('/tenants/{id}',
                 "foreignKey": null
               }
             ],
-            "userTenants": [{}],
+            "userTenants": [
+              {}
+            ],
             "users": [
               {
                 "deleted": true,
@@ -3174,7 +3286,9 @@ fetch('/tenants/{id}',
                   "user": {},
                   "foreignKey": null
                 },
-                "userTenants": [{}]
+                "userTenants": [
+                  {}
+                ]
               }
             ],
             "roles": [],
@@ -3255,7 +3369,9 @@ fetch('/tenants/{id}',
                 "description": "string",
                 "photoUrl": "string",
                 "tenantId": "string",
-                "userGroups": [{}]
+                "userGroups": [
+                  {}
+                ]
               },
               "foreignKey": null,
               "userTenant": {}
@@ -3442,8 +3558,12 @@ fetch('/tenants/{id}',
                     "foreignKey": null
                   }
                 ],
-                "userTenants": [{}],
-                "users": [{}],
+                "userTenants": [
+                  {}
+                ],
+                "users": [
+                  {}
+                ],
                 "roles": [
                   {
                     "deleted": true,
@@ -3487,7 +3607,9 @@ fetch('/tenants/{id}',
                 "user": {},
                 "foreignKey": null
               },
-              "userTenants": [{}]
+              "userTenants": [
+                {}
+              ]
             },
             "foreignKey": null,
             "tenant": {
@@ -3525,7 +3647,9 @@ fetch('/tenants/{id}',
                   "foreignKey": null
                 }
               ],
-              "userTenants": [{}],
+              "userTenants": [
+                {}
+              ],
               "users": [
                 {
                   "deleted": true,
@@ -3569,7 +3693,9 @@ fetch('/tenants/{id}',
                     "user": {},
                     "foreignKey": null
                   },
-                  "userTenants": [{}]
+                  "userTenants": [
+                    {}
+                  ]
                 }
               ],
               "roles": [
@@ -3585,10 +3711,16 @@ fetch('/tenants/{id}',
                   "name": "string",
                   "roleType": 15,
                   "description": "string",
-                  "permissions": ["string"],
-                  "allowedClients": ["string"],
+                  "permissions": [
+                    "string"
+                  ],
+                  "allowedClients": [
+                    "string"
+                  ],
                   "tenantId": "string",
-                  "userTenants": [{}],
+                  "userTenants": [
+                    {}
+                  ],
                   "createdByUser": {
                     "deleted": true,
                     "deletedOn": "2019-08-24T14:15:22Z",
@@ -3666,10 +3798,16 @@ fetch('/tenants/{id}',
               "name": "string",
               "roleType": 15,
               "description": "string",
-              "permissions": ["string"],
-              "allowedClients": ["string"],
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
               "tenantId": "string",
-              "userTenants": [{}],
+              "userTenants": [
+                {}
+              ],
               "createdByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -3749,7 +3887,9 @@ fetch('/tenants/{id}',
                 "foreignKey": null
               }
             ],
-            "userGroups": [{}],
+            "userGroups": [
+              {}
+            ],
             "userInvitations": [
               {
                 "deleted": true,
@@ -3777,9 +3917,9 @@ fetch('/tenants/{id}',
 
 <h3 id="tenantcontroller.findbyid-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description           | Schema                                            |
-| ------ | ------------------------------------------------------- | --------------------- | ------------------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Tenant model instance | [TenantWithRelations](#schematenantwithrelations) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Tenant model instance|[TenantWithRelations](#schematenantwithrelations)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -3793,15 +3933,18 @@ None
 > Code samples
 
 ```javascript
-fetch('/tenants/{id}', {
-  method: 'DELETE',
+
+fetch('/tenants/{id}',
+{
+  method: 'DELETE'
+
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -3822,22 +3965,22 @@ fetch('/tenants/{id}',
 
 `DELETE /tenants/{id}`
 
-| Permissions      |
-| ---------------- |
-| DeleteTenant     |
-| DeleteTenantUser |
+| Permissions |
+| ------- |
+| DeleteTenant   |
+| DeleteTenantUser   |
 
 <h3 id="tenantcontroller.deletebyid-parameters">Parameters</h3>
 
-| Name | In   | Type   | Required | Description |
-| ---- | ---- | ------ | -------- | ----------- |
-| id   | path | string | true     | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
 
 <h3 id="tenantcontroller.deletebyid-responses">Responses</h3>
 
-| Status | Meaning                                                         | Description           | Schema |
-| ------ | --------------------------------------------------------------- | --------------------- | ------ |
-| 204    | [No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5) | Tenant DELETE success | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Tenant DELETE success|None|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -3929,10 +4072,10 @@ fetch('/tenants',
 
 `POST /tenants`
 
-| Permissions  |
-| ------------ |
-| CreateTenant |
-| 16           |
+| Permissions |
+| ------- |
+| CreateTenant   |
+| 16   |
 
 > Body parameter
 
@@ -3959,9 +4102,9 @@ fetch('/tenants',
 
 <h3 id="tenantcontroller.create-parameters">Parameters</h3>
 
-| Name | In   | Type                          | Required | Description |
-| ---- | ---- | ----------------------------- | -------- | ----------- |
-| body | body | [NewTenant](#schemanewtenant) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[NewTenant](#schemanewtenant)|false|none|
 
 > Example responses
 
@@ -3991,9 +4134,9 @@ fetch('/tenants',
 
 <h3 id="tenantcontroller.create-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description           | Schema                  |
-| ------ | ------------------------------------------------------- | --------------------- | ----------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Tenant model instance | [Tenant](#schematenant) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Tenant model instance|[Tenant](#schematenant)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -4087,10 +4230,10 @@ fetch('/tenants',
 
 `PATCH /tenants`
 
-| Permissions  |
-| ------------ |
-| UpdateTenant |
-| 18           |
+| Permissions |
+| ------- |
+| UpdateTenant   |
+| 18   |
 
 > Body parameter
 
@@ -4118,10 +4261,10 @@ fetch('/tenants',
 
 <h3 id="tenantcontroller.updateall-parameters">Parameters</h3>
 
-| Name  | In    | Type                                  | Required | Description |
-| ----- | ----- | ------------------------------------- | -------- | ----------- |
-| where | query | object                                | false    | none        |
-| body  | body  | [TenantPartial](#schematenantpartial) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|where|query|object|false|none|
+|body|body|[TenantPartial](#schematenantpartial)|false|none|
 
 > Example responses
 
@@ -4135,9 +4278,9 @@ fetch('/tenants',
 
 <h3 id="tenantcontroller.updateall-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                | Schema                                  |
-| ------ | ------------------------------------------------------- | -------------------------- | --------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Tenant PATCH success count | [loopback.Count](#schemaloopback.count) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Tenant PATCH success count|[loopback.Count](#schemaloopback.count)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -4151,21 +4294,23 @@ None
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/tenants', {
+fetch('/tenants',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -4192,15 +4337,15 @@ fetch('/tenants',
 `GET /tenants`
 
 | Permissions |
-| ----------- |
-| ViewTenant  |
-| 17          |
+| ------- |
+| ViewTenant   |
+| 17   |
 
 <h3 id="tenantcontroller.find-parameters">Parameters</h3>
 
-| Name   | In    | Type                                      | Required | Description |
-| ------ | ----- | ----------------------------------------- | -------- | ----------- |
-| filter | query | [tenants.Filter1](#schematenants.filter1) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|filter|query|[tenants.Filter1](#schematenants.filter1)|false|none|
 
 > Example responses
 
@@ -4300,7 +4445,9 @@ fetch('/tenants',
             "user": {},
             "foreignKey": null
           },
-          "userTenants": [{}]
+          "userTenants": [
+            {}
+          ]
         },
         "foreignKey": null,
         "tenant": {},
@@ -4316,10 +4463,16 @@ fetch('/tenants',
           "name": "string",
           "roleType": 15,
           "description": "string",
-          "permissions": ["string"],
-          "allowedClients": ["string"],
+          "permissions": [
+            "string"
+          ],
+          "allowedClients": [
+            "string"
+          ],
           "tenantId": "string",
-          "userTenants": [{}],
+          "userTenants": [
+            {}
+          ],
           "createdByUser": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -4424,7 +4577,9 @@ fetch('/tenants',
               "description": "string",
               "photoUrl": "string",
               "tenantId": "string",
-              "userGroups": [{}]
+              "userGroups": [
+                {}
+              ]
             },
             "foreignKey": null,
             "userTenant": {}
@@ -4522,10 +4677,16 @@ fetch('/tenants',
               "name": "string",
               "roleType": 15,
               "description": "string",
-              "permissions": ["string"],
-              "allowedClients": ["string"],
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
               "tenantId": "string",
-              "userTenants": [{}],
+              "userTenants": [
+                {}
+              ],
               "createdByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -4630,7 +4791,9 @@ fetch('/tenants',
                   "description": "string",
                   "photoUrl": "string",
                   "tenantId": "string",
-                  "userGroups": [{}]
+                  "userGroups": [
+                    {}
+                  ]
                 },
                 "foreignKey": null,
                 "userTenant": {}
@@ -4670,8 +4833,12 @@ fetch('/tenants',
         "name": "string",
         "roleType": 15,
         "description": "string",
-        "permissions": ["string"],
-        "allowedClients": ["string"],
+        "permissions": [
+          "string"
+        ],
+        "allowedClients": [
+          "string"
+        ],
         "tenantId": "string",
         "userTenants": [
           {
@@ -4730,7 +4897,9 @@ fetch('/tenants',
                 "user": {},
                 "foreignKey": null
               },
-              "userTenants": [{}]
+              "userTenants": [
+                {}
+              ]
             },
             "foreignKey": null,
             "tenant": {},
@@ -4777,7 +4946,9 @@ fetch('/tenants',
                   "description": "string",
                   "photoUrl": "string",
                   "tenantId": "string",
-                  "userGroups": [{}]
+                  "userGroups": [
+                    {}
+                  ]
                 },
                 "foreignKey": null,
                 "userTenant": {}
@@ -4949,7 +5120,9 @@ fetch('/tenants',
                   "user": {},
                   "foreignKey": null
                 },
-                "userTenants": [{}]
+                "userTenants": [
+                  {}
+                ]
               },
               "foreignKey": null,
               "tenant": {},
@@ -4965,10 +5138,16 @@ fetch('/tenants',
                 "name": "string",
                 "roleType": 15,
                 "description": "string",
-                "permissions": ["string"],
-                "allowedClients": ["string"],
+                "permissions": [
+                  "string"
+                ],
+                "allowedClients": [
+                  "string"
+                ],
                 "tenantId": "string",
-                "userTenants": [{}],
+                "userTenants": [
+                  {}
+                ],
                 "createdByUser": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -5048,7 +5227,9 @@ fetch('/tenants',
                   "foreignKey": null
                 }
               ],
-              "userGroups": [{}],
+              "userGroups": [
+                {}
+              ],
               "userInvitations": [
                 {
                   "deleted": true,
@@ -5077,236 +5258,236 @@ fetch('/tenants',
 
 <h3 id="tenantcontroller.find-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                     | Schema |
-| ------ | ------------------------------------------------------- | ------------------------------- | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Array of Tenant model instances | Inline |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Tenant model instances|Inline|
 
 <h3 id="tenantcontroller.find-responseschema">Response Schema</h3>
 
 Status Code **200**
 
-| Name                                   | Type                                                                          | Required | Restrictions | Description                                                                                              |
-| -------------------------------------- | ----------------------------------------------------------------------------- | -------- | ------------ | -------------------------------------------------------------------------------------------------------- |
-| _anonymous_                            | [[TenantWithRelations](#schematenantwithrelations)]                           | false    | none         | [signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })]     |
-| » TenantWithRelations                  | [TenantWithRelations](#schematenantwithrelations)                             | false    | none         | signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })       |
-| »» deleted                             | boolean                                                                       | false    | none         | none                                                                                                     |
-| »» deletedOn                           | string(date-time)¦null                                                        | false    | none         | none                                                                                                     |
-| »» deletedBy                           | string¦null                                                                   | false    | none         | none                                                                                                     |
-| »» createdOn                           | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »» modifiedOn                          | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »» createdBy                           | string                                                                        | false    | none         | none                                                                                                     |
-| »» modifiedBy                          | string                                                                        | false    | none         | none                                                                                                     |
-| »» id                                  | string                                                                        | false    | none         | none                                                                                                     |
-| »» name                                | string                                                                        | true     | none         | none                                                                                                     |
-| »» status                              | number¦null                                                                   | true     | none         | Tenant status - Active or Inactive                                                                       |
-| »» key                                 | string                                                                        | false    | none         | none                                                                                                     |
-| »» website                             | string                                                                        | false    | none         | none                                                                                                     |
-| »» address                             | string                                                                        | false    | none         | none                                                                                                     |
-| »» city                                | string                                                                        | false    | none         | none                                                                                                     |
-| »» state                               | string                                                                        | false    | none         | none                                                                                                     |
-| »» zip                                 | string                                                                        | false    | none         | none                                                                                                     |
-| »» country                             | string                                                                        | false    | none         | none                                                                                                     |
-| »» tenantConfigs                       | [[TenantConfigWithRelations](#schematenantconfigwithrelations)]               | false    | none         | (tsType: TenantConfigWithRelations, schemaOptions: { includeRelations: true })                           |
-| »»» TenantConfigWithRelations          | [TenantConfigWithRelations](#schematenantconfigwithrelations)                 | false    | none         | (tsType: TenantConfigWithRelations, schemaOptions: { includeRelations: true })                           |
-| »»»» deleted                           | boolean                                                                       | false    | none         | none                                                                                                     |
-| »»»» deletedOn                         | string(date-time)¦null                                                        | false    | none         | none                                                                                                     |
-| »»»» deletedBy                         | string¦null                                                                   | false    | none         | none                                                                                                     |
-| »»»» createdOn                         | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»» modifiedOn                        | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»» createdBy                         | string                                                                        | false    | none         | none                                                                                                     |
-| »»»» modifiedBy                        | string                                                                        | false    | none         | none                                                                                                     |
-| »»»» id                                | string                                                                        | false    | none         | none                                                                                                     |
-| »»»» configKey                         | string                                                                        | true     | none         | none                                                                                                     |
-| »»»» configValue                       | object                                                                        | false    | none         | none                                                                                                     |
-| »»»» tenantId                          | string                                                                        | true     | none         | none                                                                                                     |
-| »»»» tenant                            | [TenantWithRelations](#schematenantwithrelations)                             | false    | none         | signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })       |
-| »»»» foreignKey                        | any                                                                           | false    | none         | none                                                                                                     |
-| »» userTenants                         | [[UserTenantWithRelations](#schemausertenantwithrelations)]                   | false    | none         | (tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })                             |
-| »»» UserTenantWithRelations            | [UserTenantWithRelations](#schemausertenantwithrelations)                     | false    | none         | (tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })                             |
-| »»»» deleted                           | boolean                                                                       | false    | none         | none                                                                                                     |
-| »»»» deletedOn                         | string(date-time)¦null                                                        | false    | none         | none                                                                                                     |
-| »»»» deletedBy                         | string¦null                                                                   | false    | none         | none                                                                                                     |
-| »»»» createdOn                         | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»» modifiedOn                        | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»» createdBy                         | string                                                                        | false    | none         | none                                                                                                     |
-| »»»» modifiedBy                        | string                                                                        | false    | none         | none                                                                                                     |
-| »»»» id                                | string                                                                        | false    | none         | none                                                                                                     |
-| »»»» locale                            | string                                                                        | false    | none         | none                                                                                                     |
-| »»»» status                            | number                                                                        | false    | none         | none                                                                                                     |
-| »»»» userId                            | string                                                                        | true     | none         | none                                                                                                     |
-| »»»» tenantId                          | string                                                                        | true     | none         | none                                                                                                     |
-| »»»» roleId                            | string                                                                        | true     | none         | none                                                                                                     |
-| »»»» user                              | [UserWithRelations](#schemauserwithrelations)                                 | false    | none         | This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true }) |
-| »»»»» deleted                          | boolean                                                                       | false    | none         | none                                                                                                     |
-| »»»»» deletedOn                        | string(date-time)¦null                                                        | false    | none         | none                                                                                                     |
-| »»»»» deletedBy                        | string¦null                                                                   | false    | none         | none                                                                                                     |
-| »»»»» createdOn                        | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»» modifiedOn                       | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»» createdBy                        | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» modifiedBy                       | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» id                               | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» firstName                        | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»» lastName                         | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» middleName                       | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» username                         | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»» email                            | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»» designation                      | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» phone                            | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» authClientIds                    | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» lastLogin                        | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»» photoUrl                         | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» gender                           | string                                                                        | false    | none         | This field takes a single character as input in database.<br> 'M' for male and 'F' for female.           |
-| »»»»» dob                              | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»» defaultTenantId                  | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» defaultTenant                    | [TenantWithRelations](#schematenantwithrelations)                             | false    | none         | signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })       |
-| »»»»» foreignKey                       | any                                                                           | false    | none         | none                                                                                                     |
-| »»»»» credentials                      | [UserCredentialsWithRelations](#schemausercredentialswithrelations)           | false    | none         | (tsType: UserCredentialsWithRelations, schemaOptions: { includeRelations: true })                        |
-| »»»»»» deleted                         | boolean                                                                       | false    | none         | none                                                                                                     |
-| »»»»»» deletedOn                       | string(date-time)¦null                                                        | false    | none         | none                                                                                                     |
-| »»»»»» deletedBy                       | string¦null                                                                   | false    | none         | none                                                                                                     |
-| »»»»»» createdOn                       | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»»» modifiedOn                      | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»»» createdBy                       | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»» modifiedBy                      | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»» id                              | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»» authProvider                    | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»»» authId                          | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»» authToken                       | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»» secretKey                       | string                                                                        | false    | none         | Secret for Authenticator app                                                                             |
-| »»»»»» password                        | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»» userId                          | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»»» user                            | [UserWithRelations](#schemauserwithrelations)                                 | false    | none         | This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true }) |
-| »»»»»» foreignKey                      | any                                                                           | false    | none         | none                                                                                                     |
-| »»»»» userTenants                      | [[UserTenantWithRelations](#schemausertenantwithrelations)]                   | false    | none         | (tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })                             |
-| »»»»»» UserTenantWithRelations         | [UserTenantWithRelations](#schemausertenantwithrelations)                     | false    | none         | (tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })                             |
-| »»»» foreignKey                        | any                                                                           | false    | none         | none                                                                                                     |
-| »»»» tenant                            | [TenantWithRelations](#schematenantwithrelations)                             | false    | none         | signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })       |
-| »»»» role                              | [RoleWithRelations](#schemarolewithrelations)                                 | false    | none         | (tsType: RoleWithRelations, schemaOptions: { includeRelations: true })                                   |
-| »»»»» deleted                          | boolean                                                                       | false    | none         | none                                                                                                     |
-| »»»»» deletedOn                        | string(date-time)¦null                                                        | false    | none         | none                                                                                                     |
-| »»»»» deletedBy                        | string¦null                                                                   | false    | none         | none                                                                                                     |
-| »»»»» createdOn                        | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»» modifiedOn                       | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»» createdBy                        | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» modifiedBy                       | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» id                               | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» name                             | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»» roleType                         | number                                                                        | false    | none         | none                                                                                                     |
-| »»»»» description                      | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» permissions                      | [string]                                                                      | false    | none         | none                                                                                                     |
-| »»»»» allowedClients                   | [string]                                                                      | false    | none         | none                                                                                                     |
-| »»»»» tenantId                         | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»» userTenants                      | [[UserTenantWithRelations](#schemausertenantwithrelations)]                   | false    | none         | (tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })                             |
-| »»»»»» UserTenantWithRelations         | [UserTenantWithRelations](#schemausertenantwithrelations)                     | false    | none         | (tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })                             |
-| »»»»» createdByUser                    | [UserViewWithRelations](#schemauserviewwithrelations)                         | false    | none         | User details view in DB (tsType: UserViewWithRelations, schemaOptions: { includeRelations: true })       |
-| »»»»»» deleted                         | boolean                                                                       | false    | none         | none                                                                                                     |
-| »»»»»» deletedOn                       | string(date-time)¦null                                                        | false    | none         | none                                                                                                     |
-| »»»»»» deletedBy                       | string¦null                                                                   | false    | none         | none                                                                                                     |
-| »»»»»» createdOn                       | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»»» modifiedOn                      | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»»» createdBy                       | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»» modifiedBy                      | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»» id                              | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»» firstName                       | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»»» lastName                        | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»» middleName                      | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»» username                        | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»»» email                           | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»»» designation                     | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»» phone                           | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»» authClientIds                   | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»» lastLogin                       | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»» photoUrl                        | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»» gender                          | string                                                                        | false    | none         | This field takes a single character as input in database.<br> 'M' for male and 'F' for female.           |
-| »»»»»» dob                             | string(date-time)¦null                                                        | false    | none         | none                                                                                                     |
-| »»»»»» defaultTenantId                 | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»»» status                          | number                                                                        | false    | none         | none                                                                                                     |
-| »»»»»» tenantId                        | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»»» roleId                          | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»»» tenantName                      | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»»» tenantKey                       | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»» roleName                        | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»» userTenantId                    | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»» foreignKey                       | any                                                                           | false    | none         | none                                                                                                     |
-| »»»»» modifiedByUser                   | [UserViewWithRelations](#schemauserviewwithrelations)                         | false    | none         | User details view in DB (tsType: UserViewWithRelations, schemaOptions: { includeRelations: true })       |
-| »»»» userLevelPermissions              | [[UserLevelPermissionWithRelations](#schemauserlevelpermissionwithrelations)] | false    | none         | (tsType: UserLevelPermissionWithRelations, schemaOptions: { includeRelations: true })                    |
-| »»»»» UserLevelPermissionWithRelations | [UserLevelPermissionWithRelations](#schemauserlevelpermissionwithrelations)   | false    | none         | (tsType: UserLevelPermissionWithRelations, schemaOptions: { includeRelations: true })                    |
-| »»»»»» deleted                         | boolean                                                                       | false    | none         | none                                                                                                     |
-| »»»»»» deletedOn                       | string(date-time)¦null                                                        | false    | none         | none                                                                                                     |
-| »»»»»» deletedBy                       | string¦null                                                                   | false    | none         | none                                                                                                     |
-| »»»»»» createdOn                       | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»»» modifiedOn                      | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»»» createdBy                       | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»» modifiedBy                      | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»» id                              | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»» permission                      | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»»» allowed                         | boolean                                                                       | true     | none         | none                                                                                                     |
-| »»»»»» userTenantId                    | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»»» userTenant                      | [UserTenantWithRelations](#schemausertenantwithrelations)                     | false    | none         | (tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })                             |
-| »»»»»» foreignKey                      | any                                                                           | false    | none         | none                                                                                                     |
-| »»»» userGroups                        | [[UserGroupWithRelations](#schemausergroupwithrelations)]                     | false    | none         | (tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })                              |
-| »»»»» UserGroupWithRelations           | [UserGroupWithRelations](#schemausergroupwithrelations)                       | false    | none         | (tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })                              |
-| »»»»»» deleted                         | boolean                                                                       | false    | none         | none                                                                                                     |
-| »»»»»» deletedOn                       | string(date-time)¦null                                                        | false    | none         | none                                                                                                     |
-| »»»»»» deletedBy                       | string¦null                                                                   | false    | none         | none                                                                                                     |
-| »»»»»» createdOn                       | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»»» modifiedOn                      | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»»» createdBy                       | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»» modifiedBy                      | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»» id                              | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»» groupId                         | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»»» userTenantId                    | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»»» group                           | [GroupWithRelations](#schemagroupwithrelations)                               | false    | none         | (tsType: GroupWithRelations, schemaOptions: { includeRelations: true })                                  |
-| »»»»»»» deleted                        | boolean                                                                       | false    | none         | none                                                                                                     |
-| »»»»»»» deletedOn                      | string(date-time)¦null                                                        | false    | none         | none                                                                                                     |
-| »»»»»»» deletedBy                      | string¦null                                                                   | false    | none         | none                                                                                                     |
-| »»»»»»» createdOn                      | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»»»» modifiedOn                     | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»»»» createdBy                      | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»» modifiedBy                     | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»» id                             | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»» name                           | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»» description                    | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»» photoUrl                       | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»» tenantId                       | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»»»» userGroups                     | [[UserGroupWithRelations](#schemausergroupwithrelations)]                     | false    | none         | (tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })                              |
-| »»»»»»»» UserGroupWithRelations        | [UserGroupWithRelations](#schemausergroupwithrelations)                       | false    | none         | (tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })                              |
-| »»»»»» foreignKey                      | any                                                                           | false    | none         | none                                                                                                     |
-| »»»»»» userTenant                      | [UserTenantWithRelations](#schemausertenantwithrelations)                     | false    | none         | (tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })                             |
-| »»»» userInvitations                   | [[UserInvitationWithRelations](#schemauserinvitationwithrelations)]           | false    | none         | (tsType: UserInvitationWithRelations, schemaOptions: { includeRelations: true })                         |
-| »»»»» UserInvitationWithRelations      | [UserInvitationWithRelations](#schemauserinvitationwithrelations)             | false    | none         | (tsType: UserInvitationWithRelations, schemaOptions: { includeRelations: true })                         |
-| »»»»»» deleted                         | boolean                                                                       | false    | none         | none                                                                                                     |
-| »»»»»» deletedOn                       | string(date-time)¦null                                                        | false    | none         | none                                                                                                     |
-| »»»»»» deletedBy                       | string¦null                                                                   | false    | none         | none                                                                                                     |
-| »»»»»» createdOn                       | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»»» modifiedOn                      | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»»» createdBy                       | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»» modifiedBy                      | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»» id                              | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»» expiresOn                       | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»»» token                           | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»» userTenantId                    | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»»» userTenant                      | [UserTenantWithRelations](#schemausertenantwithrelations)                     | false    | none         | (tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })                             |
-| »»»»»» foreignKey                      | any                                                                           | false    | none         | none                                                                                                     |
-| »» users                               | [[UserWithRelations](#schemauserwithrelations)]                               | false    | none         | This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true }) |
-| »»» UserWithRelations                  | [UserWithRelations](#schemauserwithrelations)                                 | false    | none         | This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true }) |
-| »» roles                               | [[RoleWithRelations](#schemarolewithrelations)]                               | false    | none         | (tsType: RoleWithRelations, schemaOptions: { includeRelations: true })                                   |
-| »»» RoleWithRelations                  | [RoleWithRelations](#schemarolewithrelations)                                 | false    | none         | (tsType: RoleWithRelations, schemaOptions: { includeRelations: true })                                   |
-| »» groups                              | [[GroupWithRelations](#schemagroupwithrelations)]                             | false    | none         | (tsType: GroupWithRelations, schemaOptions: { includeRelations: true })                                  |
-| »»» GroupWithRelations                 | [GroupWithRelations](#schemagroupwithrelations)                               | false    | none         | (tsType: GroupWithRelations, schemaOptions: { includeRelations: true })                                  |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[TenantWithRelations](#schematenantwithrelations)]|false|none|[signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })]|
+|» TenantWithRelations|[TenantWithRelations](#schematenantwithrelations)|false|none|signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|string(date-time)¦null|false|none|none|
+|»» deletedBy|string¦null|false|none|none|
+|»» createdOn|string(date-time)|false|none|none|
+|»» modifiedOn|string(date-time)|false|none|none|
+|»» createdBy|string|false|none|none|
+|»» modifiedBy|string|false|none|none|
+|»» id|string|false|none|none|
+|»» name|string|true|none|none|
+|»» status|number¦null|true|none|Tenant status - Active or Inactive|
+|»» key|string|false|none|none|
+|»» website|string|false|none|none|
+|»» address|string|false|none|none|
+|»» city|string|false|none|none|
+|»» state|string|false|none|none|
+|»» zip|string|false|none|none|
+|»» country|string|false|none|none|
+|»» tenantConfigs|[[TenantConfigWithRelations](#schematenantconfigwithrelations)]|false|none|(tsType: TenantConfigWithRelations, schemaOptions: { includeRelations: true })|
+|»»» TenantConfigWithRelations|[TenantConfigWithRelations](#schematenantconfigwithrelations)|false|none|(tsType: TenantConfigWithRelations, schemaOptions: { includeRelations: true })|
+|»»»» deleted|boolean|false|none|none|
+|»»»» deletedOn|string(date-time)¦null|false|none|none|
+|»»»» deletedBy|string¦null|false|none|none|
+|»»»» createdOn|string(date-time)|false|none|none|
+|»»»» modifiedOn|string(date-time)|false|none|none|
+|»»»» createdBy|string|false|none|none|
+|»»»» modifiedBy|string|false|none|none|
+|»»»» id|string|false|none|none|
+|»»»» configKey|string|true|none|none|
+|»»»» configValue|object|false|none|none|
+|»»»» tenantId|string|true|none|none|
+|»»»» tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
+|»»»» foreignKey|any|false|none|none|
+|»» userTenants|[[UserTenantWithRelations](#schemausertenantwithrelations)]|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
+|»»» UserTenantWithRelations|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
+|»»»» deleted|boolean|false|none|none|
+|»»»» deletedOn|string(date-time)¦null|false|none|none|
+|»»»» deletedBy|string¦null|false|none|none|
+|»»»» createdOn|string(date-time)|false|none|none|
+|»»»» modifiedOn|string(date-time)|false|none|none|
+|»»»» createdBy|string|false|none|none|
+|»»»» modifiedBy|string|false|none|none|
+|»»»» id|string|false|none|none|
+|»»»» locale|string|false|none|none|
+|»»»» status|number|false|none|none|
+|»»»» userId|string|true|none|none|
+|»»»» tenantId|string|true|none|none|
+|»»»» roleId|string|true|none|none|
+|»»»» user|[UserWithRelations](#schemauserwithrelations)|false|none|This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»» deleted|boolean|false|none|none|
+|»»»»» deletedOn|string(date-time)¦null|false|none|none|
+|»»»»» deletedBy|string¦null|false|none|none|
+|»»»»» createdOn|string(date-time)|false|none|none|
+|»»»»» modifiedOn|string(date-time)|false|none|none|
+|»»»»» createdBy|string|false|none|none|
+|»»»»» modifiedBy|string|false|none|none|
+|»»»»» id|string|false|none|none|
+|»»»»» firstName|string|true|none|none|
+|»»»»» lastName|string|false|none|none|
+|»»»»» middleName|string|false|none|none|
+|»»»»» username|string|true|none|none|
+|»»»»» email|string|true|none|none|
+|»»»»» designation|string|false|none|none|
+|»»»»» phone|string|false|none|none|
+|»»»»» authClientIds|string|false|none|none|
+|»»»»» lastLogin|string(date-time)|false|none|none|
+|»»»»» photoUrl|string|false|none|none|
+|»»»»» gender|string|false|none|This field takes a single character as input in database.<br>    'M' for male and 'F' for female.|
+|»»»»» dob|string(date-time)|false|none|none|
+|»»»»» defaultTenantId|string|false|none|none|
+|»»»»» defaultTenant|[TenantWithRelations](#schematenantwithrelations)|false|none|signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»» foreignKey|any|false|none|none|
+|»»»»» credentials|[UserCredentialsWithRelations](#schemausercredentialswithrelations)|false|none|(tsType: UserCredentialsWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»» deleted|boolean|false|none|none|
+|»»»»»» deletedOn|string(date-time)¦null|false|none|none|
+|»»»»»» deletedBy|string¦null|false|none|none|
+|»»»»»» createdOn|string(date-time)|false|none|none|
+|»»»»»» modifiedOn|string(date-time)|false|none|none|
+|»»»»»» createdBy|string|false|none|none|
+|»»»»»» modifiedBy|string|false|none|none|
+|»»»»»» id|string|false|none|none|
+|»»»»»» authProvider|string|true|none|none|
+|»»»»»» authId|string|false|none|none|
+|»»»»»» authToken|string|false|none|none|
+|»»»»»» secretKey|string|false|none|Secret for Authenticator app|
+|»»»»»» password|string|false|none|none|
+|»»»»»» userId|string|true|none|none|
+|»»»»»» user|[UserWithRelations](#schemauserwithrelations)|false|none|This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»» foreignKey|any|false|none|none|
+|»»»»» userTenants|[[UserTenantWithRelations](#schemausertenantwithrelations)]|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»» UserTenantWithRelations|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
+|»»»» foreignKey|any|false|none|none|
+|»»»» tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
+|»»»» role|[RoleWithRelations](#schemarolewithrelations)|false|none|(tsType: RoleWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»» deleted|boolean|false|none|none|
+|»»»»» deletedOn|string(date-time)¦null|false|none|none|
+|»»»»» deletedBy|string¦null|false|none|none|
+|»»»»» createdOn|string(date-time)|false|none|none|
+|»»»»» modifiedOn|string(date-time)|false|none|none|
+|»»»»» createdBy|string|false|none|none|
+|»»»»» modifiedBy|string|false|none|none|
+|»»»»» id|string|false|none|none|
+|»»»»» name|string|true|none|none|
+|»»»»» roleType|number|false|none|none|
+|»»»»» description|string|false|none|none|
+|»»»»» permissions|[string]|false|none|none|
+|»»»»» allowedClients|[string]|false|none|none|
+|»»»»» tenantId|string|true|none|none|
+|»»»»» userTenants|[[UserTenantWithRelations](#schemausertenantwithrelations)]|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»» UserTenantWithRelations|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»» createdByUser|[UserViewWithRelations](#schemauserviewwithrelations)|false|none|User details view in DB (tsType: UserViewWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»» deleted|boolean|false|none|none|
+|»»»»»» deletedOn|string(date-time)¦null|false|none|none|
+|»»»»»» deletedBy|string¦null|false|none|none|
+|»»»»»» createdOn|string(date-time)|false|none|none|
+|»»»»»» modifiedOn|string(date-time)|false|none|none|
+|»»»»»» createdBy|string|false|none|none|
+|»»»»»» modifiedBy|string|false|none|none|
+|»»»»»» id|string|false|none|none|
+|»»»»»» firstName|string|true|none|none|
+|»»»»»» lastName|string|false|none|none|
+|»»»»»» middleName|string|false|none|none|
+|»»»»»» username|string|true|none|none|
+|»»»»»» email|string|true|none|none|
+|»»»»»» designation|string|false|none|none|
+|»»»»»» phone|string|false|none|none|
+|»»»»»» authClientIds|string|false|none|none|
+|»»»»»» lastLogin|string|false|none|none|
+|»»»»»» photoUrl|string|false|none|none|
+|»»»»»» gender|string|false|none|This field takes a single character as input in database.<br>    'M' for male and 'F' for female.|
+|»»»»»» dob|string(date-time)¦null|false|none|none|
+|»»»»»» defaultTenantId|string|true|none|none|
+|»»»»»» status|number|false|none|none|
+|»»»»»» tenantId|string|true|none|none|
+|»»»»»» roleId|string|true|none|none|
+|»»»»»» tenantName|string|true|none|none|
+|»»»»»» tenantKey|string|false|none|none|
+|»»»»»» roleName|string|false|none|none|
+|»»»»»» userTenantId|string|true|none|none|
+|»»»»» foreignKey|any|false|none|none|
+|»»»»» modifiedByUser|[UserViewWithRelations](#schemauserviewwithrelations)|false|none|User details view in DB (tsType: UserViewWithRelations, schemaOptions: { includeRelations: true })|
+|»»»» userLevelPermissions|[[UserLevelPermissionWithRelations](#schemauserlevelpermissionwithrelations)]|false|none|(tsType: UserLevelPermissionWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»» UserLevelPermissionWithRelations|[UserLevelPermissionWithRelations](#schemauserlevelpermissionwithrelations)|false|none|(tsType: UserLevelPermissionWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»» deleted|boolean|false|none|none|
+|»»»»»» deletedOn|string(date-time)¦null|false|none|none|
+|»»»»»» deletedBy|string¦null|false|none|none|
+|»»»»»» createdOn|string(date-time)|false|none|none|
+|»»»»»» modifiedOn|string(date-time)|false|none|none|
+|»»»»»» createdBy|string|false|none|none|
+|»»»»»» modifiedBy|string|false|none|none|
+|»»»»»» id|string|false|none|none|
+|»»»»»» permission|string|true|none|none|
+|»»»»»» allowed|boolean|true|none|none|
+|»»»»»» userTenantId|string|true|none|none|
+|»»»»»» userTenant|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»» foreignKey|any|false|none|none|
+|»»»» userGroups|[[UserGroupWithRelations](#schemausergroupwithrelations)]|false|none|(tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»» UserGroupWithRelations|[UserGroupWithRelations](#schemausergroupwithrelations)|false|none|(tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»» deleted|boolean|false|none|none|
+|»»»»»» deletedOn|string(date-time)¦null|false|none|none|
+|»»»»»» deletedBy|string¦null|false|none|none|
+|»»»»»» createdOn|string(date-time)|false|none|none|
+|»»»»»» modifiedOn|string(date-time)|false|none|none|
+|»»»»»» createdBy|string|false|none|none|
+|»»»»»» modifiedBy|string|false|none|none|
+|»»»»»» id|string|false|none|none|
+|»»»»»» groupId|string|true|none|none|
+|»»»»»» userTenantId|string|true|none|none|
+|»»»»»» group|[GroupWithRelations](#schemagroupwithrelations)|false|none|(tsType: GroupWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»»» deleted|boolean|false|none|none|
+|»»»»»»» deletedOn|string(date-time)¦null|false|none|none|
+|»»»»»»» deletedBy|string¦null|false|none|none|
+|»»»»»»» createdOn|string(date-time)|false|none|none|
+|»»»»»»» modifiedOn|string(date-time)|false|none|none|
+|»»»»»»» createdBy|string|false|none|none|
+|»»»»»»» modifiedBy|string|false|none|none|
+|»»»»»»» id|string|false|none|none|
+|»»»»»»» name|string|false|none|none|
+|»»»»»»» description|string|false|none|none|
+|»»»»»»» photoUrl|string|false|none|none|
+|»»»»»»» tenantId|string|true|none|none|
+|»»»»»»» userGroups|[[UserGroupWithRelations](#schemausergroupwithrelations)]|false|none|(tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»»»» UserGroupWithRelations|[UserGroupWithRelations](#schemausergroupwithrelations)|false|none|(tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»» foreignKey|any|false|none|none|
+|»»»»»» userTenant|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
+|»»»» userInvitations|[[UserInvitationWithRelations](#schemauserinvitationwithrelations)]|false|none|(tsType: UserInvitationWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»» UserInvitationWithRelations|[UserInvitationWithRelations](#schemauserinvitationwithrelations)|false|none|(tsType: UserInvitationWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»» deleted|boolean|false|none|none|
+|»»»»»» deletedOn|string(date-time)¦null|false|none|none|
+|»»»»»» deletedBy|string¦null|false|none|none|
+|»»»»»» createdOn|string(date-time)|false|none|none|
+|»»»»»» modifiedOn|string(date-time)|false|none|none|
+|»»»»»» createdBy|string|false|none|none|
+|»»»»»» modifiedBy|string|false|none|none|
+|»»»»»» id|string|false|none|none|
+|»»»»»» expiresOn|string(date-time)|false|none|none|
+|»»»»»» token|string|false|none|none|
+|»»»»»» userTenantId|string|true|none|none|
+|»»»»»» userTenant|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»» foreignKey|any|false|none|none|
+|»» users|[[UserWithRelations](#schemauserwithrelations)]|false|none|This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true })|
+|»»» UserWithRelations|[UserWithRelations](#schemauserwithrelations)|false|none|This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true })|
+|»» roles|[[RoleWithRelations](#schemarolewithrelations)]|false|none|(tsType: RoleWithRelations, schemaOptions: { includeRelations: true })|
+|»»» RoleWithRelations|[RoleWithRelations](#schemarolewithrelations)|false|none|(tsType: RoleWithRelations, schemaOptions: { includeRelations: true })|
+|»» groups|[[GroupWithRelations](#schemagroupwithrelations)]|false|none|(tsType: GroupWithRelations, schemaOptions: { includeRelations: true })|
+|»»» GroupWithRelations|[GroupWithRelations](#schemagroupwithrelations)|false|none|(tsType: GroupWithRelations, schemaOptions: { includeRelations: true })|
 
 #### Enumerated Values
 
-| Property | Value |
-| -------- | ----- |
-| status   | 1     |
-| status   | 0     |
-| gender   | M     |
-| gender   | F     |
-| gender   | O     |
-| gender   | M     |
-| gender   | F     |
-| gender   | O     |
+|Property|Value|
+|---|---|
+|status|1|
+|status|0|
+|gender|M|
+|gender|F|
+|gender|O|
+|gender|M|
+|gender|F|
+|gender|O|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -5322,21 +5503,23 @@ None
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/tenants/{id}/groups/{groupId}', {
+fetch('/tenants/{id}/groups/{groupId}',
+{
   method: 'DELETE',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -5363,17 +5546,17 @@ fetch('/tenants/{id}/groups/{groupId}',
 `DELETE /tenants/{id}/groups/{groupId}`
 
 | Permissions |
-| ----------- |
-| DeleteGroup |
-| 35          |
+| ------- |
+| DeleteGroup   |
+| 35   |
 
 <h3 id="tenantgroupcontroller.delete-parameters">Parameters</h3>
 
-| Name    | In    | Type   | Required | Description |
-| ------- | ----- | ------ | -------- | ----------- |
-| id      | path  | string | true     | none        |
-| groupId | path  | string | true     | none        |
-| where   | query | object | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|groupId|path|string|true|none|
+|where|query|object|false|none|
 
 > Example responses
 
@@ -5387,9 +5570,9 @@ fetch('/tenants/{id}/groups/{groupId}',
 
 <h3 id="tenantgroupcontroller.delete-responses">Responses</h3>
 
-| Status | Meaning                                                         | Description         | Schema                                  |
-| ------ | --------------------------------------------------------------- | ------------------- | --------------------------------------- |
-| 204    | [No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5) | Tenant.Group DELETE | [loopback.Count](#schemaloopback.count) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Tenant.Group DELETE|[loopback.Count](#schemaloopback.count)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -5470,9 +5653,9 @@ fetch('/tenants/{id}/groups',
 `POST /tenants/{id}/groups`
 
 | Permissions |
-| ----------- |
-| CreateGroup |
-| 32          |
+| ------- |
+| CreateGroup   |
+| 32   |
 
 > Body parameter
 
@@ -5493,10 +5676,10 @@ fetch('/tenants/{id}/groups',
 
 <h3 id="tenantgroupcontroller.create-parameters">Parameters</h3>
 
-| Name | In   | Type                                        | Required | Description |
-| ---- | ---- | ------------------------------------------- | -------- | ----------- |
-| id   | path | string                                      | true     | none        |
-| body | body | [NewGroupInTenant](#schemanewgroupintenant) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[NewGroupInTenant](#schemanewgroupintenant)|false|none|
 
 > Example responses
 
@@ -5521,9 +5704,9 @@ fetch('/tenants/{id}/groups',
 
 <h3 id="tenantgroupcontroller.create-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description          | Schema                |
-| ------ | ------------------------------------------------------- | -------------------- | --------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Group model instance | [Group](#schemagroup) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Group model instance|[Group](#schemagroup)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -5608,9 +5791,9 @@ fetch('/tenants/{id}/groups',
 `PATCH /tenants/{id}/groups`
 
 | Permissions |
-| ----------- |
-| UpdateGroup |
-| 34          |
+| ------- |
+| UpdateGroup   |
+| 34   |
 
 > Body parameter
 
@@ -5633,11 +5816,11 @@ fetch('/tenants/{id}/groups',
 
 <h3 id="tenantgroupcontroller.patch-parameters">Parameters</h3>
 
-| Name  | In    | Type                                | Required | Description |
-| ----- | ----- | ----------------------------------- | -------- | ----------- |
-| id    | path  | string                              | true     | none        |
-| where | query | object                              | false    | none        |
-| body  | body  | [GroupPartial](#schemagrouppartial) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|where|query|object|false|none|
+|body|body|[GroupPartial](#schemagrouppartial)|false|none|
 
 > Example responses
 
@@ -5651,9 +5834,9 @@ fetch('/tenants/{id}/groups',
 
 <h3 id="tenantgroupcontroller.patch-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                      | Schema                                  |
-| ------ | ------------------------------------------------------- | -------------------------------- | --------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Tenant.Group PATCH success count | [loopback.Count](#schemaloopback.count) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Tenant.Group PATCH success count|[loopback.Count](#schemaloopback.count)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -5667,21 +5850,23 @@ None
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/tenants/{id}/groups', {
+fetch('/tenants/{id}/groups',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -5707,16 +5892,16 @@ fetch('/tenants/{id}/groups',
 
 `GET /tenants/{id}/groups`
 
-| Permissions   |
-| ------------- |
-| ViewGroupList |
+| Permissions |
+| ------- |
+| ViewGroupList   |
 
 <h3 id="tenantgroupcontroller.find-parameters">Parameters</h3>
 
-| Name   | In    | Type   | Required | Description |
-| ------ | ----- | ------ | -------- | ----------- |
-| id     | path  | string | true     | none        |
-| filter | query | object | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|filter|query|object|false|none|
 
 > Example responses
 
@@ -5743,30 +5928,30 @@ fetch('/tenants/{id}/groups',
 
 <h3 id="tenantgroupcontroller.find-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description               | Schema |
-| ------ | ------------------------------------------------------- | ------------------------- | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Array of Groups of Tenant | Inline |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Groups of Tenant|Inline|
 
 <h3 id="tenantgroupcontroller.find-responseschema">Response Schema</h3>
 
 Status Code **200**
 
-| Name           | Type                    | Required | Restrictions | Description |
-| -------------- | ----------------------- | -------- | ------------ | ----------- |
-| _anonymous_    | [[Group](#schemagroup)] | false    | none         | none        |
-| » Group        | [Group](#schemagroup)   | false    | none         | none        |
-| »» deleted     | boolean                 | false    | none         | none        |
-| »» deletedOn   | string(date-time)¦null  | false    | none         | none        |
-| »» deletedBy   | string¦null             | false    | none         | none        |
-| »» createdOn   | string(date-time)       | false    | none         | none        |
-| »» modifiedOn  | string(date-time)       | false    | none         | none        |
-| »» createdBy   | string                  | false    | none         | none        |
-| »» modifiedBy  | string                  | false    | none         | none        |
-| »» id          | string                  | false    | none         | none        |
-| »» name        | string                  | false    | none         | none        |
-| »» description | string                  | false    | none         | none        |
-| »» photoUrl    | string                  | false    | none         | none        |
-| »» tenantId    | string                  | true     | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[Group](#schemagroup)]|false|none|none|
+|» Group|[Group](#schemagroup)|false|none|none|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|string(date-time)¦null|false|none|none|
+|»» deletedBy|string¦null|false|none|none|
+|»» createdOn|string(date-time)|false|none|none|
+|»» modifiedOn|string(date-time)|false|none|none|
+|»» createdBy|string|false|none|none|
+|»» modifiedBy|string|false|none|none|
+|»» id|string|false|none|none|
+|»» name|string|false|none|none|
+|»» description|string|false|none|none|
+|»» photoUrl|string|false|none|none|
+|»» tenantId|string|true|none|none|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -5782,21 +5967,23 @@ None
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/tenants/{id}/roles/{roleId}', {
+fetch('/tenants/{id}/roles/{roleId}',
+{
   method: 'DELETE',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -5823,17 +6010,17 @@ fetch('/tenants/{id}/roles/{roleId}',
 `DELETE /tenants/{id}/roles/{roleId}`
 
 | Permissions |
-| ----------- |
-| DeleteRoles |
-| 10          |
+| ------- |
+| DeleteRoles   |
+| 10   |
 
 <h3 id="tenantrolecontroller.delete-parameters">Parameters</h3>
 
-| Name   | In    | Type   | Required | Description |
-| ------ | ----- | ------ | -------- | ----------- |
-| id     | path  | string | true     | none        |
-| roleId | path  | string | true     | none        |
-| where  | query | object | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|roleId|path|string|true|none|
+|where|query|object|false|none|
 
 > Example responses
 
@@ -5847,9 +6034,9 @@ fetch('/tenants/{id}/roles/{roleId}',
 
 <h3 id="tenantrolecontroller.delete-responses">Responses</h3>
 
-| Status | Meaning                                                         | Description                | Schema                                  |
-| ------ | --------------------------------------------------------------- | -------------------------- | --------------------------------------- |
-| 204    | [No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5) | Tenant.Role DELETE success | [loopback.Count](#schemaloopback.count) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Tenant.Role DELETE success|[loopback.Count](#schemaloopback.count)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -5942,9 +6129,9 @@ fetch('/tenants/{id}/roles',
 `POST /tenants/{id}/roles`
 
 | Permissions |
-| ----------- |
-| CreateRoles |
-| 8           |
+| ------- |
+| CreateRoles   |
+| 8   |
 
 > Body parameter
 
@@ -5960,17 +6147,21 @@ fetch('/tenants/{id}/roles',
   "name": "string",
   "roleType": 15,
   "description": "string",
-  "permissions": ["string"],
-  "allowedClients": ["string"]
+  "permissions": [
+    "string"
+  ],
+  "allowedClients": [
+    "string"
+  ]
 }
 ```
 
 <h3 id="tenantrolecontroller.create-parameters">Parameters</h3>
 
-| Name | In   | Type                                      | Required | Description |
-| ---- | ---- | ----------------------------------------- | -------- | ----------- |
-| id   | path | string                                    | true     | none        |
-| body | body | [NewRoleInTenant](#schemanewroleintenant) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[NewRoleInTenant](#schemanewroleintenant)|false|none|
 
 > Example responses
 
@@ -5989,17 +6180,21 @@ fetch('/tenants/{id}/roles',
   "name": "string",
   "roleType": 15,
   "description": "string",
-  "permissions": ["string"],
-  "allowedClients": ["string"],
+  "permissions": [
+    "string"
+  ],
+  "allowedClients": [
+    "string"
+  ],
   "tenantId": "string"
 }
 ```
 
 <h3 id="tenantrolecontroller.create-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description         | Schema              |
-| ------ | ------------------------------------------------------- | ------------------- | ------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Role model instance | [Role](#schemarole) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Role model instance|[Role](#schemarole)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -6092,9 +6287,9 @@ fetch('/tenants/{id}/roles',
 `PATCH /tenants/{id}/roles`
 
 | Permissions |
-| ----------- |
-| UpdateRoles |
-| 9           |
+| ------- |
+| UpdateRoles   |
+| 9   |
 
 > Body parameter
 
@@ -6110,18 +6305,22 @@ fetch('/tenants/{id}/roles',
   "name": "string",
   "roleType": 15,
   "description": "string",
-  "permissions": ["string"],
-  "allowedClients": ["string"]
+  "permissions": [
+    "string"
+  ],
+  "allowedClients": [
+    "string"
+  ]
 }
 ```
 
 <h3 id="tenantrolecontroller.patch-parameters">Parameters</h3>
 
-| Name  | In    | Type                                                                          | Required | Description |
-| ----- | ----- | ----------------------------------------------------------------------------- | -------- | ----------- |
-| id    | path  | string                                                                        | true     | none        |
-| where | query | object                                                                        | false    | none        |
-| body  | body  | [RolePartialExcluding*id-tenantId*](#schemarolepartialexcluding_id-tenantid_) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|where|query|object|false|none|
+|body|body|[RolePartialExcluding_id-tenantId_](#schemarolepartialexcluding_id-tenantid_)|false|none|
 
 > Example responses
 
@@ -6135,9 +6334,9 @@ fetch('/tenants/{id}/roles',
 
 <h3 id="tenantrolecontroller.patch-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                     | Schema                                  |
-| ------ | ------------------------------------------------------- | ------------------------------- | --------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Tenant.Role PATCH success count | [loopback.Count](#schemaloopback.count) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Tenant.Role PATCH success count|[loopback.Count](#schemaloopback.count)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -6151,21 +6350,23 @@ None
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/tenants/{id}/roles', {
+fetch('/tenants/{id}/roles',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -6192,16 +6393,16 @@ fetch('/tenants/{id}/roles',
 `GET /tenants/{id}/roles`
 
 | Permissions |
-| ----------- |
+| ------- |
 | ViewRoles   |
-| 6           |
+| 6   |
 
 <h3 id="tenantrolecontroller.find-parameters">Parameters</h3>
 
-| Name   | In    | Type   | Required | Description |
-| ------ | ----- | ------ | -------- | ----------- |
-| id     | path  | string | true     | none        |
-| filter | query | object | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|filter|query|object|false|none|
 
 > Example responses
 
@@ -6221,8 +6422,12 @@ fetch('/tenants/{id}/roles',
     "name": "string",
     "roleType": 15,
     "description": "string",
-    "permissions": ["string"],
-    "allowedClients": ["string"],
+    "permissions": [
+      "string"
+    ],
+    "allowedClients": [
+      "string"
+    ],
     "tenantId": "string"
   }
 ]
@@ -6230,32 +6435,32 @@ fetch('/tenants/{id}/roles',
 
 <h3 id="tenantrolecontroller.find-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description              | Schema |
-| ------ | ------------------------------------------------------- | ------------------------ | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Array of Roles of Tenant | Inline |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Roles of Tenant|Inline|
 
 <h3 id="tenantrolecontroller.find-responseschema">Response Schema</h3>
 
 Status Code **200**
 
-| Name              | Type                   | Required | Restrictions | Description |
-| ----------------- | ---------------------- | -------- | ------------ | ----------- |
-| _anonymous_       | [[Role](#schemarole)]  | false    | none         | none        |
-| » Role            | [Role](#schemarole)    | false    | none         | none        |
-| »» deleted        | boolean                | false    | none         | none        |
-| »» deletedOn      | string(date-time)¦null | false    | none         | none        |
-| »» deletedBy      | string¦null            | false    | none         | none        |
-| »» createdOn      | string(date-time)      | false    | none         | none        |
-| »» modifiedOn     | string(date-time)      | false    | none         | none        |
-| »» createdBy      | string                 | false    | none         | none        |
-| »» modifiedBy     | string                 | false    | none         | none        |
-| »» id             | string                 | false    | none         | none        |
-| »» name           | string                 | true     | none         | none        |
-| »» roleType       | number                 | false    | none         | none        |
-| »» description    | string                 | false    | none         | none        |
-| »» permissions    | [string]               | false    | none         | none        |
-| »» allowedClients | [string]               | false    | none         | none        |
-| »» tenantId       | string                 | true     | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[Role](#schemarole)]|false|none|none|
+|» Role|[Role](#schemarole)|false|none|none|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|string(date-time)¦null|false|none|none|
+|»» deletedBy|string¦null|false|none|none|
+|»» createdOn|string(date-time)|false|none|none|
+|»» modifiedOn|string(date-time)|false|none|none|
+|»» createdBy|string|false|none|none|
+|»» modifiedBy|string|false|none|none|
+|»» id|string|false|none|none|
+|»» name|string|true|none|none|
+|»» roleType|number|false|none|none|
+|»» description|string|false|none|none|
+|»» permissions|[string]|false|none|none|
+|»» allowedClients|[string]|false|none|none|
+|»» tenantId|string|true|none|none|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -6335,10 +6540,10 @@ fetch('/tenants/{id}/tenant-configs',
 
 `POST /tenants/{id}/tenant-configs`
 
-| Permissions  |
-| ------------ |
-| CreateTenant |
-| 16           |
+| Permissions |
+| ------- |
+| CreateTenant   |
+| 16   |
 
 > Body parameter
 
@@ -6358,10 +6563,10 @@ fetch('/tenants/{id}/tenant-configs',
 
 <h3 id="tenanttenantconfigcontroller.create-parameters">Parameters</h3>
 
-| Name | In   | Type                                                      | Required | Description |
-| ---- | ---- | --------------------------------------------------------- | -------- | ----------- |
-| id   | path | string                                                    | true     | none        |
-| body | body | [NewTenantConfigInTenant](#schemanewtenantconfigintenant) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[NewTenantConfigInTenant](#schemanewtenantconfigintenant)|false|none|
 
 > Example responses
 
@@ -6385,9 +6590,9 @@ fetch('/tenants/{id}/tenant-configs',
 
 <h3 id="tenanttenantconfigcontroller.create-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                 | Schema                              |
-| ------ | ------------------------------------------------------- | --------------------------- | ----------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | TenantConfig model instance | [TenantConfig](#schematenantconfig) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|TenantConfig model instance|[TenantConfig](#schematenantconfig)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -6465,10 +6670,10 @@ fetch('/tenants/{id}/tenant-configs',
 
 `PATCH /tenants/{id}/tenant-configs`
 
-| Permissions  |
-| ------------ |
-| UpdateTenant |
-| 18           |
+| Permissions |
+| ------- |
+| UpdateTenant   |
+| 18   |
 
 > Body parameter
 
@@ -6488,11 +6693,11 @@ fetch('/tenants/{id}/tenant-configs',
 
 <h3 id="tenanttenantconfigcontroller.patch-parameters">Parameters</h3>
 
-| Name  | In    | Type                                                      | Required | Description |
-| ----- | ----- | --------------------------------------------------------- | -------- | ----------- |
-| id    | path  | string                                                    | true     | none        |
-| where | query | object                                                    | false    | none        |
-| body  | body  | [NewTenantConfigInTenant](#schemanewtenantconfigintenant) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|where|query|object|false|none|
+|body|body|[NewTenantConfigInTenant](#schemanewtenantconfigintenant)|false|none|
 
 > Example responses
 
@@ -6506,9 +6711,9 @@ fetch('/tenants/{id}/tenant-configs',
 
 <h3 id="tenanttenantconfigcontroller.patch-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                             | Schema                                  |
-| ------ | ------------------------------------------------------- | --------------------------------------- | --------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Tenant.TenantConfig PATCH success count | [loopback.Count](#schemaloopback.count) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Tenant.TenantConfig PATCH success count|[loopback.Count](#schemaloopback.count)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -6522,21 +6727,23 @@ None
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/tenants/{id}/tenant-configs', {
+fetch('/tenants/{id}/tenant-configs',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -6563,16 +6770,16 @@ fetch('/tenants/{id}/tenant-configs',
 `GET /tenants/{id}/tenant-configs`
 
 | Permissions |
-| ----------- |
-| ViewTenant  |
-| 17          |
+| ------- |
+| ViewTenant   |
+| 17   |
 
 <h3 id="tenanttenantconfigcontroller.find-parameters">Parameters</h3>
 
-| Name   | In    | Type   | Required | Description |
-| ------ | ----- | ------ | -------- | ----------- |
-| id     | path  | string | true     | none        |
-| filter | query | object | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|filter|query|object|false|none|
 
 > Example responses
 
@@ -6598,29 +6805,29 @@ fetch('/tenants/{id}/tenant-configs',
 
 <h3 id="tenanttenantconfigcontroller.find-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                      | Schema |
-| ------ | ------------------------------------------------------- | -------------------------------- | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Array of TenantConfigs of Tenant | Inline |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of TenantConfigs of Tenant|Inline|
 
 <h3 id="tenanttenantconfigcontroller.find-responseschema">Response Schema</h3>
 
 Status Code **200**
 
-| Name           | Type                                  | Required | Restrictions | Description |
-| -------------- | ------------------------------------- | -------- | ------------ | ----------- |
-| _anonymous_    | [[TenantConfig](#schematenantconfig)] | false    | none         | none        |
-| » TenantConfig | [TenantConfig](#schematenantconfig)   | false    | none         | none        |
-| »» deleted     | boolean                               | false    | none         | none        |
-| »» deletedOn   | string(date-time)¦null                | false    | none         | none        |
-| »» deletedBy   | string¦null                           | false    | none         | none        |
-| »» createdOn   | string(date-time)                     | false    | none         | none        |
-| »» modifiedOn  | string(date-time)                     | false    | none         | none        |
-| »» createdBy   | string                                | false    | none         | none        |
-| »» modifiedBy  | string                                | false    | none         | none        |
-| »» id          | string                                | false    | none         | none        |
-| »» configKey   | string                                | true     | none         | none        |
-| »» configValue | object                                | false    | none         | none        |
-| »» tenantId    | string                                | true     | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[TenantConfig](#schematenantconfig)]|false|none|none|
+|» TenantConfig|[TenantConfig](#schematenantconfig)|false|none|none|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|string(date-time)¦null|false|none|none|
+|»» deletedBy|string¦null|false|none|none|
+|»» createdOn|string(date-time)|false|none|none|
+|»» modifiedOn|string(date-time)|false|none|none|
+|»» createdBy|string|false|none|none|
+|»» modifiedBy|string|false|none|none|
+|»» id|string|false|none|none|
+|»» configKey|string|true|none|none|
+|»» configValue|object|false|none|none|
+|»» tenantId|string|true|none|none|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -6634,21 +6841,23 @@ None
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/tenants/{id}/tenant-configs', {
+fetch('/tenants/{id}/tenant-configs',
+{
   method: 'DELETE',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -6674,17 +6883,17 @@ fetch('/tenants/{id}/tenant-configs',
 
 `DELETE /tenants/{id}/tenant-configs`
 
-| Permissions      |
-| ---------------- |
-| DeleteTenant     |
-| DeleteTenantUser |
+| Permissions |
+| ------- |
+| DeleteTenant   |
+| DeleteTenantUser   |
 
 <h3 id="tenanttenantconfigcontroller.delete-parameters">Parameters</h3>
 
-| Name  | In    | Type   | Required | Description |
-| ----- | ----- | ------ | -------- | ----------- |
-| id    | path  | string | true     | none        |
-| where | query | object | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|where|query|object|false|none|
 
 > Example responses
 
@@ -6698,9 +6907,9 @@ fetch('/tenants/{id}/tenant-configs',
 
 <h3 id="tenanttenantconfigcontroller.delete-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                              | Schema                                  |
-| ------ | ------------------------------------------------------- | ---------------------------------------- | --------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Tenant.TenantConfig DELETE success count | [loopback.Count](#schemaloopback.count) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Tenant.TenantConfig DELETE success count|[loopback.Count](#schemaloopback.count)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -6800,10 +7009,10 @@ fetch('/tenants/{id}/users/{userId}',
 
 `PATCH /tenants/{id}/users/{userId}`
 
-| Permissions      |
-| ---------------- |
-| UpdateTenantUser |
-| 14               |
+| Permissions |
+| ------- |
+| UpdateTenantUser   |
+| 14   |
 
 > Body parameter
 
@@ -6834,18 +7043,18 @@ fetch('/tenants/{id}/users/{userId}',
 
 <h3 id="tenantusercontroller.patch-parameters">Parameters</h3>
 
-| Name   | In    | Type                                                                                                                                                                                                                        | Required | Description |
-| ------ | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ----------- |
-| id     | path  | string                                                                                                                                                                                                                      | true     | none        |
-| userId | path  | string                                                                                                                                                                                                                      | true     | none        |
-| where  | query | object                                                                                                                                                                                                                      | false    | none        |
-| body   | body  | [UserViewPartialExcluding*id-authClientIds-lastLogin-tenantId-tenantName-tenantKey-roleName-userTenantId*](#schemauserviewpartialexcluding_id-authclientids-lastlogin-tenantid-tenantname-tenantkey-rolename-usertenantid_) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|userId|path|string|true|none|
+|where|query|object|false|none|
+|body|body|[UserViewPartialExcluding_id-authClientIds-lastLogin-tenantId-tenantName-tenantKey-roleName-userTenantId_](#schemauserviewpartialexcluding_id-authclientids-lastlogin-tenantid-tenantname-tenantkey-rolename-usertenantid_)|false|none|
 
 <h3 id="tenantusercontroller.patch-responses">Responses</h3>
 
-| Status | Meaning                                                         | Description       | Schema |
-| ------ | --------------------------------------------------------------- | ----------------- | ------ |
-| 204    | [No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5) | Tenant.User PATCH | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Tenant.User PATCH|None|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -6859,15 +7068,18 @@ None
 > Code samples
 
 ```javascript
-fetch('/tenants/{id}/users/{userId}', {
-  method: 'DELETE',
+
+fetch('/tenants/{id}/users/{userId}',
+{
+  method: 'DELETE'
+
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -6888,24 +7100,24 @@ fetch('/tenants/{id}/users/{userId}',
 
 `DELETE /tenants/{id}/users/{userId}`
 
-| Permissions      |
-| ---------------- |
-| DeleteTenantUser |
-| 15               |
+| Permissions |
+| ------- |
+| DeleteTenantUser   |
+| 15   |
 
 <h3 id="tenantusercontroller.delete-parameters">Parameters</h3>
 
-| Name   | In    | Type   | Required | Description |
-| ------ | ----- | ------ | -------- | ----------- |
-| id     | path  | string | true     | none        |
-| userId | path  | string | true     | none        |
-| where  | query | object | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|userId|path|string|true|none|
+|where|query|object|false|none|
 
 <h3 id="tenantusercontroller.delete-responses">Responses</h3>
 
-| Status | Meaning                                                         | Description        | Schema |
-| ------ | --------------------------------------------------------------- | ------------------ | ------ |
-| 204    | [No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5) | Tenant.User DELETE | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Tenant.User DELETE|None|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -7007,10 +7219,10 @@ fetch('/tenants/{id}/users',
 
 `POST /tenants/{id}/users`
 
-| Permissions      |
-| ---------------- |
-| CreateTenantUser |
-| 13               |
+| Permissions |
+| ------- |
+| CreateTenantUser   |
+| 13   |
 
 > Body parameter
 
@@ -7042,10 +7254,10 @@ fetch('/tenants/{id}/users',
 
 <h3 id="tenantusercontroller.create-parameters">Parameters</h3>
 
-| Name | In   | Type                                      | Required | Description |
-| ---- | ---- | ----------------------------------------- | -------- | ----------- |
-| id   | path | string                                    | true     | none        |
-| body | body | [NewUserInTenant](#schemanewuserintenant) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[NewUserInTenant](#schemanewuserintenant)|false|none|
 
 > Example responses
 
@@ -7079,9 +7291,9 @@ fetch('/tenants/{id}/users',
 
 <h3 id="tenantusercontroller.create-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description         | Schema              |
-| ------ | ------------------------------------------------------- | ------------------- | ------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | User model instance | [User](#schemauser) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|User model instance|[User](#schemauser)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -7095,21 +7307,23 @@ None
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/tenants/{id}/users', {
+fetch('/tenants/{id}/users',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -7135,17 +7349,17 @@ fetch('/tenants/{id}/users',
 
 `GET /tenants/{id}/users`
 
-| Permissions    |
-| -------------- |
-| ViewTenantUser |
-| 12             |
+| Permissions |
+| ------- |
+| ViewTenantUser   |
+| 12   |
 
 <h3 id="tenantusercontroller.find-parameters">Parameters</h3>
 
-| Name   | In    | Type   | Required | Description |
-| ------ | ----- | ------ | -------- | ----------- |
-| id     | path  | string | true     | none        |
-| filter | query | object | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|filter|query|object|false|none|
 
 > Example responses
 
@@ -7181,47 +7395,47 @@ fetch('/tenants/{id}/users',
 
 <h3 id="tenantusercontroller.find-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description              | Schema |
-| ------ | ------------------------------------------------------- | ------------------------ | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Array of Users of Tenant | Inline |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Users of Tenant|Inline|
 
 <h3 id="tenantusercontroller.find-responseschema">Response Schema</h3>
 
 Status Code **200**
 
-| Name               | Type                   | Required | Restrictions | Description                                                                                    |
-| ------------------ | ---------------------- | -------- | ------------ | ---------------------------------------------------------------------------------------------- |
-| _anonymous_        | [[User](#schemauser)]  | false    | none         | [This is signature for user model.]                                                            |
-| » User             | [User](#schemauser)    | false    | none         | This is signature for user model.                                                              |
-| »» deleted         | boolean                | false    | none         | none                                                                                           |
-| »» deletedOn       | string(date-time)¦null | false    | none         | none                                                                                           |
-| »» deletedBy       | string¦null            | false    | none         | none                                                                                           |
-| »» createdOn       | string(date-time)      | false    | none         | none                                                                                           |
-| »» modifiedOn      | string(date-time)      | false    | none         | none                                                                                           |
-| »» createdBy       | string                 | false    | none         | none                                                                                           |
-| »» modifiedBy      | string                 | false    | none         | none                                                                                           |
-| »» id              | string                 | false    | none         | none                                                                                           |
-| »» firstName       | string                 | true     | none         | none                                                                                           |
-| »» lastName        | string                 | false    | none         | none                                                                                           |
-| »» middleName      | string                 | false    | none         | none                                                                                           |
-| »» username        | string                 | true     | none         | none                                                                                           |
-| »» email           | string                 | true     | none         | none                                                                                           |
-| »» designation     | string                 | false    | none         | none                                                                                           |
-| »» phone           | string                 | false    | none         | none                                                                                           |
-| »» authClientIds   | string                 | false    | none         | none                                                                                           |
-| »» lastLogin       | string(date-time)      | false    | none         | none                                                                                           |
-| »» photoUrl        | string                 | false    | none         | none                                                                                           |
-| »» gender          | string                 | false    | none         | This field takes a single character as input in database.<br> 'M' for male and 'F' for female. |
-| »» dob             | string(date-time)      | false    | none         | none                                                                                           |
-| »» defaultTenantId | string                 | false    | none         | none                                                                                           |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[User](#schemauser)]|false|none|[This is signature for user model.]|
+|» User|[User](#schemauser)|false|none|This is signature for user model.|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|string(date-time)¦null|false|none|none|
+|»» deletedBy|string¦null|false|none|none|
+|»» createdOn|string(date-time)|false|none|none|
+|»» modifiedOn|string(date-time)|false|none|none|
+|»» createdBy|string|false|none|none|
+|»» modifiedBy|string|false|none|none|
+|»» id|string|false|none|none|
+|»» firstName|string|true|none|none|
+|»» lastName|string|false|none|none|
+|»» middleName|string|false|none|none|
+|»» username|string|true|none|none|
+|»» email|string|true|none|none|
+|»» designation|string|false|none|none|
+|»» phone|string|false|none|none|
+|»» authClientIds|string|false|none|none|
+|»» lastLogin|string(date-time)|false|none|none|
+|»» photoUrl|string|false|none|none|
+|»» gender|string|false|none|This field takes a single character as input in database.<br>    'M' for male and 'F' for female.|
+|»» dob|string(date-time)|false|none|none|
+|»» defaultTenantId|string|false|none|none|
 
 #### Enumerated Values
 
-| Property | Value |
-| -------- | ----- |
-| gender   | M     |
-| gender   | F     |
-| gender   | O     |
+|Property|Value|
+|---|---|
+|gender|M|
+|gender|F|
+|gender|O|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -7237,21 +7451,23 @@ None
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/user/{id}/tenants', {
+fetch('/user/{id}/tenants',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -7277,16 +7493,16 @@ fetch('/user/{id}/tenants',
 
 `GET /user/{id}/tenants`
 
-| Permissions         |
-| ------------------- |
-| ViewAllTenantOfSelf |
+| Permissions |
+| ------- |
+| ViewAllTenantOfSelf   |
 
 <h3 id="usertenantcontroller.find-parameters">Parameters</h3>
 
-| Name   | In    | Type   | Required | Description |
-| ------ | ----- | ------ | -------- | ----------- |
-| id     | path  | string | true     | none        |
-| filter | query | object | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|filter|query|object|false|none|
 
 > Example responses
 
@@ -7318,42 +7534,42 @@ fetch('/user/{id}/tenants',
 
 <h3 id="usertenantcontroller.find-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                                | Schema |
-| ------ | ------------------------------------------------------- | ------------------------------------------ | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Array of Tenants to Which the User Belongs | Inline |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Tenants to Which the User Belongs|Inline|
 
 <h3 id="usertenantcontroller.find-responseschema">Response Schema</h3>
 
 Status Code **200**
 
-| Name          | Type                      | Required | Restrictions | Description                        |
-| ------------- | ------------------------- | -------- | ------------ | ---------------------------------- |
-| _anonymous_   | [[Tenant](#schematenant)] | false    | none         | [signature for all tenants]        |
-| » Tenant      | [Tenant](#schematenant)   | false    | none         | signature for all tenants          |
-| »» deleted    | boolean                   | false    | none         | none                               |
-| »» deletedOn  | string(date-time)¦null    | false    | none         | none                               |
-| »» deletedBy  | string¦null               | false    | none         | none                               |
-| »» createdOn  | string(date-time)         | false    | none         | none                               |
-| »» modifiedOn | string(date-time)         | false    | none         | none                               |
-| »» createdBy  | string                    | false    | none         | none                               |
-| »» modifiedBy | string                    | false    | none         | none                               |
-| »» id         | string                    | false    | none         | none                               |
-| »» name       | string                    | true     | none         | none                               |
-| »» status     | number¦null               | true     | none         | Tenant status - Active or Inactive |
-| »» key        | string                    | false    | none         | none                               |
-| »» website    | string                    | false    | none         | none                               |
-| »» address    | string                    | false    | none         | none                               |
-| »» city       | string                    | false    | none         | none                               |
-| »» state      | string                    | false    | none         | none                               |
-| »» zip        | string                    | false    | none         | none                               |
-| »» country    | string                    | false    | none         | none                               |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[Tenant](#schematenant)]|false|none|[signature for all tenants]|
+|» Tenant|[Tenant](#schematenant)|false|none|signature for all tenants|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|string(date-time)¦null|false|none|none|
+|»» deletedBy|string¦null|false|none|none|
+|»» createdOn|string(date-time)|false|none|none|
+|»» modifiedOn|string(date-time)|false|none|none|
+|»» createdBy|string|false|none|none|
+|»» modifiedBy|string|false|none|none|
+|»» id|string|false|none|none|
+|»» name|string|true|none|none|
+|»» status|number¦null|true|none|Tenant status - Active or Inactive|
+|»» key|string|false|none|none|
+|»» website|string|false|none|none|
+|»» address|string|false|none|none|
+|»» city|string|false|none|none|
+|»» state|string|false|none|none|
+|»» zip|string|false|none|none|
+|»» country|string|false|none|none|
 
 #### Enumerated Values
 
-| Property | Value |
-| -------- | ----- |
-| status   | 1     |
-| status   | 0     |
+|Property|Value|
+|---|---|
+|status|1|
+|status|0|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -7369,21 +7585,23 @@ None
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/user-tenant-prefs/count', {
+fetch('/user-tenant-prefs/count',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -7409,16 +7627,16 @@ fetch('/user-tenant-prefs/count',
 
 `GET /user-tenant-prefs/count`
 
-| Permissions              |
-| ------------------------ |
-| ViewUserTenantPreference |
-| 25                       |
+| Permissions |
+| ------- |
+| ViewUserTenantPreference   |
+| 25   |
 
 <h3 id="usertenantprefscontroller.count-parameters">Parameters</h3>
 
-| Name  | In    | Type   | Required | Description |
-| ----- | ----- | ------ | -------- | ----------- |
-| where | query | object | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|where|query|object|false|none|
 
 > Example responses
 
@@ -7432,9 +7650,9 @@ fetch('/user-tenant-prefs/count',
 
 <h3 id="usertenantprefscontroller.count-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                 | Schema                                  |
-| ------ | ------------------------------------------------------- | --------------------------- | --------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | UserTenantPrefs model count | [loopback.Count](#schemaloopback.count) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|UserTenantPrefs model count|[loopback.Count](#schemaloopback.count)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -7448,21 +7666,23 @@ None
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/user-tenant-prefs/{id}', {
+fetch('/user-tenant-prefs/{id}',
+{
   method: 'DELETE',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -7488,16 +7708,16 @@ fetch('/user-tenant-prefs/{id}',
 
 `DELETE /user-tenant-prefs/{id}`
 
-| Permissions                |
-| -------------------------- |
-| DeleteUserTenantPreference |
-| 30                         |
+| Permissions |
+| ------- |
+| DeleteUserTenantPreference   |
+| 30   |
 
 <h3 id="usertenantprefscontroller.deletebyid-parameters">Parameters</h3>
 
-| Name | In   | Type   | Required | Description |
-| ---- | ---- | ------ | -------- | ----------- |
-| id   | path | string | true     | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
 
 > Example responses
 
@@ -7509,18 +7729,18 @@ null
 
 <h3 id="usertenantprefscontroller.deletebyid-responses">Responses</h3>
 
-| Status | Meaning                                                         | Description | Schema |
-| ------ | --------------------------------------------------------------- | ----------- | ------ |
-| 204    | [No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5) | No Content  | Inline |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content|Inline|
 
 <h3 id="usertenantprefscontroller.deletebyid-responseschema">Response Schema</h3>
 
 Status Code **204**
 
-_UserTenantPrefs DELETE success_
+*UserTenantPrefs DELETE success*
 
-| Name | Type | Required | Restrictions | Description |
-| ---- | ---- | -------- | ------------ | ----------- |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -7598,10 +7818,10 @@ fetch('/user-tenant-prefs',
 
 `POST /user-tenant-prefs`
 
-| Permissions                |
-| -------------------------- |
-| CreateUserTenantPreference |
-| 29                         |
+| Permissions |
+| ------- |
+| CreateUserTenantPreference   |
+| 29   |
 
 > Body parameter
 
@@ -7621,9 +7841,9 @@ fetch('/user-tenant-prefs',
 
 <h3 id="usertenantprefscontroller.create-parameters">Parameters</h3>
 
-| Name | In   | Type                                            | Required | Description |
-| ---- | ---- | ----------------------------------------------- | -------- | ----------- |
-| body | body | [NewUserTenantPrefs](#schemanewusertenantprefs) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[NewUserTenantPrefs](#schemanewusertenantprefs)|false|none|
 
 > Example responses
 
@@ -7647,9 +7867,9 @@ fetch('/user-tenant-prefs',
 
 <h3 id="usertenantprefscontroller.create-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                    | Schema                                    |
-| ------ | ------------------------------------------------------- | ------------------------------ | ----------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | UserTenantPrefs model instance | [UserTenantPrefs](#schemausertenantprefs) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|UserTenantPrefs model instance|[UserTenantPrefs](#schemausertenantprefs)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -7663,21 +7883,23 @@ None
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/user-tenant-prefs', {
+fetch('/user-tenant-prefs',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -7703,16 +7925,16 @@ fetch('/user-tenant-prefs',
 
 `GET /user-tenant-prefs`
 
-| Permissions              |
-| ------------------------ |
-| ViewUserTenantPreference |
-| 25                       |
+| Permissions |
+| ------- |
+| ViewUserTenantPreference   |
+| 25   |
 
 <h3 id="usertenantprefscontroller.find-parameters">Parameters</h3>
 
-| Name   | In    | Type                                                        | Required | Description |
-| ------ | ----- | ----------------------------------------------------------- | -------- | ----------- |
-| filter | query | [user_tenant_prefs.Filter](#schemauser_tenant_prefs.filter) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|filter|query|[user_tenant_prefs.Filter](#schemauser_tenant_prefs.filter)|false|none|
 
 > Example responses
 
@@ -7803,8 +8025,12 @@ fetch('/user-tenant-prefs',
               "foreignKey": null
             }
           ],
-          "userTenants": [{}],
-          "users": [{}],
+          "userTenants": [
+            {}
+          ],
+          "users": [
+            {}
+          ],
           "roles": [
             {
               "deleted": true,
@@ -7818,10 +8044,16 @@ fetch('/user-tenant-prefs',
               "name": "string",
               "roleType": 15,
               "description": "string",
-              "permissions": ["string"],
-              "allowedClients": ["string"],
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
               "tenantId": "string",
-              "userTenants": [{}],
+              "userTenants": [
+                {}
+              ],
               "createdByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -7938,7 +8170,9 @@ fetch('/user-tenant-prefs',
           "user": {},
           "foreignKey": null
         },
-        "userTenants": [{}]
+        "userTenants": [
+          {}
+        ]
       },
       "foreignKey": null,
       "tenant": {
@@ -7976,7 +8210,9 @@ fetch('/user-tenant-prefs',
             "foreignKey": null
           }
         ],
-        "userTenants": [{}],
+        "userTenants": [
+          {}
+        ],
         "users": [
           {
             "deleted": true,
@@ -8020,7 +8256,9 @@ fetch('/user-tenant-prefs',
               "user": {},
               "foreignKey": null
             },
-            "userTenants": [{}]
+            "userTenants": [
+              {}
+            ]
           }
         ],
         "roles": [
@@ -8036,10 +8274,16 @@ fetch('/user-tenant-prefs',
             "name": "string",
             "roleType": 15,
             "description": "string",
-            "permissions": ["string"],
-            "allowedClients": ["string"],
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
             "tenantId": "string",
-            "userTenants": [{}],
+            "userTenants": [
+              {}
+            ],
             "createdByUser": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -8149,10 +8393,16 @@ fetch('/user-tenant-prefs',
         "name": "string",
         "roleType": 15,
         "description": "string",
-        "permissions": ["string"],
-        "allowedClients": ["string"],
+        "permissions": [
+          "string"
+        ],
+        "allowedClients": [
+          "string"
+        ],
         "tenantId": "string",
-        "userTenants": [{}],
+        "userTenants": [
+          {}
+        ],
         "createdByUser": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -8257,7 +8507,9 @@ fetch('/user-tenant-prefs',
             "description": "string",
             "photoUrl": "string",
             "tenantId": "string",
-            "userGroups": [{}]
+            "userGroups": [
+              {}
+            ]
           },
           "foreignKey": null,
           "userTenant": {}
@@ -8288,249 +8540,249 @@ fetch('/user-tenant-prefs',
 
 <h3 id="usertenantprefscontroller.find-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                              | Schema |
-| ------ | ------------------------------------------------------- | ---------------------------------------- | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Array of UserTenantPrefs model instances | Inline |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of UserTenantPrefs model instances|Inline|
 
 <h3 id="usertenantprefscontroller.find-responseschema">Response Schema</h3>
 
 Status Code **200**
 
-| Name                                  | Type                                                                          | Required | Restrictions | Description                                                                                              |
-| ------------------------------------- | ----------------------------------------------------------------------------- | -------- | ------------ | -------------------------------------------------------------------------------------------------------- |
-| _anonymous_                           | [[UserTenantPrefsWithRelations](#schemausertenantprefswithrelations)]         | false    | none         | [(tsType: UserTenantPrefsWithRelations, schemaOptions: { includeRelations: true })]                      |
-| » UserTenantPrefsWithRelations        | [UserTenantPrefsWithRelations](#schemausertenantprefswithrelations)           | false    | none         | (tsType: UserTenantPrefsWithRelations, schemaOptions: { includeRelations: true })                        |
-| »» deleted                            | boolean                                                                       | false    | none         | none                                                                                                     |
-| »» deletedOn                          | string(date-time)¦null                                                        | false    | none         | none                                                                                                     |
-| »» deletedBy                          | string¦null                                                                   | false    | none         | none                                                                                                     |
-| »» createdOn                          | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »» modifiedOn                         | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »» createdBy                          | string                                                                        | false    | none         | none                                                                                                     |
-| »» modifiedBy                         | string                                                                        | false    | none         | none                                                                                                     |
-| »» id                                 | string                                                                        | false    | none         | none                                                                                                     |
-| »» configKey                          | string                                                                        | true     | none         | none                                                                                                     |
-| »» configValue                        | object                                                                        | true     | none         | none                                                                                                     |
-| »» userTenantId                       | string                                                                        | false    | none         | none                                                                                                     |
-| »» userTenant                         | [UserTenantWithRelations](#schemausertenantwithrelations)                     | false    | none         | (tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })                             |
-| »»» deleted                           | boolean                                                                       | false    | none         | none                                                                                                     |
-| »»» deletedOn                         | string(date-time)¦null                                                        | false    | none         | none                                                                                                     |
-| »»» deletedBy                         | string¦null                                                                   | false    | none         | none                                                                                                     |
-| »»» createdOn                         | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»» modifiedOn                        | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»» createdBy                         | string                                                                        | false    | none         | none                                                                                                     |
-| »»» modifiedBy                        | string                                                                        | false    | none         | none                                                                                                     |
-| »»» id                                | string                                                                        | false    | none         | none                                                                                                     |
-| »»» locale                            | string                                                                        | false    | none         | none                                                                                                     |
-| »»» status                            | number                                                                        | false    | none         | none                                                                                                     |
-| »»» userId                            | string                                                                        | true     | none         | none                                                                                                     |
-| »»» tenantId                          | string                                                                        | true     | none         | none                                                                                                     |
-| »»» roleId                            | string                                                                        | true     | none         | none                                                                                                     |
-| »»» user                              | [UserWithRelations](#schemauserwithrelations)                                 | false    | none         | This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true }) |
-| »»»» deleted                          | boolean                                                                       | false    | none         | none                                                                                                     |
-| »»»» deletedOn                        | string(date-time)¦null                                                        | false    | none         | none                                                                                                     |
-| »»»» deletedBy                        | string¦null                                                                   | false    | none         | none                                                                                                     |
-| »»»» createdOn                        | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»» modifiedOn                       | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»» createdBy                        | string                                                                        | false    | none         | none                                                                                                     |
-| »»»» modifiedBy                       | string                                                                        | false    | none         | none                                                                                                     |
-| »»»» id                               | string                                                                        | false    | none         | none                                                                                                     |
-| »»»» firstName                        | string                                                                        | true     | none         | none                                                                                                     |
-| »»»» lastName                         | string                                                                        | false    | none         | none                                                                                                     |
-| »»»» middleName                       | string                                                                        | false    | none         | none                                                                                                     |
-| »»»» username                         | string                                                                        | true     | none         | none                                                                                                     |
-| »»»» email                            | string                                                                        | true     | none         | none                                                                                                     |
-| »»»» designation                      | string                                                                        | false    | none         | none                                                                                                     |
-| »»»» phone                            | string                                                                        | false    | none         | none                                                                                                     |
-| »»»» authClientIds                    | string                                                                        | false    | none         | none                                                                                                     |
-| »»»» lastLogin                        | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»» photoUrl                         | string                                                                        | false    | none         | none                                                                                                     |
-| »»»» gender                           | string                                                                        | false    | none         | This field takes a single character as input in database.<br> 'M' for male and 'F' for female.           |
-| »»»» dob                              | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»» defaultTenantId                  | string                                                                        | false    | none         | none                                                                                                     |
-| »»»» defaultTenant                    | [TenantWithRelations](#schematenantwithrelations)                             | false    | none         | signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })       |
-| »»»»» deleted                         | boolean                                                                       | false    | none         | none                                                                                                     |
-| »»»»» deletedOn                       | string(date-time)¦null                                                        | false    | none         | none                                                                                                     |
-| »»»»» deletedBy                       | string¦null                                                                   | false    | none         | none                                                                                                     |
-| »»»»» createdOn                       | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»» modifiedOn                      | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»» createdBy                       | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» modifiedBy                      | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» id                              | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» name                            | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»» status                          | number¦null                                                                   | true     | none         | Tenant status - Active or Inactive                                                                       |
-| »»»»» key                             | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» website                         | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» address                         | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» city                            | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» state                           | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» zip                             | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» country                         | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» tenantConfigs                   | [[TenantConfigWithRelations](#schematenantconfigwithrelations)]               | false    | none         | (tsType: TenantConfigWithRelations, schemaOptions: { includeRelations: true })                           |
-| »»»»»» TenantConfigWithRelations      | [TenantConfigWithRelations](#schematenantconfigwithrelations)                 | false    | none         | (tsType: TenantConfigWithRelations, schemaOptions: { includeRelations: true })                           |
-| »»»»»»» deleted                       | boolean                                                                       | false    | none         | none                                                                                                     |
-| »»»»»»» deletedOn                     | string(date-time)¦null                                                        | false    | none         | none                                                                                                     |
-| »»»»»»» deletedBy                     | string¦null                                                                   | false    | none         | none                                                                                                     |
-| »»»»»»» createdOn                     | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»»»» modifiedOn                    | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»»»» createdBy                     | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»» modifiedBy                    | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»» id                            | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»» configKey                     | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»»»» configValue                   | object                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»» tenantId                      | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»»»» tenant                        | [TenantWithRelations](#schematenantwithrelations)                             | false    | none         | signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })       |
-| »»»»»»» foreignKey                    | any                                                                           | false    | none         | none                                                                                                     |
-| »»»»» userTenants                     | [[UserTenantWithRelations](#schemausertenantwithrelations)]                   | false    | none         | (tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })                             |
-| »»»»»» UserTenantWithRelations        | [UserTenantWithRelations](#schemausertenantwithrelations)                     | false    | none         | (tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })                             |
-| »»»»» users                           | [[UserWithRelations](#schemauserwithrelations)]                               | false    | none         | This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true }) |
-| »»»»»» UserWithRelations              | [UserWithRelations](#schemauserwithrelations)                                 | false    | none         | This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true }) |
-| »»»»» roles                           | [[RoleWithRelations](#schemarolewithrelations)]                               | false    | none         | (tsType: RoleWithRelations, schemaOptions: { includeRelations: true })                                   |
-| »»»»»» RoleWithRelations              | [RoleWithRelations](#schemarolewithrelations)                                 | false    | none         | (tsType: RoleWithRelations, schemaOptions: { includeRelations: true })                                   |
-| »»»»»»» deleted                       | boolean                                                                       | false    | none         | none                                                                                                     |
-| »»»»»»» deletedOn                     | string(date-time)¦null                                                        | false    | none         | none                                                                                                     |
-| »»»»»»» deletedBy                     | string¦null                                                                   | false    | none         | none                                                                                                     |
-| »»»»»»» createdOn                     | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»»»» modifiedOn                    | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»»»» createdBy                     | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»» modifiedBy                    | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»» id                            | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»» name                          | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»»»» roleType                      | number                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»» description                   | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»» permissions                   | [string]                                                                      | false    | none         | none                                                                                                     |
-| »»»»»»» allowedClients                | [string]                                                                      | false    | none         | none                                                                                                     |
-| »»»»»»» tenantId                      | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»»»» userTenants                   | [[UserTenantWithRelations](#schemausertenantwithrelations)]                   | false    | none         | (tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })                             |
-| »»»»»»»» UserTenantWithRelations      | [UserTenantWithRelations](#schemausertenantwithrelations)                     | false    | none         | (tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })                             |
-| »»»»»»» createdByUser                 | [UserViewWithRelations](#schemauserviewwithrelations)                         | false    | none         | User details view in DB (tsType: UserViewWithRelations, schemaOptions: { includeRelations: true })       |
-| »»»»»»»» deleted                      | boolean                                                                       | false    | none         | none                                                                                                     |
-| »»»»»»»» deletedOn                    | string(date-time)¦null                                                        | false    | none         | none                                                                                                     |
-| »»»»»»»» deletedBy                    | string¦null                                                                   | false    | none         | none                                                                                                     |
-| »»»»»»»» createdOn                    | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»»»»» modifiedOn                   | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»»»»» createdBy                    | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»»» modifiedBy                   | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»»» id                           | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»»» firstName                    | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»»»»» lastName                     | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»»» middleName                   | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»»» username                     | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»»»»» email                        | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»»»»» designation                  | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»»» phone                        | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»»» authClientIds                | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»»» lastLogin                    | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»»» photoUrl                     | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»»» gender                       | string                                                                        | false    | none         | This field takes a single character as input in database.<br> 'M' for male and 'F' for female.           |
-| »»»»»»»» dob                          | string(date-time)¦null                                                        | false    | none         | none                                                                                                     |
-| »»»»»»»» defaultTenantId              | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»»»»» status                       | number                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»»» tenantId                     | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»»»»» roleId                       | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»»»»» tenantName                   | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»»»»» tenantKey                    | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»»» roleName                     | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»»» userTenantId                 | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»»»» foreignKey                    | any                                                                           | false    | none         | none                                                                                                     |
-| »»»»»»» modifiedByUser                | [UserViewWithRelations](#schemauserviewwithrelations)                         | false    | none         | User details view in DB (tsType: UserViewWithRelations, schemaOptions: { includeRelations: true })       |
-| »»»»» groups                          | [[GroupWithRelations](#schemagroupwithrelations)]                             | false    | none         | (tsType: GroupWithRelations, schemaOptions: { includeRelations: true })                                  |
-| »»»»»» GroupWithRelations             | [GroupWithRelations](#schemagroupwithrelations)                               | false    | none         | (tsType: GroupWithRelations, schemaOptions: { includeRelations: true })                                  |
-| »»»»»»» deleted                       | boolean                                                                       | false    | none         | none                                                                                                     |
-| »»»»»»» deletedOn                     | string(date-time)¦null                                                        | false    | none         | none                                                                                                     |
-| »»»»»»» deletedBy                     | string¦null                                                                   | false    | none         | none                                                                                                     |
-| »»»»»»» createdOn                     | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»»»» modifiedOn                    | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»»»» createdBy                     | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»» modifiedBy                    | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»» id                            | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»» name                          | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»» description                   | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»» photoUrl                      | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»» tenantId                      | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»»»» userGroups                    | [[UserGroupWithRelations](#schemausergroupwithrelations)]                     | false    | none         | (tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })                              |
-| »»»»»»»» UserGroupWithRelations       | [UserGroupWithRelations](#schemausergroupwithrelations)                       | false    | none         | (tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })                              |
-| »»»»»»»»» deleted                     | boolean                                                                       | false    | none         | none                                                                                                     |
-| »»»»»»»»» deletedOn                   | string(date-time)¦null                                                        | false    | none         | none                                                                                                     |
-| »»»»»»»»» deletedBy                   | string¦null                                                                   | false    | none         | none                                                                                                     |
-| »»»»»»»»» createdOn                   | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»»»»»» modifiedOn                  | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»»»»»» createdBy                   | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»»»» modifiedBy                  | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»»»» id                          | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»»»»»» groupId                     | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»»»»»» userTenantId                | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»»»»»» group                       | [GroupWithRelations](#schemagroupwithrelations)                               | false    | none         | (tsType: GroupWithRelations, schemaOptions: { includeRelations: true })                                  |
-| »»»»»»»»» foreignKey                  | any                                                                           | false    | none         | none                                                                                                     |
-| »»»»»»»»» userTenant                  | [UserTenantWithRelations](#schemausertenantwithrelations)                     | false    | none         | (tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })                             |
-| »»»» foreignKey                       | any                                                                           | false    | none         | none                                                                                                     |
-| »»»» credentials                      | [UserCredentialsWithRelations](#schemausercredentialswithrelations)           | false    | none         | (tsType: UserCredentialsWithRelations, schemaOptions: { includeRelations: true })                        |
-| »»»»» deleted                         | boolean                                                                       | false    | none         | none                                                                                                     |
-| »»»»» deletedOn                       | string(date-time)¦null                                                        | false    | none         | none                                                                                                     |
-| »»»»» deletedBy                       | string¦null                                                                   | false    | none         | none                                                                                                     |
-| »»»»» createdOn                       | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»» modifiedOn                      | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»» createdBy                       | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» modifiedBy                      | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» id                              | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» authProvider                    | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»» authId                          | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» authToken                       | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» secretKey                       | string                                                                        | false    | none         | Secret for Authenticator app                                                                             |
-| »»»»» password                        | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» userId                          | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»» user                            | [UserWithRelations](#schemauserwithrelations)                                 | false    | none         | This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true }) |
-| »»»»» foreignKey                      | any                                                                           | false    | none         | none                                                                                                     |
-| »»»» userTenants                      | [[UserTenantWithRelations](#schemausertenantwithrelations)]                   | false    | none         | (tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })                             |
-| »»»»» UserTenantWithRelations         | [UserTenantWithRelations](#schemausertenantwithrelations)                     | false    | none         | (tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })                             |
-| »»» foreignKey                        | any                                                                           | false    | none         | none                                                                                                     |
-| »»» tenant                            | [TenantWithRelations](#schematenantwithrelations)                             | false    | none         | signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })       |
-| »»» role                              | [RoleWithRelations](#schemarolewithrelations)                                 | false    | none         | (tsType: RoleWithRelations, schemaOptions: { includeRelations: true })                                   |
-| »»» userLevelPermissions              | [[UserLevelPermissionWithRelations](#schemauserlevelpermissionwithrelations)] | false    | none         | (tsType: UserLevelPermissionWithRelations, schemaOptions: { includeRelations: true })                    |
-| »»»» UserLevelPermissionWithRelations | [UserLevelPermissionWithRelations](#schemauserlevelpermissionwithrelations)   | false    | none         | (tsType: UserLevelPermissionWithRelations, schemaOptions: { includeRelations: true })                    |
-| »»»»» deleted                         | boolean                                                                       | false    | none         | none                                                                                                     |
-| »»»»» deletedOn                       | string(date-time)¦null                                                        | false    | none         | none                                                                                                     |
-| »»»»» deletedBy                       | string¦null                                                                   | false    | none         | none                                                                                                     |
-| »»»»» createdOn                       | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»» modifiedOn                      | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»» createdBy                       | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» modifiedBy                      | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» id                              | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» permission                      | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»» allowed                         | boolean                                                                       | true     | none         | none                                                                                                     |
-| »»»»» userTenantId                    | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»» userTenant                      | [UserTenantWithRelations](#schemausertenantwithrelations)                     | false    | none         | (tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })                             |
-| »»»»» foreignKey                      | any                                                                           | false    | none         | none                                                                                                     |
-| »»» userGroups                        | [[UserGroupWithRelations](#schemausergroupwithrelations)]                     | false    | none         | (tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })                              |
-| »»»» UserGroupWithRelations           | [UserGroupWithRelations](#schemausergroupwithrelations)                       | false    | none         | (tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })                              |
-| »»» userInvitations                   | [[UserInvitationWithRelations](#schemauserinvitationwithrelations)]           | false    | none         | (tsType: UserInvitationWithRelations, schemaOptions: { includeRelations: true })                         |
-| »»»» UserInvitationWithRelations      | [UserInvitationWithRelations](#schemauserinvitationwithrelations)             | false    | none         | (tsType: UserInvitationWithRelations, schemaOptions: { includeRelations: true })                         |
-| »»»»» deleted                         | boolean                                                                       | false    | none         | none                                                                                                     |
-| »»»»» deletedOn                       | string(date-time)¦null                                                        | false    | none         | none                                                                                                     |
-| »»»»» deletedBy                       | string¦null                                                                   | false    | none         | none                                                                                                     |
-| »»»»» createdOn                       | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»» modifiedOn                      | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»» createdBy                       | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» modifiedBy                      | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» id                              | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» expiresOn                       | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| »»»»» token                           | string                                                                        | false    | none         | none                                                                                                     |
-| »»»»» userTenantId                    | string                                                                        | true     | none         | none                                                                                                     |
-| »»»»» userTenant                      | [UserTenantWithRelations](#schemausertenantwithrelations)                     | false    | none         | (tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })                             |
-| »»»»» foreignKey                      | any                                                                           | false    | none         | none                                                                                                     |
-| »» foreignKey                         | any                                                                           | false    | none         | none                                                                                                     |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[UserTenantPrefsWithRelations](#schemausertenantprefswithrelations)]|false|none|[(tsType: UserTenantPrefsWithRelations, schemaOptions: { includeRelations: true })]|
+|» UserTenantPrefsWithRelations|[UserTenantPrefsWithRelations](#schemausertenantprefswithrelations)|false|none|(tsType: UserTenantPrefsWithRelations, schemaOptions: { includeRelations: true })|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|string(date-time)¦null|false|none|none|
+|»» deletedBy|string¦null|false|none|none|
+|»» createdOn|string(date-time)|false|none|none|
+|»» modifiedOn|string(date-time)|false|none|none|
+|»» createdBy|string|false|none|none|
+|»» modifiedBy|string|false|none|none|
+|»» id|string|false|none|none|
+|»» configKey|string|true|none|none|
+|»» configValue|object|true|none|none|
+|»» userTenantId|string|false|none|none|
+|»» userTenant|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
+|»»» deleted|boolean|false|none|none|
+|»»» deletedOn|string(date-time)¦null|false|none|none|
+|»»» deletedBy|string¦null|false|none|none|
+|»»» createdOn|string(date-time)|false|none|none|
+|»»» modifiedOn|string(date-time)|false|none|none|
+|»»» createdBy|string|false|none|none|
+|»»» modifiedBy|string|false|none|none|
+|»»» id|string|false|none|none|
+|»»» locale|string|false|none|none|
+|»»» status|number|false|none|none|
+|»»» userId|string|true|none|none|
+|»»» tenantId|string|true|none|none|
+|»»» roleId|string|true|none|none|
+|»»» user|[UserWithRelations](#schemauserwithrelations)|false|none|This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true })|
+|»»»» deleted|boolean|false|none|none|
+|»»»» deletedOn|string(date-time)¦null|false|none|none|
+|»»»» deletedBy|string¦null|false|none|none|
+|»»»» createdOn|string(date-time)|false|none|none|
+|»»»» modifiedOn|string(date-time)|false|none|none|
+|»»»» createdBy|string|false|none|none|
+|»»»» modifiedBy|string|false|none|none|
+|»»»» id|string|false|none|none|
+|»»»» firstName|string|true|none|none|
+|»»»» lastName|string|false|none|none|
+|»»»» middleName|string|false|none|none|
+|»»»» username|string|true|none|none|
+|»»»» email|string|true|none|none|
+|»»»» designation|string|false|none|none|
+|»»»» phone|string|false|none|none|
+|»»»» authClientIds|string|false|none|none|
+|»»»» lastLogin|string(date-time)|false|none|none|
+|»»»» photoUrl|string|false|none|none|
+|»»»» gender|string|false|none|This field takes a single character as input in database.<br>    'M' for male and 'F' for female.|
+|»»»» dob|string(date-time)|false|none|none|
+|»»»» defaultTenantId|string|false|none|none|
+|»»»» defaultTenant|[TenantWithRelations](#schematenantwithrelations)|false|none|signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»» deleted|boolean|false|none|none|
+|»»»»» deletedOn|string(date-time)¦null|false|none|none|
+|»»»»» deletedBy|string¦null|false|none|none|
+|»»»»» createdOn|string(date-time)|false|none|none|
+|»»»»» modifiedOn|string(date-time)|false|none|none|
+|»»»»» createdBy|string|false|none|none|
+|»»»»» modifiedBy|string|false|none|none|
+|»»»»» id|string|false|none|none|
+|»»»»» name|string|true|none|none|
+|»»»»» status|number¦null|true|none|Tenant status - Active or Inactive|
+|»»»»» key|string|false|none|none|
+|»»»»» website|string|false|none|none|
+|»»»»» address|string|false|none|none|
+|»»»»» city|string|false|none|none|
+|»»»»» state|string|false|none|none|
+|»»»»» zip|string|false|none|none|
+|»»»»» country|string|false|none|none|
+|»»»»» tenantConfigs|[[TenantConfigWithRelations](#schematenantconfigwithrelations)]|false|none|(tsType: TenantConfigWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»» TenantConfigWithRelations|[TenantConfigWithRelations](#schematenantconfigwithrelations)|false|none|(tsType: TenantConfigWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»»» deleted|boolean|false|none|none|
+|»»»»»»» deletedOn|string(date-time)¦null|false|none|none|
+|»»»»»»» deletedBy|string¦null|false|none|none|
+|»»»»»»» createdOn|string(date-time)|false|none|none|
+|»»»»»»» modifiedOn|string(date-time)|false|none|none|
+|»»»»»»» createdBy|string|false|none|none|
+|»»»»»»» modifiedBy|string|false|none|none|
+|»»»»»»» id|string|false|none|none|
+|»»»»»»» configKey|string|true|none|none|
+|»»»»»»» configValue|object|false|none|none|
+|»»»»»»» tenantId|string|true|none|none|
+|»»»»»»» tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»»» foreignKey|any|false|none|none|
+|»»»»» userTenants|[[UserTenantWithRelations](#schemausertenantwithrelations)]|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»» UserTenantWithRelations|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»» users|[[UserWithRelations](#schemauserwithrelations)]|false|none|This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»» UserWithRelations|[UserWithRelations](#schemauserwithrelations)|false|none|This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»» roles|[[RoleWithRelations](#schemarolewithrelations)]|false|none|(tsType: RoleWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»» RoleWithRelations|[RoleWithRelations](#schemarolewithrelations)|false|none|(tsType: RoleWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»»» deleted|boolean|false|none|none|
+|»»»»»»» deletedOn|string(date-time)¦null|false|none|none|
+|»»»»»»» deletedBy|string¦null|false|none|none|
+|»»»»»»» createdOn|string(date-time)|false|none|none|
+|»»»»»»» modifiedOn|string(date-time)|false|none|none|
+|»»»»»»» createdBy|string|false|none|none|
+|»»»»»»» modifiedBy|string|false|none|none|
+|»»»»»»» id|string|false|none|none|
+|»»»»»»» name|string|true|none|none|
+|»»»»»»» roleType|number|false|none|none|
+|»»»»»»» description|string|false|none|none|
+|»»»»»»» permissions|[string]|false|none|none|
+|»»»»»»» allowedClients|[string]|false|none|none|
+|»»»»»»» tenantId|string|true|none|none|
+|»»»»»»» userTenants|[[UserTenantWithRelations](#schemausertenantwithrelations)]|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»»»» UserTenantWithRelations|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»»» createdByUser|[UserViewWithRelations](#schemauserviewwithrelations)|false|none|User details view in DB (tsType: UserViewWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»»»» deleted|boolean|false|none|none|
+|»»»»»»»» deletedOn|string(date-time)¦null|false|none|none|
+|»»»»»»»» deletedBy|string¦null|false|none|none|
+|»»»»»»»» createdOn|string(date-time)|false|none|none|
+|»»»»»»»» modifiedOn|string(date-time)|false|none|none|
+|»»»»»»»» createdBy|string|false|none|none|
+|»»»»»»»» modifiedBy|string|false|none|none|
+|»»»»»»»» id|string|false|none|none|
+|»»»»»»»» firstName|string|true|none|none|
+|»»»»»»»» lastName|string|false|none|none|
+|»»»»»»»» middleName|string|false|none|none|
+|»»»»»»»» username|string|true|none|none|
+|»»»»»»»» email|string|true|none|none|
+|»»»»»»»» designation|string|false|none|none|
+|»»»»»»»» phone|string|false|none|none|
+|»»»»»»»» authClientIds|string|false|none|none|
+|»»»»»»»» lastLogin|string|false|none|none|
+|»»»»»»»» photoUrl|string|false|none|none|
+|»»»»»»»» gender|string|false|none|This field takes a single character as input in database.<br>    'M' for male and 'F' for female.|
+|»»»»»»»» dob|string(date-time)¦null|false|none|none|
+|»»»»»»»» defaultTenantId|string|true|none|none|
+|»»»»»»»» status|number|false|none|none|
+|»»»»»»»» tenantId|string|true|none|none|
+|»»»»»»»» roleId|string|true|none|none|
+|»»»»»»»» tenantName|string|true|none|none|
+|»»»»»»»» tenantKey|string|false|none|none|
+|»»»»»»»» roleName|string|false|none|none|
+|»»»»»»»» userTenantId|string|true|none|none|
+|»»»»»»» foreignKey|any|false|none|none|
+|»»»»»»» modifiedByUser|[UserViewWithRelations](#schemauserviewwithrelations)|false|none|User details view in DB (tsType: UserViewWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»» groups|[[GroupWithRelations](#schemagroupwithrelations)]|false|none|(tsType: GroupWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»» GroupWithRelations|[GroupWithRelations](#schemagroupwithrelations)|false|none|(tsType: GroupWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»»» deleted|boolean|false|none|none|
+|»»»»»»» deletedOn|string(date-time)¦null|false|none|none|
+|»»»»»»» deletedBy|string¦null|false|none|none|
+|»»»»»»» createdOn|string(date-time)|false|none|none|
+|»»»»»»» modifiedOn|string(date-time)|false|none|none|
+|»»»»»»» createdBy|string|false|none|none|
+|»»»»»»» modifiedBy|string|false|none|none|
+|»»»»»»» id|string|false|none|none|
+|»»»»»»» name|string|false|none|none|
+|»»»»»»» description|string|false|none|none|
+|»»»»»»» photoUrl|string|false|none|none|
+|»»»»»»» tenantId|string|true|none|none|
+|»»»»»»» userGroups|[[UserGroupWithRelations](#schemausergroupwithrelations)]|false|none|(tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»»»» UserGroupWithRelations|[UserGroupWithRelations](#schemausergroupwithrelations)|false|none|(tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»»»»» deleted|boolean|false|none|none|
+|»»»»»»»»» deletedOn|string(date-time)¦null|false|none|none|
+|»»»»»»»»» deletedBy|string¦null|false|none|none|
+|»»»»»»»»» createdOn|string(date-time)|false|none|none|
+|»»»»»»»»» modifiedOn|string(date-time)|false|none|none|
+|»»»»»»»»» createdBy|string|false|none|none|
+|»»»»»»»»» modifiedBy|string|false|none|none|
+|»»»»»»»»» id|string|false|none|none|
+|»»»»»»»»» groupId|string|true|none|none|
+|»»»»»»»»» userTenantId|string|true|none|none|
+|»»»»»»»»» group|[GroupWithRelations](#schemagroupwithrelations)|false|none|(tsType: GroupWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»»»»»» foreignKey|any|false|none|none|
+|»»»»»»»»» userTenant|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
+|»»»» foreignKey|any|false|none|none|
+|»»»» credentials|[UserCredentialsWithRelations](#schemausercredentialswithrelations)|false|none|(tsType: UserCredentialsWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»» deleted|boolean|false|none|none|
+|»»»»» deletedOn|string(date-time)¦null|false|none|none|
+|»»»»» deletedBy|string¦null|false|none|none|
+|»»»»» createdOn|string(date-time)|false|none|none|
+|»»»»» modifiedOn|string(date-time)|false|none|none|
+|»»»»» createdBy|string|false|none|none|
+|»»»»» modifiedBy|string|false|none|none|
+|»»»»» id|string|false|none|none|
+|»»»»» authProvider|string|true|none|none|
+|»»»»» authId|string|false|none|none|
+|»»»»» authToken|string|false|none|none|
+|»»»»» secretKey|string|false|none|Secret for Authenticator app|
+|»»»»» password|string|false|none|none|
+|»»»»» userId|string|true|none|none|
+|»»»»» user|[UserWithRelations](#schemauserwithrelations)|false|none|This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»» foreignKey|any|false|none|none|
+|»»»» userTenants|[[UserTenantWithRelations](#schemausertenantwithrelations)]|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»» UserTenantWithRelations|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
+|»»» foreignKey|any|false|none|none|
+|»»» tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
+|»»» role|[RoleWithRelations](#schemarolewithrelations)|false|none|(tsType: RoleWithRelations, schemaOptions: { includeRelations: true })|
+|»»» userLevelPermissions|[[UserLevelPermissionWithRelations](#schemauserlevelpermissionwithrelations)]|false|none|(tsType: UserLevelPermissionWithRelations, schemaOptions: { includeRelations: true })|
+|»»»» UserLevelPermissionWithRelations|[UserLevelPermissionWithRelations](#schemauserlevelpermissionwithrelations)|false|none|(tsType: UserLevelPermissionWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»» deleted|boolean|false|none|none|
+|»»»»» deletedOn|string(date-time)¦null|false|none|none|
+|»»»»» deletedBy|string¦null|false|none|none|
+|»»»»» createdOn|string(date-time)|false|none|none|
+|»»»»» modifiedOn|string(date-time)|false|none|none|
+|»»»»» createdBy|string|false|none|none|
+|»»»»» modifiedBy|string|false|none|none|
+|»»»»» id|string|false|none|none|
+|»»»»» permission|string|true|none|none|
+|»»»»» allowed|boolean|true|none|none|
+|»»»»» userTenantId|string|true|none|none|
+|»»»»» userTenant|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»» foreignKey|any|false|none|none|
+|»»» userGroups|[[UserGroupWithRelations](#schemausergroupwithrelations)]|false|none|(tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })|
+|»»»» UserGroupWithRelations|[UserGroupWithRelations](#schemausergroupwithrelations)|false|none|(tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })|
+|»»» userInvitations|[[UserInvitationWithRelations](#schemauserinvitationwithrelations)]|false|none|(tsType: UserInvitationWithRelations, schemaOptions: { includeRelations: true })|
+|»»»» UserInvitationWithRelations|[UserInvitationWithRelations](#schemauserinvitationwithrelations)|false|none|(tsType: UserInvitationWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»» deleted|boolean|false|none|none|
+|»»»»» deletedOn|string(date-time)¦null|false|none|none|
+|»»»»» deletedBy|string¦null|false|none|none|
+|»»»»» createdOn|string(date-time)|false|none|none|
+|»»»»» modifiedOn|string(date-time)|false|none|none|
+|»»»»» createdBy|string|false|none|none|
+|»»»»» modifiedBy|string|false|none|none|
+|»»»»» id|string|false|none|none|
+|»»»»» expiresOn|string(date-time)|false|none|none|
+|»»»»» token|string|false|none|none|
+|»»»»» userTenantId|string|true|none|none|
+|»»»»» userTenant|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
+|»»»»» foreignKey|any|false|none|none|
+|»» foreignKey|any|false|none|none|
 
 #### Enumerated Values
 
-| Property | Value |
-| -------- | ----- |
-| gender   | M     |
-| gender   | F     |
-| gender   | O     |
-| status   | 1     |
-| status   | 0     |
-| gender   | M     |
-| gender   | F     |
-| gender   | O     |
+|Property|Value|
+|---|---|
+|gender|M|
+|gender|F|
+|gender|O|
+|status|1|
+|status|0|
+|gender|M|
+|gender|F|
+|gender|O|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -8546,21 +8798,23 @@ None
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/user-tenants/{id}/user-groups', {
+fetch('/user-tenants/{id}/user-groups',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -8586,16 +8840,16 @@ fetch('/user-tenants/{id}/user-groups',
 
 `GET /user-tenants/{id}/user-groups`
 
-| Permissions    |
-| -------------- |
-| ViewUserTenant |
+| Permissions |
+| ------- |
+| ViewUserTenant   |
 
 <h3 id="usertenantusergroupcontroller.find-parameters">Parameters</h3>
 
-| Name   | In    | Type   | Required | Description |
-| ------ | ----- | ------ | -------- | ----------- |
-| id     | path  | string | true     | none        |
-| filter | query | object | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|filter|query|object|false|none|
 
 > Example responses
 
@@ -8620,28 +8874,28 @@ fetch('/user-tenants/{id}/user-groups',
 
 <h3 id="usertenantusergroupcontroller.find-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                       | Schema |
-| ------ | ------------------------------------------------------- | --------------------------------- | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Array of UserGroups of UserTenant | Inline |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of UserGroups of UserTenant|Inline|
 
 <h3 id="usertenantusergroupcontroller.find-responseschema">Response Schema</h3>
 
 Status Code **200**
 
-| Name            | Type                            | Required | Restrictions | Description |
-| --------------- | ------------------------------- | -------- | ------------ | ----------- |
-| _anonymous_     | [[UserGroup](#schemausergroup)] | false    | none         | none        |
-| » UserGroup     | [UserGroup](#schemausergroup)   | false    | none         | none        |
-| »» deleted      | boolean                         | false    | none         | none        |
-| »» deletedOn    | string(date-time)¦null          | false    | none         | none        |
-| »» deletedBy    | string¦null                     | false    | none         | none        |
-| »» createdOn    | string(date-time)               | false    | none         | none        |
-| »» modifiedOn   | string(date-time)               | false    | none         | none        |
-| »» createdBy    | string                          | false    | none         | none        |
-| »» modifiedBy   | string                          | false    | none         | none        |
-| »» id           | string                          | false    | none         | none        |
-| »» groupId      | string                          | true     | none         | none        |
-| »» userTenantId | string                          | true     | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[UserGroup](#schemausergroup)]|false|none|none|
+|» UserGroup|[UserGroup](#schemausergroup)|false|none|none|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|string(date-time)¦null|false|none|none|
+|»» deletedBy|string¦null|false|none|none|
+|»» createdOn|string(date-time)|false|none|none|
+|»» modifiedOn|string(date-time)|false|none|none|
+|»» createdBy|string|false|none|none|
+|»» modifiedBy|string|false|none|none|
+|»» id|string|false|none|none|
+|»» groupId|string|true|none|none|
+|»» userTenantId|string|true|none|none|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -8723,10 +8977,10 @@ fetch('/user-tenants/{id}/user-level-permissions',
 
 `POST /user-tenants/{id}/user-level-permissions`
 
-| Permissions           |
-| --------------------- |
-| CreateUserTenant      |
-| CreateUserPermissions |
+| Permissions |
+| ------- |
+| CreateUserTenant   |
+| CreateUserPermissions   |
 
 > Body parameter
 
@@ -8747,10 +9001,10 @@ fetch('/user-tenants/{id}/user-level-permissions',
 
 <h3 id="usertenantuserlevelpermissioncontroller.create-parameters">Parameters</h3>
 
-| Name | In   | Type                                                                            | Required | Description |
-| ---- | ---- | ------------------------------------------------------------------------------- | -------- | ----------- |
-| id   | path | string                                                                          | true     | none        |
-| body | body | [NewUserLevelPermissionInUserTenant](#schemanewuserlevelpermissioninusertenant) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[NewUserLevelPermissionInUserTenant](#schemanewuserlevelpermissioninusertenant)|false|none|
 
 > Example responses
 
@@ -8774,9 +9028,9 @@ fetch('/user-tenants/{id}/user-level-permissions',
 
 <h3 id="usertenantuserlevelpermissioncontroller.create-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                        | Schema                                            |
-| ------ | ------------------------------------------------------- | ---------------------------------- | ------------------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | UserLevelPermission model instance | [UserLevelPermission](#schemauserlevelpermission) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|UserLevelPermission model instance|[UserLevelPermission](#schemauserlevelpermission)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -8858,10 +9112,10 @@ fetch('/user-tenants/{id}/user-level-permissions',
 
 `PATCH /user-tenants/{id}/user-level-permissions`
 
-| Permissions           |
-| --------------------- |
-| UpdateUserTenant      |
-| UpdateUserPermissions |
+| Permissions |
+| ------- |
+| UpdateUserTenant   |
+| UpdateUserPermissions   |
 
 > Body parameter
 
@@ -8883,11 +9137,11 @@ fetch('/user-tenants/{id}/user-level-permissions',
 
 <h3 id="usertenantuserlevelpermissioncontroller.patch-parameters">Parameters</h3>
 
-| Name  | In    | Type                                                            | Required | Description |
-| ----- | ----- | --------------------------------------------------------------- | -------- | ----------- |
-| id    | path  | string                                                          | true     | none        |
-| where | query | object                                                          | false    | none        |
-| body  | body  | [UserLevelPermissionPartial](#schemauserlevelpermissionpartial) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|where|query|object|false|none|
+|body|body|[UserLevelPermissionPartial](#schemauserlevelpermissionpartial)|false|none|
 
 > Example responses
 
@@ -8901,9 +9155,9 @@ fetch('/user-tenants/{id}/user-level-permissions',
 
 <h3 id="usertenantuserlevelpermissioncontroller.patch-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                                        | Schema                                  |
-| ------ | ------------------------------------------------------- | -------------------------------------------------- | --------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | UserTenant.UserLevelPermission PATCH success count | [loopback.Count](#schemaloopback.count) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|UserTenant.UserLevelPermission PATCH success count|[loopback.Count](#schemaloopback.count)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -8917,21 +9171,23 @@ None
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/user-tenants/{id}/user-level-permissions', {
+fetch('/user-tenants/{id}/user-level-permissions',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -8957,16 +9213,16 @@ fetch('/user-tenants/{id}/user-level-permissions',
 
 `GET /user-tenants/{id}/user-level-permissions`
 
-| Permissions    |
-| -------------- |
-| ViewUserTenant |
+| Permissions |
+| ------- |
+| ViewUserTenant   |
 
 <h3 id="usertenantuserlevelpermissioncontroller.find-parameters">Parameters</h3>
 
-| Name   | In    | Type   | Required | Description |
-| ------ | ----- | ------ | -------- | ----------- |
-| id     | path  | string | true     | none        |
-| filter | query | object | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|filter|query|object|false|none|
 
 > Example responses
 
@@ -8992,29 +9248,29 @@ fetch('/user-tenants/{id}/user-level-permissions',
 
 <h3 id="usertenantuserlevelpermissioncontroller.find-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                                 | Schema |
-| ------ | ------------------------------------------------------- | ------------------------------------------- | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Array of UserLevelPermissions of UserTenant | Inline |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of UserLevelPermissions of UserTenant|Inline|
 
 <h3 id="usertenantuserlevelpermissioncontroller.find-responseschema">Response Schema</h3>
 
 Status Code **200**
 
-| Name                  | Type                                                | Required | Restrictions | Description |
-| --------------------- | --------------------------------------------------- | -------- | ------------ | ----------- |
-| _anonymous_           | [[UserLevelPermission](#schemauserlevelpermission)] | false    | none         | none        |
-| » UserLevelPermission | [UserLevelPermission](#schemauserlevelpermission)   | false    | none         | none        |
-| »» deleted            | boolean                                             | false    | none         | none        |
-| »» deletedOn          | string(date-time)¦null                              | false    | none         | none        |
-| »» deletedBy          | string¦null                                         | false    | none         | none        |
-| »» createdOn          | string(date-time)                                   | false    | none         | none        |
-| »» modifiedOn         | string(date-time)                                   | false    | none         | none        |
-| »» createdBy          | string                                              | false    | none         | none        |
-| »» modifiedBy         | string                                              | false    | none         | none        |
-| »» id                 | string                                              | false    | none         | none        |
-| »» permission         | string                                              | true     | none         | none        |
-| »» allowed            | boolean                                             | true     | none         | none        |
-| »» userTenantId       | string                                              | true     | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[UserLevelPermission](#schemauserlevelpermission)]|false|none|none|
+|» UserLevelPermission|[UserLevelPermission](#schemauserlevelpermission)|false|none|none|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|string(date-time)¦null|false|none|none|
+|»» deletedBy|string¦null|false|none|none|
+|»» createdOn|string(date-time)|false|none|none|
+|»» modifiedOn|string(date-time)|false|none|none|
+|»» createdBy|string|false|none|none|
+|»» modifiedBy|string|false|none|none|
+|»» id|string|false|none|none|
+|»» permission|string|true|none|none|
+|»» allowed|boolean|true|none|none|
+|»» userTenantId|string|true|none|none|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -9028,21 +9284,23 @@ None
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/user-tenants/{id}/user-level-permissions', {
+fetch('/user-tenants/{id}/user-level-permissions',
+{
   method: 'DELETE',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -9068,16 +9326,16 @@ fetch('/user-tenants/{id}/user-level-permissions',
 
 `DELETE /user-tenants/{id}/user-level-permissions`
 
-| Permissions      |
-| ---------------- |
-| DeleteUserTenant |
+| Permissions |
+| ------- |
+| DeleteUserTenant   |
 
 <h3 id="usertenantuserlevelpermissioncontroller.delete-parameters">Parameters</h3>
 
-| Name  | In    | Type   | Required | Description |
-| ----- | ----- | ------ | -------- | ----------- |
-| id    | path  | string | true     | none        |
-| where | query | object | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|where|query|object|false|none|
 
 > Example responses
 
@@ -9091,9 +9349,9 @@ fetch('/user-tenants/{id}/user-level-permissions',
 
 <h3 id="usertenantuserlevelpermissioncontroller.delete-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                                         | Schema                                  |
-| ------ | ------------------------------------------------------- | --------------------------------------------------- | --------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | UserTenant.UserLevelPermission DELETE success count | [loopback.Count](#schemaloopback.count) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|UserTenant.UserLevelPermission DELETE success count|[loopback.Count](#schemaloopback.count)|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -9122,32 +9380,37 @@ None
   "name": "string",
   "roleType": 15,
   "description": "string",
-  "permissions": ["string"],
-  "allowedClients": ["string"],
+  "permissions": [
+    "string"
+  ],
+  "allowedClients": [
+    "string"
+  ],
   "tenantId": "string"
 }
+
 ```
 
 Role
 
 ### Properties
 
-| Name           | Type                   | Required | Restrictions | Description |
-| -------------- | ---------------------- | -------- | ------------ | ----------- |
-| deleted        | boolean                | false    | none         | none        |
-| deletedOn      | string(date-time)¦null | false    | none         | none        |
-| deletedBy      | string¦null            | false    | none         | none        |
-| createdOn      | string(date-time)      | false    | none         | none        |
-| modifiedOn     | string(date-time)      | false    | none         | none        |
-| createdBy      | string                 | false    | none         | none        |
-| modifiedBy     | string                 | false    | none         | none        |
-| id             | string                 | false    | none         | none        |
-| name           | string                 | true     | none         | none        |
-| roleType       | number                 | false    | none         | none        |
-| description    | string                 | false    | none         | none        |
-| permissions    | [string]               | false    | none         | none        |
-| allowedClients | [string]               | false    | none         | none        |
-| tenantId       | string                 | true     | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|name|string|true|none|none|
+|roleType|number|false|none|none|
+|description|string|false|none|none|
+|permissions|[string]|false|none|none|
+|allowedClients|[string]|false|none|none|
+|tenantId|string|true|none|none|
 
 <h2 id="tocS_NewRoleInTenant">NewRoleInTenant</h2>
 <!-- backwards compatibility -->
@@ -9168,29 +9431,34 @@ Role
   "name": "string",
   "roleType": 15,
   "description": "string",
-  "permissions": ["string"],
-  "allowedClients": ["string"]
+  "permissions": [
+    "string"
+  ],
+  "allowedClients": [
+    "string"
+  ]
 }
+
 ```
 
 NewRoleInTenant
 
 ### Properties
 
-| Name           | Type                   | Required | Restrictions | Description |
-| -------------- | ---------------------- | -------- | ------------ | ----------- |
-| deleted        | boolean                | false    | none         | none        |
-| deletedOn      | string(date-time)¦null | false    | none         | none        |
-| deletedBy      | string¦null            | false    | none         | none        |
-| createdOn      | string(date-time)      | false    | none         | none        |
-| modifiedOn     | string(date-time)      | false    | none         | none        |
-| createdBy      | string                 | false    | none         | none        |
-| modifiedBy     | string                 | false    | none         | none        |
-| name           | string                 | true     | none         | none        |
-| roleType       | number                 | false    | none         | none        |
-| description    | string                 | false    | none         | none        |
-| permissions    | [string]               | false    | none         | none        |
-| allowedClients | [string]               | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|name|string|true|none|none|
+|roleType|number|false|none|none|
+|description|string|false|none|none|
+|permissions|[string]|false|none|none|
+|allowedClients|[string]|false|none|none|
 
 <h2 id="tocS_RolePartialExcluding_id-tenantId_">RolePartialExcluding_id-tenantId_</h2>
 <!-- backwards compatibility -->
@@ -9211,29 +9479,34 @@ NewRoleInTenant
   "name": "string",
   "roleType": 15,
   "description": "string",
-  "permissions": ["string"],
-  "allowedClients": ["string"]
+  "permissions": [
+    "string"
+  ],
+  "allowedClients": [
+    "string"
+  ]
 }
+
 ```
 
-RolePartialExcluding*id-tenantId*
+RolePartialExcluding_id-tenantId_
 
 ### Properties
 
-| Name           | Type                   | Required | Restrictions | Description |
-| -------------- | ---------------------- | -------- | ------------ | ----------- |
-| deleted        | boolean                | false    | none         | none        |
-| deletedOn      | string(date-time)¦null | false    | none         | none        |
-| deletedBy      | string¦null            | false    | none         | none        |
-| createdOn      | string(date-time)      | false    | none         | none        |
-| modifiedOn     | string(date-time)      | false    | none         | none        |
-| createdBy      | string                 | false    | none         | none        |
-| modifiedBy     | string                 | false    | none         | none        |
-| name           | string                 | false    | none         | none        |
-| roleType       | number                 | false    | none         | none        |
-| description    | string                 | false    | none         | none        |
-| permissions    | [string]               | false    | none         | none        |
-| allowedClients | [string]               | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|name|string|false|none|none|
+|roleType|number|false|none|none|
+|description|string|false|none|none|
+|permissions|[string]|false|none|none|
+|allowedClients|[string]|false|none|none|
 
 <h2 id="tocS_Tenant">Tenant</h2>
 <!-- backwards compatibility -->
@@ -9262,38 +9535,39 @@ RolePartialExcluding*id-tenantId*
   "zip": "string",
   "country": "string"
 }
+
 ```
 
 Tenant
 
 ### Properties
 
-| Name       | Type                   | Required | Restrictions | Description                        |
-| ---------- | ---------------------- | -------- | ------------ | ---------------------------------- |
-| deleted    | boolean                | false    | none         | none                               |
-| deletedOn  | string(date-time)¦null | false    | none         | none                               |
-| deletedBy  | string¦null            | false    | none         | none                               |
-| createdOn  | string(date-time)      | false    | none         | none                               |
-| modifiedOn | string(date-time)      | false    | none         | none                               |
-| createdBy  | string                 | false    | none         | none                               |
-| modifiedBy | string                 | false    | none         | none                               |
-| id         | string                 | false    | none         | none                               |
-| name       | string                 | true     | none         | none                               |
-| status     | number¦null            | true     | none         | Tenant status - Active or Inactive |
-| key        | string                 | false    | none         | none                               |
-| website    | string                 | false    | none         | none                               |
-| address    | string                 | false    | none         | none                               |
-| city       | string                 | false    | none         | none                               |
-| state      | string                 | false    | none         | none                               |
-| zip        | string                 | false    | none         | none                               |
-| country    | string                 | false    | none         | none                               |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|name|string|true|none|none|
+|status|number¦null|true|none|Tenant status - Active or Inactive|
+|key|string|false|none|none|
+|website|string|false|none|none|
+|address|string|false|none|none|
+|city|string|false|none|none|
+|state|string|false|none|none|
+|zip|string|false|none|none|
+|country|string|false|none|none|
 
 #### Enumerated Values
 
-| Property | Value |
-| -------- | ----- |
-| status   | 1     |
-| status   | 0     |
+|Property|Value|
+|---|---|
+|status|1|
+|status|0|
 
 <h2 id="tocS_NewTenant">NewTenant</h2>
 <!-- backwards compatibility -->
@@ -9321,37 +9595,38 @@ Tenant
   "zip": "string",
   "country": "string"
 }
+
 ```
 
 NewTenant
 
 ### Properties
 
-| Name       | Type                   | Required | Restrictions | Description                        |
-| ---------- | ---------------------- | -------- | ------------ | ---------------------------------- |
-| deleted    | boolean                | false    | none         | none                               |
-| deletedOn  | string(date-time)¦null | false    | none         | none                               |
-| deletedBy  | string¦null            | false    | none         | none                               |
-| createdOn  | string(date-time)      | false    | none         | none                               |
-| modifiedOn | string(date-time)      | false    | none         | none                               |
-| createdBy  | string                 | false    | none         | none                               |
-| modifiedBy | string                 | false    | none         | none                               |
-| name       | string                 | true     | none         | none                               |
-| status     | number¦null            | true     | none         | Tenant status - Active or Inactive |
-| key        | string                 | false    | none         | none                               |
-| website    | string                 | false    | none         | none                               |
-| address    | string                 | false    | none         | none                               |
-| city       | string                 | false    | none         | none                               |
-| state      | string                 | false    | none         | none                               |
-| zip        | string                 | false    | none         | none                               |
-| country    | string                 | false    | none         | none                               |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|name|string|true|none|none|
+|status|number¦null|true|none|Tenant status - Active or Inactive|
+|key|string|false|none|none|
+|website|string|false|none|none|
+|address|string|false|none|none|
+|city|string|false|none|none|
+|state|string|false|none|none|
+|zip|string|false|none|none|
+|country|string|false|none|none|
 
 #### Enumerated Values
 
-| Property | Value |
-| -------- | ----- |
-| status   | 1     |
-| status   | 0     |
+|Property|Value|
+|---|---|
+|status|1|
+|status|0|
 
 <h2 id="tocS_GroupWithRelations">GroupWithRelations</h2>
 <!-- backwards compatibility -->
@@ -9473,8 +9748,12 @@ NewTenant
                 "foreignKey": null
               }
             ],
-            "userTenants": [{}],
-            "users": [{}],
+            "userTenants": [
+              {}
+            ],
+            "users": [
+              {}
+            ],
             "roles": [
               {
                 "deleted": true,
@@ -9488,10 +9767,16 @@ NewTenant
                 "name": "string",
                 "roleType": 15,
                 "description": "string",
-                "permissions": ["string"],
-                "allowedClients": ["string"],
+                "permissions": [
+                  "string"
+                ],
+                "allowedClients": [
+                  "string"
+                ],
                 "tenantId": "string",
-                "userTenants": [{}],
+                "userTenants": [
+                  {}
+                ],
                 "createdByUser": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -9592,7 +9877,9 @@ NewTenant
             "user": {},
             "foreignKey": null
           },
-          "userTenants": [{}]
+          "userTenants": [
+            {}
+          ]
         },
         "foreignKey": null,
         "tenant": {
@@ -9630,7 +9917,9 @@ NewTenant
               "foreignKey": null
             }
           ],
-          "userTenants": [{}],
+          "userTenants": [
+            {}
+          ],
           "users": [
             {
               "deleted": true,
@@ -9674,7 +9963,9 @@ NewTenant
                 "user": {},
                 "foreignKey": null
               },
-              "userTenants": [{}]
+              "userTenants": [
+                {}
+              ]
             }
           ],
           "roles": [
@@ -9690,10 +9981,16 @@ NewTenant
               "name": "string",
               "roleType": 15,
               "description": "string",
-              "permissions": ["string"],
-              "allowedClients": ["string"],
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
               "tenantId": "string",
-              "userTenants": [{}],
+              "userTenants": [
+                {}
+              ],
               "createdByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -9787,10 +10084,16 @@ NewTenant
           "name": "string",
           "roleType": 15,
           "description": "string",
-          "permissions": ["string"],
-          "allowedClients": ["string"],
+          "permissions": [
+            "string"
+          ],
+          "allowedClients": [
+            "string"
+          ],
           "tenantId": "string",
-          "userTenants": [{}],
+          "userTenants": [
+            {}
+          ],
           "createdByUser": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -9870,7 +10173,9 @@ NewTenant
             "foreignKey": null
           }
         ],
-        "userGroups": [{}],
+        "userGroups": [
+          {}
+        ],
         "userInvitations": [
           {
             "deleted": true,
@@ -9892,27 +10197,28 @@ NewTenant
     }
   ]
 }
+
 ```
 
 GroupWithRelations
 
 ### Properties
 
-| Name        | Type                                                      | Required | Restrictions | Description                                                                   |
-| ----------- | --------------------------------------------------------- | -------- | ------------ | ----------------------------------------------------------------------------- |
-| deleted     | boolean                                                   | false    | none         | none                                                                          |
-| deletedOn   | string(date-time)¦null                                    | false    | none         | none                                                                          |
-| deletedBy   | string¦null                                               | false    | none         | none                                                                          |
-| createdOn   | string(date-time)                                         | false    | none         | none                                                                          |
-| modifiedOn  | string(date-time)                                         | false    | none         | none                                                                          |
-| createdBy   | string                                                    | false    | none         | none                                                                          |
-| modifiedBy  | string                                                    | false    | none         | none                                                                          |
-| id          | string                                                    | false    | none         | none                                                                          |
-| name        | string                                                    | false    | none         | none                                                                          |
-| description | string                                                    | false    | none         | none                                                                          |
-| photoUrl    | string                                                    | false    | none         | none                                                                          |
-| tenantId    | string                                                    | true     | none         | none                                                                          |
-| userGroups  | [[UserGroupWithRelations](#schemausergroupwithrelations)] | false    | none         | [(tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })] |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|name|string|false|none|none|
+|description|string|false|none|none|
+|photoUrl|string|false|none|none|
+|tenantId|string|true|none|none|
+|userGroups|[[UserGroupWithRelations](#schemausergroupwithrelations)]|false|none|[(tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })]|
 
 <h2 id="tocS_TenantConfigWithRelations">TenantConfigWithRelations</h2>
 <!-- backwards compatibility -->
@@ -10026,7 +10332,9 @@ GroupWithRelations
             "user": {},
             "foreignKey": null
           },
-          "userTenants": [{}]
+          "userTenants": [
+            {}
+          ]
         },
         "foreignKey": null,
         "tenant": {},
@@ -10042,10 +10350,16 @@ GroupWithRelations
           "name": "string",
           "roleType": 15,
           "description": "string",
-          "permissions": ["string"],
-          "allowedClients": ["string"],
+          "permissions": [
+            "string"
+          ],
+          "allowedClients": [
+            "string"
+          ],
           "tenantId": "string",
-          "userTenants": [{}],
+          "userTenants": [
+            {}
+          ],
           "createdByUser": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -10150,7 +10464,9 @@ GroupWithRelations
               "description": "string",
               "photoUrl": "string",
               "tenantId": "string",
-              "userGroups": [{}]
+              "userGroups": [
+                {}
+              ]
             },
             "foreignKey": null,
             "userTenant": {}
@@ -10248,10 +10564,16 @@ GroupWithRelations
               "name": "string",
               "roleType": 15,
               "description": "string",
-              "permissions": ["string"],
-              "allowedClients": ["string"],
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
               "tenantId": "string",
-              "userTenants": [{}],
+              "userTenants": [
+                {}
+              ],
               "createdByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -10356,7 +10678,9 @@ GroupWithRelations
                   "description": "string",
                   "photoUrl": "string",
                   "tenantId": "string",
-                  "userGroups": [{}]
+                  "userGroups": [
+                    {}
+                  ]
                 },
                 "foreignKey": null,
                 "userTenant": {}
@@ -10396,8 +10720,12 @@ GroupWithRelations
         "name": "string",
         "roleType": 15,
         "description": "string",
-        "permissions": ["string"],
-        "allowedClients": ["string"],
+        "permissions": [
+          "string"
+        ],
+        "allowedClients": [
+          "string"
+        ],
         "tenantId": "string",
         "userTenants": [
           {
@@ -10456,7 +10784,9 @@ GroupWithRelations
                 "user": {},
                 "foreignKey": null
               },
-              "userTenants": [{}]
+              "userTenants": [
+                {}
+              ]
             },
             "foreignKey": null,
             "tenant": {},
@@ -10503,7 +10833,9 @@ GroupWithRelations
                   "description": "string",
                   "photoUrl": "string",
                   "tenantId": "string",
-                  "userGroups": [{}]
+                  "userGroups": [
+                    {}
+                  ]
                 },
                 "foreignKey": null,
                 "userTenant": {}
@@ -10675,7 +11007,9 @@ GroupWithRelations
                   "user": {},
                   "foreignKey": null
                 },
-                "userTenants": [{}]
+                "userTenants": [
+                  {}
+                ]
               },
               "foreignKey": null,
               "tenant": {},
@@ -10691,10 +11025,16 @@ GroupWithRelations
                 "name": "string",
                 "roleType": 15,
                 "description": "string",
-                "permissions": ["string"],
-                "allowedClients": ["string"],
+                "permissions": [
+                  "string"
+                ],
+                "allowedClients": [
+                  "string"
+                ],
                 "tenantId": "string",
-                "userTenants": [{}],
+                "userTenants": [
+                  {}
+                ],
                 "createdByUser": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -10774,7 +11114,9 @@ GroupWithRelations
                   "foreignKey": null
                 }
               ],
-              "userGroups": [{}],
+              "userGroups": [
+                {}
+              ],
               "userInvitations": [
                 {
                   "deleted": true,
@@ -10800,27 +11142,28 @@ GroupWithRelations
   },
   "foreignKey": null
 }
+
 ```
 
 TenantConfigWithRelations
 
 ### Properties
 
-| Name        | Type                                              | Required | Restrictions | Description                                                                                        |
-| ----------- | ------------------------------------------------- | -------- | ------------ | -------------------------------------------------------------------------------------------------- |
-| deleted     | boolean                                           | false    | none         | none                                                                                               |
-| deletedOn   | string(date-time)¦null                            | false    | none         | none                                                                                               |
-| deletedBy   | string¦null                                       | false    | none         | none                                                                                               |
-| createdOn   | string(date-time)                                 | false    | none         | none                                                                                               |
-| modifiedOn  | string(date-time)                                 | false    | none         | none                                                                                               |
-| createdBy   | string                                            | false    | none         | none                                                                                               |
-| modifiedBy  | string                                            | false    | none         | none                                                                                               |
-| id          | string                                            | false    | none         | none                                                                                               |
-| configKey   | string                                            | true     | none         | none                                                                                               |
-| configValue | object                                            | false    | none         | none                                                                                               |
-| tenantId    | string                                            | true     | none         | none                                                                                               |
-| tenant      | [TenantWithRelations](#schematenantwithrelations) | false    | none         | signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true }) |
-| foreignKey  | any                                               | false    | none         | none                                                                                               |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|configKey|string|true|none|none|
+|configValue|object|false|none|none|
+|tenantId|string|true|none|none|
+|tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
+|foreignKey|any|false|none|none|
 
 <h2 id="tocS_UserCredentialsWithRelations">UserCredentialsWithRelations</h2>
 <!-- backwards compatibility -->
@@ -10932,10 +11275,16 @@ TenantConfigWithRelations
             "name": "string",
             "roleType": 15,
             "description": "string",
-            "permissions": ["string"],
-            "allowedClients": ["string"],
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
             "tenantId": "string",
-            "userTenants": [{}],
+            "userTenants": [
+              {}
+            ],
             "createdByUser": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -11040,7 +11389,9 @@ TenantConfigWithRelations
                 "description": "string",
                 "photoUrl": "string",
                 "tenantId": "string",
-                "userGroups": [{}]
+                "userGroups": [
+                  {}
+                ]
               },
               "foreignKey": null,
               "userTenant": {}
@@ -11065,7 +11416,9 @@ TenantConfigWithRelations
           ]
         }
       ],
-      "users": [{}],
+      "users": [
+        {}
+      ],
       "roles": [
         {
           "deleted": true,
@@ -11079,8 +11432,12 @@ TenantConfigWithRelations
           "name": "string",
           "roleType": 15,
           "description": "string",
-          "permissions": ["string"],
-          "allowedClients": ["string"],
+          "permissions": [
+            "string"
+          ],
+          "allowedClients": [
+            "string"
+          ],
           "tenantId": "string",
           "userTenants": [
             {
@@ -11288,10 +11645,16 @@ TenantConfigWithRelations
                   "name": "string",
                   "roleType": 15,
                   "description": "string",
-                  "permissions": ["string"],
-                  "allowedClients": ["string"],
+                  "permissions": [
+                    "string"
+                  ],
+                  "allowedClients": [
+                    "string"
+                  ],
                   "tenantId": "string",
-                  "userTenants": [{}],
+                  "userTenants": [
+                    {}
+                  ],
                   "createdByUser": {
                     "deleted": true,
                     "deletedOn": "2019-08-24T14:15:22Z",
@@ -11371,7 +11734,9 @@ TenantConfigWithRelations
                     "foreignKey": null
                   }
                 ],
-                "userGroups": [{}],
+                "userGroups": [
+                  {}
+                ],
                 "userInvitations": [
                   {
                     "deleted": true,
@@ -11466,8 +11831,12 @@ TenantConfigWithRelations
               "foreignKey": null
             }
           ],
-          "userTenants": [{}],
-          "users": [{}],
+          "userTenants": [
+            {}
+          ],
+          "users": [
+            {}
+          ],
           "roles": [
             {
               "deleted": true,
@@ -11481,10 +11850,16 @@ TenantConfigWithRelations
               "name": "string",
               "roleType": 15,
               "description": "string",
-              "permissions": ["string"],
-              "allowedClients": ["string"],
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
               "tenantId": "string",
-              "userTenants": [{}],
+              "userTenants": [
+                {}
+              ],
               "createdByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -11594,10 +11969,16 @@ TenantConfigWithRelations
           "name": "string",
           "roleType": 15,
           "description": "string",
-          "permissions": ["string"],
-          "allowedClients": ["string"],
+          "permissions": [
+            "string"
+          ],
+          "allowedClients": [
+            "string"
+          ],
           "tenantId": "string",
-          "userTenants": [{}],
+          "userTenants": [
+            {}
+          ],
           "createdByUser": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -11702,7 +12083,9 @@ TenantConfigWithRelations
               "description": "string",
               "photoUrl": "string",
               "tenantId": "string",
-              "userGroups": [{}]
+              "userGroups": [
+                {}
+              ]
             },
             "foreignKey": null,
             "userTenant": {}
@@ -11730,30 +12113,31 @@ TenantConfigWithRelations
   },
   "foreignKey": null
 }
+
 ```
 
 UserCredentialsWithRelations
 
 ### Properties
 
-| Name         | Type                                          | Required | Restrictions | Description                                                                                              |
-| ------------ | --------------------------------------------- | -------- | ------------ | -------------------------------------------------------------------------------------------------------- |
-| deleted      | boolean                                       | false    | none         | none                                                                                                     |
-| deletedOn    | string(date-time)¦null                        | false    | none         | none                                                                                                     |
-| deletedBy    | string¦null                                   | false    | none         | none                                                                                                     |
-| createdOn    | string(date-time)                             | false    | none         | none                                                                                                     |
-| modifiedOn   | string(date-time)                             | false    | none         | none                                                                                                     |
-| createdBy    | string                                        | false    | none         | none                                                                                                     |
-| modifiedBy   | string                                        | false    | none         | none                                                                                                     |
-| id           | string                                        | false    | none         | none                                                                                                     |
-| authProvider | string                                        | true     | none         | none                                                                                                     |
-| authId       | string                                        | false    | none         | none                                                                                                     |
-| authToken    | string                                        | false    | none         | none                                                                                                     |
-| secretKey    | string                                        | false    | none         | Secret for Authenticator app                                                                             |
-| password     | string                                        | false    | none         | none                                                                                                     |
-| userId       | string                                        | true     | none         | none                                                                                                     |
-| user         | [UserWithRelations](#schemauserwithrelations) | false    | none         | This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true }) |
-| foreignKey   | any                                           | false    | none         | none                                                                                                     |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|authProvider|string|true|none|none|
+|authId|string|false|none|none|
+|authToken|string|false|none|none|
+|secretKey|string|false|none|Secret for Authenticator app|
+|password|string|false|none|none|
+|userId|string|true|none|none|
+|user|[UserWithRelations](#schemauserwithrelations)|false|none|This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true })|
+|foreignKey|any|false|none|none|
 
 <h2 id="tocS_UserWithRelations">UserWithRelations</h2>
 <!-- backwards compatibility -->
@@ -11877,7 +12261,9 @@ UserCredentialsWithRelations
             "user": {},
             "foreignKey": null
           },
-          "userTenants": [{}]
+          "userTenants": [
+            {}
+          ]
         },
         "foreignKey": null,
         "tenant": {},
@@ -11893,10 +12279,16 @@ UserCredentialsWithRelations
           "name": "string",
           "roleType": 15,
           "description": "string",
-          "permissions": ["string"],
-          "allowedClients": ["string"],
+          "permissions": [
+            "string"
+          ],
+          "allowedClients": [
+            "string"
+          ],
           "tenantId": "string",
-          "userTenants": [{}],
+          "userTenants": [
+            {}
+          ],
           "createdByUser": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -12001,7 +12393,9 @@ UserCredentialsWithRelations
               "description": "string",
               "photoUrl": "string",
               "tenantId": "string",
-              "userGroups": [{}]
+              "userGroups": [
+                {}
+              ]
             },
             "foreignKey": null,
             "userTenant": {}
@@ -12099,10 +12493,16 @@ UserCredentialsWithRelations
               "name": "string",
               "roleType": 15,
               "description": "string",
-              "permissions": ["string"],
-              "allowedClients": ["string"],
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
               "tenantId": "string",
-              "userTenants": [{}],
+              "userTenants": [
+                {}
+              ],
               "createdByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -12207,7 +12607,9 @@ UserCredentialsWithRelations
                   "description": "string",
                   "photoUrl": "string",
                   "tenantId": "string",
-                  "userGroups": [{}]
+                  "userGroups": [
+                    {}
+                  ]
                 },
                 "foreignKey": null,
                 "userTenant": {}
@@ -12247,8 +12649,12 @@ UserCredentialsWithRelations
         "name": "string",
         "roleType": 15,
         "description": "string",
-        "permissions": ["string"],
-        "allowedClients": ["string"],
+        "permissions": [
+          "string"
+        ],
+        "allowedClients": [
+          "string"
+        ],
         "tenantId": "string",
         "userTenants": [
           {
@@ -12307,7 +12713,9 @@ UserCredentialsWithRelations
                 "user": {},
                 "foreignKey": null
               },
-              "userTenants": [{}]
+              "userTenants": [
+                {}
+              ]
             },
             "foreignKey": null,
             "tenant": {},
@@ -12354,7 +12762,9 @@ UserCredentialsWithRelations
                   "description": "string",
                   "photoUrl": "string",
                   "tenantId": "string",
-                  "userGroups": [{}]
+                  "userGroups": [
+                    {}
+                  ]
                 },
                 "foreignKey": null,
                 "userTenant": {}
@@ -12526,7 +12936,9 @@ UserCredentialsWithRelations
                   "user": {},
                   "foreignKey": null
                 },
-                "userTenants": [{}]
+                "userTenants": [
+                  {}
+                ]
               },
               "foreignKey": null,
               "tenant": {},
@@ -12542,10 +12954,16 @@ UserCredentialsWithRelations
                 "name": "string",
                 "roleType": 15,
                 "description": "string",
-                "permissions": ["string"],
-                "allowedClients": ["string"],
+                "permissions": [
+                  "string"
+                ],
+                "allowedClients": [
+                  "string"
+                ],
                 "tenantId": "string",
-                "userTenants": [{}],
+                "userTenants": [
+                  {}
+                ],
                 "createdByUser": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -12625,7 +13043,9 @@ UserCredentialsWithRelations
                   "foreignKey": null
                 }
               ],
-              "userGroups": [{}],
+              "userGroups": [
+                {}
+              ],
               "userInvitations": [
                 {
                   "deleted": true,
@@ -12752,10 +13172,16 @@ UserCredentialsWithRelations
               "name": "string",
               "roleType": 15,
               "description": "string",
-              "permissions": ["string"],
-              "allowedClients": ["string"],
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
               "tenantId": "string",
-              "userTenants": [{}],
+              "userTenants": [
+                {}
+              ],
               "createdByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -12860,7 +13286,9 @@ UserCredentialsWithRelations
                   "description": "string",
                   "photoUrl": "string",
                   "tenantId": "string",
-                  "userGroups": [{}]
+                  "userGroups": [
+                    {}
+                  ]
                 },
                 "foreignKey": null,
                 "userTenant": {}
@@ -12885,7 +13313,9 @@ UserCredentialsWithRelations
             ]
           }
         ],
-        "users": [{}],
+        "users": [
+          {}
+        ],
         "roles": [
           {
             "deleted": true,
@@ -12899,8 +13329,12 @@ UserCredentialsWithRelations
             "name": "string",
             "roleType": 15,
             "description": "string",
-            "permissions": ["string"],
-            "allowedClients": ["string"],
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
             "tenantId": "string",
             "userTenants": [
               {
@@ -13102,9 +13536,15 @@ UserCredentialsWithRelations
                     "foreignKey": null,
                     "modifiedByUser": {}
                   },
-                  "userLevelPermissions": [{}],
-                  "userGroups": [{}],
-                  "userInvitations": [{}]
+                  "userLevelPermissions": [
+                    {}
+                  ],
+                  "userGroups": [
+                    {}
+                  ],
+                  "userInvitations": [
+                    {}
+                  ]
                 }
               }
             ]
@@ -13165,8 +13605,12 @@ UserCredentialsWithRelations
                 "foreignKey": null
               }
             ],
-            "userTenants": [{}],
-            "users": [{}],
+            "userTenants": [
+              {}
+            ],
+            "users": [
+              {}
+            ],
             "roles": [
               {
                 "deleted": true,
@@ -13180,10 +13624,16 @@ UserCredentialsWithRelations
                 "name": "string",
                 "roleType": 15,
                 "description": "string",
-                "permissions": ["string"],
-                "allowedClients": ["string"],
+                "permissions": [
+                  "string"
+                ],
+                "allowedClients": [
+                  "string"
+                ],
                 "tenantId": "string",
-                "userTenants": [{}],
+                "userTenants": [
+                  {}
+                ],
                 "createdByUser": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -13293,10 +13743,16 @@ UserCredentialsWithRelations
             "name": "string",
             "roleType": 15,
             "description": "string",
-            "permissions": ["string"],
-            "allowedClients": ["string"],
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
             "tenantId": "string",
-            "userTenants": [{}],
+            "userTenants": [
+              {}
+            ],
             "createdByUser": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -13401,7 +13857,9 @@ UserCredentialsWithRelations
                 "description": "string",
                 "photoUrl": "string",
                 "tenantId": "string",
-                "userGroups": [{}]
+                "userGroups": [
+                  {}
+                ]
               },
               "foreignKey": null,
               "userTenant": {}
@@ -13501,8 +13959,12 @@ UserCredentialsWithRelations
               "foreignKey": null
             }
           ],
-          "userTenants": [{}],
-          "users": [{}],
+          "userTenants": [
+            {}
+          ],
+          "users": [
+            {}
+          ],
           "roles": [
             {
               "deleted": true,
@@ -13516,10 +13978,16 @@ UserCredentialsWithRelations
               "name": "string",
               "roleType": 15,
               "description": "string",
-              "permissions": ["string"],
-              "allowedClients": ["string"],
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
               "tenantId": "string",
-              "userTenants": [{}],
+              "userTenants": [
+                {}
+              ],
               "createdByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -13674,7 +14142,9 @@ UserCredentialsWithRelations
             "foreignKey": null
           }
         ],
-        "userTenants": [{}],
+        "userTenants": [
+          {}
+        ],
         "users": [
           {
             "deleted": true,
@@ -13734,10 +14204,16 @@ UserCredentialsWithRelations
             "name": "string",
             "roleType": 15,
             "description": "string",
-            "permissions": ["string"],
-            "allowedClients": ["string"],
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
             "tenantId": "string",
-            "userTenants": [{}],
+            "userTenants": [
+              {}
+            ],
             "createdByUser": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -13847,10 +14323,16 @@ UserCredentialsWithRelations
         "name": "string",
         "roleType": 15,
         "description": "string",
-        "permissions": ["string"],
-        "allowedClients": ["string"],
+        "permissions": [
+          "string"
+        ],
+        "allowedClients": [
+          "string"
+        ],
         "tenantId": "string",
-        "userTenants": [{}],
+        "userTenants": [
+          {}
+        ],
         "createdByUser": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -13955,7 +14437,9 @@ UserCredentialsWithRelations
             "description": "string",
             "photoUrl": "string",
             "tenantId": "string",
-            "userGroups": [{}]
+            "userGroups": [
+              {}
+            ]
           },
           "foreignKey": null,
           "userTenant": {}
@@ -13981,47 +14465,48 @@ UserCredentialsWithRelations
     }
   ]
 }
+
 ```
 
 UserWithRelations
 
 ### Properties
 
-| Name            | Type                                                                | Required | Restrictions | Description                                                                                        |
-| --------------- | ------------------------------------------------------------------- | -------- | ------------ | -------------------------------------------------------------------------------------------------- |
-| deleted         | boolean                                                             | false    | none         | none                                                                                               |
-| deletedOn       | string(date-time)¦null                                              | false    | none         | none                                                                                               |
-| deletedBy       | string¦null                                                         | false    | none         | none                                                                                               |
-| createdOn       | string(date-time)                                                   | false    | none         | none                                                                                               |
-| modifiedOn      | string(date-time)                                                   | false    | none         | none                                                                                               |
-| createdBy       | string                                                              | false    | none         | none                                                                                               |
-| modifiedBy      | string                                                              | false    | none         | none                                                                                               |
-| id              | string                                                              | false    | none         | none                                                                                               |
-| firstName       | string                                                              | true     | none         | none                                                                                               |
-| lastName        | string                                                              | false    | none         | none                                                                                               |
-| middleName      | string                                                              | false    | none         | none                                                                                               |
-| username        | string                                                              | true     | none         | none                                                                                               |
-| email           | string                                                              | true     | none         | none                                                                                               |
-| designation     | string                                                              | false    | none         | none                                                                                               |
-| phone           | string                                                              | false    | none         | none                                                                                               |
-| authClientIds   | string                                                              | false    | none         | none                                                                                               |
-| lastLogin       | string(date-time)                                                   | false    | none         | none                                                                                               |
-| photoUrl        | string                                                              | false    | none         | none                                                                                               |
-| gender          | string                                                              | false    | none         | This field takes a single character as input in database.<br> 'M' for male and 'F' for female.     |
-| dob             | string(date-time)                                                   | false    | none         | none                                                                                               |
-| defaultTenantId | string                                                              | false    | none         | none                                                                                               |
-| defaultTenant   | [TenantWithRelations](#schematenantwithrelations)                   | false    | none         | signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true }) |
-| foreignKey      | any                                                                 | false    | none         | none                                                                                               |
-| credentials     | [UserCredentialsWithRelations](#schemausercredentialswithrelations) | false    | none         | (tsType: UserCredentialsWithRelations, schemaOptions: { includeRelations: true })                  |
-| userTenants     | [[UserTenantWithRelations](#schemausertenantwithrelations)]         | false    | none         | [(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })]                     |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|firstName|string|true|none|none|
+|lastName|string|false|none|none|
+|middleName|string|false|none|none|
+|username|string|true|none|none|
+|email|string|true|none|none|
+|designation|string|false|none|none|
+|phone|string|false|none|none|
+|authClientIds|string|false|none|none|
+|lastLogin|string(date-time)|false|none|none|
+|photoUrl|string|false|none|none|
+|gender|string|false|none|This field takes a single character as input in database.<br>    'M' for male and 'F' for female.|
+|dob|string(date-time)|false|none|none|
+|defaultTenantId|string|false|none|none|
+|defaultTenant|[TenantWithRelations](#schematenantwithrelations)|false|none|signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
+|foreignKey|any|false|none|none|
+|credentials|[UserCredentialsWithRelations](#schemausercredentialswithrelations)|false|none|(tsType: UserCredentialsWithRelations, schemaOptions: { includeRelations: true })|
+|userTenants|[[UserTenantWithRelations](#schemausertenantwithrelations)]|false|none|[(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })]|
 
 #### Enumerated Values
 
-| Property | Value |
-| -------- | ----- |
-| gender   | M     |
-| gender   | F     |
-| gender   | O     |
+|Property|Value|
+|---|---|
+|gender|M|
+|gender|F|
+|gender|O|
 
 <h2 id="tocS_UserViewWithRelations">UserViewWithRelations</h2>
 <!-- backwards compatibility -->
@@ -14061,50 +14546,51 @@ UserWithRelations
   "roleName": "string",
   "userTenantId": "string"
 }
+
 ```
 
 UserViewWithRelations
 
 ### Properties
 
-| Name            | Type                   | Required | Restrictions | Description                                                                                    |
-| --------------- | ---------------------- | -------- | ------------ | ---------------------------------------------------------------------------------------------- |
-| deleted         | boolean                | false    | none         | none                                                                                           |
-| deletedOn       | string(date-time)¦null | false    | none         | none                                                                                           |
-| deletedBy       | string¦null            | false    | none         | none                                                                                           |
-| createdOn       | string(date-time)      | false    | none         | none                                                                                           |
-| modifiedOn      | string(date-time)      | false    | none         | none                                                                                           |
-| createdBy       | string                 | false    | none         | none                                                                                           |
-| modifiedBy      | string                 | false    | none         | none                                                                                           |
-| id              | string                 | false    | none         | none                                                                                           |
-| firstName       | string                 | true     | none         | none                                                                                           |
-| lastName        | string                 | false    | none         | none                                                                                           |
-| middleName      | string                 | false    | none         | none                                                                                           |
-| username        | string                 | true     | none         | none                                                                                           |
-| email           | string                 | true     | none         | none                                                                                           |
-| designation     | string                 | false    | none         | none                                                                                           |
-| phone           | string                 | false    | none         | none                                                                                           |
-| authClientIds   | string                 | false    | none         | none                                                                                           |
-| lastLogin       | string                 | false    | none         | none                                                                                           |
-| photoUrl        | string                 | false    | none         | none                                                                                           |
-| gender          | string                 | false    | none         | This field takes a single character as input in database.<br> 'M' for male and 'F' for female. |
-| dob             | string(date-time)¦null | false    | none         | none                                                                                           |
-| defaultTenantId | string                 | true     | none         | none                                                                                           |
-| status          | number                 | false    | none         | none                                                                                           |
-| tenantId        | string                 | true     | none         | none                                                                                           |
-| roleId          | string                 | true     | none         | none                                                                                           |
-| tenantName      | string                 | true     | none         | none                                                                                           |
-| tenantKey       | string                 | false    | none         | none                                                                                           |
-| roleName        | string                 | false    | none         | none                                                                                           |
-| userTenantId    | string                 | true     | none         | none                                                                                           |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|firstName|string|true|none|none|
+|lastName|string|false|none|none|
+|middleName|string|false|none|none|
+|username|string|true|none|none|
+|email|string|true|none|none|
+|designation|string|false|none|none|
+|phone|string|false|none|none|
+|authClientIds|string|false|none|none|
+|lastLogin|string|false|none|none|
+|photoUrl|string|false|none|none|
+|gender|string|false|none|This field takes a single character as input in database.<br>    'M' for male and 'F' for female.|
+|dob|string(date-time)¦null|false|none|none|
+|defaultTenantId|string|true|none|none|
+|status|number|false|none|none|
+|tenantId|string|true|none|none|
+|roleId|string|true|none|none|
+|tenantName|string|true|none|none|
+|tenantKey|string|false|none|none|
+|roleName|string|false|none|none|
+|userTenantId|string|true|none|none|
 
 #### Enumerated Values
 
-| Property | Value |
-| -------- | ----- |
-| gender   | M     |
-| gender   | F     |
-| gender   | O     |
+|Property|Value|
+|---|---|
+|gender|M|
+|gender|F|
+|gender|O|
 
 <h2 id="tocS_RoleWithRelations">RoleWithRelations</h2>
 <!-- backwards compatibility -->
@@ -14126,8 +14612,12 @@ UserViewWithRelations
   "name": "string",
   "roleType": 15,
   "description": "string",
-  "permissions": ["string"],
-  "allowedClients": ["string"],
+  "permissions": [
+    "string"
+  ],
+  "allowedClients": [
+    "string"
+  ],
   "tenantId": "string",
   "userTenants": [
     {
@@ -14201,8 +14691,12 @@ UserViewWithRelations
               "foreignKey": null
             }
           ],
-          "userTenants": [{}],
-          "users": [{}],
+          "userTenants": [
+            {}
+          ],
+          "users": [
+            {}
+          ],
           "roles": [
             {
               "deleted": true,
@@ -14216,8 +14710,12 @@ UserViewWithRelations
               "name": "string",
               "roleType": 15,
               "description": "string",
-              "permissions": ["string"],
-              "allowedClients": ["string"],
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
               "tenantId": "string",
               "userTenants": [],
               "createdByUser": {
@@ -14336,7 +14834,9 @@ UserViewWithRelations
           "user": {},
           "foreignKey": null
         },
-        "userTenants": [{}]
+        "userTenants": [
+          {}
+        ]
       },
       "foreignKey": null,
       "tenant": {
@@ -14374,7 +14874,9 @@ UserViewWithRelations
             "foreignKey": null
           }
         ],
-        "userTenants": [{}],
+        "userTenants": [
+          {}
+        ],
         "users": [
           {
             "deleted": true,
@@ -14418,7 +14920,9 @@ UserViewWithRelations
               "user": {},
               "foreignKey": null
             },
-            "userTenants": [{}]
+            "userTenants": [
+              {}
+            ]
           }
         ],
         "roles": [
@@ -14434,8 +14938,12 @@ UserViewWithRelations
             "name": "string",
             "roleType": 15,
             "description": "string",
-            "permissions": ["string"],
-            "allowedClients": ["string"],
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
             "tenantId": "string",
             "userTenants": [],
             "createdByUser": {
@@ -14547,8 +15055,12 @@ UserViewWithRelations
         "name": "string",
         "roleType": 15,
         "description": "string",
-        "permissions": ["string"],
-        "allowedClients": ["string"],
+        "permissions": [
+          "string"
+        ],
+        "allowedClients": [
+          "string"
+        ],
         "tenantId": "string",
         "userTenants": [],
         "createdByUser": {
@@ -14655,7 +15167,9 @@ UserViewWithRelations
             "description": "string",
             "photoUrl": "string",
             "tenantId": "string",
-            "userGroups": [{}]
+            "userGroups": [
+              {}
+            ]
           },
           "foreignKey": null,
           "userTenant": {}
@@ -14742,32 +15256,33 @@ UserViewWithRelations
     "userTenantId": "string"
   }
 }
+
 ```
 
 RoleWithRelations
 
 ### Properties
 
-| Name           | Type                                                        | Required | Restrictions | Description                                                                                        |
-| -------------- | ----------------------------------------------------------- | -------- | ------------ | -------------------------------------------------------------------------------------------------- |
-| deleted        | boolean                                                     | false    | none         | none                                                                                               |
-| deletedOn      | string(date-time)¦null                                      | false    | none         | none                                                                                               |
-| deletedBy      | string¦null                                                 | false    | none         | none                                                                                               |
-| createdOn      | string(date-time)                                           | false    | none         | none                                                                                               |
-| modifiedOn     | string(date-time)                                           | false    | none         | none                                                                                               |
-| createdBy      | string                                                      | false    | none         | none                                                                                               |
-| modifiedBy     | string                                                      | false    | none         | none                                                                                               |
-| id             | string                                                      | false    | none         | none                                                                                               |
-| name           | string                                                      | true     | none         | none                                                                                               |
-| roleType       | number                                                      | false    | none         | none                                                                                               |
-| description    | string                                                      | false    | none         | none                                                                                               |
-| permissions    | [string]                                                    | false    | none         | none                                                                                               |
-| allowedClients | [string]                                                    | false    | none         | none                                                                                               |
-| tenantId       | string                                                      | true     | none         | none                                                                                               |
-| userTenants    | [[UserTenantWithRelations](#schemausertenantwithrelations)] | false    | none         | [(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })]                     |
-| createdByUser  | [UserViewWithRelations](#schemauserviewwithrelations)       | false    | none         | User details view in DB (tsType: UserViewWithRelations, schemaOptions: { includeRelations: true }) |
-| foreignKey     | any                                                         | false    | none         | none                                                                                               |
-| modifiedByUser | [UserViewWithRelations](#schemauserviewwithrelations)       | false    | none         | User details view in DB (tsType: UserViewWithRelations, schemaOptions: { includeRelations: true }) |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|name|string|true|none|none|
+|roleType|number|false|none|none|
+|description|string|false|none|none|
+|permissions|[string]|false|none|none|
+|allowedClients|[string]|false|none|none|
+|tenantId|string|true|none|none|
+|userTenants|[[UserTenantWithRelations](#schemausertenantwithrelations)]|false|none|[(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })]|
+|createdByUser|[UserViewWithRelations](#schemauserviewwithrelations)|false|none|User details view in DB (tsType: UserViewWithRelations, schemaOptions: { includeRelations: true })|
+|foreignKey|any|false|none|none|
+|modifiedByUser|[UserViewWithRelations](#schemauserviewwithrelations)|false|none|User details view in DB (tsType: UserViewWithRelations, schemaOptions: { includeRelations: true })|
 
 <h2 id="tocS_UserLevelPermissionWithRelations">UserLevelPermissionWithRelations</h2>
 <!-- backwards compatibility -->
@@ -14860,8 +15375,12 @@ RoleWithRelations
             "foreignKey": null
           }
         ],
-        "userTenants": [{}],
-        "users": [{}],
+        "userTenants": [
+          {}
+        ],
+        "users": [
+          {}
+        ],
         "roles": [
           {
             "deleted": true,
@@ -14875,10 +15394,16 @@ RoleWithRelations
             "name": "string",
             "roleType": 15,
             "description": "string",
-            "permissions": ["string"],
-            "allowedClients": ["string"],
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
             "tenantId": "string",
-            "userTenants": [{}],
+            "userTenants": [
+              {}
+            ],
             "createdByUser": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -14995,7 +15520,9 @@ RoleWithRelations
         "user": {},
         "foreignKey": null
       },
-      "userTenants": [{}]
+      "userTenants": [
+        {}
+      ]
     },
     "foreignKey": null,
     "tenant": {
@@ -15033,7 +15560,9 @@ RoleWithRelations
           "foreignKey": null
         }
       ],
-      "userTenants": [{}],
+      "userTenants": [
+        {}
+      ],
       "users": [
         {
           "deleted": true,
@@ -15077,7 +15606,9 @@ RoleWithRelations
             "user": {},
             "foreignKey": null
           },
-          "userTenants": [{}]
+          "userTenants": [
+            {}
+          ]
         }
       ],
       "roles": [
@@ -15093,10 +15624,16 @@ RoleWithRelations
           "name": "string",
           "roleType": 15,
           "description": "string",
-          "permissions": ["string"],
-          "allowedClients": ["string"],
+          "permissions": [
+            "string"
+          ],
+          "allowedClients": [
+            "string"
+          ],
           "tenantId": "string",
-          "userTenants": [{}],
+          "userTenants": [
+            {}
+          ],
           "createdByUser": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -15206,10 +15743,16 @@ RoleWithRelations
       "name": "string",
       "roleType": 15,
       "description": "string",
-      "permissions": ["string"],
-      "allowedClients": ["string"],
+      "permissions": [
+        "string"
+      ],
+      "allowedClients": [
+        "string"
+      ],
       "tenantId": "string",
-      "userTenants": [{}],
+      "userTenants": [
+        {}
+      ],
       "createdByUser": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -15314,7 +15857,9 @@ RoleWithRelations
           "description": "string",
           "photoUrl": "string",
           "tenantId": "string",
-          "userGroups": [{}]
+          "userGroups": [
+            {}
+          ]
         },
         "foreignKey": null,
         "userTenant": {}
@@ -15340,27 +15885,28 @@ RoleWithRelations
   },
   "foreignKey": null
 }
+
 ```
 
 UserLevelPermissionWithRelations
 
 ### Properties
 
-| Name         | Type                                                      | Required | Restrictions | Description                                                                  |
-| ------------ | --------------------------------------------------------- | -------- | ------------ | ---------------------------------------------------------------------------- |
-| deleted      | boolean                                                   | false    | none         | none                                                                         |
-| deletedOn    | string(date-time)¦null                                    | false    | none         | none                                                                         |
-| deletedBy    | string¦null                                               | false    | none         | none                                                                         |
-| createdOn    | string(date-time)                                         | false    | none         | none                                                                         |
-| modifiedOn   | string(date-time)                                         | false    | none         | none                                                                         |
-| createdBy    | string                                                    | false    | none         | none                                                                         |
-| modifiedBy   | string                                                    | false    | none         | none                                                                         |
-| id           | string                                                    | false    | none         | none                                                                         |
-| permission   | string                                                    | true     | none         | none                                                                         |
-| allowed      | boolean                                                   | true     | none         | none                                                                         |
-| userTenantId | string                                                    | true     | none         | none                                                                         |
-| userTenant   | [UserTenantWithRelations](#schemausertenantwithrelations) | false    | none         | (tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true }) |
-| foreignKey   | any                                                       | false    | none         | none                                                                         |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|permission|string|true|none|none|
+|allowed|boolean|true|none|none|
+|userTenantId|string|true|none|none|
+|userTenant|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
+|foreignKey|any|false|none|none|
 
 <h2 id="tocS_UserGroupWithRelations">UserGroupWithRelations</h2>
 <!-- backwards compatibility -->
@@ -15479,8 +16025,12 @@ UserLevelPermissionWithRelations
                   "foreignKey": null
                 }
               ],
-              "userTenants": [{}],
-              "users": [{}],
+              "userTenants": [
+                {}
+              ],
+              "users": [
+                {}
+              ],
               "roles": [
                 {
                   "deleted": true,
@@ -15494,10 +16044,16 @@ UserLevelPermissionWithRelations
                   "name": "string",
                   "roleType": 15,
                   "description": "string",
-                  "permissions": ["string"],
-                  "allowedClients": ["string"],
+                  "permissions": [
+                    "string"
+                  ],
+                  "allowedClients": [
+                    "string"
+                  ],
                   "tenantId": "string",
-                  "userTenants": [{}],
+                  "userTenants": [
+                    {}
+                  ],
                   "createdByUser": {
                     "deleted": true,
                     "deletedOn": "2019-08-24T14:15:22Z",
@@ -15561,7 +16117,9 @@ UserLevelPermissionWithRelations
                   }
                 }
               ],
-              "groups": [{}]
+              "groups": [
+                {}
+              ]
             },
             "foreignKey": null,
             "credentials": {
@@ -15582,7 +16140,9 @@ UserLevelPermissionWithRelations
               "user": {},
               "foreignKey": null
             },
-            "userTenants": [{}]
+            "userTenants": [
+              {}
+            ]
           },
           "foreignKey": null,
           "tenant": {
@@ -15620,7 +16180,9 @@ UserLevelPermissionWithRelations
                 "foreignKey": null
               }
             ],
-            "userTenants": [{}],
+            "userTenants": [
+              {}
+            ],
             "users": [
               {
                 "deleted": true,
@@ -15664,7 +16226,9 @@ UserLevelPermissionWithRelations
                   "user": {},
                   "foreignKey": null
                 },
-                "userTenants": [{}]
+                "userTenants": [
+                  {}
+                ]
               }
             ],
             "roles": [
@@ -15680,10 +16244,16 @@ UserLevelPermissionWithRelations
                 "name": "string",
                 "roleType": 15,
                 "description": "string",
-                "permissions": ["string"],
-                "allowedClients": ["string"],
+                "permissions": [
+                  "string"
+                ],
+                "allowedClients": [
+                  "string"
+                ],
                 "tenantId": "string",
-                "userTenants": [{}],
+                "userTenants": [
+                  {}
+                ],
                 "createdByUser": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -15747,7 +16317,9 @@ UserLevelPermissionWithRelations
                 }
               }
             ],
-            "groups": [{}]
+            "groups": [
+              {}
+            ]
           },
           "role": {
             "deleted": true,
@@ -15761,10 +16333,16 @@ UserLevelPermissionWithRelations
             "name": "string",
             "roleType": 15,
             "description": "string",
-            "permissions": ["string"],
-            "allowedClients": ["string"],
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
             "tenantId": "string",
-            "userTenants": [{}],
+            "userTenants": [
+              {}
+            ],
             "createdByUser": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -15844,7 +16422,9 @@ UserLevelPermissionWithRelations
               "foreignKey": null
             }
           ],
-          "userGroups": [{}],
+          "userGroups": [
+            {}
+          ],
           "userInvitations": [
             {
               "deleted": true,
@@ -15938,8 +16518,12 @@ UserLevelPermissionWithRelations
             "foreignKey": null
           }
         ],
-        "userTenants": [{}],
-        "users": [{}],
+        "userTenants": [
+          {}
+        ],
+        "users": [
+          {}
+        ],
         "roles": [
           {
             "deleted": true,
@@ -15953,10 +16537,16 @@ UserLevelPermissionWithRelations
             "name": "string",
             "roleType": 15,
             "description": "string",
-            "permissions": ["string"],
-            "allowedClients": ["string"],
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
             "tenantId": "string",
-            "userTenants": [{}],
+            "userTenants": [
+              {}
+            ],
             "createdByUser": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -16073,7 +16663,9 @@ UserLevelPermissionWithRelations
         "user": {},
         "foreignKey": null
       },
-      "userTenants": [{}]
+      "userTenants": [
+        {}
+      ]
     },
     "foreignKey": null,
     "tenant": {
@@ -16111,7 +16703,9 @@ UserLevelPermissionWithRelations
           "foreignKey": null
         }
       ],
-      "userTenants": [{}],
+      "userTenants": [
+        {}
+      ],
       "users": [
         {
           "deleted": true,
@@ -16155,7 +16749,9 @@ UserLevelPermissionWithRelations
             "user": {},
             "foreignKey": null
           },
-          "userTenants": [{}]
+          "userTenants": [
+            {}
+          ]
         }
       ],
       "roles": [
@@ -16171,10 +16767,16 @@ UserLevelPermissionWithRelations
           "name": "string",
           "roleType": 15,
           "description": "string",
-          "permissions": ["string"],
-          "allowedClients": ["string"],
+          "permissions": [
+            "string"
+          ],
+          "allowedClients": [
+            "string"
+          ],
           "tenantId": "string",
-          "userTenants": [{}],
+          "userTenants": [
+            {}
+          ],
           "createdByUser": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -16284,10 +16886,16 @@ UserLevelPermissionWithRelations
       "name": "string",
       "roleType": 15,
       "description": "string",
-      "permissions": ["string"],
-      "allowedClients": ["string"],
+      "permissions": [
+        "string"
+      ],
+      "allowedClients": [
+        "string"
+      ],
       "tenantId": "string",
-      "userTenants": [{}],
+      "userTenants": [
+        {}
+      ],
       "createdByUser": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -16392,7 +17000,9 @@ UserLevelPermissionWithRelations
           "description": "string",
           "photoUrl": "string",
           "tenantId": "string",
-          "userGroups": [{}]
+          "userGroups": [
+            {}
+          ]
         },
         "foreignKey": null,
         "userTenant": {}
@@ -16417,27 +17027,28 @@ UserLevelPermissionWithRelations
     ]
   }
 }
+
 ```
 
 UserGroupWithRelations
 
 ### Properties
 
-| Name         | Type                                                      | Required | Restrictions | Description                                                                  |
-| ------------ | --------------------------------------------------------- | -------- | ------------ | ---------------------------------------------------------------------------- |
-| deleted      | boolean                                                   | false    | none         | none                                                                         |
-| deletedOn    | string(date-time)¦null                                    | false    | none         | none                                                                         |
-| deletedBy    | string¦null                                               | false    | none         | none                                                                         |
-| createdOn    | string(date-time)                                         | false    | none         | none                                                                         |
-| modifiedOn   | string(date-time)                                         | false    | none         | none                                                                         |
-| createdBy    | string                                                    | false    | none         | none                                                                         |
-| modifiedBy   | string                                                    | false    | none         | none                                                                         |
-| id           | string                                                    | false    | none         | none                                                                         |
-| groupId      | string                                                    | true     | none         | none                                                                         |
-| userTenantId | string                                                    | true     | none         | none                                                                         |
-| group        | [GroupWithRelations](#schemagroupwithrelations)           | false    | none         | (tsType: GroupWithRelations, schemaOptions: { includeRelations: true })      |
-| foreignKey   | any                                                       | false    | none         | none                                                                         |
-| userTenant   | [UserTenantWithRelations](#schemausertenantwithrelations) | false    | none         | (tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true }) |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|groupId|string|true|none|none|
+|userTenantId|string|true|none|none|
+|group|[GroupWithRelations](#schemagroupwithrelations)|false|none|(tsType: GroupWithRelations, schemaOptions: { includeRelations: true })|
+|foreignKey|any|false|none|none|
+|userTenant|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
 
 <h2 id="tocS_UserInvitationWithRelations">UserInvitationWithRelations</h2>
 <!-- backwards compatibility -->
@@ -16530,8 +17141,12 @@ UserGroupWithRelations
             "foreignKey": null
           }
         ],
-        "userTenants": [{}],
-        "users": [{}],
+        "userTenants": [
+          {}
+        ],
+        "users": [
+          {}
+        ],
         "roles": [
           {
             "deleted": true,
@@ -16545,10 +17160,16 @@ UserGroupWithRelations
             "name": "string",
             "roleType": 15,
             "description": "string",
-            "permissions": ["string"],
-            "allowedClients": ["string"],
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
             "tenantId": "string",
-            "userTenants": [{}],
+            "userTenants": [
+              {}
+            ],
             "createdByUser": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -16665,7 +17286,9 @@ UserGroupWithRelations
         "user": {},
         "foreignKey": null
       },
-      "userTenants": [{}]
+      "userTenants": [
+        {}
+      ]
     },
     "foreignKey": null,
     "tenant": {
@@ -16703,7 +17326,9 @@ UserGroupWithRelations
           "foreignKey": null
         }
       ],
-      "userTenants": [{}],
+      "userTenants": [
+        {}
+      ],
       "users": [
         {
           "deleted": true,
@@ -16747,7 +17372,9 @@ UserGroupWithRelations
             "user": {},
             "foreignKey": null
           },
-          "userTenants": [{}]
+          "userTenants": [
+            {}
+          ]
         }
       ],
       "roles": [
@@ -16763,10 +17390,16 @@ UserGroupWithRelations
           "name": "string",
           "roleType": 15,
           "description": "string",
-          "permissions": ["string"],
-          "allowedClients": ["string"],
+          "permissions": [
+            "string"
+          ],
+          "allowedClients": [
+            "string"
+          ],
           "tenantId": "string",
-          "userTenants": [{}],
+          "userTenants": [
+            {}
+          ],
           "createdByUser": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -16876,10 +17509,16 @@ UserGroupWithRelations
       "name": "string",
       "roleType": 15,
       "description": "string",
-      "permissions": ["string"],
-      "allowedClients": ["string"],
+      "permissions": [
+        "string"
+      ],
+      "allowedClients": [
+        "string"
+      ],
       "tenantId": "string",
-      "userTenants": [{}],
+      "userTenants": [
+        {}
+      ],
       "createdByUser": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -16984,7 +17623,9 @@ UserGroupWithRelations
           "description": "string",
           "photoUrl": "string",
           "tenantId": "string",
-          "userGroups": [{}]
+          "userGroups": [
+            {}
+          ]
         },
         "foreignKey": null,
         "userTenant": {}
@@ -17010,27 +17651,28 @@ UserGroupWithRelations
   },
   "foreignKey": null
 }
+
 ```
 
 UserInvitationWithRelations
 
 ### Properties
 
-| Name         | Type                                                      | Required | Restrictions | Description                                                                  |
-| ------------ | --------------------------------------------------------- | -------- | ------------ | ---------------------------------------------------------------------------- |
-| deleted      | boolean                                                   | false    | none         | none                                                                         |
-| deletedOn    | string(date-time)¦null                                    | false    | none         | none                                                                         |
-| deletedBy    | string¦null                                               | false    | none         | none                                                                         |
-| createdOn    | string(date-time)                                         | false    | none         | none                                                                         |
-| modifiedOn   | string(date-time)                                         | false    | none         | none                                                                         |
-| createdBy    | string                                                    | false    | none         | none                                                                         |
-| modifiedBy   | string                                                    | false    | none         | none                                                                         |
-| id           | string                                                    | false    | none         | none                                                                         |
-| expiresOn    | string(date-time)                                         | false    | none         | none                                                                         |
-| token        | string                                                    | false    | none         | none                                                                         |
-| userTenantId | string                                                    | true     | none         | none                                                                         |
-| userTenant   | [UserTenantWithRelations](#schemausertenantwithrelations) | false    | none         | (tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true }) |
-| foreignKey   | any                                                       | false    | none         | none                                                                         |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|expiresOn|string(date-time)|false|none|none|
+|token|string|false|none|none|
+|userTenantId|string|true|none|none|
+|userTenant|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
+|foreignKey|any|false|none|none|
 
 <h2 id="tocS_UserTenantWithRelations">UserTenantWithRelations</h2>
 <!-- backwards compatibility -->
@@ -17141,10 +17783,16 @@ UserInvitationWithRelations
             "name": "string",
             "roleType": 15,
             "description": "string",
-            "permissions": ["string"],
-            "allowedClients": ["string"],
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
             "tenantId": "string",
-            "userTenants": [{}],
+            "userTenants": [
+              {}
+            ],
             "createdByUser": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -17249,7 +17897,9 @@ UserInvitationWithRelations
                 "description": "string",
                 "photoUrl": "string",
                 "tenantId": "string",
-                "userGroups": [{}]
+                "userGroups": [
+                  {}
+                ]
               },
               "foreignKey": null,
               "userTenant": {}
@@ -17274,7 +17924,9 @@ UserInvitationWithRelations
           ]
         }
       ],
-      "users": [{}],
+      "users": [
+        {}
+      ],
       "roles": [
         {
           "deleted": true,
@@ -17288,8 +17940,12 @@ UserInvitationWithRelations
           "name": "string",
           "roleType": 15,
           "description": "string",
-          "permissions": ["string"],
-          "allowedClients": ["string"],
+          "permissions": [
+            "string"
+          ],
+          "allowedClients": [
+            "string"
+          ],
           "tenantId": "string",
           "userTenants": [
             {
@@ -17497,10 +18153,16 @@ UserInvitationWithRelations
                   "name": "string",
                   "roleType": 15,
                   "description": "string",
-                  "permissions": ["string"],
-                  "allowedClients": ["string"],
+                  "permissions": [
+                    "string"
+                  ],
+                  "allowedClients": [
+                    "string"
+                  ],
                   "tenantId": "string",
-                  "userTenants": [{}],
+                  "userTenants": [
+                    {}
+                  ],
                   "createdByUser": {
                     "deleted": true,
                     "deletedOn": "2019-08-24T14:15:22Z",
@@ -17580,7 +18242,9 @@ UserInvitationWithRelations
                     "foreignKey": null
                   }
                 ],
-                "userGroups": [{}],
+                "userGroups": [
+                  {}
+                ],
                 "userInvitations": [
                   {
                     "deleted": true,
@@ -17675,8 +18339,12 @@ UserInvitationWithRelations
               "foreignKey": null
             }
           ],
-          "userTenants": [{}],
-          "users": [{}],
+          "userTenants": [
+            {}
+          ],
+          "users": [
+            {}
+          ],
           "roles": [
             {
               "deleted": true,
@@ -17690,10 +18358,16 @@ UserInvitationWithRelations
               "name": "string",
               "roleType": 15,
               "description": "string",
-              "permissions": ["string"],
-              "allowedClients": ["string"],
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
               "tenantId": "string",
-              "userTenants": [{}],
+              "userTenants": [
+                {}
+              ],
               "createdByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -17803,10 +18477,16 @@ UserInvitationWithRelations
           "name": "string",
           "roleType": 15,
           "description": "string",
-          "permissions": ["string"],
-          "allowedClients": ["string"],
+          "permissions": [
+            "string"
+          ],
+          "allowedClients": [
+            "string"
+          ],
           "tenantId": "string",
-          "userTenants": [{}],
+          "userTenants": [
+            {}
+          ],
           "createdByUser": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -17911,7 +18591,9 @@ UserInvitationWithRelations
               "description": "string",
               "photoUrl": "string",
               "tenantId": "string",
-              "userGroups": [{}]
+              "userGroups": [
+                {}
+              ]
             },
             "foreignKey": null,
             "userTenant": {}
@@ -18030,7 +18712,9 @@ UserInvitationWithRelations
             "user": {},
             "foreignKey": null
           },
-          "userTenants": [{}]
+          "userTenants": [
+            {}
+          ]
         },
         "foreignKey": null,
         "tenant": {},
@@ -18046,10 +18730,16 @@ UserInvitationWithRelations
           "name": "string",
           "roleType": 15,
           "description": "string",
-          "permissions": ["string"],
-          "allowedClients": ["string"],
+          "permissions": [
+            "string"
+          ],
+          "allowedClients": [
+            "string"
+          ],
           "tenantId": "string",
-          "userTenants": [{}],
+          "userTenants": [
+            {}
+          ],
           "createdByUser": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -18154,7 +18844,9 @@ UserInvitationWithRelations
               "description": "string",
               "photoUrl": "string",
               "tenantId": "string",
-              "userGroups": [{}]
+              "userGroups": [
+                {}
+              ]
             },
             "foreignKey": null,
             "userTenant": {}
@@ -18252,10 +18944,16 @@ UserInvitationWithRelations
               "name": "string",
               "roleType": 15,
               "description": "string",
-              "permissions": ["string"],
-              "allowedClients": ["string"],
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
               "tenantId": "string",
-              "userTenants": [{}],
+              "userTenants": [
+                {}
+              ],
               "createdByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -18360,7 +19058,9 @@ UserInvitationWithRelations
                   "description": "string",
                   "photoUrl": "string",
                   "tenantId": "string",
-                  "userGroups": [{}]
+                  "userGroups": [
+                    {}
+                  ]
                 },
                 "foreignKey": null,
                 "userTenant": {}
@@ -18400,8 +19100,12 @@ UserInvitationWithRelations
         "name": "string",
         "roleType": 15,
         "description": "string",
-        "permissions": ["string"],
-        "allowedClients": ["string"],
+        "permissions": [
+          "string"
+        ],
+        "allowedClients": [
+          "string"
+        ],
         "tenantId": "string",
         "userTenants": [
           {
@@ -18460,7 +19164,9 @@ UserInvitationWithRelations
                 "user": {},
                 "foreignKey": null
               },
-              "userTenants": [{}]
+              "userTenants": [
+                {}
+              ]
             },
             "foreignKey": null,
             "tenant": {},
@@ -18507,7 +19213,9 @@ UserInvitationWithRelations
                   "description": "string",
                   "photoUrl": "string",
                   "tenantId": "string",
-                  "userGroups": [{}]
+                  "userGroups": [
+                    {}
+                  ]
                 },
                 "foreignKey": null,
                 "userTenant": {}
@@ -18679,7 +19387,9 @@ UserInvitationWithRelations
                   "user": {},
                   "foreignKey": null
                 },
-                "userTenants": [{}]
+                "userTenants": [
+                  {}
+                ]
               },
               "foreignKey": null,
               "tenant": {},
@@ -18695,10 +19405,16 @@ UserInvitationWithRelations
                 "name": "string",
                 "roleType": 15,
                 "description": "string",
-                "permissions": ["string"],
-                "allowedClients": ["string"],
+                "permissions": [
+                  "string"
+                ],
+                "allowedClients": [
+                  "string"
+                ],
                 "tenantId": "string",
-                "userTenants": [{}],
+                "userTenants": [
+                  {}
+                ],
                 "createdByUser": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -18778,7 +19494,9 @@ UserInvitationWithRelations
                   "foreignKey": null
                 }
               ],
-              "userGroups": [{}],
+              "userGroups": [
+                {}
+              ],
               "userInvitations": [
                 {
                   "deleted": true,
@@ -18814,8 +19532,12 @@ UserInvitationWithRelations
     "name": "string",
     "roleType": 15,
     "description": "string",
-    "permissions": ["string"],
-    "allowedClients": ["string"],
+    "permissions": [
+      "string"
+    ],
+    "allowedClients": [
+      "string"
+    ],
     "tenantId": "string",
     "userTenants": [
       {
@@ -18889,9 +19611,15 @@ UserInvitationWithRelations
                 "foreignKey": null
               }
             ],
-            "userTenants": [{}],
-            "users": [{}],
-            "roles": [{}],
+            "userTenants": [
+              {}
+            ],
+            "users": [
+              {}
+            ],
+            "roles": [
+              {}
+            ],
             "groups": [
               {
                 "deleted": true,
@@ -18945,7 +19673,9 @@ UserInvitationWithRelations
             "user": {},
             "foreignKey": null
           },
-          "userTenants": [{}]
+          "userTenants": [
+            {}
+          ]
         },
         "foreignKey": null,
         "tenant": {
@@ -18983,7 +19713,9 @@ UserInvitationWithRelations
               "foreignKey": null
             }
           ],
-          "userTenants": [{}],
+          "userTenants": [
+            {}
+          ],
           "users": [
             {
               "deleted": true,
@@ -19027,10 +19759,14 @@ UserInvitationWithRelations
                 "user": {},
                 "foreignKey": null
               },
-              "userTenants": [{}]
+              "userTenants": [
+                {}
+              ]
             }
           ],
-          "roles": [{}],
+          "roles": [
+            {}
+          ],
           "groups": [
             {
               "deleted": true,
@@ -19108,7 +19844,9 @@ UserInvitationWithRelations
               "description": "string",
               "photoUrl": "string",
               "tenantId": "string",
-              "userGroups": [{}]
+              "userGroups": [
+                {}
+              ]
             },
             "foreignKey": null,
             "userTenant": {}
@@ -19279,8 +20017,12 @@ UserInvitationWithRelations
                 "foreignKey": null
               }
             ],
-            "userTenants": [{}],
-            "users": [{}],
+            "userTenants": [
+              {}
+            ],
+            "users": [
+              {}
+            ],
             "roles": [
               {
                 "deleted": true,
@@ -19294,10 +20036,16 @@ UserInvitationWithRelations
                 "name": "string",
                 "roleType": 15,
                 "description": "string",
-                "permissions": ["string"],
-                "allowedClients": ["string"],
+                "permissions": [
+                  "string"
+                ],
+                "allowedClients": [
+                  "string"
+                ],
                 "tenantId": "string",
-                "userTenants": [{}],
+                "userTenants": [
+                  {}
+                ],
                 "createdByUser": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -19414,7 +20162,9 @@ UserInvitationWithRelations
             "user": {},
             "foreignKey": null
           },
-          "userTenants": [{}]
+          "userTenants": [
+            {}
+          ]
         },
         "foreignKey": null,
         "tenant": {
@@ -19452,7 +20202,9 @@ UserInvitationWithRelations
               "foreignKey": null
             }
           ],
-          "userTenants": [{}],
+          "userTenants": [
+            {}
+          ],
           "users": [
             {
               "deleted": true,
@@ -19496,7 +20248,9 @@ UserInvitationWithRelations
                 "user": {},
                 "foreignKey": null
               },
-              "userTenants": [{}]
+              "userTenants": [
+                {}
+              ]
             }
           ],
           "roles": [
@@ -19512,10 +20266,16 @@ UserInvitationWithRelations
               "name": "string",
               "roleType": 15,
               "description": "string",
-              "permissions": ["string"],
-              "allowedClients": ["string"],
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
               "tenantId": "string",
-              "userTenants": [{}],
+              "userTenants": [
+                {}
+              ],
               "createdByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -19625,10 +20385,16 @@ UserInvitationWithRelations
           "name": "string",
           "roleType": 15,
           "description": "string",
-          "permissions": ["string"],
-          "allowedClients": ["string"],
+          "permissions": [
+            "string"
+          ],
+          "allowedClients": [
+            "string"
+          ],
           "tenantId": "string",
-          "userTenants": [{}],
+          "userTenants": [
+            {}
+          ],
           "createdByUser": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -19717,7 +20483,9 @@ UserInvitationWithRelations
               "description": "string",
               "photoUrl": "string",
               "tenantId": "string",
-              "userGroups": [{}]
+              "userGroups": [
+                {}
+              ]
             },
             "foreignKey": null,
             "userTenant": {}
@@ -19769,7 +20537,9 @@ UserInvitationWithRelations
         "description": "string",
         "photoUrl": "string",
         "tenantId": "string",
-        "userGroups": [{}]
+        "userGroups": [
+          {}
+        ]
       },
       "foreignKey": null,
       "userTenant": {
@@ -19843,8 +20613,12 @@ UserInvitationWithRelations
                 "foreignKey": null
               }
             ],
-            "userTenants": [{}],
-            "users": [{}],
+            "userTenants": [
+              {}
+            ],
+            "users": [
+              {}
+            ],
             "roles": [
               {
                 "deleted": true,
@@ -19858,10 +20632,16 @@ UserInvitationWithRelations
                 "name": "string",
                 "roleType": 15,
                 "description": "string",
-                "permissions": ["string"],
-                "allowedClients": ["string"],
+                "permissions": [
+                  "string"
+                ],
+                "allowedClients": [
+                  "string"
+                ],
                 "tenantId": "string",
-                "userTenants": [{}],
+                "userTenants": [
+                  {}
+                ],
                 "createdByUser": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -19939,7 +20719,9 @@ UserInvitationWithRelations
                 "description": "string",
                 "photoUrl": "string",
                 "tenantId": "string",
-                "userGroups": [{}]
+                "userGroups": [
+                  {}
+                ]
               }
             ]
           },
@@ -19962,7 +20744,9 @@ UserInvitationWithRelations
             "user": {},
             "foreignKey": null
           },
-          "userTenants": [{}]
+          "userTenants": [
+            {}
+          ]
         },
         "foreignKey": null,
         "tenant": {
@@ -20000,7 +20784,9 @@ UserInvitationWithRelations
               "foreignKey": null
             }
           ],
-          "userTenants": [{}],
+          "userTenants": [
+            {}
+          ],
           "users": [
             {
               "deleted": true,
@@ -20044,7 +20830,9 @@ UserInvitationWithRelations
                 "user": {},
                 "foreignKey": null
               },
-              "userTenants": [{}]
+              "userTenants": [
+                {}
+              ]
             }
           ],
           "roles": [
@@ -20060,10 +20848,16 @@ UserInvitationWithRelations
               "name": "string",
               "roleType": 15,
               "description": "string",
-              "permissions": ["string"],
-              "allowedClients": ["string"],
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
               "tenantId": "string",
-              "userTenants": [{}],
+              "userTenants": [
+                {}
+              ],
               "createdByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -20141,7 +20935,9 @@ UserInvitationWithRelations
               "description": "string",
               "photoUrl": "string",
               "tenantId": "string",
-              "userGroups": [{}]
+              "userGroups": [
+                {}
+              ]
             }
           ]
         },
@@ -20157,10 +20953,16 @@ UserInvitationWithRelations
           "name": "string",
           "roleType": 15,
           "description": "string",
-          "permissions": ["string"],
-          "allowedClients": ["string"],
+          "permissions": [
+            "string"
+          ],
+          "allowedClients": [
+            "string"
+          ],
           "tenantId": "string",
-          "userTenants": [{}],
+          "userTenants": [
+            {}
+          ],
           "createdByUser": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -20345,8 +21147,12 @@ UserInvitationWithRelations
                 "foreignKey": null
               }
             ],
-            "userTenants": [{}],
-            "users": [{}],
+            "userTenants": [
+              {}
+            ],
+            "users": [
+              {}
+            ],
             "roles": [
               {
                 "deleted": true,
@@ -20360,10 +21166,16 @@ UserInvitationWithRelations
                 "name": "string",
                 "roleType": 15,
                 "description": "string",
-                "permissions": ["string"],
-                "allowedClients": ["string"],
+                "permissions": [
+                  "string"
+                ],
+                "allowedClients": [
+                  "string"
+                ],
                 "tenantId": "string",
-                "userTenants": [{}],
+                "userTenants": [
+                  {}
+                ],
                 "createdByUser": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -20480,7 +21292,9 @@ UserInvitationWithRelations
             "user": {},
             "foreignKey": null
           },
-          "userTenants": [{}]
+          "userTenants": [
+            {}
+          ]
         },
         "foreignKey": null,
         "tenant": {
@@ -20518,7 +21332,9 @@ UserInvitationWithRelations
               "foreignKey": null
             }
           ],
-          "userTenants": [{}],
+          "userTenants": [
+            {}
+          ],
           "users": [
             {
               "deleted": true,
@@ -20562,7 +21378,9 @@ UserInvitationWithRelations
                 "user": {},
                 "foreignKey": null
               },
-              "userTenants": [{}]
+              "userTenants": [
+                {}
+              ]
             }
           ],
           "roles": [
@@ -20578,10 +21396,16 @@ UserInvitationWithRelations
               "name": "string",
               "roleType": 15,
               "description": "string",
-              "permissions": ["string"],
-              "allowedClients": ["string"],
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
               "tenantId": "string",
-              "userTenants": [{}],
+              "userTenants": [
+                {}
+              ],
               "createdByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -20691,10 +21515,16 @@ UserInvitationWithRelations
           "name": "string",
           "roleType": 15,
           "description": "string",
-          "permissions": ["string"],
-          "allowedClients": ["string"],
+          "permissions": [
+            "string"
+          ],
+          "allowedClients": [
+            "string"
+          ],
           "tenantId": "string",
-          "userTenants": [{}],
+          "userTenants": [
+            {}
+          ],
           "createdByUser": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -20799,7 +21629,9 @@ UserInvitationWithRelations
               "description": "string",
               "photoUrl": "string",
               "tenantId": "string",
-              "userGroups": [{}]
+              "userGroups": [
+                {}
+              ]
             },
             "foreignKey": null,
             "userTenant": {}
@@ -20811,34 +21643,35 @@ UserInvitationWithRelations
     }
   ]
 }
+
 ```
 
 UserTenantWithRelations
 
 ### Properties
 
-| Name                 | Type                                                                          | Required | Restrictions | Description                                                                                              |
-| -------------------- | ----------------------------------------------------------------------------- | -------- | ------------ | -------------------------------------------------------------------------------------------------------- |
-| deleted              | boolean                                                                       | false    | none         | none                                                                                                     |
-| deletedOn            | string(date-time)¦null                                                        | false    | none         | none                                                                                                     |
-| deletedBy            | string¦null                                                                   | false    | none         | none                                                                                                     |
-| createdOn            | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| modifiedOn           | string(date-time)                                                             | false    | none         | none                                                                                                     |
-| createdBy            | string                                                                        | false    | none         | none                                                                                                     |
-| modifiedBy           | string                                                                        | false    | none         | none                                                                                                     |
-| id                   | string                                                                        | false    | none         | none                                                                                                     |
-| locale               | string                                                                        | false    | none         | none                                                                                                     |
-| status               | number                                                                        | false    | none         | none                                                                                                     |
-| userId               | string                                                                        | true     | none         | none                                                                                                     |
-| tenantId             | string                                                                        | true     | none         | none                                                                                                     |
-| roleId               | string                                                                        | true     | none         | none                                                                                                     |
-| user                 | [UserWithRelations](#schemauserwithrelations)                                 | false    | none         | This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true }) |
-| foreignKey           | any                                                                           | false    | none         | none                                                                                                     |
-| tenant               | [TenantWithRelations](#schematenantwithrelations)                             | false    | none         | signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })       |
-| role                 | [RoleWithRelations](#schemarolewithrelations)                                 | false    | none         | (tsType: RoleWithRelations, schemaOptions: { includeRelations: true })                                   |
-| userLevelPermissions | [[UserLevelPermissionWithRelations](#schemauserlevelpermissionwithrelations)] | false    | none         | [(tsType: UserLevelPermissionWithRelations, schemaOptions: { includeRelations: true })]                  |
-| userGroups           | [[UserGroupWithRelations](#schemausergroupwithrelations)]                     | false    | none         | [(tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })]                            |
-| userInvitations      | [[UserInvitationWithRelations](#schemauserinvitationwithrelations)]           | false    | none         | [(tsType: UserInvitationWithRelations, schemaOptions: { includeRelations: true })]                       |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|locale|string|false|none|none|
+|status|number|false|none|none|
+|userId|string|true|none|none|
+|tenantId|string|true|none|none|
+|roleId|string|true|none|none|
+|user|[UserWithRelations](#schemauserwithrelations)|false|none|This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true })|
+|foreignKey|any|false|none|none|
+|tenant|[TenantWithRelations](#schematenantwithrelations)|false|none|signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })|
+|role|[RoleWithRelations](#schemarolewithrelations)|false|none|(tsType: RoleWithRelations, schemaOptions: { includeRelations: true })|
+|userLevelPermissions|[[UserLevelPermissionWithRelations](#schemauserlevelpermissionwithrelations)]|false|none|[(tsType: UserLevelPermissionWithRelations, schemaOptions: { includeRelations: true })]|
+|userGroups|[[UserGroupWithRelations](#schemausergroupwithrelations)]|false|none|[(tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })]|
+|userInvitations|[[UserInvitationWithRelations](#schemauserinvitationwithrelations)]|false|none|[(tsType: UserInvitationWithRelations, schemaOptions: { includeRelations: true })]|
 
 <h2 id="tocS_TenantWithRelations">TenantWithRelations</h2>
 <!-- backwards compatibility -->
@@ -20955,7 +21788,9 @@ UserTenantWithRelations
                 "user": {},
                 "foreignKey": null
               },
-              "userTenants": [{}]
+              "userTenants": [
+                {}
+              ]
             },
             "foreignKey": null,
             "tenant": {},
@@ -20971,10 +21806,16 @@ UserTenantWithRelations
               "name": "string",
               "roleType": 15,
               "description": "string",
-              "permissions": ["string"],
-              "allowedClients": ["string"],
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
               "tenantId": "string",
-              "userTenants": [{}],
+              "userTenants": [
+                {}
+              ],
               "createdByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -21079,7 +21920,9 @@ UserTenantWithRelations
                   "description": "string",
                   "photoUrl": "string",
                   "tenantId": "string",
-                  "userGroups": [{}]
+                  "userGroups": [
+                    {}
+                  ]
                 },
                 "foreignKey": null,
                 "userTenant": {}
@@ -21177,10 +22020,16 @@ UserTenantWithRelations
                   "name": "string",
                   "roleType": 15,
                   "description": "string",
-                  "permissions": ["string"],
-                  "allowedClients": ["string"],
+                  "permissions": [
+                    "string"
+                  ],
+                  "allowedClients": [
+                    "string"
+                  ],
                   "tenantId": "string",
-                  "userTenants": [{}],
+                  "userTenants": [
+                    {}
+                  ],
                   "createdByUser": {
                     "deleted": true,
                     "deletedOn": "2019-08-24T14:15:22Z",
@@ -21311,8 +22160,12 @@ UserTenantWithRelations
             "name": "string",
             "roleType": 15,
             "description": "string",
-            "permissions": ["string"],
-            "allowedClients": ["string"],
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
             "tenantId": "string",
             "userTenants": [
               {
@@ -21371,7 +22224,9 @@ UserTenantWithRelations
                     "user": {},
                     "foreignKey": null
                   },
-                  "userTenants": [{}]
+                  "userTenants": [
+                    {}
+                  ]
                 },
                 "foreignKey": null,
                 "tenant": {},
@@ -21583,9 +22438,15 @@ UserTenantWithRelations
                     "foreignKey": null,
                     "modifiedByUser": {}
                   },
-                  "userLevelPermissions": [{}],
-                  "userGroups": [{}],
-                  "userInvitations": [{}]
+                  "userLevelPermissions": [
+                    {}
+                  ],
+                  "userGroups": [
+                    {}
+                  ],
+                  "userInvitations": [
+                    {}
+                  ]
                 }
               }
             ]
@@ -21668,7 +22529,9 @@ UserTenantWithRelations
             }
           ],
           "userTenants": [],
-          "users": [{}],
+          "users": [
+            {}
+          ],
           "roles": [
             {
               "deleted": true,
@@ -21682,10 +22545,16 @@ UserTenantWithRelations
               "name": "string",
               "roleType": 15,
               "description": "string",
-              "permissions": ["string"],
-              "allowedClients": ["string"],
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
               "tenantId": "string",
-              "userTenants": [{}],
+              "userTenants": [
+                {}
+              ],
               "createdByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -21802,7 +22671,9 @@ UserTenantWithRelations
           "user": {},
           "foreignKey": null
         },
-        "userTenants": [{}]
+        "userTenants": [
+          {}
+        ]
       },
       "foreignKey": null,
       "tenant": {
@@ -21884,7 +22755,9 @@ UserTenantWithRelations
               "user": {},
               "foreignKey": null
             },
-            "userTenants": [{}]
+            "userTenants": [
+              {}
+            ]
           }
         ],
         "roles": [
@@ -21900,10 +22773,16 @@ UserTenantWithRelations
             "name": "string",
             "roleType": 15,
             "description": "string",
-            "permissions": ["string"],
-            "allowedClients": ["string"],
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
             "tenantId": "string",
-            "userTenants": [{}],
+            "userTenants": [
+              {}
+            ],
             "createdByUser": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -22013,10 +22892,16 @@ UserTenantWithRelations
         "name": "string",
         "roleType": 15,
         "description": "string",
-        "permissions": ["string"],
-        "allowedClients": ["string"],
+        "permissions": [
+          "string"
+        ],
+        "allowedClients": [
+          "string"
+        ],
         "tenantId": "string",
-        "userTenants": [{}],
+        "userTenants": [
+          {}
+        ],
         "createdByUser": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -22121,7 +23006,9 @@ UserTenantWithRelations
             "description": "string",
             "photoUrl": "string",
             "tenantId": "string",
-            "userGroups": [{}]
+            "userGroups": [
+              {}
+            ]
           },
           "foreignKey": null,
           "userTenant": {}
@@ -22234,10 +23121,16 @@ UserTenantWithRelations
               "name": "string",
               "roleType": 15,
               "description": "string",
-              "permissions": ["string"],
-              "allowedClients": ["string"],
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
               "tenantId": "string",
-              "userTenants": [{}],
+              "userTenants": [
+                {}
+              ],
               "createdByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -22342,7 +23235,9 @@ UserTenantWithRelations
                   "description": "string",
                   "photoUrl": "string",
                   "tenantId": "string",
-                  "userGroups": [{}]
+                  "userGroups": [
+                    {}
+                  ]
                 },
                 "foreignKey": null,
                 "userTenant": {}
@@ -22381,8 +23276,12 @@ UserTenantWithRelations
             "name": "string",
             "roleType": 15,
             "description": "string",
-            "permissions": ["string"],
-            "allowedClients": ["string"],
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
             "tenantId": "string",
             "userTenants": [
               {
@@ -22584,9 +23483,15 @@ UserTenantWithRelations
                     "foreignKey": null,
                     "modifiedByUser": {}
                   },
-                  "userLevelPermissions": [{}],
-                  "userGroups": [{}],
-                  "userInvitations": [{}]
+                  "userLevelPermissions": [
+                    {}
+                  ],
+                  "userGroups": [
+                    {}
+                  ],
+                  "userInvitations": [
+                    {}
+                  ]
                 }
               }
             ]
@@ -22664,7 +23569,9 @@ UserTenantWithRelations
                 "foreignKey": null
               }
             ],
-            "userTenants": [{}],
+            "userTenants": [
+              {}
+            ],
             "users": [],
             "roles": [
               {
@@ -22679,10 +23586,16 @@ UserTenantWithRelations
                 "name": "string",
                 "roleType": 15,
                 "description": "string",
-                "permissions": ["string"],
-                "allowedClients": ["string"],
+                "permissions": [
+                  "string"
+                ],
+                "allowedClients": [
+                  "string"
+                ],
                 "tenantId": "string",
-                "userTenants": [{}],
+                "userTenants": [
+                  {}
+                ],
                 "createdByUser": {
                   "deleted": true,
                   "deletedOn": "2019-08-24T14:15:22Z",
@@ -22792,10 +23705,16 @@ UserTenantWithRelations
             "name": "string",
             "roleType": 15,
             "description": "string",
-            "permissions": ["string"],
-            "allowedClients": ["string"],
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
             "tenantId": "string",
-            "userTenants": [{}],
+            "userTenants": [
+              {}
+            ],
             "createdByUser": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -22900,7 +23819,9 @@ UserTenantWithRelations
                 "description": "string",
                 "photoUrl": "string",
                 "tenantId": "string",
-                "userGroups": [{}]
+                "userGroups": [
+                  {}
+                ]
               },
               "foreignKey": null,
               "userTenant": {}
@@ -22940,8 +23861,12 @@ UserTenantWithRelations
       "name": "string",
       "roleType": 15,
       "description": "string",
-      "permissions": ["string"],
-      "allowedClients": ["string"],
+      "permissions": [
+        "string"
+      ],
+      "allowedClients": [
+        "string"
+      ],
       "tenantId": "string",
       "userTenants": [
         {
@@ -23015,8 +23940,12 @@ UserTenantWithRelations
                   "foreignKey": null
                 }
               ],
-              "userTenants": [{}],
-              "users": [{}],
+              "userTenants": [
+                {}
+              ],
+              "users": [
+                {}
+              ],
               "roles": [],
               "groups": [
                 {
@@ -23032,7 +23961,9 @@ UserTenantWithRelations
                   "description": "string",
                   "photoUrl": "string",
                   "tenantId": "string",
-                  "userGroups": [{}]
+                  "userGroups": [
+                    {}
+                  ]
                 }
               ]
             },
@@ -23055,7 +23986,9 @@ UserTenantWithRelations
               "user": {},
               "foreignKey": null
             },
-            "userTenants": [{}]
+            "userTenants": [
+              {}
+            ]
           },
           "foreignKey": null,
           "tenant": {
@@ -23093,7 +24026,9 @@ UserTenantWithRelations
                 "foreignKey": null
               }
             ],
-            "userTenants": [{}],
+            "userTenants": [
+              {}
+            ],
             "users": [
               {
                 "deleted": true,
@@ -23137,7 +24072,9 @@ UserTenantWithRelations
                   "user": {},
                   "foreignKey": null
                 },
-                "userTenants": [{}]
+                "userTenants": [
+                  {}
+                ]
               }
             ],
             "roles": [],
@@ -23218,7 +24155,9 @@ UserTenantWithRelations
                 "description": "string",
                 "photoUrl": "string",
                 "tenantId": "string",
-                "userGroups": [{}]
+                "userGroups": [
+                  {}
+                ]
               },
               "foreignKey": null,
               "userTenant": {}
@@ -23405,8 +24344,12 @@ UserTenantWithRelations
                     "foreignKey": null
                   }
                 ],
-                "userTenants": [{}],
-                "users": [{}],
+                "userTenants": [
+                  {}
+                ],
+                "users": [
+                  {}
+                ],
                 "roles": [
                   {
                     "deleted": true,
@@ -23450,7 +24393,9 @@ UserTenantWithRelations
                 "user": {},
                 "foreignKey": null
               },
-              "userTenants": [{}]
+              "userTenants": [
+                {}
+              ]
             },
             "foreignKey": null,
             "tenant": {
@@ -23488,7 +24433,9 @@ UserTenantWithRelations
                   "foreignKey": null
                 }
               ],
-              "userTenants": [{}],
+              "userTenants": [
+                {}
+              ],
               "users": [
                 {
                   "deleted": true,
@@ -23532,7 +24479,9 @@ UserTenantWithRelations
                     "user": {},
                     "foreignKey": null
                   },
-                  "userTenants": [{}]
+                  "userTenants": [
+                    {}
+                  ]
                 }
               ],
               "roles": [
@@ -23548,10 +24497,16 @@ UserTenantWithRelations
                   "name": "string",
                   "roleType": 15,
                   "description": "string",
-                  "permissions": ["string"],
-                  "allowedClients": ["string"],
+                  "permissions": [
+                    "string"
+                  ],
+                  "allowedClients": [
+                    "string"
+                  ],
                   "tenantId": "string",
-                  "userTenants": [{}],
+                  "userTenants": [
+                    {}
+                  ],
                   "createdByUser": {
                     "deleted": true,
                     "deletedOn": "2019-08-24T14:15:22Z",
@@ -23629,10 +24584,16 @@ UserTenantWithRelations
               "name": "string",
               "roleType": 15,
               "description": "string",
-              "permissions": ["string"],
-              "allowedClients": ["string"],
+              "permissions": [
+                "string"
+              ],
+              "allowedClients": [
+                "string"
+              ],
               "tenantId": "string",
-              "userTenants": [{}],
+              "userTenants": [
+                {}
+              ],
               "createdByUser": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
@@ -23712,7 +24673,9 @@ UserTenantWithRelations
                 "foreignKey": null
               }
             ],
-            "userGroups": [{}],
+            "userGroups": [
+              {}
+            ],
             "userInvitations": [
               {
                 "deleted": true,
@@ -23736,43 +24699,44 @@ UserTenantWithRelations
     }
   ]
 }
+
 ```
 
 TenantWithRelations
 
 ### Properties
 
-| Name          | Type                                                            | Required | Restrictions | Description                                                                                                |
-| ------------- | --------------------------------------------------------------- | -------- | ------------ | ---------------------------------------------------------------------------------------------------------- |
-| deleted       | boolean                                                         | false    | none         | none                                                                                                       |
-| deletedOn     | string(date-time)¦null                                          | false    | none         | none                                                                                                       |
-| deletedBy     | string¦null                                                     | false    | none         | none                                                                                                       |
-| createdOn     | string(date-time)                                               | false    | none         | none                                                                                                       |
-| modifiedOn    | string(date-time)                                               | false    | none         | none                                                                                                       |
-| createdBy     | string                                                          | false    | none         | none                                                                                                       |
-| modifiedBy    | string                                                          | false    | none         | none                                                                                                       |
-| id            | string                                                          | false    | none         | none                                                                                                       |
-| name          | string                                                          | true     | none         | none                                                                                                       |
-| status        | number¦null                                                     | true     | none         | Tenant status - Active or Inactive                                                                         |
-| key           | string                                                          | false    | none         | none                                                                                                       |
-| website       | string                                                          | false    | none         | none                                                                                                       |
-| address       | string                                                          | false    | none         | none                                                                                                       |
-| city          | string                                                          | false    | none         | none                                                                                                       |
-| state         | string                                                          | false    | none         | none                                                                                                       |
-| zip           | string                                                          | false    | none         | none                                                                                                       |
-| country       | string                                                          | false    | none         | none                                                                                                       |
-| tenantConfigs | [[TenantConfigWithRelations](#schematenantconfigwithrelations)] | false    | none         | [(tsType: TenantConfigWithRelations, schemaOptions: { includeRelations: true })]                           |
-| userTenants   | [[UserTenantWithRelations](#schemausertenantwithrelations)]     | false    | none         | [(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })]                             |
-| users         | [[UserWithRelations](#schemauserwithrelations)]                 | false    | none         | [This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true })] |
-| roles         | [[RoleWithRelations](#schemarolewithrelations)]                 | false    | none         | [(tsType: RoleWithRelations, schemaOptions: { includeRelations: true })]                                   |
-| groups        | [[GroupWithRelations](#schemagroupwithrelations)]               | false    | none         | [(tsType: GroupWithRelations, schemaOptions: { includeRelations: true })]                                  |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|name|string|true|none|none|
+|status|number¦null|true|none|Tenant status - Active or Inactive|
+|key|string|false|none|none|
+|website|string|false|none|none|
+|address|string|false|none|none|
+|city|string|false|none|none|
+|state|string|false|none|none|
+|zip|string|false|none|none|
+|country|string|false|none|none|
+|tenantConfigs|[[TenantConfigWithRelations](#schematenantconfigwithrelations)]|false|none|[(tsType: TenantConfigWithRelations, schemaOptions: { includeRelations: true })]|
+|userTenants|[[UserTenantWithRelations](#schemausertenantwithrelations)]|false|none|[(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })]|
+|users|[[UserWithRelations](#schemauserwithrelations)]|false|none|[This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true })]|
+|roles|[[RoleWithRelations](#schemarolewithrelations)]|false|none|[(tsType: RoleWithRelations, schemaOptions: { includeRelations: true })]|
+|groups|[[GroupWithRelations](#schemagroupwithrelations)]|false|none|[(tsType: GroupWithRelations, schemaOptions: { includeRelations: true })]|
 
 #### Enumerated Values
 
-| Property | Value |
-| -------- | ----- |
-| status   | 1     |
-| status   | 0     |
+|Property|Value|
+|---|---|
+|status|1|
+|status|0|
 
 <h2 id="tocS_TenantPartial">TenantPartial</h2>
 <!-- backwards compatibility -->
@@ -23801,38 +24765,39 @@ TenantWithRelations
   "zip": "string",
   "country": "string"
 }
+
 ```
 
 TenantPartial
 
 ### Properties
 
-| Name       | Type                   | Required | Restrictions | Description                        |
-| ---------- | ---------------------- | -------- | ------------ | ---------------------------------- |
-| deleted    | boolean                | false    | none         | none                               |
-| deletedOn  | string(date-time)¦null | false    | none         | none                               |
-| deletedBy  | string¦null            | false    | none         | none                               |
-| createdOn  | string(date-time)      | false    | none         | none                               |
-| modifiedOn | string(date-time)      | false    | none         | none                               |
-| createdBy  | string                 | false    | none         | none                               |
-| modifiedBy | string                 | false    | none         | none                               |
-| id         | string                 | false    | none         | none                               |
-| name       | string                 | false    | none         | none                               |
-| status     | number¦null            | false    | none         | Tenant status - Active or Inactive |
-| key        | string                 | false    | none         | none                               |
-| website    | string                 | false    | none         | none                               |
-| address    | string                 | false    | none         | none                               |
-| city       | string                 | false    | none         | none                               |
-| state      | string                 | false    | none         | none                               |
-| zip        | string                 | false    | none         | none                               |
-| country    | string                 | false    | none         | none                               |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|name|string|false|none|none|
+|status|number¦null|false|none|Tenant status - Active or Inactive|
+|key|string|false|none|none|
+|website|string|false|none|none|
+|address|string|false|none|none|
+|city|string|false|none|none|
+|state|string|false|none|none|
+|zip|string|false|none|none|
+|country|string|false|none|none|
 
 #### Enumerated Values
 
-| Property | Value |
-| -------- | ----- |
-| status   | 1     |
-| status   | 0     |
+|Property|Value|
+|---|---|
+|status|1|
+|status|0|
 
 <h2 id="tocS_UserGroup">UserGroup</h2>
 <!-- backwards compatibility -->
@@ -23854,24 +24819,25 @@ TenantPartial
   "groupId": "string",
   "userTenantId": "string"
 }
+
 ```
 
 UserGroup
 
 ### Properties
 
-| Name         | Type                   | Required | Restrictions | Description |
-| ------------ | ---------------------- | -------- | ------------ | ----------- |
-| deleted      | boolean                | false    | none         | none        |
-| deletedOn    | string(date-time)¦null | false    | none         | none        |
-| deletedBy    | string¦null            | false    | none         | none        |
-| createdOn    | string(date-time)      | false    | none         | none        |
-| modifiedOn   | string(date-time)      | false    | none         | none        |
-| createdBy    | string                 | false    | none         | none        |
-| modifiedBy   | string                 | false    | none         | none        |
-| id           | string                 | false    | none         | none        |
-| groupId      | string                 | true     | none         | none        |
-| userTenantId | string                 | true     | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|groupId|string|true|none|none|
+|userTenantId|string|true|none|none|
 
 <h2 id="tocS_NewUserGroupInGroup">NewUserGroupInGroup</h2>
 <!-- backwards compatibility -->
@@ -23891,22 +24857,23 @@ UserGroup
   "modifiedBy": "string",
   "userTenantId": "string"
 }
+
 ```
 
 NewUserGroupInGroup
 
 ### Properties
 
-| Name         | Type                   | Required | Restrictions | Description |
-| ------------ | ---------------------- | -------- | ------------ | ----------- |
-| deleted      | boolean                | false    | none         | none        |
-| deletedOn    | string(date-time)¦null | false    | none         | none        |
-| deletedBy    | string¦null            | false    | none         | none        |
-| createdOn    | string(date-time)      | false    | none         | none        |
-| modifiedOn   | string(date-time)      | false    | none         | none        |
-| createdBy    | string                 | false    | none         | none        |
-| modifiedBy   | string                 | false    | none         | none        |
-| userTenantId | string                 | true     | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|userTenantId|string|true|none|none|
 
 <h2 id="tocS_TenantConfig">TenantConfig</h2>
 <!-- backwards compatibility -->
@@ -23929,25 +24896,26 @@ NewUserGroupInGroup
   "configValue": {},
   "tenantId": "string"
 }
+
 ```
 
 TenantConfig
 
 ### Properties
 
-| Name        | Type                   | Required | Restrictions | Description |
-| ----------- | ---------------------- | -------- | ------------ | ----------- |
-| deleted     | boolean                | false    | none         | none        |
-| deletedOn   | string(date-time)¦null | false    | none         | none        |
-| deletedBy   | string¦null            | false    | none         | none        |
-| createdOn   | string(date-time)      | false    | none         | none        |
-| modifiedOn  | string(date-time)      | false    | none         | none        |
-| createdBy   | string                 | false    | none         | none        |
-| modifiedBy  | string                 | false    | none         | none        |
-| id          | string                 | false    | none         | none        |
-| configKey   | string                 | true     | none         | none        |
-| configValue | object                 | false    | none         | none        |
-| tenantId    | string                 | true     | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|configKey|string|true|none|none|
+|configValue|object|false|none|none|
+|tenantId|string|true|none|none|
 
 <h2 id="tocS_NewTenantConfigInTenant">NewTenantConfigInTenant</h2>
 <!-- backwards compatibility -->
@@ -23968,23 +24936,24 @@ TenantConfig
   "configKey": "string",
   "configValue": {}
 }
+
 ```
 
 NewTenantConfigInTenant
 
 ### Properties
 
-| Name        | Type                   | Required | Restrictions | Description |
-| ----------- | ---------------------- | -------- | ------------ | ----------- |
-| deleted     | boolean                | false    | none         | none        |
-| deletedOn   | string(date-time)¦null | false    | none         | none        |
-| deletedBy   | string¦null            | false    | none         | none        |
-| createdOn   | string(date-time)      | false    | none         | none        |
-| modifiedOn  | string(date-time)      | false    | none         | none        |
-| createdBy   | string                 | false    | none         | none        |
-| modifiedBy  | string                 | false    | none         | none        |
-| configKey   | string                 | true     | none         | none        |
-| configValue | object                 | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|configKey|string|true|none|none|
+|configValue|object|false|none|none|
 
 <h2 id="tocS_Group">Group</h2>
 <!-- backwards compatibility -->
@@ -24008,26 +24977,27 @@ NewTenantConfigInTenant
   "photoUrl": "string",
   "tenantId": "string"
 }
+
 ```
 
 Group
 
 ### Properties
 
-| Name        | Type                   | Required | Restrictions | Description |
-| ----------- | ---------------------- | -------- | ------------ | ----------- |
-| deleted     | boolean                | false    | none         | none        |
-| deletedOn   | string(date-time)¦null | false    | none         | none        |
-| deletedBy   | string¦null            | false    | none         | none        |
-| createdOn   | string(date-time)      | false    | none         | none        |
-| modifiedOn  | string(date-time)      | false    | none         | none        |
-| createdBy   | string                 | false    | none         | none        |
-| modifiedBy  | string                 | false    | none         | none        |
-| id          | string                 | false    | none         | none        |
-| name        | string                 | false    | none         | none        |
-| description | string                 | false    | none         | none        |
-| photoUrl    | string                 | false    | none         | none        |
-| tenantId    | string                 | true     | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|name|string|false|none|none|
+|description|string|false|none|none|
+|photoUrl|string|false|none|none|
+|tenantId|string|true|none|none|
 
 <h2 id="tocS_NewGroupInTenant">NewGroupInTenant</h2>
 <!-- backwards compatibility -->
@@ -24049,24 +25019,25 @@ Group
   "description": "string",
   "photoUrl": "string"
 }
+
 ```
 
 NewGroupInTenant
 
 ### Properties
 
-| Name        | Type                   | Required | Restrictions | Description |
-| ----------- | ---------------------- | -------- | ------------ | ----------- |
-| deleted     | boolean                | false    | none         | none        |
-| deletedOn   | string(date-time)¦null | false    | none         | none        |
-| deletedBy   | string¦null            | false    | none         | none        |
-| createdOn   | string(date-time)      | false    | none         | none        |
-| modifiedOn  | string(date-time)      | false    | none         | none        |
-| createdBy   | string                 | false    | none         | none        |
-| modifiedBy  | string                 | false    | none         | none        |
-| name        | string                 | false    | none         | none        |
-| description | string                 | false    | none         | none        |
-| photoUrl    | string                 | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|name|string|false|none|none|
+|description|string|false|none|none|
+|photoUrl|string|false|none|none|
 
 <h2 id="tocS_GroupPartial">GroupPartial</h2>
 <!-- backwards compatibility -->
@@ -24090,26 +25061,27 @@ NewGroupInTenant
   "photoUrl": "string",
   "tenantId": "string"
 }
+
 ```
 
 GroupPartial
 
 ### Properties
 
-| Name        | Type                   | Required | Restrictions | Description |
-| ----------- | ---------------------- | -------- | ------------ | ----------- |
-| deleted     | boolean                | false    | none         | none        |
-| deletedOn   | string(date-time)¦null | false    | none         | none        |
-| deletedBy   | string¦null            | false    | none         | none        |
-| createdOn   | string(date-time)      | false    | none         | none        |
-| modifiedOn  | string(date-time)      | false    | none         | none        |
-| createdBy   | string                 | false    | none         | none        |
-| modifiedBy  | string                 | false    | none         | none        |
-| id          | string                 | false    | none         | none        |
-| name        | string                 | false    | none         | none        |
-| description | string                 | false    | none         | none        |
-| photoUrl    | string                 | false    | none         | none        |
-| tenantId    | string                 | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|name|string|false|none|none|
+|description|string|false|none|none|
+|photoUrl|string|false|none|none|
+|tenantId|string|false|none|none|
 
 <h2 id="tocS_User">User</h2>
 <!-- backwards compatibility -->
@@ -24142,43 +25114,44 @@ GroupPartial
   "dob": "2019-08-24T14:15:22Z",
   "defaultTenantId": "string"
 }
+
 ```
 
 User
 
 ### Properties
 
-| Name            | Type                   | Required | Restrictions | Description                                                                                    |
-| --------------- | ---------------------- | -------- | ------------ | ---------------------------------------------------------------------------------------------- |
-| deleted         | boolean                | false    | none         | none                                                                                           |
-| deletedOn       | string(date-time)¦null | false    | none         | none                                                                                           |
-| deletedBy       | string¦null            | false    | none         | none                                                                                           |
-| createdOn       | string(date-time)      | false    | none         | none                                                                                           |
-| modifiedOn      | string(date-time)      | false    | none         | none                                                                                           |
-| createdBy       | string                 | false    | none         | none                                                                                           |
-| modifiedBy      | string                 | false    | none         | none                                                                                           |
-| id              | string                 | false    | none         | none                                                                                           |
-| firstName       | string                 | true     | none         | none                                                                                           |
-| lastName        | string                 | false    | none         | none                                                                                           |
-| middleName      | string                 | false    | none         | none                                                                                           |
-| username        | string                 | true     | none         | none                                                                                           |
-| email           | string                 | true     | none         | none                                                                                           |
-| designation     | string                 | false    | none         | none                                                                                           |
-| phone           | string                 | false    | none         | none                                                                                           |
-| authClientIds   | string                 | false    | none         | none                                                                                           |
-| lastLogin       | string(date-time)      | false    | none         | none                                                                                           |
-| photoUrl        | string                 | false    | none         | none                                                                                           |
-| gender          | string                 | false    | none         | This field takes a single character as input in database.<br> 'M' for male and 'F' for female. |
-| dob             | string(date-time)      | false    | none         | none                                                                                           |
-| defaultTenantId | string                 | false    | none         | none                                                                                           |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|firstName|string|true|none|none|
+|lastName|string|false|none|none|
+|middleName|string|false|none|none|
+|username|string|true|none|none|
+|email|string|true|none|none|
+|designation|string|false|none|none|
+|phone|string|false|none|none|
+|authClientIds|string|false|none|none|
+|lastLogin|string(date-time)|false|none|none|
+|photoUrl|string|false|none|none|
+|gender|string|false|none|This field takes a single character as input in database.<br>    'M' for male and 'F' for female.|
+|dob|string(date-time)|false|none|none|
+|defaultTenantId|string|false|none|none|
 
 #### Enumerated Values
 
-| Property | Value |
-| -------- | ----- |
-| gender   | M     |
-| gender   | F     |
-| gender   | O     |
+|Property|Value|
+|---|---|
+|gender|M|
+|gender|F|
+|gender|O|
 
 <h2 id="tocS_NewUserInTenant">NewUserInTenant</h2>
 <!-- backwards compatibility -->
@@ -24211,43 +25184,44 @@ User
   "roleId": "string",
   "locale": "string"
 }
+
 ```
 
 NewUserInTenant
 
 ### Properties
 
-| Name          | Type                   | Required | Restrictions | Description                                                                                    |
-| ------------- | ---------------------- | -------- | ------------ | ---------------------------------------------------------------------------------------------- |
-| deleted       | boolean                | false    | none         | none                                                                                           |
-| deletedOn     | string(date-time)¦null | false    | none         | none                                                                                           |
-| deletedBy     | string¦null            | false    | none         | none                                                                                           |
-| createdOn     | string(date-time)      | false    | none         | none                                                                                           |
-| modifiedOn    | string(date-time)      | false    | none         | none                                                                                           |
-| createdBy     | string                 | false    | none         | none                                                                                           |
-| modifiedBy    | string                 | false    | none         | none                                                                                           |
-| firstName     | string                 | true     | none         | none                                                                                           |
-| lastName      | string                 | false    | none         | none                                                                                           |
-| middleName    | string                 | false    | none         | none                                                                                           |
-| username      | string                 | true     | none         | none                                                                                           |
-| email         | string                 | true     | none         | none                                                                                           |
-| designation   | string                 | false    | none         | none                                                                                           |
-| phone         | string                 | false    | none         | none                                                                                           |
-| authClientIds | string                 | false    | none         | none                                                                                           |
-| lastLogin     | string(date-time)      | false    | none         | none                                                                                           |
-| photoUrl      | string                 | false    | none         | none                                                                                           |
-| gender        | string                 | false    | none         | This field takes a single character as input in database.<br> 'M' for male and 'F' for female. |
-| dob           | string(date-time)      | false    | none         | none                                                                                           |
-| roleId        | string                 | true     | none         | none                                                                                           |
-| locale        | string                 | false    | none         | none                                                                                           |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|firstName|string|true|none|none|
+|lastName|string|false|none|none|
+|middleName|string|false|none|none|
+|username|string|true|none|none|
+|email|string|true|none|none|
+|designation|string|false|none|none|
+|phone|string|false|none|none|
+|authClientIds|string|false|none|none|
+|lastLogin|string(date-time)|false|none|none|
+|photoUrl|string|false|none|none|
+|gender|string|false|none|This field takes a single character as input in database.<br>    'M' for male and 'F' for female.|
+|dob|string(date-time)|false|none|none|
+|roleId|string|true|none|none|
+|locale|string|false|none|none|
 
 #### Enumerated Values
 
-| Property | Value |
-| -------- | ----- |
-| gender   | M     |
-| gender   | F     |
-| gender   | O     |
+|Property|Value|
+|---|---|
+|gender|M|
+|gender|F|
+|gender|O|
 
 <h2 id="tocS_UserDto">UserDto</h2>
 <!-- backwards compatibility -->
@@ -24282,45 +25256,46 @@ NewUserInTenant
   "roleId": "string",
   "locale": "string"
 }
+
 ```
 
 UserDto
 
 ### Properties
 
-| Name            | Type                   | Required | Restrictions | Description                                                                                    |
-| --------------- | ---------------------- | -------- | ------------ | ---------------------------------------------------------------------------------------------- |
-| deleted         | boolean                | false    | none         | none                                                                                           |
-| deletedOn       | string(date-time)¦null | false    | none         | none                                                                                           |
-| deletedBy       | string¦null            | false    | none         | none                                                                                           |
-| createdOn       | string(date-time)      | false    | none         | none                                                                                           |
-| modifiedOn      | string(date-time)      | false    | none         | none                                                                                           |
-| createdBy       | string                 | false    | none         | none                                                                                           |
-| modifiedBy      | string                 | false    | none         | none                                                                                           |
-| id              | string                 | false    | none         | none                                                                                           |
-| firstName       | string                 | true     | none         | none                                                                                           |
-| lastName        | string                 | false    | none         | none                                                                                           |
-| middleName      | string                 | false    | none         | none                                                                                           |
-| username        | string                 | true     | none         | none                                                                                           |
-| email           | string                 | true     | none         | none                                                                                           |
-| designation     | string                 | false    | none         | none                                                                                           |
-| phone           | string                 | false    | none         | none                                                                                           |
-| authClientIds   | string                 | false    | none         | none                                                                                           |
-| lastLogin       | string(date-time)      | false    | none         | none                                                                                           |
-| photoUrl        | string                 | false    | none         | none                                                                                           |
-| gender          | string                 | false    | none         | This field takes a single character as input in database.<br> 'M' for male and 'F' for female. |
-| dob             | string(date-time)      | false    | none         | none                                                                                           |
-| defaultTenantId | string                 | false    | none         | none                                                                                           |
-| roleId          | string                 | true     | none         | none                                                                                           |
-| locale          | string                 | false    | none         | none                                                                                           |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|firstName|string|true|none|none|
+|lastName|string|false|none|none|
+|middleName|string|false|none|none|
+|username|string|true|none|none|
+|email|string|true|none|none|
+|designation|string|false|none|none|
+|phone|string|false|none|none|
+|authClientIds|string|false|none|none|
+|lastLogin|string(date-time)|false|none|none|
+|photoUrl|string|false|none|none|
+|gender|string|false|none|This field takes a single character as input in database.<br>    'M' for male and 'F' for female.|
+|dob|string(date-time)|false|none|none|
+|defaultTenantId|string|false|none|none|
+|roleId|string|true|none|none|
+|locale|string|false|none|none|
 
 #### Enumerated Values
 
-| Property | Value |
-| -------- | ----- |
-| gender   | M     |
-| gender   | F     |
-| gender   | O     |
+|Property|Value|
+|---|---|
+|gender|M|
+|gender|F|
+|gender|O|
 
 <h2 id="tocS_UserViewPartialExcluding_id-authClientIds-lastLogin-tenantId-tenantName-tenantKey-roleName-userTenantId_">UserViewPartialExcluding_id-authClientIds-lastLogin-tenantId-tenantName-tenantKey-roleName-userTenantId_</h2>
 <!-- backwards compatibility -->
@@ -24352,42 +25327,43 @@ UserDto
   "status": 11,
   "roleId": "string"
 }
+
 ```
 
-UserViewPartialExcluding*id-authClientIds-lastLogin-tenantId-tenantName-tenantKey-roleName-userTenantId*
+UserViewPartialExcluding_id-authClientIds-lastLogin-tenantId-tenantName-tenantKey-roleName-userTenantId_
 
 ### Properties
 
-| Name            | Type                   | Required | Restrictions | Description                                                                                    |
-| --------------- | ---------------------- | -------- | ------------ | ---------------------------------------------------------------------------------------------- |
-| deleted         | boolean                | false    | none         | none                                                                                           |
-| deletedOn       | string(date-time)¦null | false    | none         | none                                                                                           |
-| deletedBy       | string¦null            | false    | none         | none                                                                                           |
-| createdOn       | string(date-time)      | false    | none         | none                                                                                           |
-| modifiedOn      | string(date-time)      | false    | none         | none                                                                                           |
-| createdBy       | string                 | false    | none         | none                                                                                           |
-| modifiedBy      | string                 | false    | none         | none                                                                                           |
-| firstName       | string                 | false    | none         | none                                                                                           |
-| lastName        | string                 | false    | none         | none                                                                                           |
-| middleName      | string                 | false    | none         | none                                                                                           |
-| username        | string                 | false    | none         | none                                                                                           |
-| email           | string                 | false    | none         | none                                                                                           |
-| designation     | string                 | false    | none         | none                                                                                           |
-| phone           | string                 | false    | none         | none                                                                                           |
-| photoUrl        | string                 | false    | none         | none                                                                                           |
-| gender          | string                 | false    | none         | This field takes a single character as input in database.<br> 'M' for male and 'F' for female. |
-| dob             | string(date-time)¦null | false    | none         | none                                                                                           |
-| defaultTenantId | string                 | false    | none         | none                                                                                           |
-| status          | number                 | false    | none         | none                                                                                           |
-| roleId          | string                 | false    | none         | none                                                                                           |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|firstName|string|false|none|none|
+|lastName|string|false|none|none|
+|middleName|string|false|none|none|
+|username|string|false|none|none|
+|email|string|false|none|none|
+|designation|string|false|none|none|
+|phone|string|false|none|none|
+|photoUrl|string|false|none|none|
+|gender|string|false|none|This field takes a single character as input in database.<br>    'M' for male and 'F' for female.|
+|dob|string(date-time)¦null|false|none|none|
+|defaultTenantId|string|false|none|none|
+|status|number|false|none|none|
+|roleId|string|false|none|none|
 
 #### Enumerated Values
 
-| Property | Value |
-| -------- | ----- |
-| gender   | M     |
-| gender   | F     |
-| gender   | O     |
+|Property|Value|
+|---|---|
+|gender|M|
+|gender|F|
+|gender|O|
 
 <h2 id="tocS_UserTenantPrefs">UserTenantPrefs</h2>
 <!-- backwards compatibility -->
@@ -24410,25 +25386,26 @@ UserViewPartialExcluding*id-authClientIds-lastLogin-tenantId-tenantName-tenantKe
   "configValue": {},
   "userTenantId": "string"
 }
+
 ```
 
 UserTenantPrefs
 
 ### Properties
 
-| Name         | Type                   | Required | Restrictions | Description |
-| ------------ | ---------------------- | -------- | ------------ | ----------- |
-| deleted      | boolean                | false    | none         | none        |
-| deletedOn    | string(date-time)¦null | false    | none         | none        |
-| deletedBy    | string¦null            | false    | none         | none        |
-| createdOn    | string(date-time)      | false    | none         | none        |
-| modifiedOn   | string(date-time)      | false    | none         | none        |
-| createdBy    | string                 | false    | none         | none        |
-| modifiedBy   | string                 | false    | none         | none        |
-| id           | string                 | false    | none         | none        |
-| configKey    | string                 | true     | none         | none        |
-| configValue  | object                 | true     | none         | none        |
-| userTenantId | string                 | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|configKey|string|true|none|none|
+|configValue|object|true|none|none|
+|userTenantId|string|false|none|none|
 
 <h2 id="tocS_NewUserTenantPrefs">NewUserTenantPrefs</h2>
 <!-- backwards compatibility -->
@@ -24449,23 +25426,24 @@ UserTenantPrefs
   "configKey": "string",
   "configValue": {}
 }
+
 ```
 
 NewUserTenantPrefs
 
 ### Properties
 
-| Name        | Type                   | Required | Restrictions | Description |
-| ----------- | ---------------------- | -------- | ------------ | ----------- |
-| deleted     | boolean                | false    | none         | none        |
-| deletedOn   | string(date-time)¦null | false    | none         | none        |
-| deletedBy   | string¦null            | false    | none         | none        |
-| createdOn   | string(date-time)      | false    | none         | none        |
-| modifiedOn  | string(date-time)      | false    | none         | none        |
-| createdBy   | string                 | false    | none         | none        |
-| modifiedBy  | string                 | false    | none         | none        |
-| configKey   | string                 | true     | none         | none        |
-| configValue | object                 | true     | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|configKey|string|true|none|none|
+|configValue|object|true|none|none|
 
 <h2 id="tocS_UserTenantPrefsWithRelations">UserTenantPrefsWithRelations</h2>
 <!-- backwards compatibility -->
@@ -24558,8 +25536,12 @@ NewUserTenantPrefs
             "foreignKey": null
           }
         ],
-        "userTenants": [{}],
-        "users": [{}],
+        "userTenants": [
+          {}
+        ],
+        "users": [
+          {}
+        ],
         "roles": [
           {
             "deleted": true,
@@ -24573,10 +25555,16 @@ NewUserTenantPrefs
             "name": "string",
             "roleType": 15,
             "description": "string",
-            "permissions": ["string"],
-            "allowedClients": ["string"],
+            "permissions": [
+              "string"
+            ],
+            "allowedClients": [
+              "string"
+            ],
             "tenantId": "string",
-            "userTenants": [{}],
+            "userTenants": [
+              {}
+            ],
             "createdByUser": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
@@ -24693,7 +25681,9 @@ NewUserTenantPrefs
         "user": {},
         "foreignKey": null
       },
-      "userTenants": [{}]
+      "userTenants": [
+        {}
+      ]
     },
     "foreignKey": null,
     "tenant": {
@@ -24731,7 +25721,9 @@ NewUserTenantPrefs
           "foreignKey": null
         }
       ],
-      "userTenants": [{}],
+      "userTenants": [
+        {}
+      ],
       "users": [
         {
           "deleted": true,
@@ -24775,7 +25767,9 @@ NewUserTenantPrefs
             "user": {},
             "foreignKey": null
           },
-          "userTenants": [{}]
+          "userTenants": [
+            {}
+          ]
         }
       ],
       "roles": [
@@ -24791,10 +25785,16 @@ NewUserTenantPrefs
           "name": "string",
           "roleType": 15,
           "description": "string",
-          "permissions": ["string"],
-          "allowedClients": ["string"],
+          "permissions": [
+            "string"
+          ],
+          "allowedClients": [
+            "string"
+          ],
           "tenantId": "string",
-          "userTenants": [{}],
+          "userTenants": [
+            {}
+          ],
           "createdByUser": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
@@ -24904,10 +25904,16 @@ NewUserTenantPrefs
       "name": "string",
       "roleType": 15,
       "description": "string",
-      "permissions": ["string"],
-      "allowedClients": ["string"],
+      "permissions": [
+        "string"
+      ],
+      "allowedClients": [
+        "string"
+      ],
       "tenantId": "string",
-      "userTenants": [{}],
+      "userTenants": [
+        {}
+      ],
       "createdByUser": {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -25012,7 +26018,9 @@ NewUserTenantPrefs
           "description": "string",
           "photoUrl": "string",
           "tenantId": "string",
-          "userGroups": [{}]
+          "userGroups": [
+            {}
+          ]
         },
         "foreignKey": null,
         "userTenant": {}
@@ -25038,27 +26046,28 @@ NewUserTenantPrefs
   },
   "foreignKey": null
 }
+
 ```
 
 UserTenantPrefsWithRelations
 
 ### Properties
 
-| Name         | Type                                                      | Required | Restrictions | Description                                                                  |
-| ------------ | --------------------------------------------------------- | -------- | ------------ | ---------------------------------------------------------------------------- |
-| deleted      | boolean                                                   | false    | none         | none                                                                         |
-| deletedOn    | string(date-time)¦null                                    | false    | none         | none                                                                         |
-| deletedBy    | string¦null                                               | false    | none         | none                                                                         |
-| createdOn    | string(date-time)                                         | false    | none         | none                                                                         |
-| modifiedOn   | string(date-time)                                         | false    | none         | none                                                                         |
-| createdBy    | string                                                    | false    | none         | none                                                                         |
-| modifiedBy   | string                                                    | false    | none         | none                                                                         |
-| id           | string                                                    | false    | none         | none                                                                         |
-| configKey    | string                                                    | true     | none         | none                                                                         |
-| configValue  | object                                                    | true     | none         | none                                                                         |
-| userTenantId | string                                                    | false    | none         | none                                                                         |
-| userTenant   | [UserTenantWithRelations](#schemausertenantwithrelations) | false    | none         | (tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true }) |
-| foreignKey   | any                                                       | false    | none         | none                                                                         |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|configKey|string|true|none|none|
+|configValue|object|true|none|none|
+|userTenantId|string|false|none|none|
+|userTenant|[UserTenantWithRelations](#schemausertenantwithrelations)|false|none|(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })|
+|foreignKey|any|false|none|none|
 
 <h2 id="tocS_UserLevelPermission">UserLevelPermission</h2>
 <!-- backwards compatibility -->
@@ -25081,25 +26090,26 @@ UserTenantPrefsWithRelations
   "allowed": true,
   "userTenantId": "string"
 }
+
 ```
 
 UserLevelPermission
 
 ### Properties
 
-| Name         | Type                   | Required | Restrictions | Description |
-| ------------ | ---------------------- | -------- | ------------ | ----------- |
-| deleted      | boolean                | false    | none         | none        |
-| deletedOn    | string(date-time)¦null | false    | none         | none        |
-| deletedBy    | string¦null            | false    | none         | none        |
-| createdOn    | string(date-time)      | false    | none         | none        |
-| modifiedOn   | string(date-time)      | false    | none         | none        |
-| createdBy    | string                 | false    | none         | none        |
-| modifiedBy   | string                 | false    | none         | none        |
-| id           | string                 | false    | none         | none        |
-| permission   | string                 | true     | none         | none        |
-| allowed      | boolean                | true     | none         | none        |
-| userTenantId | string                 | true     | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|permission|string|true|none|none|
+|allowed|boolean|true|none|none|
+|userTenantId|string|true|none|none|
 
 <h2 id="tocS_NewUserLevelPermissionInUserTenant">NewUserLevelPermissionInUserTenant</h2>
 <!-- backwards compatibility -->
@@ -25121,24 +26131,25 @@ UserLevelPermission
   "allowed": true,
   "userTenantId": "string"
 }
+
 ```
 
 NewUserLevelPermissionInUserTenant
 
 ### Properties
 
-| Name         | Type                   | Required | Restrictions | Description |
-| ------------ | ---------------------- | -------- | ------------ | ----------- |
-| deleted      | boolean                | false    | none         | none        |
-| deletedOn    | string(date-time)¦null | false    | none         | none        |
-| deletedBy    | string¦null            | false    | none         | none        |
-| createdOn    | string(date-time)      | false    | none         | none        |
-| modifiedOn   | string(date-time)      | false    | none         | none        |
-| createdBy    | string                 | false    | none         | none        |
-| modifiedBy   | string                 | false    | none         | none        |
-| permission   | string                 | true     | none         | none        |
-| allowed      | boolean                | true     | none         | none        |
-| userTenantId | string                 | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|permission|string|true|none|none|
+|allowed|boolean|true|none|none|
+|userTenantId|string|false|none|none|
 
 <h2 id="tocS_UserLevelPermissionPartial">UserLevelPermissionPartial</h2>
 <!-- backwards compatibility -->
@@ -25161,25 +26172,26 @@ NewUserLevelPermissionInUserTenant
   "allowed": true,
   "userTenantId": "string"
 }
+
 ```
 
 UserLevelPermissionPartial
 
 ### Properties
 
-| Name         | Type                   | Required | Restrictions | Description |
-| ------------ | ---------------------- | -------- | ------------ | ----------- |
-| deleted      | boolean                | false    | none         | none        |
-| deletedOn    | string(date-time)¦null | false    | none         | none        |
-| deletedBy    | string¦null            | false    | none         | none        |
-| createdOn    | string(date-time)      | false    | none         | none        |
-| modifiedOn   | string(date-time)      | false    | none         | none        |
-| createdBy    | string                 | false    | none         | none        |
-| modifiedBy   | string                 | false    | none         | none        |
-| id           | string                 | false    | none         | none        |
-| permission   | string                 | false    | none         | none        |
-| allowed      | boolean                | false    | none         | none        |
-| userTenantId | string                 | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|permission|string|false|none|none|
+|allowed|boolean|false|none|none|
+|userTenantId|string|false|none|none|
 
 <h2 id="tocS_loopback.Count">loopback.Count</h2>
 <!-- backwards compatibility -->
@@ -25192,15 +26204,16 @@ UserLevelPermissionPartial
 {
   "count": 0
 }
+
 ```
 
 loopback.Count
 
 ### Properties
 
-| Name  | Type   | Required | Restrictions | Description |
-| ----- | ------ | -------- | ------------ | ----------- |
-| count | number | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|count|number|false|none|none|
 
 <h2 id="tocS_tenants.ScopeFilter">tenants.ScopeFilter</h2>
 <!-- backwards compatibility -->
@@ -25217,57 +26230,60 @@ loopback.Count
   "order": "string",
   "where": {},
   "fields": {},
-  "include": [{}]
+  "include": [
+    {}
+  ]
 }
+
 ```
 
 tenants.ScopeFilter
 
 ### Properties
 
-| Name   | Type    | Required | Restrictions | Description |
-| ------ | ------- | -------- | ------------ | ----------- |
-| offset | integer | false    | none         | none        |
-| limit  | integer | false    | none         | none        |
-| skip   | integer | false    | none         | none        |
-| order  | any     | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|offset|integer|false|none|none|
+|limit|integer|false|none|none|
+|skip|integer|false|none|none|
+|order|any|false|none|none|
 
 oneOf
 
-| Name          | Type   | Required | Restrictions | Description |
-| ------------- | ------ | -------- | ------------ | ----------- |
-| » _anonymous_ | string | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
 
 xor
 
-| Name          | Type     | Required | Restrictions | Description |
-| ------------- | -------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [string] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
 
 continued
 
-| Name   | Type   | Required | Restrictions | Description |
-| ------ | ------ | -------- | ------------ | ----------- |
-| where  | object | false    | none         | none        |
-| fields | any    | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|where|object|false|none|none|
+|fields|any|false|none|none|
 
 oneOf
 
-| Name          | Type   | Required | Restrictions | Description |
-| ------------- | ------ | -------- | ------------ | ----------- |
-| » _anonymous_ | object | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|object|false|none|none|
 
 xor
 
-| Name          | Type     | Required | Restrictions | Description |
-| ------------- | -------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [string] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
 
 continued
 
-| Name    | Type     | Required | Restrictions | Description |
-| ------- | -------- | -------- | ------------ | ----------- |
-| include | [object] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|include|[object]|false|none|none|
 
 <h2 id="tocS_tenants.IncludeFilter.Items">tenants.IncludeFilter.Items</h2>
 <!-- backwards compatibility -->
@@ -25286,29 +26302,32 @@ continued
     "order": "string",
     "where": {},
     "fields": {},
-    "include": [{}]
+    "include": [
+      {}
+    ]
   }
 }
+
 ```
 
 tenants.IncludeFilter.Items
 
 ### Properties
 
-| Name     | Type                                              | Required | Restrictions | Description |
-| -------- | ------------------------------------------------- | -------- | ------------ | ----------- |
-| relation | string                                            | false    | none         | none        |
-| scope    | [tenants.ScopeFilter](#schematenants.scopefilter) | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|relation|string|false|none|none|
+|scope|[tenants.ScopeFilter](#schematenants.scopefilter)|false|none|none|
 
 #### Enumerated Values
 
-| Property | Value         |
-| -------- | ------------- |
-| relation | tenantConfigs |
-| relation | userTenants   |
-| relation | users         |
-| relation | roles         |
-| relation | groups        |
+|Property|Value|
+|---|---|
+|relation|tenantConfigs|
+|relation|userTenants|
+|relation|users|
+|relation|roles|
+|relation|groups|
 
 <h2 id="tocS_tenants.Filter">tenants.Filter</h2>
 <!-- backwards compatibility -->
@@ -25352,88 +26371,91 @@ tenants.IncludeFilter.Items
         "order": "string",
         "where": {},
         "fields": {},
-        "include": [{}]
+        "include": [
+          {}
+        ]
       }
     }
   ]
 }
+
 ```
 
 tenants.Filter
 
 ### Properties
 
-| Name   | Type    | Required | Restrictions | Description |
-| ------ | ------- | -------- | ------------ | ----------- |
-| offset | integer | false    | none         | none        |
-| limit  | integer | false    | none         | none        |
-| skip   | integer | false    | none         | none        |
-| order  | any     | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|offset|integer|false|none|none|
+|limit|integer|false|none|none|
+|skip|integer|false|none|none|
+|order|any|false|none|none|
 
 oneOf
 
-| Name          | Type   | Required | Restrictions | Description |
-| ------------- | ------ | -------- | ------------ | ----------- |
-| » _anonymous_ | string | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
 
 xor
 
-| Name          | Type     | Required | Restrictions | Description |
-| ------------- | -------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [string] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
 
 continued
 
-| Name   | Type | Required | Restrictions | Description |
-| ------ | ---- | -------- | ------------ | ----------- |
-| fields | any  | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|fields|any|false|none|none|
 
 oneOf
 
-| Name          | Type    | Required | Restrictions | Description |
-| ------------- | ------- | -------- | ------------ | ----------- |
-| » _anonymous_ | object  | false    | none         | none        |
-| »» deleted    | boolean | false    | none         | none        |
-| »» deletedOn  | boolean | false    | none         | none        |
-| »» deletedBy  | boolean | false    | none         | none        |
-| »» createdOn  | boolean | false    | none         | none        |
-| »» modifiedOn | boolean | false    | none         | none        |
-| »» createdBy  | boolean | false    | none         | none        |
-| »» modifiedBy | boolean | false    | none         | none        |
-| »» id         | boolean | false    | none         | none        |
-| »» name       | boolean | false    | none         | none        |
-| »» status     | boolean | false    | none         | none        |
-| »» key        | boolean | false    | none         | none        |
-| »» website    | boolean | false    | none         | none        |
-| »» address    | boolean | false    | none         | none        |
-| »» city       | boolean | false    | none         | none        |
-| »» state      | boolean | false    | none         | none        |
-| »» zip        | boolean | false    | none         | none        |
-| »» country    | boolean | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|object|false|none|none|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|boolean|false|none|none|
+|»» deletedBy|boolean|false|none|none|
+|»» createdOn|boolean|false|none|none|
+|»» modifiedOn|boolean|false|none|none|
+|»» createdBy|boolean|false|none|none|
+|»» modifiedBy|boolean|false|none|none|
+|»» id|boolean|false|none|none|
+|»» name|boolean|false|none|none|
+|»» status|boolean|false|none|none|
+|»» key|boolean|false|none|none|
+|»» website|boolean|false|none|none|
+|»» address|boolean|false|none|none|
+|»» city|boolean|false|none|none|
+|»» state|boolean|false|none|none|
+|»» zip|boolean|false|none|none|
+|»» country|boolean|false|none|none|
 
 xor
 
-| Name          | Type     | Required | Restrictions | Description |
-| ------------- | -------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [string] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
 
 continued
 
-| Name    | Type    | Required | Restrictions | Description |
-| ------- | ------- | -------- | ------------ | ----------- |
-| include | [anyOf] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|include|[anyOf]|false|none|none|
 
 anyOf
 
-| Name          | Type                                                              | Required | Restrictions | Description |
-| ------------- | ----------------------------------------------------------------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [tenants.IncludeFilter.Items](#schematenants.includefilter.items) | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[tenants.IncludeFilter.Items](#schematenants.includefilter.items)|false|none|none|
 
 or
 
-| Name          | Type   | Required | Restrictions | Description |
-| ------------- | ------ | -------- | ------------ | ----------- |
-| » _anonymous_ | string | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
 
 <h2 id="tocS_tenants.Filter1">tenants.Filter1</h2>
 <!-- backwards compatibility -->
@@ -25478,89 +26500,92 @@ or
         "order": "string",
         "where": {},
         "fields": {},
-        "include": [{}]
+        "include": [
+          {}
+        ]
       }
     }
   ]
 }
+
 ```
 
 tenants.Filter
 
 ### Properties
 
-| Name   | Type    | Required | Restrictions | Description |
-| ------ | ------- | -------- | ------------ | ----------- |
-| offset | integer | false    | none         | none        |
-| limit  | integer | false    | none         | none        |
-| skip   | integer | false    | none         | none        |
-| order  | any     | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|offset|integer|false|none|none|
+|limit|integer|false|none|none|
+|skip|integer|false|none|none|
+|order|any|false|none|none|
 
 oneOf
 
-| Name          | Type   | Required | Restrictions | Description |
-| ------------- | ------ | -------- | ------------ | ----------- |
-| » _anonymous_ | string | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
 
 xor
 
-| Name          | Type     | Required | Restrictions | Description |
-| ------------- | -------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [string] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
 
 continued
 
-| Name   | Type   | Required | Restrictions | Description |
-| ------ | ------ | -------- | ------------ | ----------- |
-| where  | object | false    | none         | none        |
-| fields | any    | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|where|object|false|none|none|
+|fields|any|false|none|none|
 
 oneOf
 
-| Name          | Type    | Required | Restrictions | Description |
-| ------------- | ------- | -------- | ------------ | ----------- |
-| » _anonymous_ | object  | false    | none         | none        |
-| »» deleted    | boolean | false    | none         | none        |
-| »» deletedOn  | boolean | false    | none         | none        |
-| »» deletedBy  | boolean | false    | none         | none        |
-| »» createdOn  | boolean | false    | none         | none        |
-| »» modifiedOn | boolean | false    | none         | none        |
-| »» createdBy  | boolean | false    | none         | none        |
-| »» modifiedBy | boolean | false    | none         | none        |
-| »» id         | boolean | false    | none         | none        |
-| »» name       | boolean | false    | none         | none        |
-| »» status     | boolean | false    | none         | none        |
-| »» key        | boolean | false    | none         | none        |
-| »» website    | boolean | false    | none         | none        |
-| »» address    | boolean | false    | none         | none        |
-| »» city       | boolean | false    | none         | none        |
-| »» state      | boolean | false    | none         | none        |
-| »» zip        | boolean | false    | none         | none        |
-| »» country    | boolean | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|object|false|none|none|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|boolean|false|none|none|
+|»» deletedBy|boolean|false|none|none|
+|»» createdOn|boolean|false|none|none|
+|»» modifiedOn|boolean|false|none|none|
+|»» createdBy|boolean|false|none|none|
+|»» modifiedBy|boolean|false|none|none|
+|»» id|boolean|false|none|none|
+|»» name|boolean|false|none|none|
+|»» status|boolean|false|none|none|
+|»» key|boolean|false|none|none|
+|»» website|boolean|false|none|none|
+|»» address|boolean|false|none|none|
+|»» city|boolean|false|none|none|
+|»» state|boolean|false|none|none|
+|»» zip|boolean|false|none|none|
+|»» country|boolean|false|none|none|
 
 xor
 
-| Name          | Type     | Required | Restrictions | Description |
-| ------------- | -------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [string] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
 
 continued
 
-| Name    | Type    | Required | Restrictions | Description |
-| ------- | ------- | -------- | ------------ | ----------- |
-| include | [anyOf] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|include|[anyOf]|false|none|none|
 
 anyOf
 
-| Name          | Type                                                              | Required | Restrictions | Description |
-| ------------- | ----------------------------------------------------------------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [tenants.IncludeFilter.Items](#schematenants.includefilter.items) | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[tenants.IncludeFilter.Items](#schematenants.includefilter.items)|false|none|none|
 
 or
 
-| Name          | Type   | Required | Restrictions | Description |
-| ------------- | ------ | -------- | ------------ | ----------- |
-| » _anonymous_ | string | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
 
 <h2 id="tocS_user_tenant_prefs.ScopeFilter">user_tenant_prefs.ScopeFilter</h2>
 <!-- backwards compatibility -->
@@ -25577,57 +26602,60 @@ or
   "order": "string",
   "where": {},
   "fields": {},
-  "include": [{}]
+  "include": [
+    {}
+  ]
 }
+
 ```
 
 user_tenant_prefs.ScopeFilter
 
 ### Properties
 
-| Name   | Type    | Required | Restrictions | Description |
-| ------ | ------- | -------- | ------------ | ----------- |
-| offset | integer | false    | none         | none        |
-| limit  | integer | false    | none         | none        |
-| skip   | integer | false    | none         | none        |
-| order  | any     | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|offset|integer|false|none|none|
+|limit|integer|false|none|none|
+|skip|integer|false|none|none|
+|order|any|false|none|none|
 
 oneOf
 
-| Name          | Type   | Required | Restrictions | Description |
-| ------------- | ------ | -------- | ------------ | ----------- |
-| » _anonymous_ | string | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
 
 xor
 
-| Name          | Type     | Required | Restrictions | Description |
-| ------------- | -------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [string] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
 
 continued
 
-| Name   | Type   | Required | Restrictions | Description |
-| ------ | ------ | -------- | ------------ | ----------- |
-| where  | object | false    | none         | none        |
-| fields | any    | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|where|object|false|none|none|
+|fields|any|false|none|none|
 
 oneOf
 
-| Name          | Type   | Required | Restrictions | Description |
-| ------------- | ------ | -------- | ------------ | ----------- |
-| » _anonymous_ | object | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|object|false|none|none|
 
 xor
 
-| Name          | Type     | Required | Restrictions | Description |
-| ------------- | -------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [string] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
 
 continued
 
-| Name    | Type     | Required | Restrictions | Description |
-| ------- | -------- | -------- | ------------ | ----------- |
-| include | [object] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|include|[object]|false|none|none|
 
 <h2 id="tocS_user_tenant_prefs.IncludeFilter.Items">user_tenant_prefs.IncludeFilter.Items</h2>
 <!-- backwards compatibility -->
@@ -25646,25 +26674,28 @@ continued
     "order": "string",
     "where": {},
     "fields": {},
-    "include": [{}]
+    "include": [
+      {}
+    ]
   }
 }
+
 ```
 
 user_tenant_prefs.IncludeFilter.Items
 
 ### Properties
 
-| Name     | Type                                                                  | Required | Restrictions | Description |
-| -------- | --------------------------------------------------------------------- | -------- | ------------ | ----------- |
-| relation | string                                                                | false    | none         | none        |
-| scope    | [user_tenant_prefs.ScopeFilter](#schemauser_tenant_prefs.scopefilter) | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|relation|string|false|none|none|
+|scope|[user_tenant_prefs.ScopeFilter](#schemauser_tenant_prefs.scopefilter)|false|none|none|
 
 #### Enumerated Values
 
-| Property | Value      |
-| -------- | ---------- |
-| relation | userTenant |
+|Property|Value|
+|---|---|
+|relation|userTenant|
 
 <h2 id="tocS_user_tenant_prefs.Filter">user_tenant_prefs.Filter</h2>
 <!-- backwards compatibility -->
@@ -25703,80 +26734,84 @@ user_tenant_prefs.IncludeFilter.Items
         "order": "string",
         "where": {},
         "fields": {},
-        "include": [{}]
+        "include": [
+          {}
+        ]
       }
     }
   ]
 }
+
 ```
 
 user_tenant_prefs.Filter
 
 ### Properties
 
-| Name   | Type    | Required | Restrictions | Description |
-| ------ | ------- | -------- | ------------ | ----------- |
-| offset | integer | false    | none         | none        |
-| limit  | integer | false    | none         | none        |
-| skip   | integer | false    | none         | none        |
-| order  | any     | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|offset|integer|false|none|none|
+|limit|integer|false|none|none|
+|skip|integer|false|none|none|
+|order|any|false|none|none|
 
 oneOf
 
-| Name          | Type   | Required | Restrictions | Description |
-| ------------- | ------ | -------- | ------------ | ----------- |
-| » _anonymous_ | string | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
 
 xor
 
-| Name          | Type     | Required | Restrictions | Description |
-| ------------- | -------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [string] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
 
 continued
 
-| Name   | Type   | Required | Restrictions | Description |
-| ------ | ------ | -------- | ------------ | ----------- |
-| where  | object | false    | none         | none        |
-| fields | any    | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|where|object|false|none|none|
+|fields|any|false|none|none|
 
 oneOf
 
-| Name            | Type    | Required | Restrictions | Description |
-| --------------- | ------- | -------- | ------------ | ----------- |
-| » _anonymous_   | object  | false    | none         | none        |
-| »» deleted      | boolean | false    | none         | none        |
-| »» deletedOn    | boolean | false    | none         | none        |
-| »» deletedBy    | boolean | false    | none         | none        |
-| »» createdOn    | boolean | false    | none         | none        |
-| »» modifiedOn   | boolean | false    | none         | none        |
-| »» createdBy    | boolean | false    | none         | none        |
-| »» modifiedBy   | boolean | false    | none         | none        |
-| »» id           | boolean | false    | none         | none        |
-| »» configKey    | boolean | false    | none         | none        |
-| »» configValue  | boolean | false    | none         | none        |
-| »» userTenantId | boolean | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|object|false|none|none|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|boolean|false|none|none|
+|»» deletedBy|boolean|false|none|none|
+|»» createdOn|boolean|false|none|none|
+|»» modifiedOn|boolean|false|none|none|
+|»» createdBy|boolean|false|none|none|
+|»» modifiedBy|boolean|false|none|none|
+|»» id|boolean|false|none|none|
+|»» configKey|boolean|false|none|none|
+|»» configValue|boolean|false|none|none|
+|»» userTenantId|boolean|false|none|none|
 
 xor
 
-| Name          | Type     | Required | Restrictions | Description |
-| ------------- | -------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [string] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
 
 continued
 
-| Name    | Type    | Required | Restrictions | Description |
-| ------- | ------- | -------- | ------------ | ----------- |
-| include | [anyOf] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|include|[anyOf]|false|none|none|
 
 anyOf
 
-| Name          | Type                                                                                  | Required | Restrictions | Description |
-| ------------- | ------------------------------------------------------------------------------------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [user_tenant_prefs.IncludeFilter.Items](#schemauser_tenant_prefs.includefilter.items) | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[user_tenant_prefs.IncludeFilter.Items](#schemauser_tenant_prefs.includefilter.items)|false|none|none|
 
 or
 
-| Name          | Type   | Required | Restrictions | Description |
-| ------------- | ------ | -------- | ------------ | ----------- |
-| » _anonymous_ | string | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
+

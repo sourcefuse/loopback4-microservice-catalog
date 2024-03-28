@@ -33,28 +33,52 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
   }
 
   async updateAllProjects() {
-    const types = ['facades', 'services', 'packages'];
+    const types = [
+      'packages',
+      'services',
+      'sandbox',
+      'sandbox/chat-notification-pubnub-example/facade',
+      'sandbox/chat-notification-pubnub-example/services/chat-service',
+      'sandbox/chat-notification-pubnub-example/services/notifications-service',
+      'sandbox/chat-notification-socketio-example/facade',
+      'sandbox/chat-notification-socketio-example/services/chat-service',
+      'sandbox/chat-notification-socketio-example/services/notifications-service',
+      'sandbox/chat-notification-socketio-example/services/socketio-service',
+      'sandbox/telemed-app/backend/authentication-service',
+      'sandbox/telemed-app/backend/notification-service',
+      'sandbox/telemed-app/backend/video-conferencing-service',
+    ];
     const monoRepo = this.destinationPath();
-
+    const ignore = [
+      'custom-sf-changelog',
+      '@sourceloop/ocr-parser',
+      '@sourceloop/search-client',
+      '@sourceloop/user-onboarding-client',
+      '@sourceloop/ocr-service',
+      '@sourceloop/ocr-s3-service',
+      '@sourceloop/cli',
+    ];
     for (const type of types) {
       this.destinationRoot(monoRepo);
-      const folders = await this._getDirectories(
+      const folders = this._getDirectories(
         this.destinationRoot(join('.', type)),
       );
-      for (const folder of folders) {
+      for (const folder of await folders) {
         this.destinationRoot(join(monoRepo, type, folder));
-
         const pkgJs = this.fs.readJSON(
           this.destinationPath(packageJsonFile),
         ) as AnyObject;
-
         if (pkgJs) {
+          const ignoredPackage = ignore.find(pack => pack === pkgJs.name);
+          if (ignoredPackage) {
+            this.log(chalk.yellow(`Ignoring - ${pkgJs.name}`));
+            continue;
+          }
           this.log(
             chalk.cyan(
               `Updating dependencies in the following project- ${pkgJs.name}`,
             ),
           );
-
           await this._updateSourceloopDep();
         }
       }

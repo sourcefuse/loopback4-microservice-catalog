@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "@sourceloop/payment-service",
-    "version": "11.1.5",
+    "version": "12.0.0",
     "description": "payment microservice.",
     "contact": {
       "name": "Sourcefuse"
@@ -13,7 +13,9 @@
       "post": {
         "x-controller-name": "SubscriptionTransactionsController",
         "x-operation-name": "subscriptionandtransactionscreate",
-        "tags": ["SubscriptionTransactionsController"],
+        "tags": [
+          "SubscriptionTransactionsController"
+        ],
         "responses": {
           "302": {
             "description": "Subscription model instance",
@@ -39,7 +41,9 @@
       "get": {
         "x-controller-name": "OrdersController",
         "x-operation-name": "count",
-        "tags": ["OrdersController"],
+        "tags": [
+          "OrdersController"
+        ],
         "responses": {
           "200": {
             "description": "Orders model count",
@@ -75,7 +79,9 @@
       "put": {
         "x-controller-name": "OrdersController",
         "x-operation-name": "replaceById",
-        "tags": ["OrdersController"],
+        "tags": [
+          "OrdersController"
+        ],
         "responses": {
           "204": {
             "description": "Orders PUT success"
@@ -106,7 +112,9 @@
       "patch": {
         "x-controller-name": "OrdersController",
         "x-operation-name": "updateById",
-        "tags": ["OrdersController"],
+        "tags": [
+          "OrdersController"
+        ],
         "responses": {
           "204": {
             "description": "Orders PATCH success"
@@ -137,7 +145,9 @@
       "get": {
         "x-controller-name": "OrdersController",
         "x-operation-name": "findById",
-        "tags": ["OrdersController"],
+        "tags": [
+          "OrdersController"
+        ],
         "responses": {
           "200": {
             "description": "Orders model instance",
@@ -176,7 +186,9 @@
       "delete": {
         "x-controller-name": "OrdersController",
         "x-operation-name": "deleteById",
-        "tags": ["OrdersController"],
+        "tags": [
+          "OrdersController"
+        ],
         "responses": {
           "204": {
             "description": "Orders DELETE success"
@@ -199,7 +211,9 @@
       "post": {
         "x-controller-name": "OrdersController",
         "x-operation-name": "create",
-        "tags": ["OrdersController"],
+        "tags": [
+          "OrdersController"
+        ],
         "responses": {
           "200": {
             "description": "Orders model instance",
@@ -226,7 +240,9 @@
       "patch": {
         "x-controller-name": "OrdersController",
         "x-operation-name": "updateAll",
-        "tags": ["OrdersController"],
+        "tags": [
+          "OrdersController"
+        ],
         "responses": {
           "200": {
             "description": "Orders PATCH success count",
@@ -269,7 +285,9 @@
       "get": {
         "x-controller-name": "OrdersController",
         "x-operation-name": "find",
-        "tags": ["OrdersController"],
+        "tags": [
+          "OrdersController"
+        ],
         "responses": {
           "200": {
             "description": "Array of Orders model instances",
@@ -305,7 +323,9 @@
       "get": {
         "x-controller-name": "PaymentGatewaysController",
         "x-operation-name": "count",
-        "tags": ["PaymentGatewaysController"],
+        "tags": [
+          "PaymentGatewaysController"
+        ],
         "responses": {
           "200": {
             "description": "PaymentGateways model count",
@@ -341,7 +361,9 @@
       "put": {
         "x-controller-name": "PaymentGatewaysController",
         "x-operation-name": "replaceById",
-        "tags": ["PaymentGatewaysController"],
+        "tags": [
+          "PaymentGatewaysController"
+        ],
         "responses": {
           "204": {
             "description": "PaymentGateways PUT success"
@@ -372,7 +394,9 @@
       "patch": {
         "x-controller-name": "PaymentGatewaysController",
         "x-operation-name": "updateById",
-        "tags": ["PaymentGatewaysController"],
+        "tags": [
+          "PaymentGatewaysController"
+        ],
         "responses": {
           "204": {
             "description": "PaymentGateways PATCH success"
@@ -403,7 +427,9 @@
       "get": {
         "x-controller-name": "PaymentGatewaysController",
         "x-operation-name": "findById",
-        "tags": ["PaymentGatewaysController"],
+        "tags": [
+          "PaymentGatewaysController"
+        ],
         "responses": {
           "200": {
             "description": "PaymentGateways model instance",
@@ -442,7 +468,9 @@
       "delete": {
         "x-controller-name": "PaymentGatewaysController",
         "x-operation-name": "deleteById",
-        "tags": ["PaymentGatewaysController"],
+        "tags": [
+          "PaymentGatewaysController"
+        ],
         "responses": {
           "204": {
             "description": "PaymentGateways DELETE success"
@@ -465,7 +493,9 @@
       "post": {
         "x-controller-name": "PaymentGatewaysController",
         "x-operation-name": "create",
-        "tags": ["PaymentGatewaysController"],
+        "tags": [
+          "PaymentGatewaysController"
+        ],
         "responses": {
           "200": {
             "description": "PaymentGateways model instance",
@@ -492,7 +522,9 @@
       "patch": {
         "x-controller-name": "PaymentGatewaysController",
         "x-operation-name": "updateAll",
-        "tags": ["PaymentGatewaysController"],
+        "tags": [
+          "PaymentGatewaysController"
+        ],
         "responses": {
           "200": {
             "description": "PaymentGateways PATCH success count",
@@ -535,7 +567,9 @@
       "get": {
         "x-controller-name": "PaymentGatewaysController",
         "x-operation-name": "find",
-        "tags": ["PaymentGatewaysController"],
+        "tags": [
+          "PaymentGatewaysController"
+        ],
         "responses": {
           "200": {
             "description": "Array of PaymentGateways model instances",
@@ -571,7 +605,9 @@
       "get": {
         "x-controller-name": "PingController",
         "x-operation-name": "ping",
-        "tags": ["PingController"],
+        "tags": [
+          "PingController"
+        ],
         "responses": {
           "200": {
             "description": "Ping Response",
@@ -591,7 +627,9 @@
       "post": {
         "x-controller-name": "TransactionsController",
         "x-operation-name": "orderandtransactionscreate",
-        "tags": ["TransactionsController"],
+        "tags": [
+          "TransactionsController"
+        ],
         "responses": {
           "302": {
             "description": "Order model instance",
@@ -616,7 +654,9 @@
       "post": {
         "x-controller-name": "SubscriptionTransactionsController",
         "x-operation-name": "subscriptionTransactionscharge",
-        "tags": ["SubscriptionTransactionsController"],
+        "tags": [
+          "SubscriptionTransactionsController"
+        ],
         "responses": {
           "200": {
             "description": "Subscription model instance",
@@ -641,7 +681,9 @@
       "get": {
         "x-controller-name": "SubscriptionsController",
         "x-operation-name": "count",
-        "tags": ["SubscriptionsController"],
+        "tags": [
+          "SubscriptionsController"
+        ],
         "responses": {
           "200": {
             "description": "Subscriptions model count",
@@ -678,7 +720,9 @@
       "put": {
         "x-controller-name": "SubscriptionsController",
         "x-operation-name": "replaceById",
-        "tags": ["SubscriptionsController"],
+        "tags": [
+          "SubscriptionsController"
+        ],
         "responses": {
           "204": {
             "description": "Subscriptions PUT success"
@@ -710,7 +754,9 @@
       "patch": {
         "x-controller-name": "SubscriptionsController",
         "x-operation-name": "updateById",
-        "tags": ["SubscriptionsController"],
+        "tags": [
+          "SubscriptionsController"
+        ],
         "responses": {
           "204": {
             "description": "Subscriptions PATCH success"
@@ -742,7 +788,9 @@
       "get": {
         "x-controller-name": "SubscriptionsController",
         "x-operation-name": "findById",
-        "tags": ["SubscriptionsController"],
+        "tags": [
+          "SubscriptionsController"
+        ],
         "responses": {
           "200": {
             "description": "Subscriptions model instance",
@@ -782,7 +830,9 @@
       "delete": {
         "x-controller-name": "SubscriptionsController",
         "x-operation-name": "deleteById",
-        "tags": ["SubscriptionsController"],
+        "tags": [
+          "SubscriptionsController"
+        ],
         "responses": {
           "204": {
             "description": "Subscriptions DELETE success"
@@ -806,7 +856,9 @@
       "post": {
         "x-controller-name": "SubscriptionsController",
         "x-operation-name": "create",
-        "tags": ["SubscriptionsController"],
+        "tags": [
+          "SubscriptionsController"
+        ],
         "responses": {
           "200": {
             "description": "Subscriptions model instance",
@@ -834,7 +886,9 @@
       "patch": {
         "x-controller-name": "SubscriptionsController",
         "x-operation-name": "updateAll",
-        "tags": ["SubscriptionsController"],
+        "tags": [
+          "SubscriptionsController"
+        ],
         "responses": {
           "200": {
             "description": "Subscriptions PATCH success count",
@@ -878,7 +932,9 @@
       "get": {
         "x-controller-name": "SubscriptionsController",
         "x-operation-name": "find",
-        "tags": ["SubscriptionsController"],
+        "tags": [
+          "SubscriptionsController"
+        ],
         "responses": {
           "200": {
             "description": "Array of Subscriptions model instances",
@@ -915,7 +971,9 @@
       "get": {
         "x-controller-name": "TemplatesController",
         "x-operation-name": "count",
-        "tags": ["TemplatesController"],
+        "tags": [
+          "TemplatesController"
+        ],
         "responses": {
           "200": {
             "description": "Templates model count",
@@ -951,7 +1009,9 @@
       "put": {
         "x-controller-name": "TemplatesController",
         "x-operation-name": "replaceById",
-        "tags": ["TemplatesController"],
+        "tags": [
+          "TemplatesController"
+        ],
         "responses": {
           "204": {
             "description": "Templates PUT success"
@@ -982,7 +1042,9 @@
       "patch": {
         "x-controller-name": "TemplatesController",
         "x-operation-name": "updateById",
-        "tags": ["TemplatesController"],
+        "tags": [
+          "TemplatesController"
+        ],
         "responses": {
           "204": {
             "description": "Templates PATCH success"
@@ -1013,7 +1075,9 @@
       "get": {
         "x-controller-name": "TemplatesController",
         "x-operation-name": "findById",
-        "tags": ["TemplatesController"],
+        "tags": [
+          "TemplatesController"
+        ],
         "responses": {
           "200": {
             "description": "Templates model instance",
@@ -1052,7 +1116,9 @@
       "delete": {
         "x-controller-name": "TemplatesController",
         "x-operation-name": "deleteById",
-        "tags": ["TemplatesController"],
+        "tags": [
+          "TemplatesController"
+        ],
         "responses": {
           "204": {
             "description": "Templates DELETE success"
@@ -1075,7 +1141,9 @@
       "post": {
         "x-controller-name": "TemplatesController",
         "x-operation-name": "create",
-        "tags": ["TemplatesController"],
+        "tags": [
+          "TemplatesController"
+        ],
         "responses": {
           "200": {
             "description": "Templates model instance",
@@ -1102,7 +1170,9 @@
       "patch": {
         "x-controller-name": "TemplatesController",
         "x-operation-name": "updateAll",
-        "tags": ["TemplatesController"],
+        "tags": [
+          "TemplatesController"
+        ],
         "responses": {
           "200": {
             "description": "Templates PATCH success count",
@@ -1145,7 +1215,9 @@
       "get": {
         "x-controller-name": "TemplatesController",
         "x-operation-name": "find",
-        "tags": ["TemplatesController"],
+        "tags": [
+          "TemplatesController"
+        ],
         "responses": {
           "200": {
             "description": "Array of Templates model instances",
@@ -1181,7 +1253,9 @@
       "post": {
         "x-controller-name": "TransactionsController",
         "x-operation-name": "transactionscharge",
-        "tags": ["TransactionsController"],
+        "tags": [
+          "TransactionsController"
+        ],
         "responses": {
           "200": {
             "description": "Transacttion Gateway Request",
@@ -1206,7 +1280,9 @@
       "get": {
         "x-controller-name": "TransactionsController",
         "x-operation-name": "count",
-        "tags": ["TransactionsController"],
+        "tags": [
+          "TransactionsController"
+        ],
         "responses": {
           "200": {
             "description": "Transactions model count",
@@ -1242,7 +1318,9 @@
       "get": {
         "x-controller-name": "TransactionsController",
         "x-operation-name": "transactionsPay",
-        "tags": ["TransactionsController"],
+        "tags": [
+          "TransactionsController"
+        ],
         "responses": {
           "200": {
             "description": "HTML response for payment gateway interface.",
@@ -1272,7 +1350,9 @@
       "get": {
         "x-controller-name": "TransactionsController",
         "x-operation-name": "transactionsRefundParse",
-        "tags": ["TransactionsController"],
+        "tags": [
+          "TransactionsController"
+        ],
         "responses": {
           "200": {
             "description": "Refund Object from payment gateway",
@@ -1298,7 +1378,9 @@
       "post": {
         "x-controller-name": "TransactionsController",
         "x-operation-name": "transactionsRefund",
-        "tags": ["TransactionsController"],
+        "tags": [
+          "TransactionsController"
+        ],
         "responses": {
           "200": {
             "description": "Refund Object from payment gateway",
@@ -1324,7 +1406,9 @@
       "get": {
         "x-controller-name": "TransactionSubscriptionsController",
         "x-operation-name": "subscriptionTransactionsPay",
-        "tags": ["TransactionSubscriptionsController"],
+        "tags": [
+          "TransactionSubscriptionsController"
+        ],
         "responses": {
           "302": {
             "description": "Array of Transactions model instances",
@@ -1354,7 +1438,9 @@
       "post": {
         "x-controller-name": "TransactionsController",
         "x-operation-name": "subscriptionWebHook",
-        "tags": ["TransactionsController"],
+        "tags": [
+          "TransactionsController"
+        ],
         "responses": {
           "200": {
             "description": "Subscription Gateway Request",
@@ -1379,7 +1465,9 @@
       "put": {
         "x-controller-name": "TransactionsController",
         "x-operation-name": "replaceById",
-        "tags": ["TransactionsController"],
+        "tags": [
+          "TransactionsController"
+        ],
         "responses": {
           "204": {
             "description": "Transactions PUT success"
@@ -1410,7 +1498,9 @@
       "patch": {
         "x-controller-name": "TransactionsController",
         "x-operation-name": "updateById",
-        "tags": ["TransactionsController"],
+        "tags": [
+          "TransactionsController"
+        ],
         "responses": {
           "204": {
             "description": "Transactions PATCH success"
@@ -1441,7 +1531,9 @@
       "get": {
         "x-controller-name": "TransactionsController",
         "x-operation-name": "findById",
-        "tags": ["TransactionsController"],
+        "tags": [
+          "TransactionsController"
+        ],
         "responses": {
           "200": {
             "description": "Transactions model instance",
@@ -1480,7 +1572,9 @@
       "delete": {
         "x-controller-name": "TransactionsController",
         "x-operation-name": "deleteById",
-        "tags": ["TransactionsController"],
+        "tags": [
+          "TransactionsController"
+        ],
         "responses": {
           "204": {
             "description": "Transactions DELETE success"
@@ -1503,7 +1597,9 @@
       "post": {
         "x-controller-name": "TransactionsController",
         "x-operation-name": "create",
-        "tags": ["TransactionsController"],
+        "tags": [
+          "TransactionsController"
+        ],
         "responses": {
           "200": {
             "description": "Transactions model instance",
@@ -1530,7 +1626,9 @@
       "patch": {
         "x-controller-name": "TransactionsController",
         "x-operation-name": "updateAll",
-        "tags": ["TransactionsController"],
+        "tags": [
+          "TransactionsController"
+        ],
         "responses": {
           "200": {
             "description": "Transactions PATCH success count",
@@ -1573,7 +1671,9 @@
       "get": {
         "x-controller-name": "TransactionsController",
         "x-operation-name": "find",
-        "tags": ["TransactionsController"],
+        "tags": [
+          "TransactionsController"
+        ],
         "responses": {
           "200": {
             "description": "Array of Transactions model instances",
@@ -1639,7 +1739,12 @@
             "type": "object"
           }
         },
-        "required": ["totalAmount", "currency", "status", "paymentGatewayId"],
+        "required": [
+          "totalAmount",
+          "currency",
+          "status",
+          "paymentGatewayId"
+        ],
         "additionalProperties": false
       },
       "NewOrders": {
@@ -1669,7 +1774,12 @@
             "type": "object"
           }
         },
-        "required": ["totalAmount", "currency", "status", "paymentGatewayId"],
+        "required": [
+          "totalAmount",
+          "currency",
+          "status",
+          "paymentGatewayId"
+        ],
         "additionalProperties": false,
         "x-typescript-type": "Orders"
       },
@@ -1700,7 +1810,12 @@
             "type": "object"
           }
         },
-        "required": ["totalAmount", "currency", "status", "paymentGatewayId"],
+        "required": [
+          "totalAmount",
+          "currency",
+          "status",
+          "paymentGatewayId"
+        ],
         "additionalProperties": false,
         "x-typescript-type": "OrdersWithRelations"
       },
@@ -1764,7 +1879,12 @@
             "type": "object"
           }
         },
-        "required": ["id", "amountPaid", "currency", "status"],
+        "required": [
+          "id",
+          "amountPaid",
+          "currency",
+          "status"
+        ],
         "additionalProperties": true
       },
       "NewTransactions": {
@@ -1798,7 +1918,12 @@
             "type": "object"
           }
         },
-        "required": ["id", "amountPaid", "currency", "status"],
+        "required": [
+          "id",
+          "amountPaid",
+          "currency",
+          "status"
+        ],
         "additionalProperties": true,
         "x-typescript-type": "Transactions"
       },
@@ -1833,7 +1958,12 @@
             "type": "object"
           }
         },
-        "required": ["id", "amountPaid", "currency", "status"],
+        "required": [
+          "id",
+          "amountPaid",
+          "currency",
+          "status"
+        ],
         "additionalProperties": true,
         "x-typescript-type": "TransactionsWithRelations"
       },
@@ -1888,7 +2018,12 @@
             "type": "boolean"
           }
         },
-        "required": ["id", "name", "gatewayType", "enabled"],
+        "required": [
+          "id",
+          "name",
+          "gatewayType",
+          "enabled"
+        ],
         "additionalProperties": true
       },
       "NewPaymentGateways": {
@@ -1909,7 +2044,12 @@
             "type": "boolean"
           }
         },
-        "required": ["id", "name", "gatewayType", "enabled"],
+        "required": [
+          "id",
+          "name",
+          "gatewayType",
+          "enabled"
+        ],
         "additionalProperties": true,
         "x-typescript-type": "PaymentGateways"
       },
@@ -1931,7 +2071,12 @@
             "type": "boolean"
           }
         },
-        "required": ["id", "name", "gatewayType", "enabled"],
+        "required": [
+          "id",
+          "name",
+          "gatewayType",
+          "enabled"
+        ],
         "additionalProperties": true,
         "x-typescript-type": "PaymentGatewaysWithRelations"
       },
@@ -1976,7 +2121,13 @@
             "type": "string"
           }
         },
-        "required": ["id", "paymentGatewayId", "name", "template", "type"],
+        "required": [
+          "id",
+          "paymentGatewayId",
+          "name",
+          "template",
+          "type"
+        ],
         "additionalProperties": true
       },
       "NewTemplates": {
@@ -2000,7 +2151,13 @@
             "type": "string"
           }
         },
-        "required": ["id", "paymentGatewayId", "name", "template", "type"],
+        "required": [
+          "id",
+          "paymentGatewayId",
+          "name",
+          "template",
+          "type"
+        ],
         "additionalProperties": true,
         "x-typescript-type": "Templates"
       },
@@ -2025,7 +2182,13 @@
             "type": "string"
           }
         },
-        "required": ["id", "paymentGatewayId", "name", "template", "type"],
+        "required": [
+          "id",
+          "paymentGatewayId",
+          "name",
+          "template",
+          "type"
+        ],
         "additionalProperties": true,
         "x-typescript-type": "TemplatesWithRelations"
       },
@@ -2093,7 +2256,11 @@
             "type": "string"
           }
         },
-        "required": ["id", "totalAmount", "status"],
+        "required": [
+          "id",
+          "totalAmount",
+          "status"
+        ],
         "additionalProperties": true
       },
       "NewSubscriptions": {
@@ -2137,7 +2304,11 @@
             "type": "string"
           }
         },
-        "required": ["id", "totalAmount", "status"],
+        "required": [
+          "id",
+          "totalAmount",
+          "status"
+        ],
         "additionalProperties": true,
         "x-typescript-type": "Subscriptions"
       },
@@ -2182,7 +2353,11 @@
             "type": "string"
           }
         },
-        "required": ["id", "totalAmount", "status"],
+        "required": [
+          "id",
+          "totalAmount",
+          "status"
+        ],
         "additionalProperties": true,
         "x-typescript-type": "SubscriptionsWithRelations"
       },

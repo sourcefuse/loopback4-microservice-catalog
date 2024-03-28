@@ -1,21 +1,22 @@
 ---
-title: '@sourceloop/payment-service v11.1.5'
+title: "@sourceloop/payment-service v12.0.0"
 language_tabs:
   - javascript: JavaScript
   - javascript--nodejs: Node.JS
 language_clients:
   - javascript: request
-  - javascript--nodejs: ''
+  - javascript--nodejs: ""
 toc_footers: []
 includes: []
 search: true
 highlight_theme: darkula
 headingLevel: 2
+
 ---
 
 <!-- Generator: Widdershins v4.0.1 -->
 
-<h1 id="-sourceloop-payment-service">@sourceloop/payment-service v11.1.5</h1>
+<h1 id="-sourceloop-payment-service">@sourceloop/payment-service v12.0.0</h1>
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
@@ -23,7 +24,7 @@ payment microservice.
 
 Base URLs:
 
-- <a href="/">/</a>
+* <a href="/">/</a>
 
 <h1 id="-sourceloop-payment-service-subscriptiontransactionscontroller">SubscriptionTransactionsController</h1>
 
@@ -36,21 +37,22 @@ Base URLs:
 ```javascript
 const inputBody = '{}';
 const headers = {
-  'Content-Type': 'application/json',
-  Accept: 'text/html',
+  'Content-Type':'application/json',
+  'Accept':'text/html'
 };
 
-fetch('/create-subscription-and-pay', {
+fetch('/create-subscription-and-pay',
+{
   method: 'POST',
   body: inputBody,
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -77,10 +79,10 @@ fetch('/create-subscription-and-pay',
 
 `POST /create-subscription-and-pay`
 
-| Permissions        |
-| ------------------ |
-| CreateSubscription |
-| 2                  |
+| Permissions |
+| ------- |
+| CreateSubscription   |
+| 2   |
 
 > Body parameter
 
@@ -90,17 +92,17 @@ fetch('/create-subscription-and-pay',
 
 <h3 id="subscriptiontransactionscontroller.subscriptionandtransactionscreate-parameters">Parameters</h3>
 
-| Name | In   | Type   | Required | Description |
-| ---- | ---- | ------ | -------- | ----------- |
-| body | body | object | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|object|false|none|
 
 > Example responses
 
 <h3 id="subscriptiontransactionscontroller.subscriptionandtransactionscreate-responses">Responses</h3>
 
-| Status | Meaning                                                    | Description                 | Schema |
-| ------ | ---------------------------------------------------------- | --------------------------- | ------ |
-| 302    | [Found](https://tools.ietf.org/html/rfc7231#section-6.4.3) | Subscription model instance | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|302|[Found](https://tools.ietf.org/html/rfc7231#section-6.4.3)|Subscription model instance|None|
 
 <h3 id="subscriptiontransactionscontroller.subscriptionandtransactionscreate-responseschema">Response Schema</h3>
 
@@ -117,21 +119,22 @@ This operation does not require authentication
 ```javascript
 const inputBody = '{}';
 const headers = {
-  'Content-Type': 'application/x-www-form-urlencoded',
-  Accept: 'application/json',
+  'Content-Type':'application/x-www-form-urlencoded',
+  'Accept':'application/json'
 };
 
-fetch('/subscription/transaction/charge', {
+fetch('/subscription/transaction/charge',
+{
   method: 'POST',
   body: inputBody,
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -162,21 +165,22 @@ fetch('/subscription/transaction/charge',
 
 ```yaml
 {}
+
 ```
 
 <h3 id="subscriptiontransactionscontroller.subscriptiontransactionscharge-parameters">Parameters</h3>
 
-| Name | In   | Type   | Required | Description |
-| ---- | ---- | ------ | -------- | ----------- |
-| body | body | object | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|object|false|none|
 
 > Example responses
 
 <h3 id="subscriptiontransactionscontroller.subscriptiontransactionscharge-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                 | Schema |
-| ------ | ------------------------------------------------------- | --------------------------- | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Subscription model instance | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Subscription model instance|None|
 
 <h3 id="subscriptiontransactionscontroller.subscriptiontransactionscharge-responseschema">Response Schema</h3>
 
@@ -193,21 +197,23 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/orders/count', {
+fetch('/orders/count',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -235,9 +241,9 @@ fetch('/orders/count',
 
 <h3 id="orderscontroller.count-parameters">Parameters</h3>
 
-| Name  | In    | Type   | Required | Description |
-| ----- | ----- | ------ | -------- | ----------- |
-| where | query | object | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|where|query|object|false|none|
 
 > Example responses
 
@@ -251,9 +257,9 @@ fetch('/orders/count',
 
 <h3 id="orderscontroller.count-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description        | Schema                                  |
-| ------ | ------------------------------------------------------- | ------------------ | --------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Orders model count | [loopback.Count](#schemaloopback.count) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Orders model count|[loopback.Count](#schemaloopback.count)|
 
 <aside class="success">
 This operation does not require authentication
@@ -340,16 +346,16 @@ fetch('/orders/{id}',
 
 <h3 id="orderscontroller.replacebyid-parameters">Parameters</h3>
 
-| Name | In   | Type                    | Required | Description |
-| ---- | ---- | ----------------------- | -------- | ----------- |
-| id   | path | string                  | true     | none        |
-| body | body | [Orders](#schemaorders) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[Orders](#schemaorders)|false|none|
 
 <h3 id="orderscontroller.replacebyid-responses">Responses</h3>
 
-| Status | Meaning                                                         | Description        | Schema |
-| ------ | --------------------------------------------------------------- | ------------------ | ------ |
-| 204    | [No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5) | Orders PUT success | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Orders PUT success|None|
 
 <aside class="success">
 This operation does not require authentication
@@ -436,16 +442,16 @@ fetch('/orders/{id}',
 
 <h3 id="orderscontroller.updatebyid-parameters">Parameters</h3>
 
-| Name | In   | Type                                  | Required | Description |
-| ---- | ---- | ------------------------------------- | -------- | ----------- |
-| id   | path | string                                | true     | none        |
-| body | body | [OrdersPartial](#schemaorderspartial) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[OrdersPartial](#schemaorderspartial)|false|none|
 
 <h3 id="orderscontroller.updatebyid-responses">Responses</h3>
 
-| Status | Meaning                                                         | Description          | Schema |
-| ------ | --------------------------------------------------------------- | -------------------- | ------ |
-| 204    | [No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5) | Orders PATCH success | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Orders PATCH success|None|
 
 <aside class="success">
 This operation does not require authentication
@@ -458,21 +464,23 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/orders/{id}', {
+fetch('/orders/{id}',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -500,10 +508,10 @@ fetch('/orders/{id}',
 
 <h3 id="orderscontroller.findbyid-parameters">Parameters</h3>
 
-| Name   | In    | Type                                  | Required | Description |
-| ------ | ----- | ------------------------------------- | -------- | ----------- |
-| id     | path  | string                                | true     | none        |
-| filter | query | [Orders.Filter](#schemaorders.filter) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|filter|query|[Orders.Filter](#schemaorders.filter)|false|none|
 
 > Example responses
 
@@ -523,9 +531,9 @@ fetch('/orders/{id}',
 
 <h3 id="orderscontroller.findbyid-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description           | Schema                                            |
-| ------ | ------------------------------------------------------- | --------------------- | ------------------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Orders model instance | [OrdersWithRelations](#schemaorderswithrelations) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Orders model instance|[OrdersWithRelations](#schemaorderswithrelations)|
 
 <aside class="success">
 This operation does not require authentication
@@ -538,15 +546,18 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
-fetch('/orders/{id}', {
-  method: 'DELETE',
+
+fetch('/orders/{id}',
+{
+  method: 'DELETE'
+
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -569,15 +580,15 @@ fetch('/orders/{id}',
 
 <h3 id="orderscontroller.deletebyid-parameters">Parameters</h3>
 
-| Name | In   | Type   | Required | Description |
-| ---- | ---- | ------ | -------- | ----------- |
-| id   | path | string | true     | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
 
 <h3 id="orderscontroller.deletebyid-responses">Responses</h3>
 
-| Status | Meaning                                                         | Description           | Schema |
-| ------ | --------------------------------------------------------------- | --------------------- | ------ |
-| 204    | [No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5) | Orders DELETE success | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Orders DELETE success|None|
 
 <aside class="success">
 This operation does not require authentication
@@ -666,9 +677,9 @@ fetch('/orders',
 
 <h3 id="orderscontroller.create-parameters">Parameters</h3>
 
-| Name | In   | Type                          | Required | Description |
-| ---- | ---- | ----------------------------- | -------- | ----------- |
-| body | body | [NewOrders](#schemaneworders) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[NewOrders](#schemaneworders)|false|none|
 
 > Example responses
 
@@ -688,9 +699,9 @@ fetch('/orders',
 
 <h3 id="orderscontroller.create-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description           | Schema                  |
-| ------ | ------------------------------------------------------- | --------------------- | ----------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Orders model instance | [Orders](#schemaorders) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Orders model instance|[Orders](#schemaorders)|
 
 <aside class="success">
 This operation does not require authentication
@@ -779,10 +790,10 @@ fetch('/orders',
 
 <h3 id="orderscontroller.updateall-parameters">Parameters</h3>
 
-| Name  | In    | Type                                  | Required | Description |
-| ----- | ----- | ------------------------------------- | -------- | ----------- |
-| where | query | object                                | false    | none        |
-| body  | body  | [OrdersPartial](#schemaorderspartial) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|where|query|object|false|none|
+|body|body|[OrdersPartial](#schemaorderspartial)|false|none|
 
 > Example responses
 
@@ -796,9 +807,9 @@ fetch('/orders',
 
 <h3 id="orderscontroller.updateall-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                | Schema                                  |
-| ------ | ------------------------------------------------------- | -------------------------- | --------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Orders PATCH success count | [loopback.Count](#schemaloopback.count) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Orders PATCH success count|[loopback.Count](#schemaloopback.count)|
 
 <aside class="success">
 This operation does not require authentication
@@ -811,21 +822,23 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/orders', {
+fetch('/orders',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -853,9 +866,9 @@ fetch('/orders',
 
 <h3 id="orderscontroller.find-parameters">Parameters</h3>
 
-| Name   | In    | Type                                    | Required | Description |
-| ------ | ----- | --------------------------------------- | -------- | ----------- |
-| filter | query | [Orders.Filter1](#schemaorders.filter1) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|filter|query|[Orders.Filter1](#schemaorders.filter1)|false|none|
 
 > Example responses
 
@@ -877,25 +890,25 @@ fetch('/orders',
 
 <h3 id="orderscontroller.find-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                     | Schema |
-| ------ | ------------------------------------------------------- | ------------------------------- | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Array of Orders model instances | Inline |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Orders model instances|Inline|
 
 <h3 id="orderscontroller.find-responseschema">Response Schema</h3>
 
 Status Code **200**
 
-| Name                  | Type                                                | Required | Restrictions | Description                                                                |
-| --------------------- | --------------------------------------------------- | -------- | ------------ | -------------------------------------------------------------------------- |
-| _anonymous_           | [[OrdersWithRelations](#schemaorderswithrelations)] | false    | none         | [(tsType: OrdersWithRelations, schemaOptions: { includeRelations: true })] |
-| » OrdersWithRelations | [OrdersWithRelations](#schemaorderswithrelations)   | false    | none         | (tsType: OrdersWithRelations, schemaOptions: { includeRelations: true })   |
-| »» id                 | string                                              | false    | none         | none                                                                       |
-| »» totalAmount        | number                                              | true     | none         | none                                                                       |
-| »» currency           | string                                              | true     | none         | none                                                                       |
-| »» status             | string                                              | true     | none         | none                                                                       |
-| »» paymentGatewayId   | string                                              | true     | none         | none                                                                       |
-| »» paymentmethod      | string                                              | false    | none         | none                                                                       |
-| »» metaData           | object                                              | false    | none         | none                                                                       |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[OrdersWithRelations](#schemaorderswithrelations)]|false|none|[(tsType: OrdersWithRelations, schemaOptions: { includeRelations: true })]|
+|» OrdersWithRelations|[OrdersWithRelations](#schemaorderswithrelations)|false|none|(tsType: OrdersWithRelations, schemaOptions: { includeRelations: true })|
+|»» id|string|false|none|none|
+|»» totalAmount|number|true|none|none|
+|»» currency|string|true|none|none|
+|»» status|string|true|none|none|
+|»» paymentGatewayId|string|true|none|none|
+|»» paymentmethod|string|false|none|none|
+|»» metaData|object|false|none|none|
 
 <aside class="success">
 This operation does not require authentication
@@ -910,21 +923,23 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/payment-gateways/count', {
+fetch('/payment-gateways/count',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -952,9 +967,9 @@ fetch('/payment-gateways/count',
 
 <h3 id="paymentgatewayscontroller.count-parameters">Parameters</h3>
 
-| Name  | In    | Type   | Required | Description |
-| ----- | ----- | ------ | -------- | ----------- |
-| where | query | object | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|where|query|object|false|none|
 
 > Example responses
 
@@ -968,9 +983,9 @@ fetch('/payment-gateways/count',
 
 <h3 id="paymentgatewayscontroller.count-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                 | Schema                                  |
-| ------ | ------------------------------------------------------- | --------------------------- | --------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | PaymentGateways model count | [loopback.Count](#schemaloopback.count) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|PaymentGateways model count|[loopback.Count](#schemaloopback.count)|
 
 <aside class="success">
 This operation does not require authentication
@@ -1048,16 +1063,16 @@ fetch('/payment-gateways/{id}',
 
 <h3 id="paymentgatewayscontroller.replacebyid-parameters">Parameters</h3>
 
-| Name | In   | Type                                      | Required | Description |
-| ---- | ---- | ----------------------------------------- | -------- | ----------- |
-| id   | path | string                                    | true     | none        |
-| body | body | [PaymentGateways](#schemapaymentgateways) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[PaymentGateways](#schemapaymentgateways)|false|none|
 
 <h3 id="paymentgatewayscontroller.replacebyid-responses">Responses</h3>
 
-| Status | Meaning                                                         | Description                 | Schema |
-| ------ | --------------------------------------------------------------- | --------------------------- | ------ |
-| 204    | [No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5) | PaymentGateways PUT success | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|PaymentGateways PUT success|None|
 
 <aside class="success">
 This operation does not require authentication
@@ -1135,16 +1150,16 @@ fetch('/payment-gateways/{id}',
 
 <h3 id="paymentgatewayscontroller.updatebyid-parameters">Parameters</h3>
 
-| Name | In   | Type                                                    | Required | Description |
-| ---- | ---- | ------------------------------------------------------- | -------- | ----------- |
-| id   | path | string                                                  | true     | none        |
-| body | body | [PaymentGatewaysPartial](#schemapaymentgatewayspartial) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[PaymentGatewaysPartial](#schemapaymentgatewayspartial)|false|none|
 
 <h3 id="paymentgatewayscontroller.updatebyid-responses">Responses</h3>
 
-| Status | Meaning                                                         | Description                   | Schema |
-| ------ | --------------------------------------------------------------- | ----------------------------- | ------ |
-| 204    | [No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5) | PaymentGateways PATCH success | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|PaymentGateways PATCH success|None|
 
 <aside class="success">
 This operation does not require authentication
@@ -1157,21 +1172,23 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/payment-gateways/{id}', {
+fetch('/payment-gateways/{id}',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -1199,10 +1216,10 @@ fetch('/payment-gateways/{id}',
 
 <h3 id="paymentgatewayscontroller.findbyid-parameters">Parameters</h3>
 
-| Name   | In    | Type                                                    | Required | Description |
-| ------ | ----- | ------------------------------------------------------- | -------- | ----------- |
-| id     | path  | string                                                  | true     | none        |
-| filter | query | [PaymentGateways.Filter](#schemapaymentgateways.filter) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|filter|query|[PaymentGateways.Filter](#schemapaymentgateways.filter)|false|none|
 
 > Example responses
 
@@ -1219,9 +1236,9 @@ fetch('/payment-gateways/{id}',
 
 <h3 id="paymentgatewayscontroller.findbyid-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                    | Schema                                                              |
-| ------ | ------------------------------------------------------- | ------------------------------ | ------------------------------------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | PaymentGateways model instance | [PaymentGatewaysWithRelations](#schemapaymentgatewayswithrelations) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|PaymentGateways model instance|[PaymentGatewaysWithRelations](#schemapaymentgatewayswithrelations)|
 
 <aside class="success">
 This operation does not require authentication
@@ -1234,15 +1251,18 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
-fetch('/payment-gateways/{id}', {
-  method: 'DELETE',
+
+fetch('/payment-gateways/{id}',
+{
+  method: 'DELETE'
+
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -1265,15 +1285,15 @@ fetch('/payment-gateways/{id}',
 
 <h3 id="paymentgatewayscontroller.deletebyid-parameters">Parameters</h3>
 
-| Name | In   | Type   | Required | Description |
-| ---- | ---- | ------ | -------- | ----------- |
-| id   | path | string | true     | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
 
 <h3 id="paymentgatewayscontroller.deletebyid-responses">Responses</h3>
 
-| Status | Meaning                                                         | Description                    | Schema |
-| ------ | --------------------------------------------------------------- | ------------------------------ | ------ |
-| 204    | [No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5) | PaymentGateways DELETE success | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|PaymentGateways DELETE success|None|
 
 <aside class="success">
 This operation does not require authentication
@@ -1353,9 +1373,9 @@ fetch('/payment-gateways',
 
 <h3 id="paymentgatewayscontroller.create-parameters">Parameters</h3>
 
-| Name | In   | Type                                            | Required | Description |
-| ---- | ---- | ----------------------------------------------- | -------- | ----------- |
-| body | body | [NewPaymentGateways](#schemanewpaymentgateways) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[NewPaymentGateways](#schemanewpaymentgateways)|false|none|
 
 > Example responses
 
@@ -1372,9 +1392,9 @@ fetch('/payment-gateways',
 
 <h3 id="paymentgatewayscontroller.create-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                    | Schema                                    |
-| ------ | ------------------------------------------------------- | ------------------------------ | ----------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | PaymentGateways model instance | [PaymentGateways](#schemapaymentgateways) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|PaymentGateways model instance|[PaymentGateways](#schemapaymentgateways)|
 
 <aside class="success">
 This operation does not require authentication
@@ -1454,10 +1474,10 @@ fetch('/payment-gateways',
 
 <h3 id="paymentgatewayscontroller.updateall-parameters">Parameters</h3>
 
-| Name  | In    | Type                                                    | Required | Description |
-| ----- | ----- | ------------------------------------------------------- | -------- | ----------- |
-| where | query | object                                                  | false    | none        |
-| body  | body  | [PaymentGatewaysPartial](#schemapaymentgatewayspartial) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|where|query|object|false|none|
+|body|body|[PaymentGatewaysPartial](#schemapaymentgatewayspartial)|false|none|
 
 > Example responses
 
@@ -1471,9 +1491,9 @@ fetch('/payment-gateways',
 
 <h3 id="paymentgatewayscontroller.updateall-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                         | Schema                                  |
-| ------ | ------------------------------------------------------- | ----------------------------------- | --------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | PaymentGateways PATCH success count | [loopback.Count](#schemaloopback.count) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|PaymentGateways PATCH success count|[loopback.Count](#schemaloopback.count)|
 
 <aside class="success">
 This operation does not require authentication
@@ -1486,21 +1506,23 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/payment-gateways', {
+fetch('/payment-gateways',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -1528,9 +1550,9 @@ fetch('/payment-gateways',
 
 <h3 id="paymentgatewayscontroller.find-parameters">Parameters</h3>
 
-| Name   | In    | Type                                                      | Required | Description |
-| ------ | ----- | --------------------------------------------------------- | -------- | ----------- |
-| filter | query | [PaymentGateways.Filter1](#schemapaymentgateways.filter1) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|filter|query|[PaymentGateways.Filter1](#schemapaymentgateways.filter1)|false|none|
 
 > Example responses
 
@@ -1549,22 +1571,22 @@ fetch('/payment-gateways',
 
 <h3 id="paymentgatewayscontroller.find-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                              | Schema |
-| ------ | ------------------------------------------------------- | ---------------------------------------- | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Array of PaymentGateways model instances | Inline |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of PaymentGateways model instances|Inline|
 
 <h3 id="paymentgatewayscontroller.find-responseschema">Response Schema</h3>
 
 Status Code **200**
 
-| Name                           | Type                                                                  | Required | Restrictions | Description                                                                         |
-| ------------------------------ | --------------------------------------------------------------------- | -------- | ------------ | ----------------------------------------------------------------------------------- |
-| _anonymous_                    | [[PaymentGatewaysWithRelations](#schemapaymentgatewayswithrelations)] | false    | none         | [(tsType: PaymentGatewaysWithRelations, schemaOptions: { includeRelations: true })] |
-| » PaymentGatewaysWithRelations | [PaymentGatewaysWithRelations](#schemapaymentgatewayswithrelations)   | false    | none         | (tsType: PaymentGatewaysWithRelations, schemaOptions: { includeRelations: true })   |
-| »» id                          | string                                                                | true     | none         | none                                                                                |
-| »» name                        | string                                                                | true     | none         | none                                                                                |
-| »» gatewayType                 | string                                                                | true     | none         | none                                                                                |
-| »» enabled                     | boolean                                                               | true     | none         | none                                                                                |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[PaymentGatewaysWithRelations](#schemapaymentgatewayswithrelations)]|false|none|[(tsType: PaymentGatewaysWithRelations, schemaOptions: { includeRelations: true })]|
+|» PaymentGatewaysWithRelations|[PaymentGatewaysWithRelations](#schemapaymentgatewayswithrelations)|false|none|(tsType: PaymentGatewaysWithRelations, schemaOptions: { includeRelations: true })|
+|»» id|string|true|none|none|
+|»» name|string|true|none|none|
+|»» gatewayType|string|true|none|none|
+|»» enabled|boolean|true|none|none|
 
 <aside class="success">
 This operation does not require authentication
@@ -1579,21 +1601,23 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/ping', {
+fetch('/ping',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -1636,9 +1660,9 @@ fetch('/ping',
 
 <h3 id="pingcontroller.ping-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description   | Schema                              |
-| ------ | ------------------------------------------------------- | ------------- | ----------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Ping Response | [PingResponse](#schemapingresponse) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Ping Response|[PingResponse](#schemapingresponse)|
 
 <aside class="success">
 This operation does not require authentication
@@ -1655,21 +1679,22 @@ This operation does not require authentication
 ```javascript
 const inputBody = '{}';
 const headers = {
-  'Content-Type': 'application/json',
-  Accept: 'text/html',
+  'Content-Type':'application/json',
+  'Accept':'text/html'
 };
 
-fetch('/place-order-and-pay', {
+fetch('/place-order-and-pay',
+{
   method: 'POST',
   body: inputBody,
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -1704,17 +1729,17 @@ fetch('/place-order-and-pay',
 
 <h3 id="transactionscontroller.orderandtransactionscreate-parameters">Parameters</h3>
 
-| Name | In   | Type   | Required | Description |
-| ---- | ---- | ------ | -------- | ----------- |
-| body | body | object | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|object|false|none|
 
 > Example responses
 
 <h3 id="transactionscontroller.orderandtransactionscreate-responses">Responses</h3>
 
-| Status | Meaning                                                    | Description          | Schema |
-| ------ | ---------------------------------------------------------- | -------------------- | ------ |
-| 302    | [Found](https://tools.ietf.org/html/rfc7231#section-6.4.3) | Order model instance | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|302|[Found](https://tools.ietf.org/html/rfc7231#section-6.4.3)|Order model instance|None|
 
 <h3 id="transactionscontroller.orderandtransactionscreate-responseschema">Response Schema</h3>
 
@@ -1731,21 +1756,22 @@ This operation does not require authentication
 ```javascript
 const inputBody = '{}';
 const headers = {
-  'Content-Type': 'application/x-www-form-urlencoded',
-  Accept: 'application/json',
+  'Content-Type':'application/x-www-form-urlencoded',
+  'Accept':'application/json'
 };
 
-fetch('/transactions/charge', {
+fetch('/transactions/charge',
+{
   method: 'POST',
   body: inputBody,
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -1776,21 +1802,22 @@ fetch('/transactions/charge',
 
 ```yaml
 {}
+
 ```
 
 <h3 id="transactionscontroller.transactionscharge-parameters">Parameters</h3>
 
-| Name | In   | Type   | Required | Description |
-| ---- | ---- | ------ | -------- | ----------- |
-| body | body | object | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|object|false|none|
 
 > Example responses
 
 <h3 id="transactionscontroller.transactionscharge-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                  | Schema |
-| ------ | ------------------------------------------------------- | ---------------------------- | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Transacttion Gateway Request | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Transacttion Gateway Request|None|
 
 <h3 id="transactionscontroller.transactionscharge-responseschema">Response Schema</h3>
 
@@ -1805,21 +1832,23 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/transactions/count', {
+fetch('/transactions/count',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -1847,9 +1876,9 @@ fetch('/transactions/count',
 
 <h3 id="transactionscontroller.count-parameters">Parameters</h3>
 
-| Name  | In    | Type   | Required | Description |
-| ----- | ----- | ------ | -------- | ----------- |
-| where | query | object | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|where|query|object|false|none|
 
 > Example responses
 
@@ -1863,9 +1892,9 @@ fetch('/transactions/count',
 
 <h3 id="transactionscontroller.count-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description              | Schema                                  |
-| ------ | ------------------------------------------------------- | ------------------------ | --------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Transactions model count | [loopback.Count](#schemaloopback.count) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Transactions model count|[loopback.Count](#schemaloopback.count)|
 
 <aside class="success">
 This operation does not require authentication
@@ -1878,21 +1907,23 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'text/html',
+  'Accept':'text/html'
 };
 
-fetch('/transactions/orderid/{id}', {
+fetch('/transactions/orderid/{id}',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -1920,9 +1951,9 @@ fetch('/transactions/orderid/{id}',
 
 <h3 id="transactionscontroller.transactionspay-parameters">Parameters</h3>
 
-| Name | In   | Type   | Required | Description |
-| ---- | ---- | ------ | -------- | ----------- |
-| id   | path | string | true     | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
 
 > Example responses
 
@@ -1934,9 +1965,9 @@ fetch('/transactions/orderid/{id}',
 
 <h3 id="transactionscontroller.transactionspay-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                                  | Schema |
-| ------ | ------------------------------------------------------- | -------------------------------------------- | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | HTML response for payment gateway interface. | Inline |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|HTML response for payment gateway interface.|Inline|
 
 <h3 id="transactionscontroller.transactionspay-responseschema">Response Schema</h3>
 
@@ -1951,21 +1982,23 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/transactions/refund/parse/{id}', {
+fetch('/transactions/refund/parse/{id}',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -1993,17 +2026,17 @@ fetch('/transactions/refund/parse/{id}',
 
 <h3 id="transactionscontroller.transactionsrefundparse-parameters">Parameters</h3>
 
-| Name | In   | Type   | Required | Description |
-| ---- | ---- | ------ | -------- | ----------- |
-| id   | path | string | true     | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
 
 > Example responses
 
 <h3 id="transactionscontroller.transactionsrefundparse-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                        | Schema |
-| ------ | ------------------------------------------------------- | ---------------------------------- | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Refund Object from payment gateway | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Refund Object from payment gateway|None|
 
 <h3 id="transactionscontroller.transactionsrefundparse-responseschema">Response Schema</h3>
 
@@ -2018,21 +2051,23 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/transactions/refund/{id}', {
+fetch('/transactions/refund/{id}',
+{
   method: 'POST',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -2060,17 +2095,17 @@ fetch('/transactions/refund/{id}',
 
 <h3 id="transactionscontroller.transactionsrefund-parameters">Parameters</h3>
 
-| Name | In   | Type   | Required | Description |
-| ---- | ---- | ------ | -------- | ----------- |
-| id   | path | string | true     | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
 
 > Example responses
 
 <h3 id="transactionscontroller.transactionsrefund-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                        | Schema |
-| ------ | ------------------------------------------------------- | ---------------------------------- | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Refund Object from payment gateway | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Refund Object from payment gateway|None|
 
 <h3 id="transactionscontroller.transactionsrefund-responseschema">Response Schema</h3>
 
@@ -2087,21 +2122,22 @@ This operation does not require authentication
 ```javascript
 const inputBody = '{}';
 const headers = {
-  'Content-Type': 'application/json',
-  Accept: 'application/json',
+  'Content-Type':'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/transactions/webhook', {
+fetch('/transactions/webhook',
+{
   method: 'POST',
   body: inputBody,
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -2136,17 +2172,17 @@ fetch('/transactions/webhook',
 
 <h3 id="transactionscontroller.subscriptionwebhook-parameters">Parameters</h3>
 
-| Name | In   | Type   | Required | Description |
-| ---- | ---- | ------ | -------- | ----------- |
-| body | body | object | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|object|false|none|
 
 > Example responses
 
 <h3 id="transactionscontroller.subscriptionwebhook-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                  | Schema |
-| ------ | ------------------------------------------------------- | ---------------------------- | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Subscription Gateway Request | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Subscription Gateway Request|None|
 
 <h3 id="transactionscontroller.subscriptionwebhook-responseschema">Response Schema</h3>
 
@@ -2238,16 +2274,16 @@ fetch('/transactions/{id}',
 
 <h3 id="transactionscontroller.replacebyid-parameters">Parameters</h3>
 
-| Name | In   | Type                                | Required | Description |
-| ---- | ---- | ----------------------------------- | -------- | ----------- |
-| id   | path | string                              | true     | none        |
-| body | body | [Transactions](#schematransactions) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[Transactions](#schematransactions)|false|none|
 
 <h3 id="transactionscontroller.replacebyid-responses">Responses</h3>
 
-| Status | Meaning                                                         | Description              | Schema |
-| ------ | --------------------------------------------------------------- | ------------------------ | ------ |
-| 204    | [No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5) | Transactions PUT success | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Transactions PUT success|None|
 
 <aside class="success">
 This operation does not require authentication
@@ -2337,16 +2373,16 @@ fetch('/transactions/{id}',
 
 <h3 id="transactionscontroller.updatebyid-parameters">Parameters</h3>
 
-| Name | In   | Type                                              | Required | Description |
-| ---- | ---- | ------------------------------------------------- | -------- | ----------- |
-| id   | path | string                                            | true     | none        |
-| body | body | [TransactionsPartial](#schematransactionspartial) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[TransactionsPartial](#schematransactionspartial)|false|none|
 
 <h3 id="transactionscontroller.updatebyid-responses">Responses</h3>
 
-| Status | Meaning                                                         | Description                | Schema |
-| ------ | --------------------------------------------------------------- | -------------------------- | ------ |
-| 204    | [No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5) | Transactions PATCH success | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Transactions PATCH success|None|
 
 <aside class="success">
 This operation does not require authentication
@@ -2359,21 +2395,23 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/transactions/{id}', {
+fetch('/transactions/{id}',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -2401,10 +2439,10 @@ fetch('/transactions/{id}',
 
 <h3 id="transactionscontroller.findbyid-parameters">Parameters</h3>
 
-| Name   | In    | Type                                              | Required | Description |
-| ------ | ----- | ------------------------------------------------- | -------- | ----------- |
-| id     | path  | string                                            | true     | none        |
-| filter | query | [Transactions.Filter](#schematransactions.filter) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|filter|query|[Transactions.Filter](#schematransactions.filter)|false|none|
 
 > Example responses
 
@@ -2425,9 +2463,9 @@ fetch('/transactions/{id}',
 
 <h3 id="transactionscontroller.findbyid-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                 | Schema                                                        |
-| ------ | ------------------------------------------------------- | --------------------------- | ------------------------------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Transactions model instance | [TransactionsWithRelations](#schematransactionswithrelations) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Transactions model instance|[TransactionsWithRelations](#schematransactionswithrelations)|
 
 <aside class="success">
 This operation does not require authentication
@@ -2440,15 +2478,18 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
-fetch('/transactions/{id}', {
-  method: 'DELETE',
+
+fetch('/transactions/{id}',
+{
+  method: 'DELETE'
+
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -2471,15 +2512,15 @@ fetch('/transactions/{id}',
 
 <h3 id="transactionscontroller.deletebyid-parameters">Parameters</h3>
 
-| Name | In   | Type   | Required | Description |
-| ---- | ---- | ------ | -------- | ----------- |
-| id   | path | string | true     | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
 
 <h3 id="transactionscontroller.deletebyid-responses">Responses</h3>
 
-| Status | Meaning                                                         | Description                 | Schema |
-| ------ | --------------------------------------------------------------- | --------------------------- | ------ |
-| 204    | [No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5) | Transactions DELETE success | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Transactions DELETE success|None|
 
 <aside class="success">
 This operation does not require authentication
@@ -2571,9 +2612,9 @@ fetch('/transactions',
 
 <h3 id="transactionscontroller.create-parameters">Parameters</h3>
 
-| Name | In   | Type                                      | Required | Description |
-| ---- | ---- | ----------------------------------------- | -------- | ----------- |
-| body | body | [NewTransactions](#schemanewtransactions) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[NewTransactions](#schemanewtransactions)|false|none|
 
 > Example responses
 
@@ -2594,9 +2635,9 @@ fetch('/transactions',
 
 <h3 id="transactionscontroller.create-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                 | Schema                              |
-| ------ | ------------------------------------------------------- | --------------------------- | ----------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Transactions model instance | [Transactions](#schematransactions) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Transactions model instance|[Transactions](#schematransactions)|
 
 <aside class="success">
 This operation does not require authentication
@@ -2688,10 +2729,10 @@ fetch('/transactions',
 
 <h3 id="transactionscontroller.updateall-parameters">Parameters</h3>
 
-| Name  | In    | Type                                              | Required | Description |
-| ----- | ----- | ------------------------------------------------- | -------- | ----------- |
-| where | query | object                                            | false    | none        |
-| body  | body  | [TransactionsPartial](#schematransactionspartial) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|where|query|object|false|none|
+|body|body|[TransactionsPartial](#schematransactionspartial)|false|none|
 
 > Example responses
 
@@ -2705,9 +2746,9 @@ fetch('/transactions',
 
 <h3 id="transactionscontroller.updateall-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                      | Schema                                  |
-| ------ | ------------------------------------------------------- | -------------------------------- | --------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Transactions PATCH success count | [loopback.Count](#schemaloopback.count) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Transactions PATCH success count|[loopback.Count](#schemaloopback.count)|
 
 <aside class="success">
 This operation does not require authentication
@@ -2720,21 +2761,23 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/transactions', {
+fetch('/transactions',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -2762,9 +2805,9 @@ fetch('/transactions',
 
 <h3 id="transactionscontroller.find-parameters">Parameters</h3>
 
-| Name   | In    | Type                                                | Required | Description |
-| ------ | ----- | --------------------------------------------------- | -------- | ----------- |
-| filter | query | [Transactions.Filter1](#schematransactions.filter1) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|filter|query|[Transactions.Filter1](#schematransactions.filter1)|false|none|
 
 > Example responses
 
@@ -2787,26 +2830,26 @@ fetch('/transactions',
 
 <h3 id="transactionscontroller.find-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                           | Schema |
-| ------ | ------------------------------------------------------- | ------------------------------------- | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Array of Transactions model instances | Inline |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Transactions model instances|Inline|
 
 <h3 id="transactionscontroller.find-responseschema">Response Schema</h3>
 
 Status Code **200**
 
-| Name                        | Type                                                            | Required | Restrictions | Description                                                                      |
-| --------------------------- | --------------------------------------------------------------- | -------- | ------------ | -------------------------------------------------------------------------------- |
-| _anonymous_                 | [[TransactionsWithRelations](#schematransactionswithrelations)] | false    | none         | [(tsType: TransactionsWithRelations, schemaOptions: { includeRelations: true })] |
-| » TransactionsWithRelations | [TransactionsWithRelations](#schematransactionswithrelations)   | false    | none         | (tsType: TransactionsWithRelations, schemaOptions: { includeRelations: true })   |
-| »» id                       | string                                                          | true     | none         | none                                                                             |
-| »» amountPaid               | number                                                          | true     | none         | none                                                                             |
-| »» currency                 | string                                                          | true     | none         | none                                                                             |
-| »» status                   | string                                                          | true     | none         | none                                                                             |
-| »» paidDate                 | string(date-time)                                               | false    | none         | none                                                                             |
-| »» paymentGatewayId         | string                                                          | false    | none         | none                                                                             |
-| »» orderId                  | string                                                          | false    | none         | none                                                                             |
-| »» res                      | object                                                          | false    | none         | none                                                                             |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[TransactionsWithRelations](#schematransactionswithrelations)]|false|none|[(tsType: TransactionsWithRelations, schemaOptions: { includeRelations: true })]|
+|» TransactionsWithRelations|[TransactionsWithRelations](#schematransactionswithrelations)|false|none|(tsType: TransactionsWithRelations, schemaOptions: { includeRelations: true })|
+|»» id|string|true|none|none|
+|»» amountPaid|number|true|none|none|
+|»» currency|string|true|none|none|
+|»» status|string|true|none|none|
+|»» paidDate|string(date-time)|false|none|none|
+|»» paymentGatewayId|string|false|none|none|
+|»» orderId|string|false|none|none|
+|»» res|object|false|none|none|
 
 <aside class="success">
 This operation does not require authentication
@@ -2821,21 +2864,23 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/subscriptions/count', {
+fetch('/subscriptions/count',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -2861,16 +2906,16 @@ fetch('/subscriptions/count',
 
 `GET /subscriptions/count`
 
-| Permissions          |
-| -------------------- |
-| GetSubscriptionCount |
-| 1                    |
+| Permissions |
+| ------- |
+| GetSubscriptionCount   |
+| 1   |
 
 <h3 id="subscriptionscontroller.count-parameters">Parameters</h3>
 
-| Name  | In    | Type   | Required | Description |
-| ----- | ----- | ------ | -------- | ----------- |
-| where | query | object | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|where|query|object|false|none|
 
 > Example responses
 
@@ -2884,9 +2929,9 @@ fetch('/subscriptions/count',
 
 <h3 id="subscriptionscontroller.count-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description               | Schema                                  |
-| ------ | ------------------------------------------------------- | ------------------------- | --------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Subscriptions model count | [loopback.Count](#schemaloopback.count) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Subscriptions model count|[loopback.Count](#schemaloopback.count)|
 
 <aside class="success">
 This operation does not require authentication
@@ -2965,10 +3010,10 @@ fetch('/subscriptions/{id}',
 
 `PUT /subscriptions/{id}`
 
-| Permissions         |
-| ------------------- |
-| UpdateSubscriptions |
-| 4                   |
+| Permissions |
+| ------- |
+| UpdateSubscriptions   |
+| 4   |
 
 > Body parameter
 
@@ -2990,16 +3035,16 @@ fetch('/subscriptions/{id}',
 
 <h3 id="subscriptionscontroller.replacebyid-parameters">Parameters</h3>
 
-| Name | In   | Type                                  | Required | Description |
-| ---- | ---- | ------------------------------------- | -------- | ----------- |
-| id   | path | string                                | true     | none        |
-| body | body | [Subscriptions](#schemasubscriptions) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[Subscriptions](#schemasubscriptions)|false|none|
 
 <h3 id="subscriptionscontroller.replacebyid-responses">Responses</h3>
 
-| Status | Meaning                                                         | Description               | Schema |
-| ------ | --------------------------------------------------------------- | ------------------------- | ------ |
-| 204    | [No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5) | Subscriptions PUT success | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Subscriptions PUT success|None|
 
 <aside class="success">
 This operation does not require authentication
@@ -3078,10 +3123,10 @@ fetch('/subscriptions/{id}',
 
 `PATCH /subscriptions/{id}`
 
-| Permissions         |
-| ------------------- |
-| UpdateSubscriptions |
-| 4                   |
+| Permissions |
+| ------- |
+| UpdateSubscriptions   |
+| 4   |
 
 > Body parameter
 
@@ -3103,16 +3148,16 @@ fetch('/subscriptions/{id}',
 
 <h3 id="subscriptionscontroller.updatebyid-parameters">Parameters</h3>
 
-| Name | In   | Type                                                | Required | Description |
-| ---- | ---- | --------------------------------------------------- | -------- | ----------- |
-| id   | path | string                                              | true     | none        |
-| body | body | [SubscriptionsPartial](#schemasubscriptionspartial) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[SubscriptionsPartial](#schemasubscriptionspartial)|false|none|
 
 <h3 id="subscriptionscontroller.updatebyid-responses">Responses</h3>
 
-| Status | Meaning                                                         | Description                 | Schema |
-| ------ | --------------------------------------------------------------- | --------------------------- | ------ |
-| 204    | [No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5) | Subscriptions PATCH success | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Subscriptions PATCH success|None|
 
 <aside class="success">
 This operation does not require authentication
@@ -3125,21 +3170,23 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/subscriptions/{id}', {
+fetch('/subscriptions/{id}',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -3165,17 +3212,17 @@ fetch('/subscriptions/{id}',
 
 `GET /subscriptions/{id}`
 
-| Permissions      |
-| ---------------- |
-| GetSubscriptions |
-| 3                |
+| Permissions |
+| ------- |
+| GetSubscriptions   |
+| 3   |
 
 <h3 id="subscriptionscontroller.findbyid-parameters">Parameters</h3>
 
-| Name   | In    | Type                                                | Required | Description |
-| ------ | ----- | --------------------------------------------------- | -------- | ----------- |
-| id     | path  | string                                              | true     | none        |
-| filter | query | [Subscriptions.Filter](#schemasubscriptions.filter) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|filter|query|[Subscriptions.Filter](#schemasubscriptions.filter)|false|none|
 
 > Example responses
 
@@ -3199,9 +3246,9 @@ fetch('/subscriptions/{id}',
 
 <h3 id="subscriptionscontroller.findbyid-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                  | Schema                                                          |
-| ------ | ------------------------------------------------------- | ---------------------------- | --------------------------------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Subscriptions model instance | [SubscriptionsWithRelations](#schemasubscriptionswithrelations) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Subscriptions model instance|[SubscriptionsWithRelations](#schemasubscriptionswithrelations)|
 
 <aside class="success">
 This operation does not require authentication
@@ -3214,15 +3261,18 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
-fetch('/subscriptions/{id}', {
-  method: 'DELETE',
+
+fetch('/subscriptions/{id}',
+{
+  method: 'DELETE'
+
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -3243,22 +3293,22 @@ fetch('/subscriptions/{id}',
 
 `DELETE /subscriptions/{id}`
 
-| Permissions         |
-| ------------------- |
-| DeleteSubscriptions |
-| 5                   |
+| Permissions |
+| ------- |
+| DeleteSubscriptions   |
+| 5   |
 
 <h3 id="subscriptionscontroller.deletebyid-parameters">Parameters</h3>
 
-| Name | In   | Type   | Required | Description |
-| ---- | ---- | ------ | -------- | ----------- |
-| id   | path | string | true     | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
 
 <h3 id="subscriptionscontroller.deletebyid-responses">Responses</h3>
 
-| Status | Meaning                                                         | Description                  | Schema |
-| ------ | --------------------------------------------------------------- | ---------------------------- | ------ |
-| 204    | [No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5) | Subscriptions DELETE success | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Subscriptions DELETE success|None|
 
 <aside class="success">
 This operation does not require authentication
@@ -3339,10 +3389,10 @@ fetch('/subscriptions',
 
 `POST /subscriptions`
 
-| Permissions        |
-| ------------------ |
-| CreateSubscription |
-| 2                  |
+| Permissions |
+| ------- |
+| CreateSubscription   |
+| 2   |
 
 > Body parameter
 
@@ -3364,9 +3414,9 @@ fetch('/subscriptions',
 
 <h3 id="subscriptionscontroller.create-parameters">Parameters</h3>
 
-| Name | In   | Type                                        | Required | Description |
-| ---- | ---- | ------------------------------------------- | -------- | ----------- |
-| body | body | [NewSubscriptions](#schemanewsubscriptions) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[NewSubscriptions](#schemanewsubscriptions)|false|none|
 
 > Example responses
 
@@ -3390,9 +3440,9 @@ fetch('/subscriptions',
 
 <h3 id="subscriptionscontroller.create-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                  | Schema                                |
-| ------ | ------------------------------------------------------- | ---------------------------- | ------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Subscriptions model instance | [Subscriptions](#schemasubscriptions) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Subscriptions model instance|[Subscriptions](#schemasubscriptions)|
 
 <aside class="success">
 This operation does not require authentication
@@ -3473,10 +3523,10 @@ fetch('/subscriptions',
 
 `PATCH /subscriptions`
 
-| Permissions         |
-| ------------------- |
-| UpdateSubscriptions |
-| 4                   |
+| Permissions |
+| ------- |
+| UpdateSubscriptions   |
+| 4   |
 
 > Body parameter
 
@@ -3498,10 +3548,10 @@ fetch('/subscriptions',
 
 <h3 id="subscriptionscontroller.updateall-parameters">Parameters</h3>
 
-| Name  | In    | Type                                                | Required | Description |
-| ----- | ----- | --------------------------------------------------- | -------- | ----------- |
-| where | query | object                                              | false    | none        |
-| body  | body  | [SubscriptionsPartial](#schemasubscriptionspartial) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|where|query|object|false|none|
+|body|body|[SubscriptionsPartial](#schemasubscriptionspartial)|false|none|
 
 > Example responses
 
@@ -3515,9 +3565,9 @@ fetch('/subscriptions',
 
 <h3 id="subscriptionscontroller.updateall-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                       | Schema                                  |
-| ------ | ------------------------------------------------------- | --------------------------------- | --------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Subscriptions PATCH success count | [loopback.Count](#schemaloopback.count) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Subscriptions PATCH success count|[loopback.Count](#schemaloopback.count)|
 
 <aside class="success">
 This operation does not require authentication
@@ -3530,21 +3580,23 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/subscriptions', {
+fetch('/subscriptions',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -3570,16 +3622,16 @@ fetch('/subscriptions',
 
 `GET /subscriptions`
 
-| Permissions      |
-| ---------------- |
-| GetSubscriptions |
-| 3                |
+| Permissions |
+| ------- |
+| GetSubscriptions   |
+| 3   |
 
 <h3 id="subscriptionscontroller.find-parameters">Parameters</h3>
 
-| Name   | In    | Type                                                  | Required | Description |
-| ------ | ----- | ----------------------------------------------------- | -------- | ----------- |
-| filter | query | [Subscriptions.Filter1](#schemasubscriptions.filter1) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|filter|query|[Subscriptions.Filter1](#schemasubscriptions.filter1)|false|none|
 
 > Example responses
 
@@ -3605,29 +3657,29 @@ fetch('/subscriptions',
 
 <h3 id="subscriptionscontroller.find-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                            | Schema |
-| ------ | ------------------------------------------------------- | -------------------------------------- | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Array of Subscriptions model instances | Inline |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Subscriptions model instances|Inline|
 
 <h3 id="subscriptionscontroller.find-responseschema">Response Schema</h3>
 
 Status Code **200**
 
-| Name                         | Type                                                              | Required | Restrictions | Description                                                                       |
-| ---------------------------- | ----------------------------------------------------------------- | -------- | ------------ | --------------------------------------------------------------------------------- |
-| _anonymous_                  | [[SubscriptionsWithRelations](#schemasubscriptionswithrelations)] | false    | none         | [(tsType: SubscriptionsWithRelations, schemaOptions: { includeRelations: true })] |
-| » SubscriptionsWithRelations | [SubscriptionsWithRelations](#schemasubscriptionswithrelations)   | false    | none         | (tsType: SubscriptionsWithRelations, schemaOptions: { includeRelations: true })   |
-| »» id                        | string                                                            | true     | none         | none                                                                              |
-| »» totalAmount               | number                                                            | true     | none         | none                                                                              |
-| »» currency                  | string                                                            | false    | none         | none                                                                              |
-| »» status                    | string                                                            | true     | none         | none                                                                              |
-| »» paymentGatewayId          | string                                                            | false    | none         | none                                                                              |
-| »» paymentMethod             | string                                                            | false    | none         | none                                                                              |
-| »» metaData                  | object                                                            | false    | none         | none                                                                              |
-| »» startDate                 | string(date-time)                                                 | false    | none         | none                                                                              |
-| »» endDate                   | string(date-time)                                                 | false    | none         | none                                                                              |
-| »» gatewaySubscriptionId     | string                                                            | false    | none         | none                                                                              |
-| »» planId                    | string                                                            | false    | none         | none                                                                              |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[SubscriptionsWithRelations](#schemasubscriptionswithrelations)]|false|none|[(tsType: SubscriptionsWithRelations, schemaOptions: { includeRelations: true })]|
+|» SubscriptionsWithRelations|[SubscriptionsWithRelations](#schemasubscriptionswithrelations)|false|none|(tsType: SubscriptionsWithRelations, schemaOptions: { includeRelations: true })|
+|»» id|string|true|none|none|
+|»» totalAmount|number|true|none|none|
+|»» currency|string|false|none|none|
+|»» status|string|true|none|none|
+|»» paymentGatewayId|string|false|none|none|
+|»» paymentMethod|string|false|none|none|
+|»» metaData|object|false|none|none|
+|»» startDate|string(date-time)|false|none|none|
+|»» endDate|string(date-time)|false|none|none|
+|»» gatewaySubscriptionId|string|false|none|none|
+|»» planId|string|false|none|none|
 
 <aside class="success">
 This operation does not require authentication
@@ -3642,21 +3694,23 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/templates/count', {
+fetch('/templates/count',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -3684,9 +3738,9 @@ fetch('/templates/count',
 
 <h3 id="templatescontroller.count-parameters">Parameters</h3>
 
-| Name  | In    | Type   | Required | Description |
-| ----- | ----- | ------ | -------- | ----------- |
-| where | query | object | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|where|query|object|false|none|
 
 > Example responses
 
@@ -3700,9 +3754,9 @@ fetch('/templates/count',
 
 <h3 id="templatescontroller.count-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description           | Schema                                  |
-| ------ | ------------------------------------------------------- | --------------------- | --------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Templates model count | [loopback.Count](#schemaloopback.count) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Templates model count|[loopback.Count](#schemaloopback.count)|
 
 <aside class="success">
 This operation does not require authentication
@@ -3783,16 +3837,16 @@ fetch('/templates/{id}',
 
 <h3 id="templatescontroller.replacebyid-parameters">Parameters</h3>
 
-| Name | In   | Type                          | Required | Description |
-| ---- | ---- | ----------------------------- | -------- | ----------- |
-| id   | path | string                        | true     | none        |
-| body | body | [Templates](#schematemplates) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[Templates](#schematemplates)|false|none|
 
 <h3 id="templatescontroller.replacebyid-responses">Responses</h3>
 
-| Status | Meaning                                                         | Description           | Schema |
-| ------ | --------------------------------------------------------------- | --------------------- | ------ |
-| 204    | [No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5) | Templates PUT success | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Templates PUT success|None|
 
 <aside class="success">
 This operation does not require authentication
@@ -3873,16 +3927,16 @@ fetch('/templates/{id}',
 
 <h3 id="templatescontroller.updatebyid-parameters">Parameters</h3>
 
-| Name | In   | Type                                        | Required | Description |
-| ---- | ---- | ------------------------------------------- | -------- | ----------- |
-| id   | path | string                                      | true     | none        |
-| body | body | [TemplatesPartial](#schematemplatespartial) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[TemplatesPartial](#schematemplatespartial)|false|none|
 
 <h3 id="templatescontroller.updatebyid-responses">Responses</h3>
 
-| Status | Meaning                                                         | Description             | Schema |
-| ------ | --------------------------------------------------------------- | ----------------------- | ------ |
-| 204    | [No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5) | Templates PATCH success | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Templates PATCH success|None|
 
 <aside class="success">
 This operation does not require authentication
@@ -3895,21 +3949,23 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/templates/{id}', {
+fetch('/templates/{id}',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -3937,10 +3993,10 @@ fetch('/templates/{id}',
 
 <h3 id="templatescontroller.findbyid-parameters">Parameters</h3>
 
-| Name   | In    | Type                                        | Required | Description |
-| ------ | ----- | ------------------------------------------- | -------- | ----------- |
-| id     | path  | string                                      | true     | none        |
-| filter | query | [Templates.Filter](#schematemplates.filter) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|filter|query|[Templates.Filter](#schematemplates.filter)|false|none|
 
 > Example responses
 
@@ -3958,9 +4014,9 @@ fetch('/templates/{id}',
 
 <h3 id="templatescontroller.findbyid-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description              | Schema                                                  |
-| ------ | ------------------------------------------------------- | ------------------------ | ------------------------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Templates model instance | [TemplatesWithRelations](#schematemplateswithrelations) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Templates model instance|[TemplatesWithRelations](#schematemplateswithrelations)|
 
 <aside class="success">
 This operation does not require authentication
@@ -3973,15 +4029,18 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
-fetch('/templates/{id}', {
-  method: 'DELETE',
+
+fetch('/templates/{id}',
+{
+  method: 'DELETE'
+
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -4004,15 +4063,15 @@ fetch('/templates/{id}',
 
 <h3 id="templatescontroller.deletebyid-parameters">Parameters</h3>
 
-| Name | In   | Type   | Required | Description |
-| ---- | ---- | ------ | -------- | ----------- |
-| id   | path | string | true     | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
 
 <h3 id="templatescontroller.deletebyid-responses">Responses</h3>
 
-| Status | Meaning                                                         | Description              | Schema |
-| ------ | --------------------------------------------------------------- | ------------------------ | ------ |
-| 204    | [No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5) | Templates DELETE success | None   |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Templates DELETE success|None|
 
 <aside class="success">
 This operation does not require authentication
@@ -4095,9 +4154,9 @@ fetch('/templates',
 
 <h3 id="templatescontroller.create-parameters">Parameters</h3>
 
-| Name | In   | Type                                | Required | Description |
-| ---- | ---- | ----------------------------------- | -------- | ----------- |
-| body | body | [NewTemplates](#schemanewtemplates) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[NewTemplates](#schemanewtemplates)|false|none|
 
 > Example responses
 
@@ -4115,9 +4174,9 @@ fetch('/templates',
 
 <h3 id="templatescontroller.create-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description              | Schema                        |
-| ------ | ------------------------------------------------------- | ------------------------ | ----------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Templates model instance | [Templates](#schematemplates) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Templates model instance|[Templates](#schematemplates)|
 
 <aside class="success">
 This operation does not require authentication
@@ -4200,10 +4259,10 @@ fetch('/templates',
 
 <h3 id="templatescontroller.updateall-parameters">Parameters</h3>
 
-| Name  | In    | Type                                        | Required | Description |
-| ----- | ----- | ------------------------------------------- | -------- | ----------- |
-| where | query | object                                      | false    | none        |
-| body  | body  | [TemplatesPartial](#schematemplatespartial) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|where|query|object|false|none|
+|body|body|[TemplatesPartial](#schematemplatespartial)|false|none|
 
 > Example responses
 
@@ -4217,9 +4276,9 @@ fetch('/templates',
 
 <h3 id="templatescontroller.updateall-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                   | Schema                                  |
-| ------ | ------------------------------------------------------- | ----------------------------- | --------------------------------------- |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Templates PATCH success count | [loopback.Count](#schemaloopback.count) |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Templates PATCH success count|[loopback.Count](#schemaloopback.count)|
 
 <aside class="success">
 This operation does not require authentication
@@ -4232,21 +4291,23 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'application/json',
+  'Accept':'application/json'
 };
 
-fetch('/templates', {
+fetch('/templates',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -4274,9 +4335,9 @@ fetch('/templates',
 
 <h3 id="templatescontroller.find-parameters">Parameters</h3>
 
-| Name   | In    | Type                                          | Required | Description |
-| ------ | ----- | --------------------------------------------- | -------- | ----------- |
-| filter | query | [Templates.Filter1](#schematemplates.filter1) | false    | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|filter|query|[Templates.Filter1](#schematemplates.filter1)|false|none|
 
 > Example responses
 
@@ -4296,23 +4357,23 @@ fetch('/templates',
 
 <h3 id="templatescontroller.find-responses">Responses</h3>
 
-| Status | Meaning                                                 | Description                        | Schema |
-| ------ | ------------------------------------------------------- | ---------------------------------- | ------ |
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Array of Templates model instances | Inline |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Templates model instances|Inline|
 
 <h3 id="templatescontroller.find-responseschema">Response Schema</h3>
 
 Status Code **200**
 
-| Name                     | Type                                                      | Required | Restrictions | Description                                                                   |
-| ------------------------ | --------------------------------------------------------- | -------- | ------------ | ----------------------------------------------------------------------------- |
-| _anonymous_              | [[TemplatesWithRelations](#schematemplateswithrelations)] | false    | none         | [(tsType: TemplatesWithRelations, schemaOptions: { includeRelations: true })] |
-| » TemplatesWithRelations | [TemplatesWithRelations](#schematemplateswithrelations)   | false    | none         | (tsType: TemplatesWithRelations, schemaOptions: { includeRelations: true })   |
-| »» id                    | string                                                    | true     | none         | none                                                                          |
-| »» paymentGatewayId      | string                                                    | true     | none         | none                                                                          |
-| »» name                  | string                                                    | true     | none         | none                                                                          |
-| »» template              | string                                                    | true     | none         | none                                                                          |
-| »» type                  | string                                                    | true     | none         | none                                                                          |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[TemplatesWithRelations](#schematemplateswithrelations)]|false|none|[(tsType: TemplatesWithRelations, schemaOptions: { includeRelations: true })]|
+|» TemplatesWithRelations|[TemplatesWithRelations](#schematemplateswithrelations)|false|none|(tsType: TemplatesWithRelations, schemaOptions: { includeRelations: true })|
+|»» id|string|true|none|none|
+|»» paymentGatewayId|string|true|none|none|
+|»» name|string|true|none|none|
+|»» template|string|true|none|none|
+|»» type|string|true|none|none|
 
 <aside class="success">
 This operation does not require authentication
@@ -4327,21 +4388,23 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
+
 const headers = {
-  Accept: 'text/html',
+  'Accept':'text/html'
 };
 
-fetch('/transactions/subscription/{id}', {
+fetch('/transactions/subscription/{id}',
+{
   method: 'GET',
 
-  headers: headers,
+  headers: headers
 })
-  .then(function (res) {
+.then(function(res) {
     return res.json();
-  })
-  .then(function (body) {
+}).then(function(body) {
     console.log(body);
-  });
+});
+
 ```
 
 ```javascript--nodejs
@@ -4369,9 +4432,9 @@ fetch('/transactions/subscription/{id}',
 
 <h3 id="transactionsubscriptionscontroller.subscriptiontransactionspay-parameters">Parameters</h3>
 
-| Name | In   | Type   | Required | Description |
-| ---- | ---- | ------ | -------- | ----------- |
-| id   | path | string | true     | none        |
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
 
 > Example responses
 
@@ -4383,9 +4446,9 @@ fetch('/transactions/subscription/{id}',
 
 <h3 id="transactionsubscriptionscontroller.subscriptiontransactionspay-responses">Responses</h3>
 
-| Status | Meaning                                                    | Description                           | Schema |
-| ------ | ---------------------------------------------------------- | ------------------------------------- | ------ |
-| 302    | [Found](https://tools.ietf.org/html/rfc7231#section-6.4.3) | Array of Transactions model instances | Inline |
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|302|[Found](https://tools.ietf.org/html/rfc7231#section-6.4.3)|Array of Transactions model instances|Inline|
 
 <h3 id="transactionsubscriptionscontroller.subscriptiontransactionspay-responseschema">Response Schema</h3>
 
@@ -4412,21 +4475,22 @@ This operation does not require authentication
   "paymentmethod": "string",
   "metaData": {}
 }
+
 ```
 
 Orders
 
 ### Properties
 
-| Name             | Type   | Required | Restrictions | Description |
-| ---------------- | ------ | -------- | ------------ | ----------- |
-| id               | string | false    | none         | none        |
-| totalAmount      | number | true     | none         | none        |
-| currency         | string | true     | none         | none        |
-| status           | string | true     | none         | none        |
-| paymentGatewayId | string | true     | none         | none        |
-| paymentmethod    | string | false    | none         | none        |
-| metaData         | object | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|false|none|none|
+|totalAmount|number|true|none|none|
+|currency|string|true|none|none|
+|status|string|true|none|none|
+|paymentGatewayId|string|true|none|none|
+|paymentmethod|string|false|none|none|
+|metaData|object|false|none|none|
 
 <h2 id="tocS_NewOrders">NewOrders</h2>
 <!-- backwards compatibility -->
@@ -4445,21 +4509,22 @@ Orders
   "paymentmethod": "string",
   "metaData": {}
 }
+
 ```
 
 NewOrders
 
 ### Properties
 
-| Name             | Type   | Required | Restrictions | Description |
-| ---------------- | ------ | -------- | ------------ | ----------- |
-| id               | string | false    | none         | none        |
-| totalAmount      | number | true     | none         | none        |
-| currency         | string | true     | none         | none        |
-| status           | string | true     | none         | none        |
-| paymentGatewayId | string | true     | none         | none        |
-| paymentmethod    | string | false    | none         | none        |
-| metaData         | object | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|false|none|none|
+|totalAmount|number|true|none|none|
+|currency|string|true|none|none|
+|status|string|true|none|none|
+|paymentGatewayId|string|true|none|none|
+|paymentmethod|string|false|none|none|
+|metaData|object|false|none|none|
 
 <h2 id="tocS_OrdersWithRelations">OrdersWithRelations</h2>
 <!-- backwards compatibility -->
@@ -4478,21 +4543,22 @@ NewOrders
   "paymentmethod": "string",
   "metaData": {}
 }
+
 ```
 
 OrdersWithRelations
 
 ### Properties
 
-| Name             | Type   | Required | Restrictions | Description |
-| ---------------- | ------ | -------- | ------------ | ----------- |
-| id               | string | false    | none         | none        |
-| totalAmount      | number | true     | none         | none        |
-| currency         | string | true     | none         | none        |
-| status           | string | true     | none         | none        |
-| paymentGatewayId | string | true     | none         | none        |
-| paymentmethod    | string | false    | none         | none        |
-| metaData         | object | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|false|none|none|
+|totalAmount|number|true|none|none|
+|currency|string|true|none|none|
+|status|string|true|none|none|
+|paymentGatewayId|string|true|none|none|
+|paymentmethod|string|false|none|none|
+|metaData|object|false|none|none|
 
 <h2 id="tocS_OrdersPartial">OrdersPartial</h2>
 <!-- backwards compatibility -->
@@ -4511,21 +4577,22 @@ OrdersWithRelations
   "paymentmethod": "string",
   "metaData": {}
 }
+
 ```
 
 OrdersPartial
 
 ### Properties
 
-| Name             | Type   | Required | Restrictions | Description |
-| ---------------- | ------ | -------- | ------------ | ----------- |
-| id               | string | false    | none         | none        |
-| totalAmount      | number | false    | none         | none        |
-| currency         | string | false    | none         | none        |
-| status           | string | false    | none         | none        |
-| paymentGatewayId | string | false    | none         | none        |
-| paymentmethod    | string | false    | none         | none        |
-| metaData         | object | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|false|none|none|
+|totalAmount|number|false|none|none|
+|currency|string|false|none|none|
+|status|string|false|none|none|
+|paymentGatewayId|string|false|none|none|
+|paymentmethod|string|false|none|none|
+|metaData|object|false|none|none|
 
 <h2 id="tocS_Transactions">Transactions</h2>
 <!-- backwards compatibility -->
@@ -4545,22 +4612,23 @@ OrdersPartial
   "orderId": "string",
   "res": {}
 }
+
 ```
 
 Transactions
 
 ### Properties
 
-| Name             | Type              | Required | Restrictions | Description |
-| ---------------- | ----------------- | -------- | ------------ | ----------- |
-| id               | string            | true     | none         | none        |
-| amountPaid       | number            | true     | none         | none        |
-| currency         | string            | true     | none         | none        |
-| status           | string            | true     | none         | none        |
-| paidDate         | string(date-time) | false    | none         | none        |
-| paymentGatewayId | string            | false    | none         | none        |
-| orderId          | string            | false    | none         | none        |
-| res              | object            | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|true|none|none|
+|amountPaid|number|true|none|none|
+|currency|string|true|none|none|
+|status|string|true|none|none|
+|paidDate|string(date-time)|false|none|none|
+|paymentGatewayId|string|false|none|none|
+|orderId|string|false|none|none|
+|res|object|false|none|none|
 
 <h2 id="tocS_NewTransactions">NewTransactions</h2>
 <!-- backwards compatibility -->
@@ -4580,22 +4648,23 @@ Transactions
   "orderId": "string",
   "res": {}
 }
+
 ```
 
 NewTransactions
 
 ### Properties
 
-| Name             | Type              | Required | Restrictions | Description |
-| ---------------- | ----------------- | -------- | ------------ | ----------- |
-| id               | string            | true     | none         | none        |
-| amountPaid       | number            | true     | none         | none        |
-| currency         | string            | true     | none         | none        |
-| status           | string            | true     | none         | none        |
-| paidDate         | string(date-time) | false    | none         | none        |
-| paymentGatewayId | string            | false    | none         | none        |
-| orderId          | string            | false    | none         | none        |
-| res              | object            | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|true|none|none|
+|amountPaid|number|true|none|none|
+|currency|string|true|none|none|
+|status|string|true|none|none|
+|paidDate|string(date-time)|false|none|none|
+|paymentGatewayId|string|false|none|none|
+|orderId|string|false|none|none|
+|res|object|false|none|none|
 
 <h2 id="tocS_TransactionsWithRelations">TransactionsWithRelations</h2>
 <!-- backwards compatibility -->
@@ -4615,22 +4684,23 @@ NewTransactions
   "orderId": "string",
   "res": {}
 }
+
 ```
 
 TransactionsWithRelations
 
 ### Properties
 
-| Name             | Type              | Required | Restrictions | Description |
-| ---------------- | ----------------- | -------- | ------------ | ----------- |
-| id               | string            | true     | none         | none        |
-| amountPaid       | number            | true     | none         | none        |
-| currency         | string            | true     | none         | none        |
-| status           | string            | true     | none         | none        |
-| paidDate         | string(date-time) | false    | none         | none        |
-| paymentGatewayId | string            | false    | none         | none        |
-| orderId          | string            | false    | none         | none        |
-| res              | object            | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|true|none|none|
+|amountPaid|number|true|none|none|
+|currency|string|true|none|none|
+|status|string|true|none|none|
+|paidDate|string(date-time)|false|none|none|
+|paymentGatewayId|string|false|none|none|
+|orderId|string|false|none|none|
+|res|object|false|none|none|
 
 <h2 id="tocS_TransactionsPartial">TransactionsPartial</h2>
 <!-- backwards compatibility -->
@@ -4650,22 +4720,23 @@ TransactionsWithRelations
   "orderId": "string",
   "res": {}
 }
+
 ```
 
 TransactionsPartial
 
 ### Properties
 
-| Name             | Type              | Required | Restrictions | Description |
-| ---------------- | ----------------- | -------- | ------------ | ----------- |
-| id               | string            | false    | none         | none        |
-| amountPaid       | number            | false    | none         | none        |
-| currency         | string            | false    | none         | none        |
-| status           | string            | false    | none         | none        |
-| paidDate         | string(date-time) | false    | none         | none        |
-| paymentGatewayId | string            | false    | none         | none        |
-| orderId          | string            | false    | none         | none        |
-| res              | object            | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|false|none|none|
+|amountPaid|number|false|none|none|
+|currency|string|false|none|none|
+|status|string|false|none|none|
+|paidDate|string(date-time)|false|none|none|
+|paymentGatewayId|string|false|none|none|
+|orderId|string|false|none|none|
+|res|object|false|none|none|
 
 <h2 id="tocS_PaymentGateways">PaymentGateways</h2>
 <!-- backwards compatibility -->
@@ -4681,18 +4752,19 @@ TransactionsPartial
   "gatewayType": "string",
   "enabled": true
 }
+
 ```
 
 PaymentGateways
 
 ### Properties
 
-| Name        | Type    | Required | Restrictions | Description |
-| ----------- | ------- | -------- | ------------ | ----------- |
-| id          | string  | true     | none         | none        |
-| name        | string  | true     | none         | none        |
-| gatewayType | string  | true     | none         | none        |
-| enabled     | boolean | true     | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|true|none|none|
+|name|string|true|none|none|
+|gatewayType|string|true|none|none|
+|enabled|boolean|true|none|none|
 
 <h2 id="tocS_NewPaymentGateways">NewPaymentGateways</h2>
 <!-- backwards compatibility -->
@@ -4708,18 +4780,19 @@ PaymentGateways
   "gatewayType": "string",
   "enabled": true
 }
+
 ```
 
 NewPaymentGateways
 
 ### Properties
 
-| Name        | Type    | Required | Restrictions | Description |
-| ----------- | ------- | -------- | ------------ | ----------- |
-| id          | string  | true     | none         | none        |
-| name        | string  | true     | none         | none        |
-| gatewayType | string  | true     | none         | none        |
-| enabled     | boolean | true     | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|true|none|none|
+|name|string|true|none|none|
+|gatewayType|string|true|none|none|
+|enabled|boolean|true|none|none|
 
 <h2 id="tocS_PaymentGatewaysWithRelations">PaymentGatewaysWithRelations</h2>
 <!-- backwards compatibility -->
@@ -4735,18 +4808,19 @@ NewPaymentGateways
   "gatewayType": "string",
   "enabled": true
 }
+
 ```
 
 PaymentGatewaysWithRelations
 
 ### Properties
 
-| Name        | Type    | Required | Restrictions | Description |
-| ----------- | ------- | -------- | ------------ | ----------- |
-| id          | string  | true     | none         | none        |
-| name        | string  | true     | none         | none        |
-| gatewayType | string  | true     | none         | none        |
-| enabled     | boolean | true     | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|true|none|none|
+|name|string|true|none|none|
+|gatewayType|string|true|none|none|
+|enabled|boolean|true|none|none|
 
 <h2 id="tocS_PaymentGatewaysPartial">PaymentGatewaysPartial</h2>
 <!-- backwards compatibility -->
@@ -4762,18 +4836,19 @@ PaymentGatewaysWithRelations
   "gatewayType": "string",
   "enabled": true
 }
+
 ```
 
 PaymentGatewaysPartial
 
 ### Properties
 
-| Name        | Type    | Required | Restrictions | Description |
-| ----------- | ------- | -------- | ------------ | ----------- |
-| id          | string  | false    | none         | none        |
-| name        | string  | false    | none         | none        |
-| gatewayType | string  | false    | none         | none        |
-| enabled     | boolean | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|false|none|none|
+|name|string|false|none|none|
+|gatewayType|string|false|none|none|
+|enabled|boolean|false|none|none|
 
 <h2 id="tocS_Templates">Templates</h2>
 <!-- backwards compatibility -->
@@ -4790,19 +4865,20 @@ PaymentGatewaysPartial
   "template": "string",
   "type": "string"
 }
+
 ```
 
 Templates
 
 ### Properties
 
-| Name             | Type   | Required | Restrictions | Description |
-| ---------------- | ------ | -------- | ------------ | ----------- |
-| id               | string | true     | none         | none        |
-| paymentGatewayId | string | true     | none         | none        |
-| name             | string | true     | none         | none        |
-| template         | string | true     | none         | none        |
-| type             | string | true     | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|true|none|none|
+|paymentGatewayId|string|true|none|none|
+|name|string|true|none|none|
+|template|string|true|none|none|
+|type|string|true|none|none|
 
 <h2 id="tocS_NewTemplates">NewTemplates</h2>
 <!-- backwards compatibility -->
@@ -4819,19 +4895,20 @@ Templates
   "template": "string",
   "type": "string"
 }
+
 ```
 
 NewTemplates
 
 ### Properties
 
-| Name             | Type   | Required | Restrictions | Description |
-| ---------------- | ------ | -------- | ------------ | ----------- |
-| id               | string | true     | none         | none        |
-| paymentGatewayId | string | true     | none         | none        |
-| name             | string | true     | none         | none        |
-| template         | string | true     | none         | none        |
-| type             | string | true     | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|true|none|none|
+|paymentGatewayId|string|true|none|none|
+|name|string|true|none|none|
+|template|string|true|none|none|
+|type|string|true|none|none|
 
 <h2 id="tocS_TemplatesWithRelations">TemplatesWithRelations</h2>
 <!-- backwards compatibility -->
@@ -4848,19 +4925,20 @@ NewTemplates
   "template": "string",
   "type": "string"
 }
+
 ```
 
 TemplatesWithRelations
 
 ### Properties
 
-| Name             | Type   | Required | Restrictions | Description |
-| ---------------- | ------ | -------- | ------------ | ----------- |
-| id               | string | true     | none         | none        |
-| paymentGatewayId | string | true     | none         | none        |
-| name             | string | true     | none         | none        |
-| template         | string | true     | none         | none        |
-| type             | string | true     | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|true|none|none|
+|paymentGatewayId|string|true|none|none|
+|name|string|true|none|none|
+|template|string|true|none|none|
+|type|string|true|none|none|
 
 <h2 id="tocS_TemplatesPartial">TemplatesPartial</h2>
 <!-- backwards compatibility -->
@@ -4877,19 +4955,20 @@ TemplatesWithRelations
   "template": "string",
   "type": "string"
 }
+
 ```
 
 TemplatesPartial
 
 ### Properties
 
-| Name             | Type   | Required | Restrictions | Description |
-| ---------------- | ------ | -------- | ------------ | ----------- |
-| id               | string | false    | none         | none        |
-| paymentGatewayId | string | false    | none         | none        |
-| name             | string | false    | none         | none        |
-| template         | string | false    | none         | none        |
-| type             | string | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|false|none|none|
+|paymentGatewayId|string|false|none|none|
+|name|string|false|none|none|
+|template|string|false|none|none|
+|type|string|false|none|none|
 
 <h2 id="tocS_Subscriptions">Subscriptions</h2>
 <!-- backwards compatibility -->
@@ -4912,25 +4991,26 @@ TemplatesPartial
   "gatewaySubscriptionId": "string",
   "planId": "string"
 }
+
 ```
 
 Subscriptions
 
 ### Properties
 
-| Name                  | Type              | Required | Restrictions | Description |
-| --------------------- | ----------------- | -------- | ------------ | ----------- |
-| id                    | string            | true     | none         | none        |
-| totalAmount           | number            | true     | none         | none        |
-| currency              | string            | false    | none         | none        |
-| status                | string            | true     | none         | none        |
-| paymentGatewayId      | string            | false    | none         | none        |
-| paymentMethod         | string            | false    | none         | none        |
-| metaData              | object            | false    | none         | none        |
-| startDate             | string(date-time) | false    | none         | none        |
-| endDate               | string(date-time) | false    | none         | none        |
-| gatewaySubscriptionId | string            | false    | none         | none        |
-| planId                | string            | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|true|none|none|
+|totalAmount|number|true|none|none|
+|currency|string|false|none|none|
+|status|string|true|none|none|
+|paymentGatewayId|string|false|none|none|
+|paymentMethod|string|false|none|none|
+|metaData|object|false|none|none|
+|startDate|string(date-time)|false|none|none|
+|endDate|string(date-time)|false|none|none|
+|gatewaySubscriptionId|string|false|none|none|
+|planId|string|false|none|none|
 
 <h2 id="tocS_NewSubscriptions">NewSubscriptions</h2>
 <!-- backwards compatibility -->
@@ -4953,25 +5033,26 @@ Subscriptions
   "gatewaySubscriptionId": "string",
   "planId": "string"
 }
+
 ```
 
 NewSubscriptions
 
 ### Properties
 
-| Name                  | Type              | Required | Restrictions | Description |
-| --------------------- | ----------------- | -------- | ------------ | ----------- |
-| id                    | string            | true     | none         | none        |
-| totalAmount           | number            | true     | none         | none        |
-| currency              | string            | false    | none         | none        |
-| status                | string            | true     | none         | none        |
-| paymentGatewayId      | string            | false    | none         | none        |
-| paymentMethod         | string            | false    | none         | none        |
-| metaData              | object            | false    | none         | none        |
-| startDate             | string(date-time) | false    | none         | none        |
-| endDate               | string(date-time) | false    | none         | none        |
-| gatewaySubscriptionId | string            | false    | none         | none        |
-| planId                | string            | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|true|none|none|
+|totalAmount|number|true|none|none|
+|currency|string|false|none|none|
+|status|string|true|none|none|
+|paymentGatewayId|string|false|none|none|
+|paymentMethod|string|false|none|none|
+|metaData|object|false|none|none|
+|startDate|string(date-time)|false|none|none|
+|endDate|string(date-time)|false|none|none|
+|gatewaySubscriptionId|string|false|none|none|
+|planId|string|false|none|none|
 
 <h2 id="tocS_SubscriptionsWithRelations">SubscriptionsWithRelations</h2>
 <!-- backwards compatibility -->
@@ -4994,25 +5075,26 @@ NewSubscriptions
   "gatewaySubscriptionId": "string",
   "planId": "string"
 }
+
 ```
 
 SubscriptionsWithRelations
 
 ### Properties
 
-| Name                  | Type              | Required | Restrictions | Description |
-| --------------------- | ----------------- | -------- | ------------ | ----------- |
-| id                    | string            | true     | none         | none        |
-| totalAmount           | number            | true     | none         | none        |
-| currency              | string            | false    | none         | none        |
-| status                | string            | true     | none         | none        |
-| paymentGatewayId      | string            | false    | none         | none        |
-| paymentMethod         | string            | false    | none         | none        |
-| metaData              | object            | false    | none         | none        |
-| startDate             | string(date-time) | false    | none         | none        |
-| endDate               | string(date-time) | false    | none         | none        |
-| gatewaySubscriptionId | string            | false    | none         | none        |
-| planId                | string            | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|true|none|none|
+|totalAmount|number|true|none|none|
+|currency|string|false|none|none|
+|status|string|true|none|none|
+|paymentGatewayId|string|false|none|none|
+|paymentMethod|string|false|none|none|
+|metaData|object|false|none|none|
+|startDate|string(date-time)|false|none|none|
+|endDate|string(date-time)|false|none|none|
+|gatewaySubscriptionId|string|false|none|none|
+|planId|string|false|none|none|
 
 <h2 id="tocS_SubscriptionsPartial">SubscriptionsPartial</h2>
 <!-- backwards compatibility -->
@@ -5035,25 +5117,26 @@ SubscriptionsWithRelations
   "gatewaySubscriptionId": "string",
   "planId": "string"
 }
+
 ```
 
 SubscriptionsPartial
 
 ### Properties
 
-| Name                  | Type              | Required | Restrictions | Description |
-| --------------------- | ----------------- | -------- | ------------ | ----------- |
-| id                    | string            | false    | none         | none        |
-| totalAmount           | number            | false    | none         | none        |
-| currency              | string            | false    | none         | none        |
-| status                | string            | false    | none         | none        |
-| paymentGatewayId      | string            | false    | none         | none        |
-| paymentMethod         | string            | false    | none         | none        |
-| metaData              | object            | false    | none         | none        |
-| startDate             | string(date-time) | false    | none         | none        |
-| endDate               | string(date-time) | false    | none         | none        |
-| gatewaySubscriptionId | string            | false    | none         | none        |
-| planId                | string            | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|false|none|none|
+|totalAmount|number|false|none|none|
+|currency|string|false|none|none|
+|status|string|false|none|none|
+|paymentGatewayId|string|false|none|none|
+|paymentMethod|string|false|none|none|
+|metaData|object|false|none|none|
+|startDate|string(date-time)|false|none|none|
+|endDate|string(date-time)|false|none|none|
+|gatewaySubscriptionId|string|false|none|none|
+|planId|string|false|none|none|
 
 <h2 id="tocS_loopback.Count">loopback.Count</h2>
 <!-- backwards compatibility -->
@@ -5066,15 +5149,16 @@ SubscriptionsPartial
 {
   "count": 0
 }
+
 ```
 
 loopback.Count
 
 ### Properties
 
-| Name  | Type   | Required | Restrictions | Description |
-| ----- | ------ | -------- | ------------ | ----------- |
-| count | number | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|count|number|false|none|none|
 
 <h2 id="tocS_Orders.Filter">Orders.Filter</h2>
 <!-- backwards compatibility -->
@@ -5099,55 +5183,56 @@ loopback.Count
     "metaData": true
   }
 }
+
 ```
 
 Orders.Filter
 
 ### Properties
 
-| Name   | Type    | Required | Restrictions | Description |
-| ------ | ------- | -------- | ------------ | ----------- |
-| offset | integer | false    | none         | none        |
-| limit  | integer | false    | none         | none        |
-| skip   | integer | false    | none         | none        |
-| order  | any     | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|offset|integer|false|none|none|
+|limit|integer|false|none|none|
+|skip|integer|false|none|none|
+|order|any|false|none|none|
 
 oneOf
 
-| Name          | Type   | Required | Restrictions | Description |
-| ------------- | ------ | -------- | ------------ | ----------- |
-| » _anonymous_ | string | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
 
 xor
 
-| Name          | Type     | Required | Restrictions | Description |
-| ------------- | -------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [string] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
 
 continued
 
-| Name   | Type | Required | Restrictions | Description |
-| ------ | ---- | -------- | ------------ | ----------- |
-| fields | any  | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|fields|any|false|none|none|
 
 oneOf
 
-| Name                | Type    | Required | Restrictions | Description |
-| ------------------- | ------- | -------- | ------------ | ----------- |
-| » _anonymous_       | object  | false    | none         | none        |
-| »» id               | boolean | false    | none         | none        |
-| »» totalAmount      | boolean | false    | none         | none        |
-| »» currency         | boolean | false    | none         | none        |
-| »» status           | boolean | false    | none         | none        |
-| »» paymentGatewayId | boolean | false    | none         | none        |
-| »» paymentmethod    | boolean | false    | none         | none        |
-| »» metaData         | boolean | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|object|false|none|none|
+|»» id|boolean|false|none|none|
+|»» totalAmount|boolean|false|none|none|
+|»» currency|boolean|false|none|none|
+|»» status|boolean|false|none|none|
+|»» paymentGatewayId|boolean|false|none|none|
+|»» paymentmethod|boolean|false|none|none|
+|»» metaData|boolean|false|none|none|
 
 xor
 
-| Name          | Type     | Required | Restrictions | Description |
-| ------------- | -------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [string] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
 
 <h2 id="tocS_Orders.Filter1">Orders.Filter1</h2>
 <!-- backwards compatibility -->
@@ -5173,56 +5258,57 @@ xor
     "metaData": true
   }
 }
+
 ```
 
 Orders.Filter
 
 ### Properties
 
-| Name   | Type    | Required | Restrictions | Description |
-| ------ | ------- | -------- | ------------ | ----------- |
-| offset | integer | false    | none         | none        |
-| limit  | integer | false    | none         | none        |
-| skip   | integer | false    | none         | none        |
-| order  | any     | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|offset|integer|false|none|none|
+|limit|integer|false|none|none|
+|skip|integer|false|none|none|
+|order|any|false|none|none|
 
 oneOf
 
-| Name          | Type   | Required | Restrictions | Description |
-| ------------- | ------ | -------- | ------------ | ----------- |
-| » _anonymous_ | string | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
 
 xor
 
-| Name          | Type     | Required | Restrictions | Description |
-| ------------- | -------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [string] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
 
 continued
 
-| Name   | Type   | Required | Restrictions | Description |
-| ------ | ------ | -------- | ------------ | ----------- |
-| where  | object | false    | none         | none        |
-| fields | any    | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|where|object|false|none|none|
+|fields|any|false|none|none|
 
 oneOf
 
-| Name                | Type    | Required | Restrictions | Description |
-| ------------------- | ------- | -------- | ------------ | ----------- |
-| » _anonymous_       | object  | false    | none         | none        |
-| »» id               | boolean | false    | none         | none        |
-| »» totalAmount      | boolean | false    | none         | none        |
-| »» currency         | boolean | false    | none         | none        |
-| »» status           | boolean | false    | none         | none        |
-| »» paymentGatewayId | boolean | false    | none         | none        |
-| »» paymentmethod    | boolean | false    | none         | none        |
-| »» metaData         | boolean | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|object|false|none|none|
+|»» id|boolean|false|none|none|
+|»» totalAmount|boolean|false|none|none|
+|»» currency|boolean|false|none|none|
+|»» status|boolean|false|none|none|
+|»» paymentGatewayId|boolean|false|none|none|
+|»» paymentmethod|boolean|false|none|none|
+|»» metaData|boolean|false|none|none|
 
 xor
 
-| Name          | Type     | Required | Restrictions | Description |
-| ------------- | -------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [string] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
 
 <h2 id="tocS_PaymentGateways.Filter">PaymentGateways.Filter</h2>
 <!-- backwards compatibility -->
@@ -5244,52 +5330,53 @@ xor
     "enabled": true
   }
 }
+
 ```
 
 PaymentGateways.Filter
 
 ### Properties
 
-| Name   | Type    | Required | Restrictions | Description |
-| ------ | ------- | -------- | ------------ | ----------- |
-| offset | integer | false    | none         | none        |
-| limit  | integer | false    | none         | none        |
-| skip   | integer | false    | none         | none        |
-| order  | any     | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|offset|integer|false|none|none|
+|limit|integer|false|none|none|
+|skip|integer|false|none|none|
+|order|any|false|none|none|
 
 oneOf
 
-| Name          | Type   | Required | Restrictions | Description |
-| ------------- | ------ | -------- | ------------ | ----------- |
-| » _anonymous_ | string | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
 
 xor
 
-| Name          | Type     | Required | Restrictions | Description |
-| ------------- | -------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [string] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
 
 continued
 
-| Name   | Type | Required | Restrictions | Description |
-| ------ | ---- | -------- | ------------ | ----------- |
-| fields | any  | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|fields|any|false|none|none|
 
 oneOf
 
-| Name           | Type    | Required | Restrictions | Description |
-| -------------- | ------- | -------- | ------------ | ----------- |
-| » _anonymous_  | object  | false    | none         | none        |
-| »» id          | boolean | false    | none         | none        |
-| »» name        | boolean | false    | none         | none        |
-| »» gatewayType | boolean | false    | none         | none        |
-| »» enabled     | boolean | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|object|false|none|none|
+|»» id|boolean|false|none|none|
+|»» name|boolean|false|none|none|
+|»» gatewayType|boolean|false|none|none|
+|»» enabled|boolean|false|none|none|
 
 xor
 
-| Name          | Type     | Required | Restrictions | Description |
-| ------------- | -------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [string] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
 
 <h2 id="tocS_PaymentGateways.Filter1">PaymentGateways.Filter1</h2>
 <!-- backwards compatibility -->
@@ -5312,53 +5399,54 @@ xor
     "enabled": true
   }
 }
+
 ```
 
 PaymentGateways.Filter
 
 ### Properties
 
-| Name   | Type    | Required | Restrictions | Description |
-| ------ | ------- | -------- | ------------ | ----------- |
-| offset | integer | false    | none         | none        |
-| limit  | integer | false    | none         | none        |
-| skip   | integer | false    | none         | none        |
-| order  | any     | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|offset|integer|false|none|none|
+|limit|integer|false|none|none|
+|skip|integer|false|none|none|
+|order|any|false|none|none|
 
 oneOf
 
-| Name          | Type   | Required | Restrictions | Description |
-| ------------- | ------ | -------- | ------------ | ----------- |
-| » _anonymous_ | string | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
 
 xor
 
-| Name          | Type     | Required | Restrictions | Description |
-| ------------- | -------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [string] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
 
 continued
 
-| Name   | Type   | Required | Restrictions | Description |
-| ------ | ------ | -------- | ------------ | ----------- |
-| where  | object | false    | none         | none        |
-| fields | any    | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|where|object|false|none|none|
+|fields|any|false|none|none|
 
 oneOf
 
-| Name           | Type    | Required | Restrictions | Description |
-| -------------- | ------- | -------- | ------------ | ----------- |
-| » _anonymous_  | object  | false    | none         | none        |
-| »» id          | boolean | false    | none         | none        |
-| »» name        | boolean | false    | none         | none        |
-| »» gatewayType | boolean | false    | none         | none        |
-| »» enabled     | boolean | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|object|false|none|none|
+|»» id|boolean|false|none|none|
+|»» name|boolean|false|none|none|
+|»» gatewayType|boolean|false|none|none|
+|»» enabled|boolean|false|none|none|
 
 xor
 
-| Name          | Type     | Required | Restrictions | Description |
-| ------------- | -------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [string] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
 
 <h2 id="tocS_PingResponse">PingResponse</h2>
 <!-- backwards compatibility -->
@@ -5376,19 +5464,20 @@ xor
     "Content-Type": "string"
   }
 }
+
 ```
 
 PingResponse
 
 ### Properties
 
-| Name           | Type   | Required | Restrictions | Description |
-| -------------- | ------ | -------- | ------------ | ----------- |
-| greeting       | string | false    | none         | none        |
-| date           | string | false    | none         | none        |
-| url            | string | false    | none         | none        |
-| headers        | object | false    | none         | none        |
-| » Content-Type | string | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|greeting|string|false|none|none|
+|date|string|false|none|none|
+|url|string|false|none|none|
+|headers|object|false|none|none|
+|» Content-Type|string|false|none|none|
 
 <h2 id="tocS_Subscriptions.Filter">Subscriptions.Filter</h2>
 <!-- backwards compatibility -->
@@ -5417,59 +5506,60 @@ PingResponse
     "planId": true
   }
 }
+
 ```
 
 Subscriptions.Filter
 
 ### Properties
 
-| Name   | Type    | Required | Restrictions | Description |
-| ------ | ------- | -------- | ------------ | ----------- |
-| offset | integer | false    | none         | none        |
-| limit  | integer | false    | none         | none        |
-| skip   | integer | false    | none         | none        |
-| order  | any     | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|offset|integer|false|none|none|
+|limit|integer|false|none|none|
+|skip|integer|false|none|none|
+|order|any|false|none|none|
 
 oneOf
 
-| Name          | Type   | Required | Restrictions | Description |
-| ------------- | ------ | -------- | ------------ | ----------- |
-| » _anonymous_ | string | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
 
 xor
 
-| Name          | Type     | Required | Restrictions | Description |
-| ------------- | -------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [string] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
 
 continued
 
-| Name   | Type | Required | Restrictions | Description |
-| ------ | ---- | -------- | ------------ | ----------- |
-| fields | any  | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|fields|any|false|none|none|
 
 oneOf
 
-| Name                     | Type    | Required | Restrictions | Description |
-| ------------------------ | ------- | -------- | ------------ | ----------- |
-| » _anonymous_            | object  | false    | none         | none        |
-| »» id                    | boolean | false    | none         | none        |
-| »» totalAmount           | boolean | false    | none         | none        |
-| »» currency              | boolean | false    | none         | none        |
-| »» status                | boolean | false    | none         | none        |
-| »» paymentGatewayId      | boolean | false    | none         | none        |
-| »» paymentMethod         | boolean | false    | none         | none        |
-| »» metaData              | boolean | false    | none         | none        |
-| »» startDate             | boolean | false    | none         | none        |
-| »» endDate               | boolean | false    | none         | none        |
-| »» gatewaySubscriptionId | boolean | false    | none         | none        |
-| »» planId                | boolean | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|object|false|none|none|
+|»» id|boolean|false|none|none|
+|»» totalAmount|boolean|false|none|none|
+|»» currency|boolean|false|none|none|
+|»» status|boolean|false|none|none|
+|»» paymentGatewayId|boolean|false|none|none|
+|»» paymentMethod|boolean|false|none|none|
+|»» metaData|boolean|false|none|none|
+|»» startDate|boolean|false|none|none|
+|»» endDate|boolean|false|none|none|
+|»» gatewaySubscriptionId|boolean|false|none|none|
+|»» planId|boolean|false|none|none|
 
 xor
 
-| Name          | Type     | Required | Restrictions | Description |
-| ------------- | -------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [string] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
 
 <h2 id="tocS_Subscriptions.Filter1">Subscriptions.Filter1</h2>
 <!-- backwards compatibility -->
@@ -5499,60 +5589,61 @@ xor
     "planId": true
   }
 }
+
 ```
 
 Subscriptions.Filter
 
 ### Properties
 
-| Name   | Type    | Required | Restrictions | Description |
-| ------ | ------- | -------- | ------------ | ----------- |
-| offset | integer | false    | none         | none        |
-| limit  | integer | false    | none         | none        |
-| skip   | integer | false    | none         | none        |
-| order  | any     | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|offset|integer|false|none|none|
+|limit|integer|false|none|none|
+|skip|integer|false|none|none|
+|order|any|false|none|none|
 
 oneOf
 
-| Name          | Type   | Required | Restrictions | Description |
-| ------------- | ------ | -------- | ------------ | ----------- |
-| » _anonymous_ | string | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
 
 xor
 
-| Name          | Type     | Required | Restrictions | Description |
-| ------------- | -------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [string] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
 
 continued
 
-| Name   | Type   | Required | Restrictions | Description |
-| ------ | ------ | -------- | ------------ | ----------- |
-| where  | object | false    | none         | none        |
-| fields | any    | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|where|object|false|none|none|
+|fields|any|false|none|none|
 
 oneOf
 
-| Name                     | Type    | Required | Restrictions | Description |
-| ------------------------ | ------- | -------- | ------------ | ----------- |
-| » _anonymous_            | object  | false    | none         | none        |
-| »» id                    | boolean | false    | none         | none        |
-| »» totalAmount           | boolean | false    | none         | none        |
-| »» currency              | boolean | false    | none         | none        |
-| »» status                | boolean | false    | none         | none        |
-| »» paymentGatewayId      | boolean | false    | none         | none        |
-| »» paymentMethod         | boolean | false    | none         | none        |
-| »» metaData              | boolean | false    | none         | none        |
-| »» startDate             | boolean | false    | none         | none        |
-| »» endDate               | boolean | false    | none         | none        |
-| »» gatewaySubscriptionId | boolean | false    | none         | none        |
-| »» planId                | boolean | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|object|false|none|none|
+|»» id|boolean|false|none|none|
+|»» totalAmount|boolean|false|none|none|
+|»» currency|boolean|false|none|none|
+|»» status|boolean|false|none|none|
+|»» paymentGatewayId|boolean|false|none|none|
+|»» paymentMethod|boolean|false|none|none|
+|»» metaData|boolean|false|none|none|
+|»» startDate|boolean|false|none|none|
+|»» endDate|boolean|false|none|none|
+|»» gatewaySubscriptionId|boolean|false|none|none|
+|»» planId|boolean|false|none|none|
 
 xor
 
-| Name          | Type     | Required | Restrictions | Description |
-| ------------- | -------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [string] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
 
 <h2 id="tocS_Templates.Filter">Templates.Filter</h2>
 <!-- backwards compatibility -->
@@ -5575,53 +5666,54 @@ xor
     "type": true
   }
 }
+
 ```
 
 Templates.Filter
 
 ### Properties
 
-| Name   | Type    | Required | Restrictions | Description |
-| ------ | ------- | -------- | ------------ | ----------- |
-| offset | integer | false    | none         | none        |
-| limit  | integer | false    | none         | none        |
-| skip   | integer | false    | none         | none        |
-| order  | any     | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|offset|integer|false|none|none|
+|limit|integer|false|none|none|
+|skip|integer|false|none|none|
+|order|any|false|none|none|
 
 oneOf
 
-| Name          | Type   | Required | Restrictions | Description |
-| ------------- | ------ | -------- | ------------ | ----------- |
-| » _anonymous_ | string | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
 
 xor
 
-| Name          | Type     | Required | Restrictions | Description |
-| ------------- | -------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [string] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
 
 continued
 
-| Name   | Type | Required | Restrictions | Description |
-| ------ | ---- | -------- | ------------ | ----------- |
-| fields | any  | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|fields|any|false|none|none|
 
 oneOf
 
-| Name                | Type    | Required | Restrictions | Description |
-| ------------------- | ------- | -------- | ------------ | ----------- |
-| » _anonymous_       | object  | false    | none         | none        |
-| »» id               | boolean | false    | none         | none        |
-| »» paymentGatewayId | boolean | false    | none         | none        |
-| »» name             | boolean | false    | none         | none        |
-| »» template         | boolean | false    | none         | none        |
-| »» type             | boolean | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|object|false|none|none|
+|»» id|boolean|false|none|none|
+|»» paymentGatewayId|boolean|false|none|none|
+|»» name|boolean|false|none|none|
+|»» template|boolean|false|none|none|
+|»» type|boolean|false|none|none|
 
 xor
 
-| Name          | Type     | Required | Restrictions | Description |
-| ------------- | -------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [string] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
 
 <h2 id="tocS_Templates.Filter1">Templates.Filter1</h2>
 <!-- backwards compatibility -->
@@ -5645,54 +5737,55 @@ xor
     "type": true
   }
 }
+
 ```
 
 Templates.Filter
 
 ### Properties
 
-| Name   | Type    | Required | Restrictions | Description |
-| ------ | ------- | -------- | ------------ | ----------- |
-| offset | integer | false    | none         | none        |
-| limit  | integer | false    | none         | none        |
-| skip   | integer | false    | none         | none        |
-| order  | any     | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|offset|integer|false|none|none|
+|limit|integer|false|none|none|
+|skip|integer|false|none|none|
+|order|any|false|none|none|
 
 oneOf
 
-| Name          | Type   | Required | Restrictions | Description |
-| ------------- | ------ | -------- | ------------ | ----------- |
-| » _anonymous_ | string | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
 
 xor
 
-| Name          | Type     | Required | Restrictions | Description |
-| ------------- | -------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [string] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
 
 continued
 
-| Name   | Type   | Required | Restrictions | Description |
-| ------ | ------ | -------- | ------------ | ----------- |
-| where  | object | false    | none         | none        |
-| fields | any    | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|where|object|false|none|none|
+|fields|any|false|none|none|
 
 oneOf
 
-| Name                | Type    | Required | Restrictions | Description |
-| ------------------- | ------- | -------- | ------------ | ----------- |
-| » _anonymous_       | object  | false    | none         | none        |
-| »» id               | boolean | false    | none         | none        |
-| »» paymentGatewayId | boolean | false    | none         | none        |
-| »» name             | boolean | false    | none         | none        |
-| »» template         | boolean | false    | none         | none        |
-| »» type             | boolean | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|object|false|none|none|
+|»» id|boolean|false|none|none|
+|»» paymentGatewayId|boolean|false|none|none|
+|»» name|boolean|false|none|none|
+|»» template|boolean|false|none|none|
+|»» type|boolean|false|none|none|
 
 xor
 
-| Name          | Type     | Required | Restrictions | Description |
-| ------------- | -------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [string] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
 
 <h2 id="tocS_Transactions.Filter">Transactions.Filter</h2>
 <!-- backwards compatibility -->
@@ -5718,56 +5811,57 @@ xor
     "res": true
   }
 }
+
 ```
 
 Transactions.Filter
 
 ### Properties
 
-| Name   | Type    | Required | Restrictions | Description |
-| ------ | ------- | -------- | ------------ | ----------- |
-| offset | integer | false    | none         | none        |
-| limit  | integer | false    | none         | none        |
-| skip   | integer | false    | none         | none        |
-| order  | any     | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|offset|integer|false|none|none|
+|limit|integer|false|none|none|
+|skip|integer|false|none|none|
+|order|any|false|none|none|
 
 oneOf
 
-| Name          | Type   | Required | Restrictions | Description |
-| ------------- | ------ | -------- | ------------ | ----------- |
-| » _anonymous_ | string | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
 
 xor
 
-| Name          | Type     | Required | Restrictions | Description |
-| ------------- | -------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [string] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
 
 continued
 
-| Name   | Type | Required | Restrictions | Description |
-| ------ | ---- | -------- | ------------ | ----------- |
-| fields | any  | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|fields|any|false|none|none|
 
 oneOf
 
-| Name                | Type    | Required | Restrictions | Description |
-| ------------------- | ------- | -------- | ------------ | ----------- |
-| » _anonymous_       | object  | false    | none         | none        |
-| »» id               | boolean | false    | none         | none        |
-| »» amountPaid       | boolean | false    | none         | none        |
-| »» currency         | boolean | false    | none         | none        |
-| »» status           | boolean | false    | none         | none        |
-| »» paidDate         | boolean | false    | none         | none        |
-| »» paymentGatewayId | boolean | false    | none         | none        |
-| »» orderId          | boolean | false    | none         | none        |
-| »» res              | boolean | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|object|false|none|none|
+|»» id|boolean|false|none|none|
+|»» amountPaid|boolean|false|none|none|
+|»» currency|boolean|false|none|none|
+|»» status|boolean|false|none|none|
+|»» paidDate|boolean|false|none|none|
+|»» paymentGatewayId|boolean|false|none|none|
+|»» orderId|boolean|false|none|none|
+|»» res|boolean|false|none|none|
 
 xor
 
-| Name          | Type     | Required | Restrictions | Description |
-| ------------- | -------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [string] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
 
 <h2 id="tocS_Transactions.Filter1">Transactions.Filter1</h2>
 <!-- backwards compatibility -->
@@ -5794,54 +5888,56 @@ xor
     "res": true
   }
 }
+
 ```
 
 Transactions.Filter
 
 ### Properties
 
-| Name   | Type    | Required | Restrictions | Description |
-| ------ | ------- | -------- | ------------ | ----------- |
-| offset | integer | false    | none         | none        |
-| limit  | integer | false    | none         | none        |
-| skip   | integer | false    | none         | none        |
-| order  | any     | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|offset|integer|false|none|none|
+|limit|integer|false|none|none|
+|skip|integer|false|none|none|
+|order|any|false|none|none|
 
 oneOf
 
-| Name          | Type   | Required | Restrictions | Description |
-| ------------- | ------ | -------- | ------------ | ----------- |
-| » _anonymous_ | string | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
 
 xor
 
-| Name          | Type     | Required | Restrictions | Description |
-| ------------- | -------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [string] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
 
 continued
 
-| Name   | Type   | Required | Restrictions | Description |
-| ------ | ------ | -------- | ------------ | ----------- |
-| where  | object | false    | none         | none        |
-| fields | any    | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|where|object|false|none|none|
+|fields|any|false|none|none|
 
 oneOf
 
-| Name                | Type    | Required | Restrictions | Description |
-| ------------------- | ------- | -------- | ------------ | ----------- |
-| » _anonymous_       | object  | false    | none         | none        |
-| »» id               | boolean | false    | none         | none        |
-| »» amountPaid       | boolean | false    | none         | none        |
-| »» currency         | boolean | false    | none         | none        |
-| »» status           | boolean | false    | none         | none        |
-| »» paidDate         | boolean | false    | none         | none        |
-| »» paymentGatewayId | boolean | false    | none         | none        |
-| »» orderId          | boolean | false    | none         | none        |
-| »» res              | boolean | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|object|false|none|none|
+|»» id|boolean|false|none|none|
+|»» amountPaid|boolean|false|none|none|
+|»» currency|boolean|false|none|none|
+|»» status|boolean|false|none|none|
+|»» paidDate|boolean|false|none|none|
+|»» paymentGatewayId|boolean|false|none|none|
+|»» orderId|boolean|false|none|none|
+|»» res|boolean|false|none|none|
 
 xor
 
-| Name          | Type     | Required | Restrictions | Description |
-| ------------- | -------- | -------- | ------------ | ----------- |
-| » _anonymous_ | [string] | false    | none         | none        |
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
+

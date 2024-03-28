@@ -149,6 +149,9 @@ x-payment-backend-variables: &payment-backend-variables
   FAILURE_CALLBACK_URL: http://localhost:3000
   JWT_SECRET: i_am_a_strong_secret
   JWT_ISSUER: https://loopback4-microservice-catalog
+  PAYPAL_ENVIRONMENT: dev
+  PAYPAL_CLIENT_ID: test_client_id
+  PAYPAL_CLIENT_SECRET: test_client_secret
 
 x-search-ms-variables: &search-ms-variables
   NODE_ENV: dev
