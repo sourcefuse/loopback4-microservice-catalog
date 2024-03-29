@@ -168,8 +168,8 @@ export class WorkflowController {
   @authenticate(STRATEGY.BEARER)
   @authorize({
     permissions: [
-      PermissionKey.CreateWorkflow,
-      PermissionKey.CreateWorkflowNum,
+      PermissionKey.ExecuteWorkflow,
+      PermissionKey.ExecuteWorkflowNum,
     ],
   })
   @post(`${basePath}/{id}/execute`, {

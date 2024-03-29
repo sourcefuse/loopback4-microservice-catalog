@@ -91,8 +91,8 @@ fetch('/workflows/{id}/execute',
 
 | Permissions |
 | ------- |
-| CreateWorkflow   |
-| 2   |
+| ExecuteWorkflow   |
+| 5   |
 
 > Body parameter
 
