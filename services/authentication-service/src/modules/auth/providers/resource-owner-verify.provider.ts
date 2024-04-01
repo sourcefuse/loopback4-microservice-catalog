@@ -2,7 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Provider, inject} from '@loopback/context';
+import {Provider} from '@loopback/context';
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {AuthenticateErrorKeys, UserStatus} from '@sourceloop/core';
@@ -12,18 +12,15 @@ import {Otp} from '../../../models';
 import {
   AuthClientRepository,
   OtpRepository,
+  UserRepository,
   UserTenantRepository,
-  UserViewRepository,
 } from '../../../repositories';
-import {UserViewService} from '../../../services/user-view.service';
 export class ResourceOwnerVerifyProvider
   implements Provider<VerifyFunction.ResourceOwnerPasswordFn>
 {
   constructor(
-    @repository(UserViewRepository)
-    public userViewRepository: UserViewRepository,
-    @inject('services.userViewService')
-    public userViewService: UserViewService,
+    @repository(UserRepository)
+    public userRepository: UserRepository,
     @repository(UserTenantRepository)
     public utRepository: UserTenantRepository,
     @repository(AuthClientRepository)
@@ -37,14 +34,13 @@ export class ResourceOwnerVerifyProvider
       let user;
 
       try {
-        // Using the userViewRepository because userRepository doesn't give the tenantId
-        user = await this.userViewService.verifyPassword(username, password);
+        user = await this.userRepository.verifyPassword(username, password);
       } catch (error) {
         const otp: Otp = await this.otpRepository.get(username);
         if (!otp || otp.otp !== password) {
           throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
         }
-        user = await this.userViewRepository.findOne({
+        user = await this.userRepository.findOne({
           where: {username},
         });
         if (!user) {

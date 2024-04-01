@@ -13,25 +13,24 @@ import sinon from 'sinon';
 import {
   AuthClient,
   Otp,
+  User,
   UserTenant,
   UserTenantWithRelations,
+  UserWithRelations,
 } from '../../../models';
-import {UserView} from '../../../models/user-view.model';
 import {ResourceOwnerVerifyProvider} from '../../../modules/auth/providers/resource-owner-verify.provider';
 import {
   AuthClientRepository,
   OtpRepository,
+  UserRepository,
   UserTenantRepository,
 } from '../../../repositories';
-import {UserViewRepository} from '../../../repositories/user-view.repository';
-import {UserViewService} from '../../../services';
 
 describe('Resource Owner Verify Provider', () => {
+  let userRepo: StubbedInstanceWithSinonAccessor<UserRepository>;
   let userTenantRepo: StubbedInstanceWithSinonAccessor<UserTenantRepository>;
   let otpRepo: StubbedInstanceWithSinonAccessor<OtpRepository>;
   let authClientRepo: StubbedInstanceWithSinonAccessor<AuthClientRepository>;
-  let userViewRepo: StubbedInstanceWithSinonAccessor<UserViewRepository>;
-  let userViewService: StubbedInstanceWithSinonAccessor<UserViewService>;
   let resourceOwnerVerifyProvider: ResourceOwnerVerifyProvider;
 
   afterEach(() => sinon.restore());
@@ -44,7 +43,7 @@ describe('Resource Owner Verify Provider', () => {
     });
 
     it('return user and client if both are present', async () => {
-      const user = new UserView({
+      const user = new User({
         id: '1',
         firstName: 'test',
         lastName: 'test',
@@ -53,7 +52,6 @@ describe('Resource Owner Verify Provider', () => {
         authClientIds: '{1}',
         defaultTenantId: '1',
         dob: new Date(),
-        tenantId: '1',
       });
       const userTenant = new UserTenant({
         id: '1',
@@ -75,8 +73,8 @@ describe('Resource Owner Verify Provider', () => {
       const password = 'test123!@';
       const clientId = 'web';
       const clientSecret = 'test';
-      const findOne = userViewService.stubs.verifyPassword;
-      findOne.resolves(user);
+      const findOne = userRepo.stubs.verifyPassword;
+      findOne.resolves(user as UserWithRelations);
       const findThree = userTenantRepo.stubs.findOne;
       findThree.resolves(userTenant as UserTenantWithRelations);
       const findFour = authClientRepo.stubs.findOne;
@@ -87,7 +85,7 @@ describe('Resource Owner Verify Provider', () => {
     });
 
     it('return user and client if verification for password is not done', async () => {
-      const user = new UserView({
+      const user = new User({
         id: '1',
         firstName: 'test',
         lastName: 'test',
@@ -96,7 +94,6 @@ describe('Resource Owner Verify Provider', () => {
         authClientIds: '{1}',
         defaultTenantId: '1',
         dob: new Date(),
-        tenantId: '1',
       });
       const userTenant = new UserTenant({
         id: '1',
@@ -123,10 +120,10 @@ describe('Resource Owner Verify Provider', () => {
       const password = 'test123!@';
       const clientId = 'web';
       const clientSecret = 'test';
-      const findFive = userViewService.stubs.verifyPassword;
+      const findFive = userRepo.stubs.verifyPassword;
       findFive.throws(err);
-      const findOne = userViewRepo.stubs.findOne;
-      findOne.resolves(user);
+      const findOne = userRepo.stubs.findOne;
+      findOne.resolves(user as UserWithRelations);
       const findTwo = otpRepo.stubs.get;
       findTwo.resolves(otpCreds);
       const findThree = userTenantRepo.stubs.findOne;
@@ -140,14 +137,12 @@ describe('Resource Owner Verify Provider', () => {
   });
 
   function setUp() {
+    userRepo = createStubInstance(UserRepository);
     userTenantRepo = createStubInstance(UserTenantRepository);
     otpRepo = createStubInstance(OtpRepository);
     authClientRepo = createStubInstance(AuthClientRepository);
-    userViewRepo = createStubInstance(UserViewRepository);
-    userViewService = createStubInstance(UserViewService);
     resourceOwnerVerifyProvider = new ResourceOwnerVerifyProvider(
-      userViewRepo,
-      userViewService,
+      userRepo,
       userTenantRepo,
       authClientRepo,
       otpRepo,

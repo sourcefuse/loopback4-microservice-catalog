@@ -16,7 +16,6 @@ import {UserCredentialsRepository} from './user-credentials.repository';
 import {UserLevelPermissionRepository} from './user-level-permission.repository';
 import {UserLevelResourceRepository} from './user-level-resource.repository';
 import {UserTenantRepository} from './user-tenant.repository';
-import {UserViewRepository} from './user-view.repository';
 import {UserRepository} from './user.repository';
 
 export * from '../otp-cache.repository';
@@ -33,12 +32,10 @@ export * from './user-credentials.repository';
 export * from './user-level-permission.repository';
 export * from './user-level-resource.repository';
 export * from './user-tenant.repository';
-export * from './user-view.repository';
 export * from './user.repository';
 
 export const repositories = [
   UserRepository,
-  UserViewRepository,
   RoleRepository,
   UserLevelPermissionRepository,
   RefreshTokenRepository,
