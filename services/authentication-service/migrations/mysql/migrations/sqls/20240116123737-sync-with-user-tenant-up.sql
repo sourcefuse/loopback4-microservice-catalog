@@ -6,5 +6,5 @@ CALL add_columns_if_not_exists('roles', 'description', 'VARCHAR(500)');
 CALL add_columns_if_not_exists('tenants', 'website', 'VARCHAR(100)');
 
 -- ALTER TABLE for users
-CALL add_columns_if_not_exists('users', 'photo_url', 'VARCHAR(250)');
+CALL add_columns_if_not_exists('users', 'photo_url', 'text');
 CALL add_columns_if_not_exists('users', 'designation', 'VARCHAR(50)');
