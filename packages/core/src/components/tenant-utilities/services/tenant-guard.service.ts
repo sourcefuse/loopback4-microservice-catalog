@@ -12,7 +12,13 @@ import {AuthenticationBindings} from 'loopback4-authentication';
 
 import {TenantType} from '../enums';
 import {TenantUtilitiesErrorKeys} from '../error-keys';
-import {EntityWithTenantId, ITenantGuard, UserInToken} from '../types';
+import {TenantUtilitiesBindings} from '../keys';
+import {
+  EntityWithTenantId,
+  ITenantGuard,
+  ITenantUtilitiesConfig,
+  UserInToken,
+} from '../types';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class TenantGuardService<T extends EntityWithTenantId, ID>
@@ -21,11 +27,16 @@ export class TenantGuardService<T extends EntityWithTenantId, ID>
   constructor(
     @inject.getter(AuthenticationBindings.CURRENT_USER)
     public readonly getCurrentUser: Getter<UserInToken>,
+    @inject(TenantUtilitiesBindings.Config, {optional: true})
+    private readonly config?: ITenantUtilitiesConfig,
   ) {}
 
   async skipTenantGuard(): Promise<boolean> {
     const user = await this.getCurrentUser();
-    return user.tenantType === TenantType.MASTER;
+    return (
+      user.tenantType === TenantType.MASTER ||
+      (this.config?.useSingleTenant ?? false)
+    );
   }
 
   find(filter?: Filter<T>): Promise<Filter<T>> {
