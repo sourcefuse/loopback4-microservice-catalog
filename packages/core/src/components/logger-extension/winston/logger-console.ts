@@ -24,7 +24,9 @@ export class WinstonConsoleLogger extends WinstonLoggerBase {
       format.timestamp(),
       format.printf(
         (log: LogEntry) =>
-          `[${log.timestamp}] ${log.level} :: ${log.context ?? '-'} :: ${log.key} -> [${log.statusCode ?? '-'}] ${log.message}`,
+          `[${log.timestamp}] ${log.level} :: ${log.context ?? '-'} :: ${
+            log.key
+          } -> [${log.statusCode ?? '-'}] ${log.message}`,
       ),
     );
 

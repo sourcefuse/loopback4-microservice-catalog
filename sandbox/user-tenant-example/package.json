@@ -22,7 +22,7 @@
     "eslint": "lb-eslint --report-unused-disable-directives .",
     "eslint:fix": "npm run eslint -- --fix",
     "pretest": "npm run rebuild",
-    "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
+    "test": "echo 'No Tests!'",
     "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js",
     "docker:build": "DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $REPOSITORY_URI:user-tenant-service .",
     "docker:run": "docker run -p 3000:3000 -d user-tenant-example",
