@@ -13,12 +13,19 @@
     "./sequelize": {
       "types": "./dist/repositories/sequelize/index.d.ts",
       "default": "./dist/repositories/sequelize/index.js"
+    },
+    "./dynamic-datasource": {
+      "types": "./dist/components/dynamic-datasource/index.d.ts",
+      "default": "./dist/components/dynamic-datasource/index.js"
     }
   },
   "typesVersions": {
     "*": {
       "sequelize": [
         "./dist/repositories/sequelize/index.d.ts"
+      ],
+      "dynamic-datasource": [
+        "./dist/components/dynamic-datasource/index.d.ts"
       ]
     }
   },
