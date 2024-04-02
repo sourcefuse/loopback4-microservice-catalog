@@ -23,7 +23,7 @@ export class HomePageController {
     );
   }
 
-    @authorize({permissions: ['*']})
+  @authorize({permissions: ['*']})
   @get('/', {
     responses: {
       [STATUS_CODE.OK]: {
@@ -33,10 +33,7 @@ export class HomePageController {
     },
   })
   homePage() {
-    this.response
-      .status(STATUS_CODE.OK)
-      .contentType('html')
-      .send(this.html);
+    this.response.status(STATUS_CODE.OK).contentType('html').send(this.html);
     return this.response;
   }
 }

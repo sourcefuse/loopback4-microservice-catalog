@@ -45,7 +45,8 @@
   },
   "dependencies": {
     "handlebars": "^4.7.8",
-    "patch-package": "^8.0.0"
+    "patch-package": "^8.0.0",
+    "prettier": "^3.2.5"
   },
   "workspaces": [
     "packages/core/",
@@ -53,6 +54,7 @@
     "packages/cache",
     "packages/feature-toggle",
     "packages/custom-sf-changelog/",
-    "services/*"
+    "services/*",
+    "sandbox/*"
   ]
 }
