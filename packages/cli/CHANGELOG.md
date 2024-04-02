@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>8.0.1 (2024-04-02)</small>
+
+* chore(deps): template dependencies version update (#2066) ([89521dd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/89521dd)), closes [#2066](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2066) [#2064](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2064)
+
+
+
+
+
 ## 8.0.0 (2024-03-26)
 
 * feat(deps): update template dependencies (#2047) ([75fc35e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/75fc35e)), closes [#2047](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2047) [#2045](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2045) [#2045](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2045)

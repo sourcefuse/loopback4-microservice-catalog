@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.2.13 (2024-04-02)</small>
+
+**Note:** Version bump only for package @sourceloop/telemed-auth-api
+
+
+
+
+
 ## <small>0.2.12 (2024-03-26)</small>
 
 **Note:** Version bump only for package @sourceloop/telemed-auth-api

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 18.0.0 (2024-04-02)
+
+* fix(authentication-service): change the random fields from varchar to text (#2062) ([3213093](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3213093)), closes [#2062](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2062) [#2036](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2036)
+
+
+
+
+
 ## 17.0.0 (2024-03-26)
 
 * feat(authentication-service): filtering option in activity logs (#2049) ([aa60b14](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/aa60b14)), closes [#2049](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2049) [#1517](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1517) [#1517](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1517) [#1517](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1517) [#1517](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1517)
