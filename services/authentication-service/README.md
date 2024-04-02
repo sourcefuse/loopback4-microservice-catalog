@@ -10,6 +10,10 @@
 
 ![check-code-coverage](https://img.shields.io/badge/code--coverage-75.01%25-yellow)
 
+## ATTENTION
+
+We regret to inform you that we are deprecating `ts '/auth/login-token' ` due to security vulnerabilities. Your immediate action is required to transition away from its usage. We encourage you to transition to OAuth-compliant APIs such as `ts '/auth/login' ` and `ts '/auth/token' ` for secure authentication and data exchange. Refer to our documentation and reach out for support if needed. Your cooperation is appreciated in safeguarding our systems' integrity.s.
+
 ## Overview
 
 A Microservice for handling authentications. It provides -

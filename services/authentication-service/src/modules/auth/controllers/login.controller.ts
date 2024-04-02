@@ -9,6 +9,7 @@ import {
   RequestContext,
   get,
   getModelSchemaRef,
+  oas,
   param,
   patch,
   post,
@@ -183,6 +184,7 @@ export class LoginController {
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
   @authenticate(STRATEGY.OAUTH2_RESOURCE_OWNER_GRANT)
   @authorize({permissions: ['*']})
+  @oas.deprecated()
   @post('/auth/login-token', {
     description:
       'Gets you refresh token and access token in one hit. (mobile app)',
