@@ -10,10 +10,6 @@
 
 ![check-code-coverage](https://img.shields.io/badge/code--coverage-75.01%25-yellow)
 
-## ATTENTION
-
-We would like to inform you that we have deprecated `'/auth/login-token'` due to security vulnerabilities. Your immediate action is required to transition away from its usage. We encourage you to transition to OAuth-compliant APIs such as `'/auth/login'` and `'/auth/token'` for secure authentication and data exchange. Refer to our documentation and reach out for support if needed. Your cooperation is appreciated in safeguarding our systems integrity.
-
 ## Overview
 
 A Microservice for handling authentications. It provides -
@@ -489,6 +485,10 @@ NOTE : For [`@sourceloop/cli`](https://www.npmjs.com/package/@sourceloop/cli?act
 ### Providers
 
 You can find documentation for some of the providers available in this service [here](./src/providers/README.md)
+
+## ATTENTION
+
+We would like to inform you that we have deprecated `'/auth/login-token'` due to security vulnerabilities. Your immediate action is required to transition away from its usage. We encourage you to transition to OAuth-compliant APIs such as `'/auth/login'` and `'/auth/token'` for secure authentication and data exchange. Refer to our documentation and reach out for support if needed. Your cooperation is appreciated in safeguarding our systems integrity.
 
 #### Common Headers
 
