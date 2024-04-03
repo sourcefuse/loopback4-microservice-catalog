@@ -1,17 +1,17 @@
 {
-  "name": "telemed-auth-migration",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "private": true,
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 0"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "db-migrate": "^0.11.13",
-    "db-migrate-pg": "^1.2.2"
-  }
+    "name": "telemed-auth-migration",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "private": true,
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 0"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "db-migrate": "^1.0.0-beta.21",
+        "db-migrate-pg": "^1.3.0"
+    }
 }

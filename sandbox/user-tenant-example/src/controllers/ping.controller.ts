@@ -1,10 +1,5 @@
 import {inject} from '@loopback/core';
-import {
-  Request,
-  RestBindings,
-  get,
-  ResponseObject,
-} from '@loopback/rest';
+import {Request, RestBindings, get, ResponseObject} from '@loopback/rest';
 import {authorize} from 'loopback4-authorization';
 import {STATUS_CODE} from '@sourceloop/core';
 
@@ -39,7 +34,9 @@ const PING_RESPONSE: ResponseObject = {
  * A simple controller to bounce back http requests
  */
 export class PingController {
-  constructor(@inject(RestBindings.Http.REQUEST) private readonly req: Request) {}
+  constructor(
+    @inject(RestBindings.Http.REQUEST) private readonly req: Request,
+  ) {}
 
   // Map to `GET /ping`
   @authorize({permissions: ['*']})

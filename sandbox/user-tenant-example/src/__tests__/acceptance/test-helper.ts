@@ -19,10 +19,6 @@ export async function setupApplication(): Promise<AppWithClient> {
     rest: restConfig,
   });
 
-      
-
-  
-  
   await app.boot();
   await app.start();
 
@@ -35,7 +31,7 @@ function setUpEnv() {
   process.env.NODE_ENV = 'test';
   process.env.ENABLE_TRACING = '0';
   process.env.ENABLE_OBF = '0';
-  }
+}
 
 export interface AppWithClient {
   app: UserTenantExampleApplication;

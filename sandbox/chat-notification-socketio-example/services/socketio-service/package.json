@@ -49,19 +49,19 @@
     "!*/__tests__"
   ],
   "dependencies": {
-    "@loopback/boot": "^6.1.5",
-    "@loopback/core": "^5.1.5",
-    "@loopback/rest": "^13.1.5",
-    "@loopback/rest-explorer": "^6.1.5",
-    "@loopback/socketio": "^0.7.6",
+    "@loopback/boot": "^7.0.0",
+    "@loopback/core": "^6.0.0",
+    "@loopback/rest": "^14.0.0",
+    "@loopback/rest-explorer": "^7.0.0",
+    "@loopback/socketio": "^0.8.0",
     "debug": "^4.3.4",
     "p-event": "^4.2.0",
     "tslib": "^2.6.2"
   },
   "devDependencies": {
-    "@loopback/build": "^10.1.5",
-    "@loopback/eslint-config": "^14.0.4",
-    "@loopback/testlab": "^6.1.5",
+    "@loopback/build": "^11.0.0",
+    "@loopback/eslint-config": "^15.0.0",
+    "@loopback/testlab": "^7.0.0",
     "@types/debug": "^4.1.7",
     "@types/node": "^18.11.9",
     "eslint": "^8.44.0",
