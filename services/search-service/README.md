@@ -147,6 +147,21 @@ CREATE INDEX tbl_fts_idx ON main.<TABLENAME> USING GIN (
        to_tsvector('english', f_concat_ws(' ', <COLUMN1>, <COLUMN2>)));
 ```
 
+### Using with Sequelize
+
+This service supports Sequelize as the underlying ORM using [@loopback/sequelize](https://www.npmjs.com/package/@loopback/sequelize) extension. And in order to use it, you'll need to do following changes.
+
+1.To use Sequelize in your application, add following to application.ts:
+
+```ts
+this.bind(SearchServiceBindings.Config).to({
+  useCustomSequence: false,
+  useSequelize: true,
+});
+```
+
+2. Use the `SequelizeDataSource` in your datasource as the parent class. Refer [this](https://www.npmjs.com/package/@loopback/sequelize#step-1-configure-datasource) for more.
+
 ## Migrations
 
 The migrations required for this service are processed during the installation automatically if you set the `CHAT_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or databasea, they may be affected. In such a scenario, it is advised that you copy the migration files in your project root, using the `CHAT_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
