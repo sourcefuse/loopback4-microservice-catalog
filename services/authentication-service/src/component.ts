@@ -16,6 +16,8 @@ import {
   CoreComponent,
   SECURITY_SCHEME_SPEC,
   SFCoreBindings,
+  TenantGuardService,
+  TenantUtilitiesBindings,
 } from '@sourceloop/core';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
@@ -114,6 +116,7 @@ import {repositories as sequelizeRepositories} from './repositories/sequelize';
 import {MySequence} from './sequence';
 import {
   ActiveUserFilterBuilderService,
+  LoginActivityHelperService,
   LoginHelperService,
   OtpService,
 } from './services';
@@ -183,12 +186,18 @@ export class AuthenticationServiceComponent implements Component {
       .bind('services.LoginHelperService')
       .toClass(LoginHelperService);
     this.application.bind('services.otpService').toClass(OtpService);
+    this.application
+      .bind('services.loginActivityHelperService')
+      .toClass(LoginActivityHelperService);
 
     //set the userActivity to false by default
     this.application
       .bind(AuthServiceBindings.MarkUserActivity)
       .to({markUserActivity: false});
     this.models = models;
+    this.application
+      .bind(TenantUtilitiesBindings.GuardService)
+      .toClass(TenantGuardService);
     this.application
       .bind('services.ActiveUserFilterBuilderService')
       .toClass(ActiveUserFilterBuilderService);

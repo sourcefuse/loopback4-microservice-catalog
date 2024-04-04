@@ -8,6 +8,7 @@ const User = {
   id: 1,
   username: 'test_user',
   password: 'test_password',
+  tenantId: 'tenant1',
 };
 export const testUserPayload = {
   ...User,

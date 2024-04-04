@@ -2,9 +2,9 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {LoginActivityRepository} from './login-activity.repository';
 import {AuthClientRepository} from './auth-client.repository';
 import {AuthSecureClientRepository} from './auth-secure-client.repository';
+import {LoginActivityRepository} from './login-activity.repository';
 import {OtpCacheRepository} from './otp-cache.repository';
 import {OtpRepository} from './otp.repository';
 import {RefreshTokenRepository} from './refresh-token.repository';
@@ -20,6 +20,7 @@ import {UserRepository} from './user.repository';
 
 export * from './auth-client.repository';
 export * from './auth-secure-client.repository';
+export * from './login-activity.repository';
 export * from './otp-cache.repository';
 export * from './otp.repository';
 export * from './refresh-token.repository';
@@ -32,7 +33,6 @@ export * from './user-level-permission.repository';
 export * from './user-level-resource.repository';
 export * from './user-tenant.repository';
 export * from './user.repository';
-export * from './login-activity.repository';
 
 export const repositories = [
   UserRepository,

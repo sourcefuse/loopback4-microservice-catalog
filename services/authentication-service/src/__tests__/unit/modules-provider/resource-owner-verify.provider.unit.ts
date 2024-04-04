@@ -2,19 +2,14 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {HttpErrors} from '@loopback/rest';
 import {
   StubbedInstanceWithSinonAccessor,
   createStubInstance,
   expect,
 } from '@loopback/testlab';
-import {
-  UserTenantRepository,
-  UserRepository,
-  OtpRepository,
-  AuthClientRepository,
-} from '../../../repositories';
+import {UserStatus} from '@sourceloop/core';
 import sinon from 'sinon';
-import {ResourceOwnerVerifyProvider} from '../../../modules/auth/providers/resource-owner-verify.provider';
 import {
   AuthClient,
   Otp,
@@ -23,8 +18,13 @@ import {
   UserTenantWithRelations,
   UserWithRelations,
 } from '../../../models';
-import {UserStatus} from '@sourceloop/core';
-import {HttpErrors} from '@loopback/rest';
+import {ResourceOwnerVerifyProvider} from '../../../modules/auth/providers/resource-owner-verify.provider';
+import {
+  AuthClientRepository,
+  OtpRepository,
+  UserRepository,
+  UserTenantRepository,
+} from '../../../repositories';
 
 describe('Resource Owner Verify Provider', () => {
   let userRepo: StubbedInstanceWithSinonAccessor<UserRepository>;
