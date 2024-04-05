@@ -1,0 +1,1 @@
+CALL add_columns_if_not_exists('search_query', 'where_', 'json DEFAULT ''{}''');
