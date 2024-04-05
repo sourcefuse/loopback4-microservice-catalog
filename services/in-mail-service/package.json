@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/in-mail-service",
-  "version": "10.0.0",
+  "version": "10.0.1",
   "description": "In mail microservice",
   "keywords": [
     "loopback-extension",
@@ -63,7 +63,7 @@
     "@loopback/repository": "^7.0.0",
     "@loopback/repository-tests": "^0.24.0",
     "@loopback/rest": "^14.0.0",
-    "@sourceloop/core": "^13.0.0",
+    "@sourceloop/core": "^13.1.0",
     "dotenv": "^16.0.3",
     "dotenv-extended": "^2.9.0",
     "loopback4-authentication": "^12.0.0",

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 18.1.0 (2024-04-05)
+
+* feat(authentication-service): enable tenant aware metrics (#2044) ([e67280d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e67280d)), closes [#2044](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2044) [#1980](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1980) [#1980](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1980)
+
+
+
+
+
 ## 18.0.0 (2024-04-02)
 
 * fix(authentication-service): change the random fields from varchar to text (#2062) ([3213093](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3213093)), closes [#2062](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2062) [#2036](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2036)

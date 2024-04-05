@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>12.0.2 (2024-04-05)</small>
+
+**Note:** Version bump only for package @sourceloop/bpmn-service
+
+
+
+
+
 ## <small>12.0.1 (2024-03-29)</small>
 
 * fix(bpmn-service): added and changed permission for execute workflow api (#2060) ([d3ff4ec](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d3ff4ec)), closes [#2060](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2060)
