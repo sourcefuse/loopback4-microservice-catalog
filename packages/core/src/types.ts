@@ -7,6 +7,7 @@ import CryptoJS from 'crypto-js';
 import {IncomingMessage, ServerResponse} from 'http';
 import {AnyObject} from 'loopback-datasource-juggler';
 import {SWStats} from 'swagger-stats';
+
 export interface IServiceConfig {
   useCustomSequence: boolean;
   useSequelize?: boolean;

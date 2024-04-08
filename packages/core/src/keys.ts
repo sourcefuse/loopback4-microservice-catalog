@@ -4,6 +4,7 @@
 // https://opensource.org/licenses/MIT
 import {BindingKey} from '@loopback/core';
 import {ExpressRequestHandler} from '@loopback/rest';
+import {SetupDatasourceFn} from 'loopback4-dynamic-datasource';
 import {BINDING_PREFIX} from './constants';
 import {HttpMethod} from './enums';
 import {CoreConfig, TenantIdEncryptionFn} from './types';
@@ -21,6 +22,10 @@ export namespace SFCoreBindings {
   export const TENANTID_ENCRYPTION_PROVIDER =
     BindingKey.create<TenantIdEncryptionFn>(
       `sf.auth.tenantid.encryption.provider`,
+    );
+  export const DYNAMIC_DATASOURCE_MIDDLEWARES =
+    BindingKey.create<SetupDatasourceFn>(
+      `sf.packages.core.dynamicDatasourceMiddleware`,
     );
 }
 
