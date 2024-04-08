@@ -1,5 +1,6 @@
 import {JSONObject} from '@loopback/core';
-import {Action, AuditLog} from '@sourceloop/audit-log';
+import {Action} from '@sourceloop/audit-log';
+import {AuditLog} from '../../models/tenant-support';
 const tenantId = 'fac65aad-3f01-dd25-3ea0-ee6563fbe02b';
 export const archiveLogs: AuditLog[] = [
   new AuditLog({

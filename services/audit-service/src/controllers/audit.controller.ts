@@ -41,7 +41,8 @@ import {
   ColumnBuilderServiceBindings,
   ExportToCsvServiceBindings,
 } from '../keys';
-import {AuditLog, CustomFilter, Job, MappingLog} from '../models';
+import {CustomFilter} from '../models';
+import {AuditLog, Job, MappingLog} from '../models/tenant-support';
 import {
   AuditLogRepository,
   JobRepository,
@@ -186,7 +187,6 @@ export class AuditController {
         filterUsed: filter,
         status: FileStatusKey.PENDING,
         operation: OperationKey.QUERY,
-        tenantId: this.currentUser.tenantId,
       });
 
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
@@ -381,7 +381,6 @@ export class AuditController {
         filterUsed: filter,
         status: FileStatusKey.PENDING,
         operation: OperationKey.EXPORT,
-        tenantId: this.currentUser.tenantId,
       });
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
       this.jobProcessingService.start(job.getId());

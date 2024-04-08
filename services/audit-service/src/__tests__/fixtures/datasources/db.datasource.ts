@@ -1,5 +1,5 @@
-import {sinon} from '@loopback/testlab';
 import {AnyObject, Connector, juggler, Options} from '@loopback/repository';
+import {sinon} from '@loopback/testlab';
 import {ModelBuilder} from 'loopback-datasource-juggler';
 import IsolationLevel = juggler.IsolationLevel;
 import Transaction = juggler.Transaction;

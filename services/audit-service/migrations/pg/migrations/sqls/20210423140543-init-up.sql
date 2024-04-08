@@ -11,7 +11,6 @@ CREATE TABLE main.audit_logs (
 	action_key              text NOT NULL,
 	entity_id               text NOT NULL,
 	actor                   text NOT NULL,
-	tenant_id				uuid NOT NULL,
 	"before"                text NULL,
 	"after"                 text NULL,
 	action_group            text NULL,

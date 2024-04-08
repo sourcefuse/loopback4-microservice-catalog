@@ -11,11 +11,14 @@ import {
 } from '@loopback/testlab';
 
 import {AnyObject, Filter} from '@loopback/repository';
-import {AuditLog, AuditLogRepository} from '@sourceloop/audit-log';
 import {AuditController} from '../../controllers';
 import {FileStatusKey} from '../../enums/file-status-key.enum';
-import {Job} from '../../models';
-import {JobRepository, MappingLogRepository} from '../../repositories';
+import {AuditLog, Job} from '../../models/tenant-support';
+import {
+  AuditLogRepository,
+  JobRepository,
+  MappingLogRepository,
+} from '../../repositories';
 import {ColumnBuilderProvider, JobProcessingService} from '../../services';
 import {AuditLogExportFn, ExportToCsvFn} from '../../types';
 import {testUser} from '../helpers/db.helper';
