@@ -10,6 +10,7 @@ import {
   repository,
 } from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
+import {UserCredentialsRepository} from '@sourceloop/authentication-service';
 import {AuthenticateErrorKeys} from '@sourceloop/core';
 import * as bcrypt from 'bcrypt';
 import {AuthErrorKeys} from 'loopback4-authentication';
@@ -27,6 +28,8 @@ export class UserExtHelperService {
   constructor(
     @repository(UserExtRepository)
     public userExtRepository: UserExtRepository,
+    @repository(UserCredentialsRepository)
+    public userCredentialsRepository: UserCredentialsRepository,
   ) {}
 
   async create(entity: DataObject<User>, options?: Options): Promise<User> {
@@ -71,7 +74,7 @@ export class UserExtHelperService {
           password,
         });
       }
-      await this.credentials(user.id).create(creds, options);
+      await this.userCredentialsRepository.create(creds, options);
     } catch (err) {
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
       this.userExtRepository.deleteByIdHard(user.id);
@@ -82,7 +85,11 @@ export class UserExtHelperService {
 
   async verifyPassword(username: string, password: string): Promise<User> {
     const user = await this.userExtRepository.findOne({where: {username}});
-    const creds = user && (await this.credentials(user.id).get());
+    const creds =
+      user &&
+      (await this.userCredentialsRepository.findOne({
+        where: {userId: user.id},
+      }));
     if ((!user || user.deleted) ?? !creds?.password) {
       throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
     } else if (!(await bcrypt.compare(password, creds.password))) {
@@ -105,7 +112,11 @@ export class UserExtHelperService {
     newPassword: string,
   ): Promise<User> {
     const user = await this.userExtRepository.findOne({where: {username}});
-    const creds = user && (await this.credentials(user.id).get());
+    const creds =
+      user &&
+      (await this.userCredentialsRepository.findOne({
+        where: {userId: user.id},
+      }));
     if ((!user || user.deleted) ?? !creds?.password) {
       throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
     } else if (!(await bcrypt.compare(password, creds.password))) {
@@ -117,9 +128,9 @@ export class UserExtHelperService {
     } else {
       // Do nothing
     }
-    await this.credentials(user.id).patch({
-      password: await bcrypt.hash(newPassword, saltRounds),
-    });
+
+    creds.password = await bcrypt.hash(newPassword, saltRounds);
+    await this.userCredentialsRepository.update(creds);
     return user;
   }
 }

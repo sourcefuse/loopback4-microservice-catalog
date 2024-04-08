@@ -2,28 +2,28 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import { Getter, inject } from '@loopback/context';
-import { BindingScope, injectable } from '@loopback/core';
+import {Getter, inject} from '@loopback/context';
+import {BindingScope, injectable} from '@loopback/core';
 import {
   DataObject,
   HasOneRepositoryFactory,
-  repository
+  repository,
 } from '@loopback/repository';
-import { HttpErrors } from '@loopback/rest';
+import {HttpErrors} from '@loopback/rest';
 import {
   AuthProvider,
   AuthenticateErrorKeys,
   ILogger,
   LOGGER,
-  UserStatus
+  UserStatus,
 } from '@sourceloop/core';
 import * as bcrypt from 'bcrypt';
-import { User, UserCredentials } from '../models';
+import {User, UserCredentials} from '../models';
 
-import { Options } from '@loopback/repository/src/common-types';
-import { AuthErrorKeys } from 'loopback4-authentication';
-import { AuthServiceBindings } from '../keys';
-import { PasswordDecryptionFn } from '../providers';
+import {Options} from '@loopback/repository/src/common-types';
+import {AuthErrorKeys} from 'loopback4-authentication';
+import {AuthServiceBindings} from '../keys';
+import {PasswordDecryptionFn, PasswordHashingFn} from '../providers';
 import {
   OtpRepository,
   UserCredentialsRepository,
@@ -42,7 +42,7 @@ export class UserHelperService {
     @repository(UserRepository)
     public userRepository: UserRepository,
     @repository(UserCredentialsRepository)
-    public userCredentialsRepository: UserCredentialsRepository,    
+    public userCredentialsRepository: UserCredentialsRepository,
     @repository.getter(OtpRepository)
     public getOtpRepository: Getter<OtpRepository>,
     @repository.getter('UserTenantRepository')
@@ -50,16 +50,17 @@ export class UserHelperService {
     @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
     @inject(AuthServiceBindings.PASSWORD_DECRYPTION_PROVIDER)
     private readonly passwordDecryptionFn: PasswordDecryptionFn,
+    @inject(AuthServiceBindings.PASSWORD_HASHING_PROVIDER)
+    private readonly passwordHashingProvider: PasswordHashingFn,
   ) {}
 
   async create(entity: DataObject<User>, options?: Options): Promise<User> {
     const user = await this.userRepository.create(entity, options);
     try {
       // Add temporary password for first time
-      const password = (await bcrypt.hash(
+      const password = await this.passwordHashingProvider(
         process.env.USER_TEMP_PASSWORD as string,
-        saltRounds,
-      )) as string;
+      );
       const creds = new UserCredentials({
         userId: user.id,
         authProvider: 'internal',
@@ -88,7 +89,11 @@ export class UserHelperService {
     const user = await this.userRepository.findOne({
       where: {username: username.toLowerCase()},
     });
-    const creds = user && (await this.credentials(user.id).get());
+    const creds =
+      user &&
+      (await this.userCredentialsRepository.findOne({
+        where: {userId: user.id},
+      }));
     if (!user || user.deleted) {
       throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
     } else if (
@@ -114,7 +119,11 @@ export class UserHelperService {
     newPassword: string,
   ): Promise<User> {
     const user = await this.userRepository.findOne({where: {username}});
-    const creds = user && (await this.credentials(user.id).get());
+    const creds =
+      user &&
+      (await this.userCredentialsRepository.findOne({
+        where: {userId: user.id},
+      }));
     if ((!user || user.deleted) ?? !creds?.password) {
       throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
     } else if (creds.authProvider !== AuthProvider.INTERNAL) {
@@ -130,9 +139,8 @@ export class UserHelperService {
     } else {
       // Do nothing
     }
-    await this.credentials(user.id).patch({
-      password: await bcrypt.hash(newPassword, saltRounds),
-    });
+    creds.password = await bcrypt.hash(newPassword, saltRounds);
+    await this.userCredentialsRepository.update(creds);
     return user;
   }
 
@@ -142,7 +150,11 @@ export class UserHelperService {
     oldPassword?: string,
   ): Promise<User> {
     const user = await this.userRepository.findOne({where: {username}});
-    const creds = user && (await this.credentials(user.id).get());
+    const creds =
+      user &&
+      (await this.userCredentialsRepository.findOne({
+        where: {userId: user.id},
+      }));
 
     if (oldPassword) {
       // This method considers old password as OTP
@@ -166,9 +178,8 @@ export class UserHelperService {
     } else {
       // DO nothing
     }
-    await this.credentials(user.id).patch({
-      password: await bcrypt.hash(newPassword, saltRounds),
-    });
+    creds.password = await bcrypt.hash(newPassword, saltRounds);
+    await this.userCredentialsRepository.update(creds);
     return user;
   }
 

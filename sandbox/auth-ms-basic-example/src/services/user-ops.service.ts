@@ -6,20 +6,18 @@ import {BindingScope, injectable, service} from '@loopback/core';
 import {AnyObject, repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {
-  User,
-  UserCredentials,
-  UserTenant,
-} from '@sourceloop/authentication-service/dist/models';
-import {
   AuthClientRepository,
   RoleRepository,
+  User,
+  UserCredentials,
   UserRepository,
+  UserTenant,
   UserTenantRepository,
-} from '@sourceloop/authentication-service/dist/repositories';
-import {UserHelperService} from '@sourceloop/authentication-service/dist/services';
+} from '@sourceloop/authentication-service';
 import {UserStatus} from '@sourceloop/core';
 import {AuthenticateErrorKeys} from '@sourceloop/core/src/enums';
 import bcrypt from 'bcrypt';
+import {UserHelperService} from '.';
 import {UserDto} from '../models/user.dto';
 const saltRounds = 10;
 

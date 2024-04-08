@@ -2,7 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import { Getter, inject } from '@loopback/core';
+import {Getter, inject} from '@loopback/core';
 import {
   BelongsToAccessor,
   Entity,
@@ -11,8 +11,8 @@ import {
   juggler,
   repository,
 } from '@loopback/repository';
-import { DefaultSoftCrudRepository, ILogger, LOGGER } from '@sourceloop/core';
-import { AuthServiceBindings } from '../keys';
+import {DefaultSoftCrudRepository, ILogger, LOGGER} from '@sourceloop/core';
+import {AuthServiceBindings} from '../keys';
 import {
   Tenant,
   User,
@@ -25,11 +25,11 @@ import {
   PasswordHashingFn,
   PasswordVerifyFn,
 } from '../providers';
-import { AuthDbSourceName } from '../types';
-import { OtpRepository } from './otp.repository';
-import { TenantRepository } from './tenant.repository';
-import { UserCredentialsRepository } from './user-credentials.repository';
-import { UserTenantRepository } from './user-tenant.repository';
+import {AuthDbSourceName} from '../types';
+import {OtpRepository} from './otp.repository';
+import {TenantRepository} from './tenant.repository';
+import {UserCredentialsRepository} from './user-credentials.repository';
+import {UserTenantRepository} from './user-tenant.repository';
 
 export class UserRepository extends DefaultSoftCrudRepository<
   User,

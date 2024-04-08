@@ -929,6 +929,7 @@
             "description": "The syntax of the request entity is incorrect"
           }
         },
+        "deprecated": true,
         "requestBody": {
           "content": {
             "application/json": {

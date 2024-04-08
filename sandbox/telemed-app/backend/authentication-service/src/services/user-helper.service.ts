@@ -14,6 +14,7 @@ import {
   OtpRepository,
   User,
   UserCredentials,
+  UserCredentialsRepository,
   UserTenantRepository,
 } from '@sourceloop/authentication-service';
 import {
@@ -38,6 +39,8 @@ export class UserHelperService {
   constructor(
     @repository(UserRepository)
     public userRepository: UserRepository,
+    @repository(UserCredentialsRepository)
+    public userCredentialsRepository: UserCredentialsRepository,
     @repository.getter(OtpRepository)
     public getOtpRepository: Getter<OtpRepository>,
     @repository.getter('UserTenantRepository')
@@ -57,7 +60,7 @@ export class UserHelperService {
         authProvider: 'internal',
         password,
       });
-      await this.credentials(user.id).create(creds);
+      await this.userCredentialsRepository.create(creds);
     } catch (err) {
       throw new HttpErrors.UnprocessableEntity('Error while hashing password');
     }
@@ -75,14 +78,16 @@ export class UserHelperService {
     const user = await this.userRepository.findOne({
       where: {username: username.toLowerCase()},
     });
-    const creds = user && (await this.credentials(user.id).get());
+    const creds =
+      user &&
+      (await this.userCredentialsRepository.findOne({
+        where: {userId: user.id},
+      }));
     if (!user || user.deleted) {
       throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
     } else if (
-      // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-      !creds ||
-      !creds.password ||
-      creds.authProvider !== AuthProvider.INTERNAL ||
+      !creds?.password ||
+      creds?.authProvider !== AuthProvider.INTERNAL ||
       !(await bcrypt.compare(password, creds.password))
     ) {
       this.logger.error('User creds not found in DB or is invalid');
@@ -98,7 +103,11 @@ export class UserHelperService {
     newPassword: string,
   ): Promise<User> {
     const user = await this.userRepository.findOne({where: {username}});
-    const creds = user && (await this.credentials(user.id).get());
+    const creds =
+      user &&
+      (await this.userCredentialsRepository.findOne({
+        where: {userId: user.id},
+      }));
     if ((!user || user.deleted) ?? !creds?.password) {
       throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
     } else if (creds.authProvider !== AuthProvider.INTERNAL) {
@@ -114,9 +123,8 @@ export class UserHelperService {
     } else {
       // Do nothing
     }
-    await this.credentials(user.id).patch({
-      password: await bcrypt.hash(newPassword, saltRounds),
-    });
+    creds.password = await bcrypt.hash(newPassword, saltRounds);
+    await this.userCredentialsRepository.update(creds);
     return user;
   }
 
@@ -126,7 +134,11 @@ export class UserHelperService {
     oldPassword?: string,
   ): Promise<User> {
     const user = await this.userRepository.findOne({where: {username}});
-    const creds = user && (await this.credentials(user.id).get());
+    const creds =
+      user &&
+      (await this.userCredentialsRepository.findOne({
+        where: {userId: user.id},
+      }));
 
     if (oldPassword) {
       // This method considers old password as OTP
@@ -150,9 +162,8 @@ export class UserHelperService {
     } else {
       // DO nothing
     }
-    await this.credentials(user.id).patch({
-      password: await bcrypt.hash(newPassword, saltRounds),
-    });
+    creds.password = await bcrypt.hash(newPassword, saltRounds);
+    await this.userCredentialsRepository.update(creds);
     return user;
   }
 

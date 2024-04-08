@@ -17,17 +17,17 @@ import {
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
+import path from 'path';
+import {OidcController} from './controllers';
+import {OIDCServiceBindings} from './keys';
+import {AuthClient, User} from './models';
+import {FindAccountProvider, OidcProviderProvider} from './providers';
 import {
   AuthClientRepository,
   UserCredentialsRepository,
   UserRepository,
 } from './repositories';
-import {OidcController} from './controllers';
-import {OidcProviderProvider, FindAccountProvider} from './providers';
-import {OidcInitializerService} from './services';
-import {OIDCServiceBindings} from './keys';
-import path from 'path';
-import {AuthClient, User} from './models';
+import {OidcInitializerService, UserHelperService} from './services';
 export class OidcServiceComponent implements Component {
   repositories?: Class<Repository<Model>>[];
 
@@ -42,7 +42,7 @@ export class OidcServiceComponent implements Component {
     [OIDCServiceBindings.FIND_ACCOUNT_PROVIDER.key]: FindAccountProvider,
   };
 
-  services = [OidcInitializerService];
+  services = [OidcInitializerService, UserHelperService];
   /**
    * An array of controller classes
    */

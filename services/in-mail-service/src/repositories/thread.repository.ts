@@ -65,23 +65,3 @@ export class ThreadRepository extends DefaultUserModifyCrudRepository<
     this.registerInclusionResolver('message', this.messages.inclusionResolver);
   }
 }
-//   async incrementOrCreate(
-//     id: typeof Thread.prototype.id | undefined,
-//     entity: DataObject<Thread>,
-//     options?: Options,
-//   ) {
-//     if (!id) {
-//       return this.create(entity, options);
-//     }
-//     const thread = await this.findById(id);
-//     if (!thread) {
-//       return this.create(entity, options);
-//     }
-//     await this.updateById(
-//       id,
-//       {messageCounts: thread.messageCounts + 1},
-//       options,
-//     );
-//     return thread;
-//   }
-// }

@@ -2,7 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {inject} from '@loopback/core';
+import {inject, service} from '@loopback/core';
 import {AnyObject, repository} from '@loopback/repository';
 import {HttpErrors, get, param, patch, post, requestBody} from '@loopback/rest';
 import {
