@@ -1,4 +1,4 @@
-import {BindingKey, CoreBindings} from '@loopback/core';
+import {BindingKey, Constructor, CoreBindings} from '@loopback/core';
 import {MetadataAccessor} from '@loopback/metadata';
 import {DataSource} from '@loopback/repository';
 import {Sequelize} from 'sequelize';
@@ -10,7 +10,9 @@ import {
   DataStoreConfiguration,
   DataStoreDataTypeConversionFunctions,
   IngestionHandler,
+  QueryBinding,
   QueryUtilityInterface,
+  SqlValidatorInterface,
 } from './interfaces';
 import {IngestionMapping} from './models';
 import {DataTypeMapping} from './providers/data-mappings-providers/data-type-mapping';
@@ -77,7 +79,15 @@ export namespace ReportingServiceComponentBindings {
   export const SEQUELIZE_OBJECT_PROVIDER = BindingKey.create<Sequelize>(
     `datastores.SequelizeObjectProvider`,
   );
-
+  export const SQL_VALIDATOR = BindingKey.create<SqlValidatorInterface>(
+    `services.sqlValidator`,
+  );
+  export const BINDING_MANAGER_CLASS = BindingKey.create<
+    Constructor<QueryBinding>
+  >(`services.BindingManagerClass`);
+  export const BINDING_OBJECT_PROVIDER = BindingKey.create<QueryBinding>(
+    `services.QueryBindingObjectProvider`,
+  );
   export const QUERY_UTILITY =
     BindingKey.create<QueryUtilityInterface>('QueryUtility');
 }

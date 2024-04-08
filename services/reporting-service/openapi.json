@@ -2,8 +2,13 @@
   "openapi": "3.0.0",
   "info": {
     "title": "@sourceloop/reporting-service",
+<<<<<<< HEAD
     "version": "2.1.2",
     "description": "reporting-service.",
+=======
+    "version": "0.9.1",
+    "description": "reporting-service",
+>>>>>>> 2cf3f0ca (feat(reporting-service): supports subqueries, multilevel function, dataset filter, sql in dataset)
     "contact": {
       "name": "Sourav Bhargava",
       "email": "sourav.bhargava@sourcefuse.com"
@@ -276,8 +281,13 @@
           {
             "name": "filter",
             "in": "query",
-            "schema": {
-              "type": "string"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
             }
           }
         ],
@@ -1137,6 +1147,10 @@
             "type": "object",
             "description": "The query for the data set refer to StructuredQueryInterface"
           },
+          "dataSetQuerySQL": {
+            "type": "string",
+            "description": "The query for the data set refer to standard SQL "
+          },
           "dataSetQueryHash": {
             "type": "string",
             "description": "The hash of the query for the data set"
@@ -1199,6 +1213,10 @@
             "type": "object",
             "description": "The query for the data set refer to StructuredQueryInterface"
           },
+          "dataSetQuerySQL": {
+            "type": "string",
+            "description": "The query for the data set refer to standard SQL "
+          },
           "dataSetQueryHash": {
             "type": "string",
             "description": "The hash of the query for the data set"
@@ -1256,6 +1274,10 @@
           "dataSetQuery": {
             "type": "object",
             "description": "The query for the data set refer to StructuredQueryInterface"
+          },
+          "dataSetQuerySQL": {
+            "type": "string",
+            "description": "The query for the data set refer to standard SQL "
           },
           "dataSetQueryHash": {
             "type": "string",
@@ -2121,6 +2143,9 @@
                   "dataSetQuery": {
                     "type": "boolean"
                   },
+                  "dataSetQuerySQL": {
+                    "type": "boolean"
+                  },
                   "dataSetQueryHash": {
                     "type": "boolean"
                   },
@@ -2148,6 +2173,7 @@
                     "id",
                     "name",
                     "dataSetQuery",
+                    "dataSetQuerySQL",
                     "dataSetQueryHash",
                     "extId",
                     "extMetadata"

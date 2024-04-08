@@ -33,7 +33,13 @@ export class DataSet
     name: 'data_set_query',
     description: `The query for the data set refer to StructuredQueryInterface`,
   })
-  dataSetQuery: StructuredQueryInterface;
+  dataSetQuery?: StructuredQueryInterface;
+  @property({
+    type: 'string',
+    name: 'data_set_query_sql',
+    description: 'The query for the data set refer to standard SQL ',
+  })
+  dataSetQuerySQL?: string;
 
   @property({
     type: 'string',

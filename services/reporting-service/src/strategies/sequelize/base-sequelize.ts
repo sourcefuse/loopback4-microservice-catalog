@@ -34,7 +34,9 @@ export abstract class BaseSequelize implements SequelizeStrategy {
 
   abstract listdataSources(): Promise<DataSourceList[]>;
 
-  abstract query(queryObject: StructuredQueryInterface): Promise<AnyObject[]>;
+  abstract query(
+    queryObject: StructuredQueryInterface | string,
+  ): Promise<AnyObject[]>;
 
   abstract listDataSourceColumns(
     dataSource: string,
