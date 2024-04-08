@@ -23,9 +23,8 @@ describe('DataSetsController', () => {
         select: {
           fields: ['public.mock_table.column1', 'public.mock_table.column2'],
         },
-        from: {
-          dataSources: ['public.mock_table'],
-        },
+
+        from: 'public.mock_table',
       },
     };
 

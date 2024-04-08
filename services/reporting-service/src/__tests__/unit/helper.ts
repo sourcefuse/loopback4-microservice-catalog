@@ -1,4 +1,5 @@
 import {Application} from '@loopback/core';
+import {AnyObject} from '@loopback/repository';
 import * as sinon from 'sinon';
 import {
   ColumnEntityPair,
@@ -8,7 +9,6 @@ import {
   IngestReportRecord,
   StructuredQueryInterface,
 } from '../../interfaces';
-import {AnyObject} from '@loopback/repository';
 import {DataSet} from '../../models';
 
 export async function setupApplication(): Promise<Application> {
@@ -95,9 +95,7 @@ export function givenMockDataSet(overrides: Partial<DataSet> = {}): DataSet {
       select: {
         fields: ['field1', 'field2'],
       },
-      from: {
-        dataSources: ['dataSource1'],
-      },
+      from: 'dataSource1',
     },
     dataSetQueryHash:
       'fd5d2df7b996dd11a96a2a2692e8fec6b3ae09afe63cab73affd5168d83ac32a', // Default hash

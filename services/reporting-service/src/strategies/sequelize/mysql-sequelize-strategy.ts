@@ -24,7 +24,7 @@ export class MysqlSequelizeStrategy extends BaseSequelize {
   async listdataSources(): Promise<DataSourceList[]> {
     throw new Error(METHOD_NOT_IMPLEMENTED);
   }
-  query(queryObject: StructuredQueryInterface): Promise<AnyObject[]> {
+  query(queryObject: StructuredQueryInterface | string): Promise<AnyObject[]> {
     throw new Error(METHOD_NOT_IMPLEMENTED);
   }
   listDataSourceColumns(

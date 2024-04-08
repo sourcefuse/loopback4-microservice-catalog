@@ -8,7 +8,9 @@ import {
   CustomFilter,
   DataSetServiceConfig,
   DataStoreAdapter,
+  FunctionExpression,
   QueryUtilityInterface,
+  SqlValidatorInterface,
   StructuredQueryInterface,
 } from '../interfaces';
 import {ReportingServiceComponentBindings} from '../keys';
@@ -17,12 +19,12 @@ import {DataSetsRepository} from '../repositories';
 
 const BAD_REQUEST = 400;
 const MINUS_TWO = -2;
-
 @injectable({scope: BindingScope.TRANSIENT})
 /* The `DataSetsService` class is responsible for creating, validating, updating, and retrieving data
 sets, as well as fetching data from data sources based on specified queries. */
 export class DataSetsService {
   config: DataSetServiceConfig;
+
   constructor(
     @repository(DataSetsRepository)
     private readonly dataSetsRepo: DataSetsRepository,
@@ -30,6 +32,8 @@ export class DataSetsService {
     private dataStoreAdapter: DataStoreAdapter,
     @inject(ReportingServiceComponentBindings.QUERY_UTILITY)
     private queryUtility: QueryUtilityInterface,
+    @inject(ReportingServiceComponentBindings.SQL_VALIDATOR, {optional: true})
+    private sqlValidator: SqlValidatorInterface,
     @inject(ReportingServiceComponentBindings.DATA_SET_CONFIG, {optional: true})
     config: DataSetServiceConfig = {},
   ) {
@@ -62,17 +66,23 @@ export class DataSetsService {
   }
 
   /**
-   * The function "validateDataSet" asynchronously validates a given data set by validating its query
-   * and its data sources and columns.
-   * @param {DataSet} dataSet - The `dataSet` parameter is an object that represents a data set. It
-   * likely contains properties such as `dataSetQuery`, which represents the query used to retrieve the
-   * data, and `dataSourcesAndColumns`, which represents the data sources and columns used in the
-   * query.
+   * The function `validateDataSet` in TypeScript validates a DataSet object by checking its query and
+   * SQL query if provided.
+   * @param {DataSet} dataSet - The `dataSet` parameter is an object that contains information about a
+   * data set. It may have the following properties:
    */
   private async validateDataSet(dataSet: DataSet) {
-    await this.validateDataSetQuery(dataSet.dataSetQuery);
+    if (dataSet.dataSetQuery) {
+      await this.validateDataSetQuery(dataSet.dataSetQuery);
+      await this.validateDataSourcesAndColumns(dataSet.dataSetQuery);
+    }
 
-    await this.validateDataSourcesAndColumns(dataSet.dataSetQuery);
+    if (dataSet.dataSetQuerySQL && this.sqlValidator) {
+      const isValid = await this.sqlValidator.validate(dataSet.dataSetQuerySQL);
+      if (!isValid) {
+        throw new Error('The Data Set SQL Query is invalid');
+      }
+    }
   }
 
   /**
@@ -250,7 +260,7 @@ export class DataSetsService {
       throw HttpErrors(BAD_REQUEST, 'Invalid dataSources');
     }
 
-    const columnEntityPairs = this.getcolumnEntityPairs(dataSetQuery.select);
+    const columnEntityPairs = this.getColumnEntityPairs(dataSetQuery.select);
 
     const columnsExist =
       await this.dataStoreAdapter.checkIfColumnsExists(columnEntityPairs);
@@ -261,38 +271,65 @@ export class DataSetsService {
   }
 
   /**
-   * The function `getcolumnEntityPairs` takes a `select` object and returns an array of
-   * `ColumnEntityPair` objects by extracting the data source name and column from each field or
-   * function in the `select` object.
-   * @param select - The `select` parameter is an object that represents the select clause of a
-   * structured query. It contains two properties:
-   * @returns an array of objects, where each object represents a column-entity pair.
+   * The function `getColumnEntityPairs` processes fields and functions from a select query to extract
+   * column and entity pairs.
+   * @param select - The `select` parameter in the `getColumnEntityPairs` function is of type
+   * `StructuredQueryInterface['select']`. This means it is expected to be a part of a structured query
+   * interface and specifically the `select` property of that interface. The function processes the
+   * fields and functions within the `select
+   * @returns The function `getColumnEntityPairs` returns an array of objects, where each object
+   * represents a pair of a data source name and a column name extracted from the provided `select`
+   * object.
    */
-  private getcolumnEntityPairs(
+  private getColumnEntityPairs(
     select: StructuredQueryInterface['select'],
   ): ColumnEntityPair[] {
-    const {fields, functions = []} = select;
     const columnEntityPairs: ColumnEntityPair[] = [];
 
-    [...fields, ...functions].forEach(item => {
-      const isFieldObject = typeof item === 'object';
-      const field = isFieldObject ? item.field : item;
+    select.fields?.forEach(field => {
+      let fieldName: string | undefined;
 
-      const [dataSourceName, column] = field.split('.').slice(MINUS_TWO);
-      columnEntityPairs.push({dataSourceName, column});
+      if (typeof field === 'string') {
+        fieldName = field;
+      } else if ('field' in field && typeof field.field === 'string') {
+        fieldName = field.field;
+      } else {
+        // No operation for now, but you can handle other cases or log a warning if needed
+      }
+
+      if (fieldName) {
+        const [dataSourceName, column] = fieldName.split('.').slice(MINUS_TWO);
+        if (dataSourceName && column) {
+          columnEntityPairs.push({dataSourceName, column});
+        }
+      }
+    });
+
+    select.functions?.forEach(func => {
+      func.args.forEach(arg => {
+        if (typeof arg === 'string') {
+          const [dataSourceName, column] = arg.split('.').slice(MINUS_TWO);
+          if (dataSourceName && column) {
+            columnEntityPairs.push({dataSourceName, column});
+          }
+        }
+      });
     });
 
     return columnEntityPairs;
   }
 
   /**
-   * The function fetchDataById fetches data from a data source based on an ID and a where clause.
-   * @param {string} id - The `id` parameter is a string that represents the identifier of the data you
-   * want to fetch. It is used to specify which data you want to retrieve from the data source.
-   * @param whereClause - The `whereClause` parameter is a structured query interface that specifies
-   * the conditions for filtering the data. It allows you to define conditions such as equality,
-   * inequality, range, and logical operators to retrieve specific data from a dataset.
-   * @returns The function `fetchDataById` is returning a Promise that resolves to an `AnyObject`.
+   * This TypeScript function fetches data by a specific ID using a custom filter and returns the
+   * result as a Promise.
+   * @param {string} id - The `id` parameter is a string that represents the unique identifier of the
+   * data you want to fetch.
+   * @param filter - The `filter` parameter in the `fetchDataById` function is of type
+   * `CustomFilter<AnyObject>`. This means that it is a custom filter object that can be applied to
+   * filter the data based on certain criteria. The `AnyObject` type indicates that the filter can be
+   * applied to any
+   * @returns The `fetchDataById` function returns a Promise that resolves to an object of type
+   * `AnyObject`.
    */
   async fetchDataById(
     id: string,
@@ -305,26 +342,52 @@ export class DataSetsService {
   }
 
   /**
-   * The function fetches the count of records based on the provided id and where clause.
-   * @param {string} id - The `id` parameter is a string that represents the identifier of the data you
-   * want to fetch. It is used to specify which data set you want to query.
-   * @param whereClause - The `whereClause` parameter is a structured query interface that specifies
-   * the conditions for filtering the data. It allows you to define conditions such as equality,
-   * inequality, range, and logical operators to filter the data based on specific criteria.
-   * @returns a Promise that resolves to a Count object.
+   * The function `fetchDataByIdCount` fetches the count of records based on a given ID and custom
+   * filter.
+   * @param {string} id - The `id` parameter in the `fetchDataByIdCount` function is a string that
+   * represents the identifier used to fetch data from a data set. It is used to uniquely identify the
+   * data set for which the count of records needs to be retrieved.
+   * @param filter - The `filter` parameter in the `fetchDataByIdCount` function is of type
+   * `CustomFilter<AnyObject>`. This means that it is a custom filter object that can be applied to
+   * filter the data based on certain criteria. The `AnyObject` type indicates that the filter can be
+   * applied to
+   * @returns The function `fetchDataByIdCount` returns a Promise that resolves to an object containing
+   * the count of records based on the provided id and filter. If the query is successful and there are
+   * results, it returns an object with the count value. If there are no results, it returns an object
+   * with a count of 0.
    */
   async fetchDataByIdCount(
     id: string,
     filter: CustomFilter<AnyObject>,
   ): Promise<Count> {
     const query = await this.mergeAndValidateDataSetQuery(id, filter);
-    query.select.fields = [`COUNT(${query.from.dataSources[0]}.*) AS count`];
-    delete query.offset;
-    delete query.limit;
-    delete query.orderBy;
+    let countQuery: string | StructuredQueryInterface;
 
+    if (typeof query === 'string') {
+      // Convert the SQL query to a count query
+      countQuery = this.convertToCountQuery(query);
+    } else {
+      // Define a count field expression using the FunctionExpression interface
+      const countField: FunctionExpression = {
+        function: 'COUNT',
+        args: ['*'], // Count all records
+        alias: 'count',
+      };
+
+      // Set the count field expression in the select fields
+
+      countQuery = {
+        ...query,
+        select: {fields: [countField]},
+      };
+
+      // Remove properties not relevant for a count query
+      delete countQuery.offset;
+      delete countQuery.limit;
+      delete countQuery.orderBy;
+    }
     // Execute SQL query and process the result
-    const result = await this.dataStoreAdapter.query(query);
+    const result = await this.dataStoreAdapter.query(countQuery);
     if (result && result.length > 0) {
       const count = parseInt(result[0].count, 10);
       return {count};
@@ -332,70 +395,100 @@ export class DataSetsService {
 
     return {count: 0};
   }
+
   /**
-   * The function merges and validates a data set query, throwing errors if the data set is not found
-   * or the query is invalid.
-   * @param {string} id - The `id` parameter is a string that represents the identifier of a data set.
-   * It is used to retrieve the data set object from the dataSetsRepo.
-   * @param whereClause - The `whereClause` parameter is a structured query interface that specifies
-   * the conditions for filtering the data set. It is used to narrow down the results based on specific
-   * criteria.
-   * @returns a Promise that resolves to a StructuredQueryInterface object.
+   * The function `convertToCountQuery` converts a SQL query to a count query by adding `SELECT
+   * COUNT(*) AS count` before the FROM clause.
+   * @param {string} sqlQuery - The `sqlQuery` parameter is a string representing a SQL query that you
+   * want to convert into a count query. The function `convertToCountQuery` takes this SQL query as
+   * input and converts it into a count query by prepending `SELECT COUNT(*) AS count` to the original
+   * query after the
+   * @returns The function `convertToCountQuery` takes a SQL query as input, extracts everything after
+   * the `FROM` clause, and prepends it with `SELECT COUNT(*) AS count`. The modified query with the
+   * count is then returned.
+   */
+  private convertToCountQuery(sqlQuery: string): string {
+    // Basic conversion to a count query, might need adjustments based on your SQL dialect
+    const fromIndex = sqlQuery.toUpperCase().indexOf('FROM');
+    if (fromIndex === -1) {
+      throw new Error('Invalid SQL Query for Count Conversion');
+    }
+
+    // Extract everything after the FROM clause and prepend with SELECT COUNT(*)
+    const fromClauseAndAfter = sqlQuery.substring(fromIndex);
+    return `SELECT COUNT(*) AS count ${fromClauseAndAfter}`;
+  }
+
+  /**
+   * The function `mergeAndValidateDataSetQuery` retrieves a dataset object, merges a custom filter
+   * with the dataset query, and validates the resulting query.
+   * @param {string} id - The `id` parameter in the `mergeAndValidateDataSetQuery` function is a string
+   * that represents the identifier of a dataset.
+   * @param filter - The `filter` parameter in the `mergeAndValidateDataSetQuery` function is of type
+   * `CustomFilter<AnyObject>`. It is used to filter the dataset query results based on certain
+   * criteria such as `where` conditions, `order` criteria, `limit`, and `offset`. The function
+   * processes
+   * @returns The function `mergeAndValidateDataSetQuery` returns either a `StructuredQueryInterface`
+   * object or a string.
    */
   private async mergeAndValidateDataSetQuery(
     id: string,
     filter: CustomFilter<AnyObject>,
-  ): Promise<StructuredQueryInterface> {
+  ): Promise<StructuredQueryInterface | string> {
     const datasetObj = await this.dataSetsRepo.findById(id);
     if (!datasetObj) {
       throw new HttpErrors.NotFound('Data set not found');
     }
 
-    // Set orderBy, limit, and offset with precedence to filter values
-    let orderBy;
-    if (filter?.order) {
-      orderBy = this.convertOrderToOrderBy(filter.order);
-    } else if (datasetObj.dataSetQuery?.orderBy) {
-      orderBy = datasetObj.dataSetQuery.orderBy;
+    if (typeof datasetObj.dataSetQuerySQL === 'string') {
+      return this.queryUtility.prepareFinalSqlQuery(
+        datasetObj.dataSetQuerySQL,
+        filter,
+      );
     } else {
-      //no case for order by
+      const query: StructuredQueryInterface = JSON.parse(
+        JSON.stringify(datasetObj.dataSetQuery ?? {}),
+      );
+      if (filter.where) {
+        query.where = query.where
+          ? {and: [query.where, filter.where]}
+          : filter.where;
+      }
+      if (filter.order) {
+        const orderBy = this.convertOrderToOrderBy(filter.order);
+        query.orderBy = orderBy;
+      }
+      query.limit = filter.limit ?? query.limit;
+      query.offset = filter.offset ?? query.offset;
+
+      const isValidObject = this.queryUtility.validateQueryObject(query);
+      if (!isValidObject) {
+        throw new HttpErrors.BadRequest('Invalid data set query');
+      }
+
+      return query;
     }
-    const limit = filter?.limit ?? datasetObj.dataSetQuery?.limit;
-    const offset = filter?.offset ?? datasetObj.dataSetQuery?.offset;
-
-    const query: StructuredQueryInterface = {
-      ...datasetObj.dataSetQuery,
-      orderBy: orderBy,
-      limit: limit,
-      offset: offset,
-    };
-    // to be done in future releases check if current user has permission to access the data set
-    // if not throw error
-    // else fetch data from data set
-
-    //validate data set query
-    const isValidObject = this.queryUtility.validateQueryObject(query);
-
-    if (!isValidObject) {
-      throw new HttpErrors.BadRequest('Invalid data set query');
-    }
-    return query;
   }
+
   /**
-   * The function converts an array of order strings into an array of structured query order objects.
-   * @param {string[]} orderArray - An array of strings representing the order of fields in a query.
-   * Each string in the array follows the format "field order", where "field" is the name of the field
-   * and "order" is either "asc" for ascending order or "desc" for descending order.
-   * @returns an array of objects that represent the order by clauses for a structured query. Each
-   * object has two properties: "field" which represents the field to order by, and "order" which
-   * represents the order direction ('asc' for ascending or 'desc' for descending).
+   * The function `convertOrderToOrderBy` converts an array of strings representing order criteria into
+   * an array of objects with field and order properties.
+   * @param {string[]} [orderArray] - The `orderArray` parameter is an optional array of strings that
+   * represents the order in which to sort query results. Each string in the array consists of a field
+   * name followed by a space and then the sorting order ('ASC' for ascending or 'DESC' for
+   * descending).
+   * @returns An array of objects with each object containing a "field" key and an "order" key with
+   * values of either 'ASC' or 'DESC'.
    */
-  convertOrderToOrderBy(
-    orderArray: string[],
+  private convertOrderToOrderBy(
+    orderArray?: string[],
   ): StructuredQueryInterface['orderBy'] {
+    if (!orderArray) {
+      return [];
+    }
     return orderArray.map(orderStr => {
       const [field, ord] = orderStr.split(' ');
-      return {field, order: ord.toLowerCase() as 'asc' | 'desc'};
+      return {field, order: ord.toUpperCase() as 'ASC' | 'DESC'};
     });
   }
 }
