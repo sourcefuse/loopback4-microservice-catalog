@@ -80,7 +80,7 @@
     "loopback4-helmet": "^7.0.0",
     "loopback4-ratelimiter": "^7.0.0",
     "loopback4-soft-delete": "^10.0.0",
-    "loopback4-dynamic-datasource": "file:loopback4-dynamic-datasource-1.1.0.tgz",
+    "loopback4-dynamic-datasource": "^2.0.0",
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.34",
     "openapi3-ts": "^2.0.2",

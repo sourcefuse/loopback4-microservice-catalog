@@ -420,6 +420,14 @@ this.bind(DynamicDataSourceBinding.CONFIG).to({dataSourceNames: ['authDb']});
 
 This key will be one that we use in repository class through `datasources.authDb`
 
+Since our implementaion depends on current user we have added a sequnce step to invoke the middleware after authentication and before invoke so if you wish to do same follow this
+
+```ts
+await this.invokeMiddleware(context, {
+  chain: MiddlewareChain.PRE_INVOKE,
+});
+```
+
 ### Service
 
 #### With Mixin

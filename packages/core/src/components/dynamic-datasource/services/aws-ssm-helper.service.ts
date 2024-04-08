@@ -1,5 +1,4 @@
 import {BindingScope, injectable} from '@loopback/core';
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import * as AWS from 'aws-sdk';
 
 @injectable({scope: BindingScope.TRANSIENT})

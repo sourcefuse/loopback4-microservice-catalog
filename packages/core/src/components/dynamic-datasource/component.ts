@@ -9,11 +9,11 @@ import {
 import {RestApplication, createMiddlewareBinding} from '@loopback/rest';
 import {
   DynamicDatasourceBindings,
-  DynamicDatasourceMiddlewareProvider,
   Loopback4DynamicDatasourceComponent,
 } from 'loopback4-dynamic-datasource';
 import {BearerVerifierComponent} from '../bearer-verifier';
 import {DynamicDataSourceBinding} from './keys';
+import {DynamicDatasourceMiddlewareProvider} from './middlewares';
 import {
   DataSourceConfigProvider,
   DatasourceIdentifierProvider,

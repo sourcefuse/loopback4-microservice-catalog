@@ -106,7 +106,9 @@ export class ServiceSequence implements SequenceHandler {
       if (!isAccessAllowed) {
         throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
       }
-      //this middleware will only be invoked when
+      //this middleware will only be invoked,
+      //if any middleware exists in this particular chain
+
       finished = await this.invokeMiddleware(context, {
         chain: MiddlewareChain.PRE_INVOKE,
       });
