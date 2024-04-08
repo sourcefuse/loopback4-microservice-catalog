@@ -31,9 +31,7 @@ export class DatasourceProvider implements Provider<DatasourceProviderFn> {
       return this.combineArraysIntoObject(
         dataSourceNames,
         dataSourceConfigs,
-      ).then((combinedObject: AnyObject) => {
-        return combinedObject;
-      });
+      ).then((combinedObject: AnyObject) => combinedObject);
     };
   }
 
