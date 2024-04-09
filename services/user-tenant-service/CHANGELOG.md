@@ -3,6 +3,43 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.17.1 (2024-04-05)</small>
+
+**Note:** Version bump only for package @sourceloop/user-tenant-service
+
+
+
+
+
+## 0.17.0 (2024-04-02)
+
+* fix(authentication-service): change the random fields from varchar to text (#2062) ([3213093](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3213093)), closes [#2062](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2062) [#2036](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2036)
+
+
+
+
+
+## 0.16.0 (2024-03-26)
+
+* feat(deps): update template dependencies (#2047) ([75fc35e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/75fc35e)), closes [#2047](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2047) [#2045](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2045) [#2045](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2045)
+
+
+### BREAKING CHANGE
+
+* loopback and sourceloop versions update
+* major version updates
+
+
+
+
+## <small>0.15.4 (2024-03-20)</small>
+
+**Note:** Version bump only for package @sourceloop/user-tenant-service
+
+
+
+
+
 ## <small>0.15.3 (2024-03-12)</small>
 
 * fix(user-tenant-service): enable the ability to override the model (#2031) ([27f32fd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/27f32fd)), closes [#2031](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2031)

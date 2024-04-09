@@ -315,7 +315,7 @@ export class LogoutController {
         method: 'post',
         body: params,
         headers: {
-          'Content-type': 'application/x-www-form-urlencoded',
+          'Content-type': CONTENT_TYPE.JSON,
         },
       })
         .then(() => {
@@ -326,6 +326,100 @@ export class LogoutController {
         .catch(err => {
           this.logger.error(
             `Error while logging off from google. Error :: ${err} ${JSON.stringify(
+              err,
+            )}`,
+          );
+        });
+    }
+
+    if (refreshTokenModel.accessToken !== token) {
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenInvalid);
+    }
+    await this.revokedTokens.set(token, {token});
+    await this.refreshTokenRepo.delete(req.refreshToken);
+    if (refreshTokenModel.pubnubToken) {
+      await this.refreshTokenRepo.delete(refreshTokenModel.pubnubToken);
+    }
+
+    return new SuccessResponse({
+      success: true,
+
+      key: refreshTokenModel.userId,
+    });
+  }
+
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: ['*']})
+  @post('/cognito/logout', {
+    security: OPERATION_SECURITY_SPEC,
+    description:
+      'This API will log out the user from application as well as cognito',
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: SUCCESS_RESPONSE,
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: {[X_TS_TYPE]: SuccessResponse},
+          },
+        },
+      },
+      ...ErrorCodes,
+    },
+  })
+  async cognitoLogout(
+    @param.header.string('Authorization', {
+      description: AUTHENTICATE_USER,
+    })
+    auth: string,
+    @requestBody({
+      content: {
+        [CONTENT_TYPE.JSON]: {
+          schema: getModelSchemaRef(RefreshTokenRequest, {
+            partial: true,
+          }),
+        },
+      },
+    })
+    req: RefreshTokenRequest,
+  ): Promise<SuccessResponse> {
+    const token = auth?.replace(/bearer /i, '');
+    if (!token || !req.refreshToken) {
+      throw new HttpErrors.UnprocessableEntity(
+        AuthenticateErrorKeys.TokenMissing,
+      );
+    }
+
+    const refreshTokenModel = await this.refreshTokenRepo.get(req.refreshToken);
+    if (!refreshTokenModel) {
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenExpired);
+    }
+
+    if (refreshTokenModel.externalRefreshToken) {
+      const revokeUrl = `${process.env.COGNITO_AUTH_CLIENT_DOMAIN}/oauth2/revoke`;
+      const basicAuth = Buffer.from(
+        `${process.env.COGNITO_AUTH_CLIENT_ID}:${process.env.COGNITO_AUTH_CLIENT_SECRET}`,
+      ).toString('base64');
+      const params = new URLSearchParams();
+      params.append('token', refreshTokenModel.externalRefreshToken);
+      params.append('client_id', `${process.env.COGNITO_AUTH_CLIENT_ID}`);
+      fetch(revokeUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': CONTENT_TYPE.JSON,
+          Authorization: `Basic ${basicAuth}`,
+        },
+        body: params,
+      })
+        .then(() => {
+          this.logger.info(
+            `User ${refreshTokenModel.username} logged off successfully from cognito.`,
+          );
+        })
+        .catch(err => {
+          this.logger.error(
+            `Error while logging off from cognito. Error :: ${err} ${JSON.stringify(
               err,
             )}`,
           );

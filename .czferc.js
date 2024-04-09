@@ -25,6 +25,7 @@ const types = [
 
 const scopes = [
   {name: 'chore'},
+  {name: 'ci-cd'},
   {name: 'deps'},
   {name: 'all-services'},
   {name: 'typedoc'},

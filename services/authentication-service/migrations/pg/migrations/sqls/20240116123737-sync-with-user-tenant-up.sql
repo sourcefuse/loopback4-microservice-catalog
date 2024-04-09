@@ -9,7 +9,7 @@ ALTER TABLE main.tenants
 ADD IF NOT EXISTS website varchar(100);
 
 ALTER TABLE main.users
-ADD IF NOT EXISTS photo_url varchar(250),
+ADD IF NOT EXISTS photo_url text,
 ADD IF NOT EXISTS designation  varchar(50);
 
 

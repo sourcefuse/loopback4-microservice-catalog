@@ -16,6 +16,8 @@ import {
   CoreComponent,
   SECURITY_SCHEME_SPEC,
   SFCoreBindings,
+  TenantGuardService,
+  TenantUtilitiesBindings,
 } from '@sourceloop/core';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
@@ -61,6 +63,7 @@ import {
   AzurePostVerifyProvider,
   AzurePreVerifyProvider,
   CodeWriterProvider,
+  CognitoAuthenticationProvider,
   CognitoOauth2SignupProvider,
   CognitoPostVerifyProvider,
   CognitoPreVerifyProvider,
@@ -101,14 +104,22 @@ import {LocalSignupProvider} from './providers/local-signup.provider';
 import {MfaProvider} from './providers/mfa.provider';
 import {PasswordDecryptionProvider} from './providers/password-decryption.provider';
 
+import {AzureAuthenticationProvider} from './providers/azure-authentication.provider';
 import {DeafultAuthenticationProvider} from './providers/default-authentication.provider';
 import {GoogleAuthenticationProvider} from './providers/google-authentication.provider';
 import {KeycloakAuthenticationProvider} from './providers/keycloak-authentication.provider';
+import {PasswordHashingProvider} from './providers/password-hashing.provider';
+import {PasswordVerifyProvider} from './providers/password-verify.provider';
 import {UserValidationProvider} from './providers/user-validation.provider';
 import {repositories} from './repositories/index';
 import {repositories as sequelizeRepositories} from './repositories/sequelize';
 import {MySequence} from './sequence';
-import {LoginHelperService, OtpService} from './services';
+import {
+  ActiveUserFilterBuilderService,
+  LoginActivityHelperService,
+  LoginHelperService,
+  OtpService,
+} from './services';
 import {IAuthServiceConfig, IMfaConfig, IOtpConfig} from './types';
 
 export class AuthenticationServiceComponent implements Component {
@@ -175,11 +186,22 @@ export class AuthenticationServiceComponent implements Component {
       .bind('services.LoginHelperService')
       .toClass(LoginHelperService);
     this.application.bind('services.otpService').toClass(OtpService);
-    this.application.bind(AuthServiceBindings.ActorIdKey).to('userId');
+    this.application
+      .bind('services.loginActivityHelperService')
+      .toClass(LoginActivityHelperService);
+
+    //set the userActivity to false by default
     this.application
       .bind(AuthServiceBindings.MarkUserActivity)
       .to({markUserActivity: false});
     this.models = models;
+    this.application
+      .bind(TenantUtilitiesBindings.GuardService)
+      .toClass(TenantGuardService);
+    this.application
+      .bind('services.ActiveUserFilterBuilderService')
+      .toClass(ActiveUserFilterBuilderService);
+    this.application.bind(AuthServiceBindings.ActorIdKey).to('userId');
 
     this.controllers = controllers;
   }
@@ -264,6 +286,10 @@ export class AuthenticationServiceComponent implements Component {
       LocalSignupProvider;
     this.providers[AuthServiceBindings.PASSWORD_DECRYPTION_PROVIDER.key] =
       PasswordDecryptionProvider;
+    this.providers[AuthServiceBindings.PASSWORD_HASHING_PROVIDER.key] =
+      PasswordHashingProvider;
+    this.providers[AuthServiceBindings.PASSWORD_VERIFY_PROVIDER.key] =
+      PasswordVerifyProvider;
     this.providers[SignUpBindings.PRE_LOCAL_SIGNUP_PROVIDER.key] =
       LocalPreSignupProvider;
     this.providers[SignUpBindings.SIGNUP_HANDLER_PROVIDER.key] =
@@ -310,6 +336,10 @@ export class AuthenticationServiceComponent implements Component {
       GoogleAuthenticationProvider;
     this.providers[UserValidationServiceBindings.KEYCLOAK_AUTHENTICATION.key] =
       KeycloakAuthenticationProvider;
+    this.providers[UserValidationServiceBindings.AZURE_AD_AUTHENTICATION.key] =
+      AzureAuthenticationProvider;
+    this.providers[UserValidationServiceBindings.COGNITO_AUTHENTICATION.key] =
+      CognitoAuthenticationProvider;
     this.providers[UserValidationServiceBindings.DEFAULT_AUTHENTICATION.key] =
       DeafultAuthenticationProvider;
     this.application.bind(AuthenticationBindings.USER_MODEL.key).to(AuthUser);

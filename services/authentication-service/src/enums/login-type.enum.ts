@@ -13,3 +13,8 @@ export const enum ActiveUsersRange {
   DAILY = 'daily',
   MONTHLY = 'monthly',
 }
+
+export const enum UserIdentity {
+  ACTOR_ID = 'actorId',
+  USER_NAME = 'userName',
+}

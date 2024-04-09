@@ -54,6 +54,18 @@
               "type": "string",
               "format": "date-time"
             }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
           }
         ],
         "operationId": "LoginActivityController.getActiveUsers"
@@ -1472,6 +1484,66 @@
         "operationId": "ForgetPasswordController.verifyResetPasswordLink"
       }
     },
+    "/cognito/logout": {
+      "post": {
+        "x-controller-name": "LogoutController",
+        "x-operation-name": "cognitoLogout",
+        "tags": [
+          "LogoutController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "description": "This API will log out the user from application as well as cognito",
+        "responses": {
+          "200": {
+            "description": "Success Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The syntax of the request entity is incorrect."
+          },
+          "401": {
+            "description": "Invalid Credentials."
+          },
+          "404": {
+            "description": "The entity requested does not exist."
+          },
+          "422": {
+            "description": "The syntax of the request entity is incorrect"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "description": "This is the access token which is required to authenticate user."
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenRequestPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "LogoutController.cognitoLogout"
+      }
+    },
     "/google/logout": {
       "post": {
         "x-controller-name": "LogoutController",
@@ -2236,6 +2308,27 @@
         "additionalProperties": false
       },
       "Date": {},
+      "ActiveUsersFilter": {
+        "title": "ActiveUsersFilter",
+        "type": "object",
+        "properties": {
+          "inclusion": {
+            "type": "boolean"
+          },
+          "userIdentity": {
+            "type": "string"
+          },
+          "userIdentifier": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "inclusion",
+          "userIdentity",
+          "userIdentifier"
+        ],
+        "additionalProperties": false
+      },
       "loopback.Count": {
         "type": "object",
         "title": "loopback.Count",

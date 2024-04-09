@@ -106,3 +106,7 @@ export type AbstractConstructorWithGuard<
 export interface UserInToken extends IAuthUserWithPermissions {
   tenantType?: TenantType;
 }
+
+export interface ITenantUtilitiesConfig {
+  useSingleTenant: boolean;
+}

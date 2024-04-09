@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.0.16 (2024-04-05)</small>
+
+**Note:** Version bump only for package @sourceloop/nestjs-auth-ms-example
+
+
+
+
+
+## <small>2.0.15 (2024-04-02)</small>
+
+**Note:** Version bump only for package @sourceloop/nestjs-auth-ms-example
+
+
+
+
+
+## <small>2.0.14 (2024-03-26)</small>
+
+**Note:** Version bump only for package @sourceloop/nestjs-auth-ms-example
+
+
+
+
+
+## <small>2.0.13 (2024-03-20)</small>
+
+**Note:** Version bump only for package @sourceloop/nestjs-auth-ms-example
+
+
+
+
+
 ## <small>2.0.12 (2024-03-12)</small>
 
 **Note:** Version bump only for package @sourceloop/nestjs-auth-ms-example

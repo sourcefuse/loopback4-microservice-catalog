@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.12.1 (2024-04-05)</small>
+
+**Note:** Version bump only for package @sourceloop/search-service
+
+
+
+
+
+## 0.12.0 (2024-03-26)
+
+* feat(deps): update template dependencies (#2047) ([75fc35e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/75fc35e)), closes [#2047](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2047) [#2045](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2045) [#2045](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2045)
+
+
+### BREAKING CHANGE
+
+* loopback and sourceloop versions update
+* major version updates
+
+
+
+
+## <small>0.11.5 (2024-03-20)</small>
+
+**Note:** Version bump only for package @sourceloop/search-service
+
+
+
+
+
 ## <small>0.11.4 (2024-03-12)</small>
 
 * docs(all-services): update services readme (#2000) ([93a7f91](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/93a7f91)), closes [#2000](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2000)

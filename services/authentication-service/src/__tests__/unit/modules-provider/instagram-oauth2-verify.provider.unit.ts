@@ -12,7 +12,7 @@ import sinon from 'sinon';
 import {InstagramOauth2VerifyProvider} from '../../../modules/auth/providers/instagram-oauth2-verify.provider';
 import {InstagramSignUpFn} from '../../../providers';
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 import * as InstagramStrategy from 'passport-instagram';
 import {
   User,

@@ -5,7 +5,7 @@
 import {inject, Provider} from '@loopback/core';
 import {DataObject, repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 import Handlebars from 'handlebars';
 import {v4 as uuidv4} from 'uuid';
 import {ResponseMessage, Status} from '../../enums';

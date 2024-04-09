@@ -12,7 +12,7 @@ import sinon from 'sinon';
 import {FacebookOauth2VerifyProvider} from '../../../modules/auth/providers/facebook-oauth-verify.provider';
 import {FacebookSignUpFn} from '../../../providers';
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 import * as FacebookStrategy from 'passport-facebook';
 import {
   User,

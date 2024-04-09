@@ -3,6 +3,43 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>12.0.2 (2024-04-05)</small>
+
+**Note:** Version bump only for package @sourceloop/bpmn-service
+
+
+
+
+
+## <small>12.0.1 (2024-03-29)</small>
+
+* fix(bpmn-service): added and changed permission for execute workflow api (#2060) ([d3ff4ec](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d3ff4ec)), closes [#2060](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2060)
+
+
+
+
+
+## 12.0.0 (2024-03-26)
+
+* feat(deps): update template dependencies (#2047) ([75fc35e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/75fc35e)), closes [#2047](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2047) [#2045](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2045) [#2045](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2045)
+
+
+### BREAKING CHANGE
+
+* loopback and sourceloop versions update
+* major version updates
+
+
+
+
+## <small>11.1.2 (2024-03-20)</small>
+
+**Note:** Version bump only for package @sourceloop/bpmn-service
+
+
+
+
+
 ## <small>11.1.1 (2024-03-12)</small>
 
 * fix(all-services): fix the pending sonar issues in all services (#2025) ([b2f6dc3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b2f6dc3)), closes [#2025](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2025) [#2013](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2013)

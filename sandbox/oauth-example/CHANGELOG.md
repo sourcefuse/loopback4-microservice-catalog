@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.4.3 (2024-04-05)</small>
+
+**Note:** Version bump only for package @sourceloop/oauth-example-api
+
+
+
+
+
+## <small>0.4.2 (2024-04-02)</small>
+
+**Note:** Version bump only for package @sourceloop/oauth-example-api
+
+
+
+
+
+## <small>0.4.1 (2024-03-26)</small>
+
+**Note:** Version bump only for package @sourceloop/oauth-example-api
+
+
+
+
+
+## 0.4.0 (2024-03-20)
+
+* feat(authentication-service): added SAML example (#1912) ([72002ac](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/72002ac)), closes [#1912](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1912) [#1663](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1663) [#1663](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1663)
+
+
+### BREAKING CHANGE
+
+* 
+
+
+
+
 ## <small>0.3.12 (2024-03-12)</small>
 
 **Note:** Version bump only for package @sourceloop/oauth-example-api

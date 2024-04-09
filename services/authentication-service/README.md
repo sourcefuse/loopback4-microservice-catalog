@@ -131,12 +131,13 @@ npm i @sourceloop/authentication-service
   - Use `/verify-otp` to enter otp or code from authenticator app.
 
 - **OAuth- using Azure AD** -
+
   - Passport strategy for authenticating via Azure Ad using [passport-azure-ad](https://www.npmjs.com/package/passport-azure-ad).
-  Make sure you have an account on Azure and have your application registered. Follow the steps [here](https://docs.microsoft.com/en-us/azure/active-directory-b2c/configure-a-sample-node-web-app).
-  - Refer the .env.example file to add all the relevant env variables for Azure Auth. Note - For boolean values that need to passed as false keep them blank. 
-  We are using cookie based approach instead of session based, so the library requires a cookie-parser middleware. To bind the middleware to you application set AZURE_AUTH_ENABLED=true in env file so the middleware will be added to the sequence.
-  Also the verifier function uses Signup provider whose implementation needs to be added by the user.
-  Bind the provider key to its corresponding value.
+    Make sure you have an account on Azure and have your application registered. Follow the steps [here](https://docs.microsoft.com/en-us/azure/active-directory-b2c/configure-a-sample-node-web-app).
+  - Refer the .env.example file to add all the relevant env variables for Azure Auth. Note - For boolean values that need to passed as false keep them blank.
+    We are using cookie based approach instead of session based, so the library requires a cookie-parser middleware. To bind the middleware to you application set AZURE_AUTH_ENABLED=true in env file so the middleware will be added to the sequence.
+    Also the verifier function uses Signup provider whose implementation needs to be added by the user.
+    Bind the provider key to its corresponding value.
 
     ```ts
     this.providers[SignUpBindings.AZURE_AD_SIGN_UP_PROVIDER.key] =
@@ -209,7 +210,6 @@ npm i @sourceloop/authentication-service
 
   Note: When using `.env` file put your private key in single line with line breaks escaped with `\n`, one of the ways of doing so can be found [here](https://serverfault.com/questions/466683/can-an-ssl-certificate-be-on-a-single-line-in-a-file-no-line-breaks).
 
-
 - **Using with Sequelize**
 
   This service supports Sequelize as the underlying ORM using [@loopback/sequelize](https://www.npmjs.com/package/@loopback/sequelize) extension. And in order to use it, you'll need to do following changes.
@@ -224,6 +224,16 @@ npm i @sourceloop/authentication-service
   ```
 
   - Use the `SequelizeDataSource` in your audit datasource as the parent class. Refer [this](https://www.npmjs.com/package/@loopback/sequelize#step-1-configure-datasource) for more details.
+
+- **Customizable Password Hashing for Enhanced Security**
+
+  For hashing and verifying of password two providers utilized are as follows:
+
+  PasswordHashingProvider: This provider [here](./src/providers/password-hashing.provider.ts) generates a hash of a given password using bcrypt's hashing function.
+
+  PasswordVerifyProvider: This provider [here](./src/providers//password-verify.provider.ts) verifies whether a plain password matches a hashed password using bcrypt's comparison function
+
+  These providers offer a flexible and modular approach to password hashing and verification within a LoopBack application. Users can easily swap out these implementations with their preferred hashing algorithms by overriding the providers, allowing for customization according to specific security requirements.
 
 - Start the application
   `npm start`
@@ -475,6 +485,10 @@ NOTE : For [`@sourceloop/cli`](https://www.npmjs.com/package/@sourceloop/cli?act
 ### Providers
 
 You can find documentation for some of the providers available in this service [here](./src/providers/README.md)
+
+## ATTENTION
+
+We would like to inform you that we have deprecated `'/auth/login-token'` due to security vulnerabilities. Your immediate action is required to transition away from its usage. We encourage you to transition to OAuth-compliant APIs such as `'/auth/login'` and `'/auth/token'` for secure authentication and data exchange. Refer to our documentation and reach out for support if needed. Your cooperation is appreciated in safeguarding our systems integrity.
 
 #### Common Headers
 

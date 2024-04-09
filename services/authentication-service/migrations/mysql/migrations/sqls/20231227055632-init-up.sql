@@ -2,12 +2,12 @@
 CREATE TABLE IF NOT EXISTS auth_clients (
   id                         INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
   client_id                  VARCHAR(50) NOT NULL,
-  client_secret              VARCHAR(50) NOT NULL,
+  client_secret              text NOT NULL,
   redirect_url               VARCHAR(200),
   access_token_expiration    INTEGER DEFAULT 900 NOT NULL,
   refresh_token_expiration   INTEGER DEFAULT 86400 NOT NULL,
   auth_code_expiration       INTEGER DEFAULT 180 NOT NULL,
-  secret                     VARCHAR(50) NOT NULL,
+  secret                     text NOT NULL,
   created_on                 TIMESTAMP DEFAULT current_timestamp NOT NULL,
   modified_on                TIMESTAMP DEFAULT current_timestamp NOT NULL,
   deleted                    BOOL DEFAULT false NOT NULL,
@@ -201,7 +201,7 @@ SET NEW.modified_on = now();
 CREATE TABLE IF NOT EXISTS user_permissions (
   id                   VARCHAR(36) NOT NULL PRIMARY KEY,
   user_tenant_id       VARCHAR(36) NOT NULL,
-  permission           VARCHAR(50) NOT NULL,
+  permission           text NOT NULL,
   allowed              BOOL NOT NULL,
   created_on           TIMESTAMP DEFAULT current_timestamp NOT NULL,
   modified_on          TIMESTAMP DEFAULT current_timestamp NOT NULL,

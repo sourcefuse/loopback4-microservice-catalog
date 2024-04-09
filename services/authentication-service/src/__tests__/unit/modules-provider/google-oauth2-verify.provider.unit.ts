@@ -12,7 +12,7 @@ import sinon from 'sinon';
 import {GoogleOauth2VerifyProvider} from '../../../modules/auth/providers/google-oauth2-verify.provider';
 import {GoogleSignUpFn} from '../../../providers';
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 import * as GoogleStrategy from 'passport-google-oauth20';
 import {
   User,

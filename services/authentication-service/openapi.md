@@ -94,6 +94,7 @@ fetch('/active-users/{range}',
 |range|path|string|true|none|
 |startDate|query|string(date-time)|false|none|
 |endDate|query|string(date-time)|false|none|
+|filter|query|object|false|none|
 
 > Example responses
 
@@ -3640,6 +3641,105 @@ HTTPBearer
 
 <h1 id="authentication-service-logoutcontroller">LogoutController</h1>
 
+## LogoutController.cognitoLogout
+
+<a id="opIdLogoutController.cognitoLogout"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "refreshToken": "string"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'string'
+};
+
+fetch('/cognito/logout',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "refreshToken": "string"
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'string'
+};
+
+fetch('/cognito/logout',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /cognito/logout`
+
+This API will log out the user from application as well as cognito
+
+> Body parameter
+
+```json
+{
+  "refreshToken": "string"
+}
+```
+
+<h3 id="logoutcontroller.cognitologout-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|Authorization|header|string|false|This is the access token which is required to authenticate user.|
+|body|body|[RefreshTokenRequestPartial](#schemarefreshtokenrequestpartial)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "success": true
+}
+```
+
+<h3 id="logoutcontroller.cognitologout-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Success Response|[SuccessResponse](#schemasuccessresponse)|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|The syntax of the request entity is incorrect.|None|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Invalid Credentials.|None|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
 ## LogoutController.googleLogout
 
 <a id="opIdLogoutController.googleLogout"></a>
@@ -4482,6 +4582,32 @@ null
 ### Properties
 
 *None*
+
+<h2 id="tocS_ActiveUsersFilter">ActiveUsersFilter</h2>
+<!-- backwards compatibility -->
+<a id="schemaactiveusersfilter"></a>
+<a id="schema_ActiveUsersFilter"></a>
+<a id="tocSactiveusersfilter"></a>
+<a id="tocsactiveusersfilter"></a>
+
+```json
+{
+  "inclusion": true,
+  "userIdentity": "string",
+  "userIdentifier": {}
+}
+
+```
+
+ActiveUsersFilter
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|inclusion|boolean|true|none|none|
+|userIdentity|string|true|none|none|
+|userIdentifier|object|true|none|none|
 
 <h2 id="tocS_loopback.Count">loopback.Count</h2>
 <!-- backwards compatibility -->

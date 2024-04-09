@@ -7,6 +7,7 @@ import {
   Component,
   CoreBindings,
   ProviderMap,
+  ServiceOrProviderClass,
   createBindingFromClass,
   inject,
 } from '@loopback/core';
@@ -14,6 +15,9 @@ import {AnyObject} from '@loopback/repository';
 import {ExpressRequestHandler, RestApplication} from '@loopback/rest';
 import {configure} from 'i18n';
 import {cloneDeep} from 'lodash';
+
+import {IncomingMessage, ServerResponse} from 'http';
+
 import {Loopback4HelmetComponent} from 'loopback4-helmet';
 import {RateLimiterComponent} from 'loopback4-ratelimiter';
 import * as swstats from 'swagger-stats';
@@ -24,11 +28,8 @@ import {
 import {OperationSpecEnhancer} from './enhancer/operation-spec-enhancer';
 import {LocaleKey} from './enums';
 import {OASBindings, SFCoreBindings} from './keys';
-
-import {IncomingMessage, ServerResponse} from 'http';
-
 import {TenantContextMiddlewareInterceptorProvider} from './middlewares';
-import {TenantIdEncryptionProvider} from './providers';
+import {TenantIdEncryptionProvider} from './providers/tenantid-encryption.provider';
 import {CoreConfig, addTenantId} from './types';
 
 export class CoreComponent implements Component {
@@ -65,7 +66,6 @@ export class CoreComponent implements Component {
     if (this.coreConfig?.authenticateSwaggerUI) {
       this.application.component(SwaggerAuthenticationComponent);
     }
-
     // Configure locale provider
     if (this.coreConfig?.configObject) {
       configure({...this.coreConfig.configObject, register: this.localeObj});
@@ -165,4 +165,6 @@ export class CoreComponent implements Component {
   providers?: ProviderMap = {};
 
   bindings: Binding[] = [];
+
+  services?: ServiceOrProviderClass[];
 }

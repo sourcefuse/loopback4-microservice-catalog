@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.7.13 (2024-04-05)</small>
+
+**Note:** Version bump only for package @sourceloop/audit-ms-example
+
+
+
+
+
+## <small>0.7.12 (2024-03-26)</small>
+
+**Note:** Version bump only for package @sourceloop/audit-ms-example
+
+
+
+
+
+## <small>0.7.11 (2024-03-20)</small>
+
+**Note:** Version bump only for package @sourceloop/audit-ms-example
+
+
+
+
+
 ## <small>0.7.10 (2024-03-12)</small>
 
 * fix(all-services): fix sonar issues in all services (#2018) ([33dfa77](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/33dfa77)), closes [#2018](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2018) [#2013](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2013)
