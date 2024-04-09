@@ -49,7 +49,7 @@
     "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
     "directory": "services/search-service"
   },
-  "author": " <akshat.dubey@sourcefuse.com>",
+  "author": "Sourcefuse",
   "license": "MIT",
   "files": [
     "README.md",

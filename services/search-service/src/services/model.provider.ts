@@ -1,13 +1,12 @@
 import {BindingScope, Provider, inject, injectable} from '@loopback/context';
+import {AnyObject} from '@loopback/repository';
 import {SearchServiceBindings} from '../keys';
 import {SearchQuery, SearchResult} from '../models';
 import {SearchServiceConfig, isSearchableModel} from '../types';
 export type ModelProviderFn = (
   search: SearchQuery,
-  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-  queryBuilder: any, // NOSONAR
-  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-) => Promise<{query: string; params: any[]}>; // NOSONAR
+  queryBuilder: AnyObject,
+) => Promise<{query: string; params: AnyObject}>;
 @injectable({scope: BindingScope.SINGLETON})
 export class SearchModelProvider implements Provider<ModelProviderFn> {
   constructor(
@@ -15,10 +14,7 @@ export class SearchModelProvider implements Provider<ModelProviderFn> {
     private readonly config: SearchServiceConfig,
   ) {}
   value(): ModelProviderFn {
-    // sonarignore:start
-    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-    return async (search: SearchQuery, queryBuilder: any) => {
-      // sonarignore:end
+    return async (search: SearchQuery, queryBuilder: AnyObject) => {
       let models;
       if (search.sources && search.sources.length > 0) {
         const sources = search.sources;
