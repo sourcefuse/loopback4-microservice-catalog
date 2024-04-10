@@ -22,8 +22,10 @@ import {
 import {
   CONTENT_TYPE,
   IAuthUserWithPermissions,
+  ITenantUtilitiesConfig,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
+  TenantUtilitiesBindings,
 } from '@sourceloop/core';
 import {
   authenticate,
@@ -78,6 +80,8 @@ export class AuditController {
     public columnBuilderService: ColumnBuilderFn,
     @inject(AuthenticationBindings.CURRENT_USER)
     private readonly currentUser: IAuthUserWithPermissions,
+    @inject(TenantUtilitiesBindings.Config, {optional: true})
+    private readonly config?: ITenantUtilitiesConfig,
   ) {}
 
   @authenticate(STRATEGY.BEARER)
@@ -106,7 +110,9 @@ export class AuditController {
     })
     auditLog: Omit<AuditLog, 'id' | 'tenantId'>,
   ): Promise<AuditLog> {
-    auditLog.tenantId = this.currentUser.tenantId;
+    if (!this.config?.useSingleTenant) {
+      auditLog.tenantId = this.currentUser.tenantId;
+    }
     return this.auditLogRepository.create(auditLog);
   }
 
