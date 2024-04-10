@@ -19,8 +19,10 @@ import {
   BearerVerifierConfig,
   BearerVerifierType,
   CoreComponent,
+  ITenantUtilitiesConfig,
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
+  TenantUtilitiesBindings,
   TenantUtilitiesComponent,
 } from '@sourceloop/core';
 import {AuthenticationComponent} from 'loopback4-authentication';
@@ -39,6 +41,12 @@ import {
   QuerySelectedFilesServiceBindings,
 } from './keys';
 import {AuditLog, Job, MappingLog} from './models';
+
+import {
+  AuditLog as TenantAuditLog,
+  Job as TenantJob,
+  MappingLog as TenantMappingLog,
+} from './models/tenant-support';
 import {
   AuditLogRepository,
   JobRepository,
@@ -65,6 +73,8 @@ export class AuditServiceComponent implements Component {
     private readonly application: RestApplication,
     @inject(AuditServiceBindings.Config, {optional: true})
     private readonly notifConfig?: IAuditServiceConfig,
+    @inject(TenantUtilitiesBindings.Config, {optional: true})
+    private readonly config?: ITenantUtilitiesConfig,
   ) {
     this.providers = {};
 
@@ -72,7 +82,6 @@ export class AuditServiceComponent implements Component {
     this.application.component(CoreComponent);
 
     this.application.component(TenantUtilitiesComponent);
-
     this.application.api({
       openapi: '3.0.0',
       info: {
@@ -110,8 +119,11 @@ export class AuditServiceComponent implements Component {
         JobRepository,
       ];
     }
-
-    this.models = [AuditLog, MappingLog, Job];
+    if (this.config?.useSingleTenant) {
+      this.models = [AuditLog, MappingLog, Job];
+    } else {
+      this.models = [TenantAuditLog, TenantMappingLog, TenantJob];
+    }
 
     this.controllers = [AuditController];
 

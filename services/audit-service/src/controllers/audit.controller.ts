@@ -22,8 +22,10 @@ import {
 import {
   CONTENT_TYPE,
   IAuthUserWithPermissions,
+  ITenantUtilitiesConfig,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
+  TenantUtilitiesBindings,
 } from '@sourceloop/core';
 import {
   authenticate,
@@ -41,7 +43,8 @@ import {
   ColumnBuilderServiceBindings,
   ExportToCsvServiceBindings,
 } from '../keys';
-import {AuditLog, CustomFilter, Job, MappingLog} from '../models';
+import {CustomFilter} from '../models';
+import {AuditLog, Job, MappingLog} from '../models/tenant-support';
 import {
   AuditLogRepository,
   JobRepository,
@@ -77,6 +80,8 @@ export class AuditController {
     public columnBuilderService: ColumnBuilderFn,
     @inject(AuthenticationBindings.CURRENT_USER)
     private readonly currentUser: IAuthUserWithPermissions,
+    @inject(TenantUtilitiesBindings.Config, {optional: true})
+    private readonly config?: ITenantUtilitiesConfig,
   ) {}
 
   @authenticate(STRATEGY.BEARER)
@@ -105,7 +110,9 @@ export class AuditController {
     })
     auditLog: Omit<AuditLog, 'id' | 'tenantId'>,
   ): Promise<AuditLog> {
-    auditLog.tenantId = this.currentUser.tenantId;
+    if (!this.config?.useSingleTenant) {
+      auditLog.tenantId = this.currentUser.tenantId;
+    }
     return this.auditLogRepository.create(auditLog);
   }
 
@@ -186,7 +193,6 @@ export class AuditController {
         filterUsed: filter,
         status: FileStatusKey.PENDING,
         operation: OperationKey.QUERY,
-        tenantId: this.currentUser.tenantId,
       });
 
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
@@ -381,7 +387,6 @@ export class AuditController {
         filterUsed: filter,
         status: FileStatusKey.PENDING,
         operation: OperationKey.EXPORT,
-        tenantId: this.currentUser.tenantId,
       });
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
       this.jobProcessingService.start(job.getId());

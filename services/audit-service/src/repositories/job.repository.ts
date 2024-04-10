@@ -1,10 +1,9 @@
 import {inject} from '@loopback/core';
-import {DefaultCrudRepository, juggler} from '@loopback/repository';
+import {DefaultCrudRepository, Entity, juggler} from '@loopback/repository';
 import {AuditDbSourceName} from '@sourceloop/audit-log';
 
-import {Job} from '../models';
-
 import {tenantGuard} from '@sourceloop/core';
+import {Job} from '../models/tenant-support';
 
 @tenantGuard()
 export class JobRepository extends DefaultCrudRepository<
@@ -13,7 +12,9 @@ export class JobRepository extends DefaultCrudRepository<
 > {
   constructor(
     @inject(`datasources.${AuditDbSourceName}`) dataSource: juggler.DataSource,
+    @inject('models.Job')
+    private readonly job: typeof Entity & {prototype: Job},
   ) {
-    super(Job, dataSource);
+    super(job, dataSource);
   }
 }

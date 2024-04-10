@@ -2,8 +2,9 @@ import {PutObjectCommand, S3} from '@aws-sdk/client-s3';
 import {BindingScope, Provider, inject, injectable} from '@loopback/core';
 import {EntityCrudRepository, repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
-import {AuditLog, AuditLogRepository} from '@sourceloop/audit-log';
 import {AWSS3Bindings, AwsS3Config} from '../keys';
+import {AuditLog} from '../models';
+import {AuditLogRepository} from '../repositories';
 import {ExportToCsvFn} from '../types';
 
 @injectable({scope: BindingScope.TRANSIENT})

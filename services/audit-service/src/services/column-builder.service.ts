@@ -1,6 +1,6 @@
 import {BindingScope, Provider, injectable} from '@loopback/core';
 import {AnyObject} from '@loopback/repository';
-import {AuditLog} from '@sourceloop/audit-log';
+import {AuditLog} from '../models';
 import {ColumnBuilderFn} from '../types';
 
 @injectable({scope: BindingScope.TRANSIENT})
