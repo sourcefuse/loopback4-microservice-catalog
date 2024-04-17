@@ -20,7 +20,11 @@ import {
   put,
   requestBody,
 } from '@loopback/rest';
-import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
+import {
+  CONTENT_TYPE,
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../enums/permission-key.enum';
@@ -43,6 +47,7 @@ export class SubscriptionsController {
     ],
   })
   @post(subscriptionsRoutePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Subscriptions model instance',
@@ -75,6 +80,7 @@ export class SubscriptionsController {
     ],
   })
   @get('/subscriptions/count', {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Subscriptions model count',
@@ -96,6 +102,7 @@ export class SubscriptionsController {
     ],
   })
   @get(subscriptionsRoutePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Array of Subscriptions model instances',
@@ -124,6 +131,7 @@ export class SubscriptionsController {
     ],
   })
   @patch(subscriptionsRoutePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Subscriptions PATCH success count',
@@ -153,6 +161,7 @@ export class SubscriptionsController {
     ],
   })
   @get(subscriptionsIdRoutePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Subscriptions model instance',
@@ -180,6 +189,7 @@ export class SubscriptionsController {
     ],
   })
   @patch(subscriptionsIdRoutePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Subscriptions PATCH success',
@@ -208,6 +218,7 @@ export class SubscriptionsController {
     ],
   })
   @put(subscriptionsIdRoutePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Subscriptions PUT success',
@@ -229,6 +240,7 @@ export class SubscriptionsController {
     ],
   })
   @del(subscriptionsIdRoutePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Subscriptions DELETE success',

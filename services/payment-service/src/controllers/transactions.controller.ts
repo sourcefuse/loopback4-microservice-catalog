@@ -25,9 +25,16 @@ import {
   Response,
   RestBindings,
 } from '@loopback/rest';
-import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
+import {
+  CONTENT_TYPE,
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+} from '@sourceloop/core';
+import {authenticate, STRATEGY} from 'loopback4-authentication';
+import {authorize} from 'loopback4-authorization';
 import {v4 as uuidv4} from 'uuid';
 import {ResponseMessage, TemplateName, TemplateType} from '../enums';
+import {PermissionKey} from '../enums/permission-key.enum';
 import {Orders, Transactions} from '../models';
 import {GatewayBindings, IGateway} from '../providers';
 import {
@@ -57,7 +64,15 @@ export class TransactionsController {
     private readonly paymentGatewaysRepository: PaymentGatewaysRepository,
   ) {}
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [
+      PermissionKey.CreateTransaction,
+      PermissionKey.CreateTransactionNum,
+    ],
+  })
   @post(transactionsRoutePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Transactions model instance',
@@ -82,7 +97,15 @@ export class TransactionsController {
     return this.transactionsRepository.create(transactions);
   }
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [
+      PermissionKey.ViewTransaction,
+      PermissionKey.ViewTransactionNum,
+    ],
+  })
   @get('/transactions/count', {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Transactions model count',
@@ -96,7 +119,15 @@ export class TransactionsController {
     return this.transactionsRepository.count(where);
   }
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [
+      PermissionKey.ViewTransaction,
+      PermissionKey.ViewTransactionNum,
+    ],
+  })
   @get(transactionsRoutePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Array of Transactions model instances',
@@ -117,7 +148,15 @@ export class TransactionsController {
     return this.transactionsRepository.find(filter);
   }
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateTransaction,
+      PermissionKey.UpdateTransactionNum,
+    ],
+  })
   @patch(transactionsRoutePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Transactions PATCH success count',
@@ -139,7 +178,15 @@ export class TransactionsController {
     return this.transactionsRepository.updateAll(transactions, where);
   }
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [
+      PermissionKey.ViewTransaction,
+      PermissionKey.ViewTransactionNum,
+    ],
+  })
   @get(tranasactionsIdRoutePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Transactions model instance',
@@ -159,7 +206,15 @@ export class TransactionsController {
     return this.transactionsRepository.findById(id, filter);
   }
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateTransaction,
+      PermissionKey.UpdateTransactionNum,
+    ],
+  })
   @patch(tranasactionsIdRoutePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Transactions PATCH success',
@@ -180,7 +235,15 @@ export class TransactionsController {
     await this.transactionsRepository.updateById(id, transactions);
   }
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateTransaction,
+      PermissionKey.UpdateTransactionNum,
+    ],
+  })
   @put(tranasactionsIdRoutePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Transactions PUT success',
@@ -194,7 +257,15 @@ export class TransactionsController {
     await this.transactionsRepository.replaceById(id, transactions);
   }
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [
+      PermissionKey.DeleteTransaction,
+      PermissionKey.DeleteTransactionNum,
+    ],
+  })
   @del(tranasactionsIdRoutePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Transactions DELETE success',

@@ -11,7 +11,11 @@ import {
   post,
   requestBody,
 } from '@loopback/rest';
-import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
+import {
+  CONTENT_TYPE,
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+} from '@sourceloop/core';
 import {STRATEGY, authenticate} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {v4 as uuidv4} from 'uuid';
@@ -41,6 +45,7 @@ export class SubscriptionTransactionsController {
     ],
   })
   @post('/create-subscription-and-pay', {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [redirectStatusCode]: {
         description: 'Subscription model instance',
