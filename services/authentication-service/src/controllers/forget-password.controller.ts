@@ -3,11 +3,11 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {inject} from '@loopback/core';
-import {repository} from '@loopback/repository';
-import {get, HttpErrors, param, patch, post, requestBody} from '@loopback/rest';
+import {AnyObject, repository} from '@loopback/repository';
+import {HttpErrors, get, param, patch, post, requestBody} from '@loopback/rest';
 import {
-  AuthenticateErrorKeys,
   AuthProvider,
+  AuthenticateErrorKeys,
   ErrorCodes,
   ILogger,
   LOGGER,
@@ -15,14 +15,13 @@ import {
   STATUS_CODE,
   SuccessResponse,
 } from '@sourceloop/core';
-import * as jwt from 'jsonwebtoken';
 import {omit} from 'lodash';
 import {
-  authenticateClient,
-  AuthenticationBindings,
   AuthErrorKeys,
+  AuthenticationBindings,
   ClientAuthCode,
   STRATEGY,
+  authenticateClient,
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {AuthServiceBindings} from '../keys';
@@ -33,7 +32,12 @@ import {
   User,
 } from '../models';
 
-import {ForgotPasswordHandlerFn} from '../providers';
+import {
+  AuthCodeBindings,
+  ForgotPasswordHandlerFn,
+  JWTSignerFn,
+  JWTVerifierFn,
+} from '../providers';
 import {RevokedTokenRepository, UserRepository} from '../repositories';
 import {LoginHelperService} from '../services';
 
@@ -46,6 +50,10 @@ export class ForgetPasswordController {
     @inject('services.LoginHelperService')
     private readonly loginHelperService: LoginHelperService,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
+    @inject(AuthCodeBindings.JWT_SIGNER.key)
+    private readonly jwtSigner: JWTSignerFn<AnyObject>,
+    @inject(AuthCodeBindings.JWT_VERIFIER.key)
+    private readonly jwtVerifier: JWTVerifierFn<AnyObject>,
   ) {}
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
@@ -101,12 +109,10 @@ export class ForgetPasswordController {
     const expiryDuration = parseInt(
       process.env.FORGOT_PASSWORD_LINK_EXPIRY ?? '1800',
     );
-    const token = jwt.sign(codePayload, process.env.JWT_SECRET as string, {
-      expiresIn: expiryDuration,
+    const token = await this.jwtSigner(codePayload, {
       audience: req.client_id,
       subject: user.username.toLowerCase(),
-      issuer: process.env.JWT_ISSUER,
-      algorithm: 'HS256',
+      expiresIn: expiryDuration,
     });
 
     if (user?.credentials?.authProvider !== AuthProvider.INTERNAL) {
@@ -142,10 +148,7 @@ export class ForgetPasswordController {
       throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.TokenRevoked);
     }
     try {
-      payload = jwt.verify(token, process.env.JWT_SECRET as string, {
-        issuer: process.env.JWT_ISSUER,
-        algorithms: ['HS256'],
-      }) as ClientAuthCode<User>;
+      payload = (await this.jwtVerifier(token, {})) as ClientAuthCode<User>;
     } catch (error) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenExpired);
     }
@@ -193,10 +196,7 @@ export class ForgetPasswordController {
     }
 
     try {
-      payload = jwt.verify(req.token, process.env.JWT_SECRET as string, {
-        issuer: process.env.JWT_ISSUER,
-        algorithms: ['HS256'],
-      }) as ClientAuthCode<User>;
+      payload = (await this.jwtVerifier(req.token, {})) as ClientAuthCode<User>;
     } catch (error) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenExpired);
     }

@@ -3,8 +3,8 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {inject} from '@loopback/context';
-import {repository} from '@loopback/repository';
-import {get, HttpErrors, param, post, requestBody} from '@loopback/rest';
+import {AnyObject, repository} from '@loopback/repository';
+import {HttpErrors, get, param, post, requestBody} from '@loopback/rest';
 import {
   AuthenticateErrorKeys,
   CONTENT_TYPE,
@@ -15,18 +15,23 @@ import {
 } from '@sourceloop/core';
 import * as jwt from 'jsonwebtoken';
 import {
-  authenticate,
-  authenticateClient,
-  AuthenticationBindings,
   AuthErrorKeys,
+  AuthenticationBindings,
   ClientAuthCode,
   STRATEGY,
+  authenticate,
+  authenticateClient,
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {authenticator} from 'otplib';
 import qrcode from 'qrcode';
 import {User, UserCredentials} from '../../../models';
-import {AuthCodeBindings, CodeReaderFn, CodeWriterFn} from '../../../providers';
+import {
+  AuthCodeBindings,
+  CodeReaderFn,
+  CodeWriterFn,
+  JWTVerifierFn,
+} from '../../../providers';
 import {
   AuthClientRepository,
   OtpCacheRepository,
@@ -56,6 +61,8 @@ export class OtpController {
     @repository(UserCredentialsRepository)
     public userCredsRepository: UserCredentialsRepository,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
+    @inject(AuthCodeBindings.JWT_VERIFIER.key)
+    private readonly jwtVerifier: JWTVerifierFn<AnyObject>,
   ) {}
 
   // OTP
@@ -162,11 +169,9 @@ export class OtpController {
     }
     try {
       const authCode = await codeReader(code);
-      const payload = jwt.verify(authCode, authClient.secret, {
+      const payload = (await this.jwtVerifier(authCode, {
         audience: clientId,
-        issuer: process.env.JWT_ISSUER,
-        algorithms: ['HS256'],
-      }) as ClientAuthCode<User, typeof User.prototype.id>;
+      })) as ClientAuthCode<User, typeof User.prototype.id>;
 
       const userId = payload.userId ?? payload.user?.id;
 
@@ -228,11 +233,9 @@ export class OtpController {
     }
     try {
       const code = await codeReader(req.code);
-      const payload = jwt.verify(code, authClient.secret, {
+      const payload = (await this.jwtVerifier(code, {
         audience: req.clientId,
-        issuer: process.env.JWT_ISSUER,
-        algorithms: ['HS256'],
-      }) as ClientAuthCode<User, typeof User.prototype.id>;
+      })) as ClientAuthCode<User, typeof User.prototype.id>;
 
       const userId = payload.userId ?? payload.user?.id;
 
