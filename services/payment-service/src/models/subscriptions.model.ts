@@ -5,7 +5,10 @@
 import {model, property} from '@loopback/repository';
 import {CoreEntity} from '@sourceloop/core';
 
-@model({settings: {strict: false}})
+@model({
+  name: 'subscriptions',
+  settings: {strict: true},
+})
 export class Subscriptions extends CoreEntity<Subscriptions> {
   @property({
     type: 'string',

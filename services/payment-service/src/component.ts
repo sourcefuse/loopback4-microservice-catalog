@@ -15,7 +15,12 @@ import {
   injectable,
 } from '@loopback/core';
 import {Class, Model, Repository} from '@loopback/repository';
-import {CoreComponent} from '@sourceloop/core';
+import {
+  CoreComponent,
+  ITenantUtilitiesConfig,
+  TenantUtilitiesBindings,
+  TenantUtilitiesComponent,
+} from '@sourceloop/core';
 import {
   OrdersController,
   PaymentGatewaysController,
@@ -33,6 +38,14 @@ import {
   Templates,
   Transactions,
 } from './models';
+
+import {
+  Orders as TenantOrders,
+  PaymentGateways as TenantPaymentGateways,
+  Subscriptions as TenantSubscriptions,
+  Templates as TenantTemplates,
+  Transactions as TenantTransactions,
+} from './models/tenant-support';
 import {
   GatewayBindings,
   GatewayProvider,
@@ -88,6 +101,8 @@ export class PaymentServiceComponent implements Component {
     private readonly paymentConfig?: PaymentServiceConfig,
     @config()
     private readonly options: PaymentServiceComponentOptions = DEFAULT_PAYMENT_SERVICE_OPTIONS,
+    @inject(TenantUtilitiesBindings.Config, {optional: true})
+    private readonly tenantConfig?: ITenantUtilitiesConfig,
   ) {
     this.bindings = [
       Binding.bind(RazorpayBindings.RazorpayHelper.key).to(null),
@@ -95,13 +110,26 @@ export class PaymentServiceComponent implements Component {
       Binding.bind(PayPalBindings.PayPalHelper.key).to(null),
     ];
     this.application.component(CoreComponent);
-    this.models = [
-      Orders,
-      Transactions,
-      PaymentGateways,
-      Templates,
-      Subscriptions,
-    ];
+
+    if (this.tenantConfig?.useSingleTenant) {
+      this.models = [
+        Orders,
+        Transactions,
+        PaymentGateways,
+        Templates,
+        Subscriptions,
+      ];
+    } else {
+      this.application.component(TenantUtilitiesComponent);
+      this.models = [
+        TenantOrders,
+        TenantPaymentGateways,
+        TenantSubscriptions,
+        TenantTemplates,
+        TenantTransactions,
+      ];
+    }
+
     this.controllers = [
       OrdersController,
       TransactionsController,

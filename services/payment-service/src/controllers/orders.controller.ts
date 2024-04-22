@@ -20,7 +20,14 @@ import {
   put,
   requestBody,
 } from '@loopback/rest';
-import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
+import {
+  CONTENT_TYPE,
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+} from '@sourceloop/core';
+import {authenticate, STRATEGY} from 'loopback4-authentication';
+import {authorize} from 'loopback4-authorization';
+import {PermissionKey} from '../enums/permission-key.enum';
 import {Orders} from '../models';
 import {OrdersRepository} from '../repositories';
 const orderIdPath = '/orders/{id}';
@@ -29,7 +36,13 @@ export class OrdersController {
     @repository(OrdersRepository)
     public ordersRepository: OrdersRepository,
   ) {}
+
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [PermissionKey.CreateOrder, PermissionKey.CreateOrderNum],
+  })
   @post('/orders', {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Orders model instance',
@@ -52,7 +65,12 @@ export class OrdersController {
     return this.ordersRepository.create(orders);
   }
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [PermissionKey.ViewOrder, PermissionKey.ViewOrderNum],
+  })
   @get('/orders/count', {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Orders model count',
@@ -64,7 +82,12 @@ export class OrdersController {
     return this.ordersRepository.count(where);
   }
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [PermissionKey.ViewOrder, PermissionKey.ViewOrderNum],
+  })
   @get('/orders', {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Array of Orders model instances',
@@ -83,7 +106,12 @@ export class OrdersController {
     return this.ordersRepository.find(filter);
   }
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [PermissionKey.UpdateOrder, PermissionKey.UpdateOrderNum],
+  })
   @patch('/orders', {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Orders PATCH success count',
@@ -105,7 +133,12 @@ export class OrdersController {
     return this.ordersRepository.updateAll(orders, where);
   }
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [PermissionKey.ViewOrder, PermissionKey.ViewOrderNum],
+  })
   @get(orderIdPath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Orders model instance',
@@ -125,7 +158,12 @@ export class OrdersController {
     return this.ordersRepository.findById(id, filter);
   }
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [PermissionKey.UpdateOrder, PermissionKey.UpdateOrderNum],
+  })
   @patch(orderIdPath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Orders PATCH success',
@@ -145,8 +183,12 @@ export class OrdersController {
   ): Promise<void> {
     await this.ordersRepository.updateById(id, orders);
   }
-
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [PermissionKey.UpdateOrder, PermissionKey.UpdateOrderNum],
+  })
   @put(orderIdPath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Orders PUT success',
@@ -160,7 +202,12 @@ export class OrdersController {
     await this.ordersRepository.replaceById(id, orders);
   }
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [PermissionKey.DeleteOrder, PermissionKey.DeleteOrderNum],
+  })
   @del(orderIdPath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Orders DELETE success',
