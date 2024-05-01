@@ -31,18 +31,16 @@ export class BearerVerifierComponent implements Component {
     this.models = [RevokedToken];
 
     if (this.config && this.config.type === BearerVerifierType.service) {
-      if (process.env.JWT_PUBLIC_KEY && process.env.JWT_PUBLIC_KEY !== '') {
-        this.providers[Strategies.Passport.BEARER_TOKEN_VERIFIER.key] =
-          ServicesBearerAsymmetricTokenVerifyProvider;
-      } else {
+      this.providers[Strategies.Passport.BEARER_TOKEN_VERIFIER.key] =
+        ServicesBearerAsymmetricTokenVerifyProvider;
+      if (this.config.useSymmetricEncryption) {
         this.providers[Strategies.Passport.BEARER_TOKEN_VERIFIER.key] =
           ServicesBearerTokenVerifyProvider;
       }
     } else if (this.config && this.config.type === BearerVerifierType.facade) {
-      if (process.env.JWT_PUBLIC_KEY && process.env.JWT_PUBLIC_KEY !== '') {
-        this.providers[Strategies.Passport.BEARER_TOKEN_VERIFIER.key] =
-          FacadesBearerAsymmetricTokenVerifyProvider;
-      } else {
+      this.providers[Strategies.Passport.BEARER_TOKEN_VERIFIER.key] =
+        FacadesBearerAsymmetricTokenVerifyProvider;
+      if (this.config.useSymmetricEncryption) {
         this.providers[Strategies.Passport.BEARER_TOKEN_VERIFIER.key] =
           FacadesBearerTokenVerifyProvider;
       }

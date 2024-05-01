@@ -3,9 +3,11 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {Client, expect} from '@loopback/testlab';
+import * as fs from 'fs';
 import * as jwt from 'jsonwebtoken';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {nanoid} from 'nanoid';
+import path from 'path';
 import {UserTenantServiceApplication} from '../../application';
 import {PermissionKey} from '../../enums';
 import {UserTenantServiceKey} from '../../keys';
@@ -18,7 +20,7 @@ import {
   UserTenantRepository,
 } from '../../repositories';
 import {UserGroupService} from '../../services';
-import {issuer, secret, setupApplication} from './test-helper';
+import {issuer, setupApplication} from './test-helper';
 
 describe('Group Controller', function (this: Mocha.Suite) {
   this.timeout(100000);
@@ -47,11 +49,9 @@ describe('Group Controller', function (this: Mocha.Suite) {
       PermissionKey.CreateGroup,
     ],
   };
-
   before('setupApplication', async () => {
     ({app, client} = await setupApplication());
   });
-
   after(async () => {
     await app.stop();
   });
@@ -130,9 +130,12 @@ describe('Group Controller', function (this: Mocha.Suite) {
       password: pass,
       permissions: [],
     };
-    const newToken = jwt.sign(newTestUser, secret, {
+    const privateKey = fs.readFileSync(process.env.JWT_PRIVATE_KEY ?? '');
+
+    const newToken = jwt.sign(newTestUser, privateKey, {
       expiresIn: 180000,
       issuer: issuer,
+      algorithm: 'RS256',
     });
     app.bind(AuthenticationBindings.CURRENT_USER).to(newTestUser);
     await client
@@ -206,9 +209,15 @@ describe('Group Controller', function (this: Mocha.Suite) {
   function setCurrentUser() {
     app.bind(AuthenticationBindings.CURRENT_USER).to(testUser);
     app.bind(UserTenantServiceKey.UserGroupService).toClass(UserGroupService);
-    token = jwt.sign(testUser, secret, {
+    process.env.JWT_PRIVATE_KEY = path.resolve(
+      __dirname,
+      '../../../src/__tests__/unit/utils/privateKey.txt',
+    );
+    const privateKey = fs.readFileSync(process.env.JWT_PRIVATE_KEY ?? '');
+    token = jwt.sign(testUser, privateKey, {
       expiresIn: 180000,
       issuer: issuer,
+      algorithm: 'RS256',
     });
   }
 });
