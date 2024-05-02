@@ -20,9 +20,17 @@ import {
   put,
   requestBody,
 } from '@loopback/rest';
-import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
+import {
+  CONTENT_TYPE,
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+} from '@sourceloop/core';
+import {authenticate, STRATEGY} from 'loopback4-authentication';
+import {authorize} from 'loopback4-authorization';
+import {PermissionKey} from '../enums/permission-key.enum';
 import {Templates} from '../models';
 import {TemplatesRepository} from '../repositories';
+
 const templatesRoutePath = '/templates';
 const templatesIDRoutePath = '/templates/{id}';
 
@@ -32,7 +40,15 @@ export class TemplatesController {
     public templatesRepository: TemplatesRepository,
   ) {}
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [
+      PermissionKey.CreateTemplate,
+      PermissionKey.CreateTemplateNum,
+    ],
+  })
   @post(templatesRoutePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Templates model instance',
@@ -55,7 +71,12 @@ export class TemplatesController {
     return this.templatesRepository.create(templates);
   }
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [PermissionKey.ViewTemplate, PermissionKey.ViewTemplateNum],
+  })
   @get('/templates/count', {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Templates model count',
@@ -69,7 +90,12 @@ export class TemplatesController {
     return this.templatesRepository.count(where);
   }
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [PermissionKey.ViewTemplate, PermissionKey.ViewTemplateNum],
+  })
   @get(templatesRoutePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Array of Templates model instances',
@@ -90,7 +116,15 @@ export class TemplatesController {
     return this.templatesRepository.find(filter);
   }
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateTemplate,
+      PermissionKey.UpdateTemplateNum,
+    ],
+  })
   @patch(templatesRoutePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Templates PATCH success count',
@@ -112,7 +146,12 @@ export class TemplatesController {
     return this.templatesRepository.updateAll(templates, where);
   }
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [PermissionKey.ViewTemplate, PermissionKey.ViewTemplateNum],
+  })
   @get(templatesIDRoutePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Templates model instance',
@@ -132,7 +171,15 @@ export class TemplatesController {
     return this.templatesRepository.findById(id, filter);
   }
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateTemplate,
+      PermissionKey.UpdateTemplateNum,
+    ],
+  })
   @patch(templatesIDRoutePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Templates PATCH success',
@@ -153,7 +200,15 @@ export class TemplatesController {
     await this.templatesRepository.updateById(id, templates);
   }
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateTemplate,
+      PermissionKey.UpdateTemplateNum,
+    ],
+  })
   @put(templatesIDRoutePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Templates PUT success',
@@ -167,7 +222,15 @@ export class TemplatesController {
     await this.templatesRepository.replaceById(id, templates);
   }
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [
+      PermissionKey.DeleteTemplate,
+      PermissionKey.DeleteTemplateNum,
+    ],
+  })
   @del(templatesIDRoutePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'Templates DELETE success',

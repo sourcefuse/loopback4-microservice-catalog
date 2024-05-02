@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "@sourceloop/payment-service",
-    "version": "11.1.5",
+    "version": "12.0.1",
     "description": "payment microservice.",
     "contact": {
       "name": "Sourcefuse"
@@ -15,6 +15,11 @@
         "x-operation-name": "subscriptionandtransactionscreate",
         "tags": [
           "SubscriptionTransactionsController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "302": {
@@ -44,6 +49,11 @@
         "tags": [
           "OrdersController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Orders model count",
@@ -56,6 +66,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewOrder   |\n| 7   |\n",
         "parameters": [
           {
             "name": "where",
@@ -64,7 +75,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "title": "Orders.WhereFilter",
+                  "title": "orders.WhereFilter",
                   "additionalProperties": true,
                   "x-typescript-type": "@loopback/repository#Where<Orders>"
                 }
@@ -82,11 +93,17 @@
         "tags": [
           "OrdersController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "Orders PUT success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateOrder   |\n| 8   |\n",
         "parameters": [
           {
             "name": "id",
@@ -115,11 +132,17 @@
         "tags": [
           "OrdersController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "Orders PATCH success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateOrder   |\n| 8   |\n",
         "parameters": [
           {
             "name": "id",
@@ -148,6 +171,11 @@
         "tags": [
           "OrdersController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Orders model instance",
@@ -160,6 +188,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewOrder   |\n| 7   |\n",
         "parameters": [
           {
             "name": "id",
@@ -175,7 +204,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Orders.Filter"
+                  "$ref": "#/components/schemas/orders.Filter"
                 }
               }
             }
@@ -189,11 +218,17 @@
         "tags": [
           "OrdersController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "Orders DELETE success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteOrder   |\n| 9   |\n",
         "parameters": [
           {
             "name": "id",
@@ -214,6 +249,11 @@
         "tags": [
           "OrdersController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Orders model instance",
@@ -226,6 +266,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateOrder   |\n| 6   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -243,6 +284,11 @@
         "tags": [
           "OrdersController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Orders PATCH success count",
@@ -255,6 +301,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateOrder   |\n| 8   |\n",
         "parameters": [
           {
             "name": "where",
@@ -263,7 +310,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "title": "Orders.WhereFilter",
+                  "title": "orders.WhereFilter",
                   "additionalProperties": true,
                   "x-typescript-type": "@loopback/repository#Where<Orders>"
                 }
@@ -288,6 +335,11 @@
         "tags": [
           "OrdersController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Array of Orders model instances",
@@ -303,6 +355,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewOrder   |\n| 7   |\n",
         "parameters": [
           {
             "name": "filter",
@@ -310,7 +363,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Orders.Filter1"
+                  "$ref": "#/components/schemas/orders.Filter1"
                 }
               }
             }
@@ -326,6 +379,11 @@
         "tags": [
           "PaymentGatewaysController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "PaymentGateways model count",
@@ -338,6 +396,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewGateway   |\n| 12   |\n",
         "parameters": [
           {
             "name": "where",
@@ -346,7 +405,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "title": "PaymentGateways.WhereFilter",
+                  "title": "paymentgateways.WhereFilter",
                   "additionalProperties": true,
                   "x-typescript-type": "@loopback/repository#Where<PaymentGateways>"
                 }
@@ -364,11 +423,17 @@
         "tags": [
           "PaymentGatewaysController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "PaymentGateways PUT success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateGateway   |\n| 11   |\n",
         "parameters": [
           {
             "name": "id",
@@ -397,11 +462,17 @@
         "tags": [
           "PaymentGatewaysController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "PaymentGateways PATCH success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateGateway   |\n| 11   |\n",
         "parameters": [
           {
             "name": "id",
@@ -430,6 +501,11 @@
         "tags": [
           "PaymentGatewaysController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "PaymentGateways model instance",
@@ -442,6 +518,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewGateway   |\n| 12   |\n",
         "parameters": [
           {
             "name": "id",
@@ -457,7 +534,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PaymentGateways.Filter"
+                  "$ref": "#/components/schemas/paymentgateways.Filter"
                 }
               }
             }
@@ -471,11 +548,17 @@
         "tags": [
           "PaymentGatewaysController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "PaymentGateways DELETE success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteGateway   |\n| 13   |\n",
         "parameters": [
           {
             "name": "id",
@@ -496,6 +579,11 @@
         "tags": [
           "PaymentGatewaysController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "PaymentGateways model instance",
@@ -508,6 +596,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateGateway   |\n| 10   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -525,6 +614,11 @@
         "tags": [
           "PaymentGatewaysController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "PaymentGateways PATCH success count",
@@ -537,6 +631,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateGateway   |\n| 11   |\n",
         "parameters": [
           {
             "name": "where",
@@ -545,7 +640,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "title": "PaymentGateways.WhereFilter",
+                  "title": "paymentgateways.WhereFilter",
                   "additionalProperties": true,
                   "x-typescript-type": "@loopback/repository#Where<PaymentGateways>"
                 }
@@ -570,6 +665,11 @@
         "tags": [
           "PaymentGatewaysController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Array of PaymentGateways model instances",
@@ -585,6 +685,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewGateway   |\n| 12   |\n",
         "parameters": [
           {
             "name": "filter",
@@ -592,7 +693,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PaymentGateways.Filter1"
+                  "$ref": "#/components/schemas/paymentgateways.Filter1"
                 }
               }
             }
@@ -684,6 +785,11 @@
         "tags": [
           "SubscriptionsController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Subscriptions model count",
@@ -705,7 +811,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "title": "Subscriptions.WhereFilter",
+                  "title": "subscriptions.WhereFilter",
                   "additionalProperties": true,
                   "x-typescript-type": "@loopback/repository#Where<Subscriptions>"
                 }
@@ -722,6 +828,11 @@
         "x-operation-name": "replaceById",
         "tags": [
           "SubscriptionsController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "204": {
@@ -757,6 +868,11 @@
         "tags": [
           "SubscriptionsController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "Subscriptions PATCH success"
@@ -791,6 +907,11 @@
         "tags": [
           "SubscriptionsController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Subscriptions model instance",
@@ -819,7 +940,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Subscriptions.Filter"
+                  "$ref": "#/components/schemas/subscriptions.Filter"
                 }
               }
             }
@@ -832,6 +953,11 @@
         "x-operation-name": "deleteById",
         "tags": [
           "SubscriptionsController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "204": {
@@ -858,6 +984,11 @@
         "x-operation-name": "create",
         "tags": [
           "SubscriptionsController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -889,6 +1020,11 @@
         "tags": [
           "SubscriptionsController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Subscriptions PATCH success count",
@@ -910,7 +1046,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "title": "Subscriptions.WhereFilter",
+                  "title": "subscriptions.WhereFilter",
                   "additionalProperties": true,
                   "x-typescript-type": "@loopback/repository#Where<Subscriptions>"
                 }
@@ -935,6 +1071,11 @@
         "tags": [
           "SubscriptionsController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Array of Subscriptions model instances",
@@ -958,7 +1099,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Subscriptions.Filter1"
+                  "$ref": "#/components/schemas/subscriptions.Filter1"
                 }
               }
             }
@@ -974,6 +1115,11 @@
         "tags": [
           "TemplatesController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Templates model count",
@@ -986,6 +1132,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewTemplate   |\n| 16   |\n",
         "parameters": [
           {
             "name": "where",
@@ -994,7 +1141,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "title": "Templates.WhereFilter",
+                  "title": "templates.WhereFilter",
                   "additionalProperties": true,
                   "x-typescript-type": "@loopback/repository#Where<Templates>"
                 }
@@ -1012,11 +1159,17 @@
         "tags": [
           "TemplatesController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "Templates PUT success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateTemplate   |\n| 15   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1045,11 +1198,17 @@
         "tags": [
           "TemplatesController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "Templates PATCH success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateTemplate   |\n| 15   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1078,6 +1237,11 @@
         "tags": [
           "TemplatesController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Templates model instance",
@@ -1090,6 +1254,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewTemplate   |\n| 16   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1105,7 +1270,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Templates.Filter"
+                  "$ref": "#/components/schemas/templates.Filter"
                 }
               }
             }
@@ -1119,11 +1284,17 @@
         "tags": [
           "TemplatesController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "Templates DELETE success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteTemplate   |\n| 17   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1144,6 +1315,11 @@
         "tags": [
           "TemplatesController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Templates model instance",
@@ -1156,6 +1332,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateTemplate   |\n| 14   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1173,6 +1350,11 @@
         "tags": [
           "TemplatesController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Templates PATCH success count",
@@ -1185,6 +1367,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateTemplate   |\n| 15   |\n",
         "parameters": [
           {
             "name": "where",
@@ -1193,7 +1376,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "title": "Templates.WhereFilter",
+                  "title": "templates.WhereFilter",
                   "additionalProperties": true,
                   "x-typescript-type": "@loopback/repository#Where<Templates>"
                 }
@@ -1218,6 +1401,11 @@
         "tags": [
           "TemplatesController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Array of Templates model instances",
@@ -1233,6 +1421,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewTemplate   |\n| 16   |\n",
         "parameters": [
           {
             "name": "filter",
@@ -1240,7 +1429,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Templates.Filter1"
+                  "$ref": "#/components/schemas/templates.Filter1"
                 }
               }
             }
@@ -1283,6 +1472,11 @@
         "tags": [
           "TransactionsController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Transactions model count",
@@ -1295,6 +1489,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewTransaction   |\n| 19   |\n",
         "parameters": [
           {
             "name": "where",
@@ -1303,7 +1498,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "title": "Transactions.WhereFilter",
+                  "title": "transactions.WhereFilter",
                   "additionalProperties": true,
                   "x-typescript-type": "@loopback/repository#Where<Transactions>"
                 }
@@ -1468,11 +1663,17 @@
         "tags": [
           "TransactionsController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "Transactions PUT success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateTransaction   |\n| 20   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1501,11 +1702,17 @@
         "tags": [
           "TransactionsController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "Transactions PATCH success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateTransaction   |\n| 20   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1534,6 +1741,11 @@
         "tags": [
           "TransactionsController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Transactions model instance",
@@ -1546,6 +1758,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewTransaction   |\n| 19   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1561,7 +1774,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Transactions.Filter"
+                  "$ref": "#/components/schemas/transactions.Filter"
                 }
               }
             }
@@ -1575,11 +1788,17 @@
         "tags": [
           "TransactionsController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "Transactions DELETE success"
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteTransaction   |\n| 21   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1600,6 +1819,11 @@
         "tags": [
           "TransactionsController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Transactions model instance",
@@ -1612,6 +1836,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateTransaction   |\n| 18   |\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1629,6 +1854,11 @@
         "tags": [
           "TransactionsController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Transactions PATCH success count",
@@ -1641,6 +1871,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateTransaction   |\n| 20   |\n",
         "parameters": [
           {
             "name": "where",
@@ -1649,7 +1880,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "title": "Transactions.WhereFilter",
+                  "title": "transactions.WhereFilter",
                   "additionalProperties": true,
                   "x-typescript-type": "@loopback/repository#Where<Transactions>"
                 }
@@ -1674,6 +1905,11 @@
         "tags": [
           "TransactionsController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Array of Transactions model instances",
@@ -1689,6 +1925,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewTransaction   |\n| 19   |\n",
         "parameters": [
           {
             "name": "filter",
@@ -1696,7 +1933,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Transactions.Filter1"
+                  "$ref": "#/components/schemas/transactions.Filter1"
                 }
               }
             }
@@ -1885,7 +2122,7 @@
           "currency",
           "status"
         ],
-        "additionalProperties": true
+        "additionalProperties": false
       },
       "NewTransactions": {
         "title": "NewTransactions",
@@ -1924,7 +2161,7 @@
           "currency",
           "status"
         ],
-        "additionalProperties": true,
+        "additionalProperties": false,
         "x-typescript-type": "Transactions"
       },
       "TransactionsWithRelations": {
@@ -1964,7 +2201,7 @@
           "currency",
           "status"
         ],
-        "additionalProperties": true,
+        "additionalProperties": false,
         "x-typescript-type": "TransactionsWithRelations"
       },
       "TransactionsPartial": {
@@ -1998,7 +2235,7 @@
             "type": "object"
           }
         },
-        "additionalProperties": true,
+        "additionalProperties": false,
         "x-typescript-type": "Partial<Transactions>"
       },
       "PaymentGateways": {
@@ -2024,7 +2261,7 @@
           "gatewayType",
           "enabled"
         ],
-        "additionalProperties": true
+        "additionalProperties": false
       },
       "NewPaymentGateways": {
         "title": "NewPaymentGateways",
@@ -2050,7 +2287,7 @@
           "gatewayType",
           "enabled"
         ],
-        "additionalProperties": true,
+        "additionalProperties": false,
         "x-typescript-type": "PaymentGateways"
       },
       "PaymentGatewaysWithRelations": {
@@ -2077,7 +2314,7 @@
           "gatewayType",
           "enabled"
         ],
-        "additionalProperties": true,
+        "additionalProperties": false,
         "x-typescript-type": "PaymentGatewaysWithRelations"
       },
       "PaymentGatewaysPartial": {
@@ -2098,7 +2335,7 @@
             "type": "boolean"
           }
         },
-        "additionalProperties": true,
+        "additionalProperties": false,
         "x-typescript-type": "Partial<PaymentGateways>"
       },
       "Templates": {
@@ -2128,7 +2365,7 @@
           "template",
           "type"
         ],
-        "additionalProperties": true
+        "additionalProperties": false
       },
       "NewTemplates": {
         "title": "NewTemplates",
@@ -2158,7 +2395,7 @@
           "template",
           "type"
         ],
-        "additionalProperties": true,
+        "additionalProperties": false,
         "x-typescript-type": "Templates"
       },
       "TemplatesWithRelations": {
@@ -2189,7 +2426,7 @@
           "template",
           "type"
         ],
-        "additionalProperties": true,
+        "additionalProperties": false,
         "x-typescript-type": "TemplatesWithRelations"
       },
       "TemplatesPartial": {
@@ -2213,7 +2450,7 @@
             "type": "string"
           }
         },
-        "additionalProperties": true,
+        "additionalProperties": false,
         "x-typescript-type": "Partial<Templates>"
       },
       "Subscriptions": {
@@ -2261,7 +2498,7 @@
           "totalAmount",
           "status"
         ],
-        "additionalProperties": true
+        "additionalProperties": false
       },
       "NewSubscriptions": {
         "title": "NewSubscriptions",
@@ -2309,7 +2546,7 @@
           "totalAmount",
           "status"
         ],
-        "additionalProperties": true,
+        "additionalProperties": false,
         "x-typescript-type": "Subscriptions"
       },
       "SubscriptionsWithRelations": {
@@ -2358,7 +2595,7 @@
           "totalAmount",
           "status"
         ],
-        "additionalProperties": true,
+        "additionalProperties": false,
         "x-typescript-type": "SubscriptionsWithRelations"
       },
       "SubscriptionsPartial": {
@@ -2402,7 +2639,7 @@
             "type": "string"
           }
         },
-        "additionalProperties": true,
+        "additionalProperties": false,
         "x-typescript-type": "Partial<Subscriptions>"
       },
       "loopback.Count": {
@@ -2415,9 +2652,9 @@
           }
         }
       },
-      "Orders.Filter": {
+      "orders.Filter": {
         "type": "object",
-        "title": "Orders.Filter",
+        "title": "orders.Filter",
         "properties": {
           "offset": {
             "type": "integer",
@@ -2492,15 +2729,15 @@
                 "uniqueItems": true
               }
             ],
-            "title": "Orders.Fields"
+            "title": "orders.Fields"
           }
         },
         "additionalProperties": false,
         "x-typescript-type": "@loopback/repository#Filter<Orders>"
       },
-      "Orders.Filter1": {
+      "orders.Filter1": {
         "type": "object",
-        "title": "Orders.Filter",
+        "title": "orders.Filter",
         "properties": {
           "offset": {
             "type": "integer",
@@ -2529,7 +2766,7 @@
             ]
           },
           "where": {
-            "title": "Orders.WhereFilter",
+            "title": "orders.WhereFilter",
             "type": "object",
             "additionalProperties": true
           },
@@ -2580,15 +2817,15 @@
                 "uniqueItems": true
               }
             ],
-            "title": "Orders.Fields"
+            "title": "orders.Fields"
           }
         },
         "additionalProperties": false,
         "x-typescript-type": "@loopback/repository#Filter<Orders>"
       },
-      "PaymentGateways.Filter": {
+      "paymentgateways.Filter": {
         "type": "object",
-        "title": "PaymentGateways.Filter",
+        "title": "paymentgateways.Filter",
         "properties": {
           "offset": {
             "type": "integer",
@@ -2634,26 +2871,32 @@
                     "type": "boolean"
                   }
                 },
-                "additionalProperties": true
+                "additionalProperties": false
               },
               {
                 "type": "array",
                 "items": {
                   "type": "string",
+                  "enum": [
+                    "id",
+                    "name",
+                    "gatewayType",
+                    "enabled"
+                  ],
                   "example": "id"
                 },
                 "uniqueItems": true
               }
             ],
-            "title": "PaymentGateways.Fields"
+            "title": "paymentgateways.Fields"
           }
         },
         "additionalProperties": false,
         "x-typescript-type": "@loopback/repository#Filter<PaymentGateways>"
       },
-      "PaymentGateways.Filter1": {
+      "paymentgateways.Filter1": {
         "type": "object",
-        "title": "PaymentGateways.Filter",
+        "title": "paymentgateways.Filter",
         "properties": {
           "offset": {
             "type": "integer",
@@ -2682,7 +2925,7 @@
             ]
           },
           "where": {
-            "title": "PaymentGateways.WhereFilter",
+            "title": "paymentgateways.WhereFilter",
             "type": "object",
             "additionalProperties": true
           },
@@ -2704,18 +2947,24 @@
                     "type": "boolean"
                   }
                 },
-                "additionalProperties": true
+                "additionalProperties": false
               },
               {
                 "type": "array",
                 "items": {
                   "type": "string",
+                  "enum": [
+                    "id",
+                    "name",
+                    "gatewayType",
+                    "enabled"
+                  ],
                   "example": "id"
                 },
                 "uniqueItems": true
               }
             ],
-            "title": "PaymentGateways.Fields"
+            "title": "paymentgateways.Fields"
           }
         },
         "additionalProperties": false,
@@ -2745,9 +2994,9 @@
           }
         }
       },
-      "Subscriptions.Filter": {
+      "subscriptions.Filter": {
         "type": "object",
-        "title": "Subscriptions.Filter",
+        "title": "subscriptions.Filter",
         "properties": {
           "offset": {
             "type": "integer",
@@ -2814,26 +3063,39 @@
                     "type": "boolean"
                   }
                 },
-                "additionalProperties": true
+                "additionalProperties": false
               },
               {
                 "type": "array",
                 "items": {
                   "type": "string",
+                  "enum": [
+                    "id",
+                    "totalAmount",
+                    "currency",
+                    "status",
+                    "paymentGatewayId",
+                    "paymentMethod",
+                    "metaData",
+                    "startDate",
+                    "endDate",
+                    "gatewaySubscriptionId",
+                    "planId"
+                  ],
                   "example": "id"
                 },
                 "uniqueItems": true
               }
             ],
-            "title": "Subscriptions.Fields"
+            "title": "subscriptions.Fields"
           }
         },
         "additionalProperties": false,
         "x-typescript-type": "@loopback/repository#Filter<Subscriptions>"
       },
-      "Subscriptions.Filter1": {
+      "subscriptions.Filter1": {
         "type": "object",
-        "title": "Subscriptions.Filter",
+        "title": "subscriptions.Filter",
         "properties": {
           "offset": {
             "type": "integer",
@@ -2862,7 +3124,7 @@
             ]
           },
           "where": {
-            "title": "Subscriptions.WhereFilter",
+            "title": "subscriptions.WhereFilter",
             "type": "object",
             "additionalProperties": true
           },
@@ -2905,26 +3167,39 @@
                     "type": "boolean"
                   }
                 },
-                "additionalProperties": true
+                "additionalProperties": false
               },
               {
                 "type": "array",
                 "items": {
                   "type": "string",
+                  "enum": [
+                    "id",
+                    "totalAmount",
+                    "currency",
+                    "status",
+                    "paymentGatewayId",
+                    "paymentMethod",
+                    "metaData",
+                    "startDate",
+                    "endDate",
+                    "gatewaySubscriptionId",
+                    "planId"
+                  ],
                   "example": "id"
                 },
                 "uniqueItems": true
               }
             ],
-            "title": "Subscriptions.Fields"
+            "title": "subscriptions.Fields"
           }
         },
         "additionalProperties": false,
         "x-typescript-type": "@loopback/repository#Filter<Subscriptions>"
       },
-      "Templates.Filter": {
+      "templates.Filter": {
         "type": "object",
-        "title": "Templates.Filter",
+        "title": "templates.Filter",
         "properties": {
           "offset": {
             "type": "integer",
@@ -2973,26 +3248,33 @@
                     "type": "boolean"
                   }
                 },
-                "additionalProperties": true
+                "additionalProperties": false
               },
               {
                 "type": "array",
                 "items": {
                   "type": "string",
+                  "enum": [
+                    "id",
+                    "paymentGatewayId",
+                    "name",
+                    "template",
+                    "type"
+                  ],
                   "example": "id"
                 },
                 "uniqueItems": true
               }
             ],
-            "title": "Templates.Fields"
+            "title": "templates.Fields"
           }
         },
         "additionalProperties": false,
         "x-typescript-type": "@loopback/repository#Filter<Templates>"
       },
-      "Templates.Filter1": {
+      "templates.Filter1": {
         "type": "object",
-        "title": "Templates.Filter",
+        "title": "templates.Filter",
         "properties": {
           "offset": {
             "type": "integer",
@@ -3021,7 +3303,7 @@
             ]
           },
           "where": {
-            "title": "Templates.WhereFilter",
+            "title": "templates.WhereFilter",
             "type": "object",
             "additionalProperties": true
           },
@@ -3046,26 +3328,33 @@
                     "type": "boolean"
                   }
                 },
-                "additionalProperties": true
+                "additionalProperties": false
               },
               {
                 "type": "array",
                 "items": {
                   "type": "string",
+                  "enum": [
+                    "id",
+                    "paymentGatewayId",
+                    "name",
+                    "template",
+                    "type"
+                  ],
                   "example": "id"
                 },
                 "uniqueItems": true
               }
             ],
-            "title": "Templates.Fields"
+            "title": "templates.Fields"
           }
         },
         "additionalProperties": false,
         "x-typescript-type": "@loopback/repository#Filter<Templates>"
       },
-      "Transactions.Filter": {
+      "transactions.Filter": {
         "type": "object",
-        "title": "Transactions.Filter",
+        "title": "transactions.Filter",
         "properties": {
           "offset": {
             "type": "integer",
@@ -3123,26 +3412,36 @@
                     "type": "boolean"
                   }
                 },
-                "additionalProperties": true
+                "additionalProperties": false
               },
               {
                 "type": "array",
                 "items": {
                   "type": "string",
+                  "enum": [
+                    "id",
+                    "amountPaid",
+                    "currency",
+                    "status",
+                    "paidDate",
+                    "paymentGatewayId",
+                    "orderId",
+                    "res"
+                  ],
                   "example": "id"
                 },
                 "uniqueItems": true
               }
             ],
-            "title": "Transactions.Fields"
+            "title": "transactions.Fields"
           }
         },
         "additionalProperties": false,
         "x-typescript-type": "@loopback/repository#Filter<Transactions>"
       },
-      "Transactions.Filter1": {
+      "transactions.Filter1": {
         "type": "object",
-        "title": "Transactions.Filter",
+        "title": "transactions.Filter",
         "properties": {
           "offset": {
             "type": "integer",
@@ -3171,7 +3470,7 @@
             ]
           },
           "where": {
-            "title": "Transactions.WhereFilter",
+            "title": "transactions.WhereFilter",
             "type": "object",
             "additionalProperties": true
           },
@@ -3205,18 +3504,28 @@
                     "type": "boolean"
                   }
                 },
-                "additionalProperties": true
+                "additionalProperties": false
               },
               {
                 "type": "array",
                 "items": {
                   "type": "string",
+                  "enum": [
+                    "id",
+                    "amountPaid",
+                    "currency",
+                    "status",
+                    "paidDate",
+                    "paymentGatewayId",
+                    "orderId",
+                    "res"
+                  ],
                   "example": "id"
                 },
                 "uniqueItems": true
               }
             ],
-            "title": "Transactions.Fields"
+            "title": "transactions.Fields"
           }
         },
         "additionalProperties": false,

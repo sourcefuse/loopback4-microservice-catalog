@@ -20,7 +20,14 @@ import {
   put,
   requestBody,
 } from '@loopback/rest';
-import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
+import {
+  CONTENT_TYPE,
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+} from '@sourceloop/core';
+import {authenticate, STRATEGY} from 'loopback4-authentication';
+import {authorize} from 'loopback4-authorization';
+import {PermissionKey} from '../enums/permission-key.enum';
 import {PaymentGateways} from '../models';
 import {PaymentGatewaysRepository} from '../repositories';
 const paymentGatewayRoutePath = '/payment-gateways';
@@ -32,7 +39,12 @@ export class PaymentGatewaysController {
     public paymentGatewaysRepository: PaymentGatewaysRepository,
   ) {}
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [PermissionKey.CreateGateway, PermissionKey.CreateGatewayNum],
+  })
   @post(paymentGatewayRoutePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'PaymentGateways model instance',
@@ -57,7 +69,12 @@ export class PaymentGatewaysController {
     return this.paymentGatewaysRepository.create(paymentGateways);
   }
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [PermissionKey.ViewGateway, PermissionKey.ViewGatewayNum],
+  })
   @get('/payment-gateways/count', {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'PaymentGateways model count',
@@ -71,7 +88,12 @@ export class PaymentGatewaysController {
     return this.paymentGatewaysRepository.count(where);
   }
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [PermissionKey.ViewGateway, PermissionKey.ViewGatewayNum],
+  })
   @get(paymentGatewayRoutePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Array of PaymentGateways model instances',
@@ -94,7 +116,12 @@ export class PaymentGatewaysController {
     return this.paymentGatewaysRepository.find(filter);
   }
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [PermissionKey.UpdateGateway, PermissionKey.UpdateGatewayNum],
+  })
   @patch(paymentGatewayRoutePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'PaymentGateways PATCH success count',
@@ -116,7 +143,12 @@ export class PaymentGatewaysController {
     return this.paymentGatewaysRepository.updateAll(paymentGateways, where);
   }
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [PermissionKey.ViewGateway, PermissionKey.ViewGatewayNum],
+  })
   @get(paymentGatewayIDRoutePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'PaymentGateways model instance',
@@ -138,7 +170,12 @@ export class PaymentGatewaysController {
     return this.paymentGatewaysRepository.findById(id, filter);
   }
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [PermissionKey.UpdateGateway, PermissionKey.UpdateGatewayNum],
+  })
   @patch(paymentGatewayIDRoutePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'PaymentGateways PATCH success',
@@ -159,7 +196,12 @@ export class PaymentGatewaysController {
     await this.paymentGatewaysRepository.updateById(id, paymentGateways);
   }
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [PermissionKey.UpdateGateway, PermissionKey.UpdateGatewayNum],
+  })
   @put(paymentGatewayIDRoutePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'PaymentGateways PUT success',
@@ -173,7 +215,12 @@ export class PaymentGatewaysController {
     await this.paymentGatewaysRepository.replaceById(id, paymentGateways);
   }
 
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [PermissionKey.DeleteGateway, PermissionKey.DeleteGatewayNum],
+  })
   @del(paymentGatewayIDRoutePath, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
         description: 'PaymentGateways DELETE success',

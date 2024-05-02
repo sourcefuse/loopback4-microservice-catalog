@@ -18,9 +18,9 @@ import {
 } from '@loopback/rest';
 import {isString} from 'lodash';
 import {
+  AuthErrorKeys,
   AuthenticateFn,
   AuthenticationBindings,
-  AuthErrorKeys,
 } from 'loopback4-authentication';
 import {
   AuthorizationBindings,
@@ -29,8 +29,8 @@ import {
 } from 'loopback4-authorization';
 
 import {IAuthUserWithPermissions, ILogger, LOGGER} from './components';
+import {MiddlewareChain} from './enums';
 import {SFCoreBindings} from './keys';
-
 const SequenceActions = RestBindings.SequenceActions;
 const isJsonString = (str: string) => {
   try {
@@ -50,7 +50,6 @@ export class ServiceSequence implements SequenceHandler {
   protected invokeMiddleware: InvokeMiddleware = () => false;
   @inject(SFCoreBindings.EXPRESS_MIDDLEWARES, {optional: true})
   protected expressMiddlewares: ExpressRequestHandler[] = [];
-
   constructor(
     // sonarignore:start
     @inject(SequenceActions.FIND_ROUTE) protected findRoute: FindRoute,
@@ -92,12 +91,10 @@ export class ServiceSequence implements SequenceHandler {
         );
         if (responseGenerated) return;
       }
-
-      const finished = await this.invokeMiddleware(context);
+      let finished = await this.invokeMiddleware(context);
       if (finished) return;
       const route = this.findRoute(request);
       const args = await this.parseParams(request, route);
-
       const authUser: IAuthUserWithPermissions = await this.authenticateRequest(
         request,
         response,
@@ -109,7 +106,13 @@ export class ServiceSequence implements SequenceHandler {
       if (!isAccessAllowed) {
         throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
       }
+      //this middleware will only be invoked,
+      //if any middleware exists in this particular chain
 
+      finished = await this.invokeMiddleware(context, {
+        chain: MiddlewareChain.PRE_INVOKE,
+      });
+      if (finished) return;
       const result = await this.invoke(route, args);
       this.send(response, result);
     } catch (err) {
@@ -154,7 +157,6 @@ export class ServiceSequence implements SequenceHandler {
       );
     }
   }
-
   // sonarignore:start
   /* eslint-disable @typescript-eslint/no-explicit-any */
   private _rejectErrors(err: any) {

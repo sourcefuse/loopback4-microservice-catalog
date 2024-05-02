@@ -7,7 +7,8 @@ import paypal from '@paypal/checkout-server-sdk';
 import {ILogger} from '@sourceloop/core';
 import sinon from 'sinon';
 import {Status} from '../../enums';
-import {Orders, Transactions} from '../../models';
+import {Orders} from '../../models';
+import {Transactions} from '../../models/tenant-support';
 import {IPayPalConfig, PaypalProvider} from '../../providers/paypal';
 import {
   OrdersRepository,
@@ -65,6 +66,7 @@ describe('PaypalProvider', () => {
             gatewayOrderRes: {
               paypalOrderPayLink: 'test',
               paypalOrderId: '123',
+              tenantId: 't1',
             },
           },
         }),

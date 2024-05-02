@@ -5,6 +5,7 @@ import {TaskRepository} from '../../repositories';
 import {mockTasks} from '../fixtures/mock-data';
 import {getRepo, getToken, setupApplication} from '../fixtures/test-helper';
 import {TestTaskServiceApplication} from '../fixtures/test.application';
+import {TaskStatus} from '../../types';
 
 describe('TaskController: Acceptance', () => {
   let app: TestTaskServiceApplication;
@@ -84,6 +85,65 @@ describe('TaskController: Acceptance', () => {
 
     const tasks = await repo.find();
     expect(tasks.length).to.equal(0);
+  });
+
+  it('should update a task by id', async () => {
+    const token = getToken([TaskPermssionKey.UpdateTask]);
+    const newTask = await repo.create({
+      ...mockTasks[0],
+      key: 'test3',
+      name: 'test3',
+    });
+    await client
+      .patch(`/tasks/${newTask.id}`)
+      .set('Authorization', token)
+      .send({
+        priority: 'Low',
+      })
+      .expect(204);
+    const updatedTask = await repo.findById(newTask.id);
+    expect(updatedTask?.priority).to.equal('Low');
+  });
+
+  it('should update all tasks', async () => {
+    const token = getToken([TaskPermssionKey.UpdateTask]);
+    await client
+      .patch(`/tasks`)
+      .set('Authorization', token)
+      .send({
+        priority: 'Low',
+      })
+      .expect(200);
+    const tasks = await repo.find();
+    for (const task of tasks) {
+      expect(task.priority).to.equal('Low');
+    }
+  });
+
+  it('should not allow updating a complete task', async () => {
+    const token = getToken([TaskPermssionKey.UpdateTask]);
+    const newTask = await repo.create({
+      ...mockTasks[0],
+      key: 'test3',
+      name: 'test3',
+      status: TaskStatus.Pending,
+    });
+    await client
+      .patch(`/tasks/${newTask.id}`)
+      .set('Authorization', token)
+      .send({
+        status: TaskStatus.Completed,
+      })
+      .expect(400)
+      .expect((res: Response) => {
+        expect(res.body).to.deepEqual({
+          error: {
+            message: 'Task completion cannot be done through the PATCH API.',
+            name: 'BadRequestError',
+            statusCode: 400,
+          },
+        });
+      });
   });
 
   async function seedData() {

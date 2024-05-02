@@ -1,6 +1,6 @@
 import {Provider} from '@loopback/core';
 import {AnyObject} from '@loopback/repository';
-import {AuditLog} from '@sourceloop/audit-log';
+import {AuditLog} from '../../../models/audit-log.model';
 import {ColumnBuilderFn} from '../../../types';
 
 export class ColumnBuilderProvider implements Provider<ColumnBuilderFn> {

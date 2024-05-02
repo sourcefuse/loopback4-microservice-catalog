@@ -17,6 +17,7 @@ export class DummyAuditServiceApplication extends BootMixin(
   constructor(options: ApplicationConfig = {}) {
     super(options);
     this.static('/', path.join(__dirname, '../public'));
+
     this.component(AuditServiceComponent);
 
     this.projectRoot = __dirname;

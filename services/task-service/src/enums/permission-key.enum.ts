@@ -9,4 +9,5 @@ export const enum TaskPermssionKey {
   MapTask = '16006',
   TriggerEvent = '16007',
   SubscribeToWebhook = '16010',
+  UpdateTask = '16011',
 }

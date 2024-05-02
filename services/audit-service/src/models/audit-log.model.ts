@@ -16,7 +16,7 @@ export class AuditLog extends CoreEntity<AuditLog> {
   @property({
     type: 'string',
     id: true,
-    generated: typeof global.it === 'function' ? false : true, // NOSONAR
+    generated: false, // NOSONAR
   })
   id?: string;
 
@@ -58,13 +58,6 @@ export class AuditLog extends CoreEntity<AuditLog> {
     required: true,
   })
   actor: string;
-
-  @property({
-    name: 'tenant_id',
-    type: 'string',
-    required: true,
-  })
-  tenantId: string;
 
   @property({
     type: 'object',

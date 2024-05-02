@@ -505,6 +505,45 @@
       }
     },
     "/tasks/{id}": {
+      "patch": {
+        "x-controller-name": "TaskController",
+        "x-operation-name": "updateById",
+        "tags": [
+          "TaskController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Task UPDATE by id success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 16011   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "TaskController.updateById"
+      },
       "get": {
         "x-controller-name": "TaskController",
         "x-operation-name": "findById",
@@ -590,6 +629,50 @@
       }
     },
     "/tasks": {
+      "patch": {
+        "x-controller-name": "TaskController",
+        "x-operation-name": "updateAll",
+        "tags": [
+          "TaskController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tasks UPDATE success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| 16011   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "tasks.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<Task>"
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskPartial"
+              }
+            }
+          }
+        },
+        "operationId": "TaskController.updateAll"
+      },
       "get": {
         "x-controller-name": "TaskController",
         "x-operation-name": "find",
@@ -1387,6 +1470,180 @@
         ],
         "additionalProperties": false,
         "x-typescript-type": "TaskWorkflow"
+      },
+      "TaskPartial": {
+        "title": "TaskPartial",
+        "type": "object",
+        "description": "(tsType: Partial<Task>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string",
+            "description": "An identifier for a particular task within an event"
+          },
+          "name": {
+            "type": "string",
+            "description": "A name given by the consumer service for this task"
+          },
+          "description": {
+            "type": "string",
+            "description": "A short description of this task"
+          },
+          "status": {
+            "type": "string",
+            "description": "A short message to indicate the progression of the task"
+          },
+          "priority": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dueDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "assigneeId": {
+            "type": "string"
+          },
+          "metadata": {
+            "type": "object"
+          },
+          "externalId": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<Task>"
+      },
+      "Task": {
+        "title": "Task",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string",
+            "description": "An identifier for a particular task within an event"
+          },
+          "name": {
+            "type": "string",
+            "description": "A name given by the consumer service for this task"
+          },
+          "description": {
+            "type": "string",
+            "description": "A short description of this task"
+          },
+          "status": {
+            "type": "string",
+            "description": "A short message to indicate the progression of the task"
+          },
+          "priority": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dueDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "assigneeId": {
+            "type": "string"
+          },
+          "metadata": {
+            "type": "object"
+          },
+          "externalId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "key",
+          "name",
+          "priority",
+          "severity",
+          "type",
+          "metadata"
+        ],
+        "additionalProperties": false
       },
       "loopback.Count": {
         "type": "object",
