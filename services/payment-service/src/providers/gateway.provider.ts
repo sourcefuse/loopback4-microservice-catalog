@@ -9,6 +9,7 @@ import {PayPalBindings, PayPalPaymentGateway} from './paypal';
 import {RazorpayBindings, RazorpayPaymentGateway} from './razorpay';
 import {StripeBindings, StripePaymentGateway} from './stripe';
 import {IGateway} from './types';
+
 const providerMissingError = 'Provider Not Implemented';
 const providerMethodNumbers = 6;
 export class GatewayProvider implements Provider<IGateway> {
