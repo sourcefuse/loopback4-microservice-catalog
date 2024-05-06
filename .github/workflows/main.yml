@@ -21,7 +21,7 @@ jobs:
           node-version: '18.x'
 
       - name: Install Monorepo Deps
-        run: npm ci
+        run: npm i
 
       - name: Run Test Cases
         run: npm run test --workspaces --if-present

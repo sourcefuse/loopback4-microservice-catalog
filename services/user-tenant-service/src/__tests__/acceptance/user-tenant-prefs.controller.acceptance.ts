@@ -3,9 +3,11 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {Client, expect} from '@loopback/testlab';
+import * as fs from 'fs';
 import * as jwt from 'jsonwebtoken';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {nanoid} from 'nanoid';
+import path from 'path';
 import {UserTenantServiceApplication} from '../../application';
 import {PermissionKey} from '../../enums';
 import {Role, Tenant, User, UserTenant} from '../../models';
@@ -15,7 +17,7 @@ import {
   UserRepository,
   UserTenantRepository,
 } from '../../repositories';
-import {issuer, secret, setupApplication} from './test-helper';
+import {issuer, setupApplication} from './test-helper';
 
 interface USER {
   id: string | undefined;
@@ -156,9 +158,14 @@ describe('UserTenantPrefs Controller', function (this: Mocha.Suite) {
 
   function setCurrentUser() {
     app.bind(AuthenticationBindings.CURRENT_USER).to(testUser);
-    token = jwt.sign(testUser, secret, {
-      expiresIn: 180000,
-      issuer,
+    process.env.JWT_PRIVATE_KEY = path.resolve(
+      __dirname,
+      '../../../src/__tests__/unit/utils/privateKey.txt',
+    );
+    const privateKey = fs.readFileSync(process.env.JWT_PRIVATE_KEY ?? '');
+    token = jwt.sign(testUser, privateKey, {
+      issuer: issuer,
+      algorithm: 'RS256',
     });
   }
 });
