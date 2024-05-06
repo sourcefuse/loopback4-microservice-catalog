@@ -48,11 +48,6 @@
     "patch-package": "^8.0.0"
   },
   "workspaces": [
-    "packages/core/",
-    "packages/cli/",
-    "packages/cache",
-    "packages/feature-toggle",
-    "packages/custom-sf-changelog/",
-    "services/*"
+    "packages/core/"
   ]
 }
