@@ -2,8 +2,8 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {IAuthUser} from 'loopback4-authentication';
 import {BindingKey} from '@loopback/context';
+import {IAuthUser} from 'loopback4-authentication';
 import {BINDING_PREFIX} from '../../constants';
 
 export namespace BearerVerifierBindings {
@@ -18,6 +18,7 @@ export enum BearerVerifierType {
 }
 export interface BearerVerifierConfig {
   type: BearerVerifierType;
+  useSymmetricEncryption?: boolean;
 }
 
 export interface IUserPrefs {

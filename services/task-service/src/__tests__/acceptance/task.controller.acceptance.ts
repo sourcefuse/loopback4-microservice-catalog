@@ -2,10 +2,10 @@ import {Client, expect} from '@loopback/testlab';
 import {TaskPermssionKey} from '../../enums/permission-key.enum';
 import {Task} from '../../models';
 import {TaskRepository} from '../../repositories';
+import {TaskStatus} from '../../types';
 import {mockTasks} from '../fixtures/mock-data';
 import {getRepo, getToken, setupApplication} from '../fixtures/test-helper';
 import {TestTaskServiceApplication} from '../fixtures/test.application';
-import {TaskStatus} from '../../types';
 
 describe('TaskController: Acceptance', () => {
   let app: TestTaskServiceApplication;
