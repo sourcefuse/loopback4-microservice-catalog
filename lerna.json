@@ -1,6 +1,13 @@
 {
   "packages": [
-    "packages/core"
+    "packages/core",
+    "packages/cli",
+    "packages/cache",
+    "packages/feature-toggle",
+    "packages/custom-sf-changelog/",
+    "services/*",
+    "facades/*",
+    "sandbox/**"
   ],
   "command": {
     "version": {
