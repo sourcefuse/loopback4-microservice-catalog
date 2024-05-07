@@ -197,17 +197,17 @@ npm i @sourceloop/authentication-service
   openssl rsa -in private.pem -pubout -out public.pem
   ```
 
-  By default we are using asymmetric token signing and verification, but if symmetric signing and verification is desired it has to be explicitly provided in the manner below
+  Both the files should be in (.pem) format.
+  for example: private.pem file for private key and public.pem file for public key.
+  (refer [this](https://cryptotools.net/rsagen))
+
+  By default we are employing asymmetric token signing and verification, but if symmetric signing and verification is required it has to be explicitly provided in the manner below
 
   ```ts
   this.bind(AuthServiceBindings.Config).to({
     useSymmetricEncryption: true,
   });
   ```
-
-  Both the files should be in (.pem) format.
-  for example: private.pem file for private key and public.pem file for public key.
-  (refer [this](https://cryptotools.net/rsagen))
 
 - **Authenticating Password using RSA Encryption**
 

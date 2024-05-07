@@ -17,20 +17,25 @@ export class JWTAsymmetricVerifierProvider<T>
   ) {}
   value(): JWTVerifierFn<T> {
     return async (code: string, options: jwt.VerifyOptions) => {
-      const publicKey = (await fs.readFile(
-        process.env.JWT_PUBLIC_KEY ?? '',
-      )) as Buffer;
-      const payload = this.authConfig?.useSymmetricEncryption
-        ? (jwt.verify(code, process.env.JWT_SECRET as string, {
-            ...options,
-            issuer: process.env.JWT_ISSUER,
-            algorithms: ['HS256'],
-          }) as T)
-        : (jwt.verify(code, publicKey, {
-            ...options,
-            issuer: process.env.JWT_ISSUER,
-            algorithms: ['RS256'],
-          }) as T);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      let publicKey: any;
+      let payload: T;
+      if (this.authConfig?.useSymmetricEncryption) {
+        payload = jwt.verify(code, process.env.JWT_SECRET as string, {
+          ...options,
+          issuer: process.env.JWT_ISSUER,
+          algorithms: ['HS256'],
+        }) as T;
+      } else {
+        publicKey = (await fs.readFile(
+          process.env.JWT_PUBLIC_KEY ?? '',
+        )) as Buffer;
+        payload = jwt.verify(code, publicKey, {
+          ...options,
+          issuer: process.env.JWT_ISSUER,
+          algorithms: ['RS256'],
+        }) as T;
+      }
       return payload;
     };
   }

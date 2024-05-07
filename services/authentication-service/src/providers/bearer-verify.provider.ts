@@ -24,18 +24,21 @@ export class SignupBearerVerifyProvider
   value(): VerifyFunction.BearerFn<SignupRequest> {
     return async (token: string, req?: Request) => {
       let result: SignupRequest;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      let publicKey: any;
       try {
-        const publicKey = await fs.readFile(process.env.JWT_PUBLIC_KEY ?? '');
-
-        result = this.authConfig?.useSymmetricEncryption
-          ? (verify(token, process.env.JWT_SECRET as string, {
-              issuer: process.env.JWT_ISSUER,
-              algorithms: ['HS256'],
-            }) as SignupRequest)
-          : (verify(token, publicKey, {
-              issuer: process.env.JWT_ISSUER,
-              algorithms: ['RS256'],
-            }) as SignupRequest);
+        if (this.authConfig?.useSymmetricEncryption) {
+          result = verify(token, process.env.JWT_SECRET as string, {
+            issuer: process.env.JWT_ISSUER,
+            algorithms: ['HS256'],
+          }) as SignupRequest;
+        } else {
+          publicKey = await fs.readFile(process.env.JWT_PUBLIC_KEY ?? '');
+          result = verify(token, publicKey, {
+            issuer: process.env.JWT_ISSUER,
+            algorithms: ['RS256'],
+          }) as SignupRequest;
+        }
       } catch (error) {
         this.logger.error(JSON.stringify(error));
         throw new HttpErrors.Unauthorized('TokenExpired');

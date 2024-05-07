@@ -18,20 +18,27 @@ export class JWTSignerProvider<T extends string | object | Buffer>
   ) {}
   value(): JWTSignerFn<T> {
     return async (data: string | T, options: jwt.SignOptions) => {
-      const privateKey = fs.readFileSync(
-        process.env.JWT_PRIVATE_KEY ?? '',
-      ) as Buffer;
-      const accessToken = this.authConfig?.useSymmetricEncryption
-        ? jwt.sign(data, process.env.JWT_SECRET as string, {
-            ...options,
-            issuer: process.env.JWT_ISSUER,
-            algorithm: 'HS256',
-          })
-        : jwt.sign(data, privateKey, {
-            ...options,
-            issuer: process.env.JWT_ISSUER,
-            algorithm: 'RS256',
-          });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      let privateKey: any;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      let accessToken: any;
+      if (this.authConfig?.useSymmetricEncryption) {
+        accessToken = jwt.sign(data, process.env.JWT_SECRET as string, {
+          ...options,
+          issuer: process.env.JWT_ISSUER,
+          algorithm: 'HS256',
+        });
+      } else {
+        privateKey = fs.readFileSync(
+          process.env.JWT_PRIVATE_KEY ?? '',
+        ) as Buffer;
+        accessToken = jwt.sign(data, privateKey, {
+          ...options,
+          issuer: process.env.JWT_ISSUER,
+          algorithm: 'RS256',
+        });
+      }
+
       return accessToken;
     };
   }
