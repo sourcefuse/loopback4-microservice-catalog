@@ -775,7 +775,7 @@
             "description": "Workflow instance"
           }
         },
-        "description": "\n\n| Permissions |\n| ------- |\n| CreateWorkflow   |\n| 2   |\n",
+        "description": "\n\n| Permissions |\n| ------- |\n| ExecuteWorkflow   |\n| 5   |\n",
         "parameters": [
           {
             "name": "id",

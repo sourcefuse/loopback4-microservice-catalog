@@ -1,25 +1,41 @@
 import {Client, expect} from '@loopback/testlab';
+import path from 'path';
 import {LoginType} from '../../enums';
 import {LoginActivityRepository} from '../../repositories';
 import {TestingApplication} from '../fixtures/application';
-import {token} from '../fixtures/datasources/userCredsAndPermission';
+import {JwtToken} from '../fixtures/datasources/userCredsAndPermission';
 import {setupApplication} from './test-helper';
 
 describe('', () => {
   let app: TestingApplication;
   let client: Client;
   let loginActivityRepo: LoginActivityRepository;
+  let token: string;
   before('setupApplication', async () => {
     ({app, client} = await setupApplication());
   });
   after(async () => app.stop());
   before(givenLoginActivityRepository);
   before(setMockData);
+  beforeEach(() => {
+    process.env.JWT_PUBLIC_KEY = path.resolve(
+      __dirname,
+      '../../../src/__tests__/utils/publicKey.txt',
+    );
+    process.env.JWT_PRIVATE_KEY = path.resolve(
+      __dirname,
+      '../../../src/__tests__/utils/privateKey.txt',
+    );
+    process.env.JWT_ISSUER = 'test';
+    token = JwtToken.createToken();
+  });
   after(deleteMockData);
   afterEach(() => {
     delete process.env.JWT_ISSUER;
     delete process.env.JWT_SECRET;
     delete process.env.ENCRYPTION_KEY;
+    delete process.env.JWT_PUBLIC_KEY;
+    delete process.env.JWT_PRIVATE_KEY;
   });
   const basePath = '/login-activity';
   const range =

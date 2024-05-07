@@ -344,17 +344,14 @@ export class AuthenticationServiceComponent implements Component {
       DeafultAuthenticationProvider;
     this.application.bind(AuthenticationBindings.USER_MODEL.key).to(AuthUser);
 
-    if (process.env.JWT_PRIVATE_KEY && process.env.JWT_PRIVATE_KEY !== '') {
-      this.providers[AuthCodeBindings.JWT_SIGNER.key] =
-        JWTAsymmetricSignerProvider;
-    } else {
+    this.providers[AuthCodeBindings.JWT_SIGNER.key] =
+      JWTAsymmetricSignerProvider;
+    this.providers[AuthCodeBindings.JWT_VERIFIER.key] =
+      JWTAsymmetricVerifierProvider;
+
+    if (this.authConfig?.useSymmetricEncryption) {
       this.providers[AuthCodeBindings.JWT_SIGNER.key] =
         JWTSymmetricSignerProvider;
-    }
-    if (process.env.JWT_PRIVATE_KEY && process.env.JWT_PRIVATE_KEY !== '') {
-      this.providers[AuthCodeBindings.JWT_VERIFIER.key] =
-        JWTAsymmetricVerifierProvider;
-    } else {
       this.providers[AuthCodeBindings.JWT_VERIFIER.key] =
         JWTSymmetricVerifierProvider;
     }
