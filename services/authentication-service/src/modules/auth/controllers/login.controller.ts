@@ -29,7 +29,6 @@ import {
   X_TS_TYPE,
 } from '@sourceloop/core';
 import crypto from 'crypto';
-import * as jwt from 'jsonwebtoken';
 import {
   AuthErrorKeys,
   AuthenticationBindings,
@@ -54,6 +53,7 @@ import {
   AuthCodeGeneratorFn,
   CodeReaderFn,
   JWTSignerFn,
+  JWTVerifierFn,
   JwtPayloadFn,
   UserValidationServiceBindings,
 } from '../../../providers';
@@ -132,6 +132,8 @@ export class LoginController {
     @inject.context() private readonly ctx: RequestContext,
     @inject(UserValidationServiceBindings.VALIDATE_USER)
     private userValidationProvider: UserValidationFn,
+    @inject(AuthCodeBindings.JWT_VERIFIER.key)
+    private readonly jwtVerifier: JWTVerifierFn<AnyObject>,
     @inject(AuthServiceBindings.MarkUserActivity, {optional: true})
     private readonly userActivity?: IUserActivity,
   ) {}
@@ -267,12 +269,9 @@ export class LoginController {
     }
     try {
       const code = await codeReader(req.code);
-      const payload = jwt.verify(code, authClient.secret, {
+      const payload = (await this.jwtVerifier(code, {
         audience: req.clientId,
-        issuer: process.env.JWT_ISSUER,
-        algorithms: ['HS256'],
-      }) as ClientAuthCode<User, typeof User.prototype.id>;
-
+      })) as ClientAuthCode<User, typeof User.prototype.id>;
       if (payload.mfa) {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.UserVerificationFailed);
       }

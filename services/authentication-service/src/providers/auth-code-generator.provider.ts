@@ -3,16 +3,21 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {inject, Provider} from '@loopback/context';
+import {AnyObject} from '@loopback/repository';
 import {ClientAuthCode, STRATEGY} from 'loopback4-authentication';
-import {AuthClient, User} from '../models';
-import {AuthCodeGeneratorFn, CodeWriterFn, MfaCheckFn} from './types';
-import * as jwt from 'jsonwebtoken';
-import {AuthUser} from '../modules/auth';
-import {AuthCodeBindings, VerifyBindings} from './keys';
-import {OtpService} from '../services';
-import {AuthServiceBindings} from '../keys';
-import {IMfaConfig, IOtpConfig} from '../types';
 import {OtpMethodType} from '../enums';
+import {AuthServiceBindings} from '../keys';
+import {AuthClient, User} from '../models';
+import {AuthUser} from '../modules/auth';
+import {OtpService} from '../services';
+import {IMfaConfig, IOtpConfig} from '../types';
+import {AuthCodeBindings, VerifyBindings} from './keys';
+import {
+  AuthCodeGeneratorFn,
+  CodeWriterFn,
+  JWTSignerFn,
+  MfaCheckFn,
+} from './types';
 
 export class AuthCodeGeneratorProvider
   implements Provider<AuthCodeGeneratorFn>
@@ -28,6 +33,8 @@ export class AuthCodeGeneratorProvider
     private readonly mfaConfig: IMfaConfig,
     @inject(AuthServiceBindings.OtpConfig, {optional: true})
     private readonly otpConfig: IOtpConfig,
+    @inject(AuthCodeBindings.JWT_SIGNER.key)
+    private readonly jwtSigner: JWTSignerFn<AnyObject>,
   ) {}
 
   value(): AuthCodeGeneratorFn {
@@ -46,14 +53,11 @@ export class AuthCodeGeneratorProvider
           await this.otpService.sendOtp(user, client);
         }
       }
-      return this.codeWriter(
-        jwt.sign(codePayload, client.secret, {
-          expiresIn: client.authCodeExpiration,
-          audience: client.clientId,
-          issuer: process.env.JWT_ISSUER,
-          algorithm: 'HS256',
-        }),
-      );
+      const token = await this.jwtSigner(codePayload, {
+        audience: client.clientId,
+        expiresIn: client.authCodeExpiration,
+      });
+      return this.codeWriter(token);
     };
   }
 }

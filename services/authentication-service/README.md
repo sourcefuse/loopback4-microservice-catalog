@@ -201,6 +201,14 @@ npm i @sourceloop/authentication-service
   for example: private.pem file for private key and public.pem file for public key.
   (refer [this](https://cryptotools.net/rsagen))
 
+  By default we are employing asymmetric token signing and verification, but if symmetric signing and verification is required it has to be explicitly provided in the manner below
+
+  ```ts
+  this.bind(AuthServiceBindings.Config).to({
+    useSymmetricEncryption: true,
+  });
+  ```
+
 - **Authenticating Password using RSA Encryption**
 
   In order to authenticate password using RSA encrytion we need to provide private key through an env variable called `PRIVATE_DECRYPTION_KEY`.

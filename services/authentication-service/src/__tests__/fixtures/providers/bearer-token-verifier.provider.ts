@@ -3,10 +3,10 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {Provider} from '@loopback/context';
+import * as fs from 'fs/promises';
 import {verify} from 'jsonwebtoken';
 import {VerifyFunction} from 'loopback4-authentication';
 import {IAuthUserWithPermissions} from '../keys';
-
 export class BearerTokenVerifyProvider
   implements Provider<VerifyFunction.BearerFn>
 {
@@ -20,8 +20,10 @@ export class BearerTokenVerifyProvider
         database.
         Use global interceptor over this to apply that check on each api.
       */
-      return verify(token, 'test', {
-        issuer: 'test',
+      const publicKey = await fs.readFile(process.env.JWT_PRIVATE_KEY ?? '');
+      return verify(token, publicKey, {
+        issuer: process.env.JWT_ISSUER,
+        algorithms: ['RS256'],
       }) as IAuthUserWithPermissions;
     };
   }
