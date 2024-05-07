@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 13.0.0 (2024-05-07)
+
+* feat(all-services): update core package in all services (#2091) ([8b1703f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8b1703f)), closes [#2091](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2091) [#2077](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2077) [#2077](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2077)
+* feat(payment-service): add multi tenant support (#2075) ([23604c1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/23604c1)), closes [#2075](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2075) [#2073](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2073) [#2073](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2073)
+
+
+### BREAKING CHANGE
+
+* by default tenant support
+* default multi tenant support
+* update the core major version
+* Updated core package
+
+
+
+
 ## <small>12.0.1 (2024-04-05)</small>
 
 **Note:** Version bump only for package @sourceloop/payment-service

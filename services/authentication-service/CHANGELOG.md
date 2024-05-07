@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 19.0.0 (2024-05-07)
+
+* feat(all-services): update core package in all services (#2091) ([8b1703f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8b1703f)), closes [#2091](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2091) [#2077](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2077) [#2077](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2077)
+* feat(authentication-service): make asymmetric encryption of the token default (#2076) ([6b78867](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6b78867)), closes [#2076](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2076) [#2030](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2030) [#2030](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2030)
+* chore(ci-cd): reverting release changes all services to be released at once (#2090) ([0b25fe4](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0b25fe4)), closes [#2090](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2090) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* refactor(authentication-service): deprecate login token two in one api (#2068) ([db2bc6e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/db2bc6e)), closes [#2068](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2068) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+### BREAKING CHANGE
+
+* Config has to be provided to use symmetric encrytion
+* update the core major version
+* Updated core package
+
+
+
+
 ## 18.1.0 (2024-04-05)
 
 * feat(authentication-service): enable tenant aware metrics (#2044) ([e67280d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e67280d)), closes [#2044](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2044) [#1980](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1980) [#1980](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1980)

@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 13.0.0 (2024-05-07)
+
+* feat(all-services): update core package in all services (#2091) ([8b1703f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8b1703f)), closes [#2091](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2091) [#2077](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2077) [#2077](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2077)
+* feat(audit-service): multi tenant support (#2027) ([be00f87](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/be00f87)), closes [#2027](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2027) [#1942](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1942) [#1942](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1942)
+
+
+### BREAKING CHANGE
+
+* update the core major version
+* Updated core package
+* yes
+* YES
+
+
+
+
 ## <small>12.0.1 (2024-04-05)</small>
 
 **Note:** Version bump only for package @sourceloop/audit-service
