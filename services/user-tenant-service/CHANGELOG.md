@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.0.0 (2024-05-07)
+
+* feat(all-services): update core package in all services (#2091) ([8b1703f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8b1703f)), closes [#2091](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2091) [#2077](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2077) [#2077](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2077)
+* feat(authentication-service): make asymmetric encryption of the token default (#2076) ([6b78867](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6b78867)), closes [#2076](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2076) [#2030](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2030) [#2030](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2030)
+* feat(core): added dynamic tenant connector (#1953) ([ef32c05](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ef32c05)), closes [#1953](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1953) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#9122](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/9122) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922)
+* feat(core): update core package to use asymmetric token verification by default (#2078) ([756d956](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/756d956)), closes [#2078](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2078) [#2077](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2077)
+
+
+### BREAKING CHANGE
+
+* Config has to be provided to use symmetric encrytion
+* Rather than symmetric ,asymmetric provider will be implemented by default
+* update the core major version
+* Updated core package
+
+
+
+
 ## <small>0.17.1 (2024-04-05)</small>
 
 **Note:** Version bump only for package @sourceloop/user-tenant-service

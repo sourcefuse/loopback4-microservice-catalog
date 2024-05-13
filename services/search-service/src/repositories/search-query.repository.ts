@@ -3,7 +3,14 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {Getter, inject} from '@loopback/core';
-import {AnyObject, Count, juggler, Where} from '@loopback/repository';
+import {
+  AnyObject,
+  Count,
+  DataObject,
+  Options,
+  Where,
+  juggler,
+} from '@loopback/repository';
 import {
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
@@ -32,5 +39,14 @@ export class SearchQueryRepository extends DefaultUserModifyCrudRepository<
 
   deleteAll(where?: Where<SearchQuery>, options?: AnyObject): Promise<Count> {
     return super.deleteAllHard(where, options);
+  }
+  create(
+    entity: DataObject<SearchQuery>,
+    options?: Options | undefined,
+  ): Promise<SearchQuery> {
+    if (entity.where) {
+      delete entity.where;
+    }
+    return super.create(entity, options);
   }
 }

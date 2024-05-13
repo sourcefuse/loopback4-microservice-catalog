@@ -6,6 +6,7 @@
 import {Client, expect} from '@loopback/testlab';
 import {RoleTypes} from '@sourceloop/core';
 import {AuthErrorKeys} from 'loopback4-authentication';
+import path from 'path';
 import {
   AuthClientRepository,
   RoleRepository,
@@ -37,10 +38,21 @@ describe('OTP Controller', () => {
   before(givenRoleRepository);
   before(givenUserCredentialsRepository);
   before(setMockData);
+  beforeEach(() => {
+    process.env.JWT_PUBLIC_KEY = path.resolve(
+      __dirname,
+      '../../../src/__tests__/utils/publicKey.txt',
+    );
+    process.env.JWT_PRIVATE_KEY = path.resolve(
+      __dirname,
+      '../../../src/__tests__/utils/privateKey.txt',
+    );
+  });
   after(deleteMockData);
   afterEach(() => {
     delete process.env.JWT_ISSUER;
-    delete process.env.JWT_SECRET;
+    delete process.env.JWT_PUBLIC_KEY;
+    delete process.env.JWT_PRIVATE_KEY;
   });
   it('should give status 401 for get qrCode request without client_id', async () => {
     const response = await client
@@ -80,7 +92,6 @@ describe('OTP Controller', () => {
       password: 'temp123!@',
     };
     process.env.JWT_ISSUER = 'test';
-    process.env.JWT_SECRET = 'test';
     const reqForCode = await client
       .post(`/auth/login`)
       .send(reqData)
@@ -127,7 +138,6 @@ describe('OTP Controller', () => {
       password: 'temp123!@',
     };
     process.env.JWT_ISSUER = 'test';
-    process.env.JWT_SECRET = 'test';
     const reqForCode = await client
       .post(`/auth/login`)
       .send(reqData)

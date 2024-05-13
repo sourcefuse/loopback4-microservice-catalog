@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>5.0.13 (2024-05-07)</small>
+
+**Note:** Version bump only for package @sourceloop/schedular-example
+
+
+
+
+
 ## <small>5.0.12 (2024-04-05)</small>
 
 **Note:** Version bump only for package @sourceloop/schedular-example

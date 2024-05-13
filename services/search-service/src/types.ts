@@ -26,6 +26,7 @@ export type SearchableModelsList<T extends Model> = (
 )[];
 export interface SearchServiceConfig<T extends Model = SearchResult> {
   useCustomSequence?: boolean;
+  useSequelize?: boolean;
   doNotMountCoreComponent?: boolean;
   models: SearchableModelsList<T>;
   type?: Constructor<T> & typeof Model;

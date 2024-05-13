@@ -13,7 +13,6 @@ import {
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
-import * as jwt from 'jsonwebtoken';
 import {
   AuthenticationBindings,
   STRATEGY,
@@ -25,6 +24,8 @@ import {SignupRequestDto} from '../models/signup-request-dto.model';
 import {SignupRequest} from '../models/signup-request.model';
 import {SignupWithTokenReponseDto} from '../models/signup-with-token-response-dto.model';
 import {
+  AuthCodeBindings,
+  JWTSignerFn,
   SignUpBindings,
   SignupTokenHandlerFn,
   VerifyBindings,
@@ -39,6 +40,8 @@ export class SignupRequestController {
     private readonly preSignupFn: PreSignupFn<LocalUserProfileDto, AnyObject>,
     @inject(SignUpBindings.LOCAL_SIGNUP_PROVIDER)
     private readonly userSignupFn: UserSignupFn<LocalUserProfileDto, AnyObject>,
+    @inject(AuthCodeBindings.JWT_SIGNER.key)
+    private readonly jwtSigner: JWTSignerFn<AnyObject>,
   ) {}
 
   @authorize({permissions: ['*']})
@@ -62,14 +65,10 @@ export class SignupRequestController {
     );
 
     const codePayload = await this.preSignupFn(signUpRequest);
-
-    const token = jwt.sign(codePayload, process.env.JWT_SECRET as string, {
-      expiresIn: expiryDuration,
+    const token = await this.jwtSigner(codePayload, {
       subject: signUpRequest.email,
-      issuer: process.env.JWT_ISSUER,
-      algorithm: 'HS256',
+      expiresIn: expiryDuration,
     });
-
     await handler({
       code: token,
       expiry: expiryDuration,
