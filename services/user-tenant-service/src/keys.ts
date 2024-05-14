@@ -2,10 +2,10 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {BindingKey, CoreBindings} from '@loopback/core';
-import {BINDING_PREFIX} from '@sourceloop/core';
-import {UserTenantServiceComponent} from './component';
-import {IUserServiceConfig} from './types';
+import { BindingKey, CoreBindings, Interceptor } from '@loopback/core';
+import { BINDING_PREFIX } from '@sourceloop/core';
+import { UserTenantServiceComponent } from './component';
+import { IUserServiceConfig } from './types';
 
 /**
  * Binding keys used by this component.
@@ -32,3 +32,10 @@ export namespace UserTenantServiceKey {
   export const UserTenantInterceptorInterceptor =
     'interceptors.UserTenantInterceptorInterceptor';
 }
+
+/**
+ * Binding key for the webhook verifier.
+ */
+export const USER_CALLBACK = BindingKey.create<Interceptor>(
+  'sf.user-callback.verifier',
+);

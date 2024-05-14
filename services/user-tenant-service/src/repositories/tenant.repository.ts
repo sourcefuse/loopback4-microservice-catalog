@@ -2,7 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Getter, inject} from '@loopback/core';
+import { Getter, inject } from '@loopback/core';
 import {
   Entity,
   HasManyRepositoryFactory,
@@ -13,8 +13,8 @@ import {
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
 } from '@sourceloop/core';
-import {AuthenticationBindings} from 'loopback4-authentication';
-import {UserTenantDataSourceName} from '../keys';
+import { AuthenticationBindings } from 'loopback4-authentication';
+import { UserTenantDataSourceName } from '../keys';
 import {
   Group,
   Role,
@@ -24,11 +24,11 @@ import {
   User,
   UserTenant,
 } from '../models';
-import {GroupRepository} from './group.repository';
-import {RoleRepository} from './role.repository';
-import {TenantConfigRepository} from './tenant-config.repository';
-import {UserTenantRepository} from './user-tenant.repository';
-import {UserRepository} from './user.repository';
+import { GroupRepository } from './group.repository';
+import { RoleRepository } from './role.repository';
+import { TenantConfigRepository } from './tenant-config.repository';
+import { UserTenantRepository } from './user-tenant.repository';
+import { UserRepository } from './user.repository';
 
 export class TenantRepository extends DefaultUserModifyCrudRepository<
   Tenant,
@@ -78,7 +78,7 @@ export class TenantRepository extends DefaultUserModifyCrudRepository<
       IAuthUserWithPermissions | undefined
     >,
     @inject('models.Tenant')
-    private readonly tenant: typeof Entity & {prototype: Tenant},
+    private readonly tenant: typeof Entity & { prototype: Tenant },
   ) {
     super(tenant, dataSource, getCurrentUser);
     this.groups = this.createHasManyRepositoryFactoryFor(

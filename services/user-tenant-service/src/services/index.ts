@@ -6,3 +6,4 @@ export * from './tenant-operations.service';
 export * from './user-group.service';
 export * from './user-helper.service';
 export * from './user-operations.service';
+export * from './user-webhook-helper.service';
