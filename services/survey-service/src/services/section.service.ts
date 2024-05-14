@@ -1,4 +1,4 @@
-import {BindingScope, inject, injectable} from '@loopback/core';
+import {BindingScope, inject, injectable, service} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {ILogger, LOGGER} from '@sourceloop/core';
@@ -8,6 +8,7 @@ import {Section} from '../models';
 import {SectionRepository} from '../repositories/section.repository';
 import {SurveyQuestionRepository} from '../repositories/survey-question.repository';
 import {SurveyRepository} from '../repositories/survey.repository';
+import {SectionHelperService} from './section-helper.service';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class SectionService {
@@ -19,6 +20,8 @@ export class SectionService {
     @repository(SurveyRepository)
     public surveyRepository: SurveyRepository,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
+    @service(SectionHelperService)
+    private readonly sectionHelperService: SectionHelperService,
   ) {}
 
   async createSection(
@@ -32,7 +35,7 @@ export class SectionService {
     section.surveyId = surveyId;
     section.name = section.name ?? 'Untitled Section';
     section.displayOrder = existingSections.count + 1;
-    await this.sectionRepository.create(section);
+    await this.sectionHelperService.create(section);
 
     // fetch createdSection with id
     const orderByCreatedOn = 'created_on DESC';
@@ -99,7 +102,7 @@ export class SectionService {
         .then()
         .catch(err => Promise.reject(err));
 
-      this.sectionRepository
+      this.sectionHelperService
         .reorder(surveyId, sectionToDelete.displayOrder)
         .then()
         .catch(err => this.logger.error(JSON.stringify(err)));

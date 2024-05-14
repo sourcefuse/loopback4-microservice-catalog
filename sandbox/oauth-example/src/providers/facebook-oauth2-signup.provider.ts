@@ -3,6 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {Provider} from '@loopback/context';
+import {service} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {
@@ -16,6 +17,7 @@ import {
   TenantRepository,
   UserRepository,
 } from '../repositories';
+import {UserHelperService} from '../services';
 
 export class FacebookOauth2SignupProvider
   implements Provider<FacebookSignUpFn>
@@ -29,6 +31,8 @@ export class FacebookOauth2SignupProvider
     private readonly authClientRepo: AuthClientRepository,
     @repository(UserRepository)
     private readonly userRepo: UserRepository,
+    @service(UserHelperService)
+    private readonly userHelperService: UserHelperService,
   ) {}
 
   value(): FacebookSignUpFn {
@@ -62,7 +66,7 @@ export class FacebookOauth2SignupProvider
         throw new HttpErrors.BadRequest('User already exists');
       }
 
-      const user = await this.userRepo.createWithoutPassword({
+      const user = await this.userHelperService.createWithoutPassword({
         firstName: profile.name!.givenName ?? profile.displayName,
         lastName: profile.name!.familyName,
         username: profile._json.email ?? profile.displayName,

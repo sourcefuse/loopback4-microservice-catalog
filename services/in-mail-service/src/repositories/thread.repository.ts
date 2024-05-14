@@ -2,24 +2,22 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {Getter, inject} from '@loopback/core';
 import {
-  repository,
   HasManyRepositoryFactory,
-  DataObject,
   juggler,
+  repository,
 } from '@loopback/repository';
-import {Thread, Message, Group, Attachment} from '../models';
-import {inject, Getter} from '@loopback/core';
-import {AttachmentRepository} from './attachment.repository';
-import {MessageRepository} from './message.repository';
-import {Options} from '@loopback/repository/src/common-types';
-import {GroupRepository} from './group.repository';
-import {AuthenticationBindings} from 'loopback4-authentication';
 import {
-  IAuthUserWithPermissions,
   DefaultUserModifyCrudRepository,
+  IAuthUserWithPermissions,
 } from '@sourceloop/core';
+import {AuthenticationBindings} from 'loopback4-authentication';
 import {InMailDatasourceName} from '../keys';
+import {Attachment, Group, Message, Thread} from '../models';
+import {AttachmentRepository} from './attachment.repository';
+import {GroupRepository} from './group.repository';
+import {MessageRepository} from './message.repository';
 
 export class ThreadRepository extends DefaultUserModifyCrudRepository<
   Thread,
@@ -65,24 +63,5 @@ export class ThreadRepository extends DefaultUserModifyCrudRepository<
       messageRepositoryGetter,
     );
     this.registerInclusionResolver('message', this.messages.inclusionResolver);
-  }
-  async incrementOrCreate(
-    id: typeof Thread.prototype.id | undefined,
-    entity: DataObject<Thread>,
-    options?: Options,
-  ) {
-    if (!id) {
-      return this.create(entity, options);
-    }
-    const thread = await this.findById(id);
-    if (!thread) {
-      return this.create(entity, options);
-    }
-    await this.updateById(
-      id,
-      {messageCounts: thread.messageCounts + 1},
-      options,
-    );
-    return thread;
   }
 }

@@ -16,6 +16,7 @@ import {
   UserRepository,
   UserTenantRepository,
 } from '../../repositories';
+import {UserHelperService} from '../../services';
 import {TestingApplication} from '../fixtures/application';
 import {TestHelperKey} from '../fixtures/keys';
 import {TestHelperService} from '../fixtures/services';
@@ -26,6 +27,7 @@ describe('Authentication microservice', () => {
   let client: Client;
   let helper: TestHelperService;
   let userRepo: UserRepository;
+  let userHelperService: UserHelperService;
   let userTenantRepo: UserTenantRepository;
   let authClientRepository: AuthClientRepository;
   let userPermissionRepository: UserLevelPermissionRepository;
@@ -41,6 +43,7 @@ describe('Authentication microservice', () => {
   });
   after(async () => app.stop());
   before(givenUserRepository);
+  before(givenUserHelperService);
   before(givenUserTenantRepository);
   before(givenAuthClientRepository);
   before(givenUserPermissionRepository);
@@ -601,6 +604,9 @@ describe('Authentication microservice', () => {
   async function givenUserRepository() {
     userRepo = await app.getRepository(UserRepository);
   }
+  async function givenUserHelperService() {
+    userHelperService = await app.get('services.userHelperService');
+  }
   async function givenUserTenantRepository() {
     userTenantRepo = await app.getRepository(UserTenantRepository);
   }
@@ -682,7 +688,7 @@ describe('Authentication microservice', () => {
       },
     ]);
     process.env.USER_TEMP_PASSWORD = 'temp123!@';
-    await userRepo.create({
+    await userHelperService.create({
       id: '1',
       firstName: 'Test',
       lastName: 'User',

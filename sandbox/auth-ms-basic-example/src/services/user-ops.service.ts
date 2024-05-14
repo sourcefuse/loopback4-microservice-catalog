@@ -2,23 +2,22 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {BindingScope, injectable} from '@loopback/core';
+import {BindingScope, injectable, service} from '@loopback/core';
 import {AnyObject, repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {
-  User,
-  UserCredentials,
-  UserTenant,
-} from '@sourceloop/authentication-service/dist/models';
-import {
   AuthClientRepository,
   RoleRepository,
+  User,
+  UserCredentials,
   UserRepository,
+  UserTenant,
   UserTenantRepository,
-} from '@sourceloop/authentication-service/dist/repositories';
+} from '@sourceloop/authentication-service';
 import {UserStatus} from '@sourceloop/core';
 import {AuthenticateErrorKeys} from '@sourceloop/core/src/enums';
 import bcrypt from 'bcrypt';
+import {UserHelperService} from '.';
 import {UserDto} from '../models/user.dto';
 const saltRounds = 10;
 
@@ -33,6 +32,8 @@ export class UserOpsService {
     private readonly utRepository: UserTenantRepository,
     @repository(AuthClientRepository)
     private readonly authClientsRepository: AuthClientRepository,
+    @service(UserHelperService)
+    private readonly userHelperService: UserHelperService,
   ) {}
 
   async createUser(user: UserDto, options: AnyObject) {
@@ -84,7 +85,7 @@ export class UserOpsService {
     const username = user.username;
     user.username = username.toLowerCase();
     //Override default tenant id
-    const userSaved = await this.userRepository.createWithoutPassword(
+    const userSaved = await this.userHelperService.createWithoutPassword(
       new User({
         username: user.username,
         firstName: user.firstName,
