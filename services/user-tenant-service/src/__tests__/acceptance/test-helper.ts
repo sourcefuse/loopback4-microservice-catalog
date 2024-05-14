@@ -8,8 +8,8 @@ import {
   givenHttpServerConfig,
 } from '@loopback/testlab';
 import path from 'path';
-import {UserTenantServiceApplication} from '../../application';
-import {AuthenticationDbDataSource} from '../datasources';
+import { UserTenantServiceApplication } from '../../application';
+import { AuthenticationDbDataSource } from '../datasources';
 
 export async function setupApplication(): Promise<AppWithClient> {
   const restConfig = givenHttpServerConfig({
@@ -35,14 +35,16 @@ export async function setupApplication(): Promise<AppWithClient> {
 
   const client = createRestAppClient(app);
 
-  return {app, client};
+  return { app, client };
 }
 
 function setUpEnv() {
   process.env.NODE_ENV = 'test';
   process.env.ENABLE_TRACING = '0';
   process.env.ENABLE_OBF = '0';
+  process.env.USER_CALLBACK_SECRET = 'sf-test';
   process.env.JWT_ISSUER = issuer;
+  process.env.FIRST_USER_ROLE = 'SuperAdmin';
   process.env.JWT_PRIVATE_KEY = path.resolve(
     __dirname,
     '../../../src/__tests__/unit/utils/privateKey.txt',
