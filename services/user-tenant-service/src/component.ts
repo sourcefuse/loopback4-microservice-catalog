@@ -13,8 +13,8 @@ import {
   injectable,
   ProviderMap,
 } from '@loopback/core';
-import { Class, Model, Repository } from '@loopback/repository';
-import { RestApplication } from '@loopback/rest';
+import {Class, Model, Repository} from '@loopback/repository';
+import {RestApplication} from '@loopback/rest';
 import {
   BearerVerifierBindings,
   BearerVerifierComponent,
@@ -24,7 +24,7 @@ import {
   ServiceSequence,
   TenantUtilitiesComponent,
 } from '@sourceloop/core';
-import { AuthenticationComponent } from 'loopback4-authentication';
+import {AuthenticationComponent} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
   AuthorizationComponent,
@@ -48,7 +48,11 @@ import {
   UserTenantInterceptorInterceptor,
   UserWebhookVerifierProvider,
 } from './interceptors';
-import { USER_CALLBACK, UserTenantServiceComponentBindings, UserTenantServiceKey } from './keys';
+import {
+  USER_CALLBACK,
+  UserTenantServiceComponentBindings,
+  UserTenantServiceKey,
+} from './keys';
 import {
   AuthClient,
   Role,
@@ -65,7 +69,7 @@ import {
   UserView,
   UserWebhookDTO,
 } from './models';
-import { Group } from './models/group.model';
+import {Group} from './models/group.model';
 import {
   AuthClientRepository,
   GroupRepository,
@@ -103,11 +107,11 @@ import {
   UserOperationsService,
   UserWebhookHelperService,
 } from './services';
-import { IUserServiceConfig } from './types';
+import {IUserServiceConfig} from './types';
 
 // Configure the binding for UserTenantServiceComponent
 @injectable({
-  tags: { [ContextTags.KEY]: UserTenantServiceComponentBindings.COMPONENT },
+  tags: {[ContextTags.KEY]: UserTenantServiceComponentBindings.COMPONENT},
 })
 export class UserTenantServiceComponent implements Component {
   repositories?: Class<Repository<Model>>[];
@@ -127,7 +131,7 @@ export class UserTenantServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private application: RestApplication,
-    @inject(UserTenantServiceComponentBindings.Config, { optional: true })
+    @inject(UserTenantServiceComponentBindings.Config, {optional: true})
     private readonly config?: IUserServiceConfig,
   ) {
     this.bindings = [];
@@ -172,7 +176,7 @@ export class UserTenantServiceComponent implements Component {
       UserTenantPrefs,
       AuthClient,
       UserDto,
-      UserWebhookDTO
+      UserWebhookDTO,
     ];
     this.controllers = [
       TenantRoleController,
@@ -185,7 +189,7 @@ export class UserTenantServiceComponent implements Component {
       UserTenantPrefsController,
       UserTenantUserGroupController,
       UserTenantUserLevelPermissionController,
-      UserWebhookController
+      UserWebhookController,
     ];
     if (this.config?.useSequelize) {
       this.repositories = [

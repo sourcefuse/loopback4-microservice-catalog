@@ -25,7 +25,7 @@ export class SignupBearerVerifyProvider
     return async (token: string, req?: Request) => {
       let result: SignupRequest;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      let publicKey: any;
+      let publicKey: any; //NOSONAR
       try {
         if (this.authConfig?.useSymmetricEncryption) {
           result = verify(token, process.env.JWT_SECRET as string, {
