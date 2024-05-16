@@ -8,8 +8,8 @@ import {
   givenHttpServerConfig,
 } from '@loopback/testlab';
 import path from 'path';
-import { UserTenantServiceApplication } from '../../application';
-import { AuthenticationDbDataSource } from '../datasources';
+import {UserTenantServiceApplication} from '../../application';
+import {AuthenticationDbDataSource} from '../datasources';
 
 export async function setupApplication(): Promise<AppWithClient> {
   const restConfig = givenHttpServerConfig({
@@ -35,7 +35,7 @@ export async function setupApplication(): Promise<AppWithClient> {
 
   const client = createRestAppClient(app);
 
-  return { app, client };
+  return {app, client};
 }
 
 function setUpEnv() {

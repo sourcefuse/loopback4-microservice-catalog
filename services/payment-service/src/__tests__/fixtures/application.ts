@@ -33,7 +33,6 @@ export class TestPaymentApplication extends BootMixin(
       file: '',
     });
     this.bind(`datasources.payment`).to(ds);
-    //this.bind(TenantUtilitiesBindings.Config).to({useSingleTenant: false});
 
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here

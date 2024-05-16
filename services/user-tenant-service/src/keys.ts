@@ -2,10 +2,10 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import { BindingKey, CoreBindings, Interceptor } from '@loopback/core';
-import { BINDING_PREFIX } from '@sourceloop/core';
-import { UserTenantServiceComponent } from './component';
-import { IUserServiceConfig } from './types';
+import {BindingKey, CoreBindings, Interceptor} from '@loopback/core';
+import {BINDING_PREFIX} from '@sourceloop/core';
+import {UserTenantServiceComponent} from './component';
+import {IUserServiceConfig} from './types';
 
 /**
  * Binding keys used by this component.
