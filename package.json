@@ -1,6 +1,7 @@
 {
   "name": "@sourceloop/root",
   "private": false,
+  "description": "Catalog of loopback microservices",
   "scripts": {
     "prepare": "husky install",
     "build": "npm run build --workspaces --if-present",
