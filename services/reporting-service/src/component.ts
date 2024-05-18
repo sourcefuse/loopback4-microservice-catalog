@@ -1,5 +1,6 @@
 import {
   Binding,
+  BindingScope,
   ContextTags,
   ControllerClass,
   CoreBindings,
@@ -96,7 +97,8 @@ export class ReportingServiceComponent {
 
     this.application
       .bind(ReportingServiceComponentBindings.DATA_STORE_SERVICE_PROVIDER)
-      .toProvider(DataStoreObjectProvider);
+      .toProvider(DataStoreObjectProvider)
+      .inScope(BindingScope.SINGLETON);
     this.application
       .bind(ReportingServiceComponentBindings.QUERY_UTILITY)
       .toClass(SequelizeQueryUtility);

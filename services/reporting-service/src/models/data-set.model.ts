@@ -29,7 +29,6 @@ export class DataSet
 
   @property({
     type: 'object',
-    required: true,
     name: 'data_set_query',
     description: `The query for the data set refer to StructuredQueryInterface`,
   })
