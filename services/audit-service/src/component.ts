@@ -58,7 +58,7 @@ import {
   MappingLogRepository as MappingLogSequelizeRepository,
 } from './repositories/sequelize';
 import {
-  AuditLogExportProvider,
+ 
   ColumnBuilderProvider,
   ExportHandlerProvider,
   ExportToCsvProvider,
@@ -102,7 +102,7 @@ export class AuditServiceComponent implements Component {
 
     this.services = [
       JobProcessingService,
-      AuditLogExportProvider,
+    
       ColumnBuilderProvider,
     ];
 
@@ -131,8 +131,7 @@ export class AuditServiceComponent implements Component {
       QuerySelectedFilesProvider;
     this.providers[ExportToCsvServiceBindings.EXPORT_LOGS.key] =
       ExportToCsvProvider;
-    this.providers[AuditLogExportServiceBindings.EXPORT_AUDIT_LOGS.key] =
-      AuditLogExportProvider;
+   
     this.providers[ColumnBuilderServiceBindings.COLUMN_BUILDER.key] =
       ColumnBuilderProvider;
     this.providers[ExportHandlerServiceBindings.PROCESS_FILE.key] =

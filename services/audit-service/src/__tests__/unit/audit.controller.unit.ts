@@ -10,10 +10,13 @@ import {
   StubbedInstanceWithSinonAccessor,
 } from '@loopback/testlab';
 
+import {Context} from '@loopback/core';
 import {AnyObject, Filter} from '@loopback/repository';
 import {AuditController} from '../../controllers';
 import {FileStatusKey} from '../../enums/file-status-key.enum';
+import {AuditLogExportServiceBindings} from '../../keys';
 import {AuditLog, Job} from '../../models/tenant-support';
+import {AuditLogExportProvider} from '../../providers';
 import {
   AuditLogRepository,
   JobRepository,
@@ -21,6 +24,7 @@ import {
 } from '../../repositories';
 import {ColumnBuilderProvider, JobProcessingService} from '../../services';
 import {AuditLogExportFn, ExportToCsvFn} from '../../types';
+import {DummyAuditServiceApplication} from '../fixtures/dummy-application';
 import {testUser} from '../helpers/db.helper';
 import {dummyLog} from '../sample-data/dummy-log';
 import {filterAppliedActedAt} from '../sample-data/filters';
@@ -29,12 +33,24 @@ let auditLogRepository: StubbedInstanceWithSinonAccessor<AuditLogRepository>;
 let jobRepository: StubbedInstanceWithSinonAccessor<JobRepository>;
 let jobProcessingService: StubbedInstanceWithSinonAccessor<JobProcessingService>;
 let mappingLogRepository: StubbedInstanceWithSinonAccessor<MappingLogRepository>;
-
+let context;
 let controller: AuditController;
-
+let app: DummyAuditServiceApplication;
 const setUpStub = () => {
+  app = new DummyAuditServiceApplication({
+    rest: {
+      port: 3001,
+    },
+  });
+  app
+    .bind(AuditLogExportServiceBindings.EXPORT_AUDIT_LOGS)
+    .toProvider(AuditLogExportProvider);
   auditLogRepository = createStubInstance(AuditLogRepository);
   jobRepository = createStubInstance(JobRepository);
+  let getSyncStub = sinon.stub().returns(sinon.stub().resolves());
+  let context = {
+    getSync: getSyncStub,
+  } as unknown as Context;
   jobProcessingService = createStubInstance(JobProcessingService);
   mappingLogRepository = createStubInstance(MappingLogRepository);
   const columnBuilderProvider = new ColumnBuilderProvider();
@@ -42,13 +58,14 @@ const setUpStub = () => {
     Promise.resolve('demoResponse');
   const auditLogExport: AuditLogExportFn = (data: AnyObject[]) =>
     Promise.resolve();
+  
   controller = new AuditController(
     auditLogRepository,
     jobRepository,
     jobProcessingService,
     mappingLogRepository,
     exportToCsvService,
-    auditLogExport,
+    context,
     columnBuilderProvider.value(),
     testUser,
   );

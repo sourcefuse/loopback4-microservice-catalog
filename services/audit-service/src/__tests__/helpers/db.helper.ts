@@ -1,17 +1,17 @@
+import {Context} from '@loopback/core';
 import {AnyObject} from '@loopback/repository';
+import {sinon} from '@loopback/testlab';
 import {IAuthUserWithPermissions} from '@sourceloop/core';
 import {AuditController} from '../../controllers';
 import {PermissionKey} from '../../enums';
+import {AuditLogExportServiceBindings} from '../../keys';
+import {AuditLogExportProvider} from '../../providers';
 import {
   AuditLogRepository,
   JobRepository,
   MappingLogRepository,
 } from '../../repositories/index';
-import {
-  AuditLogExportProvider,
-  JobProcessingService,
-  QuerySelectedFilesProvider,
-} from '../../services';
+import {JobProcessingService, QuerySelectedFilesProvider} from '../../services';
 import {AuditLogExportFn, ExportHandlerFn, ExportToCsvFn} from '../../types';
 import {connector} from '../fixtures/datasources/db.datasource';
 import {DummyAuditServiceApplication} from '../fixtures/dummy-application';
@@ -22,6 +22,7 @@ import {listMappingLogs} from '../sample-data/mapping-log';
 let auditLogRepository: AuditLogRepository; //NOSONAR
 let mappingLogRepository: MappingLogRepository; //NOSONAR
 let jobRepository: JobRepository; //NOSONAR
+let context: Context;
 
 const pass = 'test_password';
 const id = '9640864d-a84a-e6b4-f20e-918ff280cdaa';
@@ -67,18 +68,30 @@ export async function getTestDBRepositories(app: DummyAuditServiceApplication) {
 
 export function getTestAuditController(app: DummyAuditServiceApplication) {
   let auditLogExportParam: AnyObject[];
-  function getAuditLogExportParameter() {
-    return auditLogExportParam;
-  }
-  const exportToCsvService: ExportToCsvFn = () =>
-    Promise.resolve('demoResponse');
-  const {jobProcessingService} = getTestJobProcessingService(app);
-  const columnBuilderProvider = new ColumnBuilderProvider();
-
   const auditLogExport: AuditLogExportFn = (data: AnyObject[]) => {
     auditLogExportParam = data;
     return Promise.resolve();
   };
+  let getSyncStub = sinon.stub().callsFake(key => {
+    if (key === AuditLogExportServiceBindings.EXPORT_AUDIT_LOGS) {
+      return sinon.stub().resolves(auditLogExport);
+    }
+
+    return undefined;
+  });
+
+  let context = {
+    getSync: getSyncStub,
+  } as unknown as Context;
+
+  function getAuditLogExportParameter() {
+    return auditLogExportParam;
+  }
+
+  const exportToCsvService: ExportToCsvFn = () =>
+    Promise.resolve('demoResponse');
+  const {jobProcessingService} = getTestJobProcessingService(app);
+  const columnBuilderProvider = new ColumnBuilderProvider();
 
   const auditLogController = new AuditController(
     auditLogRepository,
@@ -86,7 +99,7 @@ export function getTestAuditController(app: DummyAuditServiceApplication) {
     jobProcessingService,
     mappingLogRepository,
     exportToCsvService,
-    auditLogExport,
+    context,
     columnBuilderProvider.value(),
     testUser,
   );
@@ -111,7 +124,7 @@ export function getTestJobProcessingService(app: DummyAuditServiceApplication) {
 
   const jobProcessingService = new JobProcessingService(
     querySelectedFilesProvider.value(),
-    auditLogExport.value(),
+    context,
     columnBuilderProvider.value(),
     mappingLogRepository,
     jobRepository,

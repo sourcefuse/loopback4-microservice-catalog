@@ -34,7 +34,7 @@ import {
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 
-import {inject, service} from '@loopback/core';
+import {Context, inject, service} from '@loopback/core';
 import {FileStatusKey} from '../enums/file-status-key.enum';
 import {OperationKey} from '../enums/operation-key.enum';
 import {PermissionKey} from '../enums/permission-key.enum';
@@ -53,13 +53,11 @@ import {
 import {JobProcessingService} from '../services';
 import {
   ArchiveOutput,
-  AuditLogExportFn,
   ColumnBuilderFn,
   ExportResponse,
   ExportToCsvFn,
 } from '../types';
 import {constructWhere} from '../utils/construct-where';
-
 const basePath = '/audit-logs';
 
 export class AuditController {
@@ -74,8 +72,8 @@ export class AuditController {
     public mappingLogRepository: EntityCrudRepository<MappingLog, string, {}>,
     @inject(ExportToCsvServiceBindings.EXPORT_LOGS)
     public exportToCsv: ExportToCsvFn,
-    @inject(AuditLogExportServiceBindings.EXPORT_AUDIT_LOGS)
-    public auditLogExportService: AuditLogExportFn,
+
+    @inject.context() private readonly ctx: Context,
     @inject(ColumnBuilderServiceBindings.COLUMN_BUILDER)
     public columnBuilderService: ColumnBuilderFn,
     @inject(AuthenticationBindings.CURRENT_USER)
@@ -305,16 +303,16 @@ export class AuditController {
       }
     }
     /*There is a chance that during the above for loop, duplicate entries might have been
-    concatenated in the selectedAuditLogs array.Therefore filter the array to keep only 
-    unique rows based on the 'id' column. 
+    concatenated in the selectedAuditLogs array.Therefore filter the array to keep only
+    unique rows based on the 'id' column.
     Example
     id  entityId     after
     1     a        deleted:true
     2     a        deleted:false
     3     a           null
     Now if in our filter deleted is true then initially selectedAuditLogs will have
-    id->1,3 . Now the for loop will run for id->1 and it will concatenate id->2,3. 
-    Then the for loop will run for id->3 and it will concatenate id->1,2. Now eventually 
+    id->1,3 . Now the for loop will run for id->1 and it will concatenate id->2,3.
+    Then the for loop will run for id->3 and it will concatenate id->1,2. Now eventually
     selectedAuditLogs will have duplicate entries for id->1,2,3 which is why we are filtering
     selectedAuditLogs keeping 'id' unique
     */
@@ -398,7 +396,10 @@ export class AuditController {
         return {message: 'No data to be exported'};
       }
       const customColumnData = await this.columnBuilderService(result);
-      await this.auditLogExportService(customColumnData);
+      const app = this.ctx.getSync(
+        AuditLogExportServiceBindings.EXPORT_AUDIT_LOGS,
+      );
+      await app(customColumnData);
       return {message: 'Audit logs exported successfully.'};
     }
   }
