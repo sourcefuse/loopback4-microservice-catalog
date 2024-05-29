@@ -75,7 +75,6 @@ export class AuditController {
     public exportToCsv: ExportToCsvFn,
     @inject(AuditLogExportServiceBindings.EXPORT_AUDIT_LOGS)
     public auditLogExportService: AuditLogExportFn,
-    //@inject.context() private readonly ctx: Context,
     @inject(ColumnBuilderServiceBindings.COLUMN_BUILDER)
     public columnBuilderService: ColumnBuilderFn,
     @inject(AuthenticationBindings.CURRENT_USER)
