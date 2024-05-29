@@ -398,10 +398,6 @@ export class AuditController {
         return {message: 'No data to be exported'};
       }
       const customColumnData = await this.columnBuilderService(result);
-      // const app = this.ctx.getSync(
-      //   AuditLogExportServiceBindings.EXPORT_AUDIT_LOGS,
-      // );
-      // await app(customColumnData);
       await this.auditLogExportService(customColumnData);
       return {message: 'Audit logs exported successfully.'};
     }

@@ -31,7 +31,6 @@ export class JobProcessingService {
     public querySelectedFiles: QuerySelectedFilesFn,
     @inject(AuditLogExportServiceBindings.EXPORT_AUDIT_LOGS)
     public auditLogExportService: AuditLogExportFn,
-    // @inject.context() private readonly ctx: Context,
     @inject(ColumnBuilderServiceBindings.COLUMN_BUILDER)
     public columnBuilder: ColumnBuilderFn,
     @repository(MappingLogRepository)
@@ -96,10 +95,6 @@ export class JobProcessingService {
 
       if (job.operation === OperationKey.EXPORT) {
         const customColumnData = await this.columnBuilder(finalData);
-        // const app = this.ctx.getSync(
-        //   AuditLogExportServiceBindings.EXPORT_AUDIT_LOGS,
-        // );
-        // await app(customColumnData);
         await this.auditLogExportService(customColumnData);
       }
       job.status = FileStatusKey.COMPLETED;

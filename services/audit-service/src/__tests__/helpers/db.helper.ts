@@ -64,20 +64,17 @@ export async function getTestDBRepositories(app: DummyAuditServiceApplication) {
 
 export function getTestAuditController(app: DummyAuditServiceApplication) {
   let auditLogExportParam: AnyObject[];
-  const auditLogExport: AuditLogExportFn = (data: AnyObject[]) => {
-    auditLogExportParam = data;
-    return Promise.resolve();
-  };
-
   function getAuditLogExportParameter() {
     return auditLogExportParam;
   }
-
   const exportToCsvService: ExportToCsvFn = () =>
     Promise.resolve('demoResponse');
   const {jobProcessingService} = getTestJobProcessingService(app);
   const columnBuilderProvider = new ColumnBuilderProvider();
-
+  const auditLogExport: AuditLogExportFn = (data: AnyObject[]) => {
+    auditLogExportParam = data;
+    return Promise.resolve();
+  };
   const auditLogController = new AuditController(
     auditLogRepository,
     jobRepository,
