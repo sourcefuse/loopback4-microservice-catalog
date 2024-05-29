@@ -5,6 +5,7 @@ import {FileStatusKey} from '../../enums/file-status-key.enum';
 import {AuditLogExportServiceBindings} from '../../keys';
 import {Job} from '../../models';
 
+import {AuditLogExportProvider} from '../../providers';
 import {DummyAuditServiceApplication} from '../fixtures/dummy-application';
 import {
   getTestJobProcessingService,

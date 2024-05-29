@@ -43,7 +43,7 @@ describe('POST /audit-logs/export', () => {
   afterEach(async () => {
     await app.stop();
   });
-  it.only('when includeArchivedLogs is false', async () => {
+  it('when includeArchivedLogs is false', async () => {
     const includeArchivedLogs = false;
     const filter = filterAppliedActedAt;
     const {auditLogController, auditLogRepository, getAuditLogExportParameter} =
@@ -57,7 +57,7 @@ describe('POST /audit-logs/export', () => {
       filter,
     );
     expect(controllerResult).to.have.a.property('message').which.is.a.String();
-   
+
     expect(result).to.be.deepEqual(getAuditLogExportParameter());
   });
   it('when includeArchivedLogs is true', async () => {

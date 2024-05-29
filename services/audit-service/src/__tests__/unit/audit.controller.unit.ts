@@ -58,14 +58,14 @@ const setUpStub = () => {
     Promise.resolve('demoResponse');
   const auditLogExport: AuditLogExportFn = (data: AnyObject[]) =>
     Promise.resolve();
-  
+
   controller = new AuditController(
     auditLogRepository,
     jobRepository,
     jobProcessingService,
     mappingLogRepository,
     exportToCsvService,
-    context,
+    auditLogExport,
     columnBuilderProvider.value(),
     testUser,
   );

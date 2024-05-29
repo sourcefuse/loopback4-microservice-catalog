@@ -34,7 +34,7 @@ import {
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 
-import {Context, inject, service} from '@loopback/core';
+import {inject, service} from '@loopback/core';
 import {FileStatusKey} from '../enums/file-status-key.enum';
 import {OperationKey} from '../enums/operation-key.enum';
 import {PermissionKey} from '../enums/permission-key.enum';
@@ -53,6 +53,7 @@ import {
 import {JobProcessingService} from '../services';
 import {
   ArchiveOutput,
+  AuditLogExportFn,
   ColumnBuilderFn,
   ExportResponse,
   ExportToCsvFn,
@@ -72,8 +73,9 @@ export class AuditController {
     public mappingLogRepository: EntityCrudRepository<MappingLog, string, {}>,
     @inject(ExportToCsvServiceBindings.EXPORT_LOGS)
     public exportToCsv: ExportToCsvFn,
-
-    @inject.context() private readonly ctx: Context,
+    @inject(AuditLogExportServiceBindings.EXPORT_AUDIT_LOGS)
+    public auditLogExportService: AuditLogExportFn,
+    //@inject.context() private readonly ctx: Context,
     @inject(ColumnBuilderServiceBindings.COLUMN_BUILDER)
     public columnBuilderService: ColumnBuilderFn,
     @inject(AuthenticationBindings.CURRENT_USER)
@@ -396,10 +398,11 @@ export class AuditController {
         return {message: 'No data to be exported'};
       }
       const customColumnData = await this.columnBuilderService(result);
-      const app = this.ctx.getSync(
-        AuditLogExportServiceBindings.EXPORT_AUDIT_LOGS,
-      );
-      await app(customColumnData);
+      // const app = this.ctx.getSync(
+      //   AuditLogExportServiceBindings.EXPORT_AUDIT_LOGS,
+      // );
+      // await app(customColumnData);
+      await this.auditLogExportService(customColumnData);
       return {message: 'Audit logs exported successfully.'};
     }
   }

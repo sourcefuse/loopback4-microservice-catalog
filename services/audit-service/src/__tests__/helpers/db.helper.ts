@@ -99,7 +99,7 @@ export function getTestAuditController(app: DummyAuditServiceApplication) {
     jobProcessingService,
     mappingLogRepository,
     exportToCsvService,
-    context,
+    auditLogExport,
     columnBuilderProvider.value(),
     testUser,
   );
@@ -124,7 +124,7 @@ export function getTestJobProcessingService(app: DummyAuditServiceApplication) {
 
   const jobProcessingService = new JobProcessingService(
     querySelectedFilesProvider.value(),
-    context,
+    auditLogExport.value(),
     columnBuilderProvider.value(),
     mappingLogRepository,
     jobRepository,

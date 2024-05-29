@@ -1,4 +1,4 @@
-import {BindingScope, Context, inject, injectable} from '@loopback/core';
+import {BindingScope, inject, injectable} from '@loopback/core';
 import {EntityCrudRepository, Filter, repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {FileStatusKey} from '../enums/file-status-key.enum';
@@ -19,16 +19,21 @@ import {
   JobRepository,
   MappingLogRepository,
 } from '../repositories';
-import {ColumnBuilderFn, QuerySelectedFilesFn} from '../types';
+import {
+  AuditLogExportFn,
+  ColumnBuilderFn,
+  QuerySelectedFilesFn,
+} from '../types';
 @injectable({scope: BindingScope.TRANSIENT})
 export class JobProcessingService {
   constructor(
     @inject(QuerySelectedFilesServiceBindings.QUERY_ARCHIVED_LOGS)
     public querySelectedFiles: QuerySelectedFilesFn,
-    @inject.context() private readonly ctx: Context,
+    @inject(AuditLogExportServiceBindings.EXPORT_AUDIT_LOGS)
+    public auditLogExportService: AuditLogExportFn,
+    // @inject.context() private readonly ctx: Context,
     @inject(ColumnBuilderServiceBindings.COLUMN_BUILDER)
     public columnBuilder: ColumnBuilderFn,
-  
     @repository(MappingLogRepository)
     public mappingLogRepository: EntityCrudRepository<MappingLog, string, {}>,
     @repository(JobRepository)
@@ -91,11 +96,11 @@ export class JobProcessingService {
 
       if (job.operation === OperationKey.EXPORT) {
         const customColumnData = await this.columnBuilder(finalData);
-        const app = this.ctx.getSync(
-          AuditLogExportServiceBindings.EXPORT_AUDIT_LOGS,
-        );
-
-        await app(customColumnData);
+        // const app = this.ctx.getSync(
+        //   AuditLogExportServiceBindings.EXPORT_AUDIT_LOGS,
+        // );
+        // await app(customColumnData);
+        await this.auditLogExportService(customColumnData);
       }
       job.status = FileStatusKey.COMPLETED;
       job.result = JSON.stringify(finalData);
