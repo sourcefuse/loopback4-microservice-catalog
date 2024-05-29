@@ -218,7 +218,18 @@ If `includeArchivedLogs` option is set to `false` (which is default if not provi
 
 ### Export Logs
 
-This feature is used to export the logs present in Audit Database or the archive storage(eg. AWS.S3). A default loopback filter is accepted based on which logs are exported to the desired location as specified as an excel file(by default). Along with this a boolean variable called `includeArchivedLogs` is also provided which accepts `true` or `false` resulting in whether to include the archieved logs in response.
+This feature is used to export the logs present in Audit Database or the archive storage(eg. AWS.S3). A default loopback filter is accepted based on which logs are exported to the desired location as specified as an excel file(by default) using `AuditLogExportProvider` [here](src/providers/audit-log-export.service.ts).
+The exceljs dependency, used by the `AuditLogExportProvider` for generating Excel files, is optional. Users who wish to utilize this feature should manually install exceljs and bind the AuditLogExportProvider in the application.ts file of your application:
+
+```ts
+this.bind(AuditLogExportServiceBindings.EXPORT_AUDIT_LOGS).toProvider(
+  AuditLogExportProvider,
+);
+```
+
+By following these steps, users can seamlessly incorporate the AuditLogExportProvider into their applications while having the flexibility to choose whether or not to include the exceljs dependency.
+
+Along with this a boolean variable called `includeArchivedLogs` is also provided which accepts `true` or `false` resulting in whether to include the archieved logs in response.
 
 If `includeArchivedLogs` is set to `true` then data will be fetched from both Audit database and archive storage based on the filter provided as an input **but it is not immediately returned**, a `jobId` is returned which represents the operation happening in the background to fetch and parse logs from archive storage. This `jobId` can be used to check the status of this process and get the result when it is done.
 
