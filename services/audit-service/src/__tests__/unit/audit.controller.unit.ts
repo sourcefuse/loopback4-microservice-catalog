@@ -9,8 +9,6 @@ import {
   sinon,
   StubbedInstanceWithSinonAccessor,
 } from '@loopback/testlab';
-
-import {Context} from '@loopback/core';
 import {AnyObject, Filter} from '@loopback/repository';
 import {AuditController} from '../../controllers';
 import {FileStatusKey} from '../../enums/file-status-key.enum';
@@ -33,7 +31,7 @@ let auditLogRepository: StubbedInstanceWithSinonAccessor<AuditLogRepository>;
 let jobRepository: StubbedInstanceWithSinonAccessor<JobRepository>;
 let jobProcessingService: StubbedInstanceWithSinonAccessor<JobProcessingService>;
 let mappingLogRepository: StubbedInstanceWithSinonAccessor<MappingLogRepository>;
-let context;
+
 let controller: AuditController;
 let app: DummyAuditServiceApplication;
 const setUpStub = () => {
@@ -47,10 +45,6 @@ const setUpStub = () => {
     .toProvider(AuditLogExportProvider);
   auditLogRepository = createStubInstance(AuditLogRepository);
   jobRepository = createStubInstance(JobRepository);
-  let getSyncStub = sinon.stub().returns(sinon.stub().resolves());
-  let context = {
-    getSync: getSyncStub,
-  } as unknown as Context;
   jobProcessingService = createStubInstance(JobProcessingService);
   mappingLogRepository = createStubInstance(MappingLogRepository);
   const columnBuilderProvider = new ColumnBuilderProvider();

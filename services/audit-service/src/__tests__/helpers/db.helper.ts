@@ -1,10 +1,7 @@
-import {Context} from '@loopback/core';
 import {AnyObject} from '@loopback/repository';
-import {sinon} from '@loopback/testlab';
 import {IAuthUserWithPermissions} from '@sourceloop/core';
 import {AuditController} from '../../controllers';
 import {PermissionKey} from '../../enums';
-import {AuditLogExportServiceBindings} from '../../keys';
 import {AuditLogExportProvider} from '../../providers';
 import {
   AuditLogRepository,
@@ -22,7 +19,6 @@ import {listMappingLogs} from '../sample-data/mapping-log';
 let auditLogRepository: AuditLogRepository; //NOSONAR
 let mappingLogRepository: MappingLogRepository; //NOSONAR
 let jobRepository: JobRepository; //NOSONAR
-let context: Context;
 
 const pass = 'test_password';
 const id = '9640864d-a84a-e6b4-f20e-918ff280cdaa';
@@ -72,17 +68,6 @@ export function getTestAuditController(app: DummyAuditServiceApplication) {
     auditLogExportParam = data;
     return Promise.resolve();
   };
-  let getSyncStub = sinon.stub().callsFake(key => {
-    if (key === AuditLogExportServiceBindings.EXPORT_AUDIT_LOGS) {
-      return sinon.stub().resolves(auditLogExport);
-    }
-
-    return undefined;
-  });
-
-  let context = {
-    getSync: getSyncStub,
-  } as unknown as Context;
 
   function getAuditLogExportParameter() {
     return auditLogExportParam;
