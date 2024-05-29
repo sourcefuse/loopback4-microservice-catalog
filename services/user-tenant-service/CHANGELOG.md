@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.1.0 (2024-05-20)
+
+* chore(all-services): sonar fixes (#2096) ([7f958bb](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7f958bb)), closes [#2096](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2096) [#2095](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2095)
+* feat(all-services): Follow solid for repositories in all services (#2072) ([82c934b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/82c934b)), closes [#2072](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2072) [#2037](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2037)
+* feat(user-tenant-service): add user webhook test cases (#2094) ([4a64aea](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4a64aea)), closes [#2094](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2094) [#5](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/5) [#5](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/5) [#5](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/5)
+* feat(user-tenant-service): add user webhook to seed data in db (#2093) ([2c6277c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2c6277c)), closes [#2093](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2093) [#5](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/5)
+
+
+
+
+
 ## 2.0.0 (2024-05-07)
 
 * feat(all-services): update core package in all services (#2091) ([8b1703f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8b1703f)), closes [#2091](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2091) [#2077](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2077) [#2077](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2077)
