@@ -11,8 +11,8 @@ import {SequelizeDataSource} from '@loopback/sequelize';
 import {AuditDbSourceName} from '@sourceloop/audit-log';
 import * as path from 'path';
 import {AuditServiceComponent} from '../../component';
+import {AuditLogExportProvider} from '../../exporter';
 import {AuditLogExportServiceBindings, AuditServiceBindings} from '../../keys';
-import {AuditLogExportProvider} from '../../providers';
 
 export {ApplicationConfig};
 

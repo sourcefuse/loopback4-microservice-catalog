@@ -2,6 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {AnyObject, Filter} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {
   createStubInstance,
@@ -9,12 +10,12 @@ import {
   sinon,
   StubbedInstanceWithSinonAccessor,
 } from '@loopback/testlab';
-import {AnyObject, Filter} from '@loopback/repository';
 import {AuditController} from '../../controllers';
 import {FileStatusKey} from '../../enums/file-status-key.enum';
 import {AuditLogExportServiceBindings} from '../../keys';
 import {AuditLog, Job} from '../../models/tenant-support';
-import {AuditLogExportProvider} from '../../providers';
+
+import {AuditLogExportProvider} from '../../exporter';
 import {
   AuditLogRepository,
   JobRepository,

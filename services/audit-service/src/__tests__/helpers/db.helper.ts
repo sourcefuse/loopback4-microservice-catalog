@@ -2,7 +2,7 @@ import {AnyObject} from '@loopback/repository';
 import {IAuthUserWithPermissions} from '@sourceloop/core';
 import {AuditController} from '../../controllers';
 import {PermissionKey} from '../../enums';
-import {AuditLogExportProvider} from '../../providers';
+import {AuditLogExportProvider} from '../../exporter';
 import {
   AuditLogRepository,
   JobRepository,
