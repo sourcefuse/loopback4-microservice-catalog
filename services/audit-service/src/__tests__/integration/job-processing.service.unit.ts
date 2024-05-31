@@ -2,7 +2,10 @@ import {juggler} from '@loopback/repository';
 import {expect, sinon} from '@loopback/testlab';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {FileStatusKey} from '../../enums/file-status-key.enum';
+import {AuditLogExportServiceBindings} from '../../keys';
 import {Job} from '../../models';
+
+import {AuditLogExportProvider} from '../../exporter';
 import {DummyAuditServiceApplication} from '../fixtures/dummy-application';
 import {
   getTestJobProcessingService,
@@ -34,7 +37,9 @@ describe('job processing service', () => {
       connector: 'memory',
     });
     app.bind(AuthenticationBindings.CURRENT_USER).to(testUser);
-
+    app
+      .bind(AuditLogExportServiceBindings.EXPORT_AUDIT_LOGS)
+      .toProvider(AuditLogExportProvider);
     app.dataSource(ds);
 
     await app.boot();

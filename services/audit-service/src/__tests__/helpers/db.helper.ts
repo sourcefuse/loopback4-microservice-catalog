@@ -2,16 +2,13 @@ import {AnyObject} from '@loopback/repository';
 import {IAuthUserWithPermissions} from '@sourceloop/core';
 import {AuditController} from '../../controllers';
 import {PermissionKey} from '../../enums';
+import {AuditLogExportProvider} from '../../exporter';
 import {
   AuditLogRepository,
   JobRepository,
   MappingLogRepository,
 } from '../../repositories/index';
-import {
-  AuditLogExportProvider,
-  JobProcessingService,
-  QuerySelectedFilesProvider,
-} from '../../services';
+import {JobProcessingService, QuerySelectedFilesProvider} from '../../services';
 import {AuditLogExportFn, ExportHandlerFn, ExportToCsvFn} from '../../types';
 import {connector} from '../fixtures/datasources/db.datasource';
 import {DummyAuditServiceApplication} from '../fixtures/dummy-application';
@@ -74,12 +71,10 @@ export function getTestAuditController(app: DummyAuditServiceApplication) {
     Promise.resolve('demoResponse');
   const {jobProcessingService} = getTestJobProcessingService(app);
   const columnBuilderProvider = new ColumnBuilderProvider();
-
   const auditLogExport: AuditLogExportFn = (data: AnyObject[]) => {
     auditLogExportParam = data;
     return Promise.resolve();
   };
-
   const auditLogController = new AuditController(
     auditLogRepository,
     jobRepository,
