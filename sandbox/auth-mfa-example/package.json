@@ -7,6 +7,7 @@
     "loopback"
   ],
   "main": "dist/index.js",
+  "private": true,
   "types": "dist/index.d.ts",
   "engines": {
     "node": ">=18"
@@ -46,7 +47,7 @@
     "type": "git",
     "url": ""
   },
-  "author": "arpit1503khanna<arpit.khanna@sourcefuse.com>",
+  "author": "Sourcefuse",
   "license": "MIT",
   "files": [
     "README.md",
@@ -81,7 +82,7 @@
     "loopback-connector-postgresql": "^7.0.4",
     "loopback-connector-kv-redis": "^4.0.0",
     "tslib": "^2.6.2",
-    "@sourceloop/authentication-service": "^18.1.0"
+    "@sourceloop/authentication-service": "^19.1.1"
   },
   "devDependencies": {
     "@loopback/build": "^11.0.0",

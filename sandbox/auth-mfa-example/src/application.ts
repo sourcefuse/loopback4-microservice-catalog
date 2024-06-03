@@ -10,9 +10,7 @@ import {ServiceMixin} from '@loopback/service-proxy';
 import {
   AuthServiceBindings,
   AuthenticationServiceComponent,
-  GoogleAuthenticatorVerifyProvider,
   OtpMethodType,
-  ResourceOwnerVerifyProvider,
   VerifyBindings,
 } from '@sourceloop/authentication-service';
 import {
@@ -23,8 +21,6 @@ import {
   SECURITY_SCHEME_SPEC,
   SFCoreBindings,
   ServiceSequence,
-  TenantGuardService,
-  TenantUtilitiesBindings,
 } from '@sourceloop/core';
 import * as dotenv from 'dotenv';
 import * as dotenvExt from 'dotenv-extended';
@@ -35,7 +31,6 @@ import {
 } from 'loopback4-authentication';
 import {LocalPasswordStrategyFactoryProvider} from 'loopback4-authentication/passport-local';
 import {PassportOtpStrategyFactoryProvider} from 'loopback4-authentication/passport-otp';
-import {ResourceOwnerPasswordStrategyFactoryProvider} from 'loopback4-authentication/passport-resource-owner-password';
 import {
   AuthorizationBindings,
   AuthorizationComponent,
@@ -89,11 +84,28 @@ export class AuthenticationApplication extends BootMixin(
 
     // Set up the custom sequence
     this.sequence(ServiceSequence);
+   
+    this.bind(AuthServiceBindings.MfaConfig).to({
+      secondFactor: STRATEGY.OTP,
+    });
+    //This binding is for having Google MFA
+    this.bind(AuthServiceBindings.OtpConfig).to({
+      method: OtpMethodType.GOOGLE_AUTHENTICATOR,
+    });
+    // This binding is to have MFA authentication
+
+    this.bind(Strategies.Passport.LOCAL_STRATEGY_FACTORY.key).toProvider(
+      LocalPasswordStrategyFactoryProvider,
+    );
+
+    this.bind(Strategies.Passport.OTP_AUTH_STRATEGY_FACTORY.key).toProvider(
+      PassportOtpStrategyFactoryProvider,
+    );
 
     // Add authentication component
     this.component(AuthenticationComponent);
     this.component(AuthenticationServiceComponent);
-
+    this.bind(VerifyBindings.MFA_PROVIDER.key).toProvider(MfaProvider);
     // Add bearer verifier component
     this.bind(BearerVerifierBindings.Config).to({
       type: BearerVerifierType.service,
@@ -113,36 +125,7 @@ export class AuthenticationApplication extends BootMixin(
       path: '/explorer',
     });
 
-    this.bind(TenantUtilitiesBindings.GuardService).toClass(TenantGuardService);
-
     //This binding is for having OTP authentication
-    this.bind(AuthServiceBindings.MfaConfig).to({
-      secondFactor: STRATEGY.OTP,
-    });
-    //This binding is for having Google MFA
-    this.bind(AuthServiceBindings.OtpConfig).to({
-      method: OtpMethodType.GOOGLE_AUTHENTICATOR,
-    });
-    // This binding is to have MFA authentication
-    this.bind(VerifyBindings.MFA_PROVIDER.key).toProvider(MfaProvider);
-
-    this.bind(Strategies.Passport.LOCAL_STRATEGY_FACTORY.key).toProvider(
-      LocalPasswordStrategyFactoryProvider,
-    );
-    this.bind(
-      Strategies.Passport.RESOURCE_OWNER_STRATEGY_FACTORY.key,
-    ).toProvider(ResourceOwnerPasswordStrategyFactoryProvider);
-    this.bind(
-      Strategies.Passport.RESOURCE_OWNER_PASSWORD_VERIFIER.key,
-    ).toProvider(ResourceOwnerVerifyProvider);
-
-    this.bind(Strategies.Passport.OTP_AUTH_STRATEGY_FACTORY.key).toProvider(
-      PassportOtpStrategyFactoryProvider,
-    );
-    // This binding is to ensure the generated token is verified by google
-    this.bind(Strategies.Passport.OTP_VERIFIER.key).toProvider(
-      GoogleAuthenticatorVerifyProvider,
-    );
 
     this.component(RestExplorerComponent);
 
