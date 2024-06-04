@@ -25,5 +25,5 @@ export class OtpLoginRequest extends CoreModel<OtpLoginRequest> {
   @property({
     type: 'string',
   })
-  clientId: string | undefined;
+  clientId?: string;
 }

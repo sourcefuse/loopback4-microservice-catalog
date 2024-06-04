@@ -219,7 +219,7 @@ If `includeArchivedLogs` option is set to `false` (which is default if not provi
 ### Export Logs
 
 This feature is used to export the logs present in Audit Database or the archive storage(eg. AWS.S3). A default loopback filter is accepted based on which logs are exported to the desired location as specified as an excel file(by default) using `AuditLogExportProvider` [here](src/providers/audit-log-export.service.ts).
-The exceljs dependency, used by the `AuditLogExportProvider` for generating Excel files, is optional. Users who wish to utilize this feature should manually install exceljs and bind the AuditLogExportProvider in the application.ts file of your application:
+The exceljs dependency, used by the `AuditLogExportProvider` for generating Excel files, is optional. Users who wish to utilize this feature should manually install exceljs and bind the AuditLogExportProvider in the application.ts of your application:
 
 ```ts
 this.bind(AuditLogExportServiceBindings.EXPORT_AUDIT_LOGS).toProvider(
