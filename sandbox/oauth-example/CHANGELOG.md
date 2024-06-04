@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.5.1 (2024-06-04)</small>
+
+**Note:** Version bump only for package @sourceloop/oauth-example-api
+
+
+
+
+
 ## 0.5.0 (2024-05-20)
 
 * feat(all-services): Follow solid for repositories in all services (#2072) ([82c934b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/82c934b)), closes [#2072](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2072) [#2037](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2037)

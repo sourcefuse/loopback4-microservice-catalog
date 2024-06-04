@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 14.0.0 (2024-06-04)
+
+* feat(audit-service): bump major version (#2103) ([085db87](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/085db87)), closes [#2103](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2103) [#2088](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2088)
+* fix(audit-service): make exceljs dependency optional (#2097) ([f1cdbf4](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f1cdbf4)), closes [#2097](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2097) [#2088](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2088) [#2088](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2088) [#2088](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2088) [#2088](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2088) [#2088](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2088) [#2088](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2088)
+
+
+### BREAKING CHANGE
+
+* auditexportlogprovider and its exceljs deps is made optional by providing separate export path in packagejson file.
+
+
+
+
 ## 13.0.0 (2024-05-07)
 
 * feat(all-services): update core package in all services (#2091) ([8b1703f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8b1703f)), closes [#2091](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2091) [#2077](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2077) [#2077](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2077)
