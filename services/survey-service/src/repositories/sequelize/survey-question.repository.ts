@@ -1,14 +1,15 @@
 import {Getter, inject} from '@loopback/core';
 import {BelongsToAccessor, repository} from '@loopback/repository';
-import {SequelizeDataSource} from '@loopback/sequelize';
 import {IAuthUserWithPermissions, ILogger, LOGGER} from '@sourceloop/core';
-import {SequelizeUserModifyCrudRepository} from '@sourceloop/core/sequelize';
-import {AuthenticationBindings} from 'loopback4-authentication';
-import {Question, Section, Survey, SurveyQuestion} from '../../models';
-import {SurveyDbSourceName} from '../../types';
+import {Question, Survey, SurveyQuestion, Section} from '../../models';
 import {QuestionRepository} from './questions.repository';
-import {SectionRepository} from './section.repository';
 import {SurveyRepository} from './survey.repository';
+import {SurveyDbSourceName} from '../../types';
+import {SectionRepository} from './section.repository';
+import {HttpErrors} from '@loopback/rest';
+import {AuthenticationBindings} from 'loopback4-authentication';
+import {SequelizeUserModifyCrudRepository} from '@sourceloop/core/sequelize';
+import {SequelizeDataSource} from '@loopback/sequelize';
 
 export class SurveyQuestionRepository extends SequelizeUserModifyCrudRepository<
   SurveyQuestion,
@@ -73,5 +74,31 @@ export class SurveyQuestionRepository extends SequelizeUserModifyCrudRepository<
       'dependentOnQuestion',
       this.dependentOnQuestion.inclusionResolver,
     );
+  }
+
+  async reorder(surveyId: string, displayOrder: number) {
+    this._updateSurveyModifiedByAndOn(surveyId).catch(err =>
+      this.logger.error(JSON.stringify(err)),
+    );
+    const parameters = [surveyId, displayOrder];
+    const query = `
+      UPDATE survey_questions
+      SET display_order = display_order + 1 
+      WHERE survey_id = ? AND display_order >= ?`;
+    this.execute(query, parameters)
+      .then()
+      .catch(err => Promise.reject(err));
+  }
+
+  async _updateSurveyModifiedByAndOn(surveyId: string) {
+    try {
+      const surveyRepository = await this.surveyRepositoryGetter();
+
+      await surveyRepository.updateById(surveyId, {
+        id: surveyId,
+      });
+    } catch (err) {
+      throw new HttpErrors.InternalServerError(err);
+    }
   }
 }

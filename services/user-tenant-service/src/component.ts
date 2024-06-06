@@ -103,7 +103,6 @@ import {
 import {
   TenantOperationsService,
   UserGroupService,
-  UserHelperService,
   UserOperationsService,
   UserWebhookHelperService,
 } from './services';
@@ -141,7 +140,6 @@ export class UserTenantServiceComponent implements Component {
     this.bindings = [
       createServiceBinding(UserGroupService),
       createServiceBinding(UserOperationsService),
-      createServiceBinding(UserHelperService),
       createServiceBinding(TenantOperationsService),
       createServiceBinding(UserWebhookHelperService),
       Binding.bind(UserTenantServiceKey.GroupTenantInterceptor).toProvider(

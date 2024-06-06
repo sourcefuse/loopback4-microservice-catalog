@@ -3,7 +3,6 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {inject} from '@loopback/context';
-import {service} from '@loopback/core';
 import {
   getModelSchemaRef,
   param,
@@ -40,7 +39,6 @@ import {
   MessageRepository,
   ThreadRepository,
 } from '../repositories';
-import {MessageHelperService, ThreadHelperService} from '../services';
 import {
   PartyTypeMarker,
   PermissionsEnums,
@@ -117,10 +115,6 @@ export class OriginatorController {
     public attachmentRepository: AttachmentRepository,
     @inject(AuthenticationBindings.CURRENT_USER)
     public user: IAuthUserWithPermissions,
-    @service(ThreadHelperService)
-    private readonly threadHelperService: ThreadHelperService,
-    @service(MessageHelperService)
-    private readonly messageHelperService: MessageHelperService,
   ) {}
   getInMailIdentifierType(type: string | undefined): string {
     return String(type === 'user' ? this.user.id : this.user.email);
@@ -178,7 +172,7 @@ export class OriginatorController {
         'Please add atlease one receipient in a group',
       );
     }
-    const thread = await this.threadHelperService.incrementOrCreate(threadId, {
+    const thread = await this.threadRepository.incrementOrCreate(threadId, {
       subject,
       extId,
       extMetadata,
@@ -232,7 +226,7 @@ export class OriginatorController {
           m.extMetadata = extMetadata;
         });
       }
-      const mail = await this.messageHelperService.createRelational({
+      const mail = await this.messageRepository.createRelational({
         sender:
           process.env.INMAIL_IDENTIFIER_TYPE === 'user'
             ? this.user.id

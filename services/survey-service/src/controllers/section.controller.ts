@@ -4,14 +4,14 @@ import {
   CountSchema,
   Filter,
   FilterExcludingWhere,
-  Where,
   repository,
+  Where,
 } from '@loopback/repository';
 import {
-  HttpErrors,
   del,
   get,
   getModelSchemaRef,
+  HttpErrors,
   param,
   patch,
   post,
@@ -19,13 +19,12 @@ import {
   response,
 } from '@loopback/rest';
 import {CONTENT_TYPE, ILogger, LOGGER, STATUS_CODE} from '@sourceloop/core';
-import {STRATEGY, authenticate} from 'loopback4-authentication';
+import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../enum/permission-key.enum';
 import {Section} from '../models';
 import {SectionRepository} from '../repositories/section.repository';
 import {SurveyQuestionRepository} from '../repositories/survey-question.repository';
-import {SectionHelperService} from '../services';
 import {SectionService} from '../services/section.service';
 const basePath = '/surveys/{surveyId}/sections';
 
@@ -37,8 +36,6 @@ export class SectionController {
     public surveyQuestionRepository: SurveyQuestionRepository,
     @service(SectionService)
     public sectionService: SectionService,
-    @service(SectionHelperService)
-    public sectionHelperService: SectionHelperService,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
   ) {}
 
@@ -170,7 +167,7 @@ export class SectionController {
 
     // so that these parameters can not be passed in request body
     section.surveyId = surveyId;
-    const updatedCount = await this.sectionHelperService.updateAll(section, {
+    const updatedCount = await this.sectionRepository.updateAll(section, {
       id,
       surveyId,
     });

@@ -1,5 +1,4 @@
 import {inject, Provider} from '@loopback/context';
-import {service} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {
@@ -14,14 +13,11 @@ import {
 } from '@sourceloop/authentication-service';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {RoleRepository} from '../repositories';
-import {UserHelperService} from '../services/user-helper.service';
 
 export class SamlSignupProvider implements Provider<SamlSignUpFn> {
   constructor(
     @repository(UserRepository)
     public userRepository: UserRepository,
-    @service(UserHelperService)
-    private readonly userHelperService: UserHelperService,
     @repository(TenantRepository)
     public tenantRepository: TenantRepository,
     @repository(UserCredentialsRepository)
@@ -67,7 +63,7 @@ export class SamlSignupProvider implements Provider<SamlSignUpFn> {
       if (userExists) {
         throw new HttpErrors.BadRequest('User already exists');
       }
-      const user = await this.userHelperService.createWithoutPassword({
+      const user = await this.userRepo.createWithoutPassword({
         username: profile.email,
         firstName: String(profile.first_name),
         lastName: String(profile.last_name),

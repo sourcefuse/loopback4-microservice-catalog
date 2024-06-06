@@ -16,10 +16,8 @@ import {
   MessageRepository,
   ThreadRepository,
 } from '../../repositories';
-import {MessageHelperService, ThreadHelperService} from '../../services';
 import {PartyTypeMarker, StorageMarker, VisibilityMarker} from '../../types';
 import {
-  attachment,
   getSampleDataWithOutGroup,
   getSampleMailData,
   group,
@@ -28,6 +26,7 @@ import {
   thread,
   transactionStub,
   user,
+  attachment,
 } from './sample-data';
 const sampleMessageId = 'sample-message-id';
 const sampleExtId = 'sample-ext-id';
@@ -41,35 +40,29 @@ let messageRepository: StubbedInstanceWithSinonAccessor<MessageRepository>;
 let threadRepository: StubbedInstanceWithSinonAccessor<ThreadRepository>;
 let groupRepository: StubbedInstanceWithSinonAccessor<GroupRepository>;
 let attachmentRepository: StubbedInstanceWithSinonAccessor<AttachmentRepository>;
-let threadHelperService: StubbedInstanceWithSinonAccessor<ThreadHelperService>;
-let messageHelperService: StubbedInstanceWithSinonAccessor<MessageHelperService>;
 let controller: OriginatorController;
 const setUpStub = () => {
   messageRepository = createStubInstance(MessageRepository);
   threadRepository = createStubInstance(ThreadRepository);
   groupRepository = createStubInstance(GroupRepository);
   attachmentRepository = createStubInstance(AttachmentRepository);
-  threadHelperService = createStubInstance(ThreadHelperService);
-  messageHelperService = createStubInstance(MessageHelperService);
   controller = new OriginatorController(
     messageRepository,
     threadRepository,
     groupRepository,
     attachmentRepository,
     user,
-    threadHelperService,
-    messageHelperService,
   );
 };
 describe('originatorcontroller(unit) as', () => {
   describe('POST /mails', () => {
     it('compose a mail with attachments and meta-data', async () => {
       setUpStub();
-      const threadCreate = threadHelperService.stubs.incrementOrCreate;
+      const threadCreate = threadRepository.stubs.incrementOrCreate;
       threadCreate.resolves(thread);
       const transaction = messageRepository.stubs.beginTransaction;
       transaction.resolves(transactionStub);
-      const mailStub = messageHelperService.stubs.createRelational;
+      const mailStub = messageRepository.stubs.createRelational;
       mailStub.resolves(message);
       const controllerResult = await controller.composeMail(getSampleMailData);
       // eslint-disable-next-line no-unused-expressions

@@ -3,13 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-import {
-  BindingScope,
-  Getter,
-  inject,
-  injectable,
-  service,
-} from '@loopback/core';
+import {BindingScope, Getter, inject, injectable} from '@loopback/core';
 import {Filter, WhereBuilder, repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {
@@ -30,7 +24,6 @@ import {
   UserTenantRepository,
   UserViewRepository,
 } from '../repositories';
-import {UserHelperService} from './user-helper.service';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class UserOperationsService {
@@ -44,8 +37,6 @@ export class UserOperationsService {
     readonly userGroupRepository: UserGroupRepository,
     @repository(UserTenantRepository)
     readonly userTenantRepository: UserTenantRepository,
-    @service(UserHelperService)
-    readonly userHelperService: UserHelperService,
     @inject.getter(AuthenticationBindings.CURRENT_USER)
     readonly getCurrentUser: Getter<IAuthUserWithPermissions>,
     @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
@@ -84,7 +75,7 @@ export class UserOperationsService {
       ).join()}}`;
       userDtoData.defaultTenantId = tenantId;
 
-      userToReturn = await this.userHelperService.create({
+      userToReturn = await this.userRepository.create({
         firstName: userDtoData.firstName,
         lastName: userDtoData.lastName,
         middleName: userDtoData.middleName,

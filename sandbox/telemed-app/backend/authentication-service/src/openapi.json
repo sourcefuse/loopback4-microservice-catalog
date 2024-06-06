@@ -10,58 +10,6 @@
     }
   },
   "paths": {
-    "/active-users/{range}": {
-      "get": {
-        "x-controller-name": "LoginActivityController",
-        "x-operation-name": "getActiveUsers",
-        "tags": [
-          "LoginActivityController"
-        ],
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "LoginActivity model instance",
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            }
-          }
-        },
-        "description": "\n\n| Permissions |\n| ------- |\n| ViewLoginActivity   |\n",
-        "parameters": [
-          {
-            "name": "range",
-            "in": "path",
-            "schema": {
-              "type": "string"
-            },
-            "required": true
-          },
-          {
-            "name": "startDate",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "format": "date-time"
-            }
-          },
-          {
-            "name": "endDate",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "format": "date-time"
-            }
-          }
-        ],
-        "operationId": "LoginActivityController.getActiveUsers"
-      }
-    },
     "/audit-logs/count": {
       "get": {
         "x-controller-name": "AuditLogsController",
@@ -1377,16 +1325,16 @@
         "operationId": "SamlLoginController.postLoginViaSaml"
       }
     },
-    "/auth/saml-redirect": {
-      "post": {
+    "/auth/saml-auth-redirect": {
+      "get": {
         "x-controller-name": "SamlLoginController",
-        "x-operation-name": "oktaSamlCallback",
+        "x-operation-name": "samlCallback",
         "tags": [
           "SamlLoginController"
         ],
         "responses": {
           "200": {
-            "description": "okta auth callback",
+            "description": "Saml Redirect Token Response",
             "content": {
               "application/json": {
                 "schema": {
@@ -1399,24 +1347,28 @@
         "description": "",
         "parameters": [
           {
-            "name": "client",
+            "name": "code",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "session_state",
             "in": "query",
             "schema": {
               "type": "string"
             }
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/x-www-form-urlencoded": {
-              "schema": {
-                "type": "object"
-              }
-            }
-          },
-          "x-parameter-index": 1
-        },
-        "operationId": "SamlLoginController.oktaSamlCallback"
+        "operationId": "SamlLoginController.samlCallback"
       }
     },
     "/auth/send-otp": {
@@ -1574,55 +1526,6 @@
         },
         "description": "",
         "operationId": "SignupRequestController.verifyInviteToken"
-      }
-    },
-    "/auth/switch-token": {
-      "post": {
-        "x-controller-name": "LoginController",
-        "x-operation-name": "switchToken",
-        "tags": [
-          "LoginController"
-        ],
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "description": "To switch the access-token",
-        "responses": {
-          "200": {
-            "description": "Switch access token with the tenant id provided.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TokenResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "The syntax of the request entity is incorrect."
-          },
-          "401": {
-            "description": "Invalid Credentials."
-          },
-          "404": {
-            "description": "The entity requested does not exist."
-          },
-          "422": {
-            "description": "The syntax of the request entity is incorrect"
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AuthRefreshTokenRequest"
-              }
-            }
-          }
-        },
-        "operationId": "LoginController.switchToken"
       }
     },
     "/auth/token": {
@@ -1798,66 +1701,6 @@
         "operationId": "ForgetPasswordController.verifyResetPasswordLink"
       }
     },
-    "/google/logout": {
-      "post": {
-        "x-controller-name": "LogoutController",
-        "x-operation-name": "googleLogout",
-        "tags": [
-          "LogoutController"
-        ],
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "description": "This API will log out the user from application as well as google",
-        "responses": {
-          "200": {
-            "description": "Success Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SuccessResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "The syntax of the request entity is incorrect."
-          },
-          "401": {
-            "description": "Invalid Credentials."
-          },
-          "404": {
-            "description": "The entity requested does not exist."
-          },
-          "422": {
-            "description": "The syntax of the request entity is incorrect"
-          }
-        },
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            },
-            "description": "This is the access token which is required to authenticate user."
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RefreshTokenRequestPartial"
-              }
-            }
-          },
-          "x-parameter-index": 1
-        },
-        "operationId": "LogoutController.googleLogout"
-      }
-    },
     "/keycloak/logout": {
       "post": {
         "x-controller-name": "LogoutController",
@@ -1916,143 +1759,6 @@
           "x-parameter-index": 1
         },
         "operationId": "LogoutController.keycloakLogout"
-      }
-    },
-    "/login-activity/count": {
-      "get": {
-        "x-controller-name": "LoginActivityController",
-        "x-operation-name": "count",
-        "tags": [
-          "LoginActivityController"
-        ],
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "LoginActivity model count",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/loopback.Count"
-                }
-              }
-            }
-          }
-        },
-        "description": "\n\n| Permissions |\n| ------- |\n| ViewLoginActivity   |\n",
-        "parameters": [
-          {
-            "name": "where",
-            "in": "query",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "title": "login_activity.WhereFilter",
-                  "additionalProperties": true,
-                  "x-typescript-type": "@loopback/repository#Where<LoginActivity>"
-                }
-              }
-            }
-          }
-        ],
-        "operationId": "LoginActivityController.count"
-      }
-    },
-    "/login-activity/{id}": {
-      "get": {
-        "x-controller-name": "LoginActivityController",
-        "x-operation-name": "findById",
-        "tags": [
-          "LoginActivityController"
-        ],
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "LoginActivity model instance",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoginActivityWithRelations"
-                }
-              }
-            }
-          }
-        },
-        "description": "\n\n| Permissions |\n| ------- |\n| ViewLoginActivity   |\n",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "schema": {
-              "type": "string"
-            },
-            "required": true
-          },
-          {
-            "name": "filter",
-            "in": "query",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/login_activity.Filter"
-                }
-              }
-            }
-          }
-        ],
-        "operationId": "LoginActivityController.findById"
-      }
-    },
-    "/login-activity": {
-      "get": {
-        "x-controller-name": "LoginActivityController",
-        "x-operation-name": "find",
-        "tags": [
-          "LoginActivityController"
-        ],
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Array of LoginActivity model instances",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/LoginActivityWithRelations"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "description": "\n\n| Permissions |\n| ------- |\n| ViewLoginActivity   |\n",
-        "parameters": [
-          {
-            "name": "filter",
-            "in": "query",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/login_activity.Filter"
-                }
-              }
-            }
-          }
-        ],
-        "operationId": "LoginActivityController.find"
       }
     },
     "/logout": {
@@ -2251,9 +1957,6 @@
         "type": "object",
         "properties": {
           "refreshToken": {
-            "type": "string"
-          },
-          "tenantId": {
             "type": "string"
           }
         },
@@ -2574,40 +2277,6 @@
         ],
         "additionalProperties": false
       },
-      "LoginActivityWithRelations": {
-        "title": "LoginActivityWithRelations",
-        "type": "object",
-        "description": "This is to maintain the daily login activity. (tsType: LoginActivityWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "actor": {
-            "type": "string"
-          },
-          "tenantId": {
-            "type": "string"
-          },
-          "loginTime": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "tokenPayload": {
-            "type": "string"
-          },
-          "loginType": {
-            "type": "string"
-          },
-          "deviceInfo": {
-            "type": "string"
-          },
-          "ipAddress": {
-            "type": "string"
-          }
-        },
-        "additionalProperties": false
-      },
-      "Date": {},
       "AuditLog": {
         "title": "AuditLog",
         "type": "object",
@@ -2946,98 +2615,6 @@
         },
         "additionalProperties": false,
         "x-typescript-type": "@loopback/repository#Filter<AuditLog>"
-      },
-      "login_activity.Filter": {
-        "type": "object",
-        "title": "login_activity.Filter",
-        "properties": {
-          "offset": {
-            "type": "integer",
-            "minimum": 0
-          },
-          "limit": {
-            "type": "integer",
-            "minimum": 1,
-            "example": 100
-          },
-          "skip": {
-            "type": "integer",
-            "minimum": 0
-          },
-          "order": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              }
-            ]
-          },
-          "where": {
-            "title": "login_activity.WhereFilter",
-            "type": "object",
-            "additionalProperties": true
-          },
-          "fields": {
-            "oneOf": [
-              {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "boolean"
-                  },
-                  "actor": {
-                    "type": "boolean"
-                  },
-                  "tenantId": {
-                    "type": "boolean"
-                  },
-                  "loginTime": {
-                    "type": "boolean"
-                  },
-                  "tokenPayload": {
-                    "type": "boolean"
-                  },
-                  "loginType": {
-                    "type": "boolean"
-                  },
-                  "deviceInfo": {
-                    "type": "boolean"
-                  },
-                  "ipAddress": {
-                    "type": "boolean"
-                  }
-                },
-                "additionalProperties": false
-              },
-              {
-                "type": "array",
-                "items": {
-                  "type": "string",
-                  "enum": [
-                    "id",
-                    "actor",
-                    "tenantId",
-                    "loginTime",
-                    "tokenPayload",
-                    "loginType",
-                    "deviceInfo",
-                    "ipAddress"
-                  ],
-                  "example": "id"
-                },
-                "uniqueItems": true
-              }
-            ],
-            "title": "login_activity.Fields"
-          }
-        },
-        "additionalProperties": false,
-        "x-typescript-type": "@loopback/repository#Filter<LoginActivity>"
       },
       "PingResponse": {
         "type": "object",

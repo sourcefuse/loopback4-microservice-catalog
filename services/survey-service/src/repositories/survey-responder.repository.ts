@@ -1,19 +1,26 @@
+import {SurveyCycleRepository} from './survey-cycle.repository';
+import {SurveyRepository} from './survey.repository';
 import {Getter, inject} from '@loopback/core';
-import {BelongsToAccessor, juggler, repository} from '@loopback/repository';
 import {
-  DefaultUserModifyCrudRepository,
-  IAuthUserWithPermissions,
-} from '@sourceloop/core';
-import {AuthenticationBindings} from 'loopback4-authentication';
-import {SurveyCycle} from '../models/survey-cycle.model';
+  repository,
+  BelongsToAccessor,
+  DataObject,
+  Options,
+  juggler,
+} from '@loopback/repository';
+import {HttpErrors} from '@loopback/rest';
 import {
   SurveyResponder,
   SurveyResponderRelations,
 } from '../models/survey-responder.model';
-import {Survey} from '../models/survey.model';
 import {SurveyDbSourceName} from '../types';
-import {SurveyCycleRepository} from './survey-cycle.repository';
-import {SurveyRepository} from './survey.repository';
+import {
+  DefaultUserModifyCrudRepository,
+  IAuthUserWithPermissions,
+} from '@sourceloop/core';
+import {Survey} from '../models/survey.model';
+import {SurveyCycle} from '../models/survey-cycle.model';
+import {AuthenticationBindings} from 'loopback4-authentication';
 
 export class SurveyResponderRepository extends DefaultUserModifyCrudRepository<
   SurveyResponder,
@@ -53,5 +60,20 @@ export class SurveyResponderRepository extends DefaultUserModifyCrudRepository<
       surveyRepositoryGetter,
     );
     this.registerInclusionResolver('survey', this.survey.inclusionResolver);
+  }
+
+  async create(
+    entity: DataObject<SurveyResponder>,
+    options?: Options | undefined,
+  ): Promise<SurveyResponder> {
+    const existingResponderCount = await super.count({
+      surveyCycleId: entity.surveyCycleId,
+      surveyId: entity.surveyId,
+      email: entity.email,
+    });
+    if (existingResponderCount.count) {
+      throw new HttpErrors.BadRequest('Responder Already Added');
+    }
+    return super.create(entity);
   }
 }

@@ -17,8 +17,7 @@ import {
   MessageRepository,
   ThreadRepository,
 } from '../../repositories';
-import {MessageHelperService, ThreadHelperService} from '../../services';
-import {getSampleMailData, group, message, thread, user} from './sample-data';
+import {getSampleMailData, user, message, group, thread} from './sample-data';
 const sampleMessageId = 'sample-message-id';
 const sampleThreadId = 'sample-thread-id';
 async function commit() {
@@ -41,24 +40,18 @@ let messageRepository: StubbedInstanceWithSinonAccessor<MessageRepository>;
 let threadRepository: StubbedInstanceWithSinonAccessor<ThreadRepository>;
 let groupRepository: StubbedInstanceWithSinonAccessor<GroupRepository>;
 let attachmentRepository: StubbedInstanceWithSinonAccessor<AttachmentRepository>;
-let threadHelperService: StubbedInstanceWithSinonAccessor<ThreadHelperService>;
-let messageHelperService: StubbedInstanceWithSinonAccessor<MessageHelperService>;
 let replyController: ReplyAndForwardController;
 const setUpStub = () => {
   messageRepository = createStubInstance(MessageRepository);
   threadRepository = createStubInstance(ThreadRepository);
   groupRepository = createStubInstance(GroupRepository);
   attachmentRepository = createStubInstance(AttachmentRepository);
-  threadHelperService = createStubInstance(ThreadHelperService);
-  messageHelperService = createStubInstance(MessageHelperService);
   replyController = new ReplyAndForwardController(
     messageRepository,
     threadRepository,
     groupRepository,
     attachmentRepository,
     user,
-    threadHelperService,
-    messageHelperService,
   );
 };
 describe('replyController(unit) as', () => {
@@ -81,7 +74,7 @@ describe('replyController(unit) as', () => {
       const messageTransactionStub = messageRepository.stubs.beginTransaction;
       messageTransactionStub.resolves(transaction);
       const messageCreateRelationalStub =
-        messageHelperService.stubs.createRelational;
+        messageRepository.stubs.createRelational;
       messageCreateRelationalStub.resolves(message);
       const groupFind = groupRepository.stubs.execute;
       groupFind.resolves([group]);
@@ -108,14 +101,14 @@ describe('replyController(unit) as', () => {
       setUpStub();
       const threadCreateMulti = threadRepository.stubs.findOne;
       threadCreateMulti.resolves(thread);
-      const threadCreate = threadHelperService.stubs.incrementOrCreate;
+      const threadCreate = threadRepository.stubs.incrementOrCreate;
       threadCreate.resolves(thread);
       const messageFindOneStub = messageRepository.stubs.create;
       messageFindOneStub.resolves(message);
       const messageTransactionStub = messageRepository.stubs.beginTransaction;
       messageTransactionStub.resolves(transaction);
       const messageCreateRelationalStub =
-        messageHelperService.stubs.createRelational;
+        messageRepository.stubs.createRelational;
       messageCreateRelationalStub.resolves(message);
       const groupFind = groupRepository.stubs.execute;
       groupFind.resolves([group]);

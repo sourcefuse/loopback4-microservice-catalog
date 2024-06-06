@@ -15,7 +15,6 @@ import {
   UserRepository,
   UserTenantRepository,
 } from '../../repositories';
-import {UserHelperService} from '../../services';
 import {TestingApplication} from '../fixtures/application';
 import {setupApplication} from './test-helper';
 
@@ -23,7 +22,6 @@ describe('OTP Controller', () => {
   let app: TestingApplication;
   let client: Client;
   let userRepo: UserRepository;
-  let userHelperService: UserHelperService;
   let userTenantRepo: UserTenantRepository;
   let authClientRepository: AuthClientRepository;
   let userPermissionRepository: UserLevelPermissionRepository;
@@ -34,7 +32,6 @@ describe('OTP Controller', () => {
   });
   after(async () => app.stop());
   before(givenUserRepository);
-  before(givenUserHelperService);
   before(givenUserTenantRepository);
   before(givenAuthClientRepository);
   before(givenUserPermissionRepository);
@@ -180,9 +177,6 @@ describe('OTP Controller', () => {
   async function givenUserRepository() {
     userRepo = await app.getRepository(UserRepository);
   }
-  async function givenUserHelperService() {
-    userHelperService = await app.get('services.userHelperService');
-  }
   async function givenUserTenantRepository() {
     userTenantRepo = await app.getRepository(UserTenantRepository);
   }
@@ -227,7 +221,7 @@ describe('OTP Controller', () => {
       },
     ]);
     process.env.USER_TEMP_PASSWORD = 'temp123!@';
-    await userHelperService.create({
+    await userRepo.create({
       id: '1',
       firstName: 'Test',
       lastName: 'User',
