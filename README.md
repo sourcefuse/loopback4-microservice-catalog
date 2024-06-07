@@ -37,7 +37,7 @@ From v5 onwards our cli now supports workspaces, transfering the responsibility 
 
 # ARC API
 
-ARC API (aka Sourceloop), is a collection of pre-built microservices designed to accelerate the development timeline for enterprise projects. These services address common challenges encountered by large enterprises during the development of cloud-native platforms for digital transformation initiatives or new product creation. Implemented as [LoopBack Extensions](https://loopback.io/doc/en/lb4/Extending-LoopBack-4.html), ARC API services can be seamlessly integrated into existing LoopBack or NestJS applications or generated as standalone services using the LoopBack Command-line interface.
+ARC API (aka Sourceloop), is a collection of pre-built microservices designed to accelerate the development timeline for enterprise projects. These services address common challenges encountered by large enterprises during the development of cloud-native platforms for digital transformation initiatives or new product creation.Implemented as [LoopBack Extensions](https://loopback.io/doc/en/lb4/Extending-LoopBack-4.html), ARC API services can be seamlessly integrated into existing LoopBack or NestJS applications or generated as standalone services using the LoopBack Command-line interface.
 
 > Watch our [introduction video](https://youtu.be/7_mReOx8RT0) to know more about ARC API.
 
