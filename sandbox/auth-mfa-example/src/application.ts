@@ -84,7 +84,7 @@ export class AuthenticationApplication extends BootMixin(
 
     // Set up the custom sequence
     this.sequence(ServiceSequence);
-   
+
     this.bind(AuthServiceBindings.MfaConfig).to({
       secondFactor: STRATEGY.OTP,
     });
