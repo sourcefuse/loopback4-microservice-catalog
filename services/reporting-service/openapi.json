@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "@sourceloop/reporting-service",
-    "version": "0.9.1",
+    "version": "0.8.2",
     "description": "reporting-service",
     "contact": {
       "name": "Sourav Bhargava",

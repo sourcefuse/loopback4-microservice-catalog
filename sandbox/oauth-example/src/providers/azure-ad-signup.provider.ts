@@ -3,7 +3,6 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {Provider} from '@loopback/context';
-import {service} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {
@@ -17,7 +16,6 @@ import {
   TenantRepository,
   UserRepository,
 } from '../repositories';
-import {UserHelperService} from '../services';
 
 export class AzureAdSignupProvider implements Provider<AzureAdSignUpFn> {
   constructor(
@@ -29,8 +27,6 @@ export class AzureAdSignupProvider implements Provider<AzureAdSignUpFn> {
     private readonly authClientRepo: AuthClientRepository,
     @repository(UserRepository)
     private readonly userRepo: UserRepository,
-    @service(UserHelperService)
-    private readonly userHelperService: UserHelperService,
   ) {}
 
   value(): AzureAdSignUpFn {
@@ -64,7 +60,7 @@ export class AzureAdSignupProvider implements Provider<AzureAdSignUpFn> {
         throw new HttpErrors.BadRequest('User already exists');
       }
 
-      const user = await this.userHelperService.createWithoutPassword({
+      const user = await this.userRepo.createWithoutPassword({
         firstName: profile.name!.givenName,
         lastName: profile.name!.familyName,
         username: profile.upn,

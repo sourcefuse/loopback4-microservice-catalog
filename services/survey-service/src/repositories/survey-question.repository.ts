@@ -6,15 +6,16 @@ import {
   ILogger,
   LOGGER,
 } from '@sourceloop/core';
-import {AuthenticationBindings} from 'loopback4-authentication';
 import {Question} from '../models';
-import {Section} from '../models/section.model';
 import {SurveyQuestion} from '../models/survey-question.model';
 import {Survey} from '../models/survey.model';
-import {SurveyDbSourceName} from '../types';
 import {QuestionRepository} from './questions.repository';
-import {SectionRepository} from './section.repository';
 import {SurveyRepository} from './survey.repository';
+import {SurveyDbSourceName} from '../types';
+import {Section} from '../models/section.model';
+import {SectionRepository} from './section.repository';
+import {HttpErrors} from '@loopback/rest';
+import {AuthenticationBindings} from 'loopback4-authentication';
 
 export class SurveyQuestionRepository extends DefaultSoftCrudRepository<
   SurveyQuestion,
@@ -78,5 +79,31 @@ export class SurveyQuestionRepository extends DefaultSoftCrudRepository<
       'dependentOnQuestion',
       this.dependentOnQuestion.inclusionResolver,
     );
+  }
+
+  async reorder(surveyId: string, displayOrder: number) {
+    this._updateSurveyModifiedByAndOn(surveyId).catch(err =>
+      this.logger.error(JSON.stringify(err)),
+    );
+    const parameters = [surveyId, displayOrder];
+    const query = `
+      UPDATE survey_questions
+      SET display_order = display_order + 1 
+      WHERE survey_id = ? AND display_order >= ?`;
+    this.execute(query, parameters)
+      .then()
+      .catch(err => Promise.reject(err));
+  }
+
+  async _updateSurveyModifiedByAndOn(surveyId: string) {
+    try {
+      const surveyRepository = await this.surveyRepositoryGetter();
+
+      await surveyRepository.updateById(surveyId, {
+        id: surveyId,
+      });
+    } catch (err) {
+      throw new HttpErrors.InternalServerError(err);
+    }
   }
 }

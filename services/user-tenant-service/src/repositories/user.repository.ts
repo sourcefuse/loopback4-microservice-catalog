@@ -5,12 +5,15 @@
 import {Getter, inject} from '@loopback/core';
 import {
   BelongsToAccessor,
+  DataObject,
   Entity,
   HasManyRepositoryFactory,
   HasOneRepositoryFactory,
+  Options,
   juggler,
   repository,
 } from '@loopback/repository';
+import {HttpErrors} from '@loopback/rest';
 import {
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
@@ -89,5 +92,46 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
       'defaultTenant',
       this.defaultTenant.inclusionResolver,
     );
+  }
+
+  async create(entity: DataObject<User>, options?: Options): Promise<User> {
+    const userExists = await super.findOne({
+      where: {username: entity.username},
+    });
+    if (userExists) {
+      throw new HttpErrors.BadRequest('User already exists');
+    }
+    const user = await super.create(entity, options);
+    try {
+      let creds: UserCredentials;
+      if (options?.authProvider) {
+        switch (options.authProvider) {
+          case 'internal': {
+            creds = new UserCredentials({
+              authProvider: 'internal',
+            });
+            break;
+          }
+          case 'keycloak':
+          default: {
+            creds = new UserCredentials({
+              authProvider: 'keycloak',
+              authId: options?.authId,
+            });
+            break;
+          }
+        }
+      } else {
+        creds = new UserCredentials({
+          authProvider: 'keycloak',
+          authId: options?.authId,
+        });
+      }
+      await this.credentials(user.id).create(creds, options);
+    } catch (err) {
+      await super.deleteByIdHard(user.id);
+      throw new HttpErrors.UnprocessableEntity('Error while hashing password');
+    }
+    return user;
   }
 }

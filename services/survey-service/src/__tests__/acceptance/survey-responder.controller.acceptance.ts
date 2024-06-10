@@ -3,18 +3,18 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {Client, expect} from '@loopback/testlab';
-import moment from 'moment';
-import {SurveyStatus} from '../../enum';
-import '../../load-env';
-import {SurveyResponder} from '../../models';
 import {
   SurveyCycleRepository,
   SurveyRepository,
   SurveyResponderRepository,
 } from '../../repositories';
 import {SurveyServiceApplication} from '../application';
-import {token} from '../datasources/userCredsAndPermission';
 import {setUpApplication} from './helper';
+import {token} from '../datasources/userCredsAndPermission';
+import {SurveyResponder} from '../../models';
+import moment from 'moment';
+import {SurveyStatus} from '../../enum';
+import '../../load-env';
 const testEmail = 'testuser+test@sourcefuse.com';
 
 describe('Survey Responder Controller', () => {
@@ -135,7 +135,7 @@ describe('Survey Responder Controller', () => {
       .get(`${basePath}/count`)
       .set('authorization', `Bearer ${token}`)
       .expect(200);
-    expect(response.body.count).to.be.equal(3);
+    expect(response.body.count).to.be.equal(1);
   });
 
   it('will update the survey responder where id matches and return 204', async () => {

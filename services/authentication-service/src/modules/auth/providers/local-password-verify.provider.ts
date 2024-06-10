@@ -8,14 +8,12 @@ import {HttpErrors} from '@loopback/rest';
 import {AuthenticateErrorKeys, UserStatus} from '@sourceloop/core';
 import {AuthErrorKeys, VerifyFunction} from 'loopback4-authentication';
 
-import {service} from '@loopback/core';
 import {Otp} from '../../../models';
 import {
   OtpRepository,
   UserRepository,
   UserTenantRepository,
 } from '../../../repositories';
-import {UserHelperService} from '../../../services';
 import {AuthUser} from '../models/auth-user.model';
 export class LocalPasswordVerifyProvider
   implements Provider<VerifyFunction.LocalPasswordFn>
@@ -27,15 +25,13 @@ export class LocalPasswordVerifyProvider
     public utRepository: UserTenantRepository,
     @repository(OtpRepository)
     public otpRepository: OtpRepository,
-    @service(UserHelperService)
-    private readonly userHelperService: UserHelperService,
   ) {}
 
   value(): VerifyFunction.LocalPasswordFn {
     return async (username: string, password: string) => {
       try {
         const user: AuthUser = new AuthUser(
-          await this.userHelperService.verifyPassword(username, password),
+          await this.userRepository.verifyPassword(username, password),
         );
         user.permissions = [];
         return user;

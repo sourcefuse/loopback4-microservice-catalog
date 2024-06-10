@@ -13,7 +13,6 @@ import {UserRepository} from '../repositories/user.repository';
 
 import OidcProvider from 'oidc-provider';
 import {OIDCServiceBindings} from '../keys';
-import {UserHelperService} from '../services';
 
 export class OidcController {
   constructor(
@@ -26,8 +25,6 @@ export class OidcController {
     private interactionTemplateFilePath: string,
     @repository(UserRepository)
     protected readonly userRepository: UserRepository,
-    @inject('services.UserHelperService')
-    private readonly userHelperService: UserHelperService,
   ) {}
 
   @get('/interaction/{uid}', {
@@ -95,10 +92,7 @@ export class OidcController {
     },
   ) {
     const {username, password} = requestData;
-    const user = await this.userHelperService.verifyPassword(
-      username,
-      password,
-    );
+    const user = await this.userRepository.verifyPassword(username, password);
     if (user === undefined || user === null || !user) {
       return 'The user does not exist or is not authenticated.';
     }

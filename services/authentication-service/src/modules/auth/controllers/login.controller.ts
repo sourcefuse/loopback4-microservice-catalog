@@ -71,7 +71,7 @@ import {
   UserRepository,
   UserTenantRepository,
 } from '../../../repositories';
-import {LoginHelperService, UserHelperService} from '../../../services';
+import {LoginHelperService} from '../../../services';
 import {
   ActorId,
   ExternalTokens,
@@ -121,8 +121,6 @@ export class LoginController {
     private readonly getJwtPayload: JwtPayloadFn,
     @inject('services.LoginHelperService')
     private readonly loginHelperService: LoginHelperService,
-    @inject('services.userHelperService')
-    private readonly userHelperService: UserHelperService,
     @inject(AuthCodeBindings.AUTH_CODE_GENERATOR_PROVIDER)
     private readonly getAuthCode: AuthCodeGeneratorFn,
     @inject(AuthCodeBindings.JWT_SIGNER)
@@ -228,9 +226,9 @@ export class LoginController {
 
       if (
         payload.user?.id &&
-        !(await this.userHelperService.firstTimeUser(payload.user.id))
+        !(await this.userRepo.firstTimeUser(payload.user.id))
       ) {
-        await this.userHelperService.updateLastLogin(payload.user.id);
+        await this.userRepo.updateLastLogin(payload.user.id);
       }
 
       return await this.createJWT(payload, this.client, LoginType.ACCESS);
@@ -280,9 +278,9 @@ export class LoginController {
 
       if (
         payload.userId &&
-        !(await this.userHelperService.firstTimeUser(payload.userId))
+        !(await this.userRepo.firstTimeUser(payload.userId))
       ) {
-        await this.userHelperService.updateLastLogin(payload.userId);
+        await this.userRepo.updateLastLogin(payload.userId);
       }
 
       return await this.createJWT(payload, authClient, LoginType.ACCESS);
@@ -446,25 +444,20 @@ export class LoginController {
       let newPassword = password;
       if (process.env.PRIVATE_DECRYPTION_KEY) {
         const decryptedOldPassword =
-          await this.userHelperService.decryptPassword(oldPassword);
+          await this.userRepo.decryptPassword(oldPassword);
         const decryptedNewPassword =
-          await this.userHelperService.decryptPassword(password);
+          await this.userRepo.decryptPassword(password);
         oldPassword = decryptedOldPassword;
         newPassword = decryptedNewPassword;
       }
-      return this.userHelperService.updatePassword(
-        userName,
-        oldPassword,
-        newPassword,
-      );
+      return this.userRepo.updatePassword(userName, oldPassword, newPassword);
     } else {
       let newPassword = password;
       if (process.env.PRIVATE_DECRYPTION_KEY) {
-        const decryptedPassword =
-          await this.userHelperService.decryptPassword(password);
+        const decryptedPassword = await this.userRepo.decryptPassword(password);
         newPassword = decryptedPassword;
       }
-      return this.userHelperService.changePassword(userName, newPassword);
+      return this.userRepo.changePassword(userName, newPassword);
     }
   }
   @authenticate(STRATEGY.BEARER, {

@@ -27,7 +27,6 @@ import {
   LoginActivityHelperService,
   LoginHelperService,
   OtpService,
-  UserHelperService,
 } from '../../../services';
 import {getBaseClass} from '../../utils/getBaseClass';
 import {SequelizeAuthenticationServiceApplication} from './sequelize.application';
@@ -197,21 +196,6 @@ it('Uses the sequelize compatible repository in OtpService', async () => {
   const expectedBindings = [
     {
       service: OtpService,
-      repository: UserRepository,
-      prop: 'userRepository',
-    },
-  ];
-  for (const {service, repository, prop} of expectedBindings) {
-    const instance: AnyObject = sequelizeApp.getSync(
-      sequelizeApp.service(service).key,
-    );
-    expect(instance[prop]).to.be.instanceOf(repository);
-  }
-});
-it('Uses the sequelize compatible repository in UserHelperService', async () => {
-  const expectedBindings = [
-    {
-      service: UserHelperService,
       repository: UserRepository,
       prop: 'userRepository',
     },
