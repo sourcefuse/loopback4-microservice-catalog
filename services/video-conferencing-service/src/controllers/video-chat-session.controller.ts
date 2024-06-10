@@ -13,7 +13,12 @@ import {
   requestBody,
 } from '@loopback/rest';
 import {authorize} from 'loopback4-authorization';
-import {MeetingOptions, SessionOptions, SessionResponse} from '../types';
+import {
+  MeetingLink,
+  MeetingOptions,
+  SessionOptions,
+  SessionResponse,
+} from '../types';
 
 import {
   CONTENT_TYPE,
@@ -53,7 +58,7 @@ export class VideoChatSessionController {
   async getMeetingLink(
     @requestBody()
     meetingOptions: MeetingOptions,
-  ): Promise<string> {
+  ): Promise<MeetingLink> {
     return this.chatSessionService.getMeetingLink(meetingOptions);
   }
 
