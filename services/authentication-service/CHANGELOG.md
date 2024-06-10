@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>19.1.2 (2024-06-10)</small>
+
+* fix(all-services): revert to pr 2072 (#2106) ([502812f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/502812f)), closes [#2106](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2106) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>19.1.1 (2024-06-04)</small>
 
 * fix(authentication-service): fix verify otp flow for mfa (#2100) ([374ddd0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/374ddd0)), closes [#2100](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2100) [#2099](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2099)

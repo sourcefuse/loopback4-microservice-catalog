@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.9.15 (2024-06-10)</small>
+
+**Note:** Version bump only for package @sourceloop/in-mail-example
+
+
+
+
+
 ## <small>0.9.14 (2024-05-20)</small>
 
 **Note:** Version bump only for package @sourceloop/in-mail-example
