@@ -5,18 +5,25 @@
 import {Getter, inject} from '@loopback/core';
 import {
   BelongsToAccessor,
+  DataObject,
   HasManyRepositoryFactory,
   HasOneRepositoryFactory,
   juggler,
   repository,
 } from '@loopback/repository';
+import {Options} from '@loopback/repository/src/common-types';
+import {HttpErrors} from '@loopback/rest';
 import {
+  AuthProvider,
+  AuthenticateErrorKeys,
   DefaultUserModifyCrudRepository,
   IAuthUserWithPermissions,
   ILogger,
   LOGGER,
+  UserStatus,
 } from '@sourceloop/core';
-import {AuthenticationBindings} from 'loopback4-authentication';
+import * as bcrypt from 'bcrypt';
+import {AuthErrorKeys, AuthenticationBindings} from 'loopback4-authentication';
 import {
   Tenant,
   User,
@@ -30,6 +37,7 @@ import {TenantRepository} from './tenant.repository';
 import {UserCredentialsRepository} from './user-credentials.repository';
 import {UserTenantRepository} from './user-tenant.repository';
 
+const saltRounds = 10;
 export class UserRepository extends DefaultUserModifyCrudRepository<
   User,
   typeof User.prototype.id,
@@ -89,5 +97,153 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
       'credentials',
       this.credentials.inclusionResolver,
     );
+  }
+
+  async create(entity: DataObject<User>, options?: Options): Promise<User> {
+    const user = await super.create(entity, options);
+    try {
+      // Add temporary password for first time
+      const password = (await bcrypt.hash(
+        process.env.USER_TEMP_PASSWORD as string,
+        saltRounds,
+      )) as string;
+      const creds = new UserCredentials({
+        authProvider: 'internal',
+        password,
+      });
+      await this.credentials(user.id).create(creds);
+    } catch (err) {
+      throw new HttpErrors.UnprocessableEntity('Error while hashing password');
+    }
+    return user;
+  }
+
+  async createWithoutPassword(
+    entity: DataObject<User>,
+    options?: Options,
+  ): Promise<User> {
+    return super.create(entity, options);
+  }
+
+  async verifyPassword(username: string, password: string): Promise<User> {
+    const user = await super.findOne({
+      where: {username: username.toLowerCase()},
+    });
+    const creds = user && (await this.credentials(user.id).get());
+    if (!user || user.deleted) {
+      throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
+    } else if (
+      !creds?.password ||
+      creds.authProvider !== AuthProvider.INTERNAL ||
+      !(await bcrypt.compare(password, creds.password))
+    ) {
+      this.logger.error('User creds not found in DB or is invalid');
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
+    } else {
+      return user;
+    }
+  }
+
+  async updatePassword(
+    username: string,
+    password: string,
+    newPassword: string,
+  ): Promise<User> {
+    const user = await super.findOne({where: {username}});
+    const creds = user && (await this.credentials(user.id).get());
+
+    if ((!user || user.deleted) ?? !creds?.password) {
+      throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
+    } else if (creds.authProvider !== AuthProvider.INTERNAL) {
+      throw new HttpErrors.BadRequest(
+        AuthenticateErrorKeys.PasswordCannotBeChanged,
+      );
+    } else if (!(await bcrypt.compare(password, creds.password))) {
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.WrongPassword);
+    } else if (await bcrypt.compare(newPassword, creds.password)) {
+      throw new HttpErrors.Unauthorized(
+        'Password cannot be same as previous password!',
+      );
+    } else {
+      // Do nothing
+    }
+    await this.credentials(user.id).patch({
+      password: await bcrypt.hash(newPassword, saltRounds),
+    });
+    return user;
+  }
+
+  async changePassword(
+    username: string,
+    newPassword: string,
+    oldPassword?: string,
+  ): Promise<User> {
+    const user = await super.findOne({where: {username}});
+    const creds = user && (await this.credentials(user.id).get());
+
+    if (oldPassword) {
+      // This method considers old password as OTP
+      const otp = await (await this.getOtpRepository()).get(username);
+      if (!otp || otp.otp !== oldPassword) {
+        throw new HttpErrors.Unauthorized(AuthErrorKeys.WrongPassword);
+      }
+    }
+
+    if (creds?.authProvider !== AuthProvider.INTERNAL) {
+      throw new HttpErrors.Unauthorized(
+        AuthenticateErrorKeys.PasswordCannotBeChanged,
+      );
+    }
+
+    if ((!user || user.deleted) ?? !creds?.password) {
+      throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
+    } else if (await bcrypt.compare(newPassword, creds.password)) {
+      throw new HttpErrors.Unauthorized(
+        'Password cannot be same as previous password!',
+      );
+    } else {
+      // DO nothing
+    }
+    await this.credentials(user.id).patch({
+      password: await bcrypt.hash(newPassword, saltRounds),
+    });
+    return user;
+  }
+
+  async updateLastLogin(userId: string): Promise<void> {
+    await super.updateById(
+      userId,
+      {
+        lastLogin: Date.now(),
+      },
+      {
+        currentUser: {id: userId},
+      },
+    );
+  }
+
+  async firstTimeUser(userId: string): Promise<boolean> {
+    const user = await super.findOne({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) {
+      throw new HttpErrors.NotFound(AuthenticateErrorKeys.UserDoesNotExist);
+    }
+
+    const userTenant = await (
+      await this.userTenantRepositoryGetter()
+    ).findOne({
+      where: {
+        userId,
+        tenantId: user.defaultTenantId,
+        status: {
+          inq: [UserStatus.REGISTERED, UserStatus.PASSWORD_CHANGE_NEEDED],
+        },
+      },
+    });
+    return !!userTenant;
   }
 }

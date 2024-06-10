@@ -984,7 +984,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UserViewPartialExcluding_id-authClientIds-lastLogin-tenantId-tenantName-tenantKey-roleName-userTenantId_"
+                "$ref": "#/components/schemas/UserPartial"
               }
             }
           },
@@ -3779,10 +3779,10 @@
         ],
         "additionalProperties": false
       },
-      "UserViewPartialExcluding_id-authClientIds-lastLogin-tenantId-tenantName-tenantKey-roleName-userTenantId_": {
-        "title": "UserViewPartialExcluding_id-authClientIds-lastLogin-tenantId-tenantName-tenantKey-roleName-userTenantId_",
+      "UserPartial": {
+        "title": "UserPartial",
         "type": "object",
-        "description": "User details view in DB (tsType: Omit<Partial<UserView>, 'id' | 'authClientIds' | 'lastLogin' | 'tenantId' | 'tenantName' | 'tenantKey' | 'roleName' | 'userTenantId'>, schemaOptions: { partial: true, exclude: [ 'id', 'authClientIds', 'lastLogin', 'tenantId', 'tenantName', 'tenantKey', 'roleName', 'userTenantId' ] })",
+        "description": "This is signature for user model. (tsType: Partial<User>, schemaOptions: { partial: true })",
         "properties": {
           "deleted": {
             "type": "boolean"
@@ -3810,6 +3810,9 @@
           "modifiedBy": {
             "type": "string"
           },
+          "id": {
+            "type": "string"
+          },
           "firstName": {
             "type": "string"
           },
@@ -3829,7 +3832,15 @@
             "type": "string"
           },
           "phone": {
+            "type": "string",
+            "pattern": "^\\+?[1-9]\\d{1,14}$"
+          },
+          "authClientIds": {
             "type": "string"
+          },
+          "lastLogin": {
+            "type": "string",
+            "format": "date-time"
           },
           "photoUrl": {
             "type": "string"
@@ -3845,18 +3856,9 @@
           },
           "dob": {
             "type": "string",
-            "format": "date-time",
-            "nullable": true
+            "format": "date-time"
           },
           "defaultTenantId": {
-            "type": "string"
-          },
-          "status": {
-            "type": "number",
-            "maximum": 11,
-            "minimum": 0
-          },
-          "roleId": {
             "type": "string"
           }
         },

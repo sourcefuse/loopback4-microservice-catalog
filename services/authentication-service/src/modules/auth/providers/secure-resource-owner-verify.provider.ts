@@ -12,7 +12,6 @@ import {
   VerifyFunction,
 } from 'loopback4-authentication';
 
-import {service} from '@loopback/core';
 import {Otp} from '../../../models';
 import {
   AuthSecureClientRepository,
@@ -20,7 +19,6 @@ import {
   UserRepository,
   UserTenantRepository,
 } from '../../../repositories';
-import {UserHelperService} from '../../../services';
 export class SecureResourceOwnerVerifyProvider
   implements Provider<VerifyFunction.SecureResourceOwnerPasswordFn>
 {
@@ -33,8 +31,6 @@ export class SecureResourceOwnerVerifyProvider
     public authSecureClientRepository: AuthSecureClientRepository,
     @repository(OtpRepository)
     public otpRepository: OtpRepository,
-    @service(UserHelperService)
-    private readonly userHelperService: UserHelperService,
   ) {}
 
   value(): VerifyFunction.SecureResourceOwnerPasswordFn {
@@ -42,7 +38,7 @@ export class SecureResourceOwnerVerifyProvider
       let user;
 
       try {
-        user = await this.userHelperService.verifyPassword(username, password);
+        user = await this.userRepository.verifyPassword(username, password);
       } catch (error) {
         const otp: Otp = await this.otpRepository.get(username);
         if (!otp || otp.otp !== password) {
