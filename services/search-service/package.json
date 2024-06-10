@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/search-service",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "A microservice to search over provided models",
   "keywords": [
     "loopback-application",
