@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.1.2 (2024-06-11)</small>
+
+* chore: publish release ([89d1599](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/89d1599))
+* chore(deps): loopback and sourceloop version update (#2108) ([9cd8962](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9cd8962)), closes [#2108](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2108) [#2104](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2104) [#2104](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2104)
+* chore(deps): version bump commit (#2111) ([c87bc75](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c87bc75)), closes [#2111](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2111) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* fix(all-services): revert to pr 2072 (#2106) ([502812f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/502812f)), closes [#2106](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2106) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>2.1.1 (2024-06-10)</small>
 
 * fix(all-services): revert to pr 2072 (#2106) ([502812f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/502812f)), closes [#2106](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2106) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

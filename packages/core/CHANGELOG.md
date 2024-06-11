@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 14.1.0 (2024-06-11)
+
+* chore(deps): loopback and sourceloop version update (#2108) ([9cd8962](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9cd8962)), closes [#2108](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2108) [#2104](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2104) [#2104](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2104)
+* chore(deps): version bump commit (#2111) ([c87bc75](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c87bc75)), closes [#2111](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2111) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* feat(user-tenant-service): add user webhook to seed data in db (#2093) ([2c6277c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2c6277c)), closes [#2093](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2093) [#5](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/5)
+
+
+
+
+
 ## 14.0.0 (2024-05-06)
 
 * feat(ci-cd): changes to release only core (#2086) ([639e07e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/639e07e)), closes [#2086](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2086) [#2030](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2030) [#2030](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2030) [#2030](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2030)

@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.0.21 (2024-06-11)</small>
+
+* chore: publish release ([89d1599](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/89d1599))
+* chore(deps):  version update in sandbox (#2109) ([615d7f5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/615d7f5)), closes [#2109](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2109) [#2104](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2104) [#2104](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2104)
+* chore(deps): version bump commit (#2111) ([c87bc75](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c87bc75)), closes [#2111](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2111) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
 ## <small>2.0.20 (2024-06-10)</small>
 
 **Note:** Version bump only for package @sourceloop/nestjs-auth-ms-example
