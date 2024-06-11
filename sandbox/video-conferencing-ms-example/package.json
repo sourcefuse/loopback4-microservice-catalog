@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/video-conferencing-ms-example",
   "version": "5.0.14",
-  "description": "A Video conferencing service example",
+  "description": "A Video conferencing service example.",
   "keywords": [
     "loopback-application",
     "loopback"

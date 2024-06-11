@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/search-ms-example",
   "version": "0.7.12",
-  "description": "Search service basic example",
+  "description": "Search service basic example.",
   "keywords": [
     "loopback-application",
     "loopback"

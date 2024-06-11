@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/chat-notif-example-chat-socket",
   "version": "0.4.14",
-  "description": "sourceloop chat service",
+  "description": "sourceloop chat service.",
   "keywords": [
     "loopback-application",
     "loopback"

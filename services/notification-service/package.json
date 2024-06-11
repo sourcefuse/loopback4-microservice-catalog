@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/notification-service",
   "version": "13.0.0",
-  "description": "notification microservice",
+  "description": "notification microservice.",
   "keywords": [
     "loopback-extension",
     "loopback"

@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/task-service",
   "version": "2.0.0",
-  "description": "a Reusable, customizable and workflow based task service",
+  "description": "a Reusable, customizable and workflow based task service.",
   "keywords": [
     "loopback-extension",
     "loopback"

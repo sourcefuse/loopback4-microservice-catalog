@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/user-tenant-example",
   "version": "0.1.5",
-  "description": "user-tenant-example",
+  "description": "user-tenant-example.",
   "keywords": [
     "loopback-microservice",
     "loopback"

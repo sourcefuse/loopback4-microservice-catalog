@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/auth-public-private-client",
   "version": "0.0.1",
-  "description": "auth",
+  "description": "public-private-client example.",
   "keywords": [
     "loopback-microservice",
     "loopback"
