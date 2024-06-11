@@ -2,7 +2,7 @@
   "name": "@sourceloop/telemed-notification-api",
   "private": "true",
   "version": "0.1.15",
-  "description": "notification",
+  "description": "notification.",
   "keywords": [
     "loopback-microservice",
     "loopback"

@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/schedular-example",
   "version": "5.0.13",
-  "description": "scheduler-example",
+  "description": "scheduler-example.",
   "keywords": [
     "loopback-application",
     "loopback"

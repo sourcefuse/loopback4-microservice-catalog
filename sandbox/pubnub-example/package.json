@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/pubnub-example",
   "version": "0.6.15",
-  "description": "A pubnub provider example",
+  "description": "A pubnub provider example.",
   "keywords": [
     "loopback-application",
     "loopback"

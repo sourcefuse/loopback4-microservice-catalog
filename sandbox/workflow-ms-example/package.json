@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/workflow-ms-example",
   "version": "0.8.14",
-  "description": "A workflow microservice example",
+  "description": "A workflow microservice example.",
   "keywords": [
     "loopback-application",
     "loopback"

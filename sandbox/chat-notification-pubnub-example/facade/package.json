@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/chat-notif-example_facade",
   "version": "0.4.10",
-  "description": "facade",
+  "description": "facade.",
   "keywords": [
     "loopback-application",
     "loopback"

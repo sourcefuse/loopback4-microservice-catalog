@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/audit-ms-example",
   "version": "0.7.15",
-  "description": "An audit microservice example",
+  "description": "An audit microservice example.",
   "keywords": [
     "loopback-application",
     "loopback"

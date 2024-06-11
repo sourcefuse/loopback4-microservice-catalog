@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/bpmn-service",
   "version": "13.0.0",
-  "description": "BPMN microservice",
+  "description": "BPMN microservice.",
   "keywords": [
     "loopback-extension",
     "loopback"

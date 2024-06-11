@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/task-service-example",
   "version": "0.3.7",
-  "description": "task-service-user",
+  "description": "task-service-user.",
   "keywords": [
     "loopback-application",
     "loopback"

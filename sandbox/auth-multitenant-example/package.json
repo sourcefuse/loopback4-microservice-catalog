@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/auth-multitenant-example",
   "version": "7.1.2",
-  "description": "This is a sample application for sandbox testing of auth microservice components.",
+  "description": "This is a sample application for sandbox testing of auth microservice components",
   "private": true,
   "keywords": [
     "loopback-application",
