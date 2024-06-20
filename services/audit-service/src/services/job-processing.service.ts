@@ -49,24 +49,7 @@ export class JobProcessingService {
       const customFilter = new CustomFilter();
       if (filter?.where && 'and' in filter.where) {
         const andArray = filter.where?.and;
-        for (const condition of andArray) {
-          if (condition.actedAt?.between) {
-            const [start, end] = condition.actedAt.between;
-            customFilter.date = {
-              fromDate: start,
-              toDate: end,
-            };
-          }
-          if (condition.actedOn) {
-            customFilter.actedOn = this.getFilter(condition.actedOn);
-          }
-          if (condition.actionGroup) {
-            customFilter.actionGroup = this.getFilter(condition.actionGroup);
-          }
-          if (condition.entityId) {
-            customFilter.entityId = condition.entityId;
-          }
-        }
+        this.buildCustomFilter(andArray, customFilter);
       }
       const mappingLogs: MappingLog[] = await this.mappingLogRepository.find();
       const finalData: AuditLog[] = [];
@@ -127,5 +110,26 @@ export class JobProcessingService {
 
   haveCommonElements(arr1: string[], arr2: string[]): boolean {
     return arr1.some(item => arr2.includes(item));
+  }
+
+  buildCustomFilter(andArray: AnyObject[], customFilter: CustomFilter) {
+    for (const condition of andArray) {
+      if (condition.actedAt?.between) {
+        const [start, end] = condition.actedAt.between;
+        customFilter.date = {
+          fromDate: start,
+          toDate: end,
+        };
+      }
+      if (condition.actedOn) {
+        customFilter.actedOn = this.getFilter(condition.actedOn);
+      }
+      if (condition.actionGroup) {
+        customFilter.actionGroup = this.getFilter(condition.actionGroup);
+      }
+      if (condition.entityId) {
+        customFilter.entityId = condition.entityId;
+      }
+    }
   }
 }
