@@ -4,16 +4,19 @@ export function checkActedOn(
   filterUsed: CustomFilter,
   customFilter: CustomFilter,
 ): boolean | undefined {
-  const {actedOn, actedOnList} = filterUsed;
+  let {actedOn, actedOnList} = filterUsed;
   const customActedOnList = customFilter.actedOnList;
-  const actedOnInCustomList = actedOn && customActedOnList?.includes(actedOn);
+  actedOnList = actedOnList ?? [];
   // Check if both actedOn and actedOnList are null or if customFilter's actedOnList is null
   // Check if filterUsed.actedOn is defined and included in customFilter.actedOnList
   // Check if both actedOnLists have common elements
+  if (!!actedOn) {
+    actedOnList = [...new Set([...actedOnList, actedOn])];
+  }
+
   return (
     (actedOn == null && actedOnList == null) ||
     customActedOnList == null ||
-    actedOnInCustomList ||
     (actedOnList && haveCommonElements(customActedOnList, actedOnList))
   );
 }
@@ -25,8 +28,8 @@ export function checkActionGroup(
   const actionGroupList = filterUsed.actionGroupList;
   const customActionGroupList = customFilter.actionGroupList;
   return (
-    customActionGroupList == null ||
-    actionGroupList == null ||
+    !customActionGroupList ||
+    !actionGroupList ||
     haveCommonElements(actionGroupList, customActionGroupList)
   );
 }
@@ -36,8 +39,8 @@ export function checkEntityId(
   customFilter: CustomFilter,
 ): boolean {
   return (
-    customFilter.entityId == null ||
-    filterUsed.entityId == null ||
+    !customFilter.entityId ||
+    !filterUsed.entityId ||
     filterUsed.entityId === customFilter.entityId
   );
 }
@@ -46,15 +49,11 @@ export function checkDates(
   filterUsed: CustomFilter,
   customFilter: CustomFilter,
 ) {
-  // sonarignore:start
-  const {fromDate: usedFromDate, toDate: usedToDate} = filterUsed.date!;
-  const {fromDate: customFromDate, toDate: customToDate} = customFilter.date!;
-  // sonarignore:end
-
   return (
-    customFilter.date == null ||
-    filterUsed.date == null ||
-    (usedFromDate <= customToDate && usedToDate >= customFromDate)
+    !customFilter.date ||
+    !filterUsed.date ||
+    (customFilter.date.toDate >= filterUsed.date.fromDate &&
+      customFilter.date.fromDate <= filterUsed.date.toDate)
   );
 }
 
