@@ -4,24 +4,16 @@ export function checkActedOn(
   filterUsed: CustomFilter,
   customFilter: CustomFilter,
 ): boolean {
+  const {actedOn, actedOnList} = filterUsed;
+  const customActedOnList = customFilter.actedOnList;
   // Check if both actedOn and actedOnList are null or if customFilter's actedOnList is null
-  if (
-    (filterUsed.actedOn == null && filterUsed.actedOnList == null) ||
-    customFilter.actedOnList == null
-  ) {
-    return true;
-  }
   // Check if filterUsed.actedOn is defined and included in customFilter.actedOnList
-  if (
-    filterUsed.actedOn &&
-    customFilter.actedOnList.includes(filterUsed.actedOn)
-  ) {
-    return true;
-  }
   // Check if both actedOnLists have common elements
   if (
-    filterUsed.actedOnList &&
-    haveCommonElements(customFilter.actedOnList, filterUsed.actedOnList)
+    (actedOn == null && actedOnList == null) ||
+    customActedOnList == null ||
+    (actedOn && customActedOnList.includes(actedOn)) ||
+    (actedOnList && haveCommonElements(customActedOnList, actedOnList))
   ) {
     return true;
   }
@@ -33,14 +25,12 @@ export function checkActionGroup(
   filterUsed: CustomFilter,
   customFilter: CustomFilter,
 ): boolean {
+  const actionGroupList = filterUsed.actionGroupList;
+  const customActionGroupList = customFilter.actionGroupList;
   if (
-    customFilter.actionGroupList == null ||
-    filterUsed.actionGroupList == null
-  ) {
-    return true;
-  }
-  if (
-    haveCommonElements(filterUsed.actionGroupList, customFilter.actionGroupList)
+    customActionGroupList == null ||
+    actionGroupList == null ||
+    haveCommonElements(actionGroupList, customActionGroupList)
   ) {
     return true;
   }
@@ -51,10 +41,11 @@ export function checkEntityId(
   filterUsed: CustomFilter,
   customFilter: CustomFilter,
 ): boolean {
-  if (customFilter.entityId == null || filterUsed.entityId == null) {
-    return true;
-  }
-  if (filterUsed.entityId === customFilter.entityId) {
+  if (
+    customFilter.entityId == null ||
+    filterUsed.entityId == null ||
+    filterUsed.entityId === customFilter.entityId
+  ) {
     return true;
   }
   return false;
@@ -64,12 +55,12 @@ export function checkDates(
   filterUsed: CustomFilter,
   customFilter: CustomFilter,
 ) {
-  if (customFilter.date == null || filterUsed.date == null) {
-    return true;
-  }
+  const {fromDate: usedFromDate, toDate: usedToDate} = filterUsed.date!;
+  const {fromDate: customFromDate, toDate: customToDate} = customFilter.date!;
   if (
-    filterUsed.date.fromDate <= customFilter.date.toDate &&
-    filterUsed.date.toDate >= customFilter.date.fromDate
+    customFilter.date == null ||
+    filterUsed.date == null ||
+    (usedFromDate <= customToDate && usedToDate >= customFromDate)
   ) {
     return true;
   }
