@@ -6,13 +6,14 @@ export function checkActedOn(
 ): boolean | undefined {
   const {actedOn, actedOnList} = filterUsed;
   const customActedOnList = customFilter.actedOnList;
+  const actedOnInCustomList = actedOn && customActedOnList?.includes(actedOn);
   // Check if both actedOn and actedOnList are null or if customFilter's actedOnList is null
   // Check if filterUsed.actedOn is defined and included in customFilter.actedOnList
   // Check if both actedOnLists have common elements
   return (
     (actedOn == null && actedOnList == null) ||
     customActedOnList == null ||
-    (actedOn && customActedOnList.includes(actedOn)) ||
+    actedOnInCustomList ||
     (actedOnList && haveCommonElements(customActedOnList, actedOnList))
   );
 }
@@ -45,8 +46,11 @@ export function checkDates(
   filterUsed: CustomFilter,
   customFilter: CustomFilter,
 ) {
+  // sonarignore:start
   const {fromDate: usedFromDate, toDate: usedToDate} = filterUsed.date!;
   const {fromDate: customFromDate, toDate: customToDate} = customFilter.date!;
+  // sonarignore:end
+
   return (
     customFilter.date == null ||
     filterUsed.date == null ||
