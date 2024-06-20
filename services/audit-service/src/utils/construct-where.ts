@@ -43,15 +43,18 @@ export async function constructWhere(customFilter: CustomFilter) {
     });
   }
 
-  if (customFilter.actedOn) {
+  if (customFilter.actedOn || customFilter.actedOnList) {
+    const array = customFilter.actedOn
+      ? [customFilter.actedOn]
+      : customFilter.actedOnList;
     where.and.push({
-      actedOn: {inq: customFilter.actedOn},
+      actedOn: {inq: array},
     });
   }
 
-  if (customFilter.actionGroup) {
+  if (customFilter.actionGroupList) {
     where.and.push({
-      actionGroup: {inq: customFilter.actionGroup},
+      actionGroup: {inq: customFilter.actionGroupList},
     });
   }
   return where;

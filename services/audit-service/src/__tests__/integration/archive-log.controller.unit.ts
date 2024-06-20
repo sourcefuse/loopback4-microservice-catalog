@@ -25,7 +25,7 @@ describe('POST /audit-logs/archive', () => {
         toDate: testToDate,
       },
       deleted: false,
-      actedOn: ['Product'],
+      actedOn: 'Product',
     });
 
     const {auditLogController, mappingLogRepository} = getTestAuditController();
@@ -53,7 +53,7 @@ describe('POST /audit-logs/archive', () => {
         toDate: testToDate,
       },
       deleted: true,
-      actedOn: ['Product'],
+      actedOn: 'Product',
     });
     const {auditLogController, mappingLogRepository} = getTestAuditController();
 
@@ -73,7 +73,7 @@ describe('POST /audit-logs/archive', () => {
   it('archive logs when date parameter is not provided and deleted is true', async () => {
     const customFilter: CustomFilter = new CustomFilter({
       deleted: true,
-      actedOn: ['Product'],
+      actedOn: 'Product',
     });
     const {auditLogController, mappingLogRepository} = getTestAuditController();
 
@@ -96,7 +96,7 @@ describe('POST /audit-logs/archive', () => {
         fromDate: testFromDate,
         toDate: testToDate,
       },
-      actedOn: ['Product'],
+      actedOn: 'Product',
     });
     const {auditLogController, mappingLogRepository} = getTestAuditController();
 
@@ -186,6 +186,61 @@ describe('POST /audit-logs/archive', () => {
   });
   it('archive logs when none of the parameter is provided', async () => {
     const customFilter: CustomFilter = new CustomFilter({});
+    const {auditLogController, mappingLogRepository} = getTestAuditController();
+
+    const mappingLogFetch = mappingLogRepository.stubs.create;
+    mappingLogFetch.resolves(mappingLog);
+
+    const controllerResult = await auditLogController.archive(customFilter);
+    const {auditLogRepository} = getTestDBRepositories();
+    const actualResult = await auditLogRepository.find();
+    expect(
+      actualResult.length + controllerResult.numberOfEntriesArchived,
+    ).to.be.equal(archiveLogs.length);
+  });
+  it('archive logs when actedOnList parameter is provided', async () => {
+    const customFilter: CustomFilter = new CustomFilter({
+      actedOnList: ['Product'],
+    });
+    const {auditLogController, mappingLogRepository} = getTestAuditController();
+
+    const mappingLogFetch = mappingLogRepository.stubs.create;
+    mappingLogFetch.resolves(mappingLog);
+
+    const controllerResult = await auditLogController.archive(customFilter);
+    const {auditLogRepository} = getTestDBRepositories();
+    const actualResult = await auditLogRepository.find();
+    const expectedIds = ['6'];
+
+    expect(actualResult).to.be.containDeep(expectedIds.map(id => ({id})));
+    expect(
+      actualResult.length + controllerResult.numberOfEntriesArchived,
+    ).to.be.equal(archiveLogs.length);
+  });
+  it('archive logs when actedOnList parameter is provided and deleted is true', async () => {
+    const customFilter: CustomFilter = new CustomFilter({
+      actedOnList: ['Product'],
+      deleted: true,
+    });
+    const {auditLogController, mappingLogRepository} = getTestAuditController();
+
+    const mappingLogFetch = mappingLogRepository.stubs.create;
+    mappingLogFetch.resolves(mappingLog);
+
+    const controllerResult = await auditLogController.archive(customFilter);
+    const {auditLogRepository} = getTestDBRepositories();
+    const actualResult = await auditLogRepository.find();
+    const expectedIds = ['3', '6'];
+
+    expect(actualResult).to.be.containDeep(expectedIds.map(id => ({id})));
+    expect(
+      actualResult.length + controllerResult.numberOfEntriesArchived,
+    ).to.be.equal(archiveLogs.length);
+  });
+  it('archive logs when actionGroupList parameter is provided', async () => {
+    const customFilter: CustomFilter = new CustomFilter({
+      actionGroupList: ['Product_group'],
+    });
     const {auditLogController, mappingLogRepository} = getTestAuditController();
 
     const mappingLogFetch = mappingLogRepository.stubs.create;

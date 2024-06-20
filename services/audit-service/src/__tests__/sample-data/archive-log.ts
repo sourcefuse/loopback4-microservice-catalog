@@ -18,6 +18,7 @@ export const archiveLogs: AuditLog[] = [
       qty: 0,
       deleted: false,
     } as JSONObject,
+    actionGroup: 'Product_group',
   }),
   new AuditLog({
     id: '2',
@@ -41,6 +42,7 @@ export const archiveLogs: AuditLog[] = [
       qty: 0,
       deleted: false,
     } as JSONObject,
+    actionGroup: 'Product_group',
   }),
   new AuditLog({
     id: '3',
@@ -57,6 +59,7 @@ export const archiveLogs: AuditLog[] = [
       qty: 0,
       deleted: false,
     } as JSONObject,
+    actionGroup: 'Product_group',
   }),
   new AuditLog({
     id: '4',
@@ -73,6 +76,7 @@ export const archiveLogs: AuditLog[] = [
       qty: 0,
       deleted: true,
     } as JSONObject,
+    actionGroup: 'Product_group',
   }),
   new AuditLog({
     id: '5',
@@ -89,6 +93,7 @@ export const archiveLogs: AuditLog[] = [
       qty: 0,
       deleted: false,
     } as JSONObject,
+    actionGroup: 'Product_group',
   }),
   new AuditLog({
     id: '6',
@@ -105,6 +110,7 @@ export const archiveLogs: AuditLog[] = [
       qty: 0,
       deleted: false,
     } as JSONObject,
+    actionGroup: 'Product_group',
   }),
 ];
 

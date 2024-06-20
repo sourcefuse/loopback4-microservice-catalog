@@ -531,13 +531,16 @@
             "type": "string"
           },
           "actedOn": {
+            "type": "string"
+          },
+          "actedOnList": {
             "type": "array",
             "uniqueItems": true,
             "items": {
               "type": "string"
             }
           },
-          "actionGroup": {
+          "actionGroupList": {
             "type": "array",
             "uniqueItems": true,
             "items": {

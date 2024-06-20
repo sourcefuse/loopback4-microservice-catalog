@@ -21,6 +21,12 @@ import {
   ColumnBuilderFn,
   QuerySelectedFilesFn,
 } from '../types';
+import {
+  checkActedOn,
+  checkActionGroup,
+  checkDates,
+  checkEntityId,
+} from '../utils/file-check';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class JobProcessingService {
@@ -57,27 +63,10 @@ export class JobProcessingService {
       for (const mappingLog of mappingLogs) {
         const filterUsed: CustomFilter = mappingLog.filterUsed as CustomFilter;
         if (
-          (customFilter.actedOn == null ||
-            filterUsed.actedOn == null ||
-            filterUsed.actedOn === customFilter.actedOn ||
-            this.haveCommonElements(
-              filterUsed.actedOn,
-              customFilter.actedOn,
-            )) &&
-          (customFilter.actionGroup == null ||
-            filterUsed.actionGroup == null ||
-            filterUsed.actionGroup === customFilter.actionGroup ||
-            this.haveCommonElements(
-              filterUsed.actionGroup,
-              customFilter.actionGroup,
-            )) &&
-          (customFilter.entityId ??
-            filterUsed.entityId ??
-            filterUsed.entityId === customFilter.entityId) &&
-          (customFilter.date == null ||
-            filterUsed.date == null ||
-            (filterUsed.date?.fromDate <= customFilter.date?.toDate &&
-              filterUsed.date?.toDate >= customFilter.date?.fromDate))
+          checkActedOn(filterUsed, customFilter) &&
+          checkActionGroup(filterUsed, customFilter) &&
+          checkEntityId(filterUsed, customFilter) &&
+          checkDates(filterUsed, customFilter)
         ) {
           //logs from s3
           finalData.push(
@@ -122,10 +111,11 @@ export class JobProcessingService {
         };
       }
       if (condition.actedOn) {
-        customFilter.actedOn = this.getFilter(condition.actedOn);
+        //even if actedOn is a string, it is converted to an array for easy comparision
+        customFilter.actedOnList = this.getFilter(condition.actedOn);
       }
       if (condition.actionGroup) {
-        customFilter.actionGroup = this.getFilter(condition.actionGroup);
+        customFilter.actionGroupList = this.getFilter(condition.actionGroup);
       }
       if (condition.entityId) {
         customFilter.entityId = condition.entityId;

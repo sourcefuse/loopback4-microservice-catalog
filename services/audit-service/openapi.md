@@ -46,10 +46,11 @@ const inputBody = '{
   },
   "deleted": true,
   "entityId": "string",
-  "actedOn": [
+  "actedOn": "string",
+  "actedOnList": [
     "string"
   ],
-  "actionGroup": [
+  "actionGroupList": [
     "string"
   ]
 }';
@@ -82,10 +83,11 @@ const inputBody = {
   },
   "deleted": true,
   "entityId": "string",
-  "actedOn": [
+  "actedOn": "string",
+  "actedOnList": [
     "string"
   ],
-  "actionGroup": [
+  "actionGroupList": [
     "string"
   ]
 };
@@ -126,10 +128,11 @@ fetch('/audit-logs/archive',
   },
   "deleted": true,
   "entityId": "string",
-  "actedOn": [
+  "actedOn": "string",
+  "actedOnList": [
     "string"
   ],
-  "actionGroup": [
+  "actionGroupList": [
     "string"
   ]
 }
@@ -956,10 +959,11 @@ AuditLogWithRelations
   },
   "deleted": true,
   "entityId": "string",
-  "actedOn": [
+  "actedOn": "string",
+  "actedOnList": [
     "string"
   ],
-  "actionGroup": [
+  "actionGroupList": [
     "string"
   ]
 }
@@ -977,8 +981,9 @@ CustomFilter
 |» toDate|string|false|none|none|
 |deleted|boolean|false|none|none|
 |entityId|string|false|none|none|
-|actedOn|[string]|false|none|none|
-|actionGroup|[string]|false|none|none|
+|actedOn|string|false|none|none|
+|actedOnList|[string]|false|none|none|
+|actionGroupList|[string]|false|none|none|
 
 <h2 id="tocS_loopback.Count">loopback.Count</h2>
 <!-- backwards compatibility -->
