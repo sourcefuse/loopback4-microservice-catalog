@@ -1,5 +1,5 @@
-import {MappingLog} from '../../models';
 import {JSONObject} from '@loopback/core';
+import {MappingLog} from '../../models';
 
 export const mappingLog: MappingLog = new MappingLog({
   id: '1',
@@ -21,7 +21,7 @@ export const listMappingLogs: MappingLog[] = [
         toDate: '2023-05-12T09:42:07.521Z',
         fromDate: '2023-05-01T09:42:07.522Z',
       },
-      actedOn: 'Product',
+      actedOn: ['Product'],
       deleted: false,
     } as JSONObject,
     fileName: 'archive1.csv',
@@ -32,7 +32,7 @@ export const listMappingLogs: MappingLog[] = [
         toDate: '2023-05-12T09:42:07.523Z',
         fromDate: '2023-05-01T09:42:07.524Z',
       },
-      actedOn: 'Product',
+      actedOn: ['Product'],
       deleted: true,
     } as JSONObject,
     fileName: 'archive2.csv',

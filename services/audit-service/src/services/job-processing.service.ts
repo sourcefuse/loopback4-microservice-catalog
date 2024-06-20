@@ -1,5 +1,10 @@
 import {BindingScope, inject, injectable} from '@loopback/core';
-import {EntityCrudRepository, Filter, repository} from '@loopback/repository';
+import {
+  AnyObject,
+  EntityCrudRepository,
+  Filter,
+  repository,
+} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {AuditLog, AuditLogRepository} from '@sourceloop/audit-log';
 import {FileStatusKey} from '../enums/file-status-key.enum';
@@ -53,7 +58,10 @@ export class JobProcessingService {
             };
           }
           if (condition.actedOn) {
-            customFilter.actedOn = condition.actedOn;
+            customFilter.actedOn = this.getFilter(condition.actedOn);
+          }
+          if (condition.actionGroup) {
+            customFilter.actionGroup = this.getFilter(condition.actionGroup);
           }
           if (condition.entityId) {
             customFilter.entityId = condition.entityId;
@@ -68,7 +76,18 @@ export class JobProcessingService {
         if (
           (customFilter.actedOn == null ||
             filterUsed.actedOn == null ||
-            filterUsed.actedOn === customFilter.actedOn) &&
+            filterUsed.actedOn === customFilter.actedOn ||
+            this.haveCommonElements(
+              filterUsed.actedOn,
+              customFilter.actedOn,
+            )) &&
+          (customFilter.actionGroup == null ||
+            filterUsed.actionGroup == null ||
+            filterUsed.actionGroup === customFilter.actionGroup ||
+            this.haveCommonElements(
+              filterUsed.actionGroup,
+              customFilter.actionGroup,
+            )) &&
           (customFilter.entityId ??
             filterUsed.entityId ??
             filterUsed.entityId === customFilter.entityId) &&
@@ -98,5 +117,15 @@ export class JobProcessingService {
       await this.jobRepository.updateById(jobId, job);
       throw new HttpErrors.UnprocessableEntity(error.message);
     }
+  }
+
+  getFilter(inquiredFilter: string | AnyObject): string[] {
+    if (typeof inquiredFilter === 'string') {
+      return [inquiredFilter];
+    } else return inquiredFilter.inq;
+  }
+
+  haveCommonElements(arr1: string[], arr2: string[]): boolean {
+    return arr1.some(item => arr2.includes(item));
   }
 }

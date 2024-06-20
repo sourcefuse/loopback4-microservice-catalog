@@ -1,7 +1,6 @@
 import {expect, sinon} from '@loopback/testlab';
 import {archiveLogs} from '../sample-data/archive-log';
 
-import {mappingLog} from '../sample-data/mapping-log';
 import {CustomFilter} from '../../models';
 import {
   getTestAuditController,
@@ -9,6 +8,7 @@ import {
   givenEmptyTestDB,
   populateTestDB,
 } from '../helpers/db.helper';
+import {mappingLog} from '../sample-data/mapping-log';
 
 const testFromDate = new Date('2023-05-06T09:35:07.826Z');
 const testToDate = new Date('2023-05-10T09:35:07.826Z');
@@ -18,14 +18,14 @@ describe('POST /audit-logs/archive', () => {
     await givenEmptyTestDB();
     await populateTestDB();
   });
-  it('archive logs when all 3 parameters are provided and deleted is false', async () => {
+  it('archive logs when 3 parameters are provided and deleted is false', async () => {
     const customFilter: CustomFilter = new CustomFilter({
       date: {
         fromDate: testFromDate,
         toDate: testToDate,
       },
       deleted: false,
-      actedOn: 'Product',
+      actedOn: ['Product'],
     });
 
     const {auditLogController, mappingLogRepository} = getTestAuditController();
@@ -46,14 +46,14 @@ describe('POST /audit-logs/archive', () => {
       actualResult.length + controllerResult.numberOfEntriesArchived,
     ).to.be.equal(archiveLogs.length);
   });
-  it('archive logs when all 3 parameters are provided and deleted is true', async () => {
+  it('archive logs when 3 parameters are provided and deleted is true', async () => {
     const customFilter: CustomFilter = new CustomFilter({
       date: {
         fromDate: testFromDate,
         toDate: testToDate,
       },
       deleted: true,
-      actedOn: 'Product',
+      actedOn: ['Product'],
     });
     const {auditLogController, mappingLogRepository} = getTestAuditController();
 
@@ -73,7 +73,7 @@ describe('POST /audit-logs/archive', () => {
   it('archive logs when date parameter is not provided and deleted is true', async () => {
     const customFilter: CustomFilter = new CustomFilter({
       deleted: true,
-      actedOn: 'Product',
+      actedOn: ['Product'],
     });
     const {auditLogController, mappingLogRepository} = getTestAuditController();
 
@@ -96,7 +96,7 @@ describe('POST /audit-logs/archive', () => {
         fromDate: testFromDate,
         toDate: testToDate,
       },
-      actedOn: 'Product',
+      actedOn: ['Product'],
     });
     const {auditLogController, mappingLogRepository} = getTestAuditController();
 
@@ -162,7 +162,7 @@ describe('POST /audit-logs/archive', () => {
       actualResult.length + controllerResult.numberOfEntriesArchived,
     ).to.be.equal(archiveLogs.length);
   });
-  it('archive logs when only actedOn parameter is provided', async () => {
+  it('archive logs when only date parameter is provided', async () => {
     const customFilter: CustomFilter = new CustomFilter({
       date: {
         fromDate: testFromDate,

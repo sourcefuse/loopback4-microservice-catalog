@@ -1,17 +1,17 @@
 import {expect, sinon} from '@loopback/testlab';
+import {FileStatusKey} from '../../enums/file-status-key.enum';
+import {Job} from '../../models';
 import {
   getTestJobProcessingService,
   givenEmptyTestDB,
   populateTestDB,
 } from '../helpers/db.helper';
+import {archive1, archive2} from '../sample-data/archive-log';
 import {
   filterAppliedActedAt,
   filterAppliedActedOn,
   filterAppliedEntityId,
 } from '../sample-data/filters';
-import {Job} from '../../models';
-import {archive1, archive2} from '../sample-data/archive-log';
-import {FileStatusKey} from '../../enums/file-status-key.enum';
 
 describe('job processing service', () => {
   beforeEach(async () => {

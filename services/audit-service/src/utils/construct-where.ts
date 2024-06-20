@@ -45,7 +45,13 @@ export async function constructWhere(customFilter: CustomFilter) {
 
   if (customFilter.actedOn) {
     where.and.push({
-      actedOn: customFilter.actedOn,
+      actedOn: {inq: customFilter.actedOn},
+    });
+  }
+
+  if (customFilter.actionGroup) {
+    where.and.push({
+      actionGroup: {inq: customFilter.actionGroup},
     });
   }
   return where;

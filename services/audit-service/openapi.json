@@ -531,7 +531,18 @@
             "type": "string"
           },
           "actedOn": {
-            "type": "string"
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "actionGroup": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string"
+            }
           }
         },
         "additionalProperties": false,

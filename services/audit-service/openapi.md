@@ -46,7 +46,12 @@ const inputBody = '{
   },
   "deleted": true,
   "entityId": "string",
-  "actedOn": "string"
+  "actedOn": [
+    "string"
+  ],
+  "actionGroup": [
+    "string"
+  ]
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -77,7 +82,12 @@ const inputBody = {
   },
   "deleted": true,
   "entityId": "string",
-  "actedOn": "string"
+  "actedOn": [
+    "string"
+  ],
+  "actionGroup": [
+    "string"
+  ]
 };
 const headers = {
   'Content-Type':'application/json',
@@ -116,7 +126,12 @@ fetch('/audit-logs/archive',
   },
   "deleted": true,
   "entityId": "string",
-  "actedOn": "string"
+  "actedOn": [
+    "string"
+  ],
+  "actionGroup": [
+    "string"
+  ]
 }
 ```
 
@@ -941,7 +956,12 @@ AuditLogWithRelations
   },
   "deleted": true,
   "entityId": "string",
-  "actedOn": "string"
+  "actedOn": [
+    "string"
+  ],
+  "actionGroup": [
+    "string"
+  ]
 }
 
 ```
@@ -957,7 +977,8 @@ CustomFilter
 |» toDate|string|false|none|none|
 |deleted|boolean|false|none|none|
 |entityId|string|false|none|none|
-|actedOn|string|false|none|none|
+|actedOn|[string]|false|none|none|
+|actionGroup|[string]|false|none|none|
 
 <h2 id="tocS_loopback.Count">loopback.Count</h2>
 <!-- backwards compatibility -->

@@ -1,5 +1,6 @@
 import {JSONObject} from '@loopback/core';
-import {Action, AuditLog} from '@sourceloop/audit-log';
+import {Action} from '@sourceloop/audit-log';
+import {AuditLog} from '../../models';
 
 export const archiveLogs: AuditLog[] = [
   new AuditLog({
