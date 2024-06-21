@@ -15,8 +15,8 @@ export function checkActedOn(
   }
 
   return (
-    (actedOn == null && actedOnList == null) ||
-    customActedOnList == null ||
+    actedOnList.length === 0 ||
+    !customActedOnList ||
     haveCommonElements(customActedOnList, actedOnList)
   );
 }
