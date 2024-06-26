@@ -159,25 +159,17 @@ export default abstract class CommandBase<T extends object> extends Command {
       response.type = 'confirm';
       response.default = false;
     } else if (flag.options) {
-      if (flag.name === 'datasourceType') {
-        response.type = 'list';
-        response.choices = flag.options;
-      } else if (flag.options.length > 1) {
+      if (flag.name === 'baseService') {
         response.type = 'checkbox';
-        response.choices = flag.options.map(option => {
-          return {
-            name: option,
-            value: option,
-          };
-        });
+        response.choices = flag.options;
       } else {
         response.type = 'list';
         response.choices = flag.options;
       }
     } else {
       //do nothing
-      ``;
     }
+
     return response;
   }
 
