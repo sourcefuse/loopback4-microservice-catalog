@@ -39,6 +39,31 @@ export class CustomFilter extends CoreModel<CustomFilter> {
     type: 'string',
   })
   actedOn?: string;
+
+  /** Both actedOnList and actionGroupList parameters accepts a
+   * list of values that you want to archive  */
+
+  @property({
+    jsonSchema: {
+      type: 'array',
+      uniqueItems: true,
+      items: {
+        type: 'string',
+      },
+    },
+  })
+  actedOnList?: string[]; //to avoid breaking change
+
+  @property({
+    jsonSchema: {
+      type: 'array',
+      uniqueItems: true,
+      items: {
+        type: 'string',
+      },
+    },
+  })
+  actionGroupList?: string[];
 }
 
 export type CustomFilterWithRelations = CustomFilter;

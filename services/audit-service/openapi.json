@@ -532,6 +532,20 @@
           },
           "actedOn": {
             "type": "string"
+          },
+          "actedOnList": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "actionGroupList": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string"
+            }
           }
         },
         "additionalProperties": false,

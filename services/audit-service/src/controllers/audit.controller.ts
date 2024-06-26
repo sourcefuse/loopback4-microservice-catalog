@@ -214,6 +214,7 @@ export class AuditController {
   ): Promise<AuditLog> {
     return this.auditLogRepository.findById(id, filter);
   }
+
   @authorize({
     permissions: [PermissionKey.ArchiveLogs, PermissionKey.ArchiveLogsNum],
   })
@@ -311,6 +312,7 @@ export class AuditController {
       }
       return false;
     });
+
     const uploadKey = await this.exportToCsv(selectedAuditLogs);
     /* Creating a mapping log to store the filename and filterused during the archival process*/
     const mappingLog = new MappingLog();

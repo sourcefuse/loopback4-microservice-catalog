@@ -1,5 +1,5 @@
-import {MappingLog} from '../../models';
 import {JSONObject} from '@loopback/core';
+import {MappingLog} from '../../models';
 
 export const mappingLog: MappingLog = new MappingLog({
   id: '1',
