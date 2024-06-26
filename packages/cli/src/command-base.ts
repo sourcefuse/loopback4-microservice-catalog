@@ -12,13 +12,15 @@ import {Input as FlagInput} from '@oclif/parser/lib/flags';
 import inquirer, {Question} from 'inquirer';
 import fetch from 'node-fetch';
 import Environment, {createEnv} from 'yeoman-environment';
+const yeomanenv = require('yeoman-environment');
+// import * as Utils from '../src/utility';
 import {AnyObject, PromptFunction} from './types';
 const chalk = require('chalk'); //NOSONAR
 /* eslint-enable  @typescript-eslint/naming-convention */
 const IGNORED_FLAGS = ['help', 'cwd'];
 export default abstract class CommandBase<T extends object> extends Command {
   prompt: PromptFunction;
-  env: Environment<T>;
+  env: Environment<T> | undefined;
   constructor(
     argv: string[],
     config: IConfig,
@@ -31,11 +33,6 @@ export default abstract class CommandBase<T extends object> extends Command {
     } else {
       this.prompt = inquirer.prompt;
     }
-    if (env) {
-      this.env = env;
-    } else {
-      this.env = createEnv();
-    }
   }
   protected async generate(type: string, generatorOptions: Parser.Input<T>) {
     await this.promptToUpdateVersion();
@@ -47,11 +44,68 @@ export default abstract class CommandBase<T extends object> extends Command {
       await this.promptFlags(generatorOptions.flags, inputs.flags);
     }
 
-    this.env.register(require.resolve(`./generators/${type}`), `oclif:${type}`);
-    await this.env.run(`oclif:${type}`, {
-      ...inputs.args,
-      ...inputs.flags,
-    });
+    if (type === 'microservice') {
+      const baseService = (inputs.flags as any).baseService;
+
+      if (Array.isArray(baseService) && baseService.length > 0) {
+        for (const service of baseService) {
+          const envS = this.getEnv(process.cwd(), 'microservice');
+          const currentInputs = {...inputs};
+          currentInputs.flags = {...inputs.flags, baseService: service};
+
+          await this.runWithEnv(envS, type, [service], {
+            ...currentInputs.args,
+            ...currentInputs.flags,
+          });
+        }
+      }
+    } else {
+      if (this.env) {
+        this.env = this.env;
+      } else {
+        this.env = createEnv();
+      }
+      this.env.register(
+        require.resolve(`./generators/${type}`),
+        `oclif:${type}`,
+      );
+      await this.env.run(`oclif:${type}`, {
+        ...inputs.args,
+        ...inputs.flags,
+      });
+    }
+  }
+  private async yeomanRun(
+    workspace: string,
+    name: string,
+    args: string[] | undefined,
+    opts: any,
+  ) {
+    const env = this.getEnv(workspace, name);
+    await this.runWithEnv(env, name, args, opts);
+  }
+
+  private getEnv(workspace: string, name: string) {
+    const env = yeomanenv.createEnv([], {cwd: workspace});
+    this.registerGenerators(env, name);
+    return env;
+  }
+
+  private async runWithEnv(
+    env: any,
+    name: string,
+    args: string[] | undefined,
+    opts: any,
+  ) {
+    const yeomanArgs = [`sl:${name}`, ...(args ?? [])];
+    return env.run(yeomanArgs, opts);
+  }
+
+  private async registerGenerators(env: any, generator: string) {
+    env.register(
+      require.resolve(`@sourceloop/cli/lib/generators/${generator}/index`),
+      `sl:${generator}`,
+    );
   }
 
   private async promptArgs(args: IArg[], options: AnyObject) {
@@ -104,11 +158,23 @@ export default abstract class CommandBase<T extends object> extends Command {
       response.type = 'confirm';
       response.default = false;
     } else if (flag.options) {
-      response.type = 'list';
-      response.choices = flag.options;
+      if (flag.name === 'datasourceType') {
+        response.type = 'list';
+        response.choices = flag.options;
+      } else if (flag.options.length > 1) {
+        response.type = 'checkbox';
+        response.choices = flag.options.map(option => {
+          return {
+            name: option,
+            value: option,
+          };
+        });
+      } else {
+      }
     } else {
-      //do nothing
+      // Default case for other types without options
     }
+
     return response;
   }
 
