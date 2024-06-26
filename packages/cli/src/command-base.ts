@@ -12,6 +12,8 @@ import {Input as FlagInput} from '@oclif/parser/lib/flags';
 import inquirer, {Question} from 'inquirer';
 import fetch from 'node-fetch';
 import Environment, {createEnv} from 'yeoman-environment';
+const yeomanenv = require('yeoman-environment');
+
 import {AnyObject, PromptFunction} from './types';
 const chalk = require('chalk'); //NOSONAR
 /* eslint-enable  @typescript-eslint/naming-convention */
@@ -46,12 +48,65 @@ export default abstract class CommandBase<T extends object> extends Command {
     if (generatorOptions.flags) {
       await this.promptFlags(generatorOptions.flags, inputs.flags);
     }
+    const baseService = (inputs.flags as AnyObject).baseService;
+    if (
+      type === 'microservice' &&
+      Array.isArray(baseService) &&
+      baseService.length > 0
+    ) {
+      for (const service of baseService) {
+        const envS = this.getEnv(process.cwd(), 'microservice');
+        const currentInputs = {...inputs};
+        currentInputs.flags = {...inputs.flags, baseService: service};
 
-    this.env.register(require.resolve(`./generators/${type}`), `oclif:${type}`);
-    await this.env.run(`oclif:${type}`, {
-      ...inputs.args,
-      ...inputs.flags,
-    });
+        await this.runWithEnv(envS, type, [service], {
+          ...currentInputs.args,
+          ...currentInputs.flags,
+        });
+      }
+    } else {
+      this.env.register(
+        require.resolve(`./generators/${type}`),
+        `oclif:${type}`,
+      );
+      await this.env.run(
+        `oclif:${type}`,
+        Object.assign(Object.assign({}, inputs.args), inputs.flags), //NOSONAR
+      );
+    }
+  }
+
+  private async yeomanRun(
+    workspace: string,
+    name: string,
+    args: string[] | undefined,
+    opts: AnyObject,
+  ) {
+    const env = this.getEnv(workspace, name);
+    await this.runWithEnv(env, name, args, opts);
+  }
+
+  private getEnv(workspace: string, name: string) {
+    const env = yeomanenv.createEnv([], {cwd: workspace});
+    this.registerGenerators(env, name);
+    return env;
+  }
+
+  private async runWithEnv(
+    env: AnyObject,
+    name: string,
+    args: string[] | undefined,
+    opts: AnyObject,
+  ) {
+    const yeomanArgs = [`sl:${name}`, ...(args ?? [])];
+    return env.run(yeomanArgs, opts);
+  }
+
+  private async registerGenerators(env: AnyObject, generator: string) {
+    env.register(
+      require.resolve(`@sourceloop/cli/lib/generators/${generator}/index`),
+      `sl:${generator}`,
+    );
   }
 
   private async promptArgs(args: IArg[], options: AnyObject) {
@@ -104,10 +159,24 @@ export default abstract class CommandBase<T extends object> extends Command {
       response.type = 'confirm';
       response.default = false;
     } else if (flag.options) {
-      response.type = 'list';
-      response.choices = flag.options;
+      if (flag.name === 'datasourceType') {
+        response.type = 'list';
+        response.choices = flag.options;
+      } else if (flag.options.length > 1) {
+        response.type = 'checkbox';
+        response.choices = flag.options.map(option => {
+          return {
+            name: option,
+            value: option,
+          };
+        });
+      } else {
+        response.type = 'list';
+        response.choices = flag.options;
+      }
     } else {
       //do nothing
+      ``;
     }
     return response;
   }
