@@ -1,24 +1,15 @@
 {
-  "packages": [
-    "packages/core",
-    "packages/cli",
-    "packages/cache",
-    "packages/feature-toggle",
-    "packages/custom-sf-changelog/",
-    "services/*",
-    "facades/*",
-    "sandbox/**"
-  ],
+  "packages": ["services/audit-service"],
   "command": {
     "version": {
       "conventionalCommits": true,
       "message": "chore: publish release",
-      "allowBranch": "master"
+      "allowBranch": "audit-service-v10"
     },
     "publish": {
       "conventionalCommits": true,
       "message": "chore: publish release",
-      "allowBranch": "master",
+      "allowBranch": "audit-service-v10",
       "noPrivate": true,
       "graphType": "all"
     },
