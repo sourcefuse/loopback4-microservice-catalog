@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 10.2.0 (2024-06-26)
+
+* chore(audit-service): changes to fic audit service lint issues ([c1ddc7b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c1ddc7b)), closes [#2115](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2115)
+* chore(deps): update authentication component version in all services ([0d67202](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0d67202)), closes [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* feat(audit-service): support for multiple actedon and actiongroup (#2116) ([eba9eb2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/eba9eb2)), closes [#2116](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2116) [#2115](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2115) [#2115](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2115) [#2115](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2115) [#2115](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2115) [#2115](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2115) [#2115](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2115) [#2115](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2115) [#2115](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2115) [#2115](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2115)
+
+
+
+
+
 ## <small>10.0.3 (2024-01-23)</small>
 
 * fix(audit service):provide aws-sdk as a peer dependency in audit service (#1938) ([4ffdf0a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4ffdf0a)), closes [#1938](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1938)
