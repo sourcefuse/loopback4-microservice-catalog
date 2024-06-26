@@ -4,6 +4,7 @@ export function checkActedOn(
   filterUsed: CustomFilter,
   customFilter: CustomFilter,
 ): boolean | undefined {
+  // eslint-disable-next-line prefer-const
   let {actedOn, actedOnList} = filterUsed;
   const customActedOnList = customFilter.actedOnList;
   actedOnList = actedOnList ?? [];

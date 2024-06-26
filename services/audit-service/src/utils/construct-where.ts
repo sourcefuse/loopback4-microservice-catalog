@@ -43,6 +43,7 @@ export async function constructWhere(customFilter: CustomFilter) {
     });
   }
 
+  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
   if (customFilter.actedOn || customFilter.actedOnList) {
     const array = customFilter.actedOn
       ? [customFilter.actedOn]
