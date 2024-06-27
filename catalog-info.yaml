@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: loopback4-microservice-catalog
+  annotations:
+    github.com/project-slug: sourcefuse/loopback4-microservice-catalog
+spec:
+  type: other
+  lifecycle: unknown
+  owner: sourcefuse/admins
