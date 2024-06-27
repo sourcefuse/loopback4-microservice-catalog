@@ -2,8 +2,8 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {BaseGenerator} from '../../base-generator';
-import {ScaffoldOptions} from '../../types';
+import { BaseGenerator } from '../../base-generator';
+import { ScaffoldOptions } from '../../types';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import BackstageIntegrationGenerator from '../backstage-integration';
 export default class ScaffoldGenerator extends BaseGenerator<ScaffoldOptions> {
@@ -34,10 +34,18 @@ export default class ScaffoldGenerator extends BaseGenerator<ScaffoldOptions> {
         this.options,
       );
     }
+    await this._addDocs();
   }
 
   async install() {
     await this.spawnCommand('npm', ['i']);
+  }
+  async _addDocs() {
+    const sourcePath = `${this.destinationRoot()}/README.md`;
+    const destinationPath = `${this.destinationRoot()}/docs/README.md`;
+    /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
+    //@ts-ignore
+    await this.fs.copyTplAsync(sourcePath, destinationPath);
   }
 
   private _setRoot() {
