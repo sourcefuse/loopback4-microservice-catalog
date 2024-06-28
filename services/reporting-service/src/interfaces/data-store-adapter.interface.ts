@@ -8,7 +8,7 @@ import {StructuredQueryInterface} from './structured-query.interface';
 
 export interface DataStoreAdapter {
   listdataSources(): Promise<DataSourceList[]>;
-  query(queryObject: StructuredQueryInterface): Promise<AnyObject[]>;
+  query(queryObject: StructuredQueryInterface | string): Promise<AnyObject[]>;
   manageRecord(
     dataSource: string,
     data: IngestReportRecord,

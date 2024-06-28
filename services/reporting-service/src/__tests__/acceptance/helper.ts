@@ -55,7 +55,9 @@ class MockDataStoreAdapter implements DataStoreAdapter {
     return initialQuery;
   }
 
-  async query(queryObject: StructuredQueryInterface): Promise<AnyObject[]> {
+  async query(
+    queryObject: StructuredQueryInterface | string,
+  ): Promise<AnyObject[]> {
     // Mocked response
     return [{column1: 'value1', column2: 'value2'}];
   }

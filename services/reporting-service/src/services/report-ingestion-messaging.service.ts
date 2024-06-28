@@ -165,6 +165,8 @@ export class ReportIngestionMessagingService {
           },
         );
         transformationPromises.push(promise);
+      } else {
+        newCurrentValues[key] = value;
       }
     }
 

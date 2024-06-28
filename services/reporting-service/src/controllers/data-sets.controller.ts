@@ -268,7 +268,7 @@ export class DataSetsController {
    */
   async fetchDataByIdCount(
     @param.path.string('id') id: string,
-    @param.query.string('filter') filter?: CustomFilter<AnyObject>,
+    @param.query.object('filter') filter?: CustomFilter<AnyObject>,
   ): Promise<Count> {
     const effectiveFilter = filter ?? {};
     return this.dataSetsService.fetchDataByIdCount(id, effectiveFilter);
