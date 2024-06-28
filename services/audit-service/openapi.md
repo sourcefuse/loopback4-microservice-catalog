@@ -20,7 +20,7 @@ headingLevel: 2
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-Audit logging microservice
+Audit logging Microservice
 
 Base URLs:
 
@@ -46,7 +46,13 @@ const inputBody = '{
   },
   "deleted": true,
   "entityId": "string",
-  "actedOn": "string"
+  "actedOn": "string",
+  "actedOnList": [
+    "string"
+  ],
+  "actionGroupList": [
+    "string"
+  ]
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -77,7 +83,13 @@ const inputBody = {
   },
   "deleted": true,
   "entityId": "string",
-  "actedOn": "string"
+  "actedOn": "string",
+  "actedOnList": [
+    "string"
+  ],
+  "actionGroupList": [
+    "string"
+  ]
 };
 const headers = {
   'Content-Type':'application/json',
@@ -116,7 +128,13 @@ fetch('/audit-logs/archive',
   },
   "deleted": true,
   "entityId": "string",
-  "actedOn": "string"
+  "actedOn": "string",
+  "actedOnList": [
+    "string"
+  ],
+  "actionGroupList": [
+    "string"
+  ]
 }
 ```
 
@@ -953,7 +971,13 @@ AuditLogWithRelations
   },
   "deleted": true,
   "entityId": "string",
-  "actedOn": "string"
+  "actedOn": "string",
+  "actedOnList": [
+    "string"
+  ],
+  "actionGroupList": [
+    "string"
+  ]
 }
 
 ```
@@ -970,6 +994,8 @@ CustomFilter
 |deleted|boolean|false|none|none|
 |entityId|string|false|none|none|
 |actedOn|string|false|none|none|
+|actedOnList|[string]|false|none|none|
+|actionGroupList|[string]|false|none|none|
 
 <h2 id="tocS_loopback.Count">loopback.Count</h2>
 <!-- backwards compatibility -->

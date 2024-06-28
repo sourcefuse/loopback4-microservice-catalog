@@ -3,7 +3,7 @@
   "info": {
     "title": "Audit Service",
     "version": "1.0.0",
-    "description": "Audit logging microservice",
+    "description": "Audit logging Microservice",
     "contact": {
       "name": "Sourcefuse"
     }
@@ -544,6 +544,20 @@
           },
           "actedOn": {
             "type": "string"
+          },
+          "actedOnList": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "actionGroupList": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string"
+            }
           }
         },
         "additionalProperties": false,

@@ -43,9 +43,19 @@ export async function constructWhere(customFilter: CustomFilter) {
     });
   }
 
-  if (customFilter.actedOn) {
+  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+  if (customFilter.actedOn || customFilter.actedOnList) {
+    const array = customFilter.actedOn
+      ? [customFilter.actedOn]
+      : customFilter.actedOnList;
     where.and.push({
-      actedOn: customFilter.actedOn,
+      actedOn: {inq: array},
+    });
+  }
+
+  if (customFilter.actionGroupList) {
+    where.and.push({
+      actionGroup: {inq: customFilter.actionGroupList},
     });
   }
   return where;
