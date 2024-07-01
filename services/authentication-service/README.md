@@ -120,15 +120,17 @@ npm i @sourceloop/authentication-service
 - **Two-Factor-Authentication** -
 
   - As of now, 2nd Factor will always be either OTP or Google Authenticator.
-  - Implement MfaProvider(refer [this](./src/providers/mfa.provider.ts)) in your application and bind it to its respective key in application.ts
+  - Implement MfaProvider(refer [this](./src/providers/mfa.provider.ts)) in your application setting
+    its value to true and bind it to its respective key in application.ts
 
-  ```typescript
-  import {VerifyBindings} from '@sourceloop/authentication-service';
-  this.bind(VerifyBindings.MFA_PROVIDER).toProvider(MfaProvider);
-  ```
+    ```typescript
+    import {VerifyBindings} from '@sourceloop/authentication-service';
+    this.bind(VerifyBindings.MFA_PROVIDER).toProvider(MfaProvider);
+    ```
 
   - It works for almost all authentication methods provided by this service.
   - Use `/verify-otp` to enter otp or code from authenticator app.
+    for using Google Authenticator user needs to pass client id in the payload which is optional in case for OTP
 
 - **OAuth- using Azure AD** -
 
@@ -200,6 +202,14 @@ npm i @sourceloop/authentication-service
   Both the files should be in (.pem) format.
   for example: private.pem file for private key and public.pem file for public key.
   (refer [this](https://cryptotools.net/rsagen))
+
+  By default we are employing asymmetric token signing and verification, but if symmetric signing and verification is required it has to be explicitly provided in the manner below
+
+  ```ts
+  this.bind(AuthServiceBindings.Config).to({
+    useSymmetricEncryption: true,
+  });
+  ```
 
 - **Authenticating Password using RSA Encryption**
 

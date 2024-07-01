@@ -71,7 +71,7 @@ describe('Session APIs', () => {
       const save = videoChatSessionRepo.stubs.save;
       save.resolves();
       const result = await controller.getMeetingLink(meetingOptions);
-      expect(result).to.be.a.String();
+      expect(result.code).to.be.a.String();
       sinon.assert.calledOnce(save);
     });
     it('returns a meeting Id of type string, saves the session Id, schedules meeting', async () => {
@@ -85,7 +85,7 @@ describe('Session APIs', () => {
       const save = videoChatSessionRepo.stubs.save;
       save.resolves();
       const result = await controller.getMeetingLink(meetingOptions);
-      expect(result).to.be.a.String();
+      expect(result.code).to.be.a.String();
       sinon.assert.calledOnce(save);
     });
 

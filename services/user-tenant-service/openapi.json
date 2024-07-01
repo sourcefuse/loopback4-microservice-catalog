@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "@sourceloop/user-tenant-service",
-    "version": "0.15.3",
+    "version": "2.0.0",
     "description": "Sourceloop User Tenant Service.",
     "contact": {
       "name": "SourceFuse"
@@ -1456,6 +1456,47 @@
           }
         ],
         "operationId": "UserTenantController.find"
+      }
+    },
+    "/user-callback": {
+      "post": {
+        "x-controller-name": "UserWebhookController",
+        "x-operation-name": "callback",
+        "tags": [
+          "UserWebhookController"
+        ],
+        "responses": {
+          "204": {
+            "description": "Webhook success"
+          }
+        },
+        "description": "",
+        "parameters": [
+          {
+            "name": "x-signature",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-timestamp",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserWebhookDTO"
+              }
+            }
+          }
+        },
+        "operationId": "UserWebhookController.callback"
       }
     },
     "/user-tenant-prefs/count": {
@@ -4106,6 +4147,156 @@
         },
         "additionalProperties": false,
         "x-typescript-type": "Partial<UserLevelPermission>"
+      },
+      "UserWebhookDTO": {
+        "title": "UserWebhookDTO",
+        "type": "object",
+        "description": "(tsType: UserWebhookDTO, schemaOptions: { title: 'UserWebhookDTO' })",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "tenantName": {
+            "type": "string"
+          },
+          "tenantKey": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "middleName": {
+            "type": "string"
+          },
+          "cognitoAuthId": {
+            "type": "string"
+          },
+          "authClient": {
+            "type": "object",
+            "description": "(tsType: Omit<AuthClient, 'id'>, schemaOptions: { exclude: [ 'id' ] })",
+            "title": "AuthClientExcluding_id_",
+            "properties": {
+              "deleted": {
+                "type": "boolean"
+              },
+              "deletedOn": {
+                "type": "string",
+                "format": "date-time",
+                "nullable": true
+              },
+              "deletedBy": {
+                "type": "string",
+                "nullable": true
+              },
+              "createdOn": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "modifiedOn": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "clientId": {
+                "type": "string"
+              },
+              "clientSecret": {
+                "type": "string"
+              },
+              "redirectUrl": {
+                "type": "string"
+              },
+              "secret": {
+                "type": "string"
+              },
+              "accessTokenExpiration": {
+                "type": "number"
+              },
+              "refreshTokenExpiration": {
+                "type": "number"
+              },
+              "authCodeExpiration": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "clientId",
+              "secret",
+              "accessTokenExpiration",
+              "refreshTokenExpiration",
+              "authCodeExpiration"
+            ],
+            "additionalProperties": false,
+            "x-typescript-type": "Omit<AuthClient, 'id'>"
+          },
+          "address": {
+            "type": "object",
+            "description": "this model represents the address of a company (tsType: Omit<AddressDTO, 'id'>, schemaOptions: { exclude: [ 'id' ] })",
+            "title": "AddressDTOExcluding_id_",
+            "properties": {
+              "deleted": {
+                "type": "boolean"
+              },
+              "deletedOn": {
+                "type": "string",
+                "format": "date-time",
+                "nullable": true
+              },
+              "deletedBy": {
+                "type": "string",
+                "nullable": true
+              },
+              "createdOn": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "modifiedOn": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "createdBy": {
+                "type": "string"
+              },
+              "modifiedBy": {
+                "type": "string"
+              },
+              "address": {
+                "type": "string",
+                "description": "address of the company"
+              },
+              "city": {
+                "type": "string",
+                "description": "city of the company"
+              },
+              "state": {
+                "type": "string",
+                "description": "state of the company"
+              },
+              "zip": {
+                "type": "string",
+                "description": "zip code of the company"
+              },
+              "country": {
+                "type": "string",
+                "description": "country of the company"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "email",
+          "tenantName",
+          "tenantKey",
+          "firstName"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "UserWebhookDTO"
       },
       "loopback.Count": {
         "type": "object",

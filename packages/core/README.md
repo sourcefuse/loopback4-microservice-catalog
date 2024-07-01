@@ -115,6 +115,16 @@ setupSequence() {
 }
 ```
 
+By default asymmetric verification is supported, but if symmetric verification of the token is needed then it has to provided explicitly in the setupSequence() in the manner given below.
+
+```ts
+this.application.bind(BearerVerifierBindings.Config).to({
+  authServiceUrl: '',
+  type: BearerVerifierType.service,
+  useSymmetricEncryption: true,
+} as BearerVerifierConfig);
+```
+
 ## Logger-Extension
 
 ### Usage

@@ -1,9 +1,8 @@
+import * as fs from 'fs';
 import * as jwt from 'jsonwebtoken';
 import {PermissionKey} from '../../../enums';
 
 process.env.JWT_ISSUER = 'test';
-process.env.JWT_SECRET = 'test';
-//User Creds
 const User = {
   id: 1,
   username: 'test_user',
@@ -19,7 +18,16 @@ export const testUserPayload = {
   userLocked: false,
   permissions: [PermissionKey.ViewLoginActivity],
 };
-export const token = jwt.sign(testUserPayload, process.env.JWT_SECRET, {
-  expiresIn: 180000,
-  issuer: process.env.JWT_ISSUER,
-});
+export class JwtToken {
+  static createToken() {
+    const privateKey = fs.readFileSync(
+      process.env.JWT_PRIVATE_KEY ?? '',
+    ) as Buffer;
+
+    return jwt.sign(testUserPayload, privateKey, {
+      expiresIn: 180000,
+      issuer: 'test',
+      algorithm: 'RS256',
+    });
+  }
+}

@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.1.2 (2024-06-11)</small>
+
+* chore: publish release ([89d1599](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/89d1599))
+* chore(deps): loopback and sourceloop version update (#2108) ([9cd8962](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9cd8962)), closes [#2108](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2108) [#2104](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2104) [#2104](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2104)
+* chore(deps): version bump commit (#2111) ([c87bc75](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c87bc75)), closes [#2111](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2111) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* fix(all-services): revert to pr 2072 (#2106) ([502812f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/502812f)), closes [#2106](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2106) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## <small>2.1.1 (2024-06-10)</small>
+
+* fix(all-services): revert to pr 2072 (#2106) ([502812f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/502812f)), closes [#2106](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2106) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## 2.1.0 (2024-05-20)
+
+* chore(all-services): sonar fixes (#2096) ([7f958bb](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7f958bb)), closes [#2096](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2096) [#2095](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2095)
+* feat(all-services): Follow solid for repositories in all services (#2072) ([82c934b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/82c934b)), closes [#2072](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2072) [#2037](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2037)
+* feat(user-tenant-service): add user webhook test cases (#2094) ([4a64aea](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4a64aea)), closes [#2094](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2094) [#5](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/5) [#5](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/5) [#5](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/5)
+* feat(user-tenant-service): add user webhook to seed data in db (#2093) ([2c6277c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2c6277c)), closes [#2093](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2093) [#5](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/5)
+
+
+
+
+
+## 2.0.0 (2024-05-07)
+
+* feat(all-services): update core package in all services (#2091) ([8b1703f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8b1703f)), closes [#2091](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2091) [#2077](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2077) [#2077](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2077)
+* feat(authentication-service): make asymmetric encryption of the token default (#2076) ([6b78867](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6b78867)), closes [#2076](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2076) [#2030](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2030) [#2030](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2030)
+* feat(core): added dynamic tenant connector (#1953) ([ef32c05](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ef32c05)), closes [#1953](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1953) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#9122](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/9122) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922) [#1922](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1922)
+* feat(core): update core package to use asymmetric token verification by default (#2078) ([756d956](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/756d956)), closes [#2078](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2078) [#2077](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2077)
+
+
+### BREAKING CHANGE
+
+* Config has to be provided to use symmetric encrytion
+* Rather than symmetric ,asymmetric provider will be implemented by default
+* update the core major version
+* Updated core package
+
+
+
+
 ## <small>0.17.1 (2024-04-05)</small>
 
 **Note:** Version bump only for package @sourceloop/user-tenant-service

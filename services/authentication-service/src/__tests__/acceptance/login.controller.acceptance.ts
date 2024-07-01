@@ -6,6 +6,7 @@
 import {Client, createRestAppClient, expect} from '@loopback/testlab';
 import {AuthProvider, AuthenticateErrorKeys, RoleTypes} from '@sourceloop/core';
 import {AuthErrorKeys} from 'loopback4-authentication';
+import path from 'path';
 import {
   AuthClientRepository,
   RefreshTokenRepository,
@@ -51,11 +52,22 @@ describe('Authentication microservice', () => {
     helper = await app.get(TestHelperKey);
   });
   before(setMockData);
+  beforeEach(() => {
+    process.env.JWT_PUBLIC_KEY = path.resolve(
+      __dirname,
+      '../../../src/__tests__/utils/publicKey.txt',
+    );
+    process.env.JWT_PRIVATE_KEY = path.resolve(
+      __dirname,
+      '../../../src/__tests__/utils/privateKey.txt',
+    );
+  });
   after(deleteMockData);
   afterEach(() => {
     delete process.env.JWT_ISSUER;
-    delete process.env.JWT_SECRET;
     delete process.env.ENCRYPTION_KEY;
+    delete process.env.JWT_PUBLIC_KEY;
+    delete process.env.JWT_PRIVATE_KEY;
     helper.reset();
   });
   it('should give status 422 for login request with no client credentials', async () => {
@@ -144,7 +156,6 @@ describe('Authentication microservice', () => {
       password: 'temp123!@',
     };
     process.env.JWT_ISSUER = 'test';
-    process.env.JWT_SECRET = 'test';
     process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
     const reqForCode = await client
       .post(`/auth/login`)
@@ -174,7 +185,6 @@ describe('Authentication microservice', () => {
       password: 'temp123!@',
     };
     process.env.JWT_ISSUER = 'test';
-    process.env.JWT_SECRET = 'test';
     process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
     const reqForCode = await client
       .post(`/auth/login`)
@@ -204,7 +214,6 @@ describe('Authentication microservice', () => {
       password: 'temp123!@',
     };
     process.env.JWT_ISSUER = 'test';
-    process.env.JWT_SECRET = 'test';
     process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
     const reqForCode = await client
       .post(`/auth/login`)
@@ -225,7 +234,6 @@ describe('Authentication microservice', () => {
       password: 'temp123!@',
     };
     process.env.JWT_ISSUER = 'test';
-    process.env.JWT_SECRET = 'test';
     process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
     const reqForCode = await client
       .post(`/auth/login`)
@@ -255,7 +263,6 @@ describe('Authentication microservice', () => {
       password: 'new_test_password',
     };
     process.env.JWT_ISSUER = 'test';
-    process.env.JWT_SECRET = 'test';
     process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
     const reqForCode = await client
       .post(`/auth/login`)
@@ -285,7 +292,6 @@ describe('Authentication microservice', () => {
       password: 'new_test_password',
     };
     process.env.JWT_ISSUER = 'test';
-    process.env.JWT_SECRET = 'test';
     process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
     const reqForCode = await client
       .post(`/auth/login`)
@@ -315,7 +321,6 @@ describe('Authentication microservice', () => {
       password: 'temp123!@',
     };
     process.env.JWT_ISSUER = 'test';
-    process.env.JWT_SECRET = 'test';
     process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
     const reqForCode = await client
       .post(`/auth/login`)
@@ -344,7 +349,6 @@ describe('Authentication microservice', () => {
       password: 'temp123!@',
     };
     process.env.JWT_ISSUER = 'test';
-    process.env.JWT_SECRET = 'test';
     process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
     const reqForCode = await client
       .post(`/auth/login`)
@@ -371,7 +375,6 @@ describe('Authentication microservice', () => {
       username: 'test_user',
     };
     process.env.JWT_ISSUER = 'test';
-    process.env.JWT_SECRET = 'test';
     const response = await client
       .post(`/auth/forget-password`)
       .send(reqData)
@@ -389,7 +392,6 @@ describe('Authentication microservice', () => {
       username: 'test_user',
     };
     process.env.JWT_ISSUER = 'test';
-    process.env.JWT_SECRET = 'test';
     await client.post(`/auth/forget-password`).send(reqData).expect(204);
     const token = helper.get('TOKEN');
     expect(token).to.be.String();
@@ -404,7 +406,6 @@ describe('Authentication microservice', () => {
       username: 'test_teacher',
     };
     process.env.JWT_ISSUER = 'test';
-    process.env.JWT_SECRET = 'test';
     const response = await client
       .post(`/auth/forget-password`)
       .send(reqData)
@@ -435,7 +436,6 @@ describe('Authentication microservice', () => {
       username: 'test_user',
     };
     process.env.JWT_ISSUER = 'test';
-    process.env.JWT_SECRET = 'test';
     await client.post(`/auth/forget-password`).send(reqData).expect(204);
     const token = helper.get('TOKEN');
     expect(token).to.be.String();
@@ -453,7 +453,6 @@ describe('Authentication microservice', () => {
       username: 'test_user',
     };
     process.env.JWT_ISSUER = 'test';
-    process.env.JWT_SECRET = 'test';
     await client.post(`/auth/forget-password`).send(reqData).expect(204);
     const responseToken = await client
       .get(`/auth/verify-reset-password-link`)
@@ -469,7 +468,6 @@ describe('Authentication microservice', () => {
       username: 'test_user',
     };
     process.env.JWT_ISSUER = 'test';
-    process.env.JWT_SECRET = 'test';
     await client.post(`/auth/forget-password`).send(reqData).expect(204);
     const request = {
       // eslint-disable-next-line
@@ -487,7 +485,6 @@ describe('Authentication microservice', () => {
       username: 'test_user',
     };
     process.env.JWT_ISSUER = 'test';
-    process.env.JWT_SECRET = 'test';
     await client.post(`/auth/forget-password`).send(reqData).expect(204);
     const token = helper.get('TOKEN');
     const request = {
@@ -506,7 +503,6 @@ describe('Authentication microservice', () => {
       username: 'test_user',
     };
     process.env.JWT_ISSUER = 'test';
-    process.env.JWT_SECRET = 'test';
     await client.post(`/auth/forget-password`).send(reqData).expect(204);
     const token = helper.get('TOKEN');
     const request = {
@@ -527,7 +523,6 @@ describe('Authentication microservice', () => {
       username: 'test_user',
     };
     process.env.JWT_ISSUER = 'test';
-    process.env.JWT_SECRET = 'test';
     await client.post(`/auth/forget-password`).send(reqData).expect(204);
     const token = helper.get('TOKEN');
     const request = {
@@ -549,7 +544,6 @@ describe('Authentication microservice', () => {
       password: 'test123#@',
     };
     process.env.JWT_ISSUER = 'test';
-    process.env.JWT_SECRET = 'test';
     process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
     const reqForCode = await client
       .post(`/auth/login`)
@@ -581,7 +575,6 @@ describe('Authentication microservice', () => {
       password: 'test123#@',
     };
     process.env.JWT_ISSUER = 'test';
-    process.env.JWT_SECRET = 'test';
     process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
     const reqForCode = await client
       .post(`/auth/login`)

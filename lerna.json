@@ -60,6 +60,7 @@
         "@sourceloop/telemed-notification-api",
         "@sourceloop/telemed-video-conferencing-api",
         "@sourceloop/telemed-auth-cdktf",
+        "@sourceloop/auth-public-private-client",
         "@sourceloop/telemed-video-conferencing-cdktf",
         "@sourceloop/telemed-notification-cdktf",
         "@sourceloop/telemed-ui-cdk",

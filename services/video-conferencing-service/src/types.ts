@@ -151,6 +151,9 @@ export interface MeetingOptions {
   enableArchiving?: boolean;
 }
 
+export interface MeetingLink {
+  code: string;
+}
 export interface MeetingResponse {
   sessionId: string;
   isArchived?: boolean;
@@ -177,7 +180,7 @@ export interface IArchiveService {
 }
 
 export interface ISessionService {
-  getMeetingLink(options: MeetingOptions): Promise<string>;
+  getMeetingLink(options: MeetingOptions): Promise<MeetingLink>;
 
   getMeetingToken(
     sessionOptions: SessionOptions,

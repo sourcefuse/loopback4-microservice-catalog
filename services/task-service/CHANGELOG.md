@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.0.1 (2024-06-11)</small>
+
+* chore(deps): loopback and sourceloop version update (#2108) ([9cd8962](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9cd8962)), closes [#2108](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2108) [#2104](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2104) [#2104](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2104)
+* chore(deps): version bump commit (#2111) ([c87bc75](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c87bc75)), closes [#2111](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2111) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
+## 2.0.0 (2024-05-07)
+
+* feat(all-services): update core package in all services (#2091) ([8b1703f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8b1703f)), closes [#2091](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2091) [#2077](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2077) [#2077](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2077)
+* feat(authentication-service): make asymmetric encryption of the token default (#2076) ([6b78867](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6b78867)), closes [#2076](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2076) [#2030](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2030) [#2030](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2030)
+* feat(core): update core package to use asymmetric token verification by default (#2078) ([756d956](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/756d956)), closes [#2078](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2078) [#2077](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2077)
+* feat(task-service): Added patch api in task service to update any task. (#2033) ([12707b9](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/12707b9)), closes [#2033](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2033) [#2032](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2032)
+
+
+### BREAKING CHANGE
+
+* Config has to be provided to use symmetric encrytion
+* Rather than symmetric ,asymmetric provider will be implemented by default
+* update the core major version
+* Updated core package
+
+
+
+
 ## <small>0.8.2 (2024-04-05)</small>
 
 **Note:** Version bump only for package @sourceloop/task-service

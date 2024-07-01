@@ -1770,7 +1770,8 @@ This operation does not require authentication
 ```javascript
 const inputBody = '{
   "key": "string",
-  "otp": "string"
+  "otp": "string",
+  "clientId": "string"
 }';
 const headers = {
   'Content-Type':'application/json'
@@ -1794,7 +1795,8 @@ fetch('/auth/verify-otp',
 const fetch = require('node-fetch');
 const inputBody = {
   "key": "string",
-  "otp": "string"
+  "otp": "string",
+  "clientId": "string"
 };
 const headers = {
   'Content-Type':'application/json'
@@ -1823,7 +1825,8 @@ Gets you the code that will be used for getting token (webapps)
 ```json
 {
   "key": "string",
-  "otp": "string"
+  "otp": "string",
+  "clientId": "string"
 }
 ```
 
@@ -4341,7 +4344,8 @@ OtpSendRequest
 ```json
 {
   "key": "string",
-  "otp": "string"
+  "otp": "string",
+  "clientId": "string"
 }
 
 ```
@@ -4354,6 +4358,108 @@ OtpLoginRequest
 |---|---|---|---|---|
 |key|string|true|none|This property is supposed to be a string and is a required field|
 |otp|string|true|none|This property is supposed to be a string and is a required field|
+|clientId|string|false|none|none|
+
+<h2 id="tocS_AuthUser">AuthUser</h2>
+<!-- backwards compatibility -->
+<a id="schemaauthuser"></a>
+<a id="schema_AuthUser"></a>
+<a id="tocSauthuser"></a>
+<a id="tocsauthuser"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "firstName": "string",
+  "lastName": "string",
+  "middleName": "string",
+  "username": "string",
+  "email": "string",
+  "phone": "string",
+  "authClientIds": "string",
+  "lastLogin": "2019-08-24T14:15:22Z",
+  "photoUrl": "string",
+  "designation": "string",
+  "dob": "2019-08-24T14:15:22Z",
+  "gender": "M",
+  "defaultTenantId": "string",
+  "permissions": [
+    "string"
+  ],
+  "role": "string",
+  "externalAuthToken": "string",
+  "deviceInfo": {},
+  "age": 0,
+  "externalRefreshToken": "string",
+  "authClientId": 0,
+  "userPreferences": {},
+  "tenantId": "string",
+  "userTenantId": "string",
+  "passwordExpiryTime": "2019-08-24T14:15:22Z",
+  "status": 1
+}
+
+```
+
+AuthUser
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|firstName|string|true|none|none|
+|lastName|string|false|none|none|
+|middleName|string|false|none|none|
+|username|string|true|none|none|
+|email|string|false|none|none|
+|phone|string|false|none|none|
+|authClientIds|string|false|none|none|
+|lastLogin|string(date-time)|false|none|none|
+|photoUrl|string|false|none|none|
+|designation|string|false|none|none|
+|dob|string(date-time)|false|none|none|
+|gender|string|false|none|This field takes a single character as input in database.<br>    'M' for male and 'F' for female.|
+|defaultTenantId|string|false|none|none|
+|permissions|[string]|false|none|none|
+|role|string|true|none|none|
+|externalAuthToken|string|false|none|none|
+|deviceInfo|object|false|none|This property consists of two optional fields.<br>    1. userAgent<br>    2. deviceId|
+|age|number|false|none|none|
+|externalRefreshToken|string|false|none|none|
+|authClientId|number|false|none|none|
+|userPreferences|object|false|none|none|
+|tenantId|string|false|none|none|
+|userTenantId|string|false|none|none|
+|passwordExpiryTime|string(date-time)|false|none|none|
+|status|number|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|gender|M|
+|gender|F|
+|gender|O|
+|status|1|
+|status|2|
+|status|3|
+|status|0|
+|status|4|
 
 <h2 id="tocS_ForgetPasswordDto">ForgetPasswordDto</h2>
 <!-- backwards compatibility -->

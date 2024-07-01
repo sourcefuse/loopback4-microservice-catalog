@@ -6,12 +6,12 @@ import {BootMixin} from '@loopback/boot';
 import {ApplicationConfig} from '@loopback/core';
 import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
-import * as path from 'path';
-import {TaskServiceComponent} from './component';
 import {
   RestExplorerBindings,
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
+import * as path from 'path';
+import {TaskServiceComponent} from './component';
 
 export {ApplicationConfig};
 

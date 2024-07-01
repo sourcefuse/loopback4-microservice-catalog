@@ -3,6 +3,49 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.12.3 (2024-06-11)</small>
+
+* chore: publish release ([89d1599](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/89d1599))
+* chore(deps):  version update in sandbox (#2109) ([615d7f5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/615d7f5)), closes [#2109](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2109) [#2104](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2104) [#2104](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2104)
+* chore(deps): version bump commit (#2111) ([c87bc75](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c87bc75)), closes [#2111](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2111) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* fix(all-services): revert to pr 2072 (#2106) ([502812f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/502812f)), closes [#2106](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2106) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## <small>0.12.2 (2024-06-10)</small>
+
+* fix(all-services): revert to pr 2072 (#2106) ([502812f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/502812f)), closes [#2106](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2106) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## <small>0.12.1 (2024-06-04)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
+## 0.12.0 (2024-05-20)
+
+* feat(all-services): Follow solid for repositories in all services (#2072) ([82c934b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/82c934b)), closes [#2072](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2072) [#2037](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2037)
+
+
+
+
+
+## <small>0.11.13 (2024-05-07)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-ms-basic-example
+
+
+
+
+
 ## <small>0.11.12 (2024-04-05)</small>
 
 **Note:** Version bump only for package @sourceloop/auth-ms-basic-example

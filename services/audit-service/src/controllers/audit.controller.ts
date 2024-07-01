@@ -59,7 +59,6 @@ import {
   ExportToCsvFn,
 } from '../types';
 import {constructWhere} from '../utils/construct-where';
-
 const basePath = '/audit-logs';
 
 export class AuditController {
@@ -305,16 +304,16 @@ export class AuditController {
       }
     }
     /*There is a chance that during the above for loop, duplicate entries might have been
-    concatenated in the selectedAuditLogs array.Therefore filter the array to keep only 
-    unique rows based on the 'id' column. 
+    concatenated in the selectedAuditLogs array.Therefore filter the array to keep only
+    unique rows based on the 'id' column.
     Example
     id  entityId     after
     1     a        deleted:true
     2     a        deleted:false
     3     a           null
     Now if in our filter deleted is true then initially selectedAuditLogs will have
-    id->1,3 . Now the for loop will run for id->1 and it will concatenate id->2,3. 
-    Then the for loop will run for id->3 and it will concatenate id->1,2. Now eventually 
+    id->1,3 . Now the for loop will run for id->1 and it will concatenate id->2,3.
+    Then the for loop will run for id->3 and it will concatenate id->1,2. Now eventually
     selectedAuditLogs will have duplicate entries for id->1,2,3 which is why we are filtering
     selectedAuditLogs keeping 'id' unique
     */

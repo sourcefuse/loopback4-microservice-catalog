@@ -24,14 +24,13 @@ import {
   ColumnBuilderFn,
   QuerySelectedFilesFn,
 } from '../types';
-
 @injectable({scope: BindingScope.TRANSIENT})
 export class JobProcessingService {
   constructor(
     @inject(QuerySelectedFilesServiceBindings.QUERY_ARCHIVED_LOGS)
     public querySelectedFiles: QuerySelectedFilesFn,
     @inject(AuditLogExportServiceBindings.EXPORT_AUDIT_LOGS)
-    public auditLogExport: AuditLogExportFn,
+    public auditLogExportService: AuditLogExportFn,
     @inject(ColumnBuilderServiceBindings.COLUMN_BUILDER)
     public columnBuilder: ColumnBuilderFn,
     @repository(MappingLogRepository)
@@ -96,7 +95,7 @@ export class JobProcessingService {
 
       if (job.operation === OperationKey.EXPORT) {
         const customColumnData = await this.columnBuilder(finalData);
-        await this.auditLogExport(customColumnData);
+        await this.auditLogExportService(customColumnData);
       }
       job.status = FileStatusKey.COMPLETED;
       job.result = JSON.stringify(finalData);

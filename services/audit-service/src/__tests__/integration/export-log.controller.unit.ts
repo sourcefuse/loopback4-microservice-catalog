@@ -3,9 +3,10 @@ import {createStubInstance, expect} from '@loopback/testlab';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {FileStatusKey} from '../../enums/file-status-key.enum';
 import {OperationKey} from '../../enums/operation-key.enum';
+import {AuditLogExportProvider} from '../../exporter';
+import {AuditLogExportServiceBindings} from '../../keys';
 import {Job} from '../../models/tenant-support';
 import {JobRepository} from '../../repositories';
-import {AuditLogExportProvider} from '../../services';
 import {DummyAuditServiceApplication} from '../fixtures/dummy-application';
 import {ColumnBuilderProvider} from '../fixtures/providers/column-builder.service';
 import {
@@ -29,6 +30,9 @@ describe('POST /audit-logs/export', () => {
       connector: 'memory',
     });
     app.bind(AuthenticationBindings.CURRENT_USER).to(testUser);
+    app
+      .bind(AuditLogExportServiceBindings.EXPORT_AUDIT_LOGS)
+      .toProvider(AuditLogExportProvider);
     app.dataSource(ds);
 
     await app.boot();
@@ -53,6 +57,7 @@ describe('POST /audit-logs/export', () => {
       filter,
     );
     expect(controllerResult).to.have.a.property('message').which.is.a.String();
+
     expect(result).to.be.deepEqual(getAuditLogExportParameter());
   });
   it('when includeArchivedLogs is true', async () => {

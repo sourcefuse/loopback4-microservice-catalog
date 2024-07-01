@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>9.0.1 (2024-06-28)</small>
+
+* fix(cli): add docs folder while scaffolding (#2121) ([a67076a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a67076a)), closes [#2121](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2121) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* chore(cli): update cli template dependencies (#2113) ([da660d4](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/da660d4)), closes [#2113](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2113) [#2104](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2104)
+
+
+
+
+
+## 9.0.0 (2024-05-07)
+
+* feat(all-services): update core package in all services (#2091) ([8b1703f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8b1703f)), closes [#2091](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2091) [#2077](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2077) [#2077](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2077)
+
+
+### BREAKING CHANGE
+
+* update the core major version
+* Updated core package
+
+
+
+
 ## <small>8.0.1 (2024-04-02)</small>
 
 * chore(deps): template dependencies version update (#2066) ([89521dd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/89521dd)), closes [#2066](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2066) [#2064](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2064)

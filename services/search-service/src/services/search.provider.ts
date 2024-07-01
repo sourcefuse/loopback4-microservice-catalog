@@ -8,12 +8,8 @@ import {HttpErrors} from '@loopback/rest';
 import {MySqlQueryBuilder, PsqlQueryBuilder} from '../classes';
 import {CONNECTORS, Errors} from '../const';
 import {SearchServiceBindings} from '../keys';
-import {SearchResult} from '../models';
-import {
-  isSearchableModel,
-  SearchFunctionType,
-  SearchServiceConfig,
-} from '../types';
+import {SearchFunctionType, SearchServiceConfig} from '../types';
+import {ModelProviderFn} from './model.provider';
 
 @injectable({scope: BindingScope.SINGLETON})
 export class SearchProvider<T extends Model>
@@ -28,10 +24,12 @@ export class SearchProvider<T extends Model>
     private readonly mySQLBuilder: typeof MySqlQueryBuilder,
     @inject(SearchServiceBindings.PostgreSQLQueryBuilder)
     private readonly psqlBuilder: typeof PsqlQueryBuilder,
+    @inject(SearchServiceBindings.modelProvider)
+    private readonly modelProvider: ModelProviderFn,
   ) {}
 
   value(): SearchFunctionType<T> {
-    return search => {
+    return async search => {
       let queryBuilder;
 
       if (!search.match) {
@@ -53,29 +51,10 @@ export class SearchProvider<T extends Model>
             Errors.UNSUPPORTED_CONNECTOR,
           );
       }
-      let models;
-      if (search.sources && search.sources.length > 0) {
-        const sources = search.sources;
-        models = this.config.models.filter(model => {
-          if (isSearchableModel(model)) {
-            return sources.includes(model.identifier ?? model.model.modelName);
-          } else {
-            return sources.includes(model.modelName);
-          }
-        });
-      } else {
-        models = this.config.models;
-      }
-      const type = this.config.type ?? SearchResult;
-
-      const {query, params} = queryBuilder.build(
-        models,
-        this.config.ignoreColumns,
-        type,
-      );
+      const {query, params} = await this.modelProvider(search, queryBuilder);
 
       try {
-        return this.datasource.execute(query, params) as Promise<T[]>;
+        return await (this.datasource.execute(query, params) as Promise<T[]>);
       } catch (e) {
         throw new HttpErrors.InternalServerError(Errors.FAILED);
       }

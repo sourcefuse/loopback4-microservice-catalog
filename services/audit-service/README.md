@@ -32,6 +32,7 @@ Additionally, the audit-service goes beyond basic functionality by offering an a
 
 ```bash
 npm i @sourceloop/audit-service
+
 ```
 
 ## Getting Started
@@ -127,7 +128,6 @@ export class AuditDbDataSource
 
 The migrations required for this service are processed during the installation automatically if you set the `AUDIT_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or databases, they may be affected. In such a scenario, it is advised that you copy the migration files in your project root, using the `AUDIT_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
 
-
 Additionally, there is now an option to choose between SQL migration or PostgreSQL migration.
 NOTE : for [`@sourceloop/cli`](https://www.npmjs.com/package/@sourceloop/cli?activeTab=readme) users, this choice can be specified during the scaffolding process by selecting the "type of datasource" option.
 
@@ -218,7 +218,18 @@ If `includeArchivedLogs` option is set to `false` (which is default if not provi
 
 ### Export Logs
 
-This feature is used to export the logs present in Audit Database or the archive storage(eg. AWS.S3). A default loopback filter is accepted based on which logs are exported to the desired location as specified as an excel file(by default). Along with this a boolean variable called `includeArchivedLogs` is also provided which accepts `true` or `false` resulting in whether to include the archieved logs in response.
+This feature is used to export the logs present in Audit Database or the archive storage(eg. AWS.S3). A default loopback filter is accepted based on which logs are exported to the desired location as specified as an excel file(by default) using `AuditLogExportProvider` [here](src/providers/audit-log-export.service.ts).
+The exceljs dependency, used by the `AuditLogExportProvider` for generating Excel files, is optional. Users who wish to utilize this feature should manually install exceljs and bind the AuditLogExportProvider in the application.ts of your application:
+
+```ts
+this.bind(AuditLogExportServiceBindings.EXPORT_AUDIT_LOGS).toProvider(
+  AuditLogExportProvider,
+);
+```
+
+By following these steps, users can seamlessly incorporate the AuditLogExportProvider into their applications while having the flexibility to choose whether or not to include the exceljs dependency.
+
+Along with this a boolean variable called `includeArchivedLogs` is also provided which accepts `true` or `false` resulting in whether to include the archieved logs in response.
 
 If `includeArchivedLogs` is set to `true` then data will be fetched from both Audit database and archive storage based on the filter provided as an input **but it is not immediately returned**, a `jobId` is returned which represents the operation happening in the background to fetch and parse logs from archive storage. This `jobId` can be used to check the status of this process and get the result when it is done.
 

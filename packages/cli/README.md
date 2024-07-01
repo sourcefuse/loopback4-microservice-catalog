@@ -18,7 +18,7 @@ $ npm install -g @sourceloop/cli
 $ sl COMMAND
 running command...
 $ sl (-v|--version|version)
-@sourceloop/cli/8.0.1 linux-x64 node-v18.19.1
+@sourceloop/cli/9.0.1 linux-x64 node-v18.20.3
 $ sl --help [COMMAND]
 USAGE
   $ sl COMMAND
@@ -83,7 +83,7 @@ OPTIONS
   --help                                           show manual pages
 ```
 
-_See code: [src/commands/cdk.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v8.0.1/src/commands/cdk.ts)_
+_See code: [src/commands/cdk.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v9.0.1/src/commands/cdk.ts)_
 
 ## `sl extension [NAME]`
 
@@ -100,7 +100,7 @@ OPTIONS
   --help  show manual pages
 ```
 
-_See code: [src/commands/extension.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v8.0.1/src/commands/extension.ts)_
+_See code: [src/commands/extension.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v9.0.1/src/commands/extension.ts)_
 
 ## `sl help [COMMAND]`
 
@@ -164,7 +164,7 @@ OPTIONS
       Include sequelize as ORM in service
 ```
 
-_See code: [src/commands/microservice.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v8.0.1/src/commands/microservice.ts)_
+_See code: [src/commands/microservice.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v9.0.1/src/commands/microservice.ts)_
 
 ## `sl scaffold [NAME]`
 
@@ -186,7 +186,7 @@ OPTIONS
   --owner=owner              owner of the repo
 ```
 
-_See code: [src/commands/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v8.0.1/src/commands/scaffold.ts)_
+_See code: [src/commands/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v9.0.1/src/commands/scaffold.ts)_
 
 ## `sl update`
 
@@ -200,5 +200,5 @@ OPTIONS
   --help  show manual pages
 ```
 
-_See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v8.0.1/src/commands/update.ts)_
+_See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v9.0.1/src/commands/update.ts)_
 <!-- commandsstop -->

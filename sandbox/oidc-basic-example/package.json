@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/oidc-basic-example",
-  "version": "0.3.14",
-  "description": "oidc",
+  "version": "0.3.15",
+  "description": "oidc.",
   "keywords": [
     "loopback-application",
     "loopback"
@@ -62,24 +62,24 @@
     "!*/__tests__"
   ],
   "dependencies": {
-    "@loopback/boot": "^6.1.5",
-    "@loopback/core": "^5.1.5",
-    "@loopback/repository": "^6.1.5",
-    "@loopback/rest": "^13.1.5",
-    "@loopback/rest-explorer": "^6.1.5",
-    "@loopback/service-proxy": "^6.1.5",
-    "@sourceloop/oidc-service": "^0.6.1",
-    "loopback-connector-postgresql": "^7.0.2",
+    "@loopback/boot": "^7.0.2",
+    "@loopback/core": "^6.0.2",
+    "@loopback/repository": "^7.0.2",
+    "@loopback/rest": "^14.0.2",
+    "@loopback/rest-explorer": "^7.0.2",
+    "@loopback/service-proxy": "^7.0.2",
+    "@sourceloop/oidc-service": "^2.1.2",
+    "loopback-connector-postgresql": "^7.1.1",
     "nodemon": "^2.0.21",
     "tslib": "^2.6.2"
   },
   "devDependencies": {
-    "@loopback/build": "^10.1.5",
-    "@loopback/eslint-config": "^14.0.4",
-    "@loopback/testlab": "^6.1.5",
+    "@loopback/build": "^11.0.2",
+    "@loopback/eslint-config": "^15.0.2",
+    "@loopback/testlab": "^7.0.2",
     "@types/node": "^18.11.9",
-    "eslint": "^8.44.0",
+    "eslint": "^8.57.0",
     "source-map-support": "^0.5.21",
-    "typescript": "~4.9.5"
+    "typescript": "~5.2.2"
   }
 }

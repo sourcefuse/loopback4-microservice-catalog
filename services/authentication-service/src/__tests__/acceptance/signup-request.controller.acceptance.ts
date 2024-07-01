@@ -4,6 +4,7 @@
 // https://opensource.org/licenses/MIT
 'use strict';
 import {Client, expect} from '@loopback/testlab';
+import path from 'path';
 import {TestingApplication} from '../fixtures/application';
 import {TestHelperKey} from '../fixtures/keys';
 import {TestHelperService} from '../fixtures/services';
@@ -23,6 +24,16 @@ describe('SignUp Request Controller', () => {
     ({app, client} = await setupApplication());
     helper = await app.get(TestHelperKey);
   });
+  beforeEach(() => {
+    process.env.JWT_PUBLIC_KEY = path.resolve(
+      __dirname,
+      '../../../src/__tests__/utils/publicKey.txt',
+    );
+    process.env.JWT_PRIVATE_KEY = path.resolve(
+      __dirname,
+      '../../../src/__tests__/utils/privateKey.txt',
+    );
+  });
   after(() => {
     helper.reset();
     return app.stop();
@@ -30,18 +41,17 @@ describe('SignUp Request Controller', () => {
 
   afterEach(() => {
     delete process.env.JWT_ISSUER;
-    delete process.env.JWT_SECRET;
+    delete process.env.JWT_PUBLIC_KEY;
+    delete process.env.JWT_PRIVATE_KEY;
   });
 
   it('gives status 200 when token is created', async () => {
     process.env.JWT_ISSUER = 'test';
-    process.env.JWT_SECRET = 'test';
     await client.post(`${basePath}/create-token`).send(reqData).expect(204);
   });
 
   it('gives status 204 when token is created', async () => {
     process.env.JWT_ISSUER = 'test';
-    process.env.JWT_SECRET = 'test';
     await client.post(`${basePath}/create-token`).send(reqData).expect(204);
     const token = helper.get('TOKEN');
     const email = helper.get('EMAIL');
@@ -52,7 +62,6 @@ describe('SignUp Request Controller', () => {
 
   it('gives status 204 and user details for creating user', async () => {
     process.env.JWT_ISSUER = 'test';
-    process.env.JWT_SECRET = 'test';
     await client.post(`${basePath}/create-token`).send(reqData).expect(204);
     const reqDta = {
       email: sampleEmail,

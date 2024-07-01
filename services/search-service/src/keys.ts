@@ -5,9 +5,13 @@
 import {BindingKey} from '@loopback/core';
 import {SearchFilter} from '.';
 import {SearchQueryBuilder} from './classes';
+import {ModelProviderFn} from './services/model.provider';
 import {SearchFunctionType, SearchServiceConfig} from './types';
 
 export namespace SearchServiceBindings {
+  export const modelProvider = BindingKey.create<ModelProviderFn>(
+    'sf.search.modelprovider',
+  );
   export const DATASOURCE_NAME = 'SearchServiceDb';
   export const SearchFunction =
     BindingKey.create<SearchFunctionType<unknown>>('sf.search.function');

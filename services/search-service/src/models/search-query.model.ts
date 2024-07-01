@@ -58,6 +58,7 @@ export class SearchQuery extends UserModifiableEntity<SearchQuery> {
   sources?: string[];
 
   @property({
+    name: 'where_',
     type: 'object',
   })
   where?: SearchWhereFilterMap;

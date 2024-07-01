@@ -3,6 +3,59 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>19.1.3 (2024-06-11)</small>
+
+* chore: publish release ([89d1599](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/89d1599))
+* chore(deps): loopback and sourceloop version update (#2108) ([9cd8962](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9cd8962)), closes [#2108](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2108) [#2104](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2104) [#2104](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2104)
+* chore(deps): version bump commit (#2111) ([c87bc75](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c87bc75)), closes [#2111](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2111) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* fix(all-services): revert to pr 2072 (#2106) ([502812f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/502812f)), closes [#2106](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2106) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## <small>19.1.2 (2024-06-10)</small>
+
+* fix(all-services): revert to pr 2072 (#2106) ([502812f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/502812f)), closes [#2106](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2106) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## <small>19.1.1 (2024-06-04)</small>
+
+* fix(authentication-service): fix verify otp flow for mfa (#2100) ([374ddd0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/374ddd0)), closes [#2100](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2100) [#2099](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2099)
+
+
+
+
+
+## 19.1.0 (2024-05-20)
+
+* chore(all-services): sonar fixes (#2096) ([7f958bb](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7f958bb)), closes [#2096](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2096) [#2095](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2095)
+* feat(all-services): Follow solid for repositories in all services (#2072) ([82c934b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/82c934b)), closes [#2072](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2072) [#2037](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2037)
+
+
+
+
+
+## 19.0.0 (2024-05-07)
+
+* feat(all-services): update core package in all services (#2091) ([8b1703f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8b1703f)), closes [#2091](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2091) [#2077](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2077) [#2077](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2077)
+* feat(authentication-service): make asymmetric encryption of the token default (#2076) ([6b78867](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6b78867)), closes [#2076](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2076) [#2030](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2030) [#2030](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2030)
+* chore(ci-cd): reverting release changes all services to be released at once (#2090) ([0b25fe4](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0b25fe4)), closes [#2090](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2090) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* refactor(authentication-service): deprecate login token two in one api (#2068) ([db2bc6e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/db2bc6e)), closes [#2068](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2068) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+### BREAKING CHANGE
+
+* Config has to be provided to use symmetric encrytion
+* update the core major version
+* Updated core package
+
+
+
+
 ## 18.1.0 (2024-04-05)
 
 * feat(authentication-service): enable tenant aware metrics (#2044) ([e67280d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e67280d)), closes [#2044](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2044) [#1980](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1980) [#1980](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1980)

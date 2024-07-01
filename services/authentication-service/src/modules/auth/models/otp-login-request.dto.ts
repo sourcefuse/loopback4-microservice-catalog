@@ -16,11 +16,14 @@ export class OtpLoginRequest extends CoreModel<OtpLoginRequest> {
     required: true,
   })
   key: string;
-
   @property({
     type: 'string',
     description: ModelPropertyDescriptionString.reqStrPropDesc,
     required: true,
   })
   otp: string;
+  @property({
+    type: 'string',
+  })
+  clientId?: string;
 }

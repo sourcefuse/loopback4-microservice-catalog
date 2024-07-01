@@ -3,8 +3,8 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {inject} from '@loopback/context';
-import {repository} from '@loopback/repository';
-import {get, HttpErrors, param, post, requestBody} from '@loopback/rest';
+import {AnyObject, repository} from '@loopback/repository';
+import {HttpErrors, get, param, post, requestBody} from '@loopback/rest';
 import {
   AuthenticateErrorKeys,
   CONTENT_TYPE,
@@ -15,24 +15,34 @@ import {
 } from '@sourceloop/core';
 import * as jwt from 'jsonwebtoken';
 import {
-  authenticate,
-  authenticateClient,
-  AuthenticationBindings,
   AuthErrorKeys,
+  AuthenticationBindings,
   ClientAuthCode,
   STRATEGY,
+  authenticate,
+  authenticateClient,
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {authenticator} from 'otplib';
 import qrcode from 'qrcode';
+import {OtpMethodType} from '../../../enums';
+import {AuthServiceBindings} from '../../../keys';
 import {User, UserCredentials} from '../../../models';
-import {AuthCodeBindings, CodeReaderFn, CodeWriterFn} from '../../../providers';
+import {
+  AuthCodeBindings,
+  CodeReaderFn,
+  CodeWriterFn,
+  JWTVerifierFn,
+  MfaCheckFn,
+  VerifyBindings,
+} from '../../../providers';
 import {
   AuthClientRepository,
   OtpCacheRepository,
   UserCredentialsRepository,
   UserRepository,
 } from '../../../repositories';
+import {IMfaConfig, IOtpConfig} from '../../../types';
 import {
   AuthTokenRequest,
   AuthUser,
@@ -56,6 +66,14 @@ export class OtpController {
     @repository(UserCredentialsRepository)
     public userCredsRepository: UserCredentialsRepository,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
+    @inject(VerifyBindings.MFA_PROVIDER)
+    private readonly checkMfa: MfaCheckFn,
+    @inject(AuthCodeBindings.JWT_VERIFIER.key)
+    private readonly jwtVerifier: JWTVerifierFn<AnyObject>,
+    @inject(AuthServiceBindings.MfaConfig, {optional: true})
+    private readonly mfaConfig: IMfaConfig,
+    @inject(AuthServiceBindings.OtpConfig, {optional: true})
+    private readonly otpConfig: IOtpConfig,
   ) {}
 
   // OTP
@@ -101,22 +119,58 @@ export class OtpController {
     @requestBody()
     req: OtpLoginRequest,
     @inject(AuthenticationBindings.CURRENT_USER)
-    user: AuthUser | undefined,
+    user: AuthUser,
     @inject(AuthCodeBindings.CODEWRITER_PROVIDER)
     codeWriter: CodeWriterFn,
   ): Promise<CodeResponse> {
-    const otpCache = await this.otpCacheRepo.get(req.key);
-    if (user?.id) {
-      otpCache.userId = user.id;
+    let otpCache;
+    let clientId!: string;
+    let userId;
+    let clientSecret!: jwt.Secret;
+    const isMfaEnabled = await this.checkMfa(user);
+    if (isMfaEnabled) {
+      if (
+        this.mfaConfig.secondFactor === STRATEGY.OTP &&
+        this.otpConfig.method === OtpMethodType.OTP
+      ) {
+        otpCache = await this.otpCacheRepo.get(req.key);
+        if (user?.id) {
+          otpCache.userId = user.id;
+        }
+
+        clientId = otpCache.clientId;
+        userId = otpCache.userId;
+        clientSecret = otpCache.clientSecret;
+      } else if (
+        this.mfaConfig.secondFactor === STRATEGY.OTP &&
+        this.otpConfig.method === OtpMethodType.GOOGLE_AUTHENTICATOR
+      ) {
+        if (!req.clientId) {
+          throw new Error(
+            'Client ID must be provided for Google Authenticator',
+          );
+        }
+        clientId = req.clientId;
+        userId = user.id;
+        const client = await this.authClientRepository.findOne({
+          where: {
+            clientId,
+          },
+        });
+        clientSecret = client?.clientSecret as string;
+      } else {
+        // This is intentional.
+      }
     }
+
     const codePayload: ClientAuthCode<User, typeof User.prototype.id> = {
-      clientId: otpCache.clientId,
-      userId: otpCache.userId,
+      clientId: clientId,
+      userId: userId,
     };
     const token = await codeWriter(
-      jwt.sign(codePayload, otpCache.clientSecret, {
+      jwt.sign(codePayload, clientSecret, {
         expiresIn: 180,
-        audience: otpCache.clientId,
+        audience: clientId,
         issuer: process.env.JWT_ISSUER,
         algorithm: 'HS256',
       }),
@@ -162,11 +216,9 @@ export class OtpController {
     }
     try {
       const authCode = await codeReader(code);
-      const payload = jwt.verify(authCode, authClient.secret, {
+      const payload = (await this.jwtVerifier(authCode, {
         audience: clientId,
-        issuer: process.env.JWT_ISSUER,
-        algorithms: ['HS256'],
-      }) as ClientAuthCode<User, typeof User.prototype.id>;
+      })) as ClientAuthCode<User, typeof User.prototype.id>;
 
       const userId = payload.userId ?? payload.user?.id;
 
@@ -228,11 +280,9 @@ export class OtpController {
     }
     try {
       const code = await codeReader(req.code);
-      const payload = jwt.verify(code, authClient.secret, {
+      const payload = (await this.jwtVerifier(code, {
         audience: req.clientId,
-        issuer: process.env.JWT_ISSUER,
-        algorithms: ['HS256'],
-      }) as ClientAuthCode<User, typeof User.prototype.id>;
+      })) as ClientAuthCode<User, typeof User.prototype.id>;
 
       const userId = payload.userId ?? payload.user?.id;
 
