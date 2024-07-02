@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import {existsSync, mkdirSync} from 'node:fs';
+import { existsSync, mkdirSync } from 'node:fs';
 import {
   appendFile,
   readFile,
@@ -15,9 +15,9 @@ import {
   Project,
   PropertyAssignmentStructure,
 } from 'ts-morph';
-import {BaseGenerator} from '../../base-generator';
-import {IacList} from '../../enum';
-import {CdkOptions} from '../../types';
+import { BaseGenerator } from '../../base-generator';
+import { IacList } from '../../enum';
+import { CdkOptions } from '../../types';
 const chalk = require('chalk'); //NOSONAR
 
 /**
@@ -131,7 +131,7 @@ export default class CdkGenerator extends BaseGenerator<CdkOptions> {
       return filesToKeep.some(reqPath => filePath.startsWith(reqPath));
     };
 
-    const {owner, repo, tag, templateDir: dir} = this.remoteConfig;
+    const { owner, repo, tag, templateDir: dir } = this.remoteConfig;
     /**
      * When the tar file is downloaded and extracted it creates a dir structure like
      * ${repo}-${tag}
@@ -146,7 +146,7 @@ export default class CdkGenerator extends BaseGenerator<CdkOptions> {
 
     try {
       if (!existsSync(outputDir)) {
-        mkdirSync(outputDir, {recursive: true});
+        mkdirSync(outputDir, { recursive: true });
       }
 
       const response = await fetch(url);
@@ -195,51 +195,61 @@ export default class CdkGenerator extends BaseGenerator<CdkOptions> {
 
   async setupFiles() {
     this.log('🛠️ Configuring files to meet your requirements...');
+    if (this.options.applicationClassName && this.options.relativePathToApp) {
+      let appImport = '';
 
-    let appImport = '';
+      const isDefaultExport = await this._isDefaultExport(
+        this.options.applicationClassName,
+        this.options.relativePathToApp,
+      );
 
-    const isDefaultExport = await this._isDefaultExport(
-      this.options.applicationClassName!,
-      this.options.relativePathToApp!,
-    );
+      const appImportPath = this._getAppImportPath(
+        this.options.relativePathToApp,
+      );
 
-    const appImportPath = this._getAppImportPath(
-      this.options.relativePathToApp!,
-    );
+      if (!isDefaultExport) {
+        appImport = `import {${this.options.applicationClassName}} from '${appImportPath}'`;
+      } else {
+        appImport = `import ${this.options.applicationClassName} from '${appImportPath}`;
+      }
 
-    if (!isDefaultExport) {
-      appImport = `import {${this.options.applicationClassName}} from '${appImportPath}'`;
+      await this._updateFile(
+        this.destinationPath(
+          `${this.options.dir}/${(this[this.options.iac!] as LambdaConfig).handlerFile
+          }`,
+        ),
+        '{{app_class_name_placeholder}}',
+        this.options.applicationClassName,
+      );
+
+      await this._updateFile(
+        this.destinationPath(
+          `${this.options.dir}/${(this[this.options.iac!] as LambdaConfig).handlerFile
+          }`,
+        ),
+        '{{app_import_placeholder}}',
+        appImport,
+      );
     } else {
-      appImport = `import ${this.options.applicationClassName} from '${appImportPath}`;
+      // Handle the case where applicationClassName or relativePathToApp is undefined
+      this.log.error("Application class name or relative path to app is undefined.");
     }
 
-    await this._updateFile(
-      this.destinationPath(
-        `${this.options.dir}/${
-          (this[this.options.iac!] as LambdaConfig).handlerFile
-        }`,
-      ),
-      '{{app_class_name_placeholder}}',
-      this.options.applicationClassName!,
-    );
 
-    await this._updateFile(
-      this.destinationPath(
-        `${this.options.dir}/${
-          (this[this.options.iac!] as LambdaConfig).handlerFile
-        }`,
-      ),
-      '{{app_import_placeholder}}',
-      appImport,
-    );
   }
 
   async updatePackageJsonName() {
-    await this._updateFile(
-      this.destinationPath(`${this.options.dir}/package.json`),
-      '{{package_json_name_placeholder}}',
-      this.options.packageJsonName!,
-    );
+    if (this.options.packageJsonName) {
+      await this._updateFile(
+        this.destinationPath(`${this.options.dir}/package.json`),
+        '{{package_json_name_placeholder}}',
+        this.options.packageJsonName,
+      );
+    } else {
+      // Handle the case where applicationClassName or relativePathToApp is undefined
+      this.log.error("packageJsonName is undefined.");
+    }
+
   }
 
   async configureEnvs() {
@@ -248,8 +258,7 @@ export default class CdkGenerator extends BaseGenerator<CdkOptions> {
     const keysToCreate = await this._getEnvKeys(envFile);
     await this._appendEmptyKeysToEnv(
       this.destinationPath(
-        `${this.options.dir}/${
-          (this[this.options.iac!] as IacConfig).envSchemaFile
+        `${this.options.dir}/${(this[this.options.iac!] as IacConfig).envSchemaFile
         }`,
       ),
       keysToCreate,
@@ -257,10 +266,9 @@ export default class CdkGenerator extends BaseGenerator<CdkOptions> {
 
     // Create entries for env variables in stack
     try {
-      const {project, sourcefile} = this._parseTsFile(
+      const { project, sourcefile } = this._parseTsFile(
         this.destinationPath(
-          `${this.options.dir!}/${
-            (this[this.options.iac!] as IacConfig).mainStackFile
+          `${this.options.dir!}/${(this[this.options.iac!] as IacConfig).mainStackFile
           }`,
         ),
       );
@@ -292,8 +300,7 @@ export default class CdkGenerator extends BaseGenerator<CdkOptions> {
       this.log.ok('Your files are ready for action! 🎉');
     } catch (error) {
       this.log.error(
-        `Failed to update env vars of lambda stack in ${this.options.dir}/${
-          (this[this.options.iac!] as IacConfig).mainStackFile
+        `Failed to update env vars of lambda stack in ${this.options.dir}/${(this[this.options.iac!] as IacConfig).mainStackFile
         }.`,
         error,
       );
@@ -361,19 +368,25 @@ export default class CdkGenerator extends BaseGenerator<CdkOptions> {
       cwd: this.destinationRoot(),
     });
 
-    this.spawnCommandSync('npm', ['install'], {
-      cwd: this.destinationPath(this.options.dir!),
-    });
+    if (this.options.dir) {
+      this.spawnCommandSync('npm', ['install'], {
+        cwd: this.destinationPath(this.options.dir),
+      });
+    } else {
+      // Handle the case where applicationClassName or relativePathToApp is undefined
+      this.log.error("dir is undefined.");
+    }
+
   }
 
   async end() {
-    const {owner, repo, templateDir: dir} = this.remoteConfig;
+    const { owner, repo, templateDir: dir } = this.remoteConfig;
     this.log(`
 ${chalk.green("🚀 Hooray! You're all set to launch your app.")}
 Next steps:
   1. Fill up the environment variables in your ${chalk.yellow(
-    this.options.dir,
-  )} directory.
+      this.options.dir,
+    )} directory.
   2. Build your app.
   3. Run ${chalk.blue(`cdktf deploy ${this.options.iac}`)} to deploy the iac.
   
@@ -486,7 +499,7 @@ ${chalk.blue(`https://github.com/${owner}/${repo}/blob/main/${dir}/README.md`)}
   _parseTsFile(filePath: string) {
     const project = new Project();
     const sourcefile = project.addSourceFileAtPathIfExists(filePath);
-    return {project, sourcefile};
+    return { project, sourcefile };
   }
 
   /**
@@ -526,9 +539,9 @@ ${chalk.blue(`https://github.com/${owner}/${repo}/blob/main/${dir}/README.md`)}
     encoding: BufferEncoding = 'utf-8',
   ) {
     try {
-      let data = await readFile(filePath, {encoding});
+      let data = await readFile(filePath, { encoding });
       data = data.replace(new RegExp(placeholder, 'g'), replaceWith);
-      await writeFile(filePath, data, {encoding});
+      await writeFile(filePath, data, { encoding });
     } catch (error) {
       if (error instanceof Error) {
         this.log.error(error.message);

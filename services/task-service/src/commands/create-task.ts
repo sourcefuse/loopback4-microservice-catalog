@@ -126,18 +126,23 @@ export class CreateTaskCommand implements ICommand {
       return;
     }
     const promises = tasks.map(async dbTask => {
-      const result = await workflowCtrl.startWorkflow(
-        workflow.id!,
-        new ExecuteWorkflowDto({
-          input: {
-            taskId: dbTask.id,
-          },
-        }),
-      );
-      await userTaskService.updateList(dbTask.id!, result['id']);
-      await taskRepo.updateById(dbTask.id!, {
-        externalId: result['id'],
-      });
+      if (workflow.id) {
+        const result = await workflowCtrl.startWorkflow(
+          workflow.id!,
+          new ExecuteWorkflowDto({
+            input: {
+              taskId: dbTask.id,
+            },
+          }),
+        );
+        await userTaskService.updateList(dbTask.id!, result['id']);
+        await taskRepo.updateById(dbTask.id!, {
+          externalId: result['id'],
+        });
+      } else {
+        this.logger.debug(`No workflow found for key ${workflowKey}`);
+        return;
+      }
     });
     await Promise.all(promises);
   }

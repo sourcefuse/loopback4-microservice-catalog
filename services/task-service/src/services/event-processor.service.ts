@@ -83,9 +83,13 @@ export class EventProcessorService implements IEventProcessor {
     });
     if (!workflow) {
       this.logger.debug(`No workflow found for key ${workflowKey}`);
+    } else if (!workflow.id) {
+      this.logger.debug(
+        `Workflow found for key ${workflowKey}, but it has no id`,
+      );
     } else {
       await workflowCtrl.startWorkflow(
-        workflow.id!,
+        workflow.id,
         new ExecuteWorkflowDto({
           input: payload,
         }),
