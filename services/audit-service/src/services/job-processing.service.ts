@@ -1,5 +1,10 @@
 import {BindingScope, inject, injectable} from '@loopback/core';
-import {EntityCrudRepository, Filter, repository} from '@loopback/repository';
+import {
+  AnyObject,
+  EntityCrudRepository,
+  Filter,
+  repository,
+} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {FileStatusKey} from '../enums/file-status-key.enum';
 import {OperationKey} from '../enums/operation-key.enum';
@@ -24,6 +29,12 @@ import {
   ColumnBuilderFn,
   QuerySelectedFilesFn,
 } from '../types';
+import {
+  checkActedOn,
+  checkActionGroup,
+  checkDates,
+  checkEntityId,
+} from '../utils/file-check';
 @injectable({scope: BindingScope.TRANSIENT})
 export class JobProcessingService {
   constructor(
@@ -51,21 +62,7 @@ export class JobProcessingService {
       const customFilter = new CustomFilter();
       if (filter?.where && 'and' in filter.where) {
         const andArray = filter.where?.and;
-        for (const condition of andArray) {
-          if (condition.actedAt?.between) {
-            const [start, end] = condition.actedAt.between;
-            customFilter.date = {
-              fromDate: start,
-              toDate: end,
-            };
-          }
-          if (condition.actedOn) {
-            customFilter.actedOn = condition.actedOn;
-          }
-          if (condition.entityId) {
-            customFilter.entityId = condition.entityId;
-          }
-        }
+        this.buildCustomFilter(andArray, customFilter);
       }
       const mappingLogs: MappingLog[] = await this.mappingLogRepository.find();
       const finalData: AuditLog[] = [];
@@ -73,16 +70,10 @@ export class JobProcessingService {
       for (const mappingLog of mappingLogs) {
         const filterUsed: CustomFilter = mappingLog.filterUsed as CustomFilter;
         if (
-          (customFilter.actedOn == null ||
-            filterUsed.actedOn == null ||
-            filterUsed.actedOn === customFilter.actedOn) &&
-          (customFilter.entityId ??
-            filterUsed.entityId ??
-            filterUsed.entityId === customFilter.entityId) &&
-          (customFilter.date == null ||
-            filterUsed.date == null ||
-            (filterUsed.date?.fromDate <= customFilter.date?.toDate &&
-              filterUsed.date?.toDate >= customFilter.date?.fromDate))
+          checkActedOn(filterUsed, customFilter) &&
+          checkActionGroup(filterUsed, customFilter) &&
+          checkEntityId(filterUsed, customFilter) &&
+          checkDates(filterUsed, customFilter)
         ) {
           //logs from s3
           finalData.push(
@@ -104,6 +95,37 @@ export class JobProcessingService {
       job.status = FileStatusKey.COMPLETED;
       await this.jobRepository.updateById(jobId, job);
       throw new HttpErrors.UnprocessableEntity(error.message);
+    }
+  }
+  getFilter(inquiredFilter: string | AnyObject): string[] {
+    if (typeof inquiredFilter === 'string') {
+      return [inquiredFilter];
+    } else return inquiredFilter.inq;
+  }
+
+  haveCommonElements(arr1: string[], arr2: string[]): boolean {
+    return arr1.some(item => arr2.includes(item));
+  }
+
+  buildCustomFilter(andArray: AnyObject[], customFilter: CustomFilter) {
+    for (const condition of andArray) {
+      if (condition.actedAt?.between) {
+        const [start, end] = condition.actedAt.between;
+        customFilter.date = {
+          fromDate: start,
+          toDate: end,
+        };
+      }
+      if (condition.actedOn) {
+        //even if actedOn is a string, it is converted to an array for easy comparision
+        customFilter.actedOnList = this.getFilter(condition.actedOn);
+      }
+      if (condition.actionGroup) {
+        customFilter.actionGroupList = this.getFilter(condition.actionGroup);
+      }
+      if (condition.entityId) {
+        customFilter.entityId = condition.entityId;
+      }
     }
   }
 }
