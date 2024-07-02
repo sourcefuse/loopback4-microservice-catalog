@@ -2,8 +2,9 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import debug from 'debug';
 import fs from 'fs';
-import { join } from 'path';
+import {join} from 'path';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import AppGenerator from '../../app-generator';
 import {
@@ -17,14 +18,14 @@ import {
   SEQUELIZESERVICES,
   SERVICES,
 } from '../../enum';
-import { AnyObject, MicroserviceOptions } from '../../types';
+import {AnyObject, MicroserviceOptions} from '../../types';
 import {
   JSON_SPACING,
   appendDependencies,
   getDependencyVersion,
 } from '../../utils';
 const chalk = require('chalk'); //NOSONAR
-const { promisify } = require('util');
+const {promisify} = require('util');
 
 const DATASOURCE_TEMPLATE = join(
   '..',
@@ -79,7 +80,7 @@ const DEFAULT_NAME = 'microservice';
 const dbconfig = 'database.json';
 
 const ENV_EXAMPLE = '.env.example';
-const ENV_DEFAULT = '.env.defaults'
+const ENV_DEFAULT = '.env.defaults';
 
 export default class MicroserviceGenerator extends AppGenerator<MicroserviceOptions> {
   initializing() {
@@ -691,6 +692,20 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     if (this.projectInfo) {
       this.projectInfo.outdir = this.options.name ?? DEFAULT_NAME;
     }
-    await super.end();
+    if (this.shouldExit()) {
+      if (typeof this.exitGeneration === 'string') {
+        debug(this.exitGeneration);
+      } else {
+        debug(this.exitGeneration.message);
+      }
+      process.exitCode = 1;
+      return;
+    }
+    if (this.shouldExit()) return;
+    this.log();
+    this.log();
+    this.log('$ cd ' + this.projectInfo.outdir);
+    this.log(`$ ${this.options.packageManager || 'npm'} start`);
+    this.log();
   }
 }
