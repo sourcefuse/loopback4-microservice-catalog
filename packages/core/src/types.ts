@@ -78,7 +78,7 @@ export function addTenantId(
     const encryptedTenantId = req.headers['tenant-id'];
     const decryptedTenantId = CryptoJS.AES.decrypt(
       encryptedTenantId as string,
-      secretKey as string,
+      secretKey,
     ).toString(CryptoJS.enc.Utf8);
     reqResponse['tenant-id'] = decryptedTenantId;
   }
