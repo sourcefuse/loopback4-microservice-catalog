@@ -1,21 +1,21 @@
-import {Context} from '@loopback/core';
+import { Context } from '@loopback/core';
 import {
   ExecuteWorkflowDto,
   WorkflowController,
   WorkflowRepository,
 } from '@sourceloop/bpmn-service';
-import {ILogger, LOGGER} from '@sourceloop/core';
-import {AuthenticationBindings} from 'loopback4-authentication';
+import { ILogger, LOGGER } from '@sourceloop/core';
+import { AuthenticationBindings } from 'loopback4-authentication';
 import {
   ICommand,
   IEvent,
   IOutgoingConnector,
   IUserTaskService,
 } from '../interfaces';
-import {TaskServiceBindings} from '../keys';
-import {Task} from '../models';
-import {TaskRepository, TaskWorkFlowRepository} from '../repositories';
-import {CamundaTaskParameters, EventType, Source, User} from '../types';
+import { TaskServiceBindings } from '../keys';
+import { Task } from '../models';
+import { TaskRepository, TaskWorkFlowRepository } from '../repositories';
+import { CamundaTaskParameters, EventType, Source, User } from '../types';
 
 export class CreateTaskCommand implements ICommand {
   topic = 'create-tasks';
@@ -44,7 +44,7 @@ export class CreateTaskCommand implements ICommand {
       );
       await outgoing.publish({
         key: EventType.TaskCreated,
-        payload: {createdTasks},
+        payload: { createdTasks },
         timestamp: Date.now(),
         source: Source.TaskService,
       });
@@ -128,7 +128,7 @@ export class CreateTaskCommand implements ICommand {
     const promises = tasks.map(async dbTask => {
       if (workflow.id) {
         const result = await workflowCtrl.startWorkflow(
-          workflow.id!,
+          workflow.id,
           new ExecuteWorkflowDto({
             input: {
               taskId: dbTask.id,
