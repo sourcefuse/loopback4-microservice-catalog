@@ -128,7 +128,7 @@ export class CreateTaskCommand implements ICommand {
     const promises = tasks.map(async dbTask => {
       if (workflow.id) {
         const result = await workflowCtrl.startWorkflow(
-          workflow.id!,
+          workflow.id,
           new ExecuteWorkflowDto({
             input: {
               taskId: dbTask.id,
