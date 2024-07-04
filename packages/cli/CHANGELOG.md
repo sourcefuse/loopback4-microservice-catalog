@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.3.5 (2024-07-04)</small>
+
+* chore(cli): update template dependencies (#2114) ([ee0a09b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ee0a09b)), closes [#2114](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2114) [#2104](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2104)
+
+
+
+
+
 ## <small>4.3.4 (2024-02-05)</small>
 
 * chore(cli): update template deps to latest for v4 ([4b589c6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4b589c6)), closes [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
