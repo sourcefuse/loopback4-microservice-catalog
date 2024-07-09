@@ -27,6 +27,7 @@ import {
 import {authorize} from 'loopback4-authorization';
 import {AuthCodeBindings, AuthCodeGeneratorFn} from '../../../providers';
 import {AuthClientRepository} from '../../../repositories';
+import {IdpLoginService} from '../../../services';
 import {AuthUser, ClientAuthRequest, TokenResponse} from '../models';
 
 export class SamlLoginController {
@@ -37,23 +38,11 @@ export class SamlLoginController {
     public logger: ILogger,
     @inject(AuthCodeBindings.AUTH_CODE_GENERATOR_PROVIDER)
     private readonly getAuthCode: AuthCodeGeneratorFn,
-  ) {}
+    @inject('services.IdpLoginService')
+    private readonly idpLoginService: IdpLoginService,
+  ) { }
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
-  @authenticate(STRATEGY.SAML, {
-    accessType: 'offline',
-    scope: ['profile', 'email'],
-    callbackURL: process.env.SAML_CALLBACK_URL,
-    issuer: process.env.SAML_ISSUER,
-    cert: process.env.SAML_CERT,
-    entryPoint: process.env.SAML_ENTRY_POINT,
-    audience: process.env.SAML_AUDIENCE,
-    logoutUrl: process.env.SAML_LOGOUT_URL,
-    passReqToCallback: !!+(process.env.SAML_AUTH_PASS_REQ_CALLBACK ?? 0),
-    validateInResponseTo: !!+(process.env.VALIDATE_RESPONSE ?? 1),
-    idpIssuer: process.env.IDP_ISSUER,
-    logoutCallbackUrl: process.env.SAML_LOGOUT_CALLBACK_URL,
-  })
   @authorize({permissions: ['*']})
   @post('/auth/saml', {
     description: 'POST Call for saml based login',
@@ -78,7 +67,7 @@ export class SamlLoginController {
     })
     clientCreds?: ClientAuthRequest, //NOSONAR
   ): Promise<void> {
-    //do nothing
+    return this.idpLoginService.loginViaSaml();
   }
 
   @authenticate(STRATEGY.SAML, {
