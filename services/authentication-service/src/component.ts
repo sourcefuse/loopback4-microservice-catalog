@@ -120,6 +120,7 @@ import {repositories as sequelizeRepositories} from './repositories/sequelize';
 import {MySequence} from './sequence';
 import {
   ActiveUserFilterBuilderService,
+  IdpLoginService,
   LoginActivityHelperService,
   LoginHelperService,
   OtpService,
@@ -193,6 +194,7 @@ export class AuthenticationServiceComponent implements Component {
     this.application
       .bind('services.loginActivityHelperService')
       .toClass(LoginActivityHelperService);
+    this.application.bind('services.IdpLoginService').toClass(IdpLoginService);
 
     //set the userActivity to false by default
     this.application

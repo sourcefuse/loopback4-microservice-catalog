@@ -33,6 +33,7 @@ import {authorize} from 'loopback4-authorization';
 import {URLSearchParams} from 'url';
 import {AuthCodeBindings, AuthCodeGeneratorFn} from '../../../providers';
 import {AuthClientRepository} from '../../../repositories';
+import {IdpLoginService} from '../../../services';
 import {AuthUser, ClientAuthRequest, TokenResponse} from '../models';
 
 const queryGen = (from: 'body' | 'query') => {
@@ -50,22 +51,11 @@ export class AppleLoginController {
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @inject(AuthCodeBindings.AUTH_CODE_GENERATOR_PROVIDER)
     private readonly getAuthCode: AuthCodeGeneratorFn,
-  ) {}
+    @inject('services.IdpLoginService')
+    private readonly idpLoginService: IdpLoginService,
+  ) { }
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
-  @authenticate(
-    STRATEGY.APPLE_OAUTH2,
-    {
-      accessType: 'offline',
-      scope: ['name', 'email'],
-      callbackURL: process.env.APPLE_AUTH_CALLBACK_URL,
-      clientID: process.env.APPLE_AUTH_CLIENT_ID,
-      teamID: process.env.APPLE_AUTH_TEAM_ID,
-      keyID: process.env.APPLE_AUTH_KEY_ID,
-      privateKeyLocation: process.env.APPLE_AUTH_PRIVATE_KEY_LOCATION,
-    },
-    queryGen('body'),
-  )
   @authorize({permissions: ['*']})
   @post('/auth/oauth-apple', {
     responses: {
@@ -84,8 +74,8 @@ export class AppleLoginController {
       },
     })
     clientCreds: ClientAuthRequest,
-  ): void {
-    //do nothing
+  ): Promise<void> {
+    return this.idpLoginService.loginViaApple();
   }
 
   @authenticate(
@@ -138,8 +128,7 @@ export class AppleLoginController {
       const token = await this.getAuthCode(client, user);
       const role = user.role;
       response.redirect(
-        `${process.env.WEBAPP_URL ?? ''}${
-          client.redirectUrl
+        `${process.env.WEBAPP_URL ?? ''}${client.redirectUrl
         }?code=${token}&role=${role}`,
       );
     } catch (error) {

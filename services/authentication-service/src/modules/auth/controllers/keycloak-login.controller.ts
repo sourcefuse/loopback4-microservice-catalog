@@ -34,6 +34,7 @@ import {authorize} from 'loopback4-authorization';
 import {URLSearchParams} from 'url';
 import {AuthCodeBindings, AuthCodeGeneratorFn} from '../../../providers';
 import {AuthClientRepository} from '../../../repositories';
+import {IdpLoginService} from '../../../services';
 import {AuthUser, ClientAuthRequest, TokenResponse} from '../models';
 
 const queryGen = (from: 'body' | 'query') => {
@@ -51,25 +52,11 @@ export class KeycloakLoginController {
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @inject(AuthCodeBindings.AUTH_CODE_GENERATOR_PROVIDER)
     private readonly getAuthCode: AuthCodeGeneratorFn,
-  ) {}
+    @inject('services.IdpLoginService')
+    private readonly idpLoginService: IdpLoginService,
+  ) { }
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
-  @authenticate(
-    STRATEGY.KEYCLOAK,
-    {
-      host: process.env.KEYCLOAK_HOST,
-      realm: process.env.KEYCLOAK_REALM, //'Tenant1',
-      clientID: process.env.KEYCLOAK_CLIENT_ID, //'onboarding',
-      clientSecret: process.env.KEYCLOAK_CLIENT_SECRET,
-      //'e607fd75-adc8-4af7-9f03-c9e79a4b8b72',
-      callbackURL: process.env.KEYCLOAK_CALLBACK_URL,
-      //'http://localhost:3001/auth/keycloak-auth-redirect',
-      authorizationURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/auth`,
-      tokenURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/token`,
-      userInfoURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/userinfo`,
-    },
-    queryGen('body'),
-  )
   @authorize({permissions: ['*']})
   @post('/auth/keycloak', {
     description: 'POST Call for keycloak based login',
@@ -94,26 +81,10 @@ export class KeycloakLoginController {
     })
     clientCreds?: ClientAuthRequest, //NOSONAR
   ): Promise<void> {
-    //do nothing
+    return this.idpLoginService.loginViaKeycloak();
   }
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
-  @authenticate(
-    STRATEGY.KEYCLOAK,
-    {
-      host: process.env.KEYCLOAK_HOST,
-      realm: process.env.KEYCLOAK_REALM, //'Tenant1',
-      clientID: process.env.KEYCLOAK_CLIENT_ID, //'onboarding',
-      clientSecret: process.env.KEYCLOAK_CLIENT_SECRET,
-      //'e607fd75-adc8-4af7-9f03-c9e79a4b8b72',
-      callbackURL: process.env.KEYCLOAK_CALLBACK_URL,
-      //'http://localhost:3001/auth/keycloak-auth-redirect',
-      authorizationURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/auth`,
-      tokenURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/token`,
-      userInfoURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/userinfo`,
-    },
-    queryGen('query'),
-  )
   @authorize({permissions: ['*']})
   @oas.deprecated()
   @get('/auth/keycloak', {
@@ -136,7 +107,7 @@ export class KeycloakLoginController {
     @param.query.string('client_secret')
     clientSecret?: string, //NOSONAR
   ): Promise<void> {
-    //do nothing
+    return this.idpLoginService.loginViaKeycloak();
   }
 
   @authenticate(

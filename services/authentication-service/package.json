@@ -25,6 +25,7 @@
     }
   },
   "scripts": {
+    "start": "node -r source-map-support/register .",
     "prebuild": "npm run clean",
     "build": "lb-tsc && npm run openapi-spec && npm run apidocs",
     "build:watch": "lb-tsc --watch",

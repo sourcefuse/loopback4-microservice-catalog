@@ -30,6 +30,177 @@ Base URLs:
 
 - HTTP Authentication, scheme: bearer 
 
+<h1 id="authentication-service-identityservercontroller">IdentityServerController</h1>
+
+## IdentityServerController.getConfig
+
+<a id="opIdIdentityServerController.getConfig"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/.well-known/openid-configuration',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/.well-known/openid-configuration',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /.well-known/openid-configuration`
+
+To get the openid configuration
+
+> Example responses
+
+<h3 id="identityservercontroller.getconfig-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OpenId Configuration|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|The syntax of the request entity is incorrect.|None|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Invalid Credentials.|None|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
+
+<h3 id="identityservercontroller.getconfig-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
+## IdentityServerController.connectAuth
+
+<a id="opIdIdentityServerController.connectAuth"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "client_id": "string",
+  "client_secret": "string",
+  "auth_method": "string"
+}';
+const headers = {
+  'Content-Type':'application/x-www-form-urlencoded',
+  'Accept':'application/json'
+};
+
+fetch('/connect/auth',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "client_id": "string",
+  "client_secret": "string",
+  "auth_method": "string"
+};
+const headers = {
+  'Content-Type':'application/x-www-form-urlencoded',
+  'Accept':'application/json'
+};
+
+fetch('/connect/auth',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /connect/auth`
+
+POST Call for idp login
+
+> Body parameter
+
+```yaml
+client_id: string
+client_secret: string
+auth_method: string
+
+```
+
+<h3 id="identityservercontroller.connectauth-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[IdpAuthRequest](#schemaidpauthrequest)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "accessToken": "string",
+  "refreshToken": "string",
+  "expires": 0,
+  "pubnubToken": "string"
+}
+```
+
+<h3 id="identityservercontroller.connectauth-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Token Response|[TokenResponse](#schematokenresponse)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
 <h1 id="authentication-service-loginactivitycontroller">LoginActivityController</h1>
 
 ## LoginActivityController.getActiveUsers
@@ -4376,22 +4547,6 @@ AuthTokenRequest
 |code|string|true|none|none|
 |clientId|string|true|none|none|
 
-<h2 id="tocS_Function">Function</h2>
-<!-- backwards compatibility -->
-<a id="schemafunction"></a>
-<a id="schema_Function"></a>
-<a id="tocSfunction"></a>
-<a id="tocsfunction"></a>
-
-```json
-null
-
-```
-
-### Properties
-
-*None*
-
 <h2 id="tocS_AuthRefreshTokenRequest">AuthRefreshTokenRequest</h2>
 <!-- backwards compatibility -->
 <a id="schemaauthrefreshtokenrequest"></a>
@@ -4715,6 +4870,22 @@ AuthUser
 |status|0|
 |status|4|
 
+<h2 id="tocS_Function">Function</h2>
+<!-- backwards compatibility -->
+<a id="schemafunction"></a>
+<a id="schema_Function"></a>
+<a id="tocSfunction"></a>
+<a id="tocsfunction"></a>
+
+```json
+null
+
+```
+
+### Properties
+
+*None*
+
 <h2 id="tocS_ForgetPasswordDto">ForgetPasswordDto</h2>
 <!-- backwards compatibility -->
 <a id="schemaforgetpassworddto"></a>
@@ -4968,6 +5139,32 @@ ActiveUsersFilter
 |inclusion|boolean|true|none|none|
 |userIdentity|string|true|none|none|
 |userIdentifier|object|true|none|none|
+
+<h2 id="tocS_IdpAuthRequest">IdpAuthRequest</h2>
+<!-- backwards compatibility -->
+<a id="schemaidpauthrequest"></a>
+<a id="schema_IdpAuthRequest"></a>
+<a id="tocSidpauthrequest"></a>
+<a id="tocsidpauthrequest"></a>
+
+```json
+{
+  "client_id": "string",
+  "client_secret": "string",
+  "auth_method": "string"
+}
+
+```
+
+IdpAuthRequest
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|client_id|string|true|none|This property is supposed to be a string and is a required field|
+|client_secret|string|true|none|This property is supposed to be a string and is a required field|
+|auth_method|string|true|none|This property is supposed to be a string and is a required field|
 
 <h2 id="tocS_loopback.Count">loopback.Count</h2>
 <!-- backwards compatibility -->

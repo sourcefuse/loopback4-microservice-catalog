@@ -9,6 +9,7 @@ import {
   CognitoLoginController,
   FacebookLoginController,
   GoogleLoginController,
+  IdentityServerController,
   InstagramLoginController,
   KeycloakLoginController,
   LoginController,
@@ -43,4 +44,5 @@ export const controllers = [
   SamlLoginController,
   Auth0LoginController,
   LoginActivityController,
+  IdentityServerController,
 ];
