@@ -131,6 +131,7 @@ export const archive1: AuditLog[] = [
       qty: 0,
       deleted: false,
     } as JSONObject,
+    actionGroup: 'Product_group',
   }),
   new AuditLog({
     id: '12',
@@ -155,6 +156,7 @@ export const archive1: AuditLog[] = [
       qty: 0,
       deleted: false,
     } as JSONObject,
+    actionGroup: 'Product_group',
   }),
   new AuditLog({
     id: '13',
@@ -172,6 +174,7 @@ export const archive1: AuditLog[] = [
       qty: 0,
       deleted: false,
     } as JSONObject,
+    actionGroup: 'Product_group',
   }),
 ];
 export const archive2: AuditLog[] = [
