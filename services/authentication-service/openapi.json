@@ -3,10 +3,44 @@
   "info": {
     "title": "Authentication Service",
     "version": "1.0.0",
-    "description": "Authentication microservice",
+    "description": "Authentication microservice.",
     "contact": {}
   },
   "paths": {
+    "/.well-known/openid-configuration": {
+      "get": {
+        "x-controller-name": "IdentityServerController",
+        "x-operation-name": "getConfig",
+        "tags": [
+          "IdentityServerController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "description": "To get the openid configuration",
+        "responses": {
+          "200": {
+            "description": "OpenId Configuration",
+            "content": {}
+          },
+          "400": {
+            "description": "The syntax of the request entity is incorrect."
+          },
+          "401": {
+            "description": "Invalid Credentials."
+          },
+          "404": {
+            "description": "The entity requested does not exist."
+          },
+          "422": {
+            "description": "The syntax of the request entity is incorrect"
+          }
+        },
+        "operationId": "IdentityServerController.getConfig"
+      }
+    },
     "/active-users/{range}": {
       "get": {
         "x-controller-name": "LoginActivityController",
@@ -929,6 +963,7 @@
             "description": "The syntax of the request entity is incorrect"
           }
         },
+        "deprecated": true,
         "requestBody": {
           "content": {
             "application/json": {
@@ -1544,6 +1579,38 @@
         "operationId": "LogoutController.cognitoLogout"
       }
     },
+    "/connect/auth": {
+      "post": {
+        "x-controller-name": "IdentityServerController",
+        "x-operation-name": "connectAuth",
+        "tags": [
+          "IdentityServerController"
+        ],
+        "description": "POST Call for idp login",
+        "responses": {
+          "200": {
+            "description": "Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/IdpAuthRequest"
+              }
+            }
+          }
+        },
+        "operationId": "IdentityServerController.connectAuth"
+      }
+    },
     "/google/logout": {
       "post": {
         "x-controller-name": "LogoutController",
@@ -1945,7 +2012,6 @@
         ],
         "additionalProperties": false
       },
-      "Function": {},
       "AuthRefreshTokenRequest": {
         "title": "AuthRefreshTokenRequest",
         "type": "object",
@@ -2254,6 +2320,7 @@
         ],
         "additionalProperties": false
       },
+      "Function": {},
       "ForgetPasswordDto": {
         "title": "ForgetPasswordDto",
         "type": "object",
@@ -2467,6 +2534,31 @@
           "inclusion",
           "userIdentity",
           "userIdentifier"
+        ],
+        "additionalProperties": false
+      },
+      "IdpAuthRequest": {
+        "title": "IdpAuthRequest",
+        "type": "object",
+        "description": "This is signature for idp authentication request.",
+        "properties": {
+          "client_id": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          },
+          "client_secret": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          },
+          "auth_method": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          }
+        },
+        "required": [
+          "client_id",
+          "client_secret",
+          "auth_method"
         ],
         "additionalProperties": false
       },

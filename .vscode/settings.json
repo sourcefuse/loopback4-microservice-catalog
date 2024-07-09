@@ -2,6 +2,6 @@
   "markdown.extension.toc.levels": "2..2",
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.organizeImports": true
+    "source.organizeImports": "explicit"
   }
 }
