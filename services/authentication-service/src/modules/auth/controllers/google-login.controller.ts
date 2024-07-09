@@ -34,6 +34,7 @@ import {authorize} from 'loopback4-authorization';
 import {URLSearchParams} from 'url';
 import {AuthCodeBindings, AuthCodeGeneratorFn} from '../../../providers';
 import {AuthClientRepository} from '../../../repositories';
+import {IdpLoginService} from '../../../services';
 import {AuthUser, ClientAuthRequest, TokenResponse} from '../models';
 
 const queryGen = (from: 'body' | 'query') => {
@@ -51,29 +52,18 @@ export class GoogleLoginController {
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @inject(AuthCodeBindings.AUTH_CODE_GENERATOR_PROVIDER)
     private readonly getAuthCode: AuthCodeGeneratorFn,
-  ) {}
+    @inject('services.IdpLoginService')
+    private readonly idpLoginService: IdpLoginService,
+  ) { }
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
-  @authenticate(
-    STRATEGY.GOOGLE_OAUTH2,
-    {
-      accessType: 'offline',
-      scope: ['profile', 'email'],
-      authorizationURL: process.env.GOOGLE_AUTH_URL,
-      callbackURL: process.env.GOOGLE_AUTH_CALLBACK_URL,
-      clientID: process.env.GOOGLE_AUTH_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_AUTH_CLIENT_SECRET,
-      tokenURL: process.env.GOOGLE_AUTH_TOKEN_URL,
-    },
-    queryGen('query'),
-  )
   @authorize({permissions: ['*']})
   @oas.deprecated()
   @get('/auth/google', {
     responses: {
       [STATUS_CODE.OK]: {
         description: `Google Token Response,
-         (Deprecated: Possible security issue if secret is passed via query params, 
+         (Deprecated: Possible security issue if secret is passed via query params,
           please use the post endpoint)`,
         content: {
           [CONTENT_TYPE.JSON]: {
@@ -94,23 +84,10 @@ export class GoogleLoginController {
     @param.query.string('client_secret')
     clientSecret?: string,
   ): Promise<void> {
-    //do nothing
+    return this.idpLoginService.loginViaGoogle();
   }
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
-  @authenticate(
-    STRATEGY.GOOGLE_OAUTH2,
-    {
-      accessType: 'offline',
-      scope: ['profile', 'email'],
-      authorizationURL: process.env.GOOGLE_AUTH_URL,
-      callbackURL: process.env.GOOGLE_AUTH_CALLBACK_URL,
-      clientID: process.env.GOOGLE_AUTH_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_AUTH_CLIENT_SECRET,
-      tokenURL: process.env.GOOGLE_AUTH_TOKEN_URL,
-    },
-    queryGen('body'),
-  )
   @authorize({permissions: ['*']})
   @post('/auth/google', {
     responses: {
@@ -134,7 +111,7 @@ export class GoogleLoginController {
     })
     clientCreds?: ClientAuthRequest,
   ): Promise<void> {
-    //do nothing
+    return this.idpLoginService.loginViaGoogle();
   }
 
   @authenticate(
