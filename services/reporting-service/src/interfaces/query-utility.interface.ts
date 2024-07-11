@@ -1,4 +1,5 @@
 import {AnyObject} from '@loopback/repository';
+import {CustomFilter} from './custom-filter.interface';
 import {StructuredQueryInterface} from './structured-query.interface';
 
 export interface QueryUtilityInterface {
@@ -7,8 +8,12 @@ export interface QueryUtilityInterface {
     query: StructuredQueryInterface,
     removeSchema: boolean,
   ): string[];
-  jsonToQueryConverter(sqlQuery: StructuredQueryInterface): {
+  jsonToQueryConverter(query: StructuredQueryInterface): Promise<{
     query: string;
     bind: AnyObject;
-  };
+  }>;
+  prepareFinalSqlQuery(
+    sqlQuery: string,
+    filter: CustomFilter<AnyObject>,
+  ): string;
 }

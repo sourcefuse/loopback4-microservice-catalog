@@ -32,16 +32,19 @@ export class PsqlSequelizeStrategy extends BaseSequelize {
   }
 
   /**
-   * The function "listdataSources" retrieves a list of table names and schemas from the database and
-   * returns them as an array of DataSourceList objects.
-   * @returns The function `listdataSources` returns a Promise that resolves to an array of objects of
-   * type `DataSourceList`.
+   * This function retrieves a list of data sources from a database and formats them into an array of
+   * DataSourceList objects.
+   * @returns The `listdataSources` function returns an array of objects with properties
+   * `dataSourceName` and `displayName`. Each object in the array represents a data source retrieved
+   * from the database query. The `dataSourceName` property is a combination of the `table_schema` and
+   * `table_name` values from the database query result, while the `displayName` property is also a
+   * combination of the `table_schema`
    */
   async listdataSources(): Promise<DataSourceList[]> {
     const query = `
         SELECT table_name,table_schema
         FROM information_schema.tables
-        WHERE table_type = 'BASE TABLE'
+        WHERE table_type IN ('BASE TABLE', 'VIEW')
           AND table_schema NOT IN ('information_schema', 'pg_catalog')
       `;
 
@@ -60,22 +63,33 @@ export class PsqlSequelizeStrategy extends BaseSequelize {
   }
 
   /**
-   * The function `query` executes a SQL query using Sequelize and returns the result as an array of
-   * objects.
-   * @param {StructuredQueryInterface} queryObject - The queryObject parameter is an object that
-   * represents a structured query. It contains information such as the table to query, the columns to
-   * select, the conditions to filter the data, and any other relevant query parameters.
-   * @returns The function `query` returns a promise that resolves to an array of `AnyObject` objects.
+   * This TypeScript function asynchronously executes a query based on a provided query object or SQL
+   * string using Sequelize and returns the result as an array of objects.
+   * @param {StructuredQueryInterface | string} queryObject - The `queryObject` parameter in the
+   * `query` function can be either a `StructuredQueryInterface` object or a string representing a
+   * query. If the `queryObject` is not a string, it is first translated into a SQL query using the
+   * `translateQuery` method before executing the query using
+   * @returns The `query` function returns a Promise that resolves to an array of objects
+   * (`AnyObject[]`) representing the result of the executed query.
    */
-  async query(queryObject: StructuredQueryInterface): Promise<AnyObject[]> {
+  async query(
+    queryObject: StructuredQueryInterface | string,
+  ): Promise<AnyObject[]> {
     let result;
-    const sqlObject = await this.translateQuery(queryObject);
 
     try {
-      result = await this.sequelize.query(sqlObject.query, {
-        bind: sqlObject.bind,
-        type: QueryTypes.SELECT,
-      });
+      if (typeof queryObject !== 'string') {
+        const sqlObject = await this.translateQuery(queryObject);
+
+        result = await this.sequelize.query(sqlObject.query, {
+          bind: sqlObject.bind,
+          type: QueryTypes.SELECT,
+        });
+      } else {
+        result = await this.sequelize.query(queryObject, {
+          type: QueryTypes.SELECT,
+        });
+      }
       return result;
     } catch (error) {
       throw new Error(error.message || 'Error executing query');
@@ -305,9 +319,8 @@ export class PsqlSequelizeStrategy extends BaseSequelize {
   ): Promise<AnyObject> {
     const ds = this.queryUtil.listAllDataSourcesFromJson(
       {
-        from: {
-          dataSources: [dataSource],
-        },
+        select: [],
+        from: dataSource,
       } as StructuredQueryInterface,
       true,
     );
