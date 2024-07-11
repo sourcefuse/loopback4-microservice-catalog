@@ -149,6 +149,9 @@ x-payment-backend-variables: &payment-backend-variables
   FAILURE_CALLBACK_URL: http://localhost:3000
   JWT_SECRET: i_am_a_strong_secret
   JWT_ISSUER: https://loopback4-microservice-catalog
+  PAYPAL_ENVIRONMENT: dev
+  PAYPAL_CLIENT_ID: test_client_id
+  PAYPAL_CLIENT_SECRET: test_client_secret
 
 x-search-ms-variables: &search-ms-variables
   NODE_ENV: dev
@@ -460,28 +463,6 @@ services:
       - sandbox
     restart: on-failure
 
-  search-client-example:
-    image: ${REGISTRY:-localhost:32000}/search-client-example
-    build:
-      context: ./search-client-example
-      dockerfile: Dockerfile
-    ports:
-      - '4200:4200'
-    networks:
-      - sandbox
-    restart: on-failure
-
-  user-onboarding-example:
-    image: ${REGISTRY:-localhost:32000}/user-onboarding-example
-    build:
-      context: ./user-onboarding-example
-      dockerfile: Dockerfile
-    ports:
-      - '4201:4200'
-    networks:
-      - sandbox
-    restart: on-failure
-
   audit-ms-migration:
     image: ${REGISTRY:-localhost:32000}/audit-ms-example
     command: sh -c "sleep 60 && npm run db:migrate"
@@ -616,9 +597,9 @@ services:
     restart: on-failure
 
   payment-backend-example:
-    image: ${REGISTRY:-localhost:32000}/payment-example/backend
+    image: ${REGISTRY:-localhost:32000}/payment-example
     build:
-      context: ./payment-example/backend
+      context: ./payment-example
       dockerfile: Dockerfile
     ports:
       - '3042:3000'
@@ -632,9 +613,9 @@ services:
     restart: on-failure
 
   payment-backend-migration:
-    image: ${REGISTRY:-localhost:32000}/payment-example/backend
+    image: ${REGISTRY:-localhost:32000}/payment-example
     build:
-      context: ./payment-example/backend
+      context: ./payment-example
       dockerfile: Dockerfile
     command: sh -c "sleep 60 && npm run db:migrate"
     environment: *payment-backend-variables
@@ -676,20 +657,20 @@ services:
       - sandbox
     restart: on-failure
 
-  user-tenant-example:
-    image: ${REGISTRY:-localhost:32000}/user-tenant-example
-    build:
-      context: ./user-tenant-example
-      dockerfile: Dockerfile
-    ports:
-      - '3043:3000'
-    networks:
-      - sandbox
-    environment: *user-tenant-variables
-    depends_on:
-      - postgres
-      - postgres_orchestrator
-    restart: on-failure
+  # user-tenant-example:
+  #   image: ${REGISTRY:-localhost:32000}/user-tenant-example
+  #   build:
+  #     context: ./user-tenant-example
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - '3043:3000'
+  #   networks:
+  #     - sandbox
+  #   environment: *user-tenant-variables
+  #   depends_on:
+  #     - postgres
+  #     - postgres_orchestrator
+  #   restart: on-failure
 
   redis:
     image: 'redis:alpine'
