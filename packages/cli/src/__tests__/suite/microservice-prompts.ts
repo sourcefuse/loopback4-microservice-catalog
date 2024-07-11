@@ -82,7 +82,7 @@ export const microservicePromptsSuite = [
         input: {
           name: 'baseService',
           message: 'Base ARC microservice',
-          type: 'list',
+          type: 'checkbox',
           choices: Object.values(SERVICES),
         },
         output: SERVICES.AUTH,
@@ -178,7 +178,7 @@ export const microservicePromptsSuite = [
         input: {
           name: 'baseService',
           message: 'Base ARC microservice',
-          type: 'list',
+          type: 'checkbox',
           choices: Object.values(SERVICES),
         },
         output: SERVICES.AUTH,

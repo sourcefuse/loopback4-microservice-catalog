@@ -31,6 +31,7 @@ export class Microservice extends Base<MicroserviceOptions> {
       name: 'service',
       char: 's',
       description: 'Base ARC microservice',
+      multiple: true,
       options: Object.values(SERVICES),
       required: false,
       exclusive: ['facade'],
