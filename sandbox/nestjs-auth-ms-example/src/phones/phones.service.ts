@@ -4,6 +4,7 @@ import { UpdatePhoneDto } from './dto/update-phone.dto';
 
 @Injectable()
 export class PhonesService {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   create(createPhoneDto: CreatePhoneDto) {
     return 'This action adds a new phone';
   }
@@ -16,6 +17,7 @@ export class PhonesService {
     return `This action returns a #${id} phone`;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   update(id: number, updatePhoneDto: UpdatePhoneDto) {
     return `This action updates a #${id} phone`;
   }
