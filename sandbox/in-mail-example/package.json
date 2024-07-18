@@ -64,6 +64,7 @@
     "dotenv": "^16.0.3",
     "dotenv-extended": "^2.9.0",
     "loopback-connector-postgresql": "^7.1.1",
+    "loopback4-authorization": "^7.0.2",
     "loopback4-soft-delete": "^10.0.2",
     "prom-client": "^14.0.1",
     "tslib": "^2.6.2"

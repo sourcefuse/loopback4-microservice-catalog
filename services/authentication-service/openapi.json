@@ -3,7 +3,7 @@
   "info": {
     "title": "Authentication Service",
     "version": "1.0.0",
-    "description": "Authentication microservice",
+    "description": "Authentication microservice.",
     "contact": {}
   },
   "paths": {
@@ -929,6 +929,7 @@
             "description": "The syntax of the request entity is incorrect"
           }
         },
+        "deprecated": true,
         "requestBody": {
           "content": {
             "application/json": {
