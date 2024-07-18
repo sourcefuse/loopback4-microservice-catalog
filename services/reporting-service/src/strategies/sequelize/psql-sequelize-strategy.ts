@@ -166,14 +166,11 @@ export class PsqlSequelizeStrategy extends BaseSequelize {
         `,
     );
 
-    const allPairs = columnEntityPairs.reduce(
-      (acc, pair, pairIndex) => {
-        acc[`tableName${pairIndex + 1}`] = pair.dataSourceName;
-        acc[`columnName${pairIndex + 1}`] = pair.column;
-        return acc;
-      },
-      {} as Record<string, string>,
-    );
+    const allPairs = columnEntityPairs.reduce((acc, pair, pairIndex) => {
+      acc[`tableName${pairIndex + 1}`] = pair.dataSourceName;
+      acc[`columnName${pairIndex + 1}`] = pair.column;
+      return acc;
+    }, {} as Record<string, string>);
 
     const query = `SELECT COUNT(*) FROM (${queries.join(
       ' UNION ALL ',

@@ -405,8 +405,9 @@ export class TransactionsController {
     if (transaction) {
       const gatewayId = transaction.paymentGatewayId;
       if (gatewayId) {
-        const paymentGateway =
-          await this.paymentGatewaysRepository.findById(gatewayId);
+        const paymentGateway = await this.paymentGatewaysRepository.findById(
+          gatewayId,
+        );
         const gatewayType = paymentGateway?.gatewayType;
         const hostUrl = this.req.get('host');
         const hostProtocol = this.req.protocol;

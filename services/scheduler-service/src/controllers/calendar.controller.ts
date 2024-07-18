@@ -176,8 +176,9 @@ export class CalendarController {
         throw new HttpErrors.NotFound(ErrorKeys.SubscriptionIdentifierNotExist);
       }
       subscription.accessRole = AccessRoleType.Owner;
-      const subscriptionResponse =
-        await this.subscriptionRepository.create(subscription);
+      const subscriptionResponse = await this.subscriptionRepository.create(
+        subscription,
+      );
       const calendarDTOResp: CalendarDTO = new CalendarDTO();
       calendarDTOResp.subscription = subscriptionResponse;
       response = Object.assign(calendarDTOResp, response);
