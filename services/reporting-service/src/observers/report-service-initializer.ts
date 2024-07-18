@@ -36,9 +36,8 @@ export class ReportingServiceInitializer implements LifeCycleObserver {
   async start(): Promise<void> {
     this.bindDataSourcesService();
     const mappingsDict = await this.fetchAndBindIngestionMappings();
-    const mappingsWithoutCustomListeners = await this.processServiceBindings(
-      mappingsDict,
-    );
+    const mappingsWithoutCustomListeners =
+      await this.processServiceBindings(mappingsDict);
     this.bindMappingsAndServices(mappingsWithoutCustomListeners);
     this.bindReportIngestionMessagingService();
     this.application
@@ -65,10 +64,13 @@ export class ReportingServiceInitializer implements LifeCycleObserver {
     Record<string, IngestionMapping>
   > {
     const allMappings = await this.ingestionMappingsRepo.find();
-    const mappingsDict = allMappings.reduce((acc, mapping) => {
-      acc[mapping.recordType] = mapping;
-      return acc;
-    }, {} as Record<string, IngestionMapping>);
+    const mappingsDict = allMappings.reduce(
+      (acc, mapping) => {
+        acc[mapping.recordType] = mapping;
+        return acc;
+      },
+      {} as Record<string, IngestionMapping>,
+    );
 
     this.application
       .bind(ReportingServiceComponentBindings.INGESTION_MAPPINGS_LIST)

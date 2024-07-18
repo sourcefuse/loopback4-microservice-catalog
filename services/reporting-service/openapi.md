@@ -1,5 +1,5 @@
 ---
-title: "@sourceloop/reporting-service v0.8.2"
+title: "@sourceloop/reporting-service v2.1.2"
 language_tabs:
   - javascript: JavaScript
   - javascript--nodejs: Node.JS
@@ -16,11 +16,11 @@ headingLevel: 2
 
 <!-- Generator: Widdershins v4.0.1 -->
 
-<h1 id="-sourceloop-reporting-service">@sourceloop/reporting-service v0.8.2</h1>
+<h1 id="-sourceloop-reporting-service">@sourceloop/reporting-service v2.1.2</h1>
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-reporting-service
+reporting-service.
 
 Base URLs:
 

@@ -293,9 +293,8 @@ export class ProcessNotificationService {
     }
     //Create filter using criteria given in request
     const filterUsers = this._createFilterBuilder(notificationSettings).build();
-    const notificationUsers = await this.notificationUserRepository.find(
-      filterUsers,
-    );
+    const notificationUsers =
+      await this.notificationUserRepository.find(filterUsers);
     if (notificationUsers.length === 0) {
       throw new HttpErrors.UnprocessableEntity(
         ErrorKeys.NoUserFoundToSendNotification,

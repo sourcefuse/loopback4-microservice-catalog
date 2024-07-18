@@ -43,9 +43,8 @@ describe('DataSourcesController', () => {
 
   it('lists columns for a data source', async () => {
     const testDataSource = 'testDataSource';
-    const columns = await dataSourcesService.listDataSourceColumns(
-      testDataSource,
-    );
+    const columns =
+      await dataSourcesService.listDataSourceColumns(testDataSource);
 
     await client
       .get(`/data-sources/${testDataSource}/columns`)

@@ -97,9 +97,8 @@ export class SurveyResponseDetailViewController {
     @param.filter(SurveyResponseDetail, {exclude: 'where'})
     filter?: FilterExcludingWhere<SurveyResponseDetail>,
   ): Promise<SurveyResponseDetail> {
-    const surveyResponse = await this.surveyResponseDetailRepository.findOne(
-      filter,
-    );
+    const surveyResponse =
+      await this.surveyResponseDetailRepository.findOne(filter);
     if (!surveyResponse) {
       throw new HttpErrors.BadRequest('Entity not found');
     }

@@ -177,9 +177,8 @@ export class PaypalProvider implements Provider<PayPalPaymentGateway> {
         }
       },
       refund: async (transactionId: string, note?: string) => {
-        const transaction = await this.transactionsRepository.findById(
-          transactionId,
-        );
+        const transaction =
+          await this.transactionsRepository.findById(transactionId);
         const orderDetails = await this.ordersRepository.findById(
           transaction.orderId,
         );

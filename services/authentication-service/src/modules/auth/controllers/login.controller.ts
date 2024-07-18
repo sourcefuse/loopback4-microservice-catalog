@@ -443,12 +443,10 @@ export class LoginController {
       let oldPassword = prevPassword;
       let newPassword = password;
       if (process.env.PRIVATE_DECRYPTION_KEY) {
-        const decryptedOldPassword = await this.userRepo.decryptPassword(
-          oldPassword,
-        );
-        const decryptedNewPassword = await this.userRepo.decryptPassword(
-          password,
-        );
+        const decryptedOldPassword =
+          await this.userRepo.decryptPassword(oldPassword);
+        const decryptedNewPassword =
+          await this.userRepo.decryptPassword(password);
         oldPassword = decryptedOldPassword;
         newPassword = decryptedNewPassword;
       }

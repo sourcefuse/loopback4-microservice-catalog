@@ -362,9 +362,8 @@ export class QuestionHelperService {
 
   async validateParentQuestion(parentQuestionId: string | undefined) {
     if (parentQuestionId) {
-      const parentQuestion = await this.questionRepository.findById(
-        parentQuestionId,
-      );
+      const parentQuestion =
+        await this.questionRepository.findById(parentQuestionId);
       if (!parentQuestion) {
         throw new HttpErrors.NotFound('Parent question not found');
       } else if (

@@ -119,9 +119,8 @@ export class StripeProvider implements Provider<StripePaymentGateway> {
       },
 
       refund: async (transactionId: string) => {
-        const transaction = await this.transactionsRepository.findById(
-          transactionId,
-        );
+        const transaction =
+          await this.transactionsRepository.findById(transactionId);
         const paymentId = await transaction?.res?.chargeResponse?.id;
         const refund = await this.stripe.refunds.create({
           charge: paymentId,

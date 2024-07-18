@@ -123,9 +123,8 @@ describe('AuditController(unit) ', () => {
       );
       sinon.assert.calledOnce(logFetch);
       expect(controllerResult).to.have.length(1);
-      const controllerResultWithoutFilter = await controller.find(
-        includeArchivedLogs,
-      );
+      const controllerResultWithoutFilter =
+        await controller.find(includeArchivedLogs);
       expect(controllerResultWithoutFilter).to.have.length(2);
     });
   });

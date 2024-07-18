@@ -21,9 +21,8 @@ export class DataSourceConfigProvider
         ? `${process.env.SSM_PREFIX}/${tenantId}`
         : `${tenantId}`;
 
-      const data = await this.awsSsmHelper.getSSMParameterValue(
-        ssmKeyParamName,
-      );
+      const data =
+        await this.awsSsmHelper.getSSMParameterValue(ssmKeyParamName);
       if (data?.Parameter) {
         const parameterStr = data.Parameter.Value
           ? data.Parameter.Value.replace(/\n/gm, '')

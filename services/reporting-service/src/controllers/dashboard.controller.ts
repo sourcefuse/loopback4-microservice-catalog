@@ -105,13 +105,16 @@ export class DashboardController {
     });
 
     // Map widget IDs to their respective dashboards
-    const dashboardIdToWidgetIdsMap = allDashboardWidgets.reduce((map, dw) => {
-      if (!map[dw.dashboardId]) {
-        map[dw.dashboardId] = [];
-      }
-      map[dw.dashboardId].push(dw.widgetId);
-      return map;
-    }, {} as Record<string, string[]>);
+    const dashboardIdToWidgetIdsMap = allDashboardWidgets.reduce(
+      (map, dw) => {
+        if (!map[dw.dashboardId]) {
+          map[dw.dashboardId] = [];
+        }
+        map[dw.dashboardId].push(dw.widgetId);
+        return map;
+      },
+      {} as Record<string, string[]>,
+    );
 
     // Construct the final result
     const enhancedDashboards = dashboards.map(dashboard => {

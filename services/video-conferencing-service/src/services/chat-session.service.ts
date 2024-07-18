@@ -64,9 +64,8 @@ export class ChatSessionService {
       }
     }
 
-    const meetingResp = await this.videoChatProvider.getMeetingLink(
-      meetingOptions,
-    );
+    const meetingResp =
+      await this.videoChatProvider.getMeetingLink(meetingOptions);
     const meetingLinkId = await this.generator();
     //provider for this cryptoRandomString
     const videoSessionDetail = new VideoChatSession({

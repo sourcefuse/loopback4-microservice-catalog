@@ -49,9 +49,8 @@ describe('DataSourcesService', () => {
 
   describe('listDataSourceColumns', () => {
     it('should return a list of columns for a given data source', async () => {
-      const columns = await dataSourcesService.listDataSourceColumns(
-        'mockDataSource',
-      );
+      const columns =
+        await dataSourcesService.listDataSourceColumns('mockDataSource');
       expect(columns).to.be.an.Array();
       expect(columns[0].columnName).to.equal('mockColumn');
       sinon.assert.calledOnce(
@@ -72,9 +71,8 @@ describe('DataSourcesService', () => {
         dataTypeMap,
       );
 
-      const columns = await dataSourcesService.listDataSourceColumns(
-        'mockDataSource',
-      );
+      const columns =
+        await dataSourcesService.listDataSourceColumns('mockDataSource');
 
       expect(columns[0].dataType).to.equal(ResponseDataType.string);
     });

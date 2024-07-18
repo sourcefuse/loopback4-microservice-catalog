@@ -83,9 +83,8 @@ export class SubscriptionTransactionsController {
         : new Date(),
       planId: subscriptions?.planId,
     };
-    const newSubscription = await this.subscriptionRepository.create(
-      subscriptionEntity,
-    );
+    const newSubscription =
+      await this.subscriptionRepository.create(subscriptionEntity);
     const hostUrl = this.req.get('host');
     const hostProtocol = this.req.protocol;
     this.req.query.method = newSubscription.paymentMethod;
@@ -121,9 +120,8 @@ export class SubscriptionTransactionsController {
       ...chargeResponse,
       subscriptionId: this.req.query.subscriptionId,
     };
-    const chargeHelper = await this.gatewayHelper.subscriptionCharge(
-      chargeResponse,
-    );
+    const chargeHelper =
+      await this.gatewayHelper.subscriptionCharge(chargeResponse);
     const hostUrl = this.req.get('host');
     const hostProtocol = this.req.protocol;
     const defaultUrl = `${hostProtocol}://${hostUrl}`;
