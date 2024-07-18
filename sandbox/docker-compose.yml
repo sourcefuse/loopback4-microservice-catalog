@@ -657,20 +657,20 @@ services:
       - sandbox
     restart: on-failure
 
-  # user-tenant-example:
-  #   image: ${REGISTRY:-localhost:32000}/user-tenant-example
-  #   build:
-  #     context: ./user-tenant-example
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - '3043:3000'
-  #   networks:
-  #     - sandbox
-  #   environment: *user-tenant-variables
-  #   depends_on:
-  #     - postgres
-  #     - postgres_orchestrator
-  #   restart: on-failure
+  user-tenant-example:
+    image: ${REGISTRY:-localhost:32000}/user-tenant-example
+    build:
+      context: ./user-tenant-example
+      dockerfile: Dockerfile
+    ports:
+      - '3043:3000'
+    networks:
+      - sandbox
+    environment: *user-tenant-variables
+    depends_on:
+      - postgres
+      - postgres_orchestrator
+    restart: on-failure
 
   redis:
     image: 'redis:alpine'
