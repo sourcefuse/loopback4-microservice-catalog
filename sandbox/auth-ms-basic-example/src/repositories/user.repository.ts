@@ -1,4 +1,4 @@
-import { Getter, inject } from '@loopback/core';
+import {Getter, inject} from '@loopback/core';
 import {
   BelongsToAccessor,
   DataObject,
@@ -8,7 +8,7 @@ import {
   juggler,
   repository,
 } from '@loopback/repository';
-import { HttpErrors } from '@loopback/rest';
+import {HttpErrors} from '@loopback/rest';
 import {
   AuthDbSourceName,
   OtpRepository,
@@ -30,7 +30,7 @@ import {
   UserStatus,
 } from '@sourceloop/core';
 import * as bcrypt from 'bcrypt';
-import { AuthErrorKeys } from 'loopback4-authentication';
+import {AuthErrorKeys} from 'loopback4-authentication';
 
 const saltRounds = 10;
 
@@ -119,13 +119,12 @@ export class UserRepository extends DefaultSoftCrudRepository<
 
   async verifyPassword(username: string, password: string): Promise<User> {
     const user = await super.findOne({
-      where: { username: username.toLowerCase() },
+      where: {username: username.toLowerCase()},
     });
     const creds = user && (await this.credentials(user.id).get());
     if (!user || user.deleted) {
       throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
     } else if (
-      // eslint-disable-next-line
       !creds?.password ||
       creds.authProvider !== AuthProvider.INTERNAL ||
       !(await bcrypt.compare(password, creds.password))
@@ -142,7 +141,7 @@ export class UserRepository extends DefaultSoftCrudRepository<
     password: string,
     newPassword: string,
   ): Promise<User> {
-    const user = await super.findOne({ where: { username } });
+    const user = await super.findOne({where: {username}});
     const creds = user && (await this.credentials(user.id).get());
     if ((!user || user.deleted) ?? !creds?.password) {
       throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
@@ -170,7 +169,7 @@ export class UserRepository extends DefaultSoftCrudRepository<
     newPassword: string,
     oldPassword?: string,
   ): Promise<User> {
-    const user = await super.findOne({ where: { username } });
+    const user = await super.findOne({where: {username}});
     const creds = user && (await this.credentials(user.id).get());
 
     if (oldPassword) {
@@ -208,7 +207,7 @@ export class UserRepository extends DefaultSoftCrudRepository<
         lastLogin: Date.now(),
       },
       {
-        currentUser: { id: userId },
+        currentUser: {id: userId},
       },
     );
   }
