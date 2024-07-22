@@ -1,5 +1,5 @@
-import { ApplicationConfig } from '@loopback/core';
-import { AuthApplication } from './application';
+import {ApplicationConfig} from '@loopback/core';
+import {AuthApplication} from './application';
 
 const ARGV_INDEX = 2;
 const DEFAULT_PORT = 3000;
