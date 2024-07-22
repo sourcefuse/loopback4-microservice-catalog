@@ -322,9 +322,9 @@ describe('Workflow Controller: With Camunda', () => {
       const deployments: string[] = await Promise.all(
         workflows
           .map(workflow => {
-            return workflow.workflowVersions.map(version => {
-              return camundaService.get<AnyObject>(version.externalWorkflowId);
-            });
+            return workflow.workflowVersions.map(version =>
+              camundaService.get<AnyObject>(version.externalWorkflowId),
+            );
           })
           .flat()
           .map(p => p.then(res => res.deploymentId)),
@@ -332,7 +332,7 @@ describe('Workflow Controller: With Camunda', () => {
       const ids = new Set(deployments);
       for (const id of ids) {
         await camundaService.deleteDeployment(id, true).catch(() => {
-          console.error(`Error deleting deployment ${id}`);
+          console.error(`Error deleting deployment ${id}`); //NOSONAR
         });
       }
     }

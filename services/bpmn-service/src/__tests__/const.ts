@@ -91,7 +91,7 @@ export const firstTestRealBpmn = new WorkflowDto({
 });
 
 export function generateBpmn(name?: string, processId?: string) {
-  processId = processId ?? Math.floor(Math.random() * 1000000).toString();
+  processId = processId ?? Math.floor(Math.random() * 1000000).toString(); //NOSONAR
   return {
     ...firstTestBpmn,
     name: name ?? `process-${processId}`,
