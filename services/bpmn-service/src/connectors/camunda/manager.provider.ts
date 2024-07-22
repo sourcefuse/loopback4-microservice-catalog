@@ -98,7 +98,7 @@ export class CamundaManagerProvider implements Provider<WorflowManager> {
       deleteWorkflowById: async (workflow: Workflow) => {
         await this.camunda.delete(
           workflow.workflowVersions.map(
-            (version: WorkflowVersion) => version.externalWorkflowId as string,
+            (version: WorkflowVersion) => version.externalWorkflowId,
           ),
         );
         return workflow;

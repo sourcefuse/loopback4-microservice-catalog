@@ -107,7 +107,7 @@ export class WorkflowServiceComponent implements Component {
 
   bindings?: Binding[] = [];
 
-  services?: ServiceOrProviderClass[] | undefined;
+  services?: ServiceOrProviderClass[];
 
   /**
    * An optional list of Repository classes to bind for dependency injection

@@ -136,9 +136,8 @@ describe('Workflow Controller: With Camunda', () => {
       expect(workflows).to.have.length(1);
       expect(workflows[0].workflowVersions.length).to.equal(2);
       const maxVersion = workflows[0].workflowVersions.reduce(
-        (prev: WorkflowVersion, current: WorkflowVersion) => {
-          return prev.version > current.version ? prev : current;
-        },
+        (prev: WorkflowVersion, current: WorkflowVersion) =>
+          prev.version > current.version ? prev : current,
       );
 
       expect(workflows[0].externalIdentifier).to.equal(
@@ -324,12 +323,11 @@ describe('Workflow Controller: With Camunda', () => {
         workflows
           .map(workflow => {
             return workflow.workflowVersions.map(version => {
-              return camundaService
-                .get<AnyObject>(version.externalWorkflowId)
-                .then(res => res.deploymentId);
+              return camundaService.get<AnyObject>(version.externalWorkflowId);
             });
           })
-          .flat(),
+          .flat()
+          .map(p => p.then(res => res.deploymentId)),
       );
       const ids = new Set(deployments);
       for (const id of ids) {
