@@ -2,26 +2,27 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {BindingScope} from '@loopback/context';
 import {
   Client,
   createRestAppClient,
   givenHttpServerConfig,
 } from '@loopback/testlab';
-import {BearerTokenVerifyProvider} from '../provider/bearer-token-verify.provider';
 import {Strategies} from 'loopback4-authentication';
 import {WorkflowServiceApplication} from '../../application';
-import {BPMTask, WorkflowCacheSourceName} from '../../types';
-import {WorkflowDbDatasource} from '../datasources/workflowdb.datasource';
+import {CamundaComponent} from '../../connectors/camunda';
 import {WorkflowServiceBindings} from '../../keys';
-import {WorkflowMockProvider} from '../provider/workflow-helper-mock.provider';
-import {firstTestBpmn, MOCK_CAMUNDA} from '../const';
-import {MOCK_BPMN_ENGINE_KEY} from '../types';
-import {MockEngine} from '../mock-engine';
-import {BindingScope} from '@loopback/context';
-import {WorkerMockImplementationProvider} from '../provider/workflow-mock-implementation.provider';
+import {BPMTask, WorkflowCacheSourceName} from '../../types';
 import {TestBpmnCommand} from '../commands/test.command';
+import {MOCK_CAMUNDA, firstTestBpmn} from '../const';
+import {WorkflowDbDatasource} from '../datasources/workflowdb.datasource';
+import {MockEngine} from '../mock-engine';
+import {BearerTokenVerifyProvider} from '../provider/bearer-token-verify.provider';
+import {WorkflowMockProvider} from '../provider/workflow-helper-mock.provider';
+import {WorkerMockImplementationProvider} from '../provider/workflow-mock-implementation.provider';
+import {MOCK_BPMN_ENGINE_KEY} from '../types';
 
-export async function setUpApplication(): Promise<AppWithClient> {
+export async function setUpApplication(mock = true): Promise<AppWithClient> {
   const app = new WorkflowServiceApplication({
     rest: givenHttpServerConfig(),
   });
@@ -34,20 +35,29 @@ export async function setUpApplication(): Promise<AppWithClient> {
   app
     .bind(Strategies.Passport.BEARER_TOKEN_VERIFIER)
     .toProvider(BearerTokenVerifyProvider);
-  app
-    .bind(WorkflowServiceBindings.WorkflowManager)
-    .toProvider(WorkflowMockProvider);
-  app
-    .bind(WorkflowServiceBindings.WorkerImplementationFunction)
-    .toProvider(WorkerMockImplementationProvider);
-  app.bind(WorkflowServiceBindings.Config).to({
-    workflowEngineBaseUrl: MOCK_CAMUNDA,
-    useCustomSequence: false,
-  });
-  app
-    .bind(MOCK_BPMN_ENGINE_KEY)
-    .toClass(MockEngine)
-    .inScope(BindingScope.SINGLETON);
+  if (mock) {
+    app
+      .bind(WorkflowServiceBindings.WorkflowManager)
+      .toProvider(WorkflowMockProvider);
+    app
+      .bind(WorkflowServiceBindings.WorkerImplementationFunction)
+      .toProvider(WorkerMockImplementationProvider);
+    app.bind(WorkflowServiceBindings.Config).to({
+      workflowEngineBaseUrl: MOCK_CAMUNDA,
+      useCustomSequence: false,
+    });
+    app
+      .bind(MOCK_BPMN_ENGINE_KEY)
+      .toClass(MockEngine)
+      .inScope(BindingScope.SINGLETON);
+  } else {
+    app.component(CamundaComponent);
+    app.bind(WorkflowServiceBindings.Config).to({
+      workflowEngineBaseUrl: process.env.WORKFLOW_ENGINE_BASE_URL,
+      useCustomSequence: false,
+    });
+  }
+
   const registerFn = await app.getValueOrPromise(
     WorkflowServiceBindings.RegisterWorkerFunction,
   );

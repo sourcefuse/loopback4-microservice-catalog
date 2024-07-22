@@ -48,11 +48,23 @@ npm i @sourceloop/bpmn-service
   });
   ```
 - Implement `WorkflowProvider` (refer [this](#bpmnprovider)) and bind it to `WorkflowServiceBindings.WorkflowManager` key -
+
   ```typescript
   this.bind(WorkflowServiceBindings.WorkflowManager).toProvider(
     WorkflowProvider,
   );
   ```
+
+  OR
+
+  Use an existing workflow provider, like the Camunda 7 provided with this library -
+
+  ```typescript
+  this.component(CamundaComponent);
+  ```
+
+  You also need to install the [camunda-external-task-client-js](https://www.npmjs.com/package/camunda-external-task-client-js) library to use this component.
+
 - Add the `WorkflowServiceComponent` to your Loopback4 Application (in `application.ts`).
   ```typescript
   // import WorkflowServiceComponent

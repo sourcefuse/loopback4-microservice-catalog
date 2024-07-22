@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2023 Sourcefuse Technologies
+// Copyright (c) 2023 Sourcefuse Technologies
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
@@ -7,7 +7,6 @@ import {
   Component,
   ControllerClass,
   CoreBindings,
-  createBindingFromClass,
   inject,
   ProviderMap,
   ServiceOrProviderClass,
@@ -19,7 +18,6 @@ import {
   BearerVerifierComponent,
   BearerVerifierConfig,
   BearerVerifierType,
-  CoreComponent,
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
@@ -28,35 +26,18 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import {WorkflowController} from './controllers';
-import {WorkflowServiceBindings} from './keys';
-import {Workflow} from './models';
-import {ExecutionInputValidationProvider} from './providers/execution-input-validator.provider';
-import {WorkerRegisterFnProvider} from './providers/register-worker.service';
-import {WorkflowRepository, WorkflowVersionRepository} from './repositories';
-import {
-  WorkflowRepository as WorkflowSequelizeRepository,
-  WorkflowVersionRepository as WorkflowVersionSequelizeRepository,
-} from './repositories/sequelize';
-import {HttpClientService, WorkflowService} from './services';
-import {IWorkflowServiceConfig} from './types';
+import {WorkflowServiceBindings} from '../../keys';
+import {CamundaConnectorService} from './connector.service';
+import {CamundaImplementationProvider} from './implementation.provider';
+import {CamundaManagerProvider} from './manager.provider';
+import {TaskObserver} from './task.observer';
 
-export class WorkflowServiceComponent implements Component {
+export class CamundaComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: RestApplication,
-    @inject(WorkflowServiceBindings.Config, {optional: true})
-    private readonly workflowSvcConfig?: IWorkflowServiceConfig,
   ) {
-    this.bindings = [
-      createBindingFromClass(WorkflowService, {
-        key: WorkflowServiceBindings.WorkflowService,
-      }),
-    ];
     this.providers = {};
-
-    // Mount core component
-    this.application.component(CoreComponent);
 
     this.application.api({
       openapi: '3.0.0',
@@ -71,26 +52,13 @@ export class WorkflowServiceComponent implements Component {
       servers: [{url: '/'}],
     });
 
-    if (!this.workflowSvcConfig?.useCustomSequence) {
-      // Mount default sequence if needed
-      this.setupSequence();
-    }
-    if (this.workflowSvcConfig?.useSequelize) {
-      this.repositories = [
-        WorkflowSequelizeRepository,
-        WorkflowVersionSequelizeRepository,
-      ];
-    } else {
-      this.repositories = [WorkflowRepository, WorkflowVersionRepository];
-    }
-    this.models = [Workflow];
-
     this.providers = {
-      [WorkflowServiceBindings.ExecutionInputValidatorFn.key]:
-        ExecutionInputValidationProvider,
-      [WorkflowServiceBindings.RegisterWorkerFunction.key]:
-        WorkerRegisterFnProvider,
+      [WorkflowServiceBindings.WorkflowManager.key]: CamundaManagerProvider,
+      [WorkflowServiceBindings.WorkerImplementationFunction.key]:
+        CamundaImplementationProvider,
     };
+
+    this.services = [CamundaConnectorService];
 
     this.application
       .bind(WorkflowServiceBindings.WORKER_MAP)
@@ -98,9 +66,7 @@ export class WorkflowServiceComponent implements Component {
         return {};
       });
 
-    this.application.bind(WorkflowServiceBindings.COMMANDS).to([]);
-    this.controllers = [WorkflowController];
-    this.services = [HttpClientService];
+    application.lifeCycleObserver(TaskObserver);
   }
 
   providers?: ProviderMap = {};

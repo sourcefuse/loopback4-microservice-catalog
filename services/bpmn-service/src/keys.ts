@@ -2,10 +2,12 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {BindingKey} from '@loopback/core';
+import {BindingKey, Constructor} from '@loopback/core';
 import {BINDING_PREFIX} from '@sourceloop/core';
 import {
   ExecutionInputValidator,
+  ICommand,
+  IWorkflowService,
   IWorkflowServiceConfig,
   WorflowManager,
   WorkerImplementationFn,
@@ -34,5 +36,12 @@ export namespace WorkflowServiceBindings {
     );
   export const WORKER_MAP = BindingKey.create<WorkerMap | null>(
     `${BINDING_PREFIX}.workflow.worker.map`,
+  );
+  export const COMMANDS = BindingKey.create<Constructor<ICommand>[]>(
+    `${BINDING_PREFIX}.workflow.commands`,
+  );
+
+  export const WorkflowService = BindingKey.create<IWorkflowService>(
+    `${BINDING_PREFIX}.workflow.service`,
   );
 }

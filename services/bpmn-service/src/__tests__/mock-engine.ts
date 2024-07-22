@@ -57,7 +57,10 @@ export class MockEngine {
     return this.workflowList[workflow.name][version];
   }
 
-  update(workflow: WorkflowDto) {
+  update(workflow: Partial<WorkflowDto>) {
+    if (!workflow.name) {
+      throw new HttpErrors.NotFound('Not Found');
+    }
     if (this.workflowList?.[workflow.name]) {
       const latest = Math.max(
         ...Object.keys(this.workflowList[workflow.name]).map(s => Number(s)),
@@ -67,9 +70,9 @@ export class MockEngine {
         externalIdentifier: workflow.name,
         name: workflow.name,
         provider: 'bpmn',
-        inputSchema: workflow.inputSchema,
+        inputSchema: workflow.inputSchema ?? {},
         workflowVersions: [],
-        file: workflow.bpmnFile,
+        file: workflow.bpmnFile ?? '',
       };
       return this.workflowList[workflow.name][latest + 1];
     } else {
