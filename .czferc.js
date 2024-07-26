@@ -51,6 +51,7 @@ const scopes = [
   {name: 'ocr-parser'},
   {name: 'user-tenant-service'},
   {name: 'task-service'},
+  {name: 'entity-archival'},
 ];
 
 /**
