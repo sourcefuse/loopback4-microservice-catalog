@@ -28,7 +28,8 @@ import {
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class ImportArchivedDataService {
-  repo: AnyObject;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  repo: any;
   constructor(
     @repository(JobDetailsRepository)
     public jobDetailsRepo: JobDetailsRepository,
@@ -59,7 +60,6 @@ export class ImportArchivedDataService {
     const jobDetails = await this.jobDetailsRepo.findById(jobId);
     const modelName = jobDetails.entity;
     const filter = jobDetails.filterInquired;
-    const importData: AnyObject = {};
 
     const archiveFilter: Filter<ArchiveMapping> =
       await this.buildWhereConditionService.buildConditionForFetch(
@@ -69,7 +69,7 @@ export class ImportArchivedDataService {
 
     const archivedEntries = await this.archivalMappingRepo.find(archiveFilter);
 
-    let data: AnyObject[] = [];
+    const data: AnyObject[] = [];
 
     for (const entry of archivedEntries) {
       const fileContent = await this.importArchiveData(entry.key);
@@ -105,26 +105,29 @@ export class ImportArchivedDataService {
       status: JobStatus.SUCCESS,
       result: JSON.stringify(allRecords),
     });
-    this.processImportedData(allRecords);
+    await this.processImportedData(allRecords);
   }
-
-  async getFilteredData() {}
 
   // sonarignore:start
   private async getRepositoryByModelName<T extends Entity>(
     modelName: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): Promise<DefaultCrudRepository<T, any> | undefined> {
     // Find all bindings with keys matching 'repositories.*'
     const repositoryBindings =
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       this.context.find<DefaultCrudRepository<any, any>>('repositories.*');
 
     // Iterate through the bindings to find the matching repository
     for (const binding of repositoryBindings) {
-      const repository = await this.context.get<
+      const repoName = await this.context.get<
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         DefaultCrudRepository<any, any>
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       >(binding.key as unknown as BindingKey<DefaultCrudRepository<any, any>>);
-      if (repository.entityClass.name === modelName) {
-        return repository as DefaultCrudRepository<T, any>;
+      if (repoName.entityClass.name === modelName) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        return repoName as DefaultCrudRepository<T, any>;
       }
     }
     // sonarignore:end
