@@ -29,7 +29,7 @@ import {
 @injectable({scope: BindingScope.TRANSIENT})
 export class ImportArchivedDataService {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  repo: any;
+  repo: any; //NOSONAR
   constructor(
     @repository(JobDetailsRepository)
     public jobDetailsRepo: JobDetailsRepository,

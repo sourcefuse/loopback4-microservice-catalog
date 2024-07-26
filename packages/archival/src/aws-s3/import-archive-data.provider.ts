@@ -49,22 +49,26 @@ export class ImportArchiveDataProvider
       const headers = Object.keys(jsonArray[0]);
       for (const entry of jsonArray) {
         for (const key of headers) {
-          //sonarignore:start
           const value = entry[key];
-          if (value === '') {
-            entry[key] = null;
-          } else if (
-            typeof value === 'string' &&
-            /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/.test(value)
-          ) {
-            entry[key] = new Date(value);
-          } else entry[key] = value;
+          entry[key] = this.processEntryValue(key, value);
         }
-        //sonarignore:end
       }
       return jsonArray;
     } catch (error) {
       throw new HttpErrors.UnprocessableEntity(error.message);
     }
+  }
+
+  private processEntryValue(key: string, value: string) {
+    if (value === '') {
+      return null;
+    }
+    if (
+      typeof value === 'string' &&
+      /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/.test(value)
+    ) {
+      return new Date(value);
+    }
+    return value;
   }
 }
