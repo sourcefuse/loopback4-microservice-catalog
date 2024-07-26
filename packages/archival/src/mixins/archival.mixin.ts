@@ -28,7 +28,6 @@ export function ArchivalRepositoryMixin<
   T extends UserModifiableEntity,
   ID,
   Relations extends object,
-  //sonarignore:end
   R extends ArchiveMixinBase<T, ID, Relations>,
 >(superClass: R, opts: AnyObject): R & AbstractConstructor<IArchiveMixin> {
   abstract class MixedRepository extends superClass implements IArchiveMixin {
@@ -103,7 +102,7 @@ export function ArchivalRepositoryMixin<
       return (
         optionsActorId ??
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (user[this.actorIdKey ?? 'id'] as any)?.toString() ?? //NOSOAR
+        (user[this.actorIdKey ?? 'id'] as any)?.toString() ?? //NOSONAR
         '0'
       );
     }

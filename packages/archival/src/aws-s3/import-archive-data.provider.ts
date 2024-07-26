@@ -14,9 +14,7 @@ export class ImportArchiveDataProvider
   implements Provider<ImportDataExternalSystem>
 {
   value(): ValueOrPromise<ImportDataExternalSystem> {
-    return async (fileName: string) => {
-      return this.getFileContent(fileName);
-    };
+    return async (fileName: string) => this.getFileContent(fileName);
   }
 
   async getFileContent(fileName: string): Promise<AnyObject[]> {
@@ -40,27 +38,25 @@ export class ImportArchiveDataProvider
       const csvData = data.Body!.toString('utf-8');
 
       const jsonArray: AnyObject[] = await new Promise((resolve, reject) => {
-        const results: any[] = [];
+        const results: AnyObject[] = [];
         stream.Readable.from(csvData)
           .pipe(csv())
-          .on('data', (data: any) => results.push(data))
+          .on('data', (data: AnyObject) => results.push(data))
           .on('end', () => resolve(results))
           .on('error', reject);
       });
       const headers = Object.keys(jsonArray[0]);
       for (const entry of jsonArray) {
         for (const key of headers) {
-          if (entry.hasOwnProperty(key)) {
-            const value = entry[key];
-            if (value === '') {
-              entry[key] = null;
-            } else if (
-              typeof value === 'string' &&
-              /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/.test(value)
-            ) {
-              entry[key] = new Date(value);
-            } else entry[key] = value;
-          }
+          const value = entry[key];
+          if (value === '') {
+            entry[key] = null;
+          } else if (
+            typeof value === 'string' &&
+            /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/.test(value)
+          ) {
+            entry[key] = new Date(value);
+          } else entry[key] = value;
         }
       }
       return jsonArray;

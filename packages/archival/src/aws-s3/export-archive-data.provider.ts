@@ -14,9 +14,8 @@ export class ExportArchiveDataProvider
     private readonly config: AwsS3Config,
   ) {}
   value(): ExportDataExternalSystem {
-    return async (seletedEntries: AnyObject[]) => {
-      return this.exportToCsv(seletedEntries);
-    };
+    return async (seletedEntries: AnyObject[]) =>
+      this.exportToCsv(seletedEntries);
   }
   async exportToCsv(seletedEntries: AnyObject[]): Promise<string> {
     const csvRows = [];

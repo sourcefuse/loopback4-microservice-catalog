@@ -1,11 +1,4 @@
-import {
-  AnyObject,
-  Count,
-  Entity,
-  Filter,
-  Options,
-  Where,
-} from '@loopback/repository';
+import {AnyObject, Count, Filter, Options, Where} from '@loopback/repository';
 import {UserModifiableEntity} from '@sourceloop/core';
 import {ArchiveMapping} from './models';
 
@@ -25,7 +18,7 @@ export const DEFAULT_ARCHIVAL_OPTIONS: ArchivalComponentOptions = {
 
 export type AbstractConstructor<T> = abstract new (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ...args: any[]
+  ...args: any[] //NOSONAR
 ) => T;
 
 export type MixinBaseClass<T> = AbstractConstructor<T>;
@@ -100,13 +93,6 @@ export type GetJobDetailsFn = (
 ) => Promise<JobResponse>;
 
 export const ArchivalDbSourceName = 'ArchivalDB';
-
-export interface LoopBackModelClass<T extends Entity> {
-  new (): T;
-  modelName: string;
-  definition?: any; // Adjust the type as needed
-  relations?: any; // Adjust the type as needed
-}
 
 export interface IBuildWhereConditionService {
   buildConditionForInsert(where: AnyObject | undefined): Promise<AnyObject>;
