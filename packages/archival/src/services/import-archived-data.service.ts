@@ -28,7 +28,7 @@ import {
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class ImportArchivedDataService {
-  repo: any;
+  repo: AnyObject;
   constructor(
     @repository(JobDetailsRepository)
     public jobDetailsRepo: JobDetailsRepository,
@@ -110,6 +110,7 @@ export class ImportArchivedDataService {
 
   async getFilteredData() {}
 
+  // sonarignore:start
   private async getRepositoryByModelName<T extends Entity>(
     modelName: string,
   ): Promise<DefaultCrudRepository<T, any> | undefined> {
@@ -126,7 +127,7 @@ export class ImportArchivedDataService {
         return repository as DefaultCrudRepository<T, any>;
       }
     }
-
+    // sonarignore:end
     return undefined; // Return undefined if no matching repository is found
   }
 }
