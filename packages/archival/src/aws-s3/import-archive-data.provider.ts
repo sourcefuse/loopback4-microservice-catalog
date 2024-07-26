@@ -6,6 +6,7 @@ import {
 } from '@loopback/core';
 import {AnyObject} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import AWS from 'aws-sdk';
 import {ImportDataExternalSystem} from '../types';
 
@@ -32,10 +33,10 @@ export class ImportArchiveDataProvider
       Bucket: process.env.AWS_S3_BUCKET_NAME as string,
       Key: fileName,
     };
-    let data;
+    let s3Response;
     try {
-      data = await s3.getObject(params).promise();
-      const csvData = data.Body!.toString('utf-8');
+      s3Response = await s3.getObject(params).promise();
+      const csvData = s3Response.Body!.toString('utf-8');
 
       const jsonArray: AnyObject[] = await new Promise((resolve, reject) => {
         const results: AnyObject[] = [];
@@ -48,6 +49,7 @@ export class ImportArchiveDataProvider
       const headers = Object.keys(jsonArray[0]);
       for (const entry of jsonArray) {
         for (const key of headers) {
+          //sonarignore:start
           const value = entry[key];
           if (value === '') {
             entry[key] = null;
@@ -58,6 +60,7 @@ export class ImportArchiveDataProvider
             entry[key] = new Date(value);
           } else entry[key] = value;
         }
+        //sonarignore:end
       }
       return jsonArray;
     } catch (error) {

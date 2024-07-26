@@ -24,6 +24,7 @@ import {
   User,
 } from '../types';
 
+// NOSONAR -  ignore camelCase naming convention
 export function ArchivalRepositoryMixin<
   T extends UserModifiableEntity,
   ID,

@@ -25,7 +25,9 @@ export type MixinBaseClass<T> = AbstractConstructor<T>;
 
 export type ArchiveMixinBase<
   T extends UserModifiableEntity,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ID,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   Relations,
 > = MixinBaseClass<{
   entityClass: typeof UserModifiableEntity & {
