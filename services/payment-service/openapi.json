@@ -34,7 +34,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object"
+                "$ref": "#/components/schemas/NewSubscriptions"
               }
             }
           }
@@ -749,7 +749,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewMessage"
+                "$ref": "#/components/schemas/NewOrder"
               }
             }
           }
@@ -1585,6 +1585,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateRefund   |\n| CreateRefundNum   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1618,6 +1619,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateRefund   |\n| CreateRefundNum   |\n",
         "parameters": [
           {
             "name": "id",
@@ -2278,10 +2280,10 @@
         "additionalProperties": false,
         "x-typescript-type": "Partial<Transactions>"
       },
-      "NewMessage": {
-        "title": "NewMessage",
+      "NewOrder": {
+        "title": "NewOrder",
         "type": "object",
-        "description": "(tsType: Omit<Orders, 'id'>, schemaOptions: { title: 'NewMessage', exclude: [ 'id' ] })",
+        "description": "(tsType: Omit<Orders, 'id'>, schemaOptions: { title: 'NewOrder', exclude: [ 'id' ] })",
         "properties": {
           "totalAmount": {
             "type": "number"
@@ -2576,11 +2578,8 @@
       "NewSubscriptions": {
         "title": "NewSubscriptions",
         "type": "object",
-        "description": "(tsType: Subscriptions, schemaOptions: { title: 'NewSubscriptions' })",
+        "description": "(tsType: Omit<Subscriptions, 'id'>, schemaOptions: { title: 'NewSubscriptions', exclude: [ 'id' ] })",
         "properties": {
-          "id": {
-            "type": "string"
-          },
           "totalAmount": {
             "type": "number"
           },
@@ -2615,12 +2614,11 @@
           }
         },
         "required": [
-          "id",
           "totalAmount",
           "status"
         ],
         "additionalProperties": false,
-        "x-typescript-type": "Subscriptions"
+        "x-typescript-type": "Omit<Subscriptions, 'id'>"
       },
       "SubscriptionsWithRelations": {
         "title": "SubscriptionsWithRelations",

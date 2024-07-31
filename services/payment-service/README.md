@@ -213,6 +213,14 @@ copy the credentials to the sandbox account and use them to develop payment-serv
 
 Order creation , capture and refund is supported right now.
 
+The **`place-order-and-pay`** API endpoint allows creating a new order and initiate payment through PayPal. When a request is made, it first creates an order with the given details and saves it to the database.
+
+The create method in it handles the payment process by checking if a payment transaction already exists for the order. If not, it creates a new PayPal order and retrieves a payment link, which is then returned along with the order ID.
+
+The redirect url redirect users to the PayPal checkout page where they can review and complete their payment for a transaction associated with the provided orderId and receive a token or approval link in the response redirecting users to either the `SUCCESS_CALLBACK_URL` for successful payments with token and payerID or the `FAILURE_CALLBACK_URL` for canceled or failed transactions provided in env file.
+
+The **`transactionscharge`** API endpoint processes a payment charge and redirects the user based on the result.Upon receiving a successful response, it updates the order and transaction records to reflect the payment status.
+
 #### API Details
 
 ##### POST /payment-gateways

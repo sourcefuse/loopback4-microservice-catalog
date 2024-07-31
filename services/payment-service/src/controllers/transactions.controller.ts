@@ -369,7 +369,7 @@ export class TransactionsController {
       content: {
         [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Orders, {
-            title: 'NewMessage',
+            title: 'NewOrder',
             exclude: ['id'],
           }),
         },
@@ -491,7 +491,10 @@ export class TransactionsController {
       );
     }
   }
-
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [PermissionKey.CreateRefund, PermissionKey.CreateRefundNum],
+  })
   @post(`/transactions/refund/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
@@ -537,7 +540,10 @@ export class TransactionsController {
       return 'Transaction does not exist';
     }
   }
-
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [PermissionKey.CreateRefund, PermissionKey.CreateRefundNum],
+  })
   @get(`/transactions/refund/parse/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {

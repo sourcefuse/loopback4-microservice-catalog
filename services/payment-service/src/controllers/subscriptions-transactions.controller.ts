@@ -8,6 +8,7 @@ import {
   Request,
   Response,
   RestBindings,
+  getModelSchemaRef,
   post,
   requestBody,
 } from '@loopback/rest';
@@ -59,9 +60,10 @@ export class SubscriptionTransactionsController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: {
-            type: 'object',
-          },
+          schema: getModelSchemaRef(Subscriptions, {
+            title: 'NewSubscriptions',
+            exclude: ['id'],
+          }),
         },
       },
     })
