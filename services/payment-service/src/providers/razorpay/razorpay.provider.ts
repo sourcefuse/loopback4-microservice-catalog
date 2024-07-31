@@ -125,12 +125,12 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
     });
     if (subscription) {
       return {
-        res: ResponseMessage.Sucess,
+        res: ResponseMessage.Success,
         subscriptionId: subscription[0].id,
       };
     } else {
       return {
-        res: ResponseMessage.NotSucess,
+        res: ResponseMessage.NotSuccess,
         subscriptionId: chargeResponse.razorpay_subscription_id,
       };
     }
@@ -302,9 +302,9 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
           );
         }
         if (chargeComplete) {
-          return {res: ResponseMessage.Sucess, orderId: order[0].id};
+          return {res: ResponseMessage.Success, orderId: order[0].id};
         } else {
-          return {res: ResponseMessage.NotSucess, orderId: order[0].id};
+          return {res: ResponseMessage.NotSuccess, orderId: order[0].id};
         }
       },
 
@@ -322,7 +322,7 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
           return refund;
         } else {
           return {
-            err: ResponseMessage.NotSucess,
+            err: ResponseMessage.NotSuccess,
             message: 'please check PaymentId',
           };
         }

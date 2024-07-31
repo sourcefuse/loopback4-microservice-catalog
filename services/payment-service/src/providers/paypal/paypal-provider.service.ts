@@ -83,6 +83,13 @@ export class PaypalProvider implements Provider<PayPalPaymentGateway> {
                 },
               },
             ],
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            application_context: {
+              // eslint-disable-next-line @typescript-eslint/naming-convention
+              return_url: `${process.env.SUCCESS_CALLBACK_URL}`,
+              // eslint-disable-next-line @typescript-eslint/naming-convention
+              cancel_url: `${process.env.FAILURE_CALLBACK_URL}`,
+            },
           });
           const response = await this.client.execute(request);
           const order = response.result;
@@ -171,9 +178,9 @@ export class PaypalProvider implements Provider<PayPalPaymentGateway> {
           }
         }
         if (chargeComplete) {
-          return {res: ResponseMessage.Sucess, orderId: orderDetails.id};
+          return {res: ResponseMessage.Success, orderId: orderDetails.id};
         } else {
-          return {res: ResponseMessage.NotSucess, orderId: orderDetails.id};
+          return {res: ResponseMessage.NotSuccess, orderId: orderDetails.id};
         }
       },
       refund: async (transactionId: string, note?: string) => {
@@ -210,7 +217,7 @@ export class PaypalProvider implements Provider<PayPalPaymentGateway> {
           return order;
         } else {
           return {
-            err: ResponseMessage.NotSucess,
+            err: ResponseMessage.NotSuccess,
             message: 'please check transactionId',
           };
         }

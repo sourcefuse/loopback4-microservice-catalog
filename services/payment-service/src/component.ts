@@ -110,7 +110,7 @@ export class PaymentServiceComponent implements Component {
       Binding.bind(PayPalBindings.PayPalHelper.key).to(null),
     ];
     this.application.component(CoreComponent);
-
+    this.application.component(TenantUtilitiesComponent);
     if (this.tenantConfig?.useSingleTenant) {
       this.models = [
         Orders,
@@ -120,7 +120,6 @@ export class PaymentServiceComponent implements Component {
         Subscriptions,
       ];
     } else {
-      this.application.component(TenantUtilitiesComponent);
       this.models = [
         TenantOrders,
         TenantPaymentGateways,
