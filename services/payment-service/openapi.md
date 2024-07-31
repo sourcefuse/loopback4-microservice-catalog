@@ -35,7 +35,18 @@ Base URLs:
 > Code samples
 
 ```javascript
-const inputBody = '{}';
+const inputBody = '{
+  "totalAmount": 0,
+  "currency": "string",
+  "status": "string",
+  "paymentGatewayId": "string",
+  "paymentMethod": "string",
+  "metaData": {},
+  "startDate": "2019-08-24T14:15:22Z",
+  "endDate": "2019-08-24T14:15:22Z",
+  "gatewaySubscriptionId": "string",
+  "planId": "string"
+}';
 const headers = {
   'Content-Type':'application/json',
   'Accept':'text/html'
@@ -57,7 +68,18 @@ fetch('/create-subscription-and-pay',
 
 ```javascript--nodejs
 const fetch = require('node-fetch');
-const inputBody = {};
+const inputBody = {
+  "totalAmount": 0,
+  "currency": "string",
+  "status": "string",
+  "paymentGatewayId": "string",
+  "paymentMethod": "string",
+  "metaData": {},
+  "startDate": "2019-08-24T14:15:22Z",
+  "endDate": "2019-08-24T14:15:22Z",
+  "gatewaySubscriptionId": "string",
+  "planId": "string"
+};
 const headers = {
   'Content-Type':'application/json',
   'Accept':'text/html'
@@ -87,14 +109,25 @@ fetch('/create-subscription-and-pay',
 > Body parameter
 
 ```json
-{}
+{
+  "totalAmount": 0,
+  "currency": "string",
+  "status": "string",
+  "paymentGatewayId": "string",
+  "paymentMethod": "string",
+  "metaData": {},
+  "startDate": "2019-08-24T14:15:22Z",
+  "endDate": "2019-08-24T14:15:22Z",
+  "gatewaySubscriptionId": "string",
+  "planId": "string"
+}
 ```
 
 <h3 id="subscriptiontransactionscontroller.subscriptionandtransactionscreate-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|body|body|object|false|none|
+|body|body|[NewSubscriptions](#schemanewsubscriptions)|false|none|
 
 > Example responses
 
@@ -1860,7 +1893,7 @@ fetch('/place-order-and-pay',
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|body|body|[NewMessage](#schemanewmessage)|false|none|
+|body|body|[NewOrder](#schemaneworder)|false|none|
 
 > Example responses
 
@@ -2172,6 +2205,11 @@ fetch('/transactions/refund/parse/{id}',
 
 `GET /transactions/refund/parse/{id}`
 
+| Permissions |
+| ------- |
+| CreateRefund   |
+| CreateRefundNum   |
+
 <h3 id="transactionscontroller.transactionsrefundparse-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -2241,6 +2279,11 @@ fetch('/transactions/refund/{id}',
 ```
 
 `POST /transactions/refund/{id}`
+
+| Permissions |
+| ------- |
+| CreateRefund   |
+| CreateRefundNum   |
 
 <h3 id="transactionscontroller.transactionsrefund-parameters">Parameters</h3>
 
@@ -3519,7 +3562,6 @@ None
 
 ```javascript
 const inputBody = '{
-  "id": "string",
   "totalAmount": 0,
   "currency": "string",
   "status": "string",
@@ -3553,7 +3595,6 @@ fetch('/subscriptions',
 ```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
-  "id": "string",
   "totalAmount": 0,
   "currency": "string",
   "status": "string",
@@ -3595,7 +3636,6 @@ fetch('/subscriptions',
 
 ```json
 {
-  "id": "string",
   "totalAmount": 0,
   "currency": "string",
   "status": "string",
@@ -4992,12 +5032,12 @@ TransactionsPartial
 |orderId|string|false|none|none|
 |res|object|false|none|none|
 
-<h2 id="tocS_NewMessage">NewMessage</h2>
+<h2 id="tocS_NewOrder">NewOrder</h2>
 <!-- backwards compatibility -->
-<a id="schemanewmessage"></a>
-<a id="schema_NewMessage"></a>
-<a id="tocSnewmessage"></a>
-<a id="tocsnewmessage"></a>
+<a id="schemaneworder"></a>
+<a id="schema_NewOrder"></a>
+<a id="tocSneworder"></a>
+<a id="tocsneworder"></a>
 
 ```json
 {
@@ -5011,7 +5051,7 @@ TransactionsPartial
 
 ```
 
-NewMessage
+NewOrder
 
 ### Properties
 
@@ -5307,7 +5347,6 @@ Subscriptions
 
 ```json
 {
-  "id": "string",
   "totalAmount": 0,
   "currency": "string",
   "status": "string",
@@ -5328,7 +5367,6 @@ NewSubscriptions
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|id|string|true|none|none|
 |totalAmount|number|true|none|none|
 |currency|string|false|none|none|
 |status|string|true|none|none|
