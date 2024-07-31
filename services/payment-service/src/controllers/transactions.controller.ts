@@ -33,6 +33,7 @@ import {
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {v4 as uuidv4} from 'uuid';
+
 import {ResponseMessage, TemplateName, TemplateType} from '../enums';
 import {PermissionKey} from '../enums/permission-key.enum';
 import {Orders, Transactions} from '../models';
@@ -43,6 +44,7 @@ import {
   TemplatesRepository,
   TransactionsRepository,
 } from '../repositories';
+
 const transactionsRoutePath = '/transactions';
 const tranasactionsIdRoutePath = '/transactions/{id}';
 const redirectStatusCode = 302;
@@ -82,6 +84,14 @@ export class TransactionsController {
       },
     },
   })
+  /**
+   * The above function is an async function that creates a new transaction and returns the created
+   * transaction.
+   * @param {Transactions} transactions - The `transactions` parameter is an object of type
+   * `Transactions`. It represents the data for creating a new transaction.
+   * @returns The `create` function is returning a Promise that resolves to an instance of the
+   * `Transactions` model.
+   */
   async create(
     @requestBody({
       content: {
@@ -113,6 +123,14 @@ export class TransactionsController {
       },
     },
   })
+  /**
+   * The count function returns the number of transactions that match the given criteria.
+   * @param [where] - The `where` parameter is an optional parameter of type `Where<Transactions>`. It
+   * is used to specify the conditions for filtering the transactions. The `Where` type is a generic
+   * type that allows you to define the conditions for filtering based on the properties of the
+   * `Transactions` entity.
+   * @returns The count of transactions that match the provided `where` condition.
+   */
   async count(
     @param.where(Transactions) where?: Where<Transactions>,
   ): Promise<Count> {
@@ -142,6 +160,16 @@ export class TransactionsController {
       },
     },
   })
+  /**
+   * The `find` function is an asynchronous method that takes an optional filter parameter and returns a
+   * promise that resolves to an array of `Transactions` objects.
+   * @param [filter] - The `filter` parameter is an optional parameter of type `Filter<Transactions>`.
+   * It is used to specify the filtering criteria for the transactions that need to be retrieved. The
+   * `Filter` type is a generic type that allows you to define the filtering criteria based on the
+   * properties of the `Transactions`
+   * @returns The `find` method is returning a promise that resolves to an array of `Transactions`
+   * objects.
+   */
   async find(
     @param.filter(Transactions) filter?: Filter<Transactions>,
   ): Promise<Transactions[]> {
@@ -164,6 +192,18 @@ export class TransactionsController {
       },
     },
   })
+  /**
+   * The function `updateAll` updates multiple transactions based on the provided filter and returns
+   * the count of updated transactions.
+   * @param {Transactions} transactions - The `transactions` parameter is an object of type
+   * `Transactions` which represents the data that needs to be updated in the database. It is
+   * decorated with `@requestBody` to indicate that it is coming from the request body of the API
+   * call.
+   * @param [where] - The `where` parameter is an optional filter object that specifies the conditions
+   * for updating the transactions. It is used to narrow down the scope of the update operation by
+   * specifying certain criteria that the transactions must meet in order to be updated.
+   * @returns a Promise that resolves to a Count.
+   */
   async updateAll(
     @requestBody({
       content: {
@@ -198,6 +238,16 @@ export class TransactionsController {
       },
     },
   })
+  /**
+   * The `findById` function retrieves a transaction by its ID, with an optional filter.
+   * @param {string} id - The `id` parameter is a string that represents the unique identifier of the
+   * transaction you want to find. It is passed as a path parameter in the URL.
+   * @param [filter] - The `filter` parameter is an optional parameter that allows you to specify
+   * additional filtering options for the `findById` method. It is of type
+   * `FilterExcludingWhere<Transactions>`, which means it can include any properties of the
+   * `Transactions` model except for the `where` property.
+   * @returns a Promise that resolves to an instance of the Transactions model.
+   */
   async findById(
     @param.path.string('id') id: string,
     @param.filter(Transactions, {exclude: 'where'})
@@ -221,6 +271,14 @@ export class TransactionsController {
       },
     },
   })
+  /**
+   * The function updates a transaction by its ID.
+   * @param {string} id - The `id` parameter is a string that represents the unique identifier of the
+   * transaction that needs to be updated.
+   * @param {Transactions} transactions - The `transactions` parameter is an object of type
+   * `Transactions`. It represents the data that will be used to update a specific transaction in the
+   * database.
+   */
   async updateById(
     @param.path.string('id') id: string,
     @requestBody({
@@ -250,6 +308,14 @@ export class TransactionsController {
       },
     },
   })
+  /**
+   * The function replaces a transaction by its ID in the transactions repository.
+   * @param {string} id - The `id` parameter is a string that represents the unique identifier of the
+   * transaction that needs to be replaced.
+   * @param {Transactions} transactions - The `transactions` parameter is of type `Transactions`. It
+   * is the request body that contains the data to be used for replacing the transaction with the
+   * specified `id`.
+   */
   async replaceById(
     @param.path.string('id') id: string,
     @requestBody() transactions: Transactions,
@@ -276,7 +342,19 @@ export class TransactionsController {
     await this.transactionsRepository.deleteById(id);
   }
 
+  /**
+   * The function creates a new order entity and redirects the user to a transaction page with the
+   * order ID and payment method.
+   * @param {Orders} orders - The `orders` parameter is an object that contains the following
+   * properties:
+   * @returns a Promise that resolves to an unknown value.
+   */
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [PermissionKey.CreateOrder, PermissionKey.CreateOrderNum],
+  })
   @post('/place-order-and-pay', {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [redirectStatusCode]: {
         description: 'Order model instance',
@@ -290,13 +368,14 @@ export class TransactionsController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: {
-            type: 'object',
-          },
+          schema: getModelSchemaRef(Orders, {
+            title: 'NewMessage',
+            exclude: ['id'],
+          }),
         },
       },
     })
-    orders: Orders,
+    orders: Omit<Orders, 'id'>,
   ): Promise<unknown> {
     const orderEntity = {
       id: uuidv4(),
@@ -315,8 +394,12 @@ export class TransactionsController {
       `${hostProtocol}://${hostUrl}/transactions/orderid/${newOrder.id}?method=${newOrder.paymentmethod}`,
     );
   }
-
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [PermissionKey.CreateOrder, PermissionKey.CreateOrderNum],
+  })
   @get(`/transactions/orderid/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'HTML response for payment gateway interface.',
@@ -330,6 +413,13 @@ export class TransactionsController {
       },
     },
   })
+  /**
+   * The function retrieves an order by its ID, finds a payment template based on the order's payment
+   * gateway ID, name, and type, and then sends the created order and payment template to a gateway
+   * helper for processing.
+   * @param {string} id - The `id` parameter is a string that represents the ID of an order.
+   * @returns the result of the `this.gatewayHelper.create(Order, paymentTemplate)` method call.
+   */
   async transactionsPay(@param.path.string('id') id: string): Promise<unknown> {
     const Order = await this.ordersRepository.findById(id);
     const templates = await this.templatesRepository.find({
@@ -344,8 +434,15 @@ export class TransactionsController {
       await this.gatewayHelper.create(Order, paymentTemplate),
     );
   }
-
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [
+      PermissionKey.CreateTransaction,
+      PermissionKey.CreateTransactionNum,
+    ],
+  })
   @post('/transactions/charge', {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Transacttion Gateway Request',
@@ -355,6 +452,13 @@ export class TransactionsController {
       },
     },
   })
+  /**
+   * The function `transactionscharge` handles a charge response, performs a charge operation, and
+   * redirects the user to a success or failure callback URL based on the result.
+   * @param chargeResponse - The `chargeResponse` parameter is an object of type `DataObject<{}>`. It
+   * is used to store the response data for the charge transaction.
+   * @returns a Promise that resolves to an unknown value.
+   */
   async transactionscharge(
     @requestBody({
       content: {
@@ -375,7 +479,7 @@ export class TransactionsController {
     const hostUrl = this.req.get('host');
     const hostProtocol = this.req.protocol;
     const defaultUrl = `${hostProtocol}://${hostUrl}`;
-    if (chargeHelper?.res === ResponseMessage.Sucess) {
+    if (chargeHelper?.res === ResponseMessage.Success) {
       return this.res.redirect(
         permRedirectStatusCode,
         `${process.env.SUCCESS_CALLBACK_URL ?? defaultUrl}`,
@@ -389,6 +493,7 @@ export class TransactionsController {
   }
 
   @post(`/transactions/refund/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Refund Object from payment gateway',
@@ -398,6 +503,17 @@ export class TransactionsController {
       },
     },
   })
+  /**
+   * The `transactionsRefund` function refunds a transaction by redirecting to a refund parsing
+   * endpoint based on the payment gateway type.
+   * @param {string} id - The `id` parameter is a string that represents the unique identifier of a
+   * transaction.
+   * @returns either a redirect response or a string message. If the transaction exists and has a
+   * valid payment gateway ID, it will return a redirect response to the specified URL. If the
+   * transaction does not exist, it will return the string message "Transaction does not exist". If
+   * the transaction exists but does not have a valid payment gateway ID, it will return the string
+   * message "Not Valid Gateway Id".
+   */
   async transactionsRefund(
     @param.path.string('id') id: string,
   ): Promise<unknown> {
@@ -423,6 +539,7 @@ export class TransactionsController {
   }
 
   @get(`/transactions/refund/parse/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Refund Object from payment gateway',
@@ -432,6 +549,12 @@ export class TransactionsController {
       },
     },
   })
+  /**
+   * The function `transactionsRefundParse` refunds a transaction with the given ID using the
+   * `gatewayHelper` object.
+   * @param {string} id - The `id` parameter is a string that represents the transaction ID.
+   * @returns a Promise that resolves to an unknown value.
+   */
   async transactionsRefundParse(
     @param.path.string('id') id: string,
   ): Promise<unknown> {
@@ -448,6 +571,15 @@ export class TransactionsController {
       },
     },
   })
+  /**
+   * The function `subscriptionWebHook` is an async function that receives a charge response as a
+   * request body and sends it to a helper function called `subscriptionWebHook` before returning the
+   * response.
+   * @param chargeResponse - The `chargeResponse` parameter is an object that represents the response
+   * received from a charge or payment processing operation. It is of type `DataObject<{}>`, which
+   * means it is a generic object with no specific properties defined.
+   * @returns the result of the `subscriptionWebHook` method of the `gatewayHelper` object.
+   */
   async subscriptionWebHook(
     @requestBody({
       content: {

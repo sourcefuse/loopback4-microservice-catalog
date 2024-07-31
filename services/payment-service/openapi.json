@@ -731,6 +731,11 @@
         "tags": [
           "TransactionsController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "302": {
             "description": "Order model instance",
@@ -739,11 +744,12 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateOrder   |\n| 6   |\n",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "type": "object"
+                "$ref": "#/components/schemas/NewMessage"
               }
             }
           }
@@ -758,6 +764,11 @@
         "tags": [
           "SubscriptionTransactionsController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Subscription model instance",
@@ -766,6 +777,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateTransaction   |\n| 20   |\n",
         "requestBody": {
           "content": {
             "application/x-www-form-urlencoded": {
@@ -1445,6 +1457,11 @@
         "tags": [
           "TransactionsController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Transacttion Gateway Request",
@@ -1453,6 +1470,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateTransaction   |\n| 18   |\n",
         "requestBody": {
           "content": {
             "application/x-www-form-urlencoded": {
@@ -1516,6 +1534,11 @@
         "tags": [
           "TransactionsController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "HTML response for payment gateway interface.",
@@ -1528,6 +1551,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateOrder   |\n| 6   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1547,6 +1571,11 @@
         "x-operation-name": "transactionsRefundParse",
         "tags": [
           "TransactionsController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
         ],
         "responses": {
           "200": {
@@ -1576,6 +1605,11 @@
         "tags": [
           "TransactionsController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Refund Object from payment gateway",
@@ -1604,6 +1638,11 @@
         "tags": [
           "TransactionSubscriptionsController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "302": {
             "description": "Array of Transactions model instances",
@@ -1616,6 +1655,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateSubscriptions   |\n| 4   |\n",
         "parameters": [
           {
             "name": "id",
@@ -2237,6 +2277,39 @@
         },
         "additionalProperties": false,
         "x-typescript-type": "Partial<Transactions>"
+      },
+      "NewMessage": {
+        "title": "NewMessage",
+        "type": "object",
+        "description": "(tsType: Omit<Orders, 'id'>, schemaOptions: { title: 'NewMessage', exclude: [ 'id' ] })",
+        "properties": {
+          "totalAmount": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "paymentGatewayId": {
+            "type": "string"
+          },
+          "paymentmethod": {
+            "type": "string"
+          },
+          "metaData": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "totalAmount",
+          "currency",
+          "status",
+          "paymentGatewayId"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<Orders, 'id'>"
       },
       "PaymentGateways": {
         "title": "PaymentGateways",
