@@ -35,7 +35,18 @@ Base URLs:
 > Code samples
 
 ```javascript
-const inputBody = '{}';
+const inputBody = '{
+  "totalAmount": 0,
+  "currency": "string",
+  "status": "string",
+  "paymentGatewayId": "string",
+  "paymentMethod": "string",
+  "metaData": {},
+  "startDate": "2019-08-24T14:15:22Z",
+  "endDate": "2019-08-24T14:15:22Z",
+  "gatewaySubscriptionId": "string",
+  "planId": "string"
+}';
 const headers = {
   'Content-Type':'application/json',
   'Accept':'text/html'
@@ -57,7 +68,18 @@ fetch('/create-subscription-and-pay',
 
 ```javascript--nodejs
 const fetch = require('node-fetch');
-const inputBody = {};
+const inputBody = {
+  "totalAmount": 0,
+  "currency": "string",
+  "status": "string",
+  "paymentGatewayId": "string",
+  "paymentMethod": "string",
+  "metaData": {},
+  "startDate": "2019-08-24T14:15:22Z",
+  "endDate": "2019-08-24T14:15:22Z",
+  "gatewaySubscriptionId": "string",
+  "planId": "string"
+};
 const headers = {
   'Content-Type':'application/json',
   'Accept':'text/html'
@@ -87,14 +109,25 @@ fetch('/create-subscription-and-pay',
 > Body parameter
 
 ```json
-{}
+{
+  "totalAmount": 0,
+  "currency": "string",
+  "status": "string",
+  "paymentGatewayId": "string",
+  "paymentMethod": "string",
+  "metaData": {},
+  "startDate": "2019-08-24T14:15:22Z",
+  "endDate": "2019-08-24T14:15:22Z",
+  "gatewaySubscriptionId": "string",
+  "planId": "string"
+}
 ```
 
 <h3 id="subscriptiontransactionscontroller.subscriptionandtransactionscreate-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|body|body|object|false|none|
+|body|body|[NewSubscriptions](#schemanewsubscriptions)|false|none|
 
 > Example responses
 
@@ -162,6 +195,11 @@ fetch('/subscription/transaction/charge',
 
 `POST /subscription/transaction/charge`
 
+| Permissions |
+| ------- |
+| UpdateTransaction   |
+| 20   |
+
 > Body parameter
 
 ```yaml
@@ -185,8 +223,9 @@ fetch('/subscription/transaction/charge',
 
 <h3 id="subscriptiontransactionscontroller.subscriptiontransactionscharge-responseschema">Response Schema</h3>
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
 </aside>
 
 <h1 id="-sourceloop-payment-service-orderscontroller">OrdersController</h1>
@@ -1774,7 +1813,14 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
-const inputBody = '{}';
+const inputBody = '{
+  "totalAmount": 0,
+  "currency": "string",
+  "status": "string",
+  "paymentGatewayId": "string",
+  "paymentmethod": "string",
+  "metaData": {}
+}';
 const headers = {
   'Content-Type':'application/json',
   'Accept':'text/html'
@@ -1796,7 +1842,14 @@ fetch('/place-order-and-pay',
 
 ```javascript--nodejs
 const fetch = require('node-fetch');
-const inputBody = {};
+const inputBody = {
+  "totalAmount": 0,
+  "currency": "string",
+  "status": "string",
+  "paymentGatewayId": "string",
+  "paymentmethod": "string",
+  "metaData": {}
+};
 const headers = {
   'Content-Type':'application/json',
   'Accept':'text/html'
@@ -1818,17 +1871,29 @@ fetch('/place-order-and-pay',
 
 `POST /place-order-and-pay`
 
+| Permissions |
+| ------- |
+| CreateOrder   |
+| 6   |
+
 > Body parameter
 
 ```json
-{}
+{
+  "totalAmount": 0,
+  "currency": "string",
+  "status": "string",
+  "paymentGatewayId": "string",
+  "paymentmethod": "string",
+  "metaData": {}
+}
 ```
 
 <h3 id="transactionscontroller.orderandtransactionscreate-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|body|body|object|false|none|
+|body|body|[NewOrder](#schemaneworder)|false|none|
 
 > Example responses
 
@@ -1840,8 +1905,9 @@ fetch('/place-order-and-pay',
 
 <h3 id="transactionscontroller.orderandtransactionscreate-responseschema">Response Schema</h3>
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
 </aside>
 
 ## TransactionsController.transactionscharge
@@ -1895,6 +1961,11 @@ fetch('/transactions/charge',
 
 `POST /transactions/charge`
 
+| Permissions |
+| ------- |
+| CreateTransaction   |
+| 18   |
+
 > Body parameter
 
 ```yaml
@@ -1918,8 +1989,9 @@ fetch('/transactions/charge',
 
 <h3 id="transactionscontroller.transactionscharge-responseschema">Response Schema</h3>
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
 </aside>
 
 ## TransactionsController.count
@@ -2052,6 +2124,11 @@ fetch('/transactions/orderid/{id}',
 
 `GET /transactions/orderid/{id}`
 
+| Permissions |
+| ------- |
+| CreateOrder   |
+| 6   |
+
 <h3 id="transactionscontroller.transactionspay-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -2074,8 +2151,9 @@ fetch('/transactions/orderid/{id}',
 
 <h3 id="transactionscontroller.transactionspay-responseschema">Response Schema</h3>
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
 </aside>
 
 ## TransactionsController.transactionsRefundParse
@@ -2127,6 +2205,11 @@ fetch('/transactions/refund/parse/{id}',
 
 `GET /transactions/refund/parse/{id}`
 
+| Permissions |
+| ------- |
+| CreateRefund   |
+| CreateRefundNum   |
+
 <h3 id="transactionscontroller.transactionsrefundparse-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -2143,8 +2226,9 @@ fetch('/transactions/refund/parse/{id}',
 
 <h3 id="transactionscontroller.transactionsrefundparse-responseschema">Response Schema</h3>
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
 </aside>
 
 ## TransactionsController.transactionsRefund
@@ -2196,6 +2280,11 @@ fetch('/transactions/refund/{id}',
 
 `POST /transactions/refund/{id}`
 
+| Permissions |
+| ------- |
+| CreateRefund   |
+| CreateRefundNum   |
+
 <h3 id="transactionscontroller.transactionsrefund-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -2212,8 +2301,9 @@ fetch('/transactions/refund/{id}',
 
 <h3 id="transactionscontroller.transactionsrefund-responseschema">Response Schema</h3>
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
 </aside>
 
 ## TransactionsController.subscriptionWebHook
@@ -3472,7 +3562,6 @@ None
 
 ```javascript
 const inputBody = '{
-  "id": "string",
   "totalAmount": 0,
   "currency": "string",
   "status": "string",
@@ -3506,7 +3595,6 @@ fetch('/subscriptions',
 ```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
-  "id": "string",
   "totalAmount": 0,
   "currency": "string",
   "status": "string",
@@ -3548,7 +3636,6 @@ fetch('/subscriptions',
 
 ```json
 {
-  "id": "string",
   "totalAmount": 0,
   "currency": "string",
   "status": "string",
@@ -4631,6 +4718,11 @@ fetch('/transactions/subscription/{id}',
 
 `GET /transactions/subscription/{id}`
 
+| Permissions |
+| ------- |
+| UpdateSubscriptions   |
+| 4   |
+
 <h3 id="transactionsubscriptionscontroller.subscriptiontransactionspay-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -4653,8 +4745,9 @@ fetch('/transactions/subscription/{id}',
 
 <h3 id="transactionsubscriptionscontroller.subscriptiontransactionspay-responseschema">Response Schema</h3>
 
-<aside class="success">
-This operation does not require authentication
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
 </aside>
 
 # Schemas
@@ -4939,6 +5032,38 @@ TransactionsPartial
 |orderId|string|false|none|none|
 |res|object|false|none|none|
 
+<h2 id="tocS_NewOrder">NewOrder</h2>
+<!-- backwards compatibility -->
+<a id="schemaneworder"></a>
+<a id="schema_NewOrder"></a>
+<a id="tocSneworder"></a>
+<a id="tocsneworder"></a>
+
+```json
+{
+  "totalAmount": 0,
+  "currency": "string",
+  "status": "string",
+  "paymentGatewayId": "string",
+  "paymentmethod": "string",
+  "metaData": {}
+}
+
+```
+
+NewOrder
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|totalAmount|number|true|none|none|
+|currency|string|true|none|none|
+|status|string|true|none|none|
+|paymentGatewayId|string|true|none|none|
+|paymentmethod|string|false|none|none|
+|metaData|object|false|none|none|
+
 <h2 id="tocS_PaymentGateways">PaymentGateways</h2>
 <!-- backwards compatibility -->
 <a id="schemapaymentgateways"></a>
@@ -5222,7 +5347,6 @@ Subscriptions
 
 ```json
 {
-  "id": "string",
   "totalAmount": 0,
   "currency": "string",
   "status": "string",
@@ -5243,7 +5367,6 @@ NewSubscriptions
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|id|string|true|none|none|
 |totalAmount|number|true|none|none|
 |currency|string|false|none|none|
 |status|string|true|none|none|

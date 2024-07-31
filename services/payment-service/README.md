@@ -16,6 +16,7 @@ any client application.
 - Users can seamlessly integrate PayPal for payment transactions.
 - The microservice supports Stripe as a preferred payment gateway option.
 - Razorpay integration is also available for users seeking diverse payment methods.
+
 ## Installation
 
 ```bash
@@ -41,12 +42,10 @@ npm i @sourceloop/payment-service
 - Bind any of the custom [providers](#providers) you need.
 - **Using Paypal payment Gateway**
   Bind the PayPalHelper and PayPalConfig as shown below
+
   ```typescript
   //import Providers
-  import {
-    PayPalBindings,
-    PaypalProvider
-  } from 'payment-service/dist/providers';
+  import {PayPalBindings, PaypalProvider} from 'payment-service/dist/providers';
   //Bind the providers
   this.bind(PayPalBindings.PayPalHelper.key).toProvider(PaypalProvider);
   this.bind(PayPalBindings.PayPalConfig).to({
@@ -56,15 +55,11 @@ npm i @sourceloop/payment-service
   ```
 
 - **Using Stripe payment Gateway**
-    Bind the StripeHelper and Config as shown below
-
+  Bind the StripeHelper and Config as shown below
 
   ```typescript
   //import Providers
-  import {
-    StripeBindings,
-    StripeProvider,
-  } from 'payment-service/dist/providers';
+  import {StripeBindings, StripeProvider} from 'payment-service/dist/providers';
   //Bind the providers
   this.bind(StripeBindings.Config).to({dataKey: '', publishKey: ''});
   this.bind(StripeBindings.StripeHelper).toProvider(StripeProvider);
@@ -72,7 +67,7 @@ npm i @sourceloop/payment-service
 
 - **Using RazorPay payment Gateway**
   Bind the RazorPayHelper and RazorPayConfig as shown below
-  
+
   ```typescript
   //import Providers
   import {
@@ -183,6 +178,7 @@ JWT_ISSUER=https://authentication.service
 | `DB_SCHEMA`   | Y        | `public`      | Database schema used for the data source. In PostgreSQL, this will be `public` unless a schema is made explicitly for the service. |
 | `JWT_SECRET`  | Y        |               | Symmetric signing key of the JWT token.                                                                                            |
 | `JWT_ISSUER`  | Y        |               | Issuer of the JWT token.                                                                                                           |
+
 ### Providers
 
 You can find documentation for some of the providers available in this service [here](./src/providers/README.md)
@@ -217,6 +213,14 @@ copy the credentials to the sandbox account and use them to develop payment-serv
 
 Order creation , capture and refund is supported right now.
 
+The **`place-order-and-pay`** API endpoint allows creating a new order and initiate payment through PayPal. When a request is made, it first creates an order with the given details and saves it to the database.
+
+The create method in it handles the payment process by checking if a payment transaction already exists for the order. If not, it creates a new PayPal order and retrieves a payment link, which is then returned along with the order ID.
+
+The redirect url redirect users to the PayPal checkout page where they can review and complete their payment for a transaction associated with the provided orderId and receive a token or approval link in the response redirecting users to either the `SUCCESS_CALLBACK_URL` for successful payments with token and payerID or the `FAILURE_CALLBACK_URL` for canceled or failed transactions provided in env file.
+
+The **`transactionscharge`** API endpoint processes a payment charge and redirects the user based on the result.Upon receiving a successful response, it updates the order and transaction records to reflect the payment status.
+
 #### API Details
 
 ##### POST /payment-gateways
@@ -226,6 +230,10 @@ Create a payment gateway.
 ##### POST /place-order-and-pay
 
 Create an order and initiate transaction for the selected payment gateway, this will create order and initiate payment process.
+
+##### POST /transactions/charge
+
+The transactionscharge endpoint handles incoming charge requests. It extracts the order ID from the request, calls the charge helper method of selected payment gateway,and redirects the user to a success or failure URL based on the charge outcome.
 
 ##### POST /orders
 
