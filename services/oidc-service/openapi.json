@@ -3,7 +3,7 @@
   "info": {
     "title": "Oidc Service",
     "version": "1.0.0",
-    "description": "Oidc microservice",
+    "description": "Oidc microservice.",
     "contact": {
       "name": "SourceFuse"
     }
