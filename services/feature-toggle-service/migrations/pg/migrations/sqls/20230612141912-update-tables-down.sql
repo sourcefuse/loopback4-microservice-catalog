@@ -18,7 +18,7 @@ drop column deleted  ,
 drop column deleted_on ,
 drop column deleted_by;
 
-ALTER TABLE main.feature_toggles
+ALTER TABLE main.feature_values
 drop column created_by,
 drop column modified_by ,
 drop column created_on ,

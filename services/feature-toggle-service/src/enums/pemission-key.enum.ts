@@ -13,10 +13,10 @@ export enum PermissionKey {
   UpdateStrategy = 'UpdateStrategy',
   DeleteStrategy = 'DeleteStrategy',
 
-  ViewFeatureToggle = 'ViewFeatureToggle',
-  CreateFeatureToggle = 'CreateFeatureToggle',
-  UpdateFeatureToggle = 'UpdateFeatureToggle',
-  DeleteFeatureToggle = 'DeleteFeatureToggle',
+  ViewFeatureValues = 'ViewFeatureValues',
+  CreateFeatureValues = 'CreateFeatureValues',
+  UpdateFeatureValues = 'UpdateFeatureValues',
+  DeleteFeatureValues = 'DeleteFeatureValues',
 
   ViewFeatureNum = '1',
   CreateFeatureNum = '2',
@@ -28,8 +28,8 @@ export enum PermissionKey {
   UpdateStrategyNum = '7',
   DeleteStrategyNum = '8',
 
-  ViewFeatureToggleNum = '9',
-  CreateFeatureToggleNum = '10',
-  UpdateFeatureToggleNum = '11',
-  DeleteFeatureToggleNum = '12',
+  ViewFeatureValuesNum = '9',
+  CreateFeatureValuesNum = '10',
+  UpdateFeatureValuesNum = '11',
+  DeleteFeatureValuesNum = '12',
 }
