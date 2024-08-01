@@ -11,7 +11,7 @@ import {SequelizeUserModifyCrudRepository} from '@sourceloop/core/sequelize';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {SearchServiceConfig} from '../..';
 import {DEFAULT_RECENTS, Errors} from '../../const';
-import {SearchServiceBindings} from '../../keys';
+import {DATASOURCE_NAME, SearchServiceBindings} from '../../keys';
 import {RecentSearch, SearchQuery} from '../../models';
 import {SearchQueryRepository} from './search-query.repository';
 export class RecentSearchRepository extends SequelizeUserModifyCrudRepository<
@@ -24,7 +24,7 @@ export class RecentSearchRepository extends SequelizeUserModifyCrudRepository<
   >;
 
   constructor(
-    @inject(`datasources.${SearchServiceBindings.DATASOURCE_NAME}`)
+    @inject(`datasources.${DATASOURCE_NAME}`)
     dataSource: SequelizeDataSource,
     @repository.getter('SearchQueryRepository')
     queryRepositoryGetter: Getter<SearchQueryRepository>,

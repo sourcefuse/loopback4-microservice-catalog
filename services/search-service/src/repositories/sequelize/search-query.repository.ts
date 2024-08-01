@@ -4,24 +4,21 @@
 // https://opensource.org/licenses/MIT
 import {Getter, inject} from '@loopback/core';
 import {AnyObject, Count, Options, Where} from '@loopback/repository';
+import {DataObject} from '@loopback/repository/src/common-types';
 import {SequelizeDataSource} from '@loopback/sequelize';
 import {IAuthUserWithPermissions} from '@sourceloop/core';
 import {SequelizeUserModifyCrudRepository} from '@sourceloop/core/sequelize';
 import {AuthenticationBindings} from 'loopback4-authentication';
-import {SearchServiceConfig} from '../..';
-import {SearchServiceBindings} from '../../keys';
+import {DATASOURCE_NAME} from '../../keys';
 import {SearchQuery} from '../../models';
-import {DataObject} from '@loopback/repository/src/common-types';
 
 export class SearchQueryRepository extends SequelizeUserModifyCrudRepository<
   SearchQuery,
   typeof SearchQuery.prototype.id
 > {
   constructor(
-    @inject(`datasources.${SearchServiceBindings.DATASOURCE_NAME}`)
+    @inject(`datasources.${DATASOURCE_NAME}`)
     dataSource: SequelizeDataSource,
-    @inject(SearchServiceBindings.Config)
-    private readonly config: SearchServiceConfig,
     @inject.getter(AuthenticationBindings.CURRENT_USER)
     protected readonly getCurrentUser: Getter<
       IAuthUserWithPermissions | undefined
