@@ -28,14 +28,14 @@ import {
 } from 'loopback4-authorization';
 import {
   FeatureController,
-  FeatureToggleController,
+  FeatureValuesController,
   StrategyController,
 } from './controllers';
 import {FeatureToggleBindings} from './keys';
-import {Feature, FeatureToggle, Strategy} from './models';
+import {Feature, FeatureValues, Strategy} from './models';
 import {
   FeatureRepository,
-  FeatureToggleRepository,
+  FeatureValuesRepository,
   StrategyRepository,
 } from './repositories';
 import {IToggleServiceConfig} from './types';
@@ -72,14 +72,14 @@ export class FeatureToggleServiceComponent implements Component {
     }
     this.repositories = [
       FeatureRepository,
-      FeatureToggleRepository,
+      FeatureValuesRepository,
       StrategyRepository,
     ];
-    this.models = [Feature, FeatureToggle, Strategy];
+    this.models = [Feature, FeatureValues, Strategy];
 
     this.controllers = [
       FeatureController,
-      FeatureToggleController,
+      FeatureValuesController,
       StrategyController,
     ];
   }
