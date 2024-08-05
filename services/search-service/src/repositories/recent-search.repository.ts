@@ -16,7 +16,7 @@ import {
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {SearchServiceConfig} from '..';
 import {DEFAULT_RECENTS, Errors} from '../const';
-import {SearchServiceBindings} from '../keys';
+import {DATASOURCE_NAME, SearchServiceBindings} from '../keys';
 import {RecentSearch, SearchQuery} from '../models';
 import {SearchQueryRepository} from './search-query.repository';
 
@@ -30,7 +30,7 @@ export class RecentSearchRepository extends DefaultUserModifyCrudRepository<
   >;
 
   constructor(
-    @inject(`datasources.${SearchServiceBindings.DATASOURCE_NAME}`)
+    @inject(`datasources.${DATASOURCE_NAME}`)
     dataSource: juggler.DataSource,
     @repository.getter('SearchQueryRepository')
     queryRepositoryGetter: Getter<SearchQueryRepository>,

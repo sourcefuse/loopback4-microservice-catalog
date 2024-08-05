@@ -16,8 +16,7 @@ import {
   IAuthUserWithPermissions,
 } from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
-import {SearchServiceConfig} from '..';
-import {SearchServiceBindings} from '../keys';
+import {DATASOURCE_NAME} from '../keys';
 import {SearchQuery} from '../models';
 
 export class SearchQueryRepository extends DefaultUserModifyCrudRepository<
@@ -25,10 +24,8 @@ export class SearchQueryRepository extends DefaultUserModifyCrudRepository<
   typeof SearchQuery.prototype.id
 > {
   constructor(
-    @inject(`datasources.${SearchServiceBindings.DATASOURCE_NAME}`)
+    @inject(`datasources.${DATASOURCE_NAME}`)
     dataSource: juggler.DataSource,
-    @inject(SearchServiceBindings.Config)
-    private readonly config: SearchServiceConfig,
     @inject.getter(AuthenticationBindings.CURRENT_USER)
     protected readonly getCurrentUser: Getter<
       IAuthUserWithPermissions | undefined

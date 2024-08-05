@@ -4,10 +4,10 @@
 // https://opensource.org/licenses/MIT
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {juggler} from '@loopback/repository';
-import {SearchServiceBindings} from '@sourceloop/search-service';
+import {DATASOURCE_NAME} from '@sourceloop/search-service';
 
 const config = {
-  name: SearchServiceBindings.DATASOURCE_NAME,
+  name: DATASOURCE_NAME,
   connector: process.env.DB_CONNECTOR ?? 'postgresql',
   // url: '',
   host: process.env.DB_HOST,
@@ -27,7 +27,7 @@ export class DynamicDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
-  static readonly dataSourceName = SearchServiceBindings.DATASOURCE_NAME;
+  static readonly dataSourceName = DATASOURCE_NAME;
   static readonly defaultConfig = config;
 
   constructor(
