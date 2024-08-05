@@ -50,7 +50,7 @@
     "semver": "^7.5.4",
     "simple-git": "^3.19.1",
     "sinon": "^15.2.0",
-    "tar": "^6.2.0",
+    "tar": "^7.0.0",
     "ts-morph": "^19.0.0",
     "tslib": "^2.6.2",
     "yeoman-environment": "^3.19.3",
