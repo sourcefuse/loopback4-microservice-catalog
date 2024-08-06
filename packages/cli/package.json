@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/cli",
-  "version": "9.0.1",
+  "version": "9.0.2",
   "description": "Custom ARC CLI.",
   "bin": {
     "sl": "./bin/run"

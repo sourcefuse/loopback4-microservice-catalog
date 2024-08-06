@@ -3,7 +3,7 @@
   "info": {
     "title": "Bpmn Service",
     "version": "1.0.0",
-    "description": "a Reusable, customizable and workflow based task service",
+    "description": "a Reusable, customizable and workflow based task service.",
     "contact": {
       "name": "SourceFuse"
     }

@@ -19,10 +19,10 @@ describe('Message-Message Recipient Controller', () => {
     username: 'test_user',
     password: pass,
     permissions: [
-      'ViewMessage',
-      'CreateMessage',
-      'UpdateMessage',
-      'DeleteMessage',
+      'ViewMessageRecipient',
+      'CreateMessageRecipient',
+      'UpdateMessageRecipient',
+      'DeleteMessageRecipient',
     ],
   };
 

@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 14.1.0 (2024-08-05)
+
+* feat(audit-service): add support for multiple actedon and actiongroup (#2124) ([2a2891d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2a2891d)), closes [#2124](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2124) [#2119](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2119)
+* feat(audit-service): dummy commit to bump version (#2147) ([5abe5eb](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5abe5eb)), closes [#2147](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2147) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
 ## <small>14.0.1 (2024-06-11)</small>
 
 * chore(deps): loopback and sourceloop version update (#2108) ([9cd8962](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9cd8962)), closes [#2108](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2108) [#2104](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2104) [#2104](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2104)

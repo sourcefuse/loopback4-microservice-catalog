@@ -85,8 +85,6 @@ x-feature-toggle-variables: &feature-toggle-variables
   DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
   DB_DATABASE: feature_toggle_db
   JWT_SECRET: i_am_a_strong_secret
-  REDIS_PASSWORD:
-  REDIS_DATABASE: 0
   JWT_ISSUER: https://loopback4-microservice-catalog
 
 x-scheduler-variables: &scheduler-variables
@@ -149,6 +147,9 @@ x-payment-backend-variables: &payment-backend-variables
   FAILURE_CALLBACK_URL: http://localhost:3000
   JWT_SECRET: i_am_a_strong_secret
   JWT_ISSUER: https://loopback4-microservice-catalog
+  PAYPAL_ENVIRONMENT: dev
+  PAYPAL_CLIENT_ID: test_client_id
+  PAYPAL_CLIENT_SECRET: test_client_secret
 
 x-search-ms-variables: &search-ms-variables
   NODE_ENV: dev
@@ -430,6 +431,20 @@ services:
       - audit-ms-migration
     restart: on-failure
 
+  audit-ms-migration:
+    image: ${REGISTRY:-localhost:32000}/audit-ms-example
+    command: sh -c "sleep 60 && npm run db:migrate"
+    build:
+      context: ./audit-ms-example
+      dockerfile: Dockerfile
+    environment: *audit-variables
+    depends_on:
+      - postgres
+      - postgres_orchestrator
+    networks:
+      - sandbox
+    restart: on-failure
+
   search-ms-example:
     image: ${REGISTRY:-localhost:32000}/search-ms-example
     build:
@@ -453,42 +468,6 @@ services:
       context: ./search-ms-example
       dockerfile: Dockerfile
     environment: *search-ms-variables
-    depends_on:
-      - postgres
-      - postgres_orchestrator
-    networks:
-      - sandbox
-    restart: on-failure
-
-  search-client-example:
-    image: ${REGISTRY:-localhost:32000}/search-client-example
-    build:
-      context: ./search-client-example
-      dockerfile: Dockerfile
-    ports:
-      - '4200:4200'
-    networks:
-      - sandbox
-    restart: on-failure
-
-  user-onboarding-example:
-    image: ${REGISTRY:-localhost:32000}/user-onboarding-example
-    build:
-      context: ./user-onboarding-example
-      dockerfile: Dockerfile
-    ports:
-      - '4201:4200'
-    networks:
-      - sandbox
-    restart: on-failure
-
-  audit-ms-migration:
-    image: ${REGISTRY:-localhost:32000}/audit-ms-example
-    command: sh -c "sleep 60 && npm run db:migrate"
-    build:
-      context: ./audit-ms-example
-      dockerfile: Dockerfile
-    environment: *audit-variables
     depends_on:
       - postgres
       - postgres_orchestrator
@@ -616,9 +595,9 @@ services:
     restart: on-failure
 
   payment-backend-example:
-    image: ${REGISTRY:-localhost:32000}/payment-example/backend
+    image: ${REGISTRY:-localhost:32000}/payment-example
     build:
-      context: ./payment-example/backend
+      context: ./payment-example
       dockerfile: Dockerfile
     ports:
       - '3042:3000'
@@ -632,9 +611,9 @@ services:
     restart: on-failure
 
   payment-backend-migration:
-    image: ${REGISTRY:-localhost:32000}/payment-example/backend
+    image: ${REGISTRY:-localhost:32000}/payment-example
     build:
-      context: ./payment-example/backend
+      context: ./payment-example
       dockerfile: Dockerfile
     command: sh -c "sleep 60 && npm run db:migrate"
     environment: *payment-backend-variables

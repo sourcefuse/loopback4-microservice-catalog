@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>7.1.4 (2024-08-05)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-multitenant-example
+
+
+
+
+
 ## <small>7.1.3 (2024-06-11)</small>
 
 * chore: publish release ([89d1599](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/89d1599))

@@ -1,13 +1,13 @@
-import { BootMixin } from '@loopback/boot';
-import { ApplicationConfig } from '@loopback/core';
-import { RepositoryMixin } from '@loopback/repository';
-import { RestApplication } from '@loopback/rest';
+import {BootMixin} from '@loopback/boot';
+import {ApplicationConfig} from '@loopback/core';
+import {RepositoryMixin} from '@loopback/repository';
+import {RestApplication} from '@loopback/rest';
 import {
   RestExplorerBindings,
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
-import { ServiceMixin } from '@loopback/service-proxy';
-import { AuthenticationServiceComponent } from '@sourceloop/authentication-service';
+import {ServiceMixin} from '@loopback/service-proxy';
+import {AuthenticationServiceComponent} from '@sourceloop/authentication-service';
 import {
   BearerVerifierBindings,
   BearerVerifierComponent,
@@ -19,8 +19,13 @@ import {
 } from '@sourceloop/core';
 import * as dotenv from 'dotenv';
 import * as dotenvExt from 'dotenv-extended';
-import { AuthenticationBindings, AuthenticationComponent, AuthenticationConfig, Strategies } from 'loopback4-authentication';
-import { LocalPasswordStrategyFactoryProvider } from 'loopback4-authentication/passport-local';
+import {
+  AuthenticationBindings,
+  AuthenticationComponent,
+  AuthenticationConfig,
+  Strategies,
+} from 'loopback4-authentication';
+import {LocalPasswordStrategyFactoryProvider} from 'loopback4-authentication/passport-local';
 import {
   AuthorizationBindings,
   AuthorizationComponent,
@@ -28,7 +33,7 @@ import {
 import path from 'path';
 import * as openapi from './openapi.json';
 
-export { ApplicationConfig };
+export {ApplicationConfig};
 
 export class AuthApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
@@ -59,7 +64,8 @@ export class AuthApplication extends BootMixin(
     // To check if monitoring is enabled from env or not
     const enableObf = !!+(process.env.ENABLE_OBF ?? 0);
     // To check if authorization is enabled for swagger stats or not
-    const authentication = !!process.env.SWAGGER_USER && !!process.env.SWAGGER_PASSWORD;
+    const authentication =
+      !!process.env.SWAGGER_USER && !!process.env.SWAGGER_PASSWORD;
 
     const obj = {
       enableObf,
@@ -68,8 +74,7 @@ export class AuthApplication extends BootMixin(
       authentication: authentication,
       swaggerUsername: process.env.SWAGGER_USER,
       swaggerPassword: process.env.SWAGGER_PASSWORD,
-
-    }
+    };
     this.bind(SFCoreBindings.config).to(obj);
 
     // Set up the custom sequence
@@ -93,7 +98,9 @@ export class AuthApplication extends BootMixin(
       allowAlwaysPaths: ['/explorer', '/openapi.json'],
     });
     this.component(AuthorizationComponent);
-    this.bind(Strategies.Passport.LOCAL_STRATEGY_FACTORY).toProvider(LocalPasswordStrategyFactoryProvider)
+    this.bind(Strategies.Passport.LOCAL_STRATEGY_FACTORY).toProvider(
+      LocalPasswordStrategyFactoryProvider,
+    );
     // Set up default home page
     this.static('/', path.join(__dirname, '../public'));
 
@@ -103,7 +110,6 @@ export class AuthApplication extends BootMixin(
     });
 
     this.component(RestExplorerComponent);
-
 
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here
@@ -126,7 +132,7 @@ export class AuthApplication extends BootMixin(
       components: {
         securitySchemes: SECURITY_SCHEME_SPEC,
       },
-      servers: [{ url: '/' }],
+      servers: [{url: '/'}],
     });
   }
 }

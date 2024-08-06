@@ -1,7 +1,7 @@
-import { inject, lifeCycleObserver, LifeCycleObserver } from '@loopback/core';
-import { AnyObject, juggler } from '@loopback/repository';
-import { AuthCacheSourceName } from '@sourceloop/authentication-service';
-import { readFileSync } from 'fs';
+import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
+import {AnyObject, juggler} from '@loopback/repository';
+import {AuthCacheSourceName} from '@sourceloop/authentication-service';
+import {readFileSync} from 'fs';
 
 const config = {
   name: process.env.REDIS_NAME,
@@ -15,8 +15,8 @@ const config = {
     +process.env.REDIS_TLS_ENABLED! ||
     (process.env.REDIS_TLS_CERT
       ? {
-        ca: readFileSync(process.env.REDIS_TLS_CERT),
-      }
+          ca: readFileSync(process.env.REDIS_TLS_CERT),
+        }
       : undefined),
   sentinels:
     +process.env.REDIS_HAS_SENTINELS! && process.env.REDIS_SENTINELS
@@ -39,12 +39,13 @@ const config = {
 @lifeCycleObserver('datasource')
 export class RedisDataSource
   extends juggler.DataSource
-  implements LifeCycleObserver {
+  implements LifeCycleObserver
+{
   static readonly dataSourceName = AuthCacheSourceName;
   static readonly defaultConfig = config;
 
   constructor(
-    @inject(`datasources.config.${process.env.REDIS_NAME}`, { optional: true })
+    @inject(`datasources.config.${process.env.REDIS_NAME}`, {optional: true})
     dsConfig: AnyObject = config,
   ) {
     if (

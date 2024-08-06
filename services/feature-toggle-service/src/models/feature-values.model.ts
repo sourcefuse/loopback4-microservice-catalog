@@ -6,10 +6,10 @@ import {model, property} from '@loopback/repository';
 import {UserModifiableEntity} from '@sourceloop/core';
 
 @model({
-  name: 'feature_toggles',
-  description: 'The feature-toggle table',
+  name: 'feature_values',
+  description: 'The feature-values table',
 })
-export class FeatureToggle extends UserModifiableEntity<FeatureToggle> {
+export class FeatureValues extends UserModifiableEntity<FeatureValues> {
   @property({
     type: 'string',
     id: true,
@@ -32,12 +32,17 @@ export class FeatureToggle extends UserModifiableEntity<FeatureToggle> {
     type: 'string',
     name: 'strategy_entity_id',
   })
-  strategyEntityId: string;
+  strategyEntityId?: string; // can be null in case of system strategy
 
   @property({
     type: 'boolean',
   })
   status: boolean;
-}
 
-export type FeatureToggleWithRelations = FeatureToggle;
+  @property({
+    type: 'string',
+    name: 'value',
+  })
+  value: string;
+}
+export type FeatureValuesWithRelations = FeatureValues;

@@ -21,15 +21,11 @@ if (!!+(process.env.ENABLE_TRACING ?? 0)) {
     tags: [],
     // You can use the default UDPSender
     host: process.env.OPENTELEMETRY_HOST ?? '',
-    port: process.env.OPENTELEMETRY_PORT
-      ? +process.env.OPENTELEMETRY_PORT
-      : 0,
+    port: process.env.OPENTELEMETRY_PORT ? +process.env.OPENTELEMETRY_PORT : 0,
   };
   // Configure span processor to send spans to the exporter
   const exporter = new JaegerExporter(option);
   provider.addSpanProcessor(new BatchSpanProcessor(exporter));
-  provider.addSpanProcessor(
-    new BatchSpanProcessor(new ConsoleSpanExporter()),
-  );
+  provider.addSpanProcessor(new BatchSpanProcessor(new ConsoleSpanExporter()));
   provider.register();
 }

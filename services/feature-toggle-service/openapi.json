@@ -3,12 +3,342 @@
   "info": {
     "title": "Feature Toggle Service",
     "version": "1.0.0",
-    "description": "A service that provides feature toggle functionality",
+    "description": "A service that provides feature toggle functionality.",
     "contact": {
       "name": "Sourcefuse"
     }
   },
   "paths": {
+    "/feature-values/count": {
+      "get": {
+        "x-controller-name": "FeatureValuesController",
+        "x-operation-name": "count",
+        "tags": [
+          "FeatureValuesController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "FeatureValues model count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewFeatureValues   |\n| 9   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "feature_values.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<FeatureValues>"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "FeatureValuesController.count"
+      }
+    },
+    "/feature-values/{id}": {
+      "put": {
+        "x-controller-name": "FeatureValuesController",
+        "x-operation-name": "replaceById",
+        "tags": [
+          "FeatureValuesController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "FeatureValues PUT success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateFeatureValues   |\n| 11   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FeatureValues"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "FeatureValuesController.replaceById"
+      },
+      "patch": {
+        "x-controller-name": "FeatureValuesController",
+        "x-operation-name": "updateById",
+        "tags": [
+          "FeatureValuesController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "FeatureValues PATCH success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateFeatureValues   |\n| 11   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FeatureValuesPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "FeatureValuesController.updateById"
+      },
+      "get": {
+        "x-controller-name": "FeatureValuesController",
+        "x-operation-name": "findById",
+        "tags": [
+          "FeatureValuesController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "FeatureValues model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeatureValuesWithRelations"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewFeatureValues   |\n| 9   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/feature_values.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "FeatureValuesController.findById"
+      },
+      "delete": {
+        "x-controller-name": "FeatureValuesController",
+        "x-operation-name": "deleteById",
+        "tags": [
+          "FeatureValuesController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "FeatureValues DELETE success"
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteFeatureValues   |\n| 12   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "FeatureValuesController.deleteById"
+      }
+    },
+    "/feature-values": {
+      "post": {
+        "x-controller-name": "FeatureValuesController",
+        "x-operation-name": "create",
+        "tags": [
+          "FeatureValuesController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "FeatureValues model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeatureValues"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateFeatureValues   |\n| 10   |\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewFeatureValues"
+              }
+            }
+          }
+        },
+        "operationId": "FeatureValuesController.create"
+      },
+      "patch": {
+        "x-controller-name": "FeatureValuesController",
+        "x-operation-name": "updateAll",
+        "tags": [
+          "FeatureValuesController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "FeatureValues PATCH success count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateFeatureValues   |\n| 11   |\n",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "feature_values.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<FeatureValues>"
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FeatureValuesPartial"
+              }
+            }
+          }
+        },
+        "operationId": "FeatureValuesController.updateAll"
+      },
+      "get": {
+        "x-controller-name": "FeatureValuesController",
+        "x-operation-name": "find",
+        "tags": [
+          "FeatureValuesController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of FeatureValues model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FeatureValuesWithRelations"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewFeatureValues   |\n| 9   |\n",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/feature_values.Filter1"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "FeatureValuesController.find"
+      }
+    },
     "/features/count": {
       "get": {
         "x-controller-name": "FeatureController",
@@ -337,336 +667,6 @@
           }
         ],
         "operationId": "FeatureController.find"
-      }
-    },
-    "/featuretoggles/count": {
-      "get": {
-        "x-controller-name": "FeatureToggleController",
-        "x-operation-name": "count",
-        "tags": [
-          "FeatureToggleController"
-        ],
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "FeatureToggle model count",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/loopback.Count"
-                }
-              }
-            }
-          }
-        },
-        "description": "\n\n| Permissions |\n| ------- |\n| ViewFeatureToggle   |\n| 9   |\n",
-        "parameters": [
-          {
-            "name": "where",
-            "in": "query",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "title": "feature_toggles.WhereFilter",
-                  "additionalProperties": true,
-                  "x-typescript-type": "@loopback/repository#Where<FeatureToggle>"
-                }
-              }
-            }
-          }
-        ],
-        "operationId": "FeatureToggleController.count"
-      }
-    },
-    "/featuretoggles/{id}": {
-      "put": {
-        "x-controller-name": "FeatureToggleController",
-        "x-operation-name": "replaceById",
-        "tags": [
-          "FeatureToggleController"
-        ],
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "FeatureToggle PUT success"
-          }
-        },
-        "description": "\n\n| Permissions |\n| ------- |\n| UpdateFeatureToggle   |\n| 11   |\n",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "schema": {
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/FeatureToggle"
-              }
-            }
-          },
-          "x-parameter-index": 1
-        },
-        "operationId": "FeatureToggleController.replaceById"
-      },
-      "patch": {
-        "x-controller-name": "FeatureToggleController",
-        "x-operation-name": "updateById",
-        "tags": [
-          "FeatureToggleController"
-        ],
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "FeatureToggle PATCH success"
-          }
-        },
-        "description": "\n\n| Permissions |\n| ------- |\n| UpdateFeatureToggle   |\n| 11   |\n",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "schema": {
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/FeatureTogglePartial"
-              }
-            }
-          },
-          "x-parameter-index": 1
-        },
-        "operationId": "FeatureToggleController.updateById"
-      },
-      "get": {
-        "x-controller-name": "FeatureToggleController",
-        "x-operation-name": "findById",
-        "tags": [
-          "FeatureToggleController"
-        ],
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "FeatureToggle model instance",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FeatureToggleWithRelations"
-                }
-              }
-            }
-          }
-        },
-        "description": "\n\n| Permissions |\n| ------- |\n| ViewFeatureToggle   |\n| 9   |\n",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "schema": {
-              "type": "string"
-            },
-            "required": true
-          },
-          {
-            "name": "filter",
-            "in": "query",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/feature_toggles.Filter"
-                }
-              }
-            }
-          }
-        ],
-        "operationId": "FeatureToggleController.findById"
-      },
-      "delete": {
-        "x-controller-name": "FeatureToggleController",
-        "x-operation-name": "deleteById",
-        "tags": [
-          "FeatureToggleController"
-        ],
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "FeatureToggle DELETE success"
-          }
-        },
-        "description": "\n\n| Permissions |\n| ------- |\n| DeleteFeatureToggle   |\n| 12   |\n",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "schema": {
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "operationId": "FeatureToggleController.deleteById"
-      }
-    },
-    "/featuretoggles": {
-      "post": {
-        "x-controller-name": "FeatureToggleController",
-        "x-operation-name": "create",
-        "tags": [
-          "FeatureToggleController"
-        ],
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "FeatureToggle model instance",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FeatureToggle"
-                }
-              }
-            }
-          }
-        },
-        "description": "\n\n| Permissions |\n| ------- |\n| CreateFeatureToggle   |\n| 10   |\n",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewFeatureToggle"
-              }
-            }
-          }
-        },
-        "operationId": "FeatureToggleController.create"
-      },
-      "patch": {
-        "x-controller-name": "FeatureToggleController",
-        "x-operation-name": "updateAll",
-        "tags": [
-          "FeatureToggleController"
-        ],
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "FeatureToggle PATCH success count",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/loopback.Count"
-                }
-              }
-            }
-          }
-        },
-        "description": "\n\n| Permissions |\n| ------- |\n| UpdateFeatureToggle   |\n| 11   |\n",
-        "parameters": [
-          {
-            "name": "where",
-            "in": "query",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "title": "feature_toggles.WhereFilter",
-                  "additionalProperties": true,
-                  "x-typescript-type": "@loopback/repository#Where<FeatureToggle>"
-                }
-              }
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/FeatureTogglePartial"
-              }
-            }
-          }
-        },
-        "operationId": "FeatureToggleController.updateAll"
-      },
-      "get": {
-        "x-controller-name": "FeatureToggleController",
-        "x-operation-name": "find",
-        "tags": [
-          "FeatureToggleController"
-        ],
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Array of FeatureToggle model instances",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FeatureToggleWithRelations"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "description": "\n\n| Permissions |\n| ------- |\n| ViewFeatureToggle   |\n| 9   |\n",
-        "parameters": [
-          {
-            "name": "filter",
-            "in": "query",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/feature_toggles.Filter1"
-                }
-              }
-            }
-          }
-        ],
-        "operationId": "FeatureToggleController.find"
       }
     },
     "/strategies/count": {
@@ -1053,7 +1053,13 @@
             "type": "string"
           },
           "defaultValue": {
-            "type": "boolean"
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "metadata": {
+            "type": "object"
           }
         },
         "required": [
@@ -1106,7 +1112,13 @@
             "type": "string"
           },
           "defaultValue": {
-            "type": "boolean"
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "metadata": {
+            "type": "object"
           }
         },
         "required": [
@@ -1159,7 +1171,13 @@
             "type": "string"
           },
           "defaultValue": {
-            "type": "boolean"
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "metadata": {
+            "type": "object"
           }
         },
         "required": [
@@ -1212,15 +1230,21 @@
             "type": "string"
           },
           "defaultValue": {
-            "type": "boolean"
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "metadata": {
+            "type": "object"
           }
         },
         "additionalProperties": false
       },
-      "FeatureToggle": {
-        "title": "FeatureToggle",
+      "FeatureValues": {
+        "title": "FeatureValues",
         "type": "object",
-        "description": "The feature-toggle table",
+        "description": "The feature-values table",
         "properties": {
           "deleted": {
             "type": "boolean"
@@ -1262,14 +1286,17 @@
           },
           "status": {
             "type": "boolean"
+          },
+          "value": {
+            "type": "string"
           }
         },
         "additionalProperties": false
       },
-      "NewFeatureToggle": {
-        "title": "NewFeatureToggle",
+      "NewFeatureValues": {
+        "title": "NewFeatureValues",
         "type": "object",
-        "description": "The feature-toggle table (tsType: FeatureToggle, schemaOptions: { title: 'NewFeatureToggle' })",
+        "description": "The feature-values table (tsType: FeatureValues, schemaOptions: { title: 'NewFeatureValues' })",
         "properties": {
           "deleted": {
             "type": "boolean"
@@ -1311,14 +1338,17 @@
           },
           "status": {
             "type": "boolean"
+          },
+          "value": {
+            "type": "string"
           }
         },
         "additionalProperties": false
       },
-      "FeatureToggleWithRelations": {
-        "title": "FeatureToggleWithRelations",
+      "FeatureValuesWithRelations": {
+        "title": "FeatureValuesWithRelations",
         "type": "object",
-        "description": "The feature-toggle table (tsType: FeatureToggleWithRelations, schemaOptions: { includeRelations: true })",
+        "description": "The feature-values table (tsType: FeatureValuesWithRelations, schemaOptions: { includeRelations: true })",
         "properties": {
           "deleted": {
             "type": "boolean"
@@ -1360,14 +1390,17 @@
           },
           "status": {
             "type": "boolean"
+          },
+          "value": {
+            "type": "string"
           }
         },
         "additionalProperties": false
       },
-      "FeatureTogglePartial": {
-        "title": "FeatureTogglePartial",
+      "FeatureValuesPartial": {
+        "title": "FeatureValuesPartial",
         "type": "object",
-        "description": "The feature-toggle table (tsType: Partial<FeatureToggle>, schemaOptions: { partial: true })",
+        "description": "The feature-values table (tsType: Partial<FeatureValues>, schemaOptions: { partial: true })",
         "properties": {
           "deleted": {
             "type": "boolean"
@@ -1409,6 +1442,9 @@
           },
           "status": {
             "type": "boolean"
+          },
+          "value": {
+            "type": "string"
           }
         },
         "additionalProperties": false
@@ -1619,6 +1655,225 @@
           }
         }
       },
+      "feature_values.Filter": {
+        "type": "object",
+        "title": "feature_values.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "featureKey": {
+                    "type": "boolean"
+                  },
+                  "strategyKey": {
+                    "type": "boolean"
+                  },
+                  "strategyEntityId": {
+                    "type": "boolean"
+                  },
+                  "status": {
+                    "type": "boolean"
+                  },
+                  "value": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
+                    "id",
+                    "featureKey",
+                    "strategyKey",
+                    "strategyEntityId",
+                    "status",
+                    "value"
+                  ],
+                  "example": "deleted"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "feature_values.Fields"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<FeatureValues>"
+      },
+      "feature_values.Filter1": {
+        "type": "object",
+        "title": "feature_values.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "title": "feature_values.WhereFilter",
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "deleted": {
+                    "type": "boolean"
+                  },
+                  "deletedOn": {
+                    "type": "boolean"
+                  },
+                  "deletedBy": {
+                    "type": "boolean"
+                  },
+                  "createdOn": {
+                    "type": "boolean"
+                  },
+                  "modifiedOn": {
+                    "type": "boolean"
+                  },
+                  "createdBy": {
+                    "type": "boolean"
+                  },
+                  "modifiedBy": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "featureKey": {
+                    "type": "boolean"
+                  },
+                  "strategyKey": {
+                    "type": "boolean"
+                  },
+                  "strategyEntityId": {
+                    "type": "boolean"
+                  },
+                  "status": {
+                    "type": "boolean"
+                  },
+                  "value": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "deleted",
+                    "deletedOn",
+                    "deletedBy",
+                    "createdOn",
+                    "modifiedOn",
+                    "createdBy",
+                    "modifiedBy",
+                    "id",
+                    "featureKey",
+                    "strategyKey",
+                    "strategyEntityId",
+                    "status",
+                    "value"
+                  ],
+                  "example": "deleted"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "feature_values.Fields"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<FeatureValues>"
+      },
       "features.Filter": {
         "type": "object",
         "title": "features.Filter",
@@ -1689,6 +1944,12 @@
                   },
                   "defaultValue": {
                     "type": "boolean"
+                  },
+                  "type": {
+                    "type": "boolean"
+                  },
+                  "metadata": {
+                    "type": "boolean"
                   }
                 },
                 "additionalProperties": false
@@ -1709,7 +1970,9 @@
                     "name",
                     "key",
                     "description",
-                    "defaultValue"
+                    "defaultValue",
+                    "type",
+                    "metadata"
                   ],
                   "example": "deleted"
                 },
@@ -1797,6 +2060,12 @@
                   },
                   "defaultValue": {
                     "type": "boolean"
+                  },
+                  "type": {
+                    "type": "boolean"
+                  },
+                  "metadata": {
+                    "type": "boolean"
                   }
                 },
                 "additionalProperties": false
@@ -1817,7 +2086,9 @@
                     "name",
                     "key",
                     "description",
-                    "defaultValue"
+                    "defaultValue",
+                    "type",
+                    "metadata"
                   ],
                   "example": "deleted"
                 },
@@ -1829,217 +2100,6 @@
         },
         "additionalProperties": false,
         "x-typescript-type": "@loopback/repository#Filter<Feature>"
-      },
-      "feature_toggles.Filter": {
-        "type": "object",
-        "title": "feature_toggles.Filter",
-        "properties": {
-          "offset": {
-            "type": "integer",
-            "minimum": 0
-          },
-          "limit": {
-            "type": "integer",
-            "minimum": 1,
-            "example": 100
-          },
-          "skip": {
-            "type": "integer",
-            "minimum": 0
-          },
-          "order": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              }
-            ]
-          },
-          "fields": {
-            "oneOf": [
-              {
-                "type": "object",
-                "properties": {
-                  "deleted": {
-                    "type": "boolean"
-                  },
-                  "deletedOn": {
-                    "type": "boolean"
-                  },
-                  "deletedBy": {
-                    "type": "boolean"
-                  },
-                  "createdOn": {
-                    "type": "boolean"
-                  },
-                  "modifiedOn": {
-                    "type": "boolean"
-                  },
-                  "createdBy": {
-                    "type": "boolean"
-                  },
-                  "modifiedBy": {
-                    "type": "boolean"
-                  },
-                  "id": {
-                    "type": "boolean"
-                  },
-                  "featureKey": {
-                    "type": "boolean"
-                  },
-                  "strategyKey": {
-                    "type": "boolean"
-                  },
-                  "strategyEntityId": {
-                    "type": "boolean"
-                  },
-                  "status": {
-                    "type": "boolean"
-                  }
-                },
-                "additionalProperties": false
-              },
-              {
-                "type": "array",
-                "items": {
-                  "type": "string",
-                  "enum": [
-                    "deleted",
-                    "deletedOn",
-                    "deletedBy",
-                    "createdOn",
-                    "modifiedOn",
-                    "createdBy",
-                    "modifiedBy",
-                    "id",
-                    "featureKey",
-                    "strategyKey",
-                    "strategyEntityId",
-                    "status"
-                  ],
-                  "example": "deleted"
-                },
-                "uniqueItems": true
-              }
-            ],
-            "title": "feature_toggles.Fields"
-          }
-        },
-        "additionalProperties": false,
-        "x-typescript-type": "@loopback/repository#Filter<FeatureToggle>"
-      },
-      "feature_toggles.Filter1": {
-        "type": "object",
-        "title": "feature_toggles.Filter",
-        "properties": {
-          "offset": {
-            "type": "integer",
-            "minimum": 0
-          },
-          "limit": {
-            "type": "integer",
-            "minimum": 1,
-            "example": 100
-          },
-          "skip": {
-            "type": "integer",
-            "minimum": 0
-          },
-          "order": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              }
-            ]
-          },
-          "where": {
-            "title": "feature_toggles.WhereFilter",
-            "type": "object",
-            "additionalProperties": true
-          },
-          "fields": {
-            "oneOf": [
-              {
-                "type": "object",
-                "properties": {
-                  "deleted": {
-                    "type": "boolean"
-                  },
-                  "deletedOn": {
-                    "type": "boolean"
-                  },
-                  "deletedBy": {
-                    "type": "boolean"
-                  },
-                  "createdOn": {
-                    "type": "boolean"
-                  },
-                  "modifiedOn": {
-                    "type": "boolean"
-                  },
-                  "createdBy": {
-                    "type": "boolean"
-                  },
-                  "modifiedBy": {
-                    "type": "boolean"
-                  },
-                  "id": {
-                    "type": "boolean"
-                  },
-                  "featureKey": {
-                    "type": "boolean"
-                  },
-                  "strategyKey": {
-                    "type": "boolean"
-                  },
-                  "strategyEntityId": {
-                    "type": "boolean"
-                  },
-                  "status": {
-                    "type": "boolean"
-                  }
-                },
-                "additionalProperties": false
-              },
-              {
-                "type": "array",
-                "items": {
-                  "type": "string",
-                  "enum": [
-                    "deleted",
-                    "deletedOn",
-                    "deletedBy",
-                    "createdOn",
-                    "modifiedOn",
-                    "createdBy",
-                    "modifiedBy",
-                    "id",
-                    "featureKey",
-                    "strategyKey",
-                    "strategyEntityId",
-                    "status"
-                  ],
-                  "example": "deleted"
-                },
-                "uniqueItems": true
-              }
-            ],
-            "title": "feature_toggles.Fields"
-          }
-        },
-        "additionalProperties": false,
-        "x-typescript-type": "@loopback/repository#Filter<FeatureToggle>"
       },
       "strategies.Filter": {
         "type": "object",

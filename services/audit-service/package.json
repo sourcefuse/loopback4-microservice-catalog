@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/audit-service",
-  "version": "14.0.1",
-  "description": "Audit logging Microservice",
+  "version": "14.1.0",
+  "description": "Audit logging Microservice.",
   "keywords": [
     "loopback-extension",
     "loopback"
@@ -80,7 +80,7 @@
     "@loopback/repository": "^7.0.2",
     "@loopback/rest": "^14.0.2",
     "@sourceloop/audit-log": "^8.0.2",
-    "@sourceloop/core": "^14.1.0",
+    "@sourceloop/core": "^14.1.1",
     "csvtojson": "^2.0.10",
     "dotenv": "^16.0.3",
     "dotenv-extended": "^2.9.0",

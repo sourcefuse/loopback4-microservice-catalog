@@ -9,12 +9,12 @@ import {
   IAuthUserWithPermissions,
 } from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
-import {FeatureToggle} from '../models';
+import {FeatureValues} from '../models';
 import {FeatureToggleDbName} from '../types';
 
-export class FeatureToggleRepository extends DefaultUserModifyCrudRepository<
-  FeatureToggle,
-  typeof FeatureToggle.prototype.id
+export class FeatureValuesRepository extends DefaultUserModifyCrudRepository<
+  FeatureValues,
+  typeof FeatureValues.prototype.id
 > {
   constructor(
     @inject(`datasources.${FeatureToggleDbName}`)
@@ -24,6 +24,6 @@ export class FeatureToggleRepository extends DefaultUserModifyCrudRepository<
       IAuthUserWithPermissions | undefined
     >,
   ) {
-    super(FeatureToggle, dataSource, getCurrentUser);
+    super(FeatureValues, dataSource, getCurrentUser);
   }
 }

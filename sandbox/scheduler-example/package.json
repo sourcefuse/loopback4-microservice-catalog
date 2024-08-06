@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/schedular-example",
-  "version": "5.0.14",
+  "version": "6.0.0",
   "description": "scheduler-example.",
   "keywords": [
     "loopback-application",
@@ -57,14 +57,15 @@
     "@loopback/rest": "^14.0.2",
     "@loopback/rest-explorer": "^7.0.2",
     "@loopback/service-proxy": "^7.0.2",
-    "@sourceloop/core": "^14.1.0",
-    "@sourceloop/scheduler-service": "^12.0.1",
+    "@sourceloop/core": "^14.1.1",
+    "@sourceloop/scheduler-service": "^12.0.2",
     "ajv": "^8.11.0",
     "ajv-errors": "^3.0.0",
     "dotenv": "^16.0.3",
     "dotenv-extended": "^2.9.0",
     "loopback-connector-kv-redis": "^4.0.0",
     "loopback-connector-postgresql": "^7.1.1",
+    "loopback4-authorization": "^7.0.2",
     "loopback4-soft-delete": "^10.0.2",
     "prom-client": "^14.0.1",
     "tslib": "^2.6.2"

@@ -2,8 +2,8 @@
   "openapi": "3.0.0",
   "info": {
     "title": "@sourceloop/reporting-service",
-    "version": "0.8.2",
-    "description": "reporting-service",
+    "version": "2.1.2",
+    "description": "reporting-service.",
     "contact": {
       "name": "Sourav Bhargava",
       "email": "sourav.bhargava@sourcefuse.com"

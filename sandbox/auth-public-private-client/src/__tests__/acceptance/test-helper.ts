@@ -19,18 +19,16 @@ export async function setupApplication(): Promise<AppWithClient> {
     rest: restConfig,
   });
 
-        app.bind('datasources.config.db').to({
-      name: 'db',
-      connector: 'memory',
-    });
-      
+  app.bind('datasources.config.db').to({
+    name: 'db',
+    connector: 'memory',
+  });
 
-      app.bind(`datasources.config.${process.env.REDIS_NAME}`).to({
-      name: process.env.REDIS_NAME,
-      connector: 'kv-memory',
-    });
-  
-  
+  app.bind(`datasources.config.${process.env.REDIS_NAME}`).to({
+    name: process.env.REDIS_NAME,
+    connector: 'kv-memory',
+  });
+
   await app.boot();
   await app.start();
 
@@ -43,8 +41,8 @@ function setUpEnv() {
   process.env.NODE_ENV = 'test';
   process.env.ENABLE_TRACING = '0';
   process.env.ENABLE_OBF = '0';
-    process.env.REDIS_NAME = 'redis';
-  }
+  process.env.REDIS_NAME = 'redis';
+}
 
 export interface AppWithClient {
   app: AuthApplication;

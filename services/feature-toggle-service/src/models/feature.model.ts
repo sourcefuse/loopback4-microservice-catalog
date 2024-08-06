@@ -35,11 +35,22 @@ export class Feature extends UserModifiableEntity<Feature> {
   description?: string;
 
   @property({
-    type: 'boolean',
-    default: true,
+    type: 'string',
     name: 'default_value',
   })
-  defaultValue: boolean;
+  defaultValue: string;
+
+  @property({
+    type: 'string',
+    name: 'type',
+  })
+  type: string;
+
+  @property({
+    type: 'object',
+    name: 'metadata',
+  })
+  metadata?: object;
 }
 
 export type FeaturesWithRelations = Feature;
