@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>9.0.2 (2024-08-05)</small>
+
+* chore(all-services): ping api in sandbox examples (#2134) ([b69cda1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b69cda1)), closes [#2134](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2134) [#2133](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2133) [#2133](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2133)
+* fix(deps): fix sonar issues (#2127) ([f226bc7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f226bc7)), closes [#2127](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2127)
+
+
+
+
+
 ## <small>9.0.1 (2024-06-28)</small>
 
 * fix(cli): add docs folder while scaffolding (#2121) ([a67076a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a67076a)), closes [#2121](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2121) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

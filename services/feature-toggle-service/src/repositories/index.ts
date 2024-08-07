@@ -2,6 +2,6 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+export * from './feature-values.repository';
 export * from './feature.repository';
 export * from './strategy.repository';
-export * from './feature-toggle.repository';

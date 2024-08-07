@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.6.0 (2024-08-05)
+
+* chore(sandbox): fix the docker compose for sandbox (#2132) ([13a4945](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/13a4945)), closes [#2132](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2132) [#1962](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1962) [#1962](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1962) [#1962](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1962) [#1962](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1962) [#1962](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1962)
+* chore(sandbox): version bump ([8ecc905](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8ecc905))
+* fix(sandbox): updated the user tenant example version (#2143) ([6cfe028](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6cfe028)), closes [#2143](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2143) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
 ## 0.2.0 (2024-06-11)
 
 * chore(deps):  version update in sandbox (#2109) ([615d7f5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/615d7f5)), closes [#2109](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2109) [#2104](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2104) [#2104](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2104)

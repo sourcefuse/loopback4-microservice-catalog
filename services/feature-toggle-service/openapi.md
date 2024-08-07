@@ -30,6 +30,900 @@ Base URLs:
 
 - HTTP Authentication, scheme: bearer 
 
+<h1 id="feature-toggle-service-featurevaluescontroller">FeatureValuesController</h1>
+
+## FeatureValuesController.count
+
+<a id="opIdFeatureValuesController.count"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/feature-values/count',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/feature-values/count',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /feature-values/count`
+
+| Permissions |
+| ------- |
+| ViewFeatureValues   |
+| 9   |
+
+<h3 id="featurevaluescontroller.count-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|where|query|object|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "count": 0
+}
+```
+
+<h3 id="featurevaluescontroller.count-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|FeatureValues model count|[loopback.Count](#schemaloopback.count)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
+## FeatureValuesController.replaceById
+
+<a id="opIdFeatureValuesController.replaceById"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "featureKey": "string",
+  "strategyKey": "string",
+  "strategyEntityId": "string",
+  "status": true,
+  "value": "string"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/feature-values/{id}',
+{
+  method: 'PUT',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "featureKey": "string",
+  "strategyKey": "string",
+  "strategyEntityId": "string",
+  "status": true,
+  "value": "string"
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/feature-values/{id}',
+{
+  method: 'PUT',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PUT /feature-values/{id}`
+
+| Permissions |
+| ------- |
+| UpdateFeatureValues   |
+| 11   |
+
+> Body parameter
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "featureKey": "string",
+  "strategyKey": "string",
+  "strategyEntityId": "string",
+  "status": true,
+  "value": "string"
+}
+```
+
+<h3 id="featurevaluescontroller.replacebyid-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[FeatureValues](#schemafeaturevalues)|false|none|
+
+<h3 id="featurevaluescontroller.replacebyid-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|FeatureValues PUT success|None|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
+## FeatureValuesController.updateById
+
+<a id="opIdFeatureValuesController.updateById"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "featureKey": "string",
+  "strategyKey": "string",
+  "strategyEntityId": "string",
+  "status": true,
+  "value": "string"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/feature-values/{id}',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "featureKey": "string",
+  "strategyKey": "string",
+  "strategyEntityId": "string",
+  "status": true,
+  "value": "string"
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/feature-values/{id}',
+{
+  method: 'PATCH',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PATCH /feature-values/{id}`
+
+| Permissions |
+| ------- |
+| UpdateFeatureValues   |
+| 11   |
+
+> Body parameter
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "featureKey": "string",
+  "strategyKey": "string",
+  "strategyEntityId": "string",
+  "status": true,
+  "value": "string"
+}
+```
+
+<h3 id="featurevaluescontroller.updatebyid-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[FeatureValuesPartial](#schemafeaturevaluespartial)|false|none|
+
+<h3 id="featurevaluescontroller.updatebyid-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|FeatureValues PATCH success|None|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
+## FeatureValuesController.findById
+
+<a id="opIdFeatureValuesController.findById"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/feature-values/{id}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/feature-values/{id}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /feature-values/{id}`
+
+| Permissions |
+| ------- |
+| ViewFeatureValues   |
+| 9   |
+
+<h3 id="featurevaluescontroller.findbyid-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|filter|query|[feature_values.Filter](#schemafeature_values.filter)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "featureKey": "string",
+  "strategyKey": "string",
+  "strategyEntityId": "string",
+  "status": true,
+  "value": "string"
+}
+```
+
+<h3 id="featurevaluescontroller.findbyid-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|FeatureValues model instance|[FeatureValuesWithRelations](#schemafeaturevalueswithrelations)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
+## FeatureValuesController.deleteById
+
+<a id="opIdFeatureValuesController.deleteById"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/feature-values/{id}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/feature-values/{id}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`DELETE /feature-values/{id}`
+
+| Permissions |
+| ------- |
+| DeleteFeatureValues   |
+| 12   |
+
+<h3 id="featurevaluescontroller.deletebyid-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+
+<h3 id="featurevaluescontroller.deletebyid-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|FeatureValues DELETE success|None|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
+## FeatureValuesController.create
+
+<a id="opIdFeatureValuesController.create"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "featureKey": "string",
+  "strategyKey": "string",
+  "strategyEntityId": "string",
+  "status": true,
+  "value": "string"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/feature-values',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "featureKey": "string",
+  "strategyKey": "string",
+  "strategyEntityId": "string",
+  "status": true,
+  "value": "string"
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/feature-values',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /feature-values`
+
+| Permissions |
+| ------- |
+| CreateFeatureValues   |
+| 10   |
+
+> Body parameter
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "featureKey": "string",
+  "strategyKey": "string",
+  "strategyEntityId": "string",
+  "status": true,
+  "value": "string"
+}
+```
+
+<h3 id="featurevaluescontroller.create-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[NewFeatureValues](#schemanewfeaturevalues)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "featureKey": "string",
+  "strategyKey": "string",
+  "strategyEntityId": "string",
+  "status": true,
+  "value": "string"
+}
+```
+
+<h3 id="featurevaluescontroller.create-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|FeatureValues model instance|[FeatureValues](#schemafeaturevalues)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
+## FeatureValuesController.updateAll
+
+<a id="opIdFeatureValuesController.updateAll"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "featureKey": "string",
+  "strategyKey": "string",
+  "strategyEntityId": "string",
+  "status": true,
+  "value": "string"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/feature-values',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "featureKey": "string",
+  "strategyKey": "string",
+  "strategyEntityId": "string",
+  "status": true,
+  "value": "string"
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/feature-values',
+{
+  method: 'PATCH',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PATCH /feature-values`
+
+| Permissions |
+| ------- |
+| UpdateFeatureValues   |
+| 11   |
+
+> Body parameter
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "featureKey": "string",
+  "strategyKey": "string",
+  "strategyEntityId": "string",
+  "status": true,
+  "value": "string"
+}
+```
+
+<h3 id="featurevaluescontroller.updateall-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|where|query|object|false|none|
+|body|body|[FeatureValuesPartial](#schemafeaturevaluespartial)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "count": 0
+}
+```
+
+<h3 id="featurevaluescontroller.updateall-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|FeatureValues PATCH success count|[loopback.Count](#schemaloopback.count)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
+## FeatureValuesController.find
+
+<a id="opIdFeatureValuesController.find"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/feature-values',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json',
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/feature-values',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /feature-values`
+
+| Permissions |
+| ------- |
+| ViewFeatureValues   |
+| 9   |
+
+<h3 id="featurevaluescontroller.find-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|filter|query|[feature_values.Filter1](#schemafeature_values.filter1)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "featureKey": "string",
+    "strategyKey": "string",
+    "strategyEntityId": "string",
+    "status": true,
+    "value": "string"
+  }
+]
+```
+
+<h3 id="featurevaluescontroller.find-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of FeatureValues model instances|Inline|
+
+<h3 id="featurevaluescontroller.find-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[FeatureValuesWithRelations](#schemafeaturevalueswithrelations)]|false|none|[The feature-values table (tsType: FeatureValuesWithRelations, schemaOptions: { includeRelations: true })]|
+|» FeatureValuesWithRelations|[FeatureValuesWithRelations](#schemafeaturevalueswithrelations)|false|none|The feature-values table (tsType: FeatureValuesWithRelations, schemaOptions: { includeRelations: true })|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|string(date-time)¦null|false|none|none|
+|»» deletedBy|string¦null|false|none|none|
+|»» createdOn|string(date-time)|false|none|none|
+|»» modifiedOn|string(date-time)|false|none|none|
+|»» createdBy|string|false|none|none|
+|»» modifiedBy|string|false|none|none|
+|»» id|string|false|none|none|
+|»» featureKey|string|false|none|none|
+|»» strategyKey|string|false|none|none|
+|»» strategyEntityId|string|false|none|none|
+|»» status|boolean|false|none|none|
+|»» value|string|false|none|none|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
 <h1 id="feature-toggle-service-featurecontroller">FeatureController</h1>
 
 ## FeatureController.count
@@ -134,7 +1028,9 @@ const inputBody = '{
   "name": "string",
   "key": "string",
   "description": "string",
-  "defaultValue": true
+  "defaultValue": "string",
+  "type": "string",
+  "metadata": {}
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -169,7 +1065,9 @@ const inputBody = {
   "name": "string",
   "key": "string",
   "description": "string",
-  "defaultValue": true
+  "defaultValue": "string",
+  "type": "string",
+  "metadata": {}
 };
 const headers = {
   'Content-Type':'application/json',
@@ -212,7 +1110,9 @@ fetch('/features/{id}',
   "name": "string",
   "key": "string",
   "description": "string",
-  "defaultValue": true
+  "defaultValue": "string",
+  "type": "string",
+  "metadata": {}
 }
 ```
 
@@ -253,7 +1153,9 @@ const inputBody = '{
   "name": "string",
   "key": "string",
   "description": "string",
-  "defaultValue": true
+  "defaultValue": "string",
+  "type": "string",
+  "metadata": {}
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -288,7 +1190,9 @@ const inputBody = {
   "name": "string",
   "key": "string",
   "description": "string",
-  "defaultValue": true
+  "defaultValue": "string",
+  "type": "string",
+  "metadata": {}
 };
 const headers = {
   'Content-Type':'application/json',
@@ -331,7 +1235,9 @@ fetch('/features/{id}',
   "name": "string",
   "key": "string",
   "description": "string",
-  "defaultValue": true
+  "defaultValue": "string",
+  "type": "string",
+  "metadata": {}
 }
 ```
 
@@ -433,7 +1339,9 @@ fetch('/features/{id}',
   "name": "string",
   "key": "string",
   "description": "string",
-  "defaultValue": true
+  "defaultValue": "string",
+  "type": "string",
+  "metadata": {}
 }
 ```
 
@@ -538,7 +1446,9 @@ const inputBody = '{
   "name": "string",
   "key": "string",
   "description": "string",
-  "defaultValue": true
+  "defaultValue": "string",
+  "type": "string",
+  "metadata": {}
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -574,7 +1484,9 @@ const inputBody = {
   "name": "string",
   "key": "string",
   "description": "string",
-  "defaultValue": true
+  "defaultValue": "string",
+  "type": "string",
+  "metadata": {}
 };
 const headers = {
   'Content-Type':'application/json',
@@ -618,7 +1530,9 @@ fetch('/features',
   "name": "string",
   "key": "string",
   "description": "string",
-  "defaultValue": true
+  "defaultValue": "string",
+  "type": "string",
+  "metadata": {}
 }
 ```
 
@@ -645,7 +1559,9 @@ fetch('/features',
   "name": "string",
   "key": "string",
   "description": "string",
-  "defaultValue": true
+  "defaultValue": "string",
+  "type": "string",
+  "metadata": {}
 }
 ```
 
@@ -679,7 +1595,9 @@ const inputBody = '{
   "name": "string",
   "key": "string",
   "description": "string",
-  "defaultValue": true
+  "defaultValue": "string",
+  "type": "string",
+  "metadata": {}
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -715,7 +1633,9 @@ const inputBody = {
   "name": "string",
   "key": "string",
   "description": "string",
-  "defaultValue": true
+  "defaultValue": "string",
+  "type": "string",
+  "metadata": {}
 };
 const headers = {
   'Content-Type':'application/json',
@@ -759,7 +1679,9 @@ fetch('/features',
   "name": "string",
   "key": "string",
   "description": "string",
-  "defaultValue": true
+  "defaultValue": "string",
+  "type": "string",
+  "metadata": {}
 }
 ```
 
@@ -871,7 +1793,9 @@ fetch('/features',
     "name": "string",
     "key": "string",
     "description": "string",
-    "defaultValue": true
+    "defaultValue": "string",
+    "type": "string",
+    "metadata": {}
   }
 ]
 ```
@@ -901,885 +1825,9 @@ Status Code **200**
 |»» name|string|true|none|none|
 |»» key|string|true|none|none|
 |»» description|string|false|none|none|
-|»» defaultValue|boolean|false|none|none|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-HTTPBearer
-</aside>
-
-<h1 id="feature-toggle-service-featuretogglecontroller">FeatureToggleController</h1>
-
-## FeatureToggleController.count
-
-<a id="opIdFeatureToggleController.count"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json',
-  'Authorization':'Bearer {access-token}'
-};
-
-fetch('/featuretoggles/count',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json',
-  'Authorization':'Bearer {access-token}'
-};
-
-fetch('/featuretoggles/count',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /featuretoggles/count`
-
-| Permissions |
-| ------- |
-| ViewFeatureToggle   |
-| 9   |
-
-<h3 id="featuretogglecontroller.count-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|where|query|object|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "count": 0
-}
-```
-
-<h3 id="featuretogglecontroller.count-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|FeatureToggle model count|[loopback.Count](#schemaloopback.count)|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-HTTPBearer
-</aside>
-
-## FeatureToggleController.replaceById
-
-<a id="opIdFeatureToggleController.replaceById"></a>
-
-> Code samples
-
-```javascript
-const inputBody = '{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "featureKey": "string",
-  "strategyKey": "string",
-  "strategyEntityId": "string",
-  "status": true
-}';
-const headers = {
-  'Content-Type':'application/json',
-  'Authorization':'Bearer {access-token}'
-};
-
-fetch('/featuretoggles/{id}',
-{
-  method: 'PUT',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-const inputBody = {
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "featureKey": "string",
-  "strategyKey": "string",
-  "strategyEntityId": "string",
-  "status": true
-};
-const headers = {
-  'Content-Type':'application/json',
-  'Authorization':'Bearer {access-token}'
-};
-
-fetch('/featuretoggles/{id}',
-{
-  method: 'PUT',
-  body: JSON.stringify(inputBody),
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`PUT /featuretoggles/{id}`
-
-| Permissions |
-| ------- |
-| UpdateFeatureToggle   |
-| 11   |
-
-> Body parameter
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "featureKey": "string",
-  "strategyKey": "string",
-  "strategyEntityId": "string",
-  "status": true
-}
-```
-
-<h3 id="featuretogglecontroller.replacebyid-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|id|path|string|true|none|
-|body|body|[FeatureToggle](#schemafeaturetoggle)|false|none|
-
-<h3 id="featuretogglecontroller.replacebyid-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|FeatureToggle PUT success|None|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-HTTPBearer
-</aside>
-
-## FeatureToggleController.updateById
-
-<a id="opIdFeatureToggleController.updateById"></a>
-
-> Code samples
-
-```javascript
-const inputBody = '{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "featureKey": "string",
-  "strategyKey": "string",
-  "strategyEntityId": "string",
-  "status": true
-}';
-const headers = {
-  'Content-Type':'application/json',
-  'Authorization':'Bearer {access-token}'
-};
-
-fetch('/featuretoggles/{id}',
-{
-  method: 'PATCH',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-const inputBody = {
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "featureKey": "string",
-  "strategyKey": "string",
-  "strategyEntityId": "string",
-  "status": true
-};
-const headers = {
-  'Content-Type':'application/json',
-  'Authorization':'Bearer {access-token}'
-};
-
-fetch('/featuretoggles/{id}',
-{
-  method: 'PATCH',
-  body: JSON.stringify(inputBody),
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`PATCH /featuretoggles/{id}`
-
-| Permissions |
-| ------- |
-| UpdateFeatureToggle   |
-| 11   |
-
-> Body parameter
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "featureKey": "string",
-  "strategyKey": "string",
-  "strategyEntityId": "string",
-  "status": true
-}
-```
-
-<h3 id="featuretogglecontroller.updatebyid-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|id|path|string|true|none|
-|body|body|[FeatureTogglePartial](#schemafeaturetogglepartial)|false|none|
-
-<h3 id="featuretogglecontroller.updatebyid-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|FeatureToggle PATCH success|None|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-HTTPBearer
-</aside>
-
-## FeatureToggleController.findById
-
-<a id="opIdFeatureToggleController.findById"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json',
-  'Authorization':'Bearer {access-token}'
-};
-
-fetch('/featuretoggles/{id}',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json',
-  'Authorization':'Bearer {access-token}'
-};
-
-fetch('/featuretoggles/{id}',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /featuretoggles/{id}`
-
-| Permissions |
-| ------- |
-| ViewFeatureToggle   |
-| 9   |
-
-<h3 id="featuretogglecontroller.findbyid-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|id|path|string|true|none|
-|filter|query|[feature_toggles.Filter](#schemafeature_toggles.filter)|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "featureKey": "string",
-  "strategyKey": "string",
-  "strategyEntityId": "string",
-  "status": true
-}
-```
-
-<h3 id="featuretogglecontroller.findbyid-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|FeatureToggle model instance|[FeatureToggleWithRelations](#schemafeaturetogglewithrelations)|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-HTTPBearer
-</aside>
-
-## FeatureToggleController.deleteById
-
-<a id="opIdFeatureToggleController.deleteById"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Authorization':'Bearer {access-token}'
-};
-
-fetch('/featuretoggles/{id}',
-{
-  method: 'DELETE',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-const headers = {
-  'Authorization':'Bearer {access-token}'
-};
-
-fetch('/featuretoggles/{id}',
-{
-  method: 'DELETE',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`DELETE /featuretoggles/{id}`
-
-| Permissions |
-| ------- |
-| DeleteFeatureToggle   |
-| 12   |
-
-<h3 id="featuretogglecontroller.deletebyid-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|id|path|string|true|none|
-
-<h3 id="featuretogglecontroller.deletebyid-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|FeatureToggle DELETE success|None|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-HTTPBearer
-</aside>
-
-## FeatureToggleController.create
-
-<a id="opIdFeatureToggleController.create"></a>
-
-> Code samples
-
-```javascript
-const inputBody = '{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "featureKey": "string",
-  "strategyKey": "string",
-  "strategyEntityId": "string",
-  "status": true
-}';
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json',
-  'Authorization':'Bearer {access-token}'
-};
-
-fetch('/featuretoggles',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-const inputBody = {
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "featureKey": "string",
-  "strategyKey": "string",
-  "strategyEntityId": "string",
-  "status": true
-};
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json',
-  'Authorization':'Bearer {access-token}'
-};
-
-fetch('/featuretoggles',
-{
-  method: 'POST',
-  body: JSON.stringify(inputBody),
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`POST /featuretoggles`
-
-| Permissions |
-| ------- |
-| CreateFeatureToggle   |
-| 10   |
-
-> Body parameter
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "featureKey": "string",
-  "strategyKey": "string",
-  "strategyEntityId": "string",
-  "status": true
-}
-```
-
-<h3 id="featuretogglecontroller.create-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|body|body|[NewFeatureToggle](#schemanewfeaturetoggle)|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "featureKey": "string",
-  "strategyKey": "string",
-  "strategyEntityId": "string",
-  "status": true
-}
-```
-
-<h3 id="featuretogglecontroller.create-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|FeatureToggle model instance|[FeatureToggle](#schemafeaturetoggle)|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-HTTPBearer
-</aside>
-
-## FeatureToggleController.updateAll
-
-<a id="opIdFeatureToggleController.updateAll"></a>
-
-> Code samples
-
-```javascript
-const inputBody = '{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "featureKey": "string",
-  "strategyKey": "string",
-  "strategyEntityId": "string",
-  "status": true
-}';
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json',
-  'Authorization':'Bearer {access-token}'
-};
-
-fetch('/featuretoggles',
-{
-  method: 'PATCH',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-const inputBody = {
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "featureKey": "string",
-  "strategyKey": "string",
-  "strategyEntityId": "string",
-  "status": true
-};
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json',
-  'Authorization':'Bearer {access-token}'
-};
-
-fetch('/featuretoggles',
-{
-  method: 'PATCH',
-  body: JSON.stringify(inputBody),
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`PATCH /featuretoggles`
-
-| Permissions |
-| ------- |
-| UpdateFeatureToggle   |
-| 11   |
-
-> Body parameter
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "featureKey": "string",
-  "strategyKey": "string",
-  "strategyEntityId": "string",
-  "status": true
-}
-```
-
-<h3 id="featuretogglecontroller.updateall-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|where|query|object|false|none|
-|body|body|[FeatureTogglePartial](#schemafeaturetogglepartial)|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "count": 0
-}
-```
-
-<h3 id="featuretogglecontroller.updateall-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|FeatureToggle PATCH success count|[loopback.Count](#schemaloopback.count)|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-HTTPBearer
-</aside>
-
-## FeatureToggleController.find
-
-<a id="opIdFeatureToggleController.find"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json',
-  'Authorization':'Bearer {access-token}'
-};
-
-fetch('/featuretoggles',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json',
-  'Authorization':'Bearer {access-token}'
-};
-
-fetch('/featuretoggles',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /featuretoggles`
-
-| Permissions |
-| ------- |
-| ViewFeatureToggle   |
-| 9   |
-
-<h3 id="featuretogglecontroller.find-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|filter|query|[feature_toggles.Filter1](#schemafeature_toggles.filter1)|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-[
-  {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "featureKey": "string",
-    "strategyKey": "string",
-    "strategyEntityId": "string",
-    "status": true
-  }
-]
-```
-
-<h3 id="featuretogglecontroller.find-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of FeatureToggle model instances|Inline|
-
-<h3 id="featuretogglecontroller.find-responseschema">Response Schema</h3>
-
-Status Code **200**
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|[[FeatureToggleWithRelations](#schemafeaturetogglewithrelations)]|false|none|[The feature-toggle table (tsType: FeatureToggleWithRelations, schemaOptions: { includeRelations: true })]|
-|» FeatureToggleWithRelations|[FeatureToggleWithRelations](#schemafeaturetogglewithrelations)|false|none|The feature-toggle table (tsType: FeatureToggleWithRelations, schemaOptions: { includeRelations: true })|
-|»» deleted|boolean|false|none|none|
-|»» deletedOn|string(date-time)¦null|false|none|none|
-|»» deletedBy|string¦null|false|none|none|
-|»» createdOn|string(date-time)|false|none|none|
-|»» modifiedOn|string(date-time)|false|none|none|
-|»» createdBy|string|false|none|none|
-|»» modifiedBy|string|false|none|none|
-|»» id|string|false|none|none|
-|»» featureKey|string|false|none|none|
-|»» strategyKey|string|false|none|none|
-|»» strategyEntityId|string|false|none|none|
-|»» status|boolean|false|none|none|
+|»» defaultValue|string|false|none|none|
+|»» type|string|false|none|none|
+|»» metadata|object|false|none|none|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -2670,7 +2718,9 @@ HTTPBearer
   "name": "string",
   "key": "string",
   "description": "string",
-  "defaultValue": true
+  "defaultValue": "string",
+  "type": "string",
+  "metadata": {}
 }
 
 ```
@@ -2692,7 +2742,9 @@ Feature
 |name|string|true|none|none|
 |key|string|true|none|none|
 |description|string|false|none|none|
-|defaultValue|boolean|false|none|none|
+|defaultValue|string|false|none|none|
+|type|string|false|none|none|
+|metadata|object|false|none|none|
 
 <h2 id="tocS_NewFeature">NewFeature</h2>
 <!-- backwards compatibility -->
@@ -2714,7 +2766,9 @@ Feature
   "name": "string",
   "key": "string",
   "description": "string",
-  "defaultValue": true
+  "defaultValue": "string",
+  "type": "string",
+  "metadata": {}
 }
 
 ```
@@ -2736,7 +2790,9 @@ NewFeature
 |name|string|true|none|none|
 |key|string|true|none|none|
 |description|string|false|none|none|
-|defaultValue|boolean|false|none|none|
+|defaultValue|string|false|none|none|
+|type|string|false|none|none|
+|metadata|object|false|none|none|
 
 <h2 id="tocS_FeatureWithRelations">FeatureWithRelations</h2>
 <!-- backwards compatibility -->
@@ -2758,7 +2814,9 @@ NewFeature
   "name": "string",
   "key": "string",
   "description": "string",
-  "defaultValue": true
+  "defaultValue": "string",
+  "type": "string",
+  "metadata": {}
 }
 
 ```
@@ -2780,7 +2838,9 @@ FeatureWithRelations
 |name|string|true|none|none|
 |key|string|true|none|none|
 |description|string|false|none|none|
-|defaultValue|boolean|false|none|none|
+|defaultValue|string|false|none|none|
+|type|string|false|none|none|
+|metadata|object|false|none|none|
 
 <h2 id="tocS_FeaturePartial">FeaturePartial</h2>
 <!-- backwards compatibility -->
@@ -2802,7 +2862,9 @@ FeatureWithRelations
   "name": "string",
   "key": "string",
   "description": "string",
-  "defaultValue": true
+  "defaultValue": "string",
+  "type": "string",
+  "metadata": {}
 }
 
 ```
@@ -2824,14 +2886,16 @@ FeaturePartial
 |name|string|false|none|none|
 |key|string|false|none|none|
 |description|string|false|none|none|
-|defaultValue|boolean|false|none|none|
+|defaultValue|string|false|none|none|
+|type|string|false|none|none|
+|metadata|object|false|none|none|
 
-<h2 id="tocS_FeatureToggle">FeatureToggle</h2>
+<h2 id="tocS_FeatureValues">FeatureValues</h2>
 <!-- backwards compatibility -->
-<a id="schemafeaturetoggle"></a>
-<a id="schema_FeatureToggle"></a>
-<a id="tocSfeaturetoggle"></a>
-<a id="tocsfeaturetoggle"></a>
+<a id="schemafeaturevalues"></a>
+<a id="schema_FeatureValues"></a>
+<a id="tocSfeaturevalues"></a>
+<a id="tocsfeaturevalues"></a>
 
 ```json
 {
@@ -2846,12 +2910,13 @@ FeaturePartial
   "featureKey": "string",
   "strategyKey": "string",
   "strategyEntityId": "string",
-  "status": true
+  "status": true,
+  "value": "string"
 }
 
 ```
 
-FeatureToggle
+FeatureValues
 
 ### Properties
 
@@ -2869,13 +2934,14 @@ FeatureToggle
 |strategyKey|string|false|none|none|
 |strategyEntityId|string|false|none|none|
 |status|boolean|false|none|none|
+|value|string|false|none|none|
 
-<h2 id="tocS_NewFeatureToggle">NewFeatureToggle</h2>
+<h2 id="tocS_NewFeatureValues">NewFeatureValues</h2>
 <!-- backwards compatibility -->
-<a id="schemanewfeaturetoggle"></a>
-<a id="schema_NewFeatureToggle"></a>
-<a id="tocSnewfeaturetoggle"></a>
-<a id="tocsnewfeaturetoggle"></a>
+<a id="schemanewfeaturevalues"></a>
+<a id="schema_NewFeatureValues"></a>
+<a id="tocSnewfeaturevalues"></a>
+<a id="tocsnewfeaturevalues"></a>
 
 ```json
 {
@@ -2890,12 +2956,13 @@ FeatureToggle
   "featureKey": "string",
   "strategyKey": "string",
   "strategyEntityId": "string",
-  "status": true
+  "status": true,
+  "value": "string"
 }
 
 ```
 
-NewFeatureToggle
+NewFeatureValues
 
 ### Properties
 
@@ -2913,13 +2980,14 @@ NewFeatureToggle
 |strategyKey|string|false|none|none|
 |strategyEntityId|string|false|none|none|
 |status|boolean|false|none|none|
+|value|string|false|none|none|
 
-<h2 id="tocS_FeatureToggleWithRelations">FeatureToggleWithRelations</h2>
+<h2 id="tocS_FeatureValuesWithRelations">FeatureValuesWithRelations</h2>
 <!-- backwards compatibility -->
-<a id="schemafeaturetogglewithrelations"></a>
-<a id="schema_FeatureToggleWithRelations"></a>
-<a id="tocSfeaturetogglewithrelations"></a>
-<a id="tocsfeaturetogglewithrelations"></a>
+<a id="schemafeaturevalueswithrelations"></a>
+<a id="schema_FeatureValuesWithRelations"></a>
+<a id="tocSfeaturevalueswithrelations"></a>
+<a id="tocsfeaturevalueswithrelations"></a>
 
 ```json
 {
@@ -2934,12 +3002,13 @@ NewFeatureToggle
   "featureKey": "string",
   "strategyKey": "string",
   "strategyEntityId": "string",
-  "status": true
+  "status": true,
+  "value": "string"
 }
 
 ```
 
-FeatureToggleWithRelations
+FeatureValuesWithRelations
 
 ### Properties
 
@@ -2957,13 +3026,14 @@ FeatureToggleWithRelations
 |strategyKey|string|false|none|none|
 |strategyEntityId|string|false|none|none|
 |status|boolean|false|none|none|
+|value|string|false|none|none|
 
-<h2 id="tocS_FeatureTogglePartial">FeatureTogglePartial</h2>
+<h2 id="tocS_FeatureValuesPartial">FeatureValuesPartial</h2>
 <!-- backwards compatibility -->
-<a id="schemafeaturetogglepartial"></a>
-<a id="schema_FeatureTogglePartial"></a>
-<a id="tocSfeaturetogglepartial"></a>
-<a id="tocsfeaturetogglepartial"></a>
+<a id="schemafeaturevaluespartial"></a>
+<a id="schema_FeatureValuesPartial"></a>
+<a id="tocSfeaturevaluespartial"></a>
+<a id="tocsfeaturevaluespartial"></a>
 
 ```json
 {
@@ -2978,12 +3048,13 @@ FeatureToggleWithRelations
   "featureKey": "string",
   "strategyKey": "string",
   "strategyEntityId": "string",
-  "status": true
+  "status": true,
+  "value": "string"
 }
 
 ```
 
-FeatureTogglePartial
+FeatureValuesPartial
 
 ### Properties
 
@@ -3001,6 +3072,7 @@ FeatureTogglePartial
 |strategyKey|string|false|none|none|
 |strategyEntityId|string|false|none|none|
 |status|boolean|false|none|none|
+|value|string|false|none|none|
 
 <h2 id="tocS_Strategy">Strategy</h2>
 <!-- backwards compatibility -->
@@ -3192,6 +3264,180 @@ loopback.Count
 |---|---|---|---|---|
 |count|number|false|none|none|
 
+<h2 id="tocS_feature_values.Filter">feature_values.Filter</h2>
+<!-- backwards compatibility -->
+<a id="schemafeature_values.filter"></a>
+<a id="schema_feature_values.Filter"></a>
+<a id="tocSfeature_values.filter"></a>
+<a id="tocsfeature_values.filter"></a>
+
+```json
+{
+  "offset": 0,
+  "limit": 100,
+  "skip": 0,
+  "order": "string",
+  "fields": {
+    "deleted": true,
+    "deletedOn": true,
+    "deletedBy": true,
+    "createdOn": true,
+    "modifiedOn": true,
+    "createdBy": true,
+    "modifiedBy": true,
+    "id": true,
+    "featureKey": true,
+    "strategyKey": true,
+    "strategyEntityId": true,
+    "status": true,
+    "value": true
+  }
+}
+
+```
+
+feature_values.Filter
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|offset|integer|false|none|none|
+|limit|integer|false|none|none|
+|skip|integer|false|none|none|
+|order|any|false|none|none|
+
+oneOf
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
+
+xor
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
+
+continued
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|fields|any|false|none|none|
+
+oneOf
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|object|false|none|none|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|boolean|false|none|none|
+|»» deletedBy|boolean|false|none|none|
+|»» createdOn|boolean|false|none|none|
+|»» modifiedOn|boolean|false|none|none|
+|»» createdBy|boolean|false|none|none|
+|»» modifiedBy|boolean|false|none|none|
+|»» id|boolean|false|none|none|
+|»» featureKey|boolean|false|none|none|
+|»» strategyKey|boolean|false|none|none|
+|»» strategyEntityId|boolean|false|none|none|
+|»» status|boolean|false|none|none|
+|»» value|boolean|false|none|none|
+
+xor
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
+
+<h2 id="tocS_feature_values.Filter1">feature_values.Filter1</h2>
+<!-- backwards compatibility -->
+<a id="schemafeature_values.filter1"></a>
+<a id="schema_feature_values.Filter1"></a>
+<a id="tocSfeature_values.filter1"></a>
+<a id="tocsfeature_values.filter1"></a>
+
+```json
+{
+  "offset": 0,
+  "limit": 100,
+  "skip": 0,
+  "order": "string",
+  "where": {},
+  "fields": {
+    "deleted": true,
+    "deletedOn": true,
+    "deletedBy": true,
+    "createdOn": true,
+    "modifiedOn": true,
+    "createdBy": true,
+    "modifiedBy": true,
+    "id": true,
+    "featureKey": true,
+    "strategyKey": true,
+    "strategyEntityId": true,
+    "status": true,
+    "value": true
+  }
+}
+
+```
+
+feature_values.Filter
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|offset|integer|false|none|none|
+|limit|integer|false|none|none|
+|skip|integer|false|none|none|
+|order|any|false|none|none|
+
+oneOf
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
+
+xor
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
+
+continued
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|where|object|false|none|none|
+|fields|any|false|none|none|
+
+oneOf
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|object|false|none|none|
+|»» deleted|boolean|false|none|none|
+|»» deletedOn|boolean|false|none|none|
+|»» deletedBy|boolean|false|none|none|
+|»» createdOn|boolean|false|none|none|
+|»» modifiedOn|boolean|false|none|none|
+|»» createdBy|boolean|false|none|none|
+|»» modifiedBy|boolean|false|none|none|
+|»» id|boolean|false|none|none|
+|»» featureKey|boolean|false|none|none|
+|»» strategyKey|boolean|false|none|none|
+|»» strategyEntityId|boolean|false|none|none|
+|»» status|boolean|false|none|none|
+|»» value|boolean|false|none|none|
+
+xor
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
+
 <h2 id="tocS_features.Filter">features.Filter</h2>
 <!-- backwards compatibility -->
 <a id="schemafeatures.filter"></a>
@@ -3217,7 +3463,9 @@ loopback.Count
     "name": true,
     "key": true,
     "description": true,
-    "defaultValue": true
+    "defaultValue": true,
+    "type": true,
+    "metadata": true
   }
 }
 
@@ -3269,6 +3517,8 @@ oneOf
 |»» key|boolean|false|none|none|
 |»» description|boolean|false|none|none|
 |»» defaultValue|boolean|false|none|none|
+|»» type|boolean|false|none|none|
+|»» metadata|boolean|false|none|none|
 
 xor
 
@@ -3302,7 +3552,9 @@ xor
     "name": true,
     "key": true,
     "description": true,
-    "defaultValue": true
+    "defaultValue": true,
+    "type": true,
+    "metadata": true
   }
 }
 
@@ -3355,176 +3607,8 @@ oneOf
 |»» key|boolean|false|none|none|
 |»» description|boolean|false|none|none|
 |»» defaultValue|boolean|false|none|none|
-
-xor
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|[string]|false|none|none|
-
-<h2 id="tocS_feature_toggles.Filter">feature_toggles.Filter</h2>
-<!-- backwards compatibility -->
-<a id="schemafeature_toggles.filter"></a>
-<a id="schema_feature_toggles.Filter"></a>
-<a id="tocSfeature_toggles.filter"></a>
-<a id="tocsfeature_toggles.filter"></a>
-
-```json
-{
-  "offset": 0,
-  "limit": 100,
-  "skip": 0,
-  "order": "string",
-  "fields": {
-    "deleted": true,
-    "deletedOn": true,
-    "deletedBy": true,
-    "createdOn": true,
-    "modifiedOn": true,
-    "createdBy": true,
-    "modifiedBy": true,
-    "id": true,
-    "featureKey": true,
-    "strategyKey": true,
-    "strategyEntityId": true,
-    "status": true
-  }
-}
-
-```
-
-feature_toggles.Filter
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|offset|integer|false|none|none|
-|limit|integer|false|none|none|
-|skip|integer|false|none|none|
-|order|any|false|none|none|
-
-oneOf
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|string|false|none|none|
-
-xor
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|[string]|false|none|none|
-
-continued
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|fields|any|false|none|none|
-
-oneOf
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|object|false|none|none|
-|»» deleted|boolean|false|none|none|
-|»» deletedOn|boolean|false|none|none|
-|»» deletedBy|boolean|false|none|none|
-|»» createdOn|boolean|false|none|none|
-|»» modifiedOn|boolean|false|none|none|
-|»» createdBy|boolean|false|none|none|
-|»» modifiedBy|boolean|false|none|none|
-|»» id|boolean|false|none|none|
-|»» featureKey|boolean|false|none|none|
-|»» strategyKey|boolean|false|none|none|
-|»» strategyEntityId|boolean|false|none|none|
-|»» status|boolean|false|none|none|
-
-xor
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|[string]|false|none|none|
-
-<h2 id="tocS_feature_toggles.Filter1">feature_toggles.Filter1</h2>
-<!-- backwards compatibility -->
-<a id="schemafeature_toggles.filter1"></a>
-<a id="schema_feature_toggles.Filter1"></a>
-<a id="tocSfeature_toggles.filter1"></a>
-<a id="tocsfeature_toggles.filter1"></a>
-
-```json
-{
-  "offset": 0,
-  "limit": 100,
-  "skip": 0,
-  "order": "string",
-  "where": {},
-  "fields": {
-    "deleted": true,
-    "deletedOn": true,
-    "deletedBy": true,
-    "createdOn": true,
-    "modifiedOn": true,
-    "createdBy": true,
-    "modifiedBy": true,
-    "id": true,
-    "featureKey": true,
-    "strategyKey": true,
-    "strategyEntityId": true,
-    "status": true
-  }
-}
-
-```
-
-feature_toggles.Filter
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|offset|integer|false|none|none|
-|limit|integer|false|none|none|
-|skip|integer|false|none|none|
-|order|any|false|none|none|
-
-oneOf
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|string|false|none|none|
-
-xor
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|[string]|false|none|none|
-
-continued
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|where|object|false|none|none|
-|fields|any|false|none|none|
-
-oneOf
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|object|false|none|none|
-|»» deleted|boolean|false|none|none|
-|»» deletedOn|boolean|false|none|none|
-|»» deletedBy|boolean|false|none|none|
-|»» createdOn|boolean|false|none|none|
-|»» modifiedOn|boolean|false|none|none|
-|»» createdBy|boolean|false|none|none|
-|»» modifiedBy|boolean|false|none|none|
-|»» id|boolean|false|none|none|
-|»» featureKey|boolean|false|none|none|
-|»» strategyKey|boolean|false|none|none|
-|»» strategyEntityId|boolean|false|none|none|
-|»» status|boolean|false|none|none|
+|»» type|boolean|false|none|none|
+|»» metadata|boolean|false|none|none|
 
 xor
 
