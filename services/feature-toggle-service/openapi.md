@@ -20,7 +20,7 @@ headingLevel: 2
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-A service that provides feature toggle functionality.
+A service that provides feature toggle functionality
 
 Base URLs:
 
@@ -29,6 +29,94 @@ Base URLs:
 # Authentication
 
 - HTTP Authentication, scheme: bearer 
+
+<h1 id="feature-toggle-service-bootstrapcontroller">BootstrapController</h1>
+
+## BootstrapController.bootstrap
+
+<a id="opIdBootstrapController.bootstrap"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "plan": {},
+  "tenant": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'x-signature':'string',
+  'x-timestamp':'string'
+};
+
+fetch('/bootstrap',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "plan": {},
+  "tenant": {}
+};
+const headers = {
+  'Content-Type':'application/json',
+  'x-signature':'string',
+  'x-timestamp':'string'
+};
+
+fetch('/bootstrap',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /bootstrap`
+
+> Body parameter
+
+```json
+{
+  "plan": {},
+  "tenant": {}
+}
+```
+
+<h3 id="bootstrapcontroller.bootstrap-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|x-signature|header|string|false|none|
+|x-timestamp|header|string|false|none|
+|body|body|[Bootstrap Request](#schemabootstrap request)|false|none|
+
+<h3 id="bootstrapcontroller.bootstrap-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Bootstrap success|None|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
 
 <h1 id="feature-toggle-service-featurevaluescontroller">FeatureValuesController</h1>
 
@@ -2698,6 +2786,174 @@ HTTPBearer
 
 # Schemas
 
+<h2 id="tocS_Strategy">Strategy</h2>
+<!-- backwards compatibility -->
+<a id="schemastrategy"></a>
+<a id="schema_Strategy"></a>
+<a id="tocSstrategy"></a>
+<a id="tocsstrategy"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "name": "string",
+  "key": "string",
+  "priority": 0
+}
+
+```
+
+Strategy
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|name|string|true|none|none|
+|key|string|true|none|none|
+|priority|number|false|none|none|
+
+<h2 id="tocS_NewStrategy">NewStrategy</h2>
+<!-- backwards compatibility -->
+<a id="schemanewstrategy"></a>
+<a id="schema_NewStrategy"></a>
+<a id="tocSnewstrategy"></a>
+<a id="tocsnewstrategy"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "name": "string",
+  "key": "string",
+  "priority": 0
+}
+
+```
+
+NewStrategy
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|name|string|true|none|none|
+|key|string|true|none|none|
+|priority|number|false|none|none|
+
+<h2 id="tocS_StrategyWithRelations">StrategyWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemastrategywithrelations"></a>
+<a id="schema_StrategyWithRelations"></a>
+<a id="tocSstrategywithrelations"></a>
+<a id="tocsstrategywithrelations"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "name": "string",
+  "key": "string",
+  "priority": 0
+}
+
+```
+
+StrategyWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|name|string|true|none|none|
+|key|string|true|none|none|
+|priority|number|false|none|none|
+
+<h2 id="tocS_StrategyPartial">StrategyPartial</h2>
+<!-- backwards compatibility -->
+<a id="schemastrategypartial"></a>
+<a id="schema_StrategyPartial"></a>
+<a id="tocSstrategypartial"></a>
+<a id="tocsstrategypartial"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "name": "string",
+  "key": "string",
+  "priority": 0
+}
+
+```
+
+StrategyPartial
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|name|string|false|none|none|
+|key|string|false|none|none|
+|priority|number|false|none|none|
+
 <h2 id="tocS_Feature">Feature</h2>
 <!-- backwards compatibility -->
 <a id="schemafeature"></a>
@@ -3074,173 +3330,53 @@ FeatureValuesPartial
 |status|boolean|false|none|none|
 |value|string|false|none|none|
 
-<h2 id="tocS_Strategy">Strategy</h2>
+<h2 id="tocS_Bootstrap Request">Bootstrap Request</h2>
 <!-- backwards compatibility -->
-<a id="schemastrategy"></a>
-<a id="schema_Strategy"></a>
-<a id="tocSstrategy"></a>
-<a id="tocsstrategy"></a>
+<a id="schemabootstrap request"></a>
+<a id="schema_Bootstrap Request"></a>
+<a id="tocSbootstrap request"></a>
+<a id="tocsbootstrap request"></a>
 
 ```json
 {
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "key": "string",
-  "priority": 0
+  "plan": {},
+  "tenant": {}
 }
 
 ```
 
-Strategy
+Bootstrap Request
 
 ### Properties
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|name|string|true|none|none|
-|key|string|true|none|none|
-|priority|number|false|none|none|
+|plan|object|false|none|none|
+|tenant|object|false|none|none|
 
-<h2 id="tocS_NewStrategy">NewStrategy</h2>
+<h2 id="tocS_BootstrapDTO">BootstrapDTO</h2>
 <!-- backwards compatibility -->
-<a id="schemanewstrategy"></a>
-<a id="schema_NewStrategy"></a>
-<a id="tocSnewstrategy"></a>
-<a id="tocsnewstrategy"></a>
+<a id="schemabootstrapdto"></a>
+<a id="schema_BootstrapDTO"></a>
+<a id="tocSbootstrapdto"></a>
+<a id="tocsbootstrapdto"></a>
 
 ```json
 {
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "key": "string",
-  "priority": 0
+  "plan": {},
+  "tenant": {}
 }
 
 ```
 
-NewStrategy
+BootstrapDTO
 
 ### Properties
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|name|string|true|none|none|
-|key|string|true|none|none|
-|priority|number|false|none|none|
-
-<h2 id="tocS_StrategyWithRelations">StrategyWithRelations</h2>
-<!-- backwards compatibility -->
-<a id="schemastrategywithrelations"></a>
-<a id="schema_StrategyWithRelations"></a>
-<a id="tocSstrategywithrelations"></a>
-<a id="tocsstrategywithrelations"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "key": "string",
-  "priority": 0
-}
-
-```
-
-StrategyWithRelations
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|name|string|true|none|none|
-|key|string|true|none|none|
-|priority|number|false|none|none|
-
-<h2 id="tocS_StrategyPartial">StrategyPartial</h2>
-<!-- backwards compatibility -->
-<a id="schemastrategypartial"></a>
-<a id="schema_StrategyPartial"></a>
-<a id="tocSstrategypartial"></a>
-<a id="tocsstrategypartial"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "key": "string",
-  "priority": 0
-}
-
-```
-
-StrategyPartial
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|name|string|false|none|none|
-|key|string|false|none|none|
-|priority|number|false|none|none|
+|plan|object|false|none|none|
+|tenant|object|false|none|none|
 
 <h2 id="tocS_loopback.Count">loopback.Count</h2>
 <!-- backwards compatibility -->

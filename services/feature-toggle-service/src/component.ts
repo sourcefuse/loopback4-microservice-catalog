@@ -27,12 +27,20 @@ import {
   AuthorizationComponent,
 } from 'loopback4-authorization';
 import {
+  BootstrapController,
   FeatureController,
   FeatureValuesController,
   StrategyController,
 } from './controllers';
-import {FeatureToggleBindings} from './keys';
-import {Feature, FeatureValues, Strategy} from './models';
+import {BootstrapVerifierProvider} from './interceptors';
+import {BOOTSTRAP, FeatureToggleBindings} from './keys';
+import {
+  BootstrapDTO,
+  Feature,
+  FeaturesDTO,
+  FeatureValues,
+  Strategy,
+} from './models';
 import {
   FeatureRepository,
   FeatureValuesRepository,
@@ -75,13 +83,16 @@ export class FeatureToggleServiceComponent implements Component {
       FeatureValuesRepository,
       StrategyRepository,
     ];
-    this.models = [Feature, FeatureValues, Strategy];
+    this.models = [Feature, FeatureValues, Strategy, FeaturesDTO, BootstrapDTO];
 
-    this.controllers = [
-      FeatureController,
-      FeatureValuesController,
-      StrategyController,
-    ];
+    if (this.config?.bindControllers)
+      this.controllers = [
+        FeatureController,
+        FeatureValuesController,
+        StrategyController,
+        BootstrapController,
+      ];
+    this.application.bind(BOOTSTRAP).toProvider(BootstrapVerifierProvider);
   }
   providers?: ProviderMap = {};
 

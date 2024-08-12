@@ -3,12 +3,53 @@
   "info": {
     "title": "Feature Toggle Service",
     "version": "1.0.0",
-    "description": "A service that provides feature toggle functionality.",
+    "description": "A service that provides feature toggle functionality",
     "contact": {
       "name": "Sourcefuse"
     }
   },
   "paths": {
+    "/bootstrap": {
+      "post": {
+        "x-controller-name": "BootstrapController",
+        "x-operation-name": "bootstrap",
+        "tags": [
+          "BootstrapController"
+        ],
+        "responses": {
+          "204": {
+            "description": "Bootstrap success"
+          }
+        },
+        "description": "",
+        "parameters": [
+          {
+            "name": "x-signature",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-timestamp",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Bootstrap Request"
+              }
+            }
+          }
+        },
+        "operationId": "BootstrapController.bootstrap"
+      }
+    },
     "/feature-values/count": {
       "get": {
         "x-controller-name": "FeatureValuesController",
@@ -1009,6 +1050,202 @@
       }
     },
     "schemas": {
+      "Strategy": {
+        "title": "Strategy",
+        "type": "object",
+        "description": "The strategies table",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "name",
+          "key"
+        ],
+        "additionalProperties": false
+      },
+      "NewStrategy": {
+        "title": "NewStrategy",
+        "type": "object",
+        "description": "The strategies table (tsType: Strategy, schemaOptions: { title: 'NewStrategy' })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "name",
+          "key"
+        ],
+        "additionalProperties": false
+      },
+      "StrategyWithRelations": {
+        "title": "StrategyWithRelations",
+        "type": "object",
+        "description": "The strategies table (tsType: StrategyWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "name",
+          "key"
+        ],
+        "additionalProperties": false
+      },
+      "StrategyPartial": {
+        "title": "StrategyPartial",
+        "type": "object",
+        "description": "The strategies table (tsType: Partial<Strategy>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      },
       "Feature": {
         "title": "Feature",
         "type": "object",
@@ -1449,198 +1686,30 @@
         },
         "additionalProperties": false
       },
-      "Strategy": {
-        "title": "Strategy",
+      "Bootstrap Request": {
+        "title": "Bootstrap Request",
         "type": "object",
-        "description": "The strategies table",
+        "description": "(tsType: BootstrapDTO, schemaOptions: { title: 'Bootstrap Request' })",
         "properties": {
-          "deleted": {
-            "type": "boolean"
+          "plan": {
+            "type": "object"
           },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "key": {
-            "type": "string"
-          },
-          "priority": {
-            "type": "number"
+          "tenant": {
+            "type": "object"
           }
         },
-        "required": [
-          "name",
-          "key"
-        ],
-        "additionalProperties": false
+        "additionalProperties": false,
+        "x-typescript-type": "BootstrapDTO"
       },
-      "NewStrategy": {
-        "title": "NewStrategy",
+      "BootstrapDTO": {
+        "title": "BootstrapDTO",
         "type": "object",
-        "description": "The strategies table (tsType: Strategy, schemaOptions: { title: 'NewStrategy' })",
         "properties": {
-          "deleted": {
-            "type": "boolean"
+          "plan": {
+            "type": "object"
           },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "key": {
-            "type": "string"
-          },
-          "priority": {
-            "type": "number"
-          }
-        },
-        "required": [
-          "name",
-          "key"
-        ],
-        "additionalProperties": false
-      },
-      "StrategyWithRelations": {
-        "title": "StrategyWithRelations",
-        "type": "object",
-        "description": "The strategies table (tsType: StrategyWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "key": {
-            "type": "string"
-          },
-          "priority": {
-            "type": "number"
-          }
-        },
-        "required": [
-          "name",
-          "key"
-        ],
-        "additionalProperties": false
-      },
-      "StrategyPartial": {
-        "title": "StrategyPartial",
-        "type": "object",
-        "description": "The strategies table (tsType: Partial<Strategy>, schemaOptions: { partial: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "key": {
-            "type": "string"
-          },
-          "priority": {
-            "type": "number"
+          "tenant": {
+            "type": "object"
           }
         },
         "additionalProperties": false
