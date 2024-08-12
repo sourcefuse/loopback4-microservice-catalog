@@ -2,10 +2,19 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import { BaseGenerator } from '../../base-generator';
-import { ScaffoldOptions } from '../../types';
+import {join} from 'path';
+import {BaseGenerator} from '../../base-generator';
+import {ScaffoldOptions} from '../../types';
+const chalk = require('chalk'); //NOSONAR
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import BackstageIntegrationGenerator from '../backstage-integration';
+const JENKINSFILE_TEMPLATE = join(
+  '..',
+  '..',
+  'jenkins',
+  'templates',
+  'jenkinsfile.tpl',
+);
 export default class ScaffoldGenerator extends BaseGenerator<ScaffoldOptions> {
   cwd?: string;
   constructor(
@@ -34,9 +43,27 @@ export default class ScaffoldGenerator extends BaseGenerator<ScaffoldOptions> {
         this.options,
       );
     }
+    if (this.options.jenkinsfile) {
+      await this._createJenkinsFileAsync();
+    }
     await this._addDocs();
   }
-
+  async _createJenkinsFileAsync() {
+    try {
+      /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
+      // @ts-ignore
+      await this.fs.copyTplAsync(
+        this.templatePath(JENKINSFILE_TEMPLATE),
+        this.destinationPath(`JenkinsFile`),
+        {
+          project: this.options.name,
+          helmPath: this.options.helmPath,
+        },
+      );
+    } catch (error) {
+      this.log(chalk.cyan(`Error while adding jenkinsfile`));
+    }
+  }
   async install() {
     await this.spawnCommand('npm', ['i']);
   }
