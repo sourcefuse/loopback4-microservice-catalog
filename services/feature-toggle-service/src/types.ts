@@ -15,12 +15,3 @@ export type TempUser = {
   tenantType: string;
   tenantId?: string;
 } & IAuthUser;
-
-// export type BootstrapDTO = {
-//   plan: {
-//     features: FeaturesDTO[];
-//     [key: string]: any;
-//   };
-//   tenant: AnyObject;
-//   [key: string]: any;
-// };
