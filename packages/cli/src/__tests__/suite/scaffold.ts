@@ -7,6 +7,8 @@ export const scaffoldSuite = [
       integrateWithBackstage: 'No',
       owner: 'tester',
       description: 'test description',
+      jenkinsfile: 'No',
+      helmPath: 'helm test path',
     },
     prompts: [
       {
@@ -51,8 +53,28 @@ export const scaffoldSuite = [
         },
         output: 'test description',
       },
+      {
+        input: {
+          type: 'confirm',
+          name: 'jenkinsfile',
+          message:
+            'Do you want to create a Jenkinsfile for Helm-based deployment on Kubernetes?',
+          default: false,
+        },
+        output: 'No',
+      },
+      {
+        input: {
+          type: 'input',
+          name: 'helmPath',
+          message: 'Enter the path for Helm chart:',
+          default: '',
+        },
+        output: 'helm test path',
+      },
     ],
   },
+
   {
     name: 'scaffold command with name flag',
     options: {
@@ -61,6 +83,8 @@ export const scaffoldSuite = [
       integrateWithBackstage: 'No',
       owner: 'tester',
       description: 'test description',
+      jenkinsfile: 'No',
+      helmPath: 'helm test path',
     },
     argv: ['test'],
     prompts: [
@@ -97,6 +121,25 @@ export const scaffoldSuite = [
         },
         output: 'test description',
       },
+      {
+        input: {
+          type: 'confirm',
+          name: 'jenkinsfile',
+          message:
+            'Do you want to create a Jenkinsfile for Helm-based deployment on Kubernetes?',
+          default: false,
+        },
+        output: 'No',
+      },
+      {
+        input: {
+          type: 'input',
+          name: 'helmPath',
+          message: 'Enter the path for Helm chart:',
+          default: '',
+        },
+        output: 'helm test path',
+      },
     ],
   },
   {
@@ -107,6 +150,8 @@ export const scaffoldSuite = [
       integrateWithBackstage: 'No',
       owner: 'tester',
       description: 'test description',
+      jenkinsfile: 'No',
+      helmPath: 'helm test path',
     },
     argv: ['--issuePrefix', 'GH-1'],
     prompts: [
@@ -144,6 +189,25 @@ export const scaffoldSuite = [
         },
         output: 'test description',
       },
+      {
+        input: {
+          type: 'confirm',
+          name: 'jenkinsfile',
+          message:
+            'Do you want to create a Jenkinsfile for Helm-based deployment on Kubernetes?',
+          default: false,
+        },
+        output: 'No',
+      },
+      {
+        input: {
+          type: 'input',
+          name: 'helmPath',
+          message: 'Enter the path for Helm chart:',
+          default: '',
+        },
+        output: 'helm test path',
+      },
     ],
   },
   {
@@ -154,6 +218,8 @@ export const scaffoldSuite = [
       integrateWithBackstage: 'No',
       owner: 'tester',
       description: 'test description',
+      jenkinsfile: 'No',
+      helmPath: 'helm test path',
     },
     argv: ['test', '--issuePrefix', 'GH-1'],
     prompts: [
@@ -182,6 +248,25 @@ export const scaffoldSuite = [
         },
         output: 'test description',
       },
+      {
+        input: {
+          type: 'confirm',
+          name: 'jenkinsfile',
+          message:
+            'Do you want to create a Jenkinsfile for Helm-based deployment on Kubernetes?',
+          default: false,
+        },
+        output: 'No',
+      },
+      {
+        input: {
+          type: 'input',
+          name: 'helmPath',
+          message: 'Enter the path for Helm chart:',
+          default: '',
+        },
+        output: 'helm test path',
+      },
     ],
   },
   {
@@ -192,6 +277,8 @@ export const scaffoldSuite = [
       integrateWithBackstage: 'No',
       owner: 'tester',
       description: 'test description',
+      jenkinsfile: 'No',
+      helmPath: 'helm test path',
     },
     argv: ['--owner', 'tester', '--description', 'test description'],
     prompts: [
@@ -221,6 +308,25 @@ export const scaffoldSuite = [
         },
         output: 'No',
       },
+      {
+        input: {
+          type: 'confirm',
+          name: 'jenkinsfile',
+          message:
+            'Do you want to create a Jenkinsfile for Helm-based deployment on Kubernetes?',
+          default: false,
+        },
+        output: 'No',
+      },
+      {
+        input: {
+          type: 'input',
+          name: 'helmPath',
+          message: 'Enter the path for Helm chart:',
+          default: '',
+        },
+        output: 'helm test path',
+      },
     ],
   },
   {
@@ -231,6 +337,8 @@ export const scaffoldSuite = [
       integrateWithBackstage: true,
       owner: 'tester',
       description: 'test description',
+      jenkinsfile: 'No',
+      helmPath: 'helm test path',
     },
     argv: ['--integrateWithBackstage'],
     prompts: [
@@ -267,6 +375,25 @@ export const scaffoldSuite = [
         },
         output: 'test description',
       },
+      {
+        input: {
+          type: 'confirm',
+          name: 'jenkinsfile',
+          message:
+            'Do you want to create a Jenkinsfile for Helm-based deployment on Kubernetes?',
+          default: false,
+        },
+        output: 'No',
+      },
+      {
+        input: {
+          type: 'input',
+          name: 'helmPath',
+          message: 'Enter the path for Helm chart:',
+          default: '',
+        },
+        output: 'helm test path',
+      },
     ],
   },
   {
@@ -277,6 +404,8 @@ export const scaffoldSuite = [
       integrateWithBackstage: true,
       owner: 'tester',
       description: 'test description',
+      jenkinsfile: true,
+      helmPath: 'helm test path',
     },
     argv: [
       'test',
@@ -287,7 +416,18 @@ export const scaffoldSuite = [
       '--issuePrefix',
       'GH-1',
       '--integrateWithBackstage',
+      '--jenkinsfile',
     ],
-    prompts: [],
+    prompts: [
+      {
+        input: {
+          type: 'input',
+          name: 'helmPath',
+          message: 'Enter the path for Helm chart:',
+          default: '',
+        },
+        output: 'helm test path',
+      },
+    ],
   },
 ];

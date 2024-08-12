@@ -40,7 +40,7 @@ pipeline {
         NR_ENABLED_VALUE="${params.NR_ENABLED ? '1': '0'}"
         DOCKER_BUILDKIT="1"
         DOCKERHUB_CREDENTIALS=credentials('sourcefuse-dockerhub-credentials')
-	    <%= project %>_API_CREDENTIALS=credentials('sourcefuse-github-access-user')
+	    <%= projectName %>_API_CREDENTIALS=credentials('sourcefuse-github-access-user')
 	    HUSKY="0"
         GIT_API_BRANCH="${params.GIT_TAG_OR_BRANCH}"
         GIT_REPO_NAME="sourcefuse/<%= project %>-api.git"
@@ -66,7 +66,7 @@ pipeline {
                 sh "sudo git config --global credential.helper 'cache --timeout=6000'"
                 sh "sudo git config --global user.name 'ayushi212001'"
                 sh "sudo git config --global user.email ayushit45@gmail.com"
-                sh "sudo git remote add origin 'https://$DUMMY_API_CREDENTIALS@github.com/$GIT_REPO_NAME'"
+                sh "sudo git remote add origin 'https://$<%= projectName %>_API_CREDENTIALS@github.com/$GIT_REPO_NAME'"
                 sh "sudo git fetch"
             }
         }

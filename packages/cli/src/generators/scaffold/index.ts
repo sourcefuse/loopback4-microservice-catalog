@@ -57,6 +57,7 @@ export default class ScaffoldGenerator extends BaseGenerator<ScaffoldOptions> {
         this.destinationPath(`JenkinsFile`),
         {
           project: this.options.name,
+          projectName: this.options.name?.toUpperCase(),
           helmPath: this.options.helmPath,
         },
       );
