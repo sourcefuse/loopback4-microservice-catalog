@@ -1,0 +1,9 @@
+const HOURS_IN_A_DAY = 24;
+const MINUTES_IN_AN_HOUR = 60;
+const SECONDS_IN_A_MINUTE = 60;
+const MS_IN_A_SECOND = 1000;
+
+export const DEFAULT_CACHE_OPTIONS = {
+  ttl:
+    MS_IN_A_SECOND * SECONDS_IN_A_MINUTE * MINUTES_IN_AN_HOUR * HOURS_IN_A_DAY, // 1 day
+};

@@ -1,17 +1,17 @@
 {
   "name": "@sourceloop/cache",
   "version": "2.0.2",
-  "description": "This package provides a mixin which works with redis to cache GET request responses.",
+  "description": "A caching extension to cache methods",
   "keywords": [
-    "cache",
-    "redis",
     "loopback-extension",
-    "loopback"
+    "loopback",
+    "cache",
+    "redis"
   ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
-    "node": "18 || 20"
+    "node": ">=18"
   },
   "scripts": {
     "build": "lb-tsc",
@@ -24,11 +24,13 @@
     "eslint": "eslint --report-unused-disable-directives .",
     "eslint:fix": "npm run eslint -- --fix",
     "pretest": "npm run rebuild",
-    "test": "lb-mocha --allow-console-logs \"dist/__tests__\" --timeout 10000",
-    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js",
+    "test": "lb-mocha --timeout=5000 --allow-console-logs \"dist/__tests__\"",
+    "posttest": "npm run lint",
+    "test:dev": "lb-mocha --timeout=5000 --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
     "rebuild": "npm run clean && npm run build",
-    "coverage": "lb-nyc npm run test"
+    "prune": "npm prune --production",
+    "coverage": "nyc npm run test"
   },
   "repository": {
     "type": "git",
@@ -43,29 +45,30 @@
     "!*/__tests__"
   ],
   "peerDependencies": {
-    "@loopback/core": "^6.0.2",
-    "@loopback/repository": "^7.0.2",
-    "@loopback/rest": "^14.0.2",
-    "loopback-connector-kv-redis": "^4.0.0"
+    "@loopback/core": "^6.0.2"
   },
   "dependencies": {
-    "@loopback/sequelize": "^0.6.2",
-    "tslib": "^2.6.2"
-  },
-  "devDependencies": {
-    "@loopback/build": "^11.0.2",
     "@loopback/core": "^6.0.2",
-    "@loopback/eslint-config": "^15.0.2",
     "@loopback/repository": "^7.0.2",
     "@loopback/rest": "^14.0.2",
-    "@loopback/testlab": "^7.0.2",
+    "@loopback/rest-explorer": "^7.0.2",
     "@sourceloop/core": "^14.1.1",
-    "@types/node": "^18.11.9",
-    "dotenv": "^16.0.3",
-    "dotenv-extended": "^2.9.0",
+    "tslib": "^2.6.2",
+    "winston": "^3.13.0"
+  },
+  "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
+    "@loopback/build": "^11.0.2",
+    "@loopback/eslint-config": "^15.0.3",
+    "@loopback/testlab": "^7.0.1",
+    "@types/dotenv": "^8.2.0",
+    "@types/node": "^20.12.7",
+    "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
+    "loopback-connector-kv-redis": "^4.0.0",
+    "mochawesome": "^7.1.3",
     "source-map-support": "^0.5.21",
-    "typescript": "~5.2.2"
+    "typescript": "^5.4.5"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
