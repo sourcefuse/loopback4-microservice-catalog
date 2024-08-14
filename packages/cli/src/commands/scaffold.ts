@@ -37,6 +37,12 @@ export class Scaffold extends Base<ScaffoldOptions> {
       name: 'description',
       description: 'description of the repo',
     }),
+    jenkinsfile: flags.boolean({
+      name: 'jenkinsfile',
+      description:
+        'Do you want to create a Jenkinsfile for Helm-based deployment on Kubernetes?',
+      required: false,
+    }),
   };
   static readonly args = [
     {name: 'name', description: 'name of the project', required: false},
