@@ -50,9 +50,9 @@
   "workspaces": [
     "packages/core/",
     "packages/cli/",
-    "packages/cache",
-    "packages/feature-toggle",
-    "packages/file-utils",
+    "packages/cache/",
+    "packages/feature-toggle/",
+    "packages/file-utils/",
     "packages/custom-sf-changelog/",
     "services/*",
     "sandbox/*"
