@@ -22,8 +22,6 @@
     "prettier:fix": "npm run prettier:cli -- --write",
     "eslint": "eslint --report-unused-disable-directives .",
     "eslint:fix": "npm run eslint -- --fix",
-    "pretest": "npm run rebuild",
-    "test": "echo 'No Tests'",
     "posttest": "npm run lint",
     "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
     "docker:build": "docker build -t @sourceloop/cache-example .",
