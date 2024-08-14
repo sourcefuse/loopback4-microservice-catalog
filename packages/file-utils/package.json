@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/file-utils",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "file upload and multipart related utilities for loopback4 applications",
   "keywords": [
     "loopback-extension",
@@ -9,17 +9,17 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
-    "node": ">=10.16"
+    "node": ">=18"
   },
   "scripts": {
     "build": "lb-tsc",
     "build:watch": "lb-tsc --watch",
     "lint": "npm run eslint && npm run prettier:check",
     "lint:fix": "npm run eslint:fix && npm run prettier:fix",
-    "prettier:cli": "lb-prettier \"**/*.ts\" \"**/*.js\"",
+    "prettier:cli": "prettier \"**/*.ts\" \"**/*.js\"",
     "prettier:check": "npm run prettier:cli -- -l",
     "prettier:fix": "npm run prettier:cli -- --write",
-    "eslint": "lb-eslint --report-unused-disable-directives .",
+    "eslint": "eslint --report-unused-disable-directives .",
     "eslint:fix": "npm run eslint -- --fix",
     "pretest": "npm run rebuild",
     "test": "lb-mocha --timeout=5000 --allow-console-logs \"dist/__tests__\"",
@@ -27,15 +27,15 @@
     "test:dev": "lb-mocha --timeout=5000 --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
     "rebuild": "npm run clean && npm run build",
-    "preinstall": "npm i @loopback/build --no-save && npm run build",
     "prune": "npm prune --production",
     "coverage": "nyc npm run test"
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
+    "directory": "packages/file-utils"
   },
-  "author": "",
+  "author": "Sourcefuse",
   "license": "MIT",
   "files": [
     "README.md",
@@ -44,14 +44,14 @@
     "!*/__tests__"
   ],
   "peerDependencies": {
-    "@loopback/core": "^6.0.1"
+    "@loopback/core": "^6.0.2"
   },
   "dependencies": {
-    "@loopback/core": "^6.0.1",
-    "@loopback/repository": "^7.0.1",
-    "@loopback/rest": "^14.0.1",
-    "@loopback/rest-explorer": "^7.0.1",
-    "@sourceloop/core": "^13.1.0",
+    "@loopback/core": "^6.0.2",
+    "@loopback/repository": "^7.0.2",
+    "@loopback/rest": "^14.0.2",
+    "@loopback/rest-explorer": "^7.0.2",
+    "@sourceloop/core": "^14.1.1",
     "@types/multer": "^1.4.11",
     "file-type": "^16.5.4",
     "lodash": "^4.17.21",
@@ -63,9 +63,9 @@
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
-    "@loopback/build": "^11.0.1",
-    "@loopback/eslint-config": "^15.0.1",
-    "@loopback/testlab": "^7.0.1",
+    "@loopback/build": "^11.0.2",
+    "@loopback/eslint-config": "^15.0.2",
+    "@loopback/testlab": "^7.0.2",
     "@types/dotenv": "^8.2.0",
     "@types/lodash": "^4.17.0",
     "@types/multer-s3": "^3.0.3",
