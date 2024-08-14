@@ -1,192 +1,221 @@
-﻿// Copyright (c) 2023 Sourcefuse Technologies
-//
-// This software is released under the MIT License.
-// https://opensource.org/licenses/MIT
 import {
+  AnyObject,
+  Count,
+  DataObject,
+  DefaultCrudRepository,
   Entity,
   Filter,
   FilterExcludingWhere,
-  JugglerDataSource,
-  Options,
+  Where,
 } from '@loopback/repository';
-import {HttpErrors} from '@loopback/rest';
-import {SequelizeDataSource} from '@loopback/sequelize';
-import * as crypto from 'crypto';
-import {ICacheStrategy, RedisCacheStrategy} from '../strategies';
-import {CacheStrategyTypes} from '../strategy-types.enum';
 import {
   AbstractConstructor,
-  CacheMixinBase,
-  CachePluginComponentOptions,
-  DEFAULT_CACHE_PLUGIN_OPTIONS,
-  ICacheMixin,
-  OptionsWithForceUpdate,
+  ICacheMixinOptions,
+  ICacheService,
+  ICachedMethodOptions,
+  ICachedRepository,
+  ICachedService,
 } from '../types';
+import {inject} from '@loopback/core';
+import {CacheComponentBindings} from '../keys';
+import {cacheInvalidator} from '../decorators/cache-invalidator.decorator';
 
-const SKIP_CACHE_VALUES = ['1', 'true', 1, true];
-export class CacheManager {
-  static options: CachePluginComponentOptions = DEFAULT_CACHE_PLUGIN_OPTIONS; // NOSONAR
+// sonarignore:start
+/**
+ * This is a mixin function that adds caching functionality to a given repository class.
+ * @param superClass - The superclass is a generic type parameter that extends the
+ * `DefaultCrudRepository` class. It represents the base repository class that the `CacheMixin` will
+ * extend and add caching functionality to.
+ * @param {ICacheMixinOptions} [cacheOptions] - `cacheOptions` is an optional parameter of type
+ * `ICacheMixinOptions`. It is used to configure the caching behavior of the repository.
+ */
+export function CacheMixin<
+  // sonarignore:end
+  M extends Entity,
+  ID,
+  Relations extends object,
+  S extends AbstractConstructor<DefaultCrudRepository<M, ID, Relations>>,
+>(
+  superClass: S & AbstractConstructor<DefaultCrudRepository<M, ID, Relations>>,
+  cacheOptions?: ICacheMixinOptions,
+): typeof superClass &
+  AbstractConstructor<ICachedRepository<M, ID, Relations>> & {
+    prototype: ICachedRepository<M, ID, Relations>;
+  } {
+  abstract class CachedRepo
+    extends superClass
+    implements ICachedService, ICachedRepository<M, ID, Relations>
+  {
+    @inject(CacheComponentBindings.CacheService)
+    cache: ICacheService;
 
-  /* eslint-disable-next-line @typescript-eslint/naming-convention */
-  static CacheRepositoryMixin<
-    M extends Entity,
-    ID,
-    Relations extends object,
-    R extends CacheMixinBase<M, ID, Relations>,
-  >(
-    baseClass: R,
-    cacheOptions: Partial<CachePluginComponentOptions>,
-  ): R & AbstractConstructor<ICacheMixin<M, ID>> {
-    abstract class MixedRepository extends baseClass {
-      getCacheDataSource: () => Promise<
-        JugglerDataSource | SequelizeDataSource
-      >;
-      strategy: ICacheStrategy<M>;
-      private allCacheOptions: CachePluginComponentOptions;
+    abstract cacheIdentifier: string;
 
-      /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-      constructor(...args: any[]) {
-        super(...args);
-        this.allCacheOptions = {
-          ...CacheManager.options,
-          ...cacheOptions,
-        };
-
-        if (CacheManager.options.cacheProvider === CacheStrategyTypes.Redis) {
-          this.strategy = new RedisCacheStrategy<M>(this.allCacheOptions);
-        } else {
-          throw new HttpErrors.NotImplemented(
-            'Cache strategy is not implemented !',
-          );
-        }
+    async find(
+      filter?: Filter<M>,
+      options?: ICachedMethodOptions,
+    ): Promise<(M & Relations)[]> {
+      options = addTagsToOptions(options, cacheOptions?.cachedItemTags);
+      if (cacheOptions?.disableCachedFetch) {
+        return super.find(filter, options);
       }
-
-      /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
-      // @ts-ignore
-      async findById(
-        id: ID,
-        filter?: FilterExcludingWhere<M>,
-        options?: OptionsWithForceUpdate,
-      ): Promise<M> {
-        if (SKIP_CACHE_VALUES.includes(process.env.SKIP_CACHE ?? false)) {
-          return super.findById(id, filter, options);
-        }
-        this.checkDataSource();
-        const key = await this.generateKey(id, filter);
-        let finalResult: M;
-        if (options?.forceUpdate) {
-          finalResult = await super.findById(id, filter, options);
-          this.strategy
-            .saveInCache(key, finalResult)
-            .catch(err => console.error(err)); //NOSONAR
-        } else {
-          const result = (await this.strategy.searchInCache(key)) as M;
-          if (result) {
-            finalResult = result;
-          } else {
-            finalResult = await super.findById(id, filter, options);
-            this.strategy
-              .saveInCache(key, finalResult)
-              .catch(err => console.error(err)); //NOSONAR
-          }
-        }
-
-        return finalResult;
-      }
-
-      /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
-      // @ts-ignore
-      async find(
-        filter?: Filter<M> | undefined,
-        options?: OptionsWithForceUpdate,
-      ): Promise<M[]> {
-        if (SKIP_CACHE_VALUES.includes(process.env.SKIP_CACHE ?? false)) {
-          return super.find(filter, options);
-        }
-        this.checkDataSource();
-        const key = await this.generateKey(undefined, filter);
-        let finalResult: M[];
-        if (options?.forceUpdate) {
-          finalResult = await super.find(filter, options);
-          this.strategy
-            .saveInCache(key, finalResult)
-            .catch(err => console.error(err)); //NOSONAR
-        } else {
-          const result = (await this.strategy.searchInCache(key)) as M[];
-          if (result) {
-            finalResult = result;
-          } else {
-            finalResult = await super.find(filter, options);
-            this.strategy
-              .saveInCache(key, finalResult)
-              .catch(err => console.error(err)); //NOSONAR
-          }
-        }
-
-        return finalResult;
-      }
-
-      /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
-      // @ts-ignore
-      async findOne(
-        filter?: Filter<M>,
-        options?: Options,
-      ): Promise<(M & Relations) | null> {
-        if (SKIP_CACHE_VALUES.includes(process.env.SKIP_CACHE ?? false)) {
-          return super.findOne(filter, options);
-        }
-        this.checkDataSource();
-        const key = await this.generateKey(undefined, filter);
-        let finalResult: (M & Relations) | null;
-        if (options?.forceUpdate) {
-          finalResult = await super.findOne(filter, options);
-          this.strategy
-            .saveInCache(key, finalResult)
-            .catch(err => console.error(err)); //NOSONAR
-        } else {
-          const result = (await this.strategy.searchInCache(key)) as
-            | (M & Relations)
-            | null;
-          // check is only for undefined as result of type null can also be stored in cache
-          if (result !== undefined) {
-            finalResult = result;
-          } else {
-            finalResult = await super.findOne(filter, options);
-            this.strategy
-              .saveInCache(key, finalResult)
-              .catch(err => console.error(err)); //NOSONAR
-          }
-        }
-        return finalResult;
-      }
-
-      async clearCache(): Promise<void> {
-        this.checkDataSource();
-        return this.strategy.clearCache();
-      }
-
-      async generateKey(id?: ID, filter?: Filter<M>): Promise<string> {
-        let key = '';
-        if (id) {
-          key += `_${id}`;
-        }
-        if (filter) {
-          key += `_${JSON.stringify(filter)}`;
-        }
-        // hash to reduce key length
-        return (
-          this.allCacheOptions.prefix +
-          crypto.createHash('sha256').update(key).digest('hex')
-        );
-      }
-
-      checkDataSource(): void {
-        if (!this.getCacheDataSource) {
-          throw new Error(`Please provide value for getCacheDataSource`);
-        }
-        this.strategy.getCacheDataSource = this.getCacheDataSource;
-      }
+      return this.cache.executeAndSave(
+        super.find.bind(this),
+        [filter, options],
+        'find',
+        this.cacheIdentifier,
+        options,
+        cacheOptions,
+      );
     }
-    return MixedRepository;
+
+    async findOne(
+      filter?: Filter<M>,
+      options?: ICachedMethodOptions,
+    ): Promise<(M & Relations) | null> {
+      if (cacheOptions?.disableCachedFetch) {
+        return super.findOne(filter, options);
+      }
+      options = addTagsToOptions(options, cacheOptions?.cachedItemTags);
+      return this.cache.executeAndSave(
+        super.findOne.bind(this),
+        [filter, options],
+        'findOne',
+        this.cacheIdentifier,
+        options,
+        cacheOptions,
+      );
+    }
+
+    async findById(
+      id: ID,
+      filter?: FilterExcludingWhere<M>,
+      options?: ICachedMethodOptions,
+    ): Promise<M & Relations> {
+      if (cacheOptions?.disableCachedFetch) {
+        return super.findById(id, filter, options);
+      }
+      options = addTagsToOptions(options, cacheOptions?.cachedItemTags);
+      return this.cache.executeAndSave(
+        super.findById.bind(this),
+        [id, filter, options],
+        'findById',
+        this.cacheIdentifier,
+        options,
+        cacheOptions,
+      );
+    }
+
+    async count(
+      where?: Where<M>,
+      options?: ICachedMethodOptions,
+    ): Promise<Count> {
+      if (cacheOptions?.disableCachedFetch) {
+        return super.count(where, options);
+      }
+      options = addTagsToOptions(options, cacheOptions?.cachedItemTags);
+      return this.cache.executeAndSave(
+        super.count.bind(this),
+        [where, options],
+        'count',
+        this.cacheIdentifier,
+        options,
+        cacheOptions,
+      );
+    }
+
+    async exists(id: ID, options?: ICachedMethodOptions): Promise<boolean> {
+      if (cacheOptions?.disableCachedFetch) {
+        return super.exists(id, options);
+      }
+      options = addTagsToOptions(options, cacheOptions?.cachedItemTags);
+      return this.cache.executeAndSave(
+        super.exists.bind(this),
+        [id, options],
+        'exists',
+        this.cacheIdentifier,
+        options,
+        cacheOptions,
+      );
+    }
+
+    @cacheInvalidator(cacheOptions?.invalidationTags)
+    async create(data: DataObject<M>, options?: AnyObject): Promise<M> {
+      return super.create(data, options);
+    }
+
+    @cacheInvalidator(cacheOptions?.invalidationTags)
+    async createAll(data: DataObject<M>[], options?: AnyObject): Promise<M[]> {
+      return super.createAll(data, options);
+    }
+
+    @cacheInvalidator(cacheOptions?.invalidationTags)
+    async save(entity: M, options?: AnyObject): Promise<M> {
+      return super.save(entity, options);
+    }
+
+    @cacheInvalidator(cacheOptions?.invalidationTags)
+    async update(entity: M, options?: AnyObject): Promise<void> {
+      return super.update(entity, options);
+    }
+
+    @cacheInvalidator(cacheOptions?.invalidationTags)
+    async updateAll(
+      data: DataObject<M>,
+      where?: Where<M>,
+      options?: AnyObject,
+    ): Promise<Count> {
+      return super.updateAll(data, where, options);
+    }
+
+    @cacheInvalidator(cacheOptions?.invalidationTags)
+    async updateById(
+      id: ID,
+      data: DataObject<M>,
+      options?: AnyObject,
+    ): Promise<void> {
+      return super.updateById(id, data, options);
+    }
+
+    @cacheInvalidator(cacheOptions?.invalidationTags)
+    async replaceById(
+      id: ID,
+      data: DataObject<M>,
+      options?: AnyObject,
+    ): Promise<void> {
+      return super.replaceById(id, data, options);
+    }
+
+    @cacheInvalidator(cacheOptions?.invalidationTags)
+    async delete(entity: M, options?: AnyObject): Promise<void> {
+      return super.delete(entity, options);
+    }
+
+    @cacheInvalidator(cacheOptions?.invalidationTags)
+    async deleteAll(where?: Where<M>, options?: AnyObject): Promise<Count> {
+      return super.deleteAll(where, options);
+    }
+
+    @cacheInvalidator(cacheOptions?.invalidationTags)
+    async deleteById(id: ID, options?: AnyObject): Promise<void> {
+      return super.deleteById(id, options);
+    }
   }
+  return CachedRepo;
+}
+
+function addTagsToOptions(
+  options?: ICachedMethodOptions,
+  tags?: string[],
+): ICachedMethodOptions {
+  if (!options) {
+    options = {};
+  }
+  if (!options.tags && tags?.length) {
+    options.tags = [];
+  }
+  if (tags?.length) {
+    options.tags = options.tags?.concat(tags);
+  }
+  return options;
 }

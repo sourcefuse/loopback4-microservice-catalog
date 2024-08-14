@@ -1,2 +1,4 @@
 dist
 *.json
+mochawesome-report
+coverage

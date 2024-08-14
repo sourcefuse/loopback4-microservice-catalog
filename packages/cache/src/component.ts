@@ -1,32 +1,39 @@
-﻿// Copyright (c) 2023 Sourcefuse Technologies
-//
-// This software is released under the MIT License.
-// https://opensource.org/licenses/MIT
 import {
   Application,
+  Binding,
   Component,
-  config,
-  ContextTags,
   CoreBindings,
+  createBindingFromClass,
   inject,
   injectable,
+  ServiceOrProviderClass,
 } from '@loopback/core';
-import {CachePluginComponentBindings} from './keys';
-import {CacheManager} from './mixins';
+import {AnyObject} from '@loopback/repository';
+import {LoggerExtensionComponent} from '@sourceloop/core';
+import {CacheComponentBindings} from './keys';
+import {ICacheOptions} from './types';
 import {
-  CachePluginComponentOptions,
-  DEFAULT_CACHE_PLUGIN_OPTIONS,
-} from './types';
+  CacheService,
+  InMemoryStoreStrategy,
+  RedisStoreStrategy,
+} from './services';
 
-// Configure the binding for CachePluginComponent
-@injectable({tags: {[ContextTags.KEY]: CachePluginComponentBindings.COMPONENT}})
-export class CachePluginComponent implements Component {
+@injectable()
+export class CachingComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
-    private readonly application: Application,
-    @config()
-    private readonly options: CachePluginComponentOptions = DEFAULT_CACHE_PLUGIN_OPTIONS,
+    app: Application,
+    @inject(CacheComponentBindings.CacheConfig)
+    configuration: ICacheOptions,
   ) {
-    CacheManager.options = options;
+    app.component(LoggerExtensionComponent);
+    this.bindings = [
+      createBindingFromClass(CacheService, {
+        key: CacheComponentBindings.CacheService,
+      }),
+    ];
+    this.services = [RedisStoreStrategy, InMemoryStoreStrategy];
   }
+  services?: ServiceOrProviderClass<AnyObject>[];
+  bindings?: Binding<AnyObject>[];
 }
