@@ -3,6 +3,7 @@
     "packages/core",
     "packages/cli",
     "packages/cache",
+    "packages/file-utils",
     "packages/feature-toggle",
     "packages/custom-sf-changelog/",
     "services/*",
