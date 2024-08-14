@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/file-utils",
   "version": "0.1.0",
-  "description": "file upload and multipart related utilities for loopback4 applications",
+  "description": "file upload and multipart related utilities for loopback4 applications.",
   "keywords": [
     "loopback-extension",
     "loopback"
