@@ -63,11 +63,12 @@ export class SubscriptionsController {
         [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Subscriptions, {
             title: 'NewSubscriptions',
+            exclude: ['id'],
           }),
         },
       },
     })
-    subscriptions: Subscriptions,
+    subscriptions: Omit<Subscriptions, 'id'>,
   ): Promise<Subscriptions> {
     return this.subscriptionsRepository.create(subscriptions);
   }
@@ -147,7 +148,7 @@ export class SubscriptionsController {
         },
       },
     })
-    subscriptions: Subscriptions,
+    subscriptions: Omit<Subscriptions, 'id'>,
     @param.where(Subscriptions) where?: Where<Subscriptions>,
   ): Promise<Count> {
     return this.subscriptionsRepository.updateAll(subscriptions, where);

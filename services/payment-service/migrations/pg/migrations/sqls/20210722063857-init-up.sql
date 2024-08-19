@@ -1,7 +1,7 @@
 CREATE SCHEMA IF NOT EXISTS main;
 
 CREATE  TABLE main.paymentgateways ( 
-	id                   uuid  NOT NULL ,
+	id                   uuid DEFAULT md5(random()::text || clock_timestamp()::text)::uuid NOT NULL,
 	name                 varchar  NOT NULL ,
 	gateway_type         varchar  NOT NULL ,
 	enabled              boolean  NOT NULL ,
@@ -9,7 +9,7 @@ CREATE  TABLE main.paymentgateways (
  );
 
 CREATE  TABLE main.templates ( 
-	id                   uuid  NOT NULL ,
+	id                   uuid DEFAULT md5(random()::text || clock_timestamp()::text)::uuid NOT NULL,
 	payment_gateway_id   uuid  NOT NULL ,
 	name                 varchar  NOT NULL ,
 	"template"           text  NOT NULL ,
@@ -18,7 +18,7 @@ CREATE  TABLE main.templates (
  );
 
 CREATE  TABLE main.orders ( 
-	id                   uuid  NOT NULL ,
+	id                   uuid DEFAULT md5(random()::text || clock_timestamp()::text)::uuid NOT NULL,
 	totalamount          numeric  NOT NULL ,
 	status               varchar(100)  NOT NULL ,
 	paymentmethod        varchar(100)   ,
@@ -29,7 +29,7 @@ CREATE  TABLE main.orders (
  );
 
 CREATE  TABLE main.transactions ( 
-	id                   uuid  NOT NULL ,
+	id                   uuid DEFAULT md5(random()::text || clock_timestamp()::text)::uuid NOT NULL,
 	amount_paid          numeric  NOT NULL ,
 	status               varchar(100)   ,
 	order_id             uuid  NOT NULL ,
@@ -41,7 +41,7 @@ CREATE  TABLE main.transactions (
  );
 
  CREATE  TABLE main.subscriptions ( 
-	id                   uuid  NOT NULL ,
+	id                   uuid DEFAULT md5(random()::text || clock_timestamp()::text)::uuid NOT NULL,
 	currency             varchar   ,
 	status               varchar   ,
 	payment_gateway_id   uuid   ,

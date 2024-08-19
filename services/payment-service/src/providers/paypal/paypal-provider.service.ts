@@ -113,11 +113,13 @@ export class PaypalProvider implements Provider<PayPalPaymentGateway> {
             currency: payorder.currency,
             status: Status.Draft,
             orderId: payorder.id,
+            tenantId: payorder.tenantId ? payorder.tenantId : undefined,
             paymentGatewayId: payorder.paymentGatewayId,
             res: {
               gatewayOrderRes: payorder?.metaData,
             },
           };
+
           await this.transactionsRepository.create(transactionData);
           return {
             orderPayLink: payorder.metaData?.paypalOrderPayLink,

@@ -60,6 +60,7 @@ export class PaymentGatewaysController {
         [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(PaymentGateways, {
             title: 'NewPaymentGateways',
+            exclude: ['id'],
           }),
         },
       },

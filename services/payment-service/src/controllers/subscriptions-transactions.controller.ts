@@ -67,7 +67,7 @@ export class SubscriptionTransactionsController {
         },
       },
     })
-    subscriptions: Subscriptions,
+    subscriptions: Omit<Subscriptions, 'id'>,
   ): Promise<void> {
     const subscriptionEntity = {
       id: uuidv4(),

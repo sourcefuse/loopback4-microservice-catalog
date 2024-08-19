@@ -98,12 +98,17 @@ export class TransactionsController {
         [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Transactions, {
             title: 'NewTransactions',
+            exclude: ['id'],
           }),
         },
       },
     })
-    transactions: Transactions,
+    transactions: Omit<Transactions, 'id'>,
   ): Promise<Transactions> {
+    const Order = await this.ordersRepository.findById(transactions.orderId);
+    if (Order && Order.tenantId) {
+      transactions.tenantId = Order.tenantId;
+    }
     return this.transactionsRepository.create(transactions);
   }
 

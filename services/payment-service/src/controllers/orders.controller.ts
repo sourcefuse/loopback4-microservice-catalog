@@ -27,21 +27,24 @@ import {
 } from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
+
 import {PermissionKey} from '../enums/permission-key.enum';
 import {Orders} from '../models';
 import {OrdersRepository} from '../repositories';
-const orderIdPath = '/orders/{id}';
+
+const basePath = '/Orders';
+
 export class OrdersController {
   constructor(
     @repository(OrdersRepository)
-    public ordersRepository: OrdersRepository,
+    public OrdersRepository: OrdersRepository,
   ) {}
 
   @authenticate(STRATEGY.BEARER)
   @authorize({
     permissions: [PermissionKey.CreateOrder, PermissionKey.CreateOrderNum],
   })
-  @post('/orders', {
+  @post(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -56,20 +59,21 @@ export class OrdersController {
         [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Orders, {
             title: 'NewOrders',
+            exclude: ['id'],
           }),
         },
       },
     })
-    orders: Orders,
+    Orders: Omit<Orders, 'id'>,
   ): Promise<Orders> {
-    return this.ordersRepository.create(orders);
+    return this.OrdersRepository.create(Orders);
   }
 
   @authenticate(STRATEGY.BEARER)
   @authorize({
     permissions: [PermissionKey.ViewOrder, PermissionKey.ViewOrderNum],
   })
-  @get('/orders/count', {
+  @get(`${basePath}/count`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -79,14 +83,14 @@ export class OrdersController {
     },
   })
   async count(@param.where(Orders) where?: Where<Orders>): Promise<Count> {
-    return this.ordersRepository.count(where);
+    return this.OrdersRepository.count(where);
   }
 
   @authenticate(STRATEGY.BEARER)
   @authorize({
     permissions: [PermissionKey.ViewOrder, PermissionKey.ViewOrderNum],
   })
-  @get('/orders', {
+  @get(`${basePath}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -103,14 +107,14 @@ export class OrdersController {
     },
   })
   async find(@param.filter(Orders) filter?: Filter<Orders>): Promise<Orders[]> {
-    return this.ordersRepository.find(filter);
+    return this.OrdersRepository.find(filter);
   }
 
   @authenticate(STRATEGY.BEARER)
   @authorize({
     permissions: [PermissionKey.UpdateOrder, PermissionKey.UpdateOrderNum],
   })
-  @patch('/orders', {
+  @patch(basePath, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -127,17 +131,17 @@ export class OrdersController {
         },
       },
     })
-    orders: Orders,
+    Orders: Orders,
     @param.where(Orders) where?: Where<Orders>,
   ): Promise<Count> {
-    return this.ordersRepository.updateAll(orders, where);
+    return this.OrdersRepository.updateAll(Orders, where);
   }
 
   @authenticate(STRATEGY.BEARER)
   @authorize({
     permissions: [PermissionKey.ViewOrder, PermissionKey.ViewOrderNum],
   })
-  @get(orderIdPath, {
+  @get(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
@@ -155,14 +159,14 @@ export class OrdersController {
     @param.filter(Orders, {exclude: 'where'})
     filter?: FilterExcludingWhere<Orders>,
   ): Promise<Orders> {
-    return this.ordersRepository.findById(id, filter);
+    return this.OrdersRepository.findById(id, filter);
   }
 
   @authenticate(STRATEGY.BEARER)
   @authorize({
     permissions: [PermissionKey.UpdateOrder, PermissionKey.UpdateOrderNum],
   })
-  @patch(orderIdPath, {
+  @patch(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -179,15 +183,16 @@ export class OrdersController {
         },
       },
     })
-    orders: Orders,
+    Orders: Orders,
   ): Promise<void> {
-    await this.ordersRepository.updateById(id, orders);
+    await this.OrdersRepository.updateById(id, Orders);
   }
+
   @authenticate(STRATEGY.BEARER)
   @authorize({
     permissions: [PermissionKey.UpdateOrder, PermissionKey.UpdateOrderNum],
   })
-  @put(orderIdPath, {
+  @put(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -197,16 +202,16 @@ export class OrdersController {
   })
   async replaceById(
     @param.path.string('id') id: string,
-    @requestBody() orders: Orders,
+    @requestBody() Orders: Orders,
   ): Promise<void> {
-    await this.ordersRepository.replaceById(id, orders);
+    await this.OrdersRepository.replaceById(id, Orders);
   }
 
   @authenticate(STRATEGY.BEARER)
   @authorize({
     permissions: [PermissionKey.DeleteOrder, PermissionKey.DeleteOrderNum],
   })
-  @del(orderIdPath, {
+  @del(`${basePath}/{id}`, {
     security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.NO_CONTENT]: {
@@ -215,6 +220,6 @@ export class OrdersController {
     },
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
-    await this.ordersRepository.deleteById(id);
+    await this.OrdersRepository.deleteById(id);
   }
 }

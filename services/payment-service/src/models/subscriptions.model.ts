@@ -13,10 +13,8 @@ export class Subscriptions extends CoreEntity<Subscriptions> {
   @property({
     type: 'string',
     id: true,
-    generated: false,
-    required: true,
   })
-  id: string;
+  id?: string;
 
   @property({
     type: 'number',

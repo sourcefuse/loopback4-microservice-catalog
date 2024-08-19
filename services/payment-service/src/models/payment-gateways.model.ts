@@ -13,10 +13,8 @@ export class PaymentGateways extends CoreEntity<PaymentGateways> {
   @property({
     type: 'string',
     id: true,
-    generated: false,
-    required: true,
   })
-  id: string;
+  id?: string;
 
   @property({
     type: 'string',

@@ -1,5 +1,5 @@
 ---
-title: "@sourceloop/payment-service v13.0.1"
+title: "@sourceloop/payment-service v14.0.0"
 language_tabs:
   - javascript: JavaScript
   - javascript--nodejs: Node.JS
@@ -16,7 +16,7 @@ headingLevel: 2
 
 <!-- Generator: Widdershins v4.0.1 -->
 
-<h1 id="-sourceloop-payment-service">@sourceloop/payment-service v13.0.1</h1>
+<h1 id="-sourceloop-payment-service">@sourceloop/payment-service v14.0.0</h1>
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
@@ -25,6 +25,777 @@ payment microservice
 Base URLs:
 
 * <a href="/">/</a>
+
+<h1 id="-sourceloop-payment-service-orderscontroller">OrdersController</h1>
+
+## OrdersController.count
+
+<a id="opIdOrdersController.count"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/Orders/count',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/Orders/count',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /Orders/count`
+
+| Permissions |
+| ------- |
+| ViewOrder   |
+| 7   |
+
+<h3 id="orderscontroller.count-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|where|query|object|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "count": 0
+}
+```
+
+<h3 id="orderscontroller.count-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Orders model count|[loopback.Count](#schemaloopback.count)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
+</aside>
+
+## OrdersController.replaceById
+
+<a id="opIdOrdersController.replaceById"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "id": "string",
+  "totalAmount": 0,
+  "currency": "string",
+  "status": "string",
+  "paymentGatewayId": "string",
+  "paymentmethod": "string",
+  "metaData": {}
+}';
+const headers = {
+  'Content-Type':'application/json'
+};
+
+fetch('/Orders/{id}',
+{
+  method: 'PUT',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "id": "string",
+  "totalAmount": 0,
+  "currency": "string",
+  "status": "string",
+  "paymentGatewayId": "string",
+  "paymentmethod": "string",
+  "metaData": {}
+};
+const headers = {
+  'Content-Type':'application/json'
+};
+
+fetch('/Orders/{id}',
+{
+  method: 'PUT',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PUT /Orders/{id}`
+
+| Permissions |
+| ------- |
+| UpdateOrder   |
+| 8   |
+
+> Body parameter
+
+```json
+{
+  "id": "string",
+  "totalAmount": 0,
+  "currency": "string",
+  "status": "string",
+  "paymentGatewayId": "string",
+  "paymentmethod": "string",
+  "metaData": {}
+}
+```
+
+<h3 id="orderscontroller.replacebyid-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[Orders](#schemaorders)|false|none|
+
+<h3 id="orderscontroller.replacebyid-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Orders PUT success|None|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
+</aside>
+
+## OrdersController.updateById
+
+<a id="opIdOrdersController.updateById"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "id": "string",
+  "totalAmount": 0,
+  "currency": "string",
+  "status": "string",
+  "paymentGatewayId": "string",
+  "paymentmethod": "string",
+  "metaData": {}
+}';
+const headers = {
+  'Content-Type':'application/json'
+};
+
+fetch('/Orders/{id}',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "id": "string",
+  "totalAmount": 0,
+  "currency": "string",
+  "status": "string",
+  "paymentGatewayId": "string",
+  "paymentmethod": "string",
+  "metaData": {}
+};
+const headers = {
+  'Content-Type':'application/json'
+};
+
+fetch('/Orders/{id}',
+{
+  method: 'PATCH',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PATCH /Orders/{id}`
+
+| Permissions |
+| ------- |
+| UpdateOrder   |
+| 8   |
+
+> Body parameter
+
+```json
+{
+  "id": "string",
+  "totalAmount": 0,
+  "currency": "string",
+  "status": "string",
+  "paymentGatewayId": "string",
+  "paymentmethod": "string",
+  "metaData": {}
+}
+```
+
+<h3 id="orderscontroller.updatebyid-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|body|body|[OrdersPartial](#schemaorderspartial)|false|none|
+
+<h3 id="orderscontroller.updatebyid-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Orders PATCH success|None|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
+</aside>
+
+## OrdersController.findById
+
+<a id="opIdOrdersController.findById"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/Orders/{id}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/Orders/{id}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /Orders/{id}`
+
+| Permissions |
+| ------- |
+| ViewOrder   |
+| 7   |
+
+<h3 id="orderscontroller.findbyid-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+|filter|query|[orders.Filter](#schemaorders.filter)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "id": "string",
+  "totalAmount": 0,
+  "currency": "string",
+  "status": "string",
+  "paymentGatewayId": "string",
+  "paymentmethod": "string",
+  "metaData": {}
+}
+```
+
+<h3 id="orderscontroller.findbyid-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Orders model instance|[OrdersWithRelations](#schemaorderswithrelations)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
+</aside>
+
+## OrdersController.deleteById
+
+<a id="opIdOrdersController.deleteById"></a>
+
+> Code samples
+
+```javascript
+
+fetch('/Orders/{id}',
+{
+  method: 'DELETE'
+
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+fetch('/Orders/{id}',
+{
+  method: 'DELETE'
+
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`DELETE /Orders/{id}`
+
+| Permissions |
+| ------- |
+| DeleteOrder   |
+| 9   |
+
+<h3 id="orderscontroller.deletebyid-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+
+<h3 id="orderscontroller.deletebyid-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Orders DELETE success|None|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
+</aside>
+
+## OrdersController.create
+
+<a id="opIdOrdersController.create"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "totalAmount": 0,
+  "currency": "string",
+  "status": "string",
+  "paymentGatewayId": "string",
+  "paymentmethod": "string",
+  "metaData": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/Orders',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "totalAmount": 0,
+  "currency": "string",
+  "status": "string",
+  "paymentGatewayId": "string",
+  "paymentmethod": "string",
+  "metaData": {}
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/Orders',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /Orders`
+
+| Permissions |
+| ------- |
+| CreateOrder   |
+| 6   |
+
+> Body parameter
+
+```json
+{
+  "totalAmount": 0,
+  "currency": "string",
+  "status": "string",
+  "paymentGatewayId": "string",
+  "paymentmethod": "string",
+  "metaData": {}
+}
+```
+
+<h3 id="orderscontroller.create-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[NewOrders](#schemaneworders)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "id": "string",
+  "totalAmount": 0,
+  "currency": "string",
+  "status": "string",
+  "paymentGatewayId": "string",
+  "paymentmethod": "string",
+  "metaData": {}
+}
+```
+
+<h3 id="orderscontroller.create-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Orders model instance|[Orders](#schemaorders)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
+</aside>
+
+## OrdersController.updateAll
+
+<a id="opIdOrdersController.updateAll"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "id": "string",
+  "totalAmount": 0,
+  "currency": "string",
+  "status": "string",
+  "paymentGatewayId": "string",
+  "paymentmethod": "string",
+  "metaData": {}
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/Orders',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "id": "string",
+  "totalAmount": 0,
+  "currency": "string",
+  "status": "string",
+  "paymentGatewayId": "string",
+  "paymentmethod": "string",
+  "metaData": {}
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/Orders',
+{
+  method: 'PATCH',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`PATCH /Orders`
+
+| Permissions |
+| ------- |
+| UpdateOrder   |
+| 8   |
+
+> Body parameter
+
+```json
+{
+  "id": "string",
+  "totalAmount": 0,
+  "currency": "string",
+  "status": "string",
+  "paymentGatewayId": "string",
+  "paymentmethod": "string",
+  "metaData": {}
+}
+```
+
+<h3 id="orderscontroller.updateall-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|where|query|object|false|none|
+|body|body|[OrdersPartial](#schemaorderspartial)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "count": 0
+}
+```
+
+<h3 id="orderscontroller.updateall-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Orders PATCH success count|[loopback.Count](#schemaloopback.count)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
+</aside>
+
+## OrdersController.find
+
+<a id="opIdOrdersController.find"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/Orders',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/Orders',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /Orders`
+
+| Permissions |
+| ------- |
+| ViewOrder   |
+| 7   |
+
+<h3 id="orderscontroller.find-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|filter|query|[orders.Filter1](#schemaorders.filter1)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  {
+    "id": "string",
+    "totalAmount": 0,
+    "currency": "string",
+    "status": "string",
+    "paymentGatewayId": "string",
+    "paymentmethod": "string",
+    "metaData": {}
+  }
+]
+```
+
+<h3 id="orderscontroller.find-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Orders model instances|Inline|
+
+<h3 id="orderscontroller.find-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[OrdersWithRelations](#schemaorderswithrelations)]|false|none|[(tsType: OrdersWithRelations, schemaOptions: { includeRelations: true })]|
+|» OrdersWithRelations|[OrdersWithRelations](#schemaorderswithrelations)|false|none|(tsType: OrdersWithRelations, schemaOptions: { includeRelations: true })|
+|»» id|string|false|none|none|
+|»» totalAmount|number|true|none|none|
+|»» currency|string|true|none|none|
+|»» status|string|true|none|none|
+|»» paymentGatewayId|string|true|none|none|
+|»» paymentmethod|string|false|none|none|
+|»» metaData|object|false|none|none|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
+</aside>
 
 <h1 id="-sourceloop-payment-service-subscriptiontransactionscontroller">SubscriptionTransactionsController</h1>
 
@@ -222,780 +993,6 @@ fetch('/subscription/transaction/charge',
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Subscription model instance|None|
 
 <h3 id="subscriptiontransactionscontroller.subscriptiontransactionscharge-responseschema">Response Schema</h3>
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-None
-</aside>
-
-<h1 id="-sourceloop-payment-service-orderscontroller">OrdersController</h1>
-
-## OrdersController.count
-
-<a id="opIdOrdersController.count"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/orders/count',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/orders/count',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /orders/count`
-
-| Permissions |
-| ------- |
-| ViewOrder   |
-| 7   |
-
-<h3 id="orderscontroller.count-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|where|query|object|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "count": 0
-}
-```
-
-<h3 id="orderscontroller.count-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Orders model count|[loopback.Count](#schemaloopback.count)|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-None
-</aside>
-
-## OrdersController.replaceById
-
-<a id="opIdOrdersController.replaceById"></a>
-
-> Code samples
-
-```javascript
-const inputBody = '{
-  "id": "string",
-  "totalAmount": 0,
-  "currency": "string",
-  "status": "string",
-  "paymentGatewayId": "string",
-  "paymentmethod": "string",
-  "metaData": {}
-}';
-const headers = {
-  'Content-Type':'application/json'
-};
-
-fetch('/orders/{id}',
-{
-  method: 'PUT',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-const inputBody = {
-  "id": "string",
-  "totalAmount": 0,
-  "currency": "string",
-  "status": "string",
-  "paymentGatewayId": "string",
-  "paymentmethod": "string",
-  "metaData": {}
-};
-const headers = {
-  'Content-Type':'application/json'
-};
-
-fetch('/orders/{id}',
-{
-  method: 'PUT',
-  body: JSON.stringify(inputBody),
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`PUT /orders/{id}`
-
-| Permissions |
-| ------- |
-| UpdateOrder   |
-| 8   |
-
-> Body parameter
-
-```json
-{
-  "id": "string",
-  "totalAmount": 0,
-  "currency": "string",
-  "status": "string",
-  "paymentGatewayId": "string",
-  "paymentmethod": "string",
-  "metaData": {}
-}
-```
-
-<h3 id="orderscontroller.replacebyid-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|id|path|string|true|none|
-|body|body|[Orders](#schemaorders)|false|none|
-
-<h3 id="orderscontroller.replacebyid-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Orders PUT success|None|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-None
-</aside>
-
-## OrdersController.updateById
-
-<a id="opIdOrdersController.updateById"></a>
-
-> Code samples
-
-```javascript
-const inputBody = '{
-  "id": "string",
-  "totalAmount": 0,
-  "currency": "string",
-  "status": "string",
-  "paymentGatewayId": "string",
-  "paymentmethod": "string",
-  "metaData": {}
-}';
-const headers = {
-  'Content-Type':'application/json'
-};
-
-fetch('/orders/{id}',
-{
-  method: 'PATCH',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-const inputBody = {
-  "id": "string",
-  "totalAmount": 0,
-  "currency": "string",
-  "status": "string",
-  "paymentGatewayId": "string",
-  "paymentmethod": "string",
-  "metaData": {}
-};
-const headers = {
-  'Content-Type':'application/json'
-};
-
-fetch('/orders/{id}',
-{
-  method: 'PATCH',
-  body: JSON.stringify(inputBody),
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`PATCH /orders/{id}`
-
-| Permissions |
-| ------- |
-| UpdateOrder   |
-| 8   |
-
-> Body parameter
-
-```json
-{
-  "id": "string",
-  "totalAmount": 0,
-  "currency": "string",
-  "status": "string",
-  "paymentGatewayId": "string",
-  "paymentmethod": "string",
-  "metaData": {}
-}
-```
-
-<h3 id="orderscontroller.updatebyid-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|id|path|string|true|none|
-|body|body|[OrdersPartial](#schemaorderspartial)|false|none|
-
-<h3 id="orderscontroller.updatebyid-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Orders PATCH success|None|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-None
-</aside>
-
-## OrdersController.findById
-
-<a id="opIdOrdersController.findById"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/orders/{id}',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/orders/{id}',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /orders/{id}`
-
-| Permissions |
-| ------- |
-| ViewOrder   |
-| 7   |
-
-<h3 id="orderscontroller.findbyid-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|id|path|string|true|none|
-|filter|query|[orders.Filter](#schemaorders.filter)|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "id": "string",
-  "totalAmount": 0,
-  "currency": "string",
-  "status": "string",
-  "paymentGatewayId": "string",
-  "paymentmethod": "string",
-  "metaData": {}
-}
-```
-
-<h3 id="orderscontroller.findbyid-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Orders model instance|[OrdersWithRelations](#schemaorderswithrelations)|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-None
-</aside>
-
-## OrdersController.deleteById
-
-<a id="opIdOrdersController.deleteById"></a>
-
-> Code samples
-
-```javascript
-
-fetch('/orders/{id}',
-{
-  method: 'DELETE'
-
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-fetch('/orders/{id}',
-{
-  method: 'DELETE'
-
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`DELETE /orders/{id}`
-
-| Permissions |
-| ------- |
-| DeleteOrder   |
-| 9   |
-
-<h3 id="orderscontroller.deletebyid-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|id|path|string|true|none|
-
-<h3 id="orderscontroller.deletebyid-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Orders DELETE success|None|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-None
-</aside>
-
-## OrdersController.create
-
-<a id="opIdOrdersController.create"></a>
-
-> Code samples
-
-```javascript
-const inputBody = '{
-  "id": "string",
-  "totalAmount": 0,
-  "currency": "string",
-  "status": "string",
-  "paymentGatewayId": "string",
-  "paymentmethod": "string",
-  "metaData": {}
-}';
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json'
-};
-
-fetch('/orders',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-const inputBody = {
-  "id": "string",
-  "totalAmount": 0,
-  "currency": "string",
-  "status": "string",
-  "paymentGatewayId": "string",
-  "paymentmethod": "string",
-  "metaData": {}
-};
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json'
-};
-
-fetch('/orders',
-{
-  method: 'POST',
-  body: JSON.stringify(inputBody),
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`POST /orders`
-
-| Permissions |
-| ------- |
-| CreateOrder   |
-| 6   |
-
-> Body parameter
-
-```json
-{
-  "id": "string",
-  "totalAmount": 0,
-  "currency": "string",
-  "status": "string",
-  "paymentGatewayId": "string",
-  "paymentmethod": "string",
-  "metaData": {}
-}
-```
-
-<h3 id="orderscontroller.create-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|body|body|[NewOrders](#schemaneworders)|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "id": "string",
-  "totalAmount": 0,
-  "currency": "string",
-  "status": "string",
-  "paymentGatewayId": "string",
-  "paymentmethod": "string",
-  "metaData": {}
-}
-```
-
-<h3 id="orderscontroller.create-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Orders model instance|[Orders](#schemaorders)|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-None
-</aside>
-
-## OrdersController.updateAll
-
-<a id="opIdOrdersController.updateAll"></a>
-
-> Code samples
-
-```javascript
-const inputBody = '{
-  "id": "string",
-  "totalAmount": 0,
-  "currency": "string",
-  "status": "string",
-  "paymentGatewayId": "string",
-  "paymentmethod": "string",
-  "metaData": {}
-}';
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json'
-};
-
-fetch('/orders',
-{
-  method: 'PATCH',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-const inputBody = {
-  "id": "string",
-  "totalAmount": 0,
-  "currency": "string",
-  "status": "string",
-  "paymentGatewayId": "string",
-  "paymentmethod": "string",
-  "metaData": {}
-};
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json'
-};
-
-fetch('/orders',
-{
-  method: 'PATCH',
-  body: JSON.stringify(inputBody),
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`PATCH /orders`
-
-| Permissions |
-| ------- |
-| UpdateOrder   |
-| 8   |
-
-> Body parameter
-
-```json
-{
-  "id": "string",
-  "totalAmount": 0,
-  "currency": "string",
-  "status": "string",
-  "paymentGatewayId": "string",
-  "paymentmethod": "string",
-  "metaData": {}
-}
-```
-
-<h3 id="orderscontroller.updateall-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|where|query|object|false|none|
-|body|body|[OrdersPartial](#schemaorderspartial)|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "count": 0
-}
-```
-
-<h3 id="orderscontroller.updateall-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Orders PATCH success count|[loopback.Count](#schemaloopback.count)|
-
-<aside class="warning">
-To perform this operation, you must be authenticated by means of one of the following methods:
-None
-</aside>
-
-## OrdersController.find
-
-<a id="opIdOrdersController.find"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/orders',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/orders',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /orders`
-
-| Permissions |
-| ------- |
-| ViewOrder   |
-| 7   |
-
-<h3 id="orderscontroller.find-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|filter|query|[orders.Filter1](#schemaorders.filter1)|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-[
-  {
-    "id": "string",
-    "totalAmount": 0,
-    "currency": "string",
-    "status": "string",
-    "paymentGatewayId": "string",
-    "paymentmethod": "string",
-    "metaData": {}
-  }
-]
-```
-
-<h3 id="orderscontroller.find-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of Orders model instances|Inline|
-
-<h3 id="orderscontroller.find-responseschema">Response Schema</h3>
-
-Status Code **200**
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|[[OrdersWithRelations](#schemaorderswithrelations)]|false|none|[(tsType: OrdersWithRelations, schemaOptions: { includeRelations: true })]|
-|» OrdersWithRelations|[OrdersWithRelations](#schemaorderswithrelations)|false|none|(tsType: OrdersWithRelations, schemaOptions: { includeRelations: true })|
-|»» id|string|false|none|none|
-|»» totalAmount|number|true|none|none|
-|»» currency|string|true|none|none|
-|»» status|string|true|none|none|
-|»» paymentGatewayId|string|true|none|none|
-|»» paymentmethod|string|false|none|none|
-|»» metaData|object|false|none|none|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -1425,7 +1422,6 @@ None
 
 ```javascript
 const inputBody = '{
-  "id": "string",
   "name": "string",
   "gatewayType": "string",
   "enabled": true
@@ -1452,7 +1448,6 @@ fetch('/payment-gateways',
 ```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
-  "id": "string",
   "name": "string",
   "gatewayType": "string",
   "enabled": true
@@ -1487,7 +1482,6 @@ fetch('/payment-gateways',
 
 ```json
 {
-  "id": "string",
   "name": "string",
   "gatewayType": "string",
   "enabled": true
@@ -1718,7 +1712,7 @@ Status Code **200**
 |---|---|---|---|---|
 |*anonymous*|[[PaymentGatewaysWithRelations](#schemapaymentgatewayswithrelations)]|false|none|[(tsType: PaymentGatewaysWithRelations, schemaOptions: { includeRelations: true })]|
 |» PaymentGatewaysWithRelations|[PaymentGatewaysWithRelations](#schemapaymentgatewayswithrelations)|false|none|(tsType: PaymentGatewaysWithRelations, schemaOptions: { includeRelations: true })|
-|»» id|string|true|none|none|
+|»» id|string|false|none|none|
 |»» name|string|true|none|none|
 |»» gatewayType|string|true|none|none|
 |»» enabled|boolean|true|none|none|
@@ -2751,7 +2745,6 @@ None
 
 ```javascript
 const inputBody = '{
-  "id": "string",
   "amountPaid": 0,
   "currency": "string",
   "status": "string",
@@ -2782,7 +2775,6 @@ fetch('/transactions',
 ```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
-  "id": "string",
   "amountPaid": 0,
   "currency": "string",
   "status": "string",
@@ -2821,7 +2813,6 @@ fetch('/transactions',
 
 ```json
 {
-  "id": "string",
   "amountPaid": 0,
   "currency": "string",
   "status": "string",
@@ -3076,7 +3067,7 @@ Status Code **200**
 |---|---|---|---|---|
 |*anonymous*|[[TransactionsWithRelations](#schematransactionswithrelations)]|false|none|[(tsType: TransactionsWithRelations, schemaOptions: { includeRelations: true })]|
 |» TransactionsWithRelations|[TransactionsWithRelations](#schematransactionswithrelations)|false|none|(tsType: TransactionsWithRelations, schemaOptions: { includeRelations: true })|
-|»» id|string|true|none|none|
+|»» id|string|false|none|none|
 |»» amountPaid|number|true|none|none|
 |»» currency|string|true|none|none|
 |»» status|string|true|none|none|
@@ -3908,7 +3899,7 @@ Status Code **200**
 |---|---|---|---|---|
 |*anonymous*|[[SubscriptionsWithRelations](#schemasubscriptionswithrelations)]|false|none|[(tsType: SubscriptionsWithRelations, schemaOptions: { includeRelations: true })]|
 |» SubscriptionsWithRelations|[SubscriptionsWithRelations](#schemasubscriptionswithrelations)|false|none|(tsType: SubscriptionsWithRelations, schemaOptions: { includeRelations: true })|
-|»» id|string|true|none|none|
+|»» id|string|false|none|none|
 |»» totalAmount|number|true|none|none|
 |»» currency|string|false|none|none|
 |»» status|string|true|none|none|
@@ -4355,7 +4346,6 @@ None
 
 ```javascript
 const inputBody = '{
-  "id": "string",
   "paymentGatewayId": "string",
   "name": "string",
   "template": "string",
@@ -4383,7 +4373,6 @@ fetch('/templates',
 ```javascript--nodejs
 const fetch = require('node-fetch');
 const inputBody = {
-  "id": "string",
   "paymentGatewayId": "string",
   "name": "string",
   "template": "string",
@@ -4419,7 +4408,6 @@ fetch('/templates',
 
 ```json
 {
-  "id": "string",
   "paymentGatewayId": "string",
   "name": "string",
   "template": "string",
@@ -4656,7 +4644,7 @@ Status Code **200**
 |---|---|---|---|---|
 |*anonymous*|[[TemplatesWithRelations](#schematemplateswithrelations)]|false|none|[(tsType: TemplatesWithRelations, schemaOptions: { includeRelations: true })]|
 |» TemplatesWithRelations|[TemplatesWithRelations](#schematemplateswithrelations)|false|none|(tsType: TemplatesWithRelations, schemaOptions: { includeRelations: true })|
-|»» id|string|true|none|none|
+|»» id|string|false|none|none|
 |»» paymentGatewayId|string|true|none|none|
 |»» name|string|true|none|none|
 |»» template|string|true|none|none|
@@ -4795,7 +4783,6 @@ Orders
 
 ```json
 {
-  "id": "string",
   "totalAmount": 0,
   "currency": "string",
   "status": "string",
@@ -4812,7 +4799,6 @@ NewOrders
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|id|string|false|none|none|
 |totalAmount|number|true|none|none|
 |currency|string|true|none|none|
 |status|string|true|none|none|
@@ -4915,7 +4901,7 @@ Transactions
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|id|string|true|none|none|
+|id|string|false|none|none|
 |amountPaid|number|true|none|none|
 |currency|string|true|none|none|
 |status|string|true|none|none|
@@ -4933,7 +4919,6 @@ Transactions
 
 ```json
 {
-  "id": "string",
   "amountPaid": 0,
   "currency": "string",
   "status": "string",
@@ -4951,7 +4936,6 @@ NewTransactions
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|id|string|true|none|none|
 |amountPaid|number|true|none|none|
 |currency|string|true|none|none|
 |status|string|true|none|none|
@@ -4987,7 +4971,7 @@ TransactionsWithRelations
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|id|string|true|none|none|
+|id|string|false|none|none|
 |amountPaid|number|true|none|none|
 |currency|string|true|none|none|
 |status|string|true|none|none|
@@ -5087,7 +5071,7 @@ PaymentGateways
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|id|string|true|none|none|
+|id|string|false|none|none|
 |name|string|true|none|none|
 |gatewayType|string|true|none|none|
 |enabled|boolean|true|none|none|
@@ -5101,7 +5085,6 @@ PaymentGateways
 
 ```json
 {
-  "id": "string",
   "name": "string",
   "gatewayType": "string",
   "enabled": true
@@ -5115,7 +5098,6 @@ NewPaymentGateways
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|id|string|true|none|none|
 |name|string|true|none|none|
 |gatewayType|string|true|none|none|
 |enabled|boolean|true|none|none|
@@ -5143,7 +5125,7 @@ PaymentGatewaysWithRelations
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|id|string|true|none|none|
+|id|string|false|none|none|
 |name|string|true|none|none|
 |gatewayType|string|true|none|none|
 |enabled|boolean|true|none|none|
@@ -5200,7 +5182,7 @@ Templates
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|id|string|true|none|none|
+|id|string|false|none|none|
 |paymentGatewayId|string|true|none|none|
 |name|string|true|none|none|
 |template|string|true|none|none|
@@ -5215,7 +5197,6 @@ Templates
 
 ```json
 {
-  "id": "string",
   "paymentGatewayId": "string",
   "name": "string",
   "template": "string",
@@ -5230,7 +5211,6 @@ NewTemplates
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|id|string|true|none|none|
 |paymentGatewayId|string|true|none|none|
 |name|string|true|none|none|
 |template|string|true|none|none|
@@ -5260,7 +5240,7 @@ TemplatesWithRelations
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|id|string|true|none|none|
+|id|string|false|none|none|
 |paymentGatewayId|string|true|none|none|
 |name|string|true|none|none|
 |template|string|true|none|none|
@@ -5326,7 +5306,7 @@ Subscriptions
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|id|string|true|none|none|
+|id|string|false|none|none|
 |totalAmount|number|true|none|none|
 |currency|string|false|none|none|
 |status|string|true|none|none|
@@ -5408,7 +5388,7 @@ SubscriptionsWithRelations
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|id|string|true|none|none|
+|id|string|false|none|none|
 |totalAmount|number|true|none|none|
 |currency|string|false|none|none|
 |status|string|true|none|none|
