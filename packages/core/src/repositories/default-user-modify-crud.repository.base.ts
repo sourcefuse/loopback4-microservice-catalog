@@ -73,7 +73,7 @@ export class DefaultUserModifyCrudRepository<
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     entity.modifiedBy = uid;
     delete entity.createdOn;
-    delete entity.modifiedOn;
+    entity.modifiedOn = new Date();
     return super.save(entity, options);
   }
 
