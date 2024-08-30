@@ -44,8 +44,8 @@ export class DefaultUserModifyCrudRepository<
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     entity.createdBy = uid;
     entity.modifiedBy = uid;
-    delete entity.createdOn;
-    delete entity.modifiedOn;
+    entity.createdOn = new Date();
+    entity.modifiedOn = new Date();
     return super.create(entity, options);
   }
 
@@ -59,8 +59,8 @@ export class DefaultUserModifyCrudRepository<
     entities.forEach(entity => {
       entity.createdBy = uid ?? '';
       entity.modifiedBy = uid ?? '';
-      delete entity.createdOn;
-      delete entity.modifiedOn;
+      entity.createdOn = new Date();
+      entity.modifiedOn = new Date();
     });
     return super.createAll(entities, options);
   }

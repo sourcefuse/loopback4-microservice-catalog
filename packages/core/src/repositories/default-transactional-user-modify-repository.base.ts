@@ -41,8 +41,8 @@ export abstract class DefaultTransactionalUserModifyRepository<
       throw new HttpErrors.Forbidden(AuthErrorKeys.InvalidCredentials);
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
-    delete entity.createdOn;
-    delete entity.modifiedOn;
+    entity.createdOn = new Date();
+    entity.modifiedOn = new Date();
     entity.createdBy = uid;
     entity.modifiedBy = uid;
     return super.create(entity, options);
@@ -58,8 +58,8 @@ export abstract class DefaultTransactionalUserModifyRepository<
     entities.forEach(entity => {
       entity.createdBy = uid ?? '';
       entity.modifiedBy = uid ?? '';
-      delete entity.createdOn;
-      delete entity.modifiedOn;
+      entity.createdOn = new Date();
+      entity.modifiedOn = new Date();
     });
     return super.createAll(entities, options);
   }
