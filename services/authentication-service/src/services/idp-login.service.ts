@@ -1,7 +1,7 @@
-import {BindingScope, inject, injectable} from '@loopback/core';
-import {AnyObject, repository} from '@loopback/repository';
-import {HttpErrors, RequestContext} from '@loopback/rest';
-import {AuthenticateErrorKeys, ILogger, LOGGER} from '@sourceloop/core';
+import { BindingScope, inject, injectable } from '@loopback/core';
+import { AnyObject, repository } from '@loopback/repository';
+import { HttpErrors, RequestContext } from '@loopback/rest';
+import { AuthenticateErrorKeys, ILogger, LOGGER } from '@sourceloop/core';
 import crypto from 'crypto';
 import {
   authenticate,
@@ -10,22 +10,25 @@ import {
   STRATEGY,
 } from 'loopback4-authentication';
 import moment from 'moment';
-import {LoginType} from '../enums';
-import {AuthServiceBindings} from '../keys';
-import {AuthClient, LoginActivity, User, UserTenant} from '../models';
+import { LoginType } from '../enums';
+import { AuthServiceBindings } from '../keys';
+import { AuthClient, LoginActivity, User, UserTenant } from '../models';
 import {
   AuthTokenRequest,
   AuthUser,
   IdpConfiguration,
   TokenResponse,
 } from '../modules/auth';
+
 import {
-  AuthCodeBindings,
   CodeReaderFn,
   JwtPayloadFn,
   JWTSignerFn,
   JWTVerifierFn,
 } from '../providers';
+import {
+  AuthCodeBindings
+} from '../providers/keys';
 import {
   AuthClientRepository,
   LoginActivityRepository,
@@ -34,13 +37,13 @@ import {
   UserRepository,
   UserTenantRepository,
 } from '../repositories';
-import {ActorId, ExternalTokens, IUserActivity} from '../types';
+import { ActorId, ExternalTokens, IUserActivity } from '../types';
 
 const clockSkew = 300;
 const nonceTime = 3600;
 const nonceCount = 10;
 
-@injectable({scope: BindingScope.TRANSIENT})
+@injectable({ scope: BindingScope.TRANSIENT })
 export class IdpLoginService {
   constructor(
     @repository(AuthClientRepository)
@@ -61,13 +64,13 @@ export class IdpLoginService {
     @inject.context() private readonly ctx: RequestContext,
     @inject(AuthCodeBindings.CODEREADER_PROVIDER)
     private readonly codeReader: CodeReaderFn,
-    @inject(AuthCodeBindings.JWT_VERIFIER, {optional: true})
+    @inject(AuthCodeBindings.JWT_VERIFIER, { optional: true })
     private readonly jwtVerifier: JWTVerifierFn<AnyObject>,
     @inject(AuthCodeBindings.JWT_SIGNER)
     private readonly jwtSigner: JWTSignerFn<object>,
     @inject(AuthServiceBindings.JWTPayloadProvider)
     private readonly getJwtPayload: JwtPayloadFn,
-    @inject(AuthServiceBindings.MarkUserActivity, {optional: true})
+    @inject(AuthServiceBindings.MarkUserActivity, { optional: true })
     private readonly userActivity?: IUserActivity,
   ) { }
 
@@ -361,14 +364,14 @@ export class IdpLoginService {
           externalRefreshToken: (user as AuthUser).externalRefreshToken,
           tenantId: data.tenantId,
         },
-        {ttl: authClient.refreshTokenExpiration * ms},
+        { ttl: authClient.refreshTokenExpiration * ms },
       );
 
       const userTenant = await this.userTenantRepo.findOne({
-        where: {userId: user.id},
+        where: { userId: user.id },
       });
       if (this.userActivity?.markUserActivity)
-        this.markUserActivity(user, userTenant, {...data}, loginType);
+        this.markUserActivity(user, userTenant, { ...data }, loginType);
 
       return new TokenResponse({
         accessToken,
