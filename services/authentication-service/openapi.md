@@ -201,6 +201,276 @@ auth_method: string
 This operation does not require authentication
 </aside>
 
+## IdentityServerController.logout
+
+<a id="opIdIdentityServerController.logout"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "refreshToken": "string"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'string'
+};
+
+fetch('/connect/endsession',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "refreshToken": "string"
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'string'
+};
+
+fetch('/connect/endsession',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /connect/endsession`
+
+To logout
+
+> Body parameter
+
+```json
+{
+  "refreshToken": "string"
+}
+```
+
+<h3 id="identityservercontroller.logout-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|Authorization|header|string|false|This is the access token which is required to authenticate user.|
+|body|body|[RefreshTokenRequestPartial](#schemarefreshtokenrequestpartial)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "success": true
+}
+```
+
+<h3 id="identityservercontroller.logout-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Success Response|[SuccessResponse](#schemasuccessresponse)|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|The syntax of the request entity is incorrect.|None|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Invalid Credentials.|None|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
+## IdentityServerController.getToken
+
+<a id="opIdIdentityServerController.getToken"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "code": "string",
+  "clientId": "string"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/connect/token',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "code": "string",
+  "clientId": "string"
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/connect/token',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /connect/token`
+
+Send the code received from the POST /auth/login api and get refresh token and access token (webapps)
+
+> Body parameter
+
+```json
+{
+  "code": "string",
+  "clientId": "string"
+}
+```
+
+<h3 id="identityservercontroller.gettoken-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[AuthTokenRequest](#schemaauthtokenrequest)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "accessToken": "string",
+  "refreshToken": "string",
+  "expires": 0,
+  "pubnubToken": "string"
+}
+```
+
+<h3 id="identityservercontroller.gettoken-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Token Response|[TokenResponse](#schematokenresponse)|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|The syntax of the request entity is incorrect.|None|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Invalid Credentials.|None|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## IdentityServerController.me
+
+<a id="opIdIdentityServerController.me"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/connect/userinfo',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Authorization':'Bearer {access-token}'
+};
+
+fetch('/connect/userinfo',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /connect/userinfo`
+
+To get the user details
+
+> Example responses
+
+<h3 id="identityservercontroller.me-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|User Object|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|The syntax of the request entity is incorrect.|None|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Invalid Credentials.|None|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
+
+<h3 id="identityservercontroller.me-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
 <h1 id="authentication-service-loginactivitycontroller">LoginActivityController</h1>
 
 ## LoginActivityController.getActiveUsers
@@ -3114,7 +3384,7 @@ fetch('/auth/google',
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Google Token Response,
-         (Deprecated: Possible security issue if secret is passed via query params, 
+         (Deprecated: Possible security issue if secret is passed via query params,
           please use the post endpoint)|[TokenResponse](#schematokenresponse)|
 
 <aside class="success">

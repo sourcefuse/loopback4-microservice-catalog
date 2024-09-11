@@ -25,7 +25,6 @@
     }
   },
   "scripts": {
-    "start": "node -r source-map-support/register .",
     "prebuild": "npm run clean",
     "build": "lb-tsc && npm run openapi-spec && npm run apidocs",
     "build:watch": "lb-tsc --watch",
@@ -95,6 +94,7 @@
     "moment": "^2.29.3",
     "moment-timezone": "^0.5.34",
     "node-fetch": "^2.6.6",
+    "node-jose": "^2.2.0",
     "otplib": "^12.0.1",
     "passport-apple": "^2.0.1",
     "passport-auth0": "^1.4.4",
@@ -121,6 +121,7 @@
     "@types/node": "^18.11.9",
     "@types/node-fetch": "^2.6.1",
     "@types/node-forge": "^1.3.4",
+    "@types/node-jose": "^1.1.13",
     "@types/passport-apple": "^1.1.1",
     "@types/passport-auth0": "^1.0.9",
     "@types/passport-azure-ad": "^4.3.1",

@@ -9,11 +9,9 @@ import {
   requestBody,
 } from '@loopback/rest';
 import {
-  AuthenticateErrorKeys,
   CONTENT_TYPE,
   ErrorCodes,
   OPERATION_SECURITY_SPEC,
-  RevokedTokenRepository,
   STATUS_CODE,
   SuccessResponse,
   X_TS_TYPE,
@@ -27,11 +25,6 @@ import {
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {
-  AuthCodeBindings,
-  AuthServiceBindings,
-  CodeReaderFn,
-  IUserActivity,
-  LoginType,
   RefreshTokenRepository,
   RefreshTokenRequest,
   UserRepository,
@@ -49,23 +42,17 @@ import {
 
 export class IdentityServerController {
   constructor(
-    @inject(AuthCodeBindings.CODEREADER_PROVIDER)
-    private readonly codeReader: CodeReaderFn,
     @inject('services.IdpLoginService')
     private readonly idpLoginService: IdpLoginService,
     @inject(AuthenticationBindings.CURRENT_USER)
     private readonly user: AuthUser | undefined,
-    @repository(RevokedTokenRepository)
-    private readonly revokedTokens: RevokedTokenRepository,
     @repository(RefreshTokenRepository)
     public refreshTokenRepo: RefreshTokenRepository,
     @repository(UserRepository)
     public userRepo: UserRepository,
     @repository(UserTenantRepository)
     public userTenantRepo: UserTenantRepository,
-    @inject(AuthServiceBindings.MarkUserActivity, {optional: true})
-    private readonly userActivity?: IUserActivity,
-  ) { }
+  ) {}
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
   @authorize({permissions: ['*']})
@@ -134,8 +121,8 @@ export class IdentityServerController {
       ...ErrorCodes,
     },
   })
-  async getConfig(): Promise<void> {
-    this.idpLoginService.getOpenIdConfiguration();
+  async getConfig(): Promise<IdpConfiguration> {
+    return this.idpLoginService.getOpenIdConfiguration();
   }
 
   @authorize({permissions: ['*']})
@@ -219,46 +206,20 @@ export class IdentityServerController {
     })
     req: RefreshTokenRequest,
   ): Promise<SuccessResponse> {
-    const token = auth?.replace(/bearer /i, '');
-    if (!token || !req.refreshToken) {
-      throw new HttpErrors.UnprocessableEntity(
-        AuthenticateErrorKeys.TokenMissing,
-      );
-    }
+    return this.idpLoginService.logoutUser(auth, req);
+  }
 
-    const refreshTokenModel = await this.refreshTokenRepo.get(req.refreshToken);
-    if (!refreshTokenModel) {
-      throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenExpired);
-    }
-    if (refreshTokenModel.accessToken !== token) {
-      throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenInvalid);
-    }
-    await this.revokedTokens.set(token, {token});
-    await this.refreshTokenRepo.delete(req.refreshToken);
-    if (refreshTokenModel.pubnubToken) {
-      await this.refreshTokenRepo.delete(refreshTokenModel.pubnubToken);
-    }
-
-    const user = await this.userRepo.findById(refreshTokenModel.userId);
-
-    const userTenant = await this.userTenantRepo.findOne({
-      where: {userId: user.id},
-    });
-
-    if (this.userActivity?.markUserActivity)
-      this.idpLoginService.markUserActivity(
-        user,
-        userTenant,
-        {
-          ...user,
-          clientId: refreshTokenModel.clientId,
-        },
-        LoginType.LOGOUT,
-      );
-    return new SuccessResponse({
-      success: true,
-
-      key: refreshTokenModel.userId,
-    });
+  @authorize({permissions: ['*']})
+  @post('/connect/generate-keys', {
+    description: 'Generate the set of public and private keys',
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'JWKS Keys',
+      },
+      ...ErrorCodes,
+    },
+  })
+  async generateKeys(): Promise<void> {
+    return this.idpLoginService.rotateKeys();
   }
 }

@@ -1,8 +1,14 @@
-import {BindingScope, inject, injectable} from '@loopback/core';
-import {AnyObject, repository} from '@loopback/repository';
-import {HttpErrors, RequestContext} from '@loopback/rest';
-import {AuthenticateErrorKeys, ILogger, LOGGER} from '@sourceloop/core';
-import crypto from 'crypto';
+import { BindingScope, inject, injectable } from '@loopback/core';
+import { AnyObject, repository } from '@loopback/repository';
+import { HttpErrors, RequestContext } from '@loopback/rest';
+import {
+  AuthenticateErrorKeys,
+  ILogger,
+  LOGGER,
+  SuccessResponse,
+} from '@sourceloop/core';
+import crypto, { generateKeyPairSync } from 'crypto';
+import * as fs from 'fs';
 import {
   authenticate,
   AuthErrorKeys,
@@ -10,9 +16,17 @@ import {
   STRATEGY,
 } from 'loopback4-authentication';
 import moment from 'moment';
-import {LoginType} from '../enums';
-import {AuthServiceBindings} from '../keys';
-import {AuthClient, LoginActivity, User, UserTenant} from '../models';
+import * as jose from 'node-jose';
+import * as path from 'path';
+import { LoginType } from '../enums';
+import { AuthServiceBindings } from '../keys';
+import {
+  AuthClient,
+  LoginActivity,
+  RefreshTokenRequest,
+  User,
+  UserTenant,
+} from '../models';
 import {
   AuthTokenRequest,
   AuthUser,
@@ -20,12 +34,12 @@ import {
   TokenResponse,
 } from '../modules/auth';
 import {
-  AuthCodeBindings,
   CodeReaderFn,
   JwtPayloadFn,
   JWTSignerFn,
   JWTVerifierFn,
 } from '../providers';
+import { AuthCodeBindings } from '../providers/keys';
 import {
   AuthClientRepository,
   LoginActivityRepository,
@@ -34,13 +48,17 @@ import {
   UserRepository,
   UserTenantRepository,
 } from '../repositories';
-import {ActorId, ExternalTokens, IUserActivity} from '../types';
+import { ActorId, ExternalTokens, IUserActivity } from '../types';
 
 const clockSkew = 300;
 const nonceTime = 3600;
 const nonceCount = 10;
 
-@injectable({scope: BindingScope.TRANSIENT})
+// File path where JWKS and keys are stored
+const JWKS_FILE_PATH = path.join(__dirname, 'jwks.json');
+const PRIVATE_KEYS_PATH = path.join(__dirname, 'private-keys.json');
+
+@injectable({ scope: BindingScope.TRANSIENT })
 export class IdpLoginService {
   constructor(
     @repository(AuthClientRepository)
@@ -61,13 +79,13 @@ export class IdpLoginService {
     @inject.context() private readonly ctx: RequestContext,
     @inject(AuthCodeBindings.CODEREADER_PROVIDER)
     private readonly codeReader: CodeReaderFn,
-    @inject(AuthCodeBindings.JWT_VERIFIER, {optional: true})
+    @inject(AuthCodeBindings.JWT_VERIFIER, { optional: true })
     private readonly jwtVerifier: JWTVerifierFn<AnyObject>,
     @inject(AuthCodeBindings.JWT_SIGNER)
     private readonly jwtSigner: JWTSignerFn<object>,
     @inject(AuthServiceBindings.JWTPayloadProvider)
     private readonly getJwtPayload: JwtPayloadFn,
-    @inject(AuthServiceBindings.MarkUserActivity, {optional: true})
+    @inject(AuthServiceBindings.MarkUserActivity, { optional: true })
     private readonly userActivity?: IUserActivity,
   ) { }
 
@@ -204,12 +222,14 @@ export class IdpLoginService {
    * set based on environment variables.
    * @returns An IdpConfiguration object with the specified properties and values is being returned.
    */
-  getOpenIdConfiguration() {
+  async getOpenIdConfiguration() {
+    await this.generateJWKS();
+
     const config = new IdpConfiguration();
-    config.issuer = '';
+    config.issuer = `${process.env.API_BASE_URL}`;
     config.authorization_endpoint = `${process.env.API_BASE_URL}/connect/auth`;
     config.token_endpoint = `${process.env.API_BASE_URL}/connect/token`;
-    config.jwks_uri = '';
+    config.jwks_uri = `${process.env.API_BASE_URL}/jwks.json`;
     config.end_session_endpoint = `${process.env.API_BASE_URL}/connect/endsession`;
     config.response_types_supported = ['code'];
     config.scopes_supported = ['openid', 'email', 'phone', 'profile'];
@@ -361,14 +381,14 @@ export class IdpLoginService {
           externalRefreshToken: (user as AuthUser).externalRefreshToken,
           tenantId: data.tenantId,
         },
-        {ttl: authClient.refreshTokenExpiration * ms},
+        { ttl: authClient.refreshTokenExpiration * ms },
       );
 
       const userTenant = await this.userTenantRepo.findOne({
-        where: {userId: user.id},
+        where: { userId: user.id },
       });
       if (this.userActivity?.markUserActivity)
-        this.markUserActivity(user, userTenant, {...data}, loginType);
+        this.markUserActivity(user, userTenant, { ...data }, loginType);
 
       return new TokenResponse({
         accessToken,
@@ -483,5 +503,166 @@ export class IdpLoginService {
         );
       });
     }
+  }
+
+  /**
+   * The `logoutUser` function in TypeScript handles the logout process for a user
+   * by revoking tokens and deleting refresh tokens.
+   * @param {string} auth - The `auth` parameter in the `logoutUser` function is a
+   * string that represents the authentication token. It is used to identify and
+   * authenticate the user who is attempting to log out. The function extracts the
+   * token from the `auth` parameter and performs various checks and operations
+   * related to user logout based on
+   * @param {RefreshTokenRequest} req - The `req` parameter in the `logoutUser`
+   * function is of type `RefreshTokenRequest`. It likely contains information
+   * related to the refresh token that is used to identify and authenticate the
+   * user during the logout process. This parameter may include properties such as
+   * `refreshToken`, which is essential for revoking
+   * @returns The `logoutUser` function returns a `Promise` that resolves to a
+   * `SuccessResponse` object with a `success` property set to `true` and a `key`
+   * property set to `refreshTokenModel.userId`.
+   */
+  async logoutUser(
+    auth: string,
+    req: RefreshTokenRequest,
+  ): Promise<SuccessResponse> {
+    const token = auth?.replace(/bearer /i, '');
+    if (!token || !req.refreshToken) {
+      throw new HttpErrors.UnprocessableEntity(
+        AuthenticateErrorKeys.TokenMissing,
+      );
+    }
+
+    const refreshTokenModel = await this.refreshTokenRepo.get(req.refreshToken);
+    if (!refreshTokenModel) {
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenExpired);
+    }
+    if (refreshTokenModel.accessToken !== token) {
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenInvalid);
+    }
+    await this.revokedTokensRepo.set(token, { token });
+    await this.refreshTokenRepo.delete(req.refreshToken);
+    if (refreshTokenModel.pubnubToken) {
+      await this.refreshTokenRepo.delete(refreshTokenModel.pubnubToken);
+    }
+
+    const user = await this.userRepo.findById(refreshTokenModel.userId);
+
+    const userTenant = await this.userTenantRepo.findOne({
+      where: { userId: user.id },
+    });
+
+    if (this.userActivity?.markUserActivity)
+      this.markUserActivity(
+        user,
+        userTenant,
+        {
+          ...user,
+          clientId: refreshTokenModel.clientId,
+        },
+        LoginType.LOGOUT,
+      );
+    return new SuccessResponse({
+      success: true,
+
+      key: refreshTokenModel.userId,
+    });
+  }
+
+  /**
+   * The function generates a JSON Web Key Set (JWKS) containing a RSA public key and saves it to a
+   * file.
+   */
+  async generateJWKS(): Promise<void> {
+    const { publicKey } = generateKeyPairSync('rsa', {
+      modulusLength: 2048,
+      publicKeyEncoding: {
+        type: 'spki',
+        format: 'pem',
+      },
+      privateKeyEncoding: {
+        type: 'pkcs8',
+        format: 'pem',
+        cipher: 'aes-256-cbc',
+        passphrase: process.env.JWT_PRIVATE_KEY_PASSPHRASE,
+      },
+    });
+
+    const keyStore = jose.JWK.createKeyStore();
+    const key = await keyStore.add(publicKey, 'pem');
+
+    const jwks = {
+      keys: [key.toJSON()],
+    };
+
+    fs.writeFileSync(JWKS_FILE_PATH, JSON.stringify(jwks, null, 2));
+
+    console.log('JWKS has been generated and saved to jwks.json');
+  }
+
+  /**
+   * The function rotates the RSA keys used for signing JWT tokens. It generates a new key pair,
+   * adds the public key to the JWKS, and saves the private key to a file.
+   */
+  async rotateKeys() {
+    // Generate a new RSA key pair
+    const { publicKey, privateKey } = generateKeyPairSync('rsa', {
+      modulusLength: 2048,
+      publicKeyEncoding: {
+        type: 'spki',
+        format: 'pem',
+      },
+      privateKeyEncoding: {
+        type: 'pkcs8',
+        format: 'pem',
+        cipher: 'aes-256-cbc',
+        passphrase: process.env.JWT_PRIVATE_KEY_PASSPHRASE,
+      },
+    });
+
+    // Load the existing JWKS
+    let jwks;
+    try {
+      jwks = JSON.parse(fs.readFileSync(JWKS_FILE_PATH, 'utf8'));
+    } catch (err) {
+      jwks = { keys: [] };
+    }
+
+    // Create a new JWK KeyStore and add the new public key
+    const keyStore = jose.JWK.createKeyStore();
+    const newKey = await keyStore.add(publicKey, 'pem');
+
+    // Add a unique Key ID (kid) to the key
+    const newKid = `key-${Date.now()}`; // Can generate a better kid based on our needs
+    newKey.kid = newKid;
+
+    // Remove the oldest key if there are too many
+    if (jwks.keys.length >= 3) {
+      jwks.keys.shift();
+    }
+
+    // Add the new key to JWKS and save it
+    jwks.keys.push(newKey.toJSON());
+    fs.writeFileSync(JWKS_FILE_PATH, JSON.stringify(jwks, null, 2));
+
+    // Load existing private keys (if they exist)
+    let privateKeys;
+    try {
+      privateKeys = JSON.parse(fs.readFileSync(PRIVATE_KEYS_PATH, 'utf8'));
+    } catch (err) {
+      privateKeys = {};
+    }
+
+    // Keep only the new private key and remove old ones
+    if (Object.keys(privateKeys).length >= 3) {
+      const oldestKey = Object.keys(privateKeys)[0];
+      delete privateKeys[oldestKey];
+    }
+
+    // Save the new private key with the matching kid
+    privateKeys[newKid] = privateKey;
+    fs.writeFileSync(PRIVATE_KEYS_PATH, JSON.stringify(privateKeys, null, 2));
+
+    console.log('Keys have been rotated successfully.');
   }
 }

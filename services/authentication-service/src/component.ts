@@ -81,6 +81,8 @@ import {
   InstagramOauth2SignupProvider,
   InstagramPostVerifyProvider,
   InstagramPreVerifyProvider,
+  JwksJWTAsymmetricSignerProvider,
+  JwksJWTAsymmetricVerifierProvider,
   JWTAsymmetricSignerProvider,
   JWTAsymmetricVerifierProvider,
   JwtPayloadProvider,
@@ -369,6 +371,14 @@ export class AuthenticationServiceComponent implements Component {
       this.providers[AuthCodeBindings.JWT_VERIFIER.key] =
         JWTSymmetricVerifierProvider;
     }
+
+    if (this.authConfig?.useIdentityServer) {
+      this.providers[AuthCodeBindings.JWT_SIGNER.key] =
+        JwksJWTAsymmetricSignerProvider;
+      this.providers[AuthCodeBindings.JWT_VERIFIER.key] =
+        JwksJWTAsymmetricVerifierProvider;
+    }
+
     this.providers[AuthServiceBindings.JWTPayloadProvider.key] =
       JwtPayloadProvider;
     this.providers[AuthServiceBindings.ForgotPasswordHandler.key] =

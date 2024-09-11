@@ -30,6 +30,8 @@ export * from './google-pre-verify.provider';
 export * from './instagram-oauth2-signup.provider';
 export * from './instagram-post-verify.provider';
 export * from './instagram-pre-verify.provider';
+export * from './jwks-jwt-asymmertric-signer.provider';
+export * from './jwks-jwt-asymmetric-verifier.provider';
 export * from './jwt-asymmetric-signer.provider';
 export * from './jwt-asymmetric-verifier.provider';
 export * from './jwt-payload.provider';

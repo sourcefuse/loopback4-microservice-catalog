@@ -53,7 +53,7 @@ export class FacebookLoginController {
     private readonly getAuthCode: AuthCodeGeneratorFn,
     @inject('services.IdpLoginService')
     private readonly idpLoginService: IdpLoginService,
-  ) { }
+  ) {}
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
   @authorize({permissions: ['*']})

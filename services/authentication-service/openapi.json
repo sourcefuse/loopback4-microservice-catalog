@@ -752,7 +752,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Google Token Response,\n         (Deprecated: Possible security issue if secret is passed via query params, \n          please use the post endpoint)",
+            "description": "Google Token Response,\n         (Deprecated: Possible security issue if secret is passed via query params,\n          please use the post endpoint)",
             "content": {
               "application/json": {
                 "schema": {
@@ -1718,6 +1718,144 @@
           }
         },
         "operationId": "IdentityServerController.connectAuth"
+      }
+    },
+    "/connect/endsession": {
+      "post": {
+        "x-controller-name": "IdentityServerController",
+        "x-operation-name": "logout",
+        "tags": [
+          "IdentityServerController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "description": "To logout",
+        "responses": {
+          "200": {
+            "description": "Success Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The syntax of the request entity is incorrect."
+          },
+          "401": {
+            "description": "Invalid Credentials."
+          },
+          "404": {
+            "description": "The entity requested does not exist."
+          },
+          "422": {
+            "description": "The syntax of the request entity is incorrect"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "description": "This is the access token which is required to authenticate user."
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenRequestPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "IdentityServerController.logout"
+      }
+    },
+    "/connect/token": {
+      "post": {
+        "x-controller-name": "IdentityServerController",
+        "x-operation-name": "getToken",
+        "tags": [
+          "IdentityServerController"
+        ],
+        "description": "Send the code received from the POST /auth/login api and get refresh token and access token (webapps)",
+        "responses": {
+          "200": {
+            "description": "Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The syntax of the request entity is incorrect."
+          },
+          "401": {
+            "description": "Invalid Credentials."
+          },
+          "404": {
+            "description": "The entity requested does not exist."
+          },
+          "422": {
+            "description": "The syntax of the request entity is incorrect"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthTokenRequest"
+              }
+            }
+          }
+        },
+        "operationId": "IdentityServerController.getToken"
+      }
+    },
+    "/connect/userinfo": {
+      "get": {
+        "x-controller-name": "IdentityServerController",
+        "x-operation-name": "me",
+        "tags": [
+          "IdentityServerController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "description": "To get the user details",
+        "responses": {
+          "200": {
+            "description": "User Object",
+            "content": {}
+          },
+          "400": {
+            "description": "The syntax of the request entity is incorrect."
+          },
+          "401": {
+            "description": "Invalid Credentials."
+          },
+          "404": {
+            "description": "The entity requested does not exist."
+          },
+          "422": {
+            "description": "The syntax of the request entity is incorrect"
+          }
+        },
+        "operationId": "IdentityServerController.me"
       }
     },
     "/google/logout": {

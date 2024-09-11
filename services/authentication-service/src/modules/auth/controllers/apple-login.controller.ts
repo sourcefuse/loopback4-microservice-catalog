@@ -53,7 +53,7 @@ export class AppleLoginController {
     private readonly getAuthCode: AuthCodeGeneratorFn,
     @inject('services.IdpLoginService')
     private readonly idpLoginService: IdpLoginService,
-  ) { }
+  ) {}
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
   @authorize({permissions: ['*']})
@@ -128,7 +128,8 @@ export class AppleLoginController {
       const token = await this.getAuthCode(client, user);
       const role = user.role;
       response.redirect(
-        `${process.env.WEBAPP_URL ?? ''}${client.redirectUrl
+        `${process.env.WEBAPP_URL ?? ''}${
+          client.redirectUrl
         }?code=${token}&role=${role}`,
       );
     } catch (error) {
