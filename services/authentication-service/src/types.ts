@@ -14,6 +14,7 @@ import {AuthRefreshTokenRequest} from './modules/auth';
 // sonarignore:start
 export interface IAuthServiceConfig extends IServiceConfig {
   useSymmetricEncryption?: boolean;
+  useIdentityServer?: boolean;
 }
 // sonarignore:end
 

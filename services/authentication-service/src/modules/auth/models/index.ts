@@ -2,8 +2,6 @@ export * from './auth-refresh-token-request.dto';
 export * from './auth-token-request.dto';
 export * from './auth-user.model';
 export * from './client-auth-request.dto';
-export * from './idp-auth-request.dto';
-export * from './idp-auth.method';
 export * from './idp-configuration.dto';
 export * from './login-request.dto';
 export * from './model-property-description.enum';

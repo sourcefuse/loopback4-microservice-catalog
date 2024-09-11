@@ -9,116 +9,40 @@ import {
   requestBody,
 } from '@loopback/rest';
 import {
-  AuthenticateErrorKeys,
   CONTENT_TYPE,
   ErrorCodes,
   OPERATION_SECURITY_SPEC,
-  RevokedTokenRepository,
   STATUS_CODE,
   SuccessResponse,
   X_TS_TYPE,
 } from '@sourceloop/core';
 import {
   authenticate,
-  authenticateClient,
   AuthenticationBindings,
   AuthErrorKeys,
   STRATEGY,
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-import {
-  AuthCodeBindings,
-  AuthServiceBindings,
-  CodeReaderFn,
-  IUserActivity,
-  LoginType,
-  RefreshTokenRepository,
-  RefreshTokenRequest,
-  UserRepository,
-  UserTenantRepository,
-} from '../../..';
+import {JwtKeys} from '../../../models';
+import {JwtKeysRepository} from '../../../repositories';
 import {IdpLoginService} from '../../../services';
 import {
+  AuthRefreshTokenRequest,
   AuthTokenRequest,
   AuthUser,
-  IdpAuthMethod,
-  IdpAuthRequest,
   IdpConfiguration,
   TokenResponse,
 } from '../models';
 
 export class IdentityServerController {
   constructor(
-    @inject(AuthCodeBindings.CODEREADER_PROVIDER)
-    private readonly codeReader: CodeReaderFn,
     @inject('services.IdpLoginService')
     private readonly idpLoginService: IdpLoginService,
     @inject(AuthenticationBindings.CURRENT_USER)
     private readonly user: AuthUser | undefined,
-    @repository(RevokedTokenRepository)
-    private readonly revokedTokens: RevokedTokenRepository,
-    @repository(RefreshTokenRepository)
-    public refreshTokenRepo: RefreshTokenRepository,
-    @repository(UserRepository)
-    public userRepo: UserRepository,
-    @repository(UserTenantRepository)
-    public userTenantRepo: UserTenantRepository,
-    @inject(AuthServiceBindings.MarkUserActivity, {optional: true})
-    private readonly userActivity?: IUserActivity,
-  ) { }
-
-  @authenticateClient(STRATEGY.CLIENT_PASSWORD)
-  @authorize({permissions: ['*']})
-  @post('/connect/auth', {
-    description: 'POST Call for idp login',
-    responses: {
-      [STATUS_CODE.OK]: {
-        description: 'Token Response',
-        content: {
-          [CONTENT_TYPE.JSON]: {
-            schema: {[X_TS_TYPE]: TokenResponse},
-          },
-        },
-      },
-    },
-  })
-  async connectAuth(
-    @requestBody({
-      content: {
-        [CONTENT_TYPE.FORM_URLENCODED]: {
-          schema: getModelSchemaRef(IdpAuthRequest),
-        },
-      },
-    })
-    idpAuthRequest: IdpAuthRequest,
-  ): Promise<void> {
-    switch (idpAuthRequest?.auth_method) {
-      case IdpAuthMethod.COGNITO:
-        await this.idpLoginService.loginViaCognito();
-        break;
-      case IdpAuthMethod.GOOGLE:
-        await this.idpLoginService.loginViaGoogle();
-        break;
-      case IdpAuthMethod.SAML:
-        await this.idpLoginService.loginViaSaml();
-        break;
-      case IdpAuthMethod.FACEBOOK:
-        await this.idpLoginService.loginViaFacebook();
-        break;
-      case IdpAuthMethod.APPLE:
-        await this.idpLoginService.loginViaApple();
-        break;
-      case IdpAuthMethod.AZURE:
-        await this.idpLoginService.loginViaAzure();
-        break;
-      case IdpAuthMethod.INSTAGRAM:
-        await this.idpLoginService.loginViaInstagram();
-        break;
-      case IdpAuthMethod.KEYCLOAK:
-        await this.idpLoginService.loginViaKeycloak();
-        break;
-    }
-  }
+    @repository(JwtKeysRepository)
+    private jwtKeysRepository: JwtKeysRepository,
+  ) {}
 
   @authorize({permissions: ['*']})
   @get('/.well-known/openid-configuration', {
@@ -134,8 +58,8 @@ export class IdentityServerController {
       ...ErrorCodes,
     },
   })
-  async getConfig(): Promise<void> {
-    this.idpLoginService.getOpenIdConfiguration();
+  async getConfig(): Promise<IdpConfiguration> {
+    return this.idpLoginService.getOpenIdConfiguration();
   }
 
   @authorize({permissions: ['*']})
@@ -211,54 +135,44 @@ export class IdentityServerController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(RefreshTokenRequest, {
+          schema: getModelSchemaRef(AuthRefreshTokenRequest, {
             partial: true,
           }),
         },
       },
     })
-    req: RefreshTokenRequest,
+    req: AuthRefreshTokenRequest,
   ): Promise<SuccessResponse> {
-    const token = auth?.replace(/bearer /i, '');
-    if (!token || !req.refreshToken) {
-      throw new HttpErrors.UnprocessableEntity(
-        AuthenticateErrorKeys.TokenMissing,
-      );
-    }
+    return this.idpLoginService.logoutUser(auth, req);
+  }
 
-    const refreshTokenModel = await this.refreshTokenRepo.get(req.refreshToken);
-    if (!refreshTokenModel) {
-      throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenExpired);
-    }
-    if (refreshTokenModel.accessToken !== token) {
-      throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenInvalid);
-    }
-    await this.revokedTokens.set(token, {token});
-    await this.refreshTokenRepo.delete(req.refreshToken);
-    if (refreshTokenModel.pubnubToken) {
-      await this.refreshTokenRepo.delete(refreshTokenModel.pubnubToken);
-    }
+  @authorize({permissions: ['*']})
+  @post('/connect/rotate-keys', {
+    description: 'Generate the set of public and private keys',
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'JWKS Keys',
+      },
+      ...ErrorCodes,
+    },
+  })
+  async generateKeys(): Promise<void> {
+    return this.idpLoginService.rotateKeys();
+  }
 
-    const user = await this.userRepo.findById(refreshTokenModel.userId);
-
-    const userTenant = await this.userTenantRepo.findOne({
-      where: {userId: user.id},
-    });
-
-    if (this.userActivity?.markUserActivity)
-      this.idpLoginService.markUserActivity(
-        user,
-        userTenant,
-        {
-          ...user,
-          clientId: refreshTokenModel.clientId,
-        },
-        LoginType.LOGOUT,
-      );
-    return new SuccessResponse({
-      success: true,
-
-      key: refreshTokenModel.userId,
+  @authorize({permissions: ['*']})
+  @post('/connect/get-keys', {
+    description: 'Get the public keys',
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'JWKS Keys',
+      },
+      ...ErrorCodes,
+    },
+  })
+  async getKeys(): Promise<JwtKeys[]> {
+    return this.jwtKeysRepository.find({
+      fields: {publicKey: true, id: true, keyId: true},
     });
   }
 }

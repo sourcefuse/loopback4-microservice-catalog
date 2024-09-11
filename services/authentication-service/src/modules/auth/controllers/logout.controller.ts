@@ -2,8 +2,8 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {inject} from '@loopback/context';
-import {repository} from '@loopback/repository';
+import { inject } from '@loopback/context';
+import { repository } from '@loopback/repository';
 import {
   getModelSchemaRef,
   HttpErrors,
@@ -25,30 +25,18 @@ import {
   SuccessResponse,
   X_TS_TYPE,
 } from '@sourceloop/core';
-import {encode} from 'base-64';
-import crypto from 'crypto';
-import {HttpsProxyAgent} from 'https-proxy-agent';
-import jwt from 'jsonwebtoken';
+import { encode } from 'base-64';
+import { HttpsProxyAgent } from 'https-proxy-agent';
 import {
   authenticate,
-  AuthenticationBindings,
   AuthErrorKeys,
   STRATEGY,
 } from 'loopback4-authentication';
-import {authorize} from 'loopback4-authorization';
+import { authorize } from 'loopback4-authorization';
 import fetch from 'node-fetch';
-import {URLSearchParams} from 'url';
-import {LoginType} from '../../../enums';
-import {AuthServiceBindings} from '../../../keys';
-import {
-  AuthClient,
-  LoginActivity,
-  RefreshToken,
-  RefreshTokenRequest,
-  User,
-  UserTenant,
-} from '../../../models';
-import {JwtPayloadFn} from '../../../providers';
+import { URLSearchParams } from 'url';
+import { AuthServiceBindings } from '../../../keys';
+import { RefreshTokenRequest } from '../../../models';
 import {
   LoginActivityRepository,
   RefreshTokenRepository,
@@ -56,8 +44,8 @@ import {
   UserRepository,
   UserTenantRepository,
 } from '../../../repositories';
-import {ActorId, IUserActivity} from '../../../types';
-import {TokenPayload} from '../interfaces';
+import { IdpLoginService } from '../../../services';
+import { ActorId } from '../../../types';
 
 const proxyUrl = process.env.HTTPS_PROXY ?? process.env.HTTP_PROXY;
 
@@ -67,8 +55,6 @@ const getProxyAgent = () => {
   }
   return undefined;
 };
-
-const size = 16;
 const SUCCESS_RESPONSE = 'Success Response';
 const AUTHENTICATE_USER =
   'This is the access token which is required to authenticate user.';
@@ -90,18 +76,14 @@ export class LogoutController {
     public userRepo: UserRepository,
     @repository(UserTenantRepository)
     public userTenantRepo: UserTenantRepository,
-    @inject(AuthServiceBindings.JWTPayloadProvider)
-    private readonly getJwtPayload: JwtPayloadFn,
-    @inject(AuthenticationBindings.CURRENT_CLIENT)
-    private readonly client: AuthClient | undefined,
-    @inject(AuthServiceBindings.MarkUserActivity, {optional: true})
-    private readonly userActivity?: IUserActivity,
-  ) {}
+    @inject('services.IdpLoginService')
+    private readonly idpLoginService: IdpLoginService,
+  ) { }
 
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: ['*']})
+  @authorize({ permissions: ['*'] })
   @post('/logout', {
     security: OPERATION_SECURITY_SPEC,
     description: 'To logout',
@@ -110,7 +92,7 @@ export class LogoutController {
         description: SUCCESS_RESPONSE,
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: {[X_TS_TYPE]: SuccessResponse},
+            schema: { [X_TS_TYPE]: SuccessResponse },
           },
         },
       },
@@ -133,53 +115,13 @@ export class LogoutController {
     })
     req: RefreshTokenRequest,
   ): Promise<SuccessResponse> {
-    const token = auth?.replace(/bearer /i, '');
-    if (!token || !req.refreshToken) {
-      throw new HttpErrors.UnprocessableEntity(
-        AuthenticateErrorKeys.TokenMissing,
-      );
-    }
-    const refreshTokenModel = await this.refreshTokenRepo.get(req.refreshToken);
-    if (!refreshTokenModel) {
-      throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenExpired);
-    }
-    if (refreshTokenModel.accessToken !== token) {
-      throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenInvalid);
-    }
-    const expiry = this.decodeAndGetExpiry(token);
-    await this.revokedTokens.set(
-      token,
-      {token},
-      {
-        ttl: expiry,
-      },
-    );
-    await this.refreshTokenRepo.delete(req.refreshToken);
-    if (refreshTokenModel.pubnubToken) {
-      await this.refreshTokenRepo.delete(refreshTokenModel.pubnubToken);
-    }
-
-    //
-
-    const user = await this.userRepo.findById(refreshTokenModel.userId);
-
-    const userTenant = await this.userTenantRepo.findOne({
-      where: {userId: user.id},
-    });
-
-    if (this.userActivity?.markUserActivity)
-      this.markUserActivity(refreshTokenModel, user, userTenant);
-    return new SuccessResponse({
-      success: true,
-
-      key: refreshTokenModel.userId,
-    });
+    return this.idpLoginService.logoutUser(auth, req);
   }
 
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: ['*']})
+  @authorize({ permissions: ['*'] })
   @post('/keycloak/logout', {
     security: OPERATION_SECURITY_SPEC,
     description:
@@ -189,7 +131,7 @@ export class LogoutController {
         description: SUCCESS_RESPONSE,
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: {[X_TS_TYPE]: SuccessResponse},
+            schema: { [X_TS_TYPE]: SuccessResponse },
           },
         },
       },
@@ -254,7 +196,7 @@ export class LogoutController {
     if (refreshTokenModel.accessToken !== token) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenInvalid);
     }
-    await this.revokedTokens.set(token, {token});
+    await this.revokedTokens.set(token, { token });
     await this.refreshTokenRepo.delete(req.refreshToken);
     if (refreshTokenModel.pubnubToken) {
       await this.refreshTokenRepo.delete(refreshTokenModel.pubnubToken);
@@ -270,7 +212,7 @@ export class LogoutController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: ['*']})
+  @authorize({ permissions: ['*'] })
   @post('/google/logout', {
     security: OPERATION_SECURITY_SPEC,
     description:
@@ -280,7 +222,7 @@ export class LogoutController {
         description: SUCCESS_RESPONSE,
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: {[X_TS_TYPE]: SuccessResponse},
+            schema: { [X_TS_TYPE]: SuccessResponse },
           },
         },
       },
@@ -344,7 +286,7 @@ export class LogoutController {
     if (refreshTokenModel.accessToken !== token) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenInvalid);
     }
-    await this.revokedTokens.set(token, {token});
+    await this.revokedTokens.set(token, { token });
     await this.refreshTokenRepo.delete(req.refreshToken);
     if (refreshTokenModel.pubnubToken) {
       await this.refreshTokenRepo.delete(refreshTokenModel.pubnubToken);
@@ -360,7 +302,7 @@ export class LogoutController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: ['*']})
+  @authorize({ permissions: ['*'] })
   @post('/cognito/logout', {
     security: OPERATION_SECURITY_SPEC,
     description:
@@ -370,7 +312,7 @@ export class LogoutController {
         description: SUCCESS_RESPONSE,
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: {[X_TS_TYPE]: SuccessResponse},
+            schema: { [X_TS_TYPE]: SuccessResponse },
           },
         },
       },
@@ -438,7 +380,7 @@ export class LogoutController {
     if (refreshTokenModel.accessToken !== token) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenInvalid);
     }
-    await this.revokedTokens.set(token, {token});
+    await this.revokedTokens.set(token, { token });
     await this.refreshTokenRepo.delete(req.refreshToken);
     if (refreshTokenModel.pubnubToken) {
       await this.refreshTokenRepo.delete(refreshTokenModel.pubnubToken);
@@ -449,104 +391,5 @@ export class LogoutController {
 
       key: refreshTokenModel.userId,
     });
-  }
-
-  private markUserActivity(
-    refreshTokenModel: RefreshToken,
-    user: User,
-    userTenant: UserTenant | null,
-  ) {
-    const encryptionKey = process.env.ENCRYPTION_KEY;
-
-    if (encryptionKey) {
-      const iv = crypto.randomBytes(size);
-
-      /* encryption of IP Address */
-      const cipherIp = crypto.createCipheriv('aes-256-gcm', encryptionKey, iv);
-      const ip =
-        this.ctx.request.headers['x-forwarded-for']?.toString() ??
-        this.ctx.request.socket.remoteAddress?.toString() ??
-        '';
-      const encyptIp = Buffer.concat([
-        cipherIp.update(ip, 'utf8'),
-        cipherIp.final(),
-      ]);
-      const authTagIp = cipherIp.getAuthTag();
-      const ipAddress = JSON.stringify({
-        iv: iv.toString('hex'),
-        encryptedData: encyptIp.toString('hex'),
-        authTag: authTagIp.toString('hex'),
-      });
-
-      /* encryption of Paylolad Address */
-
-      const cipherPayload = crypto.createCipheriv(
-        'aes-256-gcm',
-        encryptionKey,
-        iv,
-      );
-      const activityPayload = JSON.stringify({
-        ...user,
-        clientId: refreshTokenModel.clientId,
-      });
-      const encyptPayload = Buffer.concat([
-        cipherPayload.update(activityPayload, 'utf8'),
-        cipherPayload.final(),
-      ]);
-      const authTagPayload = cipherIp.getAuthTag();
-      const tokenPayload = JSON.stringify({
-        iv: iv.toString('hex'),
-        encryptedData: encyptPayload.toString('hex'),
-        authTag: authTagPayload.toString('hex'),
-      });
-      let actor: string, tenantId;
-      if (userTenant) {
-        actor = userTenant[this.actorKey]?.toString() ?? '0';
-        tenantId = userTenant.tenantId;
-      } else {
-        actor = user['id']?.toString() ?? '0';
-        tenantId = user.defaultTenantId ?? '0';
-      }
-
-      const loginActivity = new LoginActivity({
-        actor,
-        tenantId,
-        loginTime: new Date(),
-        tokenPayload,
-        deviceInfo: this.ctx.request.headers['user-agent']?.toString(),
-        loginType: LoginType.LOGOUT,
-        ipAddress,
-      });
-      this.loginActivityRepo.create(loginActivity).catch(() => {
-        this.logger.error(
-          `Failed to add the login activity => ${JSON.stringify(
-            loginActivity,
-          )}`,
-        );
-      });
-    }
-  }
-
-  /**
-   * The function decodes a JWT token and returns the expiration time in milliseconds.
-   * @param {string} token - The `token` parameter is a string that represents a JSON Web Token (JWT).
-   * @returns the expiry time of the token in milliseconds.
-   */
-  /**
-   * Decodes the given token and retrieves the expiry timestamp.
-   *
-   * @param token - The token to decode.
-   * @returns The expiry timestamp in milliseconds.
-   */
-  decodeAndGetExpiry(token: string): number | null {
-    const tokenData = jwt.decode(token) as TokenPayload | null; // handle null result from decode
-    const ms = 1000;
-
-    if (tokenData?.exp) {
-      return tokenData.exp * ms;
-    }
-
-    // If tokenData or exp is missing, return null to indicate no expiry
-    return null;
   }
 }

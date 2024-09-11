@@ -33,7 +33,6 @@ import {authorize} from 'loopback4-authorization';
 import {URLSearchParams} from 'url';
 import {AuthCodeBindings, AuthCodeGeneratorFn} from '../../../providers';
 import {AuthClientRepository} from '../../../repositories';
-import {IdpLoginService} from '../../../services';
 import {AuthUser, ClientAuthRequest, TokenResponse} from '../models';
 
 const queryGen = (from: 'body' | 'query') => {
@@ -51,11 +50,21 @@ export class InstagramLoginController {
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @inject(AuthCodeBindings.AUTH_CODE_GENERATOR_PROVIDER)
     private readonly getAuthCode: AuthCodeGeneratorFn,
-    @inject('services.IdpLoginService')
-    private readonly idpLoginService: IdpLoginService,
-  ) { }
+  ) {}
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
+  @authenticate(
+    STRATEGY.INSTAGRAM_OAUTH2,
+    {
+      accessType: 'offline',
+      authorizationURL: process.env.INSTAGRAM_AUTH_URL,
+      callbackURL: process.env.INSTAGRAM_AUTH_CALLBACK_URL,
+      clientID: process.env.INSTAGRAM_AUTH_CLIENT_ID,
+      clientSecret: process.env.INSTAGRAM_AUTH_CLIENT_SECRET,
+      tokenURL: process.env.INSTAGRAM_AUTH_TOKEN_URL,
+    },
+    queryGen('body'),
+  )
   @authorize({permissions: ['*']})
   @post('/auth/instagram', {
     responses: {
@@ -79,7 +88,7 @@ export class InstagramLoginController {
     })
     clientCreds?: ClientAuthRequest,
   ): Promise<void> {
-    return this.idpLoginService.loginViaInstagram();
+    //do nothing
   }
 
   @authenticate(

@@ -1,46 +1,53 @@
-import {BindingScope, inject, injectable} from '@loopback/core';
-import {AnyObject, repository} from '@loopback/repository';
-import {HttpErrors, RequestContext} from '@loopback/rest';
-import {AuthenticateErrorKeys, ILogger, LOGGER} from '@sourceloop/core';
-import crypto from 'crypto';
+import { BindingScope, inject, injectable } from '@loopback/core';
+import { AnyObject, repository } from '@loopback/repository';
+import { HttpErrors, RequestContext } from '@loopback/rest';
 import {
-  authenticate,
-  AuthErrorKeys,
-  ClientAuthCode,
-  STRATEGY,
-} from 'loopback4-authentication';
+  AuthenticateErrorKeys,
+  ILogger,
+  LOGGER,
+  SuccessResponse,
+} from '@sourceloop/core';
+import crypto, { generateKeyPairSync } from 'crypto';
+import * as jwt from 'jsonwebtoken';
+import { AuthErrorKeys, ClientAuthCode } from 'loopback4-authentication';
 import moment from 'moment';
-import {LoginType} from '../enums';
-import {AuthServiceBindings} from '../keys';
-import {AuthClient, LoginActivity, User, UserTenant} from '../models';
+import * as jose from 'node-jose';
+import { LoginType } from '../enums';
+import { AuthServiceBindings } from '../keys';
+import {
+  AuthClient,
+  LoginActivity,
+  RefreshToken,
+  RefreshTokenRequest,
+  User,
+  UserTenant,
+} from '../models';
 import {
   AuthTokenRequest,
   AuthUser,
   IdpConfiguration,
   TokenResponse,
 } from '../modules/auth';
+import { TokenPayload } from '../modules/auth/interfaces';
 import {
-  AuthCodeBindings,
   CodeReaderFn,
   JwtPayloadFn,
   JWTSignerFn,
   JWTVerifierFn,
 } from '../providers';
+import { AuthCodeBindings } from '../providers/keys';
 import {
   AuthClientRepository,
+  JwtKeysRepository,
   LoginActivityRepository,
   RefreshTokenRepository,
   RevokedTokenRepository,
   UserRepository,
   UserTenantRepository,
 } from '../repositories';
-import {ActorId, ExternalTokens, IUserActivity} from '../types';
+import { ActorId, ExternalTokens, IUserActivity } from '../types';
 
-const clockSkew = 300;
-const nonceTime = 3600;
-const nonceCount = 10;
-
-@injectable({scope: BindingScope.TRANSIENT})
+@injectable({ scope: BindingScope.TRANSIENT })
 export class IdpLoginService {
   constructor(
     @repository(AuthClientRepository)
@@ -51,8 +58,10 @@ export class IdpLoginService {
     public userTenantRepo: UserTenantRepository,
     @repository(RefreshTokenRepository)
     public refreshTokenRepo: RefreshTokenRepository,
+    @repository(JwtKeysRepository)
+    public jwtKeysRepo: JwtKeysRepository,
     @repository(RevokedTokenRepository)
-    public revokedTokensRepo: RevokedTokenRepository,
+    private readonly revokedTokensRepo: RevokedTokenRepository,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @repository(LoginActivityRepository)
     private readonly loginActivityRepo: LoginActivityRepository,
@@ -61,159 +70,38 @@ export class IdpLoginService {
     @inject.context() private readonly ctx: RequestContext,
     @inject(AuthCodeBindings.CODEREADER_PROVIDER)
     private readonly codeReader: CodeReaderFn,
-    @inject(AuthCodeBindings.JWT_VERIFIER, {optional: true})
+    @inject(AuthCodeBindings.JWT_VERIFIER, { optional: true })
     private readonly jwtVerifier: JWTVerifierFn<AnyObject>,
     @inject(AuthCodeBindings.JWT_SIGNER)
     private readonly jwtSigner: JWTSignerFn<object>,
     @inject(AuthServiceBindings.JWTPayloadProvider)
     private readonly getJwtPayload: JwtPayloadFn,
-    @inject(AuthServiceBindings.MarkUserActivity, {optional: true})
+    @inject(AuthServiceBindings.MarkUserActivity, { optional: true })
     private readonly userActivity?: IUserActivity,
   ) { }
-
-  @authenticate(STRATEGY.COGNITO_OAUTH2, {
-    callbackURL: process.env.COGNITO_AUTH_CALLBACK_URL,
-    clientDomain: process.env.COGNITO_AUTH_CLIENT_DOMAIN,
-    clientID: process.env.COGNITO_AUTH_CLIENT_ID,
-    clientSecret: process.env.COGNITO_AUTH_CLIENT_SECRET,
-    region: process.env.COGNITO_AUTH_REGION,
-  })
-  async loginViaCognito(): Promise<void> {
-    // do nothing
-  }
-
-  @authenticate(STRATEGY.GOOGLE_OAUTH2, {
-    accessType: 'offline',
-    scope: ['profile', 'email'],
-    authorizationURL: process.env.GOOGLE_AUTH_URL,
-    callbackURL: process.env.GOOGLE_AUTH_CALLBACK_URL,
-    clientID: process.env.GOOGLE_AUTH_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_AUTH_CLIENT_SECRET,
-    tokenURL: process.env.GOOGLE_AUTH_TOKEN_URL,
-  })
-  async loginViaGoogle(): Promise<void> {
-    // do nothing
-  }
-
-  @authenticate(STRATEGY.SAML, {
-    accessType: 'offline',
-    scope: ['profile', 'email'],
-    callbackURL: process.env.SAML_CALLBACK_URL,
-    issuer: process.env.SAML_ISSUER,
-    cert: process.env.SAML_CERT,
-    entryPoint: process.env.SAML_ENTRY_POINT,
-    audience: process.env.SAML_AUDIENCE,
-    logoutUrl: process.env.SAML_LOGOUT_URL,
-    passReqToCallback: !!+(process.env.SAML_AUTH_PASS_REQ_CALLBACK ?? 0),
-    validateInResponseTo: !!+(process.env.VALIDATE_RESPONSE ?? 1),
-    idpIssuer: process.env.IDP_ISSUER,
-    logoutCallbackUrl: process.env.SAML_LOGOUT_CALLBACK_URL,
-  })
-  async loginViaSaml(): Promise<void> {
-    // do nothing
-  }
-
-  @authenticate(STRATEGY.FACEBOOK_OAUTH2, {
-    accessType: 'offline',
-    authorizationURL: process.env.FACEBOOK_AUTH_URL,
-    callbackURL: process.env.FACEBOOK_AUTH_CALLBACK_URL,
-    clientID: process.env.FACEBOOK_AUTH_CLIENT_ID,
-    clientSecret: process.env.FACEBOOK_AUTH_CLIENT_SECRET,
-    tokenURL: process.env.FACEBOOK_AUTH_TOKEN_URL,
-  })
-  async loginViaFacebook(): Promise<void> {
-    // do nothing
-  }
-
-  @authenticate(STRATEGY.APPLE_OAUTH2, {
-    accessType: 'offline',
-    scope: ['name', 'email'],
-    callbackURL: process.env.APPLE_AUTH_CALLBACK_URL,
-    clientID: process.env.APPLE_AUTH_CLIENT_ID,
-    teamID: process.env.APPLE_AUTH_TEAM_ID,
-    keyID: process.env.APPLE_AUTH_KEY_ID,
-    privateKeyLocation: process.env.APPLE_AUTH_PRIVATE_KEY_LOCATION,
-  })
-  async loginViaApple(): Promise<void> {
-    // do nothing
-  }
-
-  @authenticate(STRATEGY.AZURE_AD, {
-    scope: ['profile', 'email', 'openid', 'offline_access'],
-    identityMetadata: process.env.AZURE_IDENTITY_METADATA,
-    clientID: process.env.AZURE_AUTH_CLIENT_ID,
-    responseType: 'code',
-    responseMode: 'query',
-    redirectUrl: process.env.AZURE_AUTH_REDIRECT_URL,
-    clientSecret: process.env.AZURE_AUTH_CLIENT_SECRET,
-    allowHttpForRedirectUrl: !!+(
-      process.env.AZURE_AUTH_ALLOW_HTTP_REDIRECT ?? 1
-    ),
-    passReqToCallback: !!+(process.env.AZURE_AUTH_PASS_REQ_CALLBACK ?? 0),
-    validateIssuer: !!+(process.env.AZURE_AUTH_VALIDATE_ISSUER ?? 1),
-    useCookieInsteadOfSession: !!+(
-      process.env.AZURE_AUTH_COOKIE_INSTEAD_SESSION ?? 1
-    ),
-    cookieEncryptionKeys: [
-      {
-        key: process.env.AZURE_AUTH_COOKIE_KEY,
-        iv: process.env.AZURE_AUTH_COOKIE_IV,
-      },
-    ],
-    isB2c: !!+(process.env.AZURE_AUTH_B2C_TENANT ?? 0),
-    clockSkew: +(process.env.AZURE_AUTH_CLOCK_SKEW ?? clockSkew),
-    loggingLevel: process.env.AZURE_AUTH_LOG_LEVEL,
-    loggingNoPII: !!+(process.env.AZURE_AUTH_LOG_PII ?? 1),
-    nonceLifetime: +(process.env.AZURE_AUTH_NONCE_TIME ?? nonceTime),
-    nonceMaxAmount: +(process.env.AZURE_AUTH_NONCE_COUNT ?? nonceCount),
-    issuer: process.env.AZURE_AUTH_ISSUER,
-    cookieSameSite: !!+(process.env.AZURE_AUTH_COOKIE_SAME_SITE ?? 0),
-  })
-  async loginViaAzure(): Promise<void> {
-    // do nothing
-  }
-
-  @authenticate(STRATEGY.INSTAGRAM_OAUTH2, {
-    accessType: 'offline',
-    authorizationURL: process.env.INSTAGRAM_AUTH_URL,
-    callbackURL: process.env.INSTAGRAM_AUTH_CALLBACK_URL,
-    clientID: process.env.INSTAGRAM_AUTH_CLIENT_ID,
-    clientSecret: process.env.INSTAGRAM_AUTH_CLIENT_SECRET,
-    tokenURL: process.env.INSTAGRAM_AUTH_TOKEN_URL,
-  })
-  async loginViaInstagram(): Promise<void> {
-    // do nothing
-  }
-
-  @authenticate(STRATEGY.KEYCLOAK, {
-    host: process.env.KEYCLOAK_HOST,
-    realm: process.env.KEYCLOAK_REALM,
-    clientID: process.env.KEYCLOAK_CLIENT_ID,
-    clientSecret: process.env.KEYCLOAK_CLIENT_SECRET,
-    callbackURL: process.env.KEYCLOAK_CALLBACK_URL,
-    authorizationURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/auth`,
-    tokenURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/token`,
-    userInfoURL: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/userinfo`,
-  })
-  async loginViaKeycloak(): Promise<void> {
-    // do nothing
-  }
 
   /**
    * The function `getOpenIdConfiguration` returns an IdpConfiguration object with specific properties
    * set based on environment variables.
    * @returns An IdpConfiguration object with the specified properties and values is being returned.
    */
-  getOpenIdConfiguration() {
+  async getOpenIdConfiguration() {
+    await this.generateJWKS();
+
     const config = new IdpConfiguration();
-    config.issuer = '';
+    config.issuer = `${process.env.API_BASE_URL}`;
     config.authorization_endpoint = `${process.env.API_BASE_URL}/connect/auth`;
     config.token_endpoint = `${process.env.API_BASE_URL}/connect/token`;
-    config.jwks_uri = '';
+    config.jwks_uri = `${process.env.API_BASE_URL}/connect/get-keys`;
     config.end_session_endpoint = `${process.env.API_BASE_URL}/connect/endsession`;
-    config.response_types_supported = ['code'];
+    config.response_types_supported = ['code', 'id_token', 'token'];
     config.scopes_supported = ['openid', 'email', 'phone', 'profile'];
-    config.id_token_signing_alg_values_supported = ['RS256'];
+    config.id_token_signing_alg_values_supported = [
+      'RS256',
+      'HS256',
+      'RS384',
+      'RS512',
+    ];
     config.token_endpoint_auth_methods_supported = [
       'client_secret_basic',
       'client_secret_post',
@@ -361,14 +249,14 @@ export class IdpLoginService {
           externalRefreshToken: (user as AuthUser).externalRefreshToken,
           tenantId: data.tenantId,
         },
-        {ttl: authClient.refreshTokenExpiration * ms},
+        { ttl: authClient.refreshTokenExpiration * ms },
       );
 
       const userTenant = await this.userTenantRepo.findOne({
-        where: {userId: user.id},
+        where: { userId: user.id },
       });
       if (this.userActivity?.markUserActivity)
-        this.markUserActivity(user, userTenant, {...data}, loginType);
+        this.markUserActivity(user, userTenant, { ...data }, loginType);
 
       return new TokenResponse({
         accessToken,
@@ -410,10 +298,10 @@ export class IdpLoginService {
    * using a certain method or platform. Examples of `loginType` could include
    * 'email', 'social', '2
    */
-  public markUserActivity(
+  private markUserActivity(
+    refreshTokenModel: RefreshToken,
     user: User,
     userTenant: UserTenant | null,
-    payload: AnyObject,
     loginType: LoginType,
   ) {
     const size = 16;
@@ -445,7 +333,10 @@ export class IdpLoginService {
         encryptionKey,
         iv,
       );
-      const activityPayload = JSON.stringify(payload);
+      const activityPayload = JSON.stringify({
+        ...user,
+        clientId: refreshTokenModel.clientId,
+      });
       const encyptPayload = Buffer.concat([
         cipherPayload.update(activityPayload, 'utf8'),
         cipherPayload.final(),
@@ -457,14 +348,13 @@ export class IdpLoginService {
         authTag: authTagPayload.toString('hex'),
       });
       // make an entry to mark the users login activity
-      let actor: string;
-      let tenantId: string;
+      let actor, tenantId: string;
       if (userTenant) {
         actor = userTenant[this.actorKey]?.toString() ?? '0';
         tenantId = userTenant.tenantId;
       } else {
         actor = user['id']?.toString() ?? '0';
-        tenantId = user.defaultTenantId;
+        tenantId = user.defaultTenantId ?? '0';
       }
       const loginActivity = new LoginActivity({
         actor,
@@ -483,5 +373,178 @@ export class IdpLoginService {
         );
       });
     }
+  }
+
+  /**
+   * The `logoutUser` function in TypeScript handles the logout process for a user
+   * by revoking tokens and deleting refresh tokens.
+   * @param {string} auth - The `auth` parameter in the `logoutUser` function is a
+   * string that represents the authentication token. It is used to identify and
+   * authenticate the user who is attempting to log out. The function extracts the
+   * token from the `auth` parameter and performs various checks and operations
+   * related to user logout based on
+   * @param {RefreshTokenRequest} req - The `req` parameter in the `logoutUser`
+   * function is of type `RefreshTokenRequest`. It likely contains information
+   * related to the refresh token that is used to identify and authenticate the
+   * user during the logout process. This parameter may include properties such as
+   * `refreshToken`, which is essential for revoking
+   * @returns The `logoutUser` function returns a `Promise` that resolves to a
+   * `SuccessResponse` object with a `success` property set to `true` and a `key`
+   * property set to `refreshTokenModel.userId`.
+   */
+  async logoutUser(
+    auth: string,
+    req: RefreshTokenRequest,
+  ): Promise<SuccessResponse> {
+    const token = auth?.replace(/bearer /i, '');
+    if (!token || !req.refreshToken) {
+      throw new HttpErrors.UnprocessableEntity(
+        AuthenticateErrorKeys.TokenMissing,
+      );
+    }
+
+    const refreshTokenModel = await this.refreshTokenRepo.get(req.refreshToken);
+    if (!refreshTokenModel) {
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenExpired);
+    }
+    if (refreshTokenModel.accessToken !== token) {
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenInvalid);
+    }
+    const expiry = this.decodeAndGetExpiry(token);
+    await this.revokedTokensRepo.set(
+      token,
+      { token },
+      {
+        ttl: expiry,
+      },
+    );
+    await this.revokedTokensRepo.set(token, { token });
+    await this.refreshTokenRepo.delete(req.refreshToken);
+    if (refreshTokenModel.pubnubToken) {
+      await this.refreshTokenRepo.delete(refreshTokenModel.pubnubToken);
+    }
+
+    const user = await this.userRepo.findById(refreshTokenModel.userId);
+
+    const userTenant = await this.userTenantRepo.findOne({
+      where: { userId: user.id },
+    });
+
+    if (this.userActivity?.markUserActivity)
+      this.markUserActivity(
+        refreshTokenModel,
+        user,
+        userTenant,
+        LoginType.LOGOUT,
+      );
+    return new SuccessResponse({
+      success: true,
+      key: refreshTokenModel.userId,
+    });
+  }
+
+  /**
+   * The function generates a JSON Web Key Set (JWKS) containing a RSA public key and saves it to a
+   * file.
+   */
+  async generateJWKS(): Promise<void> {
+    // Generate the RSA key pair
+    const { publicKey, privateKey } = generateKeyPairSync('rsa', {
+      modulusLength: 2048,
+      publicKeyEncoding: {
+        type: 'spki',
+        format: 'pem',
+      },
+      privateKeyEncoding: {
+        type: 'pkcs8',
+        format: 'pem',
+        cipher: 'aes-256-cbc',
+        passphrase: process.env.JWT_PRIVATE_KEY_PASSPHRASE,
+      },
+    });
+
+    // Create the JWKS object
+    const keyStore = jose.JWK.createKeyStore();
+    const key = await keyStore.add(publicKey, 'pem');
+
+    // Save public and private keys to the database using JwtKeysRepository
+    await this.jwtKeysRepo.create({
+      keyId: key.kid, // Unique identifier for the key
+      publicKey: publicKey,
+      privateKey: privateKey,
+    });
+
+    console.log('JWKS has been generated and saved to the database');
+  }
+
+  /**
+   * The function rotates the RSA keys used for signing JWT tokens. It generates a new key pair,
+   * adds the public key to the JWKS, and saves the private key to a file.
+   */
+  async rotateKeys(): Promise<void> {
+    // Generate a new RSA key pair
+    const { publicKey, privateKey } = generateKeyPairSync('rsa', {
+      modulusLength: 2048,
+      publicKeyEncoding: {
+        type: 'spki',
+        format: 'pem',
+      },
+      privateKeyEncoding: {
+        type: 'pkcs8',
+        format: 'pem',
+        cipher: 'aes-256-cbc',
+        passphrase: process.env.JWT_PRIVATE_KEY_PASSPHRASE,
+      },
+    });
+
+    // Create a new KeyStore and add the public key
+    const keyStore = jose.JWK.createKeyStore();
+    const newKey = await keyStore.add(publicKey, 'pem');
+    const newKid = `key-${Date.now()}`;
+    newKey.kid = newKid;
+
+    // Fetch existing keys from the database
+    const existingKeys = await this.jwtKeysRepo.find({
+      order: ['createdOn ASC'],
+    });
+
+    // Rotate keys: remove the oldest key if max limit is exceeded
+    const maxKeys = +(process.env.MAX_JWT_KEYS || 2);
+    if (existingKeys.length >= maxKeys) {
+      const oldestKey = existingKeys[0];
+      await this.jwtKeysRepo.deleteById(oldestKey.id);
+    }
+
+    // Save the new public and private keys to the repository
+    await this.jwtKeysRepo.create({
+      keyId: newKid,
+      publicKey: publicKey,
+      privateKey: privateKey,
+    });
+
+    console.log('Keys have been rotated and saved to the database.');
+  }
+
+  /**
+   * The function decodes a JWT token and returns the expiration time in milliseconds.
+   * @param {string} token - The `token` parameter is a string that represents a JSON Web Token (JWT).
+   * @returns the expiry time of the token in milliseconds.
+   */
+  /**
+   * Decodes the given token and retrieves the expiry timestamp.
+   *
+   * @param token - The token to decode.
+   * @returns The expiry timestamp in milliseconds.
+   */
+  decodeAndGetExpiry(token: string): number | null {
+    const tokenData = jwt.decode(token) as TokenPayload | null; // handle null result from decode
+    const ms = 1000;
+
+    if (tokenData?.exp) {
+      return tokenData.exp * ms;
+    }
+
+    // If tokenData or exp is missing, return null to indicate no expiry
+    return null;
   }
 }
