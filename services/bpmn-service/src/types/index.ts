@@ -2,6 +2,6 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-export * from './camunda';
+export * from '../connectors/camunda/types';
 export * from './types';
 export * from './bpm-task';
