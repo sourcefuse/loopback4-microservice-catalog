@@ -44,6 +44,8 @@ const queryGen = (from: 'body' | 'query') => {
   };
 };
 
+const auth0Scope = 'openid email profile';
+
 export class Auth0LoginController {
   constructor(
     @repository(AuthClientRepository)
@@ -77,7 +79,7 @@ export class Auth0LoginController {
       callbackURL: process.env.AUTH0_CALLBACK_URL,
       state: false,
       profileFields: ['email', 'name'],
-      scope: 'openid email profile',
+      scope: auth0Scope,
     },
     queryGen('body'),
   )
@@ -118,7 +120,7 @@ export class Auth0LoginController {
       callbackURL: process.env.AUTH0_CALLBACK_URL,
       state: false,
       profileFields: ['email', 'name'],
-      scope: 'openid email profile',
+      scope: auth0Scope,
     },
     queryGen('body'),
   )
@@ -144,7 +146,7 @@ export class Auth0LoginController {
       callbackURL: process.env.AUTH0_CALLBACK_URL,
       state: false,
       profileFields: ['email', 'name'],
-      scope: 'openid email profile',
+      scope: auth0Scope,
     },
     queryGen('query'),
   )
