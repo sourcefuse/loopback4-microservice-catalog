@@ -2,6 +2,7 @@ import {BindingScope, inject, injectable} from '@loopback/core';
 import {AnyObject, Count, Filter, repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 
+import {ILogger, LOGGER} from '@sourceloop/core';
 import * as CryptoJS from 'crypto-js';
 import {
   ColumnEntityPair,
@@ -16,7 +17,6 @@ import {
 import {ReportingServiceComponentBindings} from '../keys';
 import {DataSet} from '../models';
 import {DataSetsRepository} from '../repositories';
-
 const BAD_REQUEST = 400;
 const MINUS_TWO = -2;
 @injectable({scope: BindingScope.TRANSIENT})
@@ -26,6 +26,7 @@ export class DataSetsService {
   config: DataSetServiceConfig;
 
   constructor(
+    @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
     @repository(DataSetsRepository)
     private readonly dataSetsRepo: DataSetsRepository,
     @inject(ReportingServiceComponentBindings.DATA_STORE_ADAPTER)
@@ -33,7 +34,7 @@ export class DataSetsService {
     @inject(ReportingServiceComponentBindings.QUERY_UTILITY)
     private queryUtility: QueryUtilityInterface,
     @inject(ReportingServiceComponentBindings.SQL_VALIDATOR, {optional: true})
-    private sqlValidator: SqlValidatorInterface,
+    private readonly sqlValidator: SqlValidatorInterface,
     @inject(ReportingServiceComponentBindings.DATA_SET_CONFIG, {optional: true})
     config: DataSetServiceConfig = {},
   ) {
@@ -66,21 +67,40 @@ export class DataSetsService {
   }
 
   /**
-   * The function `validateDataSet` in TypeScript validates a DataSet object by checking its query and
-   * SQL query if provided.
+   * The function `validateDataSet` in TypeScript validates a DataSet object by checking for query or
+   * SQL, validating query syntax and data sources, and validating SQL using a SQL validator if
+   * available.
    * @param {DataSet} dataSet - The `dataSet` parameter is an object that contains information about a
-   * data set. It may have the following properties:
+   * data set, including `dataSetQuery` and `dataSetQuerySQL` properties. The `validateDataSet`
+   * function is responsible for validating these properties. If `dataSetQuery` is present, it will be
+   * validated using the
+   * @returns If neither `dataSetQuery` nor `dataSetQuerySQL` is found in the `dataSet`, the function
+   * returns without performing any validation.
    */
   private async validateDataSet(dataSet: DataSet) {
-    if (dataSet.dataSetQuery) {
-      await this.validateDataSetQuery(dataSet.dataSetQuery);
-      await this.validateDataSourcesAndColumns(dataSet.dataSetQuery);
+    if (!dataSet.dataSetQuery && !dataSet.dataSetQuerySQL) {
+      this.logger.info('No DataSet query or SQL found to validate.');
+      return;
     }
+    if (dataSet.dataSetQuery) {
+      await Promise.all([
+        this.validateDataSetQuery(dataSet.dataSetQuery),
+        this.validateDataSourcesAndColumns(dataSet.dataSetQuery),
+      ]);
+    }
+    if (dataSet.dataSetQuerySQL) {
+      if (!this.sqlValidator) {
+        this.logger.info(
+          'No SQL Validator attached, the SQL validation shall be skipped.',
+        );
+        return;
+      }
 
-    if (dataSet.dataSetQuerySQL && this.sqlValidator) {
       const isValid = await this.sqlValidator.validate(dataSet.dataSetQuerySQL);
       if (!isValid) {
-        throw new Error('The Data Set SQL Query is invalid');
+        throw new Error(
+          'The Data Set SQL Query is invalid. Please check the syntax and references.',
+        );
       }
     }
   }
@@ -234,7 +254,6 @@ export class DataSetsService {
    */
   private async validateDataSetQuery(dataSetQuery: StructuredQueryInterface) {
     const isValidObject = this.queryUtility.validateQueryObject(dataSetQuery);
-
     if (!isValidObject) {
       throw HttpErrors(BAD_REQUEST, 'Invalid dataSetQuery');
     }
@@ -261,7 +280,6 @@ export class DataSetsService {
     }
 
     const columnEntityPairs = this.getColumnEntityPairs(dataSetQuery.select);
-
     const columnsExist =
       await this.dataStoreAdapter.checkIfColumnsExists(columnEntityPairs);
 

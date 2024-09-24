@@ -5,8 +5,8 @@ import {QueryBinding} from '../interfaces/query-binding.interface';
 export class QueryBindingManager implements QueryBinding {
   // sonarignore:start
   private bindings: Record<string, any> = {};
-  // sonarignore:end
   private index = 0;
+  // sonarignore:end
 
   /**
    * The `addBinding` function generates a unique key for a given value and stores it in a bindings

@@ -20,8 +20,9 @@ import {ReportingServiceComponentBindings} from '../keys';
 queries based on structured query objects. */
 export class SequelizeQueryUtility implements QueryUtilityInterface {
   constructor(
-    @inject(LOGGER.LOGGER_INJECT) private logger: ILogger,
-    @inject(CoreBindings.APPLICATION_INSTANCE) private app: Application,
+    @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
+    @inject(CoreBindings.APPLICATION_INSTANCE)
+    private readonly app: Application,
   ) {}
 
   /**
@@ -309,12 +310,11 @@ export class SequelizeQueryUtility implements QueryUtilityInterface {
     bind: AnyObject;
   }> {
     const bindingManager = await this.app.get<QueryBinding>(
-      ReportingServiceComponentBindings.BINDING_OBJECT_PROVIDER,
+      ReportingServiceComponentBindings.BINDING_MANAGER,
     );
 
     const sqlQuery = this.generateQuery(query, bindingManager);
     const bind = bindingManager.getBindings();
-
     return {query: sqlQuery, bind};
   }
 
@@ -511,12 +511,10 @@ export class SequelizeQueryUtility implements QueryUtilityInterface {
     if (!sqlQuery.where) {
       return query;
     }
-
     const whereConditions = this.processWhereClause(
       sqlQuery.where,
       bindingManager,
     );
-
     if (whereConditions.length > 0) {
       query += ' WHERE ' + whereConditions.join(' AND ');
     }

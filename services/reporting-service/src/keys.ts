@@ -1,4 +1,4 @@
-import {BindingKey, Constructor, CoreBindings} from '@loopback/core';
+import {BindingKey, CoreBindings} from '@loopback/core';
 import {MetadataAccessor} from '@loopback/metadata';
 import {DataSource} from '@loopback/repository';
 import {Sequelize} from 'sequelize';
@@ -82,11 +82,8 @@ export namespace ReportingServiceComponentBindings {
   export const SQL_VALIDATOR = BindingKey.create<SqlValidatorInterface>(
     `services.sqlValidator`,
   );
-  export const BINDING_MANAGER_CLASS = BindingKey.create<
-    Constructor<QueryBinding>
-  >(`services.BindingManagerClass`);
-  export const BINDING_OBJECT_PROVIDER = BindingKey.create<QueryBinding>(
-    `services.QueryBindingObjectProvider`,
+  export const BINDING_MANAGER = BindingKey.create<QueryBinding>(
+    `services.BindingManager`,
   );
   export const QUERY_UTILITY =
     BindingKey.create<QueryUtilityInterface>('QueryUtility');

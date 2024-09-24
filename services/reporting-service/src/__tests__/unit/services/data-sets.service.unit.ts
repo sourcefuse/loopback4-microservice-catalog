@@ -14,13 +14,20 @@ import {
   givenStubbedRepository,
   setupApplication,
 } from '../helper';
+import {ILogger} from '@sourceloop/core';
 
 describe('DataSetsService', () => {
   let dataSetsService: DataSetsService;
   let dataSetsRepo: sinon.SinonStubbedInstance<DataSetsRepository>;
   let mockDataStoreAdapter: MockDataStoreAdapter;
   let mockQueryUtility: QueryUtilityInterface;
-
+  let mockLogger: sinon.SinonStubbedInstance<ILogger>;
+  beforeEach(async () => {
+    mockLogger = {
+      info: sinon.stub(),
+      error: sinon.stub(),
+    } as unknown as sinon.SinonStubbedInstance<ILogger>;
+  });
   before('setupApplication', async () => {
     await setupApplication();
     dataSetsRepo = givenStubbedRepository(DataSetsRepository);
@@ -35,6 +42,7 @@ describe('DataSetsService', () => {
     };
 
     dataSetsService = new DataSetsService(
+      mockLogger,
       dataSetsRepo,
       mockDataStoreAdapter,
       // sonarignore:start

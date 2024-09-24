@@ -42,7 +42,6 @@ import {SequelizeObjectProvider} from './providers/data-store-objects/sequelize-
 import {DefaultListenerService} from './services/default-listener.service';
 import {GenericConversionUtils} from './utils/generic-data-type-conversion.utils';
 
-import {QueryBindingObjectProvider} from './providers/query-binding-object.provider';
 import {QueryBindingManager} from './utils/query-binding-manager';
 import {SequelizeQueryUtility} from './utils/sequelize-query.utils';
 
@@ -103,11 +102,9 @@ export class ReportingServiceComponent {
       .bind(ReportingServiceComponentBindings.QUERY_UTILITY)
       .toClass(SequelizeQueryUtility);
     this.application
-      .bind(ReportingServiceComponentBindings.BINDING_OBJECT_PROVIDER)
-      .toProvider(QueryBindingObjectProvider);
-    this.application
-      .bind(ReportingServiceComponentBindings.BINDING_MANAGER_CLASS)
-      .to(QueryBindingManager);
+      .bind(ReportingServiceComponentBindings.BINDING_MANAGER)
+      .toClass(QueryBindingManager)
+      .inScope(BindingScope.TRANSIENT);
     this.application.lifeCycleObserver(ReportingServiceInitializer);
   }
 }

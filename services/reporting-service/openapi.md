@@ -1,9 +1,5 @@
 ---
-<<<<<<< HEAD
-title: "@sourceloop/reporting-service v2.1.2"
-=======
-title: "@sourceloop/reporting-service v0.9.1"
->>>>>>> 2cf3f0ca (feat(reporting-service): supports subqueries, multilevel function, dataset filter, sql in dataset)
+title: "@sourceloop/reporting-service v2.1.3"
 language_tabs:
   - javascript: JavaScript
   - javascript--nodejs: Node.JS
@@ -20,11 +16,7 @@ headingLevel: 2
 
 <!-- Generator: Widdershins v4.0.1 -->
 
-<<<<<<< HEAD
-<h1 id="-sourceloop-reporting-service">@sourceloop/reporting-service v2.1.2</h1>
-=======
-<h1 id="-sourceloop-reporting-service">@sourceloop/reporting-service v0.9.1</h1>
->>>>>>> 2cf3f0ca (feat(reporting-service): supports subqueries, multilevel function, dataset filter, sql in dataset)
+<h1 id="-sourceloop-reporting-service">@sourceloop/reporting-service v2.1.3</h1>
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
@@ -3197,7 +3189,7 @@ NewDataSet
 |createdBy|string|false|none|none|
 |modifiedBy|string|false|none|none|
 |name|string|true|none|The name of the data set|
-|dataSetQuery|object|true|none|The query for the data set refer to StructuredQueryInterface|
+|dataSetQuery|object|false|none|The query for the data set refer to StructuredQueryInterface|
 |dataSetQuerySQL|string|false|none|The query for the data set refer to standard SQL|
 |dataSetQueryHash|string|false|none|The hash of the query for the data set|
 |extId|string|false|none|The external id of the data set|
@@ -3293,7 +3285,7 @@ DataSet
 |modifiedBy|string|false|none|none|
 |id|string|false|none|The unique identifier for a data set|
 |name|string|true|none|The name of the data set|
-|dataSetQuery|object|true|none|The query for the data set refer to StructuredQueryInterface|
+|dataSetQuery|object|false|none|The query for the data set refer to StructuredQueryInterface|
 |dataSetQuerySQL|string|false|none|The query for the data set refer to standard SQL|
 |dataSetQueryHash|string|false|none|The hash of the query for the data set|
 |extId|string|false|none|The external id of the data set|
