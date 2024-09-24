@@ -1,4 +1,5 @@
 export * from './apple-oauth2-verify.provider';
+export * from './auth0-verify.provider';
 export * from './azure-ad-verify.provider';
 export * from './bearer-token-verify.provider';
 export * from './client-password-verify.provider';
