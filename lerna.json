@@ -4,7 +4,7 @@
     "version": {
       "conventionalCommits": true,
       "message": "chore: publish release",
-      "allowBranch": "master"
+      "allowBranch": "core-v13"
     },
     "publish": {
       "conventionalCommits": true,
