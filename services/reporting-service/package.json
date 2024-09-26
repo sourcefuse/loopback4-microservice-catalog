@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/reporting-service",
-  "version": "2.1.3",
+  "version": "2.1.4",
   "description": "reporting-service.",
   "keywords": [
     "loopback-extension",
@@ -66,7 +66,7 @@
     "@loopback/openapi-v3": "^10.0.2",
     "@loopback/repository": "^7.0.2",
     "@loopback/rest": "^14.0.2",
-    "@sourceloop/core": "^14.1.1",
+    "@sourceloop/core": "^14.1.2",
     "crypto-js": "^4.2.0",
     "dotenv": "^16.0.3",
     "dotenv-extended": "^2.9.0",

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>14.1.1 (2024-09-26)</small>
+
+**Note:** Version bump only for package @sourceloop/audit-service
+
+
+
+
+
 ## 14.1.0 (2024-08-05)
 
 * feat(audit-service): add support for multiple actedon and actiongroup (#2124) ([2a2891d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2a2891d)), closes [#2124](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2124) [#2119](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2119)
