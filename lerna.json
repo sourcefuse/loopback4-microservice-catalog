@@ -1,14 +1,5 @@
 {
-  "packages": [
-    "packages/core",
-    "packages/cli",
-    "packages/cache",
-    "packages/feature-toggle",
-    "packages/custom-sf-changelog/",
-    "services/*",
-    "facades/*",
-    "sandbox/**"
-  ],
+  "packages": ["packages/core"],
   "command": {
     "version": {
       "conventionalCommits": true,
@@ -18,7 +9,7 @@
     "publish": {
       "conventionalCommits": true,
       "message": "chore: publish release",
-      "allowBranch": "master",
+      "allowBranch": "core-v13",
       "noPrivate": true,
       "graphType": "all"
     },
