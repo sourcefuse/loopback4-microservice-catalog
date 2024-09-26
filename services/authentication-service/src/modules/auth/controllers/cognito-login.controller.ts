@@ -34,6 +34,7 @@ import {authorize} from 'loopback4-authorization';
 import {URLSearchParams} from 'url';
 import {AuthCodeBindings, AuthCodeGeneratorFn} from '../../../providers';
 import {AuthClientRepository} from '../../../repositories';
+import {IdpLoginService} from '../../../services';
 import {AuthUser, ClientAuthRequest, TokenResponse} from '../models';
 
 const queryGen = (from: 'body' | 'query') => {
@@ -51,20 +52,11 @@ export class CognitoLoginController {
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @inject(AuthCodeBindings.AUTH_CODE_GENERATOR_PROVIDER)
     private readonly getAuthCode: AuthCodeGeneratorFn,
-  ) {}
+    @inject('services.IdpLoginService')
+    private readonly idpLoginService: IdpLoginService,
+  ) { }
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
-  @authenticate(
-    STRATEGY.COGNITO_OAUTH2,
-    {
-      callbackURL: process.env.COGNITO_AUTH_CALLBACK_URL,
-      clientDomain: process.env.COGNITO_AUTH_CLIENT_DOMAIN,
-      clientID: process.env.COGNITO_AUTH_CLIENT_ID,
-      clientSecret: process.env.COGNITO_AUTH_CLIENT_SECRET,
-      region: process.env.COGNITO_AUTH_REGION,
-    },
-    queryGen('query'),
-  )
   @authorize({permissions: ['*']})
   @oas.deprecated()
   @get('/auth/cognito', {
@@ -91,21 +83,10 @@ export class CognitoLoginController {
     @param.query.string('client_secret')
     clientSecret?: string,
   ): Promise<void> {
-    //do nothing
+    return this.idpLoginService.loginViaCognito();
   }
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
-  @authenticate(
-    STRATEGY.COGNITO_OAUTH2,
-    {
-      callbackURL: process.env.COGNITO_AUTH_CALLBACK_URL,
-      clientDomain: process.env.COGNITO_AUTH_CLIENT_DOMAIN,
-      clientID: process.env.COGNITO_AUTH_CLIENT_ID,
-      clientSecret: process.env.COGNITO_AUTH_CLIENT_SECRET,
-      region: process.env.COGNITO_AUTH_REGION,
-    },
-    queryGen('body'),
-  )
   @authorize({permissions: ['*']})
   @post('/auth/cognito', {
     responses: {
@@ -129,7 +110,7 @@ export class CognitoLoginController {
     })
     clientCreds?: ClientAuthRequest,
   ): Promise<void> {
-    //do nothing
+    return this.idpLoginService.loginViaCognito();
   }
 
   @authenticate(

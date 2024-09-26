@@ -1,0 +1,10 @@
+export enum IdpAuthMethod {
+  COGNITO = 'COGNITO',
+  GOOGLE = 'GOOGLE',
+  SAML = 'SAML',
+  FACEBOOK = 'FACEBOOK',
+  APPLE = 'APPLE',
+  AZURE = 'AZURE',
+  INSTAGRAM = 'INSTAGRAM',
+  KEYCLOAK = 'KEYCLOAK',
+}
