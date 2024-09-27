@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>13.2.1 (2024-09-27)</small>
+
+* fix(chore):dummy for version bump ([e6b1891](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e6b1891))
+
+
+
+
+
 ## 13.2.0 (2024-09-26)
 
 * fix(core): update the condition to set i18n localization ([91ecb6f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/91ecb6f)), closes [#2165](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2165)
