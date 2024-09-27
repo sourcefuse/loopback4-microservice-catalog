@@ -2,10 +2,6 @@
   "name": "@sourceloop/core",
   "version": "13.2.0",
   "description": "Sourceloop core package.",
-  "keywords": [
-    "loopback-extension",
-    "loopback"
-  ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -19,6 +15,10 @@
       "default": "./dist/components/dynamic-datasource/index.js"
     }
   },
+  "keywords": [
+    "loopback-extension",
+    "loopback"
+  ],
   "typesVersions": {
     "*": {
       "sequelize": [
