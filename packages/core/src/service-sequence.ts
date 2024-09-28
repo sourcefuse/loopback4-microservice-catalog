@@ -31,6 +31,7 @@ import {
 import {IAuthUserWithPermissions, ILogger, LOGGER} from './components';
 import {MiddlewareChain} from './enums';
 import {SFCoreBindings} from './keys';
+import {CoreConfig} from './types';
 const SequenceActions = RestBindings.SequenceActions;
 const isJsonString = (str: string) => {
   try {
@@ -64,6 +65,8 @@ export class ServiceSequence implements SequenceHandler {
     protected authenticateRequest: AuthenticateFn<IAuthUserWithPermissions>,
     @inject(AuthorizationBindings.AUTHORIZE_ACTION)
     protected checkAuthorisation: AuthorizeFn,
+    @inject(SFCoreBindings.config, {optional: true})
+    private readonly coreConfig: CoreConfig,
     @inject(SFCoreBindings.i18n)
     protected i18n: i18nAPI, // sonarignore:end
   ) {}
@@ -123,31 +126,7 @@ export class ServiceSequence implements SequenceHandler {
       );
 
       const error = this._rejectErrors(err);
-      if (
-        // sonarignore:start
-        !(
-          error.message &&
-          [
-            AuthErrorKeys.TokenInvalid,
-            AuthErrorKeys.TokenExpired,
-            'TokenExpired',
-          ].includes(
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            (error.message as any).message,
-          )
-        )
-        // sonarignore:end
-      ) {
-        if (isString(error.message)) {
-          error.message = this.i18n.__({
-            phrase: error.message,
-            locale: process.env.LOCALE ?? 'en',
-          });
-        } else {
-          error.message =
-            error.message || 'Some error occured. Please try again';
-        }
-      }
+      this._handleErrorMessage(error);
       this.reject(context, error);
     } finally {
       this.logger.info(
@@ -198,6 +177,30 @@ export class ServiceSequence implements SequenceHandler {
       );
     } else {
       return err as Error;
+    }
+  }
+
+  private _handleErrorMessage(error: Error) {
+    if (
+      // sonarignore:start
+      !(
+        error.message &&
+        [
+          AuthErrorKeys.TokenInvalid,
+          AuthErrorKeys.TokenExpired,
+          'TokenExpired',
+        ].includes((error.message as any).message)
+      )
+      // sonarignore:end
+    ) {
+      if (isString(error.message) && !this.coreConfig?.disablei18n) {
+        error.message = this.i18n.__({
+          phrase: error.message,
+          locale: process.env.LOCALE ?? 'en',
+        });
+      } else {
+        error.message = error.message || 'Some error occured. Please try again';
+      }
     }
   }
 }
