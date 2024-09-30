@@ -1,4 +1,5 @@
 export * from './apple-login.controller';
+export * from './auth0-login-controller';
 export * from './azure-login.controller';
 export * from './cognito-login.controller';
 export * from './facebook-login.controller';
