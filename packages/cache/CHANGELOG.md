@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.0.4 (2024-09-30)</small>
+
+**Note:** Version bump only for package @sourceloop/cache
+
+
+
+
+
 ## <small>3.0.3 (2024-09-30)</small>
 
 **Note:** Version bump only for package @sourceloop/cache
