@@ -12,7 +12,7 @@
 
 ### Reporting Service Component
 
-The Reporting Service Component, part of the ARC microservices suite, is a versatile and robust solution designed for data ingestion, processing, and reporting. This component serves two primary functions:
+The Reporting Service Component, part of the ARC microservices suite, is a versatile and robust solution designed for data ingestion, processing, and reporting.This component serves two primary functions:
 
 #### 1. Data Ingestion and Processing
 
