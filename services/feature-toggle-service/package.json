@@ -73,7 +73,7 @@
     "dotenv": "^16.0.3",
     "dotenv-extended": "^2.9.0",
     "lodash": "^4.17.21",
-    "loopback4-authentication": "^12.0.2",
+    "loopback4-authentication": "^12.1.0",
     "loopback4-authorization": "^7.0.2",
     "loopback4-soft-delete": "^10.0.2",
     "proxyquire": "^2.1.3",

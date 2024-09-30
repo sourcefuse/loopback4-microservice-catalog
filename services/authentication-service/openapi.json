@@ -110,6 +110,115 @@
         "operationId": "AppleLoginController.appleCallback"
       }
     },
+    "/auth/auth0": {
+      "post": {
+        "x-controller-name": "Auth0LoginController",
+        "x-operation-name": "postLoginViaAuth0",
+        "tags": [
+          "Auth0LoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "POST Call for auth0 based login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientAuthRequest"
+              }
+            }
+          }
+        },
+        "operationId": "Auth0LoginController.postLoginViaAuth0"
+      },
+      "get": {
+        "x-controller-name": "Auth0LoginController",
+        "x-operation-name": "loginViaAuth0",
+        "tags": [
+          "Auth0LoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "POST Call for auth0 based login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "deprecated": true,
+        "parameters": [
+          {
+            "name": "client_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "client_secret",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "Auth0LoginController.loginViaAuth0"
+      }
+    },
+    "/auth/auth0-auth-redirect": {
+      "get": {
+        "x-controller-name": "Auth0LoginController",
+        "x-operation-name": "auth0Callback",
+        "tags": [
+          "Auth0LoginController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Redirect Token Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "Auth0LoginController.auth0Callback"
+      }
+    },
     "/auth/azure": {
       "post": {
         "x-controller-name": "AzureLoginController",

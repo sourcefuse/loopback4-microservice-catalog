@@ -4,6 +4,7 @@
 // https://opensource.org/licenses/MIT
 import {
   AppleLoginController,
+  Auth0LoginController,
   AzureLoginController,
   CognitoLoginController,
   FacebookLoginController,
@@ -40,5 +41,6 @@ export const controllers = [
   AzureLoginController,
   CognitoLoginController,
   SamlLoginController,
+  Auth0LoginController,
   LoginActivityController,
 ];
