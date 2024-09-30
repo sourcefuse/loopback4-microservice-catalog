@@ -1,5 +1,6 @@
 import {
   Binding,
+  BindingScope,
   ContextTags,
   ControllerClass,
   CoreBindings,
@@ -41,6 +42,7 @@ import {SequelizeObjectProvider} from './providers/data-store-objects/sequelize-
 import {DefaultListenerService} from './services/default-listener.service';
 import {GenericConversionUtils} from './utils/generic-data-type-conversion.utils';
 
+import {QueryBindingManager} from './utils/query-binding-manager';
 import {SequelizeQueryUtility} from './utils/sequelize-query.utils';
 
 @injectable({
@@ -94,11 +96,15 @@ export class ReportingServiceComponent {
 
     this.application
       .bind(ReportingServiceComponentBindings.DATA_STORE_SERVICE_PROVIDER)
-      .toProvider(DataStoreObjectProvider);
+      .toProvider(DataStoreObjectProvider)
+      .inScope(BindingScope.SINGLETON);
     this.application
       .bind(ReportingServiceComponentBindings.QUERY_UTILITY)
       .toClass(SequelizeQueryUtility);
-
+    this.application
+      .bind(ReportingServiceComponentBindings.BINDING_MANAGER)
+      .toClass(QueryBindingManager)
+      .inScope(BindingScope.TRANSIENT);
     this.application.lifeCycleObserver(ReportingServiceInitializer);
   }
 }

@@ -10,7 +10,9 @@ import {
   DataStoreConfiguration,
   DataStoreDataTypeConversionFunctions,
   IngestionHandler,
+  QueryBinding,
   QueryUtilityInterface,
+  SqlValidatorInterface,
 } from './interfaces';
 import {IngestionMapping} from './models';
 import {DataTypeMapping} from './providers/data-mappings-providers/data-type-mapping';
@@ -77,7 +79,12 @@ export namespace ReportingServiceComponentBindings {
   export const SEQUELIZE_OBJECT_PROVIDER = BindingKey.create<Sequelize>(
     `datastores.SequelizeObjectProvider`,
   );
-
+  export const SQL_VALIDATOR = BindingKey.create<SqlValidatorInterface>(
+    `services.sqlValidator`,
+  );
+  export const BINDING_MANAGER = BindingKey.create<QueryBinding>(
+    `services.BindingManager`,
+  );
   export const QUERY_UTILITY =
     BindingKey.create<QueryUtilityInterface>('QueryUtility');
 }
