@@ -8,6 +8,7 @@ import {
   Request,
   Response,
   RestBindings,
+  getModelSchemaRef,
   post,
   requestBody,
 } from '@loopback/rest';
@@ -59,13 +60,14 @@ export class SubscriptionTransactionsController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: {
-            type: 'object',
-          },
+          schema: getModelSchemaRef(Subscriptions, {
+            title: 'NewSubscriptions',
+            exclude: ['id'],
+          }),
         },
       },
     })
-    subscriptions: Subscriptions,
+    subscriptions: Omit<Subscriptions, 'id'>,
   ): Promise<void> {
     const subscriptionEntity = {
       id: uuidv4(),
@@ -93,8 +95,15 @@ export class SubscriptionTransactionsController {
       `${hostProtocol}://${hostUrl}/transactions/subscription/${newSubscription.id}?method=${newSubscription.paymentMethod}`,
     );
   }
-
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateTransaction,
+      PermissionKey.UpdateTransactionNum,
+    ],
+  })
   @post('/subscription/transaction/charge', {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Subscription model instance',
@@ -125,7 +134,7 @@ export class SubscriptionTransactionsController {
     const hostUrl = this.req.get('host');
     const hostProtocol = this.req.protocol;
     const defaultUrl = `${hostProtocol}://${hostUrl}`;
-    if (chargeHelper?.res === ResponseMessage.Sucess) {
+    if (chargeHelper?.res === ResponseMessage.Success) {
       return this.res.redirect(
         permRedirectStatusCode,
         `${process.env.SUCCESS_CALLBACK_URL ?? defaultUrl}`,

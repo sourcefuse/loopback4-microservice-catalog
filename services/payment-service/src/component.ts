@@ -120,7 +120,6 @@ export class PaymentServiceComponent implements Component {
         Subscriptions,
       ];
     } else {
-      this.application.component(TenantUtilitiesComponent);
       this.models = [
         TenantOrders,
         TenantPaymentGateways,
@@ -129,7 +128,7 @@ export class PaymentServiceComponent implements Component {
         TenantTransactions,
       ];
     }
-
+    this.application.component(TenantUtilitiesComponent);
     this.controllers = [
       OrdersController,
       TransactionsController,
@@ -139,6 +138,7 @@ export class PaymentServiceComponent implements Component {
       SubscriptionTransactionsController,
       TransactionSubscriptionsController,
     ];
+
     if (this.paymentConfig?.useSequelize) {
       this.repositories = [
         OrdersSequelizeRepository,

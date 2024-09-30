@@ -115,7 +115,7 @@ export class StripeProvider implements Provider<StripePaymentGateway> {
               await this.ordersRepository.updateById(order.id, {...order});
             }
           });
-        return {res: ResponseMessage.Sucess, orderId: order.id};
+        return {res: ResponseMessage.Success, orderId: order.id};
       },
 
       refund: async (transactionId: string) => {
@@ -134,7 +134,7 @@ export class StripeProvider implements Provider<StripePaymentGateway> {
           return refund;
         } else {
           return {
-            err: ResponseMessage.NotSucess,
+            err: ResponseMessage.NotSuccess,
             message: 'please check PaymentId',
           };
         }
@@ -211,7 +211,7 @@ export class StripeProvider implements Provider<StripePaymentGateway> {
               });
             }
           });
-        return {res: ResponseMessage.Sucess, subscriptionId: subscription.id};
+        return {res: ResponseMessage.Success, subscriptionId: subscription.id};
       },
 
       subscriptionWebHook: async (

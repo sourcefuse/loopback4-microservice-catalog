@@ -13,10 +13,8 @@ export class Templates extends CoreEntity<Templates> {
   @property({
     type: 'string',
     id: true,
-    generated: false,
-    required: true,
   })
-  id: string;
+  id?: string;
 
   @property({
     type: 'string',

@@ -62,7 +62,7 @@ describe('Sequelize Component', () => {
       {
         controller: OrdersController,
         repository: OrdersRepository,
-        prop: 'ordersRepository',
+        prop: 'OrdersRepository',
       },
     ];
 

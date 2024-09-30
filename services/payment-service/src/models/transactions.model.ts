@@ -13,10 +13,8 @@ export class Transactions extends CoreEntity<Transactions> {
   @property({
     type: 'string',
     id: true,
-    generated: false,
-    required: true,
   })
-  id: string;
+  id?: string;
 
   @property({
     type: 'number',

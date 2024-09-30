@@ -62,11 +62,12 @@ export class TemplatesController {
         [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Templates, {
             title: 'NewTemplates',
+            exclude: ['id'],
           }),
         },
       },
     })
-    templates: Templates,
+    templates: Omit<Templates, 'id'>,
   ): Promise<Templates> {
     return this.templatesRepository.create(templates);
   }

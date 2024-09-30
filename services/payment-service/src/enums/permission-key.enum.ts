@@ -24,7 +24,7 @@ export const enum PermissionKey {
   ViewTransaction = 'ViewTransaction',
   UpdateTransaction = 'UpdateTransaction',
   DeleteTransaction = 'DeleteTransaction',
-
+  CreateRefund = 'CreateRefund',
   GetSubscriptionCountNum = '1',
   CreateSubscriptionNum = '2',
   GetSubscriptionsNum = '3',
@@ -46,4 +46,5 @@ export const enum PermissionKey {
   ViewTransactionNum = '19',
   UpdateTransactionNum = '20',
   DeleteTransactionNum = '21',
+  CreateRefundNum = 'CreateRefundNum',
 }

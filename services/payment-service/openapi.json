@@ -2,47 +2,14 @@
   "openapi": "3.0.0",
   "info": {
     "title": "@sourceloop/payment-service",
-    "version": "13.0.1",
+    "version": "14.0.0",
     "description": "payment microservice",
     "contact": {
       "name": "Sourcefuse"
     }
   },
   "paths": {
-    "/create-subscription-and-pay": {
-      "post": {
-        "x-controller-name": "SubscriptionTransactionsController",
-        "x-operation-name": "subscriptionandtransactionscreate",
-        "tags": [
-          "SubscriptionTransactionsController"
-        ],
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "responses": {
-          "302": {
-            "description": "Subscription model instance",
-            "content": {
-              "text/html": {}
-            }
-          }
-        },
-        "description": "\n\n| Permissions |\n| ------- |\n| CreateSubscription   |\n| 2   |\n",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
-              }
-            }
-          }
-        },
-        "operationId": "SubscriptionTransactionsController.subscriptionandtransactionscreate"
-      }
-    },
-    "/orders/count": {
+    "/Orders/count": {
       "get": {
         "x-controller-name": "OrdersController",
         "x-operation-name": "count",
@@ -86,7 +53,7 @@
         "operationId": "OrdersController.count"
       }
     },
-    "/orders/{id}": {
+    "/Orders/{id}": {
       "put": {
         "x-controller-name": "OrdersController",
         "x-operation-name": "replaceById",
@@ -242,7 +209,7 @@
         "operationId": "OrdersController.deleteById"
       }
     },
-    "/orders": {
+    "/Orders": {
       "post": {
         "x-controller-name": "OrdersController",
         "x-operation-name": "create",
@@ -370,6 +337,39 @@
           }
         ],
         "operationId": "OrdersController.find"
+      }
+    },
+    "/create-subscription-and-pay": {
+      "post": {
+        "x-controller-name": "SubscriptionTransactionsController",
+        "x-operation-name": "subscriptionandtransactionscreate",
+        "tags": [
+          "SubscriptionTransactionsController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "302": {
+            "description": "Subscription model instance",
+            "content": {
+              "text/html": {}
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateSubscription   |\n| 2   |\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewSubscriptions"
+              }
+            }
+          }
+        },
+        "operationId": "SubscriptionTransactionsController.subscriptionandtransactionscreate"
       }
     },
     "/payment-gateways/count": {
@@ -731,6 +731,11 @@
         "tags": [
           "TransactionsController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "302": {
             "description": "Order model instance",
@@ -739,11 +744,12 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateOrder   |\n| 6   |\n",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "type": "object"
+                "$ref": "#/components/schemas/NewOrder"
               }
             }
           }
@@ -758,6 +764,11 @@
         "tags": [
           "SubscriptionTransactionsController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Subscription model instance",
@@ -766,6 +777,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateTransaction   |\n| 20   |\n",
         "requestBody": {
           "content": {
             "application/x-www-form-urlencoded": {
@@ -1445,6 +1457,11 @@
         "tags": [
           "TransactionsController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Transacttion Gateway Request",
@@ -1453,6 +1470,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateTransaction   |\n| 18   |\n",
         "requestBody": {
           "content": {
             "application/x-www-form-urlencoded": {
@@ -1516,6 +1534,11 @@
         "tags": [
           "TransactionsController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "HTML response for payment gateway interface.",
@@ -1528,6 +1551,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateOrder   |\n| 6   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1548,6 +1572,11 @@
         "tags": [
           "TransactionsController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Refund Object from payment gateway",
@@ -1556,6 +1585,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateRefund   |\n| CreateRefundNum   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1576,6 +1606,11 @@
         "tags": [
           "TransactionsController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Refund Object from payment gateway",
@@ -1584,6 +1619,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateRefund   |\n| CreateRefundNum   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1604,6 +1640,11 @@
         "tags": [
           "TransactionSubscriptionsController"
         ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "responses": {
           "302": {
             "description": "Array of Transactions model instances",
@@ -1616,6 +1657,7 @@
             }
           }
         },
+        "description": "\n\n| Permissions |\n| ------- |\n| UpdateSubscriptions   |\n| 4   |\n",
         "parameters": [
           {
             "name": "id",
@@ -1987,11 +2029,8 @@
       "NewOrders": {
         "title": "NewOrders",
         "type": "object",
-        "description": "(tsType: Orders, schemaOptions: { title: 'NewOrders' })",
+        "description": "(tsType: Omit<Orders, 'id'>, schemaOptions: { title: 'NewOrders', exclude: [ 'id' ] })",
         "properties": {
-          "id": {
-            "type": "string"
-          },
           "totalAmount": {
             "type": "number"
           },
@@ -2018,7 +2057,7 @@
           "paymentGatewayId"
         ],
         "additionalProperties": false,
-        "x-typescript-type": "Orders"
+        "x-typescript-type": "Omit<Orders, 'id'>"
       },
       "OrdersWithRelations": {
         "title": "OrdersWithRelations",
@@ -2117,7 +2156,6 @@
           }
         },
         "required": [
-          "id",
           "amountPaid",
           "currency",
           "status"
@@ -2127,11 +2165,8 @@
       "NewTransactions": {
         "title": "NewTransactions",
         "type": "object",
-        "description": "(tsType: Transactions, schemaOptions: { title: 'NewTransactions' })",
+        "description": "(tsType: Omit<Transactions, 'id'>, schemaOptions: { title: 'NewTransactions', exclude: [ 'id' ] })",
         "properties": {
-          "id": {
-            "type": "string"
-          },
           "amountPaid": {
             "type": "number"
           },
@@ -2156,13 +2191,12 @@
           }
         },
         "required": [
-          "id",
           "amountPaid",
           "currency",
           "status"
         ],
         "additionalProperties": false,
-        "x-typescript-type": "Transactions"
+        "x-typescript-type": "Omit<Transactions, 'id'>"
       },
       "TransactionsWithRelations": {
         "title": "TransactionsWithRelations",
@@ -2196,7 +2230,6 @@
           }
         },
         "required": [
-          "id",
           "amountPaid",
           "currency",
           "status"
@@ -2238,6 +2271,39 @@
         "additionalProperties": false,
         "x-typescript-type": "Partial<Transactions>"
       },
+      "NewOrder": {
+        "title": "NewOrder",
+        "type": "object",
+        "description": "(tsType: Omit<Orders, 'id'>, schemaOptions: { title: 'NewOrder', exclude: [ 'id' ] })",
+        "properties": {
+          "totalAmount": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "paymentGatewayId": {
+            "type": "string"
+          },
+          "paymentmethod": {
+            "type": "string"
+          },
+          "metaData": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "totalAmount",
+          "currency",
+          "status",
+          "paymentGatewayId"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<Orders, 'id'>"
+      },
       "PaymentGateways": {
         "title": "PaymentGateways",
         "type": "object",
@@ -2256,7 +2322,6 @@
           }
         },
         "required": [
-          "id",
           "name",
           "gatewayType",
           "enabled"
@@ -2266,11 +2331,8 @@
       "NewPaymentGateways": {
         "title": "NewPaymentGateways",
         "type": "object",
-        "description": "(tsType: PaymentGateways, schemaOptions: { title: 'NewPaymentGateways' })",
+        "description": "(tsType: Omit<PaymentGateways, 'id'>, schemaOptions: { title: 'NewPaymentGateways', exclude: [ 'id' ] })",
         "properties": {
-          "id": {
-            "type": "string"
-          },
           "name": {
             "type": "string"
           },
@@ -2282,13 +2344,12 @@
           }
         },
         "required": [
-          "id",
           "name",
           "gatewayType",
           "enabled"
         ],
         "additionalProperties": false,
-        "x-typescript-type": "PaymentGateways"
+        "x-typescript-type": "Omit<PaymentGateways, 'id'>"
       },
       "PaymentGatewaysWithRelations": {
         "title": "PaymentGatewaysWithRelations",
@@ -2309,7 +2370,6 @@
           }
         },
         "required": [
-          "id",
           "name",
           "gatewayType",
           "enabled"
@@ -2359,7 +2419,6 @@
           }
         },
         "required": [
-          "id",
           "paymentGatewayId",
           "name",
           "template",
@@ -2370,11 +2429,8 @@
       "NewTemplates": {
         "title": "NewTemplates",
         "type": "object",
-        "description": "(tsType: Templates, schemaOptions: { title: 'NewTemplates' })",
+        "description": "(tsType: Omit<Templates, 'id'>, schemaOptions: { title: 'NewTemplates', exclude: [ 'id' ] })",
         "properties": {
-          "id": {
-            "type": "string"
-          },
           "paymentGatewayId": {
             "type": "string"
           },
@@ -2389,14 +2445,13 @@
           }
         },
         "required": [
-          "id",
           "paymentGatewayId",
           "name",
           "template",
           "type"
         ],
         "additionalProperties": false,
-        "x-typescript-type": "Templates"
+        "x-typescript-type": "Omit<Templates, 'id'>"
       },
       "TemplatesWithRelations": {
         "title": "TemplatesWithRelations",
@@ -2420,7 +2475,6 @@
           }
         },
         "required": [
-          "id",
           "paymentGatewayId",
           "name",
           "template",
@@ -2494,7 +2548,6 @@
           }
         },
         "required": [
-          "id",
           "totalAmount",
           "status"
         ],
@@ -2503,11 +2556,8 @@
       "NewSubscriptions": {
         "title": "NewSubscriptions",
         "type": "object",
-        "description": "(tsType: Subscriptions, schemaOptions: { title: 'NewSubscriptions' })",
+        "description": "(tsType: Omit<Subscriptions, 'id'>, schemaOptions: { title: 'NewSubscriptions', exclude: [ 'id' ] })",
         "properties": {
-          "id": {
-            "type": "string"
-          },
           "totalAmount": {
             "type": "number"
           },
@@ -2542,12 +2592,11 @@
           }
         },
         "required": [
-          "id",
           "totalAmount",
           "status"
         ],
         "additionalProperties": false,
-        "x-typescript-type": "Subscriptions"
+        "x-typescript-type": "Omit<Subscriptions, 'id'>"
       },
       "SubscriptionsWithRelations": {
         "title": "SubscriptionsWithRelations",
@@ -2591,7 +2640,6 @@
           }
         },
         "required": [
-          "id",
           "totalAmount",
           "status"
         ],

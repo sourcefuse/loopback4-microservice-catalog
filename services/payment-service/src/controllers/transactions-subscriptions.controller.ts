@@ -6,8 +6,11 @@ import {inject} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {get, param, Response, RestBindings} from '@loopback/rest';
 
-import {CONTENT_TYPE} from '@sourceloop/core';
+import {CONTENT_TYPE, OPERATION_SECURITY_SPEC} from '@sourceloop/core';
+import {authenticate, STRATEGY} from 'loopback4-authentication';
+import {authorize} from 'loopback4-authorization';
 import {TemplateName, TemplateType} from '../enums';
+import {PermissionKey} from '../enums/permission-key.enum';
 import {GatewayBindings, IGateway} from '../providers';
 import {SubscriptionsRepository, TemplatesRepository} from '../repositories';
 
@@ -23,8 +26,15 @@ export class TransactionSubscriptionsController {
     @repository(SubscriptionsRepository)
     private readonly subscriptionRepository: SubscriptionsRepository,
   ) {}
-
+  @authenticate(STRATEGY.BEARER)
+  @authorize({
+    permissions: [
+      PermissionKey.UpdateSubscriptions,
+      PermissionKey.UpdateSubscriptionsNum,
+    ],
+  })
   @get(`/transactions/subscription/{id}`, {
+    security: OPERATION_SECURITY_SPEC,
     responses: {
       [redirectStatusCode]: {
         description: 'Array of Transactions model instances',
