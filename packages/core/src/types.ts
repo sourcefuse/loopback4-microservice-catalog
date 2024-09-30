@@ -23,6 +23,7 @@ export interface CoreConfig {
   tenantContextEncryptionKey?: string;
   openapiSpec?: Record<string, unknown>;
   tenantContextMiddleware?: boolean;
+  disablei18n?: boolean;
 
   /**
    * In order to hide or alter some path from the definition provided by swagger stats, `modifyPathDefinition`

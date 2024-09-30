@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.0.1 (2024-09-26)</small>
+
+**Note:** Version bump only for package @sourceloop/feature-toggle-service
+
+
+
+
+
 ## 3.0.0 (2024-08-05)
 
 * feat(feature-toggle): dummy commit to bump version (#2146) ([45df834](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/45df834)), closes [#2146](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2146) [#2141](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2141)

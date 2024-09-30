@@ -1,5 +1,5 @@
 CREATE SCHEMA IF NOT EXISTS core;
-
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE  TABLE core.dashboards ( 
 	id                   uuid DEFAULT uuid_generate_v4() NOT NULL  ,

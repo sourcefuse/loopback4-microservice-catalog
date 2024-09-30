@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>14.1.2 (2024-09-26)</small>
+
+* fix(core): createdon modifiedon can not be changed via input (#2159) ([411dd76](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/411dd76)), closes [#2159](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2159) [#2158](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2158) [#2158](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2158) [#2158](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2158)
+* fix(core): updated condition to set i18n localization (#2166) ([0aeb985](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0aeb985)), closes [#2166](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2166) [#2165](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2165)
+
+
+
+
+
 ## <small>14.1.1 (2024-08-05)</small>
 
 * chore(all-services): ping api in sandbox examples (#2134) ([b69cda1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b69cda1)), closes [#2134](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2134) [#2133](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2133) [#2133](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2133)

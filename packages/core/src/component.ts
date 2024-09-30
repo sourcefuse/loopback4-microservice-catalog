@@ -67,7 +67,9 @@ export class CoreComponent implements Component {
       this.application.component(SwaggerAuthenticationComponent);
     }
     // Configure locale provider
-    if (this.coreConfig?.configObject) {
+    if (this.coreConfig?.disablei18n) {
+      // do nothing
+    } else if (this.coreConfig?.configObject) {
       configure({...this.coreConfig.configObject, register: this.localeObj});
     } else {
       configure({
@@ -86,7 +88,7 @@ export class CoreComponent implements Component {
         },
         register: this.localeObj,
         directoryPermissions: '777',
-        directory: `${__dirname}/../locales`,
+        directory: process.env.LOCALE_PATH ?? `${__dirname}/../locales`,
         // sonarignore:start
         /* eslint-disable @typescript-eslint/no-explicit-any */
         objectNotation: '->' as any,
