@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 3.0.0 (2024-09-30)
+
+* fix(reporting-service): fix migration folder path (#2171) ([9d0a8cf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9d0a8cf)), closes [#2171](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2171) [#2170](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2170)
+* feat(reporting-service): supports subqueries, multilevel function, da… (#2071) ([41247d2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/41247d2)), closes [#2071](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2071)
+
+
+
+
+
 ## <small>2.1.4 (2024-09-26)</small>
 
 **Note:** Version bump only for package @sourceloop/reporting-service
