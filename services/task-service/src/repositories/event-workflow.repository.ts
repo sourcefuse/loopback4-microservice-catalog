@@ -16,7 +16,7 @@ export class EventWorkflowRepository extends DefaultUserModifyCrudRepository<
     @inject(`datasources.${TaskDbSourceName}`)
     dataSource: juggler.DataSource,
     @inject.getter(AuthenticationBindings.CURRENT_USER)
-    private userGetter: Getter<IAuthUserWithPermissions>,
+    private readonly userGetter: Getter<IAuthUserWithPermissions>,
     @inject('models.EventWorkflow')
     private readonly eventWorkflow: typeof Entity & {prototype: EventWorkflow},
   ) {

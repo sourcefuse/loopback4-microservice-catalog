@@ -30,9 +30,9 @@ export class DataSetsService {
     @repository(DataSetsRepository)
     private readonly dataSetsRepo: DataSetsRepository,
     @inject(ReportingServiceComponentBindings.DATA_STORE_ADAPTER)
-    private dataStoreAdapter: DataStoreAdapter,
+    private readonly dataStoreAdapter: DataStoreAdapter,
     @inject(ReportingServiceComponentBindings.QUERY_UTILITY)
-    private queryUtility: QueryUtilityInterface,
+    private readonly queryUtility: QueryUtilityInterface,
     @inject(ReportingServiceComponentBindings.SQL_VALIDATOR, {optional: true})
     private readonly sqlValidator: SqlValidatorInterface,
     @inject(ReportingServiceComponentBindings.DATA_SET_CONFIG, {optional: true})

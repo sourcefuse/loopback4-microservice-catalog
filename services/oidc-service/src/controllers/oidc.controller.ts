@@ -16,13 +16,14 @@ import {OIDCServiceBindings} from '../keys';
 
 export class OidcController {
   constructor(
-    @inject(RestBindings.Http.CONTEXT) private requestContext: RequestContext,
+    @inject(RestBindings.Http.CONTEXT)
+    private readonly requestContext: RequestContext,
     @inject(OIDCServiceBindings.OIDC_PROVIDER)
-    private oidcProvider: OidcProvider,
+    private readonly oidcProvider: OidcProvider,
     @inject(OIDCServiceBindings.LoginTemplate)
-    private loginTemplateFilePath: string,
+    private readonly loginTemplateFilePath: string,
     @inject(OIDCServiceBindings.InteractionTemplate)
-    private interactionTemplateFilePath: string,
+    private readonly interactionTemplateFilePath: string,
     @repository(UserRepository)
     protected readonly userRepository: UserRepository,
   ) {}

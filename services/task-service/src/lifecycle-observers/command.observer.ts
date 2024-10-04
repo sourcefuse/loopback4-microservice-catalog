@@ -19,7 +19,7 @@ export class CommandObserver implements LifeCycleObserver {
     @inject(LOGGER.LOGGER_INJECT)
     private readonly logger: ILogger,
     @inject(TaskServiceBindings.COMMANDS)
-    private commandsCtors: Constructor<ICommand & {topic: string}>[],
+    private readonly commandsCtors: Constructor<ICommand & {topic: string}>[],
     @inject.context()
     private readonly ctx: Context,
     @inject(WorkflowServiceBindings.WorkerImplementationFunction)

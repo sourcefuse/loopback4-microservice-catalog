@@ -129,7 +129,7 @@ export class UserTenantServiceComponent implements Component {
   providers?: ProviderMap = {};
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
-    private application: RestApplication,
+    private readonly application: RestApplication,
     @inject(UserTenantServiceComponentBindings.Config, {optional: true})
     private readonly config?: IUserServiceConfig,
   ) {
