@@ -15,13 +15,16 @@ npm install @sourceloop/file-utils
 - bind the component and add the require bindings.
 
 ```ts
-this.component(FileUtilComponent);
+
 
 this.bind(AWSS3Bindings.Config).to({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   region: process.env.AWS_REGION,
 } as AwsS3Config);
+
+this.component(FileUtilComponent);
+
 
 ```
 
