@@ -2,7 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {inject} from '@loopback/context';
+import { inject } from '@loopback/context';
 import {
   ExpressRequestHandler,
   FindRoute,
@@ -16,8 +16,8 @@ import {
   Send,
   SequenceHandler,
 } from '@loopback/rest';
-import {ILogger, LOGGER, SFCoreBindings} from '@sourceloop/core';
-import {isString} from 'lodash';
+import { CoreConfig, ILogger, LOGGER, SFCoreBindings } from '@sourceloop/core';
+import { isString } from 'lodash';
 import {
   AuthErrorKeys,
   AuthenticateFn,
@@ -29,8 +29,8 @@ import {
   AuthorizeFn,
 } from 'loopback4-authorization';
 
-import {AuthClient} from './models';
-import {AuthUser} from './modules/auth';
+import { AuthClient } from './models';
+import { AuthUser } from './modules/auth';
 
 const SequenceActions = RestBindings.SequenceActions;
 const isJsonString = (str: string) => {
@@ -47,9 +47,9 @@ export class MySequence implements SequenceHandler {
    * Optional invoker for registered middleware in a chain.
    * To be injected via SequenceActions.INVOKE_MIDDLEWARE.
    */
-  @inject(SequenceActions.INVOKE_MIDDLEWARE, {optional: true})
+  @inject(SequenceActions.INVOKE_MIDDLEWARE, { optional: true })
   protected invokeMiddleware: InvokeMiddleware = () => false;
-  @inject(SFCoreBindings.EXPRESS_MIDDLEWARES, {optional: true})
+  @inject(SFCoreBindings.EXPRESS_MIDDLEWARES, { optional: true })
   protected expressMiddlewares: ExpressRequestHandler[] = [];
 
   constructor(
@@ -69,16 +69,17 @@ export class MySequence implements SequenceHandler {
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @inject(SFCoreBindings.i18n)
     protected i18n: i18nAPI, // sonarignore:end
-  ) {}
+    @inject(SFCoreBindings.config, { optional: true })
+    private readonly coreConfig: CoreConfig,
+  ) { }
 
   async handle(context: RequestContext) {
     const requestTime = Date.now();
     try {
-      const {request, response} = context;
+      const { request, response } = context;
       response.removeHeader('x-powered-by');
       this.logger.info(
-        `Request ${request.method} ${
-          request.url
+        `Request ${request.method} ${request.url
         } started at ${requestTime.toString()}.
         Request Details
         Referer = ${request.headers.referer}
@@ -115,42 +116,16 @@ export class MySequence implements SequenceHandler {
       this.send(response, result);
     } catch (err) {
       this.logger.error(
-        `Request ${context.request.method} ${
-          context.request.url
+        `Request ${context.request.method} ${context.request.url
         } errored out. Error :: ${JSON.stringify(err)} ${err}`,
       );
 
       const error = this._rejectErrors(err);
-      if (
-        // sonarignore:start
-        !(
-          error.message &&
-          [
-            AuthErrorKeys.TokenInvalid,
-            AuthErrorKeys.TokenExpired,
-            'TokenExpired',
-          ].includes(
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            (error.message as any).message,
-          )
-        )
-        // sonarignore:end
-      ) {
-        if (isString(error.message)) {
-          error.message = this.i18n.__({
-            phrase: error.message,
-            locale: process.env.LOCALE ?? 'en',
-          });
-        } else {
-          error.message =
-            error.message || 'Some error occured. Please try again';
-        }
-      }
+      this._handleErrorMessage(error);
       this.reject(context, error);
     } finally {
       this.logger.info(
-        `Request ${context.request.method} ${
-          context.request.url
+        `Request ${context.request.method} ${context.request.url
         } Completed in ${Date.now() - requestTime}ms`,
       );
     }
@@ -197,6 +172,30 @@ export class MySequence implements SequenceHandler {
       );
     } else {
       return err as Error;
+    }
+  }
+
+  private _handleErrorMessage(error: Error) {
+    if (
+      // sonarignore:start
+      !(
+        error.message &&
+        [
+          AuthErrorKeys.TokenInvalid,
+          AuthErrorKeys.TokenExpired,
+          'TokenExpired',
+        ].includes((error.message as any).message)
+      )
+      // sonarignore:end
+    ) {
+      if (isString(error.message) && !this.coreConfig?.disablei18n) {
+        error.message = this.i18n.__({
+          phrase: error.message,
+          locale: process.env.LOCALE ?? 'en',
+        });
+      } else {
+        error.message = error.message || 'Some error occured. Please try again';
+      }
     }
   }
 }
