@@ -29,13 +29,16 @@ USAGE
 ## Commands
 
 <!-- commands -->
-* [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
-* [`sl cdk`](#sl-cdk)
-* [`sl extension [NAME]`](#sl-extension-name)
-* [`sl help [COMMAND]`](#sl-help-command)
-* [`sl microservice [NAME]`](#sl-microservice-name)
-* [`sl scaffold [NAME]`](#sl-scaffold-name)
-* [`sl update`](#sl-update)
+- [Building](#building)
+- [Usage](#usage)
+- [Commands](#commands)
+- [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
+- [`sl cdk`](#sl-cdk)
+- [`sl extension [NAME]`](#sl-extension-name)
+- [`sl help [COMMAND]`](#sl-help-command)
+- [`sl microservice [NAME]`](#sl-microservice-name)
+- [`sl scaffold [NAME]`](#sl-scaffold-name)
+- [`sl update`](#sl-update)
 
 ## `sl autocomplete [SHELL]`
 
