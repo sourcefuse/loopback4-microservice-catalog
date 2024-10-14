@@ -1,9 +1,9 @@
-import { BindingScope, Context, inject, injectable } from '@loopback/core';
-import { AnyObject } from '@loopback/repository';
-import { IAuthUserWithPermissions, ILogger, LOGGER } from '@sourceloop/core';
-import { createHash } from 'crypto';
-import { DEFAULT_CACHE_OPTIONS } from '../constants';
-import { AUTH_USER_KEY, CacheComponentBindings } from '../keys';
+import {BindingScope, Context, inject, injectable} from '@loopback/core';
+import {AnyObject} from '@loopback/repository';
+import {IAuthUserWithPermissions, ILogger, LOGGER} from '@sourceloop/core';
+import {createHash} from 'crypto';
+import {DEFAULT_CACHE_OPTIONS} from '../constants';
+import {AUTH_USER_KEY, CacheComponentBindings} from '../keys';
 import {
   CacheMethod,
   ICacheComponentOptions,
@@ -48,7 +48,7 @@ export class CacheService implements ICacheService {
     @inject(CacheComponentBindings.CacheConfig)
     private readonly configuration: ICacheComponentOptions &
       typeof DEFAULT_CACHE_OPTIONS,
-    @inject(AUTH_USER_KEY, { optional: true })
+    @inject(AUTH_USER_KEY, {optional: true})
     private readonly user?: IAuthUserWithPermissions,
   ) {
     configuration = {
