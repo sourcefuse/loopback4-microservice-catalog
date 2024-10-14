@@ -7,8 +7,8 @@ strategy key and the current context. */
 export class DataStoreStrategyProvider implements Provider<DataStoreAdapter> {
   constructor(
     @inject(ReportingServiceComponentBindings.DATA_STORE_ADAPTER)
-    private strategyKey: string,
-    @inject.context() private ctx: Context,
+    private readonly strategyKey: string,
+    @inject.context() private readonly ctx: Context,
   ) {}
 
   async value(): Promise<DataStoreAdapter> {

@@ -10,7 +10,7 @@ import {IFileValidator, ParsedMultipartData} from '../types';
 export class FileValidatorService {
   constructor(
     @extensions()
-    private validatorGetter: Getter<IFileValidator[]>,
+    private readonly validatorGetter: Getter<IFileValidator[]>,
   ) {}
   async validateParsedData(parsed: ParsedMultipartData): Promise<void> {
     const {file} = parsed;

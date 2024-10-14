@@ -16,7 +16,7 @@ export class EndTaskCommand implements ICommand {
   topic = 'end-task';
   parameters: CamundaTaskParameters;
   logger: ILogger;
-  constructor(private context: Context) {
+  constructor(private readonly context: Context) {
     this.logger = context.getSync(LOGGER.LOGGER_INJECT);
   }
   async execute(): Promise<void> {

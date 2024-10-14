@@ -24,22 +24,22 @@ processing incoming payloads, applying column transformations, and validating an
 export class ReportIngestionMessagingService {
   constructor(
     @inject('repositories.StateTrackingRepository')
-    private stateTrackingRepo: StateTrackingRepository,
+    private readonly stateTrackingRepo: StateTrackingRepository,
     @inject('services.DefaultListenerService')
-    private defaultListenerService: DefaultListenerService,
+    private readonly defaultListenerService: DefaultListenerService,
     @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
     @inject(ReportingServiceComponentBindings.DATA_STORE_ADAPTER)
-    private dataStoreAdapter: DataStoreAdapter,
+    private readonly dataStoreAdapter: DataStoreAdapter,
     @inject(ReportingServiceComponentBindings.INGESTION_MAPPINGS_LIST)
-    private validIngestionMappings: Record<string, IngestionMapping>,
+    private readonly validIngestionMappings: Record<string, IngestionMapping>,
     @inject(ReportingServiceComponentBindings.MAPPING_WITHOUT_CUSTOM_LISTENERS)
-    private mappingsWithoutCustomListeners: Set<string>,
+    private readonly mappingsWithoutCustomListeners: Set<string>,
     @inject(ReportingServiceComponentBindings.SERVICE_MAPPING)
-    private serviceMapping: Record<string, IngestionHandler>,
+    private readonly serviceMapping: Record<string, IngestionHandler>,
     @inject(ReportingServiceComponentBindings.CUSTOM_TYPE_CONVERTER_MAPPING)
-    private customTypeConverters: Record<string, CustomTypeConvertor>,
+    private readonly customTypeConverters: Record<string, CustomTypeConvertor>,
     @inject(ReportingServiceComponentBindings.DATA_TYPE_MAP, {optional: true})
-    private dataTypeMap?: Record<string, DataTypeMapping>,
+    private readonly dataTypeMap?: Record<string, DataTypeMapping>,
   ) {}
 
   /**

@@ -7,7 +7,7 @@ import {StateTrackingRepository} from '../repositories/state-tracking.repository
 export class StateTrackingService {
   constructor(
     @repository(StateTrackingRepository)
-    private stateTrackingRepo: StateTrackingRepository,
+    private readonly stateTrackingRepo: StateTrackingRepository,
   ) {}
 
   /**

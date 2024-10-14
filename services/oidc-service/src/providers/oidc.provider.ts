@@ -51,9 +51,9 @@ const cookies = {
 export class OidcProviderProvider implements Provider<OidcProvider> {
   constructor(
     @inject(`repositories.AuthClientRepository`)
-    private authClientRepository: AuthClientRepository,
+    private readonly authClientRepository: AuthClientRepository,
     @inject(OIDCServiceBindings.FIND_ACCOUNT_PROVIDER)
-    private findAccountProvider: FindAccountProvider,
+    private readonly findAccountProvider: FindAccountProvider,
     @repository(UserRepository)
     protected readonly userRepository: UserRepository,
   ) {}
