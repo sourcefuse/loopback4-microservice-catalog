@@ -14,7 +14,7 @@ export class UserTaskRepository extends SequelizeUserModifyCrudRepository<
     @inject(`datasources.${TaskDbSourceName}`)
     dataSource: SequelizeDataSource,
     @inject.getter(AuthenticationBindings.CURRENT_USER)
-    private userGetter: Getter<IAuthUserWithPermissions>,
+    private readonly userGetter: Getter<IAuthUserWithPermissions>,
     @inject('models.UserTask')
     private readonly userTask: typeof Entity & {prototype: UserTask},
   ) {

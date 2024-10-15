@@ -22,7 +22,7 @@ const debug = debugFactory('loopback:socketio:controller');
 export class SocketIoController {
   constructor(
     @socketio.socket() // Equivalent to `@inject('ws.socket')`
-    private socket: Socket,
+    private readonly socket: Socket,
   ) {}
 
   /**
@@ -80,7 +80,6 @@ export class SocketIoController {
   registerChannel(msg: string[]) {
     if (Array.isArray(msg) && msg.length > 0) {
       msg.forEach(item => {
-        // eslint-disable-next-line @typescript-eslint/no-floating-promises
         this.socket.join(item);
       });
     } else {

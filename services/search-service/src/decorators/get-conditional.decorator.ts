@@ -9,9 +9,11 @@ export function getOnCondition(
   path: string,
   spec?: OperationObject | undefined,
 ) {
+  // sonarignore:start
   if (condition) {
     return get(path, spec);
   } else {
-    return () => {}; //NOSONAR
+    return () => {};
   }
+  // sonarignore:end
 }

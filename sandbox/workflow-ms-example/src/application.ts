@@ -48,10 +48,11 @@ export class WorkflowHelloworldApplication extends BootMixin(
     this.component(WorkflowServiceComponent);
 
     this.bind(WorkflowServiceBindings.WorkflowManager).toProvider(BpmnProvider);
+    // sonarignore:start
     this.registerWorkers().catch(err => {
       throw new Error('Error while registering workers.');
     });
-
+    // sonarignore:end
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here
     this.bootOptions = {
