@@ -37,17 +37,18 @@ import {
 export class RestServiceModifier<T extends Entity, S extends Entity>
   implements Provider<CrudRestServiceModifier<T>>
 {
-  private token: string;
+  private readonly token: string;
   private resolvers: IRestResolver<T, S>[];
   constructor(
     @extensions()
-    private resolverGetter: Getter<IRestResolver<T, S>[]>,
+    private readonly resolverGetter: Getter<IRestResolver<T, S>[]>,
     @inject(ProxyBuilderBindings.TOKEN_VALIDATOR)
-    private _validateToken: (
+    private readonly _validateToken: (
       context: RestServiceModifier<T, S>,
       token?: string,
     ) => string,
-    @inject(RestBindings.Http.REQUEST, {optional: true}) private req?: Request,
+    @inject(RestBindings.Http.REQUEST, {optional: true})
+    private readonly req?: Request,
   ) {
     if (req?.headers.authorization) {
       this.token = req.headers.authorization;

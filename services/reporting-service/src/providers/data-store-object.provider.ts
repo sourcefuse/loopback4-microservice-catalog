@@ -12,8 +12,8 @@ export class DataStoreObjectProvider
 {
   constructor(
     @inject(ReportingServiceComponentBindings.DATA_STORE_CONFIGURATION)
-    private config: DataStoreConfiguration,
-    @inject.context() private ctx: Context,
+    private readonly config: DataStoreConfiguration,
+    @inject.context() private readonly ctx: Context,
   ) {}
 
   /**

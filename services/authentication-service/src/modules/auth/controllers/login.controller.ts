@@ -131,7 +131,7 @@ export class LoginController {
     private readonly actorKey: ActorId,
     @inject.context() private readonly ctx: RequestContext,
     @inject(UserValidationServiceBindings.VALIDATE_USER)
-    private userValidationProvider: UserValidationFn,
+    private readonly userValidationProvider: UserValidationFn,
     @inject(AuthCodeBindings.JWT_VERIFIER.key)
     private readonly jwtVerifier: JWTVerifierFn<AnyObject>,
     @inject(AuthServiceBindings.MarkUserActivity, {optional: true})

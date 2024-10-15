@@ -1,17 +1,17 @@
 import {Getter, extensionPoint, extensions} from '@loopback/core';
+import {HttpErrors} from '@loopback/rest';
 import {
   FeatureFlagMetadata,
   FeatureHandler,
   HANDLER_EXTENSION_POINT_NAME,
   IAuthUserWithDisabledFeat,
 } from '../types';
-import {HttpErrors} from '@loopback/rest';
 
 @extensionPoint(HANDLER_EXTENSION_POINT_NAME)
 export class FeatureHandlerService {
   constructor(
     @extensions()
-    private getHandlers: Getter<FeatureHandler[]>,
+    private readonly getHandlers: Getter<FeatureHandler[]>,
   ) {}
 
   async findHandler(handlerName: string): Promise<FeatureHandler | undefined> {
