@@ -4,9 +4,11 @@
 // https://opensource.org/licenses/MIT
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 export function authenticateOnCondition(condition = false) {
+  // sonarignore:start
   if (condition) {
     return authenticate(STRATEGY.BEARER);
   } else {
-    return () => {}; //NOSONAR
+    return () => {};
   }
+  // sonarignore:end
 }
