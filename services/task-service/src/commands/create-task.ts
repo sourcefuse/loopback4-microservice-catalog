@@ -21,7 +21,7 @@ export class CreateTaskCommand implements ICommand {
   topic = 'create-tasks';
   parameters: CamundaTaskParameters;
   logger: ILogger;
-  constructor(private context: Context) {
+  constructor(private readonly context: Context) {
     this.logger = context.getSync(LOGGER.LOGGER_INJECT);
   }
   async execute(): Promise<void> {

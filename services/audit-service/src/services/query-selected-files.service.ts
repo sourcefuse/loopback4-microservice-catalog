@@ -19,7 +19,7 @@ export class QuerySelectedFilesProvider
 {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
-    private application: AuditServiceApplication,
+    private readonly application: AuditServiceApplication,
   ) {}
 
   value(): QuerySelectedFilesFn {

@@ -22,11 +22,11 @@ services and mappings for a reporting service. */
 export class ReportingServiceInitializer implements LifeCycleObserver {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
-    private application: RestApplication,
+    private readonly application: RestApplication,
     @inject(LOGGER.LOGGER_INJECT)
     private readonly logger: ILogger,
     @repository(IngestionMappingsRepository)
-    private ingestionMappingsRepo: IngestionMappingsRepository,
+    private readonly ingestionMappingsRepo: IngestionMappingsRepository,
   ) {}
 
   /**

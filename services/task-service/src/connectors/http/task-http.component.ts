@@ -9,6 +9,7 @@ import {
 import {Class, Model, Repository} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {TaskServiceBindings} from '../../keys';
+import {TaskServiceConfig} from '../../types';
 import {
   ClientAppController,
   EventTriggerController,
@@ -24,7 +25,6 @@ import {
   WebhookSubscriptionRepository as WebhookSubscriptionSequelizeRepository,
 } from './repositories/sequelize';
 import {ApiKeyService, WebhookService} from './services';
-import {TaskServiceConfig} from '../../types';
 
 export class TaskHttpComponent implements Component {
   controllers?: ControllerClass[];
@@ -32,7 +32,7 @@ export class TaskHttpComponent implements Component {
   services?: ServiceOrProviderClass[];
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
-    private app: RestApplication,
+    private readonly app: RestApplication,
     @inject(TaskServiceBindings.CONFIG, {optional: true})
     private readonly config?: TaskServiceConfig,
   ) {

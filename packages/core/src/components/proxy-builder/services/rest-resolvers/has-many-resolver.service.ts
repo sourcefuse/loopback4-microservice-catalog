@@ -29,7 +29,7 @@ export class HasManyRestResolver<T extends Entity, S extends Entity>
 {
   constructor(
     @inject.context()
-    private context: Context,
+    private readonly context: Context,
   ) {}
   type: RelationType = RelationType.hasMany;
   async resolve({

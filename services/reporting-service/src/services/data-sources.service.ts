@@ -19,9 +19,9 @@ export class DataSourcesService {
    */
   constructor(
     @inject(ReportingServiceComponentBindings.DATA_STORE_ADAPTER)
-    private dataStoreAdapter: DataStoreAdapter,
+    private readonly dataStoreAdapter: DataStoreAdapter,
     @inject(ReportingServiceComponentBindings.DATA_TYPE_MAP, {optional: true})
-    private dataTypeMap: Record<string, DataTypeMapping> | undefined,
+    private readonly dataTypeMap: Record<string, DataTypeMapping> | undefined,
   ) {}
 
   /**

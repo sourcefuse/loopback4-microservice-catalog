@@ -80,7 +80,7 @@ type LambdaConfig = IacConfig & {
 const filesToKeep: string[] = [];
 
 export default class CdkGenerator extends BaseGenerator<CdkOptions> {
-  private remoteConfig: RemoteConfig = {
+  private readonly remoteConfig: RemoteConfig = {
     owner: 'sourcefuse',
     repo: 'arc-lambda',
     tag: '1.2.0',

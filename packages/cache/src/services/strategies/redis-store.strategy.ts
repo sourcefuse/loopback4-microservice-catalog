@@ -1,19 +1,19 @@
 import {BindingScope, Context, inject, injectable} from '@loopback/core';
-import {ICacheComponentOptions, ICacheStore} from '../../types';
 import {juggler} from '@loopback/repository';
 import {CacheComponentBindings} from '../../keys';
+import {ICacheComponentOptions, ICacheStore} from '../../types';
 
 @injectable({
   scope: BindingScope.SINGLETON,
 })
 export class RedisStoreStrategy implements ICacheStore {
   public datasource: juggler.DataSource;
-  private decoder = new TextDecoder('utf-8');
+  private readonly decoder = new TextDecoder('utf-8');
   constructor(
     @inject(CacheComponentBindings.CacheConfig)
-    private configuration: ICacheComponentOptions,
+    private readonly configuration: ICacheComponentOptions,
     @inject.context()
-    private context: Context,
+    private readonly context: Context,
   ) {
     if (!configuration.datasourceName) {
       throw new Error('Datasource name is required for redis caching strategy');

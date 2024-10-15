@@ -28,7 +28,7 @@ export class BelongsToRestResolver<T extends Entity, S extends Entity>
   type: RelationType = RelationType.belongsTo;
   constructor(
     @inject.context()
-    private context: Context,
+    private readonly context: Context,
   ) {}
   /**
    * It takes the results of the query, finds the foreign key in each result, and then uses that key to

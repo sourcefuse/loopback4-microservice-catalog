@@ -1,4 +1,9 @@
 import {BindingScope, Context, inject, injectable} from '@loopback/core';
+import {AnyObject} from '@loopback/repository';
+import {IAuthUserWithPermissions, ILogger, LOGGER} from '@sourceloop/core';
+import {createHash} from 'crypto';
+import {DEFAULT_CACHE_OPTIONS} from '../constants';
+import {AUTH_USER_KEY, CacheComponentBindings} from '../keys';
 import {
   CacheMethod,
   ICacheComponentOptions,
@@ -7,21 +12,16 @@ import {
   ICacheStore,
   ICachedMethodOptions,
 } from '../types';
-import {createHash} from 'crypto';
-import {IAuthUserWithPermissions, ILogger, LOGGER} from '@sourceloop/core';
-import {AUTH_USER_KEY, CacheComponentBindings} from '../keys';
-import {DEFAULT_CACHE_OPTIONS} from '../constants';
-import {AnyObject} from '@loopback/repository';
 
 @injectable({
   scope: BindingScope.TRANSIENT,
 })
 export class CacheService implements ICacheService {
-  private deletionMarkerPrefix = 'deletion-marker-';
-  private insertionMarkerPrefix = 'insertion-marker-';
-  private store: ICacheStore;
+  private readonly deletionMarkerPrefix = 'deletion-marker-';
+  private readonly insertionMarkerPrefix = 'insertion-marker-';
+  private readonly store: ICacheStore;
   // refer this - https://gist.github.com/saitonakamura/d51aa672c929e35cc81fa5a0e31f12a9
-  private replacer = (val: AnyObject, cache?: WeakSet<AnyObject>) => {
+  private readonly replacer = (val: AnyObject, cache?: WeakSet<AnyObject>) => {
     cache = cache ?? new WeakSet();
 
     if (val && typeof val == 'object') {
@@ -44,9 +44,9 @@ export class CacheService implements ICacheService {
     @inject(LOGGER.LOGGER_INJECT)
     public logger: ILogger,
     @inject.context()
-    private context: Context,
+    private readonly context: Context,
     @inject(CacheComponentBindings.CacheConfig)
-    private configuration: ICacheComponentOptions &
+    private readonly configuration: ICacheComponentOptions &
       typeof DEFAULT_CACHE_OPTIONS,
     @inject(AUTH_USER_KEY, {optional: true})
     private readonly user?: IAuthUserWithPermissions,
