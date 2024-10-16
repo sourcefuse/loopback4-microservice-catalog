@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/scheduler-service",
-  "version": "12.1.1",
+  "version": "12.1.2",
   "description": "Scheduler Microservice.",
   "keywords": [
     "loopback-extension",
@@ -76,7 +76,7 @@
     "@loopback/rest-explorer": "^7.0.2",
     "@loopback/service-proxy": "^7.0.2",
     "@sourceloop/audit-log": "^8.0.2",
-    "@sourceloop/core": "^14.2.1",
+    "@sourceloop/core": "^14.2.2",
     "dotenv": "^16.0.3",
     "dotenv-extended": "^2.9.0",
     "jsonwebtoken": "^9.0.0",
