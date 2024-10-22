@@ -7,8 +7,8 @@ import {juggler, Model} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {MySqlQueryBuilder, PsqlQueryBuilder} from '../classes';
 import {CONNECTORS, Errors} from '../const';
-import {SearchServiceBindings} from '../keys';
-import {SearchFunctionType, SearchServiceConfig} from '../types';
+import {DATASOURCE_NAME, SearchServiceBindings} from '../keys';
+import {SearchFunctionType} from '../types';
 import {ModelProviderFn} from './model.provider';
 
 @injectable({scope: BindingScope.SINGLETON})
@@ -16,9 +16,7 @@ export class SearchProvider<T extends Model>
   implements Provider<SearchFunctionType<T>>
 {
   constructor(
-    @inject(SearchServiceBindings.Config)
-    private readonly config: SearchServiceConfig<T>,
-    @inject(`datasources.${SearchServiceBindings.DATASOURCE_NAME}`)
+    @inject(`datasources.${DATASOURCE_NAME}`)
     private readonly datasource: juggler.DataSource,
     @inject(SearchServiceBindings.MySQLQueryBuilder)
     private readonly mySQLBuilder: typeof MySqlQueryBuilder,

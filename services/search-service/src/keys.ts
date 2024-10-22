@@ -12,7 +12,6 @@ export namespace SearchServiceBindings {
   export const modelProvider = BindingKey.create<ModelProviderFn>(
     'sf.search.modelprovider',
   );
-  export const DATASOURCE_NAME = 'SearchServiceDb';
   export const SearchFunction =
     BindingKey.create<SearchFunctionType<unknown>>('sf.search.function');
   export const MySQLQueryBuilder = BindingKey.create<typeof SearchQueryBuilder>(
@@ -30,3 +29,4 @@ export namespace SearchServiceBindings {
 }
 
 export const IGNORED_COLUMN = '-';
+export const DATASOURCE_NAME = 'SearchServiceDb';
