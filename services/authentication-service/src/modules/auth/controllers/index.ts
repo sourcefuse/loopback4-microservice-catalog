@@ -4,6 +4,7 @@ export * from './azure-login.controller';
 export * from './cognito-login.controller';
 export * from './facebook-login.controller';
 export * from './google-login.controller';
+export * from './identity-server.controller';
 export * from './instagram-login.controller';
 export * from './keycloak-login.controller';
 export * from './login.controller';

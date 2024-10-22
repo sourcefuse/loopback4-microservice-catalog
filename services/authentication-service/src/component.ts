@@ -81,6 +81,8 @@ import {
   InstagramOauth2SignupProvider,
   InstagramPostVerifyProvider,
   InstagramPreVerifyProvider,
+  JwksJWTAsymmetricSignerProvider,
+  JwksJWTAsymmetricVerifierProvider,
   JWTAsymmetricSignerProvider,
   JWTAsymmetricVerifierProvider,
   JwtPayloadProvider,
@@ -120,6 +122,7 @@ import {repositories as sequelizeRepositories} from './repositories/sequelize';
 import {MySequence} from './sequence';
 import {
   ActiveUserFilterBuilderService,
+  IdpLoginService,
   LoginActivityHelperService,
   LoginHelperService,
   OtpService,
@@ -193,6 +196,7 @@ export class AuthenticationServiceComponent implements Component {
     this.application
       .bind('services.loginActivityHelperService')
       .toClass(LoginActivityHelperService);
+    this.application.bind('services.IdpLoginService').toClass(IdpLoginService);
 
     //set the userActivity to false by default
     this.application
@@ -367,6 +371,14 @@ export class AuthenticationServiceComponent implements Component {
       this.providers[AuthCodeBindings.JWT_VERIFIER.key] =
         JWTSymmetricVerifierProvider;
     }
+
+    if (this.authConfig?.useIdentityServer) {
+      this.providers[AuthCodeBindings.JWT_SIGNER.key] =
+        JwksJWTAsymmetricSignerProvider;
+      this.providers[AuthCodeBindings.JWT_VERIFIER.key] =
+        JwksJWTAsymmetricVerifierProvider;
+    }
+
     this.providers[AuthServiceBindings.JWTPayloadProvider.key] =
       JwtPayloadProvider;
     this.providers[AuthServiceBindings.ForgotPasswordHandler.key] =

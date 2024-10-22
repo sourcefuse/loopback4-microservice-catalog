@@ -51,7 +51,6 @@ import {
 import {
   AuthCodeBindings,
   AuthCodeGeneratorFn,
-  CodeReaderFn,
   JWTSignerFn,
   JWTVerifierFn,
   JwtPayloadFn,
@@ -71,7 +70,7 @@ import {
   UserRepository,
   UserTenantRepository,
 } from '../../../repositories';
-import {LoginHelperService} from '../../../services';
+import {IdpLoginService, LoginHelperService} from '../../../services';
 import {
   ActorId,
   ExternalTokens,
@@ -121,6 +120,8 @@ export class LoginController {
     private readonly getJwtPayload: JwtPayloadFn,
     @inject('services.LoginHelperService')
     private readonly loginHelperService: LoginHelperService,
+    @inject('services.IdpLoginService')
+    private readonly idpLoginService: IdpLoginService,
     @inject(AuthCodeBindings.AUTH_CODE_GENERATOR_PROVIDER)
     private readonly getAuthCode: AuthCodeGeneratorFn,
     @inject(AuthCodeBindings.JWT_SIGNER)
@@ -254,46 +255,8 @@ export class LoginController {
       ...ErrorCodes,
     },
   })
-  async getToken(
-    @requestBody() req: AuthTokenRequest,
-    @inject(AuthCodeBindings.CODEREADER_PROVIDER)
-    codeReader: CodeReaderFn,
-  ): Promise<TokenResponse> {
-    const authClient = await this.authClientRepository.findOne({
-      where: {
-        clientId: req.clientId,
-      },
-    });
-    if (!authClient) {
-      throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
-    }
-    try {
-      const code = await codeReader(req.code);
-      const payload = (await this.jwtVerifier(code, {
-        audience: req.clientId,
-      })) as ClientAuthCode<User, typeof User.prototype.id>;
-      if (payload.mfa) {
-        throw new HttpErrors.Unauthorized(AuthErrorKeys.UserVerificationFailed);
-      }
-
-      if (
-        payload.userId &&
-        !(await this.userRepo.firstTimeUser(payload.userId))
-      ) {
-        await this.userRepo.updateLastLogin(payload.userId);
-      }
-
-      return await this.createJWT(payload, authClient, LoginType.ACCESS);
-    } catch (error) {
-      this.logger.error(error);
-      if (error.name === 'TokenExpiredError') {
-        throw new HttpErrors.Unauthorized(AuthErrorKeys.CodeExpired);
-      } else if (HttpErrors.HttpError.prototype.isPrototypeOf(error)) {
-        throw error;
-      } else {
-        throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
-      }
-    }
+  async getToken(@requestBody() req: AuthTokenRequest): Promise<TokenResponse> {
+    return this.idpLoginService.generateToken(req);
   }
 
   @authorize({permissions: ['*']})
