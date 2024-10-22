@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.1.3 (2024-10-22)</small>
+
+**Note:** Version bump only for package @sourceloop/search-service
+
+
+
+
+
 ## <small>4.1.2 (2024-10-16)</small>
 
 * chore(ci-cd): resolve sonar issues (#2180) ([19c969b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/19c969b)), closes [#2180](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2180) [#2177](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2177)

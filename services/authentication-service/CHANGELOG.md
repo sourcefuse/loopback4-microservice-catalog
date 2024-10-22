@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>19.2.3 (2024-10-22)</small>
+
+**Note:** Version bump only for package @sourceloop/authentication-service
+
+
+
+
+
 ## <small>19.2.2 (2024-10-16)</small>
 
 * fix(authentication-service): add condition to set locale for error me… (#2174) ([72ee7a0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/72ee7a0)), closes [#2174](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2174) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

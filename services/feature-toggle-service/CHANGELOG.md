@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.1.3 (2024-10-22)</small>
+
+**Note:** Version bump only for package @sourceloop/feature-toggle-service
+
+
+
+
+
 ## <small>3.1.2 (2024-10-16)</small>
 
 **Note:** Version bump only for package @sourceloop/feature-toggle-service

@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/oidc-service",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "description": "Oidc microservice.",
   "keywords": [
     "loopback-extension",
@@ -63,7 +63,7 @@
     "@loopback/rest": "^14.0.2",
     "@loopback/rest-explorer": "^7.0.2",
     "@loopback/service-proxy": "^7.0.2",
-    "@sourceloop/core": "^14.2.2",
+    "@sourceloop/core": "^14.2.3",
     "base-64": "^1.0.0",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.20.0",
