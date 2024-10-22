@@ -44,8 +44,6 @@ export class DefaultUserModifyCrudRepository<
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     entity.createdBy = uid;
     entity.modifiedBy = uid;
-    entity.createdOn = new Date();
-    entity.modifiedOn = new Date();
     return super.create(entity, options);
   }
 
@@ -59,8 +57,6 @@ export class DefaultUserModifyCrudRepository<
     entities.forEach(entity => {
       entity.createdBy = uid ?? '';
       entity.modifiedBy = uid ?? '';
-      entity.createdOn = new Date();
-      entity.modifiedOn = new Date();
     });
     return super.createAll(entities, options);
   }
@@ -72,8 +68,6 @@ export class DefaultUserModifyCrudRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     entity.modifiedBy = uid;
-    delete entity.createdOn;
-    entity.modifiedOn = new Date();
     return super.save(entity, options);
   }
 
@@ -84,8 +78,6 @@ export class DefaultUserModifyCrudRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     entity.modifiedBy = uid;
-    delete entity.createdOn;
-    delete entity.modifiedOn;
     return super.update(entity, options);
   }
 
@@ -101,8 +93,6 @@ export class DefaultUserModifyCrudRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     data.modifiedBy = uid;
-    delete data.createdOn;
-    delete data.modifiedOn;
     return super.updateAll(data, where, options);
   }
 
@@ -118,8 +108,6 @@ export class DefaultUserModifyCrudRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     data.modifiedBy = uid;
-    delete data.createdOn;
-    delete data.modifiedOn;
     return super.updateById(id, data, options);
   }
   async replaceById(
@@ -133,8 +121,6 @@ export class DefaultUserModifyCrudRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     data.modifiedBy = uid;
-    delete data.createdOn;
-    delete data.modifiedOn;
     return super.replaceById(id, data, options);
   }
 }
