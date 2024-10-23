@@ -12,7 +12,7 @@
   "private": true,
   "license": "MIT",
   "dependencies": {
-    "@angular/animations": "~13.1.0",
+    "@angular/animations": "~13.4.0",
     "@angular/common": "~13.1.0",
     "@angular/compiler": "~13.1.0",
     "@angular/core": "~13.1.0",
