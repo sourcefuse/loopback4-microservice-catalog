@@ -12,7 +12,13 @@ export interface IServiceConfig {
   useCustomSequence: boolean;
   useSequelize?: boolean;
 }
-
+/**This type is used to override the default behaviour of our repo classes */
+export interface RepositoryOverridingOptions {
+  /**restricts user to pass createdOn and modifiedOn fields in the request body
+   * and only current date will be set in the database */
+  restrictDateModification: boolean;
+  [property: string]: any; //NOSONAR
+}
 export type OASPathDefinition = AnyObject;
 
 export interface CoreConfig {

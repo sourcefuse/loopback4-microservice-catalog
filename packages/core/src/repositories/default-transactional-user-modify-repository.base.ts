@@ -16,6 +16,7 @@ import {AuthErrorKeys} from 'loopback4-authentication';
 import {DefaultTransactionSoftCrudRepository} from 'loopback4-soft-delete';
 import {IAuthUserWithPermissions} from '../components';
 import {UserModifiableEntity} from '../models';
+import {RepositoryOverridingOptions} from '../types';
 
 export abstract class DefaultTransactionalUserModifyRepository<
   T extends UserModifiableEntity,
@@ -34,6 +35,8 @@ export abstract class DefaultTransactionalUserModifyRepository<
     super(entityClass, dataSource);
   }
 
+  public overridingOptions?: RepositoryOverridingOptions;
+
   async create(entity: DataObject<T>, options?: Options): Promise<T> {
     let currentUser = await this.getCurrentUser();
     currentUser = currentUser ?? options?.currentUser;
@@ -43,6 +46,10 @@ export abstract class DefaultTransactionalUserModifyRepository<
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     entity.createdBy = uid;
     entity.modifiedBy = uid;
+    if (this.overridingOptions?.restrictDateModification) {
+      delete entity.createdOn;
+      delete entity.modifiedOn;
+    }
     return super.create(entity, options);
   }
 
@@ -56,6 +63,10 @@ export abstract class DefaultTransactionalUserModifyRepository<
     entities.forEach(entity => {
       entity.createdBy = uid ?? '';
       entity.modifiedBy = uid ?? '';
+      if (this.overridingOptions?.restrictDateModification) {
+        delete entity.createdOn;
+        delete entity.modifiedOn;
+      }
     });
     return super.createAll(entities, options);
   }
@@ -67,6 +78,10 @@ export abstract class DefaultTransactionalUserModifyRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     entity.modifiedBy = uid;
+    if (this.overridingOptions?.restrictDateModification) {
+      delete entity.createdOn;
+      delete entity.modifiedOn;
+    }
     return super.save(entity, options);
   }
 
@@ -77,6 +92,11 @@ export abstract class DefaultTransactionalUserModifyRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     entity.modifiedBy = uid;
+    if (this.overridingOptions?.restrictDateModification) {
+      /**not deleting the createdOn as it can be a use case where
+       * we want to update the modifiedOn but not the createdOn */
+      delete entity.modifiedOn;
+    }
     return super.update(entity, options);
   }
 
@@ -92,6 +112,11 @@ export abstract class DefaultTransactionalUserModifyRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     data.modifiedBy = uid;
+    if (this.overridingOptions?.restrictDateModification) {
+      /**not deleting the createdOn as it can be a use case where
+       * we want to update the modifiedOn but not the createdOn */
+      delete data.modifiedOn;
+    }
     return super.updateAll(data, where, options);
   }
 
@@ -107,6 +132,11 @@ export abstract class DefaultTransactionalUserModifyRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     data.modifiedBy = uid;
+    if (this.overridingOptions?.restrictDateModification) {
+      /**not deleting the createdOn as it can be a use case where
+       * we want to update the modifiedOn but not the createdOn */
+      delete data.modifiedOn;
+    }
     return super.updateById(id, data, options);
   }
 
@@ -121,6 +151,11 @@ export abstract class DefaultTransactionalUserModifyRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     data.modifiedBy = uid;
+    if (this.overridingOptions?.restrictDateModification) {
+      /**not deleting the createdOn as it can be a use case where
+       * we want to update the modifiedOn but not the createdOn */
+      delete data.modifiedOn;
+    }
     return super.replaceById(id, data, options);
   }
 }

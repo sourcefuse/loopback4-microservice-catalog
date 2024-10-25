@@ -17,6 +17,7 @@ import {SoftCrudRepository} from 'loopback4-soft-delete';
 
 import {IAuthUserWithPermissions} from '../components';
 import {UserModifiableEntity} from '../models';
+import {RepositoryOverridingOptions} from '../types';
 
 export class DefaultUserModifyCrudRepository<
   T extends UserModifiableEntity,
@@ -34,6 +35,7 @@ export class DefaultUserModifyCrudRepository<
   ) {
     super(entityClass, dataSource);
   }
+  public overridingOptions?: RepositoryOverridingOptions;
 
   async create(entity: DataObject<T>, options?: Options): Promise<T> {
     let currentUser = await this.getCurrentUser();
@@ -44,6 +46,10 @@ export class DefaultUserModifyCrudRepository<
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     entity.createdBy = uid;
     entity.modifiedBy = uid;
+    if (this.overridingOptions?.restrictDateModification) {
+      delete entity.createdOn;
+      delete entity.modifiedOn;
+    }
     return super.create(entity, options);
   }
 
@@ -57,6 +63,10 @@ export class DefaultUserModifyCrudRepository<
     entities.forEach(entity => {
       entity.createdBy = uid ?? '';
       entity.modifiedBy = uid ?? '';
+      if (this.overridingOptions?.restrictDateModification) {
+        delete entity.createdOn;
+        delete entity.modifiedOn;
+      }
     });
     return super.createAll(entities, options);
   }
@@ -68,6 +78,10 @@ export class DefaultUserModifyCrudRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     entity.modifiedBy = uid;
+    if (this.overridingOptions?.restrictDateModification) {
+      delete entity.createdOn;
+      delete entity.modifiedOn;
+    }
     return super.save(entity, options);
   }
 
@@ -78,6 +92,11 @@ export class DefaultUserModifyCrudRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     entity.modifiedBy = uid;
+    if (this.overridingOptions?.restrictDateModification) {
+      /**not deleting the createdOn as it can be a use case where
+       * we want to update the modifiedOn but not the createdOn */
+      delete entity.modifiedOn;
+    }
     return super.update(entity, options);
   }
 
@@ -93,6 +112,11 @@ export class DefaultUserModifyCrudRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     data.modifiedBy = uid;
+    if (this.overridingOptions?.restrictDateModification) {
+      /**not deleting the createdOn as it can be a use case where
+       * we want to update the modifiedOn but not the createdOn */
+      delete data.modifiedOn;
+    }
     return super.updateAll(data, where, options);
   }
 
@@ -108,6 +132,11 @@ export class DefaultUserModifyCrudRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     data.modifiedBy = uid;
+    if (this.overridingOptions?.restrictDateModification) {
+      /**not deleting the createdOn as it can be a use case where
+       * we want to update the modifiedOn but not the createdOn */
+      delete data.modifiedOn;
+    }
     return super.updateById(id, data, options);
   }
   async replaceById(
@@ -121,6 +150,11 @@ export class DefaultUserModifyCrudRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     data.modifiedBy = uid;
+    if (this.overridingOptions?.restrictDateModification) {
+      /**not deleting the createdOn as it can be a use case where
+       * we want to update the modifiedOn but not the createdOn */
+      delete data.modifiedOn;
+    }
     return super.replaceById(id, data, options);
   }
 }
