@@ -570,6 +570,29 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
   )
 ```
 
+The repository by default allows to pass back dated or future dates for createdOn and modifiedOn values but to restrict the manual date modification we can pass overridingOptions like this
+
+```ts
+export class UsersRepository extends DefaultUserModifyCrudRepository<
+  Users,
+  typeof Users.prototype.id,
+  UsersRelations
+> {
+  constructor(
+    @inject(`datasources.AuditDB`) dataSource: juggler.DataSource,
+    @inject.getter(AuthenticationBindings.CURRENT_USER)
+    protected readonly getCurrentUser: Getter<
+      IAuthUserWithPermissions | undefined
+    >,
+  ) {
+    super(Users, dataSource, getCurrentUser);
+  }
+  public overridingOptions = {
+    restrictDateModification: true,
+  };
+}
+```
+
 ![Connector](https://loopback.io/images/9830486.png)
 
 #### SequelizeUserModifyCrudRepository
