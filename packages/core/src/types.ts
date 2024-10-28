@@ -17,6 +17,7 @@ export interface RepositoryOverridingOptions {
   /**restricts user to pass createdOn and modifiedOn fields in the request body
    * and only current date will be set in the database */
   restrictDateModification: boolean;
+  //eslint-disable-next-line @typescript-eslint/no-explicit-any
   [property: string]: any; //NOSONAR
 }
 export type OASPathDefinition = AnyObject;
