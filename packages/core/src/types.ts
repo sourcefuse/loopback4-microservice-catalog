@@ -3,22 +3,16 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
+import {DataObject, Where} from '@loopback/repository';
 import CryptoJS from 'crypto-js';
 import {IncomingMessage, ServerResponse} from 'http';
 import {AnyObject} from 'loopback-datasource-juggler';
 import {SWStats} from 'swagger-stats';
+import {UserModifiableEntity} from './models';
 
 export interface IServiceConfig {
   useCustomSequence: boolean;
   useSequelize?: boolean;
-}
-/**This type is used to override the default behaviour of our repo classes */
-export interface RepositoryOverridingOptions {
-  /**restricts user to pass createdOn and modifiedOn fields in the request body
-   * and only current date will be set in the database */
-  restrictDateModification: boolean;
-  //eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [property: string]: any; //NOSONAR
 }
 export type OASPathDefinition = AnyObject;
 
@@ -59,6 +53,7 @@ export interface CoreConfig {
     username?: string,
     password?: string,
   ) => boolean;
+  restrictDateModification?: boolean;
 }
 
 /**
@@ -95,3 +90,16 @@ export type TenantIdEncryptionFn = (
   secretKey: string,
   tenantId: string,
 ) => Promise<string>;
+
+export interface IDefaultUserModifyCrud<T extends UserModifiableEntity, ID> {
+  create(data: DataObject<T>): Promise<DataObject<T>>;
+  createAll(data: DataObject<T>[]): Promise<DataObject<T>[]>;
+  save(entity: T): Promise<T>;
+  update(data: T): Promise<T>;
+  updateAll(
+    data: DataObject<T>,
+    where?: Where<T>,
+  ): Promise<{data: DataObject<T>; where: Where<T>}>;
+  updateById(id: ID, data: DataObject<T>): Promise<DataObject<T>>;
+  replaceById(id: ID, data: DataObject<T>): Promise<DataObject<T>>;
+}

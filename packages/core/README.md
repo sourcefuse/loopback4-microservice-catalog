@@ -570,27 +570,10 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
   )
 ```
 
-The repository by default allows to pass back dated or future dates for createdOn and modifiedOn values but to restrict the manual date modification we can pass overridingOptions like this
+The repository by default does not restrict setting up of createdOn and modifiedOn through API or external sources. However, you can restrict it by binding the restrictDateModification property to config like this
 
 ```ts
-export class UsersRepository extends DefaultUserModifyCrudRepository<
-  Users,
-  typeof Users.prototype.id,
-  UsersRelations
-> {
-  constructor(
-    @inject(`datasources.AuditDB`) dataSource: juggler.DataSource,
-    @inject.getter(AuthenticationBindings.CURRENT_USER)
-    protected readonly getCurrentUser: Getter<
-      IAuthUserWithPermissions | undefined
-    >,
-  ) {
-    super(Users, dataSource, getCurrentUser);
-  }
-  public overridingOptions = {
-    restrictDateModification: true,
-  };
-}
+this.bind(SFCoreBindings.config).to({restrictDateModification: true});
 ```
 
 ![Connector](https://loopback.io/images/9830486.png)

@@ -15,9 +15,11 @@ import {Options} from 'loopback-datasource-juggler';
 import {AuthErrorKeys} from 'loopback4-authentication';
 import {SoftCrudRepository} from 'loopback4-soft-delete';
 
+import {inject} from '@loopback/core';
 import {IAuthUserWithPermissions} from '../components';
+import {SFCoreBindings} from '../keys';
 import {UserModifiableEntity} from '../models';
-import {RepositoryOverridingOptions} from '../types';
+import {IDefaultUserModifyCrud} from '../types';
 
 export class DefaultUserModifyCrudRepository<
   T extends UserModifiableEntity,
@@ -35,7 +37,9 @@ export class DefaultUserModifyCrudRepository<
   ) {
     super(entityClass, dataSource);
   }
-  public overridingOptions?: RepositoryOverridingOptions;
+
+  @inject(SFCoreBindings.DEFAULT_USER_MODIFY_CRUD_SERVICE)
+  public defaultUserModifyCrudService: IDefaultUserModifyCrud<T, ID>;
 
   async create(entity: DataObject<T>, options?: Options): Promise<T> {
     let currentUser = await this.getCurrentUser();
@@ -46,10 +50,7 @@ export class DefaultUserModifyCrudRepository<
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     entity.createdBy = uid;
     entity.modifiedBy = uid;
-    if (this.overridingOptions?.restrictDateModification) {
-      delete entity.createdOn;
-      delete entity.modifiedOn;
-    }
+    entity = await this.defaultUserModifyCrudService.create(entity);
     return super.create(entity, options);
   }
 
@@ -63,11 +64,8 @@ export class DefaultUserModifyCrudRepository<
     entities.forEach(entity => {
       entity.createdBy = uid ?? '';
       entity.modifiedBy = uid ?? '';
-      if (this.overridingOptions?.restrictDateModification) {
-        delete entity.createdOn;
-        delete entity.modifiedOn;
-      }
     });
+    entities = await this.defaultUserModifyCrudService.createAll(entities);
     return super.createAll(entities, options);
   }
 
@@ -78,10 +76,7 @@ export class DefaultUserModifyCrudRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     entity.modifiedBy = uid;
-    if (this.overridingOptions?.restrictDateModification) {
-      delete entity.createdOn;
-      delete entity.modifiedOn;
-    }
+    entity = await this.defaultUserModifyCrudService.save(entity);
     return super.save(entity, options);
   }
 
@@ -92,11 +87,7 @@ export class DefaultUserModifyCrudRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     entity.modifiedBy = uid;
-    if (this.overridingOptions?.restrictDateModification) {
-      /**not deleting the createdOn as it can be a use case where
-       * we want to update the modifiedOn but not the createdOn */
-      delete entity.modifiedOn;
-    }
+    entity = await this.defaultUserModifyCrudService.update(entity);
     return super.update(entity, options);
   }
 
@@ -112,12 +103,11 @@ export class DefaultUserModifyCrudRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     data.modifiedBy = uid;
-    if (this.overridingOptions?.restrictDateModification) {
-      /**not deleting the createdOn as it can be a use case where
-       * we want to update the modifiedOn but not the createdOn */
-      delete data.modifiedOn;
-    }
-    return super.updateAll(data, where, options);
+    const result = await this.defaultUserModifyCrudService.updateAll(
+      data,
+      where,
+    );
+    return super.updateAll(result.data, result.where, options);
   }
 
   async updateById(
@@ -132,11 +122,7 @@ export class DefaultUserModifyCrudRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     data.modifiedBy = uid;
-    if (this.overridingOptions?.restrictDateModification) {
-      /**not deleting the createdOn as it can be a use case where
-       * we want to update the modifiedOn but not the createdOn */
-      delete data.modifiedOn;
-    }
+    data = await this.defaultUserModifyCrudService.updateById(id, data);
     return super.updateById(id, data, options);
   }
   async replaceById(
@@ -150,11 +136,7 @@ export class DefaultUserModifyCrudRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     data.modifiedBy = uid;
-    if (this.overridingOptions?.restrictDateModification) {
-      /**not deleting the createdOn as it can be a use case where
-       * we want to update the modifiedOn but not the createdOn */
-      delete data.modifiedOn;
-    }
+    data = await this.defaultUserModifyCrudService.replaceById(id, data);
     return super.replaceById(id, data, options);
   }
 }
