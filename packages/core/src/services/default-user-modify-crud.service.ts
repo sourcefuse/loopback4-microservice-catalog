@@ -47,10 +47,10 @@ export class DefaultUserModifyCrudService<T extends UserModifiableEntity, ID>
     if (this.coreConfig?.restrictDateModification) {
       return this.removeDateFields(data).then(d => ({
         data: d,
-        where: where || ({} as Where<T>),
+        where: where ?? ({} as Where<T>),
       }));
     }
-    return Promise.resolve({data, where: where || ({} as Where<T>)});
+    return Promise.resolve({data, where: where ?? ({} as Where<T>)});
   }
   updateById(id: ID, data: DataObject<T>): Promise<DataObject<T>> {
     if (this.coreConfig?.restrictDateModification) {
