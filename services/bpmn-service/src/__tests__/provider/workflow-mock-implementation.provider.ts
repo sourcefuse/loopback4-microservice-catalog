@@ -4,10 +4,10 @@
 // https://opensource.org/licenses/MIT
 import {inject, Provider} from '@loopback/context';
 import {ILogger, LOGGER} from '@sourceloop/core';
-import {IWorkflowServiceConfig, WorkerImplementationFn} from '../../types';
 import {WorkflowServiceBindings} from '../../keys';
-import {MOCK_BPMN_ENGINE_KEY} from '../types';
+import {IWorkflowServiceConfig, WorkerImplementationFn} from '../../types';
 import {MockEngine} from '../mock-engine';
+import {MOCK_BPMN_ENGINE_KEY} from '../types';
 
 export class WorkerMockImplementationProvider
   implements Provider<WorkerImplementationFn>

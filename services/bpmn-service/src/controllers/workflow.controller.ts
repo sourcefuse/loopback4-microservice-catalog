@@ -2,10 +2,9 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Getter, inject} from '@loopback/core';
-import {AnyObject, Filter, repository} from '@loopback/repository';
+import {inject} from '@loopback/core';
+import {AnyObject, Filter} from '@loopback/repository';
 import {
-  HttpErrors,
   del,
   get,
   getFilterSchemaFor,
@@ -22,36 +21,18 @@ import {
 } from '@sourceloop/core';
 import {STRATEGY, authenticate} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-import {ErrorKeys} from '../enums/error-keys.enum';
 import {PermissionKey} from '../enums/permission-key.enum';
 import {WorkflowServiceBindings} from '../keys';
-import {Workflow, WorkflowVersion} from '../models';
+import {Workflow} from '../models';
 import {ExecuteWorkflowDto} from '../models/execute-workflow-dto';
 import {WorkflowDto} from '../models/workflow-dto.model';
-import {WorkflowRepository} from '../repositories';
-import {WorkflowVersionRepository} from '../repositories/workflow-version.repository';
-import {
-  ExecutionInputValidator,
-  WorflowManager,
-  WorkerImplementationFn,
-  WorkerMap,
-} from '../types';
+import {IWorkflowService} from '../types';
 const basePath = '/workflows';
 
 export class WorkflowController {
   constructor(
-    @repository(WorkflowRepository)
-    public workflowRepository: WorkflowRepository,
-    @repository(WorkflowVersionRepository)
-    public workflowVersionRepository: WorkflowVersionRepository,
-    @inject(WorkflowServiceBindings.WorkflowManager)
-    private readonly workflowManagerService: WorflowManager,
-    @inject(WorkflowServiceBindings.ExecutionInputValidatorFn)
-    private readonly execInputValidator: ExecutionInputValidator,
-    @inject.getter(WorkflowServiceBindings.WORKER_MAP)
-    private readonly workerMapGetter: Getter<WorkerMap>,
-    @inject(WorkflowServiceBindings.WorkerImplementationFunction)
-    private readonly workerFn: WorkerImplementationFn,
+    @inject(WorkflowServiceBindings.WorkflowService)
+    private readonly workflowService: IWorkflowService,
   ) {}
 
   @authenticate(STRATEGY.BEARER)
@@ -84,34 +65,7 @@ export class WorkflowController {
     })
     workflowDto: WorkflowDto,
   ): Promise<Workflow> {
-    try {
-      const workflowResponse =
-        await this.workflowManagerService.createWorkflow(workflowDto);
-
-      const entity = new Workflow({
-        workflowVersion: workflowResponse.version,
-        externalIdentifier: workflowResponse.processId,
-        name: workflowDto.name,
-        provider: workflowResponse.provider,
-        inputSchema: workflowDto.inputSchema,
-        description: workflowDto.description,
-      });
-
-      const newWorkflow = await this.workflowRepository.create(entity);
-
-      const version = new WorkflowVersion({
-        workflowId: newWorkflow.id,
-        version: workflowResponse.version,
-        bpmnDiagram: workflowResponse.fileRef,
-        externalWorkflowId: workflowResponse.externalId,
-        inputSchema: workflowDto.inputSchema,
-      });
-
-      await this.workflowVersionRepository.create(version);
-      return newWorkflow;
-    } catch (e) {
-      throw new HttpErrors.BadRequest(e);
-    }
+    return this.workflowService.create(workflowDto);
   }
 
   @authenticate(STRATEGY.BEARER)
@@ -140,29 +94,7 @@ export class WorkflowController {
     workflowDto: WorkflowDto,
     @param.path.string('id') id: string,
   ): Promise<void> {
-    const workflowResponse =
-      await this.workflowManagerService.updateWorkflow(workflowDto);
-
-    const entity = new Workflow({
-      workflowVersion: workflowResponse.version,
-      externalIdentifier: workflowResponse.processId,
-      name: workflowDto.name,
-      provider: workflowResponse.provider,
-      inputSchema: workflowDto.inputSchema,
-      description: workflowDto.description,
-    });
-
-    await this.workflowRepository.updateById(id, entity);
-
-    const version = new WorkflowVersion({
-      workflowId: id,
-      version: workflowResponse.version,
-      bpmnDiagram: workflowResponse.fileRef,
-      externalWorkflowId: workflowResponse.externalId,
-      inputSchema: workflowDto.inputSchema,
-    });
-
-    await this.workflowVersionRepository.create(version);
+    return this.workflowService.updateById(id, workflowDto);
   }
 
   @authenticate(STRATEGY.BEARER)
@@ -191,37 +123,7 @@ export class WorkflowController {
     })
     instance: ExecuteWorkflowDto,
   ): Promise<AnyObject> {
-    const workflow = await this.workflowRepository.findOne({
-      where: {
-        id: id,
-      },
-    });
-    let version;
-    if (!workflow) {
-      throw new HttpErrors.NotFound(ErrorKeys.WorkflowNotFound);
-    }
-    let inputSchema = workflow.inputSchema;
-    if (instance.workflowVersion) {
-      version = await this.workflowVersionRepository.findOne({
-        where: {
-          version: instance.workflowVersion,
-          workflowId: workflow.id,
-        },
-      });
-      if (version) {
-        inputSchema = version.inputSchema;
-      } else {
-        throw new HttpErrors.NotFound(ErrorKeys.VersionNotFound);
-      }
-    }
-
-    await this.execInputValidator(inputSchema, instance.input);
-    await this.initWorkers(workflow.name);
-    return this.workflowManagerService.startWorkflow(
-      instance.input,
-      workflow,
-      version,
-    );
+    return this.workflowService.executeById(id, instance);
   }
 
   @authenticate(STRATEGY.BEARER)
@@ -245,9 +147,7 @@ export class WorkflowController {
     @param.query.object('filter', getFilterSchemaFor(Workflow))
     filter?: Filter<Workflow>,
   ): Promise<Workflow[]> {
-    return this.workflowRepository.find(filter, {
-      include: ['workflowVersions'],
-    });
+    return this.workflowService.find(filter);
   }
 
   @authenticate(STRATEGY.BEARER)
@@ -263,8 +163,7 @@ export class WorkflowController {
     },
   })
   async count(@param.path.string('id') id: string): Promise<Workflow> {
-    const workflow = await this.workflowRepository.findById(id);
-    return this.workflowManagerService.getWorkflowById(workflow);
+    return this.workflowService.findById(id);
   }
 
   @authenticate(STRATEGY.BEARER)
@@ -283,14 +182,7 @@ export class WorkflowController {
     },
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
-    const workflow = await this.workflowRepository.findById(id, {
-      include: ['workflowVersions'],
-    });
-    await this.workflowManagerService.deleteWorkflowById(workflow);
-    await this.workflowVersionRepository.deleteAll({
-      workflowId: workflow.id,
-    });
-    await this.workflowRepository.deleteById(workflow.id);
+    return this.workflowService.deleteById(id);
   }
 
   @authenticate(STRATEGY.BEARER)
@@ -312,42 +204,6 @@ export class WorkflowController {
     @param.path.string('id') id: string,
     @param.path.number('version') versionNumber: number,
   ): Promise<void> {
-    const workflow = await this.workflowRepository.findById(id);
-    if (workflow.workflowVersion === versionNumber) {
-      throw new HttpErrors.BadRequest(
-        'Can not delete latest version of a workflow',
-      );
-    }
-    const version = await this.workflowVersionRepository.findOne({
-      where: {
-        workflowId: id,
-        version: versionNumber,
-      },
-    });
-    if (!this.workflowManagerService.deleteWorkflowVersionById) {
-      throw new HttpErrors.InternalServerError(
-        'Version Delete Provider Missing',
-      );
-    }
-
-    if (version) {
-      await this.workflowManagerService.deleteWorkflowVersionById(version);
-      await this.workflowVersionRepository.deleteById(version.id);
-    } else {
-      throw new HttpErrors.NotFound(ErrorKeys.VersionNotFound);
-    }
-  }
-
-  private async initWorkers(workflowName: string) {
-    const workerMap = await this.workerMapGetter();
-    if (workerMap?.[workflowName]) {
-      const workerList = workerMap[workflowName];
-      for (const worker of workerList) {
-        if (!worker.running) {
-          await this.workerFn(worker);
-          worker.running = true;
-        }
-      }
-    }
+    return this.workflowService.deleteVersionById(id, versionNumber);
   }
 }

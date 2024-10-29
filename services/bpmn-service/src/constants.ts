@@ -1,0 +1,2 @@
+export const MAX_CAMUNDA_ATTEMPTS = 3;
+export const CAMUNDA_RETRY_INTERVAL = 60000;
