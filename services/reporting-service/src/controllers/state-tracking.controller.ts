@@ -11,7 +11,7 @@ records. */
 export class StateTrackingController {
   constructor(
     @inject('services.StateTrackingService')
-    private stateTrackingService: StateTrackingService,
+    private readonly stateTrackingService: StateTrackingService,
   ) {}
   @authenticate(STRATEGY.BEARER, {passReqToCallback: true})
   @authorize({permissions: [PermissionKeys.DeleteIngestionMappings]})

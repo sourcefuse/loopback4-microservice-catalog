@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.6.5 (2024-10-22)</small>
+
+**Note:** Version bump only for package @sourceloop/cache-example
+
+
+
+
+
+## <small>0.6.4 (2024-10-16)</small>
+
+**Note:** Version bump only for package @sourceloop/cache-example
+
+
+
+
+
+## <small>0.6.3 (2024-09-30)</small>
+
+**Note:** Version bump only for package @sourceloop/cache-example
+
+
+
+
+
+## <small>0.6.2 (2024-09-30)</small>
+
+**Note:** Version bump only for package @sourceloop/cache-example
+
+
+
+
+
+## <small>0.6.1 (2024-09-26)</small>
+
+**Note:** Version bump only for package @sourceloop/cache-example
+
+
+
+
+
+## 0.6.0 (2024-08-14)
+
+* feat(cache): complete refactor for more flexibility (#2156) ([d0e0233](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d0e0233)), closes [#2156](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2156) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
 ## 0.5.0 (2024-08-05)
 
 * chore(sandbox): fix the docker compose for sandbox (#2132) ([13a4945](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/13a4945)), closes [#2132](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2132) [#1962](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1962) [#1962](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1962) [#1962](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1962) [#1962](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1962) [#1962](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1962)

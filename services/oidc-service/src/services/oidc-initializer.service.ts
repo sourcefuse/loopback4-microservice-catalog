@@ -20,7 +20,7 @@ import {OIDCServiceBindings} from '../keys';
 export class OidcInitializerService implements LifeCycleObserver {
   constructor(
     @inject(OIDCServiceBindings.OIDC_PROVIDER)
-    private oidcProvider: OidcProvider,
+    private readonly oidcProvider: OidcProvider,
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: RestApplication,
   ) {}

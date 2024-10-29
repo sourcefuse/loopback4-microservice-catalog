@@ -36,7 +36,7 @@ export class MemoryDatasource extends juggler.DataSource {
           this.cache[mid] = {};
           this.ids[mid] = 1;
         });
-      }.bind(this.connector as MemoryConnector);
+      }.bind(this.connector as MemoryConnector); // NOSONAR
     }
   }
   beginTransaction(options?: IsolationLevel | Options): Promise<Transaction> {
@@ -57,4 +57,4 @@ export const testDB = new MemoryDatasource({
   connector: 'memory',
 });
 
-export const connector = testDB.connector as MemoryConnector;
+export const connector = testDB.connector as MemoryConnector; // NOSONAR

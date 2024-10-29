@@ -13,6 +13,9 @@ import {
   ApplePostVerifyFn,
   ApplePreVerifyFn,
   AppleSignUpFn,
+  Auth0PostVerifyFn,
+  Auth0PreVerifyFn,
+  Auth0SignUpFn,
   AuthenticationProviderFn,
   AzureAdPostVerifyFn,
   AzureAdPreVerifyFn,
@@ -80,6 +83,10 @@ export namespace SignUpBindings {
 
   export const SIGNUP_HANDLER_PROVIDER =
     BindingKey.create<SignupTokenHandlerFn>(`sf.local.signup.handler.provider`);
+
+  export const AUTH0_SIGN_UP_PROVIDER = BindingKey.create<Auth0SignUpFn>(
+    'sf.auth0.signup.provider',
+  );
 }
 
 export namespace VerifyBindings {
@@ -130,11 +137,16 @@ export namespace VerifyBindings {
     BindingKey.create<VerifyFunction.GenericAuthFn>(
       `sf.bearer.signupverify.provider`,
     );
-
   export const AZURE_AD_PRE_VERIFY_PROVIDER =
     BindingKey.create<AzureAdPreVerifyFn>('sf.azure.preverify.provider');
   export const AZURE_AD_POST_VERIFY_PROVIDER =
     BindingKey.create<AzureAdPostVerifyFn>('sf.azure.postverify.provider');
+
+  export const AUTH0_PRE_VERIFY_PROVIDER = BindingKey.create<Auth0PreVerifyFn>(
+    'sf.auth0.preverify.provider',
+  );
+  export const AUTH0_POST_VERIFY_PROVIDER =
+    BindingKey.create<Auth0PostVerifyFn>('sf.auth0.postverify.provider');
 }
 
 export namespace AuthCodeBindings {

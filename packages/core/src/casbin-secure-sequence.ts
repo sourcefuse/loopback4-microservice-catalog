@@ -36,6 +36,7 @@ import {
 
 import {IAuthUserWithPermissions, ILogger, LOGGER} from './components';
 import {SFCoreBindings} from './keys';
+import {CoreConfig} from './types';
 
 const SequenceActions = RestBindings.SequenceActions;
 const isJsonString = (str: string) => {
@@ -79,6 +80,8 @@ export class CasbinSecureSequence implements SequenceHandler {
     protected helmetAction: HelmetAction,
     @inject(RateLimitSecurityBindings.RATELIMIT_SECURITY_ACTION)
     protected rateLimitAction: RateLimitAction,
+    @inject(SFCoreBindings.config, {optional: true})
+    private readonly coreConfig: CoreConfig,
     @inject(SFCoreBindings.i18n)
     protected i18n: i18nAPI, // sonarignore:end
     @inject(RateLimitSecurityBindings.CONFIG, {optional: true})
@@ -168,7 +171,7 @@ export class CasbinSecureSequence implements SequenceHandler {
       !(error.message && (error.message as any).message === 'TokenExpired')
       // sonarignore:end
     ) {
-      if (isString(error.message)) {
+      if (isString(error.message) && !this.coreConfig?.disablei18n) {
         error.message = this.i18n.__({
           phrase: error.message,
           locale: process.env.LOCALE ?? 'en',

@@ -9,9 +9,9 @@ import {CamundaService} from './camunda.service';
 export class UserTaskService implements IUserTaskService {
   constructor(
     @repository(TaskRepository)
-    private taskRepo: TaskRepository,
+    private readonly taskRepo: TaskRepository,
     @repository(UserTaskRepository)
-    private userTaskRepo: UserTaskRepository,
+    private readonly userTaskRepo: UserTaskRepository,
     @inject(TaskServiceBindings.OUTGOING_CONNECTOR)
     private readonly outgoing: IOutgoingConnector<IEvent>,
     @service(CamundaService)

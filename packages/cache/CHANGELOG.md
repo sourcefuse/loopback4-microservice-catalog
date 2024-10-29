@@ -3,6 +3,63 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.0.6 (2024-10-22)</small>
+
+**Note:** Version bump only for package @sourceloop/cache
+
+
+
+
+
+## <small>3.0.5 (2024-10-16)</small>
+
+* chore(ci-cd): resolve sonar issues (#2179) ([12ec556](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/12ec556)), closes [#2179](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2179) [#2177](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2177) [#2177](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2177)
+
+
+
+
+
+## <small>3.0.4 (2024-09-30)</small>
+
+**Note:** Version bump only for package @sourceloop/cache
+
+
+
+
+
+## <small>3.0.3 (2024-09-30)</small>
+
+**Note:** Version bump only for package @sourceloop/cache
+
+
+
+
+
+## <small>3.0.2 (2024-09-26)</small>
+
+**Note:** Version bump only for package @sourceloop/cache
+
+
+
+
+
+## <small>3.0.1 (2024-08-14)</small>
+
+* fix(ci-cd): bump the version ([9c31dbb](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9c31dbb)), closes [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* chore(ci-cd): version update for breaking changes ([6bbf1d7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6bbf1d7)), closes [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
+## 2.1.0 (2024-08-14)
+
+* feat(cache): complete refactor for more flexibility (#2156) ([d0e0233](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d0e0233)), closes [#2156](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2156) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
 ## <small>2.0.2 (2024-08-05)</small>
 
 **Note:** Version bump only for package @sourceloop/cache

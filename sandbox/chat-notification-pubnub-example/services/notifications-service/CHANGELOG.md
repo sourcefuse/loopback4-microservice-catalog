@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.7.5 (2024-10-22)</small>
+
+**Note:** Version bump only for package @sourceloop/chat-notif-example_notif-service
+
+
+
+
+
+## <small>0.7.4 (2024-10-16)</small>
+
+**Note:** Version bump only for package @sourceloop/chat-notif-example_notif-service
+
+
+
+
+
+## <small>0.7.3 (2024-09-30)</small>
+
+**Note:** Version bump only for package @sourceloop/chat-notif-example_notif-service
+
+
+
+
+
+## <small>0.7.2 (2024-09-30)</small>
+
+**Note:** Version bump only for package @sourceloop/chat-notif-example_notif-service
+
+
+
+
+
+## <small>0.7.1 (2024-09-26)</small>
+
+**Note:** Version bump only for package @sourceloop/chat-notif-example_notif-service
+
+
+
+
+
 ## 0.7.0 (2024-08-05)
 
 * chore(all-services): ping api in sandbox examples (#2134) ([b69cda1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b69cda1)), closes [#2134](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2134) [#2133](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2133) [#2133](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2133)

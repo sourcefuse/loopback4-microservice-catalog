@@ -46,6 +46,7 @@ export interface ScaffoldOptions extends BackstageIntegrationOptions {
   cwd?: string;
   issuePrefix?: string;
   integrateWithBackstage?: boolean;
+  jenkinsfile?: boolean;
 }
 
 export interface MigrationOptions extends Generator.GeneratorOptions {

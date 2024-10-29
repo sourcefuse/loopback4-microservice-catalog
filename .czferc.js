@@ -34,6 +34,7 @@ const scopes = [
   {name: 'core'},
   {name: 'cli'},
   {name: 'cache'},
+  {name: 'file-utils'},
   {name: 'authentication-service'},
   {name: 'in-mail-service'},
   {name: 'notification-service'},
