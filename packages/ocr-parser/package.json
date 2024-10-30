@@ -19,7 +19,7 @@
     "@angular/flex-layout": "^13.0.0-beta.38",
     "@angular/forms": "~13.1.0",
     "@angular/platform-browser": "~13.1.0",
-    "@angular/platform-browser-dynamic": "~13.1.0",
+    "@angular/platform-browser-dynamic": "~13.4.0",
     "@angular/router": "~13.1.0",
     "mark.js": "^8.11.1",
     "ng-circle-progress": "^1.6.0",
