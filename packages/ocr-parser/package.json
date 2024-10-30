@@ -24,7 +24,7 @@
     "mark.js": "^8.11.1",
     "ng-circle-progress": "^1.6.0",
     "ngx-markjs": "^0.1.2",
-    "rxjs": "~7.4.0",
+    "rxjs": "~7.8.1",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },
