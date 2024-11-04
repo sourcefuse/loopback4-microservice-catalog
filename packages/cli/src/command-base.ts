@@ -93,7 +93,6 @@ export default abstract class CommandBase<T extends object> extends Command {
       }
     }
     if (options['jenkinsfile']) {
-    
       const helmPathPrompt: Question = {
         type: 'input',
         name: 'helmPath',
