@@ -6,10 +6,9 @@ permissions:
   contents: write
 env:
   AUTOMATION_REPO: sourcefuse/arc-automation
-  BRANCH_PREFIX: automated-docs-sync/
   GITHUB_TOKEN: ${{secrets.RELEASE_COMMIT_GH_PAT}}
-  CONFIG_USERNAME: ${{ vars.DOCS_PR_USERNAME }}
-  CONFIG_EMAIL: ${{ vars.DOCS_PR_EMAIL }}
+  CONFIG_USERNAME: ${{ vars.RELEASE_COMMIT_USERNAME }}
+  CONFIG_EMAIL: ${{ vars.RELEASE_COMMIT_EMAIL }}
 
 jobs:
   Pre-Release:
