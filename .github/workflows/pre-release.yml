@@ -46,7 +46,6 @@ jobs:
         working-directory: arc-automation
         run: |
           branch_name="${{ steps.configure_git.outputs.branch_name }}"
-          cd arc-automation
           git fetch origin automation  
           git checkout automation     
           CURRENT_DATE=$(date +"%d/%m/%Y")   
