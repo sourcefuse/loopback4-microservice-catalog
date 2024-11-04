@@ -1,0 +1,79 @@
+# This Manually Executable Workflow is to be used before the Release Workflow
+
+name: Pre-Release [Manual]
+on: workflow_dispatch
+permissions:
+  contents: write
+env:
+  AUTOMATION_REPO: sourcefuse/arc-automation
+  BRANCH_PREFIX: automated-docs-sync/
+  GITHUB_TOKEN: ${{secrets.RELEASE_COMMIT_GH_PAT}}
+  CONFIG_USERNAME: ${{ vars.DOCS_PR_USERNAME }}
+  CONFIG_EMAIL: ${{ vars.DOCS_PR_EMAIL }}
+
+jobs:
+  Pre-Release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          # fetch-depth is necessary to get all tags
+          # otherwise lerna can't detect the changes and will end up bumping the versions for all packages
+          fetch-depth: 0
+          token: ${{ secrets.RELEASE_COMMIT_GH_PAT }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+
+      - name: Checkout Automation Repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{env.GITHUB_TOKEN}}
+          repository: ${{env.AUTOMATION_REPO}}
+          path: './arc-automation/'
+
+      - name: Configure CI Git User
+        id: configure_git
+        working-directory: arc-automation
+        run: |
+          git config --global user.name $CONFIG_USERNAME
+          git config --global user.email $CONFIG_EMAIL
+          branch_name="update-automation-$(date +%s)"
+          echo "branch_name=$branch_name" >> $GITHUB_OUTPUT
+
+      - name: Update Readme of automation branch
+        run: |
+          branch_name="${{ steps.configure_git.outputs.branch_name }}"
+          cd arc-automation
+          git fetch origin automation  
+          git checkout automation     
+          CURRENT_DATE=$(date +"%d/%m/%Y")   
+          echo "| $CURRENT_DATE | Automated update for testing |" >> README.md
+
+      - name: Commit Changes
+        id: commit
+        working-directory: arc-automation
+        run: |
+          branch_name="${{ steps.configure_git.outputs.branch_name }}"
+          git checkout git checkout -B $branch_name || git checkout $branch_name
+          git add README.md
+          git commit -m "Automated update for testing"
+
+      - name: Push Changes
+        id: push
+        working-directory: arc-automation
+        run: |
+          branch_name="${{ steps.configure_git.outputs.branch_name }}"
+          git push https://oauth2:${GITHUB_TOKEN}@github.com/${{env.AUTOMATION_REPO}}.git HEAD:$branch_name --force
+
+      - name: Create Pull Request
+        env:
+          token: ${{env.GITHUB_TOKEN}}
+        working-directory: arc-automation
+        run: |
+          branch_name="${{ steps.configure_git.outputs.branch_name }}"
+          TARGET_REPO=${{env.AUTOMATION_REPO}}
+          gh pr create --repo "$TARGET_REPO" --base automation --head "$branch_name" \
+          --title "Automated Update PR" --body "This PR was created by a GitHub Action to update the README.md file in the automation branch."
