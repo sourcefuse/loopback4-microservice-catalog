@@ -43,6 +43,7 @@ jobs:
           echo "branch_name=$branch_name" >> $GITHUB_OUTPUT
 
       - name: Update Readme of automation branch
+        working-directory: arc-automation
         run: |
           branch_name="${{ steps.configure_git.outputs.branch_name }}"
           cd arc-automation
