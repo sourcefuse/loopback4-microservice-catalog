@@ -247,6 +247,31 @@ x-user-tenant-variables: &user-tenant-variables
   USER_TEMP_PASSWORD: tempP@ssw0rd
   SUCCESS_CALLBACK_URL: http://localhost:3000
   FAILURE_CALLBACK_URL: http://localhost:3000
+
+  x-task-variables: &task-variables
+  NODE_ENV: dev
+  LOG_LEVEL: debug
+  DB_HOST: postgres
+  DB_PORT: 5432
+  DB_USER: ${POSTGRES_USER:-postgres}
+  DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+  DB_DATABASE: task_db
+  DB_SCHEMA: main
+  JWT_SECRET: i_am_a_strong_secret
+  JWT_ISSUER: https://loopback4-microservice-catalog
+  REDIS_HOST: redis
+  REDIS_PORT: 6379
+  REDIS_PASSWORD: ""
+  REDIS_DB: 0
+  USER_TEMP_PASSWORD: tempP@ssw0rd
+  CAMUNDA_URL: http://camunda:8080/engine-rest
+  KAFKA_CLIENT_ID: test123
+  KAFKA_SERVER: 9092
+  KAFKA_SSL: false
+  KAFKA_GROUP_ID: task-service
+  KAFKA_REQUEST_TIMEOUT : 10000
+  KAFKA_CONNECTION_TIMEOUT :  3000
+
 services:
   chat-notification-pubnub-example:
     image: ${REGISTRY:-localhost:32000}/chat-notification-pubnub-example
@@ -654,6 +679,38 @@ services:
     networks:
       - sandbox
     restart: on-failure
+  
+  task-example:
+    image: ${REGISTRY:-localhost:32000}task-example
+    build:
+      context: ./task-example
+      dockerfile: Dockerfile
+    ports:
+      - '3043:3000'
+    networks:
+      - sandbox
+    environment: *task-variables
+    depends_on:
+      - postgres
+      - camunda
+      - zookeeper
+      - kafka   
+      - postgres_orchestrator
+    restart: on-failure
+  
+  task-example-migration:
+    image: ${REGISTRY:-localhost:32000}/task-example
+    build:
+      context: ./task-example
+      dockerfile: Dockerfile
+    command: sh -c "sleep 60 && npm run db:migrate"
+    environment: *task-variables
+    depends_on:
+      - postgres
+      - postgres_orchestrator
+    networks:
+      - sandbox
+    restart: on-failure
 
   user-tenant-example:
     image: ${REGISTRY:-localhost:32000}/user-tenant-example
@@ -676,15 +733,46 @@ services:
       - '6379:6379'
     networks:
       - sandbox
+    environment:
+    - REDIS_PORT=6379
+
+  zookeeper:
+    image: wurstmeister/zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - '22181:2181'
+  
+  kafka:
+    image: wurstmeister/kafka
+    depends_on:
+     - zookeeper
+    ports:
+     - 29092:29092
+     - 9092:9092
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: PLAINTEXT://:9092,PLAINTEXT_HOST://:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
 
   camunda:
     container_name: camunda_engine
-    image: camunda/camunda-bpm-platform:run-latest
+    image: camunda/camunda-bpm-platform:7.21.0
     ports:
       - '8080:8080'
+    restart: on-failure
     networks:
       - sandbox
-    restart: always
+    healthcheck:
+      # from camunda-bizbook-qa.sourcef.us/camunda/app/cockpit/default/#/processes?pdSearchQuery=%5B%5D
+      test: "curl -f http://localhost:8080/engine-rest/case-instance/count"
 
   postgres:
     container_name: postgres_container
