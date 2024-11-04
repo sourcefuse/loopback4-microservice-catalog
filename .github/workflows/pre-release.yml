@@ -56,7 +56,7 @@ jobs:
         working-directory: arc-automation
         run: |
           branch_name="${{ steps.configure_git.outputs.branch_name }}"
-          git checkout git checkout -B $branch_name || git checkout $branch_name
+          git checkout -B $branch_name || git checkout $branch_name
           git add README.md
           git commit -m "Automated update for testing"
 
