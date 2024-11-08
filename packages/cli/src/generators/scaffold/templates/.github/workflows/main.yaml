@@ -26,3 +26,12 @@ jobs:
 
       - name: Run Lint Checks
         run: npm run lint --workspaces --if-present
+
+      - name: lerna-coverage
+        run: "npx lerna run coverage --concurrency 2"
+
+      - name: coverage report
+        id: coverage
+        uses: akshatdubeysf/lerna-monorepo-coverage-action@v4.5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
