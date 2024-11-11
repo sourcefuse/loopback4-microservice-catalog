@@ -125,9 +125,7 @@ export class UserRepository extends DefaultSoftCrudRepository<
     if (!user || user.deleted) {
       throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
     } else if (
-      // eslint-disable-next-line
-      !creds ||
-      !creds.password ||
+      !creds?.password ||
       creds.authProvider !== AuthProvider.INTERNAL ||
       !(await bcrypt.compare(password, creds.password))
     ) {

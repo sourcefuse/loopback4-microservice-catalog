@@ -16,7 +16,7 @@ import {
   Send,
   SequenceHandler,
 } from '@loopback/rest';
-import {ILogger, LOGGER, SFCoreBindings} from '@sourceloop/core';
+import {CoreConfig, ILogger, LOGGER, SFCoreBindings} from '@sourceloop/core';
 import {isString} from 'lodash';
 import {
   AuthErrorKeys,
@@ -69,6 +69,8 @@ export class MySequence implements SequenceHandler {
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @inject(SFCoreBindings.i18n)
     protected i18n: i18nAPI, // sonarignore:end
+    @inject(SFCoreBindings.config, {optional: true})
+    private readonly coreConfig: CoreConfig,
   ) {}
 
   async handle(context: RequestContext) {
@@ -121,31 +123,7 @@ export class MySequence implements SequenceHandler {
       );
 
       const error = this._rejectErrors(err);
-      if (
-        // sonarignore:start
-        !(
-          error.message &&
-          [
-            AuthErrorKeys.TokenInvalid,
-            AuthErrorKeys.TokenExpired,
-            'TokenExpired',
-          ].includes(
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            (error.message as any).message,
-          )
-        )
-        // sonarignore:end
-      ) {
-        if (isString(error.message)) {
-          error.message = this.i18n.__({
-            phrase: error.message,
-            locale: process.env.LOCALE ?? 'en',
-          });
-        } else {
-          error.message =
-            error.message || 'Some error occured. Please try again';
-        }
-      }
+      this._handleErrorMessage(error);
       this.reject(context, error);
     } finally {
       this.logger.info(
@@ -197,6 +175,30 @@ export class MySequence implements SequenceHandler {
       );
     } else {
       return err as Error;
+    }
+  }
+
+  private _handleErrorMessage(error: Error) {
+    if (
+      // sonarignore:start
+      !(
+        error.message &&
+        [
+          AuthErrorKeys.TokenInvalid,
+          AuthErrorKeys.TokenExpired,
+          'TokenExpired',
+        ].includes((error.message as any).message)
+      )
+      // sonarignore:end
+    ) {
+      if (isString(error.message) && !this.coreConfig?.disablei18n) {
+        error.message = this.i18n.__({
+          phrase: error.message,
+          locale: process.env.LOCALE ?? 'en',
+        });
+      } else {
+        error.message = error.message || 'Some error occured. Please try again';
+      }
     }
   }
 }

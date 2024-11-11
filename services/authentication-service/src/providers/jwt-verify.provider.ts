@@ -18,7 +18,7 @@ export class JWTAsymmetricVerifierProvider<T>
   value(): JWTVerifierFn<T> {
     return async (code: string, options: jwt.VerifyOptions) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      let publicKey: any;
+      let publicKey: any; //NOSONAR
       let payload: T;
       if (this.authConfig?.useSymmetricEncryption) {
         payload = jwt.verify(code, process.env.JWT_SECRET as string, {

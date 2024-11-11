@@ -1,5 +1,5 @@
 ---
-title: "@sourceloop/user-tenant-service v0.17.1"
+title: "@sourceloop/user-tenant-service v2.1.2"
 language_tabs:
   - javascript: JavaScript
   - javascript--nodejs: Node.JS
@@ -16,11 +16,11 @@ headingLevel: 2
 
 <!-- Generator: Widdershins v4.0.1 -->
 
-<h1 id="-sourceloop-user-tenant-service">@sourceloop/user-tenant-service v0.17.1</h1>
+<h1 id="-sourceloop-user-tenant-service">@sourceloop/user-tenant-service v2.1.2</h1>
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-Sourceloop User Tenant Service.
+Sourceloop User Tenant Service
 
 Base URLs:
 
@@ -7574,6 +7574,196 @@ Status Code **200**
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
 None
+</aside>
+
+<h1 id="-sourceloop-user-tenant-service-userwebhookcontroller">UserWebhookController</h1>
+
+## UserWebhookController.callback
+
+<a id="opIdUserWebhookController.callback"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "email": "string",
+  "phone": "string",
+  "tenantName": "string",
+  "tenantKey": "string",
+  "firstName": "string",
+  "lastName": "string",
+  "middleName": "string",
+  "cognitoAuthId": "string",
+  "authClient": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "clientId": "string",
+    "clientSecret": "string",
+    "redirectUrl": "string",
+    "secret": "string",
+    "accessTokenExpiration": 0,
+    "refreshTokenExpiration": 0,
+    "authCodeExpiration": 0
+  },
+  "address": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "address": "string",
+    "city": "string",
+    "state": "string",
+    "zip": "string",
+    "country": "string"
+  }
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'x-signature':'string',
+  'x-timestamp':'string'
+};
+
+fetch('/user-callback',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "email": "string",
+  "phone": "string",
+  "tenantName": "string",
+  "tenantKey": "string",
+  "firstName": "string",
+  "lastName": "string",
+  "middleName": "string",
+  "cognitoAuthId": "string",
+  "authClient": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "clientId": "string",
+    "clientSecret": "string",
+    "redirectUrl": "string",
+    "secret": "string",
+    "accessTokenExpiration": 0,
+    "refreshTokenExpiration": 0,
+    "authCodeExpiration": 0
+  },
+  "address": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "address": "string",
+    "city": "string",
+    "state": "string",
+    "zip": "string",
+    "country": "string"
+  }
+};
+const headers = {
+  'Content-Type':'application/json',
+  'x-signature':'string',
+  'x-timestamp':'string'
+};
+
+fetch('/user-callback',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /user-callback`
+
+> Body parameter
+
+```json
+{
+  "email": "string",
+  "phone": "string",
+  "tenantName": "string",
+  "tenantKey": "string",
+  "firstName": "string",
+  "lastName": "string",
+  "middleName": "string",
+  "cognitoAuthId": "string",
+  "authClient": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "clientId": "string",
+    "clientSecret": "string",
+    "redirectUrl": "string",
+    "secret": "string",
+    "accessTokenExpiration": 0,
+    "refreshTokenExpiration": 0,
+    "authCodeExpiration": 0
+  },
+  "address": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "address": "string",
+    "city": "string",
+    "state": "string",
+    "zip": "string",
+    "country": "string"
+  }
+}
+```
+
+<h3 id="userwebhookcontroller.callback-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|x-signature|header|string|false|none|
+|x-timestamp|header|string|false|none|
+|body|body|[UserWebhookDTO](#schemauserwebhookdto)|false|none|
+
+<h3 id="userwebhookcontroller.callback-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Webhook success|None|
+
+<aside class="success">
+This operation does not require authentication
 </aside>
 
 <h1 id="-sourceloop-user-tenant-service-usertenantprefscontroller">UserTenantPrefsController</h1>
@@ -26192,6 +26382,96 @@ UserLevelPermissionPartial
 |permission|string|false|none|none|
 |allowed|boolean|false|none|none|
 |userTenantId|string|false|none|none|
+
+<h2 id="tocS_UserWebhookDTO">UserWebhookDTO</h2>
+<!-- backwards compatibility -->
+<a id="schemauserwebhookdto"></a>
+<a id="schema_UserWebhookDTO"></a>
+<a id="tocSuserwebhookdto"></a>
+<a id="tocsuserwebhookdto"></a>
+
+```json
+{
+  "email": "string",
+  "phone": "string",
+  "tenantName": "string",
+  "tenantKey": "string",
+  "firstName": "string",
+  "lastName": "string",
+  "middleName": "string",
+  "cognitoAuthId": "string",
+  "authClient": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "clientId": "string",
+    "clientSecret": "string",
+    "redirectUrl": "string",
+    "secret": "string",
+    "accessTokenExpiration": 0,
+    "refreshTokenExpiration": 0,
+    "authCodeExpiration": 0
+  },
+  "address": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "address": "string",
+    "city": "string",
+    "state": "string",
+    "zip": "string",
+    "country": "string"
+  }
+}
+
+```
+
+UserWebhookDTO
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|email|string|true|none|none|
+|phone|string|false|none|none|
+|tenantName|string|true|none|none|
+|tenantKey|string|true|none|none|
+|firstName|string|true|none|none|
+|lastName|string|false|none|none|
+|middleName|string|false|none|none|
+|cognitoAuthId|string|false|none|none|
+|authClient|object|false|none|(tsType: Omit<AuthClient, 'id'>, schemaOptions: { exclude: [ 'id' ] })|
+|» deleted|boolean|false|none|none|
+|» deletedOn|string(date-time)¦null|false|none|none|
+|» deletedBy|string¦null|false|none|none|
+|» createdOn|string(date-time)|false|none|none|
+|» modifiedOn|string(date-time)|false|none|none|
+|» clientId|string|true|none|none|
+|» clientSecret|string|false|none|none|
+|» redirectUrl|string|false|none|none|
+|» secret|string|true|none|none|
+|» accessTokenExpiration|number|true|none|none|
+|» refreshTokenExpiration|number|true|none|none|
+|» authCodeExpiration|number|true|none|none|
+|address|object|false|none|this model represents the address of a company (tsType: Omit<AddressDTO, 'id'>, schemaOptions: { exclude: [ 'id' ] })|
+|» deleted|boolean|false|none|none|
+|» deletedOn|string(date-time)¦null|false|none|none|
+|» deletedBy|string¦null|false|none|none|
+|» createdOn|string(date-time)|false|none|none|
+|» modifiedOn|string(date-time)|false|none|none|
+|» createdBy|string|false|none|none|
+|» modifiedBy|string|false|none|none|
+|» address|string|false|none|address of the company|
+|» city|string|false|none|city of the company|
+|» state|string|false|none|state of the company|
+|» zip|string|false|none|zip code of the company|
+|» country|string|false|none|country of the company|
 
 <h2 id="tocS_loopback.Count">loopback.Count</h2>
 <!-- backwards compatibility -->

@@ -18,9 +18,9 @@ const baseUrl = '/webhooks';
 export class WebhookSubscriptionController {
   constructor(
     @service(ApiKeyService)
-    private apiKeyService: ApiKeyService,
+    private readonly apiKeyService: ApiKeyService,
     @service(WebhookService)
-    private webhookService: WebhookService,
+    private readonly webhookService: WebhookService,
   ) {}
   @authenticate(STRATEGY.BEARER)
   @authorize({permissions: [TaskPermssionKey.SubscribeToWebhook]})

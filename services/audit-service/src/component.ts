@@ -33,7 +33,6 @@ import {
 
 import {AuditController} from './controllers';
 import {
-  AuditLogExportServiceBindings,
   AuditServiceBindings,
   ColumnBuilderServiceBindings,
   ExportHandlerServiceBindings,
@@ -58,7 +57,6 @@ import {
   MappingLogRepository as MappingLogSequelizeRepository,
 } from './repositories/sequelize';
 import {
-  AuditLogExportProvider,
   ColumnBuilderProvider,
   ExportHandlerProvider,
   ExportToCsvProvider,
@@ -100,11 +98,7 @@ export class AuditServiceComponent implements Component {
       this.setupSequence();
     }
 
-    this.services = [
-      JobProcessingService,
-      AuditLogExportProvider,
-      ColumnBuilderProvider,
-    ];
+    this.services = [JobProcessingService, ColumnBuilderProvider];
 
     if (this.notifConfig?.useSequelize) {
       this.repositories = [
@@ -131,8 +125,7 @@ export class AuditServiceComponent implements Component {
       QuerySelectedFilesProvider;
     this.providers[ExportToCsvServiceBindings.EXPORT_LOGS.key] =
       ExportToCsvProvider;
-    this.providers[AuditLogExportServiceBindings.EXPORT_AUDIT_LOGS.key] =
-      AuditLogExportProvider;
+
     this.providers[ColumnBuilderServiceBindings.COLUMN_BUILDER.key] =
       ColumnBuilderProvider;
     this.providers[ExportHandlerServiceBindings.PROCESS_FILE.key] =

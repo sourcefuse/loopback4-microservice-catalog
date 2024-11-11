@@ -2,9 +2,10 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {inject} from '@loopback/core';
-import {Request, ResponseObject, RestBindings, get} from '@loopback/rest';
-import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
+import { inject } from '@loopback/core';
+import { Request, ResponseObject, RestBindings, get } from '@loopback/rest';
+import { CONTENT_TYPE, STATUS_CODE } from '@sourceloop/core';
+import { authorize } from 'loopback4-authorization';
 
 /**
  * OpenAPI response for ping()
@@ -43,6 +44,7 @@ export class PingController {
   ) {}
 
   // Map to `GET /ping`
+  @authorize({permissions: ['*']})
   @get('/ping', {
     responses: {
       [STATUS_CODE.OK]: PING_RESPONSE,

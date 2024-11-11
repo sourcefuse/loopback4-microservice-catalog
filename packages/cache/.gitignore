@@ -62,3 +62,5 @@ typings/
 
 # Cache used by TypeScript's incremental build
 *.tsbuildinfo
+
+mochawesome-report

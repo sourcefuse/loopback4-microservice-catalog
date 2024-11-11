@@ -2,7 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Constructor, Getter, inject} from '@loopback/core';
+import { Constructor, Getter, inject } from '@loopback/core';
 import {
   BelongsToAccessor,
   DataObject,
@@ -12,7 +12,7 @@ import {
   juggler,
   repository,
 } from '@loopback/repository';
-import {HttpErrors} from '@loopback/rest';
+import { HttpErrors } from '@loopback/rest';
 import {
   AuditLogRepository,
   AuditRepositoryMixin,
@@ -40,7 +40,7 @@ import {
   UserStatus,
 } from '@sourceloop/core';
 import * as bcrypt from 'bcrypt';
-import {AuthErrorKeys, AuthenticationBindings} from 'loopback4-authentication';
+import { AuthErrorKeys, AuthenticationBindings } from 'loopback4-authentication';
 
 const saltRounds = 10;
 
@@ -141,15 +141,14 @@ export class UserRepository extends AuditRepositoryMixin<
 
   async verifyPassword(username: string, password: string): Promise<User> {
     const user = await super.findOne({
-      where: {username: username.toLowerCase()},
+      where: { username: username.toLowerCase() },
     });
     const creds = user && (await this.credentials(user.id).get());
     if (!user || user.deleted) {
       throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
     } else if (
       // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-      !creds ||
-      !creds.password ||
+      !creds?.password ||
       creds.authProvider !== AuthProvider.INTERNAL ||
       !(await bcrypt.compare(password, creds.password))
     ) {
@@ -165,7 +164,7 @@ export class UserRepository extends AuditRepositoryMixin<
     password: string,
     newPassword: string,
   ): Promise<User> {
-    const user = await super.findOne({where: {username}});
+    const user = await super.findOne({ where: { username } });
     const creds = user && (await this.credentials(user.id).get());
     if ((!user || user.deleted) ?? !creds?.password) {
       throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
@@ -193,7 +192,7 @@ export class UserRepository extends AuditRepositoryMixin<
     newPassword: string,
     oldPassword?: string,
   ): Promise<User> {
-    const user = await super.findOne({where: {username}});
+    const user = await super.findOne({ where: { username } });
     const creds = user && (await this.credentials(user.id).get());
 
     if (oldPassword) {
@@ -231,7 +230,7 @@ export class UserRepository extends AuditRepositoryMixin<
         lastLogin: Date.now(),
       },
       {
-        currentUser: {id: userId},
+        currentUser: { id: userId },
       },
     );
   }

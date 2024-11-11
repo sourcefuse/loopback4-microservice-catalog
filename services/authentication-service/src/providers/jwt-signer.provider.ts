@@ -19,9 +19,9 @@ export class JWTSignerProvider<T extends string | object | Buffer>
   value(): JWTSignerFn<T> {
     return async (data: string | T, options: jwt.SignOptions) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      let privateKey: any;
+      let privateKey: any; //NOSONAR
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      let accessToken: any;
+      let accessToken: any; //NOSONAR
       if (this.authConfig?.useSymmetricEncryption) {
         accessToken = jwt.sign(data, process.env.JWT_SECRET as string, {
           ...options,

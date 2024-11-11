@@ -40,13 +40,19 @@ import {
   UserTenantPrefsController,
   UserTenantUserGroupController,
   UserTenantUserLevelPermissionController,
+  UserWebhookController,
 } from './controllers';
 import {
   GroupTenantInterceptor,
   TenantInterceptorInterceptor,
   UserTenantInterceptorInterceptor,
+  UserWebhookVerifierProvider,
 } from './interceptors';
-import {UserTenantServiceComponentBindings, UserTenantServiceKey} from './keys';
+import {
+  USER_CALLBACK,
+  UserTenantServiceComponentBindings,
+  UserTenantServiceKey,
+} from './keys';
 import {
   AuthClient,
   Role,
@@ -61,6 +67,7 @@ import {
   UserTenant,
   UserTenantPrefs,
   UserView,
+  UserWebhookDTO,
 } from './models';
 import {Group} from './models/group.model';
 import {
@@ -97,6 +104,7 @@ import {
   TenantOperationsService,
   UserGroupService,
   UserOperationsService,
+  UserWebhookHelperService,
 } from './services';
 import {IUserServiceConfig} from './types';
 
@@ -121,7 +129,7 @@ export class UserTenantServiceComponent implements Component {
   providers?: ProviderMap = {};
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
-    private application: RestApplication,
+    private readonly application: RestApplication,
     @inject(UserTenantServiceComponentBindings.Config, {optional: true})
     private readonly config?: IUserServiceConfig,
   ) {
@@ -133,6 +141,7 @@ export class UserTenantServiceComponent implements Component {
       createServiceBinding(UserGroupService),
       createServiceBinding(UserOperationsService),
       createServiceBinding(TenantOperationsService),
+      createServiceBinding(UserWebhookHelperService),
       Binding.bind(UserTenantServiceKey.GroupTenantInterceptor).toProvider(
         GroupTenantInterceptor,
       ),
@@ -142,6 +151,7 @@ export class UserTenantServiceComponent implements Component {
       Binding.bind(
         UserTenantServiceKey.UserTenantInterceptorInterceptor,
       ).toProvider(UserTenantInterceptorInterceptor),
+      Binding.bind(USER_CALLBACK).toProvider(UserWebhookVerifierProvider),
     ];
     this.application.component(TenantUtilitiesComponent);
 
@@ -164,6 +174,7 @@ export class UserTenantServiceComponent implements Component {
       UserTenantPrefs,
       AuthClient,
       UserDto,
+      UserWebhookDTO,
     ];
     this.controllers = [
       TenantRoleController,
@@ -176,6 +187,7 @@ export class UserTenantServiceComponent implements Component {
       UserTenantPrefsController,
       UserTenantUserGroupController,
       UserTenantUserLevelPermissionController,
+      UserWebhookController,
     ];
     if (this.config?.useSequelize) {
       this.repositories = [

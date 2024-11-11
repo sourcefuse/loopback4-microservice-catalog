@@ -41,7 +41,7 @@ describe('POST /audit-logs/archive', () => {
   afterEach(async () => {
     await app.stop();
   });
-  it('archive logs when all 3 parameters are provided and deleted is false', async () => {
+  it('archive logs when  3 parameters are provided and deleted is false', async () => {
     const customFilter: CustomFilter = new CustomFilter({
       date: {
         fromDate: testFromDate,
@@ -67,7 +67,7 @@ describe('POST /audit-logs/archive', () => {
       actualResult.length + controllerResult.numberOfEntriesArchived,
     ).to.be.equal(archiveLogs.length);
   });
-  it('archive logs when all 3 parameters are provided and deleted is true', async () => {
+  it('archive logs when 3 parameters are provided and deleted is true', async () => {
     const customFilter: CustomFilter = new CustomFilter({
       date: {
         fromDate: testFromDate,
@@ -176,7 +176,7 @@ describe('POST /audit-logs/archive', () => {
       actualResult.length + controllerResult.numberOfEntriesArchived,
     ).to.be.equal(archiveLogs.length);
   });
-  it('archive logs when only actedOn parameter is provided', async () => {
+  it('archive logs when only date parameter is provided', async () => {
     const customFilter: CustomFilter = new CustomFilter({
       date: {
         fromDate: testFromDate,
@@ -199,6 +199,58 @@ describe('POST /audit-logs/archive', () => {
   });
   it('archive logs when none of the parameter is provided', async () => {
     const customFilter: CustomFilter = new CustomFilter({});
+    const {auditLogController} = getTestAuditController(app);
+    const mappingLogRepositoryStub = createStubInstance(MappingLogRepository);
+    const mappingLogFetch = mappingLogRepositoryStub.stubs.create;
+    mappingLogFetch.resolves(mappingLog);
+
+    const controllerResult = await auditLogController.archive(customFilter);
+    const actualResult = await auditLogRepository.find();
+    expect(
+      actualResult.length + controllerResult.numberOfEntriesArchived,
+    ).to.be.equal(archiveLogs.length);
+  });
+  it('archive logs when actedOnList parameter is provided', async () => {
+    const customFilter: CustomFilter = new CustomFilter({
+      actedOnList: ['Product'],
+    });
+    const {auditLogController} = getTestAuditController(app);
+    const mappingLogRepositoryStub = createStubInstance(MappingLogRepository);
+    const mappingLogFetch = mappingLogRepositoryStub.stubs.create;
+    mappingLogFetch.resolves(mappingLog);
+
+    const controllerResult = await auditLogController.archive(customFilter);
+    const actualResult = await auditLogRepository.find();
+    const expectedIds = ['6'];
+
+    expect(actualResult).to.be.containDeep(expectedIds.map(id => ({id})));
+    expect(
+      actualResult.length + controllerResult.numberOfEntriesArchived,
+    ).to.be.equal(archiveLogs.length);
+  });
+  it('archive logs when actedOnList parameter is provided and deleted is true', async () => {
+    const customFilter: CustomFilter = new CustomFilter({
+      actedOnList: ['Product'],
+      deleted: true,
+    });
+    const {auditLogController} = getTestAuditController(app);
+    const mappingLogRepositoryStub = createStubInstance(MappingLogRepository);
+    const mappingLogFetch = mappingLogRepositoryStub.stubs.create;
+    mappingLogFetch.resolves(mappingLog);
+
+    const controllerResult = await auditLogController.archive(customFilter);
+    const actualResult = await auditLogRepository.find();
+    const expectedIds = ['3', '6'];
+
+    expect(actualResult).to.be.containDeep(expectedIds.map(id => ({id})));
+    expect(
+      actualResult.length + controllerResult.numberOfEntriesArchived,
+    ).to.be.equal(archiveLogs.length);
+  });
+  it('archive logs when actionGroupList parameter is provided', async () => {
+    const customFilter: CustomFilter = new CustomFilter({
+      actionGroupList: ['Product_group'],
+    });
     const {auditLogController} = getTestAuditController(app);
     const mappingLogRepositoryStub = createStubInstance(MappingLogRepository);
     const mappingLogFetch = mappingLogRepositoryStub.stubs.create;

@@ -20,7 +20,7 @@ headingLevel: 2
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-Authentication microservice
+Authentication microservice.
 
 Base URLs:
 
@@ -556,6 +556,260 @@ client_secret: string
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|POST Call for Apple based login|None|
 
 <h3 id="applelogincontroller.postloginviaapple-responseschema">Response Schema</h3>
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+<h1 id="authentication-service-auth0logincontroller">Auth0LoginController</h1>
+
+## Auth0LoginController.postLoginViaAuth0
+
+<a id="opIdAuth0LoginController.postLoginViaAuth0"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "client_id": "string",
+  "client_secret": "string"
+}';
+const headers = {
+  'Content-Type':'application/x-www-form-urlencoded',
+  'Accept':'application/json'
+};
+
+fetch('/auth/auth0',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "client_id": "string",
+  "client_secret": "string"
+};
+const headers = {
+  'Content-Type':'application/x-www-form-urlencoded',
+  'Accept':'application/json'
+};
+
+fetch('/auth/auth0',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /auth/auth0`
+
+> Body parameter
+
+```yaml
+client_id: string
+client_secret: string
+
+```
+
+<h3 id="auth0logincontroller.postloginviaauth0-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[ClientAuthRequest](#schemaclientauthrequest)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "accessToken": "string",
+  "refreshToken": "string",
+  "expires": 0,
+  "pubnubToken": "string"
+}
+```
+
+<h3 id="auth0logincontroller.postloginviaauth0-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|POST Call for auth0 based login|[TokenResponse](#schematokenresponse)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## Auth0LoginController.loginViaAuth0
+
+<a id="opIdAuth0LoginController.loginViaAuth0"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/auth/auth0',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/auth/auth0',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /auth/auth0`
+
+<h3 id="auth0logincontroller.loginviaauth0-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|client_id|query|string|false|none|
+|client_secret|query|string|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "accessToken": "string",
+  "refreshToken": "string",
+  "expires": 0,
+  "pubnubToken": "string"
+}
+```
+
+<h3 id="auth0logincontroller.loginviaauth0-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|POST Call for auth0 based login|[TokenResponse](#schematokenresponse)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## Auth0LoginController.auth0Callback
+
+<a id="opIdAuth0LoginController.auth0Callback"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/auth/auth0-auth-redirect',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/auth/auth0-auth-redirect',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /auth/auth0-auth-redirect`
+
+<h3 id="auth0logincontroller.auth0callback-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|code|query|string|false|none|
+|state|query|string|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "accessToken": "string",
+  "refreshToken": "string",
+  "expires": 0,
+  "pubnubToken": "string"
+}
+```
+
+<h3 id="auth0logincontroller.auth0callback-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Redirect Token Response|[TokenResponse](#schematokenresponse)|
 
 <aside class="success">
 This operation does not require authentication
@@ -1770,7 +2024,8 @@ This operation does not require authentication
 ```javascript
 const inputBody = '{
   "key": "string",
-  "otp": "string"
+  "otp": "string",
+  "clientId": "string"
 }';
 const headers = {
   'Content-Type':'application/json'
@@ -1794,7 +2049,8 @@ fetch('/auth/verify-otp',
 const fetch = require('node-fetch');
 const inputBody = {
   "key": "string",
-  "otp": "string"
+  "otp": "string",
+  "clientId": "string"
 };
 const headers = {
   'Content-Type':'application/json'
@@ -1823,7 +2079,8 @@ Gets you the code that will be used for getting token (webapps)
 ```json
 {
   "key": "string",
-  "otp": "string"
+  "otp": "string",
+  "clientId": "string"
 }
 ```
 
@@ -4341,7 +4598,8 @@ OtpSendRequest
 ```json
 {
   "key": "string",
-  "otp": "string"
+  "otp": "string",
+  "clientId": "string"
 }
 
 ```
@@ -4354,6 +4612,108 @@ OtpLoginRequest
 |---|---|---|---|---|
 |key|string|true|none|This property is supposed to be a string and is a required field|
 |otp|string|true|none|This property is supposed to be a string and is a required field|
+|clientId|string|false|none|none|
+
+<h2 id="tocS_AuthUser">AuthUser</h2>
+<!-- backwards compatibility -->
+<a id="schemaauthuser"></a>
+<a id="schema_AuthUser"></a>
+<a id="tocSauthuser"></a>
+<a id="tocsauthuser"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "firstName": "string",
+  "lastName": "string",
+  "middleName": "string",
+  "username": "string",
+  "email": "string",
+  "phone": "string",
+  "authClientIds": "string",
+  "lastLogin": "2019-08-24T14:15:22Z",
+  "photoUrl": "string",
+  "designation": "string",
+  "dob": "2019-08-24T14:15:22Z",
+  "gender": "M",
+  "defaultTenantId": "string",
+  "permissions": [
+    "string"
+  ],
+  "role": "string",
+  "externalAuthToken": "string",
+  "deviceInfo": {},
+  "age": 0,
+  "externalRefreshToken": "string",
+  "authClientId": 0,
+  "userPreferences": {},
+  "tenantId": "string",
+  "userTenantId": "string",
+  "passwordExpiryTime": "2019-08-24T14:15:22Z",
+  "status": 1
+}
+
+```
+
+AuthUser
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|firstName|string|true|none|none|
+|lastName|string|false|none|none|
+|middleName|string|false|none|none|
+|username|string|true|none|none|
+|email|string|false|none|none|
+|phone|string|false|none|none|
+|authClientIds|string|false|none|none|
+|lastLogin|string(date-time)|false|none|none|
+|photoUrl|string|false|none|none|
+|designation|string|false|none|none|
+|dob|string(date-time)|false|none|none|
+|gender|string|false|none|This field takes a single character as input in database.<br>    'M' for male and 'F' for female.|
+|defaultTenantId|string|false|none|none|
+|permissions|[string]|false|none|none|
+|role|string|true|none|none|
+|externalAuthToken|string|false|none|none|
+|deviceInfo|object|false|none|This property consists of two optional fields.<br>    1. userAgent<br>    2. deviceId|
+|age|number|false|none|none|
+|externalRefreshToken|string|false|none|none|
+|authClientId|number|false|none|none|
+|userPreferences|object|false|none|none|
+|tenantId|string|false|none|none|
+|userTenantId|string|false|none|none|
+|passwordExpiryTime|string(date-time)|false|none|none|
+|status|number|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|gender|M|
+|gender|F|
+|gender|O|
+|status|1|
+|status|2|
+|status|3|
+|status|0|
+|status|4|
 
 <h2 id="tocS_ForgetPasswordDto">ForgetPasswordDto</h2>
 <!-- backwards compatibility -->

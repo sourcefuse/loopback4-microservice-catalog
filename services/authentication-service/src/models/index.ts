@@ -28,7 +28,7 @@ import {UserLevelResource} from './user-level-resource.model';
 import {UserTenant} from './user-tenant.model';
 import {User} from './user.model';
 
-export * from './';
+export * from '.';
 export * from './active-users-filter.model';
 export * from './auth-client.model';
 export * from './auth-secure-client.model';

@@ -11,7 +11,8 @@ import {SequelizeDataSource} from '@loopback/sequelize';
 import {AuditDbSourceName} from '@sourceloop/audit-log';
 import * as path from 'path';
 import {AuditServiceComponent} from '../../component';
-import {AuditServiceBindings} from '../../keys';
+import {AuditLogExportProvider} from '../../exporter';
+import {AuditLogExportServiceBindings, AuditServiceBindings} from '../../keys';
 
 export {ApplicationConfig};
 
@@ -35,6 +36,9 @@ export class SequelizeAuditServiceApplication extends BootMixin(
     });
 
     this.component(AuditServiceComponent);
+    this.bind(AuditLogExportServiceBindings.EXPORT_AUDIT_LOGS).toProvider(
+      AuditLogExportProvider,
+    );
     this.projectRoot = __dirname;
     this.bootOptions = {
       controllers: {

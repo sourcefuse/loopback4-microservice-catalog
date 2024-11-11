@@ -1,8 +1,8 @@
-import * as TypeDoc from 'typedoc';
+import { execSync } from 'child_process';
+import { existsSync, readFileSync, writeFileSync } from 'fs';
 import * as path from 'path';
-import {execSync} from 'child_process';
-import {existsSync, readFileSync, writeFileSync} from 'fs';
-import {PackageJson} from 'type-fest';
+import { PackageJson } from 'type-fest';
+import * as TypeDoc from 'typedoc';
 
 /**
  * Exports API references using TypeDoc.
@@ -27,9 +27,9 @@ class ApiReferenceExporter {
    * @param settings - Additional custom settings, eg. `includeOpenAPIDoc`
    */
   constructor(
-    private pkg: LernaPackageInfo,
-    private config: CustomTypeDocOptions['config'],
-    private settings: CustomTypeDocOptions['settings'] = {},
+    private readonly pkg: LernaPackageInfo,
+    private readonly config: CustomTypeDocOptions['config'],
+    private readonly settings: CustomTypeDocOptions['settings'] = {},
   ) {
     this.app = new TypeDoc.Application();
     this.app.options.addReader(new TypeDoc.TSConfigReader());

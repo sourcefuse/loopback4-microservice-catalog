@@ -12,3 +12,4 @@ export * from './user-tenant-prefs.controller';
 export * from './user-tenant-user-group.controller';
 export * from './user-tenant-user-level-permission.controller';
 export * from './user-tenant.controller';
+export * from './user-webhook.controller';

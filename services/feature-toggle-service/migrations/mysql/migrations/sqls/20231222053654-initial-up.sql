@@ -1,10 +1,11 @@
 -- creating features table
 CREATE TABLE features (
-	id                   VARCHAR(36) NOT NULL PRIMARY KEY,
-  name                 VARCHAR(50) NOT NULL,
-  `key`                VARCHAR(50) NOT NULL,
-  description          VARCHAR(50),
-  default_value        BOOL DEFAULT true NOT NULL,
+	id                   TEXT NOT NULL PRIMARY KEY,
+  name                 TEXT NOT NULL,
+  `key`                TEXT NOT NULL,
+  description          TEXT,
+  default_value        TEXT NOT NULL,
+  type                 TEXT NOT NULL,
   metadata             TEXT,  
   created_by           VARCHAR(100),
   modified_by          VARCHAR(100),
@@ -12,7 +13,7 @@ CREATE TABLE features (
   modified_on          TIMESTAMP DEFAULT current_timestamp NOT NULL,
   deleted              BOOL DEFAULT false NOT NULL,
   deleted_on           TIMESTAMP,
-  deleted_by           VARCHAR(36)
+  deleted_by           VARCHAR(100)
 );
 
 -- adding triggers
@@ -24,8 +25,8 @@ SET NEW.id = IFNULL(NEW.id, uuid());
 -- creating strategies table
 CREATE TABLE strategies (
 	id                   VARCHAR(36) NOT NULL PRIMARY KEY,
-	name                 VARCHAR(50) NOT NULL,
-	`key`                VARCHAR(50) NOT NULL,
+	name                 TEXT NOT NULL,
+	`key`                TEXT NOT NULL,
 	priority             INTEGER,
   created_by           VARCHAR(100),
   modified_by          VARCHAR(100),
@@ -33,7 +34,7 @@ CREATE TABLE strategies (
   modified_on          TIMESTAMP DEFAULT current_timestamp NOT NULL,
   deleted              BOOL DEFAULT false NOT NULL,
   deleted_on           TIMESTAMP,
-  deleted_by           VARCHAR(36)
+  deleted_by           VARCHAR(100)
 );
 
 -- adding triggers
@@ -42,25 +43,26 @@ BEFORE INSERT ON strategies
 FOR EACH ROW
 SET NEW.id = IFNULL(NEW.id, uuid());
 
--- creating feature_toggles table
-CREATE TABLE feature_toggles (
+-- creating feature_values table
+CREATE TABLE feature_values (
 	id                   VARCHAR(36) NOT NULL PRIMARY KEY,
-	feature_key          VARCHAR(50) NOT NULL,
-	strategy_key         VARCHAR(50) NOT NULL,
+	feature_key          TEXT NOT NULL,
+	strategy_key         TEXT NOT NULL,
   strategy_entity_id   VARCHAR(36),
 	status               BOOL DEFAULT true NOT NULL,
+  values               TEXT,
   created_by           VARCHAR(100),
   modified_by          VARCHAR(100),
   created_on           TIMESTAMP DEFAULT current_timestamp NOT NULL,
   modified_on          TIMESTAMP DEFAULT current_timestamp NOT NULL,
   deleted              BOOL DEFAULT false NOT NULL,
   deleted_on           TIMESTAMP,
-  deleted_by           VARCHAR(36)
+  deleted_by           VARCHAR(100)
 );
 
 -- adding triggers
-CREATE TRIGGER before_insert_trigger_feature_toggles
-BEFORE INSERT ON feature_toggles
+CREATE TRIGGER before_insert_trigger_feature_values
+BEFORE INSERT ON feature_values
 FOR EACH ROW
 SET NEW.id = IFNULL(NEW.id, uuid());
 

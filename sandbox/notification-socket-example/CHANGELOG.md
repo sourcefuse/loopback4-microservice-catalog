@@ -3,6 +3,63 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>6.0.22 (2024-10-22)</small>
+
+**Note:** Version bump only for package @sourceloop/notification-socket-example
+
+
+
+
+
+## <small>6.0.21 (2024-10-16)</small>
+
+**Note:** Version bump only for package @sourceloop/notification-socket-example
+
+
+
+
+
+## <small>6.0.20 (2024-09-30)</small>
+
+**Note:** Version bump only for package @sourceloop/notification-socket-example
+
+
+
+
+
+## <small>6.0.19 (2024-09-30)</small>
+
+**Note:** Version bump only for package @sourceloop/notification-socket-example
+
+
+
+
+
+## <small>6.0.18 (2024-09-26)</small>
+
+**Note:** Version bump only for package @sourceloop/notification-socket-example
+
+
+
+
+
+## <small>6.0.17 (2024-08-05)</small>
+
+**Note:** Version bump only for package @sourceloop/notification-socket-example
+
+
+
+
+
+## <small>6.0.16 (2024-06-11)</small>
+
+* chore(deps):  version update in sandbox (#2109) ([615d7f5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/615d7f5)), closes [#2109](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2109) [#2104](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2104) [#2104](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2104)
+* chore(deps): version bump commit (#2111) ([c87bc75](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c87bc75)), closes [#2111](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2111) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
 ## <small>6.0.15 (2024-05-07)</small>
 
 **Note:** Version bump only for package @sourceloop/notification-socket-example

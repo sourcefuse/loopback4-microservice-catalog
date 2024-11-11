@@ -2,6 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {AnyObject, Filter} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {
   createStubInstance,
@@ -9,11 +10,12 @@ import {
   sinon,
   StubbedInstanceWithSinonAccessor,
 } from '@loopback/testlab';
-
-import {AnyObject, Filter} from '@loopback/repository';
 import {AuditController} from '../../controllers';
 import {FileStatusKey} from '../../enums/file-status-key.enum';
+import {AuditLogExportServiceBindings} from '../../keys';
 import {AuditLog, Job} from '../../models/tenant-support';
+
+import {AuditLogExportProvider} from '../../exporter';
 import {
   AuditLogRepository,
   JobRepository,
@@ -21,6 +23,7 @@ import {
 } from '../../repositories';
 import {ColumnBuilderProvider, JobProcessingService} from '../../services';
 import {AuditLogExportFn, ExportToCsvFn} from '../../types';
+import {DummyAuditServiceApplication} from '../fixtures/dummy-application';
 import {testUser} from '../helpers/db.helper';
 import {dummyLog} from '../sample-data/dummy-log';
 import {filterAppliedActedAt} from '../sample-data/filters';
@@ -31,8 +34,16 @@ let jobProcessingService: StubbedInstanceWithSinonAccessor<JobProcessingService>
 let mappingLogRepository: StubbedInstanceWithSinonAccessor<MappingLogRepository>;
 
 let controller: AuditController;
-
+let app: DummyAuditServiceApplication;
 const setUpStub = () => {
+  app = new DummyAuditServiceApplication({
+    rest: {
+      port: 3001,
+    },
+  });
+  app
+    .bind(AuditLogExportServiceBindings.EXPORT_AUDIT_LOGS)
+    .toProvider(AuditLogExportProvider);
   auditLogRepository = createStubInstance(AuditLogRepository);
   jobRepository = createStubInstance(JobRepository);
   jobProcessingService = createStubInstance(JobProcessingService);
@@ -42,6 +53,7 @@ const setUpStub = () => {
     Promise.resolve('demoResponse');
   const auditLogExport: AuditLogExportFn = (data: AnyObject[]) =>
     Promise.resolve();
+
   controller = new AuditController(
     auditLogRepository,
     jobRepository,

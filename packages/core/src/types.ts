@@ -23,6 +23,7 @@ export interface CoreConfig {
   tenantContextEncryptionKey?: string;
   openapiSpec?: Record<string, unknown>;
   tenantContextMiddleware?: boolean;
+  disablei18n?: boolean;
 
   /**
    * In order to hide or alter some path from the definition provided by swagger stats, `modifyPathDefinition`
@@ -78,7 +79,7 @@ export function addTenantId(
     const encryptedTenantId = req.headers['tenant-id'];
     const decryptedTenantId = CryptoJS.AES.decrypt(
       encryptedTenantId as string,
-      secretKey as string,
+      secretKey,
     ).toString(CryptoJS.enc.Utf8);
     reqResponse['tenant-id'] = decryptedTenantId;
   }

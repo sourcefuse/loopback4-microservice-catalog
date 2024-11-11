@@ -3,18 +3,18 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {Client, expect} from '@loopback/testlab';
-import {FeatureToggleRepository} from '../../repositories';
-import {TestingApplication} from '../fixtures/application';
 import * as jwt from 'jsonwebtoken';
-import {setupApplication} from '../fixtures/test-helper';
 import {StrategyKey} from '../../enums';
+import {FeatureValues} from '../../models';
+import {FeatureValuesRepository} from '../../repositories';
+import {TestingApplication} from '../fixtures/application';
+import {setupApplication} from '../fixtures/test-helper';
 import {Test} from '../fixtures/test.enum';
-import {FeatureToggle} from '../../models';
 
-describe('Feature Toggle Contrtoller', () => {
+describe('Feature Values Contrtoller', () => {
   let app: TestingApplication;
   let client: Client;
-  let featureToggleRepo: FeatureToggleRepository;
+  let featureToggleRepo: FeatureValuesRepository;
 
   const testUser = {
     id: 1,
@@ -23,13 +23,13 @@ describe('Feature Toggle Contrtoller', () => {
     tenantId: 'tenant_id',
     userTenantId: 'user_tenant_id',
     permissions: [
-      'ViewFeatureToggle',
-      'CreateFeatureToggle',
-      'UpdateFeatureToggle',
-      'DeleteFeatureToggle',
+      'ViewFeatureValues',
+      'CreateFeatureValues',
+      'UpdateFeatureValues',
+      'DeleteFeatureValues',
     ],
   };
-  const basePath = '/featuretoggles';
+  const basePath = '/feature-values';
 
   const token = jwt.sign(testUser, 'kdskssdkdfs', {
     expiresIn: 180000,
@@ -52,7 +52,7 @@ describe('Feature Toggle Contrtoller', () => {
       .post(basePath)
       .set('authorization', `Bearer ${token}`)
       .send(
-        new FeatureToggle({
+        new FeatureValues({
           id: '4',
           featureKey: Test.Feature1,
           strategyKey: StrategyKey.User,
@@ -147,7 +147,7 @@ describe('Feature Toggle Contrtoller', () => {
   }
 
   async function givenRepositories() {
-    featureToggleRepo = await app.getRepository(FeatureToggleRepository);
+    featureToggleRepo = await app.getRepository(FeatureValuesRepository);
 
     await featureToggleRepo.createAll([
       {

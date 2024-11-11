@@ -25,12 +25,16 @@ import {
 import {authorize} from 'loopback4-authorization';
 import {authenticator} from 'otplib';
 import qrcode from 'qrcode';
+import {OtpMethodType} from '../../../enums';
+import {AuthServiceBindings} from '../../../keys';
 import {User, UserCredentials} from '../../../models';
 import {
   AuthCodeBindings,
   CodeReaderFn,
   CodeWriterFn,
   JWTVerifierFn,
+  MfaCheckFn,
+  VerifyBindings,
 } from '../../../providers';
 import {
   AuthClientRepository,
@@ -38,6 +42,7 @@ import {
   UserCredentialsRepository,
   UserRepository,
 } from '../../../repositories';
+import {IMfaConfig, IOtpConfig} from '../../../types';
 import {
   AuthTokenRequest,
   AuthUser,
@@ -61,8 +66,14 @@ export class OtpController {
     @repository(UserCredentialsRepository)
     public userCredsRepository: UserCredentialsRepository,
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
+    @inject(VerifyBindings.MFA_PROVIDER)
+    private readonly checkMfa: MfaCheckFn,
     @inject(AuthCodeBindings.JWT_VERIFIER.key)
     private readonly jwtVerifier: JWTVerifierFn<AnyObject>,
+    @inject(AuthServiceBindings.MfaConfig, {optional: true})
+    private readonly mfaConfig: IMfaConfig,
+    @inject(AuthServiceBindings.OtpConfig, {optional: true})
+    private readonly otpConfig: IOtpConfig,
   ) {}
 
   // OTP
@@ -108,22 +119,58 @@ export class OtpController {
     @requestBody()
     req: OtpLoginRequest,
     @inject(AuthenticationBindings.CURRENT_USER)
-    user: AuthUser | undefined,
+    user: AuthUser,
     @inject(AuthCodeBindings.CODEWRITER_PROVIDER)
     codeWriter: CodeWriterFn,
   ): Promise<CodeResponse> {
-    const otpCache = await this.otpCacheRepo.get(req.key);
-    if (user?.id) {
-      otpCache.userId = user.id;
+    let otpCache;
+    let clientId!: string;
+    let userId;
+    let clientSecret!: jwt.Secret;
+    const isMfaEnabled = await this.checkMfa(user);
+    if (isMfaEnabled) {
+      if (
+        this.mfaConfig.secondFactor === STRATEGY.OTP &&
+        this.otpConfig.method === OtpMethodType.OTP
+      ) {
+        otpCache = await this.otpCacheRepo.get(req.key);
+        if (user?.id) {
+          otpCache.userId = user.id;
+        }
+
+        clientId = otpCache.clientId;
+        userId = otpCache.userId;
+        clientSecret = otpCache.clientSecret;
+      } else if (
+        this.mfaConfig.secondFactor === STRATEGY.OTP &&
+        this.otpConfig.method === OtpMethodType.GOOGLE_AUTHENTICATOR
+      ) {
+        if (!req.clientId) {
+          throw new Error(
+            'Client ID must be provided for Google Authenticator',
+          );
+        }
+        clientId = req.clientId;
+        userId = user.id;
+        const client = await this.authClientRepository.findOne({
+          where: {
+            clientId,
+          },
+        });
+        clientSecret = client?.clientSecret as string;
+      } else {
+        // This is intentional.
+      }
     }
+
     const codePayload: ClientAuthCode<User, typeof User.prototype.id> = {
-      clientId: otpCache.clientId,
-      userId: otpCache.userId,
+      clientId: clientId,
+      userId: userId,
     };
     const token = await codeWriter(
-      jwt.sign(codePayload, otpCache.clientSecret, {
+      jwt.sign(codePayload, clientSecret, {
         expiresIn: 180,
-        audience: otpCache.clientId,
+        audience: clientId,
         issuer: process.env.JWT_ISSUER,
         algorithm: 'HS256',
       }),

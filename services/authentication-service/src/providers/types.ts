@@ -13,6 +13,7 @@ import {
   Keycloak,
 } from 'loopback4-authentication';
 import * as AppleStrategy from 'passport-apple';
+import * as Auth0Strategy from 'passport-auth0';
 import * as AzureADStrategy from 'passport-azure-ad';
 import * as FacebookStrategy from 'passport-facebook';
 import * as GoogleStrategy from 'passport-google-oauth20';
@@ -207,5 +208,21 @@ export type SamlPreVerifyFn = (
 
 export type SamlPostVerifyFn = (
   profile: SamlStrategy.Profile,
+  user: IAuthUser | null,
+) => Promise<IAuthUser | null>;
+
+export type Auth0SignUpFn = (
+  profile: Auth0Strategy.Profile,
+) => Promise<(User & UserRelations) | null>;
+
+export type Auth0PreVerifyFn = (
+  accessToken: string,
+  refreshToken: string,
+  profile: Auth0Strategy.Profile,
+  user: IAuthUser | null,
+) => Promise<IAuthUser | null>;
+
+export type Auth0PostVerifyFn = (
+  profile: Auth0Strategy.Profile,
   user: IAuthUser | null,
 ) => Promise<IAuthUser | null>;

@@ -13,8 +13,8 @@ import {
 import {SequelizeDataSource} from '@loopback/sequelize';
 import * as path from 'path';
 import {TaskServiceComponent} from '../../../component';
-import {TaskServiceBindings} from '../../../keys';
 import {TaskHttpComponent} from '../../../connectors/http';
+import {TaskServiceBindings} from '../../../keys';
 export {ApplicationConfig};
 
 export class TaskServiceSequelizeApplication extends BootMixin(
@@ -23,7 +23,6 @@ export class TaskServiceSequelizeApplication extends BootMixin(
   constructor(options: ApplicationConfig = {}) {
     super(options);
     this.static('/', path.join(__dirname, '../public'));
-    this.component(TaskServiceComponent);
 
     this.projectRoot = __dirname;
 

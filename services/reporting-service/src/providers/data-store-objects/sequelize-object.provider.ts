@@ -6,7 +6,7 @@ import {ReportingServiceComponentBindings} from '../../keys';
 export class SequelizeObjectProvider implements Provider<Sequelize> {
   constructor(
     @inject(ReportingServiceComponentBindings.DATA_STORE_CONFIGURATION)
-    private config: SequelizeDataStoreConfiguration,
+    private readonly config: SequelizeDataStoreConfiguration,
   ) {}
   value(): Sequelize {
     return new Sequelize({

@@ -12,7 +12,7 @@
 
 ### Reporting Service Component
 
-The Reporting Service Component, part of the ARC microservices suite, is a versatile and robust solution designed for data ingestion, processing, and reporting. This component serves two primary functions:
+The Reporting Service Component, part of the ARC microservices suite, is a versatile and robust solution designed for data ingestion, processing, and reporting.This component serves two primary functions:
 
 #### 1. Data Ingestion and Processing
 
@@ -168,10 +168,12 @@ This binding is essential for the component to interface with the data store, wh
 
 To enable duplication checks for datasets and specify which keys should be used for hashing, bind the configuration like this:
 
-````typescript
+```typescript
 this.bind(ReportingServiceComponentBindings.DATA_SET_CONFIG).to({
   hashFields: ['name', 'otherKey'], // Add other keys as needed from data set model
 });
+```
+
 ### Step 6: Bind the Component
 
 Finally, bind the Reporting Service Component to your application:
@@ -180,7 +182,36 @@ Finally, bind the Reporting Service Component to your application:
 import {ReportingServiceComponent} from '@sourceloop/reporting-service';
 
 this.component(ReportingServiceComponent);
-````
+```
+
+### Optionally pass validation for SQL Queries
+
+For use cases requiring direct SQL queries, the component now offers support for plain SQL. It's important to note that when using direct SQL, the responsibility for query validation shifts to the component user. To assist with SQL validation, the component can be configured with a custom SqlValidatorInterface implementation:
+
+```typescript
+export interface SqlValidatorInterface {
+  validate(sqlQuery: string): Promise<boolean>;
+}
+```
+
+This interface ensures that your SQL queries are validated according to your custom logic, enhancing the security and reliability of direct SQL query usage within the component.
+To utilize the SqlValidatorInterface, you need to implement your own SQL validation logic and bind it to your application. This can be done as follows:
+
+```typescript
+import {SqlValidatorInterface} from '@sourceloop/reporting-service';
+
+class MyCustomSqlValidator implements SqlValidatorInterface {
+  async validate(sqlQuery: string): Promise<boolean> {
+    // Implement your SQL validation logic here
+    return true; // return true if the SQL query is valid
+  }
+}
+
+// In your application constructor
+this.bind(ReportingServiceComponentBindings.SQL_VALIDATOR).toClass(
+  MyCustomSqlValidator,
+);
+```
 
 This completes the setup, and your application is now equipped to utilize the features of the Reporting Service Component for data ingestion, processing, and reporting.
 

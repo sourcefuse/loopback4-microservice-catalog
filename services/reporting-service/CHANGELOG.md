@@ -3,6 +3,83 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.0.3 (2024-10-22)</small>
+
+**Note:** Version bump only for package @sourceloop/reporting-service
+
+
+
+
+
+## <small>3.0.2 (2024-10-16)</small>
+
+* chore(ci-cd): resolve sonar issues (#2179) ([12ec556](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/12ec556)), closes [#2179](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2179) [#2177](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2177) [#2177](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2177)
+* chore(ci-cd): resolve sonar issues (#2180) ([19c969b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/19c969b)), closes [#2180](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2180) [#2177](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2177)
+
+
+
+
+
+## <small>3.0.1 (2024-09-30)</small>
+
+**Note:** Version bump only for package @sourceloop/reporting-service
+
+
+
+
+
+## 3.0.0 (2024-09-30)
+
+* fix(reporting-service): fix migration folder path (#2171) ([9d0a8cf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9d0a8cf)), closes [#2171](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2171) [#2170](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2170)
+* feat(reporting-service): supports subqueries, multilevel function, da… (#2071) ([41247d2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/41247d2)), closes [#2071](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2071)
+
+
+
+
+
+## <small>2.1.4 (2024-09-26)</small>
+
+**Note:** Version bump only for package @sourceloop/reporting-service
+
+
+
+
+
+## <small>2.1.3 (2024-08-05)</small>
+
+* chore(all-services): ping api in sandbox examples (#2134) ([b69cda1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b69cda1)), closes [#2134](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2134) [#2133](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2133) [#2133](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2133)
+
+
+
+
+
+## <small>2.1.2 (2024-06-11)</small>
+
+* chore: publish release ([89d1599](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/89d1599))
+* chore(deps): loopback and sourceloop version update (#2108) ([9cd8962](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9cd8962)), closes [#2108](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2108) [#2104](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2104) [#2104](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2104)
+* chore(deps): version bump commit (#2111) ([c87bc75](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c87bc75)), closes [#2111](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2111) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* fix(all-services): revert to pr 2072 (#2106) ([502812f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/502812f)), closes [#2106](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2106) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## <small>2.1.1 (2024-06-10)</small>
+
+* fix(all-services): revert to pr 2072 (#2106) ([502812f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/502812f)), closes [#2106](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2106) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
+## 2.1.0 (2024-05-20)
+
+* feat(all-services): Follow solid for repositories in all services (#2072) ([82c934b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/82c934b)), closes [#2072](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2072) [#2037](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2037)
+
+
+
+
+
 ## 2.0.0 (2024-05-07)
 
 * feat(all-services): update core package in all services (#2091) ([8b1703f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8b1703f)), closes [#2091](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2091) [#2077](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2077) [#2077](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2077)

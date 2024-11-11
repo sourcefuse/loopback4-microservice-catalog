@@ -19,6 +19,7 @@ import {
 } from '../repositories';
 import {
   IConfig,
+  MeetingLink,
   MeetingOptions,
   SessionOptions,
   SessionResponse,
@@ -41,7 +42,7 @@ export class ChatSessionService {
     private readonly config: IConfig,
   ) {}
 
-  async getMeetingLink(meetingOptions: MeetingOptions): Promise<string> {
+  async getMeetingLink(meetingOptions: MeetingOptions): Promise<MeetingLink> {
     let scheduledTime: Date = new Date();
 
     let errorMessage: string;
@@ -77,7 +78,7 @@ export class ChatSessionService {
 
     await this.videoChatSessionRepository.save(videoSessionDetail);
 
-    return meetingLinkId;
+    return {code: meetingLinkId};
   }
 
   async getMeetingToken(

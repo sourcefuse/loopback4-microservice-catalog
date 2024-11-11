@@ -1,0 +1,9 @@
+{
+  "include": ["dist"],
+  "exclude": ["dist/__tests__/"],
+  "extension": [".js", ".ts"],
+  "reporter": ["text", "html", "json"],
+  "exclude-after-remap": false,
+  "check-coverage": true,
+  "lines": 75
+}

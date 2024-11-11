@@ -3,6 +3,66 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>14.2.3 (2024-10-22)</small>
+
+* fix(core): revert the changes of 2158 (#2181) ([1307aa0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1307aa0)), closes [#2181](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2181) [#2158](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2158)
+
+
+
+
+
+## <small>14.2.2 (2024-10-16)</small>
+
+* chore(ci-cd): resolve sonar issues (#2179) ([12ec556](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/12ec556)), closes [#2179](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2179) [#2177](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2177) [#2177](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2177)
+
+
+
+
+
+## <small>14.2.1 (2024-09-30)</small>
+
+* fix(core): add condition to set locale for error message (#2169) ([8c532db](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8c532db)), closes [#2169](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2169) [#2168](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2168)
+
+
+
+
+
+## 14.2.0 (2024-09-30)
+
+* feat(authentication-service): add the implementation of auth0 strategy (#2164) ([ba0752d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ba0752d)), closes [#2164](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2164) [#2163](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2163) [#2163](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2163)
+
+
+
+
+
+## <small>14.1.2 (2024-09-26)</small>
+
+* fix(core): createdon modifiedon can not be changed via input (#2159) ([411dd76](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/411dd76)), closes [#2159](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2159) [#2158](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2158) [#2158](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2158) [#2158](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2158)
+* fix(core): updated condition to set i18n localization (#2166) ([0aeb985](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0aeb985)), closes [#2166](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2166) [#2165](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2165)
+
+
+
+
+
+## <small>14.1.1 (2024-08-05)</small>
+
+* chore(all-services): ping api in sandbox examples (#2134) ([b69cda1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b69cda1)), closes [#2134](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2134) [#2133](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2133) [#2133](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2133)
+* fix(deps): fix sonar issues (#2127) ([f226bc7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f226bc7)), closes [#2127](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2127)
+
+
+
+
+
+## 14.1.0 (2024-06-11)
+
+* chore(deps): loopback and sourceloop version update (#2108) ([9cd8962](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9cd8962)), closes [#2108](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2108) [#2104](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2104) [#2104](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2104)
+* chore(deps): version bump commit (#2111) ([c87bc75](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c87bc75)), closes [#2111](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2111) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* feat(user-tenant-service): add user webhook to seed data in db (#2093) ([2c6277c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2c6277c)), closes [#2093](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2093) [#5](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/5)
+
+
+
+
+
 ## 14.0.0 (2024-05-06)
 
 * feat(ci-cd): changes to release only core (#2086) ([639e07e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/639e07e)), closes [#2086](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2086) [#2030](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2030) [#2030](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2030) [#2030](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2030)

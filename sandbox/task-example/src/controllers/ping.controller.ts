@@ -39,7 +39,9 @@ const PING_RESPONSE: ResponseObject = {
  * A simple controller to bounce back http requests
  */
 export class PingController {
-  constructor(@inject(RestBindings.Http.REQUEST) private req: Request) {}
+  constructor(
+    @inject(RestBindings.Http.REQUEST) private readonly req: Request,
+  ) {}
 
   // Map to `GET /ping`
   @authorize({permissions: ['*']})
