@@ -405,7 +405,7 @@ npm i @sourceloop/authentication-service
       <tr>
         <td>KEYCLOAK_HOST</td>
         <td>N</td>
-        <td>Hostname of the Keycloak instance</td>
+        <td>Hostname of the Keycloak instance. For all keycloak version below 17, user can still use this by only updating the KEYCLOCK_HOST and appending '/auth/realms' to its existing value</td>
         <td></td>
       </tr>
       <tr>
