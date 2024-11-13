@@ -29,7 +29,6 @@ if (isLocal) {
     `${type}_MIGRATION or SOURCELOOP_MIGRATION variables not found in the environment, skipping automigration.`,
   );
 } else {
-
   const migrationType = isMySQLMigration ? 'mysql' : 'pg'; // Default to 'pg'
 
   const DBMigrate = require('db-migrate');
@@ -41,7 +40,6 @@ if (isLocal) {
     errorOnMissing: true,
     includeProcessEnv: true,
   });
-
 
   // Initialize db-migrate with the correct migration directory and database config path
   const dbmigrate = DBMigrate.getInstance(true, {

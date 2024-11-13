@@ -44,7 +44,6 @@ if (isLocal) {
     includeProcessEnv: true,
   });
 
-
   // Initialize db-migrate with the correct migration directory and database config path
   const dbmigrate = DBMigrate.getInstance(true, {
     config: path.join(`migrations/${migrationType}`, 'database.json'),
