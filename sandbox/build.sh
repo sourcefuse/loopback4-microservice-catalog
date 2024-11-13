@@ -33,3 +33,4 @@ docker push ${REGISTRY}/in-mail-example
 docket push ${REGISTRY}/search-ms-example
 docker push ${REGISTRY}/chat-notification-pubnub-example
 docker push ${REGISTRY}/feature-toggle-example
+docker push ${REGISTRY}/task-example
