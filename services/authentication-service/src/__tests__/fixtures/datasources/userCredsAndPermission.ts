@@ -1,6 +1,6 @@
-import * as fs from 'fs';
 import * as jwt from 'jsonwebtoken';
 import {PermissionKey} from '../../../enums';
+import {JwtKeysRepository} from '../../../repositories';
 
 process.env.JWT_ISSUER = 'test';
 const User = {
@@ -19,15 +19,25 @@ export const testUserPayload = {
   permissions: [PermissionKey.ViewLoginActivity],
 };
 export class JwtToken {
-  static createToken() {
-    const privateKey = fs.readFileSync(
-      process.env.JWT_PRIVATE_KEY ?? '',
-    ) as Buffer;
+  static async createToken(jwtKeysRepo: JwtKeysRepository) {
+    const keys = await jwtKeysRepo.find();
 
-    return jwt.sign(testUserPayload, privateKey, {
-      expiresIn: 180000,
-      issuer: 'test',
-      algorithm: 'RS256',
-    });
+    if (!keys) {
+      throw new Error('No keys found');
+    }
+
+    const token = jwt.sign(
+      testUserPayload,
+      {
+        key: keys[0].privateKey,
+        passphrase: process.env.JWT_PRIVATE_KEY_PASSPHRASE,
+      },
+      {
+        algorithm: 'RS256',
+        issuer: process.env.JWT_ISSUER,
+        keyid: keys[0].keyId,
+      },
+    );
+    return token;
   }
 }

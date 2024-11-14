@@ -1748,8 +1748,36 @@
         "operationId": "IdentityServerController.logout"
       }
     },
-    "/connect/get-keys": {
+    "/connect/generate-keys": {
       "post": {
+        "x-controller-name": "IdentityServerController",
+        "x-operation-name": "generateKeys",
+        "tags": [
+          "IdentityServerController"
+        ],
+        "description": "Generate the set of public and private keys",
+        "responses": {
+          "200": {
+            "description": "JWKS Keys"
+          },
+          "400": {
+            "description": "The syntax of the request entity is incorrect."
+          },
+          "401": {
+            "description": "Invalid Credentials."
+          },
+          "404": {
+            "description": "The entity requested does not exist."
+          },
+          "422": {
+            "description": "The syntax of the request entity is incorrect"
+          }
+        },
+        "operationId": "IdentityServerController.generateKeys"
+      }
+    },
+    "/connect/get-keys": {
+      "get": {
         "x-controller-name": "IdentityServerController",
         "x-operation-name": "getKeys",
         "tags": [
@@ -1779,7 +1807,7 @@
     "/connect/rotate-keys": {
       "post": {
         "x-controller-name": "IdentityServerController",
-        "x-operation-name": "generateKeys",
+        "x-operation-name": "rotateKeys",
         "tags": [
           "IdentityServerController"
         ],
@@ -1801,7 +1829,7 @@
             "description": "The syntax of the request entity is incorrect"
           }
         },
-        "operationId": "IdentityServerController.generateKeys"
+        "operationId": "IdentityServerController.rotateKeys"
       }
     },
     "/connect/token": {

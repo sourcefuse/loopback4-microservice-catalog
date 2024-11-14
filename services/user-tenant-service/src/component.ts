@@ -21,9 +21,11 @@ import {
   BearerVerifierConfig,
   BearerVerifierType,
   CoreComponent,
+  JwtKeysRepository,
   ServiceSequence,
   TenantUtilitiesComponent,
 } from '@sourceloop/core';
+import {JwtKeysRepository as SequelizeJwtKeysRepository} from '@sourceloop/core/sequelize';
 import {AuthenticationComponent} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
@@ -204,6 +206,7 @@ export class UserTenantServiceComponent implements Component {
         UserTenantPrefsSequelizeRepository,
         UserLevelPermissionSequelizeRepository,
         AuthClientSequelizeRepository,
+        SequelizeJwtKeysRepository,
       ];
     } else {
       this.repositories = [
@@ -220,6 +223,7 @@ export class UserTenantServiceComponent implements Component {
         UserTenantPrefsRepository,
         UserLevelPermissionRepository,
         AuthClientRepository,
+        JwtKeysRepository,
       ];
     }
   }

@@ -147,7 +147,7 @@ export class IdentityServerController {
   }
 
   @authorize({permissions: ['*']})
-  @post('/connect/rotate-keys', {
+  @post('/connect/generate-keys', {
     description: 'Generate the set of public and private keys',
     responses: {
       [STATUS_CODE.OK]: {
@@ -157,11 +157,28 @@ export class IdentityServerController {
     },
   })
   async generateKeys(): Promise<void> {
-    return this.idpLoginService.rotateKeys();
+    return this.idpLoginService.generateKeys();
+  }
+
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({permissions: ['*']})
+  @post('/connect/rotate-keys', {
+    description: 'Generate the set of public and private keys',
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'JWKS Keys',
+      },
+      ...ErrorCodes,
+    },
+  })
+  async rotateKeys(): Promise<void> {
+    return this.idpLoginService.generateNewKey();
   }
 
   @authorize({permissions: ['*']})
-  @post('/connect/get-keys', {
+  @get('/connect/get-keys', {
     description: 'Get the public keys',
     responses: {
       [STATUS_CODE.OK]: {

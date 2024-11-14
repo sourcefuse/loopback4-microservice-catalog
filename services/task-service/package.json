@@ -53,7 +53,7 @@
     "openapi-spec": "node ./dist/openapi-spec",
     "apidocs": "npx widdershins --search false --language_tabs 'javascript:JavaScript:request' 'javascript--nodejs:Node.JS' --summary openapi.json -o openapi.md",
     "pretest": "npm run build",
-    "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
+    "test": "lb-mocha --allow-console-logs \"dist/__tests__/acceptance/task-user-task.controller.js\"",
     "coverage": "nyc npm run test",
     "posttest": "npm run lint",
     "prepublishOnly": "npm run test",

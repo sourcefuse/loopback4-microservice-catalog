@@ -204,15 +204,15 @@ To perform this operation, you must be authenticated by means of one of the foll
 HTTPBearer
 </aside>
 
-## IdentityServerController.getKeys
+## IdentityServerController.generateKeys
 
-<a id="opIdIdentityServerController.getKeys"></a>
+<a id="opIdIdentityServerController.generateKeys"></a>
 
 > Code samples
 
 ```javascript
 
-fetch('/connect/get-keys',
+fetch('/connect/generate-keys',
 {
   method: 'POST'
 
@@ -228,7 +228,7 @@ fetch('/connect/get-keys',
 ```javascript--nodejs
 const fetch = require('node-fetch');
 
-fetch('/connect/get-keys',
+fetch('/connect/generate-keys',
 {
   method: 'POST'
 
@@ -241,7 +241,62 @@ fetch('/connect/get-keys',
 
 ```
 
-`POST /connect/get-keys`
+`POST /connect/generate-keys`
+
+Generate the set of public and private keys
+
+<h3 id="identityservercontroller.generatekeys-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|JWKS Keys|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|The syntax of the request entity is incorrect.|None|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Invalid Credentials.|None|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## IdentityServerController.getKeys
+
+<a id="opIdIdentityServerController.getKeys"></a>
+
+> Code samples
+
+```javascript
+
+fetch('/connect/get-keys',
+{
+  method: 'GET'
+
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+fetch('/connect/get-keys',
+{
+  method: 'GET'
+
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`GET /connect/get-keys`
 
 Get the public keys
 
@@ -259,9 +314,9 @@ Get the public keys
 This operation does not require authentication
 </aside>
 
-## IdentityServerController.generateKeys
+## IdentityServerController.rotateKeys
 
-<a id="opIdIdentityServerController.generateKeys"></a>
+<a id="opIdIdentityServerController.rotateKeys"></a>
 
 > Code samples
 
@@ -300,7 +355,7 @@ fetch('/connect/rotate-keys',
 
 Generate the set of public and private keys
 
-<h3 id="identityservercontroller.generatekeys-responses">Responses</h3>
+<h3 id="identityservercontroller.rotatekeys-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|

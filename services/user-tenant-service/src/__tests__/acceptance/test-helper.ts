@@ -7,7 +7,6 @@ import {
   createRestAppClient,
   givenHttpServerConfig,
 } from '@loopback/testlab';
-import path from 'path';
 import {UserTenantServiceApplication} from '../../application';
 import {AuthenticationDbDataSource} from '../datasources';
 
@@ -45,14 +44,6 @@ function setUpEnv() {
   process.env.USER_CALLBACK_SECRET = 'sf-test';
   process.env.JWT_ISSUER = issuer;
   process.env.FIRST_USER_ROLE = 'SuperAdmin';
-  process.env.JWT_PRIVATE_KEY = path.resolve(
-    __dirname,
-    '../../../src/__tests__/unit/utils/privateKey.txt',
-  );
-  process.env.JWT_PUBLIC_KEY = path.resolve(
-    __dirname,
-    '../../../src/__tests__/unit/utils/publicKey.txt',
-  );
 }
 
 export interface AppWithClient {

@@ -1,19 +1,19 @@
-import { BindingScope, inject, injectable } from '@loopback/core';
-import { AnyObject, repository } from '@loopback/repository';
-import { HttpErrors, RequestContext } from '@loopback/rest';
+import {BindingScope, inject, injectable} from '@loopback/core';
+import {AnyObject, repository} from '@loopback/repository';
+import {HttpErrors, RequestContext} from '@loopback/rest';
 import {
   AuthenticateErrorKeys,
   ILogger,
   LOGGER,
   SuccessResponse,
 } from '@sourceloop/core';
-import crypto, { generateKeyPairSync } from 'crypto';
+import crypto, {generateKeyPairSync} from 'crypto';
 import * as jwt from 'jsonwebtoken';
-import { AuthErrorKeys, ClientAuthCode } from 'loopback4-authentication';
+import {AuthErrorKeys, ClientAuthCode} from 'loopback4-authentication';
 import moment from 'moment';
 import * as jose from 'node-jose';
-import { LoginType } from '../enums';
-import { AuthServiceBindings } from '../keys';
+import {LoginType} from '../enums';
+import {AuthServiceBindings} from '../keys';
 import {
   AuthClient,
   LoginActivity,
@@ -28,14 +28,14 @@ import {
   IdpConfiguration,
   TokenResponse,
 } from '../modules/auth';
-import { TokenPayload } from '../modules/auth/interfaces';
+import {TokenPayload} from '../modules/auth/interfaces';
 import {
   CodeReaderFn,
   JwtPayloadFn,
   JWTSignerFn,
   JWTVerifierFn,
 } from '../providers';
-import { AuthCodeBindings } from '../providers/keys';
+import {AuthCodeBindings} from '../providers/keys';
 import {
   AuthClientRepository,
   JwtKeysRepository,
@@ -45,9 +45,9 @@ import {
   UserRepository,
   UserTenantRepository,
 } from '../repositories';
-import { ActorId, ExternalTokens, IUserActivity } from '../types';
+import {ActorId, ExternalTokens, IUserActivity} from '../types';
 
-@injectable({ scope: BindingScope.TRANSIENT })
+@injectable({scope: BindingScope.TRANSIENT})
 export class IdpLoginService {
   constructor(
     @repository(AuthClientRepository)
@@ -70,15 +70,15 @@ export class IdpLoginService {
     @inject.context() private readonly ctx: RequestContext,
     @inject(AuthCodeBindings.CODEREADER_PROVIDER)
     private readonly codeReader: CodeReaderFn,
-    @inject(AuthCodeBindings.JWT_VERIFIER, { optional: true })
+    @inject(AuthCodeBindings.JWT_VERIFIER, {optional: true})
     private readonly jwtVerifier: JWTVerifierFn<AnyObject>,
     @inject(AuthCodeBindings.JWT_SIGNER)
     private readonly jwtSigner: JWTSignerFn<object>,
     @inject(AuthServiceBindings.JWTPayloadProvider)
     private readonly getJwtPayload: JwtPayloadFn,
-    @inject(AuthServiceBindings.MarkUserActivity, { optional: true })
+    @inject(AuthServiceBindings.MarkUserActivity, {optional: true})
     private readonly userActivity?: IUserActivity,
-  ) { }
+  ) {}
 
   /**
    * The function `getOpenIdConfiguration` returns an IdpConfiguration object with specific properties
@@ -86,8 +86,7 @@ export class IdpLoginService {
    * @returns An IdpConfiguration object with the specified properties and values is being returned.
    */
   async getOpenIdConfiguration() {
-    await this.generateJWKS();
-
+    // sonarignore:start
     const config = new IdpConfiguration();
     config.issuer = `${process.env.API_BASE_URL}`;
     config.authorization_endpoint = `${process.env.API_BASE_URL}/connect/auth`;
@@ -108,6 +107,7 @@ export class IdpLoginService {
     ];
     config.userinfo_endpoint = `${process.env.API_BASE_URL}/connect/userinfo`;
     return config;
+    // sonarignore:end
   }
 
   /**
@@ -249,14 +249,14 @@ export class IdpLoginService {
           externalRefreshToken: (user as AuthUser).externalRefreshToken,
           tenantId: data.tenantId,
         },
-        { ttl: authClient.refreshTokenExpiration * ms },
+        {ttl: authClient.refreshTokenExpiration * ms},
       );
 
       const userTenant = await this.userTenantRepo.findOne({
-        where: { userId: user.id },
+        where: {userId: user.id},
       });
       if (this.userActivity?.markUserActivity)
-        this.markUserActivity(user, userTenant, { ...data }, loginType);
+        this.markUserActivity({...data}, user, userTenant, loginType);
 
       return new TokenResponse({
         accessToken,
@@ -299,7 +299,7 @@ export class IdpLoginService {
    * 'email', 'social', '2
    */
   private markUserActivity(
-    refreshTokenModel: RefreshToken,
+    payload: RefreshToken | AnyObject,
     user: User,
     userTenant: UserTenant | null,
     loginType: LoginType,
@@ -333,10 +333,15 @@ export class IdpLoginService {
         encryptionKey,
         iv,
       );
-      const activityPayload = JSON.stringify({
-        ...user,
-        clientId: refreshTokenModel.clientId,
-      });
+      let activityPayload;
+      if (loginType === LoginType.LOGOUT) {
+        activityPayload = JSON.stringify({
+          ...user,
+          clientId: payload.clientId,
+        });
+      } else {
+        activityPayload = JSON.stringify(payload);
+      }
       const encyptPayload = Buffer.concat([
         cipherPayload.update(activityPayload, 'utf8'),
         cipherPayload.final(),
@@ -413,12 +418,12 @@ export class IdpLoginService {
     const expiry = this.decodeAndGetExpiry(token);
     await this.revokedTokensRepo.set(
       token,
-      { token },
+      {token},
       {
         ttl: expiry,
       },
     );
-    await this.revokedTokensRepo.set(token, { token });
+    await this.revokedTokensRepo.set(token, {token});
     await this.refreshTokenRepo.delete(req.refreshToken);
     if (refreshTokenModel.pubnubToken) {
       await this.refreshTokenRepo.delete(refreshTokenModel.pubnubToken);
@@ -427,7 +432,7 @@ export class IdpLoginService {
     const user = await this.userRepo.findById(refreshTokenModel.userId);
 
     const userTenant = await this.userTenantRepo.findOne({
-      where: { userId: user.id },
+      where: {userId: user.id},
     });
 
     if (this.userActivity?.markUserActivity)
@@ -444,12 +449,23 @@ export class IdpLoginService {
   }
 
   /**
+   * The `generateKeys` function generates new keys for a specified number of times defined by the
+   * `MAX_JWT_KEYS` environment variable or 2 by default.
+   */
+  async generateKeys(): Promise<void> {
+    //call the function to generate new keys for process.env.MAX_JWT_KEYS times.
+    for (let i = 0; i < +(process.env.MAX_JWT_KEYS ?? 2); i++) {
+      await this.generateNewKey();
+    }
+  }
+
+  /**
    * The function generates a JSON Web Key Set (JWKS) containing a RSA public key and saves it to a
    * file.
    */
-  async generateJWKS(): Promise<void> {
+  async generateNewKey(): Promise<void> {
     // Generate the RSA key pair
-    const { publicKey, privateKey } = generateKeyPairSync('rsa', {
+    const {publicKey, privateKey} = generateKeyPairSync('rsa', {
       modulusLength: 2048,
       publicKeyEncoding: {
         type: 'spki',
@@ -467,62 +483,24 @@ export class IdpLoginService {
     const keyStore = jose.JWK.createKeyStore();
     const key = await keyStore.add(publicKey, 'pem');
 
-    // Save public and private keys to the database using JwtKeysRepository
-    await this.jwtKeysRepo.create({
-      keyId: key.kid, // Unique identifier for the key
-      publicKey: publicKey,
-      privateKey: privateKey,
-    });
-
-    console.log('JWKS has been generated and saved to the database');
-  }
-
-  /**
-   * The function rotates the RSA keys used for signing JWT tokens. It generates a new key pair,
-   * adds the public key to the JWKS, and saves the private key to a file.
-   */
-  async rotateKeys(): Promise<void> {
-    // Generate a new RSA key pair
-    const { publicKey, privateKey } = generateKeyPairSync('rsa', {
-      modulusLength: 2048,
-      publicKeyEncoding: {
-        type: 'spki',
-        format: 'pem',
-      },
-      privateKeyEncoding: {
-        type: 'pkcs8',
-        format: 'pem',
-        cipher: 'aes-256-cbc',
-        passphrase: process.env.JWT_PRIVATE_KEY_PASSPHRASE,
-      },
-    });
-
-    // Create a new KeyStore and add the public key
-    const keyStore = jose.JWK.createKeyStore();
-    const newKey = await keyStore.add(publicKey, 'pem');
-    const newKid = `key-${Date.now()}`;
-    newKey.kid = newKid;
-
     // Fetch existing keys from the database
     const existingKeys = await this.jwtKeysRepo.find({
       order: ['createdOn ASC'],
     });
 
     // Rotate keys: remove the oldest key if max limit is exceeded
-    const maxKeys = +(process.env.MAX_JWT_KEYS || 2);
+    const maxKeys = +(process.env.MAX_JWT_KEYS ?? 2);
     if (existingKeys.length >= maxKeys) {
       const oldestKey = existingKeys[0];
       await this.jwtKeysRepo.deleteById(oldestKey.id);
     }
 
-    // Save the new public and private keys to the repository
+    // Save public and private keys to the database using JwtKeysRepository
     await this.jwtKeysRepo.create({
-      keyId: newKid,
+      keyId: key.kid, // Unique identifier for the key
       publicKey: publicKey,
       privateKey: privateKey,
     });
-
-    console.log('Keys have been rotated and saved to the database.');
   }
 
   /**

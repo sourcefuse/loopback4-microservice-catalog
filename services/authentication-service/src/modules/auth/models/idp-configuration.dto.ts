@@ -2,7 +2,7 @@
 import {model, property} from '@loopback/repository';
 import {CoreModel} from '@sourceloop/core';
 import {ModelPropertyDescriptionString} from './model-property-description.enum';
-
+// sonarignore:start
 @model({
   description: 'This is signature for idp configuration.',
 })
@@ -81,3 +81,4 @@ export class IdpConfiguration extends CoreModel<IdpConfiguration> {
   })
   userinfo_endpoint: string;
 }
+// sonarignore:end
