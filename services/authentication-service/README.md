@@ -1,14 +1,24 @@
-# @sourceloop/authentication-service
+<a style="position: relative; top: 10px;" href="https://sourcefuse.github.io/arc-docs/arc-api-docs" target="_blank"><img src="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/docs/assets/logo-dark-bg.png?raw=true" alt="ARC By SourceFuse logo" title="ARC By SourceFuse" align="right" width="150" /></a>
 
-[![LoopBack](<https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
+# [@sourceloop/authentication-service](https://github.com/sourcefuse/loopback4-microservice-catalog/tree/master/services/authentication-service)
 
-![npm](https://img.shields.io/npm/dm/@sourceloop/authentication-service)
-
-![node-current (scoped)](https://img.shields.io/node/v/@sourceloop/authentication-service)
-
-![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/authentication-service/@loopback/core)
-
-![check-code-coverage](https://img.shields.io/badge/code--coverage-75.01%25-yellow)
+<p align="left">
+<a href="https://www.npmjs.org/package/@sourceloop/authentication-service">
+<img src="https://img.shields.io/npm/v/@sourceloop/authentication-service.svg" alt="npm version" />
+</a>
+<a href="https://github.com/sourcefuse/loopback4-microservice-catalog/graphs/contributors" target="_blank">
+<img alt="GitHub contributors" src="https://img.shields.io/github/contributors/sourcefuse/loopback4-microservice-catalog">
+</a>
+<a href="https://www.npmjs.com/@sourceloop/audit-service" target="_blank">
+<img alt="sourceloop authentication-service downloads" src="https://img.shields.io/npm/dm/@sourceloop/authentication-service">
+</a>
+<a href="./LICENSE">
+<img src="https://img.shields.io/github/license/sourcefuse/loopback4-microservice-catalog" alt="License" />
+</a>
+<a href="https://loopback.io/" target="_blank">
+<img alt="Pb Loopback" src="https://img.shields.io/badge/Powered%20by-Loopback 4-brightgreen" />
+</a>
+</p>
 
 ## Overview
 
@@ -181,6 +191,8 @@ npm i @sourceloop/authentication-service
     ALTER TABLE main.auth_clients
     ADD client_type varchar(100) DEFAULT 'public';
     ```
+
+    For a more elaborate implementation , see `/sandbox/auth-public-private-client`.
 
 - **Authenticating JWT using RSA Encryption**
 
