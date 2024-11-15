@@ -3,7 +3,7 @@
   "info": {
     "title": "Feature Toggle Service",
     "version": "1.0.0",
-    "description": "A service that provides feature toggle functionality",
+    "description": "A service that provides feature toggle functionality.",
     "contact": {
       "name": "Sourcefuse"
     }
