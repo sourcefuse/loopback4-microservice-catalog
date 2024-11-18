@@ -1,12 +1,24 @@
-# chat-service
+<a style="position: relative; top: 10px;" href="https://sourcefuse.github.io/arc-docs/arc-api-docs" target="_blank"><img src="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/docs/assets/logo-dark-bg.png?raw=true" alt="ARC By SourceFuse logo" title="ARC By SourceFuse" align="right" width="150" /></a>
 
-[![LoopBack](<https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
+# [@sourceloop/chat-service](https://github.com/sourcefuse/loopback4-microservice-catalog/tree/master/services/chat-service)
 
-![npm](https://img.shields.io/npm/dm/@sourceloop/chat-service)
-
-![node-current (scoped)](https://img.shields.io/node/v/@sourceloop/chat-service)
-
-![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/chat-service/@loopback/core)
+<p align="left">
+ <a href="https://nodejs.org/en/" target="_blank">
+  <img src="https://img.shields.io/node/v/@sourceloop/chat-service" alt="Node.js version (scoped)" />
+</a>
+<a href="https://github.com/sourcefuse/loopback4-microservice-catalog/graphs/contributors" target="_blank">
+<img alt="GitHub contributors" src="https://img.shields.io/github/contributors/sourcefuse/loopback4-microservice-catalog">
+</a>
+<a href="https://www.npmjs.com/@sourceloop/audit-service" target="_blank">
+<img alt="sourceloop chat-service downloads" src="https://img.shields.io/npm/dm/@sourceloop/chat-service">
+</a>
+<a href="./LICENSE">
+<img src="https://img.shields.io/github/license/sourcefuse/loopback4-microservice-catalog" alt="License" />
+</a>
+<a href="https://loopback.io/" target="_blank">
+<img alt="Pb Loopback" src="https://img.shields.io/badge/Powered%20by-Loopback 4-brightgreen" />
+</a>
+</p>
 
 ## Overview
 
