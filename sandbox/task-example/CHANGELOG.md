@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.4.5 (2024-10-22)</small>
+
+**Note:** Version bump only for package @sourceloop/task-service-example
+
+
+
+
+
+## <small>0.4.4 (2024-10-16)</small>
+
+* chore(ci-cd): resolve sonar issues (#2179) ([12ec556](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/12ec556)), closes [#2179](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2179) [#2177](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2177) [#2177](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2177)
+
+
+
+
+
+## <small>0.4.3 (2024-09-30)</small>
+
+**Note:** Version bump only for package @sourceloop/task-service-example
+
+
+
+
+
+## <small>0.4.2 (2024-09-30)</small>
+
+**Note:** Version bump only for package @sourceloop/task-service-example
+
+
+
+
+
 ## <small>0.4.1 (2024-09-26)</small>
 
 **Note:** Version bump only for package @sourceloop/task-service-example

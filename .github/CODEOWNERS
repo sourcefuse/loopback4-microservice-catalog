@@ -12,12 +12,12 @@
 # In this example, owner owns any files in the services/audit-service
 # directory at the root of the repository and any of its
 # subdirectories.
-/services/audit-service @sourcefuse/loopback4-admins arpit.khanna@sourcefuse.com
+/services/audit-service @sourcefuse/loopback4-admins
 
 # In this example, owner owns any files in the services/authentication-service
 # directory at the root of the repository and any of its
 # subdirectories.
-/services/authentication-service @sourcefuse/loopback4-admins surbhi.sharma1@sourcefuse.com
+/services/authentication-service @sourcefuse/loopback4-admins yesha.mavani@sourcefuse.com surbhi.sharma1@sourcefuse.com
 
 # In this example, owner owns any files in the services/chat-service
 # directory at the root of the repository and any of its
@@ -43,3 +43,8 @@
 # directory at the root of the repository and any of its
 # subdirectories.
 /services/survey-service @sourcefuse/loopback4-admins swati.prashar@sourcefuse.com
+
+# In this example, owner owns any files in the services/feature-toggle-service
+# directory at the root of the repository and any of its
+# subdirectories.
+/services/feature-toggle-service @sourcefuse/loopback4-admins yesha.mavani@sourcefuse.com

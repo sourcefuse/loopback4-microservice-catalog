@@ -26,7 +26,7 @@ export class TaskRepository extends SequelizeUserModifyCrudRepository<
     @repository.getter('UserTaskRepository')
     userTaskRepo: Getter<UserTaskRepository>,
     @inject.getter(AuthenticationBindings.CURRENT_USER)
-    private userGetter: Getter<IAuthUserWithPermissions>,
+    private readonly userGetter: Getter<IAuthUserWithPermissions>,
     @inject('models.Task')
     private readonly task: typeof Entity & {prototype: Task},
   ) {

@@ -83,7 +83,7 @@ export class SamlSignupProvider implements Provider<SamlSignUpFn> {
         tenantId: tenant?.id,
         roleId: role?.id,
       });
-      return user as User & UserRelations;
+      return user as User & UserRelations; // NOSONAR
     };
   }
 }

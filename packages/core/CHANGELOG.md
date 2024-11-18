@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>14.2.3 (2024-10-22)</small>
+
+* fix(core): revert the changes of 2158 (#2181) ([1307aa0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1307aa0)), closes [#2181](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2181) [#2158](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2158)
+
+
+
+
+
+## <small>14.2.2 (2024-10-16)</small>
+
+* chore(ci-cd): resolve sonar issues (#2179) ([12ec556](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/12ec556)), closes [#2179](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2179) [#2177](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2177) [#2177](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2177)
+
+
+
+
+
+## <small>14.2.1 (2024-09-30)</small>
+
+* fix(core): add condition to set locale for error message (#2169) ([8c532db](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8c532db)), closes [#2169](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2169) [#2168](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2168)
+
+
+
+
+
+## 14.2.0 (2024-09-30)
+
+* feat(authentication-service): add the implementation of auth0 strategy (#2164) ([ba0752d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ba0752d)), closes [#2164](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2164) [#2163](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2163) [#2163](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2163)
+
+
+
+
+
 ## <small>14.1.2 (2024-09-26)</small>
 
 * fix(core): createdon modifiedon can not be changed via input (#2159) ([411dd76](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/411dd76)), closes [#2159](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2159) [#2158](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2158) [#2158](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2158) [#2158](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2158)

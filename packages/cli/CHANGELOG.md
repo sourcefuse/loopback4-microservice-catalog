@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>9.1.2 (2024-10-16)</small>
+
+* chore(ci-cd): resolve sonar issues (#2179) ([12ec556](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/12ec556)), closes [#2179](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2179) [#2177](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2177) [#2177](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2177)
+
+
+
+
+
+## <small>9.1.1 (2024-10-04)</small>
+
+* chore(cli): update cli template deps (#2172) ([921e59c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/921e59c)), closes [#2172](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2172) [#2104](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2104)
+
+
+
+
+
 ## 9.1.0 (2024-08-14)
 
 * feat(cli): add support for jenkinsfile template in sl scaffold (#2152) ([8100aa7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8100aa7)), closes [#2152](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2152) [#2149](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2149) [#2149](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2149)

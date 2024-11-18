@@ -3,7 +3,7 @@ import {ICacheStore} from '../../types';
 
 @injectable({scope: BindingScope.SINGLETON})
 export class InMemoryStoreStrategy implements ICacheStore {
-  private store = new Map<
+  private readonly store = new Map<
     string,
     {
       cachedAt: number;

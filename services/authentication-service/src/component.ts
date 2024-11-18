@@ -38,6 +38,7 @@ import {AuthServiceBindings} from './keys';
 import {models} from './models';
 import {
   AppleOauth2VerifyProvider,
+  Auth0VerifyProvider,
   AuthUser,
   AzureAdVerifyProvider,
   BearerTokenVerifyProvider,
@@ -58,6 +59,9 @@ import {
   AppleOauth2SignupProvider,
   ApplePostVerifyProvider,
   ApplePreVerifyProvider,
+  Auth0PostVerifyProvider,
+  Auth0PreVerifyProvider,
+  Auth0SignupProvider,
   AuthCodeBindings,
   AzureAdSignupProvider,
   AzurePostVerifyProvider,
@@ -268,6 +272,8 @@ export class AuthenticationServiceComponent implements Component {
       CognitoOauth2VerifyProvider;
     this.providers[Strategies.Passport.KEYCLOAK_VERIFIER.key] =
       KeycloakVerifyProvider;
+    this.providers[Strategies.Passport.AUTH0_VERIFIER.key] =
+      Auth0VerifyProvider;
     this.providers[SignUpBindings.KEYCLOAK_SIGN_UP_PROVIDER.key] =
       KeyCloakSignupProvider;
     this.providers[SignUpBindings.GOOGLE_SIGN_UP_PROVIDER.key] =
@@ -278,6 +284,8 @@ export class AuthenticationServiceComponent implements Component {
       InstagramOauth2SignupProvider;
     this.providers[SignUpBindings.APPLE_SIGN_UP_PROVIDER.key] =
       AppleOauth2SignupProvider;
+    this.providers[SignUpBindings.AUTH0_SIGN_UP_PROVIDER.key] =
+      Auth0SignupProvider;
     this.providers[SignUpBindings.FACEBOOK_SIGN_UP_PROVIDER.key] =
       FacebookOauth2SignupProvider;
     this.providers[SignUpBindings.COGNITO_SIGN_UP_PROVIDER.key] =
@@ -314,6 +322,10 @@ export class AuthenticationServiceComponent implements Component {
       ApplePreVerifyProvider;
     this.providers[VerifyBindings.APPLE_POST_VERIFY_PROVIDER.key] =
       ApplePostVerifyProvider;
+    this.providers[VerifyBindings.AUTH0_PRE_VERIFY_PROVIDER.key] =
+      Auth0PreVerifyProvider;
+    this.providers[VerifyBindings.AUTH0_POST_VERIFY_PROVIDER.key] =
+      Auth0PostVerifyProvider;
     this.providers[VerifyBindings.FACEBOOK_PRE_VERIFY_PROVIDER.key] =
       FacebookPreVerifyProvider;
     this.providers[VerifyBindings.FACEBOOK_POST_VERIFY_PROVIDER.key] =

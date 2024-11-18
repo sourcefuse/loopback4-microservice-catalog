@@ -1,6 +1,6 @@
-import {DataStoreDataTypeConversionFunctions} from '../../interfaces';
 import {inject} from '@loopback/core';
 import {ResponseDataType} from '../../enums';
+import {DataStoreDataTypeConversionFunctions} from '../../interfaces';
 import {ReportingServiceComponentBindings} from '../../keys';
 import {DataTypeMapping} from './data-type-mapping';
 
@@ -9,7 +9,7 @@ export class S3DataTypes {
     @inject(
       ReportingServiceComponentBindings.GENERIC_DATA_TYPE_CONVERSION_FUNCTIONS,
     )
-    private conversionUtils: DataStoreDataTypeConversionFunctions,
+    private readonly conversionUtils: DataStoreDataTypeConversionFunctions,
   ) {}
   value(): Record<string, DataTypeMapping> {
     return {

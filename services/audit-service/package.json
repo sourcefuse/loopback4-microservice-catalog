@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/audit-service",
-  "version": "14.1.1",
+  "version": "14.2.3",
   "description": "Audit logging Microservice.",
   "keywords": [
     "loopback-extension",
@@ -26,7 +26,7 @@
       "sequelize": [
         "./dist/repositories/sequelize/index.d.ts"
       ],
-      "providers": [
+      "exporters": [
         "./dist/exporter/index.d.ts"
       ]
     }
@@ -80,11 +80,11 @@
     "@loopback/repository": "^7.0.2",
     "@loopback/rest": "^14.0.2",
     "@sourceloop/audit-log": "^8.0.2",
-    "@sourceloop/core": "^14.1.2",
+    "@sourceloop/core": "^14.2.3",
     "csvtojson": "^2.0.10",
     "dotenv": "^16.0.3",
     "dotenv-extended": "^2.9.0",
-    "loopback4-authentication": "^12.0.2",
+    "loopback4-authentication": "^12.1.0",
     "loopback4-authorization": "^7.0.2",
     "loopback4-soft-delete": "^10.0.2",
     "tslib": "^2.6.2"

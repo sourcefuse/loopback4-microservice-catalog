@@ -7,7 +7,7 @@ import {ReportingServiceComponentBindings} from '../../keys';
 export class S3ObjectProvider implements Provider<AWS.S3> {
   constructor(
     @inject(ReportingServiceComponentBindings.DATA_STORE_CONFIGURATION)
-    private s3Config: S3DataStoreConfiguration,
+    private readonly s3Config: S3DataStoreConfiguration,
   ) {}
   value(): AWS.S3 {
     AWS.config.update({

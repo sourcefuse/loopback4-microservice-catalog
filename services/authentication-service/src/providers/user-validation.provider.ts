@@ -11,15 +11,15 @@ export class UserValidationProvider implements Provider<UserValidationFn> {
   constructor(
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @inject(UserValidationServiceBindings.GOOGLE_AUTHENTICATION)
-    private googleAuthenticationProvider: AuthenticationProviderFn,
+    private readonly googleAuthenticationProvider: AuthenticationProviderFn,
     @inject(UserValidationServiceBindings.KEYCLOAK_AUTHENTICATION)
-    private keycloakAuthenticationProvider: AuthenticationProviderFn,
+    private readonly keycloakAuthenticationProvider: AuthenticationProviderFn,
     @inject(UserValidationServiceBindings.AZURE_AD_AUTHENTICATION)
-    private azureAuthenticationProvider: AuthenticationProviderFn,
+    private readonly azureAuthenticationProvider: AuthenticationProviderFn,
     @inject(UserValidationServiceBindings.COGNITO_AUTHENTICATION)
-    private cognitoAuthenticationProvider: AuthenticationProviderFn,
+    private readonly cognitoAuthenticationProvider: AuthenticationProviderFn,
     @inject(UserValidationServiceBindings.DEFAULT_AUTHENTICATION)
-    private defaultAuthneticationProvider: AuthenticationProviderFn,
+    private readonly defaultAuthneticationProvider: AuthenticationProviderFn,
   ) {}
 
   value(): UserValidationFn {

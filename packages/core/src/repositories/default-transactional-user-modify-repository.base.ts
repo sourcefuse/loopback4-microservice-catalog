@@ -41,8 +41,6 @@ export abstract class DefaultTransactionalUserModifyRepository<
       throw new HttpErrors.Forbidden(AuthErrorKeys.InvalidCredentials);
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
-    entity.createdOn = new Date();
-    entity.modifiedOn = new Date();
     entity.createdBy = uid;
     entity.modifiedBy = uid;
     return super.create(entity, options);
@@ -58,8 +56,6 @@ export abstract class DefaultTransactionalUserModifyRepository<
     entities.forEach(entity => {
       entity.createdBy = uid ?? '';
       entity.modifiedBy = uid ?? '';
-      entity.createdOn = new Date();
-      entity.modifiedOn = new Date();
     });
     return super.createAll(entities, options);
   }
@@ -71,8 +67,6 @@ export abstract class DefaultTransactionalUserModifyRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     entity.modifiedBy = uid;
-    delete entity.createdOn;
-    entity.modifiedOn = new Date();
     return super.save(entity, options);
   }
 
@@ -83,8 +77,6 @@ export abstract class DefaultTransactionalUserModifyRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     entity.modifiedBy = uid;
-    delete entity.createdOn;
-    delete entity.modifiedOn;
     return super.update(entity, options);
   }
 
@@ -100,8 +92,6 @@ export abstract class DefaultTransactionalUserModifyRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     data.modifiedBy = uid;
-    delete data.createdOn;
-    delete data.modifiedOn;
     return super.updateAll(data, where, options);
   }
 
@@ -117,8 +107,6 @@ export abstract class DefaultTransactionalUserModifyRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     data.modifiedBy = uid;
-    delete data.createdOn;
-    delete data.modifiedOn;
     return super.updateById(id, data, options);
   }
 
@@ -133,8 +121,6 @@ export abstract class DefaultTransactionalUserModifyRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     data.modifiedBy = uid;
-    delete data.createdOn;
-    delete data.modifiedOn;
     return super.replaceById(id, data, options);
   }
 }

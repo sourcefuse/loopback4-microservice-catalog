@@ -1,7 +1,9 @@
 import {expect} from '@loopback/testlab';
 import * as sinon from 'sinon';
 import {
+  FunctionExpression,
   QueryUtilityInterface,
+  SqlValidatorInterface,
   StructuredQueryInterface,
 } from '../../../interfaces';
 import {DataSetsRepository} from '../../../repositories';
@@ -12,13 +14,20 @@ import {
   givenStubbedRepository,
   setupApplication,
 } from '../helper';
+import {ILogger} from '@sourceloop/core';
 
 describe('DataSetsService', () => {
   let dataSetsService: DataSetsService;
   let dataSetsRepo: sinon.SinonStubbedInstance<DataSetsRepository>;
   let mockDataStoreAdapter: MockDataStoreAdapter;
   let mockQueryUtility: QueryUtilityInterface;
-
+  let mockLogger: sinon.SinonStubbedInstance<ILogger>;
+  beforeEach(async () => {
+    mockLogger = {
+      info: sinon.stub(),
+      error: sinon.stub(),
+    } as unknown as sinon.SinonStubbedInstance<ILogger>;
+  });
   before('setupApplication', async () => {
     await setupApplication();
     dataSetsRepo = givenStubbedRepository(DataSetsRepository);
@@ -26,17 +35,20 @@ describe('DataSetsService', () => {
     mockQueryUtility = {
       validateQueryObject: sinon.stub().returns(true),
       listAllDataSourcesFromJson: sinon.stub().returns(['mockDataSource']),
+      prepareFinalSqlQuery: sinon.stub().returns(''),
       jsonToQueryConverter: sinon
         .stub()
         .returns({query: 'mockQuery', bind: {}}),
     };
 
     dataSetsService = new DataSetsService(
+      mockLogger,
       dataSetsRepo,
       mockDataStoreAdapter,
       // sonarignore:start
       mockQueryUtility as QueryUtilityInterface,
       // sonarignore:end
+      {} as SqlValidatorInterface,
       {hashFields: ['name']},
     );
   });
@@ -123,8 +135,16 @@ describe('DataSetsService', () => {
 
       // Define the expected arguments for the query method calls
       const expectedFirstCallArg: StructuredQueryInterface = {
-        select: {fields: ['COUNT(dataSource1.*) AS count']},
-        from: {dataSources: ['dataSource1']},
+        select: {
+          fields: [
+            {
+              function: 'COUNT',
+              args: ['*'], // Assuming counting all records
+              alias: 'count',
+            } as FunctionExpression, // Casting to FunctionExpression to satisfy the FieldExpression type requirement
+          ],
+        },
+        from: 'dataSource1',
       };
 
       mockDataStoreAdapter.query.onFirstCall().resolves([{count: 10}]);

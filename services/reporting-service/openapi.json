@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "@sourceloop/reporting-service",
-    "version": "2.1.2",
+    "version": "2.1.3",
     "description": "reporting-service.",
     "contact": {
       "name": "Sourav Bhargava",
@@ -276,8 +276,13 @@
           {
             "name": "filter",
             "in": "query",
-            "schema": {
-              "type": "string"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
             }
           }
         ],
@@ -1137,6 +1142,10 @@
             "type": "object",
             "description": "The query for the data set refer to StructuredQueryInterface"
           },
+          "dataSetQuerySQL": {
+            "type": "string",
+            "description": "The query for the data set refer to standard SQL "
+          },
           "dataSetQueryHash": {
             "type": "string",
             "description": "The hash of the query for the data set"
@@ -1151,8 +1160,7 @@
           }
         },
         "required": [
-          "name",
-          "dataSetQuery"
+          "name"
         ],
         "additionalProperties": false
       },
@@ -1198,6 +1206,10 @@
           "dataSetQuery": {
             "type": "object",
             "description": "The query for the data set refer to StructuredQueryInterface"
+          },
+          "dataSetQuerySQL": {
+            "type": "string",
+            "description": "The query for the data set refer to standard SQL "
           },
           "dataSetQueryHash": {
             "type": "string",
@@ -1257,6 +1269,10 @@
             "type": "object",
             "description": "The query for the data set refer to StructuredQueryInterface"
           },
+          "dataSetQuerySQL": {
+            "type": "string",
+            "description": "The query for the data set refer to standard SQL "
+          },
           "dataSetQueryHash": {
             "type": "string",
             "description": "The hash of the query for the data set"
@@ -1271,8 +1287,7 @@
           }
         },
         "required": [
-          "name",
-          "dataSetQuery"
+          "name"
         ],
         "additionalProperties": false
       },
@@ -2121,6 +2136,9 @@
                   "dataSetQuery": {
                     "type": "boolean"
                   },
+                  "dataSetQuerySQL": {
+                    "type": "boolean"
+                  },
                   "dataSetQueryHash": {
                     "type": "boolean"
                   },
@@ -2148,6 +2166,7 @@
                     "id",
                     "name",
                     "dataSetQuery",
+                    "dataSetQuerySQL",
                     "dataSetQueryHash",
                     "extId",
                     "extMetadata"
