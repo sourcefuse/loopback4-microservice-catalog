@@ -533,3 +533,7 @@ Authorization: Bearer <token> where <token> is a JWT token signed using JWT issu
 #### API Details
 
 Visit the [OpenAPI spec docs](./openapi.md)
+
+## License
+
+Sourceloop is [MIT licensed](./LICENSE).

@@ -22,7 +22,9 @@
 
 ## Overview
 
-A microservice designed to facilitate real-time communication between users and user groups. It provides a scalable and modular solution for handling both individual and group chat functionalities.
+A microservice designed to facilitate real-time communication between users and user groups. It provides a scalable and modular solution for handling both individual and group chat functionalities.This service supports Sequelize as the underlying ORM via the @loopback/sequelize extension, allowing for easy integration with relational databases.
+
+Additionally, it includes functionality for handling file attachments, allowing users to upload and download files as part of their chat interactions. The service ensures that only authenticated and authorized users can download attachments, providing secure access to files. It also tracks who downloads each attachment for auditing purposes.
 
 ### Installation
 
@@ -185,3 +187,7 @@ Authorization: Bearer <token> where <token> is a JWT token signed using JWT issu
 ## API Details
 
 Visit the [OpenAPI spec docs](./openapi.md)
+
+## License
+
+Sourceloop is [MIT licensed](./LICENSE).
