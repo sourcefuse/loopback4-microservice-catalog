@@ -36,12 +36,11 @@ Our monorepo comes with few preconfigured
 
 1. Open root folder of this repo in VS Code.
 2. Install lerna globally `npm i -g lerna`
-3. Run `lerna bootstrap`
-4. Run `npm i`
-5. Create .env files for all the micro service packages.
-6. Run DB migrations using `lerna run db:migrate`.
-7. Build all microservices in one go - `lerna run build`.
-8. Run `lerna run start` to start all the micro services in one go.
+3. Run `npm i`
+4. Create .env files for all the micro service packages.
+5. Run DB migrations using `lerna run db:migrate`.
+6. Build all microservices in one go - `lerna run build`.
+7. Run `lerna run start` to start all the micro services in one go.
 
 ## Building the project
 
@@ -51,10 +50,10 @@ command will install npm dependencies for all packages and create symbolic links
 for intra-dependencies:
 
 ```sh
-lerna bootstrap
+npm i
 ```
 
-As part of `lerna bootstrap`, TypeScript project references are automatically
+As part of `npm i`, TypeScript project references are automatically
 updated for each package with in the monorepo.
 
 The next step is to compile all packages from TypeScript to JavaScript:
@@ -354,7 +353,7 @@ Create home-page.controller.ts if not already there.
 9. Run `npm run test` to validate upgrade.
 10. Now, navigate to individual services. `cd ../../services/audit-service`.
 11. Re-execute steps 5-8 again.
-12. Before doing test, we need to update the `@sourceloop/core` with local symlinked package. Run `lerna bootstrap --force-local --scope=@sourceloop/audit-service`.
+12. Before doing test, we need to update the `@sourceloop/core` with local symlinked package. Run `npm i --force-local --scope=@sourceloop/audit-service`.
 13. Now run `npm run test` to validate upgrade.
 14. Repeat steps 10-13 for each service.
 
