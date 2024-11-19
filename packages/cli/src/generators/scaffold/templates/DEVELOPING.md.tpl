@@ -126,6 +126,28 @@ $ npx lerna add --scope @loopback/rest debug
 See [lerna add](https://github.com/lerna/lerna/blob/master/commands/add#readme)
 for more details.
 
+**Install a Dependency in a Specific Service via npm workspaces**
+
+To install a dependency only in specific service, you can use the following command from the root of the workspace:
+
+```sh
+$ npm install <dependency-name> --workspace=<workspaces-name>
+```
+The root/package.json should have a workspaces field listing the workspace folders:
+
+```json
+{
+  "name": "monorepo-root",
+  "private": true,
+  "workspaces": [
+    "service-a",
+    "service-b"
+  ]
+}
+
+```
+
+
 ## File naming convention
 
 For consistency, we follow
@@ -155,209 +177,20 @@ src/__tests__/unit/application.unit.ts
 
 ## Develop a new microservice
 
-1. **lb4 <service_name>** - Generate a new loopback-next application under the required folder, either facades or services.
-2. **.dockerignore** - Replace node_modules with coverage
-3. **.prettierignore** - Add coverage
-4. **.eslintrc.js** - Just copy below as is
+1. **sl microservice** - Generate a new sourceloop application under the required folder, either facades or services.
 
-   ```json
-     module.exports = {
-       extends: '@loopback/eslint-config',
-       rules: {
-         'no-extra-boolean-cast': 'off',
-         '@typescript-eslint/interface-name-prefix': 'off',
-         'no-prototype-builtins': 'off',
-       },
-       parserOptions: {
-         project: './tsconfig.json',
-         tsconfigRootDir: __dirname,
-       },
-     };
-   ```
-
-5. **Necessary deps** - Add symlink-resolver package to devDependencies
-
-   ```sh
-   lerna add -D symlink-resolver --scope={service name}
-   ```
-
-   then add these two in scripts of package.json
-
-   ```json
-   "symlink-resolver": "symlink-resolver",
-   "resolve-links": "npm run symlink-resolver build ./node_modules",
-   ```
-
-6. **Dotenv** - Add dotenv packages for environment keys handling. Run below
-
-   ```sh
-   lerna add dotenv --scope={service name}
-   lerna add dotenv-extended --scope={service name}
-   lerna add -D @types/dotenv --scope={service name}
-   ```
-
-7. **Env files** - Add .env.defaults and .env.example and specify required keys
-8. **Load .env** - Add below code to the top of `application.ts` before super call.
-
-   ```ts
-   const port = 3000;
-   dotenv.config();
-   dotenvExt.load({
-     schema: '.env.example',
-     errorOnMissing: true,
-     includeProcessEnv: true,
-   });
-   options.rest = options.rest || {};
-   options.rest.port = +(process.env.PORT || port);
-   options.rest.host = process.env.HOST;
-   ```
-
-   Import dotenv related packages
-
-   ```ts
-   import * as dotenv from 'dotenv';
-   import * as dotenvExt from 'dotenv-extended';
-   ```
-
-9. **Add Sourceloop core** - Add @sourceloop/core as dependency to the module
-
-   ```sh
-   lerna add @sourceloop/core --scope={service name}
-   ```
-
-In application.ts,
-
-```ts
-import {CoreComponent, ServiceSequence} from '@sourceloop/core';
-
-this.component(CoreComponent);
-
-// Set up the custom sequence
-this.sequence(ServiceSequence);
-```
-
-10. **Bearer Verifier** - Add bearer verifier to your service
-
-```sh
-lerna add loopback4-authentication --scope={service name}
-lerna add loopback4-authorization --scope={service name}
-```
-
-Add below to application.ts
-
-```ts
-  ...
-  import {AuthenticationComponent} from 'loopback4-authentication';
-  import {
-  AuthorizationBindings,
-  AuthorizationComponent,
-  } from 'loopback4-authorization';
-  import {
-  BearerVerifierBindings,
-  BearerVerifierComponent,
-  BearerVerifierConfig,
-  BearerVerifierType,
-  } from '@sourceloop/core';
-  ...
-    // Add authentication component
-  this.component(AuthenticationComponent);
-
-  // Add bearer verifier component
-  this.bind(BearerVerifierBindings.Config).to({
-    authServiceUrl: '',
-    type: BearerVerifierType.service,
-  } as BearerVerifierConfig);
-  this.component(BearerVerifierComponent);
-
-  // Add authorization component
-  this.bind(AuthorizationBindings.CONFIG).to({
-    allowAlwaysPaths: ['/explorer'],
-  });
-  this.component(AuthorizationComponent);
-```
-
-Use BearerVerifierType.facade for facades.
-
-11. **Setup project for test coverage** -
-
-    Create a file named .nycrc and copy this data in it
-
-    ```json
-    {
-      "extends": "@istanbuljs/nyc-config-typescript",
-      "all": true,
-      "reporter": ["html", "text-summary"]
-    }
-    ```
-
-    Install nyc for coverage reporting
-
-    ```sh
-      lerna add -D @istanbuljs/nyc-config-typescript --scope={service name}
-      lerna add -D nyc --scope={service name}
-    ```
-
-    then add these in scripts of package.json
-
-    ```json
-    "coverage": "nyc npm run test",
-    ```
-
-12. **Setup sequence** - Remove auto-generated sequence.ts and change to ServiceSequence in application.ts.
-13. **Fix api explorer** - Update base path in index.html for facades.
-
-```html
-<body>
-  <div class="info">
-    <h1>auth-facade</h1>
-    <p>Version 1.0.0</p>
-
-    <h3>OpenAPI spec: <a href="${basePath}/openapi.json">/openapi.json</a></h3>
-    <h3>API Explorer: <a href="${basePath}/explorer">/explorer</a></h3>
-  </div>
-
-  <footer class="power">
-    <a href="https://v4.loopback.io" target="_blank">
-      <img
-        src="https://loopback.io/images/branding/powered-by-loopback/blue/powered-by-loopback-sm.png"
-        alt="Powered by loopback"
-      />
-    </a>
-  </footer>
-</body>
-```
-
-14. **Update home-page.controller.ts** - Update the home-page.controller.ts with base path related changes, only in facades.
-
-```ts
-this.html = fs.readFileSync(
-  path.join(__dirname, '../../public/index.html'),
-  'utf-8',
-);
-// Replace base path placeholder from env
-this.html = this.html.replace(/\$\{basePath\}/g, process.env.BASE_PATH ?? '');
-```
-
-Create home-page.controller.ts if not already there.
 
 ## How to upgrade to new LB4 dependencies
 
-1. Upgrade LB4 CLI version first. Use `npm i -g @loopback/cli@latest`.
-2. Run `npm i` at project root. This step is mandatory if node.js or npm version support is also needed to upgrade.
-3. Upgrade any deps, if needed, at project root. Verify it in the package.json at root. If not needed, skip this step.
-4. Navigate to core package. `cd packages/core`.
-5. Run `lb4 update`. It will prompt you to confirm the deps upgrade. Verify it carefully and confirm. Let it overwrite package.json.
-6. There may be some errors in previous step if there are any breaking changes coming in. If that's so, then, delete package-lock.json and run `npm i` again.
-7. Upgrade any other package related, like, loopback4 extensions - loopback4-authentication, etc. In order to ensure upgrade works, all the extensions should support the upgraded LB4 version. For example, `npm i loopback4-authentication@latest loopback4-authorization@latest loopback4-soft-delete@latest tslib@latest loopback-connector-postgresql@latest`.
-8. Run `npm audit fix`, if needed.
-9. Run `npm run test` to validate upgrade.
-10. Now, navigate to individual services. `cd ../../services/audit-service`.
-11. Re-execute steps 5-8 again.
-12. Before doing test, we need to update the `@sourceloop/core` with local symlinked package. Run `npm i --force-local --scope=@sourceloop/audit-service`.
-13. Now run `npm run test` to validate upgrade.
-14. Repeat steps 10-13 for each service.
+update the dependencies of a loopback project with following command.
 
-After all the steps above done for all services and core package, all your deps are upgraded and tested. You can commit and push them to be released. Make sure to mention any breaking changes if any of the deps upgrade had breaking change.
+```sh  
+USAGE
+$ sl update
+
+OPTIONS
+  --help  show manual pages
+```  
 
 ## Sonar Setup in VS Code
 
