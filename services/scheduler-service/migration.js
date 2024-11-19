@@ -33,7 +33,11 @@ if (isLocal) {
     errorOnMissing: true,
     includeProcessEnv: true,
   });
-  const dbmigrate = DBMigrate.getInstance(true);
+  // Initialize db-migrate with correct migration directory and database config path
+  const dbmigrate = DBMigrate.getInstance(true, {
+    config: path.join('migrations', 'pg', 'database.json'),
+    cwd: path.resolve(process.cwd(), 'migrations', 'pg'),
+  });
   dbmigrate.up();
 }
 
@@ -41,7 +45,10 @@ if (
   process.env.SOURCELOOP_MIGRATION_COPY ||
   process.env[`${type}_MIGRATION_COPY`]
 ) {
-  copyFolderRecursiveSync(path.join('.', 'migrations'), process.env.INIT_CWD);
+  copyFolderRecursiveSync(
+    path.join('.', 'migrations', 'pg', 'migrations'),
+    process.env.INIT_CWD,
+  );
 }
 
 function copyFileSync(source, target) {
