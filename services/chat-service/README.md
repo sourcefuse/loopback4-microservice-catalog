@@ -9,7 +9,7 @@
 <a href="https://github.com/sourcefuse/loopback4-microservice-catalog/graphs/contributors" target="_blank">
 <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/sourcefuse/loopback4-microservice-catalog">
 </a>
-<a href="https://www.npmjs.com/@sourceloop/audit-service" target="_blank">
+<a href="https://www.npmjs.com/@sourceloop/chat-service" target="_blank">
 <img alt="sourceloop chat-service downloads" src="https://img.shields.io/npm/dm/@sourceloop/chat-service">
 </a>
 <a href="./LICENSE">
