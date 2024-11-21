@@ -92,17 +92,6 @@ export default abstract class CommandBase<T extends object> extends Command {
         }
       }
     }
-    if (options['jenkinsfile']) {
-    
-      const helmPathPrompt: Question = {
-        type: 'input',
-        name: 'helmPath',
-        message: 'Enter the path for Helm chart:',
-        default: '',
-      };
-      const helmPathAnswer = await this.prompt([helmPathPrompt]);
-      options['helmPath'] = helmPathAnswer['helmPath'];
-    }
   }
 
   private createPromptObject<S>(flag: IFlag<S>) {

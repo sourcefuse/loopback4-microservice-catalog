@@ -43,6 +43,11 @@ export class Scaffold extends Base<ScaffoldOptions> {
         'Do you want to create a Jenkinsfile for Helm-based deployment on Kubernetes?',
       required: false,
     }),
+    helmPath: flags.string({
+      name: 'helmPath',
+      description: 'Enter the path for Helm chart:',
+      dependsOn: ['jenkinsfile'],
+    }),
   };
   static readonly args = [
     {name: 'name', description: 'name of the project', required: false},
