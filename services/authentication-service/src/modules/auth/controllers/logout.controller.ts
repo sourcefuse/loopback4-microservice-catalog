@@ -28,6 +28,7 @@ import {
 import {encode} from 'base-64';
 import crypto from 'crypto';
 import {HttpsProxyAgent} from 'https-proxy-agent';
+import jwt from 'jsonwebtoken';
 import {
   authenticate,
   AuthenticationBindings,
@@ -56,6 +57,7 @@ import {
   UserTenantRepository,
 } from '../../../repositories';
 import {ActorId, IUserActivity} from '../../../types';
+import {TokenPayload} from '../interfaces';
 
 const proxyUrl = process.env.HTTPS_PROXY ?? process.env.HTTP_PROXY;
 
@@ -70,6 +72,7 @@ const size = 16;
 const SUCCESS_RESPONSE = 'Success Response';
 const AUTHENTICATE_USER =
   'This is the access token which is required to authenticate user.';
+
 export class LogoutController {
   constructor(
     @inject(RestBindings.Http.REQUEST) private readonly req: Request,
@@ -136,7 +139,6 @@ export class LogoutController {
         AuthenticateErrorKeys.TokenMissing,
       );
     }
-
     const refreshTokenModel = await this.refreshTokenRepo.get(req.refreshToken);
     if (!refreshTokenModel) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenExpired);
@@ -144,7 +146,14 @@ export class LogoutController {
     if (refreshTokenModel.accessToken !== token) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenInvalid);
     }
-    await this.revokedTokens.set(token, {token});
+    const expiry = this.decodeAndGetExpiry(token);
+    await this.revokedTokens.set(
+      token,
+      {token},
+      {
+        ttl: expiry,
+      },
+    );
     await this.refreshTokenRepo.delete(req.refreshToken);
     if (refreshTokenModel.pubnubToken) {
       await this.refreshTokenRepo.delete(refreshTokenModel.pubnubToken);
@@ -516,5 +525,28 @@ export class LogoutController {
         );
       });
     }
+  }
+
+  /**
+   * The function decodes a JWT token and returns the expiration time in milliseconds.
+   * @param {string} token - The `token` parameter is a string that represents a JSON Web Token (JWT).
+   * @returns the expiry time of the token in milliseconds.
+   */
+  /**
+   * Decodes the given token and retrieves the expiry timestamp.
+   *
+   * @param token - The token to decode.
+   * @returns The expiry timestamp in milliseconds.
+   */
+  decodeAndGetExpiry(token: string): number | null {
+    const tokenData = jwt.decode(token) as TokenPayload | null; // handle null result from decode
+    const ms = 1000;
+
+    if (tokenData?.exp) {
+      return tokenData.exp * ms;
+    }
+
+    // If tokenData or exp is missing, return null to indicate no expiry
+    return null;
   }
 }
