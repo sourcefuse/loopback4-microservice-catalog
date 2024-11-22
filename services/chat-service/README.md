@@ -1,16 +1,30 @@
-# chat-service
+<a style="position: relative; top: 10px;" href="https://sourcefuse.github.io/arc-docs/arc-api-docs" target="_blank"><img src="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/docs/assets/logo-dark-bg.png?raw=true" alt="ARC By SourceFuse logo" title="ARC By SourceFuse" align="right" width="150" /></a>
 
-[![LoopBack](<https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
+# [@sourceloop/chat-service](https://github.com/sourcefuse/loopback4-microservice-catalog/tree/master/services/chat-service)
 
-![npm](https://img.shields.io/npm/dm/@sourceloop/chat-service)
-
-![node-current (scoped)](https://img.shields.io/node/v/@sourceloop/chat-service)
-
-![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/chat-service/@loopback/core)
+<p align="left">
+ <a href="https://nodejs.org/en/" target="_blank">
+  <img src="https://img.shields.io/node/v/@sourceloop/chat-service" alt="Node.js version (scoped)" />
+</a>
+<a href="https://github.com/sourcefuse/loopback4-microservice-catalog/graphs/contributors" target="_blank">
+<img alt="GitHub contributors" src="https://img.shields.io/github/contributors/sourcefuse/loopback4-microservice-catalog">
+</a>
+<a href="https://www.npmjs.com/@sourceloop/chat-service" target="_blank">
+<img alt="sourceloop chat-service downloads" src="https://img.shields.io/npm/dm/@sourceloop/chat-service">
+</a>
+<a href="./LICENSE">
+<img src="https://img.shields.io/github/license/sourcefuse/loopback4-microservice-catalog" alt="License" />
+</a>
+<a href="https://loopback.io/" target="_blank">
+<img alt="Pb Loopback" src="https://img.shields.io/badge/Powered%20by-Loopback 4-brightgreen" />
+</a>
+</p>
 
 ## Overview
 
-A microservice designed to facilitate real-time communication between users and user groups. It provides a scalable and modular solution for handling both individual and group chat functionalities.
+A microservice designed to facilitate real-time communication between users and user groups. It provides a scalable and modular solution for handling both individual and group chat functionalities.This service supports Sequelize as the underlying ORM via the @loopback/sequelize extension, allowing for easy integration with relational databases.
+
+Additionally, it includes functionality for handling file attachments, allowing users to upload and download files as part of their chat interactions. The service ensures that only authenticated and authorized users can download attachments, providing secure access to files. It also tracks who downloads each attachment for auditing purposes.
 
 ### Installation
 
@@ -176,3 +190,7 @@ Authorization: Bearer <token> where <token> is a JWT token signed using JWT issu
 ## API Details
 
 Visit the [OpenAPI spec docs](./openapi.md)
+
+## License
+
+Sourceloop is [MIT licensed](./LICENSE).
