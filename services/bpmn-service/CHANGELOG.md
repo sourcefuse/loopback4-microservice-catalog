@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 13.2.0 (2024-11-22)
+
+* feat(all-services): Automate Migration Execution on Installation with Optional MySQL or PostgreSQL M ([8b066bb](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8b066bb)), closes [#2209](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2209)
+* fix(all-services): update migration.js to run migration on post install (#2203) ([83dc724](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/83dc724)), closes [#2203](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2203)
+
+
+
+
+
 ## <small>13.1.3 (2024-10-22)</small>
 
 **Note:** Version bump only for package @sourceloop/bpmn-service
