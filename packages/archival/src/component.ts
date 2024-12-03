@@ -14,8 +14,14 @@ import {Class, Repository} from '@loopback/repository';
 import {Model, RestApplication} from '@loopback/rest';
 import {CoreComponent} from '@sourceloop/core';
 import {ArchivalComponentBindings} from './keys';
-import {GetJobDetailsProvider, ProcessImportedDataProvider} from './providers';
-import {ArchivalMappingRepository, JobDetailsRepository} from './repositories';
+import {
+  ProcessRetrievedDataProvider,
+  RetrieveArchivedDataProvider,
+} from './providers';
+import {
+  ArchivalMappingRepository,
+  RetrievalJobDetailsRepository,
+} from './repositories';
 import {BuildWhereConditionService} from './services';
 import {ImportArchivedDataService} from './services/import-archived-data.service';
 import {ArchivalComponentOptions, DEFAULT_ARCHIVAL_OPTIONS} from './types';
@@ -33,9 +39,9 @@ export class ArchivalComponent implements Component {
     this.application.component(CoreComponent);
 
     this.providers[ArchivalComponentBindings.PROCESS_IMPORT_DATA.key] =
-      ProcessImportedDataProvider;
+      ProcessRetrievedDataProvider;
     this.providers[ArchivalComponentBindings.GET_ARCHIVED_DATA_JOB.key] =
-      GetJobDetailsProvider;
+      RetrieveArchivedDataProvider;
 
     this.application
       .bind('services.BuildWhereConditionService')
@@ -44,7 +50,10 @@ export class ArchivalComponent implements Component {
       .bind('services.ImportArchivedDataService')
       .toClass(ImportArchivedDataService);
 
-    this.repositories = [ArchivalMappingRepository, JobDetailsRepository];
+    this.repositories = [
+      ArchivalMappingRepository,
+      RetrievalJobDetailsRepository,
+    ];
   }
   providers?: ProviderMap = {};
 

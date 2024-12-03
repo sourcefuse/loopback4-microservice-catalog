@@ -3,12 +3,12 @@ import {CoreEntity} from '@sourceloop/core';
 import {JobStatus} from '../types';
 
 @model({
-  name: 'job_details',
+  name: 'retrieval_job_details',
   settings: {
     strict: false,
   },
 })
-export class JobDetails extends CoreEntity<JobDetails> {
+export class RetrievalJobDetails extends CoreEntity<RetrievalJobDetails> {
   @property({
     type: 'string',
     id: true,
@@ -26,10 +26,10 @@ export class JobDetails extends CoreEntity<JobDetails> {
   status: JobStatus;
 
   @property({
-    name: 'filter_inquired',
+    name: 'filter',
     type: 'object',
   })
-  filterInquired: Object;
+  filter: Object;
 
   @property({
     name: 'entity',
@@ -43,4 +43,4 @@ export class JobDetails extends CoreEntity<JobDetails> {
   result: string;
 }
 
-export type JobDetailsWithRelations = JobDetails;
+export type RetrievalJobDetailsWithRelations = RetrievalJobDetails;

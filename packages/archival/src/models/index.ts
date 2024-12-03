@@ -1,2 +1,2 @@
 export * from './archival-mapping.model';
-export * from './job-details.model';
+export * from './retrieval-job-details.model';

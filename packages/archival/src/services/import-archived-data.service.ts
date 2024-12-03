@@ -18,7 +18,10 @@ import {DefaultUserModifyCrudRepository} from '@sourceloop/core';
 import {ArchivalApplication} from '../application';
 import {ArchivalComponentBindings} from '../keys';
 import {ArchiveMapping} from '../models';
-import {ArchivalMappingRepository, JobDetailsRepository} from '../repositories';
+import {
+  ArchivalMappingRepository,
+  RetrievalJobDetailsRepository,
+} from '../repositories';
 import {
   IBuildWhereConditionService,
   ImportDataExternalSystem,
@@ -31,8 +34,8 @@ export class ImportArchivedDataService {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   repo: any; //NOSONAR
   constructor(
-    @repository(JobDetailsRepository)
-    public jobDetailsRepo: JobDetailsRepository,
+    @repository(RetrievalJobDetailsRepository)
+    public jobDetailsRepo: RetrievalJobDetailsRepository,
     @repository(ArchivalMappingRepository)
     public archivalMappingRepo: ArchivalMappingRepository,
     @inject(CoreBindings.APPLICATION_INSTANCE)
@@ -59,7 +62,7 @@ export class ImportArchivedDataService {
   async import(jobId: string) {
     const jobDetails = await this.jobDetailsRepo.findById(jobId);
     const modelName = jobDetails.entity;
-    const filter = jobDetails.filterInquired;
+    const filter = jobDetails.filter;
 
     const archiveFilter: Filter<ArchiveMapping> =
       await this.buildWhereConditionService.buildConditionForFetch(
