@@ -6,7 +6,6 @@ import {
 } from '@loopback/core';
 import {AnyObject} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import AWS from 'aws-sdk';
 import {ImportDataExternalSystem} from '../types';
 

@@ -1,2 +1,2 @@
-export * from './get-job-details.provider';
-export * from './process-import-data.provider';
+export * from './process-retrieved-data.provider';
+export * from './retrieve-archived-data.provider';

@@ -7,7 +7,7 @@ import {
 import {ProcessImportedData} from '../types';
 
 @injectable({scope: BindingScope.TRANSIENT})
-export class ProcessImportedDataProvider
+export class ProcessRetrievedDataProvider
   implements Provider<ProcessImportedData>
 {
   /**Implement this provider to process and save the records do desired system

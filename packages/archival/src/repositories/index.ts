@@ -1,2 +1,2 @@
 export * from './archival-mapping.repository';
-export * from './job-details.repository';
+export * from './retrieval-job-details.repository';

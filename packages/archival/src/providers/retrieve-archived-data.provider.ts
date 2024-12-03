@@ -5,22 +5,22 @@ import {
   injectable,
 } from '@loopback/core';
 import {Filter, repository} from '@loopback/repository';
-import {JobDetails} from '../models';
-import {JobDetailsRepository} from '../repositories';
+import {RetrievalJobDetails} from '../models';
+import {RetrievalJobDetailsRepository} from '../repositories';
 import {GetJobDetailsFn, JobResponse, JobStatus} from '../types';
 
 @injectable({scope: BindingScope.TRANSIENT})
-export class GetJobDetailsProvider implements Provider<GetJobDetailsFn> {
+export class RetrieveArchivedDataProvider implements Provider<GetJobDetailsFn> {
   constructor(
-    @repository(JobDetailsRepository)
-    public jobDetailsRepo: JobDetailsRepository,
+    @repository(RetrievalJobDetailsRepository)
+    public jobDetailsRepo: RetrievalJobDetailsRepository,
   ) {}
   value(): ValueOrPromise<GetJobDetailsFn> {
     return async (entityName: string, filter?: Filter) => {
       let jobResponse: JobResponse = {jobId: '0'};
-      const job = new JobDetails({
+      const job = new RetrievalJobDetails({
         status: JobStatus.IN_PROGRESS,
-        filterInquired: filter,
+        filter,
         entity: entityName,
       });
 
