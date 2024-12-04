@@ -22,12 +22,12 @@ export class WinstonConsoleLogger extends WinstonLoggerBase {
     const logFormat = format.combine(
       format.uncolorize(),
       format.timestamp(),
-      format.printf(
-        (log: LogEntry) =>
-          `[${log.timestamp}] ${log.level} :: ${log.context ?? '-'} :: ${
-            log.key
-          } -> [${log.statusCode ?? '-'}] ${log.message}`,
-      ),
+      format.printf((info: TransformableInfo) => {
+        const log = info as LogEntry; // Type assertion
+        return `[${log.timestamp}] ${log.level} :: ${log.context ?? '-'} :: ${
+          log.key
+        } -> [${log.statusCode ?? '-'}] ${log.message}`;
+      }),
     );
 
     this.logger = createLogger({
