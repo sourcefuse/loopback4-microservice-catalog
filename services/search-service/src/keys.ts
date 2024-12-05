@@ -30,3 +30,4 @@ export namespace SearchServiceBindings {
 }
 
 export const IGNORED_COLUMN = '-';
+export const DATASOURCE_NAME = 'SearchServiceDb';

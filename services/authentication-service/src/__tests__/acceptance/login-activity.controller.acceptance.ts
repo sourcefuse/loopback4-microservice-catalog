@@ -1,7 +1,6 @@
 import {Client, expect} from '@loopback/testlab';
-import path from 'path';
 import {LoginType} from '../../enums';
-import {LoginActivityRepository} from '../../repositories';
+import {JwtKeysRepository, LoginActivityRepository} from '../../repositories';
 import {TestingApplication} from '../fixtures/application';
 import {JwtToken} from '../fixtures/datasources/userCredsAndPermission';
 import {setupApplication} from './test-helper';
@@ -10,32 +9,28 @@ describe('', () => {
   let app: TestingApplication;
   let client: Client;
   let loginActivityRepo: LoginActivityRepository;
+  let jwtKeysRepo: JwtKeysRepository;
   let token: string;
   before('setupApplication', async () => {
     ({app, client} = await setupApplication());
   });
   after(async () => app.stop());
   before(givenLoginActivityRepository);
+  before(givenJwtKeysRepository);
   before(setMockData);
-  beforeEach(() => {
-    process.env.JWT_PUBLIC_KEY = path.resolve(
-      __dirname,
-      '../../../src/__tests__/utils/publicKey.txt',
-    );
-    process.env.JWT_PRIVATE_KEY = path.resolve(
-      __dirname,
-      '../../../src/__tests__/utils/privateKey.txt',
-    );
+  before(async () => {
+    process.env.JWT_PRIVATE_KEY_PASSPHRASE = 'jwt_private_key_passphrase';
+    await client.post('/connect/generate-keys').send().expect(204);
+  });
+  beforeEach(async () => {
     process.env.JWT_ISSUER = 'test';
-    token = JwtToken.createToken();
+    token = await JwtToken.createToken(jwtKeysRepo);
   });
   after(deleteMockData);
   afterEach(() => {
     delete process.env.JWT_ISSUER;
     delete process.env.JWT_SECRET;
     delete process.env.ENCRYPTION_KEY;
-    delete process.env.JWT_PUBLIC_KEY;
-    delete process.env.JWT_PRIVATE_KEY;
   });
   const basePath = '/login-activity';
   const range =
@@ -108,6 +103,10 @@ describe('', () => {
 
   async function givenLoginActivityRepository() {
     loginActivityRepo = await app.getRepository(LoginActivityRepository);
+  }
+
+  async function givenJwtKeysRepository() {
+    jwtKeysRepo = await app.getRepository(JwtKeysRepository);
   }
 
   async function deleteMockData() {

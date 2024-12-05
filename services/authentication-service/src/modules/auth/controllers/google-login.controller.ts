@@ -73,7 +73,7 @@ export class GoogleLoginController {
     responses: {
       [STATUS_CODE.OK]: {
         description: `Google Token Response,
-         (Deprecated: Possible security issue if secret is passed via query params, 
+         (Deprecated: Possible security issue if secret is passed via query params,
           please use the post endpoint)`,
         content: {
           [CONTENT_TYPE.JSON]: {

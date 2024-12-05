@@ -4,7 +4,6 @@
 // https://opensource.org/licenses/MIT
 'use strict';
 import {Client, expect} from '@loopback/testlab';
-import path from 'path';
 import {TestingApplication} from '../fixtures/application';
 import {TestHelperKey} from '../fixtures/keys';
 import {TestHelperService} from '../fixtures/services';
@@ -24,15 +23,9 @@ describe('SignUp Request Controller', () => {
     ({app, client} = await setupApplication());
     helper = await app.get(TestHelperKey);
   });
-  beforeEach(() => {
-    process.env.JWT_PUBLIC_KEY = path.resolve(
-      __dirname,
-      '../../../src/__tests__/utils/publicKey.txt',
-    );
-    process.env.JWT_PRIVATE_KEY = path.resolve(
-      __dirname,
-      '../../../src/__tests__/utils/privateKey.txt',
-    );
+  before(async () => {
+    process.env.JWT_PRIVATE_KEY_PASSPHRASE = 'jwt_private_key_passphrase';
+    await client.post('/connect/generate-keys').send().expect(204);
   });
   after(() => {
     helper.reset();
@@ -41,8 +34,6 @@ describe('SignUp Request Controller', () => {
 
   afterEach(() => {
     delete process.env.JWT_ISSUER;
-    delete process.env.JWT_PUBLIC_KEY;
-    delete process.env.JWT_PRIVATE_KEY;
   });
 
   it('gives status 200 when token is created', async () => {

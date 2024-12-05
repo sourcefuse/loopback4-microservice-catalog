@@ -5,8 +5,8 @@
 import {inject} from '@loopback/core';
 import {DefaultKeyValueRepository, juggler} from '@loopback/repository';
 
+import {AuthCacheSourceName} from '../../../types';
 import {RevokedToken} from '../models';
-import {AuthCacheSourceName} from '../types';
 
 export class RevokedTokenRepository extends DefaultKeyValueRepository<RevokedToken> {
   constructor(

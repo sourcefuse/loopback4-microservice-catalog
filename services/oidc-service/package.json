@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/oidc-service",
-  "version": "2.2.3",
+  "version": "2.3.0",
   "description": "Oidc microservice.",
   "keywords": [
     "loopback-extension",

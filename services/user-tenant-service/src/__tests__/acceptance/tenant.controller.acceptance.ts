@@ -2,22 +2,25 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {AnyObject} from '@loopback/repository';
 import {Client, expect} from '@loopback/testlab';
-import * as fs from 'fs';
+import {JwtKeysRepository} from '@sourceloop/core';
+import {generateKeyPairSync} from 'crypto';
 import * as jwt from 'jsonwebtoken';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {nanoid} from 'nanoid';
-import path from 'path';
+import * as jose from 'node-jose';
 import {UserTenantServiceApplication} from '../../application';
 import {PermissionKey} from '../../enums';
 import {Tenant} from '../../models';
 import {TenantRepository} from '../../repositories';
-import {issuer, setupApplication} from './test-helper';
+import {setupApplication} from './test-helper';
 
 describe('Tenant Controller', function (this: Mocha.Suite) {
   this.timeout(10000);
   let app: UserTenantServiceApplication;
   let tenantRepo: TenantRepository;
+  let jwtKeyRepo: JwtKeysRepository;
   const basePath = '/tenants';
   let client: Client;
   let token: string;
@@ -42,10 +45,12 @@ describe('Tenant Controller', function (this: Mocha.Suite) {
   });
 
   after(async () => {
+    await jwtKeyRepo.deleteAll();
     await app.stop();
   });
 
   before(givenRepositories);
+  before(setJwtKeysMockData);
   before(setCurrentUser);
 
   it('gives status 401 when no token is passed', async () => {
@@ -149,13 +154,7 @@ describe('Tenant Controller', function (this: Mocha.Suite) {
       permissions: [],
     };
 
-    const privateKey = fs.readFileSync(process.env.JWT_PRIVATE_KEY ?? '');
-
-    const newToken = jwt.sign(newTestUser, privateKey, {
-      expiresIn: 180000,
-      issuer: issuer,
-      algorithm: 'RS256',
-    });
+    const newToken = await generateToken(newTestUser);
     await client
       .post(basePath)
       .send({
@@ -169,19 +168,53 @@ describe('Tenant Controller', function (this: Mocha.Suite) {
 
   async function givenRepositories() {
     tenantRepo = await app.getRepository(TenantRepository);
+    jwtKeyRepo = await app.getRepository(JwtKeysRepository);
   }
 
-  function setCurrentUser() {
-    app.bind(AuthenticationBindings.CURRENT_USER).to(testUser);
-    process.env.JWT_PRIVATE_KEY = path.resolve(
-      __dirname,
-      '../../../src/__tests__/unit/utils/privateKey.txt',
-    );
-    const privateKey = fs.readFileSync(process.env.JWT_PRIVATE_KEY ?? '');
-    token = jwt.sign(testUser, privateKey, {
-      expiresIn: 180000,
-      issuer: issuer,
-      algorithm: 'RS256',
+  async function setJwtKeysMockData() {
+    process.env.JWT_PRIVATE_KEY_PASSPHRASE = 'jwt_private_key_passphrase';
+    const {publicKey, privateKey} = generateKeyPairSync('rsa', {
+      modulusLength: 2048,
+      publicKeyEncoding: {
+        type: 'spki',
+        format: 'pem',
+      },
+      privateKeyEncoding: {
+        type: 'pkcs8',
+        format: 'pem',
+        cipher: 'aes-256-cbc',
+        passphrase: process.env.JWT_PRIVATE_KEY_PASSPHRASE,
+      },
     });
+
+    // Create the JWKS object
+    const keyStore = jose.JWK.createKeyStore();
+    const key = await keyStore.add(publicKey, 'pem');
+    await jwtKeyRepo.create({
+      keyId: key.kid, // Unique identifier for the key
+      publicKey: publicKey,
+      privateKey: privateKey,
+    });
+  }
+
+  async function setCurrentUser() {
+    app.bind(AuthenticationBindings.CURRENT_USER).to(testUser);
+    token = await generateToken(testUser);
+  }
+
+  async function generateToken(userData: AnyObject): Promise<string> {
+    const keys = await jwtKeyRepo.find();
+    return jwt.sign(
+      userData,
+      {
+        key: keys[0].privateKey,
+        passphrase: process.env.JWT_PRIVATE_KEY_PASSPHRASE,
+      },
+      {
+        algorithm: 'RS256',
+        issuer: process.env.JWT_ISSUER,
+        keyid: keys[0].keyId,
+      },
+    );
   }
 });

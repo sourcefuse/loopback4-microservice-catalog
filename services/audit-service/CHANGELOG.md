@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>14.3.1 (2024-11-27)</small>
+
+* fix(audit-service): fix types version export (#2219) ([d6b9cc9](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d6b9cc9)), closes [#2219](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2219) [#2088](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2088)
+
+
+
+
+
+## 14.3.0 (2024-11-22)
+
+* feat(all-services): Automate Migration Execution on Installation with Optional MySQL or PostgreSQL M ([8b066bb](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8b066bb)), closes [#2209](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2209)
+* fix(all-services): update migration.js to run migration on post install (#2203) ([83dc724](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/83dc724)), closes [#2203](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2203)
+* fix(audit-service): update types version to use exporter (#2182) ([f998dfd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f998dfd)), closes [#2182](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2182) [#2088](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2088)
+
+
+
+
+
 ## <small>14.2.3 (2024-10-22)</small>
 
 **Note:** Version bump only for package @sourceloop/audit-service

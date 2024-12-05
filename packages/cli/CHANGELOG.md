@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 9.2.0 (2024-11-22)
+
+*  fix(cli): update the developing.md.tpl in @sourceloop/cli while scaffolding (#2213) ([b54465a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b54465a)), closes [#2213](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2213)
+* refactor(cli): add helmpath option in scaffold command (#2204) ([78a0875](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/78a0875)), closes [#2204](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2204) [#2199](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2199)
+* feat(cli): add gitHub actions for coverage in scaffold command (#2202) ([b3069d4](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b3069d4)), closes [#2202](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2202) [#2201](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2201)
+* fix(cli): scaffold bugs (#2214) ([e46d256](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e46d256)), closes [#2214](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2214) [#2211](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2211)
+
+
+
+
+
 ## <small>9.1.2 (2024-10-16)</small>
 
 * chore(ci-cd): resolve sonar issues (#2179) ([12ec556](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/12ec556)), closes [#2179](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2179) [#2177](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2177) [#2177](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2177)

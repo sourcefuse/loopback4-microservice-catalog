@@ -6,7 +6,9 @@
     "prepare": "husky install",
     "test": "lerna run test",
      "migrate": "npm run db:migrate --workspaces --if-present",
-     "build": "npm run build --workspaces --if-present"
+     "build": "npm run build --workspaces --if-present",
+     "github:coverage": "lerna run coverage --concurrency=2",
+    "coverage:combined": "node coverage.js && nyc report --reporter html"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.1.0",
@@ -17,6 +19,7 @@
     "cz-customizable": "^6.3.0",
     "husky": "^7.0.4",
     "lerna": "^7.3.0",
+    "nyc": "^15.1.0",
     "run-s": "^0.0.0"
   },
   "workspaces":["packages/*", "services/*", "facades/*"],
