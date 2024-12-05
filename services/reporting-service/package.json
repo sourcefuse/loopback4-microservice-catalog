@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/reporting-service",
-  "version": "3.1.0",
+  "version": "4.0.0",
   "description": "reporting-service.",
   "keywords": [
     "loopback-extension",
@@ -65,7 +65,7 @@
     "@loopback/openapi-v3": "^10.0.2",
     "@loopback/repository": "^7.0.2",
     "@loopback/rest": "^14.0.2",
-    "@sourceloop/core": "^14.2.3",
+    "@sourceloop/core": "^15.0.0",
     "aws-sdk": "^2.1691.0",
     "crypto-js": "^4.2.0",
     "db-migrate": "^1.0.0-beta.21",

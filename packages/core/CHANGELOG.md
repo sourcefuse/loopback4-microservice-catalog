@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 15.0.0 (2024-12-05)
+
+* fix(authentication-service):  added idp server controller for login and discovery endpoint (#2131) ([e1bba2c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e1bba2c)), closes [#2131](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2131)
+
+
+### BREAKING CHANGE
+
+* * feat(authentication-service): added the logic for rotation of keys with database
+
+2034
+
+* feat(authentication-service):  added final changes for idp server
+
+MIGRATION CHANGE:
+migration-20241105074844-
+* JWT Asymmetric Signer and Verifier will be served from Database only. File support has been removed.
+
+2034
+
+
+
+
 ## <small>14.2.3 (2024-10-22)</small>
 
 * fix(core): revert the changes of 2158 (#2181) ([1307aa0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1307aa0)), closes [#2181](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2181) [#2158](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2158)
