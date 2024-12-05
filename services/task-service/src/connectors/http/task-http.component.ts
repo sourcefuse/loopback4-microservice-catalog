@@ -8,6 +8,8 @@ import {
 } from '@loopback/core';
 import {Class, Model, Repository} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
+import {JwtKeysRepository} from '@sourceloop/core';
+import {JwtKeysRepository as SequelizeJwtKeysRepository} from '@sourceloop/core/sequelize';
 import {TaskServiceBindings} from '../../keys';
 import {TaskServiceConfig} from '../../types';
 import {
@@ -45,9 +47,14 @@ export class TaskHttpComponent implements Component {
       this.repositories = [
         ClientAppSequelizeRepository,
         WebhookSubscriptionSequelizeRepository,
+        SequelizeJwtKeysRepository,
       ];
     } else {
-      this.repositories = [ClientAppRepository, WebhookSubscriptionRepository];
+      this.repositories = [
+        ClientAppRepository,
+        WebhookSubscriptionRepository,
+        JwtKeysRepository,
+      ];
     }
     this.services = [ApiKeyService, WebhookService];
     this.app

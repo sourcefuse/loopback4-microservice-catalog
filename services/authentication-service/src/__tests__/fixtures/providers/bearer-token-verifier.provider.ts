@@ -3,28 +3,50 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {Provider} from '@loopback/context';
-import * as fs from 'fs/promises';
-import {verify} from 'jsonwebtoken';
+import {repository} from '@loopback/repository';
+import * as jwt from 'jsonwebtoken';
 import {VerifyFunction} from 'loopback4-authentication';
+import * as jose from 'node-jose';
+import {JwtKeysRepository} from '../../../repositories';
 import {IAuthUserWithPermissions} from '../keys';
 export class BearerTokenVerifyProvider
   implements Provider<VerifyFunction.BearerFn>
 {
+  constructor(
+    @repository(JwtKeysRepository)
+    public jwtKeysRepo: JwtKeysRepository,
+  ) {}
   value(): VerifyFunction.BearerFn {
     return async (token: string) => {
-      /*
-        Implementing a basic JWT token decryption here
-        Leaving the additional security to the consumer of this application
+      // Get the key that matches the token's kid
+      const decoded = jwt.decode(token.trim(), {complete: true});
+      if (!decoded) {
+        throw new Error('Token is not valid');
+      }
+      const kid = decoded?.header.kid;
 
-        Suggestion: to revoke these tokens put them in redis or some in-memory
-        database.
-        Use global interceptor over this to apply that check on each api.
-      */
-      const publicKey = await fs.readFile(process.env.JWT_PRIVATE_KEY ?? '');
-      return verify(token, publicKey, {
+      // Load the JWKS
+      const key = await this.jwtKeysRepo.findOne({
+        where: {
+          keyId: kid,
+        },
+      });
+
+      if (!key) {
+        throw new Error('Key not found for verification');
+      }
+
+      // Convert the JWK to PEM format for verification
+      const jwkKey = await jose.JWK.asKey(key.publicKey, 'pem');
+      const pem = jwkKey.toPEM(false);
+
+      // Verify the token with the retrieved PEM-formatted public key
+      const payload = jwt.verify(token, pem, {
         issuer: process.env.JWT_ISSUER,
         algorithms: ['RS256'],
       }) as IAuthUserWithPermissions;
+
+      return payload;
     };
   }
 }

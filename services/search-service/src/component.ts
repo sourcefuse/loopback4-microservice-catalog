@@ -24,8 +24,10 @@ import {
   BearerVerifierConfig,
   BearerVerifierType,
   CoreComponent,
+  JwtKeysRepository,
   ServiceSequence,
 } from '@sourceloop/core';
+import {JwtKeysRepository as SequelizeJwtKeysRepository} from '@sourceloop/core/sequelize';
 import {AuthenticationComponent} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
@@ -78,6 +80,7 @@ export class SearchServiceComponent<T extends Model> implements Component {
       this.repositories = [
         RecentSearchSequelizeRepository,
         SearchQuerySequelizeRepository,
+        SequelizeJwtKeysRepository,
       ];
     } else {
       this.providers = {
@@ -85,7 +88,11 @@ export class SearchServiceComponent<T extends Model> implements Component {
         [SearchServiceBindings.SearchFilterFunction.key]: SearchFilterProvider,
         [SearchServiceBindings.modelProvider.key]: SearchModelProvider,
       };
-      this.repositories = [RecentSearchRepository, SearchQueryRepository];
+      this.repositories = [
+        RecentSearchRepository,
+        SearchQueryRepository,
+        JwtKeysRepository,
+      ];
     }
 
     this.application

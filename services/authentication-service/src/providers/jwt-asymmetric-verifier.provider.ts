@@ -3,22 +3,50 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {Provider} from '@loopback/core';
-import * as fs from 'fs/promises';
+import {repository} from '@loopback/repository';
 import * as jwt from 'jsonwebtoken';
+import * as jose from 'node-jose';
+import {JwtKeysRepository} from '../repositories';
 import {JWTVerifierFn} from './types';
+
 export class JWTAsymmetricVerifierProvider<T>
   implements Provider<JWTVerifierFn<T>>
 {
+  constructor(
+    @repository(JwtKeysRepository)
+    public jwtKeysRepo: JwtKeysRepository,
+  ) {}
   value(): JWTVerifierFn<T> {
-    return async (code: string, options: jwt.VerifyOptions) => {
-      const secret = (await fs.readFile(
-        process.env.JWT_PUBLIC_KEY ?? '',
-      )) as Buffer;
-      const payload = jwt.verify(code, secret, {
+    return async (token: string, options: jwt.VerifyOptions) => {
+      // Get the key that matches the token's kid
+      const decoded = jwt.decode(token.trim(), {complete: true});
+      if (!decoded) {
+        throw new Error('Token is not valid');
+      }
+      const kid = decoded?.header.kid;
+
+      // Load the JWKS
+      const key = await this.jwtKeysRepo.findOne({
+        where: {
+          keyId: kid,
+        },
+      });
+
+      if (!key) {
+        throw new Error('Key not found for verification');
+      }
+
+      // Convert the JWK to PEM format for verification
+      const jwkKey = await jose.JWK.asKey(key.publicKey, 'pem');
+      const pem = jwkKey.toPEM(false);
+
+      // Verify the token with the retrieved PEM-formatted public key
+      const payload = jwt.verify(token, pem, {
         ...options,
         issuer: process.env.JWT_ISSUER,
         algorithms: ['RS256'],
       }) as T;
+
       return payload;
     };
   }
