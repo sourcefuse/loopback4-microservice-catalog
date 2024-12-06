@@ -1,14 +1,19 @@
 import {Context} from '@loopback/context';
 import {AnyObject} from '@loopback/repository';
 import {Client, expect} from '@loopback/testlab';
+import {JwtKeysRepository} from '@sourceloop/core';
+import {generateKeyPairSync} from 'crypto';
+import * as jwt from 'jsonwebtoken';
 import {AuthenticationBindings} from 'loopback4-authentication';
+import * as jose from 'node-jose';
 import {TaskPermssionKey} from '../../enums/permission-key.enum';
 import {EventRepository, EventWorkflowRepository} from '../../repositories';
-import {getToken, setupApplication} from '../fixtures/test-helper';
+import {setupApplication} from '../fixtures/test-helper';
 import {TestTaskServiceApplication} from '../fixtures/test.application';
 
 describe('EventController: Acceptance', () => {
   let app: TestTaskServiceApplication;
+  let jwtKeyRepo: JwtKeysRepository;
   let client: Client;
   const mock = {
     key: 'test',
@@ -21,18 +26,46 @@ describe('EventController: Acceptance', () => {
   };
   before('setupApplication', async () => {
     ({app, client} = await setupApplication());
+    jwtKeyRepo = await app.getRepository(JwtKeysRepository);
     await seedData();
   });
 
+  before(async () => {
+    process.env.JWT_PRIVATE_KEY_PASSPHRASE = 'jwt_private_key_passphrase';
+    const {publicKey, privateKey} = generateKeyPairSync('rsa', {
+      modulusLength: 2048,
+      publicKeyEncoding: {
+        type: 'spki',
+        format: 'pem',
+      },
+      privateKeyEncoding: {
+        type: 'pkcs8',
+        format: 'pem',
+        cipher: 'aes-256-cbc',
+        passphrase: process.env.JWT_PRIVATE_KEY_PASSPHRASE,
+      },
+    });
+
+    // Create the JWKS object
+    const keyStore = jose.JWK.createKeyStore();
+    const key = await keyStore.add(publicKey, 'pem');
+    await jwtKeyRepo.create({
+      keyId: key.kid, // Unique identifier for the key
+      publicKey: publicKey,
+      privateKey: privateKey,
+    });
+  });
+
   after(async () => {
+    await jwtKeyRepo.deleteAll();
     await app.stop();
   });
 
   it('find: should return 200 with list of events', async () => {
-    const token = getToken([TaskPermssionKey.ViewEvent]);
+    const token = await generateToken([TaskPermssionKey.ViewEvent]);
     const data = await client
       .get('/events')
-      .set('Authorization', token)
+      .set('Authorization', `Bearer ${token}`)
       .expect(200);
     expect(data.body).to.have.length(1);
     expect(data.body[0]).to.have.properties([
@@ -49,10 +82,10 @@ describe('EventController: Acceptance', () => {
   });
 
   it('findById: should return 200 with an event', async () => {
-    const token = getToken([TaskPermssionKey.ViewEvent]);
+    const token = await generateToken([TaskPermssionKey.ViewEvent]);
     const data = await client
       .get(`/events/1`)
-      .set('Authorization', token)
+      .set('Authorization', `Bearer ${token}`)
       .expect(200);
     expect(data.body).to.have.properties([
       'key',
@@ -65,10 +98,10 @@ describe('EventController: Acceptance', () => {
   });
 
   it('count: should return 200 with an event', async () => {
-    const token = getToken([TaskPermssionKey.ViewEvent]);
+    const token = await generateToken([TaskPermssionKey.ViewEvent]);
     const data = await client
       .get(`/events/count`)
-      .set('Authorization', token)
+      .set('Authorization', `Bearer ${token}`)
       .expect(200);
     expect(data.body).to.deepEqual({
       count: 1,
@@ -76,10 +109,10 @@ describe('EventController: Acceptance', () => {
   });
 
   it('mapEventToWorkflow: should create a mapping between event and workflow', async () => {
-    const token = getToken([TaskPermssionKey.ViewEvent]);
+    const token = await generateToken([TaskPermssionKey.ViewEvent]);
     await client
       .post(`/events/mapping`)
-      .set('Authorization', token)
+      .set('Authorization', `Bearer ${token}`)
       .send({
         eventKey: 'event',
         workflowKey: 'workflow',
@@ -116,5 +149,25 @@ describe('EventController: Acceptance', () => {
       userTenantId: 'test',
     });
     return tempContext.getSync<T>(classString);
+  }
+
+  async function generateToken(permissions: string[]): Promise<string> {
+    const keys = await jwtKeyRepo.find();
+    return jwt.sign(
+      {
+        id: 'test',
+        userTenantId: 'test',
+        permissions,
+      },
+      {
+        key: keys[0].privateKey,
+        passphrase: process.env.JWT_PRIVATE_KEY_PASSPHRASE,
+      },
+      {
+        algorithm: 'RS256',
+        issuer: process.env.JWT_ISSUER,
+        keyid: keys[0].keyId,
+      },
+    );
   }
 });

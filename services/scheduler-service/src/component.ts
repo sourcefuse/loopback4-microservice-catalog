@@ -20,9 +20,11 @@ import {
   BearerVerifierType,
   CoreComponent,
   IServiceConfig,
+  JwtKeysRepository,
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
+import {JwtKeysRepository as SequelizeJwtKeysRepository} from '@sourceloop/core/sequelize';
 import {AuthenticationComponent} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
@@ -133,6 +135,7 @@ export class SchedulerServiceComponent implements Component {
         WorkingHourSequelizeRepository,
         EventAttendeeViewSequelizeRepository,
         AuditLogSequelizeRepository,
+        SequelizeJwtKeysRepository,
       ];
     } else {
       this.repositories = [
@@ -146,6 +149,7 @@ export class SchedulerServiceComponent implements Component {
         WorkingHourRepository,
         EventAttendeeViewRepository,
         AuditLogRepository,
+        JwtKeysRepository,
       ];
     }
     this.models = [

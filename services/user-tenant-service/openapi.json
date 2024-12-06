@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "@sourceloop/user-tenant-service",
-    "version": "2.1.2",
+    "version": "2.3.0",
     "description": "Sourceloop User Tenant Service",
     "contact": {
       "name": "SourceFuse"

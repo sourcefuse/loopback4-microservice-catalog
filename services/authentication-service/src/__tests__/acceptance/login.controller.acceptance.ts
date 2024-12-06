@@ -6,7 +6,6 @@
 import {Client, createRestAppClient, expect} from '@loopback/testlab';
 import {AuthProvider, AuthenticateErrorKeys, RoleTypes} from '@sourceloop/core';
 import {AuthErrorKeys} from 'loopback4-authentication';
-import path from 'path';
 import {
   AuthClientRepository,
   RefreshTokenRepository,
@@ -52,22 +51,14 @@ describe('Authentication microservice', () => {
     helper = await app.get(TestHelperKey);
   });
   before(setMockData);
-  beforeEach(() => {
-    process.env.JWT_PUBLIC_KEY = path.resolve(
-      __dirname,
-      '../../../src/__tests__/utils/publicKey.txt',
-    );
-    process.env.JWT_PRIVATE_KEY = path.resolve(
-      __dirname,
-      '../../../src/__tests__/utils/privateKey.txt',
-    );
+  before(async () => {
+    process.env.JWT_PRIVATE_KEY_PASSPHRASE = 'jwt_private_key_passphrase';
+    await client.post('/connect/generate-keys').send().expect(204);
   });
   after(deleteMockData);
   afterEach(() => {
     delete process.env.JWT_ISSUER;
     delete process.env.ENCRYPTION_KEY;
-    delete process.env.JWT_PUBLIC_KEY;
-    delete process.env.JWT_PRIVATE_KEY;
     helper.reset();
   });
   it('should give status 422 for login request with no client credentials', async () => {

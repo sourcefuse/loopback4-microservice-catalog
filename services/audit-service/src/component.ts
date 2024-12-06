@@ -20,17 +20,18 @@ import {
   BearerVerifierType,
   CoreComponent,
   ITenantUtilitiesConfig,
+  JwtKeysRepository,
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
   TenantUtilitiesBindings,
   TenantUtilitiesComponent,
 } from '@sourceloop/core';
+import {JwtKeysRepository as SequelizeJwtKeysRepository} from '@sourceloop/core/sequelize';
 import {AuthenticationComponent} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-
 import {AuditController} from './controllers';
 import {
   AuditServiceBindings,
@@ -40,7 +41,6 @@ import {
   QuerySelectedFilesServiceBindings,
 } from './keys';
 import {AuditLog, Job, MappingLog} from './models';
-
 import {
   AuditLog as TenantAuditLog,
   Job as TenantJob,
@@ -105,12 +105,14 @@ export class AuditServiceComponent implements Component {
         AuditLogSequelizeRepository,
         MappingLogSequelizeRepository,
         JobSequelizeRepository,
+        SequelizeJwtKeysRepository,
       ];
     } else {
       this.repositories = [
         AuditLogRepository,
         MappingLogRepository,
         JobRepository,
+        JwtKeysRepository,
       ];
     }
     if (this.config?.useSingleTenant) {

@@ -3,7 +3,6 @@ import {Client, expect} from '@loopback/testlab';
 import {STATUS_CODE} from '@sourceloop/core';
 import {createHmac} from 'crypto';
 import {AuthenticationBindings} from 'loopback4-authentication';
-import path from 'path';
 import {UserTenantServiceApplication} from '../../application';
 import {
   AuthClientRepository,
@@ -65,7 +64,6 @@ describe('UserCallbackController', () => {
       UserCredentialsRepository,
     );
   });
-
   before(setCurrentUser);
 
   after(async () => {
@@ -160,11 +158,7 @@ describe('UserCallbackController', () => {
     // sonarignore:end
   }
 
-  function setCurrentUser() {
+  async function setCurrentUser() {
     app.bind(AuthenticationBindings.CURRENT_USER).to(testUser);
-    process.env.JWT_PRIVATE_KEY = path.resolve(
-      __dirname,
-      '../../../src/__tests__/unit/utils/privateKey.txt',
-    );
   }
 });

@@ -8,6 +8,7 @@ import {RefreshTokenRepository} from '../refresh-token.repository';
 import {RevokedTokenRepository} from '../revoked-token.repository';
 import {AuthClientRepository} from './auth-client.repository';
 import {AuthSecureClientRepository} from './auth-secure-client.repository';
+import {JwtKeysRepository} from './jwt-keys.repository';
 import {LoginActivityRepository} from './login-activity.repository';
 import {RoleRepository} from './role.repository';
 import {TenantConfigRepository} from './tenant-config.repository';
@@ -18,6 +19,7 @@ import {UserLevelResourceRepository} from './user-level-resource.repository';
 import {UserTenantRepository} from './user-tenant.repository';
 import {UserRepository} from './user.repository';
 
+export * from '../jwt-keys.repository';
 export * from '../otp-cache.repository';
 export * from '../otp.repository';
 export * from '../refresh-token.repository';
@@ -50,4 +52,5 @@ export const repositories = [
   TenantRepository,
   UserLevelResourceRepository,
   LoginActivityRepository,
+  JwtKeysRepository,
 ];

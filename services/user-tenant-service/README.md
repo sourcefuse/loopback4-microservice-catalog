@@ -8,8 +8,8 @@
 
 ![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/user-tenant-service/@loopback/core)
 
-
 ## Overview
+
 This microservice efficiently supports tenant-specific operations, empowering you to leverage the benefits of multitenancy.
 
 - Multi-tenant support
@@ -62,6 +62,66 @@ $ [npm install | yarn add] user-tenant-service
 
 - Start the application
   `npm start`
+
+### Asymmetric Token Signing and Verification
+
+If you are using asymmetric token signing and verification, you need to create a datasource for auth database. Example datasource file for auth:-
+
+```ts
+import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
+import {juggler} from '@loopback/repository';
+import {AuthDbSourceName} from '@sourceloop/core';
+const DEFAULT_MAX_CONNECTIONS = 25;
+const DEFAULT_DB_IDLE_TIMEOUT_MILLIS = 60000;
+const DEFAULT_DB_CONNECTION_TIMEOUT_MILLIS = 2000;
+
+const config = {
+  name: 'auth',
+  connector: 'postgresql',
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  schema: process.env.DB_SCHEMA,
+  password: process.env.DB_PASSWORD,
+  database: process.env.AUTH_DB,
+};
+
+// Observe application's life cycle to disconnect the datasource when
+// application is stopped. This allows the application to be shut down
+// gracefully. The `stop()` method is inherited from `juggler.DataSource`.
+// Learn more at https://loopback.io/doc/en/lb4/Life-cycle.html
+@lifeCycleObserver('datasource')
+export class AuthDataSource
+  extends juggler.DataSource
+  implements LifeCycleObserver
+{
+  static dataSourceName = AuthDbSourceName;
+
+  static readonly defaultConfig = config;
+
+  constructor(
+    @inject('datasources.config.auth', {optional: true})
+    dsConfig: object = config,
+  ) {
+    if (!!+(process.env.ENABLE_DB_CONNECTION_POOLING ?? 0)) {
+      const dbPool = {
+        max: +(process.env.DB_MAX_CONNECTIONS ?? DEFAULT_MAX_CONNECTIONS),
+        idleTimeoutMillis: +(
+          process.env.DB_IDLE_TIMEOUT_MILLIS ?? DEFAULT_DB_IDLE_TIMEOUT_MILLIS
+        ),
+        connectionTimeoutMillis: +(
+          process.env.DB_CONNECTION_TIMEOUT_MILLIS ??
+          DEFAULT_DB_CONNECTION_TIMEOUT_MILLIS
+        ),
+      };
+
+      dsConfig = {...dsConfig, ...dbPool};
+    }
+
+    super(dsConfig);
+  }
+}
+```
 
 ### Environment Variables
 
@@ -152,18 +212,6 @@ $ [npm install | yarn add] user-tenant-service
         <td></td>
       </tr>
       <tr>
-        <td>JWT_PRIVATE_KEY</td>
-        <td>Y</td>
-        <td>Asymmetric signing key of the JWT token.</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>JWT_PUBLIC_KEY</td>
-        <td>Y</td>
-        <td>Verifying signed JWT Token.</td>
-        <td></td>
-      </tr>
-      <tr>
         <td>JWT_SECRET</td>
         <td>Y</td>
         <td>Symmetric signing key of the JWT token.</td>
@@ -181,7 +229,7 @@ $ [npm install | yarn add] user-tenant-service
 
 ### Setting up a `DataSource`
 
-Here is a sample Implementation `DataSource` implementation using environment variables and PostgreSQL as the data source. 
+Here is a sample Implementation `DataSource` implementation using environment variables and PostgreSQL as the data source.
 
 ```typescript
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
@@ -204,7 +252,7 @@ export class AuthenticationDbDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
-  static dataSourceName = "AuthDb";
+  static dataSourceName = 'AuthDb';
   static readonly defaultConfig = config;
 
   constructor(
@@ -220,7 +268,6 @@ export class AuthenticationDbDataSource
 ### Migrations
 
 The migrations required for this service are processed during the installation automatically if you set the `AUTH_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or databases, they may be affected. In such a scenario, it is advised that you copy the migration files in your project root, using the `AUTH_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
-
 
 This migration script supports both MySQL and PostgreSQL databases, controlled by environment variables. By setting MYSQL_MIGRATION to 'true', the script runs migrations using MySQL configuration files; otherwise, it defaults to PostgreSQL. .
 

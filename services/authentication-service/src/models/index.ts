@@ -7,6 +7,7 @@ import {AuthClient} from './auth-client.model';
 import {AuthSecureClient} from './auth-secure-client.model';
 import {ForgetPasswordDto} from './forget-password-dto.model';
 import {ForgetPasswordResponseDto} from './forget-password-response-dto.model';
+import {JwtKeys} from './jwt-keys.model';
 import {LocalUserProfileDto} from './local-user-profile';
 import {LoginActivity} from './login-activity.model';
 import {OtpCache} from './otp-cache.model';
@@ -34,6 +35,7 @@ export * from './auth-client.model';
 export * from './auth-secure-client.model';
 export * from './forget-password-dto.model';
 export * from './forget-password-response-dto.model';
+export * from './jwt-keys.model';
 export * from './local-user-profile';
 export * from './login-activity.model';
 export * from './otp-cache.model';
@@ -81,4 +83,5 @@ export const models = [
   LocalUserProfileDto,
   LoginActivity,
   ActiveUsersFilter,
+  JwtKeys,
 ];

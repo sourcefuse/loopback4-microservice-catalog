@@ -15,9 +15,11 @@ import {
   BearerVerifierConfig,
   BearerVerifierType,
   CoreComponent,
+  JwtKeysRepository,
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
+import {JwtKeysRepository as SequelizeJwtKeysRepository} from '@sourceloop/core/sequelize';
 import {AuthenticationComponent} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
@@ -72,10 +74,10 @@ import {
   SectionRepository as SectionSequelizeRepository,
   SurveyCycleRepository as SurveyCycleSequelizeRepository,
   SurveyQuestionRepository as SurveyQuestionSequelizeRepository,
-  SurveyRepository as SurveySequelizeRepository,
   SurveyResponderRepository as SurveyResponderSequelizeRepository,
   SurveyResponseDetailRepository as SurveyResponseDetailSequelizeRepository,
   SurveyResponseRepository as SurveyResponseSequelizeRepository,
+  SurveyRepository as SurveySequelizeRepository,
   TemplateQuestionRepository as TemplateQuestionSequelizeRepository,
 } from './repositories/sequelize';
 import {SurveyRepository} from './repositories/survey.repository';
@@ -131,6 +133,7 @@ export class SurveyServiceComponent implements Component {
         SectionSequelizeRepository,
         SurveyResponseSequelizeRepository,
         SurveyResponseDetailSequelizeRepository,
+        SequelizeJwtKeysRepository,
       ];
     } else {
       this.repositories = [
@@ -145,6 +148,7 @@ export class SurveyServiceComponent implements Component {
         SectionRepository,
         SurveyResponseRepository,
         SurveyResponseDetailRepository,
+        JwtKeysRepository,
       ];
     }
 

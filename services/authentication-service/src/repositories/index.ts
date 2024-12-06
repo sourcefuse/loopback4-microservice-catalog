@@ -4,6 +4,7 @@
 // https://opensource.org/licenses/MIT
 import {AuthClientRepository} from './auth-client.repository';
 import {AuthSecureClientRepository} from './auth-secure-client.repository';
+import {JwtKeysRepository} from './jwt-keys.repository';
 import {LoginActivityRepository} from './login-activity.repository';
 import {OtpCacheRepository} from './otp-cache.repository';
 import {OtpRepository} from './otp.repository';
@@ -20,6 +21,7 @@ import {UserRepository} from './user.repository';
 
 export * from './auth-client.repository';
 export * from './auth-secure-client.repository';
+export * from './jwt-keys.repository';
 export * from './login-activity.repository';
 export * from './otp-cache.repository';
 export * from './otp.repository';
@@ -50,4 +52,5 @@ export const repositories = [
   TenantRepository,
   UserLevelResourceRepository,
   LoginActivityRepository,
+  JwtKeysRepository,
 ];

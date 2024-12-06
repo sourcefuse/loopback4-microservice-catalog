@@ -1,5 +1,9 @@
 import {Client, expect, sinon} from '@loopback/testlab';
 import {PermissionKey} from '@sourceloop/bpmn-service';
+import {JwtKeysRepository} from '@sourceloop/core';
+import {generateKeyPairSync} from 'crypto';
+import * as jwt from 'jsonwebtoken';
+import * as jose from 'node-jose';
 import {CreateTaskCommand} from '../../../commands';
 import {TaskRepository, TaskWorkFlowRepository} from '../../../repositories';
 import {TaskStatus} from '../../../types';
@@ -9,7 +13,6 @@ import {
   clearRepo,
   getMockCamundaParameters,
   getRepo,
-  getToken,
   mockLogger,
   setupApplication,
 } from '../../fixtures/test-helper';
@@ -22,6 +25,7 @@ describe('CreateTaskCommand: Acceptance', () => {
   let engine: MockEngine;
   let logger: ReturnType<typeof mockLogger>;
   let sandbox: sinon.SinonSandbox;
+  let jwtKeyRepo: JwtKeysRepository;
   let command: CreateTaskCommand;
   let stubCommand: sinon.SinonStub;
   let repo: TaskRepository;
@@ -33,6 +37,7 @@ describe('CreateTaskCommand: Acceptance', () => {
     logger = mockLogger(sandbox);
     ({app, client} = await setupApplication(logger));
     engine = app.getSync<MockEngine>(MOCK_BPMN_ENGINE_KEY);
+    jwtKeyRepo = await app.getRepository(JwtKeysRepository);
     await seedData();
     // stub a command for task workflow
     stubCommand = sandbox.stub();
@@ -43,6 +48,7 @@ describe('CreateTaskCommand: Acceptance', () => {
   });
 
   after(async () => {
+    await jwtKeyRepo.deleteAll();
     await app.stop();
   });
 
@@ -131,11 +137,12 @@ describe('CreateTaskCommand: Acceptance', () => {
   });
 
   async function seedData() {
+    await seedJwtKeys();
     // create a workflow for tasks
-    const token = getToken([PermissionKey.CreateWorkflow]);
+    const token = await generateToken([PermissionKey.CreateWorkflow]);
     const {body: workflow} = await client
       .post('/workflows')
-      .set('Authorization', token)
+      .set('Authorization', `Bearer ${token}`)
       .send({
         name: 'workflow',
         description: 'test',
@@ -157,5 +164,51 @@ describe('CreateTaskCommand: Acceptance', () => {
       workflowKey: nonExistantWorkflow,
       taskKey: taskWithoutWorkflow,
     });
+  }
+
+  async function seedJwtKeys() {
+    process.env.JWT_PRIVATE_KEY_PASSPHRASE = 'jwt_private_key_passphrase';
+    const {publicKey, privateKey} = generateKeyPairSync('rsa', {
+      modulusLength: 2048,
+      publicKeyEncoding: {
+        type: 'spki',
+        format: 'pem',
+      },
+      privateKeyEncoding: {
+        type: 'pkcs8',
+        format: 'pem',
+        cipher: 'aes-256-cbc',
+        passphrase: process.env.JWT_PRIVATE_KEY_PASSPHRASE,
+      },
+    });
+
+    // Create the JWKS object
+    const keyStore = jose.JWK.createKeyStore();
+    const key = await keyStore.add(publicKey, 'pem');
+    await jwtKeyRepo.create({
+      keyId: key.kid, // Unique identifier for the key
+      publicKey: publicKey,
+      privateKey: privateKey,
+    });
+  }
+
+  async function generateToken(permissions: string[]): Promise<string> {
+    const keys = await jwtKeyRepo.find();
+    return jwt.sign(
+      {
+        id: 'test',
+        userTenantId: 'test',
+        permissions,
+      },
+      {
+        key: keys[0].privateKey,
+        passphrase: process.env.JWT_PRIVATE_KEY_PASSPHRASE,
+      },
+      {
+        algorithm: 'RS256',
+        issuer: process.env.JWT_ISSUER,
+        keyid: keys[0].keyId,
+      },
+    );
   }
 });

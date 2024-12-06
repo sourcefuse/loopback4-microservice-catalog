@@ -10,6 +10,7 @@ import {
   inject,
   ProviderMap,
 } from '@loopback/core';
+import {Class, Model, Repository} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {
   BearerVerifierBindings,
@@ -17,13 +18,11 @@ import {
   BearerVerifierConfig,
   BearerVerifierType,
   CoreComponent,
+  JwtKeysRepository,
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
-import {ChatServiceBindings} from './keys';
-import {IChatServiceConfig} from './types';
-
-import {Class, Model, Repository} from '@loopback/repository';
+import {JwtKeysRepository as SequelizeJwtKeysRepository} from '@sourceloop/core/sequelize';
 import {AuthenticationComponent} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
@@ -37,6 +36,7 @@ import {
   MessageRecipientController,
   MessageRecipientMessageController,
 } from './controllers';
+import {ChatServiceBindings} from './keys';
 import {
   AttachmentFile,
   AttachmentFileDto,
@@ -53,6 +53,7 @@ import {
   MessageRecipientRepository as MessageRecipientSequelizeRepository,
   MessageRepository as MessageSequelizeRepository,
 } from './repositories/sequelize';
+import {IChatServiceConfig} from './types';
 
 export class ChatServiceComponent implements Component {
   constructor(
@@ -89,12 +90,14 @@ export class ChatServiceComponent implements Component {
         MessageSequelizeRepository,
         MessageRecipientSequelizeRepository,
         AttachmentFileSequelizeRepository,
+        SequelizeJwtKeysRepository,
       ];
     } else {
       this.repositories = [
         MessageRepository,
         MessageRecipientRepository,
         AttachmentFileRepository,
+        JwtKeysRepository,
       ];
     }
 

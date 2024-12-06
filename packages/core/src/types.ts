@@ -9,11 +9,13 @@ import {AnyObject} from 'loopback-datasource-juggler';
 import {SWStats} from 'swagger-stats';
 
 export interface IServiceConfig {
-  useCustomSequence: boolean;
+  useCustomSequence?: boolean;
   useSequelize?: boolean;
 }
 
 export type OASPathDefinition = AnyObject;
+export const AuthCacheSourceName = 'AuthCache';
+export const AuthDbSourceName = 'AuthDB';
 
 export interface CoreConfig {
   name?: string;

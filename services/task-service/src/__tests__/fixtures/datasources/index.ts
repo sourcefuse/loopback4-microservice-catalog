@@ -2,4 +2,4 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-export const AuthCacheSourceName = 'AuthCache';
+export * from './auth.datasource';

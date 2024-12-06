@@ -19,9 +19,11 @@ import {
   BearerVerifierType,
   CoreComponent,
   IServiceConfig,
+  JwtKeysRepository,
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
+import {JwtKeysRepository as SequelizeJwtKeysRepository} from '@sourceloop/core/sequelize';
 import {AuthenticationComponent} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
@@ -47,8 +49,8 @@ import {
 } from './repositories';
 import {
   AuditLogRepository as AuditLogSequelizeRepository,
-  SessionAttendeesRepository as VideoChatSequelizeSessionRepository,
   VideoChatSessionRepository as SessionAttendeesSequelizeRepository,
+  SessionAttendeesRepository as VideoChatSequelizeSessionRepository,
 } from './repositories/sequelize';
 import {
   ChatArchiveService,
@@ -104,12 +106,14 @@ export class VideoConfServiceComponent implements Component {
         AuditLogSequelizeRepository, // this is the new audit repository needed for `@sourceloop/audit-logs`.
         VideoChatSequelizeSessionRepository,
         SessionAttendeesSequelizeRepository,
+        SequelizeJwtKeysRepository,
       ];
     } else {
       this.repositories = [
         AuditLogRepository, // this is the new audit repository needed for `@sourceloop/audit-logs`.
         VideoChatSessionRepository,
         SessionAttendeesRepository,
+        JwtKeysRepository,
       ];
     }
     this.models = [AuditLog, VideoChatSession];

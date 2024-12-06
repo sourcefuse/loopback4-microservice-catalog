@@ -21,10 +21,16 @@ import {
   WorkflowVersionRepository,
 } from '@sourceloop/bpmn-service';
 import {
+  WorkflowRepository as WorkflowSequelizeRepository,
+  WorkflowVersionRepository as WorkflowVersionSequelizeRepository,
+} from '@sourceloop/bpmn-service/sequelize';
+import {
   CoreComponent,
+  JwtKeysRepository,
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
+import {JwtKeysRepository as SequelizeJwtKeysRepository} from '@sourceloop/core/sequelize';
 import {AuthenticationComponent} from 'loopback4-authentication';
 import {AuthorizationComponent} from 'loopback4-authorization';
 import * as controllers from './controllers';
@@ -55,11 +61,6 @@ import {
   UtilityService,
 } from './services';
 import {TaskServiceConfig} from './types';
-
-import {
-  WorkflowRepository as WorkflowSequelizeRepository,
-  WorkflowVersionRepository as WorkflowVersionSequelizeRepository,
-} from '@sourceloop/bpmn-service/sequelize';
 
 export class TaskServiceComponent implements Component {
   repositories?: Class<Repository<Model>>[];
@@ -114,6 +115,7 @@ export class TaskServiceComponent implements Component {
         UserTaskSequelizeRepository,
         WorkflowSequelizeRepository,
         WorkflowVersionSequelizeRepository,
+        SequelizeJwtKeysRepository,
       ];
     } else {
       this.repositories = [
@@ -124,6 +126,7 @@ export class TaskServiceComponent implements Component {
         UserTaskRepository,
         WorkflowRepository,
         WorkflowVersionRepository,
+        JwtKeysRepository,
       ];
     }
     this.providers = {

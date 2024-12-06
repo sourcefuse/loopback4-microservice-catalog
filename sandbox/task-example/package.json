@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/task-service-example",
-  "version": "0.4.6",
+  "version": "0.4.7",
   "description": "task-service-user.",
   "keywords": [
     "loopback-application",
@@ -70,8 +70,8 @@
     "@loopback/rest": "^14.0.2",
     "@loopback/rest-explorer": "^7.0.2",
     "@loopback/service-proxy": "^7.0.2",
-    "@sourceloop/core": "^14.2.3",
-    "@sourceloop/task-service": "^3.2.0",
+    "@sourceloop/core": "^15.0.0",
+    "@sourceloop/task-service": "^4.0.0",
     "aws-sdk": "^2.1406.0",
     "camunda-external-task-client-js": "^2.3.1",
     "db-migrate": "^1.0.0-beta.21",

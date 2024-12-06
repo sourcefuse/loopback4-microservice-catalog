@@ -42,5 +42,7 @@
 	"API not found !": "API not found !",
 	"User Task not found": "User Task not found",
 	"Task completion cannot be done through the PATCH API.": "Task completion cannot be done through the PATCH API.",
-	"Unauthorized": "Unauthorized"
+	"Unauthorized": "Unauthorized",
+	"No keys found": "No keys found",
+	"[{\"keyword\"": "\"type\",\"dataPath\":\".valueB\",\"schemaPath\":\"#/properties/valueB/type\",\"params\":{\"type\":\"string\"},\"message\":\"should be string\"}]"
 }
