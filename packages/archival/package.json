@@ -1,0 +1,94 @@
+{
+  "name": "@sourceloop/entity-archival",
+  "version": "0.0.1",
+  "description": "archival package",
+  "keywords": [
+    "loopback-extension",
+    "loopback"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": "18 || 20"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./aws-s3": {
+      "types": "./dist/aws-s3/index.d.ts",
+      "default": "./dist/aws-s3/index.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "aws-s3": [
+        "./dist/aws-s3/index.d.ts"
+      ]
+    }
+  },
+  "scripts": {
+    "build": "npm run clean && lb-tsc",
+    "build:watch": "lb-tsc --watch",
+    "lint": "npm run eslint && npm run prettier:check",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+    "prettier:cli": "prettier \"**/*.ts\" \"**/*.js\"",
+    "prettier:check": "npm run prettier:cli -- -l",
+    "prettier:fix": "npm run prettier:cli -- --write",
+    "eslint": "eslint --report-unused-disable-directives .",
+    "eslint:fix": "npm run eslint -- --fix",
+    "pretest": "npm run rebuild",
+    "posttest": "npm run lint",
+    "coverage": "lb-nyc --reporter=html npm run test",
+    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
+    "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
+    "rebuild": "npm run clean && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git"
+  },
+  "author": "Sourcefuse",
+  "license": "MIT",
+  "files": [
+    "README.md",
+    "dist",
+    "src",
+    "!*/__tests__"
+  ],
+  "peerDependencies": {
+    "@loopback/core": "^6.0.2"
+  },
+  "dependencies": {
+    "@loopback/repository": "^7.0.2",
+    "@loopback/rest": "^14.0.2",
+    "@sourceloop/core": "^14.1.0",
+    "tslib": "^2.6.2"
+  },
+  "devDependencies": {
+    "@aws-sdk/client-s3": "^3.468.0",
+    "@loopback/build": "^11.0.2",
+    "@loopback/core": "^6.0.2",
+    "@loopback/eslint-config": "^15.0.2",
+    "@loopback/testlab": "^7.0.2",
+    "@types/node": "^18.11.9",
+    "eslint": "^8.57.0",
+    "source-map-support": "^0.5.21",
+    "stream": "^0.0.3",
+    "csv-parser": "^3.0.0",
+    "typescript": "~5.2.2"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "typedoc": {
+    "config": {
+      "entryPoints": [
+        "src/index.ts"
+      ],
+      "out": "packages/archival",
+      "plugin": [
+        "typedoc-plugin-markdown"
+      ]
+    }
+  }
+}
