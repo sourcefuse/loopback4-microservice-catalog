@@ -80,7 +80,7 @@
     "lodash": "^4.17.21",
     "loopback4-authentication": "^12.1.0",
     "loopback4-authorization": "^7.0.2",
-    "loopback4-notifications": "^8.0.3",
+    "loopback4-notifications": "^9.0.0",
     "loopback4-soft-delete": "^10.0.2",
     "tslib": "^2.6.2"
   },
