@@ -1,150 +1,150 @@
 {
-  "name": "@sourceloop/core",
-  "version": "15.0.0",
-  "description": "Sourceloop core package",
-  "keywords": [
-    "loopback-extension",
-    "loopback"
-  ],
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "exports": {
-    ".": "./dist/index.js",
-    "./sequelize": {
-      "types": "./dist/repositories/sequelize/index.d.ts",
-      "default": "./dist/repositories/sequelize/index.js"
+    "name": "@sourceloop/core",
+    "version": "15.0.0",
+    "description": "Sourceloop core package",
+    "keywords": [
+        "loopback-extension",
+        "loopback"
+    ],
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "exports": {
+        ".": "./dist/index.js",
+        "./sequelize": {
+            "types": "./dist/repositories/sequelize/index.d.ts",
+            "default": "./dist/repositories/sequelize/index.js"
+        },
+        "./dynamic-datasource": {
+            "types": "./dist/components/dynamic-datasource/index.d.ts",
+            "default": "./dist/components/dynamic-datasource/index.js"
+        }
     },
-    "./dynamic-datasource": {
-      "types": "./dist/components/dynamic-datasource/index.d.ts",
-      "default": "./dist/components/dynamic-datasource/index.js"
-    }
-  },
-  "typesVersions": {
-    "*": {
-      "sequelize": [
-        "./dist/repositories/sequelize/index.d.ts"
-      ],
-      "dynamic-datasource": [
-        "./dist/components/dynamic-datasource/index.d.ts"
-      ]
-    }
-  },
-  "engines": {
-    "node": "18 || 20"
-  },
-  "scripts": {
-    "build": "npm run clean && lb-tsc",
-    "build:watch": "lb-tsc --watch",
-    "lint": "npm run prettier:check && npm run eslint",
-    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
-    "prettier:cli": "prettier \"**/*.ts\" \"**/*.js\"",
-    "prettier:check": "npm run prettier:cli -- -l",
-    "prettier:fix": "npm run prettier:cli -- --write",
-    "eslint": "eslint --report-unused-disable-directives .",
-    "eslint:fix": "npm run eslint -- --fix",
-    "pretest": "npm run build",
-    "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
-    "coverage": "lb-nyc --reporter=html npm run test",
-    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
-    "clean": "lb-clean dist *.tsbuildinfo .eslintcache"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git"
-  },
-  "author": "Sourcefuse",
-  "license": "MIT",
-  "files": [
-    "README.md",
-    "dist",
-    "src",
-    "!*/__tests__"
-  ],
-  "dependencies": {
-    "@loopback/boot": "^7.0.2",
-    "@loopback/context": "^7.0.2",
-    "@loopback/core": "^6.0.2",
-    "@loopback/express": "^7.0.2",
-    "@loopback/openapi-v3": "^10.0.2",
-    "@loopback/repository": "^7.0.2",
-    "@loopback/rest": "^14.0.2",
-    "@loopback/rest-explorer": "^7.0.2",
-    "@loopback/service-proxy": "^7.0.2",
-    "i18n": "^0.15.1",
-    "jsonwebtoken": "^9.0.0",
-    "lodash": "^4.17.21",
-    "logform": "^2.4.0",
-    "loopback-datasource-juggler": "^5.0.9",
-    "loopback4-authentication": "^12.1.0",
-    "loopback4-authorization": "^7.0.2",
-    "loopback4-dynamic-datasource": "^2.0.1",
-    "loopback4-helmet": "^7.0.2",
-    "loopback4-ratelimiter": "^7.0.2",
-    "loopback4-soft-delete": "^10.0.2",
-    "moment": "^2.29.4",
-    "moment-timezone": "^0.5.34",
-    "openapi3-ts": "^2.0.2",
-    "request-ip": "^3.3.0",
-    "swagger-stats": "^0.99.5",
-    "tslib": "^2.6.2",
-    "winston": "^3.7.2"
-  },
-  "peerDependencies": {
-    "@loopback/sequelize": "^0.6.2",
-    "loopback-connector-rest": "^5.0.1"
-  },
-  "peerDependenciesMeta": {
-    "@loopback/sequelize": {
-      "optional": true
-    }
-  },
-  "optionalDependencies": {
-    "crypto-js": "^4.2.0"
-  },
-  "devDependencies": {
-    "@loopback/build": "^11.0.2",
-    "@loopback/eslint-config": "^15.0.2",
-    "@loopback/sequelize": "^0.6.2",
-    "@loopback/testlab": "^7.0.2",
-    "@types/crypto-js": "^4.2.2",
-    "@types/i18n": "^0.13.6",
-    "@types/jsonwebtoken": "^9.0.0",
-    "@types/lodash": "^4.14.182",
-    "@types/moment": "^2.13.0",
-    "@types/moment-timezone": "^0.5.30",
-    "@types/node": "^18.11.9",
-    "@types/request-ip": "^0.0.37",
-    "@types/swagger-stats": "^0.95.4",
-    "aws-sdk": "^2.1613.0",
-    "eslint": "^8.57.0",
-    "loopback-connector-rest": "^5.0.1",
-    "source-map-support": "^0.5.21",
-    "typescript": "~5.2.2"
-  },
-  "overrides": {
-    "body-parser": {
-      "debug": "^4.3.4"
+    "typesVersions": {
+        "*": {
+            "sequelize": [
+                "./dist/repositories/sequelize/index.d.ts"
+            ],
+            "dynamic-datasource": [
+                "./dist/components/dynamic-datasource/index.d.ts"
+            ]
+        }
     },
-    "express": {
-      "debug": "^4.3.4",
-      "finalhandler": "^1.2.0",
-      "send": "^0.18.0",
-      "serve-static": "^1.15.0"
+    "engines": {
+        "node": "18 || 20"
+    },
+    "scripts": {
+        "build": "npm run clean && lb-tsc",
+        "build:watch": "lb-tsc --watch",
+        "lint": "npm run prettier:check && npm run eslint",
+        "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+        "prettier:cli": "prettier \"**/*.ts\" \"**/*.js\"",
+        "prettier:check": "npm run prettier:cli -- -l",
+        "prettier:fix": "npm run prettier:cli -- --write",
+        "eslint": "eslint --report-unused-disable-directives .",
+        "eslint:fix": "npm run eslint -- --fix",
+        "pretest": "npm run build",
+        "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
+        "coverage": "lb-nyc --reporter=html npm run test",
+        "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
+        "clean": "lb-clean dist *.tsbuildinfo .eslintcache"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git"
+    },
+    "author": "Sourcefuse",
+    "license": "MIT",
+    "files": [
+        "README.md",
+        "dist",
+        "src",
+        "!*/__tests__"
+    ],
+    "dependencies": {
+        "@loopback/boot": "^7.0.2",
+        "@loopback/context": "^7.0.2",
+        "@loopback/core": "^6.0.2",
+        "@loopback/express": "^7.0.2",
+        "@loopback/openapi-v3": "^10.0.2",
+        "@loopback/repository": "^7.0.2",
+        "@loopback/rest": "^14.0.2",
+        "@loopback/rest-explorer": "^7.0.2",
+        "@loopback/service-proxy": "^7.0.2",
+        "i18n": "^0.15.1",
+        "jsonwebtoken": "^9.0.0",
+        "lodash": "^4.17.21",
+        "logform": "^2.4.0",
+        "loopback-datasource-juggler": "^5.0.9",
+        "loopback4-authentication": "^12.1.0",
+        "loopback4-authorization": "^7.0.2",
+        "loopback4-dynamic-datasource": "^2.0.1",
+        "loopback4-helmet": "^7.0.2",
+        "loopback4-ratelimiter": "^7.0.4",
+        "loopback4-soft-delete": "^10.0.2",
+        "moment": "^2.29.4",
+        "moment-timezone": "^0.5.34",
+        "openapi3-ts": "^2.0.2",
+        "request-ip": "^3.3.0",
+        "swagger-stats": "^0.99.5",
+        "tslib": "^2.6.2",
+        "winston": "^3.7.2"
+    },
+    "peerDependencies": {
+        "@loopback/sequelize": "^0.6.2",
+        "loopback-connector-rest": "^5.0.1"
+    },
+    "peerDependenciesMeta": {
+        "@loopback/sequelize": {
+            "optional": true
+        }
+    },
+    "optionalDependencies": {
+        "crypto-js": "^4.2.0"
+    },
+    "devDependencies": {
+        "@loopback/build": "^11.0.2",
+        "@loopback/eslint-config": "^15.0.2",
+        "@loopback/sequelize": "^0.6.2",
+        "@loopback/testlab": "^7.0.2",
+        "@types/crypto-js": "^4.2.2",
+        "@types/i18n": "^0.13.6",
+        "@types/jsonwebtoken": "^9.0.0",
+        "@types/lodash": "^4.14.182",
+        "@types/moment": "^2.13.0",
+        "@types/moment-timezone": "^0.5.30",
+        "@types/node": "^18.11.9",
+        "@types/request-ip": "^0.0.37",
+        "@types/swagger-stats": "^0.95.4",
+        "aws-sdk": "^2.1613.0",
+        "eslint": "^8.57.0",
+        "loopback-connector-rest": "^5.0.1",
+        "source-map-support": "^0.5.21",
+        "typescript": "~5.2.2"
+    },
+    "overrides": {
+        "body-parser": {
+            "debug": "^4.3.4"
+        },
+        "express": {
+            "debug": "^4.3.4",
+            "finalhandler": "^1.2.0",
+            "send": "^0.18.0",
+            "serve-static": "^1.15.0"
+        }
+    },
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org/",
+        "access": "public"
+    },
+    "typedoc": {
+        "config": {
+            "entryPoints": [
+                "src/index.ts"
+            ],
+            "out": "packages/core",
+            "plugin": [
+                "typedoc-plugin-markdown"
+            ]
+        }
     }
-  },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
-    "access": "public"
-  },
-  "typedoc": {
-    "config": {
-      "entryPoints": [
-        "src/index.ts"
-      ],
-      "out": "packages/core",
-      "plugin": [
-        "typedoc-plugin-markdown"
-      ]
-    }
-  }
 }
