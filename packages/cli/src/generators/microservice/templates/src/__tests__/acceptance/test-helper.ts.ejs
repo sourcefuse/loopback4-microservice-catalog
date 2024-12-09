@@ -60,6 +60,7 @@ function setUpEnv() {
   <% if (project.facade || project.baseServiceCacheName) { -%>
   process.env.REDIS_NAME = 'redis';
   <% } -%>
+  process.env.HOST='localhost';
 }
 
 export interface AppWithClient {
