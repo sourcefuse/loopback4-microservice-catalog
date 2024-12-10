@@ -2,15 +2,38 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {AnyObject} from '@loopback/repository';
+import {AnyObject, Filter, FilterExcludingWhere} from '@loopback/repository';
 import {IServiceConfig} from '@sourceloop/core';
+import {
+  ExecuteWorkflowDto,
+  Workflow,
+  WorkflowDto,
+  WorkflowVersion,
+} from '../models';
 import {BPMTask} from './bpm-task';
-import {Workflow, WorkflowVersion, WorkflowDto} from '../models';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface ICommand {
   parameters?: any; //NOSONAR
   execute(): Promise<any>; //NOSONAR
+}
+
+export interface IWorkflowService {
+  create(workflow: WorkflowDto): Promise<Workflow>;
+  updateById(id: string, workflow: Partial<WorkflowDto>): Promise<void>;
+  deleteById(id: string): Promise<void>;
+  deleteVersionById(id: string, version: number): Promise<void>;
+  findById(
+    id: string,
+    filter?: FilterExcludingWhere<Workflow>,
+  ): Promise<Workflow>;
+  find(filter?: Filter<Workflow>): Promise<Workflow[]>;
+  count(id: string): Promise<Workflow>;
+  executeById(id: string, instance: ExecuteWorkflowDto): Promise<AnyObject>;
+}
+
+export interface ICommandWithTopic extends ICommand {
+  topic: string;
 }
 
 export interface IBPMTask<T, R> {
@@ -31,12 +54,17 @@ export interface WorflowManager<T = AnyObject, S = AnyObject> {
     version?: WorkflowVersion,
   ): Promise<S>;
   createWorkflow(workflowDto: WorkflowDto): Promise<SuccessResponse>;
-  updateWorkflow(workflowDto: WorkflowDto): Promise<SuccessResponse>;
+  updateWorkflow(workflowDto: Partial<WorkflowDto>): Promise<SuccessResponse>;
   deleteWorkflowById(workflow: Workflow): Promise<Workflow>;
   deleteWorkflowVersionById?(
     version: WorkflowVersion,
   ): Promise<WorkflowVersion>;
 }
+export type HttpOptions = {
+  query?: AnyObject;
+  urlParams?: AnyObject;
+  headers?: AnyObject;
+};
 
 export type ExecutionInputValidator<T = AnyObject> = (
   schema: AnyObject,

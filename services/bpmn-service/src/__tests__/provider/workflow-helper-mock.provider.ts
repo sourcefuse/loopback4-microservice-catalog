@@ -2,11 +2,11 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {bind, inject, BindingScope, Provider, Getter} from '@loopback/core';
+import {BindingScope, Getter, Provider, bind, inject} from '@loopback/core';
 import {Workflow} from '../../models';
 import {WorflowManager} from '../../types';
 import {MockEngine} from '../mock-engine';
-import {MockCamundaWorkflow, MOCK_BPMN_ENGINE_KEY} from '../types';
+import {MOCK_BPMN_ENGINE_KEY, MockCamundaWorkflow} from '../types';
 
 @bind({scope: BindingScope.TRANSIENT})
 export class WorkflowMockProvider implements Provider<WorflowManager> {
@@ -51,8 +51,8 @@ export class WorkflowMockProvider implements Provider<WorflowManager> {
         return {
           version: mockWorkflow.workflowVersion,
           provider: 'bpmn',
-          processId: workflow.name,
-          externalId: workflow.name,
+          processId: workflow.name ?? '',
+          externalId: workflow.name ?? '',
         };
       },
       deleteWorkflowById: async workflow => {
