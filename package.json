@@ -4,6 +4,7 @@
   "scripts": {
     "prepare": "husky install",
     "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
     "postinstall": "npx patch-package",
     "clean-deps": "lerna clean --yes && lerna exec --no-private \"npm install --ignore-scripts --package-lock-only --no-audit\"",
     "export-typedocs": "npx tsc export-typedocs.ts && node export-typedocs",
@@ -53,6 +54,7 @@
     "packages/cache/",
     "packages/feature-toggle/",
     "packages/file-utils/",
+    "packages/archival",
     "packages/custom-sf-changelog/",
     "services/*",
     "sandbox/*"
