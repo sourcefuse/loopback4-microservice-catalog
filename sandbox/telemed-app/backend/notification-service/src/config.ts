@@ -41,4 +41,3 @@ export async function getSecretValue() {
   return secret;
 }
 
-// process.env={DB_HOST:'localhostSF'};
