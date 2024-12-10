@@ -18,8 +18,7 @@ $ npm install @sourceloop/entity-archival
 
 ## Overview
 
-`@sourceloop/entity-archival` package is a powerful LoopBack 4 extension designed to seamlessly
-implement entity level archival for your loopback applications. With this extension you can archive entries of any model to an external system. Many times we dont wish to delete data but considering the latency it brings with it we can save that to an external system and use it at our convenience. For that we have a retrieval process that helps us to fetch that data from external system and use it.
+`@sourceloop/entity-archival` package is a powerful LoopBack 4 extension designed to implement entity level archival for your loopback applications. With this extension you can archive entries of any model to an external system. Many times we dont wish to delete data but considering the latency it brings with it we can save that to an external system and use it at our convenience. For that we have a retrieval process that helps us to fetch that data from external system and use it.
 
 Here we have a repository level mixin that overrides the `deleteAll()` method - this method first saves the data to the external system, maintain a entry in the mapping table and then permanently delete the data from the system.
 
@@ -40,12 +39,10 @@ export class MyApplication extends BootMixin(ServiceMixin(RepositoryMixin(RestAp
     const opts: ArchivalComponentOptions = DEFAULT_ARCHIVAL_OPTIONS;
     this.configure(ArchivalComponentBindings.COMPONENT).to(opts);
       // Put the configuration options here
-    });
+    };
     this.component(ArchivalComponent);
     // ...
   }
-  // ...
-}
 ```
 
 - Add Datasource
@@ -86,7 +83,7 @@ export class AuditDataSource
 
 - This extension already has the required models and repositories.
 
-- The component exposes a mixin for your repository classes. Just extend your repository class with `ArchivalRepositoryMixin`, for all those repositories where you need archive data. See an example below. For a model `Product`, here we are extending the `ProductRepository` with `ArchivalRepositoryMixin`.
+- The component exposes a mixin for your repository classes. Just extend your repository class with `ArchivalRepositoryMixin`, for all those repositories where you need to archive data. See an example below. For a model `Product`, here we are extending the `ProductRepository` with `ArchivalRepositoryMixin`.
 
 ```ts
 import {Getter, inject} from '@loopback/core';
@@ -130,7 +127,7 @@ Make sure you provide `getCurrentUser` and `getRepository` Getter functions in c
 deleteAll(data, {skipArchive: true});
 ```
 
-- The Actor field is now configurable and can save any string type value in the field.
+- The Actor field is configurable and can save any string type value in the field.
   Though the default value will be userId a developer can save any string field from the current User that is being passed.
 
 ```ts
@@ -168,11 +165,11 @@ this.bind(AuthServiceBindings.ActorIdKey).to('username');
 public actorIdKey?: ActorId,
 ```
 
-- To implement the importing of entries from external system
+<!-- - To implement the importing of entries from external system
 
   - Create a job and return its Id to the user
   - Call the import function of the ImportArchivedDataService and pass the jobId to it.
-    This function asynchronously fetch the data from external system and returns the json data.
+    This function asynchronously fetch the data from external system and returns the json data. -->
 
 ## Providers and Services
 
@@ -196,7 +193,7 @@ this.bind(ArchivalComponentBindings.IMPORT_ARCHIVE_DATA).toProvider(
 );
 ```
 
-- ImportArchivedDataService uses a ProcessImportedDataProvider that takes the json data as input. You can implement it for data processing.
+- ImportArchivedDataService uses a ProcessRetrievedDataProvider that takes the json data as input. You can implement it for data processing and save the retrieved data to desired system.
 
 - BuildWhereConditionService is to save the filter column of archive_mapping model.
 

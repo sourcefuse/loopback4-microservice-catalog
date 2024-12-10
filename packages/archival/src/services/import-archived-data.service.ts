@@ -17,7 +17,7 @@ import {
 import {DefaultUserModifyCrudRepository} from '@sourceloop/core';
 import {ArchivalApplication} from '../application';
 import {ArchivalComponentBindings} from '../keys';
-import {ArchiveMapping} from '../models';
+import {ArchiveMapping, RetrievalJobDetails} from '../models';
 import {
   ArchivalMappingRepository,
   RetrievalJobDetailsRepository,
@@ -25,8 +25,9 @@ import {
 import {
   IBuildWhereConditionService,
   ImportDataExternalSystem,
+  JobResponse,
   JobStatus,
-  ProcessImportedData,
+  ProcessRetrievedData,
 } from '../types';
 
 @injectable({scope: BindingScope.TRANSIENT})
@@ -35,7 +36,7 @@ export class ImportArchivedDataService {
   repo: any; //NOSONAR
   constructor(
     @repository(RetrievalJobDetailsRepository)
-    public jobDetailsRepo: RetrievalJobDetailsRepository,
+    public retrievalJobDetailsRepo: RetrievalJobDetailsRepository,
     @repository(ArchivalMappingRepository)
     public archivalMappingRepo: ArchivalMappingRepository,
     @inject(CoreBindings.APPLICATION_INSTANCE)
@@ -45,35 +46,61 @@ export class ImportArchivedDataService {
     private buildWhereConditionService: IBuildWhereConditionService,
     @inject(ArchivalComponentBindings.IMPORT_ARCHIVE_DATA)
     private importArchiveData: ImportDataExternalSystem,
-    @inject(ArchivalComponentBindings.PROCESS_IMPORT_DATA)
-    private processImportedData: ProcessImportedData,
+    @inject(ArchivalComponentBindings.PROCESS_RETRIEVED_DATA)
+    private processRetrievedData: ProcessRetrievedData,
   ) {}
 
-  // 1. add entry in the job processing table return that
-
   /**
-   * start scanning the mapping table and get all the filename matching,
-   * read the file get all the data
-   * temporarily save the data to the in-memory source
-   * filter the required data from there
-   * return the json data to user
+   *This particular method is used to import the data from the external system
+   * 1. inserts the job details in the job processing table
+   * 2. Then it filters the data from the external system
+   * @param entityName - name of the entity on which the data needs to be imported
+   * @param filter - filter to be applied on the data to be imported
+   * @returns - job id for the import process
    */
 
-  async import(jobId: string) {
-    const jobDetails = await this.jobDetailsRepo.findById(jobId);
-    const modelName = jobDetails.entity;
-    const filter = jobDetails.filter;
+  async import(entityName: string, filter: Filter): Promise<JobResponse> {
+    const jobResponse = await this.insertToRetrievalJobDetails(
+      entityName,
+      filter,
+    );
+    this.filterData(jobResponse.jobId, entityName, filter);
+    return jobResponse;
+  }
 
+  private async insertToRetrievalJobDetails(
+    entityName: string,
+    filter: Filter,
+  ): Promise<JobResponse> {
+    const job = new RetrievalJobDetails({
+      status: JobStatus.IN_PROGRESS,
+      filter,
+      entity: entityName,
+    });
+    let jobResponse: JobResponse = {jobId: '0'};
+    const jobDetails = await this.retrievalJobDetailsRepo.create(job);
+    jobResponse = {jobId: jobDetails.id ?? '0'};
+    return jobResponse;
+  }
+
+  /**
+   * Builds a custom where condition from the filter provided to
+   * find the possible list of files that need to be imported
+   * gets the data from the files and saves it into the in-memory source temporarily
+   * and filters the data based on the filter provided
+   * updates the job status based on the success or failure of the import process
+   * passes the filtered data for further processing
+   */
+  private async filterData(jobId: string, entityName: string, filter: Filter) {
     const archiveFilter: Filter<ArchiveMapping> =
       await this.buildWhereConditionService.buildConditionForFetch(
         filter,
-        modelName,
+        entityName,
       );
 
     const archivedEntries = await this.archivalMappingRepo.find(archiveFilter);
 
     const data: AnyObject[] = [];
-
     for (const entry of archivedEntries) {
       const fileContent = await this.importArchiveData(entry.key);
       data.push(...fileContent);
@@ -84,31 +111,49 @@ export class ImportArchivedDataService {
       name: dsName,
       connector: 'memory',
     });
-    await csvDataSource.connect();
-    this.application.dataSource(csvDataSource, dsName);
 
-    this.repo = await this.getRepositoryByModelName<Entity>(modelName);
-    this.repo.dataSource = csvDataSource;
-    // Fill in the json returned from the csv
-    await this.repo.createAll(data); //jsondata
-    const isSFRepo = this.repo instanceof DefaultUserModifyCrudRepository;
-    let allRecords: AnyObject[];
-    /**save the records with us and
-     * delete the records to clear up the memory
-     */
-    if (isSFRepo) {
-      allRecords = await this.repo.findAll(filter);
-      await this.repo.deleteAll(undefined, {skipArchive: true});
-    } else {
-      allRecords = await this.repo.find(filter);
-      await this.repo.deleteAll(undefined, {skipArchive: true});
+    try {
+      await csvDataSource.connect();
+      this.application.dataSource(csvDataSource, dsName);
+
+      this.repo = await this.getRepositoryByModelName<Entity>(entityName);
+      this.repo.dataSource = csvDataSource;
+
+      // Fill in the json returned from the csv
+      await this.repo.createAll(data); // jsondata
+      const isSFRepo = this.repo instanceof DefaultUserModifyCrudRepository;
+      let allRecords: AnyObject[];
+      /** Save the records with us and
+       * delete the records to clear up the memory
+       */
+      if (isSFRepo) {
+        allRecords = await this.repo.findAll(filter);
+        await this.repo.deleteAll(undefined, {skipArchive: true});
+      } else {
+        allRecords = await this.repo.find(filter);
+        await this.repo.deleteAll(undefined, {skipArchive: true});
+      }
+
+      // Update the respective job status
+      await this.retrievalJobDetailsRepo.updateById(jobId, {
+        status: JobStatus.SUCCESS,
+        result: JSON.stringify(allRecords),
+      });
+
+      await this.processRetrievedData(allRecords);
+    } catch (error) {
+      // Log or handle the error appropriately
+      console.error('Error during import:', error);
+      // Optionally, update the job status to failure
+      await this.retrievalJobDetailsRepo.updateById(jobId, {
+        status: JobStatus.FAILED,
+        result: JSON.stringify({error: error.message}),
+      });
+      throw error;
+    } finally {
+      // Close the data source connection
+      await csvDataSource.disconnect();
     }
-    //update the respective job status
-    await this.jobDetailsRepo.updateById(jobId, {
-      status: JobStatus.SUCCESS,
-      result: JSON.stringify(allRecords),
-    });
-    await this.processImportedData(allRecords);
   }
 
   // sonarignore:start

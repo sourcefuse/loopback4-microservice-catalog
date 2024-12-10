@@ -4,9 +4,8 @@ import {BINDING_PREFIX} from '@sourceloop/core';
 import {ArchivalComponent} from './component';
 import {
   ExportDataExternalSystem,
-  GetJobDetailsFn,
   ImportDataExternalSystem,
-  ProcessImportedData,
+  ProcessRetrievedData,
 } from './types';
 
 /**
@@ -27,14 +26,9 @@ export namespace ArchivalComponentBindings {
       `${BINDING_PREFIX}.entity.archive.import`,
     );
 
-  export const PROCESS_IMPORT_DATA =
-    BindingKey.create<ProcessImportedData | null>(
+  export const PROCESS_RETRIEVED_DATA =
+    BindingKey.create<ProcessRetrievedData | null>(
       `${BINDING_PREFIX}.entity.import`,
-    );
-
-  export const GET_ARCHIVED_DATA_JOB =
-    BindingKey.create<GetJobDetailsFn | null>(
-      `${BINDING_PREFIX}.get.entity.archive`,
     );
 }
 

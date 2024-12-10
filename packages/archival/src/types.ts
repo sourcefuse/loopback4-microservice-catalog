@@ -87,12 +87,9 @@ export type ImportDataExternalSystem = (
   fileName: string,
 ) => Promise<AnyObject[]>;
 
-export type ProcessImportedData = (importedData: AnyObject[]) => Promise<void>;
-
-export type GetJobDetailsFn = (
-  entityName: string,
-  filter?: Filter,
-) => Promise<JobResponse>;
+export type ProcessRetrievedData = (
+  retrievedData: AnyObject[],
+) => Promise<void>;
 
 export const ArchivalDbSourceName = 'ArchivalDB';
 
