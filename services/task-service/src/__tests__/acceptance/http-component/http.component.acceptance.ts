@@ -1,5 +1,9 @@
 import {Client, expect, sinon} from '@loopback/testlab';
 import {PermissionKey} from '@sourceloop/bpmn-service';
+import {JwtKeysRepository} from '@sourceloop/core';
+import {generateKeyPairSync} from 'crypto';
+import * as jwt from 'jsonwebtoken';
+import * as jose from 'node-jose';
 import {ClientApp, ClientAppRepository} from '../../../connectors/http';
 import {TaskPermssionKey} from '../../../enums/permission-key.enum';
 import {IEvent, IOutgoingConnector} from '../../../interfaces';
@@ -14,7 +18,6 @@ import {
 } from '../../fixtures/mock-data';
 import {
   getRepo,
-  getToken,
   mockLogger,
   setupApplication,
 } from '../../fixtures/test-helper';
@@ -25,6 +28,7 @@ describe('HttpComponent: Acceptance', () => {
   let app: TestTaskServiceApplication;
   let client: Client;
   let engine: MockEngine;
+  let jwtKeyRepo: JwtKeysRepository;
   let logger: ReturnType<typeof mockLogger>;
   let sandbox: sinon.SinonSandbox;
   const testApiKey = new ClientApp({
@@ -41,10 +45,12 @@ describe('HttpComponent: Acceptance', () => {
     logger = mockLogger(sandbox);
     ({app, client} = await setupApplication(logger));
     engine = app.getSync<MockEngine>(MOCK_BPMN_ENGINE_KEY);
+    jwtKeyRepo = await app.getRepository(JwtKeysRepository);
     await seedData();
   });
 
   after(async () => {
+    await jwtKeyRepo.deleteAll();
     await app.stop();
   });
 
@@ -53,7 +59,7 @@ describe('HttpComponent: Acceptance', () => {
   });
 
   it('should handle an event by saving it and triggering mapped workflow', async () => {
-    const token = getToken([TaskPermssionKey.TriggerEvent]);
+    const token = await generateToken([TaskPermssionKey.TriggerEvent]);
     const stubCommand = sinon.stub();
     stubCommand.returns({});
     engine.subscribe(stubCommandTopic, stubCommand);
@@ -61,7 +67,7 @@ describe('HttpComponent: Acceptance', () => {
     // trigger event using the /events/trigger endpoint
     await client
       .post(baseUrl)
-      .set('Authorization', token)
+      .set('Authorization', `Bearer ${token}`)
       .send(mockEvent)
       .expect(204);
     const repo = await getRepo<EventRepository>(app, eventRepoKey);
@@ -77,7 +83,7 @@ describe('HttpComponent: Acceptance', () => {
   });
 
   it('should not handle an event if it is filtered out', async () => {
-    const token = getToken([TaskPermssionKey.TriggerEvent]);
+    const token = await generateToken([TaskPermssionKey.TriggerEvent]);
     const stubCommand = sinon.stub();
     stubCommand.returns({});
     engine.subscribe(stubCommandTopic, stubCommand);
@@ -85,7 +91,7 @@ describe('HttpComponent: Acceptance', () => {
     // trigger event using the /events/trigger endpoint
     await client
       .post(baseUrl)
-      .set('Authorization', token)
+      .set('Authorization', `Bearer ${token}`)
       .send(mockUnexpectedEvent)
       .expect(204);
     const repo = await getRepo<EventRepository>(app, eventRepoKey);
@@ -101,7 +107,7 @@ describe('HttpComponent: Acceptance', () => {
   });
 
   it('should save an event but log error if it is not mapped to a workflow', async () => {
-    const token = getToken([TaskPermssionKey.TriggerEvent]);
+    const token = await generateToken([TaskPermssionKey.TriggerEvent]);
     const stubCommand = sinon.stub();
     stubCommand.returns({});
     engine.subscribe(stubCommandTopic, stubCommand);
@@ -109,7 +115,7 @@ describe('HttpComponent: Acceptance', () => {
     // trigger event using the /events/trigger endpoint
     await client
       .post(baseUrl)
-      .set('Authorization', token)
+      .set('Authorization', `Bearer ${token}`)
       .send(mockUnmappedEvent)
       .expect(204);
     const repo = await getRepo<EventRepository>(app, eventRepoKey);
@@ -132,7 +138,7 @@ describe('HttpComponent: Acceptance', () => {
   });
 
   it('should save an event but log error for an event with mapping to a non-existant workflow', async () => {
-    const token = getToken([TaskPermssionKey.TriggerEvent]);
+    const token = await generateToken([TaskPermssionKey.TriggerEvent]);
     const stubCommand = sinon.stub();
     stubCommand.returns({});
     engine.subscribe(stubCommandTopic, stubCommand);
@@ -150,7 +156,7 @@ describe('HttpComponent: Acceptance', () => {
     // trigger event using the /events/trigger endpoint
     await client
       .post(baseUrl)
-      .set('Authorization', token)
+      .set('Authorization', `Bearer ${token}`)
       .send(mockUnmappedEvent)
       .expect(204);
     const repo = await getRepo<EventRepository>(app, eventRepoKey);
@@ -172,7 +178,7 @@ describe('HttpComponent: Acceptance', () => {
 
   it('should hit subscribed url on publish from output stream', async () => {
     const testEventKey = 'test-event';
-    const token = getToken([TaskPermssionKey.SubscribeToWebhook]);
+    const token = await generateToken([TaskPermssionKey.SubscribeToWebhook]);
 
     // create test app
     const repo = await getRepo<ClientAppRepository>(
@@ -184,7 +190,7 @@ describe('HttpComponent: Acceptance', () => {
     // subcribe to workflow
     await client
       .post('/webhooks/subscribe')
-      .set('Authorization', token)
+      .set('Authorization', `Bearer ${token}`)
       .set('x-api-key', testApiKey.apiKey)
       .set('x-api-secret', testApiKey.apiSecret)
       .send({
@@ -209,10 +215,11 @@ describe('HttpComponent: Acceptance', () => {
   });
 
   async function seedData() {
-    const token = getToken([PermissionKey.CreateWorkflow]);
+    await seedJwtKeys();
+    const token = await generateToken([PermissionKey.CreateWorkflow]);
     const {body: workflow} = await client
       .post('/workflows')
-      .set('Authorization', token)
+      .set('Authorization', `Bearer ${token}`)
       .send({
         name: 'workflow',
         description: 'test',
@@ -227,6 +234,51 @@ describe('HttpComponent: Acceptance', () => {
     await repo.create({
       workflowKey: workflow.externalIdentifier,
       eventKey: 'event',
+    });
+  }
+
+  async function generateToken(permissions: string[]): Promise<string> {
+    const keys = await jwtKeyRepo.find();
+    return jwt.sign(
+      {
+        id: 'test',
+        userTenantId: 'test',
+        permissions,
+      },
+      {
+        key: keys[0].privateKey,
+        passphrase: process.env.JWT_PRIVATE_KEY_PASSPHRASE,
+      },
+      {
+        algorithm: 'RS256',
+        issuer: process.env.JWT_ISSUER,
+        keyid: keys[0].keyId,
+      },
+    );
+  }
+  async function seedJwtKeys() {
+    process.env.JWT_PRIVATE_KEY_PASSPHRASE = 'jwt_private_key_passphrase';
+    const {publicKey, privateKey} = generateKeyPairSync('rsa', {
+      modulusLength: 2048,
+      publicKeyEncoding: {
+        type: 'spki',
+        format: 'pem',
+      },
+      privateKeyEncoding: {
+        type: 'pkcs8',
+        format: 'pem',
+        cipher: 'aes-256-cbc',
+        passphrase: process.env.JWT_PRIVATE_KEY_PASSPHRASE,
+      },
+    });
+
+    // Create the JWKS object
+    const keyStore = jose.JWK.createKeyStore();
+    const key = await keyStore.add(publicKey, 'pem');
+    await jwtKeyRepo.create({
+      keyId: key.kid, // Unique identifier for the key
+      publicKey: publicKey,
+      privateKey: privateKey,
     });
   }
 });

@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.0.0 (2024-12-05)
+
+* fix(authentication-service):  added idp server controller for login and discovery endpoint (#2131) ([e1bba2c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e1bba2c)), closes [#2131](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2131)
+
+
+### BREAKING CHANGE
+
+* * feat(authentication-service): added the logic for rotation of keys with database
+
+2034
+
+* feat(authentication-service):  added final changes for idp server
+
+MIGRATION CHANGE:
+migration-20241105074844-
+* JWT Asymmetric Signer and Verifier will be served from Database only. File support has been removed.
+
+2034
+
+
+
+
+## 4.2.0 (2024-11-22)
+
+* feat(all-services): Automate Migration Execution on Installation with Optional MySQL or PostgreSQL M ([8b066bb](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8b066bb)), closes [#2209](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2209)
+* fix(all-services): update migration.js to run migration on post install (#2203) ([83dc724](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/83dc724)), closes [#2203](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2203)
+* fix(search-service): export datasource name as expected by cli in search service (#2189) ([4ee8419](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4ee8419)), closes [#2189](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2189) [#2136](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2136)
+
+
+
+
+
 ## <small>4.1.3 (2024-10-22)</small>
 
 **Note:** Version bump only for package @sourceloop/search-service

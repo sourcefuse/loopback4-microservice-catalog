@@ -18,9 +18,11 @@ import {
   BearerVerifierConfig,
   BearerVerifierType,
   CoreComponent,
+  JwtKeysRepository,
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
+import {JwtKeysRepository as SequelizeJwtKeysRepository} from '@sourceloop/core/sequelize';
 import {AuthenticationComponent} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
@@ -96,6 +98,7 @@ export class NotificationServiceComponent implements Component {
         NotificationSequelizeRepository,
         NotificationUserSequelizeRepository,
         UserNotificationSettingsSequelizeRepository,
+        SequelizeJwtKeysRepository,
       ];
     } else {
       this.repositories = [
@@ -103,6 +106,7 @@ export class NotificationServiceComponent implements Component {
         NotificationRepository,
         NotificationUserRepository,
         UserNotificationSettingsRepository,
+        JwtKeysRepository,
       ];
     }
 

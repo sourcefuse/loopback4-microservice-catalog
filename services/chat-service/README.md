@@ -1,16 +1,30 @@
-# chat-service
+<a style="position: relative; top: 10px;" href="https://sourcefuse.github.io/arc-docs/arc-api-docs" target="_blank"><img src="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/docs/assets/logo-dark-bg.png?raw=true" alt="ARC By SourceFuse logo" title="ARC By SourceFuse" align="right" width="150" /></a>
 
-[![LoopBack](<https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
+# [@sourceloop/chat-service](https://github.com/sourcefuse/loopback4-microservice-catalog/tree/master/services/chat-service)
 
-![npm](https://img.shields.io/npm/dm/@sourceloop/chat-service)
-
-![node-current (scoped)](https://img.shields.io/node/v/@sourceloop/chat-service)
-
-![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/chat-service/@loopback/core)
+<p align="left">
+ <a href="https://nodejs.org/en/" target="_blank">
+  <img src="https://img.shields.io/node/v/@sourceloop/chat-service" alt="Node.js version (scoped)" />
+</a>
+<a href="https://github.com/sourcefuse/loopback4-microservice-catalog/graphs/contributors" target="_blank">
+<img alt="GitHub contributors" src="https://img.shields.io/github/contributors/sourcefuse/loopback4-microservice-catalog">
+</a>
+<a href="https://www.npmjs.com/@sourceloop/chat-service" target="_blank">
+<img alt="sourceloop chat-service downloads" src="https://img.shields.io/npm/dm/@sourceloop/chat-service">
+</a>
+<a href="./LICENSE">
+<img src="https://img.shields.io/github/license/sourcefuse/loopback4-microservice-catalog" alt="License" />
+</a>
+<a href="https://loopback.io/" target="_blank">
+<img alt="Pb Loopback" src="https://img.shields.io/badge/Powered%20by-Loopback 4-brightgreen" />
+</a>
+</p>
 
 ## Overview
 
-A microservice designed to facilitate real-time communication between users and user groups. It provides a scalable and modular solution for handling both individual and group chat functionalities.
+A microservice designed to facilitate real-time communication between users and user groups. It provides a scalable and modular solution for handling both individual and group chat functionalities.This service supports Sequelize as the underlying ORM via the @loopback/sequelize extension, allowing for easy integration with relational databases.
+
+Additionally, it includes functionality for handling file attachments, allowing users to upload and download files as part of their chat interactions. The service ensures that only authenticated and authorized users can download attachments, providing secure access to files. It also tracks who downloads each attachment for auditing purposes.
 
 ### Installation
 
@@ -90,6 +104,66 @@ export class ChatApplication extends BootMixin(
 }
 ```
 
+### Asymmetric Token Signing and Verification
+
+If you are using asymmetric token signing and verification, you need to create a datasource for auth database. Example datasource file for auth:-
+
+```ts
+import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
+import {juggler} from '@loopback/repository';
+import {AuthDbSourceName} from '@sourceloop/core';
+const DEFAULT_MAX_CONNECTIONS = 25;
+const DEFAULT_DB_IDLE_TIMEOUT_MILLIS = 60000;
+const DEFAULT_DB_CONNECTION_TIMEOUT_MILLIS = 2000;
+
+const config = {
+  name: 'auth',
+  connector: 'postgresql',
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  schema: process.env.DB_SCHEMA,
+  password: process.env.DB_PASSWORD,
+  database: process.env.AUTH_DB,
+};
+
+// Observe application's life cycle to disconnect the datasource when
+// application is stopped. This allows the application to be shut down
+// gracefully. The `stop()` method is inherited from `juggler.DataSource`.
+// Learn more at https://loopback.io/doc/en/lb4/Life-cycle.html
+@lifeCycleObserver('datasource')
+export class AuthDataSource
+  extends juggler.DataSource
+  implements LifeCycleObserver
+{
+  static dataSourceName = AuthDbSourceName;
+
+  static readonly defaultConfig = config;
+
+  constructor(
+    @inject('datasources.config.auth', {optional: true})
+    dsConfig: object = config,
+  ) {
+    if (!!+(process.env.ENABLE_DB_CONNECTION_POOLING ?? 0)) {
+      const dbPool = {
+        max: +(process.env.DB_MAX_CONNECTIONS ?? DEFAULT_MAX_CONNECTIONS),
+        idleTimeoutMillis: +(
+          process.env.DB_IDLE_TIMEOUT_MILLIS ?? DEFAULT_DB_IDLE_TIMEOUT_MILLIS
+        ),
+        connectionTimeoutMillis: +(
+          process.env.DB_CONNECTION_TIMEOUT_MILLIS ??
+          DEFAULT_DB_CONNECTION_TIMEOUT_MILLIS
+        ),
+      };
+
+      dsConfig = {...dsConfig, ...dbPool};
+    }
+
+    super(dsConfig);
+  }
+}
+```
+
 ### Environment Variables
 
 | Name          | Required | Default Value | Description                                                                                                                        |
@@ -147,6 +221,8 @@ export class ChatDataSource
 
 The migrations required for this service are processed during the installation automatically if you set the `CHAT_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or databasea, they may be affected. In such a scenario, it is advised that you copy the migration files in your project root, using the `CHAT_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
 
+This migration script supports both MySQL and PostgreSQL databases, controlled by environment variables. By setting MYSQL_MIGRATION to 'true', the script runs migrations using MySQL configuration files; otherwise, it defaults to PostgreSQL. .
+
 Additionally, there is now an option to choose between SQL migration or PostgreSQL migration.
 NOTE: For [`@sourceloop/cli`](https://www.npmjs.com/package/@sourceloop/cli?activeTab=readme) users, this choice can be specified during the scaffolding process by selecting the "type of datasource" option.
 
@@ -173,3 +249,7 @@ Authorization: Bearer <token> where <token> is a JWT token signed using JWT issu
 ## API Details
 
 Visit the [OpenAPI spec docs](./openapi.md)
+
+## License
+
+Sourceloop is [MIT licensed](./LICENSE).

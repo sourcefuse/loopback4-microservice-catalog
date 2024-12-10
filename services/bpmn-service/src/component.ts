@@ -20,9 +20,11 @@ import {
   BearerVerifierConfig,
   BearerVerifierType,
   CoreComponent,
+  JwtKeysRepository,
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
+import {JwtKeysRepository as SequelizeJwtKeysRepository} from '@sourceloop/core/sequelize';
 import {AuthenticationComponent} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
@@ -79,9 +81,14 @@ export class WorkflowServiceComponent implements Component {
       this.repositories = [
         WorkflowSequelizeRepository,
         WorkflowVersionSequelizeRepository,
+        SequelizeJwtKeysRepository,
       ];
     } else {
-      this.repositories = [WorkflowRepository, WorkflowVersionRepository];
+      this.repositories = [
+        WorkflowRepository,
+        WorkflowVersionRepository,
+        JwtKeysRepository,
+      ];
     }
     this.models = [Workflow];
 

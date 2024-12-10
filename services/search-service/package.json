@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/search-service",
-  "version": "4.1.3",
+  "version": "5.0.0",
   "description": "A microservice to search over provided models.",
   "keywords": [
     "loopback-application",
@@ -69,7 +69,7 @@
     "@loopback/rest": "^14.0.2",
     "@loopback/rest-explorer": "^7.0.2",
     "@loopback/service-proxy": "^7.0.2",
-    "@sourceloop/core": "^14.2.3",
+    "@sourceloop/core": "^15.0.0",
     "dotenv": "^16.0.3",
     "dotenv-extended": "^2.9.0",
     "loopback-connector-postgresql": "^7.1.1",

@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 20.0.0 (2024-12-05)
+
+* refactor(authentication-service): update urls and add scope for keycloak idp (#2176) ([5f83920](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5f83920)), closes [#2176](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2176) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* fix(authentication-service):  added idp server controller for login and discovery endpoint (#2131) ([e1bba2c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e1bba2c)), closes [#2131](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2131)
+
+
+### BREAKING CHANGE
+
+* * feat(authentication-service): added the logic for rotation of keys with database
+
+2034
+
+* feat(authentication-service):  added final changes for idp server
+
+MIGRATION CHANGE:
+migration-20241105074844-
+* JWT Asymmetric Signer and Verifier will be served from Database only. File support has been removed.
+
+2034
+* yes
+
+0
+
+* docs(authentication-service): update readme for keycloak url changes
+
+update readme for keycloak url changes
+* yes
+
+47
+
+* refactor(authentication-service): add realm to kecloak host env
+
+add realm to kecloak host env
+
+
+
+
+## 19.3.0 (2024-11-22)
+
+* docs(all-services): add arc branding and improve documentation (#2210) ([34feaf9](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/34feaf9)), closes [#2210](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2210) [#1440](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1440) [#1440](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1440) [#1440](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1440) [#1440](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/1440)
+* feat(all-services): Automate Migration Execution on Installation with Optional MySQL or PostgreSQL M ([8b066bb](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8b066bb)), closes [#2209](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2209)
+* fix(all-services): update migration.js to run migration on post install (#2203) ([83dc724](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/83dc724)), closes [#2203](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2203)
+* fix(authentication-service): terminate JWT token  (#2212) ([e34e826](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e34e826)), closes [#2212](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2212) [#2167](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2167) [#2167](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2167) [#2167](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2167)
+
+
+
+
+
 ## <small>19.2.3 (2024-10-22)</small>
 
 **Note:** Version bump only for package @sourceloop/authentication-service

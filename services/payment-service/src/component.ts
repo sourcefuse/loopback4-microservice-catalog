@@ -18,9 +18,11 @@ import {Class, Model, Repository} from '@loopback/repository';
 import {
   CoreComponent,
   ITenantUtilitiesConfig,
+  JwtKeysRepository,
   TenantUtilitiesBindings,
   TenantUtilitiesComponent,
 } from '@sourceloop/core';
+import {JwtKeysRepository as SequelizeJwtKeysRepository} from '@sourceloop/core/sequelize';
 import {
   OrdersController,
   PaymentGatewaysController,
@@ -146,6 +148,7 @@ export class PaymentServiceComponent implements Component {
         PaymentGatewaysSequelizeRepository,
         TemplatesSequelizeRepository,
         SubscriptionsSequelizeRepository,
+        SequelizeJwtKeysRepository,
       ];
     } else {
       this.repositories = [
@@ -154,6 +157,7 @@ export class PaymentServiceComponent implements Component {
         PaymentGatewaysRepository,
         TemplatesRepository,
         SubscriptionsRepository,
+        JwtKeysRepository,
       ];
     }
     this.providers = {

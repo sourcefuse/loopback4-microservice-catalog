@@ -9,6 +9,7 @@
 ![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@sourceloop/scheduler-service/@loopback/core)
 
 ## Overview
+
 This is a loopback4 component for scheduling events in calendar (scheduler/calendar server).
 
 Various features of Scheduler Service:
@@ -49,7 +50,6 @@ npm install @sourceloop/scheduler-service
 ![Schedular](https://user-images.githubusercontent.com/82804130/127480876-7dad27cf-11c6-4dbc-9988-f7af6f91c5b8.jpg)
 
 ![event](https://user-images.githubusercontent.com/82804130/127480906-3c70d4e0-03b8-426f-bb63-ec726eb39353.jpg)
-
 
 ### Usage
 
@@ -157,6 +157,66 @@ npm install @sourceloop/scheduler-service
 
 - Start the application
   `npm start`
+
+### Asymmetric Token Signing and Verification
+
+If you are using asymmetric token signing and verification, you need to create a datasource for auth database. Example datasource file for auth:-
+
+```ts
+import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
+import {juggler} from '@loopback/repository';
+import {AuthDbSourceName} from '@sourceloop/core';
+const DEFAULT_MAX_CONNECTIONS = 25;
+const DEFAULT_DB_IDLE_TIMEOUT_MILLIS = 60000;
+const DEFAULT_DB_CONNECTION_TIMEOUT_MILLIS = 2000;
+
+const config = {
+  name: 'auth',
+  connector: 'postgresql',
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  schema: process.env.DB_SCHEMA,
+  password: process.env.DB_PASSWORD,
+  database: process.env.AUTH_DB,
+};
+
+// Observe application's life cycle to disconnect the datasource when
+// application is stopped. This allows the application to be shut down
+// gracefully. The `stop()` method is inherited from `juggler.DataSource`.
+// Learn more at https://loopback.io/doc/en/lb4/Life-cycle.html
+@lifeCycleObserver('datasource')
+export class AuthDataSource
+  extends juggler.DataSource
+  implements LifeCycleObserver
+{
+  static dataSourceName = AuthDbSourceName;
+
+  static readonly defaultConfig = config;
+
+  constructor(
+    @inject('datasources.config.auth', {optional: true})
+    dsConfig: object = config,
+  ) {
+    if (!!+(process.env.ENABLE_DB_CONNECTION_POOLING ?? 0)) {
+      const dbPool = {
+        max: +(process.env.DB_MAX_CONNECTIONS ?? DEFAULT_MAX_CONNECTIONS),
+        idleTimeoutMillis: +(
+          process.env.DB_IDLE_TIMEOUT_MILLIS ?? DEFAULT_DB_IDLE_TIMEOUT_MILLIS
+        ),
+        connectionTimeoutMillis: +(
+          process.env.DB_CONNECTION_TIMEOUT_MILLIS ??
+          DEFAULT_DB_CONNECTION_TIMEOUT_MILLIS
+        ),
+      };
+
+      dsConfig = {...dsConfig, ...dbPool};
+    }
+
+    super(dsConfig);
+  }
+}
+```
 
 ### Environment Variables
 
@@ -276,6 +336,8 @@ export class AuthCacheDataSource
 ## Migrations
 
 The migrations required for this service are processed during the installation automatically if you set the `SCHEDULER_MIGRATION` or `SOURCELOOP_MIGRATION` env variable. The migrations use [`db-migrate`](https://www.npmjs.com/package/db-migrate) with [`db-migrate-pg`](https://www.npmjs.com/package/db-migrate-pg) driver for migrations, so you will have to install these packages to use auto-migration. Please note that if you are using some pre-existing migrations or databases, they may be affected. In such a scenario, it is advised that you copy the migration files in your project root, using the `SCHEDULER_MIGRATION_COPY` or `SOURCELOOP_MIGRATION_COPY` env variables. You can customize or cherry-pick the migrations in the copied files according to your specific requirements and then apply them to the DB.
+
+This migration script supports both MySQL and PostgreSQL databases, controlled by environment variables. By setting MYSQL_MIGRATION to 'true', the script runs migrations using MySQL configuration files; otherwise, it defaults to PostgreSQL. .
 
 Additionally, there is now an option to choose between SQL migration or PostgreSQL migration.
 NOTE : For @sourceloop/cli users, this choice can be specified during the scaffolding process by selecting the "type of datasource" option.

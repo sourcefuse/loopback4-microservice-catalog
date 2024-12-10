@@ -5,9 +5,11 @@
 import {expect} from '@loopback/testlab';
 import sinon from 'sinon';
 import {SignupBearerVerifyProvider} from '../../providers';
+import {JwtKeysRepository} from '../../repositories';
 
 describe('Bearer Verify Signup Service', () => {
   let bearerVerifyProvider: SignupBearerVerifyProvider;
+  let jwtKeysRepo: JwtKeysRepository;
 
   afterEach(() => sinon.restore());
   beforeEach(setUp);
@@ -56,6 +58,6 @@ describe('Bearer Verify Signup Service', () => {
   }
 
   function setUp() {
-    bearerVerifyProvider = new SignupBearerVerifyProvider(logger);
+    bearerVerifyProvider = new SignupBearerVerifyProvider(jwtKeysRepo, logger);
   }
 });

@@ -80,8 +80,7 @@ export class PgDbDataSource
 - To run the migrations provided by the task service (available in the migrations folder of both the source code and the packed version in your `node_modules`), use the [db-migrate](https://db-migrate.readthedocs.io/en/latest/) package.
 - Run the HTTP migrations only if you plan to use the Http Outgoing connector.
 - Additionally, there is now an option to choose between SQL migration or PostgreSQL migration.
-NOTE : For @sourceloop/cli users, this choice can be specified during the scaffolding process by selecting the "type of datasource" option.
-
+  NOTE : For @sourceloop/cli users, this choice can be specified during the scaffolding process by selecting the "type of datasource" option.
 
 ## Commands
 
@@ -239,3 +238,63 @@ this.bind(TaskServiceBindings.CONFIG).to({
 ```
 
 2. Use the `SequelizeDataSource` in your audit datasource as the parent class. Refer [this](https://www.npmjs.com/package/@loopback/sequelize#step-1-configure-datasource) for more details.
+
+### Asymmetric Token Signing and Verification
+
+If you are using asymmetric token signing and verification, you need to create a datasource for auth database. Example datasource file for auth:-
+
+```ts
+import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
+import {juggler} from '@loopback/repository';
+import {AuthDbSourceName} from '@sourceloop/core';
+const DEFAULT_MAX_CONNECTIONS = 25;
+const DEFAULT_DB_IDLE_TIMEOUT_MILLIS = 60000;
+const DEFAULT_DB_CONNECTION_TIMEOUT_MILLIS = 2000;
+
+const config = {
+  name: 'auth',
+  connector: 'postgresql',
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  schema: process.env.DB_SCHEMA,
+  password: process.env.DB_PASSWORD,
+  database: process.env.AUTH_DB,
+};
+
+// Observe application's life cycle to disconnect the datasource when
+// application is stopped. This allows the application to be shut down
+// gracefully. The `stop()` method is inherited from `juggler.DataSource`.
+// Learn more at https://loopback.io/doc/en/lb4/Life-cycle.html
+@lifeCycleObserver('datasource')
+export class AuthDataSource
+  extends juggler.DataSource
+  implements LifeCycleObserver
+{
+  static dataSourceName = AuthDbSourceName;
+
+  static readonly defaultConfig = config;
+
+  constructor(
+    @inject('datasources.config.auth', {optional: true})
+    dsConfig: object = config,
+  ) {
+    if (!!+(process.env.ENABLE_DB_CONNECTION_POOLING ?? 0)) {
+      const dbPool = {
+        max: +(process.env.DB_MAX_CONNECTIONS ?? DEFAULT_MAX_CONNECTIONS),
+        idleTimeoutMillis: +(
+          process.env.DB_IDLE_TIMEOUT_MILLIS ?? DEFAULT_DB_IDLE_TIMEOUT_MILLIS
+        ),
+        connectionTimeoutMillis: +(
+          process.env.DB_CONNECTION_TIMEOUT_MILLIS ??
+          DEFAULT_DB_CONNECTION_TIMEOUT_MILLIS
+        ),
+      };
+
+      dsConfig = {...dsConfig, ...dbPool};
+    }
+
+    super(dsConfig);
+  }
+}
+```
