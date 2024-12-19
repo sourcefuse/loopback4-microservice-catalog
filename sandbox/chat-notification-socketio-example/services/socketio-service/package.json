@@ -50,9 +50,9 @@
   ],
   "dependencies": {
     "@loopback/boot": "^7.0.2",
-    "@loopback/core": "^6.0.2",
-    "@loopback/rest": "^14.0.2",
-    "@loopback/rest-explorer": "^7.0.2",
+    "@loopback/core": "^6.1.6",
+    "@loopback/rest": "^14.0.9",
+    "@loopback/rest-explorer": "^7.0.9",
     "@loopback/socketio": "^0.8.2",
     "debug": "^4.3.4",
     "p-event": "^4.2.0",
