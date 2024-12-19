@@ -52,10 +52,10 @@
   "dependencies": {
     "@loopback/boot": "^7.0.2",
     "@loopback/context": "^7.0.2",
-    "@loopback/core": "^6.0.2",
+    "@loopback/core": "^6.1.6",
     "@loopback/repository": "^7.0.2",
-    "@loopback/rest": "^14.0.2",
-    "@loopback/rest-explorer": "^7.0.2",
+    "@loopback/rest": "^14.0.9",
+    "@loopback/rest-explorer": "^7.0.9",
     "@loopback/service-proxy": "^7.0.2",
     "@sourceloop/core": "^15.0.0",
     "ajv": "^8.11.0",

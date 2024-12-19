@@ -54,10 +54,10 @@
   ],
   "dependencies": {
     "@loopback/boot": "^7.0.2",
-    "@loopback/core": "^6.0.2",
+    "@loopback/core": "^6.1.6",
     "@loopback/repository": "^7.0.2",
-    "@loopback/rest": "^14.0.2",
-    "@loopback/rest-explorer": "^7.0.2",
+    "@loopback/rest": "^14.0.9",
+    "@loopback/rest-explorer": "^7.0.9",
     "@loopback/service-proxy": "^7.0.2",
     "@loopback/socketio": "^0.8.2",
     "@sourceloop/chat-service": "^13.0.0",
