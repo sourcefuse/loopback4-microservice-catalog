@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/task-service",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "a Reusable, customizable and workflow based task service.",
   "keywords": [
     "loopback-extension",
@@ -78,8 +78,8 @@
     "!*/__tests__"
   ],
   "dependencies": {
-    "@sourceloop/bpmn-service": "^14.0.0",
-    "@sourceloop/core": "^15.0.0",
+    "@sourceloop/bpmn-service": "^14.0.1",
+    "@sourceloop/core": "^15.0.1",
     "camunda-external-task-client-js": "^2.3.1",
     "check-code-coverage": "^1.10.0",
     "dotenv": "^16.0.3",
@@ -117,16 +117,16 @@
     "@types/lodash": "^4.14.182",
     "@types/node": "^18.11.9",
     "@types/node-fetch": "^2.6.1",
+    "@types/node-jose": "^1.1.13",
     "@types/uuid": "^9.0.2",
     "aws-sdk": "^2.1512.0",
     "db-migrate": "^1.0.0-beta.21",
     "db-migrate-pg": "^1.3.0",
     "eslint": "^8.57.0",
     "kafkajs": "^2.2.4",
+    "node-jose": "^2.2.0",
     "nyc": "^15.1.0",
     "source-map-support": "^0.5.21",
-    "node-jose": "^2.2.0",
-    "@types/node-jose": "^1.1.13",
     "typescript": "~5.2.2",
     "widdershins": "^4.0.1"
   },

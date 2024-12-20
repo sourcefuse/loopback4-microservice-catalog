@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>15.0.1 (2024-12-20)</small>
+
+* fix(deps): add node-jose dependecy in core , task-service and user-tenant service (#2228) ([5a37a10](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5a37a10)), closes [#2228](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2228) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* chore(cli): update template dependencies of cli (#2222) ([597f05d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/597f05d)), closes [#2222](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2222)
+
+
+
+
+
 ## 15.0.0 (2024-12-05)
 
 * fix(authentication-service):  added idp server controller for login and discovery endpoint (#2131) ([e1bba2c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e1bba2c)), closes [#2131](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2131)

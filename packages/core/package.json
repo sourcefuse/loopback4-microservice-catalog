@@ -1,6 +1,6 @@
 {
     "name": "@sourceloop/core",
-    "version": "15.0.0",
+    "version": "15.0.1",
     "description": "Sourceloop core package",
     "keywords": [
         "loopback-extension",
@@ -83,11 +83,11 @@
         "loopback4-soft-delete": "^10.0.2",
         "moment": "^2.29.4",
         "moment-timezone": "^0.5.34",
+        "node-jose": "^2.2.0",
         "openapi3-ts": "^2.0.2",
         "request-ip": "^3.3.0",
         "swagger-stats": "^0.99.5",
         "tslib": "^2.6.2",
-        "node-jose": "^2.2.0",
         "winston": "^3.7.2"
     },
     "peerDependencies": {
@@ -114,11 +114,11 @@
         "@types/moment": "^2.13.0",
         "@types/moment-timezone": "^0.5.30",
         "@types/node": "^18.11.9",
+        "@types/node-jose": "^1.1.13",
         "@types/request-ip": "^0.0.37",
         "@types/swagger-stats": "^0.95.4",
         "aws-sdk": "^2.1613.0",
         "eslint": "^8.57.0",
-        "@types/node-jose": "^1.1.13",
         "loopback-connector-rest": "^5.0.1",
         "source-map-support": "^0.5.21",
         "typescript": "~5.2.2"

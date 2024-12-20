@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>9.2.1 (2024-12-20)</small>
+
+* chore(cli): update template dependencies of cli (#2222) ([597f05d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/597f05d)), closes [#2222](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2222)
+* fix(cli): add host in env of default test cases of scaffolded service (#2220) ([7a3c952](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7a3c952)), closes [#2220](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2220)
+
+
+
+
+
 ## 9.2.0 (2024-11-22)
 
 *  fix(cli): update the developing.md.tpl in @sourceloop/cli while scaffolding (#2213) ([b54465a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b54465a)), closes [#2213](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2213)

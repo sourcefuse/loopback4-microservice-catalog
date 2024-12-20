@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.3.6 (2024-12-20)</small>
+
+* fix(sandbox): remove sonar issues (#2224) ([be79f79](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/be79f79)), closes [#2224](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2224) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>0.3.5 (2024-12-05)</small>
 
 **Note:** Version bump only for package @sourceloop/telemed-notification-api

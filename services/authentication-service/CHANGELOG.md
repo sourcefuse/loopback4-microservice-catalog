@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>20.0.1 (2024-12-20)</small>
+
+**Note:** Version bump only for package @sourceloop/authentication-service
+
+
+
+
+
 ## 20.0.0 (2024-12-05)
 
 * refactor(authentication-service): update urls and add scope for keycloak idp (#2176) ([5f83920](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5f83920)), closes [#2176](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2176) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
