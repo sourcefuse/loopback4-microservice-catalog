@@ -125,6 +125,8 @@
     "kafkajs": "^2.2.4",
     "nyc": "^15.1.0",
     "source-map-support": "^0.5.21",
+    "node-jose": "^2.2.0",
+    "@types/node-jose": "^1.1.13",
     "typescript": "~5.2.2",
     "widdershins": "^4.0.1"
   },
