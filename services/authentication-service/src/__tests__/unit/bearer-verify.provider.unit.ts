@@ -58,6 +58,7 @@ describe('Bearer Verify Signup Service', () => {
   }
 
   function setUp() {
+    jwtKeysRepo = sinon.createStubInstance(JwtKeysRepository); // Mock the repository
     bearerVerifyProvider = new SignupBearerVerifyProvider(jwtKeysRepo, logger);
   }
 });

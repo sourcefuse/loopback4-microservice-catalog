@@ -132,6 +132,16 @@ describe('Process notification Service', () => {
   function setUp() {
     notificationRepository = createStubInstance(NotificationRepository);
     notificationUserRepository = createStubInstance(NotificationUserRepository);
+    notifProvider = sinon.stub().resolves(); // Mock as a Sinon stub
+    notifUserService = {
+      getNotifUsers: sinon.stub().resolves([]), // Mock 'getNotifUsers' to return an empty array
+    };
+    // Mock `filterNotificationSettings` as a stub function
+    filterNotificationSettings = {
+      checkUserNotificationSettings: sinon.stub().resolves([]), // Mock with empty array
+      getNotificationSubscribers: sinon.stub().resolves([]), // Mock with empty array
+      getDraftSubscribers: sinon.stub().resolves([]), // Mock with empty array
+    };
     processNotificationService = new ProcessNotificationService(
       notificationRepository,
       notifProvider,
