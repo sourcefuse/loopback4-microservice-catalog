@@ -50,13 +50,13 @@
     "!*/__tests__"
   ],
   "dependencies": {
-    "@loopback/boot": "^7.0.2",
-    "@loopback/context": "^7.0.2",
-    "@loopback/core": "^6.0.2",
-    "@loopback/repository": "^7.0.2",
-    "@loopback/rest": "^14.0.2",
-    "@loopback/rest-explorer": "^7.0.2",
-    "@loopback/service-proxy": "^7.0.2",
+    "@loopback/boot": "^7.0.9",
+    "@loopback/context": "^7.0.9",
+    "@loopback/core": "^6.1.6",
+    "@loopback/repository": "^7.0.9",
+    "@loopback/rest": "^14.0.9",
+    "@loopback/rest-explorer": "^7.0.9",
+    "@loopback/service-proxy": "^7.0.9",
     "@sourceloop/core": "^15.0.1",
     "ajv": "^8.11.0",
     "ajv-errors": "^3.0.0",
@@ -68,14 +68,14 @@
     "loopback4-authentication": "^12.1.0",
     "loopback4-authorization": "^7.0.2",
     "prom-client": "^14.0.1",
-    "tslib": "^2.6.2"
+    "tslib": "^2.0.0"
   },
   "devDependencies": {
-    "@loopback/build": "^11.0.2",
-    "@loopback/eslint-config": "^15.0.2",
-    "@loopback/testlab": "^7.0.2",
+    "@loopback/build": "^11.0.8",
+    "@loopback/eslint-config": "^15.0.4",
+    "@loopback/testlab": "^7.0.8",
     "@types/jsonwebtoken": "^8.5.8",
-    "@types/node": "^18.11.9",
+    "@types/node": "^16.18.119",
     "eslint": "^8.57.0",
     "source-map-support": "^0.5.21",
     "typescript": "~5.2.2"
