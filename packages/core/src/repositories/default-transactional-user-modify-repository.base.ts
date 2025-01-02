@@ -2,6 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {inject} from '@loopback/core';
 import {
   Count,
   DataObject,
@@ -15,7 +16,9 @@ import {Options} from 'loopback-datasource-juggler';
 import {AuthErrorKeys} from 'loopback4-authentication';
 import {DefaultTransactionSoftCrudRepository} from 'loopback4-soft-delete';
 import {IAuthUserWithPermissions} from '../components';
+import {SFCoreBindings} from '../keys';
 import {UserModifiableEntity} from '../models';
+import {IDefaultUserModifyCrud} from '../types';
 
 export abstract class DefaultTransactionalUserModifyRepository<
   T extends UserModifiableEntity,
@@ -34,6 +37,9 @@ export abstract class DefaultTransactionalUserModifyRepository<
     super(entityClass, dataSource);
   }
 
+  @inject(SFCoreBindings.DEFAULT_USER_MODIFY_CRUD_SERVICE)
+  public defaultUserModifyCrudService: IDefaultUserModifyCrud<T, ID>;
+
   async create(entity: DataObject<T>, options?: Options): Promise<T> {
     let currentUser = await this.getCurrentUser();
     currentUser = currentUser ?? options?.currentUser;
@@ -43,6 +49,7 @@ export abstract class DefaultTransactionalUserModifyRepository<
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     entity.createdBy = uid;
     entity.modifiedBy = uid;
+    entity = await this.defaultUserModifyCrudService.create(entity);
     return super.create(entity, options);
   }
 
@@ -57,6 +64,7 @@ export abstract class DefaultTransactionalUserModifyRepository<
       entity.createdBy = uid ?? '';
       entity.modifiedBy = uid ?? '';
     });
+    entities = await this.defaultUserModifyCrudService.createAll(entities);
     return super.createAll(entities, options);
   }
 
@@ -67,6 +75,7 @@ export abstract class DefaultTransactionalUserModifyRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     entity.modifiedBy = uid;
+    entity = await this.defaultUserModifyCrudService.save(entity);
     return super.save(entity, options);
   }
 
@@ -77,6 +86,7 @@ export abstract class DefaultTransactionalUserModifyRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     entity.modifiedBy = uid;
+    entity = await this.defaultUserModifyCrudService.update(entity);
     return super.update(entity, options);
   }
 
@@ -92,7 +102,11 @@ export abstract class DefaultTransactionalUserModifyRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     data.modifiedBy = uid;
-    return super.updateAll(data, where, options);
+    const result = await this.defaultUserModifyCrudService.updateAll(
+      data,
+      where,
+    );
+    return super.updateAll(result.data, result.where, options);
   }
 
   async updateById(
@@ -107,6 +121,7 @@ export abstract class DefaultTransactionalUserModifyRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     data.modifiedBy = uid;
+    data = await this.defaultUserModifyCrudService.updateById(id, data);
     return super.updateById(id, data, options);
   }
 
@@ -121,6 +136,7 @@ export abstract class DefaultTransactionalUserModifyRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     data.modifiedBy = uid;
+    data = await this.defaultUserModifyCrudService.replaceById(id, data);
     return super.replaceById(id, data, options);
   }
 }
