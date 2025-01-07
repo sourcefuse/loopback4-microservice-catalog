@@ -11,7 +11,7 @@ import {
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
-import {CachePluginComponent} from '@sourceloop/cache';
+import {CachingComponent} from '@sourceloop/cache';
 import path from 'path';
 import {MySequence} from './sequence';
 
@@ -35,7 +35,7 @@ export class CacheExampleApplication extends BootMixin(
     });
     this.component(RestExplorerComponent);
 
-    this.component(CachePluginComponent);
+    this.component(CachingComponent);
 
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here
