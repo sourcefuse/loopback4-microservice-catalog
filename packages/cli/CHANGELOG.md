@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>9.2.3 (2025-01-07)</small>
+
+* chore(cli): cli template dependecy version update (#2231) ([50dfc15](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/50dfc15)), closes [#2231](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2231) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>9.2.2 (2025-01-07)</small>
 
 * chore(deps): version update (#2227) ([6d6b00e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6d6b00e)), closes [#2227](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2227)
