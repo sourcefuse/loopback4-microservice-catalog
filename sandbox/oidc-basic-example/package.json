@@ -1,6 +1,6 @@
 {
     "name": "@sourceloop/oidc-basic-example",
-    "version": "0.4.8",
+    "version": "0.4.9",
     "description": "oidc.",
     "keywords": [
         "loopback-application",
@@ -68,7 +68,7 @@
         "@loopback/rest": "^14.0.9",
         "@loopback/rest-explorer": "^7.0.9",
         "@loopback/service-proxy": "^7.0.9",
-        "@sourceloop/oidc-service": "^3.0.0",
+        "@sourceloop/oidc-service": "^3.0.2",
         "loopback-connector-postgresql": "^7.1.8",
         "nodemon": "^2.0.21",
         "tslib": "^2.6.2"

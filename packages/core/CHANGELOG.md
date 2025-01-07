@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>15.0.2 (2025-01-07)</small>
+
+* chore(deps): version update (#2227) ([6d6b00e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6d6b00e)), closes [#2227](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2227)
+* fix(all-services): refactor test case of auth service core and notification service (#2230) ([9e30892](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/9e30892)), closes [#2230](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2230)
+
+
+
+
+
 ## <small>15.0.1 (2024-12-20)</small>
 
 * fix(deps): add node-jose dependecy in core , task-service and user-tenant service (#2228) ([5a37a10](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5a37a10)), closes [#2228](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2228) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
