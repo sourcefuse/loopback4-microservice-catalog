@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>13.0.2 (2025-01-07)</small>
+
+* chore(deps): version update (#2227) ([6d6b00e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6d6b00e)), closes [#2227](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2227)
+
+
+
+
+
 ## <small>13.0.1 (2024-12-20)</small>
 
 **Note:** Version bump only for package @sourceloop/chat-service

@@ -1,44 +1,44 @@
 {
-  "name": "@sourceloop/telemed-auth-cdktf",
-  "version": "1.0.0",
-  "main": "main.js",
-  "types": "main.ts",
-  "license": "MPL-2.0",
-  "private": true,
-  "scripts": {
-    "get": "cdktf get",
-    "deploy": "cdktf deploy",
-    "destroy": "cdktf destroy",
-    "build": "tsc",
-    "synth": "cdktf synth",
-    "compile": "tsc --pretty",
-    "watch": "tsc -w",
-    "test": "echo 'No Tests'",
-    "test:watch": "jest --watch --coverage",
-    "test:snapshot": "jest --updateSnapshot",
-    "upgrade": "npm i cdktf@latest cdktf-cli@latest",
-    "upgrade:next": "npm i cdktf@next cdktf-cli@next"
-  },
-  "engines": {
-    "node": ">=14.0"
-  },
-  "dependencies": {
-    "@cdktf/provider-aws": "^12.0.1",
-    "@cdktf/provider-random": "^5.0.0",
-    "arc-cdk": "^0.0.8",
-    "cdktf": "^0.15.0",
-    "cdktf-cli": "^0.15.5",
-    "constructs": "^10.1.229",
-    "dotenv": "^16.0.3",
-    "dotenv-extended": "^2.9.0"
-  },
-  "devDependencies": {
-    "@types/jest": "^29.2.6",
-    "@types/node": "^18.11.9",
-    "jest": "^29.3.1",
-    "ts-essentials": "^9.3.0",
-    "ts-jest": "^29.0.5",
-    "ts-node": "^10.9.1",
-    "typescript": "~5.2.2"
-  }
+    "name": "@sourceloop/telemed-auth-cdktf",
+    "version": "1.0.0",
+    "main": "main.js",
+    "types": "main.ts",
+    "license": "MPL-2.0",
+    "private": true,
+    "scripts": {
+        "get": "cdktf get",
+        "deploy": "cdktf deploy",
+        "destroy": "cdktf destroy",
+        "build": "tsc",
+        "synth": "cdktf synth",
+        "compile": "tsc --pretty",
+        "watch": "tsc -w",
+        "test": "echo 'No Tests'",
+        "test:watch": "jest --watch --coverage",
+        "test:snapshot": "jest --updateSnapshot",
+        "upgrade": "npm i cdktf@latest cdktf-cli@latest",
+        "upgrade:next": "npm i cdktf@next cdktf-cli@next"
+    },
+    "engines": {
+        "node": ">=14.0"
+    },
+    "dependencies": {
+        "@cdktf/provider-aws": "^12.0.1",
+        "@cdktf/provider-random": "^5.0.0",
+        "arc-cdk": "^0.0.8",
+        "cdktf": "^0.15.0",
+        "cdktf-cli": "^0.15.5",
+        "constructs": "^10.1.229",
+        "dotenv": "^16.4.5",
+        "dotenv-extended": "^2.9.0"
+    },
+    "devDependencies": {
+        "@types/jest": "^29.2.6",
+        "@types/node": "^20.12.7",
+        "jest": "^29.3.1",
+        "ts-essentials": "^9.3.0",
+        "ts-jest": "^29.0.5",
+        "ts-node": "^10.9.1",
+        "typescript": "^5.4.5"
+    }
 }

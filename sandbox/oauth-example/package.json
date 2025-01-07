@@ -1,81 +1,81 @@
 {
-  "name": "@sourceloop/oauth-example-api",
-  "version": "0.5.12",
-  "description": "oauth example.",
-  "keywords": [
-    "loopback-application",
-    "loopback"
-  ],
-  "private": true,
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "engines": {
-    "node": "18 || 20"
-  },
-  "scripts": {
-    "build": "lb-tsc",
-    "build:watch": "lb-tsc --watch",
-    "lint": "npm run eslint && npm run prettier:check",
-    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
-    "prettier:cli": "prettier \"**/*.ts\" \"**/*.js\"",
-    "prettier:check": "npm run prettier:cli -- -l",
-    "prettier:fix": "npm run prettier:cli -- --write",
-    "eslint": "eslint --report-unused-disable-directives .",
-    "eslint:fix": "npm run eslint -- --fix",
-    "pretest": "npm run rebuild",
-    "test": "echo 'No Tests'",
-    "posttest": "npm run lint",
-    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
-    "docker:build": "docker build -t auth-service .",
-    "docker:run": "docker run -p 3000:3000 -d auth-service",
-    "premigrate": "npm run build",
-    "migrate": "node ./dist/migrate",
-    "preopenapi-spec": "npm run build",
-    "openapi-spec": "node ./dist/openapi-spec",
-    "prestart": "npm run rebuild",
-    "start": "node -r source-map-support/register .",
-    "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
-    "rebuild": "npm run clean && npm run build",
-    "db:migrate": "./node_modules/db-migrate/bin/db-migrate up --config './migrations/database.json'",
-    "db:migrate:down": "./node_modules/db-migrate/bin/db-migrate down --config './migrations/database.json'",
-    "db:migrate:reset": "./node_modules/db-migrate/bin/db-migrate reset --config './migrations/database.json'"
-  },
-  "repository": {
-    "type": "git",
-    "url": ""
-  },
-  "author": "Ankur <ankur.bansal@sourcefuse.com>",
-  "license": "MIT",
-  "files": [
-    "README.md",
-    "dist",
-    "src",
-    "!*/__tests__"
-  ],
-  "dependencies": {
-    "@loopback/boot": "^7.0.2",
-    "@loopback/core": "^6.0.2",
-    "@loopback/repository": "^7.0.2",
-    "@loopback/rest": "^14.0.2",
-    "@loopback/rest-explorer": "^7.0.2",
-    "@loopback/service-proxy": "^7.0.2",
-    "@sourceloop/authentication-service": "^20.0.1",
-    "bcrypt": "^5.0.1",
-    "db-migrate": "^1.0.0-beta.21",
-    "db-migrate-pg": "^1.3.0",
-    "dotenv": "^16.0.3",
-    "dotenv-extended": "^2.9.0",
-    "loopback-connector-postgresql": "^7.1.1",
-    "tslib": "^2.6.2"
-  },
-  "devDependencies": {
-    "@loopback/build": "^11.0.2",
-    "@loopback/eslint-config": "^15.0.2",
-    "@loopback/testlab": "^7.0.2",
-    "@types/bcrypt": "^5.0.0",
-    "@types/node": "^18.11.9",
-    "eslint": "^8.57.0",
-    "source-map-support": "^0.5.21",
-    "typescript": "~5.2.2"
-  }
+    "name": "@sourceloop/oauth-example-api",
+    "version": "0.5.13",
+    "description": "oauth example.",
+    "keywords": [
+        "loopback-application",
+        "loopback"
+    ],
+    "private": true,
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "engines": {
+        "node": "18 || 20"
+    },
+    "scripts": {
+        "build": "lb-tsc",
+        "build:watch": "lb-tsc --watch",
+        "lint": "npm run eslint && npm run prettier:check",
+        "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+        "prettier:cli": "prettier \"**/*.ts\" \"**/*.js\"",
+        "prettier:check": "npm run prettier:cli -- -l",
+        "prettier:fix": "npm run prettier:cli -- --write",
+        "eslint": "eslint --report-unused-disable-directives .",
+        "eslint:fix": "npm run eslint -- --fix",
+        "pretest": "npm run rebuild",
+        "test": "echo 'No Tests'",
+        "posttest": "npm run lint",
+        "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
+        "docker:build": "docker build -t auth-service .",
+        "docker:run": "docker run -p 3000:3000 -d auth-service",
+        "premigrate": "npm run build",
+        "migrate": "node ./dist/migrate",
+        "preopenapi-spec": "npm run build",
+        "openapi-spec": "node ./dist/openapi-spec",
+        "prestart": "npm run rebuild",
+        "start": "node -r source-map-support/register .",
+        "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
+        "rebuild": "npm run clean && npm run build",
+        "db:migrate": "./node_modules/db-migrate/bin/db-migrate up --config './migrations/database.json'",
+        "db:migrate:down": "./node_modules/db-migrate/bin/db-migrate down --config './migrations/database.json'",
+        "db:migrate:reset": "./node_modules/db-migrate/bin/db-migrate reset --config './migrations/database.json'"
+    },
+    "repository": {
+        "type": "git",
+        "url": ""
+    },
+    "author": "Ankur <ankur.bansal@sourcefuse.com>",
+    "license": "MIT",
+    "files": [
+        "README.md",
+        "dist",
+        "src",
+        "!*/__tests__"
+    ],
+    "dependencies": {
+        "@loopback/boot": "^7.0.9",
+        "@loopback/core": "^6.1.6",
+        "@loopback/repository": "^7.0.9",
+        "@loopback/rest": "^14.0.9",
+        "@loopback/rest-explorer": "^7.0.9",
+        "@loopback/service-proxy": "^7.0.9",
+        "@sourceloop/authentication-service": "^20.0.2",
+        "bcrypt": "^5.0.1",
+        "db-migrate": "^1.0.0-beta.21",
+        "db-migrate-pg": "^1.3.0",
+        "dotenv": "^16.4.5",
+        "dotenv-extended": "^2.9.0",
+        "loopback-connector-postgresql": "^7.1.8",
+        "tslib": "^2.6.2"
+    },
+    "devDependencies": {
+        "@loopback/build": "^11.0.8",
+        "@loopback/eslint-config": "^15.0.4",
+        "@loopback/testlab": "^7.0.8",
+        "@types/bcrypt": "^5.0.0",
+        "@types/node": "^20.12.7",
+        "eslint": "^8.57.0",
+        "source-map-support": "^0.5.21",
+        "typescript": "^5.4.5"
+    }
 }

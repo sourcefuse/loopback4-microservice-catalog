@@ -1,160 +1,160 @@
 {
-  "name": "@sourceloop/payment-service",
-  "version": "15.0.1",
-  "description": "payment microservice",
-  "keywords": [
-    "loopback-extension",
-    "loopback"
-  ],
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "engines": {
-    "node": "18 || 20"
-  },
-  "exports": {
-    ".": "./dist/index.js",
-    "./sequelize": {
-      "types": "./dist/repositories/sequelize/index.d.ts"
+    "name": "@sourceloop/payment-service",
+    "version": "15.0.2",
+    "description": "payment microservice",
+    "keywords": [
+        "loopback-extension",
+        "loopback"
+    ],
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "engines": {
+        "node": "18 || 20"
+    },
+    "exports": {
+        ".": "./dist/index.js",
+        "./sequelize": {
+            "types": "./dist/repositories/sequelize/index.d.ts"
+        }
+    },
+    "typesVersions": {
+        "*": {
+            "sequelize": [
+                "./dist/repositories/sequelize/index.d.ts"
+            ]
+        }
+    },
+    "scripts": {
+        "apidocs": "npx widdershins --language_tabs 'javascript:JavaScript:request' 'javascript--nodejs:Node.JS' --summary openapi.json -o openapi.md",
+        "prebuild": "npm run clean",
+        "build": "lb-tsc",
+        "postbuild": "npm run openapi-spec",
+        "build:watch": "lb-tsc --watch",
+        "lint": "npm run eslint && npm run prettier:check",
+        "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+        "prettier:cli": "prettier \"**/*.ts\" \"**/*.js\"",
+        "prettier:check": "npm run prettier:cli -- -l",
+        "prettier:fix": "npm run prettier:cli -- --write",
+        "eslint": "eslint --report-unused-disable-directives .",
+        "eslint:fix": "npm run eslint -- --fix",
+        "pretest": "npm run rebuild",
+        "test": "lb-mocha --allow-console-logs \"dist/__tests__\" --timeout 5000",
+        "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js",
+        "docker:build": "docker build -t payment-service .",
+        "docker:run": "docker run -p 3000:3000 -d payment-service",
+        "premigrate": "npm run build",
+        "migrate": "node ./dist/migrate",
+        "openapi-spec": "node ./dist/openapi-spec && npm run apidocs",
+        "prestart": "npm run rebuild",
+        "start": "node -r source-map-support/register .",
+        "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
+        "rebuild": "npm run clean && npm run build",
+        "postinstall": "node migration.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
+        "directory": "services/payment-service"
+    },
+    "author": "Sourcefuse",
+    "license": "MIT",
+    "files": [
+        "README.md",
+        "dist",
+        "src",
+        "migration.js",
+        "migrations",
+        "database.json",
+        "!*/__tests__"
+    ],
+    "peerDependencies": {
+        "db-migrate": "^1.0.0-beta.21",
+        "db-migrate-pg": "^1.3.0"
+    },
+    "dependencies": {
+        "@loopback/boot": "^7.0.9",
+        "@loopback/context": "^7.0.9",
+        "@loopback/core": "^6.1.6",
+        "@loopback/openapi-v3": "^10.0.9",
+        "@loopback/repository": "^7.0.9",
+        "@loopback/rest": "^14.0.9",
+        "@loopback/rest-explorer": "^7.0.9",
+        "@loopback/service-proxy": "^7.0.9",
+        "@paypal/checkout-server-sdk": "^1.0.3",
+        "@sourceloop/core": "^15.0.2",
+        "dotenv": "^16.4.5",
+        "dotenv-extended": "^2.9.0",
+        "handlebars": "^4.7.7",
+        "loopback4-authentication": "^12.1.1",
+        "loopback4-authorization": "^7.0.3",
+        "loopback4-soft-delete": "^10.0.3",
+        "razorpay": "^2.8.1",
+        "stripe": "^8.218.0",
+        "tslib": "^2.6.2",
+        "uuid": "^8.3.2"
+    },
+    "devDependencies": {
+        "@loopback/build": "^11.0.8",
+        "@loopback/eslint-config": "^15.0.4",
+        "@loopback/testlab": "^7.0.8",
+        "@types/lodash": "^4.14.182",
+        "@types/node": "^20.12.7",
+        "@types/paypal__checkout-server-sdk": "^1.0.5",
+        "@types/uuid": "^8.3.4",
+        "db-migrate": "^1.0.0-beta.21",
+        "db-migrate-pg": "^1.3.0",
+        "eslint": "^8.57.0",
+        "source-map-support": "^0.5.21",
+        "typescript": "^5.4.5",
+        "widdershins": "^4.0.1"
+    },
+    "optionalDependencies": {
+        "@loopback/sequelize": "^0.6.9"
+    },
+    "overrides": {
+        "widdershins": {
+            "swagger2openapi": "^7.0.8",
+            "markdown-it": "^12.3.2",
+            "yargs": "^17.4.1"
+        },
+        "body-parser": {
+            "debug": "^4.3.4"
+        },
+        "httpsnippet": {
+            "debug": "^4.3.4"
+        },
+        "send": {
+            "debug": "^4.3.4"
+        },
+        "tunnel-ssh": {
+            "debug": "^4.3.4"
+        },
+        "finalhandler": {
+            "debug": "^4.3.4"
+        },
+        "express": {
+            "debug": "^4.3.4",
+            "finalhandler": "^1.2.0",
+            "send": "^0.18.0",
+            "serve-static": "^1.15.0"
+        }
+    },
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org/",
+        "access": "public"
+    },
+    "typedoc": {
+        "config": {
+            "entryPoints": [
+                "src/index.ts"
+            ],
+            "out": "services/payment-service",
+            "plugin": [
+                "typedoc-plugin-markdown"
+            ]
+        },
+        "settings": {
+            "includeOpenAPIDoc": true
+        }
     }
-  },
-  "typesVersions": {
-    "*": {
-      "sequelize": [
-        "./dist/repositories/sequelize/index.d.ts"
-      ]
-    }
-  },
-  "scripts": {
-    "apidocs": "npx widdershins --language_tabs 'javascript:JavaScript:request' 'javascript--nodejs:Node.JS' --summary openapi.json -o openapi.md",
-    "prebuild": "npm run clean",
-    "build": "lb-tsc",
-    "postbuild": "npm run openapi-spec",
-    "build:watch": "lb-tsc --watch",
-    "lint": "npm run eslint && npm run prettier:check",
-    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
-    "prettier:cli": "prettier \"**/*.ts\" \"**/*.js\"",
-    "prettier:check": "npm run prettier:cli -- -l",
-    "prettier:fix": "npm run prettier:cli -- --write",
-    "eslint": "eslint --report-unused-disable-directives .",
-    "eslint:fix": "npm run eslint -- --fix",
-    "pretest": "npm run rebuild",
-    "test": "lb-mocha --allow-console-logs \"dist/__tests__\" --timeout 5000",
-    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js",
-    "docker:build": "docker build -t payment-service .",
-    "docker:run": "docker run -p 3000:3000 -d payment-service",
-    "premigrate": "npm run build",
-    "migrate": "node ./dist/migrate",
-    "openapi-spec": "node ./dist/openapi-spec && npm run apidocs",
-    "prestart": "npm run rebuild",
-    "start": "node -r source-map-support/register .",
-    "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
-    "rebuild": "npm run clean && npm run build",
-    "postinstall": "node migration.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
-    "directory": "services/payment-service"
-  },
-  "author": "Sourcefuse",
-  "license": "MIT",
-  "files": [
-    "README.md",
-    "dist",
-    "src",
-    "migration.js",
-    "migrations",
-    "database.json",
-    "!*/__tests__"
-  ],
-  "peerDependencies": {
-    "db-migrate": "^1.0.0-beta.21",
-    "db-migrate-pg": "^1.3.0"
-  },
-  "dependencies": {
-    "@loopback/boot": "^7.0.2",
-    "@loopback/context": "^7.0.2",
-    "@loopback/core": "^6.0.2",
-    "@loopback/openapi-v3": "^10.0.2",
-    "@loopback/repository": "^7.0.2",
-    "@loopback/rest": "^14.0.2",
-    "@loopback/rest-explorer": "^7.0.2",
-    "@loopback/service-proxy": "^7.0.2",
-    "@paypal/checkout-server-sdk": "^1.0.3",
-    "@sourceloop/core": "^15.0.1",
-    "dotenv": "^16.0.3",
-    "dotenv-extended": "^2.9.0",
-    "handlebars": "^4.7.7",
-    "loopback4-authentication": "^12.1.0",
-    "loopback4-authorization": "^7.0.2",
-    "loopback4-soft-delete": "^10.0.2",
-    "razorpay": "^2.8.1",
-    "stripe": "^8.218.0",
-    "tslib": "^2.6.2",
-    "uuid": "^8.3.2"
-  },
-  "devDependencies": {
-    "@loopback/build": "^11.0.2",
-    "@loopback/eslint-config": "^15.0.2",
-    "@loopback/testlab": "^7.0.2",
-    "@types/lodash": "^4.14.182",
-    "@types/node": "^18.11.9",
-    "@types/paypal__checkout-server-sdk": "^1.0.5",
-    "@types/uuid": "^8.3.4",
-    "db-migrate": "^1.0.0-beta.21",
-    "db-migrate-pg": "^1.3.0",
-    "eslint": "^8.57.0",
-    "source-map-support": "^0.5.21",
-    "typescript": "~5.2.2",
-    "widdershins": "^4.0.1"
-  },
-  "optionalDependencies": {
-    "@loopback/sequelize": "^0.6.2"
-  },
-  "overrides": {
-    "widdershins": {
-      "swagger2openapi": "^7.0.8",
-      "markdown-it": "^12.3.2",
-      "yargs": "^17.4.1"
-    },
-    "body-parser": {
-      "debug": "^4.3.4"
-    },
-    "httpsnippet": {
-      "debug": "^4.3.4"
-    },
-    "send": {
-      "debug": "^4.3.4"
-    },
-    "tunnel-ssh": {
-      "debug": "^4.3.4"
-    },
-    "finalhandler": {
-      "debug": "^4.3.4"
-    },
-    "express": {
-      "debug": "^4.3.4",
-      "finalhandler": "^1.2.0",
-      "send": "^0.18.0",
-      "serve-static": "^1.15.0"
-    }
-  },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
-    "access": "public"
-  },
-  "typedoc": {
-    "config": {
-      "entryPoints": [
-        "src/index.ts"
-      ],
-      "out": "services/payment-service",
-      "plugin": [
-        "typedoc-plugin-markdown"
-      ]
-    },
-    "settings": {
-      "includeOpenAPIDoc": true
-    }
-  }
 }

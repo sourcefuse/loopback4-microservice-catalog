@@ -1,114 +1,114 @@
 {
-  "name": "@sourceloop/user-tenant-service",
-  "version": "3.0.1",
-  "description": "Sourceloop User Tenant Service",
-  "keywords": [
-    "loopback-extension",
-    "loopback"
-  ],
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "engines": {
-    "node": "18 || 20"
-  },
-  "exports": {
-    ".": "./dist/index.js",
-    "./sequelize": {
-      "types": "./dist/repositories/sequelize/index.d.ts"
+    "name": "@sourceloop/user-tenant-service",
+    "version": "3.0.2",
+    "description": "Sourceloop User Tenant Service",
+    "keywords": [
+        "loopback-extension",
+        "loopback"
+    ],
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "engines": {
+        "node": "18 || 20"
+    },
+    "exports": {
+        ".": "./dist/index.js",
+        "./sequelize": {
+            "types": "./dist/repositories/sequelize/index.d.ts"
+        }
+    },
+    "typesVersions": {
+        "*": {
+            "sequelize": [
+                "./dist/repositories/sequelize/index.d.ts"
+            ]
+        }
+    },
+    "scripts": {
+        "prebuild": "npm run clean",
+        "build": "lb-tsc",
+        "postbuild": "npm run openapi-spec",
+        "openapi-spec": "node ./dist/openapi-spec && npm run apidocs",
+        "apidocs": "npx widdershins --language_tabs 'javascript:JavaScript:request' 'javascript--nodejs:Node.JS' --summary openapi.json -o openapi.md",
+        "build:watch": "lb-tsc --watch",
+        "lint": "npm run eslint && npm run prettier:check",
+        "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+        "prettier:cli": "prettier \"**/*.ts\" \"**/*.js\"",
+        "prettier:check": "npm run prettier:cli -- -l",
+        "prettier:fix": "npm run prettier:cli -- --write",
+        "eslint": "eslint --report-unused-disable-directives .",
+        "eslint:fix": "npm run eslint -- --fix",
+        "pretest": "npm run rebuild",
+        "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
+        "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
+        "docker:build": "docker build -t user-tenant-service .",
+        "docker:run": "docker run -p 3000:3000 -d user-tenant-service",
+        "premigrate": "npm run build",
+        "migrate": "node ./dist/migrate",
+        "prestart": "npm run rebuild",
+        "start": "node -r source-map-support/register .",
+        "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
+        "rebuild": "npm run clean && npm run build",
+        "postinstall": "node migration.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
+        "directory": "services/user-tenant-service"
+    },
+    "author": "SourceFuse",
+    "license": "MIT",
+    "files": [
+        "README.md",
+        "dist",
+        "src",
+        "migration.js",
+        "migrations",
+        "database.json",
+        "!*/__tests__"
+    ],
+    "peerDependencies": {
+        "@loopback/core": "^6.1.6"
+    },
+    "optionalDependencies": {
+        "@loopback/sequelize": "^0.6.9"
+    },
+    "dependencies": {
+        "@loopback/boot": "^7.0.9",
+        "@loopback/context": "^7.0.9",
+        "@loopback/core": "^6.1.6",
+        "@loopback/openapi-v3": "^10.0.9",
+        "@loopback/repository": "^7.0.9",
+        "@loopback/rest": "^14.0.9",
+        "@loopback/rest-explorer": "^7.0.9",
+        "@loopback/service-proxy": "^7.0.9",
+        "@sourceloop/core": "^15.0.2",
+        "bcrypt": "^5.0.1",
+        "dotenv": "^16.4.5",
+        "dotenv-extended": "^2.9.0",
+        "jsonwebtoken": "^9.0.0",
+        "loopback4-authentication": "^12.1.1",
+        "loopback4-authorization": "^7.0.3",
+        "loopback4-soft-delete": "^10.0.3",
+        "nanoid": "^3.1.25",
+        "prom-client": "^14.0.1",
+        "tslib": "^2.6.2",
+        "uuid": "^8.3.2"
+    },
+    "devDependencies": {
+        "@loopback/build": "^11.0.8",
+        "@loopback/core": "^6.1.6",
+        "@loopback/eslint-config": "^15.0.4",
+        "@loopback/testlab": "^7.0.8",
+        "@types/jest": "^29.5.5",
+        "@types/jsonwebtoken": "^9.0.3",
+        "@types/mocha": "^10.0.1",
+        "@types/node": "^20.12.7",
+        "@types/node-jose": "^1.1.13",
+        "eslint": "^8.57.0",
+        "mocha": "^10.2.0",
+        "node-jose": "^2.2.0",
+        "source-map-support": "^0.5.21",
+        "typescript": "^5.4.5"
     }
-  },
-  "typesVersions": {
-    "*": {
-      "sequelize": [
-        "./dist/repositories/sequelize/index.d.ts"
-      ]
-    }
-  },
-  "scripts": {
-    "prebuild": "npm run clean",
-    "build": "lb-tsc",
-    "postbuild": "npm run openapi-spec",
-    "openapi-spec": "node ./dist/openapi-spec && npm run apidocs",
-    "apidocs": "npx widdershins --language_tabs 'javascript:JavaScript:request' 'javascript--nodejs:Node.JS' --summary openapi.json -o openapi.md",
-    "build:watch": "lb-tsc --watch",
-    "lint": "npm run eslint && npm run prettier:check",
-    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
-    "prettier:cli": "prettier \"**/*.ts\" \"**/*.js\"",
-    "prettier:check": "npm run prettier:cli -- -l",
-    "prettier:fix": "npm run prettier:cli -- --write",
-    "eslint": "eslint --report-unused-disable-directives .",
-    "eslint:fix": "npm run eslint -- --fix",
-    "pretest": "npm run rebuild",
-    "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
-    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
-    "docker:build": "docker build -t user-tenant-service .",
-    "docker:run": "docker run -p 3000:3000 -d user-tenant-service",
-    "premigrate": "npm run build",
-    "migrate": "node ./dist/migrate",
-    "prestart": "npm run rebuild",
-    "start": "node -r source-map-support/register .",
-    "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
-    "rebuild": "npm run clean && npm run build",
-    "postinstall": "node migration.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
-    "directory": "services/user-tenant-service"
-  },
-  "author": "SourceFuse",
-  "license": "MIT",
-  "files": [
-    "README.md",
-    "dist",
-    "src",
-    "migration.js",
-    "migrations",
-    "database.json",
-    "!*/__tests__"
-  ],
-  "peerDependencies": {
-    "@loopback/core": "^6.0.2"
-  },
-  "optionalDependencies": {
-    "@loopback/sequelize": "^0.6.2"
-  },
-  "dependencies": {
-    "@loopback/boot": "^7.0.2",
-    "@loopback/context": "^7.0.2",
-    "@loopback/core": "^6.0.2",
-    "@loopback/openapi-v3": "^10.0.2",
-    "@loopback/repository": "^7.0.2",
-    "@loopback/rest": "^14.0.2",
-    "@loopback/rest-explorer": "^7.0.2",
-    "@loopback/service-proxy": "^7.0.2",
-    "@sourceloop/core": "^15.0.1",
-    "bcrypt": "^5.0.1",
-    "dotenv": "^16.0.3",
-    "dotenv-extended": "^2.9.0",
-    "jsonwebtoken": "^9.0.0",
-    "loopback4-authentication": "^12.1.0",
-    "loopback4-authorization": "^7.0.2",
-    "loopback4-soft-delete": "^10.0.2",
-    "nanoid": "^3.1.25",
-    "prom-client": "^14.0.1",
-    "tslib": "^2.6.2",
-    "uuid": "^8.3.2"
-  },
-  "devDependencies": {
-    "@loopback/build": "^11.0.2",
-    "@loopback/core": "^6.0.2",
-    "@loopback/eslint-config": "^15.0.2",
-    "@loopback/testlab": "^7.0.2",
-    "@types/jest": "^29.5.5",
-    "@types/jsonwebtoken": "^9.0.3",
-    "@types/mocha": "^10.0.1",
-    "@types/node": "^18.11.9",
-    "@types/node-jose": "^1.1.13",
-    "eslint": "^8.57.0",
-    "mocha": "^10.2.0",
-    "node-jose": "^2.2.0",
-    "source-map-support": "^0.5.21",
-    "typescript": "~5.2.2"
-  }
 }

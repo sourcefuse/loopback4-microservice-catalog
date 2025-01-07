@@ -1,107 +1,107 @@
 {
-  "name": "@sourceloop/feature-toggle",
-  "version": "2.1.5",
-  "description": "Package for feature toggle.",
-  "keywords": [
-    "loopback-extension",
-    "loopback"
-  ],
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "engines": {
-    "node": "18 || 20"
-  },
-  "scripts": {
-    "build": "lb-tsc",
-    "build:watch": "lb-tsc --watch",
-    "lint": "npm run eslint && npm run prettier:check",
-    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
-    "prettier:cli": "prettier \"**/*.ts\" \"**/*.js\"",
-    "prettier:check": "npm run prettier:cli -- -l",
-    "prettier:fix": "npm run prettier:cli -- --write",
-    "eslint": "eslint --report-unused-disable-directives .",
-    "eslint:fix": "npm run eslint -- --fix",
-    "pretest": "npm run build",
-    "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
-    "coverage": "lb-nyc npm run test",
-    "coverage:ci": "lb-nyc report --reporter=text-lcov | coveralls",
-    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js",
-    "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
-    "prepublishOnly": "npm run build && npm run lint",
-    "rebuild": "npm run clean && npm run build"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
-    "directory": "packages/feature-toggle"
-  },
-  "author": "Sourcefuse",
-  "license": "MIT",
-  "files": [
-    "README.md",
-    "dist",
-    "src",
-    "!*/__tests__"
-  ],
-  "peerDependencies": {
-    "@loopback/core": "^6.0.2"
-  },
-  "dependencies": {
-    "@loopback/boot": "^7.0.2",
-    "@loopback/context": "^7.0.2",
-    "@loopback/core": "^6.0.2",
-    "@loopback/express": "^7.0.2",
-    "@loopback/repository": "^7.0.2",
-    "@loopback/rest": "^14.0.2",
-    "@loopback/rest-explorer": "^7.0.2",
-    "@loopback/service-proxy": "^7.0.2",
-    "@sourceloop/core": "^15.0.1",
-    "lodash": "^4.17.21",
-    "loopback4-authentication": "^12.1.0",
-    "sinon": "^14.0.0",
-    "tslib": "^2.6.2"
-  },
-  "devDependencies": {
-    "@loopback/build": "^11.0.2",
-    "@loopback/core": "^6.0.2",
-    "@loopback/eslint-config": "^15.0.2",
-    "@loopback/testlab": "^7.0.2",
-    "@types/lodash": "^4.14.182",
-    "@types/node": "^18.11.9",
-    "eslint": "^8.57.0",
-    "source-map-support": "^0.5.21",
-    "typescript": "~5.2.2"
-  },
-  "overrides": {
-    "body-parser": {
-      "debug": "^4.3.4"
+    "name": "@sourceloop/feature-toggle",
+    "version": "2.1.6",
+    "description": "Package for feature toggle.",
+    "keywords": [
+        "loopback-extension",
+        "loopback"
+    ],
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "engines": {
+        "node": "18 || 20"
     },
-    "send": {
-      "debug": "^4.3.4"
+    "scripts": {
+        "build": "lb-tsc",
+        "build:watch": "lb-tsc --watch",
+        "lint": "npm run eslint && npm run prettier:check",
+        "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+        "prettier:cli": "prettier \"**/*.ts\" \"**/*.js\"",
+        "prettier:check": "npm run prettier:cli -- -l",
+        "prettier:fix": "npm run prettier:cli -- --write",
+        "eslint": "eslint --report-unused-disable-directives .",
+        "eslint:fix": "npm run eslint -- --fix",
+        "pretest": "npm run build",
+        "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
+        "coverage": "lb-nyc npm run test",
+        "coverage:ci": "lb-nyc report --reporter=text-lcov | coveralls",
+        "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js",
+        "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
+        "prepublishOnly": "npm run build && npm run lint",
+        "rebuild": "npm run clean && npm run build"
     },
-    "finalhandler": {
-      "debug": "^4.3.4"
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
+        "directory": "packages/feature-toggle"
     },
-    "express": {
-      "debug": "^4.3.4",
-      "finalhandler": "^1.2.0",
-      "send": "^0.18.0",
-      "serve-static": "^1.15.0"
+    "author": "Sourcefuse",
+    "license": "MIT",
+    "files": [
+        "README.md",
+        "dist",
+        "src",
+        "!*/__tests__"
+    ],
+    "peerDependencies": {
+        "@loopback/core": "^6.1.6"
+    },
+    "dependencies": {
+        "@loopback/boot": "^7.0.9",
+        "@loopback/context": "^7.0.9",
+        "@loopback/core": "^6.1.6",
+        "@loopback/express": "^7.0.9",
+        "@loopback/repository": "^7.0.9",
+        "@loopback/rest": "^14.0.9",
+        "@loopback/rest-explorer": "^7.0.9",
+        "@loopback/service-proxy": "^7.0.9",
+        "@sourceloop/core": "^15.0.2",
+        "lodash": "^4.17.21",
+        "loopback4-authentication": "^12.1.1",
+        "sinon": "^14.0.0",
+        "tslib": "^2.6.2"
+    },
+    "devDependencies": {
+        "@loopback/build": "^11.0.8",
+        "@loopback/core": "^6.1.6",
+        "@loopback/eslint-config": "^15.0.4",
+        "@loopback/testlab": "^7.0.8",
+        "@types/lodash": "^4.14.182",
+        "@types/node": "^20.12.7",
+        "eslint": "^8.57.0",
+        "source-map-support": "^0.5.21",
+        "typescript": "^5.4.5"
+    },
+    "overrides": {
+        "body-parser": {
+            "debug": "^4.3.4"
+        },
+        "send": {
+            "debug": "^4.3.4"
+        },
+        "finalhandler": {
+            "debug": "^4.3.4"
+        },
+        "express": {
+            "debug": "^4.3.4",
+            "finalhandler": "^1.2.0",
+            "send": "^0.18.0",
+            "serve-static": "^1.15.0"
+        }
+    },
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org/",
+        "access": "public"
+    },
+    "typedoc": {
+        "config": {
+            "entryPoints": [
+                "src/index.ts"
+            ],
+            "out": "packages/feature-toggle",
+            "plugin": [
+                "typedoc-plugin-markdown"
+            ]
+        }
     }
-  },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
-    "access": "public"
-  },
-  "typedoc": {
-    "config": {
-      "entryPoints": [
-        "src/index.ts"
-      ],
-      "out": "packages/feature-toggle",
-      "plugin": [
-        "typedoc-plugin-markdown"
-      ]
-    }
-  }
 }
