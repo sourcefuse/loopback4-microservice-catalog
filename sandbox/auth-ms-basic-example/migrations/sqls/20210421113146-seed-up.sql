@@ -1,35 +1,44 @@
-SET search_path
-TO main,public;
+SET search_path TO main, public;
 
-/* Inserting auth clients */
-insert into auth_clients
-  (client_id, client_secret, secret)
-values
-  ('test_client_id', 'test_client_secret', 'secret');
+ALTER TABLE main.roles
+ADD IF NOT EXISTS tenant_id uuid  NOT NULL,
+ADD IF NOT EXISTS allowed_clients text[],
+ADD IF NOT EXISTS description varchar(500);
 
--- Inserting roles
-insert into roles
-  (name, permissions, role_type)
-values
-  ('Admin', '{CreateTodo,UpdateTodo,DeleteTodo}', 0);
+ALTER TABLE main.tenants
+ADD IF NOT EXISTS website varchar(100);
 
-insert into roles
-  (name, permissions, role_type)
-values
-  ('Others', '{}', 1);
+ALTER TABLE main.users
+ADD IF NOT EXISTS photo_url varchar(250),
+ADD IF NOT EXISTS designation  varchar(50);
 
--- Inserting tenants
-insert into tenants
-  (name, status, key)
-values
-  ('Master', 1, 'master');
+INSERT INTO main.auth_clients(id, client_id, client_secret, redirect_url, access_token_expiration, refresh_token_expiration, auth_code_expiration, secret)
+    VALUES ('1', 'test_client_id', 'test_client_secret', '', '900', '3600', '300', 'dGVsZXNjb3BlLWhlYWx0aA==');
 
--- Inserting Admin User
-insert into users
-    (first_name, last_name, username, email, default_tenant_id)
-select 'Admin', 'User', 'admin@example.com', 'admin@example.com', id
-from tenants
-where key = 'master';
+INSERT INTO main.tenants(name, status, key)
+    VALUES ('demo', 0, 'demo');
+
+INSERT INTO main.roles(name, permissions, role_type, tenant_id)
+    VALUES ('SuperAdmin', '{CreateTenant,ViewTenant,UpdateTenant,DeleteTenant,CreateTenantUser,10200,10201,10202,10203,10204,10216,10205,10206,10207,10208,10209,10210,10211,10212,10213,10214,10215,2,7008,8000,8001,8002,8003,7001,7002,7003,7004,7005,7006,7007,7008,7009,7010,7011,7012,7013,7014,7015,7016,7017,7018,7019,7020,7021,7022,7023,7024,7025,7026,7027,7028}', 0,(
+            SELECT
+                id
+            FROM
+                main.tenants
+            WHERE
+                key = 'demo'));
+
+INSERT INTO main.users(first_name, last_name, username, email, auth_client_ids, default_tenant_id)
+SELECT 'name',
+'',
+'admin@example.com', 
+'admin@example.com',
+'{1}',
+ id
+FROM
+    main.tenants
+WHERE
+    key = 'demo';
+
 
 insert into user_tenants
     (user_id, tenant_id, status, role_id)
@@ -37,9 +46,10 @@ select (select id
     from users
     where username = 'admin@example.com'), (select id
     from tenants
-    where key = 'master'), 1, id
+    where key = 'demo'), 1, id
 from roles
-where role_type = 0;
+where name = 'SuperAdmin';    
+
 
 insert into user_credentials
     (user_id, auth_provider, password)
@@ -47,5 +57,4 @@ select id, 'internal', '$2a$10$TOLMGK43MjbibS8Jap2RXeHl3.4sJcR3eFbms2dBll2LTMggS
 from users
 where username = 'admin@example.com';
 update users set auth_client_ids = ARRAY[(select id from auth_clients where client_id = 'test_client_id')::integer];
-
 
