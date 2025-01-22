@@ -3,30 +3,45 @@
 This application is generated using [LoopBack 4 CLI](https://loopback.io/doc/en/lb4/Command-line-interface.html) with the
 [initial project layout](https://loopback.io/doc/en/lb4/Loopback-application-layout.html).
 
-## Install dependencies
+## STEP 1: Install dependencies
 
-By default, dependencies were installed when this application was generated.
-Whenever dependencies in `package.json` are changed, run the following command:
+To install the project dependencies, run the following command:
 
 ```sh
 npm install
 ```
-
-To only install resolved dependencies in `package-lock.json`:
+## STEP 2: Set up Environment Variables
+1. Copy the .env.example file to .env:
 
 ```sh
-npm ci
+cp .env.example .env
+```
+2. Open the .env file and configure the necessary environment variables (e.g., database connection settings, JWT secret keys).
+
+## STEP 3: Database Migration
+Run the following command to migrate the database:
+```sh
+npm run db:migrate
 ```
 
-## Run the application
+## STEP 4: Set up JWT Asymmetric Authentication
+This project uses JWT tokens for authentication. Ensure you have the following:
+* A private key (JWT_PRIVATE_KEY) for signing the JWT tokens.
+* A public key (JWT_PUBLIC_KEY) for verifying the JWT tokens.
 
+Add these keys to the .env file or ensure they are properly configured in your authentication service.
+
+## STEP 5: Start the application
+Once everything is set up, you can start the Node.js application with the following command:
 ```sh
 npm start
 ```
+This will start the server, and you can begin testing the API.
 
-You can also run `node .` to skip the build step.
+## STEP 6: Testing the API
+After starting the application, you can test the API using Swagger UI. Open your browser and visit:
 
-Open http://127.0.0.1:3000 in your browser.
+http://127.0.0.1:3000 Replace the URL according to your configuration
 
 ## Rebuild the project
 
@@ -55,8 +70,6 @@ npm run lint:fix
 ```
 
 ## Other useful commands
-
-- `npm run migrate`: Migrate database schemas for models
 - `npm run openapi-spec`: Generate OpenAPI spec into a file
 - `npm run docker:build`: Build a Docker image for this application
 - `npm run docker:run`: Run this application inside a Docker container
@@ -66,6 +79,11 @@ npm run lint:fix
 ```sh
 npm test
 ```
+
+## Troubleshooting
+* Ensure that your database is correctly configured and running.
+* Make sure that the JWT private and public keys are properly set up in the .env file.
+* If you encounter issues with Swagger UI not loading, verify that the server has successfully started and that the correct port is specified.
 
 ## What's next
 

@@ -22,6 +22,8 @@ import {
 } from 'loopback4-authorization';
 import path from 'path';
 import {MySequence} from './sequence';
+import { BearerVerifierBindings, BearerVerifierComponent, BearerVerifierConfig, BearerVerifierType, ServiceSequence } from '@sourceloop/core';
+import { AuthenticationComponent } from 'loopback4-authentication';
 dotenv.config();
 
 export {ApplicationConfig};
@@ -46,9 +48,24 @@ export class FeatureToggleExampleApplication extends BootMixin(
 
     this.bind(FeatureToggleBindings.Config).to({
       bindControllers: true,
-      useCustomSequence: false,
+      useCustomSequence: true,
     });
     this.component(FeatureToggleServiceComponent);
+
+
+    this.sequence(ServiceSequence);
+
+    // Mount authentication component for default sequence
+    this.component(AuthenticationComponent);
+    // Mount bearer verifier component
+    this.bind(BearerVerifierBindings.Config).to({
+      authServiceUrl: '',
+      useSymmetricEncryption: true,
+      type: BearerVerifierType.service,
+    } as BearerVerifierConfig);
+    this.component(BearerVerifierComponent);
+
+    // Mount authorization component for default sequence
 
     this.bind(AuthorizationBindings.CONFIG).to({
       allowAlwaysPaths: ['/explorer'],
