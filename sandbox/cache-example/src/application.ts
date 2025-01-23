@@ -11,11 +11,11 @@ import {
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
-import {CachingComponent} from '@sourceloop/cache';
+import { CacheComponentBindings, CachingComponent, RedisStoreStrategy } from '@sourceloop/cache';
 import path from 'path';
 import {MySequence} from './sequence';
 
-export {ApplicationConfig};
+export { ApplicationConfig };
 
 export class CacheExampleApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
@@ -28,6 +28,12 @@ export class CacheExampleApplication extends BootMixin(
 
     // Set up default home page
     this.static('/', path.join(__dirname, '../public'));
+
+    this.bind(CacheComponentBindings.CacheConfig).to({
+      ttl: 1000,
+      strategy: RedisStoreStrategy,
+      datasourceName: 'cacheDb',
+    });
 
     // Customize @loopback/rest-explorer configuration here
     this.configure(RestExplorerBindings.COMPONENT).to({
