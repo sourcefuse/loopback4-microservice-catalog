@@ -22,8 +22,14 @@ import {
 } from 'loopback4-authorization';
 import path from 'path';
 import {MySequence} from './sequence';
-import { BearerVerifierBindings, BearerVerifierComponent, BearerVerifierConfig, BearerVerifierType, ServiceSequence } from '@sourceloop/core';
-import { AuthenticationComponent } from 'loopback4-authentication';
+import {
+  BearerVerifierBindings,
+  BearerVerifierComponent,
+  BearerVerifierConfig,
+  BearerVerifierType,
+  ServiceSequence,
+} from '@sourceloop/core';
+import {AuthenticationComponent} from 'loopback4-authentication';
 dotenv.config();
 
 export {ApplicationConfig};
@@ -51,7 +57,6 @@ export class FeatureToggleExampleApplication extends BootMixin(
       useCustomSequence: true,
     });
     this.component(FeatureToggleServiceComponent);
-
 
     this.sequence(ServiceSequence);
 
