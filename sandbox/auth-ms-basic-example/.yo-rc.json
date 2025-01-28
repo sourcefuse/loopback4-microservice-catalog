@@ -1,6 +1,6 @@
 {
-  "@loopback/cli": {
+  "@sourceloop/cli": {
     "packageManager": "npm",
-    "version": "2.18.0"
+    "version": "5.2.4"
   }
 }

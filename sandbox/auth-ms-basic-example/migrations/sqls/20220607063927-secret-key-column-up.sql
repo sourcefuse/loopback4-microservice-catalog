@@ -1,2 +1,2 @@
 ALTER TABLE main.user_credentials
-ADD secret_key varchar(100);
+ADD IF NOT EXISTS secret_key text;

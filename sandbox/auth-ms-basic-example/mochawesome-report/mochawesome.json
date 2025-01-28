@@ -1,0 +1,234 @@
+{
+  "stats": {
+    "suites": 2,
+    "tests": 3,
+    "passes": 3,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-01-28T16:15:58.529Z",
+    "end": "2025-01-28T16:15:58.860Z",
+    "duration": 331,
+    "testsRegistered": 3,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "4310987d-52a2-4c3b-b315-33799d8cb954",
+      "title": "",
+      "fullFile": "",
+      "file": "",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "4a2d4874-8175-42f6-b513-d5aa2e00a091",
+          "title": "HomePage",
+          "fullFile": "/home/sunny.tyagi/Desktop/loopback4-microservice-catalog/sandbox/auth-ms-basic-example/dist/__tests__/acceptance/home-page.acceptance.js",
+          "file": "/dist/__tests__/acceptance/home-page.acceptance.js",
+          "beforeHooks": [
+            {
+              "title": "\"before all\" hook: setupApplication in \"HomePage\"",
+              "fullTitle": "HomePage \"before all\" hook: setupApplication in \"HomePage\"",
+              "timedOut": false,
+              "duration": 209,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "({ app, client } = await (0, test_helper_1.setupApplication)());",
+              "err": {},
+              "uuid": "8d2d3beb-b725-4f0f-885d-a013367d3525",
+              "parentUUID": "4a2d4874-8175-42f6-b513-d5aa2e00a091",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [
+            {
+              "title": "\"after all\" hook in \"HomePage\"",
+              "fullTitle": "HomePage \"after all\" hook in \"HomePage\"",
+              "timedOut": false,
+              "duration": 1,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "await app.stop();",
+              "err": {},
+              "uuid": "51d322f5-0bfc-42f9-a9b6-625bda6d3d27",
+              "parentUUID": "4a2d4874-8175-42f6-b513-d5aa2e00a091",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "tests": [
+            {
+              "title": "exposes a default home page",
+              "fullTitle": "HomePage exposes a default home page",
+              "timedOut": false,
+              "duration": 49,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "await client\n    .get('/')\n    .expect(200)\n    .expect('Content-Type', /text\\/html/);",
+              "err": {},
+              "uuid": "818c03f0-c547-453a-a8af-d73067c21422",
+              "parentUUID": "4a2d4874-8175-42f6-b513-d5aa2e00a091",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "exposes self-hosted explorer",
+              "fullTitle": "HomePage exposes self-hosted explorer",
+              "timedOut": false,
+              "duration": 12,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "await client\n    .get('/explorer/')\n    .expect(200)\n    .expect('Content-Type', /text\\/html/)\n    .expect(/<title>LoopBack API Explorer/);",
+              "err": {},
+              "uuid": "9d0fac57-11cf-462e-9ba3-62e64c1568a3",
+              "parentUUID": "4a2d4874-8175-42f6-b513-d5aa2e00a091",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "818c03f0-c547-453a-a8af-d73067c21422",
+            "9d0fac57-11cf-462e-9ba3-62e64c1568a3"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 61,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "e6264d9d-4cb4-4f30-8f42-3e82446e732a",
+          "title": "PingController",
+          "fullFile": "/home/sunny.tyagi/Desktop/loopback4-microservice-catalog/sandbox/auth-ms-basic-example/dist/__tests__/acceptance/ping.controller.acceptance.js",
+          "file": "/dist/__tests__/acceptance/ping.controller.acceptance.js",
+          "beforeHooks": [
+            {
+              "title": "\"before all\" hook: setupApplication in \"PingController\"",
+              "fullTitle": "PingController \"before all\" hook: setupApplication in \"PingController\"",
+              "timedOut": false,
+              "duration": 34,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "({ app, client } = await (0, test_helper_1.setupApplication)());",
+              "err": {},
+              "uuid": "33bcffa2-0b35-4997-954b-5d2a5d7b1409",
+              "parentUUID": "e6264d9d-4cb4-4f30-8f42-3e82446e732a",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [
+            {
+              "title": "\"after all\" hook in \"PingController\"",
+              "fullTitle": "PingController \"after all\" hook in \"PingController\"",
+              "timedOut": false,
+              "duration": 1,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "await app.stop();",
+              "err": {},
+              "uuid": "27ec5e4d-ff7c-4d37-986a-5d6ea8e8b88d",
+              "parentUUID": "e6264d9d-4cb4-4f30-8f42-3e82446e732a",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "tests": [
+            {
+              "title": "invokes GET /ping",
+              "fullTitle": "PingController invokes GET /ping",
+              "timedOut": false,
+              "duration": 14,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const res = await client.get('/ping?msg=world').expect(200);\n(0, testlab_1.expect)(res.body).to.containEql({ greeting: 'Hello from LoopBack' });",
+              "err": {},
+              "uuid": "51fb9cdc-b8e8-4dec-b1a9-f00769de4ee7",
+              "parentUUID": "e6264d9d-4cb4-4f30-8f42-3e82446e732a",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "51fb9cdc-b8e8-4dec-b1a9-f00769de4ee7"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 14,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "11.1.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": null,
+      "version": "6.2.0"
+    }
+  }
+}
