@@ -1,6 +1,6 @@
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {juggler} from '@loopback/repository';
-import {AuthDbSourceName} from '@sourceloop/authentication-service'
+import {AuthDbSourceName} from '@sourceloop/authentication-service';
 
 const DEFAULT_MAX_CONNECTIONS = 25;
 const DEFAULT_DB_IDLE_TIMEOUT_MILLIS = 60000;
@@ -12,9 +12,9 @@ const config = {
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   user: process.env.DB_USER,
-      schema: process.env.DB_SCHEMA,
-    password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE
+  schema: process.env.DB_SCHEMA,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
 };
 
 // Observe application's life cycle to disconnect the datasource when
@@ -22,11 +22,11 @@ const config = {
 // gracefully. The `stop()` method is inherited from `juggler.DataSource`.
 // Learn more at https://loopback.io/doc/en/lb4/Life-cycle.html
 @lifeCycleObserver('datasource')
-export class AuthDataSource extends juggler.DataSource
- 	 implements LifeCycleObserver { 
-  
-      static dataSourceName = AuthDbSourceName;
-    	
+export class AuthDataSource
+  extends juggler.DataSource
+  implements LifeCycleObserver
+{
+  static readonly dataSourceName = AuthDbSourceName;
 
   static readonly defaultConfig = config;
 

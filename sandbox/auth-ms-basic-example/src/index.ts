@@ -1,4 +1,7 @@
-import {ApplicationConfig, AuthBasicLoginSignupExampleApplication} from './application';
+import {
+  ApplicationConfig,
+  AuthBasicLoginSignupExampleApplication,
+} from './application';
 
 export * from './application';
 

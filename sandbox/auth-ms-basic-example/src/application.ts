@@ -1,33 +1,37 @@
 import {BootMixin} from '@loopback/boot';
 import {ApplicationConfig} from '@loopback/core';
+import {RepositoryMixin} from '@loopback/repository';
+import {RestApplication} from '@loopback/rest';
 import {
   RestExplorerBindings,
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
-import * as dotenv from 'dotenv';
-import * as dotenvExt from 'dotenv-extended';
-import {AuthenticationBindings, AuthenticationComponent, AuthStrategyProvider, Strategies} from 'loopback4-authentication';
+import {ServiceMixin} from '@loopback/service-proxy';
 import {
-  AuthorizationBindings,
-  AuthorizationComponent,
-} from 'loopback4-authorization';
+  AuthenticationServiceComponent,
+  AuthServiceBindings,
+  SignUpBindings,
+} from '@sourceloop/authentication-service';
 import {
-  ServiceSequence,
-  SFCoreBindings,
   BearerVerifierBindings,
   BearerVerifierComponent,
   BearerVerifierConfig,
   BearerVerifierType,
   SECURITY_SCHEME_SPEC,
+  ServiceSequence,
+  SFCoreBindings,
 } from '@sourceloop/core';
-import {AuthenticationServiceComponent, AuthServiceBindings, SignUpBindings} from '@sourceloop/authentication-service'
-import {RepositoryMixin} from '@loopback/repository';
-import {RestApplication} from '@loopback/rest';
-import {ServiceMixin} from '@loopback/service-proxy';
+import * as dotenv from 'dotenv';
+import * as dotenvExt from 'dotenv-extended';
+import {AuthenticationComponent, Strategies} from 'loopback4-authentication';
+import {LocalPasswordStrategyFactoryProvider} from 'loopback4-authentication/passport-local';
+import {
+  AuthorizationBindings,
+  AuthorizationComponent,
+} from 'loopback4-authorization';
 import path from 'path';
 import * as openapi from './openapi.json';
-import { LocalPasswordStrategyFactoryProvider } from 'loopback4-authentication/passport-local';
-import { LocalSignupProvider, SignupTokenHandlerProvider } from './providers';
+import {LocalSignupProvider, SignupTokenHandlerProvider} from './providers';
 
 export {ApplicationConfig};
 
@@ -60,17 +64,18 @@ export class AuthBasicLoginSignupExampleApplication extends BootMixin(
     // To check if monitoring is enabled from env or not
     const enableObf = !!+(process.env.ENABLE_OBF ?? 0);
     // To check if authorization is enabled for swagger stats or not
-    const authentication =
-      process.env.SWAGGER_USER && process.env.SWAGGER_PASSWORD ? true : false;
-      const obj={
-        enableObf,
-        obfPath: process.env.OBF_PATH ?? '/obf',
-        openapiSpec: openapi,
-        authentication: authentication,
-        swaggerUsername: process.env.SWAGGER_USER,
-        swaggerPassword: process.env.SWAGGER_PASSWORD,
-        
-      }
+    const authentication = !!(
+      process.env.SWAGGER_USER && process.env.SWAGGER_PASSWORD
+    );
+
+    const obj = {
+      enableObf,
+      obfPath: process.env.OBF_PATH ?? '/obf',
+      openapiSpec: openapi,
+      authentication: authentication,
+      swaggerUsername: process.env.SWAGGER_USER,
+      swaggerPassword: process.env.SWAGGER_PASSWORD,
+    };
     this.bind(SFCoreBindings.config).to(obj);
 
     // Set up the custom sequence
@@ -80,15 +85,18 @@ export class AuthBasicLoginSignupExampleApplication extends BootMixin(
     this.component(AuthenticationComponent);
     this.bind(AuthServiceBindings.Config).to({
       useSymmetricEncryption: true,
-      });
+    });
 
-
-  this.bind(Strategies.Passport.LOCAL_STRATEGY_FACTORY).toProvider(LocalPasswordStrategyFactoryProvider);
-  this.component(AuthenticationServiceComponent);
-  this.bind(SignUpBindings.LOCAL_SIGNUP_PROVIDER).toProvider(
-    LocalSignupProvider,
-  );
-  this.bind(SignUpBindings.SIGNUP_HANDLER_PROVIDER).toProvider(SignupTokenHandlerProvider);
+    this.bind(Strategies.Passport.LOCAL_STRATEGY_FACTORY).toProvider(
+      LocalPasswordStrategyFactoryProvider,
+    );
+    this.component(AuthenticationServiceComponent);
+    this.bind(SignUpBindings.LOCAL_SIGNUP_PROVIDER).toProvider(
+      LocalSignupProvider,
+    );
+    this.bind(SignUpBindings.SIGNUP_HANDLER_PROVIDER).toProvider(
+      SignupTokenHandlerProvider,
+    );
 
     // Add bearer verifier component
     this.bind(BearerVerifierBindings.Config).to({
@@ -110,7 +118,6 @@ export class AuthBasicLoginSignupExampleApplication extends BootMixin(
     });
 
     this.component(RestExplorerComponent);
-
 
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here

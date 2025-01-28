@@ -1,9 +1,9 @@
-import {AuthBasicLoginSignupExampleApplication} from '../..';
 import {
+  Client,
   createRestAppClient,
   givenHttpServerConfig,
-  Client,
 } from '@loopback/testlab';
+import {AuthBasicLoginSignupExampleApplication} from '../..';
 
 export async function setupApplication(): Promise<AppWithClient> {
   const restConfig = givenHttpServerConfig({
@@ -19,18 +19,16 @@ export async function setupApplication(): Promise<AppWithClient> {
     rest: restConfig,
   });
 
-        app.bind('datasources.config.db').to({
-      name: 'db',
-      connector: 'memory',
-    });
-      
+  app.bind('datasources.config.auth').to({
+    name: 'auth',
+    connector: 'memory',
+  });
 
-      app.bind(`datasources.config.${process.env.REDIS_NAME}`).to({
-      name: process.env.REDIS_NAME,
-      connector: 'kv-memory',
-    });
-  
-  
+  app.bind(`datasources.config.${process.env.REDIS_NAME}`).to({
+    name: process.env.REDIS_NAME,
+    connector: 'kv-memory',
+  });
+
   await app.boot();
   await app.start();
 
@@ -43,8 +41,8 @@ function setUpEnv() {
   process.env.NODE_ENV = 'test';
   process.env.ENABLE_TRACING = '0';
   process.env.ENABLE_OBF = '0';
-    process.env.REDIS_NAME = 'redis';
-    process.env.HOST='localhost';
+  process.env.REDIS_NAME = 'redis';
+  process.env.HOST = '127.0.0.1';
 }
 
 export interface AppWithClient {

@@ -16,8 +16,6 @@ export class LocalSignupProvider
   ) {}
 
   value(): UserSignupFn<UserDto, UserDto> {
-
-
     return async (model, token) => this.userOps.createUser(model, {});
   }
 }

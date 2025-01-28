@@ -3,3 +3,4 @@ dist/
 coverage/
 .eslintrc.js
 mochawesome-report
+migrations/

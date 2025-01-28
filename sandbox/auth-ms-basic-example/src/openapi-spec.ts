@@ -1,6 +1,6 @@
 import {ApplicationConfig} from '@loopback/core';
 import {AuthBasicLoginSignupExampleApplication} from './application';
-
+const PORT_NUMBER = 3000;
 const ARGV_INDEX = 2;
 /**
  * Export the OpenAPI spec from the application
@@ -8,7 +8,7 @@ const ARGV_INDEX = 2;
 async function exportOpenApiSpec(): Promise<void> {
   const config: ApplicationConfig = {
     rest: {
-      port: +(process.env.PORT ?? 3000),
+      port: +(process.env.PORT ?? PORT_NUMBER),
       host: process.env.HOST ?? 'localhost',
     },
   };
@@ -23,9 +23,5 @@ exportOpenApiSpec()
     process.exit(0);
   })
   .catch(err => {
-    console.error(
-      'Fail to export OpenAPI spec from the application.',
-      err,
-    );
     process.exit(1);
   });
