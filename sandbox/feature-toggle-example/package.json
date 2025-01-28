@@ -35,9 +35,9 @@
         "start": "node -r source-map-support/register .",
         "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
         "rebuild": "npm run clean && npm run build",
-        "db:migrate": "./node_modules/db-migrate/bin/db-migrate up --config './migrations/database.json'",
-        "db:migrate:down": "./node_modules/db-migrate/bin/db-migrate down --config './migrations/database.json'",
-        "db:migrate:reset": "./node_modules/db-migrate/bin/db-migrate reset --config './migrations/database.json'"
+        "db:migrate": "../../node_modules/db-migrate/bin/db-migrate up --config './migrations/database.json'",
+        "db:migrate:down": "../../node_modules/db-migrate/bin/db-migrate down --config './migrations/database.json'",
+        "db:migrate:reset": "../../node_modules/db-migrate/bin/db-migrate reset --config './migrations/database.json'"
     },
     "repository": {
         "type": "git",
