@@ -42,7 +42,7 @@ function setUpEnv() {
   process.env.ENABLE_TRACING = '0';
   process.env.ENABLE_OBF = '0';
   process.env.REDIS_NAME = 'redis';
-  process.env.HOST = 'localhost';
+  process.env.HOST = '127.0.0.1';
 }
 
 export interface AppWithClient {
