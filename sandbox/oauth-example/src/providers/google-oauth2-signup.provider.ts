@@ -78,7 +78,7 @@ export class GoogleOauth2SignupProvider implements Provider<GoogleSignUpFn> {
         tenantId: tenant?.id,
         roleId: role?.id,
       });
-      return user as User & UserRelations;
+      return user as User & UserRelations; // NOSONAR
     };
   }
 }
