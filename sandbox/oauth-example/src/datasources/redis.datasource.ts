@@ -1,19 +1,35 @@
-// Copyright (c) 2023 Sourcefuse Technologies
-//
-// This software is released under the MIT License.
-// https://opensource.org/licenses/MIT
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
-import {juggler} from '@loopback/repository';
+import {AnyObject, juggler} from '@loopback/repository';
 import {AuthCacheSourceName} from '@sourceloop/authentication-service';
+import {readFileSync} from 'fs';
 
 const config = {
-  name: AuthCacheSourceName,
+  name: process.env.REDIS_NAME,
   connector: 'kv-redis',
-  url: '',
   host: process.env.REDIS_HOST,
   port: process.env.REDIS_PORT,
   password: process.env.REDIS_PASSWORD,
-  database: process.env.REDIS_DATABASE,
+  db: process.env.REDIS_DATABASE,
+  url: process.env.REDIS_URL,
+  tls:
+    +process.env.REDIS_TLS_ENABLED! ||
+    (process.env.REDIS_TLS_CERT
+      ? {
+          ca: readFileSync(process.env.REDIS_TLS_CERT),
+        }
+      : undefined),
+  sentinels:
+    +process.env.REDIS_HAS_SENTINELS! && process.env.REDIS_SENTINELS
+      ? JSON.parse(process.env.REDIS_SENTINELS)
+      : undefined,
+  sentinelPassword:
+    +process.env.REDIS_HAS_SENTINELS! && process.env.REDIS_SENTINEL_PASSWORD
+      ? process.env.REDIS_SENTINEL_PASSWORD
+      : undefined,
+  role:
+    +process.env.REDIS_HAS_SENTINELS! && process.env.REDIS_SENTINEL_ROLE
+      ? process.env.REDIS_SENTINEL_ROLE
+      : undefined,
 };
 
 // Observe application's life cycle to disconnect the datasource when
@@ -29,9 +45,21 @@ export class RedisDataSource
   static readonly defaultConfig = config;
 
   constructor(
-    @inject('datasources.config.redis', {optional: true})
-    dsConfig: object = config,
+    @inject(`datasources.config.${process.env.REDIS_NAME}`, {optional: true})
+    dsConfig: AnyObject = config,
   ) {
+    if (
+      +process.env.REDIS_HAS_SENTINELS! &&
+      !!process.env.REDIS_SENTINEL_HOST &&
+      !!process.env.REDIS_SENTINEL_PORT
+    ) {
+      dsConfig.sentinels = [
+        {
+          host: process.env.REDIS_SENTINEL_HOST,
+          port: +process.env.REDIS_SENTINEL_PORT,
+        },
+      ];
+    }
     super(dsConfig);
   }
 }

@@ -1,20 +1,11 @@
-// Copyright (c) 2023 Sourcefuse Technologies
-//
-// This software is released under the MIT License.
-// https://opensource.org/licenses/MIT
 import {inject} from '@loopback/core';
-import {
-  get,
-  Request,
-  response,
-  ResponseObject,
-  RestBindings,
-} from '@loopback/rest';
+import {Request, RestBindings, get, ResponseObject} from '@loopback/rest';
+import {authorize} from 'loopback4-authorization';
+import {STATUS_CODE} from '@sourceloop/core';
 
 /**
  * OpenAPI response for ping()
  */
-const statusCode = 200;
 const PING_RESPONSE: ResponseObject = {
   description: 'Ping Response',
   content: {
@@ -48,8 +39,12 @@ export class PingController {
   ) {}
 
   // Map to `GET /ping`
-  @get('/ping')
-  @response(statusCode, PING_RESPONSE)
+  @authorize({permissions: ['*']})
+  @get('/ping', {
+    responses: {
+      [STATUS_CODE.OK]: PING_RESPONSE,
+    },
+  })
   ping(): object {
     // Reply with a greeting, the current time, the url, and request headers
     return {
