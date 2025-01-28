@@ -1,13 +1,9 @@
-// Copyright (c) 2023 Sourcefuse Technologies
-//
-// This software is released under the MIT License.
-// https://opensource.org/licenses/MIT
 import {Client, expect} from '@loopback/testlab';
-import {AuthServiceApplication} from '../..';
+import {AuthApplication} from '../..';
 import {setupApplication} from './test-helper';
 
 describe('PingController', () => {
-  let app: AuthServiceApplication;
+  let app: AuthApplication;
   let client: Client;
 
   before('setupApplication', async () => {

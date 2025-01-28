@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2023 Sourcefuse Technologies
+﻿// Copyright (c) 2022 Sourcefuse Technologies
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
@@ -8,14 +8,12 @@ import {HttpErrors} from '@loopback/rest';
 import {
   AuthClientRepository,
   GoogleSignUpFn,
-  User,
-  UserRelations,
-} from '@sourceloop/authentication-service';
-import {
   RoleRepository,
   TenantRepository,
+  User,
+  UserRelations,
   UserRepository,
-} from '../repositories';
+} from '@sourceloop/authentication-service';
 
 export class GoogleOauth2SignupProvider implements Provider<GoogleSignUpFn> {
   constructor(
@@ -61,8 +59,8 @@ export class GoogleOauth2SignupProvider implements Provider<GoogleSignUpFn> {
       }
 
       const user = await this.userRepo.createWithoutPassword({
-        firstName: profile.name!.givenName,
-        lastName: profile.name!.familyName,
+        firstName: profile.name?.givenName ?? '',
+        lastName: profile.name?.familyName ?? '',
         username: profile._json.email,
         email: profile._json.email,
         defaultTenantId: tenant?.id,
@@ -80,7 +78,7 @@ export class GoogleOauth2SignupProvider implements Provider<GoogleSignUpFn> {
         tenantId: tenant?.id,
         roleId: role?.id,
       });
-      return user as User & UserRelations;
+      return user as User & UserRelations; // NOSONAR
     };
   }
 }
