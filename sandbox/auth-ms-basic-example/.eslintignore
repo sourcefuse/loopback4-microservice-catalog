@@ -1,6 +1,0 @@
-node_modules/
-dist/
-coverage/
-migrations/
-migration.js
-.eslintrc.js
