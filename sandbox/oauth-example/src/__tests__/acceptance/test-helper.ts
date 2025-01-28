@@ -1,9 +1,9 @@
-import {AuthApplication} from '../..';
 import {
+  Client,
   createRestAppClient,
   givenHttpServerConfig,
-  Client,
 } from '@loopback/testlab';
+import {AuthApplication} from '../..';
 
 export async function setupApplication(): Promise<AppWithClient> {
   const restConfig = givenHttpServerConfig({
@@ -19,8 +19,8 @@ export async function setupApplication(): Promise<AppWithClient> {
     rest: restConfig,
   });
 
-  app.bind('datasources.config.db').to({
-    name: 'db',
+  app.bind('datasources.config.auth').to({
+    name: 'auth',
     connector: 'memory',
   });
 
