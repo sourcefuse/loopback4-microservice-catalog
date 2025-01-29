@@ -37,7 +37,7 @@ export class UserOpsService {
   ) {}
 
   createUserToken(dto: DataObject<SignupRequestResponseDto>) {
-    console.log(dto);
+    console.log(dto); //NOSONAR
   }
 
   async createUser(user: LocalUserProfileDto, options: AnyObject) {
