@@ -3,15 +3,17 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {BindingScope, injectable} from '@loopback/core';
-import {AnyObject, repository} from '@loopback/repository';
+import {AnyObject, DataObject, repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {
   AuthClientRepository,
+  LocalUserProfileDto,
+  Role,
   RoleRepository,
+  SignupRequestResponseDto,
   User,
   UserCredentials,
   UserRepository,
-  UserTenant,
   UserTenantRepository,
 } from '@sourceloop/authentication-service';
 import {UserStatus} from '@sourceloop/core';
@@ -19,6 +21,7 @@ import {AuthenticateErrorKeys} from '@sourceloop/core/src/enums';
 import bcrypt from 'bcrypt';
 import {UserDto} from '../models/user.dto';
 const saltRounds = 10;
+const DEFAULT_TENANT_ID = '91afb1b3-15ef-66f9-b5c3-d9c4daaa0b34'; // tenant with this id needs to be present in db
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class UserOpsService {
@@ -33,70 +36,117 @@ export class UserOpsService {
     private readonly authClientsRepository: AuthClientRepository,
   ) {}
 
-  async createUser(user: UserDto, options: AnyObject) {
-    this.validateUserCreation(user, options);
+  createUserToken(dto: DataObject<SignupRequestResponseDto>) {
+    console.log(dto); //NOSONAR
+  }
 
+  async createUser(user: LocalUserProfileDto, options: AnyObject) {
+    const userDto = await this.prepareUserDto(user);
+    this.validateUserCreation(userDto, options);
+
+    await this.validateAuthClient(userDto.clientId);
+
+    const existingUser = await this.findExistingUser(userDto);
+    if (existingUser) {
+      return this.handleExistingUser(existingUser, userDto, options);
+    }
+
+    return this.createNewUser(userDto, user, options);
+  }
+
+  private async prepareUserDto(user: LocalUserProfileDto): Promise<UserDto> {
+    const role = await this.roleRepository.create(
+      new Role({
+        name: 'USER',
+        tenantId: DEFAULT_TENANT_ID,
+        roleType: 1,
+      }),
+    );
+
+    return new UserDto({
+      ...user,
+      tenantId: DEFAULT_TENANT_ID,
+      username: user.email,
+      firstName: 'test',
+      lastName: 'NA',
+      roleId: role.id ?? '',
+    });
+  }
+
+  private async validateAuthClient(clientId: string) {
     const authClient = await this.authClientsRepository.findOne({
-      where: {
-        clientId: user.clientId,
-      },
+      where: {clientId},
     });
 
     if (!authClient) {
       throw new HttpErrors.BadRequest('Invalid Client');
     }
+  }
 
-    const userExists = await this.userRepository.findOne({
+  private async findExistingUser(userDto: UserDto) {
+    return this.userRepository.findOne({
       where: {
-        or: [{username: user.username}, {email: user.email}],
+        or: [{username: userDto.username}, {email: userDto.email}],
       },
-      fields: {
-        id: true,
+      fields: {id: true},
+    });
+  }
+
+  private async handleExistingUser(
+    existingUser: User,
+    userDto: UserDto,
+    options: AnyObject,
+  ) {
+    const userTenantExists = await this.utRepository.findOne({
+      where: {
+        userId: existingUser.id,
+        tenantId: userDto.tenantId,
       },
     });
-    if (userExists) {
-      const userTenantExists = await this.utRepository.findOne({
-        where: {
-          userId: userExists.id,
-          tenantId: user.tenantId,
-        },
-      });
-      if (userTenantExists) {
-        throw new HttpErrors.BadRequest('User already exists');
-      } else {
-        const userTenant: UserTenant = await this.createUserTenantData(
-          user,
-          UserStatus.ACTIVE,
-          userExists?.id,
-          options,
-        );
-        return new UserDto({
-          roleId: userTenant.roleId,
-          status: userTenant.status,
-          tenantId: userTenant.tenantId,
-          userTenantId: userTenant.id,
-        });
-      }
+
+    if (userTenantExists) {
+      throw new HttpErrors.BadRequest('User already exists');
     }
 
-    const username = user.username;
-    user.username = username.toLowerCase();
-    //Override default tenant id
+    const userTenant = await this.createUserTenantData(
+      userDto,
+      UserStatus.ACTIVE,
+      existingUser?.id,
+      options,
+    );
+
+    return new UserDto({
+      roleId: userTenant.roleId,
+      status: userTenant.status,
+      tenantId: userTenant.tenantId,
+      userTenantId: userTenant.id,
+    });
+  }
+
+  private async createNewUser(
+    userDto: UserDto,
+    user: LocalUserProfileDto,
+    options: AnyObject,
+  ) {
+    const authClient = await this.authClientsRepository.findOne({
+      where: {clientId: userDto.clientId},
+    });
+
     const userSaved = await this.userRepository.createWithoutPassword(
       new User({
-        username: user.username,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        phone: user.phone,
-        defaultTenantId: user.tenantId,
+        username: userDto.username?.toLowerCase() ?? 'NA',
+        firstName: userDto.firstName ?? 'NA',
+        lastName: userDto.lastName ?? 'NA',
+        email: userDto.email ?? 'NA',
+        phone: userDto.phone ?? 'NA',
+        defaultTenantId: userDto.tenantId ?? 'NA',
         authClientIds: `{${authClient?.id}}`,
       }),
       options,
     );
 
     const userTenantData = await this.createUserTenantData(
-      user,
+      userDto,
       UserStatus.ACTIVE,
       userSaved?.id,
       options,

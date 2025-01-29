@@ -1,30 +1,27 @@
-﻿// Copyright (c) 2023 Sourcefuse Technologies
-//
-// This software is released under the MIT License.
-// https://opensource.org/licenses/MIT
 import {ApplicationConfig} from '@loopback/core';
-import {AuthMultitenantExampleApplication} from './application';
-
+import {AuthBasicLoginSignupExampleApplication} from './application';
+const PORT_NUMBER = 3000;
+const ARGV_INDEX = 2;
 /**
  * Export the OpenAPI spec from the application
  */
-
-const PORT = 3000;
-const FILEARG = 2;
 async function exportOpenApiSpec(): Promise<void> {
   const config: ApplicationConfig = {
     rest: {
-      port: +(process.env.PORT ?? PORT),
+      port: +(process.env.PORT ?? PORT_NUMBER),
       host: process.env.HOST ?? 'localhost',
     },
   };
-  const outFile = process.argv[FILEARG] ?? '';
-  const app = new AuthMultitenantExampleApplication(config);
+  const outFile = process.argv[ARGV_INDEX] ?? './src/openapi.json';
+  const app = new AuthBasicLoginSignupExampleApplication(config);
   await app.boot();
   await app.exportOpenApiSpec(outFile);
 }
 
-exportOpenApiSpec().catch(err => {
-  console.error('Fail to export OpenAPI spec from the application.', err); //NOSONAR
-  process.exit(1);
-});
+exportOpenApiSpec()
+  .then(() => {
+    process.exit(0);
+  })
+  .catch(err => {
+    process.exit(1);
+  });

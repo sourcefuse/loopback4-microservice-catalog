@@ -1,25 +1,14 @@
-﻿// Copyright (c) 2023 Sourcefuse Technologies
-//
-// This software is released under the MIT License.
-// https://opensource.org/licenses/MIT
-import dotenv from 'dotenv';
-import dotenvExt from 'dotenv-extended';
 import {
   ApplicationConfig,
-  AuthMultitenantExampleApplication,
+  AuthBasicLoginSignupExampleApplication,
 } from './application';
+
 export * from './application';
 
-dotenv.config();
-dotenvExt.load({
-  schema: '.env.example',
-  errorOnMissing: true,
-  includeProcessEnv: true,
-});
 const PORT = 3000;
 
 export async function main(options: ApplicationConfig = {}) {
-  const app = new AuthMultitenantExampleApplication(options);
+  const app = new AuthBasicLoginSignupExampleApplication(options);
   await app.boot();
   await app.start();
 
