@@ -30,6 +30,7 @@ import {LocaleKey} from './enums';
 import {OASBindings, SFCoreBindings} from './keys';
 import {TenantContextMiddlewareInterceptorProvider} from './middlewares';
 import {TenantIdEncryptionProvider} from './providers/tenantid-encryption.provider';
+import {DefaultUserModifyCrudService} from './services/default-user-modify-crud.service';
 import {CoreConfig, addTenantId} from './types';
 
 export class CoreComponent implements Component {
@@ -100,6 +101,9 @@ export class CoreComponent implements Component {
     this.bindings.push(Binding.bind(OASBindings.HiddenEndpoint).to([]));
     this.bindings.push(Binding.bind(SFCoreBindings.i18n).to(this.localeObj));
     this.application.add(createBindingFromClass(OperationSpecEnhancer));
+    this.application
+      .bind(SFCoreBindings.DEFAULT_USER_MODIFY_CRUD_SERVICE)
+      .toClass(DefaultUserModifyCrudService);
   }
 
   private _setupSwaggerStats(): ExpressRequestHandler | undefined {
