@@ -14,10 +14,9 @@ import {
 } from 'loopback4-authentication';
 import moment from 'moment';
 import * as jose from 'node-jose';
-import {JwtKeysRepository} from '../../../repositories';
 import {ILogger, LOGGER} from '../../logger-extension';
 import {IAuthUserWithPermissions} from '../keys';
-import {RevokedTokenRepository} from '../repositories';
+import {PublicKeysRepository, RevokedTokenRepository} from '../repositories';
 
 export class FacadesBearerAsymmetricTokenVerifyProvider
   implements Provider<VerifyFunction.BearerFn>
@@ -25,9 +24,9 @@ export class FacadesBearerAsymmetricTokenVerifyProvider
   constructor(
     @repository(RevokedTokenRepository)
     public revokedTokenRepository: RevokedTokenRepository,
+    @repository(PublicKeysRepository)
+    public publicKeysRepository: PublicKeysRepository,
     @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
-    @repository(JwtKeysRepository)
-    public jwtKeysRepo: JwtKeysRepository,
     @inject(AuthenticationBindings.USER_MODEL, {optional: true})
     public authUserModel?: Constructor<EntityWithIdentifier & IAuthUser>,
   ) {}
@@ -53,14 +52,10 @@ export class FacadesBearerAsymmetricTokenVerifyProvider
         if (!decoded) {
           throw new Error('Token is not valid');
         }
-        const kid = decoded?.header.kid;
+        const kid = decoded?.header.kid ?? '';
 
-        // Load the JWKS
-        const key = await this.jwtKeysRepo.findOne({
-          where: {
-            keyId: kid,
-          },
-        });
+        // Get the public key from the cache
+        const key = await this.publicKeysRepository.get(kid);
 
         if (!key) {
           throw new Error('Key not found for verification');

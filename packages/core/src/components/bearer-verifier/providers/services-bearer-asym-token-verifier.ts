@@ -14,9 +14,9 @@ import {
 } from 'loopback4-authentication';
 import moment from 'moment-timezone';
 import * as jose from 'node-jose';
-import {JwtKeysRepository} from '../../../repositories';
 import {ILogger, LOGGER} from '../../logger-extension';
 import {IAuthUserWithPermissions} from '../keys';
+import {JwtKeysRepository} from '../repositories';
 
 export class ServicesBearerAsymmetricTokenVerifyProvider
   implements Provider<VerifyFunction.BearerFn>
