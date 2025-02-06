@@ -6,10 +6,10 @@ import {Constructor, inject, Provider} from '@loopback/context';
 import {HttpErrors} from '@loopback/rest';
 import {verify} from 'jsonwebtoken';
 import {
-  VerifyFunction,
   AuthenticationBindings,
   EntityWithIdentifier,
   IAuthUser,
+  VerifyFunction,
 } from 'loopback4-authentication';
 import moment from 'moment-timezone';
 import {ILogger, LOGGER} from '../../logger-extension';

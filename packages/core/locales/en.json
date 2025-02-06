@@ -44,5 +44,6 @@
 	"Task completion cannot be done through the PATCH API.": "Task completion cannot be done through the PATCH API.",
 	"Unauthorized": "Unauthorized",
 	"No keys found": "No keys found",
-	"[{\"keyword\"": "\"type\",\"dataPath\":\".valueB\",\"schemaPath\":\"#/properties/valueB/type\",\"params\":{\"type\":\"string\"},\"message\":\"should be string\"}]"
+	"[{\"keyword\"": "\"type\",\"dataPath\":\".valueB\",\"schemaPath\":\"#/properties/valueB/type\",\"params\":{\"type\":\"string\"},\"message\":\"should be string\"}]",
+	"JSON.stringify(validate.errors) invalid": "JSON.stringify(validate.errors) invalid"
 }

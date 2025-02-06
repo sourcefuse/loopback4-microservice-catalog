@@ -11,6 +11,7 @@ import {
 import {
   CONTENT_TYPE,
   ErrorCodes,
+  JwtKeysRepository,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
   SuccessResponse,
@@ -24,7 +25,6 @@ import {
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {JwtKeys} from '../../../models';
-import {JwtKeysRepository} from '../../../repositories';
 import {IdpLoginService} from '../../../services';
 import {
   AuthRefreshTokenRequest,
