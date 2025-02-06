@@ -14,10 +14,12 @@ import {
 } from 'loopback4-authentication';
 import moment from 'moment';
 import * as jose from 'node-jose';
-import {JwtKeysRepository} from '../../../repositories';
+import {
+  PublicKeysRepository,
+  RevokedTokenRepository,
+} from '../../../repositories';
 import {ILogger, LOGGER} from '../../logger-extension';
 import {IAuthUserWithPermissions} from '../keys';
-import {RevokedTokenRepository} from '../repositories';
 
 export class FacadesBearerAsymmetricTokenVerifyProvider
   implements Provider<VerifyFunction.BearerFn>
@@ -25,9 +27,9 @@ export class FacadesBearerAsymmetricTokenVerifyProvider
   constructor(
     @repository(RevokedTokenRepository)
     public revokedTokenRepository: RevokedTokenRepository,
+    @repository(PublicKeysRepository)
+    public publicKeysRepository: PublicKeysRepository,
     @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
-    @repository(JwtKeysRepository)
-    public jwtKeysRepo: JwtKeysRepository,
     @inject(AuthenticationBindings.USER_MODEL, {optional: true})
     public authUserModel?: Constructor<EntityWithIdentifier & IAuthUser>,
   ) {}
@@ -44,10 +46,49 @@ export class FacadesBearerAsymmetricTokenVerifyProvider
   value(): VerifyFunction.BearerFn {
     return async (token: string, req?: Request) => {
       await this._checkIfTokenRevoked(token);
-      const user = await this._verifyTokenAndGetUser(token);
+      let user = await this._verifyTokenAndGetUser(token);
       this._checkPasswordExpiry(user);
+      try {
+        // Get the key that matches the token's kid
+        const decoded = jwt.decode(token.trim(), {complete: true});
+        if (!decoded) {
+          throw new Error('Token is not valid');
+        }
+        const kid = decoded?.header.kid ?? '';
 
-      return this.authUserModel ? new this.authUserModel(user) : user;
+        // Get the public key from the cache
+        const key = await this.publicKeysRepository.get(kid);
+
+        if (!key) {
+          throw new Error('Key not found for verification');
+        }
+
+        // Convert the JWK to PEM format for verification
+        const jwkKey = await jose.JWK.asKey(key.publicKey, 'pem');
+        const pem = jwkKey.toPEM(false);
+
+        // Verify the token with the retrieved PEM-formatted public key
+        user = jwt.verify(token, pem, {
+          issuer: process.env.JWT_ISSUER,
+          algorithms: ['RS256'],
+        }) as IAuthUserWithPermissions;
+      } catch (error) {
+        this.logger.error(JSON.stringify(error));
+        throw new HttpErrors.Unauthorized('TokenExpired');
+      }
+
+      if (
+        user.passwordExpiryTime &&
+        moment().isSameOrAfter(moment(user.passwordExpiryTime))
+      ) {
+        throw new HttpErrors.Unauthorized('PasswordExpiryError');
+      }
+
+      if (this.authUserModel) {
+        return new this.authUserModel(user);
+      } else {
+        return user;
+      }
     };
   }
 
@@ -94,7 +135,7 @@ export class FacadesBearerAsymmetricTokenVerifyProvider
       }
 
       const kid = decoded?.header.kid;
-      const key = await this.jwtKeysRepo.findOne({where: {keyId: kid}});
+      const key = await this.publicKeysRepository.get(kid ?? '');
       if (!key) {
         throw new Error('Key not found for verification');
       }

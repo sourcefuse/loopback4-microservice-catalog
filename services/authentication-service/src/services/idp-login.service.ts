@@ -4,7 +4,9 @@ import {HttpErrors, RequestContext} from '@loopback/rest';
 import {
   AuthenticateErrorKeys,
   ILogger,
+  JwtKeysRepository,
   LOGGER,
+  PublicKeysRepository,
   SuccessResponse,
 } from '@sourceloop/core';
 import crypto, {generateKeyPairSync} from 'crypto';
@@ -38,7 +40,6 @@ import {
 import {AuthCodeBindings} from '../providers/keys';
 import {
   AuthClientRepository,
-  JwtKeysRepository,
   LoginActivityRepository,
   RefreshTokenRepository,
   RevokedTokenRepository,
@@ -58,6 +59,8 @@ export class IdpLoginService {
     public userTenantRepo: UserTenantRepository,
     @repository(RefreshTokenRepository)
     public refreshTokenRepo: RefreshTokenRepository,
+    @repository(PublicKeysRepository)
+    public publicKeyRepo: PublicKeysRepository,
     @repository(JwtKeysRepository)
     public jwtKeysRepo: JwtKeysRepository,
     @repository(RevokedTokenRepository)
@@ -509,8 +512,16 @@ export class IdpLoginService {
     const maxKeys = +(process.env.MAX_JWT_KEYS ?? 2);
     if (existingKeys.length >= maxKeys) {
       const oldestKey = existingKeys[0];
+      // Remove the oldest key from the cache and database
+      await this.publicKeyRepo.delete(oldestKey.keyId);
       await this.jwtKeysRepo.deleteById(oldestKey.id);
     }
+
+    // Save the public key to the cache for retrieval on facade
+    await this.publicKeyRepo.set(key.kid, {
+      keyId: key.kid,
+      publicKey,
+    });
 
     // Save public and private keys to the database using JwtKeysRepository
     await this.jwtKeysRepo.create({

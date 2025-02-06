@@ -1,6 +1,6 @@
+import {JwtKeysRepository} from '@sourceloop/core';
 import * as jwt from 'jsonwebtoken';
 import {PermissionKey} from '../../../enums';
-import {JwtKeysRepository} from '../../../repositories';
 
 process.env.JWT_ISSUER = 'test';
 const User = {

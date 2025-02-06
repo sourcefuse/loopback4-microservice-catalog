@@ -7,16 +7,16 @@ import {repository} from '@loopback/repository';
 import {HttpErrors, Request} from '@loopback/rest';
 import {verify} from 'jsonwebtoken';
 import {
-  VerifyFunction,
   AuthenticationBindings,
   EntityWithIdentifier,
   IAuthUser,
+  VerifyFunction,
 } from 'loopback4-authentication';
 import moment from 'moment';
 
+import {RevokedTokenRepository} from '../../../repositories';
 import {ILogger, LOGGER} from '../../logger-extension';
 import {IAuthUserWithPermissions} from '../keys';
-import {RevokedTokenRepository} from '../repositories';
 
 export class FacadesBearerTokenVerifyProvider
   implements Provider<VerifyFunction.BearerFn>
