@@ -1,39 +1,41 @@
-// Copyright (c) 2023 Sourcefuse Technologies
-//
-// This software is released under the MIT License.
-// https://opensource.org/licenses/MIT
 import {inject} from '@loopback/core';
 import {HttpErrors} from '@loopback/rest';
-import {fromBuffer} from 'file-type';
+import {fromStream} from 'file-type';
 
+import {PassThrough} from 'stream';
 import {fileValidator} from '../../decorators';
 import {FileUtilBindings} from '../../keys';
-import {IFileRequestMetadata, IFileValidator} from '../../types';
-import {MulterS3Storage} from '../storage';
+import {File, IFileValidator, MulterConfig} from '../../types';
 
 @fileValidator()
 export class FileTypeValidator implements IFileValidator {
   constructor(
-    @inject(FileUtilBindings.FILE_REQUEST_METADATA)
-    private readonly config: IFileRequestMetadata,
     @inject(FileUtilBindings.TEXT_FILE_TYPES)
     private readonly textFileTypes: string[],
+    @inject(FileUtilBindings.MulterConfig, {optional: true})
+    private readonly uploadOptionsGetter: MulterConfig,
   ) {}
-  async validate(file: Express.Multer.File): Promise<void> {
+  async validate(file: Express.Multer.File): Promise<File> {
     const ext = `.${file.originalname.split('.').pop() ?? ''}`;
+
     if (this.textFileTypes.includes(ext)) {
       await this._validateTextFile(file, ext);
     } else {
-      await this._validateBinaryFile(file, ext);
+      return this._validateBinaryFile(file, ext);
     }
+    return file;
   }
 
   private async _validateTextFile(
     file: Express.Multer.File,
     extension: string,
   ) {
-    if (this.config.extensions) {
-      if (!extension || !this.config.extensions.includes(extension)) {
+    const validExtensions = this.uploadOptionsGetter.configFor(
+      'extensions',
+      file,
+    );
+    if (validExtensions) {
+      if (!extension || !validExtensions.includes(extension)) {
         throw new HttpErrors.BadRequest(`File type not allowed: ${extension}`);
       }
     }
@@ -43,22 +45,35 @@ export class FileTypeValidator implements IFileValidator {
     file: Express.Multer.File,
     extension: string,
   ) {
-    if (this.config.storageOptions?.storageClass === MulterS3Storage) {
-      return;
-    }
-    const trueType = await fromBuffer(file.buffer);
-    /**
-     * Trutype gives `jpg` and we maintain whitelist as `['.jpg']`
-     */
-    let ext: string | undefined = trueType?.ext;
-    if (ext && !ext.startsWith('.')) {
-      ext = `.${ext}`;
-    }
+    const validExtensions = this.uploadOptionsGetter.configFor(
+      'extensions',
+      file,
+    );
 
-    if (this.config.extensions) {
-      if (!ext || !this.config.extensions.includes(ext) || !file.mimetype) {
-        throw new HttpErrors.BadRequest(`File type not allowed: ${ext}`);
+    const saveStream = new PassThrough();
+    file.stream.pipe(saveStream);
+    try {
+      const trueType = await fromStream(file.stream);
+      /**
+       * Trutype gives `jpg` and we maintain whitelist as `['.jpg']`
+       */
+      let ext: string | undefined = trueType?.ext;
+      if (ext && !ext.startsWith('.')) {
+        ext = `.${ext}`;
       }
+
+      if (validExtensions) {
+        if (!ext || !validExtensions.includes(ext) || !file.mimetype) {
+          throw new HttpErrors.BadRequest(`File type not allowed: ${ext}`);
+        }
+      }
+      return {
+        ...file,
+        stream: saveStream,
+      };
+    } catch (error) {
+      saveStream.destroy();
+      throw error;
     }
   }
 }

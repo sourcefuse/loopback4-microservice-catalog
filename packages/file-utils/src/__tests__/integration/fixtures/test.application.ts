@@ -3,9 +3,10 @@ import {ApplicationConfig} from '@loopback/core';
 import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
-import {FileUtilComponent} from '../../../component';
-import {Parent} from './models';
 import {AWSS3Bindings} from 'loopback4-s3';
+import {FileUtilComponent} from '../../../component';
+import {ClamAVValidator} from '../../../services';
+import {Parent} from './models';
 
 export class TestApp extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
@@ -19,6 +20,9 @@ export class TestApp extends BootMixin(
       region: process.env.AWS_REGION ?? '',
     });
     this.component(FileUtilComponent);
+    if (process.env.CLAMAV_HOST && process.env.CLAMAV_PORT) {
+      this.service(ClamAVValidator);
+    }
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here
     this.bootOptions = {

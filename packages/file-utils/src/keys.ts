@@ -1,17 +1,14 @@
-// Copyright (c) 2023 Sourcefuse Technologies
-//
-// This software is released under the MIT License.
-// https://opensource.org/licenses/MIT
 import {BindingKey, BindingTemplate, extensionFor} from '@loopback/core';
 import multer from 'multer';
 import {FileValidatorService} from './services/file-validator.provider';
+import {IConfigGetter, IFileLimitsGetter} from '.';
 
 export const FileUtilComponentNamespace = 'bizbook.fileutil.extension';
 export namespace FileUtilBindings {
   export const MulterInstance = BindingKey.create<multer.Multer>(
     `${FileUtilComponentNamespace}.multer.instance`,
   );
-  export const MulterLimits = BindingKey.create<multer.Options['limits']>(
+  export const MulterConfig = BindingKey.create<IConfigGetter>(
     `${FileUtilComponentNamespace}.multer.limits`,
   );
   export const MulterStorage = BindingKey.create<multer.StorageEngine>(
@@ -25,6 +22,9 @@ export namespace FileUtilBindings {
   );
   export const TEXT_FILE_TYPES = BindingKey.create<string[]>(
     `${FileUtilComponentNamespace}.text.file.types`,
+  );
+  export const LimitProvider = BindingKey.create<IFileLimitsGetter>(
+    `${FileUtilComponentNamespace}.fileutil.limits`,
   );
 }
 
