@@ -112,7 +112,7 @@ This decorator is designed to handle single file uploads in a `multipart/form-da
 
 #### S3 Storage Engine
 
-By default, the files are stored in memory, but the package also provides an s3 based storage engine as well, to use it, you need to install the `loopback4-s3` package - `npm i loopback4-s3` and then you can provide it in the configuration property of the `@fileProperty` or `@file` decorators. If you want it to be used as the default storage engine for every multipart request, you can bind it globally as follows -
+By default, the files are stored in memory, but the package also provides an s3 based storage engine as well, to use it, you need to install the `loopback4-s3` package - `npm i loopback4-s3` and then you can provide it in the configuration property of the `@fileProperty` or `@file` decorators. You also need to bind it globally as follows -
 
 ```ts
 import {MulterS3Storage} from '@sourceloop/file-utils/s3';
@@ -172,7 +172,6 @@ You would also need to update the model decorator with following config in your 
 })
 export class TestModel extends Entity {}
 ```
-
 
 ## Contributing
 
