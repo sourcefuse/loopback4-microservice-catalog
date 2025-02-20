@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.2.0 (2025-02-20)
+
+* feat(file-utils): add support for multiple files and av scan (#2244) ([dacb333](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/dacb333)), closes [#2244](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2244) [#2243](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2243)
+
+
+
+
+
 ## <small>0.1.9 (2025-01-07)</small>
 
 * chore(deps): version update (#2227) ([6d6b00e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6d6b00e)), closes [#2227](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2227)
