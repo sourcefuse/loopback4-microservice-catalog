@@ -11,7 +11,7 @@ import {file, multipartRequestBody} from '../../../../decorators';
 import {FileTypeValidator} from '../../../../services';
 import {MulterS3Storage} from '../../../../sub-packages/s3';
 import {S3File} from '../../../../types';
-import {Parent, ParentWithConfig} from '../models';
+import {MultipleFiles, Parent, ParentWithConfig} from '../models';
 
 export type ParentWithFile = Parent & {file: S3File};
 export type ParentWithMultipleFiles = Parent & {files: S3File[]};
@@ -22,7 +22,9 @@ export class ParentController {
   constructor(
     @inject('services.ReceiverStub')
     private readonly receiverStub: {
-      receive: (data: ParentWithFile | ParentWithMultipleFiles) => void;
+      receive: (
+        data: ParentWithFile | ParentWithMultipleFiles | MultipleFiles,
+      ) => void;
     },
   ) {}
   @post('/parents')
@@ -90,6 +92,18 @@ export class ParentController {
   async createWithModel(
     @multipartRequestBody(Parent)
     data: ParentWithFile,
+  ): Promise<void> {
+    this.receiverStub.receive(data);
+  }
+
+  @post(`/parents/multiple`)
+  @response(200, {
+    description: 'Parent model instance',
+    content: {'application/json': {schema: getModelSchemaRef(Parent)}},
+  })
+  async createMultiple(
+    @multipartRequestBody(MultipleFiles)
+    data: MultipleFiles,
   ): Promise<void> {
     this.receiverStub.receive(data);
   }

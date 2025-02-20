@@ -118,7 +118,7 @@ By default, the files are stored in memory, but the package also provides an s3 
 import {MulterS3Storage} from '@sourceloop/file-utils/s3';
 ...
 // inside component/application constructor
-this.bind(FileUtilBindings.MulterStorage).toProvider(MulterStorageProvider);
+this.service(MulterS3Storage);
 ```
 
 ### File Validations

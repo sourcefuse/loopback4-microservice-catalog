@@ -157,6 +157,26 @@ describe('FileUploaderComponent', () => {
       before(async function () {
         app.bind(FileUtilBindings.LimitProvider).toClass(MulterConfigService);
       });
+      it('should parse a multipart request and accept a multiple binary files as configured in provider', async () => {
+        await client
+          .post('/parents/multiple')
+          .attach(
+            'files',
+            './src/__tests__/integration/fixtures/dummy-files/test.png',
+          )
+          .attach(
+            'files',
+            './src/__tests__/integration/fixtures/dummy-files/test.png',
+          )
+          .field('name', 'testName')
+          .expect(204);
+
+        const arg = receiverStub.receive.getCalls()[0].args[0] as {
+          files: Express.Multer.File[];
+        };
+        expect(arg.files).length(2);
+      });
+
       it('should parse a multipart request and should use config from MulterConfig provider as limitProvider is true', async () => {
         // file type test should not throw an error if correct type matching model is provided
         await client
