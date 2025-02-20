@@ -1,20 +1,21 @@
-// Copyright (c) 2023 Sourcefuse Technologies
-//
-// This software is released under the MIT License.
-// https://opensource.org/licenses/MIT
-import {inject} from '@loopback/core';
 import multer from 'multer';
-import {DEFAULT_MULTER_LIMITS} from '../constant';
+import {inject} from '@loopback/core';
 import {FileUtilBindings} from '../keys';
+import {MulterConfig} from '..';
 
 export class MulterProvider {
   constructor(
     @inject(FileUtilBindings.MulterStorage)
     private readonly storage: multer.StorageEngine,
-    @inject(FileUtilBindings.MulterLimits, {optional: true})
-    private readonly limits: multer.Options['limits'] = DEFAULT_MULTER_LIMITS,
+    @inject(FileUtilBindings.MulterConfig, {optional: true})
+    private readonly multerConfigs: MulterConfig,
   ) {}
-  value() {
-    return multer({storage: this.storage, limits: this.limits});
+
+  async value() {
+    const uploadOptions = this.multerConfigs.limits;
+    return multer({
+      storage: this.storage,
+      limits: uploadOptions.sizeLimits,
+    });
   }
 }

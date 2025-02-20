@@ -1,14 +1,10 @@
-// Copyright (c) 2023 Sourcefuse Technologies
-//
-// This software is released under the MIT License.
-// https://opensource.org/licenses/MIT
 import {
   Constructor,
   inject,
   MetadataInspector,
   Provider,
 } from '@loopback/context';
-import {BindingScope, CoreBindings, injectable} from '@loopback/core';
+import {CoreBindings, injectable, BindingScope} from '@loopback/core';
 
 import {FileUtilBindings} from '../keys';
 import {IFileRequestMetadata} from '../types';
@@ -28,7 +24,7 @@ export class FileMetadataProvider
     if (!this.controllerClass || !this.methodName) return;
     const metadata = getFileMetadata(this.controllerClass, this.methodName);
     if (metadata && metadata.length > 1) {
-      throw Error('Multiple file upload is not supported');
+      throw Error('Multiple file decorators not supported');
     }
     return metadata?.[0];
   }

@@ -1,9 +1,10 @@
 import {Entity, model, property} from '@loopback/repository';
 import {fileProperty} from '../../../../decorators/file-property.decorator';
-import {FileTypeValidator} from '../../../../services';
 
-@model()
-export class Parent extends Entity {
+@model({
+  settings: {multer: {limitsProvider: true}},
+})
+export class ParentWithConfig extends Entity {
   @property({
     type: 'string',
     id: true,
@@ -18,14 +19,10 @@ export class Parent extends Entity {
 
   @fileProperty({
     type: 'string',
-    validators: [FileTypeValidator],
-    extensions: ['.png', '.txt'],
   })
   file: string;
 
-  constructor(data?: Partial<Parent>) {
+  constructor(data?: Partial<ParentWithConfig>) {
     super(data);
   }
 }
-
-export interface ParentRelations {}

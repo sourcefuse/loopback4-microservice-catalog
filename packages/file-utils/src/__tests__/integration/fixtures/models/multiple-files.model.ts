@@ -1,9 +1,10 @@
 import {Entity, model, property} from '@loopback/repository';
 import {fileProperty} from '../../../../decorators/file-property.decorator';
-import {FileTypeValidator} from '../../../../services';
 
-@model()
-export class Parent extends Entity {
+@model({
+  settings: {multer: {limitsProvider: true}},
+})
+export class MultipleFiles extends Entity {
   @property({
     type: 'string',
     id: true,
@@ -17,15 +18,12 @@ export class Parent extends Entity {
   name: string;
 
   @fileProperty({
-    type: 'string',
-    validators: [FileTypeValidator],
-    extensions: ['.png', '.txt'],
+    type: 'array',
+    itemType: 'object',
   })
-  file: string;
+  files: Express.Multer.File[];
 
-  constructor(data?: Partial<Parent>) {
+  constructor(data?: Partial<MultipleFiles>) {
     super(data);
   }
 }
-
-export interface ParentRelations {}
