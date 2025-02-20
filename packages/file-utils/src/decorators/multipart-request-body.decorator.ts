@@ -88,7 +88,6 @@ export function multipartRequestBody<S extends Entity, T = AnyObject>(
       FileUtilBindings.FILE_REQUEST_METADATA,
       {
         definition: model.definition.properties,
-        // TODO: pass this in property of model
         multerConfig: model.definition.settings['multer'],
       },
     )(target, member, index);
