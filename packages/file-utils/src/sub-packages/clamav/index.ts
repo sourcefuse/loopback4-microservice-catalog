@@ -1,1 +1,1 @@
-export * from './validators/clamav-validator.provider';
+export * from './validators';

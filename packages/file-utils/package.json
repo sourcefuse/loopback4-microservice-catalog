@@ -11,21 +11,21 @@
   "exports": {
     ".": "./dist/index.js",
     "./s3": {
-      "type": "./dist/connectors/kafka/index.d.ts",
-      "default": "./dist/connectors/kafka/index.js"
+      "type": "./dist/sub-packages/s3/index.d.ts",
+      "default": "./dist/sub-packages/s3/index.js"
     },
     "./clamav": {
-      "type": "./dist/connectors/sqs/index.d.ts",
-      "default": "./dist/connectors/sqs/index.js"
+      "type": "./dist/sub-packages/clamav/index.d.ts",
+      "default": "./dist/sub-packages/clamav/index.js"
     }
   },
   "typesVersions": {
     "*": {
       "s3": [
-        "./dist/connectors/sqs/index.d.ts"
+        "./dist/sub-packages/s3/index.d.ts"
       ],
       "clamav": [
-        "./dist/connectors/kafka/index.d.ts"
+        "./dist/sub-packages/clamav/index.d.ts"
       ]
     }
   },
