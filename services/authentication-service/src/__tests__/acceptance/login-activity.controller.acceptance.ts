@@ -1,6 +1,7 @@
 import {Client, expect} from '@loopback/testlab';
+import {JwtKeysRepository} from '@sourceloop/core';
 import {LoginType} from '../../enums';
-import {JwtKeysRepository, LoginActivityRepository} from '../../repositories';
+import {LoginActivityRepository} from '../../repositories';
 import {TestingApplication} from '../fixtures/application';
 import {JwtToken} from '../fixtures/datasources/userCredsAndPermission';
 import {setupApplication} from './test-helper';
