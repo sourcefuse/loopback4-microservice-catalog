@@ -31,27 +31,27 @@ export class WorkerImplementationProvider
   value(): WorkerImplementationFn {
     return async worker => {
       if (this.client) {
-        worker.inProgress = false;
+        worker.isInProgress = false;
         worker.running = true;
         const subscription = this.client.subscribe(
           worker.topic,
           ({task, taskService}) => {
-            if (worker.inProgress) return;
-            worker.inProgress = true;
+            if (worker.isInProgress) return;
+            worker.isInProgress = true;
             worker.command.operation(
               {task, taskService},
               (result: AnyObject) => {
                 if (result) {
                   this.ilogger.info(`Worker task completed - ${worker.topic}`);
                 }
-                worker.inProgress = false;
+                worker.isInProgress = false;
               },
             );
           },
         );
         this.client.on('poll:error', () => {
           worker.running = false;
-          worker.inProgress = false;
+          worker.isInProgress = false;
           subscription.unsubscribe();
         });
       } else {

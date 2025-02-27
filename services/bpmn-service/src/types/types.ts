@@ -57,7 +57,7 @@ export type WorkerNameCmdPair<T = AnyObject, R = AnyObject> = {
   topic: string;
   command: BPMTask<T, R>;
   running: boolean;
-  inProgress: boolean;
+  isInProgress: boolean;
 };
 
 export type WorkerImplementationFn<T = AnyObject, R = AnyObject> = (

@@ -34,13 +34,13 @@ describe('RegisterWorker unit', () => {
           command: task1,
           running: false,
           topic: 'topic1',
-          inProgress: false,
+          isInProgress: false,
         },
         {
           command: task2,
           running: false,
           topic: 'topic2',
-          inProgress: false,
+          isInProgress: false,
         },
       ],
       workflow2: [
@@ -48,13 +48,13 @@ describe('RegisterWorker unit', () => {
           command: task3,
           running: false,
           topic: 'topic3',
-          inProgress: false,
+          isInProgress: false,
         },
         {
           command: task4,
           running: false,
           topic: 'topic4',
-          inProgress: false,
+          isInProgress: false,
         },
       ],
     };

@@ -34,7 +34,7 @@ export class CommandObserver implements LifeCycleObserver {
         topic: command.topic,
         command: new BPMTask(command),
         running: false,
-        inProgress: false,
+        isInProgress: false,
       });
     }
     this.logger.debug('Commands registered');
