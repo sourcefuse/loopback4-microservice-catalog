@@ -2,10 +2,10 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {WorkerRegisterFnProvider} from '../../providers/register-worker.service';
-import {expect} from '@loopback/testlab';
-import {BPMTask, WorkerMap} from '../../types';
 import {AnyObject} from '@loopback/repository';
+import {expect} from '@loopback/testlab';
+import {WorkerRegisterFnProvider} from '../../providers/register-worker.service';
+import {BPMTask, WorkerMap} from '../../types';
 
 describe('RegisterWorker unit', () => {
   let map: WorkerMap = {};
@@ -34,11 +34,13 @@ describe('RegisterWorker unit', () => {
           command: task1,
           running: false,
           topic: 'topic1',
+          inProgress: false,
         },
         {
           command: task2,
           running: false,
           topic: 'topic2',
+          inProgress: false,
         },
       ],
       workflow2: [
@@ -46,11 +48,13 @@ describe('RegisterWorker unit', () => {
           command: task3,
           running: false,
           topic: 'topic3',
+          inProgress: false,
         },
         {
           command: task4,
           running: false,
           topic: 'topic4',
+          inProgress: false,
         },
       ],
     };

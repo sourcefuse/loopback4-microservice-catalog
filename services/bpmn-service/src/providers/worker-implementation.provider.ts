@@ -3,11 +3,11 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {inject, Provider} from '@loopback/context';
-import {IWorkflowServiceConfig, WorkerImplementationFn} from '../types';
-import {Client, logger} from 'camunda-external-task-client-js';
-import {WorkflowServiceBindings} from '../keys';
 import {AnyObject} from '@loopback/repository';
 import {ILogger, LOGGER} from '@sourceloop/core';
+import {Client, logger} from 'camunda-external-task-client-js';
+import {WorkflowServiceBindings} from '../keys';
+import {IWorkflowServiceConfig, WorkerImplementationFn} from '../types';
 
 export class WorkerImplementationProvider
   implements Provider<WorkerImplementationFn>
@@ -31,22 +31,27 @@ export class WorkerImplementationProvider
   value(): WorkerImplementationFn {
     return async worker => {
       if (this.client) {
+        worker.inProgress = false;
         worker.running = true;
         const subscription = this.client.subscribe(
           worker.topic,
           ({task, taskService}) => {
+            if (worker.inProgress) return;
+            worker.inProgress = true;
             worker.command.operation(
               {task, taskService},
               (result: AnyObject) => {
                 if (result) {
                   this.ilogger.info(`Worker task completed - ${worker.topic}`);
                 }
+                worker.inProgress = false;
               },
             );
           },
         );
         this.client.on('poll:error', () => {
           worker.running = false;
+          worker.inProgress = false;
           subscription.unsubscribe();
         });
       } else {
