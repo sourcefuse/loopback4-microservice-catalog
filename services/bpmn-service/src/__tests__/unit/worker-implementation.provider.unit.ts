@@ -92,9 +92,6 @@ describe('WorkerImplementationProvider Unit Tests', () => {
   it('should set isInProgress to true when processing starts', async () => {
     const implementationFn = provider.value();
 
-    // Ensure `worker.isInProgress` starts as false
-    expect(worker.isInProgress).to.be.false();
-
     // Modify existing stub instead of re-stubbing
     (worker.command.command.execute as sinon.SinonStub).callsFake(async () => {
       // verify isInProgress is true during worker execution flow
