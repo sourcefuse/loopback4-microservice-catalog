@@ -1,6 +1,6 @@
 {
     "name": "@sourceloop/workflow-ms-example",
-    "version": "0.9.9",
+    "version": "0.9.10",
     "description": "A workflow microservice example.",
     "keywords": [
         "loopback-application",
@@ -59,7 +59,7 @@
         "@loopback/rest": "^14.0.9",
         "@loopback/rest-explorer": "^7.0.9",
         "@loopback/service-proxy": "^7.0.9",
-        "@sourceloop/bpmn-service": "^14.0.2",
+        "@sourceloop/bpmn-service": "^14.0.3",
         "@sourceloop/core": "^15.0.2",
         "ajv": "^8.11.0",
         "ajv-errors": "^3.0.0",
