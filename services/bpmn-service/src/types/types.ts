@@ -4,8 +4,8 @@
 // https://opensource.org/licenses/MIT
 import {AnyObject} from '@loopback/repository';
 import {IServiceConfig} from '@sourceloop/core';
+import {Workflow, WorkflowDto, WorkflowVersion} from '../models';
 import {BPMTask} from './bpm-task';
-import {Workflow, WorkflowVersion, WorkflowDto} from '../models';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface ICommand {
@@ -57,6 +57,7 @@ export type WorkerNameCmdPair<T = AnyObject, R = AnyObject> = {
   topic: string;
   command: BPMTask<T, R>;
   running: boolean;
+  isInProgress: boolean;
 };
 
 export type WorkerImplementationFn<T = AnyObject, R = AnyObject> = (
