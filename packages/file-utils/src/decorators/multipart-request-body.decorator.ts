@@ -4,6 +4,7 @@ import {cloneDeep} from 'lodash';
 
 import {AnyObject, Entity} from '@loopback/repository';
 import {ModelConstructor} from '@sourceloop/core';
+import {isSchemaObject} from '../constant';
 import {FileUtilBindings} from '../keys';
 import {IModelWithFileMetadata} from '../types';
 /**
@@ -49,12 +50,7 @@ export function multipartRequestBody<S extends Entity, T = AnyObject>(
   return function (target: object, member: string, index: number) {
     const defaultSchema: SchemaObject = {
       type: 'object',
-      properties: {
-        file: {
-          type: 'string',
-          format: 'binary',
-        },
-      },
+      properties: {},
     };
     const schema = getJsonSchema(model) as SchemaObject;
     const fileFields = Object.entries(model.definition.properties)
@@ -63,12 +59,20 @@ export function multipartRequestBody<S extends Entity, T = AnyObject>(
     if (schema && fileFields.length) {
       const newSchema = cloneDeep(schema);
       for (const field of fileFields) {
-        if (newSchema.properties?.[field]) {
-          (newSchema.properties?.[field] as SchemaObject).format = 'binary';
+        const fieldSchema = newSchema.properties?.[field];
+        if (isSchemaObject(fieldSchema)) {
+          if (fieldSchema.type === 'array') {
+            fieldSchema.items = {
+              ...fieldSchema.items,
+              format: 'binary',
+            };
+          } else {
+            fieldSchema.format = 'binary';
+          }
         }
       }
       defaultSchema.properties = {
-        ...defaultSchema.properties,
+        ...schema.properties,
         ...newSchema.properties,
       };
     }
