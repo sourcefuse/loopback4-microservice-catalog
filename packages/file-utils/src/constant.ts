@@ -1,3 +1,4 @@
+import {ReferenceObject, SchemaObject} from '@loopback/rest';
 import multer from 'multer';
 import {
   IFileRequestMetadata,
@@ -34,4 +35,10 @@ export function getUploadConfig(
   return uploadOptions.definition
     ? (uploadOptions as IFileRequestMetadata<never>)
     : metadata;
+}
+
+export function isSchemaObject(
+  ob: SchemaObject | ReferenceObject | undefined,
+): ob is SchemaObject {
+  return (ob as SchemaObject)?.type !== undefined;
 }

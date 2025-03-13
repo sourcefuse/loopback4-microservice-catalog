@@ -11,5 +11,5 @@ import {IFileRequestMetadata} from '../types';
 export function fileProperty<T>(
   definition: Partial<PropertyDefinition & IFileRequestMetadata<T>>,
 ) {
-  return property(definition);
+  return property({...definition, file: true});
 }
