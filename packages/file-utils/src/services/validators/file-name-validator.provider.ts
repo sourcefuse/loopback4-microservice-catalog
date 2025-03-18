@@ -1,14 +1,14 @@
 import {HttpErrors} from '@loopback/rest';
 
-import {fileValidator} from '../../decorators';
-import {IFileValidator, File} from '../../types';
 import path from 'path';
 import {NAME_REGEX} from '../../constant';
+import {fileValidator} from '../../decorators';
+import {File, IFileValidator} from '../../types';
 
 @fileValidator()
 export class FileNameValidator implements IFileValidator {
   constructor() {}
-  async validate(file: Express.Multer.File): Promise<File> {
+  async validate(file: File): Promise<File> {
     await this._validateFileName(file);
     return file;
   }
