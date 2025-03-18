@@ -15,7 +15,7 @@ export class FileTypeValidator implements IFileValidator {
     @inject(FileUtilBindings.MulterConfig, {optional: true})
     private readonly uploadOptionsGetter: MulterConfig,
   ) {}
-  async validate(file: Express.Multer.File): Promise<File> {
+  async validate(file: File): Promise<File> {
     const ext = `.${file.originalname.split('.').pop() ?? ''}`;
 
     if (this.textFileTypes.includes(ext)) {
@@ -41,19 +41,16 @@ export class FileTypeValidator implements IFileValidator {
     }
   }
 
-  private async _validateBinaryFile(
-    file: Express.Multer.File,
-    extension: string,
-  ) {
+  private async _validateBinaryFile(file: File, extension: string) {
     const validExtensions = this.uploadOptionsGetter.configFor(
       'extensions',
       file,
     );
 
-    const saveStream = new PassThrough();
-    file.stream.pipe(saveStream);
+    const cloneStream = new PassThrough();
+    file.stream.pipe(cloneStream);
     try {
-      const trueType = await fromStream(file.stream);
+      const trueType = await fromStream(cloneStream);
       /**
        * Trutype gives `jpg` and we maintain whitelist as `['.jpg']`
        */
@@ -67,12 +64,9 @@ export class FileTypeValidator implements IFileValidator {
           throw new HttpErrors.BadRequest(`File type not allowed: ${ext}`);
         }
       }
-      return {
-        ...file,
-        stream: saveStream,
-      };
+      return file;
     } catch (error) {
-      saveStream.destroy();
+      cloneStream.destroy();
       throw error;
     }
   }

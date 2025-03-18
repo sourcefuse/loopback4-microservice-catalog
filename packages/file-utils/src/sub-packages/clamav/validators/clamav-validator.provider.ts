@@ -18,11 +18,8 @@ export class ClamAVValidator implements IFileValidator {
     });
     const cloneStream = new PassThrough();
     file.stream.pipe(cloneStream);
-    const saveStream = new PassThrough();
-    file.stream.pipe(saveStream);
     const cleanup = () => {
       cloneStream.destroy();
-      saveStream.destroy();
     };
     try {
       const result = await clamd.scanStream(cloneStream);
@@ -33,9 +30,6 @@ export class ClamAVValidator implements IFileValidator {
       cleanup();
       throw err;
     }
-    return {
-      ...file,
-      stream: saveStream,
-    };
+    return file;
   }
 }
