@@ -1,5 +1,10 @@
 import {inject, ParameterDecoratorFactory} from '@loopback/core';
-import {getJsonSchema, requestBody, SchemaObject} from '@loopback/rest';
+import {
+  getJsonSchema,
+  ReferenceObject,
+  requestBody,
+  SchemaObject,
+} from '@loopback/rest';
 import {cloneDeep} from 'lodash';
 
 import {AnyObject, Entity} from '@loopback/repository';
@@ -7,6 +12,19 @@ import {ModelConstructor} from '@sourceloop/core';
 import {isSchemaObject} from '../constant';
 import {FileUtilBindings} from '../keys';
 import {IModelWithFileMetadata} from '../types';
+
+function updateSchema(fieldSchema: SchemaObject | ReferenceObject | undefined) {
+  if (isSchemaObject(fieldSchema)) {
+    if (fieldSchema.type === 'array') {
+      fieldSchema.items = {
+        ...fieldSchema.items,
+        format: 'binary',
+      };
+    } else {
+      fieldSchema.format = 'binary';
+    }
+  }
+}
 /**
  * Decorator for handling multipart/form-data requests with file uploads and JSON data.
  *
@@ -60,16 +78,7 @@ export function multipartRequestBody<S extends Entity, T = AnyObject>(
       const newSchema = cloneDeep(schema);
       for (const field of fileFields) {
         const fieldSchema = newSchema.properties?.[field];
-        if (isSchemaObject(fieldSchema)) {
-          if (fieldSchema.type === 'array') {
-            fieldSchema.items = {
-              ...fieldSchema.items,
-              format: 'binary',
-            };
-          } else {
-            fieldSchema.format = 'binary';
-          }
-        }
+        updateSchema(fieldSchema);
       }
       defaultSchema.properties = {
         ...schema.properties,
