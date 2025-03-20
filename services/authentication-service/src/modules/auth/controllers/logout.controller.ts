@@ -164,7 +164,7 @@ export class LogoutController {
 
     if (refreshTokenModel.externalRefreshToken) {
       const params = new URLSearchParams();
-      const logoutUrl = `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/logout`;
+      const logoutUrl = `${process.env.KEYCLOAK_HOST}/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/logout`;
       params.append('refresh_token', refreshTokenModel.externalRefreshToken);
       const strToEncode = `${process.env.KEYCLOAK_CLIENT_ID}:${process.env.KEYCLOAK_CLIENT_SECRET}`;
       fetch(logoutUrl, {
