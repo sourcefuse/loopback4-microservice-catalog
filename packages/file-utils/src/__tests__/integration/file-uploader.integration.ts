@@ -1,6 +1,7 @@
 import {DataObject} from '@loopback/repository';
 import {Client, expect, sinon} from '@loopback/testlab';
 import {FileUtilBindings} from '../..';
+import {MultipartModel} from './fixtures';
 import {ParentWithFile} from './fixtures/controllers/parent.controller';
 import {MulterConfigService} from './fixtures/services/multer-config.service';
 import {TestApp} from './fixtures/test.application';
@@ -10,7 +11,10 @@ describe('FileUploaderComponent', () => {
   let app: TestApp;
   let client: Client;
   let receiverStub: {
-    receive: sinon.SinonStub<[DataObject<ParentWithFile>], void>;
+    receive: sinon.SinonStub<
+      [DataObject<ParentWithFile & MultipartModel>],
+      void
+    >;
   };
   before('setupApplication', async () => {
     ({app, client} = await setupApplication());
@@ -256,6 +260,30 @@ describe('FileUploaderComponent', () => {
           .field('name', 'testName')
           .expect(400);
         expect(response.body.error.message).to.equal('Infected file: test.txt');
+      });
+      it('should parse a multipart request and apply all the validators', async () => {
+        // let response = await client
+        //   .post('/multiple')
+        //   .attach(
+        //     'files',
+        //     './src/__tests__/integration/fixtures/dummy-files/test.txt',
+        //   )
+        //   .field('name', 'testName')
+        //   .expect(400);
+        // expect(response.body.error.message).to.equal('Infected file: test.txt');
+
+        await client
+          .post('/multiple')
+          .attach(
+            'files',
+            './src/__tests__/integration/fixtures/dummy-files/test.png',
+          )
+          .field('name', 'testName')
+          .expect(204);
+
+        expect(
+          receiverStub.receive.getCalls()[0].args[0].files?.size,
+        ).deepEqual(1916);
       });
     });
   });
