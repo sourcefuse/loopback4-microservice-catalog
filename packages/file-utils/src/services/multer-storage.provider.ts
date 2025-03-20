@@ -35,23 +35,15 @@ export class MulterStorageProvider implements Provider<multer.StorageEngine> {
                   cb(error);
                 } else {
                   Promise.all(result.waiters)
-                    .then(results => {
-                      const firstError = results.find(r => r);
-                      if (firstError) {
-                        if (info) {
-                          // need to do this casting because of wrong typings
-                          storage._removeFile(
-                            req,
-                            info as Express.Multer.File,
-                            err => {
-                              cb(new HttpErrors.BadRequest(firstError));
-                            },
-                          );
-                        }
-                      } else {
-                        cb(undefined, info);
-                      }
-                    })
+                    .then(results =>
+                      this._handleValidationResults(
+                        results,
+                        info,
+                        storage,
+                        req,
+                        cb,
+                      ),
+                    )
                     .catch(cb);
                 }
               });
@@ -75,5 +67,25 @@ export class MulterStorageProvider implements Provider<multer.StorageEngine> {
     return this.context.get<multer.StorageEngine>(
       `services.${config?.storageClass.name ?? 'MulterMemoryStorage'}`,
     );
+  }
+
+  private _handleValidationResults(
+    validationResults: Array<string | null>,
+    info: Partial<Express.Multer.File> | undefined,
+    storage: multer.StorageEngine,
+    req: Request,
+    cb: (error?: Error, info?: Partial<Express.Multer.File>) => void,
+  ) {
+    const firstError = validationResults.find(r => r);
+    if (firstError) {
+      if (info) {
+        // need to do this casting because of wrong typings
+        storage._removeFile(req, info as Express.Multer.File, err => {
+          cb(new HttpErrors.BadRequest(firstError));
+        });
+      }
+    } else {
+      cb(undefined, info);
+    }
   }
 }
