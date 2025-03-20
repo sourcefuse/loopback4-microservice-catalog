@@ -42,3 +42,7 @@ export function isSchemaObject(
 ): ob is SchemaObject {
   return (ob as SchemaObject)?.type !== undefined;
 }
+
+export function isFile(file: Partial<File>) {
+  return file instanceof File;
+}

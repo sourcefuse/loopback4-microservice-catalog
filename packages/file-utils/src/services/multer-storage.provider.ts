@@ -38,7 +38,16 @@ export class MulterStorageProvider implements Provider<multer.StorageEngine> {
                     .then(results => {
                       const firstError = results.find(r => r);
                       if (firstError) {
-                        cb(new HttpErrors.BadRequest(firstError));
+                        if (info) {
+                          // need to do this casting because of wrong typings
+                          storage._removeFile(
+                            req,
+                            info as Express.Multer.File,
+                            err => {
+                              cb(new HttpErrors.BadRequest(firstError));
+                            },
+                          );
+                        }
                       } else {
                         cb(undefined, info);
                       }
