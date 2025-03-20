@@ -1,8 +1,8 @@
-import {Context, Provider, inject, service} from '@loopback/core';
+import {Context, inject, Provider, service} from '@loopback/core';
+import {HttpErrors, Request} from '@loopback/rest';
 import multer from 'multer';
-import {getConfigProperty, IFileRequestMetadata} from '../types';
 import {FileUtilBindings} from '../keys';
-import {Request} from '@loopback/rest';
+import {getConfigProperty, IFileRequestMetadata} from '../types';
 import {FileValidatorService} from './file-validator.provider';
 
 export class MulterStorageProvider implements Provider<multer.StorageEngine> {
@@ -28,8 +28,25 @@ export class MulterStorageProvider implements Provider<multer.StorageEngine> {
             file,
             body: req.body,
           })
-          .then(newFile => {
-            if (newFile) storage._handleFile(req, newFile, cb);
+          .then(result => {
+            if (result) {
+              storage._handleFile(req, result.file, (error, info) => {
+                if (error) {
+                  cb(error);
+                } else {
+                  Promise.all(result.waiters)
+                    .then(results => {
+                      const firstError = results.find(r => r);
+                      if (firstError) {
+                        cb(new HttpErrors.BadRequest(firstError));
+                      } else {
+                        cb(undefined, info);
+                      }
+                    })
+                    .catch(cb);
+                }
+              });
+            }
           })
           .catch(err => cb(err));
       },

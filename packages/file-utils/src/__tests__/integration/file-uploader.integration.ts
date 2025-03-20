@@ -259,18 +259,22 @@ describe('FileUploaderComponent', () => {
           )
           .field('name', 'testName')
           .expect(400);
-        expect(response.body.error.message).to.equal('Infected file: test.txt');
+        expect(response.body.error.message).to.equal(
+          'File is infected - test.txt',
+        );
       });
       it('should parse a multipart request and apply all the validators', async () => {
-        // let response = await client
-        //   .post('/multiple')
-        //   .attach(
-        //     'files',
-        //     './src/__tests__/integration/fixtures/dummy-files/test.txt',
-        //   )
-        //   .field('name', 'testName')
-        //   .expect(400);
-        // expect(response.body.error.message).to.equal('Infected file: test.txt');
+        const response = await client
+          .post('/multiple')
+          .attach(
+            'files',
+            './src/__tests__/integration/fixtures/dummy-files/test.txt',
+          )
+          .field('name', 'testName')
+          .expect(400);
+        expect(response.body.error.message).to.equal(
+          'File is infected - test.txt',
+        );
 
         await client
           .post('/multiple')
