@@ -1,10 +1,11 @@
-import {Getter, extensionPoint, extensions, inject} from '@loopback/core';
+import {extensionPoint, extensions, Getter, inject} from '@loopback/core';
 import {FileUtilBindings, FileValidatorExtensionPoint} from '../keys';
 import {
   FileValidatorWithConstructor,
   getConfigProperty,
   IFileRequestMetadata,
   ParsedMultipartData,
+  ValidationResult,
 } from '../types';
 
 @extensionPoint(FileValidatorExtensionPoint.key)
@@ -17,7 +18,7 @@ export class FileValidatorService {
   ) {}
   async validateParsedData(
     parsed: ParsedMultipartData,
-  ): Promise<Express.Multer.File | undefined> {
+  ): Promise<ValidationResult | undefined> {
     const {file} = parsed;
     if (!file) {
       return file;
@@ -31,9 +32,17 @@ export class FileValidatorService {
         applicable.includes(validator.constructor),
       );
     }
+    const waiters: Promise<string | null>[] = [];
     for (const validator of filteredValidators) {
-      newFile = await validator.validate(newFile);
+      const result = await validator.validate(newFile);
+      newFile = result.file;
+      if (result.waiter) {
+        waiters.push(result.waiter);
+      }
     }
-    return newFile;
+    return {
+      file: newFile,
+      waiters,
+    };
   }
 }
