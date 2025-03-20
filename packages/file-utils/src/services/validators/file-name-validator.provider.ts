@@ -1,16 +1,15 @@
 import {HttpErrors} from '@loopback/rest';
 
-import {fileValidator} from '../../decorators';
-import {IFileValidator, File} from '../../types';
 import path from 'path';
 import {NAME_REGEX} from '../../constant';
+import {fileValidator} from '../../decorators';
+import {File, IFileValidator, ValidatorOutput} from '../../types';
 
 @fileValidator()
 export class FileNameValidator implements IFileValidator {
   constructor() {}
-  async validate(file: Express.Multer.File): Promise<File> {
-    await this._validateFileName(file);
-    return file;
+  async validate(file: File): Promise<ValidatorOutput> {
+    return this._validateFileName(file);
   }
 
   private async _validateFileName(file: Express.Multer.File) {
@@ -23,6 +22,6 @@ export class FileNameValidator implements IFileValidator {
         'File name should not contain special characters',
       );
     }
-    return file;
+    return {file};
   }
 }

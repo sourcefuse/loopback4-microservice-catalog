@@ -5,7 +5,7 @@ import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
 import {AWSS3Bindings} from 'loopback4-s3';
 import {FileUtilComponent} from '../../../component';
-import {ClamAVValidator} from '../../../services';
+import {ClamAVValidator} from '../../../sub-packages';
 import {Parent} from './models';
 
 export class TestApp extends BootMixin(
