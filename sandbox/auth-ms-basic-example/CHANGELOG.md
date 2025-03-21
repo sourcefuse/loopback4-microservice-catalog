@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.15.0 (2025-03-21)
+
+* fix(sandbox): update imports in user ops service (#2234) ([f5fc1e1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f5fc1e1)), closes [#2234](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2234) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* refactor(sandbox): update the sandbox sql seed file based on latest db schema (#2233) ([a01b18e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a01b18e)), closes [#2233](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2233) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
 ## <small>0.14.7 (2025-01-07)</small>
 
 * chore(deps): version update (#2227) ([6d6b00e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6d6b00e)), closes [#2227](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2227)

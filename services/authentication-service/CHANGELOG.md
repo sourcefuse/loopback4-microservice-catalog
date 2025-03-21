@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>20.0.3 (2025-03-21)</small>
+
+* fix(authentication-service): update the logout keycloak url (#2248) ([1016fcb](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1016fcb)), closes [#2248](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2248)
+
+
+
+
+
 ## <small>20.0.2 (2025-01-07)</small>
 
 * chore(deps): version update (#2227) ([6d6b00e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6d6b00e)), closes [#2227](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2227)
