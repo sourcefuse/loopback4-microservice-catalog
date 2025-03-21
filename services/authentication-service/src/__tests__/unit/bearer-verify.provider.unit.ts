@@ -3,9 +3,9 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {expect} from '@loopback/testlab';
+import {JwtKeysRepository} from '@sourceloop/core';
 import sinon from 'sinon';
 import {SignupBearerVerifyProvider} from '../../providers';
-import {JwtKeysRepository} from '../../repositories';
 
 describe('Bearer Verify Signup Service', () => {
   let bearerVerifyProvider: SignupBearerVerifyProvider;
