@@ -11,7 +11,7 @@ import {setupEnv} from '../helpers';
 import {repoTestBuilder} from '../helpers/test-builder';
 
 dotenv.config();
-const DEFAULT_TIMEOUT = 5000;
+const DEFAULT_TIMEOUT = 15000;
 
 describe('CachedRepository: Acceptance', () => {
   let app: TestApp;
@@ -33,6 +33,8 @@ describe('CachedRepository: Acceptance', () => {
     if (!process.env.REDIS_HOST || !process.env.REDIS_PORT) {
       // eslint-disable-next-line @typescript-eslint/no-invalid-this
       this.skip();
+    } else {
+      mochaContext.timeout(DEFAULT_TIMEOUT);
     }
   });
   beforeEach(async () => {
@@ -87,11 +89,6 @@ describe('CachedRepository: Acceptance', () => {
     describe(testSuite.title, () => {
       testSuite.tests.forEach(test => {
         it(test.title, async function () {
-          if (test.timeout) {
-            mochaContext.timeout(test.timeout);
-          } else {
-            mochaContext.timeout(DEFAULT_TIMEOUT);
-          }
           await test.test(
             repo,
             mockData,

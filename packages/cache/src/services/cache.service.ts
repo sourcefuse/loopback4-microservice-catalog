@@ -161,11 +161,13 @@ export class CacheService implements ICacheService {
       }
     }
     const result = await fn(...args);
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    this.saveInCache(prefix, key, options?.tags ?? [], result, cacheOptions)
-      .catch(err => this.logger.error(err.message))
-      // to make sure new calls for same prefix or tags are not invalidated
-      .then(_ => this.uninvalidate(prefix, options?.tags));
+    this.saveInCache(
+      prefix,
+      key,
+      options?.tags ?? [],
+      result,
+      cacheOptions,
+    ).catch(err => this.logger.error(err.message));
     return result;
   }
 

@@ -13,7 +13,6 @@ type TestCase = {
     secondRepo?: DefaultCrudRepository<Test, number, {}>,
     tick?: TickPromise,
   ) => Promise<void>;
-  timeout?: 3000;
 };
 
 type TestSuite = {
@@ -170,7 +169,6 @@ export function repoTestBuilder(
             // one call for value and one for insertion time
             expect(cacheStoreSetSpy.callCount).to.equal(4);
           },
-          timeout: 3000,
         },
       ],
     },
@@ -375,7 +373,6 @@ export function repoTestBuilder(
             // one call for value and one for insertion time
             expect(cacheStoreSetSpy.callCount).to.equal(4);
           },
-          timeout: 3000,
         },
       ],
     },
@@ -671,6 +668,28 @@ export function repoTestBuilder(
             expect(updated).to.match({id: 1, name: 'test-new'});
             expect(cacheStoreGetSpy.callCount).to.equal(0);
             expect(cacheStoreSetSpy.callCount).to.equal(4);
+          },
+        },
+        {
+          title:
+            'should invalidate cache after updateById, and subsequent get with different argument should not effect this invalidation',
+          async test(
+            repo: DefaultCrudRepository<Test, number, {}>,
+            mockData: DataObject<Test>[],
+            cacheStoreGetSpy: sinon.SinonSpy,
+            cacheStoreSetSpy: sinon.SinonSpy,
+            secondRepo?: DefaultCrudRepository<Test, number, {}>,
+          ) {
+            await repo.updateById(1, {name: 'test-new-1'});
+            await flushPromises();
+            await repo.updateById(2, {name: 'test-new-2'});
+            await flushPromises();
+            const updatedLast = await repo.findById(2);
+            await flushPromises();
+            const updatedFirst = await repo.findById(1);
+            await flushPromises();
+            expect(updatedLast).to.match({id: 2, name: 'test-new-2'});
+            expect(updatedFirst).to.match({id: 1, name: 'test-new-1'});
           },
         },
         {
