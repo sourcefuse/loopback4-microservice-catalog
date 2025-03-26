@@ -204,27 +204,6 @@ export class CacheService implements ICacheService {
     await this.store.setMany([prefixDeletion, ...tagDeletions]);
   }
 
-  /**
-   * This function removes invalidatations of cache entries based on a given prefix and tags.
-   * @param {string} prefix - The `prefix` parameter is a string that is used to identify a group of
-   * items that need to be uninvalidated.
-   * @param {string[]} [tags] - The `tags` parameter in the `uninvalidate` method is an optional
-   * parameter of type `string[]`. It is an array of strings that represent tags that were invalidated. If
-   * this parameter is provided when calling the method, the corresponding tags will be uninvalidated along
-   * with the specified prefix. If the `
-   */
-  private async uninvalidate(prefix: string, tags?: string[]): Promise<void> {
-    const prefixDeletion = this.invalidatePrefix(prefix);
-    let tagDeletions: [string, number, number][] = [];
-    if (tags) {
-      tagDeletions = this.invalidateTags(tags);
-    }
-    await this.store.deleteMany([
-      prefixDeletion[0],
-      ...tagDeletions.map(record => record[0]),
-    ]);
-  }
-
   private invalidatePrefix(prefix: string): [string, number, number] {
     const deletionKey = this.buildKey(this.deletionMarkerPrefix, prefix);
     return [deletionKey, Date.now(), this.configuration.ttl];
