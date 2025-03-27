@@ -78,8 +78,18 @@ export type S3StorageOptions = {
   bucket: string;
 };
 
+export type ValidationResult = {
+  file: File;
+  waiters: Promise<string | null>[];
+};
+
+export type ValidatorOutput = {
+  file: File;
+  waiter?: Promise<string | null>;
+};
+
 export interface IFileValidator {
-  validate(file: File): Promise<File>;
+  validate(file: File): Promise<ValidatorOutput>;
 }
 
 export type FileValidatorWithConstructor = IFileValidator & {
