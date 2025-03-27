@@ -680,6 +680,12 @@ export function repoTestBuilder(
             cacheStoreSetSpy: sinon.SinonSpy,
             secondRepo?: DefaultCrudRepository<Test, number, {}>,
           ) {
+            const existing1 = await repo.findById(1);
+            await flushPromises();
+            expect(existing1).to.match(mockData[0]);
+            const existing2 = await repo.findById(2);
+            await flushPromises();
+            expect(existing2).to.match(mockData[1]);
             await repo.updateById(1, {name: 'test-new-1'});
             await flushPromises();
             await repo.updateById(2, {name: 'test-new-2'});
