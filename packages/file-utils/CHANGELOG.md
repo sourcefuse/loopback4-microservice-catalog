@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.2.1 (2025-03-28)</small>
+
+* fix(file-utils): remove direct export of clamav to avoid direct dep (#2247) ([5b0208c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5b0208c)), closes [#2247](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2247) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## 0.2.0 (2025-02-20)
 
 * feat(file-utils): add support for multiple files and av scan (#2244) ([dacb333](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/dacb333)), closes [#2244](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2244) [#2243](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2243)

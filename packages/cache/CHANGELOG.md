@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.0.10 (2025-03-28)</small>
+
+* fix(cache): remove uninvalidate as it can undo invalidation in case of subsequent get (#2250) ([dbc26f1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/dbc26f1)), closes [#2250](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2250) [#2249](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2249) [#2249](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2249) [#2249](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2249)
+
+
+
+
+
 ## <small>3.0.9 (2025-01-07)</small>
 
 * chore(deps): version update (#2227) ([6d6b00e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6d6b00e)), closes [#2227](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2227)
