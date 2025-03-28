@@ -27,12 +27,6 @@ describe('CachedRepository: Integration', () => {
   let cacheStoreGetSpy: sinon.SinonSpy;
   let cacheStoreSetSpy: sinon.SinonSpy;
   let clock: sinon.SinonFakeTimers | undefined = undefined;
-  let mochaContext: Mocha.Context;
-
-  before(function () {
-    // eslint-disable-next-line @typescript-eslint/no-invalid-this, @typescript-eslint/no-this-alias
-    mochaContext = this;
-  });
 
   beforeEach(async () => {
     setupEnv();
@@ -72,9 +66,6 @@ describe('CachedRepository: Integration', () => {
     describe(testSuite.title, () => {
       testSuite.tests.forEach(test => {
         it(test.title, async function () {
-          if (test.timeout) {
-            mochaContext.timeout(test.timeout);
-          }
           await test.test(
             repo,
             mockData,
