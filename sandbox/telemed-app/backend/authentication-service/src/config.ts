@@ -40,4 +40,3 @@ export async function getSecretValue() {
   //   console.log("Retrieved secret:", secret);
   return secret;
 }
-

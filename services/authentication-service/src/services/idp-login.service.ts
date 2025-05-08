@@ -195,15 +195,35 @@ export class IdpLoginService {
    * @returns A `TokenResponse` object is being returned, which contains the
    * `accessToken`, `refreshToken`, and `expires` properties.
    */
+  /**
+   * The function `createJWT` generates a JWT token for a user with specified payload and
+   * authentication client, handling token expiration and refresh token storage.
+   * @param payload - The `payload` parameter in the `createJWT` function is an object that contains
+   * information about the user and external tokens. It has the following properties:
+   * @param {AuthClient} authClient - The `authClient` parameter in the `createJWT` function represents
+   * the client that is requesting the JWT (JSON Web Token) creation. It contains information about the
+   * client, such as the client ID and the expiration time for the access token. This information is
+   * used to customize the JWT payload and set
+   * @param {LoginType} loginType - The `loginType` parameter in the `createJWT` function represents
+   * the type of login being performed, such as "email", "social", "phone", etc. It helps in
+   * determining the context of the authentication process and can be used for logging, analytics, or
+   * custom logic based on the login
+   * @param {string} [tenantId] - The `tenantId` parameter in the `createJWT` function is an optional
+   * parameter that represents the ID of a specific tenant. Tenants are typically used in multi-tenant
+   * applications to isolate data and configuration for different groups of users or organizations. If
+   * provided, the `tenantId` is used to
+   * @returns The `createJWT` function returns a `TokenResponse` object containing the access token,
+   * refresh token, and expiration time.
+   */
   private async createJWT(
     payload: ClientAuthCode<User, typeof User.prototype.id> & ExternalTokens,
     authClient: AuthClient,
     loginType: LoginType,
     tenantId?: string,
   ): Promise<TokenResponse> {
+    const size = 32;
+    const ms = 1000;
     try {
-      const size = 32;
-      const ms = 1000;
       let user: User | undefined;
       if (payload.user) {
         user = payload.user;
@@ -220,8 +240,6 @@ export class IdpLoginService {
           (user as AuthUser).externalRefreshToken =
             payload.externalRefreshToken;
         }
-      } else {
-        // Do nothing and move ahead
       }
       if (!user) {
         throw new HttpErrors.Unauthorized(

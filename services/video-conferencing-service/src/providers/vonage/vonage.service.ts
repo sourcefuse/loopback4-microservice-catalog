@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {inject} from '@loopback/core';
-import {repository} from '@loopback/repository';
+import {AnyObject, repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import axios from 'axios';
 import {sign} from 'jsonwebtoken';
@@ -154,60 +154,21 @@ export class VonageService implements VonageVideoChat {
     const deleteArchive = promisify(this.VonageClient.deleteArchive);
     return deleteArchive(archiveId);
   }
+  /**
+   * The function `setUploadTarget` asynchronously sets the upload target for storage using Vonage S3
+   * or Azure options.
+   * @param {VonageS3TargetOptions | VonageAzureTargetOptions} storageConfig - The `storageConfig`
+   * parameter in the `setUploadTarget` function can be of type `VonageS3TargetOptions` or
+   * `VonageAzureTargetOptions`. These types likely contain configuration options specific to storing
+   * uploaded files in either an S3 bucket (for Amazon S3) or
+   */
   async setUploadTarget(
     storageConfig: VonageS3TargetOptions | VonageAzureTargetOptions,
   ): Promise<void> {
-    const {apiKey, apiSecret} = this.vonageConfig;
-    const ttl = 200;
-    const jwtPayload = {
-      iss: apiKey,
-      ist: 'project',
-      iat: moment().unix(),
-      exp: moment().add(ttl, 'seconds').unix(),
-    };
+    const token = this._createVonageJwtToken();
 
-    const token = sign(jwtPayload, apiSecret);
-    let type = '';
-    const credentials = {};
-    if (storageConfig.name === ExternalStorageName.AWSS3) {
-      const accessKey = this.vonageConfig.awsAccessKey;
-      const secretKey = this.vonageConfig.awsSecretKey;
-      if (!accessKey || !secretKey) {
-        throw new HttpErrors.InternalServerError(
-          `Missing Aws S3 credentials for setting vongae upload target`,
-        );
-      }
-      const {bucket, endpoint} = storageConfig as VonageS3TargetOptions;
-      if (bucket) {
-        type = 'S3';
-        Object.assign(credentials, {
-          accessKey,
-          secretKey,
-          bucket,
-          endpoint,
-        });
-      }
-    } else if (storageConfig.name === ExternalStorageName.AZURE) {
-      const accountKey = this.vonageConfig.azureAccountKey;
-      const container = this.vonageConfig.azureAccountContainer;
-      const {accountName, domain} = storageConfig as VonageAzureTargetOptions;
-      if (!accountKey || !container) {
-        throw new HttpErrors.InternalServerError(
-          `Missing Azure credentials for setting vongae upload target`,
-        );
-      }
-      if (accountName) {
-        type = 'Azure';
-        Object.assign(credentials, {
-          accountName,
-          accountKey,
-          container,
-          domain,
-        });
-      }
-    } else {
-      //do nothing
-    }
+    const {type, credentials} = this._buildStorageCredentials(storageConfig);
+
     await axios({
       url: `https://api.opentok.com/v2/project/${this.vonageConfig.apiKey}/archive/storage`,
       method: 'put',
@@ -220,6 +181,119 @@ export class VonageService implements VonageVideoChat {
         'X-OPENTOK-AUTH': token,
       },
     });
+  }
+
+  /**
+   * The function `_createVonageJwtToken` generates a JWT token using Vonage API key and secret with a
+   * specified time-to-live (TTL) of 200 seconds.
+   * @returns A Vonage JWT token is being returned.
+   */
+  private _createVonageJwtToken(): string {
+    const {apiKey, apiSecret} = this.vonageConfig;
+    const ttl = 200;
+
+    const jwtPayload = {
+      iss: apiKey,
+      ist: 'project',
+      iat: moment().unix(),
+      exp: moment().add(ttl, 'seconds').unix(),
+    };
+
+    return sign(jwtPayload, apiSecret);
+  }
+
+  /**
+   * The function `_buildStorageCredentials` determines the type of storage credentials based on the
+   * provided storage configuration.
+   * @param {VonageS3TargetOptions | VonageAzureTargetOptions} storageConfig - The
+   * `_buildStorageCredentials` function takes in a `storageConfig` parameter of type
+   * `VonageS3TargetOptions` or `VonageAzureTargetOptions`. It then checks the `name` property of the
+   * `storageConfig` object to determine the type of external storage (AWS S
+   * @returns The `_buildStorageCredentials` method returns an object with two properties: `type` and
+   * `credentials`. The `type` property is a string, and the `credentials` property is a record
+   * containing key-value pairs of any type. The specific values of these properties are determined
+   * based on the `storageConfig` parameter passed to the method.
+   */
+  private _buildStorageCredentials(
+    storageConfig: VonageS3TargetOptions | VonageAzureTargetOptions,
+  ): {type: string; credentials: AnyObject} {
+    switch (storageConfig.name) {
+      case ExternalStorageName.AWSS3:
+        return this._getAwsCredentials(storageConfig as VonageS3TargetOptions);
+      case ExternalStorageName.AZURE:
+        return this._getAzureCredentials(
+          storageConfig as VonageAzureTargetOptions,
+        );
+      default:
+        throw new HttpErrors.BadRequest('Unsupported storage type');
+    }
+  }
+
+  /**
+   * The function `_getAwsCredentials` retrieves AWS S3 credentials for setting a Vonage upload target.
+   * @param {VonageS3TargetOptions} config - The `_getAwsCredentials` function takes in a
+   * `VonageS3TargetOptions` object as the `config` parameter. This object typically contains
+   * properties such as `bucket` and `endpoint` for configuring an AWS S3 bucket.
+   * @returns an object with a `type` property set to 'S3' and a `credentials` property containing the
+   * AWS access key, secret key, S3 bucket name, and endpoint.
+   */
+  private _getAwsCredentials(config: VonageS3TargetOptions): {
+    type: string;
+    credentials: AnyObject;
+  } {
+    const {awsAccessKey: accessKey, awsSecretKey: secretKey} =
+      this.vonageConfig;
+
+    if (!accessKey || !secretKey) {
+      throw new HttpErrors.InternalServerError(
+        `Missing AWS S3 credentials for setting Vonage upload target`,
+      );
+    }
+
+    const {bucket, endpoint} = config;
+
+    if (!bucket) {
+      throw new HttpErrors.BadRequest('S3 bucket name is required');
+    }
+
+    return {
+      type: 'S3',
+      credentials: {accessKey, secretKey, bucket, endpoint},
+    };
+  }
+
+  /**
+   * The function `_getAzureCredentials` retrieves Azure credentials for setting Vonage upload target.
+   * @param {VonageAzureTargetOptions} config - The `config` parameter in the `_getAzureCredentials`
+   * function refers to an object of type `VonageAzureTargetOptions`. This object likely contains
+   * properties such as `accountName` and `domain` that are needed to retrieve Azure credentials for
+   * setting up a Vonage upload target.
+   * @returns an object with a `type` property set to 'Azure' and a `credentials` property containing
+   * the `accountName`, `accountKey`, `container`, and `domain` values.
+   */
+  private _getAzureCredentials(config: VonageAzureTargetOptions): {
+    type: string;
+    credentials: AnyObject;
+  } {
+    const {azureAccountKey: accountKey, azureAccountContainer: container} =
+      this.vonageConfig;
+
+    const {accountName, domain} = config;
+
+    if (!accountKey || !container) {
+      throw new HttpErrors.InternalServerError(
+        `Missing Azure credentials for setting Vonage upload target`,
+      );
+    }
+
+    if (!accountName) {
+      throw new HttpErrors.BadRequest('Azure account name is required');
+    }
+
+    return {
+      type: 'Azure',
+      credentials: {accountName, accountKey, container, domain},
+    };
   }
 
   async checkWebhookPayload(

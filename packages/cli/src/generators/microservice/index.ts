@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import fs from 'fs';
-import { join } from 'path';
+import {join} from 'path';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import AppGenerator from '../../app-generator';
 import {
@@ -17,14 +17,14 @@ import {
   SEQUELIZESERVICES,
   SERVICES,
 } from '../../enum';
-import { AnyObject, MicroserviceOptions } from '../../types';
+import {AnyObject, MicroserviceOptions} from '../../types';
 import {
   JSON_SPACING,
   appendDependencies,
   getDependencyVersion,
 } from '../../utils';
 const chalk = require('chalk'); //NOSONAR
-const { promisify } = require('util');
+const {promisify} = require('util');
 
 const DATASOURCE_TEMPLATE = join(
   '..',
@@ -79,7 +79,7 @@ const DEFAULT_NAME = 'microservice';
 const dbconfig = 'database.json';
 
 const ENV_EXAMPLE = '.env.example';
-const ENV_DEFAULT = '.env.defaults'
+const ENV_DEFAULT = '.env.defaults';
 
 export default class MicroserviceGenerator extends AppGenerator<MicroserviceOptions> {
   initializing() {
@@ -138,7 +138,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     );
     this.projectInfo.datasourceConnector =
       DATASOURCE_CONNECTORS[
-      this.options.datasourceType ?? DATASOURCES.POSTGRES
+        this.options.datasourceType ?? DATASOURCES.POSTGRES
       ];
     this.projectInfo.datasourceConnectorName =
       this.projectInfo.datasourceConnector;
@@ -332,7 +332,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
   async _appendDockerScript() {
     const packageJsonFile = join(this.destinationRoot(), './package.json');
     const packageJson = this.fs.readJSON(packageJsonFile) as AnyObject;
-    const scripts = { ...packageJson.scripts };
+    const scripts = {...packageJson.scripts};
     scripts[`docker:build:${this.options.baseService}`] =
       `docker build --build-arg SERVICE_NAME=${this.options.baseService} --build-arg FROM_FOLDER=services -t $REPOSITORY_URI:${this.options.baseService} -f ./services/${this.options.name}/Dockerfile .`;
     packageJson.scripts = scripts;

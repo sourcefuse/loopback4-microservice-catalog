@@ -60,6 +60,7 @@ export class SearchServiceComponent<T extends Model> implements Component {
   ) {
     this.bindings = [];
     this.providers = {};
+    this.models = [SearchQuery];
 
     if (!this.config.doNotMountCoreComponent) {
       // Mount core component
@@ -68,31 +69,6 @@ export class SearchServiceComponent<T extends Model> implements Component {
 
     if (!this.config?.useCustomSequence) {
       this.setupSequence();
-    }
-
-    this.models = [SearchQuery];
-    if (this.config?.useSequelize) {
-      this.providers = {
-        [SearchServiceBindings.SearchFunction.key]: SearchSequelizeProvider,
-        [SearchServiceBindings.SearchFilterFunction.key]: SearchFilterProvider,
-        [SearchServiceBindings.modelProvider.key]: SearchModelProvider,
-      };
-      this.repositories = [
-        RecentSearchSequelizeRepository,
-        SearchQuerySequelizeRepository,
-        SequelizeJwtKeysRepository,
-      ];
-    } else {
-      this.providers = {
-        [SearchServiceBindings.SearchFunction.key]: SearchProvider,
-        [SearchServiceBindings.SearchFilterFunction.key]: SearchFilterProvider,
-        [SearchServiceBindings.modelProvider.key]: SearchModelProvider,
-      };
-      this.repositories = [
-        RecentSearchRepository,
-        SearchQueryRepository,
-        JwtKeysRepository,
-      ];
     }
 
     this.application
@@ -105,34 +81,62 @@ export class SearchServiceComponent<T extends Model> implements Component {
     this.application
       .bind(SearchServiceBindings.FetchedColumns)
       .to(DEFAULT_COLUMNS);
+  }
 
+  /**
+   * The function `_configureProvidersAndRepositories` sets up providers and repositories based on the
+   * configuration for using Sequelize in a TypeScript application.
+   */
+  private _configureProvidersAndRepositories() {
+    const useSequelize = this.config?.useSequelize;
+
+    this.providers = {
+      [SearchServiceBindings.SearchFunction.key]: useSequelize
+        ? SearchSequelizeProvider
+        : SearchProvider,
+      [SearchServiceBindings.SearchFilterFunction.key]: SearchFilterProvider,
+      [SearchServiceBindings.modelProvider.key]: SearchModelProvider,
+    };
+
+    this.repositories = useSequelize
+      ? [
+          RecentSearchSequelizeRepository,
+          SearchQuerySequelizeRepository,
+          SequelizeJwtKeysRepository,
+        ]
+      : [RecentSearchRepository, SearchQueryRepository, JwtKeysRepository];
+  }
+
+  /**
+   * The function `_setupSearchController` sets up a search controller based on configuration settings.
+   * @returns If the condition `if (!this.config)` is true, then the function will return early and
+   * nothing will be executed beyond that point.
+   */
+  private _setupSearchController() {
     let controllerCtor: SearchControllerCtor<SearchResult> =
       defineSearchController(SearchResult);
-    if (this.config) {
-      if (!this.config.useCustomSequence) {
-        this.setupSequence();
-      }
-      const models = this.getSearchableModelIdentifiers(this.config);
-      const controllerConfig: SearchControllerConfig = {
-        name: '',
-        basePath: '/search',
-        authorizations: ['*'],
-        ...this.config.controller,
-      };
-      if (this.config.type) {
-        controllerCtor = defineSearchController(
-          this.createResultModel(this.config.type, models),
-          controllerConfig,
-        );
-      } else if (this.config.controller) {
-        this.models = [SearchResult];
-        controllerCtor = defineSearchController(
-          this.createResultModel(SearchResult, models),
-          controllerConfig,
-        );
-      } else {
-        // do nothing
-      }
+
+    if (!this.config) return;
+
+    const models = this.getSearchableModelIdentifiers(this.config);
+    const controllerConfig: SearchControllerConfig = {
+      name: '',
+      basePath: '/search',
+      authorizations: ['*'],
+      ...this.config.controller,
+    };
+
+    if (this.config.type) {
+      controllerCtor = defineSearchController(
+        this.createResultModel(this.config.type, models),
+        controllerConfig,
+      );
+    } else if (this.config.controller) {
+      this.models = [SearchResult];
+      controllerCtor = defineSearchController(
+        this.createResultModel(SearchResult, models),
+        controllerConfig,
+      );
     }
 
     inject(SearchServiceBindings.SearchFunction)(controllerCtor, undefined, 0);
@@ -146,6 +150,7 @@ export class SearchServiceComponent<T extends Model> implements Component {
 
     this.controllers = [controllerCtor];
   }
+
   getSearchableModelIdentifiers(config: SearchServiceConfig<T>) {
     return config.models.map(model => {
       if (isSearchableModel(model)) {

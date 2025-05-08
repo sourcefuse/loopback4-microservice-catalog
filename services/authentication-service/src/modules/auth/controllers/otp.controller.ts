@@ -128,45 +128,70 @@ export class OtpController {
     let userId;
     let clientSecret!: jwt.Secret;
     const isMfaEnabled = await this.checkMfa(user);
-    if (isMfaEnabled) {
-      if (
-        this.mfaConfig.secondFactor === STRATEGY.OTP &&
-        this.otpConfig.method === OtpMethodType.OTP
-      ) {
-        otpCache = await this.otpCacheRepo.get(req.key);
-        if (user?.id) {
-          otpCache.userId = user.id;
-        }
 
-        clientId = otpCache.clientId;
-        userId = otpCache.userId;
-        clientSecret = otpCache.clientSecret;
-      } else if (
-        this.mfaConfig.secondFactor === STRATEGY.OTP &&
-        this.otpConfig.method === OtpMethodType.GOOGLE_AUTHENTICATOR
-      ) {
-        if (!req.clientId) {
-          throw new Error(
-            'Client ID must be provided for Google Authenticator',
-          );
-        }
-        clientId = req.clientId;
-        userId = user.id;
-        const client = await this.authClientRepository.findOne({
-          where: {
-            clientId,
-          },
-        });
-        clientSecret = client?.clientSecret as string;
-      } else {
-        // This is intentional.
+    if (!isMfaEnabled) {
+      throw new HttpErrors.BadRequest('MFA is not enabled for this user.');
+    }
+    const isOtpStrategy = this.mfaConfig.secondFactor === STRATEGY.OTP;
+
+    if (isOtpStrategy && this.otpConfig.method === OtpMethodType.OTP) {
+      otpCache = await this.otpCacheRepo.get(req.key);
+
+      if (!otpCache) {
+        throw new HttpErrors.NotFound('OTP cache not found.');
       }
+
+      if (!otpCache.clientId || !otpCache.clientSecret) {
+        throw new HttpErrors.UnprocessableEntity(
+          'Client info is incomplete in OTP cache.',
+        );
+      }
+
+      if (user?.id) {
+        otpCache.userId = user.id;
+      }
+
+      if (!otpCache.userId) {
+        throw new HttpErrors.UnprocessableEntity(
+          'User ID missing in OTP cache.',
+        );
+      }
+
+      clientId = otpCache.clientId;
+      userId = otpCache.userId;
+      clientSecret = otpCache.clientSecret;
+    } else if (
+      isOtpStrategy &&
+      this.otpConfig.method === OtpMethodType.GOOGLE_AUTHENTICATOR
+    ) {
+      if (!req.clientId) {
+        throw new HttpErrors.BadRequest(
+          'Client ID must be provided for Google Authenticator.',
+        );
+      }
+
+      const client = await this.authClientRepository.findOne({
+        where: {clientId: req.clientId},
+      });
+
+      if (!client?.clientSecret) {
+        throw new HttpErrors.NotFound(
+          'Auth client not found or secret missing.',
+        );
+      }
+
+      clientId = req.clientId;
+      userId = user.id;
+      clientSecret = client.clientSecret;
+    } else {
+      throw new HttpErrors.BadRequest('Unsupported MFA configuration.');
     }
 
     const codePayload: ClientAuthCode<User, typeof User.prototype.id> = {
-      clientId: clientId,
-      userId: userId,
+      clientId,
+      userId,
     };
+
     const token = await codeWriter(
       jwt.sign(codePayload, clientSecret, {
         expiresIn: 180,
@@ -175,9 +200,8 @@ export class OtpController {
         algorithm: 'HS256',
       }),
     );
-    return {
-      code: token,
-    };
+
+    return {code: token};
   }
 
   // Google Authenticator

@@ -4,7 +4,7 @@
 // https://opensource.org/licenses/MIT
 import fs, {Dirent} from 'fs';
 import {join} from 'path';
-import {AnyObject} from '../../types';
+import {AnyObject} from '@loopback/repository'
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import BaseUpdateGenerator from '../../update-generator';
 import {JSON_SPACING} from '../../utils';
@@ -94,11 +94,36 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
     }
   }
 
-  private async _checkDependencies() {
+  private async _checkDependencies(): Promise<boolean> {
     const {pkgDeps, depsToUpdate} = await this._initialiseDependencies();
 
+    const found = this._incompatibleDependencies(pkgDeps, depsToUpdate);
+
+    if (!found) {
+      this.log(
+        chalk.green(
+          `The project dependencies are compatible with @sourceloop/cli@${configJsonFile.version}`,
+        ),
+      );
+      return false;
+    }
+    return this._printDepsToUpdate(depsToUpdate, pkgDeps);
+  }
+
+  /**
+   * The function `_incompatibleDependencies` checks for incompatible dependencies and updates them
+   * accordingly.
+   * @param {any} pkgDeps - `pkgDeps` is an object containing the dependencies of a package, including
+   * `dependencies`, `devDependencies`, and `peerDependencies`.
+   * @param {any} depsToUpdate - `depsToUpdate` is an object that contains dependencies that need to be
+   * updated. It has three properties: `dependencies`, `devDependencies`, and `peerDependencies`, each
+   * containing key-value pairs of dependency names and their corresponding updated versions.
+   * @returns a boolean value, indicating whether any incompatible dependencies were found and updated
+   * in the `depsToUpdate` object.
+   */
+  private _incompatibleDependencies(pkgDeps: AnyObject, depsToUpdate: AnyObject): boolean {
     let found = false;
-    // find the incompatable dependencies
+
     for (const d in tempDeps) {
       const dep = pkgDeps.dependencies[d];
       const devDep = pkgDeps.devDependencies[d];
@@ -111,26 +136,16 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
         found = true;
       }
       if (devDep && tempDependency !== devDep) {
-        found = true;
         depsToUpdate.devDependencies[d] = tempDependency;
+        found = true;
       }
       if (peerDep && tempDependency !== peerDep) {
-        found = true;
         depsToUpdate.peerDependencies[d] = tempDependency;
+        found = true;
       }
     }
 
-    if (!found) {
-      // No incompatible dependencies
-      this.log(
-        chalk.green(
-          `The project dependencies are compatible with @sourceloop/cli@${configJsonFile.version}`,
-        ),
-      );
-      return false;
-    } else {
-      return this._printDepsToUpdate(depsToUpdate, pkgDeps);
-    }
+    return found;
   }
 
   private async _printDepsToUpdate(
