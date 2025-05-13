@@ -127,6 +127,7 @@ export class UserRepository extends AuditRepositoryMixin<
       });
       await this.credentials(user.id).create(creds);
     } catch (err) {
+      console.error('Error while hashing password', err);
       throw new HttpErrors.UnprocessableEntity('Error while hashing password');
     }
     return user;

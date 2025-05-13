@@ -217,9 +217,7 @@ export abstract class SearchQueryBuilder<T extends Model> {
     this.baseQueryList = [];
     this.limitQuery = '';
     this.orderQuery = '';
-    if (!type) {
-      type = SearchResult;
-    }
+    type ??=SearchResult;
     const skipped = ignoredColumns ?? [];
     const defaultColumns = Object.keys(
       type.definition.properties,

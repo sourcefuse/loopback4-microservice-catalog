@@ -123,75 +123,22 @@ export class OtpController {
     @inject(AuthCodeBindings.CODEWRITER_PROVIDER)
     codeWriter: CodeWriterFn,
   ): Promise<CodeResponse> {
-    let otpCache;
-    let clientId!: string;
-    let userId;
-    let clientSecret!: jwt.Secret;
     const isMfaEnabled = await this.checkMfa(user);
-
+  
     if (!isMfaEnabled) {
       throw new HttpErrors.BadRequest('MFA is not enabled for this user.');
     }
-    const isOtpStrategy = this.mfaConfig.secondFactor === STRATEGY.OTP;
-
-    if (isOtpStrategy && this.otpConfig.method === OtpMethodType.OTP) {
-      otpCache = await this.otpCacheRepo.get(req.key);
-
-      if (!otpCache) {
-        throw new HttpErrors.NotFound('OTP cache not found.');
-      }
-
-      if (!otpCache.clientId || !otpCache.clientSecret) {
-        throw new HttpErrors.UnprocessableEntity(
-          'Client info is incomplete in OTP cache.',
-        );
-      }
-
-      if (user?.id) {
-        otpCache.userId = user.id;
-      }
-
-      if (!otpCache.userId) {
-        throw new HttpErrors.UnprocessableEntity(
-          'User ID missing in OTP cache.',
-        );
-      }
-
-      clientId = otpCache.clientId;
-      userId = otpCache.userId;
-      clientSecret = otpCache.clientSecret;
-    } else if (
-      isOtpStrategy &&
-      this.otpConfig.method === OtpMethodType.GOOGLE_AUTHENTICATOR
-    ) {
-      if (!req.clientId) {
-        throw new HttpErrors.BadRequest(
-          'Client ID must be provided for Google Authenticator.',
-        );
-      }
-
-      const client = await this.authClientRepository.findOne({
-        where: {clientId: req.clientId},
-      });
-
-      if (!client?.clientSecret) {
-        throw new HttpErrors.NotFound(
-          'Auth client not found or secret missing.',
-        );
-      }
-
-      clientId = req.clientId;
-      userId = user.id;
-      clientSecret = client.clientSecret;
-    } else {
-      throw new HttpErrors.BadRequest('Unsupported MFA configuration.');
-    }
-
+  
+    const {clientId, userId, clientSecret} = await this._getOtpVerificationDetails(
+      req,
+      user,
+    );
+  
     const codePayload: ClientAuthCode<User, typeof User.prototype.id> = {
       clientId,
       userId,
     };
-
+  
     const token = await codeWriter(
       jwt.sign(codePayload, clientSecret, {
         expiresIn: 180,
@@ -200,8 +147,124 @@ export class OtpController {
         algorithm: 'HS256',
       }),
     );
-
+  
     return {code: token};
+  }
+  
+  /**
+   * The function `_getOtpVerificationDetails` determines the OTP verification method based on the MFA
+   * configuration and handles either OTP or Google Authenticator methods.
+   * @param {OtpLoginRequest} req - The `req` parameter in the `_getOtpVerificationDetails` function is
+   * of type `OtpLoginRequest`, which likely contains information related to the OTP login request
+   * being processed.
+   * @param {AuthUser} user - The `user` parameter in the `_getOtpVerificationDetails` method
+   * represents the authenticated user for whom the OTP verification details are being retrieved. This
+   * user object likely contains information such as the user's ID, username, email, and other relevant
+   * details needed for the OTP verification process.
+   * @returns The `_getOtpVerificationDetails` method returns an object with the properties `clientId`,
+   * `userId`, and `clientSecret` as a Promise.
+   */
+  private async _getOtpVerificationDetails(
+    req: OtpLoginRequest,
+    user: AuthUser,
+  ): Promise<{clientId: string; userId: string; clientSecret: jwt.Secret}> {
+    const isOtpStrategy = this.mfaConfig.secondFactor === STRATEGY.OTP;
+  
+    if (isOtpStrategy && this.otpConfig.method === OtpMethodType.OTP) {
+      return this._handleOtpMethod(req, user);
+    } else if (
+      isOtpStrategy &&
+      this.otpConfig.method === OtpMethodType.GOOGLE_AUTHENTICATOR
+    ) {
+      return this._handleGoogleAuthenticatorMethod(req, user);
+    } else {
+      throw new HttpErrors.BadRequest('Unsupported MFA configuration.');
+    }
+  }
+  
+  /**
+   * The function `_handleOtpMethod` retrieves and validates OTP cache data for a given request and
+   * user, returning the client ID, user ID, and client secret.
+   * @param {OtpLoginRequest} req - The `req` parameter in the `_handleOtpMethod` function is of type
+   * `OtpLoginRequest`, which likely contains information required for OTP (One-Time Password) login
+   * process, such as the OTP key.
+   * @param {AuthUser} user - The `user` parameter in the `_handleOtpMethod` function represents the
+   * authenticated user who is attempting to log in using OTP (One-Time Password). This user object
+   * contains information about the user, such as their ID, which is used to associate the OTP login
+   * request with the correct user account.
+   * @returns The `_handleOtpMethod` function returns an object with the properties `clientId`,
+   * `userId`, and `clientSecret`. The values for these properties are retrieved from the `otpCache`
+   * object.
+   */
+  private async _handleOtpMethod(
+    req: OtpLoginRequest,
+    user: AuthUser,
+  ): Promise<{clientId: string; userId: string; clientSecret: jwt.Secret}> {
+    const otpCache = await this.otpCacheRepo.get(req.key);
+  
+    if (!otpCache) {
+      throw new HttpErrors.NotFound('OTP cache not found.');
+    }
+  
+    if (!otpCache.clientId || !otpCache.clientSecret) {
+      throw new HttpErrors.UnprocessableEntity(
+        'Client info is incomplete in OTP cache.',
+      );
+    }
+  
+    otpCache.userId = user?.id ?? otpCache.userId;
+  
+    if (!otpCache.userId) {
+      throw new HttpErrors.UnprocessableEntity('User ID missing in OTP cache.');
+    }
+  
+    return {
+      clientId: otpCache.clientId,
+      userId: otpCache.userId,
+      clientSecret: otpCache.clientSecret,
+    };
+  }
+  
+  /**
+   * The function `_handleGoogleAuthenticatorMethod` validates and retrieves necessary data for Google
+   * Authenticator authentication.
+   * @param {OtpLoginRequest} req - The `req` parameter in the `_handleGoogleAuthenticatorMethod`
+   * function is of type `OtpLoginRequest`. It likely contains information related to the OTP (One-Time
+   * Password) login request, such as the client ID.
+   * @param {AuthUser} user - The `user` parameter in the `_handleGoogleAuthenticatorMethod` function
+   * represents the authenticated user who is trying to log in using Google Authenticator. It contains
+   * information about the user, such as their ID and other relevant details needed for the
+   * authentication process.
+   * @returns The function `_handleGoogleAuthenticatorMethod` is returning an object with the
+   * properties `clientId`, `userId`, and `clientSecret`. The values for these properties are taken
+   * from the `req.clientId`, `user.id`, and `client.clientSecret` respectively.
+   */
+  private async _handleGoogleAuthenticatorMethod(
+    req: OtpLoginRequest,
+    user: AuthUser,
+  ): Promise<{clientId: string; userId: string; clientSecret: jwt.Secret}> {
+    if (!req.clientId) {
+      throw new HttpErrors.BadRequest(
+        'Client ID must be provided for Google Authenticator.',
+      );
+    }
+  
+    const client = await this.authClientRepository.findOne({
+      where: {clientId: req.clientId},
+    });
+  
+    if (!client?.clientSecret) {
+      throw new HttpErrors.NotFound('Auth client not found or secret missing.');
+    }
+    if (!user.id) {
+      throw new HttpErrors.UnprocessableEntity('User ID is missing.');
+    }
+  
+    return {
+      clientId: req.clientId,
+      userId: user.id,
+      clientSecret: client.clientSecret,
+    };
   }
 
   // Google Authenticator

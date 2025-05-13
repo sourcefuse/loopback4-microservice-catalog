@@ -91,7 +91,9 @@ export class SecureResourceOwnerVerifyProvider
           AuthErrorKeys.ClientVerificationFailed,
         );
       }
-      return {client, user};
+      else{
+        return {client, user};
+      }
     };
   }
 }

@@ -101,12 +101,8 @@ export default class CdkGenerator extends BaseGenerator<CdkOptions> {
       );
     }
 
-    if (!this.options.dir) {
-      this.options.dir = 'cdk';
-    }
-    if (!this.options.packageJsonName) {
-      this.options.packageJsonName = `arc-cdktf`;
-    }
+    this.options.dir ??= 'cdk';
+    this.options.packageJsonName ??= `arc-cdktf`;
     if (!this.options.iac) {
       throw new Error(
         'Error: The "iac" option is missing. Please provide an iac name.',
@@ -598,6 +594,7 @@ ${chalk.blue(`https://github.com/${owner}/${repo}/blob/main/${dir}/README.md`)}
           JSON_INDENTATION,
         )}`,
       );
+      throw error;
     }
   }
 
@@ -634,7 +631,7 @@ ${chalk.blue(`https://github.com/${owner}/${repo}/blob/main/${dir}/README.md`)}
       return pattern.test(fileContent);
     } catch (error) {
       this.log.error(`Error reading ${filePath}`);
-      return false;
+      throw error;
     }
   }
 
@@ -651,6 +648,7 @@ ${chalk.blue(`https://github.com/${owner}/${repo}/blob/main/${dir}/README.md`)}
       this.log.error(
         `Error moving file from ${sourcePath} to ${destinationPath}`,
       );
+      throw error;
     }
   }
 }

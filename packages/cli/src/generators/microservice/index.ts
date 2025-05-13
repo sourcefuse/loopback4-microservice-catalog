@@ -537,6 +537,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         await fs.promises.access(destinationPath);
       } catch (error) {
         // Handle the error or perform actions when the file/directory doesn't exist
+        console.error(error);
         this.log(
           chalk.cyan(
             `Since migrations do not exist in the base service, generating without migrations`,
@@ -579,7 +580,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       // File exists
       return true;
     } catch (error) {
-      // File does not exist
+      console.error(error);
       return false;
     }
   }

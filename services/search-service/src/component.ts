@@ -138,6 +138,9 @@ export class SearchServiceComponent<T extends Model> implements Component {
         controllerConfig,
       );
     }
+    else{
+      throw new Error('Invalid configuration:Either type or controller must be provided');
+    }
 
     inject(SearchServiceBindings.SearchFunction)(controllerCtor, undefined, 0);
     inject(SearchServiceBindings.Config)(controllerCtor, undefined, 1);
