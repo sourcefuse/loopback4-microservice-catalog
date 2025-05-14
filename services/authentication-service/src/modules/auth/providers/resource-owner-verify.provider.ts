@@ -33,20 +33,19 @@ export class ResourceOwnerVerifyProvider
     return async (clientId, clientSecret, username, password) => {
       let user;
 
-      try {
-        user = await this.userRepository.verifyPassword(username, password);
-      } catch (error) {
+      user = await this.userRepository.verifyPassword(username, password).catch(async () => {
         const otp: Otp = await this.otpRepository.get(username);
         if (!otp || otp.otp !== password) {
           throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
         }
-        user = await this.userRepository.findOne({
+        const foundUser = await this.userRepository.findOne({
           where: {username},
         });
-        if (!user) {
+        if (!foundUser) {
           throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
         }
-      }
+        return foundUser;
+      });
       const userTenant = await this.utRepository.findOne({
         where: {
           userId: user.id,

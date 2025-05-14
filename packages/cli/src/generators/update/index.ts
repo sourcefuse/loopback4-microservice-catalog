@@ -75,7 +75,7 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
 
       return directories;
     } catch (error) {
-      console.error('Error reading directory:', error);
+      this.log(chalk.cyan(`Error reading directory: ${error}`));
       return [];
     }
   }

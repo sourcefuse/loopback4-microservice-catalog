@@ -113,11 +113,8 @@ export class SearchServiceComponent<T extends Model> implements Component {
    * nothing will be executed beyond that point.
    */
   private _setupSearchController() {
-    let controllerCtor: SearchControllerCtor<SearchResult> =
-      defineSearchController(SearchResult);
-
     if (!this.config) return;
-
+  
     const models = this.getSearchableModelIdentifiers(this.config);
     const controllerConfig: SearchControllerConfig = {
       name: '',
@@ -125,7 +122,9 @@ export class SearchServiceComponent<T extends Model> implements Component {
       authorizations: ['*'],
       ...this.config.controller,
     };
-
+  
+    let controllerCtor: SearchControllerCtor<SearchResult>;
+  
     if (this.config.type) {
       controllerCtor = defineSearchController(
         this.createResultModel(this.config.type, models),
@@ -137,11 +136,10 @@ export class SearchServiceComponent<T extends Model> implements Component {
         this.createResultModel(SearchResult, models),
         controllerConfig,
       );
+    } else {
+      throw new Error('Invalid configuration: Either type or controller must be provided');
     }
-    else{
-      throw new Error('Invalid configuration:Either type or controller must be provided');
-    }
-
+  
     inject(SearchServiceBindings.SearchFunction)(controllerCtor, undefined, 0);
     inject(SearchServiceBindings.Config)(controllerCtor, undefined, 1);
     repository(RecentSearchRepository)(controllerCtor, undefined, TWO);
@@ -150,7 +148,7 @@ export class SearchServiceComponent<T extends Model> implements Component {
       undefined,
       THREE,
     );
-
+  
     this.controllers = [controllerCtor];
   }
 

@@ -359,9 +359,8 @@ export class VonageService implements VonageVideoChat {
         }
       }
     } catch (error) {
-      console.error('Error occured while processing webhook payload:', error);
       throw new HttpErrors.InternalServerError(
-        'Error occured triggering webhook event',
+        `Error occured triggering webhook event ${error.message}`,
       );
     }
   }
