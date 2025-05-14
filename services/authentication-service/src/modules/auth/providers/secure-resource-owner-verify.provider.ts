@@ -90,8 +90,7 @@ export class SecureResourceOwnerVerifyProvider
         throw new HttpErrors.Unauthorized(
           AuthErrorKeys.ClientVerificationFailed,
         );
-      }
-      else{
+      } else {
         return {client, user};
       }
     };

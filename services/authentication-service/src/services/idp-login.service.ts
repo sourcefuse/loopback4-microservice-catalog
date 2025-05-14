@@ -240,8 +240,7 @@ export class IdpLoginService {
           (user as AuthUser).externalRefreshToken =
             payload.externalRefreshToken;
         }
-      }
-      else{
+      } else {
         throw new HttpErrors.Unauthorized(
           AuthenticateErrorKeys.UserDoesNotExist,
         );

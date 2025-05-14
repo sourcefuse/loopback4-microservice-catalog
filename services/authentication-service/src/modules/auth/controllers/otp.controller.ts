@@ -124,21 +124,19 @@ export class OtpController {
     codeWriter: CodeWriterFn,
   ): Promise<CodeResponse> {
     const isMfaEnabled = await this.checkMfa(user);
-  
+
     if (!isMfaEnabled) {
       throw new HttpErrors.BadRequest('MFA is not enabled for this user.');
     }
-  
-    const {clientId, userId, clientSecret} = await this._getOtpVerificationDetails(
-      req,
-      user,
-    );
-  
+
+    const {clientId, userId, clientSecret} =
+      await this._getOtpVerificationDetails(req, user);
+
     const codePayload: ClientAuthCode<User, typeof User.prototype.id> = {
       clientId,
       userId,
     };
-  
+
     const token = await codeWriter(
       jwt.sign(codePayload, clientSecret, {
         expiresIn: 180,
@@ -147,10 +145,10 @@ export class OtpController {
         algorithm: 'HS256',
       }),
     );
-  
+
     return {code: token};
   }
-  
+
   /**
    * The function `_getOtpVerificationDetails` determines the OTP verification method based on the MFA
    * configuration and handles either OTP or Google Authenticator methods.
@@ -169,7 +167,7 @@ export class OtpController {
     user: AuthUser,
   ): Promise<{clientId: string; userId: string; clientSecret: jwt.Secret}> {
     const isOtpStrategy = this.mfaConfig.secondFactor === STRATEGY.OTP;
-  
+
     if (isOtpStrategy && this.otpConfig.method === OtpMethodType.OTP) {
       return this._handleOtpMethod(req, user);
     } else if (
@@ -181,7 +179,7 @@ export class OtpController {
       throw new HttpErrors.BadRequest('Unsupported MFA configuration.');
     }
   }
-  
+
   /**
    * The function `_handleOtpMethod` retrieves and validates OTP cache data for a given request and
    * user, returning the client ID, user ID, and client secret.
@@ -201,30 +199,30 @@ export class OtpController {
     user: AuthUser,
   ): Promise<{clientId: string; userId: string; clientSecret: jwt.Secret}> {
     const otpCache = await this.otpCacheRepo.get(req.key);
-  
+
     if (!otpCache) {
       throw new HttpErrors.NotFound('OTP cache not found.');
     }
-  
+
     if (!otpCache.clientId || !otpCache.clientSecret) {
       throw new HttpErrors.UnprocessableEntity(
         'Client info is incomplete in OTP cache.',
       );
     }
-  
+
     otpCache.userId = user?.id ?? otpCache.userId;
-  
+
     if (!otpCache.userId) {
       throw new HttpErrors.UnprocessableEntity('User ID missing in OTP cache.');
     }
-  
+
     return {
       clientId: otpCache.clientId,
       userId: otpCache.userId,
       clientSecret: otpCache.clientSecret,
     };
   }
-  
+
   /**
    * The function `_handleGoogleAuthenticatorMethod` validates and retrieves necessary data for Google
    * Authenticator authentication.
@@ -248,18 +246,18 @@ export class OtpController {
         'Client ID must be provided for Google Authenticator.',
       );
     }
-  
+
     const client = await this.authClientRepository.findOne({
       where: {clientId: req.clientId},
     });
-  
+
     if (!client?.clientSecret) {
       throw new HttpErrors.NotFound('Auth client not found or secret missing.');
     }
     if (!user.id) {
       throw new HttpErrors.UnprocessableEntity('User ID is missing.');
     }
-  
+
     return {
       clientId: req.clientId,
       userId: user.id,
