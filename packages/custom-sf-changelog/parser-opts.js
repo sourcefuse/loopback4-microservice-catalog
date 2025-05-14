@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-  headerPattern: /^(\w*)(?:\((.*)\))?: (.*)$/,
+  headerPattern: /^(\w+)(?:\(([^)]+)\))?: (.+)$/,
   headerCorrespondence: ['type', 'scope', 'subject'],
   noteKeywords: ['BREAKING CHANGE', 'MIGRATION CHANGE'],
   revertPattern:
