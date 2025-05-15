@@ -40,80 +40,84 @@ export class SecureResourceOwnerVerifyProvider
    * Inside the function, it verifies the user's password or OTP, checks the user's status, validates
    * the client, and returns an object containing the client and user if all validations pass.
    */
-  
-    value(): VerifyFunction.SecureResourceOwnerPasswordFn {
-      return async (clientId, clientSecret, username, password) => {
-        const user = await this.verifyUserOrOtp(username, password);
-  
-        await this.ensureUserIsActiveInTenant(user);
-  
-        const client = await this.validateClientAccess(
-          clientId,
-          clientSecret,
-          user,
-        );
-  
-        return {client, user};
-      };
-    }
-  
-    private async verifyUserOrOtp(username: string, password: string) {
-      try {
-        return await this.userRepository.verifyPassword(username, password);
-      } catch {
-        const otp = await this.otpRepository.get(username);
-  
-        if (!otp || otp.otp !== password) {
-          throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
-        }
-  
-        const user = await this.userRepository.findOne({where: {username}});
-  
-        if (!user) {
-          throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
-        }
-  
-        return user;
+
+  value(): VerifyFunction.SecureResourceOwnerPasswordFn {
+    return async (clientId, clientSecret, username, password) => {
+      const user = await this.verifyUserOrOtp(username, password);
+
+      await this.ensureUserIsActiveInTenant(user);
+
+      const client = await this.validateClientAccess(
+        clientId,
+        clientSecret,
+        user,
+      );
+
+      return {client, user};
+    };
+  }
+
+  private async verifyUserOrOtp(username: string, password: string) {
+    try {
+      return await this.userRepository.verifyPassword(username, password);
+    } catch {
+      const otp = await this.otpRepository.get(username);
+
+      if (!otp || otp.otp !== password) {
+        throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
       }
+
+      const user = await this.userRepository.findOne({where: {username}});
+
+      if (!user) {
+        throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
+      }
+
+      return user;
     }
-  
-    private async ensureUserIsActiveInTenant(user: User) {
-      const userTenant = await this.utRepository.findOne({
-        where: {
-          userId: user.id,
-          tenantId: user.defaultTenantId,
-          status: {
-            nin: [UserStatus.REJECTED, UserStatus.INACTIVE],
-          },
+  }
+
+  private async ensureUserIsActiveInTenant(user: User) {
+    const userTenant = await this.utRepository.findOne({
+      where: {
+        userId: user.id,
+        tenantId: user.defaultTenantId,
+        status: {
+          nin: [UserStatus.REJECTED, UserStatus.INACTIVE],
         },
-      });
-  
-      if (!userTenant) {
-        throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserInactive);
-      }
+      },
+    });
+
+    if (!userTenant) {
+      throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserInactive);
     }
-  
-    private async validateClientAccess(
-      clientId: string,
-      clientSecret: string,
-      user: User,
+  }
+
+  private async validateClientAccess(
+    clientId: string,
+    clientSecret: string,
+    user: User,
+  ) {
+    const client = await this.authSecureClientRepository.findOne({
+      where: {clientId},
+    });
+
+    if (
+      !client ||
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      user.authClientIds.indexOf(client.id ?? 0) < 0
     ) {
-      const client = await this.authSecureClientRepository.findOne({where: {clientId}});
-  
-      if (
-        !client ||
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        user.authClientIds.indexOf(client.id ?? 0) < 0
-      ) {
-        throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
-      }
-  
-      if ( client.clientType !== ClientType.public 
-        && !client.clientSecret || client.clientSecret !== clientSecret) {
-        throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientVerificationFailed);
-      }
-  
-      return client;
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
     }
+
+    if (
+      (client.clientType !== ClientType.public && !client.clientSecret) ||
+      client.clientSecret !== clientSecret
+    ) {
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientVerificationFailed);
+    }
+
+    return client;
+  }
 }

@@ -4,7 +4,7 @@
 // https://opensource.org/licenses/MIT
 import fs, {Dirent} from 'fs';
 import {join} from 'path';
-import {AnyObject} from '@loopback/repository'
+import {AnyObject} from '@loopback/repository';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import BaseUpdateGenerator from '../../update-generator';
 import {JSON_SPACING} from '../../utils';
@@ -124,7 +124,10 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
    * @returns The function `_incompatibleDependencies` returns a boolean value indicating whether any
    * incompatible dependencies were found and updated during the process.
    */
-  private _incompatibleDependencies(pkgDeps: AnyObject, depsToUpdate: AnyObject): boolean {
+  private _incompatibleDependencies(
+    pkgDeps: AnyObject,
+    depsToUpdate: AnyObject,
+  ): boolean {
     let found = false;
 
     for (const d in tempDeps) {
@@ -136,7 +139,7 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
         d,
         found,
       );
-  
+
       found = this._checkAndUpdateDependency(
         pkgDeps.devDependencies[d],
         tempDependency,
@@ -144,7 +147,7 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
         d,
         found,
       );
-  
+
       found = this._checkAndUpdateDependency(
         pkgDeps.peerDependencies[d],
         tempDependency,
