@@ -81,62 +81,44 @@ export class ChatSessionService {
     return {code: meetingLinkId};
   }
 
+  /**
+   * The function `getMeetingToken` retrieves a session token for a meeting based on provided options and
+   * meeting link ID, with validation checks for session existence, expiration, and scheduled start time.
+   * @param {SessionOptions} sessionOptions - The `sessionOptions` parameter in the `getMeetingToken`
+   * function represents the options for the session, such as the configuration settings for the meeting.
+   * It is an object that contains various properties like `expireTime`, `sessionId`, etc., which are
+   * used to customize the session behavior.
+   * @param {string} meetingLinkId - The `meetingLinkId` parameter is a string that represents the unique
+   * identifier for a specific meeting or session. It is used to retrieve information about the meeting
+   * from the database and validate its status before generating a meeting token.
+   * @returns The `getMeetingToken` function returns a Promise that resolves to a `SessionResponse`
+   * object.
+   */
   async getMeetingToken(
     sessionOptions: SessionOptions,
     meetingLinkId: string,
   ): Promise<SessionResponse> {
-    let errorMessage;
-    if (typeof meetingLinkId !== 'string' || !meetingLinkId) {
-      errorMessage = 'Meeting link should be a valid string';
-
-      throw new HttpErrors.BadRequest(errorMessage);
-    }
-
-    if (
-      sessionOptions.expireTime &&
-      isNaN(sessionOptions.expireTime?.valueOf())
-    ) {
-      errorMessage = 'Expire time is not in correct format.';
-
-      throw new HttpErrors.BadRequest(errorMessage);
-    }
-
-    if (moment().isAfter(sessionOptions.expireTime)) {
-      errorMessage = 'Expire time can not be in past.';
-
-      throw new HttpErrors.BadRequest(errorMessage);
-    }
+    this._validateMeetingLinkId(meetingLinkId);
+    this._validateExpireTime(sessionOptions.expireTime);
 
     const session = await this.videoChatSessionRepository.findOne({
-      where: {
-        meetingLink: meetingLinkId,
-      },
+      where: {meetingLink: meetingLinkId},
     });
 
     if (!session) {
-      errorMessage = 'Session does not exist';
-
-      throw new HttpErrors.BadRequest(errorMessage);
+      throw new HttpErrors.BadRequest('Session does not exist');
     }
 
-    // check if meeting is already ended
     if (session.endTime) {
-      errorMessage = 'This meeting has been expired';
-
-      throw new HttpErrors.BadRequest(errorMessage);
+      throw new HttpErrors.BadRequest('This meeting has been expired');
     }
 
-    // check for schduled meeting:
     if (session.isScheduled && session.scheduleTime) {
-      if (
-        moment()
-          .add(this.config.timeToStart, 'minutes')
-          .isBefore(session.scheduleTime)
-      ) {
-        errorMessage = `Meeting can only be started ${this.config.timeToStart} minutes before
-         the scheduled time`;
-
-        throw new HttpErrors.BadRequest(errorMessage);
+      const canStartTime = moment().add(this.config.timeToStart, 'minutes');
+      if (canStartTime.isBefore(session.scheduleTime)) {
+        throw new HttpErrors.BadRequest(
+          `Meeting can only be started ${this.config.timeToStart} minutes before the scheduled time`,
+        );
       }
     }
 
@@ -145,8 +127,42 @@ export class ChatSessionService {
         startTime: new Date(),
       });
     }
+
     Object.assign(sessionOptions, {sessionId: session.sessionId});
     return this.videoChatProvider.getToken(session.sessionId, sessionOptions);
+  }
+
+  /**
+   * The function `_validateMeetingLinkId` checks if the provided meeting link ID is a valid non-empty
+   * string in TypeScript.
+   * @param {string} meetingLinkId - The `meetingLinkId` parameter is a string that represents the link
+   * to a meeting. The `_validateMeetingLinkId` function is used to check if the `meetingLinkId` is a
+   * valid string and not empty. If the `meetingLinkId` is not a valid string or is empty, it will throw
+   */
+  private _validateMeetingLinkId(meetingLinkId: string): void {
+    if (typeof meetingLinkId !== 'string' || !meetingLinkId.trim()) {
+      throw new HttpErrors.BadRequest('Meeting link should be a valid string');
+    }
+  }
+
+  /**
+   * The function `_validateExpireTime` checks if the provided expire time is in the correct format and
+   * not in the past.
+   * @param {Date} [expireTime] - The `_validateExpireTime` function is used to validate the
+   * `expireTime` parameter. It checks if the `expireTime` is provided and if it is a valid Date object.
+   * It also ensures that the `expireTime` is not in the past.
+   */
+  private _validateExpireTime(expireTime?: Date): void {
+    if (expireTime) {
+      if (isNaN(expireTime.valueOf())) {
+        throw new HttpErrors.BadRequest(
+          'Expire time is not in correct format.',
+        );
+      }
+      if (moment().isAfter(expireTime)) {
+        throw new HttpErrors.BadRequest('Expire time cannot be in the past.');
+      }
+    }
   }
 
   async editMeeting(
