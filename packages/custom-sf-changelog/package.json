@@ -22,7 +22,7 @@
   ],
   "author": "Akshat Dubey",
   "engines": {
-    "node": "18 || 20"
+    "node": ">=20"
   },
   "license": "ISC",
   "dependencies": {

@@ -147,7 +147,6 @@ export class UserRepository extends AuditRepositoryMixin<
     if (!user || user.deleted) {
       throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
     } else if (
-      // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
       !creds?.password ||
       creds.authProvider !== AuthProvider.INTERNAL ||
       !(await bcrypt.compare(password, creds.password))

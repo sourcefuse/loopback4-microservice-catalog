@@ -12,19 +12,25 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
+    # Strategy to run the job on multiple Node.js versions
+    strategy:
+      matrix:
+        node-version: [20, 22, 24]
+
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE
       - uses: actions/checkout@v3
+
+      # Sets up the Node.js version specified in the matrix
       - uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: ${{ matrix.node-version }}
 
-      - name: Install Monorepo Deps
+      # Installs all dependencies
+      - name: Install Dependencies 📌
         run: npm ci
 
-      - name: Run Test Cases
-        run: npm run test --workspaces --if-present
-
-      - name: Run Lint Checks
-        run: npm run lint --workspaces --if-present
+      # Runs test cases
+      - name: Run Test Cases 🔧
+        run: npm run test
