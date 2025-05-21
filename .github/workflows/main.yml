@@ -27,10 +27,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      # Installs all dependencies
-      - name: Install Dependencies 📌
+      - name: Install Monorepo Deps
         run: npm ci
 
-      # Runs test cases
-      - name: Run Test Cases 🔧
-        run: npm run test
+      - name: Run Test Cases
+        run: npm run test --workspaces --if-present
+
+      - name: Run Lint Checks
+        run: npm run lint --workspaces --if-present
