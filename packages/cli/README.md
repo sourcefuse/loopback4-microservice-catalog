@@ -15,13 +15,21 @@ npm install @sourceloop/cli
 <!-- usage -->
 ```sh-session
 $ npm install -g @sourceloop/cli
-$ sl COMMAND or $ arc COMMAND
+$ sl COMMAND 
+or 
+$ arc COMMAND
 running command...
-$ sl (-v|--version|version) or $ arc (-v|--version|version)
+$ sl (-v|--version|version) 
+or
+ $ arc (-v|--version|version)
 @sourceloop/cli/9.2.3 linux-x64 node-v18.20.5
-$ sl --help [COMMAND] or $ arc --help [COMMAND]
+$ sl --help [COMMAND] 
+or
+ $ arc --help [COMMAND]
 USAGE
-  $ sl COMMAND or $ arc COMMAND
+  $ sl COMMAND 
+  or
+  $ arc COMMAND
 ...
 ```
 <!-- usagestop -->
@@ -29,13 +37,33 @@ USAGE
 ## Commands
 
 <!-- commands -->
-* [`sl  autocomplete [SHELL]`](#sl-autocomplete-shell) or [`arc autocomplete [SHELL]`]
-* [`sl cdk`](#sl-cdk) or [`arc cdk`]
-* [`sl extension [NAME]`](#sl-extension-name) or [`arc extension [NAME]`]
-* [`sl help [COMMAND]`](#sl-help-command) or [`arc help [COMMAND]`]
-* [`sl microservice [NAME]`](#sl-microservice-name) or [`arc microservice [NAME]`]
-* [`sl scaffold [NAME]`](#sl-scaffold-name) or [`arc scaffold [NAME]`]
-* [`sl update`](#sl-update) or [`arc update`]
+* [`sl  autocomplete [SHELL]`](#sl-autocomplete-shell) 
+or
+* [`arc autocomplete [SHELL]`](#arc-autocomplete-shell)
+
+* [`sl cdk`](#sl-cdk) 
+or
+* [`arc cdk`](#arc-cdk)
+
+* [`sl extension [NAME]`](#sl-extension-name) 
+or
+* [`arc extension [NAME]`](#arc-extension-name)
+
+* [`sl help [COMMAND]`](#sl-help-command) 
+or
+* [`arc help [COMMAND]`](#arc-help-command)
+
+* [`sl microservice [NAME]`](#sl-microservice-name) 
+or
+* [`arc microservice [NAME]`](#arc-microservice-name)
+
+* [`sl scaffold [NAME]`](#sl-scaffold-name) 
+or
+* [`arc scaffold [NAME]`](#arc-scaffold-name)
+
+* [`sl update`](#sl-update) 
+or
+* [`arc update`](#arc-update)
 
 ## `sl autocomplete [SHELL]` 
    or
@@ -57,9 +85,20 @@ OPTIONS
 
 EXAMPLES
   $ sl autocomplete
+  or
+  $ arc autocomplete
+
   $ sl autocomplete bash
+  or
+  $ arc autocomplete bash
+
   $ sl autocomplete zsh
+  or
+  $ arc autocomplete zsh
+
   $ sl autocomplete --refresh-cache
+  or
+  $ arc autocomplete --refresh-cache
 ```
 
 _See code: [@oclif/plugin-autocomplete](https://github.com/oclif/plugin-autocomplete/blob/v1.3.10/src/commands/autocomplete/index.ts)_
