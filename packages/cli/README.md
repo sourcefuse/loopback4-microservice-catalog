@@ -18,7 +18,7 @@ $ npm install -g @sourceloop/cli
 $ sl COMMAND
 running command...
 $ sl (-v|--version|version)
-@sourceloop/cli/9.2.3 linux-x64 node-v18.20.5
+@sourceloop/cli/9.2.3 darwin-arm64 node-v22.15.0
 $ sl --help [COMMAND]
 USAGE
   $ sl COMMAND
@@ -136,7 +136,8 @@ OPTIONS
 
   -s, --baseService=(authentication-service|audit-service|chat-service|notification-service|bpmn-service|feature-toggle-
   service|in-mail-service|payment-service|scheduler-service|search-service|survey-service|task-service|video-conferencin
-  g-service|user-tenant-service)
+  g-service|user-tenant-service|ctrl-plane-tenant-management-service|ctrl-plane-subscription-service|ctrl-plane-orchestr
+  ator-service)
       Base ARC microservice
 
   --[no-]baseOnService
