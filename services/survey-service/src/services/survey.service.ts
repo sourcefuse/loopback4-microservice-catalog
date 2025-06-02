@@ -8,7 +8,7 @@ import {SurveyStatus} from '../enum';
 import {ErrorKeys} from '../enum/error-keys.enum';
 import {QuestionStatus} from '../enum/question.enum';
 import {QuestionTemplateStatus} from '../enum/template.enum';
-import {Survey, SurveyDto, SurveyQuestion} from '../models';
+import {Survey, SurveyDto} from '../models';
 import {QuestionRepository} from '../repositories';
 import {QuestionTemplateRepository} from '../repositories/question-template.repository';
 import {SurveyCycleRepository} from '../repositories/survey-cycle.repository';
@@ -51,98 +51,162 @@ export class SurveyService {
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
   ) {}
 
+  /**
+   * This function creates a survey, performs various validations and operations, and returns the
+   * created survey.
+   * @param survey - The `createSurvey` function takes a parameter `survey` of type `SurveyDto`, but
+   * with the `id` property omitted. The function performs several tasks such as copying survey data
+   * from a base survey, performing validations, setting weight flags, generating a unique survey ID,
+   * creating a new survey in
+   * @returns The `createSurvey` function returns the created survey object after performing various
+   * operations such as copying from a base survey, setting weight flag, generating a survey ID,
+   * creating the survey in the repository, handling survey status, creating questions from a template
+   * (if applicable), and duplicating survey details (if applicable).
+   */
   async createSurvey(survey: Omit<SurveyDto, 'id'>) {
     const templateId = survey.existingTemplateId;
     survey = await this.createSurveyHelperService.copyFromBaseSurvey(survey);
     await this._checkBasicSurveyValidations(survey);
 
-    // create survey
     if (survey.surveyText) {
-      survey.surveyText = unescapeHtml(survey.surveyText) as unknown as string;
-      const title = this.getHtmlTextContent(survey.surveyText);
-      this.validateTitleLength(title);
-    }
-    let existingQuestionTemplate;
-    if (templateId) {
-      existingQuestionTemplate = await this.questionTemplateRepository.findOne({
-        fields: ['id', 'isEnableWeight'],
-        where: {id: survey.existingTemplateId},
-      });
+      this._processSurveyText(survey);
     }
 
-    if (!survey.baseSurveyId && existingQuestionTemplate?.isEnableWeight) {
-      survey.isEnableWeights = true;
-    }
+    await this._setWeightFlagIfRequired(survey, templateId);
+
     const surveyId = await this.generateSurveyId();
     survey.uid = surveyId;
     delete survey.existingTemplateId;
     await this.surveyRepository.create(survey);
 
-    // fetch createdSurvey with id
     const createdSurvey = await this.surveyRepository.findOne({
       where: {uid: surveyId},
     });
-    if (!createdSurvey) {
-      throw new HttpErrors.NotFound();
-    }
+    if (!createdSurvey) throw new HttpErrors.NotFound();
 
     this.handleSurveyStatus(createdSurvey.id as string, createdSurvey).catch(
       err => this.logger.error(JSON.stringify(err)),
     );
 
-    const questionIdMap: Map<string, string> = new Map();
-    //key contains old question id     //value contains new question id
-
-    const sectionIdMap: Map<string, string> = new Map();
-
-    //find exisiting questions only of baseSurvey and create copies of them, store ids in pairs
     if (!survey.baseSurveyId && templateId) {
-      const existingTemplateQuestions =
-        await this.templateQuestionRepository.find({
-          where: {templateId: templateId},
-        });
-      const surveyQuestionsToCreate: SurveyQuestion[] = [];
-      existingTemplateQuestions?.forEach(existingTemplateQuestion => {
-        const surveyQuestion = new SurveyQuestion();
-        surveyQuestion.displayOrder = (existingTemplateQuestion.displayOrder ??
-          0) as number;
-        surveyQuestion.isMandatory =
-          existingTemplateQuestion.isMandatory as boolean;
-        surveyQuestion.questionId = existingTemplateQuestion.questionId;
-        surveyQuestion.weight = existingTemplateQuestion.weight;
-        surveyQuestion.surveyId = createdSurvey.id as string;
-        surveyQuestionsToCreate.push(surveyQuestion);
-      });
-      if (surveyQuestionsToCreate.length)
-        await this.surveyQuestionRepository.createAll(surveyQuestionsToCreate);
-
-      await this.createSurveyHelperService.addDependentOnQuestionId(
+      await this._createQuestionsFromTemplate(
+        templateId,
         createdSurvey.id as string,
-        existingTemplateQuestions,
       );
     }
 
-    //copy survey specific questions in case of duplication
     if (survey.baseSurveyId) {
-      await Promise.all([
-        await this.createSurveyHelperService.duplicateSections(
-          createdSurvey?.id ?? '',
-          survey.baseSurveyId,
-          sectionIdMap,
-        ),
-        await this.createSurveyHelperService.duplicateRespondersAndWorkgroups(
-          survey.baseSurveyId,
-          createdSurvey?.id ?? '',
-        ),
-      ]);
-      await this.createSurveyHelperService.duplicateSurveyQuestionEntry(
-        survey,
-        createdSurvey,
-        questionIdMap,
-        sectionIdMap,
+      await this._duplicateSurveyDetails(survey, createdSurvey);
+    }
+
+    return createdSurvey;
+  }
+
+  /**
+   * The _processSurveyText function processes survey text by unescaping HTML characters, extracting
+   * the title, and validating its length.
+   * @param survey - The `survey` parameter is an object of type `SurveyDto` with the `id` property
+   * omitted. It likely contains information related to a survey, such as the survey text.
+   */
+  private _processSurveyText(survey: Omit<SurveyDto, 'id'>) {
+    survey.surveyText = unescapeHtml(survey.surveyText) as unknown as string;
+    const title = this.getHtmlTextContent(survey.surveyText);
+    this.validateTitleLength(title);
+  }
+
+  /**
+   * This function sets a weight flag on a survey if a specific condition is met.
+   * @param survey - The `survey` parameter is an object of type `SurveyDto` with the `id` property
+   * omitted. It likely contains information related to a survey, such as its title, questions,
+   * options, etc.
+   * @param {string} [templateId] - The `templateId` parameter is an optional string that represents
+   * the ID of a question template. It is used in the `_setWeightFlagIfRequired` method to check if a
+   * survey has a base survey ID and if a template ID is provided. If a template ID is provided and the
+   * corresponding template
+   */
+  private async _setWeightFlagIfRequired(
+    survey: Omit<SurveyDto, 'id'>,
+    templateId?: string,
+  ) {
+    if (!survey.baseSurveyId && templateId) {
+      const existingTemplate = await this.questionTemplateRepository.findOne({
+        fields: ['id', 'isEnableWeight'],
+        where: {id: templateId},
+      });
+      if (existingTemplate?.isEnableWeight) {
+        survey.isEnableWeights = true;
+      }
+    }
+  }
+
+  /**
+   * The function `_createQuestionsFromTemplate` creates survey questions based on a template and adds
+   * them to a survey.
+   * @param {string} templateId - The `templateId` parameter is a string that represents the unique
+   * identifier of a template from which questions will be created for a survey.
+   * @param {string} surveyId - The `surveyId` parameter is a string that represents the unique
+   * identifier of a survey. It is used to associate the questions created from a template with a
+   * specific survey.
+   */
+  private async _createQuestionsFromTemplate(
+    templateId: string,
+    surveyId: string,
+  ) {
+    const questions = await this.templateQuestionRepository.find({
+      where: {templateId},
+    });
+    const surveyQuestions = questions.map(q => ({
+      displayOrder: q.displayOrder ?? 0,
+      isMandatory: q.isMandatory ?? false,
+      questionId: q.questionId,
+      weight: q.weight,
+      surveyId,
+    }));
+    if (surveyQuestions.length) {
+      await this.surveyQuestionRepository.createAll(surveyQuestions);
+      await this.createSurveyHelperService.addDependentOnQuestionId(
+        surveyId,
+        questions,
       );
     }
-    return createdSurvey;
+  }
+
+  /**
+   * The _duplicateSurveyDetails function duplicates survey details, sections, responders, workgroups,
+   * and survey questions.
+   * @param survey - The `survey` parameter is an object of type `SurveyDto` with the `id` property
+   * omitted. It contains details of a survey that needs to be duplicated.
+   * @param {SurveyDto} createdSurvey - The `_duplicateSurveyDetails` function takes in two parameters:
+   * `survey` and `createdSurvey`. The `createdSurvey` parameter is of type `SurveyDto`, which
+   * represents a survey object. It contains details about a survey that has been created, including an
+   * `id` property.
+   */
+  private async _duplicateSurveyDetails(
+    survey: Omit<SurveyDto, 'id'>,
+    createdSurvey: SurveyDto,
+  ) {
+    const sectionIdMap = new Map<string, string>();
+    const questionIdMap = new Map<string, string>();
+    const surveyId = createdSurvey.id ?? '';
+
+    await Promise.all([
+      this.createSurveyHelperService.duplicateSections(
+        surveyId,
+        survey.baseSurveyId ?? '',
+        sectionIdMap,
+      ),
+      this.createSurveyHelperService.duplicateRespondersAndWorkgroups(
+        survey.baseSurveyId ?? '',
+        surveyId,
+      ),
+    ]);
+
+    await this.createSurveyHelperService.duplicateSurveyQuestionEntry(
+      survey,
+      createdSurvey,
+      questionIdMap,
+      sectionIdMap,
+    );
   }
 
   private _checkDateValidationForPatchCase(

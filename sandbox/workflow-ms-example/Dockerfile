@@ -20,11 +20,9 @@ ENV WORKFLOW_MIGRATION_COPY=$WORKFLOW_MIGRATION_COPY
 COPY --chown=node package*.json ./
 COPY --chown=node . .
 
-RUN npm install
+RUN npm install && npm run build
 
 # Bundle app source code
-
-RUN npm run build
 
 # Bind to all network interfaces so that it can be mapped to the host OS
 ENV HOST=0.0.0.0 PORT=3000

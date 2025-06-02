@@ -32,6 +32,18 @@ export class QuestionHelperService {
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
   ) {}
 
+  /**
+   * This function creates a new question with specified status and additional logic for handling
+   * follow-up questions and default options.
+   * @param {QuestionDto} question - The `createQuestion` function you provided is an asynchronous
+   * function that creates a new question based on the provided `QuestionDto` object and a default
+   * status of `QuestionStatus.DRAFT`. Here's a breakdown of the function:
+   * @param {string} status - The `status` parameter in the `createQuestion` function is used to
+   * specify the status of the question being created. By default, if no status is provided, the
+   * question will be set to `QuestionStatus.DRAFT`. However, you can override this default value by
+   * providing a different status when calling
+   * @returns The `createQuestion` function returns a `Promise` that resolves to a `Question` object.
+   */
   async createQuestion(
     question: QuestionDto,
     status: string = QuestionStatus.DRAFT,
@@ -54,15 +66,12 @@ export class QuestionHelperService {
       ...question,
       status,
       uid,
+      name: question.name?.trim(),
+      isScoreEnabled: question.questionType === QuestionType.SCALE,
     });
-    if (newQuestion.name) {
-      newQuestion.name = newQuestion.name.trim();
-    }
+
     if (optionId) {
       return this._createFollowupQuestion(newQuestion, optionId);
-    }
-    if (question.questionType === QuestionType.SCALE) {
-      newQuestion.isScoreEnabled = true;
     }
 
     await this.questionRepository.create(newQuestion);
