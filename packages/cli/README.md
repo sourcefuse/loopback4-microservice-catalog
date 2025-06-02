@@ -37,33 +37,19 @@ USAGE
 ## Commands
 
 <!-- commands -->
-* [`sl  autocomplete [SHELL]`](#sl-autocomplete-shell) 
-or
-* [`arc autocomplete [SHELL]`](#arc-autocomplete-shell)
+* [`sl  autocomplete [SHELL]`](#sl-autocomplete-shell) or [`arc autocomplete [SHELL]`](#arc-autocomplete-shell)
 
-* [`sl cdk`](#sl-cdk) 
-or
-* [`arc cdk`](#arc-cdk)
+* [`sl cdk`](#sl-cdk) or [`arc cdk`](#arc-cdk)
 
-* [`sl extension [NAME]`](#sl-extension-name) 
-or
-* [`arc extension [NAME]`](#arc-extension-name)
+* [`sl extension [NAME]`](#sl-extension-name) or [`arc extension [NAME]`](#arc-extension-name)
 
-* [`sl help [COMMAND]`](#sl-help-command) 
-or
-* [`arc help [COMMAND]`](#arc-help-command)
+* [`sl help [COMMAND]`](#sl-help-command) or [`arc help [COMMAND]`](#arc-help-command)
 
-* [`sl microservice [NAME]`](#sl-microservice-name) 
-or
-* [`arc microservice [NAME]`](#arc-microservice-name)
+* [`sl microservice [NAME]`](#sl-microservice-name) or [`arc microservice [NAME]`](#arc-microservice-name)
 
-* [`sl scaffold [NAME]`](#sl-scaffold-name) 
-or
-* [`arc scaffold [NAME]`](#arc-scaffold-name)
+* [`sl scaffold [NAME]`](#sl-scaffold-name) or [`arc scaffold [NAME]`](#arc-scaffold-name)
 
-* [`sl update`](#sl-update) 
-or
-* [`arc update`](#arc-update)
+* [`sl update`](#sl-update) or [`arc update`](#arc-update)
 
 ## `sl autocomplete [SHELL]` 
    or
