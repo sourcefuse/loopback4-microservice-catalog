@@ -9,27 +9,20 @@ To install sourceloop-cli, run
 ```shell
 npm install @sourceloop/cli
 ```
+Once the above command is executed, you will be able to access the CLI commands directly from your terminal. You can use either `sl` or `arc` as shorthand to run any of the `sourceloop` commands listed below. A sample usage is provided for reference:
 
 ## Usage
 
 <!-- usage -->
 ```sh-session
 $ npm install -g @sourceloop/cli
-$ sl COMMAND 
-or 
-$ arc COMMAND
+$ sl COMMAND or arc COMMAND
 running command...
-$ sl (-v|--version|version) 
-or
- $ arc (-v|--version|version)
+$ sl (-v|--version|version) or arc (-v|--version|version)
 @sourceloop/cli/9.2.3 linux-x64 node-v18.20.5
-$ sl --help [COMMAND] 
-or
- $ arc --help [COMMAND]
+$ sl --help [COMMAND] or arc --help [COMMAND]
 USAGE
-  $ sl COMMAND 
-  or
-  $ arc COMMAND
+  $ sl COMMAND or arc COMMAND
 ...
 ```
 <!-- usagestop -->
@@ -37,31 +30,27 @@ USAGE
 ## Commands
 
 <!-- commands -->
-* [`sl  autocomplete [SHELL]`](#sl-autocomplete-shell) or [`arc autocomplete [SHELL]`](#arc-autocomplete-shell)
+* [`sl  autocomplete [SHELL]`](#sl-autocomplete-shell)
 
-* [`sl cdk`](#sl-cdk) or [`arc cdk`](#arc-cdk)
+* [`sl cdk`](#sl-cdk)
 
-* [`sl extension [NAME]`](#sl-extension-name) or [`arc extension [NAME]`](#arc-extension-name)
+* [`sl extension [NAME]`](#sl-extension-name)
 
-* [`sl help [COMMAND]`](#sl-help-command) or [`arc help [COMMAND]`](#arc-help-command)
+* [`sl help [COMMAND]`](#sl-help-command)
 
-* [`sl microservice [NAME]`](#sl-microservice-name) or [`arc microservice [NAME]`](#arc-microservice-name)
+* [`sl microservice [NAME]`](#sl-microservice-name)
 
-* [`sl scaffold [NAME]`](#sl-scaffold-name) or [`arc scaffold [NAME]`](#arc-scaffold-name)
+* [`sl scaffold [NAME]`](#sl-scaffold-name)
 
-* [`sl update`](#sl-update) or [`arc update`](#arc-update)
+* [`sl update`](#sl-update) 
 
-## `sl autocomplete [SHELL]` 
-   or
-  `arc autocomplete [SHELL]`
+## `sl autocomplete [SHELL]`
 
 display autocomplete installation instructions
 
 ```
 USAGE
   $ sl autocomplete [SHELL]
-  or
-  $ arc autocomplete [SHELL]
 
 ARGUMENTS
   SHELL  shell type
@@ -71,35 +60,23 @@ OPTIONS
 
 EXAMPLES
   $ sl autocomplete
-  or
-  $ arc autocomplete
 
   $ sl autocomplete bash
-  or
-  $ arc autocomplete bash
 
   $ sl autocomplete zsh
-  or
-  $ arc autocomplete zsh
 
   $ sl autocomplete --refresh-cache
-  or
-  $ arc autocomplete --refresh-cache
 ```
 
 _See code: [@oclif/plugin-autocomplete](https://github.com/oclif/plugin-autocomplete/blob/v1.3.10/src/commands/autocomplete/index.ts)_
 
 ## `sl cdk`
-   or
-   `arc cdk`
 
 add arc-cdk
 
 ```
 USAGE
   $ sl cdk
-  or
-  $ arc cdk
 
 OPTIONS
   -a, --applicationClassName=applicationClassName  Class name of the service you want to deploy
@@ -119,16 +96,12 @@ OPTIONS
 _See code: [src/commands/cdk.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v9.2.3/src/commands/cdk.ts)_
 
 ## `sl extension [NAME]`
-   or
-   `arc extension [NAME]`
 
 add an extension
 
 ```
 USAGE
   $ sl extension [NAME]
-  or
-  $ arc extension [NAME]
 
 ARGUMENTS
   NAME  Name of the extension
@@ -140,16 +113,12 @@ OPTIONS
 _See code: [src/commands/extension.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v9.2.3/src/commands/extension.ts)_
 
 ## `sl help [COMMAND]`
-   or
-  `arc help [COMMAND]`
 
 display help for sl
 
 ```
 USAGE
   $ sl help [COMMAND]
-  or
-  $ arc help [COMMAND]
 
 ARGUMENTS
   COMMAND  command to show help for
@@ -161,16 +130,12 @@ OPTIONS
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.18/src/commands/help.ts)_
 
 ## `sl microservice [NAME]`
-   or
-   `arc microservice [NAME]`
 
 add a microservice
 
 ```
 USAGE
   $ sl microservice [NAME]
-  or
-  $ arc microservice [NAME]
 
 ARGUMENTS
   NAME  Name of the microservice
@@ -212,16 +177,12 @@ OPTIONS
 _See code: [src/commands/microservice.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v9.2.3/src/commands/microservice.ts)_
 
 ## `sl scaffold [NAME]`
-   or
-   `arc scaffold [NAME]`
 
 create a project scaffold
 
 ```
 USAGE
   $ sl scaffold [NAME]
-  or
-  $ arc scaffold [NAME]
 
 ARGUMENTS
   NAME  name of the project
@@ -239,17 +200,13 @@ OPTIONS
 
 _See code: [src/commands/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v9.2.3/src/commands/scaffold.ts)_
 
-## `sl update` 
-   or
-  `arc update`
+## `sl update`
 
 update the dependencies of a loopback project
 
 ```
 USAGE
-  $ sl update 
-  or
-  $ arc update
+  $ sl update
 
 OPTIONS
   --help  show manual pages
