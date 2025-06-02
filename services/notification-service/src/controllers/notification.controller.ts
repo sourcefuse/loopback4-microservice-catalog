@@ -206,31 +206,35 @@ export class NotificationController {
     })
     notification: Omit<Notification, 'id'>,
   ): Promise<Notification> {
-    if (notification.groupKey && notification.receiver?.to.length > 0) {
-      throw new HttpErrors.UnprocessableEntity(
-        ErrorKeys.GroupedDraftReceiverError,
-      );
-    } else if (notification.groupKey && notification.subject) {
-      throw new HttpErrors.UnprocessableEntity(
-        ErrorKeys.GroupedDraftSubjectError,
-      );
-    } else if (notification.groupKey && notification.options?.fromEmail) {
-      throw new HttpErrors.UnprocessableEntity(
-        ErrorKeys.GroupedDraftFromEmailError,
-      );
-    } else if (
-      !notification.groupKey &&
-      !(
-        notification.subject &&
-        notification.receiver?.to.length > 0 &&
-        notification.options?.fromEmail
-      )
-    ) {
+    const {groupKey, receiver, subject, options} = notification;
+    const hasTo = receiver?.to?.length > 0;
+    const hasFromEmail = options?.fromEmail;
+
+    if (groupKey) {
+      if (hasTo) {
+        throw new HttpErrors.UnprocessableEntity(
+          ErrorKeys.GroupedDraftReceiverError,
+        );
+      }
+      if (subject) {
+        throw new HttpErrors.UnprocessableEntity(
+          ErrorKeys.GroupedDraftSubjectError,
+        );
+      }
+      if (hasFromEmail) {
+        throw new HttpErrors.UnprocessableEntity(
+          ErrorKeys.GroupedDraftFromEmailError,
+        );
+      }
+    } else if (!(subject && hasTo && hasFromEmail)) {
       throw new HttpErrors.UnprocessableEntity(ErrorKeys.DraftError);
     } else {
       notification.isDraft = true;
       return this.notificationRepository.create(notification);
     }
+
+    notification.isDraft = true;
+    return this.notificationRepository.create(notification);
   }
 
   @authenticate(STRATEGY.BEARER)

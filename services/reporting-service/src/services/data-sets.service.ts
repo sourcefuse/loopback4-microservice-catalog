@@ -438,15 +438,15 @@ export class DataSetsService {
   }
 
   /**
-   * The function `mergeAndValidateDataSetQuery` retrieves a dataset object, merges a custom filter
-   * with the dataset query, and validates the resulting query.
+   * This function merges and validates a data set query based on the provided filter and dataset
+   * information.
    * @param {string} id - The `id` parameter in the `mergeAndValidateDataSetQuery` function is a string
    * that represents the identifier of a dataset.
    * @param filter - The `filter` parameter in the `mergeAndValidateDataSetQuery` function is of type
-   * `CustomFilter<AnyObject>`. It is used to filter the dataset query results based on certain
-   * criteria such as `where` conditions, `order` criteria, `limit`, and `offset`. The function
-   * processes
-   * @returns The function `mergeAndValidateDataSetQuery` returns either a `StructuredQueryInterface`
+   * `CustomFilter<AnyObject>`. This means it is a custom filter object that can filter data based on
+   * certain criteria. The `AnyObject` type indicates that the filter can be applied to any type of
+   * object
+   * @returns The `mergeAndValidateDataSetQuery` function returns either a `StructuredQueryInterface`
    * object or a string.
    */
   private async mergeAndValidateDataSetQuery(
@@ -457,35 +457,30 @@ export class DataSetsService {
     if (!datasetObj) {
       throw new HttpErrors.NotFound('Data set not found');
     }
-
-    if (typeof datasetObj.dataSetQuerySQL === 'string') {
-      return this.queryUtility.prepareFinalSqlQuery(
-        datasetObj.dataSetQuerySQL,
-        filter,
-      );
-    } else {
-      const query: StructuredQueryInterface = JSON.parse(
-        JSON.stringify(datasetObj.dataSetQuery ?? {}),
-      );
-      if (filter.where) {
-        query.where = query.where
-          ? {and: [query.where, filter.where]}
-          : filter.where;
-      }
-      if (filter.order) {
-        const orderBy = this.convertOrderToOrderBy(filter.order);
-        query.orderBy = orderBy;
-      }
-      query.limit = filter.limit ?? query.limit;
-      query.offset = filter.offset ?? query.offset;
-
-      const isValidObject = this.queryUtility.validateQueryObject(query);
-      if (!isValidObject) {
-        throw new HttpErrors.BadRequest('Invalid data set query');
-      }
-
-      return query;
+    const {dataSetQuerySQL, dataSetQuery} = datasetObj;
+    if (typeof dataSetQuerySQL === 'string') {
+      return this.queryUtility.prepareFinalSqlQuery(dataSetQuerySQL, filter);
     }
+    const query: StructuredQueryInterface = JSON.parse(
+      JSON.stringify(dataSetQuery ?? {}),
+    );
+    if (filter.where) {
+      query.where = query.where
+        ? {and: [query.where, filter.where]}
+        : filter.where;
+    }
+    if (filter.order) {
+      query.orderBy = this.convertOrderToOrderBy(filter.order);
+    }
+    query.limit = filter.limit ?? query.limit;
+    query.offset = filter.offset ?? query.offset;
+
+    const isValidObject = this.queryUtility.validateQueryObject(query);
+    if (!isValidObject) {
+      throw new HttpErrors.BadRequest('Invalid data set query');
+    }
+
+    return query;
   }
 
   /**

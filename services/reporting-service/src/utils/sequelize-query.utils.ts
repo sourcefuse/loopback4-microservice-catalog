@@ -410,7 +410,11 @@ export class SequelizeQueryUtility implements QueryUtilityInterface {
             !Array.isArray(condition.value) &&
             'query' in condition.value
           ) {
-            return `${fieldPart} ${condition.operator} (${this.generateQuery(condition.value.query, bindingManager)})`;
+            const subQuery = this.generateQuery(
+              condition.value.query,
+              bindingManager,
+            );
+            return `${fieldPart} ${condition.operator} (${subQuery})`;
           }
 
           if (Array.isArray(condition.value)) {
