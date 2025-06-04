@@ -15,8 +15,11 @@ import {Options} from 'loopback-datasource-juggler';
 import {AuthErrorKeys} from 'loopback4-authentication';
 import {SoftCrudRepository} from 'loopback4-soft-delete';
 
+import {inject} from '@loopback/core';
 import {IAuthUserWithPermissions} from '../components';
+import {SFCoreBindings} from '../keys';
 import {UserModifiableEntity} from '../models';
+import {IDefaultUserModifyCrud} from '../types';
 
 export class DefaultUserModifyCrudRepository<
   T extends UserModifiableEntity,
@@ -35,6 +38,9 @@ export class DefaultUserModifyCrudRepository<
     super(entityClass, dataSource);
   }
 
+  @inject(SFCoreBindings.DEFAULT_USER_MODIFY_CRUD_SERVICE)
+  public defaultUserModifyCrudService: IDefaultUserModifyCrud<T, ID>;
+
   async create(entity: DataObject<T>, options?: Options): Promise<T> {
     let currentUser = await this.getCurrentUser();
     currentUser = currentUser ?? options?.currentUser;
@@ -44,6 +50,7 @@ export class DefaultUserModifyCrudRepository<
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     entity.createdBy = uid;
     entity.modifiedBy = uid;
+    entity = await this.defaultUserModifyCrudService.create(entity);
     return super.create(entity, options);
   }
 
@@ -58,6 +65,7 @@ export class DefaultUserModifyCrudRepository<
       entity.createdBy = uid ?? '';
       entity.modifiedBy = uid ?? '';
     });
+    entities = await this.defaultUserModifyCrudService.createAll(entities);
     return super.createAll(entities, options);
   }
 
@@ -68,6 +76,7 @@ export class DefaultUserModifyCrudRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     entity.modifiedBy = uid;
+    entity = await this.defaultUserModifyCrudService.save(entity);
     return super.save(entity, options);
   }
 
@@ -78,6 +87,7 @@ export class DefaultUserModifyCrudRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     entity.modifiedBy = uid;
+    entity = await this.defaultUserModifyCrudService.update(entity);
     return super.update(entity, options);
   }
 
@@ -93,7 +103,11 @@ export class DefaultUserModifyCrudRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     data.modifiedBy = uid;
-    return super.updateAll(data, where, options);
+    const result = await this.defaultUserModifyCrudService.updateAll(
+      data,
+      where,
+    );
+    return super.updateAll(result.data, result.where, options);
   }
 
   async updateById(
@@ -108,6 +122,7 @@ export class DefaultUserModifyCrudRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     data.modifiedBy = uid;
+    data = await this.defaultUserModifyCrudService.updateById(id, data);
     return super.updateById(id, data, options);
   }
   async replaceById(
@@ -121,6 +136,7 @@ export class DefaultUserModifyCrudRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     data.modifiedBy = uid;
+    data = await this.defaultUserModifyCrudService.replaceById(id, data);
     return super.replaceById(id, data, options);
   }
 }
