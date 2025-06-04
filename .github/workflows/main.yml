@@ -7,7 +7,7 @@ on:
     branches: [master]
 
 jobs:
-  npm_test:
+  node_matrix_tests: 
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -24,9 +24,10 @@ jobs:
       - name: Run Lint Checks
         run: npm run lint --workspaces --if-present
 
-  summarize_tests:
+  npm_test:  
     runs-on: ubuntu-latest
-    needs: npm_test
+    needs: node_matrix_tests
+    if: success()
     steps:
-      - name: Mark tests complete
-        run: echo "All tests across all Node versions passed."
+      - name: Final status
+        run: echo "✅ All tests passed for Node.js 20, 22, and 24"
