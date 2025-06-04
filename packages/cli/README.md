@@ -9,19 +9,22 @@ To install sourceloop-cli, run
 ```shell
 npm install @sourceloop/cli
 ```
+Once the above command is executed, you will be able to access the CLI commands directly from your terminal. You can use either `sl` or `arc` as shorthand to run any of the `sourceloop` commands listed below. A sample usage is provided for reference:
 
 ## Usage
 
 <!-- usage -->
 ```sh-session
 $ npm install -g @sourceloop/cli
-$ sl COMMAND
+
+$ sl COMMAND or arc COMMAND
 running command...
-$ sl (-v|--version|version)
-@sourceloop/cli/9.2.3 linux-x64 node-v22.12.0
-$ sl --help [COMMAND]
+$ sl (-v|--version|version) or arc (-v|--version|version)
+@sourceloop/cli/9.2.3 linux-x64 node-v18.20.5
+$ sl --help [COMMAND] or arc --help [COMMAND]
+
 USAGE
-  $ sl COMMAND
+  $ sl COMMAND or arc COMMAND
 ...
 ```
 <!-- usagestop -->
@@ -29,13 +32,19 @@ USAGE
 ## Commands
 
 <!-- commands -->
-* [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
+* [`sl  autocomplete [SHELL]`](#sl-autocomplete-shell)
+
 * [`sl cdk`](#sl-cdk)
+
 * [`sl extension [NAME]`](#sl-extension-name)
+
 * [`sl help [COMMAND]`](#sl-help-command)
+
 * [`sl microservice [NAME]`](#sl-microservice-name)
+
 * [`sl scaffold [NAME]`](#sl-scaffold-name)
-* [`sl update`](#sl-update)
+
+* [`sl update`](#sl-update) 
 
 ## `sl autocomplete [SHELL]`
 
@@ -53,8 +62,11 @@ OPTIONS
 
 EXAMPLES
   $ sl autocomplete
+
   $ sl autocomplete bash
+
   $ sl autocomplete zsh
+
   $ sl autocomplete --refresh-cache
 ```
 

@@ -335,68 +335,136 @@ export class LoginController {
     @inject(AuthenticationBindings.CURRENT_USER)
     currentUser: IAuthUserWithPermissions,
   ): Promise<SuccessResponse> {
-    const token = auth?.replace(/bearer /i, '');
-    if (!token || !req.refreshToken) {
-      throw new HttpErrors.UnprocessableEntity(
-        AuthenticateErrorKeys.TokenMissing,
-      );
+    const token = this._extractToken(auth);
+    await this._validateResetPasswordRequest(req, token, currentUser);
+
+    const changePassword = await this._handlePasswordChange(req);
+    if (!currentUser.tenantId) {
+      throw new HttpErrors.BadRequest('Tenant ID is required');
+    }
+    if (changePassword.id) {
+      await this._verifyUserTenant(changePassword.id, currentUser.tenantId);
     }
 
-    const refreshTokenModel = await this.refreshTokenRepo.get(req.refreshToken);
-    if (refreshTokenModel.accessToken !== token) {
-      throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenInvalid);
-    }
-    if (
-      refreshTokenModel.username !== req.username ||
-      currentUser.username !== req.username
-    ) {
-      throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
-    }
-
-    if (req.password && req.password.length <= 0) {
-      throw new HttpErrors.BadRequest(AuthenticateErrorKeys.PasswordInvalid);
-    }
-
-    let changePasswordResponse: User;
-
-    if (req.oldPassword) {
-      changePasswordResponse = await this.getPasswordResponse(
-        req.username,
-        req.password,
-        req.oldPassword,
-      );
-    } else {
-      changePasswordResponse = await this.getPasswordResponse(
-        req.username,
-        req.password,
-      );
-    }
-
-    if (!changePasswordResponse) {
-      throw new HttpErrors.UnprocessableEntity('Unable to set password !');
-    }
-
-    const userTenant = await this.userTenantRepo.findOne({
-      where: {
-        userId: changePasswordResponse.id,
-        tenantId: currentUser.tenantId,
-      },
-    });
-    if (!userTenant) {
-      throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserInactive);
-    }
-
-    if (userTenant.status && userTenant.status < UserStatus.ACTIVE) {
-      await this.userRepo.userTenants(changePasswordResponse.id).patch({
-        status: UserStatus.ACTIVE,
-      });
-    }
     await this.revokedTokensRepo.set(token, {token});
     await this.refreshTokenRepo.delete(req.refreshToken);
     return new SuccessResponse({
       success: true,
     });
   }
+
+  /**
+   * The function `_extractToken` removes the "bearer " prefix from an authorization header and returns
+   * the extracted token, throwing an error if the token is missing.
+   * @param {string} authHeader - The `authHeader` parameter is a string that typically contains an
+   * authorization token.
+   * @returns the extracted token from the `authHeader` string after removing the "bearer " prefix.
+   */
+  private _extractToken(authHeader: string): string {
+    const token = authHeader?.replace(/bearer /i, '');
+    if (!token) {
+      throw new HttpErrors.UnprocessableEntity(
+        AuthenticateErrorKeys.TokenMissing,
+      );
+    }
+    return token;
+  }
+
+  /**
+   * The _validateResetPasswordRequest function checks the validity of a reset password request.
+   * @param {ResetPassword} req - The `req` parameter in the `_validateResetPasswordRequest` function
+   * represents the request body for resetting a password. It likely contains information such as the
+   * username, password, and refresh token needed to reset the password for a user.
+   * @param {string} token - The `token` parameter in the `_validateResetPasswordRequest` function is a
+   * string that is used to verify the validity of the reset password request. It is compared with the
+   * access token stored in the refresh token to ensure that the request is authorized. If the
+   * `accessToken` in the `refreshToken
+   * @param {IAuthUserWithPermissions} currentUser - The `currentUser` parameter in the
+   * `_validateResetPasswordRequest` function represents the currently authenticated user who is
+   * attempting to reset their password. This parameter is of type `IAuthUserWithPermissions`, which
+   * likely contains information about the user, such as their username, permissions, and other
+   * relevant details needed for
+   */
+  private async _validateResetPasswordRequest(
+    req: ResetPassword,
+    token: string,
+    currentUser: IAuthUserWithPermissions,
+  ): Promise<void> {
+    if (!req.refreshToken) {
+      throw new HttpErrors.UnprocessableEntity(
+        AuthenticateErrorKeys.TokenMissing,
+      );
+    }
+
+    const refreshToken = await this.refreshTokenRepo.get(req.refreshToken);
+    if (refreshToken.accessToken !== token) {
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenInvalid);
+    }
+
+    if (
+      refreshToken.username !== req.username ||
+      currentUser.username !== req.username
+    ) {
+      throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
+    }
+
+    if (!req.password || req.password.length <= 0) {
+      throw new HttpErrors.BadRequest(AuthenticateErrorKeys.PasswordInvalid);
+    }
+  }
+
+  /**
+   * The function `_handlePasswordChange` asynchronously handles password changes for a user based on
+   * the provided input.
+   * @param {ResetPassword} req - ResetPassword object containing the following properties:
+   * @returns The function `_handlePasswordChange` is returning a Promise that resolves to a `User`
+   * object.
+   */
+  private async _handlePasswordChange(req: ResetPassword): Promise<User> {
+    const user =
+      req.oldPassword !== undefined
+        ? await this.getPasswordResponse(
+            req.username,
+            req.password,
+            req.oldPassword,
+          )
+        : await this.getPasswordResponse(req.username, req.password);
+
+    if (!user) {
+      throw new HttpErrors.UnprocessableEntity('Unable to set password !');
+    }
+
+    return user;
+  }
+
+  /**
+   * The function `_verifyUserTenant` checks and updates the status of a user's tenant based on certain
+   * conditions.
+   * @param {string} userId - The `userId` parameter is a string that represents the unique identifier
+   * of a user in the system. It is used to identify a specific user within the application.
+   * @param {string} tenantId - The `tenantId` parameter in the `_verifyUserTenant` function is a
+   * string that represents the unique identifier of a specific tenant in the system. This parameter is
+   * used to identify the tenant to which the user belongs and is being verified against.
+   */
+  private async _verifyUserTenant(
+    userId: string,
+    tenantId: string,
+  ): Promise<void> {
+    const userTenant = await this.userTenantRepo.findOne({
+      where: {userId, tenantId},
+    });
+
+    if (!userTenant) {
+      throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserInactive);
+    }
+
+    if (userTenant.status && userTenant.status < UserStatus.ACTIVE) {
+      await this.userRepo.userTenants(userId).patch({
+        status: UserStatus.ACTIVE,
+      });
+    }
+  }
+
   async getPasswordResponse(
     userName: string,
     password: string,

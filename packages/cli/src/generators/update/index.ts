@@ -4,7 +4,7 @@
 // https://opensource.org/licenses/MIT
 import fs, {Dirent} from 'fs';
 import {join} from 'path';
-import {AnyObject} from '../../types';
+import {AnyObject} from '@loopback/repository';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import BaseUpdateGenerator from '../../update-generator';
 import {JSON_SPACING} from '../../utils';
@@ -75,6 +75,7 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
 
       return directories;
     } catch (error) {
+      this.log(chalk.cyan(`Error reading directory: ${error}`));
       return [];
     }
   }
@@ -94,43 +95,96 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
     }
   }
 
-  private async _checkDependencies() {
+  private async _checkDependencies(): Promise<boolean> {
     const {pkgDeps, depsToUpdate} = await this._initialiseDependencies();
 
-    let found = false;
-    // find the incompatable dependencies
-    for (const d in tempDeps) {
-      const dep = pkgDeps.dependencies[d];
-      const devDep = pkgDeps.devDependencies[d];
-      const peerDep = pkgDeps.peerDependencies[d];
-      if (!dep && !devDep && !peerDep) continue;
-
-      const tempDependency = tempDeps[d];
-      if (dep && tempDependency !== dep) {
-        depsToUpdate.dependencies[d] = tempDependency;
-        found = true;
-      }
-      if (devDep && tempDependency !== devDep) {
-        found = true;
-        depsToUpdate.devDependencies[d] = tempDependency;
-      }
-      if (peerDep && tempDependency !== peerDep) {
-        found = true;
-        depsToUpdate.peerDependencies[d] = tempDependency;
-      }
-    }
+    const found = this._incompatibleDependencies(pkgDeps, depsToUpdate);
 
     if (!found) {
-      // No incompatible dependencies
       this.log(
         chalk.green(
           `The project dependencies are compatible with @sourceloop/cli@${configJsonFile.version}`,
         ),
       );
       return false;
-    } else {
-      return this._printDepsToUpdate(depsToUpdate, pkgDeps);
     }
+    return this._printDepsToUpdate(depsToUpdate, pkgDeps);
+  }
+
+  /**
+   * The function `_incompatibleDependencies` checks and updates dependencies in different categories
+   * based on compatibility.
+   * @param {AnyObject} pkgDeps - `pkgDeps` is an object containing dependencies categorized into
+   * `dependencies`, `devDependencies`, and `peerDependencies`. Each of these categories contains
+   * key-value pairs where the key is the dependency name and the value is the version or details of
+   * that dependency.
+   * @param {AnyObject} depsToUpdate - `depsToUpdate` is an object containing dependencies that need to
+   * be updated. It has three properties: `dependencies`, `devDependencies`, and `peerDependencies`,
+   * each of which holds a list of dependencies to be updated.
+   * @returns The function `_incompatibleDependencies` returns a boolean value indicating whether any
+   * incompatible dependencies were found and updated during the process.
+   */
+  private _incompatibleDependencies(
+    pkgDeps: AnyObject,
+    depsToUpdate: AnyObject,
+  ): boolean {
+    let found = false;
+
+    for (const d in tempDeps) {
+      const tempDependency = tempDeps[d];
+      found = this._checkAndUpdateDependency(
+        pkgDeps.dependencies[d],
+        tempDependency,
+        depsToUpdate.dependencies,
+        d,
+        found,
+      );
+
+      found = this._checkAndUpdateDependency(
+        pkgDeps.devDependencies[d],
+        tempDependency,
+        depsToUpdate.devDependencies,
+        d,
+        found,
+      );
+
+      found = this._checkAndUpdateDependency(
+        pkgDeps.peerDependencies[d],
+        tempDependency,
+        depsToUpdate.peerDependencies,
+        d,
+        found,
+      );
+    }
+    return found;
+  }
+
+  /**
+   * The function checks and updates a dependency if it is different from the current one.
+   * @param {string | undefined} currentDep - `currentDep` is a string or undefined value representing
+   * the current dependency being checked.
+   * @param {string} tempDependency - The `tempDependency` parameter is a string representing the
+   * temporary dependency that needs to be checked and potentially updated.
+   * @param {AnyObject} depsToUpdate - `depsToUpdate` is an object that stores dependencies that need
+   * to be updated.
+   * @param {string} depName - depName is a string representing the name of a dependency.
+   * @param {boolean} found - The `found` parameter is a boolean flag that indicates whether a
+   * dependency has been found during a check and update operation. It is used to keep track of whether
+   * any changes were made to the dependencies during the process.
+   * @returns a boolean value.
+   */
+  private _checkAndUpdateDependency(
+    currentDep: string | undefined,
+    tempDependency: string,
+    depsToUpdate: AnyObject,
+    depName: string,
+    found: boolean,
+  ): boolean {
+    if (currentDep && tempDependency !== currentDep) {
+      depsToUpdate[depName] = tempDependency;
+      return true;
+    }
+    return found;
   }
 
   private async _printDepsToUpdate(

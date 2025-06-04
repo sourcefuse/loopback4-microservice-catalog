@@ -217,9 +217,7 @@ export abstract class SearchQueryBuilder<T extends Model> {
     this.baseQueryList = [];
     this.limitQuery = '';
     this.orderQuery = '';
-    if (!type) {
-      type = SearchResult;
-    }
+    type ??= SearchResult;
     const skipped = ignoredColumns ?? [];
     const defaultColumns = Object.keys(
       type.definition.properties,
@@ -278,13 +276,11 @@ export abstract class SearchQueryBuilder<T extends Model> {
       return this.handleAndOr(where, key, model);
     }
     const p = props[key as string];
-    if (p === null || p === undefined) {
+    if (!p) {
       throw new HttpErrors.BadRequest(`${Errors.UNKNOWN_PROPERTY}:${key}`);
     }
 
-    const expression = where[key] as
-      | PredicateComparison<typeof key>
-      | (typeof key & ShortHandEqualType);
+    const expression = where[key];
     const columnName = this.getColumnName(model, key);
     if (expression === null || expression === undefined) {
       stmts.push({sql: `${columnName} IS NULL`, params: []});
@@ -403,10 +399,6 @@ export abstract class SearchQueryBuilder<T extends Model> {
       return String(val);
     }
     if (prop.type === Number && typeof val === 'number') {
-      if (isNaN(val)) {
-        // Map NaN to NULL
-        return val;
-      }
       return val;
     }
 
@@ -524,6 +516,23 @@ export abstract class SearchQueryBuilder<T extends Model> {
     };
   }
 
+  /**
+   * The function `buildClauseFromExpress` constructs a SQL clause from an array of values, a separator,
+   * and other parameters.
+   * @param {(Query | ShortHandEqualType)[] | ShortHandEqualType | Query} values - The `values`
+   * parameter in the `buildClauseFromExpress` function can be one of the following types:
+   * @param {string} separator - The `separator` parameter is a string that will be used to separate the
+   * values in the resulting clause.
+   * @param {boolean} grouping - The `grouping` parameter in the `buildClauseFromExpress` function is a
+   * boolean flag that determines whether the generated SQL clause should be wrapped in parentheses for
+   * grouping purposes. If `grouping` is set to `true`, the SQL clause will be enclosed in parentheses.
+   * If `grouping`
+   * @param getPlaceholder - The `buildClauseFromExpress` function takes in four parameters:
+   * @returns The `buildClauseFromExpress` function returns an object with `sql` and `params`
+   * properties. The `sql` property contains the generated SQL clause based on the input values,
+   * separator, and grouping settings. The `params` property contains an array of parameters used in the
+   * SQL clause.
+   */
   buildClauseFromExpress(
     values: (Query | ShortHandEqualType)[] | ShortHandEqualType | Query,
     separator: string,
@@ -542,22 +551,21 @@ export abstract class SearchQueryBuilder<T extends Model> {
           params.push(val);
         }
       }
-      let sql = stmts.join(separator);
-      if (grouping) {
-        sql = `(${sql})`;
-      }
+      const sql = grouping
+        ? `(${stmts.join(separator)})`
+        : stmts.join(separator);
       return {
         sql,
         params,
       };
-    } else if (this._isQuery(values)) {
-      return values;
-    } else {
-      return {
-        sql: getPlaceholder(),
-        params: [values],
-      };
     }
+    if (this._isQuery(values)) {
+      return values;
+    }
+    return {
+      sql: getPlaceholder(),
+      params: [values],
+    };
   }
 
   getTableName(model: typeof Model) {
