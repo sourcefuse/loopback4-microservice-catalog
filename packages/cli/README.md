@@ -16,11 +16,13 @@ Once the above command is executed, you will be able to access the CLI commands 
 <!-- usage -->
 ```sh-session
 $ npm install -g @sourceloop/cli
+
 $ sl COMMAND or arc COMMAND
 running command...
 $ sl (-v|--version|version) or arc (-v|--version|version)
 @sourceloop/cli/9.2.3 linux-x64 node-v18.20.5
 $ sl --help [COMMAND] or arc --help [COMMAND]
+
 USAGE
   $ sl COMMAND or arc COMMAND
 ...

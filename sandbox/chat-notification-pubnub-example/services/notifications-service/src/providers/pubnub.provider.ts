@@ -7,7 +7,6 @@ import {
   PubNubMessage,
   PubNubSubscriberType,
 } from 'loopback4-notifications/pubnub';
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import Pubnub from 'pubnub';
 import {Config, PubNubNotification} from '../types';
 

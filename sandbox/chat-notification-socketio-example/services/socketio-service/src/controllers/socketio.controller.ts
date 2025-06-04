@@ -77,11 +77,11 @@ export class SocketIoController {
   }
 
   @socketio.subscribe('subscribe-to-channel')
-  registerChannel(msg: string[]) {
+  async registerChannel(msg: string[]) {
     if (Array.isArray(msg) && msg.length > 0) {
-      msg.forEach(item => {
-        this.socket.join(item);
-      });
+      for(const item of msg){
+        await this.socket.join(item);
+      }
     } else {
       throw new Error('Channels data not appropriate');
     }
