@@ -6,25 +6,28 @@ on:
   pull_request:
     branches: [master]
 
-# This workflow contains a single job called "npm_test"
 jobs:
-  npm_test:
-    # The type of runner that the job will run on
+  node_matrix_tests: 
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    strategy:
+      matrix:
+        node-version: [20, 22, 24]
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
-
+          node-version: ${{ matrix.node-version }}
       - name: Install Monorepo Deps
         run: npm ci
-
       - name: Run Test Cases
         run: npm run test --workspaces --if-present
-
       - name: Run Lint Checks
         run: npm run lint --workspaces --if-present
+
+  npm_test:  
+    runs-on: ubuntu-latest
+    needs: node_matrix_tests
+    if: success()
+    steps:
+      - name: Final status
+        run: echo "✅ All tests passed for Node.js 20, 22, and 24"

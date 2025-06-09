@@ -9,7 +9,7 @@
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "engines": {
-        "node": "18 || 20"
+        "node": ">=20"
     },
     "scripts": {
         "apidocs": "npx widdershins --language_tabs 'javascript:JavaScript:request' 'javascript--nodejs:Node.JS' --summary openapi.json -o openapi.md",

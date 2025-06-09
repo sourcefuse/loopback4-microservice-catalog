@@ -16,7 +16,7 @@
     "/yarn.lock"
   ],
   "engines": {
-    "node": "18 || 20"
+    "node": ">=20"
   },
   "scripts": {
     "copydeps": "copyfiles -a --up 1 src/**/templates/** lib ",
