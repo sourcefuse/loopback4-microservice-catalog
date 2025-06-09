@@ -17,7 +17,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - name: Configure CI Git User
         run: |
           git config --global user.name $CONFIG_USERNAME
