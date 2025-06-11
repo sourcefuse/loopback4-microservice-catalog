@@ -1,10 +1,10 @@
 {
   "name": "@sourceloop/cli",
-  "version": "9.2.3",
+  "version": "10.0.0",
   "description": "Custom ARC CLI.",
   "bin": {
     "arc": "./bin/run",
-    "sl":"./bin/run"
+    "sl": "./bin/run"
   },
   "files": [
     "/oclif.manifest.json",

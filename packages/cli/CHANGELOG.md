@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 10.0.0 (2025-06-11)
+
+* refactor(chore): standardize node version to >=20 (#2263) ([0c9e42e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0c9e42e)), closes [#2263](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2263) [#2260](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2260) [#2260](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2260) [#2260](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2260) [#2260](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2260) [#2260](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2260) [#2260](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2260)
+* feat(chore): support arc as an additional CLI entry point (#2269) ([7956415](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7956415)), closes [#2269](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2269) [#2268](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2268) [#2268](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2268) [#2268](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2268) [#2268](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2268) [#2268](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2268)
+* fix(all-services): sonar issues (#2253) ([f2102cb](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f2102cb)), closes [#2253](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2253) [#2252](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2252) [#2252](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2252) [#2252](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2252) [#2252](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2252) [#2252](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2252) [#2252](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2252) [#2252](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2252) [#2252](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2252) [#2252](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2252) [#2252](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2252)
+
+
+### BREAKING CHANGE
+
+* node version 18 is no longer supported
+* node version 18 is no longer supported
+* node version 18 is no longer supported
+* node version 18 is no longer supported
+* node vesion 18 is no longer supported
+
+
+
+
 ## <small>9.2.3 (2025-01-07)</small>
 
 * chore(cli): cli template dependecy version update (#2231) ([50dfc15](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/50dfc15)), closes [#2231](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2231) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)

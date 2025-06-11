@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.7.0 (2025-06-11)
+
+* refactor(chore): standardize node version to >=20 (#2263) ([0c9e42e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0c9e42e)), closes [#2263](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2263) [#2260](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2260) [#2260](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2260) [#2260](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2260) [#2260](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2260) [#2260](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2260) [#2260](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2260)
+
+
+### BREAKING CHANGE
+
+* node version 18 is no longer supported
+* node version 18 is no longer supported
+* node version 18 is no longer supported
+* node version 18 is no longer supported
+* node vesion 18 is no longer supported
+
+
+
+
 ## <small>0.6.9 (2025-03-28)</small>
 
 * fix(sandbox): fix cache sandbox (#2232) ([3546826](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3546826)), closes [#2232](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2232) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
