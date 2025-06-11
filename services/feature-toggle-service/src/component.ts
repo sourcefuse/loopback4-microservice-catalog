@@ -38,6 +38,11 @@ import {
   FeatureValuesRepository,
   StrategyRepository,
 } from './repositories';
+import {
+  FeatureRepository as FeatureSequelizeRepository,
+  FeatureValuesRepository as FeatureValuesSequelizeRepository,
+  StrategyRepository as StrategySequelizeRepository,
+} from './repositories/sequelize';
 import {IToggleServiceConfig} from './types';
 
 export class FeatureToggleServiceComponent implements Component {
@@ -70,11 +75,19 @@ export class FeatureToggleServiceComponent implements Component {
       // Mount default sequence if needed
       this.setupSequence();
     }
-    this.repositories = [
-      FeatureRepository,
-      FeatureValuesRepository,
-      StrategyRepository,
-    ];
+    if (this.config?.useSequelize) {
+      this.repositories = [
+        FeatureSequelizeRepository,
+        FeatureValuesSequelizeRepository,
+        StrategySequelizeRepository,
+      ];
+    } else {
+      this.repositories = [
+        FeatureRepository,
+        FeatureValuesRepository,
+        StrategyRepository,
+      ];
+    }
     this.models = [Feature, FeatureValues, Strategy];
 
     this.controllers = [
