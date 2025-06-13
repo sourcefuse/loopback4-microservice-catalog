@@ -135,6 +135,16 @@ USAGE
 
 OPTIONS
   --help  show manual pages
+
+DESCRIPTION
+  Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by
+  the MCP client to interact with the CLI commands.
+    You can use it using the following MCP server configuration:
+      "sourceloop": {
+        "command": "npx",
+        "args": ["@sourceloop/cli", "mcp"],
+        "timeout": 300
+      }
 ```
 
 _See code: [src/commands/mcp.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v10.0.0/src/commands/mcp.ts)_

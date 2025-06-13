@@ -17,6 +17,8 @@ export class Extension extends Base<ExtensionOptions> {
     It can also be used to create reusable components that can be shared across multiple services or facades.
     The package will be created in the packages folder of the monorepo.
     You can use 'npm install @local/<package-name>' to install the package in other modules of the monorepo.
+    You can not update existing packages using this.
+    Refer existing packages if any for discovering the parameters not provided by the user, or ask the user directly
     `;
 
   static readonly mcpFlags = {

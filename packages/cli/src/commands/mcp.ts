@@ -36,8 +36,15 @@ export class Mcp extends Base<{}> {
       this.commands = [Cdk, Extension, Microservice, Scaffold, Update];
     }
   }
-  static readonly description =
-    'Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by the MCP client to interact with the CLI commands.';
+  static readonly description = `
+  Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by the MCP client to interact with the CLI commands. 
+  You can use it using the following MCP server configuration:
+    "sourceloop": {
+      "command": "npx",
+      "args": ["@sourceloop/cli", "mcp"],
+      "timeout": 300
+    }
+    `;
 
   static readonly flags = {
     help: flags.boolean({
@@ -152,9 +159,11 @@ export class Mcp extends Base<{}> {
     switch (true) {
       case flag.type === 'boolean':
         option = z.boolean().optional();
+        description += ` (ask user for this value if not provided)`;
         option = option.default((flag.default as boolean) ?? false);
         break;
       case this._isOptionFlag(flag) && flag.options !== undefined: {
+        description += ` (ask user to provide an option if not provided when required, list the options as well)`;
         // typescript is not able to infer type
         const typedFlag = flag as IOptionFlag<T>;
         option = z.enum(typedFlag.options as [string, ...string[]]);
@@ -162,7 +171,8 @@ export class Mcp extends Base<{}> {
         break;
       }
       case this._isOptionFlag(flag) && flag.options === undefined:
-        option = z.string();
+        description += ` (ask user for this value if not provided)`;
+        option = z.string().optional();
         break;
       default:
         throw new Error(
