@@ -9,12 +9,16 @@ import {Project} from 'ts-morph';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import Base from '../command-base';
 import {IacList} from '../enum';
-import {CdkOptions} from '../types';
+import {AnyObject, CdkOptions} from '../types';
 
 const DEFAULT_APP_PATH = 'src/application.ts';
 export class Cdk extends Base<CdkOptions> {
   static readonly description = 'add arc-cdk';
-
+  static readonly mcpDescription = `
+    Use this command to add arc-cdk to your project.
+    The arc-cdk is a library that provides a set of tools and utilities to help you build and deploy your applications on AWS using the AWS Cloud Development Kit (CDK).
+    It provides a set of constructs that can be used to build and deploy your applications on AWS using the AWS CDK.
+    `;
   static readonly flags = {
     help: flags.boolean({
       name: 'help',
@@ -49,7 +53,7 @@ export class Cdk extends Base<CdkOptions> {
     relativePathToApp: flags.string({
       name: 'relativePathToApp',
       char: 'r',
-      description: 'Relative path to the service you want to deploy',
+      description: 'Relative path to the application ts file',
       required: false,
       default: this.getDefaultAppPath(),
     }),
@@ -59,6 +63,15 @@ export class Cdk extends Base<CdkOptions> {
       description:
         'Overwrite the existing Dockerfile for Lambda deployment (if it exists)?',
       required: false,
+    }),
+  };
+
+  static readonly mcpFlags = {
+    workingDir: flags.string({
+      name: 'workingDir',
+      description:
+        'path of the microservice or facade folder you want to add cdk to, note that this not the root directory of the monorepo',
+      required: true,
     }),
   };
 
@@ -87,5 +100,9 @@ export class Cdk extends Base<CdkOptions> {
 
   async run() {
     await super.generate('cdk', Cdk);
+  }
+
+  static async mcpRun(inputs: AnyObject) {
+    return Base.mcpResponse(inputs, 'cdk', []);
   }
 }

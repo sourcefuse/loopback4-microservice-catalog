@@ -6,11 +6,25 @@ import {flags} from '@oclif/command';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import Base from '../command-base';
 import {DATASOURCES, SERVICES} from '../enum';
-import {MicroserviceOptions} from '../types';
+import {AnyObject, MicroserviceOptions} from '../types';
+import {buildOptions} from '../utils';
 
 export class Microservice extends Base<MicroserviceOptions> {
-  static readonly description = 'add a microservice';
-
+  static readonly description =
+    'Add a microservice in the services or facade folder of a ARC generated monorepo. This can also optionally add migrations for the same microservice.';
+  static readonly mcpDescription = `
+    Use this command to generate or add a microservice in the ARC based monorepo following the ARC standards and best practices.
+    The generated microservice can be used as a standalone service or as a facade in the monorepo.
+    It can also generate migrations for the same microservice.
+    The microservice will be created in the services or facades folder of the monorepo depending on the options passed.
+    It can also generate datasource and import migrations from the ARC services code.`;
+  static readonly mcpFlags = {
+    workingDir: flags.string({
+      name: 'workingDir',
+      description: 'Path of the root directory of the monorepo',
+      required: false,
+    }),
+  };
   static readonly flags = {
     help: flags.boolean({
       name: 'help',
@@ -18,7 +32,7 @@ export class Microservice extends Base<MicroserviceOptions> {
     }),
     facade: flags.boolean({
       name: 'facade',
-      description: 'Create as facade',
+      description: 'Create as facade inside the facades folder',
       allowNo: true,
     }),
     baseOnService: flags.boolean({
@@ -61,7 +75,6 @@ export class Microservice extends Base<MicroserviceOptions> {
       required: false,
       exclusive: ['facade'],
     }),
-
     includeMigrations: flags.boolean({
       name: 'includeMigrations',
       description: 'Include base microservice migrations',
@@ -80,5 +93,21 @@ export class Microservice extends Base<MicroserviceOptions> {
 
   async run() {
     await super.generate('microservice', Microservice);
+  }
+
+  static async mcpRun(inputs: AnyObject) {
+    return Base.mcpResponse(
+      {
+        ...inputs,
+        config: JSON.stringify({
+          ...buildOptions,
+          applicationName: inputs.name,
+          description: `ARC based ${inputs.name}`,
+        }),
+        inMcp: true,
+      },
+      'microservice',
+      [inputs.name, '-y'],
+    );
   }
 }
