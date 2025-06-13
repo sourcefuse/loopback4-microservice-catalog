@@ -12,7 +12,8 @@ import {Input as FlagInput} from '@oclif/parser/lib/flags';
 import inquirer, {Question} from 'inquirer';
 import fetch from 'node-fetch';
 import Environment, {createEnv} from 'yeoman-environment';
-import {AnyObject, PromptFunction} from './types';
+import {AnyObject, McpTextResponse, PromptFunction} from './types';
+import {yeomanRun} from './utilities/yeoman';
 const chalk = require('chalk'); //NOSONAR
 /* eslint-enable  @typescript-eslint/naming-convention */
 const IGNORED_FLAGS = ['help', 'cwd'];
@@ -52,6 +53,49 @@ export default abstract class CommandBase<T extends object> extends Command {
       ...inputs.args,
       ...inputs.flags,
     });
+  }
+
+  static async mcpResponse(
+    inputs: AnyObject,
+    name: string,
+    args: string[],
+  ): Promise<McpTextResponse> {
+    const originalCwd = process.cwd();
+    if (inputs.workingDir) {
+      process.chdir(inputs.workingDir);
+    }
+    let output: McpTextResponse = {
+      content: [
+        {type: 'text', text: 'Command executed successfully!', isError: false},
+      ],
+    };
+    try {
+      await yeomanRun(inputs.cwd ?? process.cwd(), name, args, inputs);
+    } catch (err) {
+      if (err instanceof Error) {
+        output = {
+          content: [
+            {
+              type: 'text',
+              text: `Error executing command: ${err.message}`,
+              isError: true,
+            },
+          ],
+        };
+      } else {
+        output = {
+          content: [
+            {
+              type: 'text',
+              text: `Error executing command: ${err}`,
+              isError: true,
+            },
+          ],
+        };
+      }
+    }
+    process.chdir(originalCwd);
+    return output;
   }
 
   private async promptArgs(args: IArg[], options: AnyObject) {
