@@ -34,3 +34,14 @@ export function getDependencyVersion(
     throw new Error(`Missing dependency version in config: ${name}`);
   }
 }
+
+export const buildOptions = {
+  loopbackBuild: true,
+  eslint: true,
+  prettier: true,
+  mocha: true,
+  vscode: true,
+  docker: true,
+  repositories: true,
+  services: true,
+};

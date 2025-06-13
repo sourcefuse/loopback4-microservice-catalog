@@ -2,6 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {IFlag} from '@oclif/command/lib/flags';
 import {Question} from 'inquirer';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import Generator from 'yeoman-generator';
@@ -79,4 +80,23 @@ export type CommandTestCase = {
     input: AnyObject;
     output: string | boolean | AnyObject;
   }[];
+};
+
+export type ICommandWithMcpFlags = {
+  mcpFlags?: Record<string, IFlag<AnyObject[string]>>;
+  args?: IArg[];
+  flags?: Record<string, IFlag<AnyObject[string]>> | undefined;
+  name: string;
+  mcpDescription: string;
+  mcpRun: (args: Record<string, AnyObject[string]>) => Promise<McpTextResponse>;
+};
+
+export type IArg = {
+  name: string;
+  description?: string;
+  required?: boolean;
+};
+
+export type McpTextResponse = {
+  content: {type: 'text'; text: string; isError?: boolean}[];
 };

@@ -22,7 +22,7 @@ export const microservicePromptsSuite = [
         input: {
           name: 'facade',
           type: 'confirm',
-          message: 'Create as facade',
+          message: 'Create as facade inside the facades folder',
           default: false,
         },
         output: true,
@@ -64,7 +64,7 @@ export const microservicePromptsSuite = [
         input: {
           name: 'facade',
           type: 'confirm',
-          message: 'Create as facade',
+          message: 'Create as facade inside the facades folder',
           default: false,
         },
         output: false,
@@ -160,7 +160,7 @@ export const microservicePromptsSuite = [
         input: {
           name: 'facade',
           type: 'confirm',
-          message: 'Create as facade',
+          message: 'Create as facade inside the facades folder',
           default: false,
         },
         output: false,

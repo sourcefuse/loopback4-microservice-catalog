@@ -5,10 +5,15 @@
 import {flags} from '@oclif/command';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import Base from '../command-base';
-import {ScaffoldOptions} from '../types';
+import {AnyObject, ScaffoldOptions} from '../types';
 
 export class Scaffold extends Base<ScaffoldOptions> {
-  static readonly description = 'create a project scaffold';
+  static readonly description =
+    'Setup a ARC based monorepo using npm workspaces with an empty services, facades and packages folder';
+  static readonly mcpDescription = `
+    Use this command to generate a npm workspaces based monorepo following the ARC standards and best practices.
+    The generated monorepo contains services, facades and packages folders by default.
+  `;
 
   static readonly flags = {
     help: flags.boolean({
@@ -55,5 +60,9 @@ export class Scaffold extends Base<ScaffoldOptions> {
 
   async run() {
     await super.generate('scaffold', Scaffold);
+  }
+
+  static async mcpRun(inputs: AnyObject) {
+    return Base.mcpResponse(inputs, 'scaffold', []);
   }
 }
