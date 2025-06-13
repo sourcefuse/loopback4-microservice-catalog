@@ -17,7 +17,9 @@ export class Microservice extends Base<MicroserviceOptions> {
     The generated microservice can be used as a standalone service or as a facade in the monorepo.
     It can also generate migrations for the same microservice.
     The microservice will be created in the services or facades folder of the monorepo depending on the options passed.
-    It can also generate datasource and import migrations from the ARC services code.`;
+    It can also generate datasource and import migrations from the ARC services code. It can not update existing services or facades, 
+    for example, you can not run it again just with migration option as it would fail, saying the service already exists.
+    Refer existing service if any for discovering the parameters not provided by the user, or ask the user directly`;
   static readonly mcpFlags = {
     workingDir: flags.string({
       name: 'workingDir',

@@ -21,7 +21,7 @@ $ npm install -g @sourceloop/cli
 $ sl COMMAND
 running command...
 $ sl (-v|--version|version)
-@sourceloop/cli/10.0.0 darwin-arm64 node-v20.19.2
+@sourceloop/cli/10.0.0 linux-x64 node-v20.19.2
 $ sl --help [COMMAND]
 USAGE
   $ sl COMMAND
@@ -135,6 +135,16 @@ USAGE
 
 OPTIONS
   --help  show manual pages
+
+DESCRIPTION
+  Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by
+  the MCP client to interact with the CLI commands.
+    You can use it using the following MCP server configuration:
+      "sourceloop": {
+        "command": "npx",
+        "args": ["@sourceloop/cli", "mcp"],
+        "timeout": 300
+      }
 ```
 
 _See code: [src/commands/mcp.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v10.0.0/src/commands/mcp.ts)_

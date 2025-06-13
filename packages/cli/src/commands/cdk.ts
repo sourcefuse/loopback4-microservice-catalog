@@ -18,6 +18,7 @@ export class Cdk extends Base<CdkOptions> {
     Use this command to add arc-cdk to your project.
     The arc-cdk is a library that provides a set of tools and utilities to help you build and deploy your applications on AWS using the AWS Cloud Development Kit (CDK).
     It provides a set of constructs that can be used to build and deploy your applications on AWS using the AWS CDK.
+    Refer existing service if any for discovering the parameters not provided by the user, or ask the user directly
     `;
   static readonly flags = {
     help: flags.boolean({
