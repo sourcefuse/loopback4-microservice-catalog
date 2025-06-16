@@ -159,11 +159,9 @@ export class Mcp extends Base<{}> {
     switch (true) {
       case flag.type === 'boolean':
         option = z.boolean().optional();
-        description += ` (ask user for this value if not provided)`;
         option = option.default((flag.default as boolean) ?? false);
         break;
       case this._isOptionFlag(flag) && flag.options !== undefined: {
-        description += ` (ask user to provide an option if not provided when required, list the options as well)`;
         // typescript is not able to infer type
         const typedFlag = flag as IOptionFlag<T>;
         option = z.enum(typedFlag.options as [string, ...string[]]);
@@ -171,7 +169,6 @@ export class Mcp extends Base<{}> {
         break;
       }
       case this._isOptionFlag(flag) && flag.options === undefined:
-        description += ` (ask user for this value if not provided)`;
         option = z.string().optional();
         break;
       default:

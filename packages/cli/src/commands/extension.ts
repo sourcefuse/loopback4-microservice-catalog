@@ -13,12 +13,10 @@ export class Extension extends Base<ExtensionOptions> {
     'This generates a local package in the packages folder of a ARC generated monorepo. This package can then be installed and used inside other modules in the monorepo.';
   static readonly mcpDescription = `
     Use this command to generate or add a local packages in the ARC based monorepo following the ARC standards and best practices.
-    The generated package can be used as an extension to the existing services or facades in the monorepo.
-    It can also be used to create reusable components that can be shared across multiple services or facades.
     The package will be created in the packages folder of the monorepo.
     You can use 'npm install @local/<package-name>' to install the package in other modules of the monorepo.
     You can not update existing packages using this.
-    Refer existing packages if any for discovering the parameters not provided by the user, or ask the user directly
+    Refer existing packages if any for discovering the parameters not provided by the user, or ask the user directly if no reference package is available and  you can not infer it from context
     `;
 
   static readonly mcpFlags = {

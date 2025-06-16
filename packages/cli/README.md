@@ -15,7 +15,6 @@ Once the above command is executed, you will be able to access the CLI commands 
 ## Usage
 
 <!-- usage -->
-
 ```sh-session
 $ npm install -g @sourceloop/cli
 $ sl COMMAND
@@ -27,21 +26,19 @@ USAGE
   $ sl COMMAND
 ...
 ```
-
 <!-- usagestop -->
 
 ## Commands
 
 <!-- commands -->
-
-- [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
-- [`sl cdk`](#sl-cdk)
-- [`sl extension [NAME]`](#sl-extension-name)
-- [`sl help [COMMAND]`](#sl-help-command)
-- [`sl mcp`](#sl-mcp)
-- [`sl microservice [NAME]`](#sl-microservice-name)
-- [`sl scaffold [NAME]`](#sl-scaffold-name)
-- [`sl update`](#sl-update)
+* [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
+* [`sl cdk`](#sl-cdk)
+* [`sl extension [NAME]`](#sl-extension-name)
+* [`sl help [COMMAND]`](#sl-help-command)
+* [`sl mcp`](#sl-mcp)
+* [`sl microservice [NAME]`](#sl-microservice-name)
+* [`sl scaffold [NAME]`](#sl-scaffold-name)
+* [`sl update`](#sl-update)
 
 ## `sl autocomplete [SHELL]`
 
@@ -127,7 +124,7 @@ _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.1
 
 ## `sl mcp`
 
-Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by the MCP client to interact with the CLI commands.
+Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by the MCP client to interact with the CLI commands. 
 
 ```
 USAGE
@@ -137,8 +134,8 @@ OPTIONS
   --help  show manual pages
 
 DESCRIPTION
-  Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by
-  the MCP client to interact with the CLI commands.
+  Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by 
+  the MCP client to interact with the CLI commands. 
     You can use it using the following MCP server configuration:
       "sourceloop": {
         "command": "npx",
