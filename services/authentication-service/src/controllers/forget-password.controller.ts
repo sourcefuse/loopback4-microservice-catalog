@@ -84,6 +84,9 @@ export class ForgetPasswordController {
     try {
       await this.loginHelperService.verifyClientUserLogin(req, client, user);
     } catch (e) {
+      this.logger.warn(
+        `Forget password attempted for invalid user: ${e.message}`,
+      );
       return;
     }
     if (!user?.id) {
@@ -150,6 +153,9 @@ export class ForgetPasswordController {
     try {
       payload = (await this.jwtVerifier(token, {})) as ClientAuthCode<User>;
     } catch (error) {
+      this.logger.error(
+        `Error verifying reset password link: ${error.message}`,
+      );
       throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenExpired);
     }
 
@@ -198,6 +204,9 @@ export class ForgetPasswordController {
     try {
       payload = (await this.jwtVerifier(req.token, {})) as ClientAuthCode<User>;
     } catch (error) {
+      this.logger.error(
+        `Error verifying reset password token: ${error.message}`,
+      );
       throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenExpired);
     }
 

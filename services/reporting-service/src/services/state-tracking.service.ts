@@ -44,7 +44,7 @@ export class StateTrackingService {
     };
 
     const [latestRecord] = await this.stateTrackingRepo.find(filter);
-    return latestRecord || null;
+    return latestRecord ?? null;
   }
 
   /**

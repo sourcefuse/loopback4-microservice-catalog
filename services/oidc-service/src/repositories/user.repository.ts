@@ -113,7 +113,9 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
       });
       await this.credentials(user.id).create(creds);
     } catch (err) {
-      throw new HttpErrors.UnprocessableEntity('Error while hashing password');
+      throw new HttpErrors.UnprocessableEntity(
+        `Error while hashing password ${err.message}`,
+      );
     }
     return user;
   }

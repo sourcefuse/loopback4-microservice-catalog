@@ -15,7 +15,7 @@ const app = new App();
 
 const getSubnetIds = () => {
   try {
-    const subnetIds = process.env?.SUBNET_IDS || '';
+    const subnetIds = process.env?.SUBNET_IDS ?? '';
     return JSON.parse(subnetIds);
   } catch (e) {
     console.error(e); // NOSONAR
@@ -25,7 +25,7 @@ const getSubnetIds = () => {
 
 const getSecurityGroup = () => {
   try {
-    const securityGroup = process.env?.SECURITY_GROUPS || '';
+    const securityGroup = process.env?.SECURITY_GROUPS ?? '';
     return JSON.parse(securityGroup);
   } catch (e) {
     console.error(e); // NOSONAR
@@ -46,14 +46,14 @@ new MigrationStack(app, 'migration', {
   invocationData: '{}',
   timeout: 60,
   envVars: {
-    DB_HOST: process.env.DB_HOST || '',
-    DB_PORT: process.env.DB_PORT || '',
-    DB_USER: process.env.DB_USER || '',
-    DB_PASSWORD: process.env.DB_PASSWORD || '',
-    DB_DATABASE: process.env.DB_DATABASE || '',
+    DB_HOST: process.env.DB_HOST ?? '',
+    DB_PORT: process.env.DB_PORT ?? '',
+    DB_USER: process.env.DB_USER ?? '',
+    DB_PASSWORD: process.env.DB_PASSWORD ?? '',
+    DB_DATABASE: process.env.DB_DATABASE ?? '',
   },
-  namespace: process.env.NAMESPACE || '',
-  environment: process.env.ENV || '',
+  namespace: process.env.NAMESPACE ?? '',
+  environment: process.env.ENV ?? '',
 });
 // sonarignore:start
 new LambdaStack(app, 'lambda', {
@@ -70,11 +70,11 @@ new LambdaStack(app, 'lambda', {
   memorySize: 256,
   timeout: 30,
   customDomainName: {
-    domainName: process.env.DOMAIN_NAME || '',
-    hostedZoneId: process.env.HOSTED_ZONE_ID || '',
+    domainName: process.env.DOMAIN_NAME ?? '',
+    hostedZoneId: process.env.HOSTED_ZONE_ID ?? '',
   },
-  namespace: process.env.NAMESPACE || '',
-  environment: process.env.ENV || '',
+  namespace: process.env.NAMESPACE ?? '',
+  environment: process.env.ENV ?? '',
   createRole: {
     iamPolicy: JSON.stringify({
       Version: '2012-10-17',
@@ -115,8 +115,8 @@ new LambdaStack(app, 'lambda', {
 // sonarignore:start
 new RedisStack(app, 'redis', {
   // sonarignore:end
-  namespace: process.env.NAMESPACE || '',
-  environment: process.env.ENV || '',
+  namespace: process.env.NAMESPACE ?? '',
+  environment: process.env.ENV ?? '',
 });
 
 app.synth();
