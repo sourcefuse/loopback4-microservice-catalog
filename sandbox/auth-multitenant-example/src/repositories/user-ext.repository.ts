@@ -131,7 +131,9 @@ export class UserExtRepository extends DefaultSoftCrudRepository<
     } catch (err) {
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
       super.deleteByIdHard(user.id);
-      throw new HttpErrors.UnprocessableEntity('Error while hashing password');
+      throw new HttpErrors.UnprocessableEntity(
+        `Error while hashing password ${err.message}`,
+      );
     }
     return user;
   }

@@ -9,7 +9,7 @@ export * from './application';
 const port = 3000;
 export async function main(options: ApplicationConfig = {}) {
   const app = new SocketIoExampleApplication(
-    options || {
+    options ?? {
       httpServerOptions: {
         host: '127.0.0.1',
         port: port,

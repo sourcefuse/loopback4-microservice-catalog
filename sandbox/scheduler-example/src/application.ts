@@ -38,7 +38,7 @@ export class SchedulerExampleApplication extends BootMixin(
         includeProcessEnv: true,
       });
     }
-    options.rest = options.rest || {};
+    options.rest = options.rest ?? {};
     options.rest.port = +(process.env.PORT ?? port);
     options.rest.host = process.env.HOST;
     super(options);

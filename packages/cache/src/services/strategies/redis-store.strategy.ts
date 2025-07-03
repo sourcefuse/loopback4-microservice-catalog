@@ -80,7 +80,7 @@ export class RedisStoreStrategy implements ICacheStore {
       try {
         value = JSON.parse(value);
       } catch (e) {
-        // do nothing
+        throw new Error(`Failed to parse value: ${e.message}`);
       }
       return value as T;
     } else if (typeof res === 'number') {
@@ -94,7 +94,7 @@ export class RedisStoreStrategy implements ICacheStore {
         try {
           decoded = JSON.parse(decoded);
         } catch (e) {
-          // do nothing
+          throw new Error(`Failed to parse value: ${e.message}`);
         }
         return decoded;
       }) as T;

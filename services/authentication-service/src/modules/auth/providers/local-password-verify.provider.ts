@@ -35,7 +35,7 @@ export class LocalPasswordVerifyProvider
         );
         user.permissions = [];
         return user;
-      } catch (error) {
+      } catch (_) {
         const otp: Otp = await this.otpRepository.get(username);
         if (!otp || otp.otp !== password) {
           throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);

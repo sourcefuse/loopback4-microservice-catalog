@@ -556,58 +556,103 @@ export class OriginatorController {
     if (!messageIds?.length) {
       throw new HttpErrors.BadRequest('No messageIds provided');
     }
-    const groupWhere = {
-      where: {
-        storage,
-        messageId: {
-          inq: messageIds,
-        },
-        party: this.getInMailIdentifierType(process.env.INMAIL_IDENTIFIER_TYPE),
-      },
-    };
+    const groupWhere = this._buildGroupWhereClause(storage, messageIds);
     const groups = await this.groupRepository.find(groupWhere);
     if (!groups?.length) {
       throw new HttpErrors.NotFound('Group Not Found');
     }
 
-    const groupUpdatePromise: Promise<void>[] = [];
+    await this._processActionOnGroups(action, storage, groups);
+    return {items: groups};
+  }
+  private _buildGroupWhereClause(storage: StorageMarker, messageIds: string[]) {
+    return {
+      where: {
+        storage,
+        messageId: {inq: messageIds},
+        party: this.getInMailIdentifierType(process.env.INMAIL_IDENTIFIER_TYPE),
+      },
+    };
+  }
+  /**
+   * The function `_processActionOnGroups` processes either a 'delete' or 'trash' action on groups
+   * based on the specified storage marker.
+   * @param {'delete' | 'trash'} action - The `action` parameter in the `_processActionOnGroups` method
+   * specifies the type of action to be performed on the groups. It can have two possible values:
+   * 'delete' or 'trash'.
+   * @param {StorageMarker} storage - The `storage` parameter in the `_processActionOnGroups` method is
+   * of type `StorageMarker`. It is used to specify the storage marker for the groups being processed.
+   * @param {Group[]} groups - The `groups` parameter in the `_processActionOnGroups` method is an
+   * array of `Group` objects.
+   */
+  private async _processActionOnGroups(
+    action: 'delete' | 'trash',
+    storage: StorageMarker,
+    groups: Group[],
+  ): Promise<void> {
     switch (action) {
       case 'trash':
-        if (storage === StorageMarker.trash) {
-          throw new HttpErrors.BadRequest('Mail is already in trash');
-        }
-        if (storage === StorageMarker.draft) {
-          throw new HttpErrors.BadRequest(
-            'Can only delete the messages in Draft',
-          );
-        }
-        for (const group of groups) {
-          group.deleted = false;
-          group.storage = StorageMarker.trash;
-          group.modifiedOn = new Date();
-          groupUpdatePromise.push(this.groupRepository.update(group));
-        }
+        this._validateTrashAction(storage);
+        await this._updateGroups(groups, StorageMarker.trash, false);
         break;
 
       case 'delete':
-        if (![StorageMarker.trash, StorageMarker.draft].includes(storage)) {
-          throw new HttpErrors.BadRequest(
-            'Mail must be in trash or draft for permanent deletion',
-          );
-        }
-        for (const group of groups) {
-          group.deleted = true;
-          group.modifiedOn = new Date();
-          groupUpdatePromise.push(this.groupRepository.update(group));
-        }
+        this._validateDeleteAction(storage);
+        await this._updateGroups(groups, storage, true);
         break;
 
       default:
         throw new HttpErrors.BadRequest('Invalid action');
     }
+  }
 
-    await Promise.all(groupUpdatePromise);
-    return {items: groups};
+  /**
+   * The function `_validateTrashAction` checks if a mail is already in trash or if it can only be
+   * deleted from the Draft storage.
+   * @param {StorageMarker} storage - The `storage` parameter is a marker that indicates the current
+   * storage location of a mail message. It can have values such as `StorageMarker.trash` or
+   * `StorageMarker.draft`.
+   */
+  private _validateTrashAction(storage: StorageMarker): void {
+    if (storage === StorageMarker.trash) {
+      throw new HttpErrors.BadRequest('Mail is already in trash');
+    }
+    if (storage === StorageMarker.draft) {
+      throw new HttpErrors.BadRequest('Can only delete the messages in Draft');
+    }
+  }
+
+  /* The above code snippet is from a TypeScript class and contains two methods. */
+  private _validateDeleteAction(storage: StorageMarker): void {
+    if (![StorageMarker.trash, StorageMarker.draft].includes(storage)) {
+      throw new HttpErrors.BadRequest(
+        'Mail must be in trash or draft for permanent deletion',
+      );
+    }
+  }
+
+  /**
+   * The function `_updateGroups` asynchronously updates an array of Group objects with specified
+   * storage marker and deletion status.
+   * @param {Group[]} groups - An array of Group objects that need to be updated.
+   * @param {StorageMarker} storage - The `storage` parameter in the `_updateGroups` function is of
+   * type `StorageMarker`. It is used to determine the storage location for the groups being updated.
+   * @param {boolean} deleted - The `deleted` parameter is a boolean flag that indicates whether the
+   * groups should be marked as deleted or not. If `deleted` is true, the groups will be marked as
+   * deleted and their storage location will be updated to the specified `storage` marker.
+   */
+  private async _updateGroups(
+    groups: Group[],
+    storage: StorageMarker,
+    deleted: boolean,
+  ): Promise<void> {
+    const promises = groups.map(group => {
+      group.deleted = deleted;
+      group.storage = deleted ? group.storage : storage;
+      group.modifiedOn = new Date();
+      return this.groupRepository.update(group);
+    });
+    await Promise.all(promises);
   }
   @authenticate(STRATEGY.BEARER)
   @authorize({
