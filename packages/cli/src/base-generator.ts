@@ -12,7 +12,7 @@ export abstract class BaseGenerator<
   T extends Generator.GeneratorOptions,
 > extends Generator<T> {
   root = '';
-  private exitGeneration?: string;
+  private exitGeneration: string | Error = '';
 
   async copyTemplateAsync() {
     const readdriAsync = promisify(readdir);
@@ -40,9 +40,16 @@ export abstract class BaseGenerator<
     return super.destinationRoot(rootPath);
   }
 
-  exit(reason?: string) {
-    if (reason) return;
+  exit(reason?: string | Error) {
+    if (!reason) return;
     this.exitGeneration = reason;
+    if (this.options.inMcp) {
+      if (reason instanceof Error) {
+        throw new Error(reason.message);
+      } else {
+        throw new Error(reason);
+      }
+    }
   }
 
   shouldExit() {

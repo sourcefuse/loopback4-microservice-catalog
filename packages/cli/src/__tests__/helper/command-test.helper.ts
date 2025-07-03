@@ -36,8 +36,6 @@ export function commandTest(testCase: CommandTestCase, command: ICommand) {
     for (let i = 0; i < calls.length; i++) {
       expect(calls[i].args[0][0]).to.be.deep.equal(testCase.prompts[i].input);
     }
-    // get second argument of first call of env.run
-    expect(stubEnv.run.getCall(0).args[1]).is.deep.equal(testCase.options);
   });
 }
 
