@@ -1,6 +1,6 @@
 {
     "name": "@sourceloop/auth-mfa-example",
-    "version": "0.6.1",
+    "version": "0.6.2",
     "description": "Authentication google authenticator mfa exmaple.",
     "keywords": [
         "loopback-microservice",
@@ -71,8 +71,8 @@
         "@opentelemetry/plugin-pg": "^0.15.0",
         "@opentelemetry/plugin-pg-pool": "^0.15.0",
         "@opentelemetry/sdk-trace-base": "^1.15.0",
-        "@sourceloop/authentication-service": "^21.0.1",
-        "@sourceloop/core": "^16.0.1",
+        "@sourceloop/authentication-service": "^21.0.2",
+        "@sourceloop/core": "^16.1.0",
         "dotenv": "^16.4.5",
         "dotenv-extended": "^2.9.0",
         "loopback-connector-kv-redis": "^4.0.0",

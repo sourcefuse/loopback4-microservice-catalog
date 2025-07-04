@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 10.1.0 (2025-07-04)
+
+* fix(cli): remove unnecessary file (#2290) ([7ebdab0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7ebdab0)), closes [#2290](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2290) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+* feat(cli): add mcp server command (#2282) ([17c1238](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/17c1238)), closes [#2282](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2282) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
+
+
+
+
+
 ## <small>10.0.1 (2025-07-03)</small>
 
 * refactor(chore): fix sonarqube issues (#2288) ([3dc9655](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3dc9655)), closes [#2288](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2288) [#2287](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2287)

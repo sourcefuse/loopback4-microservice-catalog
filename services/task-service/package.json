@@ -1,6 +1,6 @@
 {
     "name": "@sourceloop/task-service",
-    "version": "5.0.1",
+    "version": "5.0.2",
     "description": "a Reusable, customizable and workflow based task service.",
     "keywords": [
         "loopback-extension",
@@ -78,8 +78,8 @@
         "!*/__tests__"
     ],
     "dependencies": {
-        "@sourceloop/bpmn-service": "^15.0.1",
-        "@sourceloop/core": "^16.0.1",
+        "@sourceloop/bpmn-service": "^15.0.2",
+        "@sourceloop/core": "^16.1.0",
         "camunda-external-task-client-js": "^2.3.1",
         "check-code-coverage": "^1.10.0",
         "dotenv": "^16.4.5",
