@@ -5,7 +5,6 @@
 import {Binding, Component, inject, ProviderMap} from '@loopback/core';
 import {Class, Model, Repository} from '@loopback/repository';
 import {Strategies} from 'loopback4-authentication';
-import {JwtKeysRepository} from '../../repositories';
 import {ILogger, LOGGER} from '../logger-extension';
 import {
   BearerVerifierBindings,
@@ -17,7 +16,11 @@ import {FacadesBearerAsymmetricTokenVerifyProvider} from './providers/facades-be
 import {FacadesBearerTokenVerifyProvider} from './providers/facades-bearer-token-verify.provider';
 import {ServicesBearerAsymmetricTokenVerifyProvider} from './providers/services-bearer-asym-token-verifier';
 import {ServicesBearerTokenVerifyProvider} from './providers/services-bearer-token-verify.provider';
-import {RevokedTokenRepository} from './repositories';
+import {
+  JwtKeysRepository,
+  PublicKeysRepository,
+  RevokedTokenRepository,
+} from './repositories';
 
 export class BearerVerifierComponent implements Component {
   constructor(
@@ -27,7 +30,11 @@ export class BearerVerifierComponent implements Component {
   ) {
     this.providers = {};
 
-    this.repositories = [RevokedTokenRepository, JwtKeysRepository];
+    this.repositories = [
+      RevokedTokenRepository,
+      JwtKeysRepository,
+      PublicKeysRepository,
+    ];
     this.models = [RevokedToken, JwtKeys];
 
     if (this.config && this.config.type === BearerVerifierType.service) {
