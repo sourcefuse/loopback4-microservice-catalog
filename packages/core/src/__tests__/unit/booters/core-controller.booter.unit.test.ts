@@ -11,8 +11,8 @@ describe('CoreControllerBooter', () => {
   class DummyController {}
 
   class TestBooter extends CoreControllerBooter {
-    constructor(app: RestApplication) {
-      super(app, '.', {});
+    constructor(application: RestApplication) {
+      super(application, '.', {});
     }
 
     async load(): Promise<void> {

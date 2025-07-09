@@ -34,13 +34,9 @@ export class CoreModelBooter extends BaseArtifactBooter {
   }
 
   async discover(): Promise<void> {
-    try {
-      const pattern = path.join(this.projectRoot, '**', '*component.js');
-      const filePaths = glob.sync(pattern, {nodir: true});
-      this.classes = loadClassesFromFiles(filePaths, this.basePath);
-    } catch (error) {
-      throw error; // rethrow for visibility
-    }
+    const pattern = path.join(this.projectRoot, '**', '*component.js');
+    const filePaths = glob.sync(pattern, {nodir: true});
+    this.classes = loadClassesFromFiles(filePaths, this.basePath);
   }
 
   async load(): Promise<void> {

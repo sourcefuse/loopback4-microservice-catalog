@@ -10,12 +10,12 @@ describe('CoreModelBooter', () => {
 
   class DummyBooter extends CoreModelBooter {
     constructor(
-      app: RestApplication,
+      application: RestApplication,
       basePath: string,
       config: object,
-      ctx: Context,
+      context: Context,
     ) {
-      super(app, basePath, config, ctx);
+      super(application, basePath, config, context);
     }
 
     // Override discover to prevent requiring real files
