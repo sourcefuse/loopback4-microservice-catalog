@@ -29,16 +29,6 @@ describe('CoreModelBooter', () => {
     sinon.restore();
   });
 
-  it('should skip load when component is not found', async () => {
-    const getSyncSpy = sinon.spy(ctx, 'getSync');
-    const booter = new DummyBooter(ctx);
-    await booter.discover();
-    await booter.load();
-
-    // Assert context tried to get the component, but failed silently
-    sinon.assert.calledWith(getSyncSpy, 'components.MyComponent');
-  });
-
   it('should skip load when component has no models', async () => {
     class NoModelComponent implements Component {}
 

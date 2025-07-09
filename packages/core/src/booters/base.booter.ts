@@ -52,33 +52,25 @@ export class BaseBooter implements Booter {
    * NOTE: All properties are configured even if all aren't used.
    */
   async configure() {
-    if (this.options.dirs) {
-      this.dirs = Array.isArray(this.options.dirs)
-        ? this.options.dirs
-        : [this.options.dirs];
-    } else {
-      this.dirs = [];
-    }
+    this.dirs = this.normalizeToArray(this.options.dirs);
+    this.extensions = this.normalizeToArray(this.options.extensions);
 
-    if (this.options.extensions) {
-      this.extensions = Array.isArray(this.options.extensions)
-        ? this.options.extensions
-        : [this.options.extensions];
-    } else {
-      this.extensions = [];
-    }
-
-    let joinedDirs = this.dirs.join(',');
-    if (this.dirs.length > 1) joinedDirs = `{${joinedDirs}}`;
-
+    const joinedDirs = this.formatDirs(this.dirs);
     const joinedExts = `@(${this.extensions.join('|')})`;
 
-    if (this.options.glob) {
-      this.glob = this.options.glob;
-    } else {
-      const pattern = this.options.nested ? '**/*' : '*';
-      this.glob = `/${joinedDirs}/${pattern}${joinedExts}`;
-    }
+    this.glob =
+      this.options.glob ??
+      `/${joinedDirs}/${this.options.nested ? '**/*' : '*'}${joinedExts}`;
+  }
+
+  private normalizeToArray<T>(value: T | T[] | undefined): T[] {
+    if (!value) return [];
+    return Array.isArray(value) ? value : [value];
+  }
+
+  private formatDirs(dirs: string[]): string {
+    if (dirs.length > 1) return `{${dirs.join(',')}}`;
+    return dirs.join(',');
   }
 
   /**
