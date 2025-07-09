@@ -1,5 +1,6 @@
 import {ArtifactOptions} from '@loopback/boot';
 import {Constructor, injectable} from '@loopback/core';
+import {randomBytes} from 'crypto';
 
 // Extend ArtifactOptions with a `key` identifier
 export interface BooterOptionsWithKey extends ArtifactOptions {
@@ -8,9 +9,10 @@ export interface BooterOptionsWithKey extends ArtifactOptions {
 function generateRandomString(length: number): string {
   const chars =
     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const bytes = randomBytes(length);
   let result = '';
   for (let i = 0; i < length; i++) {
-    result += chars.charAt(Math.floor(Math.random() * chars.length));
+    result += chars.charAt(bytes[i] % chars.length);
   }
   return result;
 }
