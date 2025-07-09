@@ -1,4 +1,4 @@
-import {ArtifactOptions} from '@loopback/boot';
+import {ArtifactOptions, Booter} from '@loopback/boot';
 import {Constructor, injectable} from '@loopback/core';
 import {randomBytes} from 'crypto';
 
@@ -16,6 +16,7 @@ function generateRandomString(length: number): string {
   }
   return result;
 }
+const KEY_LENGTH = 5;
 /**
  * Mixin to override `projectRoot` and `options` based on a given base path.
  *
@@ -23,19 +24,19 @@ function generateRandomString(length: number): string {
  * @param basePath The base path to be used as `projectRoot`
  * @param defaultOptions Default options to merge with user config
  */
-export function BooterBasePathMixin<T extends Constructor<any>>(
+export function booterBasePathMixin<T extends Constructor<Booter>>(
   BooterClass: T,
   basePath: string,
   defaultOptions: BooterOptionsWithKey,
 ): T {
   @injectable({
     tags: {
-      key: `${BooterClass.name}_${defaultOptions.interface}_${generateRandomString(5)}`,
+      key: `${BooterClass.name}_${defaultOptions.interface}_${generateRandomString(KEY_LENGTH)}`,
     },
   })
   class NewClass extends BooterClass {
     projectRoot = basePath;
-    options = Object.assign({}, defaultOptions);
+    options = {...defaultOptions};
   }
   return NewClass as T;
 }

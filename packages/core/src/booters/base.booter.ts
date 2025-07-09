@@ -52,26 +52,33 @@ export class BaseBooter implements Booter {
    * NOTE: All properties are configured even if all aren't used.
    */
   async configure() {
-    this.dirs = this.options.dirs
-      ? Array.isArray(this.options.dirs)
+    if (this.options.dirs) {
+      this.dirs = Array.isArray(this.options.dirs)
         ? this.options.dirs
-        : [this.options.dirs]
-      : [];
+        : [this.options.dirs];
+    } else {
+      this.dirs = [];
+    }
 
-    this.extensions = this.options.extensions
-      ? Array.isArray(this.options.extensions)
+    if (this.options.extensions) {
+      this.extensions = Array.isArray(this.options.extensions)
         ? this.options.extensions
-        : [this.options.extensions]
-      : [];
+        : [this.options.extensions];
+    } else {
+      this.extensions = [];
+    }
 
     let joinedDirs = this.dirs.join(',');
     if (this.dirs.length > 1) joinedDirs = `{${joinedDirs}}`;
 
     const joinedExts = `@(${this.extensions.join('|')})`;
 
-    this.glob = this.options.glob
-      ? this.options.glob
-      : `/${joinedDirs}/${this.options.nested ? '**/*' : '*'}${joinedExts}`;
+    if (this.options.glob) {
+      this.glob = this.options.glob;
+    } else {
+      const pattern = this.options.nested ? '**/*' : '*';
+      this.glob = `/${joinedDirs}/${pattern}${joinedExts}`;
+    }
   }
 
   /**

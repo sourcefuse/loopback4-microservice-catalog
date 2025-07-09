@@ -26,26 +26,25 @@ export class CoreModelBooter extends BaseBooter {
     const filePaths = glob.sync(pattern, {nodir: true});
     this.classes = loadClassesFromFiles(filePaths, this.projectRoot);
   }
-
   async load(): Promise<void> {
     this.classes.forEach(cls => {
-      let componentInstance: Component;
-      try {
-        componentInstance = this.context.getSync<Component>(
-          `components.${cls.name}`,
-        );
-      } catch (_) {
-        // If the component is not found, we skip it
+      const componentKey = `components.${cls.name}`;
+
+      if (!this.context.isBound(componentKey)) {
         return;
       }
 
+      const componentInstance = this.context.getSync<Component>(componentKey);
       const models = componentInstance?.models;
 
       if (models && Array.isArray(models)) {
         for (const model of models) {
-          const newModel = this.context.getSync<Function>(
-            'models.' + model.name,
-          );
+          const modelKey = 'models.' + model.name;
+          if (!this.context.isBound(modelKey)) {
+            continue;
+          }
+
+          const newModel = this.context.getSync<Function>(modelKey);
           MetadataInspector.defineMetadata(
             OVERRIDE_MODEL_SCHEMA_KEY,
             newModel,
