@@ -1,0 +1,39 @@
+import {ArtifactOptions} from '@loopback/boot';
+import {Constructor, injectable} from '@loopback/core';
+
+// Extend ArtifactOptions with a `key` identifier
+export interface BooterOptionsWithKey extends ArtifactOptions {
+  interface?: string;
+}
+function generateRandomString(length: number): string {
+  const chars =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
+}
+/**
+ * Mixin to override `projectRoot` and `options` based on a given base path.
+ *
+ * @param BooterClass The booter class to extend
+ * @param basePath The base path to be used as `projectRoot`
+ * @param defaultOptions Default options to merge with user config
+ */
+export function BooterBasePathMixin<T extends Constructor<any>>(
+  BooterClass: T,
+  basePath: string,
+  defaultOptions: BooterOptionsWithKey,
+): T {
+  @injectable({
+    tags: {
+      key: `${BooterClass.name}_${defaultOptions.interface}_${generateRandomString(5)}`,
+    },
+  })
+  class NewClass extends BooterClass {
+    projectRoot = basePath;
+    options = Object.assign({}, defaultOptions);
+  }
+  return NewClass as T;
+}

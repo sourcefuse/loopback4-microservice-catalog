@@ -1,9 +1,6 @@
 import {RestApplication} from '@loopback/rest';
 import {expect, sinon} from '@loopback/testlab';
-import {
-  ControllerDefaults,
-  CoreControllerBooter,
-} from '../../../booters/core-controller.booter';
+import {CoreControllerBooter} from '../../../booters/core-controller.booter';
 
 describe('CoreControllerBooter', () => {
   let app: RestApplication;
@@ -12,7 +9,7 @@ describe('CoreControllerBooter', () => {
 
   class TestBooter extends CoreControllerBooter {
     constructor(application: RestApplication) {
-      super(application, '.', {});
+      super(application);
     }
 
     async load(): Promise<void> {
@@ -47,17 +44,5 @@ describe('CoreControllerBooter', () => {
     await booter.load();
 
     sinon.assert.notCalled(spy);
-  });
-
-  it('should use default ControllerDefaults config', () => {
-    const config = {};
-    const booter = new CoreControllerBooter(app, '.', config);
-
-    // Access protected property via bracket notation for test purpose
-    const options = booter['options'];
-
-    expect(options.dirs).to.deepEqual(ControllerDefaults.dirs);
-    expect(options.extensions).to.deepEqual(ControllerDefaults.extensions);
-    expect(options.nested).to.equal(ControllerDefaults.nested);
   });
 });

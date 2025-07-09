@@ -9,13 +9,8 @@ describe('CoreModelBooter', () => {
   let ctx: Context;
 
   class DummyBooter extends CoreModelBooter {
-    constructor(
-      application: RestApplication,
-      basePath: string,
-      config: object,
-      context: Context,
-    ) {
-      super(application, basePath, config, context);
+    constructor(context: Context) {
+      super(context);
     }
 
     // Override discover to prevent requiring real files
@@ -36,7 +31,7 @@ describe('CoreModelBooter', () => {
 
   it('should skip load when component is not found', async () => {
     const getSyncSpy = sinon.spy(ctx, 'getSync');
-    const booter = new DummyBooter(app, '.', {}, ctx);
+    const booter = new DummyBooter(ctx);
     await booter.discover();
     await booter.load();
 
@@ -51,7 +46,7 @@ describe('CoreModelBooter', () => {
 
     const defineSpy = sinon.spy(MetadataInspector, 'defineMetadata');
 
-    const booter = new DummyBooter(app, '.', {}, ctx);
+    const booter = new DummyBooter(ctx);
     await booter.discover();
     await booter.load();
 
@@ -71,7 +66,7 @@ describe('CoreModelBooter', () => {
 
     const spy = sinon.spy(MetadataInspector, 'defineMetadata');
 
-    const booter = new DummyBooter(app, '.', {}, ctx);
+    const booter = new DummyBooter(ctx);
     await booter.discover(); // sets MyComponent
     await booter.load();
 

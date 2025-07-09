@@ -1,30 +1,21 @@
-import {ArtifactOptions, BaseArtifactBooter} from '@loopback/boot';
+import {ArtifactOptions} from '@loopback/boot';
 import {
   BindingScope,
-  config,
   ControllerClass,
   CoreBindings,
   inject,
   injectable,
 } from '@loopback/core';
 import {RestApplication} from '@loopback/rest';
-import path from 'path';
+import {BaseBooter} from './base.booter';
 
 @injectable({scope: BindingScope.SINGLETON})
-export class CoreControllerBooter extends BaseArtifactBooter {
+export class CoreControllerBooter extends BaseBooter {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
     protected application: RestApplication,
-    @inject('paths.base', {optional: true})
-    protected basePath: string = path.resolve(__dirname, '..'),
-    @config()
-    public controllerConfig: ArtifactOptions = {},
   ) {
-    super(
-      basePath,
-      // Set Controller Booter Options if passed in via bootConfig
-      Object.assign({}, ControllerDefaults, controllerConfig),
-    );
+    super();
   }
 
   async load(): Promise<void> {
