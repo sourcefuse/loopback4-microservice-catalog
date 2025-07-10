@@ -24,17 +24,17 @@ const KEY_LENGTH = 5;
  * @param basePath The base path to be used as `projectRoot`
  * @param defaultOptions Default options to merge with user config
  */
-export function booterBasePathMixin<T extends Constructor<Booter>>(
-  BooterClass: T,
+export function BooterBasePathMixin<T extends Constructor<Booter>>(
+  booterClass: T,
   basePath: string,
   defaultOptions: BooterOptionsWithKey,
 ): T {
   @injectable({
     tags: {
-      key: `${BooterClass.name}_${defaultOptions.interface}_${generateRandomString(KEY_LENGTH)}`,
+      key: `${booterClass.name}_${defaultOptions.interface}_${generateRandomString(KEY_LENGTH)}`,
     },
   })
-  class NewClass extends BooterClass {
+  class NewClass extends booterClass {
     projectRoot = basePath;
     options = {...defaultOptions};
   }
