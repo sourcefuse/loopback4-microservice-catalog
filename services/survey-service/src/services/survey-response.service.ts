@@ -154,7 +154,7 @@ export class SurveyResponseService {
       questions,
       createdSurveyResponse.id,
     );
-    if (createdSurveyResponse.extId || createdSurveyResponse.extMetadata) {
+    if (createdSurveyResponse.extId ?? createdSurveyResponse.extMetadata) {
       surveyResponseDetails.forEach(quesResp => {
         quesResp.extId = createdSurveyResponse.extId;
         quesResp.extMetadata = createdSurveyResponse.extMetadata;
