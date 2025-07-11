@@ -81,7 +81,7 @@
     "loopback-connector-postgresql": "^7.1.1",
     "loopback4-authentication": "^12.1.0",
     "loopback4-authorization": "^7.0.2",
-    "loopback4-notifications": "^8.0.2",
+    "loopback4-notifications": "^9.0.1",
     "pubnub": "^7.2.3",
     "swagger-stats": "^0.99.5",
     "symlink-resolver": "0.2.1",
