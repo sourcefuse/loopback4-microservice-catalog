@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 16.2.0 (2025-07-14)
+
+* feat(core): update model schema booters (#2291) ([de73478](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/de73478)), closes [#2291](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2291) [#86](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/86) [#86](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/86) [#86](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/86) [#86](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/86) [#86](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/86) [#86](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/86) [#86](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/86)
+
+
+
+
+
 ## 16.1.0 (2025-07-04)
 
 * feat(core): add helper function for override schema of models (#2284) ([4424278](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4424278)), closes [#2284](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2284) [#86](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/86)

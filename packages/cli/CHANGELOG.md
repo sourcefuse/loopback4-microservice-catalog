@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 10.2.0 (2025-07-14)
+
+* feat(ci-cd): add trivy scan in scaffold CLI (#2297) ([35fea2e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/35fea2e)), closes [#2297](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2297) [#2296](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2296) [#2296](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2296)
+* feat(cli): update node version in microservice template (#2295) ([8bdd270](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8bdd270)), closes [#2295](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2295) [#2294](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2294)
+
+
+
+
+
 ## 10.1.0 (2025-07-04)
 
 * fix(cli): remove unnecessary file (#2290) ([7ebdab0](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/7ebdab0)), closes [#2290](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2290) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0)
