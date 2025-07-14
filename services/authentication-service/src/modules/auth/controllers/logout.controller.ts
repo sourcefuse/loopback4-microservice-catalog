@@ -168,7 +168,7 @@ export class LogoutController {
       params.append('refresh_token', refreshTokenModel.externalRefreshToken);
       const strToEncode = `${process.env.KEYCLOAK_CLIENT_ID}:${process.env.KEYCLOAK_CLIENT_SECRET}`;
       fetch(logoutUrl, {
-        agent: getProxyAgent(),
+        agent: getProxyAgent() as unknown as import('http').Agent,
         method: 'post',
         body: params,
         headers: {
@@ -258,7 +258,7 @@ export class LogoutController {
       const logoutUrl = `https://oauth2.googleapis.com/revoke?token=${refreshTokenModel.externalAuthToken}`;
       params.append('refresh_token', refreshTokenModel.externalRefreshToken);
       fetch(logoutUrl, {
-        agent: getProxyAgent(),
+        agent: getProxyAgent() as unknown as import('http').Agent,
         method: 'post',
         body: params,
         headers: {

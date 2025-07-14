@@ -162,7 +162,7 @@ export class UserOpsService {
     try {
       creds = user && (await this.userRepository.credentials(user.id).get());
     } catch (e) {
-      //do nothing
+      throw new Error(`Error fetching credentials for user ${e.message}`);
     }
     if (!user || user.deleted) {
       throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);

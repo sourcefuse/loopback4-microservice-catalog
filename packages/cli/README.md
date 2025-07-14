@@ -9,6 +9,7 @@ To install sourceloop-cli, run
 ```shell
 npm install @sourceloop/cli
 ```
+
 Once the above command is executed, you will be able to access the CLI commands directly from your terminal. You can use either `sl` or `arc` as shorthand to run any of the `sourceloop` commands listed below. A sample usage is provided for reference:
 
 ## Usage
@@ -19,7 +20,7 @@ $ npm install -g @sourceloop/cli
 $ sl COMMAND
 running command...
 $ sl (-v|--version|version)
-@sourceloop/cli/10.0.0 linux-x64 node-v20.19.2
+@sourceloop/cli/10.1.0 linux-x64 node-v20.19.2
 $ sl --help [COMMAND]
 USAGE
   $ sl COMMAND
@@ -34,6 +35,7 @@ USAGE
 * [`sl cdk`](#sl-cdk)
 * [`sl extension [NAME]`](#sl-extension-name)
 * [`sl help [COMMAND]`](#sl-help-command)
+* [`sl mcp`](#sl-mcp)
 * [`sl microservice [NAME]`](#sl-microservice-name)
 * [`sl scaffold [NAME]`](#sl-scaffold-name)
 * [`sl update`](#sl-update)
@@ -79,16 +81,16 @@ OPTIONS
 
   -p, --packageJsonName=packageJsonName            Package name for arc-cdk
 
-  -r, --relativePathToApp=relativePathToApp        Relative path to the service you want to deploy
+  -r, --relativePathToApp=relativePathToApp        Relative path to the application ts file
 
   --help                                           show manual pages
 ```
 
-_See code: [src/commands/cdk.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v10.0.0/src/commands/cdk.ts)_
+_See code: [src/commands/cdk.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v10.1.0/src/commands/cdk.ts)_
 
 ## `sl extension [NAME]`
 
-add an extension
+This generates a local package in the packages folder of a ARC generated monorepo. This package can then be installed and used inside other modules in the monorepo.
 
 ```
 USAGE
@@ -101,7 +103,7 @@ OPTIONS
   --help  show manual pages
 ```
 
-_See code: [src/commands/extension.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v10.0.0/src/commands/extension.ts)_
+_See code: [src/commands/extension.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v10.1.0/src/commands/extension.ts)_
 
 ## `sl help [COMMAND]`
 
@@ -120,9 +122,33 @@ OPTIONS
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.18/src/commands/help.ts)_
 
+## `sl mcp`
+
+Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by the MCP client to interact with the CLI commands. 
+
+```
+USAGE
+  $ sl mcp
+
+OPTIONS
+  --help  show manual pages
+
+DESCRIPTION
+  Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by 
+  the MCP client to interact with the CLI commands. 
+    You can use it using the following MCP server configuration:
+      "sourceloop": {
+        "command": "npx",
+        "args": ["@sourceloop/cli", "mcp"],
+        "timeout": 300
+      }
+```
+
+_See code: [src/commands/mcp.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v10.1.0/src/commands/mcp.ts)_
+
 ## `sl microservice [NAME]`
 
-add a microservice
+Add a microservice in the services or facade folder of a ARC generated monorepo. This can also optionally add migrations for the same microservice.
 
 ```
 USAGE
@@ -153,7 +179,7 @@ OPTIONS
       Type of the datasource
 
   --[no-]facade
-      Create as facade
+      Create as facade inside the facades folder
 
   --help
       show manual pages
@@ -165,11 +191,11 @@ OPTIONS
       Include sequelize as ORM in service
 ```
 
-_See code: [src/commands/microservice.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v10.0.0/src/commands/microservice.ts)_
+_See code: [src/commands/microservice.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v10.1.0/src/commands/microservice.ts)_
 
 ## `sl scaffold [NAME]`
 
-create a project scaffold
+Setup a ARC based monorepo using npm workspaces with an empty services, facades and packages folder
 
 ```
 USAGE
@@ -189,7 +215,7 @@ OPTIONS
   --owner=owner              owner of the repo
 ```
 
-_See code: [src/commands/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v10.0.0/src/commands/scaffold.ts)_
+_See code: [src/commands/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v10.1.0/src/commands/scaffold.ts)_
 
 ## `sl update`
 
@@ -203,5 +229,5 @@ OPTIONS
   --help  show manual pages
 ```
 
-_See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v10.0.0/src/commands/update.ts)_
+_See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v10.1.0/src/commands/update.ts)_
 <!-- commandsstop -->

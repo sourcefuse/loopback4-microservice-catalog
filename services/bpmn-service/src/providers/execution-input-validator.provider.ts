@@ -23,7 +23,9 @@ export class ExecutionInputValidationProvider
           throw new Error('invalid');
         }
       } catch (e) {
-        throw new HttpErrors.BadRequest(JSON.stringify(validate.errors));
+        throw new HttpErrors.BadRequest(
+          `JSON.stringify(validate.errors) ${e.message}`,
+        );
       }
     };
   }

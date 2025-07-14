@@ -19,7 +19,7 @@ try {
     isLocal = true;
   }
 } catch (err) {
-  console.info('\n');
+  console.error('Error while checking for .infolder:', err);
 }
 
 if (isLocal) {

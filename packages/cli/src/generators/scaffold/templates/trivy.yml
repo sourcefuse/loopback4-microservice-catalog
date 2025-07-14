@@ -1,0 +1,16 @@
+format: table
+exit-code: 1
+severity:
+  - HIGH
+  - CRITICAL
+skip-files:
+  - db.env
+security-checks:
+  - vuln
+  - secret
+  - license
+vulnerability:
+  type:
+    - os
+    - library
+  ignore-unfixed: true

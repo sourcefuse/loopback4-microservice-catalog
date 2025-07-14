@@ -75,28 +75,30 @@ export abstract class SearchQueryBuilder<T extends Model> {
   }
 
   limit() {
-    if (this.query.limit) {
-      if (this.query.limitByType) {
-        if (this.query.offset) {
-          throw new HttpErrors.BadRequest(Errors.OFFSET_WITH_TYPE);
-        }
-        this.baseQueryList = this.baseQueryList.map(q => ({
-          sql: `${q.sql} LIMIT ${this.query.limit}`,
-          params: q.params,
-        }));
-      } else {
-        this.limitQuery = `LIMIT ${this.query.limit} OFFSET ${
-          this.query.offset ?? 0
-        }`;
-      }
-    } else {
-      if (this.query.limitByType) {
+    const {limit, limitByType, offset} = this.query;
+
+    if (!limit) {
+      if (limitByType) {
         throw new HttpErrors.BadRequest(Errors.TYPE_WITHOUT_LIMIT);
       }
-      if (this.query.offset) {
+      if (offset) {
         throw new HttpErrors.BadRequest(Errors.OFFSET_WITHOUT_LIMIT);
       }
+      return;
     }
+
+    if (limitByType) {
+      if (offset) {
+        throw new HttpErrors.BadRequest(Errors.OFFSET_WITH_TYPE);
+      }
+      this.baseQueryList = this.baseQueryList.map(q => ({
+        sql: `${q.sql} LIMIT ${limit}`,
+        params: q.params,
+      }));
+      return;
+    }
+
+    this.limitQuery = `LIMIT ${limit} OFFSET ${offset ?? 0}`;
   }
 
   order(columns: Array<keyof T>) {

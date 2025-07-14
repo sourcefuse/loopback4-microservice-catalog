@@ -1,6 +1,6 @@
 {
     "name": "@sourceloop/auth-public-private-client",
-    "version": "0.5.0",
+    "version": "0.5.2",
     "description": "public-private-client example.",
     "keywords": [
         "loopback-microservice",
@@ -72,8 +72,8 @@
         "@opentelemetry/plugin-pg-pool": "^0.15.0",
         "@opentelemetry/sdk-trace-base": "^1.15.0",
         "@opentelemetry/sdk-trace-node": "^1.15.0",
-        "@sourceloop/authentication-service": "^21.0.0",
-        "@sourceloop/core": "^16.0.0",
+        "@sourceloop/authentication-service": "^21.0.2",
+        "@sourceloop/core": "^16.1.0",
         "dotenv": "^16.4.5",
         "dotenv-extended": "^2.9.0",
         "loopback-connector-kv-redis": "^4.0.0",

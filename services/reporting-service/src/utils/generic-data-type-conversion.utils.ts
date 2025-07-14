@@ -92,7 +92,7 @@ export class GenericConversionUtils
       try {
         return JSON.parse(value);
       } catch (e) {
-        throw new Error(`Invalid JSON string: ${value}`);
+        throw new Error(`Invalid JSON string: ${e.message}`);
       }
     }
     if (typeof value === 'object') return value;

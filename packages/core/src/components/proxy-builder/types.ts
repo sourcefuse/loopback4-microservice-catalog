@@ -4,7 +4,7 @@
 // https://opensource.org/licenses/MIT
 import {AnyObject, Entity} from '@loopback/repository';
 import {ModelConstructor, RestRelationConfig} from './services';
-
+export type HttpMethods = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 export type ProxyBuilderConfig = Array<{
   /**
    * The `configs` property in the `ProxyBuilderConfig` type is an array of either {@link EntityRestConfig} objects
@@ -85,7 +85,7 @@ export type RestOperationTemplate = {
    *  operation like method, url, headers, etc
    */
   template: {
-    method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+    method: HttpMethods;
     url: string;
     headers?: {
       Authorization?: '{token}' | string;

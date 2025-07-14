@@ -65,7 +65,7 @@ export class EventService {
       eventAttendeeResponse = await this.eventAttendeeViewRepository.find(
         eventAttendeeFilter as Filter<EventAttendeeView>,
       );
-    } catch (e) {
+    } catch (_) {
       throw new HttpErrors.UnprocessableEntity(ErrorKeys.ItemInvalid);
     }
 

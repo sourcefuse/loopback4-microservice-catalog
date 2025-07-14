@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "prepare": "husky install",
+    "commit":"cz",
     "test": "lerna run test",
      "migrate": "npm run db:migrate --workspaces --if-present",
      "build": "npm run build --workspaces --if-present",

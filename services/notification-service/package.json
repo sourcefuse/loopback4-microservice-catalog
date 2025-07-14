@@ -1,6 +1,6 @@
 {
     "name": "@sourceloop/notification-service",
-    "version": "15.0.0",
+    "version": "15.0.2",
     "description": "notification microservice.",
     "keywords": [
         "loopback-extension",
@@ -73,7 +73,7 @@
         "@loopback/rest": "^14.0.9",
         "@loopback/rest-explorer": "^7.0.9",
         "@loopback/service-proxy": "^7.0.9",
-        "@sourceloop/core": "^16.0.0",
+        "@sourceloop/core": "^16.1.0",
         "dotenv": "^16.4.5",
         "dotenv-extended": "^2.9.0",
         "jsonwebtoken": "^9.0.0",
@@ -143,6 +143,15 @@
             "finalhandler": "^1.2.0",
             "send": "^0.18.0",
             "serve-static": "^1.15.0"
+        },
+        "axios": "^1.8.2",
+        "twilio": {
+        "axios": "^1.8.2"
+        },
+        "loopback4-notifications": {
+            "twilio": {
+                "axios": "^1.8.2"
+            }
         }
     },
     "publishConfig": {
