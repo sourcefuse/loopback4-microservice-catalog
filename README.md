@@ -10,9 +10,6 @@
 <a href="https://sonarcloud.io/summary/new_code?id=sourcefuse_loopback4-microservice-catalog" target="_blank">
 <img alt="Sonar Quality Gate" src="https://img.shields.io/sonar/quality_gate/sourcefuse_loopback4-microservice-catalog?server=https%3A%2F%2Fsonarcloud.io&style=for-the-badge">
 </a>
-<a href="https://app.snyk.io/org/ashishkaushik/reporting?context[page]=issues-detail&project_target=%255B%2522sourcefuse%252Floopback4-microservice-catalog%2522%255D&project_origin=%255B%2522github%2522%255D&issue_status=%255B%2522Open%2522%255D&issue_by=Severity&table_issues_detail_cols=SCORE%257CCVE%257CCWE%257CPROJECT%257CEXPLOIT%2520MATURITY%257CAUTO%2520FIXABLE%257CINTRODUCED%257CSNYK%2520PRODUCT&v=1">
-<img alt="Synk Status" src="https://img.shields.io/badge/SYNK_SECURITY-MONITORED-GREEN?style=for-the-badge">
-</a>
 <a href="./LICENSE">
 <img src="https://img.shields.io/github/license/sourcefuse/loopback4-microservice-catalog?style=for-the-badge" alt="License" />
 </a>

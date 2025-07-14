@@ -41,6 +41,11 @@
     },
     "oidc-provider": {
       "@koa/cors": "^5.0.0"
+    },
+    "loopback4-notifications": {
+        "twilio": {
+            "axios": "^1.8.2"
+        }
     }
   },
   "dependencies": {
