@@ -62,7 +62,7 @@ export default class ScaffoldGenerator extends BaseGenerator<ScaffoldOptions> {
         },
       );
     } catch (error) {
-      this.log(chalk.cyan(`Error while adding jenkinsfile`));
+      this.log(chalk.cyan(`Error while adding jenkinsfile{error.message}`));
     }
   }
   async install() {

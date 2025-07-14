@@ -92,7 +92,7 @@ export class PsqlSequelizeStrategy extends BaseSequelize {
       }
       return result;
     } catch (error) {
-      throw new Error(error.message || 'Error executing query');
+      throw new Error(error.message ?? 'Error executing query');
     }
   }
 
@@ -294,7 +294,7 @@ export class PsqlSequelizeStrategy extends BaseSequelize {
         type: QueryTypes.UPSERT,
       });
     } catch (error) {
-      throw new Error(error.message || 'Error executing manageRecord query');
+      throw new Error(error.message ?? 'Error executing manageRecord query');
     }
 
     return {affectedRecords: result};
@@ -343,7 +343,7 @@ export class PsqlSequelizeStrategy extends BaseSequelize {
       });
       return {affectedRecords: result};
     } catch (error) {
-      throw new Error(error.message || 'Error executing delete query');
+      throw new Error(error.message ?? 'Error executing delete query');
     }
   }
   /* The `getSchemaAndTable` function is a helper function that takes a `dataSourceName` string as input

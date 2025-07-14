@@ -42,7 +42,7 @@ const SequenceActions = RestBindings.SequenceActions;
 const isJsonString = (str: string) => {
   try {
     JSON.parse(str);
-  } catch (e) {
+  } catch (_) {
     return false;
   }
   return true;

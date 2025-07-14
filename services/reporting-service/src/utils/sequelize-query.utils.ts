@@ -107,7 +107,11 @@ export class SequelizeQueryUtility implements QueryUtilityInterface {
       const orderByParts =
         this.convertOrderToOrderBy(filter.order)?.map(
           order =>
-            `${typeof order.field === 'object' ? JSON.stringify(order.field) : order.field} ${order.order}`,
+            `${
+              typeof order.field === 'object'
+                ? JSON.stringify(order.field)
+                : order.field
+            } ${order.order}`,
         ) ?? [];
 
       // Only proceed to append ORDER BY SQL if there are orderByParts
@@ -399,53 +403,49 @@ export class SequelizeQueryUtility implements QueryUtilityInterface {
         Array.isArray(joinClause.on) ? joinClause.on : [joinClause.on]
       )
         .map(condition => {
-          const fieldPart = this.formatField(condition.field, bindingManager);
+          const {field, operator, value, valueType} = condition;
+          const fieldPart = this.formatField(field, bindingManager);
 
-          if (condition.value === null) {
+          if (value === null) {
             return `${fieldPart} IS NULL`;
           }
 
           if (
-            typeof condition.value === 'object' &&
-            !Array.isArray(condition.value) &&
-            'query' in condition.value
+            typeof value === 'object' &&
+            !Array.isArray(value) &&
+            'query' in value
           ) {
-            const subQuery = this.generateQuery(
-              condition.value.query,
-              bindingManager,
-            );
-            return `${fieldPart} ${condition.operator} (${subQuery})`;
+            const subQuery = this.generateQuery(value.query, bindingManager);
+            return `${fieldPart} ${operator} (${subQuery})`;
           }
 
-          if (Array.isArray(condition.value)) {
-            const values = condition.value.map(val => `'${val}'`).join(', '); // Assuming these are literals
-            return `${fieldPart} ${condition.operator} (${values})`;
+          if (Array.isArray(value)) {
+            const values = value.map(val => `'${val}'`).join(', '); // Assuming these are literals
+            return `${fieldPart} ${operator} (${values})`;
           }
 
           // Check if the value is a column reference
-          if (condition.valueType === 'column') {
+          if (valueType === 'column') {
             const valueStr =
-              typeof condition.value === 'object'
-                ? JSON.stringify(condition.value)
-                : condition.value;
-            return `${fieldPart} ${condition.operator} ${valueStr}`;
+              typeof value === 'object' ? JSON.stringify(value) : value;
+            return `${fieldPart} ${operator} ${valueStr}`;
           }
 
           // Treat as a literal value if bindingManager is undefined, otherwise use bindings
           if (bindingManager) {
-            const bindKey = bindingManager.addBinding(condition.value);
-            return `${fieldPart} ${condition.operator} ${bindKey}`;
+            const bindKey = bindingManager.addBinding(value);
+            return `${fieldPart} ${operator} ${bindKey}`;
           }
 
           let formattedValue;
-          if (typeof condition.value === 'string') {
-            formattedValue = `'${condition.value.replace(/'/g, "''")}'`;
-          } else if (typeof condition.value === 'object') {
-            formattedValue = JSON.stringify(condition.value);
+          if (typeof value === 'string') {
+            formattedValue = `'${value.replace(/'/g, "''")}'`;
+          } else if (typeof value === 'object') {
+            formattedValue = JSON.stringify(value);
           } else {
-            formattedValue = condition.value;
+            formattedValue = value;
           }
-          return `${fieldPart} ${condition.operator} ${formattedValue}`;
+          return `${fieldPart} ${operator} ${formattedValue}`;
         })
         .join(' AND ');
 
@@ -830,7 +830,9 @@ export class SequelizeQueryUtility implements QueryUtilityInterface {
             ? `'${condition.value.replace(/'/g, "''")}'`
             : condition.value;
       }
-      conditionString = `${this.formatField(condition.field, bindingManager)} ${condition.operator} ${formattedValue}`;
+      conditionString = `${this.formatField(condition.field, bindingManager)} ${
+        condition.operator
+      } ${formattedValue}`;
     }
 
     return conditionString;

@@ -266,7 +266,9 @@ export class ReplyAndForwardController {
       };
     } catch (error) {
       await transaction.rollback();
-      throw new HttpErrors.UnprocessableEntity('Error replying email');
+      throw new HttpErrors.UnprocessableEntity(
+        `Error replying email ${error.message}`,
+      );
     }
   }
   @authenticate(STRATEGY.BEARER)
