@@ -154,8 +154,7 @@ export class SurveyResponseService {
       questions,
       createdSurveyResponse.id,
     );
-    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-    if (createdSurveyResponse.extId || createdSurveyResponse.extMetadata) {
+    if (createdSurveyResponse.extId ?? createdSurveyResponse.extMetadata) {
       surveyResponseDetails.forEach(quesResp => {
         quesResp.extId = createdSurveyResponse.extId;
         quesResp.extMetadata = createdSurveyResponse.extMetadata;

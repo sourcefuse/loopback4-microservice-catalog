@@ -143,6 +143,15 @@
             "finalhandler": "^1.2.0",
             "send": "^0.18.0",
             "serve-static": "^1.15.0"
+        },
+        "axios": "^1.8.2",
+        "twilio": {
+        "axios": "^1.8.2"
+        },
+        "loopback4-notifications": {
+            "twilio": {
+                "axios": "^1.8.2"
+            }
         }
     },
     "publishConfig": {
