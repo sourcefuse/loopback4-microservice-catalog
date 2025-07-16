@@ -15,7 +15,7 @@
     "commitizen": "^4.2.5",
     "custom-sf-changelog": "file:packages/custom-sf-changelog",
     "cz-conventional-changelog": "^3.3.0",
-    "cz-format-extension": "^1.5.0",
+    "cz-format-extension": "^1.5.1",
     "husky": "^7.0.4",
     "lerna": "7.2.0",
     "typedoc": "0.23.23",
@@ -43,9 +43,9 @@
       "@koa/cors": "^5.0.0"
     },
     "loopback4-notifications": {
-        "twilio": {
-            "axios": "^1.8.2"
-        }
+      "twilio": {
+        "axios": "^1.8.2"
+      }
     }
   },
   "dependencies": {
