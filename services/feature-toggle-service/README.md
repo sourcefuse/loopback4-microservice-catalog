@@ -49,6 +49,21 @@ npm i @sourceloop/feature-toggle-service
 - Start the application
   `npm start`
 
+### Using with Sequelize
+
+This service supports Sequelize as the underlying ORM using [@loopback/sequelize](https://www.npmjs.com/package/@loopback/sequelize) extension. And in order to use it, you'll need to do following changes.
+
+1. To use Sequelize in your application, add following to application.ts:
+
+```ts
+this.bind(FeatureToggleBindings.Config).to({
+  bindControllers: true,
+  useCustomSequence: false,
+});
+```
+
+2. Use the `SequelizeDataSource` in your audit datasource as the parent class. Refer [this](https://www.npmjs.com/package/@loopback/sequelize#step-1-configure-datasource) for more.
+
 ### Asymmetric Token Signing and Verification
 
 If you are using asymmetric token signing and verification, you need to create a datasource for auth database. Example datasource file for auth:-
