@@ -11,7 +11,11 @@ import {
 } from '@sourceloop/core';
 import crypto, {generateKeyPairSync} from 'crypto';
 import * as jwt from 'jsonwebtoken';
-import {AuthErrorKeys, ClientAuthCode} from 'loopback4-authentication';
+import {
+  AuthenticationBindings,
+  AuthErrorKeys,
+  ClientAuthCode,
+} from 'loopback4-authentication';
 import moment from 'moment';
 import * as jose from 'node-jose';
 import {LoginType} from '../enums';
@@ -79,14 +83,28 @@ export class IdpLoginService {
     private readonly jwtSigner: JWTSignerFn<object>,
     @inject(AuthServiceBindings.JWTPayloadProvider)
     private readonly getJwtPayload: JwtPayloadFn,
+    @inject(AuthenticationBindings.CURRENT_USER)
+    private readonly currentUser: AuthUser | undefined,
     @inject(AuthServiceBindings.MarkUserActivity, {optional: true})
     private readonly userActivity?: IUserActivity,
   ) {}
 
   /**
-   * The function `getOpenIdConfiguration` returns an IdpConfiguration object with specific properties
-   * set based on environment variables.
-   * @returns An IdpConfiguration object with the specified properties and values is being returned.
+   * Retrieves OpenID Connect configuration settings.
+   * This method constructs and returns an IdpConfiguration object containing
+   * essential OpenID Connect endpoints and supported features.
+   *
+   * @returns {Promise<IdpConfiguration>} A promise that resolves to an IdpConfiguration object containing:
+   * - issuer URL
+   * - authorization endpoint
+   * - token endpoint
+   * - JWKS URI
+   * - end session endpoint
+   * - supported response types
+   * - supported scopes
+   * - supported ID token signing algorithms
+   * - supported token endpoint authentication methods
+   * - userinfo endpoint
    */
   async getOpenIdConfiguration() {
     // sonarignore:start
@@ -175,29 +193,78 @@ export class IdpLoginService {
   }
 
   /**
-   * The `createJWT` function generates a JWT token for a user with specified
-   * payload and authentication client, handling user authentication and token
-   * expiration.
-   * @param payload - The `payload` parameter in the `createJWT` function is an
-   * object that contains information about the user and external tokens. It has
-   * the following properties:
-   * @param {AuthClient} authClient - The `authClient` parameter in the `createJWT`
-   * function represents the client that is requesting the JWT token generation. It
-   * contains information about the client, such as the client ID, access token
-   * expiration time, and refresh token expiration time. This information is used
-   * to customize the JWT token generation process based
-   * @param {LoginType} loginType - The `loginType` parameter in the `createJWT`
-   * function represents the type of login being performed, such as regular login,
-   * social login, or any other specific type of authentication method. It helps in
-   * determining the context of the login operation and can be used to customize
-   * the behavior or processing logic based
-   * @param {string} [tenantId] - The `tenantId` parameter in the `createJWT`
-   * function is an optional parameter of type string. It is used to specify the ID
-   * of the tenant for which the JWT token is being created. If provided, it is
-   * used in the process of generating the JWT payload. If not provided, the
-   * @returns A `TokenResponse` object is being returned, which contains the
-   * `accessToken`, `refreshToken`, and `expires` properties.
+   * Saves a refresh token with associated user and client information to the refresh token repository
+   *
+   * @param refreshToken - The refresh token string to be saved
+   * @param user - The user object containing authentication details
+   * @param authClient - The authentication client object containing client configuration
+   * @param accessToken - The access token string associated with this refresh token
+   * @param data - Additional data object containing tenant information
+   * @returns Promise<void>
+   *
+   * @private
    */
+  private async saveRefreshToken(
+    refreshToken: string,
+    user: User,
+    authClient: AuthClient,
+    accessToken: string,
+    data: AnyObject,
+  ): Promise<void> {
+    const ms = 1000;
+    await this.refreshTokenRepo.set(
+      refreshToken,
+      {
+        clientId: authClient.clientId,
+        userId: user.id,
+        username: user.username,
+        accessToken,
+        externalAuthToken: (user as AuthUser).externalAuthToken,
+        externalRefreshToken: (user as AuthUser).externalRefreshToken,
+        tenantId: data.tenantId,
+      },
+      {ttl: authClient.refreshTokenExpiration * ms},
+    );
+  }
+
+  /**
+   * Retrieves a user based on provided authentication payload.
+   *
+   * @param payload - Contains user authentication details including user object or userId,
+   *                 and optional external auth tokens
+   * @param payload.user - Direct user object if available
+   * @param payload.userId - User ID to look up if user object not provided
+   * @param payload.externalAuthToken - Optional external authentication token
+   * @param payload.externalRefreshToken - Optional external refresh token
+   *
+   * @returns Promise resolving to User object with optional external tokens
+   * @throws {HttpErrors.Unauthorized} When neither user nor userId is provided
+   */
+  async getUser(
+    payload: ClientAuthCode<User, typeof User.prototype.id> & ExternalTokens,
+  ): Promise<User> {
+    let user: User | undefined;
+    if (payload.user) {
+      user = payload.user;
+      return user;
+    } else if (payload.userId) {
+      user = await this.userRepo.findById(payload.userId, {
+        include: [
+          {
+            relation: 'defaultTenant',
+          },
+        ],
+      });
+      if (payload.externalAuthToken && payload.externalRefreshToken) {
+        (user as AuthUser).externalAuthToken = payload.externalAuthToken;
+        (user as AuthUser).externalRefreshToken = payload.externalRefreshToken;
+      }
+      return user;
+    } else {
+      throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
+    }
+  }
+
   /**
    * The function `createJWT` generates a JWT token for a user with specified payload and
    * authentication client, handling token expiration and refresh token storage.
@@ -218,7 +285,7 @@ export class IdpLoginService {
    * @returns The `createJWT` function returns a `TokenResponse` object containing the access token,
    * refresh token, and expiration time.
    */
-  private async createJWT(
+  async createJWT(
     payload: ClientAuthCode<User, typeof User.prototype.id> & ExternalTokens,
     authClient: AuthClient,
     loginType: LoginType,
@@ -227,27 +294,7 @@ export class IdpLoginService {
     const size = 32;
     const ms = 1000;
     try {
-      let user: User | undefined;
-      if (payload.user) {
-        user = payload.user;
-      } else if (payload.userId) {
-        user = await this.userRepo.findById(payload.userId, {
-          include: [
-            {
-              relation: 'defaultTenant',
-            },
-          ],
-        });
-        if (payload.externalAuthToken && payload.externalRefreshToken) {
-          (user as AuthUser).externalAuthToken = payload.externalAuthToken;
-          (user as AuthUser).externalRefreshToken =
-            payload.externalRefreshToken;
-        }
-      } else {
-        throw new HttpErrors.Unauthorized(
-          AuthenticateErrorKeys.UserDoesNotExist,
-        );
-      }
+      const user = await this.getUser(payload);
       const data: AnyObject = await this.getJwtPayload(
         user,
         authClient,
@@ -257,20 +304,29 @@ export class IdpLoginService {
         expiresIn: authClient.accessTokenExpiration,
       });
       const refreshToken: string = crypto.randomBytes(size).toString('hex');
-      // Set refresh token into redis for later verification
-      await this.refreshTokenRepo.set(
+
+      await this.saveRefreshToken(
         refreshToken,
-        {
-          clientId: authClient.clientId,
-          userId: user.id,
-          username: user.username,
-          accessToken,
-          externalAuthToken: (user as AuthUser).externalAuthToken,
-          externalRefreshToken: (user as AuthUser).externalRefreshToken,
-          tenantId: data.tenantId,
-        },
-        {ttl: authClient.refreshTokenExpiration * ms},
+        user,
+        authClient,
+        accessToken,
+        data,
       );
+
+      const keys = await this.jwtKeysRepo.find();
+      // Save the public keys to the cache for retrieval on facade
+      for (const key of keys) {
+        await this.publicKeyRepo.set(
+          key.keyId,
+          {
+            keyId: key.keyId,
+            publicKey: key.publicKey,
+          },
+          {
+            ttl: authClient.accessTokenExpiration * ms,
+          },
+        );
+      }
 
       const userTenant = await this.userTenantRepo.findOne({
         where: {userId: user.id},
@@ -469,21 +525,44 @@ export class IdpLoginService {
   }
 
   /**
-   * The `generateKeys` function generates new keys for a specified number of times defined by the
-   * `MAX_JWT_KEYS` environment variable or 2 by default.
+   * Generates multiple JWT keys asynchronously based on the MAX_JWT_KEYS environment variable.
+   * If MAX_JWT_KEYS is not set, defaults to generating 2 keys.
+   *
+   * @throws {Error} When key generation fails with message 'Failed to generate JWT keys'
+   * @returns {Promise<void>} A promise that resolves when all keys have been generated
    */
   async generateKeys(): Promise<void> {
     //call the function to generate new keys for process.env.MAX_JWT_KEYS times.
-    for (let i = 0; i < +(process.env.MAX_JWT_KEYS ?? 2); i++) {
-      await this.generateNewKey();
+    try {
+      const keyPromises = Array(+(process.env.MAX_JWT_KEYS ?? 2))
+        .fill(0)
+        .map(() => this.generateNewKey());
+      await Promise.all(keyPromises);
+    } catch (error) {
+      this.logger.error('Error generating JWT keys:', error);
+      throw new Error('Failed to generate JWT keys');
     }
   }
 
   /**
-   * The function generates a JSON Web Key Set (JWKS) containing a RSA public key and saves it to a
-   * file.
+   * Generates a new RSA key pair and manages key rotation for JWT authentication.
+   *
+   * This method performs the following operations:
+   * 1. Generates a new RSA key pair (public/private keys)
+   * 2. Creates a JWKS (JSON Web Key Set) object
+   * 3. Manages key rotation by removing oldest keys when maximum limit is reached
+   * 4. Stores public key in cache if rotation is enabled
+   * 5. Saves both public and private keys to the database
+   *
+   * @param isRotate - Optional flag to indicate if this is a key rotation operation. Defaults to false.
+   * When true, it will store the public key in cache with TTL based on auth client's access token expiration.
+   *
+   * @throws {Error} If JWT_PRIVATE_KEY_PASSPHRASE environment variable is not set
+   * @throws {Error} If key generation or storage operations fail
+   *
+   * @returns Promise<void>
    */
-  async generateNewKey(): Promise<void> {
+  async generateNewKey(isRotate = false): Promise<void> {
     // Generate the RSA key pair
     const {publicKey, privateKey} = generateKeyPairSync('rsa', {
       modulusLength: 2048,
@@ -517,11 +596,25 @@ export class IdpLoginService {
       await this.jwtKeysRepo.deleteById(oldestKey.id);
     }
 
-    // Save the public key to the cache for retrieval on facade
-    await this.publicKeyRepo.set(key.kid, {
-      keyId: key.kid,
-      publicKey,
-    });
+    if (isRotate) {
+      // Fetch auth client on the basis of current user
+      const authClient = await this.authClientRepository.findById(
+        this.currentUser?.authClientId,
+      );
+
+      const ms = 1000;
+      // Save the public key to the cache for retrieval on facade
+      await this.publicKeyRepo.set(
+        key.kid,
+        {
+          keyId: key.kid,
+          publicKey,
+        },
+        {
+          ttl: authClient.accessTokenExpiration * ms,
+        },
+      );
+    }
 
     // Save public and private keys to the database using JwtKeysRepository
     await this.jwtKeysRepo.create({
@@ -542,7 +635,7 @@ export class IdpLoginService {
    * @param token - The token to decode.
    * @returns The expiry timestamp in milliseconds.
    */
-  decodeAndGetExpiry(token: string): number | null {
+  private decodeAndGetExpiry(token: string): number | null {
     const tokenData = jwt.decode(token) as TokenPayload | null; // handle null result from decode
     const ms = 1000;
 

@@ -501,6 +501,29 @@ Authenttication service can be used as a identity server. Following endpoints ha
   </tbody>
 </table>
 
+Here is the flow diagram to understand how IDP Server works:-
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant IdP as ARC IDP
+    participant Authentication Service
+
+    Client->>IdP: GET /.well-known/openid-configuration
+    IdP-->>Client: Returns IdP config (includes jwks_uri)
+
+    Client->>IdP: GET JWKS (using jwks_uri /connect/get-keys)
+    IdP-->>Client: Returns JWKS (public keys)
+
+    Client->>Client: Decode JWT token\nExtract kid from header
+
+    Client->>Client: Find public key from JWKS by kid
+
+    Client->>Authentication Service: Send JWT token + public key
+
+    Authentication Service->>Authentication Service: Verify JWT signature using public key
+```
+
 ### Setting up a `DataSource`
 
 Here is a sample Implementation `DataSource` implementation using environment variables and PostgreSQL as the data source. The `auth-multitenant-example` utilizes both Redis and PostgreSQL as data sources.

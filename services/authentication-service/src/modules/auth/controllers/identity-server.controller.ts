@@ -174,7 +174,7 @@ export class IdentityServerController {
     },
   })
   async rotateKeys(): Promise<void> {
-    return this.idpLoginService.generateNewKey();
+    return this.idpLoginService.generateNewKey(true);
   }
 
   @authorize({permissions: ['*']})

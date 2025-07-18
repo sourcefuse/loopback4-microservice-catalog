@@ -13,7 +13,6 @@ import {
 import {AppleLoginController} from '../../../modules/auth/controllers';
 import {
   AuthClientRepository,
-  LoginActivityRepository,
   RoleRepository,
   TenantConfigRepository,
   UserCredentialsRepository,
@@ -144,7 +143,6 @@ describe('Sequelize Component', () => {
           UserLevelResourceRepository,
           UserLevelPermissionRepository,
           UserTenantRepository,
-          LoginActivityRepository,
         ],
         props: [
           'authClientRepository',
@@ -155,7 +153,6 @@ describe('Sequelize Component', () => {
           'userResourcesRepository',
           'utPermsRepo',
           'userTenantRepo',
-          'loginActivityRepo',
         ],
       },
     ];
