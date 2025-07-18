@@ -15,7 +15,7 @@
     "commitizen": "^4.2.5",
     "custom-sf-changelog": "file:packages/custom-sf-changelog",
     "cz-conventional-changelog": "^3.3.0",
-    "cz-format-extension": "^1.5.1",
+    "cz-format-extension": "1.5.1",
     "husky": "^7.0.4",
     "lerna": "7.2.0",
     "typedoc": "0.23.23",
@@ -28,6 +28,7 @@
   },
   "overrides": {
     "semver": "^7.5.4",
+    "multer":"^2.0.2",
     "tough-cookie": "^4.1.3",
     "@loopback/cli": {
       "package-json": {
