@@ -22,7 +22,9 @@ export class ApiKeyService {
 
       return !!apiKeysObject;
     } catch (error) {
-      throw new HttpErrors.InternalServerError('Error verifying API keys');
+      throw new HttpErrors.InternalServerError(
+        `Error verifying API keys ${error.message}`,
+      );
     }
   }
 

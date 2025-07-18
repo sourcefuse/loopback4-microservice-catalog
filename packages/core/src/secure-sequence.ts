@@ -41,7 +41,9 @@ const SequenceActions = RestBindings.SequenceActions;
 const isJsonString = (str: string) => {
   try {
     JSON.parse(str);
-  } catch (_) {
+  } catch (error) {
+    // sonarignore-next-line
+    console.error('Invalid JSON string', error);
     return false;
   }
   return true;

@@ -35,7 +35,9 @@ export class LocalPasswordVerifyProvider
         );
         user.permissions = [];
         return user;
-      } catch (_) {
+      } catch (err) {
+        // sonarignore-next-line
+        console.error('Password verification failed:', err);
         const otp: Otp = await this.otpRepository.get(username);
         if (!otp || otp.otp !== password) {
           throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);

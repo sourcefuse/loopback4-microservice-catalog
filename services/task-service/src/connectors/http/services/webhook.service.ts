@@ -32,7 +32,9 @@ export class WebhookService {
         });
       }
     } catch (error) {
-      throw new HttpErrors.InternalServerError('Could not add to subscription');
+      throw new HttpErrors.InternalServerError(
+        `Could not add to subscription ${error.message}`,
+      );
     }
   }
 
@@ -72,7 +74,9 @@ export class WebhookService {
         await Promise.all(postPromises);
       }
     } catch (error) {
-      throw new HttpErrors.InternalServerError('could not trigger webhook');
+      throw new HttpErrors.InternalServerError(
+        `could not trigger webhook ${error.message}`,
+      );
     }
   }
 }

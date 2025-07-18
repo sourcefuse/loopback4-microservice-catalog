@@ -56,6 +56,8 @@ export class SearchProvider<T extends Model>
       try {
         return await (this.datasource.execute(query, params) as Promise<T[]>);
       } catch (e) {
+        // sonarignore-next-line
+        console.error('Search query execution failed:', e);
         throw new HttpErrors.InternalServerError(Errors.FAILED);
       }
     };

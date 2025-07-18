@@ -210,7 +210,7 @@ export class TwilioService {
       }
     } catch (error) {
       throw new HttpErrors.InternalServerError(
-        'Error occured while handling webhook event',
+        `Error occured while handling webhook event ${error.message}`,
       );
     }
   }

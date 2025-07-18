@@ -264,48 +264,35 @@ export class SurveyService {
   }
 
   private _checkSurveyDateValidations(survey: Survey) {
-    //CASE 1 -> Only start date is present.
-    if (survey?.startDate && survey?.status === SurveyStatus.ACTIVE) {
-      if (
-        moment(survey.startDate).format(DATE_FORMAT) !==
-        moment().utc().format(DATE_FORMAT)
-      ) {
-        //start date should be current date only and status active.
+    const {startDate, endDate, status} = survey;
+
+    const isActive = status === SurveyStatus.ACTIVE;
+    const isDraft = status === SurveyStatus.DRAFT;
+
+    // CASE 1: startDate is present with Active status — must match current date
+    if (startDate && isActive) {
+      const isSameDate =
+        moment(startDate).format(DATE_FORMAT) ===
+        moment().utc().format(DATE_FORMAT);
+      if (!isSameDate) {
         throw new HttpErrors.BadRequest(
           ErrorKeys.SurveyStartDateShouldBeCurrentDate,
         );
       }
     }
 
-    //CASE 2 -> Both start date and end date are present
-    if (survey?.startDate && survey?.endDate) {
-      // end date can not be less than start date
-      if (survey?.startDate > survey?.endDate) {
-        throw new HttpErrors.BadRequest(ErrorKeys.EndDateCanNotBeLess);
-      }
+    // CASE 2: Both startDate and endDate are present — endDate cannot be before startDate
+    if (startDate && endDate && startDate > endDate) {
+      throw new HttpErrors.BadRequest(ErrorKeys.EndDateCanNotBeLess);
     }
 
-    // CASE 3 -> Only end date is present.
-    if (
-      survey?.endDate &&
-      !survey?.startDate &&
-      survey?.status === SurveyStatus.ACTIVE
-    ) {
+    // CASE 3 & 4: endDate is present without startDate OR neither date is present, both with status Active
+    if (isActive && (!startDate || !endDate)) {
       throw new HttpErrors.BadRequest(ErrorKeys.SurveyCannotBeActivated);
     }
 
-    //CASE 4 -> If neither end date nor start date is present
-
-    if (
-      !survey?.endDate &&
-      !survey?.startDate &&
-      survey?.status === SurveyStatus.ACTIVE
-    ) {
-      throw new HttpErrors.BadRequest(ErrorKeys.SurveyCannotBeActivated);
-    }
-
-    //CASE 5 -> start date cannot be present with status draft
-    if (survey?.startDate && survey?.status === SurveyStatus.DRAFT) {
+    // CASE 5: startDate is present with Draft status — invalid
+    if (startDate && isDraft) {
       throw new HttpErrors.BadRequest(
         ErrorKeys.SurveyCannotBeActivatedInDraftState,
       );
