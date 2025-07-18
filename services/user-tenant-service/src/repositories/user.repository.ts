@@ -130,7 +130,9 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
       await this.credentials(user.id).create(creds, options);
     } catch (err) {
       await super.deleteByIdHard(user.id);
-      throw new HttpErrors.UnprocessableEntity('Error while hashing password');
+      throw new HttpErrors.UnprocessableEntity(
+        `Error while hashing password ${err.message}`,
+      );
     }
     return user;
   }

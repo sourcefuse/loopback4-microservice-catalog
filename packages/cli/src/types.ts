@@ -85,7 +85,7 @@ export type CommandTestCase = {
 export type ICommandWithMcpFlags = {
   mcpFlags?: Record<string, IFlag<AnyObject[string]>>;
   args?: IArg[];
-  flags?: Record<string, IFlag<AnyObject[string]>> | undefined;
+  flags?: Record<string, IFlag<AnyObject[string]>>;
   name: string;
   mcpDescription: string;
   mcpRun: (args: Record<string, AnyObject[string]>) => Promise<McpTextResponse>;
