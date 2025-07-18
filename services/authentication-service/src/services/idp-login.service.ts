@@ -11,7 +11,11 @@ import {
 } from '@sourceloop/core';
 import crypto, {generateKeyPairSync} from 'crypto';
 import * as jwt from 'jsonwebtoken';
-import {AuthErrorKeys, ClientAuthCode} from 'loopback4-authentication';
+import {
+  AuthenticationBindings,
+  AuthErrorKeys,
+  ClientAuthCode,
+} from 'loopback4-authentication';
 import moment from 'moment';
 import * as jose from 'node-jose';
 import {LoginType} from '../enums';
@@ -79,6 +83,8 @@ export class IdpLoginService {
     private readonly jwtSigner: JWTSignerFn<object>,
     @inject(AuthServiceBindings.JWTPayloadProvider)
     private readonly getJwtPayload: JwtPayloadFn,
+    @inject(AuthenticationBindings.CURRENT_USER)
+    private readonly currentUser: AuthUser | undefined,
     @inject(AuthServiceBindings.MarkUserActivity, {optional: true})
     private readonly userActivity?: IUserActivity,
   ) {}
@@ -218,7 +224,7 @@ export class IdpLoginService {
    * @returns The `createJWT` function returns a `TokenResponse` object containing the access token,
    * refresh token, and expiration time.
    */
-  private async createJWT(
+  async createJWT(
     payload: ClientAuthCode<User, typeof User.prototype.id> & ExternalTokens,
     authClient: AuthClient,
     loginType: LoginType,
@@ -271,6 +277,21 @@ export class IdpLoginService {
         },
         {ttl: authClient.refreshTokenExpiration * ms},
       );
+
+      const keys = await this.jwtKeysRepo.find();
+      // Save the public keys to the cache for retrieval on facade
+      for (const key of keys) {
+        this.publicKeyRepo.set(
+          key.keyId,
+          {
+            keyId: key.keyId,
+            publicKey: key.publicKey,
+          },
+          {
+            ttl: authClient.accessTokenExpiration * ms,
+          },
+        );
+      }
 
       const userTenant = await this.userTenantRepo.findOne({
         where: {userId: user.id},
@@ -474,8 +495,14 @@ export class IdpLoginService {
    */
   async generateKeys(): Promise<void> {
     //call the function to generate new keys for process.env.MAX_JWT_KEYS times.
-    for (let i = 0; i < +(process.env.MAX_JWT_KEYS ?? 2); i++) {
-      await this.generateNewKey();
+    try {
+      const keyPromises = Array(+(process.env.MAX_JWT_KEYS ?? 2))
+        .fill(0)
+        .map(() => this.generateNewKey());
+      await Promise.all(keyPromises);
+    } catch (error) {
+      this.logger.error('Error generating JWT keys:', error);
+      throw new Error('Failed to generate JWT keys');
     }
   }
 
@@ -517,11 +544,23 @@ export class IdpLoginService {
       await this.jwtKeysRepo.deleteById(oldestKey.id);
     }
 
+    // Fetch auth client on the basis of current user
+    const authClient = await this.authClientRepository.findById(
+      this.currentUser?.authClientId,
+    );
+
+    const ms = 1000;
     // Save the public key to the cache for retrieval on facade
-    await this.publicKeyRepo.set(key.kid, {
-      keyId: key.kid,
-      publicKey,
-    });
+    await this.publicKeyRepo.set(
+      key.kid,
+      {
+        keyId: key.kid,
+        publicKey,
+      },
+      {
+        ttl: authClient.accessTokenExpiration * ms,
+      },
+    );
 
     // Save public and private keys to the database using JwtKeysRepository
     await this.jwtKeysRepo.create({
@@ -542,7 +581,7 @@ export class IdpLoginService {
    * @param token - The token to decode.
    * @returns The expiry timestamp in milliseconds.
    */
-  decodeAndGetExpiry(token: string): number | null {
+  private decodeAndGetExpiry(token: string): number | null {
     const tokenData = jwt.decode(token) as TokenPayload | null; // handle null result from decode
     const ms = 1000;
 
