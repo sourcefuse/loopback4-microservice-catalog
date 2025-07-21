@@ -66,8 +66,9 @@ export class EventService {
         eventAttendeeFilter as Filter<EventAttendeeView>,
       );
     } catch (error) {
-      // sonarignore-next-line
+      // sonarignore:start
       console.error('Item validation failed:', error);
+      // sonarignore:end
       throw new HttpErrors.UnprocessableEntity(ErrorKeys.ItemInvalid);
     }
 

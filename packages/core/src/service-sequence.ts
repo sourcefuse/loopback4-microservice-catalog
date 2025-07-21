@@ -37,8 +37,9 @@ const isJsonString = (str: string) => {
   try {
     JSON.parse(str);
   } catch (error) {
-    // sonarignore-next-line
+    // sonarignore:start
     console.error('Invalid JSON string', error);
+    // sonarignore:end
     return false;
   }
   return true;

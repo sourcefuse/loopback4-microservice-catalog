@@ -114,8 +114,9 @@ export class Mcp extends Base<{}> {
           timestamp: new Date().toISOString(),
         })
         .catch(err => {
-          // sonarignore-next-line
+          // sonarignore:start
           console.error('Error sending exit message:', err);
+          // sonarignore:end
         });
       return undefined as never;
     };
@@ -144,8 +145,9 @@ export class Mcp extends Base<{}> {
           timestamp: new Date().toISOString(),
         })
         .catch(err => {
-          // sonarignore-next-line
+          // sonarignores:start
           console.error('Error sending logging message:', err);
+          // sonarignore:end
         });
     };
   }
@@ -167,7 +169,7 @@ export class Mcp extends Base<{}> {
     }
 
     if (this._isOptionFlag(flag)) {
-      const optionFlag = typedFlag as IOptionFlag<T>;
+      const optionFlag = flag as IOptionFlag<T>;
       if (optionFlag.options !== undefined) {
         option = z.enum(optionFlag.options as [string, ...string[]]);
         description += ` (options: ${optionFlag.options?.join(', ')})`;
@@ -179,7 +181,7 @@ export class Mcp extends Base<{}> {
     }
 
     throw new Error(
-      `Unsupported flag type: ${typedFlag.type}. Supported types are boolean, option, enum, and integer.`,
+      'Unsupported flag type. Supported types are boolean, option, enum, and integer.',
     );
   }
 

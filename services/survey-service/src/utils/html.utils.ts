@@ -20,8 +20,9 @@ export function unescapeHtml(unsafe?: string) {
     unsafe = convertHtmlBase64ToUtf8(unsafe);
     return decodeURIComponent(unsafe);
   } catch (error) {
-    // sonarignore-next-line
+    // sonarignore:start
     console.error('Failed to unescape HTML:', error);
+    
     return unsafe;
   }
 }
@@ -39,8 +40,9 @@ export function escapeHtml(unsafe?: string) {
   try {
     return Buffer.from(encodeURIComponent(unsafe)).toString('base64');
   } catch (error) {
-    // sonarignore-next-line
+    // sonarignore:start
     console.error('Item validation failed:', error);
+    // sonarignore:end
     return unsafe;
   }
 }
