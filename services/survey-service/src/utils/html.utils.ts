@@ -22,7 +22,7 @@ export function unescapeHtml(unsafe?: string) {
   } catch (error) {
     // sonarignore:start
     console.error('Failed to unescape HTML:', error);
-    
+    // sonarignore:end
     return unsafe;
   }
 }

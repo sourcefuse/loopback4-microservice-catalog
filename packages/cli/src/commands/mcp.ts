@@ -158,7 +158,6 @@ export class Mcp extends Base<{}> {
   }
 
   private flagToZod<T>(flag: IFlag<T>, checkRequired = false) {
-    const typedFlag = flag as IFlag<T>;
     let option;
     let description = flag.description ?? '';
 
