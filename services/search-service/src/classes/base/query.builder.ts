@@ -6,7 +6,7 @@ import {
   AnyObject,
   DataObject,
   PropertyDefinition,
-  Type,
+  PropertyType,
 } from '@loopback/repository';
 import {HttpErrors, Model} from '@loopback/rest';
 import {IGNORED_COLUMN, ModelProperties} from '../..';
@@ -273,7 +273,6 @@ export abstract class SearchQueryBuilder<T extends Model> {
   ): Query | Queries | undefined {
     const props = model.definition.properties;
     const stmts: Queries = [];
-    let columnValue;
     if (key === 'and' || key === 'or') {
       return this.handleAndOr(where, key, model);
     }
@@ -284,27 +283,38 @@ export abstract class SearchQueryBuilder<T extends Model> {
 
     const expression = where[key];
     const columnName = this.getColumnName(model, key);
-    if (expression === null || expression === undefined) {
-      stmts.push({sql: `${columnName} IS NULL`, params: []});
-    } else if (typeof expression === 'object') {
-      const mergedStmt = this.handleObjectValue(expression, p, key, model);
-      if (mergedStmt) {
-        stmts.push(mergedStmt);
-      } else {
-        return;
-      }
-    } else {
-      columnValue = this.toColumnValue(p, expression);
-      if (columnValue === null) {
-        stmts.push({sql: `${columnName} IS NULL`, params: []});
-      } else {
-        stmts.push({
-          sql: `${columnName}=${this.parseIdPlaceholder(p)}`,
-          params: [columnValue],
-        });
-      }
+    const stmt = this.buildStatement(expression, columnName, p, key, model);
+    if (stmt) {
+      stmts.push(stmt);
     }
     return stmts;
+  }
+  private buildStatement<K extends keyof SearchWhereFilter<T>>(
+    expression: SearchWhereFilter<T>[K],
+    columnName: string,
+    propSchema: PropertyDefinition,
+    key: K,
+    model: typeof Model,
+  ): Query | undefined {
+    if (expression === null || expression === undefined) {
+      return {sql: `${columnName} IS NULL`, params: []};
+    }
+
+    if (typeof expression === 'object') {
+      return (
+        this.handleObjectValue(expression, propSchema, key, model) ?? undefined
+      );
+    }
+
+    const columnValue = this.toColumnValue(propSchema, expression);
+    if (columnValue === null) {
+      return {sql: `${columnName} IS NULL`, params: []};
+    }
+
+    return {
+      sql: `${columnName}=${this.parseIdPlaceholder(propSchema)}`,
+      params: [columnValue],
+    };
   }
 
   handleAndOr<S extends typeof Model>(
@@ -397,32 +407,37 @@ export abstract class SearchQueryBuilder<T extends Model> {
     prop: PropertyDefinition,
     val: PredicateValueType<ShortHandEqualType>,
   ) {
-    if (prop.type === String && typeof val === 'string') {
+    const type = prop.type;
+    if (type === String && typeof val === 'string') {
       return String(val);
     }
-    if (prop.type === Number && typeof val === 'number') {
+    if (type === Number && typeof val === 'number') {
       return val;
     }
 
     if (
-      (prop.type === Date ||
-        (prop.type as Type<string>).name === 'Timestamp') &&
+      this.isDateType(type) &&
       (val instanceof Date || typeof val === 'string')
     ) {
       return this.toDateType(val);
     }
 
     // PostgreSQL support char(1) Y/N
-    if (prop.type === Boolean && typeof val === 'boolean') {
+    if (type === Boolean && typeof val === 'boolean') {
       return !!val;
     }
 
-    if (Array.isArray(prop.type)) {
+    if (Array.isArray(type)) {
       // There is two possible cases for the type of "val" as well as two cases for dataType
       return this.toArrayPropTypes(prop, val);
     }
 
     return val;
+  }
+  private isDateType(type: PropertyType): boolean {
+    return (
+      type === Date || (typeof type === 'function' && type.name === 'Timestamp')
+    );
   }
 
   toDateType(val: Date | string) {

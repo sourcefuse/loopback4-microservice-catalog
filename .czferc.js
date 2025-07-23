@@ -100,7 +100,7 @@ module.exports = {
         message:
           'List any ISSUES CLOSED by this change (optional). E.g.: #31, #34:\n',
         filter: (input, answers) => {
-          return input.replace(/^\#/g, 'gh-');
+          return input.replace(/^#/g, 'gh-');
         },
       },
       {
@@ -164,7 +164,7 @@ function getMigrationChanges(staged) {
     .filter(f => f && f.length > 0);
   let timestamps = {};
   for (let item of migrationPaths) {
-    let match = item.match(/[0-9]{14}/g);
+    let match = item.match(/\d{14}/g);
     if (match && match[0]) {
       timestamps[match[0]] = [...(timestamps[match[0]] || []), item];
     }

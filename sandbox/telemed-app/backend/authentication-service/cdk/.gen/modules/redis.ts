@@ -13,6 +13,7 @@ To get more info see https://registry.terraform.io/providers/hashicorp/aws/lates
 
    * @default 
    */
+  // sonarignore-next-line
   readonly additionalSecurityGroupRules?: any[];
   /**
    * Additional key-value pairs to add to each map in `tags_as_list_of_maps`. Not added to `tags` or `id`.
@@ -136,6 +137,7 @@ except for attributes, tags, and additional_tag_map, which are merged.
 
    * @default [object Object]
    */
+  // sonarignore-next-line
   readonly context?: any;
   /**
    * Set `true` to create and configure a new security group. If false, `associated_security_group_ids` must be provided.
@@ -172,6 +174,7 @@ Default is `{}` (`descriptors` output will be empty).
 
    * @default [object Object]
    */
+  // sonarignore-next-line
   readonly descriptorFormats?: any;
   /**
    * The subdomain to use for the CNAME record. If not provided then the CNAME record will use var.name.
@@ -183,6 +186,7 @@ Historical description: Outbound traffic address.
 Historical default: ["0.0.0.0/0"]
 
    */
+  // sonarignore-next-line
   readonly egressCidrBlocks?: any[];
   /**
    * Subnet group name for the ElastiCache instance
@@ -278,6 +282,7 @@ Set to `[]` to suppress all generated tags.
    * @default
    * The property type contains a map, they have special handling, please see {@link cdk.tf/module-map-inputs the docs}
    */
+  // sonarignore-next-line
   readonly logDeliveryConfiguration?: {[key: string]: any}[];
   /**
    * Maintenance window
@@ -312,6 +317,7 @@ The "name" tag is set to the full `id` string. There is no tag with the value of
    * A list of Redis parameters to apply. Note that parameters may differ from one Redis family to another
    * @default
    */
+  // sonarignore-next-line
   readonly parameter?: any;
   /**
    * Managed by Terraform
@@ -441,9 +447,11 @@ Can also be a plain string, but that use is DEPRECATED because of Terraform issu
 
    * @default 
    */
+  // sonarignore-next-line
   readonly zoneId?: any;
 }
 export class Redis extends TerraformModule {
+  // sonarignore-next-line
   private readonly inputs: {[name: string]: any} = {};
   public constructor(scope: Construct, id: string, config: RedisConfig) {
     super(scope, id, {
