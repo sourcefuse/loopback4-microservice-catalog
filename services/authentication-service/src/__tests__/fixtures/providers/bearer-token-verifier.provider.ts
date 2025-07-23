@@ -4,10 +4,10 @@
 // https://opensource.org/licenses/MIT
 import {Provider} from '@loopback/context';
 import {repository} from '@loopback/repository';
+import {JwtKeysRepository} from '@sourceloop/core';
 import * as jwt from 'jsonwebtoken';
 import {VerifyFunction} from 'loopback4-authentication';
 import * as jose from 'node-jose';
-import {JwtKeysRepository} from '../../../repositories';
 import {IAuthUserWithPermissions} from '../keys';
 export class BearerTokenVerifyProvider
   implements Provider<VerifyFunction.BearerFn>

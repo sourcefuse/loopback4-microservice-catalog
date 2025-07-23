@@ -5,9 +5,9 @@
 import {Provider, inject} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
+import {JwtKeysRepository} from '@sourceloop/core';
 import * as jwt from 'jsonwebtoken';
 import {AuthServiceBindings} from '../keys';
-import {JwtKeysRepository} from '../repositories';
 import {IAuthServiceConfig} from '../types';
 import {JWTSignerFn} from './types';
 

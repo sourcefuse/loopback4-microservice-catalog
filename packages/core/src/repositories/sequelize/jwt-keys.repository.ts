@@ -3,7 +3,7 @@ import {
   SequelizeCrudRepository,
   SequelizeDataSource,
 } from '@loopback/sequelize';
-import {JwtKeys} from '../../components';
+import {JwtKeys} from '../../models';
 import {AuthDbSourceName} from '../../types';
 
 export class JwtKeysRepository extends SequelizeCrudRepository<

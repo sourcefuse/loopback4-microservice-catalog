@@ -11,6 +11,7 @@ import {
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
+import {JwtKeysRepository, PublicKeysRepository} from '@sourceloop/core';
 import {Strategies} from 'loopback4-authentication';
 import {LocalPasswordStrategyFactoryProvider} from 'loopback4-authentication/passport-local';
 import {PassportOtpStrategyFactoryProvider} from 'loopback4-authentication/passport-otp';
@@ -60,6 +61,12 @@ export class TestingApplication extends BootMixin(
       PassportOtpStrategyFactoryProvider,
     );
     this.service(TestHelperService, {defaultScope: BindingScope.SINGLETON});
+
+    // add multiple repositories
+    this.bind('repositories.JwtKeysRepository').toClass(JwtKeysRepository);
+    this.bind('repositories.PublicKeysRepository').toClass(
+      PublicKeysRepository,
+    );
 
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here

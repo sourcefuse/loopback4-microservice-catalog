@@ -5,19 +5,18 @@
 import {Binding, Component, inject, ProviderMap} from '@loopback/core';
 import {Class, Model, Repository} from '@loopback/repository';
 import {Strategies} from 'loopback4-authentication';
-import {JwtKeysRepository} from '../../repositories';
+import {JwtKeys, RevokedToken} from '../../models';
+import {PublicKeysRepository, RevokedTokenRepository} from '../../repositories';
 import {ILogger, LOGGER} from '../logger-extension';
 import {
   BearerVerifierBindings,
   BearerVerifierConfig,
   BearerVerifierType,
 } from './keys';
-import {JwtKeys, RevokedToken} from './models';
 import {FacadesBearerAsymmetricTokenVerifyProvider} from './providers/facades-bearer-asym-token-verify.provider';
 import {FacadesBearerTokenVerifyProvider} from './providers/facades-bearer-token-verify.provider';
 import {ServicesBearerAsymmetricTokenVerifyProvider} from './providers/services-bearer-asym-token-verifier';
 import {ServicesBearerTokenVerifyProvider} from './providers/services-bearer-token-verify.provider';
-import {RevokedTokenRepository} from './repositories';
 
 export class BearerVerifierComponent implements Component {
   constructor(
@@ -27,8 +26,8 @@ export class BearerVerifierComponent implements Component {
   ) {
     this.providers = {};
 
-    this.repositories = [RevokedTokenRepository, JwtKeysRepository];
     this.models = [RevokedToken, JwtKeys];
+    this.repositories = [RevokedTokenRepository, PublicKeysRepository];
 
     if (this.config && this.config.type === BearerVerifierType.service) {
       this.providers[Strategies.Passport.BEARER_TOKEN_VERIFIER.key] =
