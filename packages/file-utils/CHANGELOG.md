@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.3.4 (2025-07-23)</small>
+
+* fix(cli): links update in readme file (#2305) ([ba66f23](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ba66f23)), closes [#2305](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2305) [#2304](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2304) [#2304](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2304) [#2304](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2304)
+
+
+
+
+
 ## <small>0.3.3 (2025-07-14)</small>
 
 **Note:** Version bump only for package @sourceloop/file-utils
