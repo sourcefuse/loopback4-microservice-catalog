@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.0.0 (2025-07-23)
+
+* fix(authentication-service):  added cache layer to the jwks implementation (#2241) ([b90e01d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b90e01d)), closes [#2241](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2241)
+
+
+### BREAKING CHANGE
+
+* issue-2034
+
+
+
+
 ## <small>4.0.3 (2025-07-14)</small>
 
 **Note:** Version bump only for package @sourceloop/oidc-service

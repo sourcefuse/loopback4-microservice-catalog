@@ -5,13 +5,12 @@
 import {inject, Provider} from '@loopback/context';
 import {repository} from '@loopback/repository';
 import {HttpErrors, Request} from '@loopback/rest';
-import {ILogger, LOGGER} from '@sourceloop/core';
+import {ILogger, JwtKeysRepository, LOGGER} from '@sourceloop/core';
 import * as jwt from 'jsonwebtoken';
 import {VerifyFunction} from 'loopback4-authentication';
 import * as jose from 'node-jose';
 import {AuthServiceBindings} from '../keys';
 import {SignupRequest} from '../models/signup-request.model';
-import {JwtKeysRepository} from '../repositories';
 import {IAuthServiceConfig} from '../types';
 
 export class SignupBearerVerifyProvider

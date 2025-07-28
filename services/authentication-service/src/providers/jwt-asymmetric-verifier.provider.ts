@@ -4,9 +4,9 @@
 // https://opensource.org/licenses/MIT
 import {Provider} from '@loopback/core';
 import {repository} from '@loopback/repository';
+import {JwtKeysRepository} from '@sourceloop/core';
 import * as jwt from 'jsonwebtoken';
 import * as jose from 'node-jose';
-import {JwtKeysRepository} from '../repositories';
 import {JWTVerifierFn} from './types';
 
 export class JWTAsymmetricVerifierProvider<T>
