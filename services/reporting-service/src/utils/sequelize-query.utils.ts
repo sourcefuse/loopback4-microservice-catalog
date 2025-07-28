@@ -18,6 +18,7 @@ import {
 import {ReportingServiceComponentBindings} from '../keys';
 /* The `SequelizeQueryUtility` class in TypeScript provides methods for preparing and generating SQL
 queries based on structured query objects. */
+export type PrimitiveValue = string | number | boolean;
 export class SequelizeQueryUtility implements QueryUtilityInterface {
   constructor(
     @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
@@ -469,7 +470,7 @@ export class SequelizeQueryUtility implements QueryUtilityInterface {
     return `${fieldPart} ${operator} ${formattedValue}`;
   }
   private _formatLiteralValue(
-    value: string | number | boolean | object,
+    value: PrimitiveValue | object,
   ): string | number | boolean {
     switch (typeof value) {
       case 'string':
