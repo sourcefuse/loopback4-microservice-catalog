@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.8.5 (2025-08-06)</small>
+
+**Note:** Version bump only for package @sourceloop/pubnub-example
+
+
+
+
+
 ## <small>0.8.4 (2025-07-23)</small>
 
 **Note:** Version bump only for package @sourceloop/pubnub-example

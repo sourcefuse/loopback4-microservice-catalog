@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 11.0.0 (2025-08-06)
+
+* refactor(chore): fix sonarqube issues (#2306) ([314d351](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/314d351)), closes [#2306](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2306) [#2302](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2302) [#2302](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2302) [#2302](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2302) [#2302](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2302)
+* fix(authentication-service):  added cache layer to the jwks implementation (#2241) ([b90e01d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b90e01d)), closes [#2241](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2241)
+* fix(cli): links update in readme file (#2305) ([ba66f23](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ba66f23)), closes [#2305](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2305) [#2304](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2304) [#2304](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2304) [#2304](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2304)
+
+
+### BREAKING CHANGE
+
+* issue-2034
+
+
+
+
 ## 10.2.0 (2025-07-14)
 
 * feat(ci-cd): add trivy scan in scaffold CLI (#2297) ([35fea2e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/35fea2e)), closes [#2297](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2297) [#2296](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2296) [#2296](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2296)

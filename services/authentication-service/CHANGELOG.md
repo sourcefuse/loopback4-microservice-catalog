@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>22.0.1 (2025-08-06)</small>
+
+* refactor(chore): fix sonarqube issues (#2306) ([314d351](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/314d351)), closes [#2306](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2306) [#2302](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2302) [#2302](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2302) [#2302](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2302) [#2302](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2302)
+* fix(authentication-service): update last login after user authentication in login API (#2312) ([e169b24](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e169b24)), closes [#2312](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2312)
+
+
+
+
+
 ## 22.0.0 (2025-07-23)
 
 * fix(authentication-service):  added cache layer to the jwks implementation (#2241) ([b90e01d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b90e01d)), closes [#2241](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2241)

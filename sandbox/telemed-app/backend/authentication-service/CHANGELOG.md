@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.6.5 (2025-08-06)</small>
+
+* refactor(chore): fix sonarqube issues (#2306) ([314d351](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/314d351)), closes [#2306](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2306) [#2302](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2302) [#2302](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2302) [#2302](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2302) [#2302](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2302)
+* fix(search-service): fix controller code (#2309) ([89804f8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/89804f8)), closes [#2309](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2309) [#2308](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2308) [#2308](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2308) [#2308](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2308) [#2308](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2308)
+
+
+
+
+
 ## <small>0.6.4 (2025-07-23)</small>
 
 **Note:** Version bump only for package @sourceloop/telemed-auth-api
