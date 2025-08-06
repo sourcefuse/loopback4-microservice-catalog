@@ -173,10 +173,10 @@ export class IdpLoginService {
       }
 
       if (
-        payload.userId &&
-        !(await this.userRepo.firstTimeUser(payload.userId))
+        payload.user?.id &&
+        !(await this.userRepo.firstTimeUser(payload.user.id))
       ) {
-        await this.userRepo.updateLastLogin(payload.userId);
+        await this.userRepo.updateLastLogin(payload.user.id);
       }
 
       return await this.createJWT(payload, authClient, LoginType.ACCESS);
