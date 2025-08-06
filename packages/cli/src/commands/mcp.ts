@@ -91,9 +91,7 @@ export class Mcp extends Base<{}> {
         command.name,
         command.mcpDescription,
         params,
-        async args => {
-          return command.mcpRun(args as Record<string, AnyObject[string]>);
-        },
+        async args => command.mcpRun(args as Record<string, AnyObject[string]>),
       );
     });
   }
@@ -116,10 +114,13 @@ export class Mcp extends Base<{}> {
           timestamp: new Date().toISOString(),
         })
         .catch(err => {
+          // sonarignore:start
           console.error('Error sending exit message:', err);
+          // sonarignore:end
         });
       return undefined as never;
     };
+    // sonarignore:start
     const original = console.error;
     console.error = (...args: AnyObject[]) => {
       // log errors to the MCP client
@@ -135,6 +136,7 @@ export class Mcp extends Base<{}> {
       original(...args);
     };
     console.log = (...args: AnyObject[]) => {
+      // sonarignore:end
       // log messages to the MCP client
       this.server.server
         .sendLoggingMessage({
@@ -143,7 +145,9 @@ export class Mcp extends Base<{}> {
           timestamp: new Date().toISOString(),
         })
         .catch(err => {
+          // sonarignores:start
           console.error('Error sending logging message:', err);
+          // sonarignore:end
         });
     };
   }
@@ -156,27 +160,35 @@ export class Mcp extends Base<{}> {
   private flagToZod<T>(flag: IFlag<T>, checkRequired = false) {
     let option;
     let description = flag.description ?? '';
-    switch (true) {
-      case flag.type === 'boolean':
-        option = z.boolean().optional();
-        option = option.default((flag.default as boolean) ?? false);
-        break;
-      case this._isOptionFlag(flag) && flag.options !== undefined: {
-        // typescript is not able to infer type
-        const typedFlag = flag as IOptionFlag<T>;
-        option = z.enum(typedFlag.options as [string, ...string[]]);
-        description += ` (options: ${typedFlag.options?.join(', ')})`;
-        break;
-      }
-      case this._isOptionFlag(flag) && flag.options === undefined:
-        option = z.string().optional();
-        break;
-      default:
-        throw new Error(
-          `Unsupported flag type: ${flag.type}. Supported types are boolean, option, enum, and integer.`,
-        );
+
+    if (flag.type === 'boolean') {
+      option = z.boolean().optional();
+      option = option.default((flag.default as boolean) ?? false);
+      return this._describeOption(option, description, flag, checkRequired);
+    }
+    if (!this._isOptionFlag(flag)) {
+      throw new Error(
+        'Unsupported flag type. Supported types are boolean, option, enum, and integer.',
+      );
     }
 
+    const optionFlag = flag as IOptionFlag<T>;
+    if (optionFlag.options !== undefined) {
+      option = z.enum(optionFlag.options as [string, ...string[]]);
+      description += ` (options: ${optionFlag.options?.join(', ')})`;
+      return this._describeOption(option, description, flag, checkRequired);
+    } else {
+      option = z.string().optional();
+      return this._describeOption(option, description, flag, checkRequired);
+    }
+  }
+
+  private _describeOption<T>(
+    option: z.ZodTypeAny,
+    description: string,
+    flag: IFlag<T>,
+    checkRequired: boolean,
+  ) {
     if (flag.dependsOn) {
       description += ` (required if ${flag.dependsOn.join(', ')} ${flag.dependsOn.length > 1 ? 'are' : 'is'} provided)`;
       option = option.optional();

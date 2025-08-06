@@ -329,39 +329,74 @@ export class VonageService implements VonageVideoChat {
           isDeleted: sessionAttendeeDetail.isDeleted,
           extMetadata: {webhookPayload: webhookPayload},
         };
-        if (event === VonageEnums.SessionWebhookEvents.ConnectionCreated) {
-          updatedAttendee.isDeleted = false;
-          await this.sessionAttendeesRepository.updateById(
-            sessionAttendeeDetail.id,
-            updatedAttendee,
-          );
-        } else if (event === VonageEnums.SessionWebhookEvents.StreamCreated) {
-          await this.sessionAttendeesRepository.updateById(
-            sessionAttendeeDetail.id,
-            updatedAttendee,
-          );
-        } else if (event === VonageEnums.SessionWebhookEvents.StreamDestroyed) {
-          await this.processStreamDestroyedEvent(
-            webhookPayload,
-            sessionAttendeeDetail,
-            updatedAttendee,
-          );
-        } else if (
-          event === VonageEnums.SessionWebhookEvents.ConnectionDestroyed
-        ) {
-          updatedAttendee.isDeleted = true;
-          await this.sessionAttendeesRepository.updateById(
-            sessionAttendeeDetail.id,
-            updatedAttendee,
-          );
-        } else {
-          //DO NOTHING
-        }
+        await this._handleWebhookEvent(
+          event as VonageEnums.SessionWebhookEvents,
+          webhookPayload,
+          sessionAttendeeDetail,
+          updatedAttendee,
+        );
       }
     } catch (error) {
       throw new HttpErrors.InternalServerError(
         `Error occured triggering webhook event ${error.message}`,
       );
+    }
+  }
+  /**
+   * The _handleWebhookEvent function processes different Vonage session webhook events by updating
+   * attendee details accordingly.
+   * @param event - The `event` parameter is of type `VonageEnums.SessionWebhookEvents` and represents
+   * the type of webhook event that occurred.
+   * @param {VonageSessionWebhookPayload} webhookPayload - The `webhookPayload` parameter in the
+   * `_handleWebhookEvent` function is of type `VonageSessionWebhookPayload`. It likely contains data
+   * related to the webhook event that triggered the function, such as information about the session,
+   * attendees, or streams involved in the event. You can
+   * @param {SessionAttendees} sessionAttendeeDetail - The `sessionAttendeeDetail` parameter in the
+   * `_handleWebhookEvent` function represents details about a session attendee. It likely includes
+   * information such as the attendee's ID, name, status, and any other relevant details related to
+   * their participation in a session. This parameter is used within the function to
+   * @param updatedAttendee - The `updatedAttendee` parameter in the `_handleWebhookEvent` function is
+   * a partial object of type `SessionAttendees`. It is used to store the updated information of an
+   * attendee during webhook event handling. Depending on the event type, different properties of the
+   * `updatedAttendee` object are
+   */
+  private async _handleWebhookEvent(
+    event: VonageEnums.SessionWebhookEvents,
+    webhookPayload: VonageSessionWebhookPayload,
+    sessionAttendeeDetail: SessionAttendees,
+    updatedAttendee: Partial<SessionAttendees>,
+  ): Promise<void> {
+    switch (event) {
+      case VonageEnums.SessionWebhookEvents.ConnectionCreated:
+        updatedAttendee.isDeleted = false;
+        await this.sessionAttendeesRepository.updateById(
+          sessionAttendeeDetail.id,
+          updatedAttendee,
+        );
+        break;
+      case VonageEnums.SessionWebhookEvents.StreamCreated:
+        await this.sessionAttendeesRepository.updateById(
+          sessionAttendeeDetail.id,
+          updatedAttendee,
+        );
+        break;
+      case VonageEnums.SessionWebhookEvents.StreamDestroyed:
+        await this.processStreamDestroyedEvent(
+          webhookPayload,
+          sessionAttendeeDetail,
+          updatedAttendee,
+        );
+        break;
+      case VonageEnums.SessionWebhookEvents.ConnectionDestroyed:
+        updatedAttendee.isDeleted = true;
+        await this.sessionAttendeesRepository.updateById(
+          sessionAttendeeDetail.id,
+          updatedAttendee,
+        );
+        break;
+      default:
+        // DO NOTHING
+        break;
     }
   }
   async processStreamDestroyedEvent(

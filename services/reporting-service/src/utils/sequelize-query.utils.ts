@@ -18,6 +18,7 @@ import {
 import {ReportingServiceComponentBindings} from '../keys';
 /* The `SequelizeQueryUtility` class in TypeScript provides methods for preparing and generating SQL
 queries based on structured query objects. */
+export type PrimitiveValue = string | number | boolean;
 export class SequelizeQueryUtility implements QueryUtilityInterface {
   constructor(
     @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
@@ -375,17 +376,16 @@ export class SequelizeQueryUtility implements QueryUtilityInterface {
   }
 
   /**
-   * The function `handleJoinClause` generates SQL join clauses based on the provided JoinClause
-   * objects and binding information.
-   * @param {JoinClause[] | undefined} joinClauses - The `joinClauses` parameter is an array of objects
-   * representing join clauses in a query. Each object in the array contains information about the join
-   * type (`type`), the data source (`source`), and the join conditions (`on`). The `on` property can
-   * be a single condition object or
+   * The function `handleJoinClause` processes an array of join clauses to generate a SQL join query
+   * string.
+   * @param {JoinClause[] | undefined} joinClauses - The `handleJoinClause` function takes in two
+   * parameters:
    * @param {QueryBinding} [bindingManager] - The `bindingManager` parameter in the `handleJoinClause`
-   * function is used to manage query bindings. It is an optional parameter that allows you to pass a
-   * `QueryBinding` object to handle bindings for the query conditions.
-   * @returns The `handleJoinClause` function returns a string representing the SQL join query based on
-   * the provided `JoinClause` array and optional `QueryBinding` object.
+   * function is an optional parameter of type `QueryBinding`. It is used to manage bindings for the
+   * query. If provided, it can be used to format the data source and join conditions within the
+   * function. If not provided, the function will
+   * @returns The `handleJoinClause` function returns a string that represents the SQL join query
+   * generated based on the provided `joinClauses` array and optional `bindingManager`.
    */
   private handleJoinClause(
     joinClauses: JoinClause[] | undefined,
@@ -402,57 +402,86 @@ export class SequelizeQueryUtility implements QueryUtilityInterface {
       const onConditions = (
         Array.isArray(joinClause.on) ? joinClause.on : [joinClause.on]
       )
-        .map(condition => {
-          const {field, operator, value, valueType} = condition;
-          const fieldPart = this.formatField(field, bindingManager);
-
-          if (value === null) {
-            return `${fieldPart} IS NULL`;
-          }
-
-          if (
-            typeof value === 'object' &&
-            !Array.isArray(value) &&
-            'query' in value
-          ) {
-            const subQuery = this.generateQuery(value.query, bindingManager);
-            return `${fieldPart} ${operator} (${subQuery})`;
-          }
-
-          if (Array.isArray(value)) {
-            const values = value.map(val => `'${val}'`).join(', '); // Assuming these are literals
-            return `${fieldPart} ${operator} (${values})`;
-          }
-
-          // Check if the value is a column reference
-          if (valueType === 'column') {
-            const valueStr =
-              typeof value === 'object' ? JSON.stringify(value) : value;
-            return `${fieldPart} ${operator} ${valueStr}`;
-          }
-
-          // Treat as a literal value if bindingManager is undefined, otherwise use bindings
-          if (bindingManager) {
-            const bindKey = bindingManager.addBinding(value);
-            return `${fieldPart} ${operator} ${bindKey}`;
-          }
-
-          let formattedValue;
-          if (typeof value === 'string') {
-            formattedValue = `'${value.replace(/'/g, "''")}'`;
-          } else if (typeof value === 'object') {
-            formattedValue = JSON.stringify(value);
-          } else {
-            formattedValue = value;
-          }
-          return `${fieldPart} ${operator} ${formattedValue}`;
-        })
+        .map(condition =>
+          this._formatJoinOnCondition(condition, bindingManager),
+        )
         .join(' AND ');
 
       joinQuery += ` ${joinClause.type} JOIN ${source} ON ${onConditions}`;
     });
 
     return joinQuery;
+  }
+
+  /**
+   * The function `_formatJoinOnCondition` formats a join condition for a SQL query based on the
+   * provided parameters.
+   * @param {WhereCondition} condition - The `_formatJoinOnCondition` method takes in a
+   * `WhereCondition` object as the `condition` parameter. This object typically contains information
+   * about the field, operator, value, and valueType for a specific condition in a SQL query. The
+   * method then formats this information into a SQL string that represents the
+   * @param {QueryBinding} [bindingManager] - The `bindingManager` parameter in the
+   * `_formatJoinOnCondition` method is used to manage query bindings. It is an optional parameter that
+   * allows you to specify a `QueryBinding` object which helps in handling parameterized queries and
+   * preventing SQL injection attacks by safely binding values to placeholders in the SQL query
+   * @returns The _formatJoinOnCondition method returns a string that represents the formatted SQL
+   * condition based on the provided WhereCondition object and optional QueryBinding. The returned
+   * string is the SQL representation of the condition that can be used in a JOIN ON clause in a
+   * database query.
+   */
+  private _formatJoinOnCondition(
+    condition: WhereCondition,
+    bindingManager?: QueryBinding,
+  ): string {
+    const {field, operator, value, valueType} = condition;
+    const fieldPart = this.formatField(field, bindingManager);
+
+    if (value === null) {
+      return `${fieldPart} IS NULL`;
+    }
+
+    if (
+      typeof value === 'object' &&
+      !Array.isArray(value) &&
+      'query' in value
+    ) {
+      const subQuery = this.generateQuery(value.query, bindingManager);
+      return `${fieldPart} ${operator} (${subQuery})`;
+    }
+
+    if (Array.isArray(value)) {
+      const values = value.map(val => `'${val}'`).join(', ');
+      return `${fieldPart} ${operator} (${values})`;
+    }
+
+    if (valueType === 'column') {
+      const valueStr =
+        typeof value === 'object' ? JSON.stringify(value) : value;
+      return `${fieldPart} ${operator} ${valueStr}`;
+    }
+
+    if (bindingManager) {
+      const bindKey = bindingManager.addBinding(value);
+      return `${fieldPart} ${operator} ${bindKey}`;
+    }
+
+    // Fallback for literal values without a binding manager
+    const formattedValue = this._formatLiteralValue(value);
+    return `${fieldPart} ${operator} ${formattedValue}`;
+  }
+  private _formatLiteralValue(
+    value: PrimitiveValue | object,
+  ): string | number | boolean {
+    switch (typeof value) {
+      case 'string':
+        return `'${value.replace(/'/g, "''")}'`;
+
+      case 'object':
+        return `'${JSON.stringify(value)}'`;
+
+      default:
+        return value;
+    }
   }
 
   /**

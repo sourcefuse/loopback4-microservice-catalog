@@ -65,7 +65,10 @@ export class EventService {
       eventAttendeeResponse = await this.eventAttendeeViewRepository.find(
         eventAttendeeFilter as Filter<EventAttendeeView>,
       );
-    } catch (_) {
+    } catch (error) {
+      // sonarignore:start
+      console.error('Item validation failed:', error);
+      // sonarignore:end
       throw new HttpErrors.UnprocessableEntity(ErrorKeys.ItemInvalid);
     }
 
