@@ -70,7 +70,7 @@ export class SearchServiceComponent<T extends Model> implements Component {
     if (!this.config?.useCustomSequence) {
       this.setupSequence();
     }
-
+    this._configureProvidersAndRepositories();
     this.application
       .bind(SearchServiceBindings.MySQLQueryBuilder)
       .to(MySqlQueryBuilder);
@@ -81,6 +81,8 @@ export class SearchServiceComponent<T extends Model> implements Component {
     this.application
       .bind(SearchServiceBindings.FetchedColumns)
       .to(DEFAULT_COLUMNS);
+
+    this._setupSearchController();
   }
 
   /**
