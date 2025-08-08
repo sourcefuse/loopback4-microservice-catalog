@@ -127,7 +127,7 @@ export class Mcp extends Base<{}> {
       this.server.server
         .sendLoggingMessage({
           level: 'debug',
-          message: args.join(' '),
+          message: args.map(v => JSON.stringify(v)).join(' '),
           timestamp: new Date().toISOString(),
         })
         .catch(err => {
@@ -141,11 +141,11 @@ export class Mcp extends Base<{}> {
       this.server.server
         .sendLoggingMessage({
           level: 'info',
-          message: args.join(' '),
+          message: args.map(v => JSON.stringify(v)).join(' '),
           timestamp: new Date().toISOString(),
         })
         .catch(err => {
-          // sonarignores:start
+          // sonarignore:start
           console.error('Error sending logging message:', err);
           // sonarignore:end
         });

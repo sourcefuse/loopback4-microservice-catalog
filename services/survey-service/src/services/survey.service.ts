@@ -269,7 +269,17 @@ export class SurveyService {
     const isActive = status === SurveyStatus.ACTIVE;
     const isDraft = status === SurveyStatus.DRAFT;
 
-    // CASE 1: startDate is present with Active status — must match current date
+    this.validateStartDateWithActiveStatus(startDate, isActive);
+    this.validateEndDateAfterStartDate(startDate, endDate);
+    this.validateActivationWithoutDates(startDate, endDate, isActive);
+    this.validateDraftWithStartDate(startDate, isDraft);
+    this.checkPastDateValidation(survey);
+  }
+
+  private validateStartDateWithActiveStatus(
+    startDate?: string,
+    isActive?: boolean,
+  ) {
     if (startDate && isActive) {
       const isSameDate =
         moment(startDate).format(DATE_FORMAT) ===
@@ -280,25 +290,30 @@ export class SurveyService {
         );
       }
     }
+  }
 
-    // CASE 2: Both startDate and endDate are present — endDate cannot be before startDate
+  private validateEndDateAfterStartDate(startDate?: string, endDate?: string) {
     if (startDate && endDate && startDate > endDate) {
       throw new HttpErrors.BadRequest(ErrorKeys.EndDateCanNotBeLess);
     }
+  }
 
-    // CASE 3 & 4: endDate is present without startDate OR neither date is present, both with status Active
+  private validateActivationWithoutDates(
+    startDate?: string,
+    endDate?: string,
+    isActive?: boolean,
+  ) {
     if (isActive && (!startDate || !endDate)) {
       throw new HttpErrors.BadRequest(ErrorKeys.SurveyCannotBeActivated);
     }
+  }
 
-    // CASE 5: startDate is present with Draft status — invalid
+  private validateDraftWithStartDate(startDate?: string, isDraft?: boolean) {
     if (startDate && isDraft) {
       throw new HttpErrors.BadRequest(
         ErrorKeys.SurveyCannotBeActivatedInDraftState,
       );
     }
-
-    this.checkPastDateValidation(survey);
   }
 
   checkPastDateValidation(survey: Survey) {

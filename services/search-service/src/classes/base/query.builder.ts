@@ -408,10 +408,10 @@ export abstract class SearchQueryBuilder<T extends Model> {
     val: PredicateValueType<ShortHandEqualType>,
   ) {
     const type = prop.type;
-    if (type === String && typeof val === 'string') {
+    if (this.isStringType(type, val)) {
       return String(val);
     }
-    if (type === Number && typeof val === 'number') {
+    if (this.isNumberType(type, val)) {
       return val;
     }
 
@@ -434,10 +434,25 @@ export abstract class SearchQueryBuilder<T extends Model> {
 
     return val;
   }
-  private isDateType(type: PropertyType): boolean {
+
+  isStringType(
+    type: PropertyType,
+    val: PredicateValueType<ShortHandEqualType>,
+  ): boolean {
+    return type === String && typeof val === 'string';
+  }
+
+  isDateType(type: PropertyType): boolean {
     return (
       type === Date || (typeof type === 'function' && type.name === 'Timestamp')
     );
+  }
+
+  isNumberType(
+    type: PropertyType,
+    val: PredicateValueType<ShortHandEqualType>,
+  ): boolean {
+    return type === Number && typeof val === 'number';
   }
 
   toDateType(val: Date | string) {
