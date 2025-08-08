@@ -408,7 +408,7 @@ export abstract class SearchQueryBuilder<T extends Model> {
     val: PredicateValueType<ShortHandEqualType>,
   ) {
     const type = prop.type;
-    if (this.isStringTyoe(type, val)) {
+    if (this.isStringType(type, val)) {
       return String(val);
     }
     if (this.isNumberType(type, val)) {
@@ -435,7 +435,7 @@ export abstract class SearchQueryBuilder<T extends Model> {
     return val;
   }
 
-  isStringTyoe(
+  isStringType(
     type: PropertyType,
     val: PredicateValueType<ShortHandEqualType>,
   ): boolean {
