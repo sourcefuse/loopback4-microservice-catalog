@@ -96,6 +96,9 @@
         "typescript": "^5.4.5",
         "widdershins": "^4.0.1"
     },
+    "optionalDependencies": {
+        "@loopback/sequelize": "^0.6.9"
+    },
     "peerDependencies": {
         "db-migrate": "^1.0.0-beta.21",
         "db-migrate-pg": "^1.3.0"
