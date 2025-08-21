@@ -17,6 +17,7 @@ export enum SERVICES {
   TASK = 'task-service',
   VIDEO_CONF = 'video-conferencing-service',
   USER_TENANT = 'user-tenant-service',
+  REPORTING = 'reporting-service',
 }
 
 export enum DATASOURCES {
@@ -96,6 +97,9 @@ export const BASESERVICEDSLIST: {
   ],
   'chat-service': [],
   'user-tenant-service': [],
+  'reporting-service': [
+    {type: 'store', name: 'ReportingCore', fileName: 'reporting'},
+  ],
 };
 
 export const BASESERVICECOMPONENTLIST: {
@@ -115,6 +119,7 @@ export const BASESERVICECOMPONENTLIST: {
   'video-conferencing-service': 'VideoConfServiceComponent',
   'chat-service': 'ChatServiceComponent',
   'user-tenant-service': 'UserTenantServiceComponent',
+  'reporting-service': 'ReportingServiceComponent',
 };
 
 export const BASESERVICEBINDINGLIST: {
@@ -134,6 +139,7 @@ export const BASESERVICEBINDINGLIST: {
   'video-conferencing-service': 'VideoChatBindings',
   'chat-service': 'ChatServiceBindings',
   'user-tenant-service': 'UserTenantServiceComponentBindings',
+  'reporting-service': 'ReportingServiceComponentBindings',
 };
 
 export enum SEQUELIZESERVICES {
