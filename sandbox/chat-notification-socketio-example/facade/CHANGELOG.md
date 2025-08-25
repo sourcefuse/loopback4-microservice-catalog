@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.5.6 (2025-08-25)</small>
+
+**Note:** Version bump only for package @sourceloop/chat-notif-example-facade-socket
+
+
+
+
+
 ## <small>0.5.5 (2025-08-06)</small>
 
 * fix(search-service): fix controller code (#2309) ([89804f8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/89804f8)), closes [#2309](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2309) [#2308](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2308) [#2308](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2308) [#2308](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2308) [#2308](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2308)

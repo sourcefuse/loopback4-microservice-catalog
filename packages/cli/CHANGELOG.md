@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>11.0.1 (2025-08-25)</small>
+
+* refactor(chore): sonar issues fix (#2313) ([937bfbe](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/937bfbe)), closes [#2313](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2313)
+
+
+
+
+
 ## 11.0.0 (2025-08-06)
 
 * refactor(chore): fix sonarqube issues (#2306) ([314d351](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/314d351)), closes [#2306](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2306) [#2302](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2302) [#2302](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2302) [#2302](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2302) [#2302](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2302)

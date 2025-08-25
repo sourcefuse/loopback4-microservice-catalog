@@ -1,6 +1,6 @@
 {
     "name": "@sourceloop/cache",
-    "version": "4.0.5",
+    "version": "4.0.6",
     "description": "A caching extension to cache methods.",
     "keywords": [
         "loopback-extension",
@@ -52,7 +52,7 @@
         "@loopback/repository": "^7.0.9",
         "@loopback/rest": "^14.0.9",
         "@loopback/rest-explorer": "^7.0.9",
-        "@sourceloop/core": "^17.0.1",
+        "@sourceloop/core": "^17.0.2",
         "tslib": "^2.6.2",
         "winston": "^3.17.0"
     },

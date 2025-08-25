@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 6.1.0 (2025-08-25)
+
+* feat(reporting-service): export enums from reporting service (#2317) ([492229d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/492229d)), closes [#2317](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2317)
+
+
+
+
+
 ## <small>6.0.1 (2025-08-06)</small>
 
 * refactor(chore): fix sonarqube issues (#2306) ([314d351](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/314d351)), closes [#2306](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2306) [#2302](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2302) [#2302](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2302) [#2302](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2302) [#2302](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2302)
