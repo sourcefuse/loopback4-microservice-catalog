@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.3.6 (2025-08-25)</small>
+
+**Note:** Version bump only for package @sourceloop/file-utils
+
+
+
+
+
 ## <small>0.3.5 (2025-08-06)</small>
 
 **Note:** Version bump only for package @sourceloop/file-utils
