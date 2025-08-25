@@ -13,8 +13,9 @@ To get more info see https://registry.terraform.io/providers/hashicorp/aws/lates
 
    * @default 
    */
-  // sonarignore-next-line
+  // sonarignore:start
   readonly additionalSecurityGroupRules?: any[];
+  // sonarignore:end
   /**
    * Additional key-value pairs to add to each map in `tags_as_list_of_maps`. Not added to `tags` or `id`.
 This is for some rare cases where resources want additional configuration of tags
@@ -137,8 +138,9 @@ except for attributes, tags, and additional_tag_map, which are merged.
 
    * @default [object Object]
    */
-  // sonarignore-next-line
+  // sonarignore:start
   readonly context?: any;
+  // sonarignore:end
   /**
    * Set `true` to create and configure a new security group. If false, `associated_security_group_ids` must be provided.
    * @default true
@@ -174,8 +176,9 @@ Default is `{}` (`descriptors` output will be empty).
 
    * @default [object Object]
    */
-  // sonarignore-next-line
+  // sonarignore:start
   readonly descriptorFormats?: any;
+  // sonarignore:end
   /**
    * The subdomain to use for the CNAME record. If not provided then the CNAME record will use var.name.
    */
@@ -186,8 +189,9 @@ Historical description: Outbound traffic address.
 Historical default: ["0.0.0.0/0"]
 
    */
-  // sonarignore-next-line
+  // sonarignore:start
   readonly egressCidrBlocks?: any[];
+  // sonarignore:end
   /**
    * Subnet group name for the ElastiCache instance
    */
@@ -282,8 +286,9 @@ Set to `[]` to suppress all generated tags.
    * @default
    * The property type contains a map, they have special handling, please see {@link cdk.tf/module-map-inputs the docs}
    */
-  // sonarignore-next-line
+  // sonarignore:start
   readonly logDeliveryConfiguration?: {[key: string]: any}[];
+  // sonarignore:end
   /**
    * Maintenance window
    * @default wed:03:00-wed:04:00
@@ -317,8 +322,9 @@ The "name" tag is set to the full `id` string. There is no tag with the value of
    * A list of Redis parameters to apply. Note that parameters may differ from one Redis family to another
    * @default
    */
-  // sonarignore-next-line
+  // sonarignore:start
   readonly parameter?: any;
+  // sonarignore:end
   /**
    * Managed by Terraform
    */
@@ -447,12 +453,14 @@ Can also be a plain string, but that use is DEPRECATED because of Terraform issu
 
    * @default 
    */
-  // sonarignore-next-line
+  // sonarignore:start
   readonly zoneId?: any;
+  // sonarignore:end
 }
 export class Redis extends TerraformModule {
-  // sonarignore-next-line
+  // sonarignore:start
   private readonly inputs: {[name: string]: any} = {};
+  // sonarignore:end
   public constructor(scope: Construct, id: string, config: RedisConfig) {
     super(scope, id, {
       ...config,
@@ -535,6 +543,7 @@ export class Redis extends TerraformModule {
     this.vpcId = config.vpcId;
     this.zoneId = config.zoneId;
   }
+  // sonarignore:start
   public get additionalSecurityGroupRules(): any[] | undefined {
     return this.inputs['additional_security_group_rules'] as any[] | undefined;
   }
@@ -991,6 +1000,7 @@ export class Redis extends TerraformModule {
   public set zoneId(value: any | undefined) {
     this.inputs['zone_id'] = value;
   }
+  // sonarignore:end
   public get arnOutput() {
     return this.getString('arn');
   }

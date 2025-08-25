@@ -10,7 +10,7 @@
     "clean": "npm run clean --workspaces --if-present"
   },
   "devDependencies": {
-    "@commitlint/cli": "^16.2.3",
+    "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^16.2.1",
     "commitizen": "^4.2.5",
     "custom-sf-changelog": "file:packages/custom-sf-changelog",
@@ -30,6 +30,7 @@
     "semver": "^7.5.4",
     "multer": "^2.0.2",
     "tough-cookie": "^4.1.3",
+    "@node-saml/node-saml": "^5.1.0",
     "@loopback/cli": {
       "package-json": {
         "got": "^11.8.6"
