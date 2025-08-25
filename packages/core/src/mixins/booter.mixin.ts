@@ -24,8 +24,7 @@ const KEY_LENGTH = 5;
  * @param basePath The base path to be used as `projectRoot`
  * @param defaultOptions Default options to merge with user config
  */
-// sonarignore-next-line
-export function BooterBasePathMixin<T extends Constructor<Booter>>(
+export function BooterBasePathMixin<T extends Constructor<Booter>>( //NOSONAR
   booterClass: T,
   basePath: string,
   defaultOptions: BooterOptionsWithKey,
