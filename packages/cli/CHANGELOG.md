@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 11.1.0 (2025-08-26)
+
+* feat(cli): add support for reporting-service (#2319) ([a25d89b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a25d89b)), closes [#2319](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2319) [#2315](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2315)
+
+
+
+
+
 ## <small>11.0.1 (2025-08-25)</small>
 
 * refactor(chore): sonar issues fix (#2313) ([937bfbe](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/937bfbe)), closes [#2313](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2313)
