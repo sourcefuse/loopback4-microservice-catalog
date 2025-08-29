@@ -207,8 +207,8 @@ x-chat-notif-facade-notif-variables: &chat-notif-facade-notif-variables
   NOTIFCACHE_DB_PORT: 6379
   NOTIFCACHE_DB_PASSWORD:
   NOTIFCACHE_DB_DATABASE: 0
-  PUBNUB_SUBSCRIBE_KEY: sub-c-795ac30a-1d26-11ec-ad6d-3eee4c94e219
-  PUBNUB_PUBLISH_KEY: pub-c-64a4aaf2-20d5-481a-b4d5-15b06b441883
+  PUBNUB_SUBSCRIBE_KEY:
+  PUBNUB_PUBLISH_KEY:
   UUID: 381f84ff-d68d-1997-5d8a-bb4c09165219
   JWT_SECRET: i_am_a_strong_secret
   JWT_ISSUER: https://loopback4-microservice-catalog
