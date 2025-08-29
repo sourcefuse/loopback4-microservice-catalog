@@ -145,6 +145,7 @@
         "bcrypt": "^5.0.1"
     },
     "overrides": {
+        "@node-saml/passport-saml": "^5.1.0",
         "check-code-coverage": {
             "lodash": "^4.17.21",
             "got": "^11.8.5"

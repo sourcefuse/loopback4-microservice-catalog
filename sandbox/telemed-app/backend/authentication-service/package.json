@@ -105,6 +105,7 @@
     "typescript": "~5.2.2"
   },
   "overrides": {
-    "@node-saml/node-saml": "^5.1.0"
+    "@node-saml/node-saml": "^5.1.0",
+    "@node-saml/passport-saml": "^5.1.0"
   }
 }
