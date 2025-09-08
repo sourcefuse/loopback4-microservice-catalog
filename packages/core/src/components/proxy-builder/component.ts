@@ -14,7 +14,6 @@ import {
 import {AnyObject, Entity, juggler} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {getService} from '@loopback/service-proxy';
-import debugFactory from 'debug';
 import {CONTENT_TYPE} from '../../constants';
 import {restProxyBuilder} from './constants';
 import {ProxyBuilderBindings} from './keys';
@@ -31,12 +30,11 @@ import {
 } from './services';
 import {
   EntityRestConfig,
+  isEntityRestConfig,
   ProxyBuilderConfig,
   RestOperationTemplate,
-  isEntityRestConfig,
 } from './types';
 
-const debug = debugFactory('loopback:proxy-builder:component');
 @injectable()
 export class ProxyBuilderComponent implements Component {
   bindings?: Binding<AnyObject>[];
@@ -115,9 +113,6 @@ export class ProxyBuilderComponent implements Component {
         operations: [...restProxyBuilder(basePath), ...(restOperations ?? [])],
       }),
     );
-    debug(
-      `Bound datasource for ${model.name} on key - datasources.${model.name}ProxyDataSource`,
-    );
   }
 
   private _bindService(
@@ -144,9 +139,6 @@ export class ProxyBuilderComponent implements Component {
       'serviceModifier',
     );
     this.application.bind(`services.${model.name}Proxy`).toProvider(TempClass);
-    debug(
-      `Bound service for ${model.name} on key - services.${model.name}Proxy`,
-    );
   }
 
   private _createBasePath(model: ModelConstructor<Entity>) {
