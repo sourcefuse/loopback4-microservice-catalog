@@ -1,6 +1,6 @@
 import {AnyObject} from '@loopback/repository';
 import {Client, expect} from '@loopback/testlab';
-import {JwtKeysRepository} from '@sourceloop/core';
+import {JwtKeysRepository, STATUS_CODE} from '@sourceloop/core';
 import {generateKeyPairSync} from 'crypto';
 import * as jwt from 'jsonwebtoken';
 import {AuthenticationBindings} from 'loopback4-authentication';
@@ -13,6 +13,7 @@ import {
   RoleRepository,
   TenantRepository,
   UserRepository,
+  UserTenantPrefsRepository,
   UserTenantRepository,
 } from '../../repositories';
 import {setupApplication} from './test-helper';
@@ -31,6 +32,7 @@ describe('UserTenantPrefs Controller', function (this: Mocha.Suite) {
   this.timeout(100000);
   let app: UserTenantServiceApplication;
   let userTenantRepo: UserTenantRepository;
+  let userTenantPrefRepo: UserTenantPrefsRepository;
   let roleRepo: RoleRepository;
   let tenantRepo: TenantRepository;
   let jwtKeyRepo: JwtKeysRepository;
@@ -52,6 +54,10 @@ describe('UserTenantPrefs Controller', function (this: Mocha.Suite) {
       PermissionKey.ViewUserTenantPreference,
       PermissionKey.ViewUserTenantPreferenceNum,
       PermissionKey.CreateUserTenantPreference,
+      PermissionKey.DeleteUserTenantPreference,
+      PermissionKey.DeleteUserTenantPreferenceNum,
+      PermissionKey.DeleteHardUserTenantPreference,
+      PermissionKey.DeleteHardUserTenantPreferenceNum,
     ],
   };
   const data = {
@@ -71,6 +77,10 @@ describe('UserTenantPrefs Controller', function (this: Mocha.Suite) {
   before(setJwtKeysMockData);
   before(setCurrentUser);
   before(setupMockData);
+
+  afterEach(async () => {
+    await userTenantPrefRepo.deleteAllHard();
+  });
 
   it('gives status 401 when no token is passed', async () => {
     const response = await client.get(basePath).expect(401);
@@ -101,8 +111,50 @@ describe('UserTenantPrefs Controller', function (this: Mocha.Suite) {
       .expect(200);
   });
 
+  it('should perform soft delete on userTenantPref record', async () => {
+    const response = await client
+      .post(basePath)
+      .set('authorization', `Bearer ${token}`)
+      .send(data)
+      .expect(STATUS_CODE.OK);
+
+    const prefId = response.body.id;
+
+    await client
+      .del(`${basePath}/${prefId}`)
+      .set('authorization', `Bearer ${token}`)
+      .expect(STATUS_CODE.NO_CONTENT);
+
+    await expect(userTenantPrefRepo.findById(prefId)).to.be.rejectedWith(
+      'EntityNotFound',
+    );
+    await expect(
+      userTenantPrefRepo.findByIdIncludeSoftDelete(prefId),
+    ).not.to.be.rejected();
+  });
+
+  it('should perform hard delete on userTenantPref record', async () => {
+    const response = await client
+      .post(basePath)
+      .set('authorization', `Bearer ${token}`)
+      .send(data)
+      .expect(STATUS_CODE.OK);
+
+    const prefId = response.body.id;
+
+    await client
+      .del(`${basePath}/${prefId}/hard`)
+      .set('authorization', `Bearer ${token}`)
+      .expect(STATUS_CODE.NO_CONTENT);
+
+    await expect(
+      userTenantPrefRepo.findByIdIncludeSoftDelete(prefId),
+    ).to.be.rejectedWith('EntityNotFound');
+  });
+
   async function givenRepositories() {
     userTenantRepo = await app.getRepository(UserTenantRepository);
+    userTenantPrefRepo = await app.getRepository(UserTenantPrefsRepository);
     userRepo = await app.getRepository(UserRepository);
     roleRepo = await app.getRepository(RoleRepository);
     tenantRepo = await app.getRepository(TenantRepository);
@@ -153,6 +205,10 @@ describe('UserTenantPrefs Controller', function (this: Mocha.Suite) {
         PermissionKey.ViewUserTenantPreference,
         PermissionKey.ViewUserTenantPreferenceNum,
         PermissionKey.CreateUserTenantPreference,
+        PermissionKey.DeleteUserTenantPreference,
+        PermissionKey.DeleteUserTenantPreferenceNum,
+        PermissionKey.DeleteHardUserTenantPreference,
+        PermissionKey.DeleteHardUserTenantPreferenceNum,
       ],
     };
     await setCurrentUser();
