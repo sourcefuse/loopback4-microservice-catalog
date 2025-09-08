@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.6.7 (2025-09-08)</small>
+
+* refactor(sandbox): remove pubnub key (#2322) ([8de3f2d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8de3f2d)), closes [#2322](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2322) [#2320](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2320)
+
+
+
+
+
 ## <small>0.6.6 (2025-08-25)</small>
 
 **Note:** Version bump only for package @sourceloop/oauth-example-api

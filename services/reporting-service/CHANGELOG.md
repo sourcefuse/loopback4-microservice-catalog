@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>6.1.1 (2025-09-08)</small>
+
+**Note:** Version bump only for package @sourceloop/reporting-service
+
+
+
+
+
 ## 6.1.0 (2025-08-25)
 
 * feat(reporting-service): export enums from reporting service (#2317) ([492229d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/492229d)), closes [#2317](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2317)

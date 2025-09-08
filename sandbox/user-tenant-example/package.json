@@ -1,6 +1,6 @@
 {
     "name": "@sourceloop/user-tenant-example",
-    "version": "0.8.6",
+    "version": "0.8.7",
     "description": "user-tenant-service example.",
     "keywords": [
         "loopback-microservice",
@@ -66,8 +66,8 @@
         "@opentelemetry/plugin-pg-pool": "^0.15.0",
         "@opentelemetry/sdk-trace-base": "^1.15.0",
         "@opentelemetry/sdk-trace-node": "^1.15.0",
-        "@sourceloop/core": "^17.0.2",
-        "@sourceloop/user-tenant-service": "^5.0.2",
+        "@sourceloop/core": "^17.0.3",
+        "@sourceloop/user-tenant-service": "^5.1.0",
         "dotenv": "^16.4.5",
         "dotenv-extended": "^2.9.0",
         "loopback-connector-postgresql": "^7.1.8",

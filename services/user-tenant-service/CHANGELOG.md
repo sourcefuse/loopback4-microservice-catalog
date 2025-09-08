@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.1.0 (2025-09-08)
+
+* feat(user-tenant-service): hard delete capability in user tenant pref controller (#2327) ([b76c7dd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b76c7dd)), closes [#2327](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2327) [#2325](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2325)
+
+
+
+
+
 ## <small>5.0.2 (2025-08-25)</small>
 
 **Note:** Version bump only for package @sourceloop/user-tenant-service

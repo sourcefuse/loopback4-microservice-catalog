@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>17.0.3 (2025-09-08)</small>
+
+* fix(core): remove hard dependency on `debug` in ProxyBuilder (#2326) ([c1a4f77](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c1a4f77)), closes [#2326](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2326) [#2324](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2324)
+
+
+
+
+
 ## <small>17.0.2 (2025-08-25)</small>
 
 * refactor(chore): sonar issues fix (#2313) ([937bfbe](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/937bfbe)), closes [#2313](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2313)
