@@ -45,22 +45,22 @@
         "!*/__tests__"
     ],
     "peerDependencies": {
-        "@loopback/core": "^6.1.6"
+        "@loopback/core": "^7.0.3"
     },
     "dependencies": {
-        "@loopback/core": "^6.1.6",
-        "@loopback/repository": "^7.0.9",
-        "@loopback/rest": "^14.0.9",
-        "@loopback/rest-explorer": "^7.0.9",
-        "@sourceloop/core": "^17.0.3",
+        "@loopback/core": "^7.0.3",
+        "@loopback/repository": "^8.0.3",
+        "@loopback/rest": "^15.0.4",
+        "@loopback/rest-explorer": "^8.0.4",
+        "@sourceloop/core": "file:../core/sourceloop-core-17.0.2.tgz",
         "tslib": "^2.6.2",
         "winston": "^3.17.0"
     },
     "devDependencies": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
-        "@loopback/build": "^11.0.8",
-        "@loopback/eslint-config": "^15.0.4",
-        "@loopback/testlab": "^7.0.8",
+        "@loopback/build": "^12.0.3",
+        "@loopback/eslint-config": "^16.0.1",
+        "@loopback/testlab": "^8.0.3",
         "@types/dotenv": "^8.2.0",
         "@types/node": "^20.12.7",
         "dotenv": "^16.4.5",
