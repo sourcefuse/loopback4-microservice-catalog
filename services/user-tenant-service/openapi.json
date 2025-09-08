@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "@sourceloop/user-tenant-service",
-    "version": "4.0.3",
+    "version": "5.0.2",
     "description": "Sourceloop User Tenant Service",
     "contact": {
       "name": "SourceFuse"
@@ -1541,6 +1541,44 @@
           }
         ],
         "operationId": "UserTenantPrefsController.count"
+      }
+    },
+    "/user-tenant-prefs/{id}/hard": {
+      "delete": {
+        "x-controller-name": "UserTenantPrefsController",
+        "x-operation-name": "deleteHardById",
+        "tags": [
+          "UserTenantPrefsController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "UserTenantPrefs DELETE hard success"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteHardUserTenantPreference   |\n| 36   |\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "UserTenantPrefsController.deleteHardById"
       }
     },
     "/user-tenant-prefs/{id}": {

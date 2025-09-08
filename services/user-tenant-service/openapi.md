@@ -1,5 +1,5 @@
 ---
-title: "@sourceloop/user-tenant-service v4.0.3"
+title: "@sourceloop/user-tenant-service v5.0.2"
 language_tabs:
   - javascript: JavaScript
   - javascript--nodejs: Node.JS
@@ -16,7 +16,7 @@ headingLevel: 2
 
 <!-- Generator: Widdershins v4.0.1 -->
 
-<h1 id="-sourceloop-user-tenant-service">@sourceloop/user-tenant-service v4.0.3</h1>
+<h1 id="-sourceloop-user-tenant-service">@sourceloop/user-tenant-service v5.0.2</h1>
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
@@ -7843,6 +7843,94 @@ fetch('/user-tenant-prefs/count',
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|UserTenantPrefs model count|[loopback.Count](#schemaloopback.count)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+None
+</aside>
+
+## UserTenantPrefsController.deleteHardById
+
+<a id="opIdUserTenantPrefsController.deleteHardById"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/user-tenant-prefs/{id}/hard',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/user-tenant-prefs/{id}/hard',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`DELETE /user-tenant-prefs/{id}/hard`
+
+| Permissions |
+| ------- |
+| DeleteHardUserTenantPreference   |
+| 36   |
+
+<h3 id="usertenantprefscontroller.deletehardbyid-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|none|
+
+> Example responses
+
+> 204 Response
+
+```json
+null
+```
+
+<h3 id="usertenantprefscontroller.deletehardbyid-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content|Inline|
+
+<h3 id="usertenantprefscontroller.deletehardbyid-responseschema">Response Schema</h3>
+
+Status Code **204**
+
+*UserTenantPrefs DELETE hard success*
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:

@@ -166,6 +166,30 @@ export class UserTenantPrefsController {
     if (userTenantPrefs.userTenantId !== this.currentUser.userTenantId) {
       throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
     }
-    await this.userTenantPrefsRepository.deleteById(id);
+    return this.userTenantPrefsRepository.deleteById(id);
+  }
+
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  @authorize({
+    permissions: [
+      PermissionKey.DeleteHardUserTenantPreference,
+      PermissionKey.DeleteHardUserTenantPreferenceNum,
+    ],
+  })
+  @del(`${baseUrl}/{id}/hard`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {},
+  })
+  @response(STATUS_CODE.NO_CONTENT, {
+    description: 'UserTenantPrefs DELETE hard success',
+  })
+  async deleteHardById(@param.path.string('id') id: string): Promise<void> {
+    const userTenantPrefs = await this.userTenantPrefsRepository.findById(id);
+    if (userTenantPrefs.userTenantId !== this.currentUser.userTenantId) {
+      throw new HttpErrors.Forbidden(AuthorizeErrorKeys.NotAllowedAccess);
+    }
+    return this.userTenantPrefsRepository.deleteByIdHard(id);
   }
 }
