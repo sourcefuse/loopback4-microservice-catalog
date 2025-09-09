@@ -18,6 +18,9 @@ export enum SERVICES {
   VIDEO_CONF = 'video-conferencing-service',
   USER_TENANT = 'user-tenant-service',
   REPORTING = 'reporting-service',
+  TEANANT_MANAGEMENT = 'ctrl-plane-tenant-management-service',
+  SUBSCRIPTION = 'ctrl-plane-subscription-service',
+  ORCHESTRATOR = 'ctrl-plane-orchestrator-service',
 }
 
 export enum DATASOURCES {
@@ -100,6 +103,28 @@ export const BASESERVICEDSLIST: {
   ],
   'chat-service': [],
   'user-tenant-service': [],
+  'ctrl-plane-tenant-management-service': [
+    {
+      type: 'store',
+      name: 'TenantManagementDbSourceName',
+      fileName: 'tenantManagement',
+    },
+    {type: 'cache', name: 'TenantManagementCacheSourceName', fileName: 'redis'},
+  ],
+
+  'ctrl-plane-subscription-service': [
+    {
+      type: 'store',
+      name: 'SubscriptionDbSourceName',
+      fileName: 'subscription',
+    },
+    {
+      type: 'store',
+      name: 'FeatureToggleDbName',
+      fileName: 'feature',
+    },
+  ],
+  'ctrl-plane-orchestrator-service': [],
 };
 
 export const BASESERVICECOMPONENTLIST: {
@@ -119,7 +144,10 @@ export const BASESERVICECOMPONENTLIST: {
   'video-conferencing-service': 'VideoConfServiceComponent',
   'chat-service': 'ChatServiceComponent',
   'user-tenant-service': 'UserTenantServiceComponent',
-  'reporting-service': 'ReportingServiceComponent'
+  'reporting-service': 'ReportingServiceComponent',
+  'ctrl-plane-tenant-management-service': 'TenantManagementServiceComponent',
+  'ctrl-plane-subscription-service': 'SubscriptionServiceComponent',
+  'ctrl-plane-orchestrator-service': 'OrchestratorServiceComponent',
 };
 
 export const BASESERVICEBINDINGLIST: {
@@ -139,7 +167,10 @@ export const BASESERVICEBINDINGLIST: {
   'video-conferencing-service': 'VideoChatBindings',
   'chat-service': 'ChatServiceBindings',
   'user-tenant-service': 'UserTenantServiceComponentBindings',
-  'reporting-service': 'ReportingServiceComponentBindings'
+  'reporting-service': 'ReportingServiceComponentBindings',
+  'ctrl-plane-tenant-management-service': 'TenantManagementServiceComponent',
+  'ctrl-plane-subscription-service': 'SubscriptionServiceBindings',
+  'ctrl-plane-orchestrator-service': 'TenantManagementServiceBindings',
 };
 
 export enum SEQUELIZESERVICES {
