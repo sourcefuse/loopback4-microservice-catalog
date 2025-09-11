@@ -7,6 +7,7 @@ lerna-debug.log
 **/.DS_Store
 .nyc_output
 dist
+**/*.tgz
 
 # Docs
 ## Site folder contains compiled html files, we don't need them because mkdocs-deploy can freshly recreate them
