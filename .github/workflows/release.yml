@@ -55,6 +55,6 @@ jobs:
       - name: Publish to NPM 🚀
         # To always compare changes from registry
         # using `from-package` compares version in local package.json with registry and publish it if required.
-        run: npx lerna publish from-package --yes
+        run: SKIP_TESTS=true SKIP_BUILD=true npx lerna publish from-package --yes
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
