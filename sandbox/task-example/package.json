@@ -1,6 +1,6 @@
 {
     "name": "@sourceloop/task-service-example",
-    "version": "0.5.7",
+    "version": "0.5.8",
     "description": "task-service-user.",
     "keywords": [
         "loopback-application",
@@ -70,7 +70,7 @@
         "@loopback/rest": "^15.0.4",
         "@loopback/rest-explorer": "^8.0.4",
         "@loopback/service-proxy": "^8.0.3",
-        "@sourceloop/core": "file:../../packages/core/sourceloop-core-17.0.2.tgz",
+        "@sourceloop/core": "^18.0.0",
         "@sourceloop/task-service": "file:../../services/task-service/sourceloop-task-service-6.0.2.tgz",
         "aws-sdk": "^2.1406.0",
         "camunda-external-task-client-js": "^2.3.1",

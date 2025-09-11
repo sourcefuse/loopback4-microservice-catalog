@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>3.0.8 (2025-09-11)</small>
+
+**Note:** Version bump only for package @sourceloop/feature-toggle
+
+
+
+
+
 ## <small>3.0.7 (2025-09-08)</small>
 
 **Note:** Version bump only for package @sourceloop/feature-toggle

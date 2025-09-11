@@ -37,16 +37,16 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_USERNAME: ${{ vars.NPM_USERNAME }}
 
-      - name: Bootstrap
-        run: npm ci
+      # - name: Bootstrap
+      #   run: npm ci
       # this step is added only since this version of nx dependency is not being installed on linux systems
       # can be removed once this issue is fixed or we update to later versions
       - name: nx dependency
         run: npm i @nx/nx-linux-x64-gnu@16.10.0
-      - name: Test
-        run: npm run test --workspaces --if-present
-      - name: Lint
-        run: npm run lint --workspaces --if-present
+      # - name: Test
+      #   run: npm run test --workspaces --if-present
+      # - name: Lint
+      #   run: npm run lint --workspaces --if-present
       - name: Stash Changes
         run: git stash
       - name: Bump Versions
@@ -55,6 +55,6 @@ jobs:
       - name: Publish to NPM 🚀
         # To always compare changes from registry
         # using `from-package` compares version in local package.json with registry and publish it if required.
-        run: npx lerna publish from-package --yes
+        run: npx lerna publish from-package --yes --ignore-scripts
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

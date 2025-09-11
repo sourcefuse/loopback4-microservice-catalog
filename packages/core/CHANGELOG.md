@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 18.0.0 (2025-09-11)
+
+* refactor(chore): loopback packages version upgrade (#2330) ([e31e4f4](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e31e4f4)), closes [#2330](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2330) [#2329](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2329)
+
+
+### BREAKING CHANGE
+
+* YES
+
+
+
+
 ## <small>17.0.3 (2025-09-08)</small>
 
 * fix(core): remove hard dependency on `debug` in ProxyBuilder (#2326) ([c1a4f77](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c1a4f77)), closes [#2326](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2326) [#2324](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2324)

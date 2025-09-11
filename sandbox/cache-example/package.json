@@ -1,6 +1,6 @@
 {
     "name": "@sourceloop/cache-example",
-    "version": "0.7.7",
+    "version": "0.7.8",
     "description": "cache example.",
     "keywords": [
         "loopback-application",

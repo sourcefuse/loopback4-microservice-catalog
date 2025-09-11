@@ -1,6 +1,6 @@
 {
     "name": "@sourceloop/in-mail-example",
-    "version": "0.11.7",
+    "version": "0.11.8",
     "description": "in mail example.",
     "keywords": [
         "loopback-application",

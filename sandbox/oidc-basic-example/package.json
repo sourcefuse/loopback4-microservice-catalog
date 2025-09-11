@@ -1,6 +1,6 @@
 {
     "name": "@sourceloop/oidc-basic-example",
-    "version": "0.5.7",
+    "version": "0.5.8",
     "description": "oidc.",
     "keywords": [
         "loopback-application",

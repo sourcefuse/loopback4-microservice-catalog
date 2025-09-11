@@ -1,6 +1,6 @@
 {
     "name": "@sourceloop/oauth-example-api",
-    "version": "0.6.7",
+    "version": "0.6.8",
     "description": "oauth example.",
     "keywords": [
         "loopback-application",
