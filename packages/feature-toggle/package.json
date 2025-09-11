@@ -1,39 +1,86 @@
 {
-    "name": "@sourceloop/feature-toggle",
-    "version": "3.0.8",
-    "description": "Package for feature toggle.",
-    "keywords": [
-        "loopback-extension",
-        "loopback"
-    ],
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
-    "engines": {
-        "node": ">=20"
+  "name": "@sourceloop/feature-toggle",
+  "version": "3.0.8",
+  "description": "Package for feature toggle.",
+  "keywords": [
+    "loopback-extension",
+    "loopback"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "lb-tsc",
+    "build:watch": "lb-tsc --watch",
+    "lint": "npm run eslint && npm run prettier:check",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+    "prettier:cli": "prettier \"**/*.ts\" \"**/*.js\"",
+    "prettier:check": "npm run prettier:cli -- -l",
+    "prettier:fix": "npm run prettier:cli -- --write",
+    "eslint": "eslint --report-unused-disable-directives .",
+    "eslint:fix": "npm run eslint -- --fix",
+    "pretest": "npm run build",
+    "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
+    "coverage": "lb-nyc npm run test",
+    "coverage:ci": "lb-nyc report --reporter=text-lcov | coveralls",
+    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js",
+    "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
+    "prepublishOnly": "npm run build && npm run lint",
+    "rebuild": "npm run clean && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
+    "directory": "packages/feature-toggle"
+  },
+  "author": "Sourcefuse",
+  "license": "MIT",
+  "files": [
+    "README.md",
+    "dist",
+    "src",
+    "!*/__tests__"
+  ],
+  "peerDependencies": {
+    "@loopback/core": "^7.0.3"
+  },
+  "dependencies": {
+    "@loopback/boot": "^8.0.4",
+    "@loopback/context": "^8.0.3",
+    "@loopback/core": "^7.0.3",
+    "@loopback/express": "^8.0.3",
+    "@loopback/repository": "^8.0.3",
+    "@loopback/rest": "^15.0.4",
+    "@loopback/rest-explorer": "^8.0.4",
+    "@loopback/service-proxy": "^8.0.3",
+    "@sourceloop/core": "^18.0.0",
+    "lodash": "^4.17.21",
+    "loopback4-authentication": "^13.0.0",
+    "sinon": "^14.0.0",
+    "tslib": "^2.6.2"
+  },
+  "devDependencies": {
+    "@loopback/build": "^12.0.3",
+    "@loopback/core": "^7.0.3",
+    "@loopback/eslint-config": "^16.0.1",
+    "@loopback/testlab": "^7.0.8",
+    "@types/lodash": "^4.14.182",
+    "@types/node": "^20.12.7",
+    "eslint": "^8.57.0",
+    "source-map-support": "^0.5.21",
+    "typescript": "^5.4.5"
+  },
+  "overrides": {
+    "body-parser": {
+      "debug": "^4.3.4"
     },
-    "scripts": {
-        "build": "lb-tsc",
-        "build:watch": "lb-tsc --watch",
-        "lint": "npm run eslint && npm run prettier:check",
-        "lint:fix": "npm run eslint:fix && npm run prettier:fix",
-        "prettier:cli": "prettier \"**/*.ts\" \"**/*.js\"",
-        "prettier:check": "npm run prettier:cli -- -l",
-        "prettier:fix": "npm run prettier:cli -- --write",
-        "eslint": "eslint --report-unused-disable-directives .",
-        "eslint:fix": "npm run eslint -- --fix",
-        "pretest": "npm run build",
-        "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
-        "coverage": "lb-nyc npm run test",
-        "coverage:ci": "lb-nyc report --reporter=text-lcov | coveralls",
-        "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js",
-        "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
-        "prepublishOnly": "npm run build && npm run lint",
-        "rebuild": "npm run clean && npm run build"
+    "send": {
+      "debug": "^4.3.4"
     },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
-        "directory": "packages/feature-toggle"
+    "finalhandler": {
+      "debug": "^4.3.4"
     },
     "author": "Sourcefuse",
     "license": "MIT",
@@ -104,4 +151,20 @@
             ]
         }
     }
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "typedoc": {
+    "config": {
+      "entryPoints": [
+        "src/index.ts"
+      ],
+      "out": "packages/feature-toggle",
+      "plugin": [
+        "typedoc-plugin-markdown"
+      ]
+    }
+  }
 }

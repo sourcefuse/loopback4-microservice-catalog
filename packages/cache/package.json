@@ -1,88 +1,88 @@
 {
-    "name": "@sourceloop/cache",
-    "version": "4.0.8",
-    "description": "A caching extension to cache methods.",
-    "keywords": [
-        "loopback-extension",
-        "loopback",
-        "cache",
-        "redis"
-    ],
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
-    "engines": {
-        "node": ">=20"
-    },
-    "scripts": {
-        "build": "lb-tsc",
-        "build:watch": "lb-tsc --watch",
-        "lint": "npm run eslint && npm run prettier:check",
-        "lint:fix": "npm run eslint:fix && npm run prettier:fix",
-        "prettier:cli": "prettier \"**/*.ts\" \"**/*.js\"",
-        "prettier:check": "npm run prettier:cli -- -l",
-        "prettier:fix": "npm run prettier:cli -- --write",
-        "eslint": "eslint --report-unused-disable-directives .",
-        "eslint:fix": "npm run eslint -- --fix",
-        "pretest": "npm run rebuild",
-        "test": "lb-mocha --timeout=5000 --allow-console-logs \"dist/__tests__\"",
-        "posttest": "npm run lint",
-        "test:dev": "lb-mocha --timeout=5000 --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
-        "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
-        "rebuild": "npm run clean && npm run build",
-        "prune": "npm prune --production",
-        "coverage": "nyc npm run test"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git"
-    },
-    "author": "Sourcefuse",
-    "license": "MIT",
-    "files": [
-        "README.md",
-        "dist",
-        "src",
-        "!*/__tests__"
-    ],
-    "peerDependencies": {
-        "@loopback/core": "^7.0.3"
-    },
-    "dependencies": {
-        "@loopback/core": "^7.0.3",
-        "@loopback/repository": "^8.0.3",
-        "@loopback/rest": "^15.0.4",
-        "@loopback/rest-explorer": "^8.0.4",
-        "@sourceloop/core": "^18.0.0",
-        "tslib": "^2.6.2",
-        "winston": "^3.17.0"
-    },
-    "devDependencies": {
-        "@istanbuljs/nyc-config-typescript": "^1.0.2",
-        "@loopback/build": "^12.0.3",
-        "@loopback/eslint-config": "^16.0.1",
-        "@loopback/testlab": "^8.0.3",
-        "@types/dotenv": "^8.2.0",
-        "@types/node": "^20.12.7",
-        "dotenv": "^16.4.5",
-        "eslint": "^8.57.0",
-        "loopback-connector-kv-redis": "^4.0.0",
-        "mochawesome": "^7.1.3",
-        "source-map-support": "^0.5.21",
-        "typescript": "^5.4.5"
-    },
-    "publishConfig": {
-        "registry": "https://registry.npmjs.org/",
-        "access": "public"
-    },
-    "typedoc": {
-        "config": {
-            "entryPoints": [
-                "src/index.ts"
-            ],
-            "out": "packages/cache",
-            "plugin": [
-                "typedoc-plugin-markdown"
-            ]
-        }
+  "name": "@sourceloop/cache",
+  "version": "4.0.8",
+  "description": "A caching extension to cache methods.",
+  "keywords": [
+    "loopback-extension",
+    "loopback",
+    "cache",
+    "redis"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "lb-tsc",
+    "build:watch": "lb-tsc --watch",
+    "lint": "npm run eslint && npm run prettier:check",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+    "prettier:cli": "prettier \"**/*.ts\" \"**/*.js\"",
+    "prettier:check": "npm run prettier:cli -- -l",
+    "prettier:fix": "npm run prettier:cli -- --write",
+    "eslint": "eslint --report-unused-disable-directives .",
+    "eslint:fix": "npm run eslint -- --fix",
+    "pretest": "npm run rebuild",
+    "test": "lb-mocha --timeout=5000 --allow-console-logs \"dist/__tests__\"",
+    "posttest": "npm run lint",
+    "test:dev": "lb-mocha --timeout=5000 --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
+    "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
+    "rebuild": "npm run clean && npm run build",
+    "prune": "npm prune --production",
+    "coverage": "nyc npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git"
+  },
+  "author": "Sourcefuse",
+  "license": "MIT",
+  "files": [
+    "README.md",
+    "dist",
+    "src",
+    "!*/__tests__"
+  ],
+  "peerDependencies": {
+    "@loopback/core": "^7.0.3"
+  },
+  "dependencies": {
+    "@loopback/core": "^7.0.3",
+    "@loopback/repository": "^8.0.3",
+    "@loopback/rest": "^15.0.4",
+    "@loopback/rest-explorer": "^8.0.4",
+    "@sourceloop/core": "^18.0.0",
+    "tslib": "^2.6.2",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
+    "@loopback/build": "^12.0.3",
+    "@loopback/eslint-config": "^16.0.1",
+    "@loopback/testlab": "^8.0.3",
+    "@types/dotenv": "^8.2.0",
+    "@types/node": "^20.12.7",
+    "dotenv": "^16.4.5",
+    "eslint": "^8.57.0",
+    "loopback-connector-kv-redis": "^4.0.0",
+    "mochawesome": "^7.1.3",
+    "source-map-support": "^0.5.21",
+    "typescript": "^5.4.5"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "typedoc": {
+    "config": {
+      "entryPoints": [
+        "src/index.ts"
+      ],
+      "out": "packages/cache",
+      "plugin": [
+        "typedoc-plugin-markdown"
+      ]
     }
+  }
 }

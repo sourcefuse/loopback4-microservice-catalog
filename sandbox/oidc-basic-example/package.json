@@ -1,85 +1,85 @@
 {
-    "name": "@sourceloop/oidc-basic-example",
-    "version": "0.5.8",
-    "description": "oidc.",
-    "keywords": [
-        "loopback-application",
-        "loopback"
+  "name": "@sourceloop/oidc-basic-example",
+  "version": "0.5.8",
+  "description": "oidc.",
+  "keywords": [
+    "loopback-application",
+    "loopback"
+  ],
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "lb-tsc",
+    "build:watch": "lb-tsc --watch",
+    "lint": "npm run eslint && npm run prettier:check",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+    "prettier:cli": "prettier \"**/*.ts\" \"**/*.js\"",
+    "prettier:check": "npm run prettier:cli -- -l",
+    "prettier:fix": "npm run prettier:cli -- --write",
+    "eslint": "eslint --report-unused-disable-directives .",
+    "eslint:fix": "npm run eslint -- --fix",
+    "pretest": "npm run build",
+    "test": "echo \"No tests !\"",
+    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js",
+    "coverage": "nyc npm run test",
+    "docker:build": "docker build -t oidc .",
+    "docker:run": "docker run -p 3000:3000 -d oidc",
+    "premigrate": "npm run build",
+    "migrate": "node ./dist/migrate",
+    "preopenapi-spec": "npm run build",
+    "openapi-spec": "node ./dist/openapi-spec",
+    "prestart": "npm run rebuild",
+    "start": "node -r source-map-support/register .",
+    "dev": "nodemon src/index.ts",
+    "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
+    "rebuild": "npm run clean && npm run build"
+  },
+  "nodemonConfig": {
+    "verbose": true,
+    "watch": [
+      "src/"
     ],
-    "private": true,
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
-    "engines": {
-        "node": ">=20"
-    },
-    "scripts": {
-        "build": "lb-tsc",
-        "build:watch": "lb-tsc --watch",
-        "lint": "npm run eslint && npm run prettier:check",
-        "lint:fix": "npm run eslint:fix && npm run prettier:fix",
-        "prettier:cli": "prettier \"**/*.ts\" \"**/*.js\"",
-        "prettier:check": "npm run prettier:cli -- -l",
-        "prettier:fix": "npm run prettier:cli -- --write",
-        "eslint": "eslint --report-unused-disable-directives .",
-        "eslint:fix": "npm run eslint -- --fix",
-        "pretest": "npm run build",
-        "test": "echo \"No tests !\"",
-        "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js",
-        "coverage": "nyc npm run test",
-        "docker:build": "docker build -t oidc .",
-        "docker:run": "docker run -p 3000:3000 -d oidc",
-        "premigrate": "npm run build",
-        "migrate": "node ./dist/migrate",
-        "preopenapi-spec": "npm run build",
-        "openapi-spec": "node ./dist/openapi-spec",
-        "prestart": "npm run rebuild",
-        "start": "node -r source-map-support/register .",
-        "dev": "nodemon src/index.ts",
-        "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
-        "rebuild": "npm run clean && npm run build"
-    },
-    "nodemonConfig": {
-        "verbose": true,
-        "watch": [
-            "src/"
-        ],
-        "ignore": [
-            "dist/*"
-        ],
-        "ext": "ts",
-        "exec": "npm start"
-    },
-    "repository": {
-        "type": "git",
-        "url": ""
-    },
-    "author": "Antriksha Somani <antriksha.somani@sourcefuse.com>",
-    "license": "",
-    "files": [
-        "README.md",
-        "dist",
-        "src",
-        "!*/__tests__"
+    "ignore": [
+      "dist/*"
     ],
-    "dependencies": {
-        "@loopback/boot": "^8.0.4",
-        "@loopback/core": "^7.0.3",
-        "@loopback/repository": "^8.0.3",
-        "@loopback/rest": "^15.0.4",
-        "@loopback/rest-explorer": "^8.0.4",
-        "@loopback/service-proxy": "^8.0.3",
-        "@sourceloop/oidc-service": "file:../../services/oidc-service/sourceloop-oidc-service-5.0.2.tgz",
-        "loopback-connector-postgresql": "^7.1.8",
-        "nodemon": "^2.0.21",
-        "tslib": "^2.6.2"
-    },
-    "devDependencies": {
-        "@loopback/build": "^12.0.3",
-        "@loopback/eslint-config": "^16.0.1",
-        "@loopback/testlab": "^8.0.3",
-        "@types/node": "^20.12.7",
-        "eslint": "^8.57.0",
-        "source-map-support": "^0.5.21",
-        "typescript": "^5.4.5"
-    }
+    "ext": "ts",
+    "exec": "npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "Antriksha Somani <antriksha.somani@sourcefuse.com>",
+  "license": "",
+  "files": [
+    "README.md",
+    "dist",
+    "src",
+    "!*/__tests__"
+  ],
+  "dependencies": {
+    "@loopback/boot": "^8.0.4",
+    "@loopback/core": "^7.0.3",
+    "@loopback/repository": "^8.0.3",
+    "@loopback/rest": "^15.0.4",
+    "@loopback/rest-explorer": "^8.0.4",
+    "@loopback/service-proxy": "^8.0.3",
+    "@sourceloop/oidc-service": "^5.0.4",
+    "loopback-connector-postgresql": "^7.1.8",
+    "nodemon": "^2.0.21",
+    "tslib": "^2.6.2"
+  },
+  "devDependencies": {
+    "@loopback/build": "^12.0.3",
+    "@loopback/eslint-config": "^16.0.1",
+    "@loopback/testlab": "^8.0.3",
+    "@types/node": "^20.12.7",
+    "eslint": "^8.57.0",
+    "source-map-support": "^0.5.21",
+    "typescript": "^5.4.5"
+  }
 }

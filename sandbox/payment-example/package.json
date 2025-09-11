@@ -1,83 +1,83 @@
 {
-    "name": "@sourceloop/payment-example-backend",
-    "version": "0.7.8",
-    "description": "backend of payment example.",
-    "keywords": [
-        "loopback-application",
-        "loopback"
-    ],
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
-    "engines": {
-        "node": ">=20"
-    },
-    "private": true,
-    "scripts": {
-        "build": "lb-tsc",
-        "build:watch": "lb-tsc --watch",
-        "lint": "npm run eslint && npm run prettier:check",
-        "lint:fix": "npm run eslint:fix && npm run prettier:fix",
-        "prettier:cli": "prettier \"**/*.ts\" \"**/*.js\"",
-        "prettier:check": "npm run prettier:cli -- -l",
-        "prettier:fix": "npm run prettier:cli -- --write",
-        "eslint": "eslint --report-unused-disable-directives .",
-        "eslint:fix": "npm run eslint -- --fix",
-        "pretest": "npm run rebuild",
-        "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
-        "posttest": "npm run lint",
-        "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
-        "docker:build": "docker build -t payment-example-backend .",
-        "docker:run": "docker run -p 3000:3000 -d payment-example-backend",
-        "premigrate": "npm run build",
-        "migrate": "node ./dist/migrate",
-        "preopenapi-spec": "npm run build",
-        "openapi-spec": "node ./dist/openapi-spec",
-        "prestart": "npm run rebuild",
-        "start": "node -r source-map-support/register .",
-        "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
-        "rebuild": "npm run clean && npm run build",
-        "db:migrate": "./node_modules/db-migrate/bin/db-migrate up --config './migrations/database.json'",
-        "db:migrate:down": "./node_modules/db-migrate/bin/db-migrate down --config './migrations/database.json'",
-        "db:migrate:reset": "./node_modules/db-migrate/bin/db-migrate reset --config './migrations/database.json'"
-    },
-    "repository": {
-        "type": "git",
-        "url": ""
-    },
-    "author": "",
-    "license": "",
-    "files": [
-        "README.md",
-        "dist",
-        "src",
-        "!*/__tests__"
-    ],
-    "dependencies": {
-        "@loopback/boot": "^8.0.4",
-        "@loopback/context": "^8.0.3",
-        "@loopback/core": "^7.0.3",
-        "@loopback/express": "^8.0.3",
-        "@loopback/repository": "^8.0.3",
-        "@loopback/rest": "^15.0.4",
-        "@loopback/rest-explorer": "^8.0.4",
-        "@loopback/service-proxy": "^8.0.3",
-        "@sourceloop/core": "^18.0.0",
-        "@sourceloop/payment-service": "file:../../services/payment-service/sourceloop-payment-service-17.0.2",
-        "db-migrate": "^1.0.0-beta.21",
-        "db-migrate-pg": "^1.3.0",
-        "dotenv": "^16.4.5",
-        "dotenv-extended": "^2.9.0",
-        "loopback-connector-postgresql": "^7.1.8",
-        "prom-client": "^14.0.1",
-        "tslib": "^2.6.2"
-    },
-    "devDependencies": {
-        "@loopback/build": "^12.0.3",
-        "@loopback/eslint-config": "^16.0.1",
-        "@loopback/testlab": "^8.0.3",
-        "@types/node": "^20.12.7",
-        "eslint": "^8.57.0",
-        "source-map-support": "^0.5.21",
-        "typescript": "^5.4.5"
-    }
+  "name": "@sourceloop/payment-example-backend",
+  "version": "0.7.8",
+  "description": "backend of payment example.",
+  "keywords": [
+    "loopback-application",
+    "loopback"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=20"
+  },
+  "private": true,
+  "scripts": {
+    "build": "lb-tsc",
+    "build:watch": "lb-tsc --watch",
+    "lint": "npm run eslint && npm run prettier:check",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+    "prettier:cli": "prettier \"**/*.ts\" \"**/*.js\"",
+    "prettier:check": "npm run prettier:cli -- -l",
+    "prettier:fix": "npm run prettier:cli -- --write",
+    "eslint": "eslint --report-unused-disable-directives .",
+    "eslint:fix": "npm run eslint -- --fix",
+    "pretest": "npm run rebuild",
+    "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
+    "posttest": "npm run lint",
+    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
+    "docker:build": "docker build -t payment-example-backend .",
+    "docker:run": "docker run -p 3000:3000 -d payment-example-backend",
+    "premigrate": "npm run build",
+    "migrate": "node ./dist/migrate",
+    "preopenapi-spec": "npm run build",
+    "openapi-spec": "node ./dist/openapi-spec",
+    "prestart": "npm run rebuild",
+    "start": "node -r source-map-support/register .",
+    "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
+    "rebuild": "npm run clean && npm run build",
+    "db:migrate": "./node_modules/db-migrate/bin/db-migrate up --config './migrations/database.json'",
+    "db:migrate:down": "./node_modules/db-migrate/bin/db-migrate down --config './migrations/database.json'",
+    "db:migrate:reset": "./node_modules/db-migrate/bin/db-migrate reset --config './migrations/database.json'"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "",
+  "license": "",
+  "files": [
+    "README.md",
+    "dist",
+    "src",
+    "!*/__tests__"
+  ],
+  "dependencies": {
+    "@loopback/boot": "^8.0.4",
+    "@loopback/context": "^8.0.3",
+    "@loopback/core": "^7.0.3",
+    "@loopback/express": "^8.0.3",
+    "@loopback/repository": "^8.0.3",
+    "@loopback/rest": "^15.0.4",
+    "@loopback/rest-explorer": "^8.0.4",
+    "@loopback/service-proxy": "^8.0.3",
+    "@sourceloop/core": "^18.0.0",
+    "@sourceloop/payment-service": "^17.0.4",
+    "db-migrate": "^1.0.0-beta.21",
+    "db-migrate-pg": "^1.3.0",
+    "dotenv": "^16.4.5",
+    "dotenv-extended": "^2.9.0",
+    "loopback-connector-postgresql": "^7.1.8",
+    "prom-client": "^14.0.1",
+    "tslib": "^2.6.2"
+  },
+  "devDependencies": {
+    "@loopback/build": "^12.0.3",
+    "@loopback/eslint-config": "^16.0.1",
+    "@loopback/testlab": "^8.0.3",
+    "@types/node": "^20.12.7",
+    "eslint": "^8.57.0",
+    "source-map-support": "^0.5.21",
+    "typescript": "^5.4.5"
+  }
 }
