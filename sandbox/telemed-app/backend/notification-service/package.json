@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/telemed-notification-api",
   "private": "true",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "description": "notification.",
   "keywords": [
     "loopback-microservice",
@@ -72,8 +72,8 @@
     "@loopback/rest": "^14.0.9",
     "@loopback/rest-explorer": "^7.0.9",
     "@loopback/service-proxy": "^7.0.9",
-    "@sourceloop/core": "^17.0.3",
-    "@sourceloop/notification-service": "^16.0.3",
+    "@sourceloop/core": "^18.0.0",
+    "@sourceloop/notification-service": "^16.0.4",
     "@types/aws-lambda": "^8.10.110",
     "@vendia/serverless-express": "^4.10.1",
     "dotenv": "^16.0.3",

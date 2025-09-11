@@ -1,6 +1,6 @@
 {
     "name": "@sourceloop/authentication-service",
-    "version": "22.0.3",
+    "version": "22.0.4",
     "description": "Authentication microservice.",
     "keywords": [
         "loopback-extension",
@@ -78,7 +78,7 @@
         "@loopback/rest-explorer": "^7.0.9",
         "@loopback/service-proxy": "^7.0.9",
         "@node-saml/passport-saml": "^5.1.0",
-        "@sourceloop/core": "^17.0.3",
+        "@sourceloop/core": "^18.0.0",
         "base-64": "^1.0.0",
         "body-parser": "^1.20.3",
         "check-code-coverage": "^1.10.0",

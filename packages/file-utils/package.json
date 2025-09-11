@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/file-utils",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "description": "file upload and multipart related utilities for loopback4 applications.",
   "keywords": [
     "loopback-extension",
@@ -72,7 +72,7 @@
     "@loopback/repository": "^7.0.9",
     "@loopback/rest": "^14.0.9",
     "@loopback/rest-explorer": "^7.0.9",
-    "@sourceloop/core": "^17.0.3",
+    "@sourceloop/core": "^18.0.0",
     "@types/multer": "^1.4.11",
     "file-type": "^16.5.4",
     "lodash": "^4.17.21",
