@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/payment-service",
-  "version": "18.0.0",
+  "version": "19.0.0",
   "description": "payment microservice",
   "keywords": [
     "loopback-extension",
@@ -81,7 +81,7 @@
     "@loopback/rest-explorer": "^8.0.4",
     "@loopback/service-proxy": "^8.0.3",
     "@paypal/checkout-server-sdk": "^1.0.3",
-    "@sourceloop/core": "^19.0.0",
+    "@sourceloop/core": "^20.0.0",
     "dotenv": "^16.4.5",
     "dotenv-extended": "^2.9.0",
     "handlebars": "^4.7.7",

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 17.0.0 (2025-09-12)
+
+* refactor(chore): dist added (#2343) ([27aefcc](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/27aefcc)), closes [#2343](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2343) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323)
+
+
+### BREAKING CHANGE
+
+* YES
+
+
+
+
 ## 16.0.0 (2025-09-12)
 
 * GH-2323-version-upgrade (#2340) ([475679b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/475679b)), closes [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323) [#2340](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2340) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323)

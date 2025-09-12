@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/chat-notif-example-notif-socket",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "sample for real-time chat api micro service using notification service and chat service. Provider can be socket. Need this in sandbox.",
   "keywords": [
     "loopback-application",
@@ -59,8 +59,8 @@
     "@loopback/rest": "^15.0.4",
     "@loopback/rest-explorer": "^8.0.4",
     "@loopback/service-proxy": "^8.0.3",
-    "@sourceloop/core": "^19.0.0",
-    "@sourceloop/notification-service": "^17.0.0",
+    "@sourceloop/core": "^20.0.0",
+    "@sourceloop/notification-service": "^18.0.0",
     "db-migrate": "^1.0.0-beta.21",
     "db-migrate-pg": "^1.3.0",
     "dotenv": "^16.0.3",

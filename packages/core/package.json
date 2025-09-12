@@ -1,6 +1,6 @@
 {
     "name": "@sourceloop/core",
-    "version": "19.0.0",
+    "version": "20.0.0",
     "description": "Sourceloop core package",
     "keywords": [
         "loopback-extension",
