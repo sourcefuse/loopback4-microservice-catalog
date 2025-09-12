@@ -19,6 +19,14 @@ export class BpmnProvider implements Provider<WorflowManager> {
     @service(CamundaService)
     private readonly camunda: CamundaService,
   ) {}
+  /**
+   * The function returns an object with methods for interacting with workflows, including getting,
+   * starting, creating, updating, and deleting workflows and workflow versions using Camunda.
+   * @returns A `WorkflowManager` object is being returned, which contains methods for interacting with
+   * workflows such as `getWorkflowById`, `startWorkflow`, `createWorkflow`, `updateWorkflow`,
+   * `deleteWorkflowById`, and `deleteWorkflowVersionById`. Each method is asynchronous and performs
+   * operations related to workflows using the provided `camunda` service.
+   */
   value(): WorflowManager {
     return {
       getWorkflowById: async workflow => {

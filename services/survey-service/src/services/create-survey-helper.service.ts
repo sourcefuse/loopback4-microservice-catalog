@@ -23,6 +23,17 @@ export class CreateSurveyHelperService {
     protected surveyResponderRepository: SurveyResponderRepository,
   ) {}
 
+  /**
+   * The function `copyFromBaseSurvey` copies properties from a base survey to a new survey object in
+   * TypeScript.
+   * @param survey - The `copyFromBaseSurvey` function takes a parameter `survey` of type
+   * `Omit<SurveyDto, 'id'>`. This means that the `survey` parameter should be an object that has all
+   * the properties of `SurveyDto` except for the `id` property.
+   * @returns The `copyFromBaseSurvey` function returns the `survey` object with the `isEnableWeights`
+   * property set based on the corresponding property value from the base survey identified by
+   * `baseSurveyId`. If `baseSurveyId` is not provided or the base survey is not found, an error will
+   * be thrown.
+   */
   async copyFromBaseSurvey(survey: Omit<SurveyDto, 'id'>) {
     if (!survey.baseSurveyId) {
       return survey;

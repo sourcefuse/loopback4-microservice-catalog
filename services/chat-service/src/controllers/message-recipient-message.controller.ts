@@ -40,6 +40,12 @@ export class MessageRecipientMessageController {
       },
     },
   })
+  /**
+   * This async function retrieves a message by its recipient ID.
+   * @param id - The `id` parameter is a string representing the unique identifier of a message
+   * recipient.
+   * @returns A Promise that resolves to a Message object.
+   */
   async getMessage(
     @param.path.string('id') id: typeof MessageRecipient.prototype.id,
   ): Promise<Message> {

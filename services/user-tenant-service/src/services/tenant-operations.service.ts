@@ -17,6 +17,17 @@ export class TenantOperationsService {
     readonly userTenantRepository: UserTenantRepository,
   ) {}
 
+  /**
+   * This TypeScript function creates a role for a specific tenant after checking for existing roles
+   * with the same name and authorization access.
+   * @param {string} tenantId - The `tenantId` parameter is a string that represents the unique
+   * identifier of the tenant to which the role belongs. It is used to associate the role with a
+   * specific tenant in a multi-tenant application environment.
+   * @param role - The `role` parameter in the `createRole` function is an object that represents a
+   * role entity. It contains properties such as `name`, `description`, `permissions`, and `tenantId`.
+   * The `Omit<Role, 'id'>` type indicates that the `id` property should be
+   * @returns The `createRole` function returns a Promise that resolves to a `Role` object.
+   */
   async createRole(tenantId: string, role: Omit<Role, 'id'>): Promise<Role> {
     const roleInDb = await this.roleRepository.findOne({
       where: {

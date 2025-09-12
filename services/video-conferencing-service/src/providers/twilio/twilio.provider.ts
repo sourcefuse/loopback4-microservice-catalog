@@ -18,6 +18,16 @@ export class TwilioProvider implements Provider<TwilioVideoChat> {
     @service(TwilioService) private readonly twilioService: TwilioService,
   ) {}
 
+  /**
+   * The function returns an object with methods for interacting with Twilio services such as getting
+   * tokens, meeting links, archives, setting upload targets, getting features, and checking webhook
+   * payloads.
+   * @returns The `value()` function returns an object with several methods related to interacting with
+   * Twilio services. These methods include `getToken`, `getMeetingLink`, `getArchives`,
+   * `deleteArchive`, `setUploadTarget`, `getFeatures`, and `checkWebhookPayload`. Each method performs
+   * a specific action such as retrieving a token, getting a meeting link, fetching archives, deleting
+   * an archive, setting
+   */
   value() {
     return {
       getToken: (

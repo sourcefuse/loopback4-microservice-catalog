@@ -17,6 +17,17 @@ export class ActiveUserFilterBuilderService {
     public userTenantRepo: UserTenantRepository,
   ) {}
 
+  /**
+   * The function `buildActiveUsersFilter` asynchronously builds a filter based on active users,
+   * considering different user identities and inclusion/exclusion criteria.
+   * @param {ActiveUsersFilter} filter - The `buildActiveUsersFilter` function takes in a parameter
+   * `filter` of type `ActiveUsersFilter`. This filter object contains information about the users to
+   * be included or excluded from the filter.
+   * @returns The function `buildActiveUsersFilter` returns an object with the key "actor" containing
+   * an array of actor IDs based on the provided `ActiveUsersFilter` input. The array of actor IDs is
+   * determined based on the conditions specified in the function, including the user identity type,
+   * actor key, and inclusion/exclusion criteria.
+   */
   async buildActiveUsersFilter(filter: ActiveUsersFilter): Promise<AnyObject> {
     let actorIds: string[] = [];
     // sonarignore:start

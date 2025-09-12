@@ -54,6 +54,15 @@ export class PaypalProvider implements Provider<PayPalPaymentGateway> {
     this.client = new paypal.core.PayPalHttpClient(this.environment);
   }
 
+  /**
+   * The `value` function in the TypeScript code handles payment processing, including creating orders,
+   * capturing charges, and processing refunds.
+   * @returns The `value()` function returns an object with several asynchronous functions for handling
+   * payment-related operations. These functions include `create` for creating a payment order,
+   * `charge` for capturing payment for an order, `refund` for processing refunds, `subscriptionCreate`
+   * for creating subscriptions (to be developed), `subscriptionCharge` for charging subscriptions (to
+   * be developed), and `subscriptionWebHook` for handling subscription
+   */
   value() {
     return {
       create: async (payorder: Orders, paymentTemplate: string) => {

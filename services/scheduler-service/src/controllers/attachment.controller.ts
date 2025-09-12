@@ -57,6 +57,14 @@ export class AttachmentController {
       },
     },
   })
+  /**
+   * This TypeScript function creates a new Attachment object by excluding the 'id' field and returns a
+   * Promise of the created Attachment.
+   * @param attachment - The `attachment` parameter in the `create` function is an object that
+   * represents an attachment. It is of type `Omit<Attachment, 'id'>`, which means it includes all
+   * properties of the `Attachment` type except for the `id` property. This object is used to create a
+   * @returns The `create` method is returning a Promise that resolves to an `Attachment` object.
+   */
   async create(
     @requestBody({
       content: {

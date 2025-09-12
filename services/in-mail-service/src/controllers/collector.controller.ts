@@ -90,6 +90,21 @@ export class CollectorController {
       [STATUS_CODE.BAD_REQUEST]: {description: NOT_FOUND_MESSAGE},
     },
   })
+  /**
+   * This function fetches a thread by its ID, retrieves related messages, updates group visibility,
+   * and returns the thread view along with the message count.
+   * @param {string} threadId - The `threadId` parameter is a string that represents the unique
+   * identifier of a thread. It is used to fetch information related to a specific thread in the
+   * system.
+   * @param filter - The `filter` parameter in the `fetchThreadById` function is of type
+   * `Partial<Thread>`, which means it is an object that may contain some properties of the `Thread`
+   * type. This parameter is used to filter the threads based on certain criteria specified in the
+   * object. You can pass
+   * @returns The function `fetchThreadById` is returning an object with two properties: `items` and
+   * `messageCount`. The `items` property contains an array of thread views fetched from the
+   * `threadViewRepository`, while the `messageCount` property contains the length of the `threadView`
+   * array.
+   */
   async fetchThreadById(
     @param.path.string('threadId') threadId: string,
     @param.query.object('filter') filter: Partial<Thread>,

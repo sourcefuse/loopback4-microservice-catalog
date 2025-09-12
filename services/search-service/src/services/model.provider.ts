@@ -13,6 +13,14 @@ export class SearchModelProvider implements Provider<ModelProviderFn> {
     @inject(SearchServiceBindings.Config)
     private readonly config: SearchServiceConfig,
   ) {}
+  /**
+   * The function returns a ModelProviderFn that asynchronously builds a query and parameters based on
+   * search criteria and model configuration.
+   * @returns The `value()` function returns a ModelProviderFn, which is an asynchronous function that
+   * takes a `search` object and a `queryBuilder` object as parameters. Inside the function, it filters
+   * models based on the search criteria, builds a query and parameters using the queryBuilder, and
+   * returns an object containing the query and params.
+   */
   value(): ModelProviderFn {
     return async (search: SearchQuery, queryBuilder: AnyObject) => {
       let models;

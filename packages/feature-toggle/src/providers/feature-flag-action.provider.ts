@@ -152,6 +152,18 @@ export class FeatureFlagActionProvider implements Provider<FeatureFlagFn> {
     return true;
   }
 
+  /**
+   * The `getStrategy` function returns a filtering strategy based on the specified `operator` or
+   * defaults to an OR strategy.
+   * @param {FilterType | undefined} operator - The `operator` parameter in the `getStrategy` function
+   * is of type `FilterType | undefined`. It is used to determine the filtering strategy based on the
+   * specified `FilterType`. If no `operator` is provided, the function will default to using the OR
+   * filter strategy.
+   * @returns The `getStrategy` function returns a filtering strategy based on the `operator` specified
+   * in the decorator. It uses the `filterStrategyMapping` array to map the `FilterType` to the
+   * corresponding `FilterStrategy`. If the specified `operator` is found in the mapping, the
+   * corresponding strategy is returned. If not found, it defaults to using the `OrFilterStrategy`.
+   */
   getStrategy(operator: FilterType | undefined) {
     /* Filtering strategy based on the `operator` specified in the decorator. It uses the
     `filterStrategyMapping` array to map the `FilterType` to the corresponding `FilterStrategy`.
