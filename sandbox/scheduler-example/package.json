@@ -1,6 +1,6 @@
 {
     "name": "@sourceloop/schedular-example",
-    "version": "7.0.7",
+    "version": "8.0.0",
     "description": "scheduler-example.",
     "keywords": [
         "loopback-application",
@@ -58,7 +58,7 @@
         "@loopback/rest-explorer": "^7.0.9",
         "@loopback/service-proxy": "^7.0.9",
         "@sourceloop/core": "^17.0.3",
-        "@sourceloop/scheduler-service": "^15.0.3",
+        "@sourceloop/scheduler-service": "^16.0.0",
         "ajv": "^8.11.0",
         "ajv-errors": "^3.0.0",
         "dotenv": "^16.4.5",

@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 6.0.0 (2025-09-12)
+
+* Gh 2323 version upgrade (#2338) ([0e62e4a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0e62e4a)), closes [#2338](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2338) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323)
+* refactor(chore): loopback packages version upgrade (#2328) ([a728c9b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a728c9b)), closes [#2328](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2328) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323)
+* refactor(chore): version upgrade (#2336) ([cb1dba8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/cb1dba8)), closes [#2336](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2336) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323)
+
+
+### BREAKING CHANGE
+
+* YES
+* YES
+* YES
+* YES
+* YES
+* YES
+
+
+
+
 ## <small>5.1.1 (2025-09-11)</small>
 
 **Note:** Version bump only for package @sourceloop/user-tenant-service
