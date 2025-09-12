@@ -141,7 +141,7 @@ export class ReportingServiceInitializer implements LifeCycleObserver {
       const metadata = MetadataInspector.getClassMetadata(
         ReportingServiceComponentBindings.REPORT_EVENT_LISTENER_METADATA,
         serviceInstance.constructor,
-      );
+      ) as {recordType?: string} | undefined;
       /* The `if` statement is checking if the `metadata` object has a `recordType` property and if the
     `mappingsWithoutCustomListeners` set contains the `recordType` as a string. */
       if (
@@ -165,7 +165,7 @@ export class ReportingServiceInitializer implements LifeCycleObserver {
       const typeConverterMetadata = MetadataInspector.getClassMetadata(
         ReportingServiceComponentBindings.CUSTOM_TYPE_CONVERTER_METADATA,
         serviceInstance.constructor,
-      );
+      ) as {convertType?: string} | undefined;;
       if (typeConverterMetadata?.convertType) {
         customTypeConverters[typeConverterMetadata.convertType as string] =
           serviceInstance;
@@ -208,7 +208,7 @@ export class ReportingServiceInitializer implements LifeCycleObserver {
     const metadata = MetadataInspector.getClassMetadata(
       ReportingServiceComponentBindings.REPORT_EVENT_LISTENER_METADATA,
       obj.constructor,
-    );
+    ) as {recordType?: string} | undefined;
 
     return !!metadata && metadata.recordType !== undefined;
   }
@@ -224,7 +224,7 @@ export class ReportingServiceInitializer implements LifeCycleObserver {
     const metadata = MetadataInspector.getClassMetadata(
       ReportingServiceComponentBindings.CUSTOM_TYPE_CONVERTER_METADATA,
       obj.constructor,
-    );
+    ) as {convertType?: string} | undefined;
 
     return !!metadata && metadata.convertType !== undefined;
   }
