@@ -165,7 +165,7 @@ export class ReportingServiceInitializer implements LifeCycleObserver {
       const typeConverterMetadata = MetadataInspector.getClassMetadata(
         ReportingServiceComponentBindings.CUSTOM_TYPE_CONVERTER_METADATA,
         serviceInstance.constructor,
-      ) as {convertType?: string} | undefined;;
+      ) as {convertType?: string} | undefined;
       if (typeConverterMetadata?.convertType) {
         customTypeConverters[typeConverterMetadata.convertType as string] =
           serviceInstance;
