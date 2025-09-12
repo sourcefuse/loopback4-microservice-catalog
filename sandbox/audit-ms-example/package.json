@@ -3,8 +3,8 @@
     "version": "0.10.7",
     "description": "An audit microservice example.",
     "keywords": [
-        "loopback-application",
-        "loopback"
+      "loopback-application",
+      "loopback"
     ],
     "private": true,
     "main": "dist/index.js",
