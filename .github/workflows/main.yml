@@ -7,7 +7,7 @@ on:
     branches: [master]
 
 jobs:
-  node_matrix_tests: 
+  node_matrix_tests:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -18,13 +18,13 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install Monorepo Deps
-        run: npm i
-      # - name: Run Test Cases
-      #   run: npm run test --workspaces --if-present
-      # - name: Run Lint Checks
-      #   run: npm run lint --workspaces --if-present
+        run: npm ci
+      - name: Run Test Cases
+        run: npm run test --workspaces --if-present
+      - name: Run Lint Checks
+        run: npm run lint --workspaces --if-present
 
-  npm_test:  
+  npm_test:
     runs-on: ubuntu-latest
     needs: node_matrix_tests
     if: success()
