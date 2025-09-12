@@ -68,7 +68,7 @@
     "loopback-connector-kv-redis": "^4.0.0",
     "loopback-connector-postgresql": "^7.1.1",
     "loopback4-authorization": "^8.0.0",
-    "loopback4-notifications": "^10.0.0",
+    "loopback4-notifications": "^9.0.1",
     "nodemailer": "^6.7.5",
     "prom-client": "^14.0.1",
     "socket.io-client": "^4.5.1",

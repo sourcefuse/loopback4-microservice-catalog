@@ -53,7 +53,7 @@
     "@loopback/core": "^7.0.3",
     "@loopback/rest": "^15.0.4",
     "@loopback/rest-explorer": "^8.0.4",
-    "@loopback/socketio": "^0.9.4",
+    "@loopback/socketio": "^0.9.5",
     "debug": "^4.4.0",
     "p-event": "^4.2.0",
     "tslib": "^2.0.0"
