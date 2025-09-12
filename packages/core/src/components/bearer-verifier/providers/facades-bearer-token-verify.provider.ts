@@ -29,6 +29,14 @@ export class FacadesBearerTokenVerifyProvider
     public authUserModel?: Constructor<EntityWithIdentifier & IAuthUser>,
   ) {}
 
+  /**
+   * The function verifies a bearer token, checks for token revocation, expiration, and password
+   * expiry, and returns the authenticated user.
+   * @returns The `value()` function returns a BearerFn function that verifies a token. Inside the
+   * function, it first checks if the token is revoked, then verifies the token using a JWT secret key.
+   * If the token is valid, it checks for password expiry and returns either an instance of
+   * `authUserModel` or the user object based on the availability of `authUserModel`.
+   */
   value(): VerifyFunction.BearerFn {
     return async (token: string, req?: Request) => {
       try {

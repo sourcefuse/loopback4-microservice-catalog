@@ -20,6 +20,11 @@ export class FileMetadataProvider
     private readonly methodName: string,
   ) {}
 
+  /**
+   * This function retrieves file request metadata for a controller class method, ensuring only one
+   * file decorator is allowed.
+   * @returns The `value()` method returns an `IFileRequestMetadata` object or `undefined`.
+   */
   value(): IFileRequestMetadata | undefined {
     if (!this.controllerClass || !this.methodName) return;
     const metadata = getFileMetadata(this.controllerClass, this.methodName);

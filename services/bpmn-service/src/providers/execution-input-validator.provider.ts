@@ -11,6 +11,14 @@ import Ajv from 'ajv';
 export class ExecutionInputValidationProvider
   implements Provider<ExecutionInputValidator>
 {
+  /**
+   * The function `value` returns an asynchronous input validator that uses Ajv to validate input
+   * against a schema and throws an error if validation fails.
+   * @returns An asynchronous function that acts as an execution input validator. The function uses the
+   * Ajv library to compile and validate input data against a given schema. If the input is valid, the
+   * function returns `true`. If the input is invalid, it throws an error with a message indicating the
+   * validation errors.
+   */
   value(): ExecutionInputValidator {
     return async (schema, input) => {
       const ajv = new Ajv();

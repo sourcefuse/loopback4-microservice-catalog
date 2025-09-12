@@ -56,6 +56,14 @@ export class FeatureValuesController {
       },
     },
   })
+  /**
+   * This function creates a new instance of FeatureValues and returns it after saving it to the
+   * database.
+   * @param {FeatureValues} featureValues - The `featureValues` parameter in the `create` function is
+   * of type `FeatureValues`. It is being passed as the request body and is used to create a new
+   * instance of `FeatureValues` in the database using the `featureValuesRepository.create` method.
+   * @returns The `create` method is returning a Promise that resolves to a `FeatureValues` object.
+   */
   async create(
     @requestBody({
       content: {

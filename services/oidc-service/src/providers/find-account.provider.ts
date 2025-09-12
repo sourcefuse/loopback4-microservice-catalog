@@ -19,6 +19,15 @@ export class FindAccountProvider implements Provider<FindAccountProviderFn> {
     protected userRepository: UserRepository,
   ) {}
 
+  /**
+   * The function returns a Promise that finds a user account based on a provided username and returns
+   * account information and claims.
+   * @returns The `value()` function is returning an asynchronous function that takes in context
+   * (`ctx`), subject (`sub`), and token as parameters and returns a Promise of `FindAccountResult`.
+   * Inside this function, it queries the user repository to find a user with the provided username
+   * (`sub`), extracts certain user claims based on a predefined list (`claimsProfile`), and constructs
+   * a response object with the account
+   */
   value(): FindAccountProviderFn {
     return async (
       ctx: unknown,

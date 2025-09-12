@@ -224,6 +224,22 @@ export class CacheService implements ICacheService {
     return this.store.set(insertionKey, insertionValue, this.configuration.ttl);
   }
 
+  /**
+   * The function `verifyInsertionTime` checks if an insertion is valid based on insertion and deletion
+   * markers and tag deletion times.
+   * @param {string} prefix - The `prefix` parameter in the `verifyInsertionTime` function is a string
+   * that represents a prefix used in building keys for data storage.
+   * @param {string} key - The `key` parameter in the `verifyInsertionTime` function is a string that
+   * represents a unique identifier for the data being inserted. It is used to build keys for insertion
+   * and deletion markers in the data store.
+   * @param {string[]} tags - The `tags` parameter in the `verifyInsertionTime` function is an array of
+   * strings representing tags associated with a key.
+   * @returns The function `verifyInsertionTime` returns a boolean value. It returns `false` under the
+   * following conditions:
+   * 1. If `insertionValue` is falsy (null, undefined, 0, false).
+   * 2. If any of the `tagDeletionTimes` is not falsy and greater than or equal to `insertionValue`.
+   * 3. If `deletionValue` is
+   */
   private async verifyInsertionTime(
     prefix: string,
     key: string,
