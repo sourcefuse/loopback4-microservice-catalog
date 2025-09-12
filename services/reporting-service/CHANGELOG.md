@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>7.0.1 (2025-09-12)</small>
+
+* refactor(chore): version upgrade (#2342) ([00101e3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/00101e3)), closes [#2342](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2342) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323)
+
+
+
+
+
 ## 7.0.0 (2025-09-12)
 
 * GH-2323-version-upgrade (#2340) ([475679b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/475679b)), closes [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323) [#2340](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2340) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323)
