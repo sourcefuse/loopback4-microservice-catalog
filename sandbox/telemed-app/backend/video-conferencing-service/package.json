@@ -73,7 +73,7 @@
     "@loopback/rest-explorer": "^8.0.4",
     "@loopback/service-proxy": "^8.0.3",
     "@sourceloop/core": "^19.0.0",
-    "@sourceloop/video-conferencing-service": "file:../../../../services/video-conferencing-service/sourceloop-video-conferencing-service-16.0.2.tgz",
+    "@sourceloop/video-conferencing-service": "^16.0.3",
     "@types/aws-lambda": "^8.10.110",
     "@vendia/serverless-express": "^4.10.1",
     "dotenv": "^16.0.3",
