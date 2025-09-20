@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/telemed-video-conferencing-api",
   "private": "true",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "video-conferencing.",
   "keywords": [
     "loopback-microservice",
@@ -73,7 +73,7 @@
     "@loopback/rest-explorer": "^8.0.4",
     "@loopback/service-proxy": "^8.0.3",
     "@sourceloop/core": "^20.0.0",
-    "@sourceloop/video-conferencing-service": "^18.0.0",
+    "@sourceloop/video-conferencing-service": "^19.0.0",
     "@types/aws-lambda": "^8.10.110",
     "@vendia/serverless-express": "^4.10.1",
     "dotenv": "^16.0.3",
