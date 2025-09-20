@@ -103,4 +103,10 @@ export class Task<TS = TaskStatus> extends UserModifiableEntity<Task> {
     type: 'string',
   })
   externalId?: string;
+
+  @property({
+    name: 'notes',
+    type: 'string',
+  })
+  notes?: string;
 }
