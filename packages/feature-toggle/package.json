@@ -65,7 +65,7 @@
     "@loopback/build": "^12.0.3",
     "@loopback/core": "^7.0.3",
     "@loopback/eslint-config": "^16.0.1",
-    "@loopback/testlab": "^7.0.8",
+    "@loopback/testlab": "^8.0.3",
     "@types/lodash": "^4.14.182",
     "@types/node": "^20.12.7",
     "eslint": "^8.57.0",
@@ -73,98 +73,35 @@
     "typescript": "^5.4.5"
   },
   "overrides": {
-    "body-parser": {
-      "debug": "^4.3.4"
-    },
-    "send": {
-      "debug": "^4.3.4"
-    },
-    "finalhandler": {
-      "debug": "^4.3.4"
-    },
-    "author": "Sourcefuse",
-    "license": "MIT",
-    "files": [
-      "README.md",
-      "dist",
-      "src",
-      "!*/__tests__"
-    ],
-    "peerDependencies": {
-      "@loopback/core": "^7.0.3"
-    },
-    "dependencies": {
-      "@loopback/boot": "^8.0.4",
-      "@loopback/context": "^8.0.3",
-      "@loopback/core": "^7.0.3",
-      "@loopback/express": "^8.0.3",
-      "@loopback/repository": "^8.0.3",
-      "@loopback/rest": "^15.0.4",
-      "@loopback/rest-explorer": "^8.0.4",
-      "@loopback/service-proxy": "^8.0.3",
-      "@sourceloop/core": "^18.0.0",
-      "lodash": "^4.17.21",
-      "loopback4-authentication": "^13.0.0",
-      "sinon": "^14.0.0",
-      "tslib": "^2.6.2"
-    },
-    "devDependencies": {
-      "@loopback/build": "^12.0.3",
-      "@loopback/core": "^7.0.3",
-      "@loopback/eslint-config": "^16.0.1",
-      "@loopback/testlab": "^8.0.3",
-      "@types/lodash": "^4.14.182",
-      "@types/node": "^20.12.7",
-      "eslint": "^8.57.0",
-      "source-map-support": "^0.5.21",
-      "typescript": "^5.4.5"
-    },
-    "overrides": {
-      "body-parser": {
-        "debug": "^4.3.4"
-      },
-      "send": {
-        "debug": "^4.3.4"
-      },
-      "finalhandler": {
-        "debug": "^4.3.4"
-      },
-      "express": {
-        "debug": "^4.3.4",
-        "finalhandler": "^1.2.0",
-        "send": "^0.18.0",
-        "serve-static": "^1.15.0"
-      }
+        "body-parser": {
+            "debug": "^4.3.4"
+        },
+        "send": {
+            "debug": "^4.3.4"
+        },
+        "finalhandler": {
+            "debug": "^4.3.4"
+        },
+        "express": {
+            "debug": "^4.3.4",
+            "finalhandler": "^1.2.0",
+            "send": "^0.18.0",
+            "serve-static": "^1.15.0"
+        }
     },
     "publishConfig": {
-      "registry": "https://registry.npmjs.org/",
-      "access": "public"
+        "registry": "https://registry.npmjs.org/",
+        "access": "public"
     },
     "typedoc": {
-      "config": {
-        "entryPoints": [
-          "src/index.ts"
-        ],
-        "out": "packages/feature-toggle",
-        "plugin": [
-          "typedoc-plugin-markdown"
-        ]
-      }
+        "config": {
+            "entryPoints": [
+                "src/index.ts"
+            ],
+            "out": "packages/feature-toggle",
+            "plugin": [
+                "typedoc-plugin-markdown"
+            ]
+        }
     }
-  },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
-    "access": "public"
-  },
-  "typedoc": {
-    "config": {
-      "entryPoints": [
-        "src/index.ts"
-      ],
-      "out": "packages/feature-toggle",
-      "plugin": [
-        "typedoc-plugin-markdown"
-      ]
-    }
-  }
 }
