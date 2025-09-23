@@ -60,14 +60,6 @@ export class VideoConferencingApplication extends BootMixin(
 
     super(options);
 
-    // To check if monitoring is enabled from env or not
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const enableObf = !!+(process.env.ENABLE_OBF ?? 0);
-    // To check if authorization is enabled for swagger stats or not
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const authentication =
-      process.env.SWAGGER_USER && process.env.SWAGGER_PASSWORD ? true : false;
-
     const configObject: CoreConfig['configObject'] = {
       locales: [
         LocaleKey.en,

@@ -23,9 +23,8 @@ export class QuerySelectedFilesProvider
   ) {}
 
   value(): QuerySelectedFilesFn {
-    return async (fileName: string, filter: Filter<AuditLog>) => {
-      return this.querySelectedFiles(fileName, filter);
-    };
+    return async (fileName: string, filter: Filter<AuditLog>) =>
+      this.querySelectedFiles(fileName, filter);
   }
 
   async querySelectedFiles(fileName: string, filter: Filter<AuditLog>) {
@@ -55,7 +54,10 @@ export class QuerySelectedFilesProvider
 
     const csvRepoInstance = await this.application.getRepository(CSVRepo);
     // Fill in the json returned from the csv
-    await csvRepoInstance.createAll(json!);
+    if (!json) {
+      throw new Error('No data to create');
+    }
+    await csvRepoInstance.createAll(json);
 
     const allRecords = await csvRepoInstance.find(filter);
 

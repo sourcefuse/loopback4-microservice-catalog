@@ -88,9 +88,11 @@ export type RestOperationTemplate = {
     method: HttpMethods;
     url: string;
     headers?: {
+      // sonarignore:start
       Authorization?: '{token}' | string;
       // eslint-disable-next-line @typescript-eslint/naming-convention
       'content-type'?: 'application/json' | string;
+      // sonarignore:end
       [key: string]: string | undefined;
     };
     path?: AnyObject;
