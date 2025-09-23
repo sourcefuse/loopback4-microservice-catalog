@@ -15,7 +15,7 @@ global.sourceloop = null;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
+  const DEFAULT_PORT = 4000;
   const config = new DocumentBuilder()
     .setTitle('NestJS x SourceLoop')
     .setDescription('Trying out sourceloop with nestjs')
@@ -39,6 +39,6 @@ async function bootstrap() {
   }
   global.sourceloop = sourceloop;
 
-  await app.listen(4000);
+  await app.listen(DEFAULT_PORT);
 }
 bootstrap();

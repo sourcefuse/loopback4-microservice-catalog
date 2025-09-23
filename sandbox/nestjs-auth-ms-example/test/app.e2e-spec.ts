@@ -5,7 +5,7 @@ import { INestApplication } from '@nestjs/common';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
-
+  const HTTP_OK = 200;
   beforeAll(async () => {
     const moduleFixture = await Test.createTestingModule({
       imports: [AppModule],
@@ -22,7 +22,7 @@ describe('AppController (e2e)', () => {
   it('/ (GET)', () => {
     return request(app.getHttpServer())
       .get('/')
-      .expect(200)
+      .expect(HTTP_OK)
       .expect('Hello World!');
   });
 });

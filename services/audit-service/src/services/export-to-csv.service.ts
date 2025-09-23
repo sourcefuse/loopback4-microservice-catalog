@@ -16,9 +16,8 @@ export class ExportToCsvProvider implements Provider<ExportToCsvFn> {
     public auditLogRepository: EntityCrudRepository<AuditLog, string, {}>,
   ) {}
   value(): ExportToCsvFn {
-    return async (selectedAuditLogs: AuditLog[]) => {
-      return this.exportToCsv(selectedAuditLogs);
-    };
+    return async (selectedAuditLogs: AuditLog[]) =>
+      this.exportToCsv(selectedAuditLogs);
   }
   async exportToCsv(selectedAuditLogs: AuditLog[]): Promise<string> {
     const csvRows = [];

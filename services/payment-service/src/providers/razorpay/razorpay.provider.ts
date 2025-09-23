@@ -5,7 +5,7 @@
 import {Provider, inject} from '@loopback/core';
 import {DataObject, repository} from '@loopback/repository';
 import {ILogger, LOGGER} from '@sourceloop/core';
-
+import util from 'node:util';
 import Handlebars from 'handlebars';
 import {v4 as uuidv4} from 'uuid';
 import {ResponseMessage, Status} from '../../enums';
@@ -261,8 +261,8 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
             order[0].currency,
             (err: unknown, response: unknown) => {
               if (err) {
-                err = typeof err === 'object' ? JSON.stringify(err) : err;
-                this.logger.info(`${err}, err`);
+                const errMsg = util.inspect(err, {depth: null});
+                this.logger.info(`${errMsg}, err`);
               }
             },
           );
@@ -270,8 +270,8 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
             chargeResponse.razorpay_payment_id,
             async (err: unknown, resdata: DataObject<{status: string}>) => {
               if (err) {
-                err = typeof err === 'object' ? JSON.stringify(err) : err;
-                this.logger.info(`${err}, err`);
+                const errMsg = util.inspect(err, {depth: null});
+                this.logger.info(`${errMsg}, err`);
                 return;
               }
 

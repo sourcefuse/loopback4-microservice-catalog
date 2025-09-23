@@ -135,8 +135,11 @@ export class CreateTaskCommand implements ICommand {
             },
           }),
         );
-        await userTaskService.updateList(dbTask.id!, result['id']);
-        await taskRepo.updateById(dbTask.id!, {
+        if (!dbTask.id) {
+          throw new Error('Task ID is missing');
+        }
+        await userTaskService.updateList(dbTask.id, result['id']);
+        await taskRepo.updateById(dbTask.id, {
           externalId: result['id'],
         });
       } else {
