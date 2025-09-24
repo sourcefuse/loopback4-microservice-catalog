@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 18.0.0 (2025-09-20)
+
+* feat(chore): loopback packages upgrade (#2346) ([4a487f8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4a487f8)), closes [#2346](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2346) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323)
+
+
+### BREAKING CHANGE
+
+* YES
+
+
+
+
 ## 17.0.0 (2025-09-12)
 
 * refactor(chore): dist added (#2343) ([27aefcc](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/27aefcc)), closes [#2343](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2343) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323)

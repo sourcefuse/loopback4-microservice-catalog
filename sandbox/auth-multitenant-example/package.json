@@ -71,8 +71,8 @@
     "loopback-connector-postgresql": "^7.1.8",
     "loopback4-authentication": "^13.0.0",
     "loopback4-authorization": "^8.0.0",
-    "loopback4-helmet": "^7.0.3",
-    "loopback4-ratelimiter": "^7.0.6",
+    "loopback4-helmet": "^8.0.0",
+    "loopback4-ratelimiter": "^8.0.0",
     "loopback4-soft-delete": "^11.0.0",
     "prom-client": "^14.0.1",
     "tslib": "^2.6.2"

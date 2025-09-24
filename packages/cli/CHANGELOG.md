@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 12.0.0 (2025-09-21)
+
+* feat(chore): packages upgrade in CLI (#2349) ([3ad75c2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3ad75c2)), closes [#2349](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2349) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323)
+* refactor(chore): loopback packages version upgrade (#2328) ([a728c9b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a728c9b)), closes [#2328](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2328) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323)
+
+
+### BREAKING CHANGE
+
+* YES
+* YES
+* YES
+* YES
+
+
+
+
 ## 11.1.0 (2025-08-26)
 
 * feat(cli): add support for reporting-service (#2319) ([a25d89b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/a25d89b)), closes [#2319](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2319) [#2315](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2315)

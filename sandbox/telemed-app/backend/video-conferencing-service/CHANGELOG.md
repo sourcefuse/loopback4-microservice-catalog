@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.6.0 (2025-09-20)
+
+* Gh 2323 audit log (#2348) ([cb6bd75](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/cb6bd75)), closes [#2348](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2348) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323)
+* feat(chore): loopback packages upgrade (#2346) ([4a487f8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4a487f8)), closes [#2346](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2346) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323)
+
+
+### BREAKING CHANGE
+
+* YES
+* YES
+* YES
+* YES
+
+
+
+
 ## <small>0.5.1 (2025-09-12)</small>
 
 * refactor(chore): version upgrade (#2342) ([00101e3](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/00101e3)), closes [#2342](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2342) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323)

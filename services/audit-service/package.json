@@ -1,154 +1,154 @@
 {
-    "name": "@sourceloop/audit-service",
-    "version": "18.0.1",
-    "description": "Audit logging Microservice.",
-    "keywords": [
-        "loopback-extension",
-        "loopback"
-    ],
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
-    "engines": {
-        "node": ">=20"
+  "name": "@sourceloop/audit-service",
+  "version": "19.0.0",
+  "description": "Audit logging Microservice.",
+  "keywords": [
+    "loopback-extension",
+    "loopback"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=20"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./sequelize": {
+      "types": "./dist/repositories/sequelize/index.d.ts"
     },
-    "exports": {
-        ".": "./dist/index.js",
-        "./sequelize": {
-            "types": "./dist/repositories/sequelize/index.d.ts"
-        },
-        "./exporter": {
-            "types": "./dist/exporter/index.d.ts",
-            "default": "./dist/exporter/index.js"
-        }
-    },
-    "typesVersions": {
-        "*": {
-            "sequelize": [
-                "./dist/repositories/sequelize/index.d.ts"
-            ],
-            "exporter": [
-                "./dist/exporter/index.d.ts"
-            ]
-        }
-    },
-    "scripts": {
-        "build": "npm run clean && lb-tsc && npm run openapi-spec && npm run apidocs",
-        "build:watch": "lb-tsc --watch",
-        "lint": "npm run prettier:check && npm run eslint",
-        "lint:fix": "npm run eslint:fix && npm run prettier:fix",
-        "prettier:cli": "prettier \"**/*.ts\" \"**/*.js\"",
-        "prettier:check": "npm run prettier:cli -- -l",
-        "prettier:fix": "npm run prettier:cli -- --write",
-        "eslint": "eslint --report-unused-disable-directives .",
-        "eslint:fix": "npm run eslint -- --fix",
-        "openapi-spec": "node ./dist/openapi-spec",
-        "apidocs": "npx widdershins --language_tabs 'javascript:JavaScript:request' 'javascript--nodejs:Node.JS' --summary openapi.json -o openapi.md",
-        "pretest": "npm run build",
-        "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
-        "coverage": "lb-nyc npm run test",
-        "coverage:ci": "lb-nyc report --reporter=text-lcov | coveralls",
-        "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js",
-        "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
-        "postinstall": "node migration.js"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
-        "directory": "services/audit-service"
-    },
-    "author": "Sourcefuse",
-    "license": "MIT",
-    "files": [
-        "README.md",
-        "dist",
-        "src",
-        "migration.js",
-        "migrations",
-        "database.json",
-        "!*/__tests__"
-    ],
-    "peerDependencies": {
-        "aws-sdk": "^2.1540.0",
-        "db-migrate": "^1.0.0-beta.21",
-        "db-migrate-pg": "^1.3.0"
-    },
-    "dependencies": {
-        "@aws-sdk/client-s3": "^3.382.0",
-        "@loopback/boot": "^7.0.9",
-        "@loopback/core": "^6.1.6",
-        "@loopback/openapi-v3": "^10.0.9",
-        "@loopback/repository": "^7.0.9",
-        "@loopback/rest": "^14.0.9",
-        "@sourceloop/audit-log": "^8.0.4",
-        "@sourceloop/core": "^17.0.3",
-        "csvtojson": "^2.0.10",
-        "dotenv": "^16.4.5",
-        "dotenv-extended": "^2.9.0",
-        "loopback4-authentication": "^12.1.1",
-        "loopback4-authorization": "^7.0.3",
-        "loopback4-soft-delete": "^10.0.3",
-        "tslib": "^2.6.2"
-    },
-    "devDependencies": {
-        "@loopback/build": "^11.0.8",
-        "@loopback/eslint-config": "^15.0.4",
-        "@loopback/testlab": "^7.0.8",
-        "@types/node": "^20.12.7",
-        "db-migrate": "^1.0.0-beta.21",
-        "db-migrate-pg": "^1.3.0",
-        "eslint": "^8.57.0",
-        "exceljs": "^4.4.0",
-        "source-map-support": "^0.5.21",
-        "typescript": "^5.4.5",
-        "widdershins": "^4.0.1"
-    },
-    "optionalDependencies": {
-        "@loopback/sequelize": "^0.6.9"
-    },
-    "overrides": {
-        "widdershins": {
-            "swagger2openapi": "^7.0.8",
-            "markdown-it": "^12.3.2",
-            "yargs": "^17.4.1"
-        },
-        "body-parser": {
-            "debug": "^4.3.4"
-        },
-        "httpsnippet": {
-            "debug": "^4.3.4"
-        },
-        "send": {
-            "debug": "^4.3.4"
-        },
-        "tunnel-ssh": {
-            "debug": "^4.3.4"
-        },
-        "finalhandler": {
-            "debug": "^4.3.4"
-        },
-        "express": {
-            "debug": "^4.3.4",
-            "finalhandler": "^1.2.0",
-            "send": "^0.18.0",
-            "serve-static": "^1.15.0"
-        }
-    },
-    "publishConfig": {
-        "registry": "https://registry.npmjs.org/",
-        "access": "public"
-    },
-    "typedoc": {
-        "config": {
-            "entryPoints": [
-                "src/index.ts"
-            ],
-            "out": "services/audit-service",
-            "plugin": [
-                "typedoc-plugin-markdown"
-            ]
-        },
-        "settings": {
-            "includeOpenAPIDoc": true
-        }
+    "./exporter": {
+      "types": "./dist/exporter/index.d.ts",
+      "default": "./dist/exporter/index.js"
     }
+  },
+  "typesVersions": {
+    "*": {
+      "sequelize": [
+        "./dist/repositories/sequelize/index.d.ts"
+      ],
+      "exporter": [
+        "./dist/exporter/index.d.ts"
+      ]
+    }
+  },
+  "scripts": {
+    "build": "npm run clean && lb-tsc && npm run openapi-spec && npm run apidocs",
+    "build:watch": "lb-tsc --watch",
+    "lint": "npm run prettier:check && npm run eslint",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+    "prettier:cli": "prettier \"**/*.ts\" \"**/*.js\"",
+    "prettier:check": "npm run prettier:cli -- -l",
+    "prettier:fix": "npm run prettier:cli -- --write",
+    "eslint": "eslint --report-unused-disable-directives .",
+    "eslint:fix": "npm run eslint -- --fix",
+    "openapi-spec": "node ./dist/openapi-spec",
+    "apidocs": "npx widdershins --language_tabs 'javascript:JavaScript:request' 'javascript--nodejs:Node.JS' --summary openapi.json -o openapi.md",
+    "pretest": "npm run build",
+    "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
+    "coverage": "lb-nyc npm run test",
+    "coverage:ci": "lb-nyc report --reporter=text-lcov | coveralls",
+    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js",
+    "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
+    "postinstall": "node migration.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
+    "directory": "services/audit-service"
+  },
+  "author": "Sourcefuse",
+  "license": "MIT",
+  "files": [
+    "README.md",
+    "dist",
+    "src",
+    "migration.js",
+    "migrations",
+    "database.json",
+    "!*/__tests__"
+  ],
+  "peerDependencies": {
+    "aws-sdk": "^2.1540.0",
+    "db-migrate": "^1.0.0-beta.21",
+    "db-migrate-pg": "^1.3.0"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.382.0",
+    "@loopback/boot": "^8.0.4",
+    "@loopback/core": "^7.0.3",
+    "@loopback/openapi-v3": "^11.0.4",
+    "@loopback/repository": "^8.0.3",
+    "@loopback/rest": "^15.0.4",
+    "@sourceloop/audit-log": "^9.0.0",
+    "@sourceloop/core": "^20.0.0",
+    "csvtojson": "^2.0.10",
+    "dotenv": "^16.4.5",
+    "dotenv-extended": "^2.9.0",
+    "loopback4-authentication": "^13.0.0",
+    "loopback4-authorization": "^8.0.0",
+    "loopback4-soft-delete": "^11.0.0",
+    "tslib": "^2.6.2"
+  },
+  "devDependencies": {
+    "@loopback/build": "^12.0.3",
+    "@loopback/eslint-config": "^16.0.1",
+    "@loopback/testlab": "^8.0.3",
+    "@types/node": "^20.12.7",
+    "db-migrate": "^1.0.0-beta.21",
+    "db-migrate-pg": "^1.3.0",
+    "eslint": "^8.57.0",
+    "exceljs": "^4.4.0",
+    "source-map-support": "^0.5.21",
+    "typescript": "^5.4.5",
+    "widdershins": "^4.0.1"
+  },
+  "optionalDependencies": {
+    "@loopback/sequelize": "^0.8.0"
+  },
+  "overrides": {
+    "widdershins": {
+      "swagger2openapi": "^7.0.8",
+      "markdown-it": "^12.3.2",
+      "yargs": "^17.4.1"
+    },
+    "body-parser": {
+      "debug": "^4.3.4"
+    },
+    "httpsnippet": {
+      "debug": "^4.3.4"
+    },
+    "send": {
+      "debug": "^4.3.4"
+    },
+    "tunnel-ssh": {
+      "debug": "^4.3.4"
+    },
+    "finalhandler": {
+      "debug": "^4.3.4"
+    },
+    "express": {
+      "debug": "^4.3.4",
+      "finalhandler": "^1.2.0",
+      "send": "^0.18.0",
+      "serve-static": "^1.15.0"
+    }
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "typedoc": {
+    "config": {
+      "entryPoints": [
+        "src/index.ts"
+      ],
+      "out": "services/audit-service",
+      "plugin": [
+        "typedoc-plugin-markdown"
+      ]
+    },
+    "settings": {
+      "includeOpenAPIDoc": true
+    }
+  }
 }
