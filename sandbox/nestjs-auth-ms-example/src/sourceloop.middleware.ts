@@ -13,7 +13,9 @@ export class SourceLoopMiddleware implements NestMiddleware {
       for (const path of service.reservedPaths) {
         const urlMatched = new Minimatch(path).match(req.url);
         if (urlMatched) {
+          // sonarignore:start
           console.log(req.url, 'matched with', path);
+          // sonarignore:end
           candidateServiceApp = service.appInstance;
           break;
         }

@@ -261,8 +261,9 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
             order[0].currency,
             (err: unknown, response: unknown) => {
               if (err) {
-                err = typeof err === 'object' ? JSON.stringify(err) : err;
-                this.logger.info(`${err}, err`);
+                const errMsg =
+                  typeof err === 'object' ? JSON.stringify(err) : String(err);
+                this.logger.info(`${errMsg}, err`);
               }
             },
           );
@@ -270,8 +271,9 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
             chargeResponse.razorpay_payment_id,
             async (err: unknown, resdata: DataObject<{status: string}>) => {
               if (err) {
-                err = typeof err === 'object' ? JSON.stringify(err) : err;
-                this.logger.info(`${err}, err`);
+                const errMsg =
+                  typeof err === 'object' ? JSON.stringify(err) : String(err);
+                this.logger.info(`${errMsg}, err`);
                 return;
               }
 

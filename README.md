@@ -128,6 +128,16 @@ ARC API utilizes many LoopBack extensions in the micro-services provided, which 
     <td><a href="https://github.com/loopbackio/loopback-next/tree/master/extensions/sequelize">GitHub</a></td>
     <td><a href="https://npmjs.com/package/@loopback/sequelize">NPM</a></td>
   </tr>
+  <tr>
+    <td>loopback4-billing</td>
+    <td><a href="https://github.com/sourcefuse/loopback4-billing">GitHub</a></td>
+    <td><a href="https://www.npmjs.com/package/loopback4-billing">NPM</a></td>
+  </tr>
+    <tr>
+    <td>lb4-llm-chat-component</td>
+    <td><a href="https://github.com/sourcefuse/llm-chat-component">GitHub</a></td>
+    <td><a href="https://www.npmjs.com/package/lb4-llm-chat-component">NPM</a></td>
+  </tr>
 </table>
 
 ## Example Implementations

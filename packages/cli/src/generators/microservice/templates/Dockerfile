@@ -10,11 +10,11 @@ ARG FROM_FOLDER
 # This command is used to install some dependencies in the Docker image.
 # Nessasary for running node-prune and npm install
 RUN  apk update &&  apk add --no-cache --virtual .gyp \
-    python3 \
-    make \
-    g++ \
     bash \
-    curl
+    curl \
+    g++ \
+    make \
+    python3
 
 # This is used to download and install the `node-prune` tool in the Docker image.
 RUN curl -sfL https://gobinaries.com/tj/node-prune | bash -s -- -b /usr/local/bin

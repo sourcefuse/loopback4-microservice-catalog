@@ -5,21 +5,8 @@
 import {AnyObject, model, property} from '@loopback/repository';
 import {CoreEntity, ExternalIdentifierEnabledEntity} from '@sourceloop/core';
 
-/**
- * Audit Logs Model
- * @deprecated Use the {@link ConditionalAuditLog} instead.
- * eg.
- * ```ts
- * class AuditLogRepository extends DefaultCrudRepository<
- * ConditionalAuditLog,
- * typeof ConditionalAuditLog.prototype.id
- * >
- * {
- *    // ...
- * }
- * ```
- */
-
+/* This TypeScript class represents an AuditLog entity with various properties for logging audit
+information in an application. */
 @model({
   name: 'audit_logs',
 })

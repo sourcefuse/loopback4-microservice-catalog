@@ -1,8 +1,9 @@
+export const ACTED_AT_ORDER = 'actedAt ASC';
 export const filterAppliedActedAt = {
   offset: 0,
   limit: 100,
   skip: 0,
-  order: ['actedAt ASC'],
+  order: [ACTED_AT_ORDER],
   where: {
     and: [
       {
@@ -30,7 +31,7 @@ export const filterAppliedActedOn = {
   offset: 0,
   limit: 100,
   skip: 0,
-  order: ['actedAt ASC'],
+  order: [ACTED_AT_ORDER],
   where: {
     and: [
       {
@@ -55,7 +56,7 @@ export const filterAppliedEntityId = {
   offset: 0,
   limit: 100,
   skip: 0,
-  order: ['actedAt ASC'],
+  order: [ACTED_AT_ORDER],
   where: {
     and: [
       {

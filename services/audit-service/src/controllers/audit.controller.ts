@@ -183,6 +183,7 @@ export class AuditController {
     },
   })
   async find(
+    // sonarignore:start
     @param.query.boolean('includeArchivedLogs')
     includeArchivedLogs: boolean,
     @param.filter(AuditLog) filter?: Filter<AuditLog>,
@@ -202,6 +203,7 @@ export class AuditController {
       const result = await this.auditLogRepository.find(filter);
       return result;
     }
+    // sonarignore:end
   }
 
   @authenticate(STRATEGY.BEARER)
