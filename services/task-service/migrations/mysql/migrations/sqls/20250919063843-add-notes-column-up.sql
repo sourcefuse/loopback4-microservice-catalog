@@ -1,0 +1,2 @@
+ALTER TABLE main.tasks
+ADD COLUMN notes TEXT;
