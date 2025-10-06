@@ -2,8 +2,8 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import { inject } from '@loopback/context';
-import { repository } from '@loopback/repository';
+import {inject} from '@loopback/context';
+import {repository} from '@loopback/repository';
 import {
   get,
   getModelSchemaRef,
@@ -30,11 +30,11 @@ import {
   AuthErrorKeys,
   STRATEGY,
 } from 'loopback4-authentication';
-import { authorize } from 'loopback4-authorization';
-import { URLSearchParams } from 'url';
-import { AuthCodeBindings, AuthCodeGeneratorFn } from '../../../providers';
-import { AuthClientRepository } from '../../../repositories';
-import { AuthUser, ClientAuthRequest, TokenResponse } from '../models';
+import {authorize} from 'loopback4-authorization';
+import {URLSearchParams} from 'url';
+import {AuthCodeBindings, AuthCodeGeneratorFn} from '../../../providers';
+import {AuthClientRepository} from '../../../repositories';
+import {AuthUser, ClientAuthRequest, TokenResponse} from '../models';
 
 const queryGen = (from: 'body' | 'query') => {
   return (req: Request) => {
@@ -215,18 +215,18 @@ export class KeycloakLoginController {
     }
     try {
       const token = await this.getAuthCode(client, user);
-      
+
       // Build query params from state (excluding client_id) and add the code
       const redirectParams = new URLSearchParams();
       redirectParams.set('code', token);
-      
+
       // Add all other state params to the redirect URL
       stateParams.forEach((value, key) => {
         if (key !== 'client_id') {
           redirectParams.set(key, value);
         }
       });
-      
+
       response.redirect(`${client.redirectUrl}?${redirectParams.toString()}`);
     } catch (error) {
       this.logger.error(error);

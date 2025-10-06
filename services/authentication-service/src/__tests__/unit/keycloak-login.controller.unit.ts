@@ -2,14 +2,16 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import { Request, Response } from '@loopback/rest';
-import { expect } from '@loopback/testlab';
-import { ILogger } from '@sourceloop/core';
-import sinon, { SinonStub } from 'sinon';
-import { KeycloakLoginController } from '../../modules/auth/controllers/keycloak-login.controller';
-import { AuthUser } from '../../modules/auth/models';
-import { AuthCodeGeneratorFn } from '../../providers';
-import { AuthClientRepository } from '../../repositories';
+/* eslint-disable @typescript-eslint/naming-convention */
+import {Request, Response} from '@loopback/rest';
+import {expect} from '@loopback/testlab';
+import {ILogger} from '@sourceloop/core';
+import sinon, {SinonStub} from 'sinon';
+import {AuthClient} from '../../models';
+import {KeycloakLoginController} from '../../modules/auth/controllers/keycloak-login.controller';
+import {AuthUser} from '../../modules/auth/models';
+import {AuthCodeGeneratorFn} from '../../providers';
+import {AuthClientRepository} from '../../repositories';
 
 describe('Keycloak Login Controller - Unit Tests', () => {
   let controller: KeycloakLoginController;
@@ -39,10 +41,20 @@ describe('Keycloak Login Controller - Unit Tests', () => {
   });
 
   describe('queryGen function - State Handling', () => {
+    // Helper type for request with state params
+    type RequestWithState = Request & {
+      body: {client_id: string; state?: string};
+      query: {client_id: string; state?: string};
+    };
+
     // Helper function to simulate queryGen behavior for testing
-    const simulateQueryGen = (from: 'body' | 'query', req: Request): {state: string} => {
-      const clientId = (req as any)[from].client_id;
-      const existingState = (req as any)[from].state;
+    const simulateQueryGen = (
+      from: 'body' | 'query',
+      req: Request,
+    ): {state: string} => {
+      const typedReq = req as RequestWithState;
+      const clientId = typedReq[from].client_id;
+      const existingState = typedReq[from].state;
 
       let stateString: string;
 
@@ -149,21 +161,25 @@ describe('Keycloak Login Controller - Unit Tests', () => {
         const mockRequest = {
           body: {
             client_id: 'test-client-999',
-            state: 'client_id=custom-client&redirect_path=/profile&tab=settings',
+            state:
+              'client_id=custom-client&redirect_path=/profile&tab=settings',
           },
         } as Request;
 
         const result = simulateQueryGen('body', mockRequest);
 
         expect(result).to.have.property('state');
-        expect(result.state).to.equal('client_id=custom-client&redirect_path=/profile&tab=settings');
+        expect(result.state).to.equal(
+          'client_id=custom-client&redirect_path=/profile&tab=settings',
+        );
       });
 
       it('should preserve all state parameters when client_id is present', () => {
         const mockRequest = {
           query: {
             client_id: 'ignored-client',
-            state: 'client_id=actual-client&param1=value1&param2=value2&param3=value3',
+            state:
+              'client_id=actual-client&param1=value1&param2=value2&param3=value3',
           },
         } as unknown as Request;
 
@@ -199,7 +215,9 @@ describe('Keycloak Login Controller - Unit Tests', () => {
 
         const result = simulateQueryGen('query', mockRequest);
 
-        expect(result.state).to.equal('param1=val1&client_id=middle-client&param2=val2');
+        expect(result.state).to.equal(
+          'param1=val1&client_id=middle-client&param2=val2',
+        );
       });
     });
   });
@@ -229,46 +247,45 @@ describe('Keycloak Login Controller - Unit Tests', () => {
           redirectUrl: 'https://example.com/callback',
         };
 
-        authClientRepository.findOne.resolves(mockClient as any);
+        authClientRepository.findOne.resolves(
+          mockClient as unknown as AuthClient,
+        );
         getAuthCode.resolves('generated-token-123');
 
-        await controller.keycloakCallback(
-          code,
-          state,
-          mockResponse,
-          mockUser,
-        );
+        await controller.keycloakCallback(code, state, mockResponse, mockUser);
 
         expect(redirectStub.calledOnce).to.be.true();
         const redirectUrl = redirectStub.firstCall.args[0];
-        expect(redirectUrl).to.equal('https://example.com/callback?code=generated-token-123');
+        expect(redirectUrl).to.equal(
+          'https://example.com/callback?code=generated-token-123',
+        );
       });
     });
 
     describe('Scenario 2: State with client_id and additional parameters', () => {
       it('should redirect with code and all additional state parameters', async () => {
-        const state = 'client_id=test-client&redirect_path=/dashboard&session_id=abc123';
+        const state =
+          'client_id=test-client&redirect_path=/dashboard&session_id=abc123';
         const code = 'auth-code-456';
         const mockClient = {
           clientId: 'test-client',
           redirectUrl: 'https://app.example.com/auth/callback',
         };
 
-        authClientRepository.findOne.resolves(mockClient as any);
+        authClientRepository.findOne.resolves(
+          mockClient as unknown as AuthClient,
+        );
         getAuthCode.resolves('generated-token-456');
 
-        await controller.keycloakCallback(
-          code,
-          state,
-          mockResponse,
-          mockUser,
-        );
+        await controller.keycloakCallback(code, state, mockResponse, mockUser);
 
         expect(redirectStub.calledOnce).to.be.true();
         const redirectUrl = redirectStub.firstCall.args[0];
-        
+
         // Verify redirect URL contains code and all state params except client_id
-        expect(redirectUrl.includes('https://app.example.com/auth/callback?')).to.be.true();
+        expect(
+          redirectUrl.includes('https://app.example.com/auth/callback?'),
+        ).to.be.true();
         expect(redirectUrl.includes('code=generated-token-456')).to.be.true();
         expect(redirectUrl.includes('redirect_path=%2Fdashboard')).to.be.true();
         expect(redirectUrl.includes('session_id=abc123')).to.be.true();
@@ -276,55 +293,53 @@ describe('Keycloak Login Controller - Unit Tests', () => {
       });
 
       it('should handle multiple state parameters with special characters', async () => {
-        const state = 'client_id=my-client&return_url=/path/to/page&user_hint=john%40example.com&locale=en_US';
+        const state =
+          'client_id=my-client&return_url=/path/to/page&user_hint=john%40example.com&locale=en_US';
         const code = 'auth-code-789';
         const mockClient = {
           clientId: 'my-client',
           redirectUrl: 'https://secure.example.com/oauth/callback',
         };
 
-        authClientRepository.findOne.resolves(mockClient as any);
+        authClientRepository.findOne.resolves(
+          mockClient as unknown as AuthClient,
+        );
         getAuthCode.resolves('generated-token-789');
 
-        await controller.keycloakCallback(
-          code,
-          state,
-          mockResponse,
-          mockUser,
-        );
+        await controller.keycloakCallback(code, state, mockResponse, mockUser);
 
         expect(redirectStub.calledOnce).to.be.true();
         const redirectUrl = redirectStub.firstCall.args[0];
-        
+
         expect(redirectUrl.includes('code=generated-token-789')).to.be.true();
         expect(redirectUrl.includes('return_url=')).to.be.true();
-        expect(redirectUrl.includes('user_hint=john%40example.com')).to.be.true();
+        expect(
+          redirectUrl.includes('user_hint=john%40example.com'),
+        ).to.be.true();
         expect(redirectUrl.includes('locale=en_US')).to.be.true();
       });
     });
 
     describe('Scenario 3: State with complex query parameters', () => {
       it('should preserve all state parameters in redirect', async () => {
-        const state = 'client_id=complex-client&tab=settings&filter=active&sort=name&page=2';
+        const state =
+          'client_id=complex-client&tab=settings&filter=active&sort=name&page=2';
         const code = 'auth-code-complex';
         const mockClient = {
           clientId: 'complex-client',
           redirectUrl: 'https://api.example.com/redirect',
         };
 
-        authClientRepository.findOne.resolves(mockClient as any);
+        authClientRepository.findOne.resolves(
+          mockClient as unknown as AuthClient,
+        );
         getAuthCode.resolves('complex-token');
 
-        await controller.keycloakCallback(
-          code,
-          state,
-          mockResponse,
-          mockUser,
-        );
+        await controller.keycloakCallback(code, state, mockResponse, mockUser);
 
         expect(redirectStub.calledOnce).to.be.true();
         const redirectUrl = redirectStub.firstCall.args[0];
-        
+
         expect(redirectUrl.includes('code=complex-token')).to.be.true();
         expect(redirectUrl.includes('tab=settings')).to.be.true();
         expect(redirectUrl.includes('filter=active')).to.be.true();
@@ -347,9 +362,9 @@ describe('Keycloak Login Controller - Unit Tests', () => {
             mockResponse,
             mockUser,
           );
-        } catch (error: any) {
+        } catch (error) {
           errorThrown = true;
-          expect(error.statusCode).to.equal(401);
+          expect((error as {statusCode: number}).statusCode).to.equal(401);
         }
         expect(errorThrown).to.be.true();
       });
@@ -366,9 +381,9 @@ describe('Keycloak Login Controller - Unit Tests', () => {
             mockResponse,
             undefined,
           );
-        } catch (error: any) {
+        } catch (error) {
           errorThrown = true;
-          expect(error.statusCode).to.equal(401);
+          expect((error as {statusCode: number}).statusCode).to.equal(401);
         }
         expect(errorThrown).to.be.true();
       });
@@ -387,9 +402,9 @@ describe('Keycloak Login Controller - Unit Tests', () => {
             mockResponse,
             mockUser,
           );
-        } catch (error: any) {
+        } catch (error) {
           errorThrown = true;
-          expect(error.statusCode).to.equal(401);
+          expect((error as {statusCode: number}).statusCode).to.equal(401);
         }
         expect(errorThrown).to.be.true();
       });
@@ -402,7 +417,9 @@ describe('Keycloak Login Controller - Unit Tests', () => {
           redirectUrl: null,
         };
 
-        authClientRepository.findOne.resolves(mockClient as any);
+        authClientRepository.findOne.resolves(
+          mockClient as unknown as AuthClient,
+        );
 
         let errorThrown = false;
         try {
@@ -412,9 +429,9 @@ describe('Keycloak Login Controller - Unit Tests', () => {
             mockResponse,
             mockUser,
           );
-        } catch (error: any) {
+        } catch (error) {
           errorThrown = true;
-          expect(error.statusCode).to.equal(401);
+          expect((error as {statusCode: number}).statusCode).to.equal(401);
         }
         expect(errorThrown).to.be.true();
       });
@@ -428,7 +445,9 @@ describe('Keycloak Login Controller - Unit Tests', () => {
         };
         const mockError = new Error('Auth code generation failed');
 
-        authClientRepository.findOne.resolves(mockClient as any);
+        authClientRepository.findOne.resolves(
+          mockClient as unknown as AuthClient,
+        );
         getAuthCode.rejects(mockError);
 
         let errorThrown = false;
@@ -439,9 +458,9 @@ describe('Keycloak Login Controller - Unit Tests', () => {
             mockResponse,
             mockUser,
           );
-        } catch (error: any) {
+        } catch (error) {
           errorThrown = true;
-          expect(error.statusCode).to.equal(401);
+          expect((error as {statusCode: number}).statusCode).to.equal(401);
           expect(logger.error.calledOnce).to.be.true();
           expect(logger.error.firstCall.args[0]).to.equal(mockError);
         }
@@ -458,19 +477,16 @@ describe('Keycloak Login Controller - Unit Tests', () => {
           redirectUrl: 'https://example.com/callback',
         };
 
-        authClientRepository.findOne.resolves(mockClient as any);
+        authClientRepository.findOne.resolves(
+          mockClient as unknown as AuthClient,
+        );
         getAuthCode.resolves('special-token');
 
-        await controller.keycloakCallback(
-          code,
-          state,
-          mockResponse,
-          mockUser,
-        );
+        await controller.keycloakCallback(code, state, mockResponse, mockUser);
 
         expect(redirectStub.calledOnce).to.be.true();
         const redirectUrl = redirectStub.firstCall.args[0];
-        
+
         expect(redirectUrl.includes('code=special-token')).to.be.true();
         // URLSearchParams automatically encodes spaces and special characters
         expect(redirectUrl).to.match(/message=Hello(\+|%20)World/);
@@ -480,14 +496,7 @@ describe('Keycloak Login Controller - Unit Tests', () => {
     describe('Integration: Full Flow with Various State Configurations', () => {
       it('should handle empty string state gracefully with client_id appended', async () => {
         // This simulates scenario 2 where state is empty but client_id should be added
-        const mockRequest = {
-          body: {
-            client_id: 'flow-client',
-            state: '',
-          },
-        } as Request;
-
-        // Simulating queryGen would produce state with only client_id
+        // queryGen would produce state with only client_id
         const state = 'client_id=flow-client';
         const code = 'flow-code';
         const mockClient = {
@@ -495,19 +504,18 @@ describe('Keycloak Login Controller - Unit Tests', () => {
           redirectUrl: 'https://flow.example.com/callback',
         };
 
-        authClientRepository.findOne.resolves(mockClient as any);
+        authClientRepository.findOne.resolves(
+          mockClient as unknown as AuthClient,
+        );
         getAuthCode.resolves('flow-token');
 
-        await controller.keycloakCallback(
-          code,
-          state,
-          mockResponse,
-          mockUser,
-        );
+        await controller.keycloakCallback(code, state, mockResponse, mockUser);
 
         expect(redirectStub.calledOnce).to.be.true();
         const redirectUrl = redirectStub.firstCall.args[0];
-        expect(redirectUrl).to.equal('https://flow.example.com/callback?code=flow-token');
+        expect(redirectUrl).to.equal(
+          'https://flow.example.com/callback?code=flow-token',
+        );
       });
 
       it('should handle state with only non-client_id parameters (should have been appended)', async () => {
@@ -519,19 +527,16 @@ describe('Keycloak Login Controller - Unit Tests', () => {
           redirectUrl: 'https://auto.example.com/callback',
         };
 
-        authClientRepository.findOne.resolves(mockClient as any);
+        authClientRepository.findOne.resolves(
+          mockClient as unknown as AuthClient,
+        );
         getAuthCode.resolves('auto-token');
 
-        await controller.keycloakCallback(
-          code,
-          state,
-          mockResponse,
-          mockUser,
-        );
+        await controller.keycloakCallback(code, state, mockResponse, mockUser);
 
         expect(redirectStub.calledOnce).to.be.true();
         const redirectUrl = redirectStub.firstCall.args[0];
-        
+
         expect(redirectUrl.includes('code=auto-token')).to.be.true();
         expect(redirectUrl.includes('redirect=%2Fhome')).to.be.true();
         expect(redirectUrl.includes('tenant=123')).to.be.true();
@@ -539,4 +544,3 @@ describe('Keycloak Login Controller - Unit Tests', () => {
     });
   });
 });
-
