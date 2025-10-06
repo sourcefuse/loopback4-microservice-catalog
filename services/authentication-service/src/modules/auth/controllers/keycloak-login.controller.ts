@@ -2,8 +2,8 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {inject} from '@loopback/context';
-import {repository} from '@loopback/repository';
+import { inject } from '@loopback/context';
+import { repository } from '@loopback/repository';
 import {
   get,
   getModelSchemaRef,
@@ -30,16 +30,38 @@ import {
   AuthErrorKeys,
   STRATEGY,
 } from 'loopback4-authentication';
-import {authorize} from 'loopback4-authorization';
-import {URLSearchParams} from 'url';
-import {AuthCodeBindings, AuthCodeGeneratorFn} from '../../../providers';
-import {AuthClientRepository} from '../../../repositories';
-import {AuthUser, ClientAuthRequest, TokenResponse} from '../models';
+import { authorize } from 'loopback4-authorization';
+import { URLSearchParams } from 'url';
+import { AuthCodeBindings, AuthCodeGeneratorFn } from '../../../providers';
+import { AuthClientRepository } from '../../../repositories';
+import { AuthUser, ClientAuthRequest, TokenResponse } from '../models';
 
 const queryGen = (from: 'body' | 'query') => {
   return (req: Request) => {
+    const clientId = req[from].client_id;
+    const existingState = req[from].state;
+
+    let stateString: string;
+
+    if (!existingState) {
+      // Case 1: No state passed, use default client_id
+      stateString = `client_id=${clientId}`;
+    } else {
+      // Parse existing state to check if client_id is present
+      const stateParams = new URLSearchParams(existingState);
+      const hasClientId = stateParams.has('client_id');
+
+      if (!hasClientId) {
+        // Case 2: State passed without client_id, append it
+        stateString = `${existingState}&client_id=${clientId}`;
+      } else {
+        // Case 3: State passed with client_id (and possibly other properties)
+        stateString = existingState;
+      }
+    }
+
     return {
-      state: `client_id=${req[from].client_id}`,
+      state: stateString,
     };
   };
 };
@@ -178,7 +200,8 @@ export class KeycloakLoginController {
     @inject(AuthenticationBindings.CURRENT_USER)
     user: AuthUser | undefined,
   ): Promise<void> {
-    const clientId = new URLSearchParams(state).get('client_id');
+    const stateParams = new URLSearchParams(state);
+    const clientId = stateParams.get('client_id');
     if (!clientId || !user) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
     }
@@ -192,7 +215,19 @@ export class KeycloakLoginController {
     }
     try {
       const token = await this.getAuthCode(client, user);
-      response.redirect(`${client.redirectUrl}?code=${token}`);
+      
+      // Build query params from state (excluding client_id) and add the code
+      const redirectParams = new URLSearchParams();
+      redirectParams.set('code', token);
+      
+      // Add all other state params to the redirect URL
+      stateParams.forEach((value, key) => {
+        if (key !== 'client_id') {
+          redirectParams.set(key, value);
+        }
+      });
+      
+      response.redirect(`${client.redirectUrl}?${redirectParams.toString()}`);
     } catch (error) {
       this.logger.error(error);
       throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
