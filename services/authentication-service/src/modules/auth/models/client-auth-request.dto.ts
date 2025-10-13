@@ -25,4 +25,10 @@ export class ClientAuthRequest extends CoreModel<ClientAuthRequest> {
     required: true,
   })
   client_secret: string; //NOSONAR
+
+  @property({
+    type: 'string',
+    description: ModelPropertyDescriptionString.reqStrPropDesc,
+  })
+  state?: string;
 }
