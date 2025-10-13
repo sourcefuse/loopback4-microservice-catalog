@@ -28,7 +28,6 @@ export class ClientAuthRequest extends CoreModel<ClientAuthRequest> {
 
   @property({
     type: 'string',
-    description: ModelPropertyDescriptionString.reqStrPropDesc,
   })
   state?: string;
 }
