@@ -41,28 +41,21 @@ const queryGen = (from: 'body' | 'query') => {
     const clientId = req[from].client_id;
     const existingState = req[from].state;
 
-    let stateString: string;
-
+    // Case 1: No state passed, use default client_id
     if (!existingState) {
-      // Case 1: No state passed, use default client_id
-      stateString = `client_id=${clientId}`;
-    } else {
-      // Parse existing state to check if client_id is present
-      const stateParams = new URLSearchParams(existingState);
-      const hasClientId = stateParams.has('client_id');
-
-      if (!hasClientId) {
-        // Case 2: State passed without client_id, append it
-        stateString = `${existingState}&client_id=${clientId}`;
-      } else {
-        // Case 3: State passed with client_id (and possibly other properties)
-        stateString = existingState;
-      }
+      return {state: `client_id=${clientId}`};
     }
 
-    return {
-      state: stateString,
-    };
+    // Parse existing state to check if client_id is present
+    const stateParams = new URLSearchParams(existingState);
+
+    // Case 2: State passed without client_id, append it
+    // Case 3: State passed with client_id (and possibly other properties)
+    const stateString = stateParams.has('client_id')
+      ? existingState
+      : `${existingState}&client_id=${clientId}`;
+
+    return {state: stateString};
   };
 };
 
@@ -221,11 +214,9 @@ export class KeycloakLoginController {
       redirectParams.set('code', token);
 
       // Add all other state params to the redirect URL
-      stateParams.forEach((value, key) => {
-        if (key !== 'client_id') {
-          redirectParams.set(key, value);
-        }
-      });
+      Array.from(stateParams.entries())
+        .filter(([key]) => key !== 'client_id')
+        .forEach(([key, value]) => redirectParams.set(key, value));
 
       response.redirect(`${client.redirectUrl}?${redirectParams.toString()}`);
     } catch (error) {
