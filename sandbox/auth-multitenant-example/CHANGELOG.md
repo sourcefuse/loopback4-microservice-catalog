@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 10.0.0 (2025-10-14)
+
+* feat(chore): packages upgrade in CLI (#2349) ([3ad75c2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3ad75c2)), closes [#2349](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2349) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323)
+
+
+### BREAKING CHANGE
+
+* YES
+
+
+
+
 ## <small>9.0.1 (2025-09-12)</small>
 
 **Note:** Version bump only for package @sourceloop/auth-multitenant-example

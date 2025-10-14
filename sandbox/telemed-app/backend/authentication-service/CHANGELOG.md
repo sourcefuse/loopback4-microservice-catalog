@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.8.0 (2025-10-14)
+
+* feat(chore): loopback packages upgrade (#2346) ([4a487f8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4a487f8)), closes [#2346](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2346) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323)
+
+
+### BREAKING CHANGE
+
+* YES
+
+
+
+
 ## <small>0.7.1 (2025-09-12)</small>
 
 **Note:** Version bump only for package @sourceloop/telemed-auth-api

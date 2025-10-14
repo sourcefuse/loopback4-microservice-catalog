@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 24.1.0 (2025-10-14)
+
+* refactor(authentication-service): streamline state handling in KeycloakLoginController and add optio ([8c8bad2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8c8bad2)), closes [#2355](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2355)
+* feat(authentication-service):  flexible state parameter handling in KeycloakLoginController (#2353) ([ab2636d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/ab2636d)), closes [#2353](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2353)
+
+
+
+
+
 ## 24.0.0 (2025-09-12)
 
 * refactor(chore): dist added (#2343) ([27aefcc](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/27aefcc)), closes [#2343](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2343) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323)

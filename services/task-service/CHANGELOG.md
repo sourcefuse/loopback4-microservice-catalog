@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 9.0.0 (2025-10-14)
+
+* feat(task-service): notes column in tasks table (#2345) ([24df6c9](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/24df6c9)), closes [#2345](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2345) [#2344](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2344)
+
+
+
+
+
 ## 8.0.0 (2025-09-12)
 
 * refactor(chore): dist added (#2343) ([27aefcc](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/27aefcc)), closes [#2343](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2343) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323)
