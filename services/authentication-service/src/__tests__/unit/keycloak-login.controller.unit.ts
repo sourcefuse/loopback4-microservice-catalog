@@ -225,6 +225,10 @@ describe('Keycloak Login Controller - Unit Tests', () => {
   describe('keycloakCallback method - Redirect with State Parameters', () => {
     let mockResponse: Response;
     let redirectStub: SinonStub;
+    const TEST_CLIENT_ID = 'test-client';
+    const TEST_CLIENT_ID_STATE = 'client_id=test-client';
+    const TEST_REDIRECT_URL = 'https://example.com/callback';
+    const TEST_ERROR_CODE = 'auth-code-error';
     const mockUser: AuthUser = {
       id: 'user-123',
       username: 'testuser',
@@ -240,11 +244,11 @@ describe('Keycloak Login Controller - Unit Tests', () => {
 
     describe('Scenario 1: State with only client_id', () => {
       it('should redirect with only code parameter when state contains only client_id', async () => {
-        const state = 'client_id=test-client';
+        const state = TEST_CLIENT_ID_STATE;
         const code = 'auth-code-123';
         const mockClient = {
-          clientId: 'test-client',
-          redirectUrl: 'https://example.com/callback',
+          clientId: TEST_CLIENT_ID,
+          redirectUrl: TEST_REDIRECT_URL,
         };
 
         authClientRepository.findOne.resolves(
@@ -268,7 +272,7 @@ describe('Keycloak Login Controller - Unit Tests', () => {
           'client_id=test-client&redirect_path=/dashboard&session_id=abc123';
         const code = 'auth-code-456';
         const mockClient = {
-          clientId: 'test-client',
+          clientId: TEST_CLIENT_ID,
           redirectUrl: 'https://app.example.com/auth/callback',
         };
 
@@ -352,7 +356,7 @@ describe('Keycloak Login Controller - Unit Tests', () => {
     describe('Error Scenarios', () => {
       it('should throw error when client_id is missing from state', async () => {
         const state = 'some_param=value';
-        const code = 'auth-code-error';
+        const code = TEST_ERROR_CODE;
 
         let errorThrown = false;
         try {
@@ -370,8 +374,8 @@ describe('Keycloak Login Controller - Unit Tests', () => {
       });
 
       it('should throw error when user is undefined', async () => {
-        const state = 'client_id=test-client';
-        const code = 'auth-code-error';
+        const state = TEST_CLIENT_ID_STATE;
+        const code = TEST_ERROR_CODE;
 
         let errorThrown = false;
         try {
@@ -390,7 +394,7 @@ describe('Keycloak Login Controller - Unit Tests', () => {
 
       it('should throw error when client is not found', async () => {
         const state = 'client_id=non-existent-client';
-        const code = 'auth-code-error';
+        const code = TEST_ERROR_CODE;
 
         authClientRepository.findOne.resolves(null);
 
@@ -410,10 +414,10 @@ describe('Keycloak Login Controller - Unit Tests', () => {
       });
 
       it('should throw error when client has no redirect URL', async () => {
-        const state = 'client_id=test-client';
-        const code = 'auth-code-error';
+        const state = TEST_CLIENT_ID_STATE;
+        const code = TEST_ERROR_CODE;
         const mockClient = {
-          clientId: 'test-client',
+          clientId: TEST_CLIENT_ID,
           redirectUrl: null,
         };
 
@@ -437,11 +441,11 @@ describe('Keycloak Login Controller - Unit Tests', () => {
       });
 
       it('should log error and throw when getAuthCode fails', async () => {
-        const state = 'client_id=test-client';
-        const code = 'auth-code-error';
+        const state = TEST_CLIENT_ID_STATE;
+        const code = TEST_ERROR_CODE;
         const mockClient = {
-          clientId: 'test-client',
-          redirectUrl: 'https://example.com/callback',
+          clientId: TEST_CLIENT_ID,
+          redirectUrl: TEST_REDIRECT_URL,
         };
         const mockError = new Error('Auth code generation failed');
 
@@ -473,8 +477,8 @@ describe('Keycloak Login Controller - Unit Tests', () => {
         const state = 'client_id=test-client&message=Hello World&data=a+b=c';
         const code = 'auth-code-special';
         const mockClient = {
-          clientId: 'test-client',
-          redirectUrl: 'https://example.com/callback',
+          clientId: TEST_CLIENT_ID,
+          redirectUrl: TEST_REDIRECT_URL,
         };
 
         authClientRepository.findOne.resolves(
