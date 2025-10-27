@@ -6,7 +6,25 @@ import {expect} from '@loopback/testlab';
 import {JwtKeysRepository} from '@sourceloop/core';
 import sinon from 'sinon';
 import {SignupBearerVerifyProvider} from '../../providers';
+function log() {
+  // This is intentional
+}
 
+function info() {
+  // This is intentional
+}
+
+function warn() {
+  // This is intentional
+}
+
+function error() {
+  // This is intentional
+}
+
+function debug() {
+  // This is intentional
+}
 describe('Bearer Verify Signup Service', () => {
   let bearerVerifyProvider: SignupBearerVerifyProvider;
   let jwtKeysRepo: JwtKeysRepository;
@@ -36,26 +54,6 @@ describe('Bearer Verify Signup Service', () => {
       expect(result).to.be.eql('TokenExpired');
     });
   });
-
-  function log() {
-    // This is intentional
-  }
-
-  function info() {
-    // This is intentional
-  }
-
-  function warn() {
-    // This is intentional
-  }
-
-  function error() {
-    // This is intentional
-  }
-
-  function debug() {
-    // This is intentional
-  }
 
   function setUp() {
     jwtKeysRepo = sinon.createStubInstance(JwtKeysRepository); // Mock the repository

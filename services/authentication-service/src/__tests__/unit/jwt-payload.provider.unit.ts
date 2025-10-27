@@ -17,7 +17,25 @@ import {
   UserLevelPermissionRepository,
   UserTenantRepository,
 } from '../../repositories';
+function log() {
+  // This is intentional
+}
 
+function info() {
+  // This is intentional
+}
+
+function warn() {
+  // This is intentional
+}
+
+function error() {
+  // This is intentional
+}
+
+function debug() {
+  // This is intentional
+}
 describe('JWT Payload Provider', () => {
   let roleRepo: StubbedInstanceWithSinonAccessor<RoleRepository>;
   let userLevelPermissionRepo: StubbedInstanceWithSinonAccessor<UserLevelPermissionRepository>;
@@ -67,26 +85,6 @@ describe('JWT Payload Provider', () => {
       expect(result).to.be.eql('UserDoesNotExist');
     });
   });
-
-  function log() {
-    // This is intentional
-  }
-
-  function info() {
-    // This is intentional
-  }
-
-  function warn() {
-    // This is intentional
-  }
-
-  function error() {
-    // This is intentional
-  }
-
-  function debug() {
-    // This is intentional
-  }
 
   function setUp() {
     roleRepo = createStubInstance(RoleRepository);

@@ -96,9 +96,9 @@ export class CasbinAuthorizationProvider
     desiredPermissions: string[],
     enforcer: casbin.Enforcer,
     subject: string,
-    authDecision: boolean,
+    authDecision = false,
   ) {
-    let decision = authDecision ?? false;
+    let decision = authDecision;
     for (const resourceId of resourceIds) {
       for (const permission of desiredPermissions) {
         decision = await enforcer.enforce(subject, permission, resourceId);

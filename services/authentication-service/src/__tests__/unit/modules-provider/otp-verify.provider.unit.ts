@@ -15,7 +15,28 @@ import {OtpService} from '../../../services';
 import {OtpResponse} from '../../../modules/auth';
 import {HttpErrors} from '@loopback/rest';
 import {AuthErrorKeys} from 'loopback4-authentication';
+function log() {
+  // This is intentional
+}
 
+function info() {
+  // This is intentional
+}
+
+function warn() {
+  // This is intentional
+}
+
+function error() {
+  // This is intentional
+}
+
+function debug() {
+  // This is intentional
+}
+function otpSenderFn(): Promise<OtpResponse> {
+  return {} as Promise<OtpResponse>;
+}
 describe('OTP Verify Provider', () => {
   let userRepo: StubbedInstanceWithSinonAccessor<UserRepository>;
   let otpRepo: StubbedInstanceWithSinonAccessor<OtpCacheRepository>;
@@ -110,30 +131,6 @@ describe('OTP Verify Provider', () => {
       }
     });
   });
-
-  function log() {
-    // This is intentional
-  }
-
-  function info() {
-    // This is intentional
-  }
-
-  function warn() {
-    // This is intentional
-  }
-
-  function error() {
-    // This is intentional
-  }
-
-  function debug() {
-    // This is intentional
-  }
-
-  function otpSenderFn(): Promise<OtpResponse> {
-    return {} as Promise<OtpResponse>;
-  }
 
   function setUp() {
     userRepo = createStubInstance(UserRepository);

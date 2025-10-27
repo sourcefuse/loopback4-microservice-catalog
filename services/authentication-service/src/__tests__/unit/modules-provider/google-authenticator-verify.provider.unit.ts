@@ -21,7 +21,25 @@ import {
 } from '../../../models';
 import {HttpErrors} from '@loopback/rest';
 import {AuthErrorKeys} from 'loopback4-authentication';
+function log() {
+  // This is intentional
+}
 
+function info() {
+  // This is intentional
+}
+
+function warn() {
+  // This is intentional
+}
+
+function error() {
+  // This is intentional
+}
+
+function debug() {
+  // This is intentional
+}
 describe('Google Authenticator Verify Provider', () => {
   let userRepo: StubbedInstanceWithSinonAccessor<UserRepository>;
   let userCredsRepo: StubbedInstanceWithSinonAccessor<UserCredentialsRepository>;
@@ -108,26 +126,6 @@ describe('Google Authenticator Verify Provider', () => {
       }
     });
   });
-
-  function log() {
-    // This is intentional
-  }
-
-  function info() {
-    // This is intentional
-  }
-
-  function warn() {
-    // This is intentional
-  }
-
-  function error() {
-    // This is intentional
-  }
-
-  function debug() {
-    // This is intentional
-  }
 
   function setUp() {
     userRepo = createStubInstance(UserRepository);

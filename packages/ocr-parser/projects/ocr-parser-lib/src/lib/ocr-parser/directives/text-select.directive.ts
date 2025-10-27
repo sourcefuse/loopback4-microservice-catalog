@@ -9,6 +9,7 @@ import {
   OnDestroy,
   OnInit,
   NgZone,
+  Output,
 } from '@angular/core';
 export interface TextSelectEvent {
   text: string;
@@ -23,10 +24,9 @@ export interface SelectionRectangle {
 }
 @Directive({
   selector: '[textSelect]',
-  outputs: ['textSelectEvent: textSelect'],
 })
 export class TextSelectDirective implements OnInit, OnDestroy {
-  public textSelectEvent: EventEmitter<TextSelectEvent>;
+  @Output('textSelect') textSelectEvent = new EventEmitter<TextSelectEvent>();
   private readonly elementRef: ElementRef;
   private hasSelection: boolean;
   private readonly zone: NgZone;
