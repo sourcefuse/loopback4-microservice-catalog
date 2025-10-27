@@ -69,10 +69,10 @@ export class QuestionTemplateService {
         existingQuestion.templateId = createdTemplate.id as string;
       });
       await this.templateQuestionRepository.createAll(existingQuestions);
-      this.addDependentOnQuestionId(
+      await this.addDependentOnQuestionId(
         createdTemplate.id as string,
         existingQuestions,
-      ).catch(err => Promise.reject(err));
+      );
     }
     return createdTemplate;
   }
@@ -116,16 +116,13 @@ export class QuestionTemplateService {
       fields: ['id'],
     });
     if (questionnaireQuestions.length) {
-      this.templateQuestionRepository
-        .deleteAllHard({
-          id: {
-            inq: questionnaireQuestions.map(
-              questionnaireQuestion => questionnaireQuestion.id,
-            ),
-          },
-        })
-        .then()
-        .catch(err => Promise.reject(err));
+      await this.templateQuestionRepository.deleteAllHard({
+        id: {
+          inq: questionnaireQuestions.map(
+            questionnaireQuestion => questionnaireQuestion.id,
+          ),
+        },
+      });
     }
   }
 
@@ -248,9 +245,11 @@ export class QuestionTemplateService {
         throw new HttpErrors.NotFound('Invalid reference Id');
       }
 
+      // sonarignore:start
       this.addTemplateQuestions(questionTemplate.existingTemplateId, templateId)
         .then()
         .catch(err => Promise.reject(err));
+      // sonarignore:end
     }
     const updatedCount = await this.questionTemplateRepository.updateAll(
       questionTemplate,
@@ -261,7 +260,9 @@ export class QuestionTemplateService {
     if (updatedCount.count === 0) {
       throw new HttpErrors.BadRequest('Entity not found.');
     }
+    // sonarignore:start
     this.updateModifiedByAndOn(templateId).catch(err => Promise.reject(err));
+    // sonarignore:end
   }
 
   private checkIfAllowedToUpdate(existingQuestionnaire: QuestionTemplate) {

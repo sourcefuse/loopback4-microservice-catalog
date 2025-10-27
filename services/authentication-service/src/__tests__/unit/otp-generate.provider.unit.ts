@@ -5,7 +5,25 @@
 import {expect} from '@loopback/testlab';
 import sinon from 'sinon';
 import {OtpGenerateProvider} from '../../providers/otp-generate.provider';
+function log() {
+  // This is intentional
+}
 
+function info() {
+  // This is intentional
+}
+
+function warn() {
+  // This is intentional
+}
+
+function error() {
+  // This is intentional
+}
+
+function debug() {
+  // This is intentional
+}
 describe('OTP Generate Provider', () => {
   let otpGenerateProvider: OtpGenerateProvider;
   const logger = {
@@ -32,26 +50,6 @@ describe('OTP Generate Provider', () => {
       expect(result).to.be.String();
     });
   });
-
-  function log() {
-    // This is intentional
-  }
-
-  function info() {
-    // This is intentional
-  }
-
-  function warn() {
-    // This is intentional
-  }
-
-  function error() {
-    // This is intentional
-  }
-
-  function debug() {
-    // This is intentional
-  }
 
   function setUp() {
     otpGenerateProvider = new OtpGenerateProvider(logger);

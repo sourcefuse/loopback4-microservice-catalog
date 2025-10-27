@@ -3,7 +3,6 @@ import {ResponseDataType} from '../../enums';
 import {DataStoreDataTypeConversionFunctions} from '../../interfaces';
 import {ReportingServiceComponentBindings} from '../../keys';
 import {DataTypeMapping} from './data-type-mapping';
-/* eslint-disable */
 export class PostgresDataTypes {
   constructor(
     @inject(
@@ -12,6 +11,7 @@ export class PostgresDataTypes {
     private readonly conversionUtils: DataStoreDataTypeConversionFunctions,
   ) {}
   value(): Record<string, DataTypeMapping> {
+    /* eslint-disable @typescript-eslint/naming-convention */
     return {
       varchar: {
         dataType: ResponseDataType.string,

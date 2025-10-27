@@ -21,7 +21,7 @@ let secret: SecretEnv;
 
 export async function getSecretValue() {
   let response;
-  // eslint-disable-next-line
+  // eslint-disable-next-line no-useless-catch
   try {
     response = await client.send(
       new GetSecretValueCommand({

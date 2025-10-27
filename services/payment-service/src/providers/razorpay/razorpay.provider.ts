@@ -24,6 +24,13 @@ import {IRazorpayConfig, RazorpayPaymentGateway} from './types';
 const Razorpay = require('razorpay');
 const monthsNumCount = 12;
 
+function monthDiff(d1: Date = new Date(), d2: Date = new Date()) {
+  let months;
+  months = (d2.getFullYear() - d1.getFullYear()) * monthsNumCount;
+  months -= d1.getMonth();
+  months += d2.getMonth();
+  return months <= 0 ? 0 : months;
+}
 export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
   constructor(
     @repository(TransactionsRepository)
@@ -52,13 +59,7 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
     const transactions = await this.transactionsRepository.find({
       where: {orderId: subscription.id},
     });
-    function monthDiff(d1: Date = new Date(), d2: Date = new Date()) {
-      let months;
-      months = (d2.getFullYear() - d1.getFullYear()) * monthsNumCount;
-      months -= d1.getMonth();
-      months += d2.getMonth();
-      return months <= 0 ? 0 : months;
-    }
+
     const razorpayPlan = await this.instance.plans.fetch(subscription.planId);
     const params = {
       // eslint-disable-next-line
