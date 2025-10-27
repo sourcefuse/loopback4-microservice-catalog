@@ -90,9 +90,7 @@ export class SurveyQuestionRepository extends DefaultSoftCrudRepository<
       UPDATE survey_questions
       SET display_order = display_order + 1 
       WHERE survey_id = ? AND display_order >= ?`;
-    this.execute(query, parameters)
-      .then()
-      .catch(err => Promise.reject(err));
+    await this.execute(query, parameters);
   }
 
   async _updateSurveyModifiedByAndOn(surveyId: string) {

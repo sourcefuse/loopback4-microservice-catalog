@@ -65,9 +65,7 @@ export class SectionRepository extends SequelizeUserModifyCrudRepository<
         UPDATE ${process.env.SURVEY_DB_DATABASE}.section
         SET display_order = display_order - 1 
         WHERE survey_id = ? AND display_order > ?`;
-    this.execute(query, parameters)
-      .then()
-      .catch(err => Promise.reject(err));
+    await this.execute(query, parameters);
   }
 
   async _updateSurveyModifiedByAndOn(surveyId: string) {
