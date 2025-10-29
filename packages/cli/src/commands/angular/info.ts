@@ -3,11 +3,12 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {flags} from '@oclif/command';
+import {IConfig} from '@oclif/config';
 import {execSync} from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
 import Base from '../../command-base';
-import {AnyObject} from '../../types';
+import {AnyObject, PromptFunction} from '../../types';
 import {FileGenerator} from '../../utilities/file-generator';
 
 export class AngularInfo extends Base<{}> {
@@ -73,7 +74,7 @@ export class AngularInfo extends Base<{}> {
     }
 
     try {
-      const infoGatherer = new AngularInfo([], {} as any, {} as any);
+      const infoGatherer = new AngularInfo([], {} as unknown as IConfig, {} as unknown as PromptFunction);
       const result = await infoGatherer.getProjectInfo(inputs);
       process.chdir(originalCwd);
       return {
@@ -210,33 +211,28 @@ Status: ${fs.existsSync(mcpConfigPath) ? '✅ Configured' : '❌ Not configured'
       return 'Source directory not found';
     }
 
-    let stats = '';
-
     try {
-      // Count components
-      const componentCount = this.countFiles(srcPath, '.component.ts');
-      stats += `Components: ${componentCount}\n`;
-
-      // Count services
-      const serviceCount = this.countFiles(srcPath, '.service.ts');
-      stats += `Services: ${serviceCount}\n`;
-
-      // Count modules
-      const moduleCount = this.countFiles(srcPath, '.module.ts');
-      stats += `Modules: ${moduleCount}\n`;
-
-      // Count directives
-      const directiveCount = this.countFiles(srcPath, '.directive.ts');
-      stats += `Directives: ${directiveCount}\n`;
-
-      // Count pipes
-      const pipeCount = this.countFiles(srcPath, '.pipe.ts');
-      stats += `Pipes: ${pipeCount}\n`;
+      return this.gatherArtifactStatistics(srcPath);
     } catch (err) {
-      stats = 'Unable to gather statistics';
+      return 'Unable to gather statistics';
     }
+  }
 
-    return stats;
+  private gatherArtifactStatistics(srcPath: string): string {
+    const artifactTypes = [
+      {extension: '.component.ts', label: 'Components'},
+      {extension: '.service.ts', label: 'Services'},
+      {extension: '.module.ts', label: 'Modules'},
+      {extension: '.directive.ts', label: 'Directives'},
+      {extension: '.pipe.ts', label: 'Pipes'},
+    ];
+
+    return artifactTypes
+      .map(({extension, label}) => {
+        const count = this.countFiles(srcPath, extension);
+        return `${label}: ${count}`;
+      })
+      .join('\n');
   }
 
   private countFiles(dir: string, extension: string): number {

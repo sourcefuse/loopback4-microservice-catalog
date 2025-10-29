@@ -3,9 +3,10 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {flags} from '@oclif/command';
+import {IConfig} from '@oclif/config';
 import * as path from 'path';
 import Base from '../../command-base';
-import {AnyObject} from '../../types';
+import {AnyObject, PromptFunction} from '../../types';
 import {FileGenerator} from '../../utilities/file-generator';
 import {McpConfigInjector} from '../../utilities/mcp-injector';
 import {TemplateFetcher} from '../../utilities/template-fetcher';
@@ -137,7 +138,7 @@ export class ReactScaffold extends Base<{}> {
     }
 
     try {
-      const scaffolder = new ReactScaffold([], {} as any, {} as any);
+      const scaffolder = new ReactScaffold([], {} as unknown as IConfig, {} as unknown as PromptFunction);
       const result = await scaffolder.scaffoldProject(inputs);
       process.chdir(originalCwd);
       return {

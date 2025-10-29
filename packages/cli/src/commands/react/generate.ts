@@ -3,10 +3,10 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {flags} from '@oclif/command';
-import * as fs from 'fs';
+import {IConfig} from '@oclif/config';
 import * as path from 'path';
 import Base from '../../command-base';
-import {AnyObject} from '../../types';
+import {AnyObject, PromptFunction} from '../../types';
 import {FileGenerator} from '../../utilities/file-generator';
 
 export class ReactGenerate extends Base<{}> {
@@ -110,7 +110,7 @@ export class ReactGenerate extends Base<{}> {
             'util',
             'slice',
           ],
-        } as any,
+        } as Record<string, unknown>,
       ]);
       inputs.type = answer.type;
     }
@@ -126,7 +126,7 @@ export class ReactGenerate extends Base<{}> {
     }
 
     try {
-      const generator = new ReactGenerate([], {} as any, {} as any);
+      const generator = new ReactGenerate([], {} as unknown as IConfig, {} as unknown as PromptFunction);
       const result = await generator.generateArtifact(inputs);
       process.chdir(originalCwd);
       return {
@@ -146,31 +146,29 @@ export class ReactGenerate extends Base<{}> {
     }
   }
 
+  private getDefaultPathForType(type: string): string {
+    switch (type) {
+      case 'component':
+        return 'src/Components';
+      case 'hook':
+        return 'src/Hooks';
+      case 'context':
+        return 'src/Providers';
+      case 'page':
+        return 'src/Pages';
+      case 'slice':
+        return 'src/redux';
+      default:
+        return 'src';
+    }
+  }
+
   private async generateArtifact(inputs: AnyObject): Promise<string> {
     const {name, type, path: artifactPath, skipTests} = inputs;
     const projectRoot = this.fileGenerator['getProjectRoot']();
 
     // Determine the target path based on artifact type (matching boilerplate conventions)
-    let defaultPath = 'src';
-    switch (type) {
-      case 'component':
-        defaultPath = 'src/Components';
-        break;
-      case 'hook':
-        defaultPath = 'src/Hooks';
-        break;
-      case 'context':
-        defaultPath = 'src/Providers';
-        break;
-      case 'page':
-        defaultPath = 'src/Pages';
-        break;
-      case 'slice':
-        defaultPath = 'src/redux';
-        break;
-      default:
-        defaultPath = 'src';
-    }
+    const defaultPath = this.getDefaultPathForType(type);
 
     const targetPath = artifactPath
       ? path.join(projectRoot, artifactPath)
@@ -547,7 +545,8 @@ describe('${utilName}', () => {
 
     // Slice TypeScript file
     const sliceContent = `import {PayloadAction, createSlice} from '@reduxjs/toolkit';
-import {RootState} from 'redux/store';
+// Note: Adjust the import path for RootState based on your project structure
+import type {RootState} from '../store';
 
 export interface ${typeName}State {
   // Define your state properties here
@@ -597,7 +596,8 @@ export const select${typeName}Error = (state: RootState) => state.${sliceName}.e
     files.push(sliceFile);
 
     // API Slice (RTK Query)
-    const apiSliceContent = `import {apiSlice} from 'redux/apiSlice';
+    const apiSliceContent = `// Note: Adjust the import path for apiSlice based on your project structure
+import {apiSlice} from '../apiSlice';
 
 export const ${sliceName}ApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({

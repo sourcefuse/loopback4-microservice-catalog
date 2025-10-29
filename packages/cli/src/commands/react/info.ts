@@ -3,11 +3,12 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {flags} from '@oclif/command';
+import {IConfig} from '@oclif/config';
 import {execSync} from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
 import Base from '../../command-base';
-import {AnyObject} from '../../types';
+import {AnyObject, PromptFunction} from '../../types';
 import {FileGenerator} from '../../utilities/file-generator';
 
 export class ReactInfo extends Base<{}> {
@@ -74,7 +75,7 @@ export class ReactInfo extends Base<{}> {
     }
 
     try {
-      const infoGatherer = new ReactInfo([], {} as any, {} as any);
+      const infoGatherer = new ReactInfo([], {} as unknown as IConfig, {} as unknown as PromptFunction);
       const result = await infoGatherer.getProjectInfo(inputs);
       process.chdir(originalCwd);
       return {

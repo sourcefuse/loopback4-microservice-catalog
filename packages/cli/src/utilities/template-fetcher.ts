@@ -2,7 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {execSync} from 'child_process';
+import {spawnSync} from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -15,37 +15,106 @@ export interface TemplateFetchOptions {
 
 export class TemplateFetcher {
   /**
-   * Fetch template from GitHub repository
+   * Validate repository name to prevent injection attacks
+   */
+  private validateRepo(repo: string): void {
+    // Only allow alphanumeric, hyphens, underscores, and forward slash for org/repo format
+    const validRepoPattern = /^[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+$/;
+    if (!validRepoPattern.test(repo)) {
+      throw new Error(
+        `Invalid repository format: ${repo}. Expected format: org/repo`,
+      );
+    }
+  }
+
+  /**
+   * Validate branch name to prevent injection attacks
+   */
+  private validateBranch(branch: string): void {
+    // Only allow alphanumeric, hyphens, underscores, dots, and forward slashes
+    const validBranchPattern = /^[a-zA-Z0-9._/-]+$/;
+    if (!validBranchPattern.test(branch)) {
+      throw new Error(`Invalid branch name: ${branch}`);
+    }
+  }
+
+  /**
+   * Fetch template from GitHub repository with security and fallback for default branch
    */
   async fetchFromGitHub(options: TemplateFetchOptions): Promise<void> {
-    const {repo, targetDir, branch = 'master', removeGit = true} = options;
+    const {repo, targetDir, branch, removeGit = true} = options;
+
+    // Validate inputs to prevent command injection
+    this.validateRepo(repo);
+    if (branch) {
+      this.validateBranch(branch);
+    }
 
     // Check if target directory already exists
     if (fs.existsSync(targetDir)) {
       throw new Error(`Directory ${targetDir} already exists`);
     }
 
-    console.log(`Cloning template from ${repo} (branch: ${branch})...`);
+    // Try specified branch first, then fallback to main/master
+    const branchesToTry = branch ? [branch] : ['main', 'master'];
+    let cloneSucceeded = false;
+    let lastError: Error | undefined;
 
-    try {
-      // Clone repository
-      execSync(
-        `git clone --depth 1 --branch ${branch} https://github.com/${repo}.git ${targetDir}`,
-        {stdio: 'inherit'},
-      );
+    for (const branchName of branchesToTry) {
+      try {
+        console.log(`Cloning template from ${repo} (branch: ${branchName})...`);
 
-      // Remove .git directory if requested
-      if (removeGit) {
-        const gitDir = path.join(targetDir, '.git');
-        if (fs.existsSync(gitDir)) {
-          fs.rmSync(gitDir, {recursive: true, force: true});
+        // Use spawnSync with array arguments to prevent command injection
+        const result = spawnSync(
+          'git',
+          [
+            'clone',
+            '--depth',
+            '1',
+            '--branch',
+            branchName,
+            `https://github.com/${repo}.git`,
+            targetDir,
+          ],
+          {stdio: 'inherit'},
+        );
+
+        if (result.status === 0) {
+          cloneSucceeded = true;
+          break;
+        } else {
+          lastError = new Error(
+            `Git clone failed with status ${result.status}`,
+          );
+          // Clean up failed clone directory
+          if (fs.existsSync(targetDir)) {
+            fs.rmSync(targetDir, {recursive: true, force: true});
+          }
+        }
+      } catch (error) {
+        lastError = error as Error;
+        // Clean up failed clone directory
+        if (fs.existsSync(targetDir)) {
+          fs.rmSync(targetDir, {recursive: true, force: true});
         }
       }
-
-      console.log(`✅ Template fetched successfully`);
-    } catch (error) {
-      throw new Error(`Failed to clone template: ${error}`);
     }
+
+    if (!cloneSucceeded) {
+      throw new Error(
+        `Failed to clone template from ${repo}. Tried branches: ${branchesToTry.join(', ')}. Last error: ${lastError?.message}`,
+      );
+    }
+
+    // Remove .git directory if requested
+    if (removeGit) {
+      const gitDir = path.join(targetDir, '.git');
+      if (fs.existsSync(gitDir)) {
+        fs.rmSync(gitDir, {recursive: true, force: true});
+      }
+    }
+
+    console.log(`✅ Template fetched successfully`);
   }
 
   /**
