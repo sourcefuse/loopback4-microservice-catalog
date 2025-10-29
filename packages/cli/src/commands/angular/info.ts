@@ -4,9 +4,9 @@
 // https://opensource.org/licenses/MIT
 import {flags} from '@oclif/command';
 import {IConfig} from '@oclif/config';
-import {execSync} from 'child_process';
-import * as fs from 'fs';
-import * as path from 'path';
+import {execSync} from 'node:child_process';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 import Base from '../../command-base';
 import {AnyObject, PromptFunction} from '../../types';
 import {FileGenerator} from '../../utilities/file-generator';
@@ -98,15 +98,33 @@ export class AngularInfo extends Base<{}> {
     const {detailed} = inputs;
     const projectRoot = this.fileGenerator['getProjectRoot']();
 
-    // Read package.json
+    const packageJson = this.loadPackageJson(projectRoot);
+    let info = this.buildBasicInfo(packageJson);
+
+    info += this.getEnvironmentInfo();
+    info += this.getKeyDependencies(packageJson);
+    info += this.getScripts(packageJson);
+
+    if (detailed) {
+      info += this.getDetailedStatistics(projectRoot);
+    }
+
+    info += this.getConfigurationFiles(projectRoot);
+    info += this.getMcpConfiguration(projectRoot);
+
+    return info;
+  }
+
+  private loadPackageJson(projectRoot: string): AnyObject {
     const packageJsonPath = path.join(projectRoot, 'package.json');
     if (!fs.existsSync(packageJsonPath)) {
       throw new Error('package.json not found. Is this an Angular project?');
     }
+    return JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+  }
 
-    const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
-
-    let info = `
+  private buildBasicInfo(packageJson: AnyObject): string {
+    return `
 📦 Angular Project Information
 ═══════════════════════════════
 
@@ -115,23 +133,26 @@ Version: ${packageJson.version || 'N/A'}
 Description: ${packageJson.description || 'N/A'}
 
 `;
+  }
 
-    // Node/NPM versions
+  private getEnvironmentInfo(): string {
     try {
       const nodeVersion = execSync('node --version', {encoding: 'utf-8'}).trim();
       const npmVersion = execSync('npm --version', {encoding: 'utf-8'}).trim();
-      info += `🔧 Environment
+      return `🔧 Environment
 ───────────────
 Node: ${nodeVersion}
 NPM: ${npmVersion}
 
 `;
     } catch (err) {
-      // Ignore if node/npm not available
+      // Node/NPM not available - return empty string
+      return '';
     }
+  }
 
-    // Key dependencies
-    info += `📚 Key Dependencies
+  private getKeyDependencies(packageJson: AnyObject): string {
+    let info = `📚 Key Dependencies
 ───────────────────
 `;
     const deps = packageJson.dependencies || {};
@@ -146,34 +167,40 @@ NPM: ${npmVersion}
       'rxjs',
     ];
 
-    keyDeps.forEach(dep => {
+    for (const dep of keyDeps) {
       if (allDeps[dep]) {
         info += `${dep}: ${allDeps[dep]}\n`;
       }
-    });
-
-    // Scripts
-    if (packageJson.scripts) {
-      info += `\n⚡ Available Scripts
-──────────────────
-`;
-      Object.keys(packageJson.scripts)
-        .slice(0, 10)
-        .forEach(script => {
-          info += `${script}: ${packageJson.scripts[script]}\n`;
-        });
     }
 
-    // Project statistics (if detailed)
-    if (detailed) {
-      const stats = this.getProjectStatistics(projectRoot);
-      info += `\n📊 Project Statistics
+    return info;
+  }
+
+  private getScripts(packageJson: AnyObject): string {
+    if (!packageJson.scripts) {
+      return '';
+    }
+
+    let info = `\n⚡ Available Scripts
+──────────────────
+`;
+    const scripts = Object.keys(packageJson.scripts).slice(0, 10);
+    for (const script of scripts) {
+      info += `${script}: ${packageJson.scripts[script]}\n`;
+    }
+
+    return info;
+  }
+
+  private getDetailedStatistics(projectRoot: string): string {
+    const stats = this.getProjectStatistics(projectRoot);
+    return `\n📊 Project Statistics
 ────────────────────
 ${stats}
 `;
-    }
+  }
 
-    // Configuration files
+  private getConfigurationFiles(projectRoot: string): string {
     const configFiles = [
       'angular.json',
       'tsconfig.json',
@@ -181,22 +208,27 @@ ${stats}
       '.eslintrc.json',
     ];
 
-    info += `\n📄 Configuration Files
+    let info = `\n📄 Configuration Files
 ──────────────────────
 `;
-    configFiles.forEach(file => {
+    for (const file of configFiles) {
       const filePath = path.join(projectRoot, file);
       info += `${file}: ${fs.existsSync(filePath) ? '✅' : '❌'}\n`;
-    });
+    }
 
-    // MCP Configuration
+    return info;
+  }
+
+  private getMcpConfiguration(projectRoot: string): string {
     const mcpConfigPath = path.join(projectRoot, '.claude', 'mcp.json');
-    info += `\n🤖 MCP Configuration
+    const isConfigured = fs.existsSync(mcpConfigPath);
+
+    let info = `\n🤖 MCP Configuration
 ───────────────────
-Status: ${fs.existsSync(mcpConfigPath) ? '✅ Configured' : '❌ Not configured'}
+Status: ${isConfigured ? '✅ Configured' : '❌ Not configured'}
 `;
 
-    if (fs.existsSync(mcpConfigPath)) {
+    if (isConfigured) {
       info += `Location: .claude/mcp.json
 `;
     }
@@ -241,7 +273,7 @@ Status: ${fs.existsSync(mcpConfigPath) ? '✅ Configured' : '❌ Not configured'
     const walk = (directory: string) => {
       try {
         const files = fs.readdirSync(directory);
-        files.forEach(file => {
+        for (const file of files) {
           const filePath = path.join(directory, file);
           const stats = fs.statSync(filePath);
 
@@ -250,9 +282,9 @@ Status: ${fs.existsSync(mcpConfigPath) ? '✅ Configured' : '❌ Not configured'
           } else if (file.endsWith(extension)) {
             count++;
           }
-        });
+        }
       } catch (err) {
-        // Ignore errors
+        // Directory not accessible - skip it
       }
     };
 

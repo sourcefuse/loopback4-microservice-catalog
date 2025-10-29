@@ -4,7 +4,7 @@
 // https://opensource.org/licenses/MIT
 import {flags} from '@oclif/command';
 import {IConfig} from '@oclif/config';
-import * as path from 'path';
+import * as path from 'node:path';
 import Base from '../../command-base';
 import {AnyObject, PromptFunction} from '../../types';
 import {FileGenerator} from '../../utilities/file-generator';
@@ -494,10 +494,13 @@ export class ${className} {}
   }
 
   private getDirectiveTemplate(className: string, selector: string): string {
+    const pascalSelector = this.fileGenerator['toPascalCase'](selector);
+    const selectorName = `[app${pascalSelector}]`;
+
     return `import {Directive} from '@angular/core';
 
 @Directive({
-  selector: '[app${this.fileGenerator['toPascalCase'](selector)}]'
+  selector: '${selectorName}'
 })
 export class ${className} {
   constructor() {}

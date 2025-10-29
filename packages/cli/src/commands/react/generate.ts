@@ -4,7 +4,7 @@
 // https://opensource.org/licenses/MIT
 import {flags} from '@oclif/command';
 import {IConfig} from '@oclif/config';
-import * as path from 'path';
+import * as path from 'node:path';
 import Base from '../../command-base';
 import {AnyObject, PromptFunction} from '../../types';
 import {FileGenerator} from '../../utilities/file-generator';
@@ -444,6 +444,7 @@ describe('${pageName}Page', () => {
     this.fileGenerator['ensureDirectory'](servicePath);
 
     const serviceName = this.fileGenerator['toPascalCase'](name) + 'Service';
+    const serviceInstanceName = this.fileGenerator['toCamelCase'](name) + 'Service';
     const files: string[] = [];
 
     // Service TypeScript file
@@ -459,7 +460,7 @@ describe('${pageName}Page', () => {
   }
 }
 
-export const ${this.fileGenerator['toCamelCase'](name)}Service = new ${serviceName}();
+export const ${serviceInstanceName} = new ${serviceName}();
 `;
     const tsFile = path.join(servicePath, `${name}.service.ts`);
     this.fileGenerator['writeFile'](tsFile, tsContent);
@@ -596,17 +597,19 @@ export const select${typeName}Error = (state: RootState) => state.${sliceName}.e
     files.push(sliceFile);
 
     // API Slice (RTK Query)
+    const sliceUrl = `/${sliceName}`;
+    const sliceIdUrl = `${sliceUrl}/\${id}`;
     const apiSliceContent = `// Note: Adjust the import path for apiSlice based on your project structure
 import {apiSlice} from '../apiSlice';
 
 export const ${sliceName}ApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     get${typeName}: builder.query({
-      query: (id: string) => \`/${sliceName}/\${id}\`,
+      query: (id: string) => \`${sliceIdUrl}\`,
     }),
     create${typeName}: builder.mutation({
       query: (data: any) => ({
-        url: '/${sliceName}',
+        url: '${sliceUrl}',
         method: 'POST',
         body: data,
       }),

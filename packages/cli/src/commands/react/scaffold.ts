@@ -4,7 +4,7 @@
 // https://opensource.org/licenses/MIT
 import {flags} from '@oclif/command';
 import {IConfig} from '@oclif/config';
-import * as path from 'path';
+import * as path from 'node:path';
 import Base from '../../command-base';
 import {AnyObject, PromptFunction} from '../../types';
 import {FileGenerator} from '../../utilities/file-generator';
@@ -174,6 +174,7 @@ export class ReactScaffold extends Base<{}> {
     const targetDir = path.join(process.cwd(), name);
 
     // Step 1: Fetch template
+    // sonar-ignore: User feedback console statement
     console.log(`\n📦 Scaffolding React project '${name}'...`);
     await this.templateFetcher.smartFetch({
       repo: templateRepo,

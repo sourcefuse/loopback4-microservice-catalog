@@ -2,8 +2,8 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import * as fs from 'fs';
-import * as path from 'path';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 
 export interface McpConfig {
   mcpServers: {
@@ -50,7 +50,9 @@ export class McpConfigInjector {
     const readmeContent = this.generateReadme(framework);
     fs.writeFileSync(readmePath, readmeContent, 'utf-8');
 
+    // sonar-ignore: User feedback console statement
     console.log('✅ MCP configuration added to project');
+    // sonar-ignore: User feedback console statement
     console.log('   AI assistants can now interact with this project');
   }
 
@@ -155,6 +157,7 @@ For more information, visit: https://docs.anthropic.com/claude/docs/mcp
       'utf-8',
     );
 
+    // sonar-ignore: User feedback console statement
     console.log('✅ MCP configuration updated');
   }
 }
