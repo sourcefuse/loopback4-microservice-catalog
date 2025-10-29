@@ -14,9 +14,17 @@ import {ICommand} from '../__tests__/helper/command-test.helper';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import Base from '../command-base';
 import {AnyObject, IArg, ICommandWithMcpFlags, PromptFunction} from '../types';
+import {AngularConfig} from './angular/config';
+import {AngularGenerate} from './angular/generate';
+import {AngularInfo} from './angular/info';
+import {AngularScaffold} from './angular/scaffold';
 import {Cdk} from './cdk';
 import {Extension} from './extension';
 import {Microservice} from './microservice';
+import {ReactConfig} from './react/config';
+import {ReactGenerate} from './react/generate';
+import {ReactInfo} from './react/info';
+import {ReactScaffold} from './react/scaffold';
 import {Scaffold} from './scaffold';
 import {Update} from './update';
 
@@ -33,7 +41,24 @@ export class Mcp extends Base<{}> {
     if (cmds) {
       this.commands = cmds;
     } else {
-      this.commands = [Cdk, Extension, Microservice, Scaffold, Update];
+      this.commands = [
+        // Backend commands
+        Cdk,
+        Extension,
+        Microservice,
+        Scaffold,
+        Update,
+        // Angular commands
+        AngularGenerate,
+        AngularScaffold,
+        AngularConfig,
+        AngularInfo,
+        // React commands
+        ReactGenerate,
+        ReactScaffold,
+        ReactConfig,
+        ReactInfo,
+      ];
     }
   }
   static readonly description = `
@@ -67,6 +92,9 @@ export class Mcp extends Base<{}> {
     },
   );
   setup() {
+    // Hook process methods once before registering tools
+    this.hookProcessMethods();
+
     this.commands.forEach(command => {
       const params: Record<string, z.ZodTypeAny> = {};
       command.args?.forEach(arg => {
@@ -86,7 +114,6 @@ export class Mcp extends Base<{}> {
           },
         );
       }
-      this.hookProcessMethods();
       this.server.tool<typeof params>(
         command.name,
         command.mcpDescription,
@@ -103,9 +130,11 @@ export class Mcp extends Base<{}> {
   }
 
   private hookProcessMethods() {
-    // stub process.exit to throw an error
-    // so that we can catch it in the MCP client
-    // and handle it gracefully instead of exiting the process
+    // Save original references before overwriting
+    const originalError = console.error;
+    const originalLog = console.log;
+
+    // Stub process.exit to prevent killing the MCP server
     process.exit = () => {
       this.server.server
         .sendLoggingMessage({
@@ -114,29 +143,28 @@ export class Mcp extends Base<{}> {
           timestamp: new Date().toISOString(),
         })
         .catch(err => {
-          // sonarignore:start
-          console.error('Error sending exit message:', err);
-          // sonarignore:end
+          originalError('Error sending exit message:', err);
         });
       return undefined as never;
     };
-    // sonarignore:start
-    const original = console.error;
+
+    // Intercept console.error
     console.error = (...args: AnyObject[]) => {
       // log errors to the MCP client
       this.server.server
         .sendLoggingMessage({
-          level: 'debug',
+          level: 'error',
           message: args.map(v => JSON.stringify(v)).join(' '),
           timestamp: new Date().toISOString(),
         })
         .catch(err => {
-          original('Error sending logging message:', err);
+          originalError('Error sending logging message:', err);
         });
-      original(...args);
+      originalError(...args);
     };
+
+    // Intercept console.log
     console.log = (...args: AnyObject[]) => {
-      // sonarignore:end
       // log messages to the MCP client
       this.server.server
         .sendLoggingMessage({
@@ -145,16 +173,15 @@ export class Mcp extends Base<{}> {
           timestamp: new Date().toISOString(),
         })
         .catch(err => {
-          // sonarignore:start
-          console.error('Error sending logging message:', err);
-          // sonarignore:end
+          originalError('Error sending logging message:', err);
         });
+      originalLog(...args);
     };
   }
 
   private argToZod(arg: IArg) {
     const option = z.string().describe(arg.description ?? '');
-    return option;
+    return arg.required ? option : option.optional();
   }
 
   private flagToZod<T>(flag: IFlag<T>, checkRequired = false) {

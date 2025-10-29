@@ -31,14 +31,117 @@ USAGE
 ## Commands
 
 <!-- commands -->
+* [`sl angular:config`](#sl-angularconfig)
+* [`sl angular:generate [NAME]`](#sl-angulargenerate-name)
+* [`sl angular:info`](#sl-angularinfo)
+* [`sl angular:scaffold [NAME]`](#sl-angularscaffold-name)
 * [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
 * [`sl cdk`](#sl-cdk)
 * [`sl extension [NAME]`](#sl-extension-name)
 * [`sl help [COMMAND]`](#sl-help-command)
 * [`sl mcp`](#sl-mcp)
 * [`sl microservice [NAME]`](#sl-microservice-name)
+* [`sl react:config`](#sl-reactconfig)
+* [`sl react:generate [NAME]`](#sl-reactgenerate-name)
+* [`sl react:info`](#sl-reactinfo)
+* [`sl react:scaffold [NAME]`](#sl-reactscaffold-name)
 * [`sl scaffold [NAME]`](#sl-scaffold-name)
 * [`sl update`](#sl-update)
+
+## `sl angular:config`
+
+Update Angular environment configuration files
+
+```
+USAGE
+  $ sl angular:config
+
+OPTIONS
+  --apiUrl=apiUrl                                 Base API URL
+  --authServiceUrl=authServiceUrl                 Authentication service URL
+  --clientId=clientId                             OAuth client ID
+  --environment=(development|production|staging)  [default: development] Environment to update
+  --help                                          Show manual pages
+  --publicKey=publicKey                           Public key for authentication
+```
+
+_See code: [src/commands/angular/config.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/angular/config.ts)_
+
+## `sl angular:generate [NAME]`
+
+Generate Angular components, services, modules, and other artifacts
+
+```
+USAGE
+  $ sl angular:generate [NAME]
+
+ARGUMENTS
+  NAME  Name of the artifact to generate
+
+OPTIONS
+  --help                                                  Show manual pages
+
+  --path=path                                             Path where the artifact should be generated (relative to
+                                                          project src/app)
+
+  --project=project                                       [default: arc] Angular project name (arc, arc-lib, arc-docs,
+                                                          saas-ui)
+
+  --skipTests                                             Skip generating test files
+
+  --standalone                                            Generate as a standalone component (Angular 14+)
+
+  --type=(component|service|module|directive|pipe|guard)  Type of artifact to generate
+```
+
+_See code: [src/commands/angular/generate.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/angular/generate.ts)_
+
+## `sl angular:info`
+
+Display Angular project information and statistics
+
+```
+USAGE
+  $ sl angular:info
+
+OPTIONS
+  --detailed  Show detailed statistics
+  --help      Show manual pages
+```
+
+_See code: [src/commands/angular/info.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/angular/info.ts)_
+
+## `sl angular:scaffold [NAME]`
+
+Scaffold a new Angular project from ARC boilerplate
+
+```
+USAGE
+  $ sl angular:scaffold [NAME]
+
+ARGUMENTS
+  NAME  Name of the project
+
+OPTIONS
+  --help                             Show manual pages
+  --installDeps                      Install dependencies after scaffolding
+  --localPath=localPath              Local path to template (for development)
+
+  --templateRepo=templateRepo        [default: sourcefuse/angular-boilerplate] Custom template repository (e.g.,
+                                     sourcefuse/angular-boilerplate)
+
+  --templateVersion=templateVersion  Template version/branch to use
+
+  --withAuth                         Include authentication module
+
+  --withBreadcrumbs                  Include breadcrumb navigation
+
+  --withI18n                         Include internationalization
+
+  --withThemes                       Include theme system
+```
+
+_See code: [src/commands/angular/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/angular/scaffold.ts)_
 
 ## `sl autocomplete [SHELL]`
 
@@ -192,6 +295,94 @@ OPTIONS
 ```
 
 _See code: [src/commands/microservice.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/microservice.ts)_
+
+## `sl react:config`
+
+Update React environment configuration
+
+```
+USAGE
+  $ sl react:config
+
+OPTIONS
+  --appApiBaseUrl=appApiBaseUrl                                Application API base URL
+  --authApiBaseUrl=authApiBaseUrl                              Authentication API base URL
+  --clientId=clientId                                          OAuth client ID
+  --enableSessionTimeout                                       Enable session timeout
+  --expiryTimeInMinute=expiryTimeInMinute                      Session timeout in minutes
+  --help                                                       Show manual pages
+  --promptTimeBeforeIdleInMinute=promptTimeBeforeIdleInMinute  Prompt time before idle in minutes
+  --regenerate                                                 Regenerate config.json after updating .env
+```
+
+_See code: [src/commands/react/config.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/react/config.ts)_
+
+## `sl react:generate [NAME]`
+
+Generate React components, hooks, contexts, pages, and other artifacts
+
+```
+USAGE
+  $ sl react:generate [NAME]
+
+ARGUMENTS
+  NAME  Name of the artifact to generate
+
+OPTIONS
+  --help                                                   Show manual pages
+  --path=path                                              Path where the artifact should be generated
+  --skipTests                                              Skip generating test files
+  --type=(component|hook|context|page|service|util|slice)  Type of artifact to generate
+```
+
+_See code: [src/commands/react/generate.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/react/generate.ts)_
+
+## `sl react:info`
+
+Display React project information and statistics
+
+```
+USAGE
+  $ sl react:info
+
+OPTIONS
+  --detailed  Show detailed statistics
+  --help      Show manual pages
+```
+
+_See code: [src/commands/react/info.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/react/info.ts)_
+
+## `sl react:scaffold [NAME]`
+
+Scaffold a new React project from ARC boilerplate
+
+```
+USAGE
+  $ sl react:scaffold [NAME]
+
+ARGUMENTS
+  NAME  Name of the project
+
+OPTIONS
+  --help                             Show manual pages
+  --installDeps                      Install dependencies after scaffolding
+  --localPath=localPath              Local path to template (for development)
+
+  --templateRepo=templateRepo        [default: sourcefuse/react-boilerplate-ts-ui] Custom template repository (e.g.,
+                                     sourcefuse/react-boilerplate-ts-ui)
+
+  --templateVersion=templateVersion  Template version/branch to use
+
+  --withAuth                         Include authentication module
+
+  --withRedux                        Include Redux Toolkit state management
+
+  --withRouting                      Include React Router
+
+  --withThemes                       Include Material-UI theme system
+```
+
+_See code: [src/commands/react/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/react/scaffold.ts)_
 
 ## `sl scaffold [NAME]`
 
