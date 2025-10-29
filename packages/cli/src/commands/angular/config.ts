@@ -3,10 +3,11 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {flags} from '@oclif/command';
+import {IConfig} from '@oclif/config';
 import * as fs from 'fs';
 import * as path from 'path';
 import Base from '../../command-base';
-import {AnyObject} from '../../types';
+import {AnyObject, PromptFunction} from '../../types';
 import {FileGenerator} from '../../utilities/file-generator';
 
 export class AngularConfig extends Base<{}> {
@@ -96,7 +97,7 @@ export class AngularConfig extends Base<{}> {
     }
 
     try {
-      const configurer = new AngularConfig([], {} as any, {} as any);
+      const configurer = new AngularConfig([], {} as unknown as IConfig, {} as unknown as PromptFunction);
       const result = await configurer.updateConfig(inputs);
       process.chdir(originalCwd);
       return {

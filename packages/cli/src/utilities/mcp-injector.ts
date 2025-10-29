@@ -85,16 +85,25 @@ MCP enables AI assistants (like Claude Code) to interact with your project throu
 
 You can also use the SourceLoop CLI directly:
 
-\`\`\`bash
+${framework ? `\`\`\`bash
 # Generate code
-sl ${framework === 'angular' ? 'angular' : framework === 'react' ? 'react' : ''}:generate --type component --name MyComponent
+sl ${framework}:generate --type component --name MyComponent
 
 # Scaffold new projects
-sl ${framework === 'angular' ? 'angular' : framework === 'react' ? 'react' : ''}:scaffold my-new-project
+sl ${framework}:scaffold my-new-project
 
 # Update configuration
-sl ${framework === 'angular' ? 'angular' : framework === 'react' ? 'react' : ''}:config --help
-\`\`\`
+sl ${framework}:config --help
+\`\`\`` : `\`\`\`bash
+# Scaffold a new ARC monorepo
+sl scaffold my-monorepo
+
+# Add a microservice
+sl microservice auth-service
+
+# Update dependencies
+sl update
+\`\`\``}
 
 ## Configuration
 

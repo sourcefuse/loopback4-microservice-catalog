@@ -3,11 +3,12 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {flags} from '@oclif/command';
-import {execSync} from 'child_process';
+import {IConfig} from '@oclif/config';
+import {spawnSync} from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
 import Base from '../../command-base';
-import {AnyObject} from '../../types';
+import {AnyObject, PromptFunction} from '../../types';
 import {FileGenerator} from '../../utilities/file-generator';
 
 export class ReactConfig extends Base<{}> {
@@ -107,7 +108,7 @@ export class ReactConfig extends Base<{}> {
     }
 
     try {
-      const configurer = new ReactConfig([], {} as any, {} as any);
+      const configurer = new ReactConfig([], {} as unknown as IConfig, {} as unknown as PromptFunction);
       const result = await configurer.updateConfig(inputs);
       process.chdir(originalCwd);
       return {
@@ -127,21 +128,7 @@ export class ReactConfig extends Base<{}> {
     }
   }
 
-  private async updateConfig(inputs: AnyObject): Promise<string> {
-    const {
-      clientId,
-      appApiBaseUrl,
-      authApiBaseUrl,
-      enableSessionTimeout,
-      expiryTimeInMinute,
-      promptTimeBeforeIdleInMinute,
-      regenerate,
-    } = inputs;
-    const projectRoot = this.fileGenerator['getProjectRoot']();
-
-    const envFilePath = path.join(projectRoot, '.env');
-
-    // Create .env file if it doesn't exist
+  private ensureEnvFileExists(envFilePath: string): void {
     if (!fs.existsSync(envFilePath)) {
       const defaultEnv = `CLIENT_ID=dev-client-id
 APP_API_BASE_URL=https://api.example.com
@@ -152,55 +139,105 @@ PROMPT_TIME_BEFORE_IDLE_IN_MINUTE=5
 `;
       fs.writeFileSync(envFilePath, defaultEnv, 'utf-8');
     }
+  }
 
-    // Read current .env file
-    let envContent = fs.readFileSync(envFilePath, 'utf-8');
+  private updateEnvVariables(
+    envContent: string,
+    inputs: AnyObject,
+  ): {updatedContent: string; updates: string[]} {
     const updates: string[] = [];
+    let updatedContent = envContent;
 
-    // Update environment variables
     const envVars: Record<string, string> = {
-      CLIENT_ID: clientId,
-      APP_API_BASE_URL: appApiBaseUrl,
-      AUTH_API_BASE_URL: authApiBaseUrl,
-      ENABLE_SESSION_TIMEOUT: enableSessionTimeout,
-      EXPIRY_TIME_IN_MINUTE: expiryTimeInMinute,
-      PROMPT_TIME_BEFORE_IDLE_IN_MINUTE: promptTimeBeforeIdleInMinute,
+      CLIENT_ID: inputs.clientId,
+      APP_API_BASE_URL: inputs.appApiBaseUrl,
+      AUTH_API_BASE_URL: inputs.authApiBaseUrl,
+      ENABLE_SESSION_TIMEOUT: inputs.enableSessionTimeout,
+      EXPIRY_TIME_IN_MINUTE: inputs.expiryTimeInMinute,
+      PROMPT_TIME_BEFORE_IDLE_IN_MINUTE: inputs.promptTimeBeforeIdleInMinute,
     };
 
     for (const [key, value] of Object.entries(envVars)) {
       if (value !== undefined && value !== null) {
         const regex = new RegExp(`^${key}=.*$`, 'm');
-        if (regex.test(envContent)) {
-          envContent = envContent.replace(regex, `${key}=${value}`);
+        if (regex.test(updatedContent)) {
+          updatedContent = updatedContent.replace(regex, `${key}=${value}`);
         } else {
-          envContent += `\n${key}=${value}`;
+          updatedContent += `\n${key}=${value}`;
         }
         updates.push(`${key}=${value}`);
       }
     }
 
+    return {updatedContent, updates};
+  }
+
+  private regenerateConfigJson(
+    projectRoot: string,
+    updates: string[],
+  ): string[] {
+    const configGeneratorPath = path.join(projectRoot, 'configGenerator.js');
+    const configTemplatePath = path.join(projectRoot, 'config.template.json');
+
+    if (!fs.existsSync(configGeneratorPath)) {
+      updates.push('⚠️  configGenerator.js not found, skipped regeneration');
+      return updates;
+    }
+
+    if (!fs.existsSync(configTemplatePath)) {
+      updates.push(
+        '⚠️  config.template.json not found, skipped regeneration',
+      );
+      return updates;
+    }
+
+    const result = spawnSync(
+      'node',
+      [
+        configGeneratorPath,
+        '--templateFileName=config.template.json',
+        '--outConfigPath=./public',
+      ],
+      {
+        cwd: projectRoot,
+        stdio: 'inherit',
+      },
+    );
+
+    if (result.status === 0) {
+      updates.push('✅ Regenerated config.json in public directory');
+    } else {
+      throw new Error(
+        `configGenerator.js exited with status ${result.status}`,
+      );
+    }
+
+    return updates;
+  }
+
+  private async updateConfig(inputs: AnyObject): Promise<string> {
+    const projectRoot = this.fileGenerator['getProjectRoot']();
+    const envFilePath = path.join(projectRoot, '.env');
+
+    // Create .env file if it doesn't exist
+    this.ensureEnvFileExists(envFilePath);
+
+    // Read current .env file
+    const envContent = fs.readFileSync(envFilePath, 'utf-8');
+
+    // Update environment variables
+    const {updatedContent, updates} = this.updateEnvVariables(
+      envContent,
+      inputs,
+    );
+
     // Write updated .env file
-    fs.writeFileSync(envFilePath, envContent, 'utf-8');
+    fs.writeFileSync(envFilePath, updatedContent, 'utf-8');
 
     // Regenerate config.json if requested
-    if (regenerate) {
+    if (inputs.regenerate) {
       try {
-        const configGeneratorPath = path.join(
-          projectRoot,
-          'configGenerator.js',
-        );
-        if (fs.existsSync(configGeneratorPath)) {
-          execSync(
-            'node configGenerator.js --templateFileName=config.template.json --outConfigPath=./public',
-            {
-              cwd: projectRoot,
-              stdio: 'inherit',
-            },
-          );
-          updates.push('✅ Regenerated config.json in public directory');
-        } else {
-          updates.push('⚠️  configGenerator.js not found, skipped regeneration');
-        }
+        this.regenerateConfigJson(projectRoot, updates);
       } catch (error) {
         return `Updated .env file successfully, but failed to regenerate config.json:\n${updates.join('\n')}\n\nError: ${error}`;
       }

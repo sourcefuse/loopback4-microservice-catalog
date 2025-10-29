@@ -3,9 +3,10 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {flags} from '@oclif/command';
+import {IConfig} from '@oclif/config';
 import * as path from 'path';
 import Base from '../../command-base';
-import {AnyObject} from '../../types';
+import {AnyObject, PromptFunction} from '../../types';
 import {FileGenerator} from '../../utilities/file-generator';
 import {McpConfigInjector} from '../../utilities/mcp-injector';
 import {TemplateFetcher} from '../../utilities/template-fetcher';
@@ -135,7 +136,7 @@ export class AngularScaffold extends Base<{}> {
     }
 
     try {
-      const scaffolder = new AngularScaffold([], {} as any, {} as any);
+      const scaffolder = new AngularScaffold([], {} as unknown as IConfig, {} as unknown as PromptFunction);
       const result = await scaffolder.scaffoldProject(inputs);
       process.chdir(originalCwd);
       return {
@@ -155,71 +156,46 @@ export class AngularScaffold extends Base<{}> {
     }
   }
 
-  private async scaffoldProject(inputs: AnyObject): Promise<string> {
-    const {
-      name,
-      withAuth,
-      withThemes,
-      withBreadcrumbs,
-      withI18n,
-      templateRepo,
-      templateVersion,
-      installDeps,
-      localPath,
-    } = inputs;
-
-    const targetDir = path.join(process.cwd(), name);
-
-    // Step 1: Fetch template
-    console.log(`\n📦 Scaffolding Angular project '${name}'...`);
-    await this.templateFetcher.smartFetch({
-      repo: templateRepo,
-      targetDir,
-      branch: templateVersion,
-      localPath,
-    });
-
-    // Step 2: Configure modular features
+  private configureModules(
+    targetDir: string,
+    inputs: AnyObject,
+  ): {includedModules: string[]; removedModules: string[]} {
     const includedModules: string[] = [];
     const removedModules: string[] = [];
 
-    if (!withAuth) {
-      this.fileGenerator.removeModule(targetDir, 'auth');
-      removedModules.push('Authentication');
-    } else {
-      includedModules.push('Authentication');
-    }
+    const moduleConfigs = [
+      {flag: inputs.withAuth, name: 'Authentication', module: 'auth'},
+      {flag: inputs.withThemes, name: 'Themes', module: 'themes'},
+      {
+        flag: inputs.withBreadcrumbs,
+        name: 'Breadcrumbs',
+        module: 'breadcrumbs',
+      },
+    ];
 
-    if (!withThemes) {
-      this.fileGenerator.removeModule(targetDir, 'themes');
-      removedModules.push('Themes');
-    } else {
-      includedModules.push('Themes');
-    }
+    moduleConfigs.forEach(({flag, name, module}) => {
+      if (flag === false) {
+        this.fileGenerator.removeModule(targetDir, module);
+        removedModules.push(name);
+      } else {
+        includedModules.push(name);
+      }
+    });
 
-    if (!withBreadcrumbs) {
-      this.fileGenerator.removeModule(targetDir, 'breadcrumbs');
-      removedModules.push('Breadcrumbs');
-    } else {
-      includedModules.push('Breadcrumbs');
-    }
-
-    if (withI18n) {
+    if (inputs.withI18n) {
       includedModules.push('Internationalization');
     }
 
-    // Step 3: Inject MCP configuration
-    this.mcpInjector.injectConfig(targetDir, 'angular');
+    return {includedModules, removedModules};
+  }
 
-    // Step 4: Update package.json
-    this.fileGenerator.updatePackageJson(targetDir, name);
-
-    // Step 5: Install dependencies
-    if (installDeps) {
-      this.fileGenerator.installDependencies(targetDir);
-    }
-
-    // Build success message
+  private buildSuccessMessage(
+    name: string,
+    targetDir: string,
+    includedModules: string[],
+    removedModules: string[],
+    installDeps: boolean,
+  ): string {
     let result = `
 ✅ Angular project '${name}' scaffolded successfully!
 
@@ -244,5 +220,47 @@ Next steps:
 `;
 
     return result;
+  }
+
+  private async scaffoldProject(inputs: AnyObject): Promise<string> {
+    const {name, templateRepo, templateVersion, installDeps, localPath} =
+      inputs;
+
+    const targetDir = path.join(process.cwd(), name);
+
+    // Step 1: Fetch template
+    console.log(`\n📦 Scaffolding Angular project '${name}'...`);
+    await this.templateFetcher.smartFetch({
+      repo: templateRepo,
+      targetDir,
+      branch: templateVersion,
+      localPath,
+    });
+
+    // Step 2: Configure modular features
+    const {includedModules, removedModules} = this.configureModules(
+      targetDir,
+      inputs,
+    );
+
+    // Step 3: Inject MCP configuration
+    this.mcpInjector.injectConfig(targetDir, 'angular');
+
+    // Step 4: Update package.json
+    this.fileGenerator.updatePackageJson(targetDir, name);
+
+    // Step 5: Install dependencies
+    if (installDeps) {
+      this.fileGenerator.installDependencies(targetDir);
+    }
+
+    // Build success message
+    return this.buildSuccessMessage(
+      name,
+      targetDir,
+      includedModules,
+      removedModules,
+      installDeps,
+    );
   }
 }

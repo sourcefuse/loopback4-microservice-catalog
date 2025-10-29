@@ -2,6 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {execSync} from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -116,7 +117,6 @@ export class FileGenerator {
    */
   installDependencies(projectPath: string): void {
     console.log('📦 Installing dependencies...');
-    const {execSync} = require('child_process');
 
     try {
       execSync('npm install', {

@@ -30,6 +30,8 @@ import {Update} from './update';
 
 export class Mcp extends Base<{}> {
   commands: ICommandWithMcpFlags[] = [];
+  private static hooksInstalled = false; // Guard flag to prevent multiple installations
+
   constructor(
     argv: string[],
     config: IConfig,
@@ -93,7 +95,11 @@ export class Mcp extends Base<{}> {
   );
   setup() {
     // Hook process methods once before registering tools
-    this.hookProcessMethods();
+    // Use guard flag to prevent multiple installations
+    if (!Mcp.hooksInstalled) {
+      this.hookProcessMethods();
+      Mcp.hooksInstalled = true;
+    }
 
     this.commands.forEach(command => {
       const params: Record<string, z.ZodTypeAny> = {};
@@ -151,10 +157,14 @@ export class Mcp extends Base<{}> {
     // Intercept console.error
     console.error = (...args: AnyObject[]) => {
       // log errors to the MCP client
+      // Only stringify objects and arrays for performance
+      const formattedArgs = args.map(v =>
+        typeof v === 'object' && v !== null ? JSON.stringify(v) : String(v)
+      );
       this.server.server
         .sendLoggingMessage({
           level: 'error',
-          message: args.map(v => JSON.stringify(v)).join(' '),
+          message: formattedArgs.join(' '),
           timestamp: new Date().toISOString(),
         })
         .catch(err => {
@@ -166,10 +176,14 @@ export class Mcp extends Base<{}> {
     // Intercept console.log
     console.log = (...args: AnyObject[]) => {
       // log messages to the MCP client
+      // Only stringify objects and arrays for performance
+      const formattedArgs = args.map(v =>
+        typeof v === 'object' && v !== null ? JSON.stringify(v) : String(v)
+      );
       this.server.server
         .sendLoggingMessage({
           level: 'info',
-          message: args.map(v => JSON.stringify(v)).join(' '),
+          message: formattedArgs.join(' '),
           timestamp: new Date().toISOString(),
         })
         .catch(err => {
