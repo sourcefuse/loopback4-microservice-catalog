@@ -4,9 +4,9 @@
 // https://opensource.org/licenses/MIT
 import {flags} from '@oclif/command';
 import {IConfig} from '@oclif/config';
-import {execSync} from 'child_process';
-import * as fs from 'fs';
-import * as path from 'path';
+import {execSync} from 'node:child_process';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 import Base from '../../command-base';
 import {AnyObject, PromptFunction} from '../../types';
 import {FileGenerator} from '../../utilities/file-generator';
@@ -152,22 +152,21 @@ NPM: ${npmVersion}
       'vite',
     ];
 
-    keyDeps.forEach(dep => {
+    for (const dep of keyDeps) {
       if (allDeps[dep]) {
         info += `${dep}: ${allDeps[dep]}\n`;
       }
-    });
+    }
 
     // Scripts
     if (packageJson.scripts) {
       info += `\n⚡ Available Scripts
 ──────────────────
 `;
-      Object.keys(packageJson.scripts)
-        .slice(0, 10)
-        .forEach(script => {
-          info += `${script}: ${packageJson.scripts[script]}\n`;
-        });
+      const scripts = Object.keys(packageJson.scripts).slice(0, 10);
+      for (const script of scripts) {
+        info += `${script}: ${packageJson.scripts[script]}\n`;
+      }
     }
 
     // Project statistics (if detailed)
@@ -191,10 +190,10 @@ ${stats}
     info += `\n📄 Configuration Files
 ──────────────────────
 `;
-    configFiles.forEach(file => {
+    for (const file of configFiles) {
       const filePath = path.join(projectRoot, file);
       info += `${file}: ${fs.existsSync(filePath) ? '✅' : '❌'}\n`;
-    });
+    }
 
     // MCP Configuration
     const mcpConfigPath = path.join(projectRoot, '.claude', 'mcp.json');
@@ -268,7 +267,7 @@ Status: ${fs.existsSync(mcpConfigPath) ? '✅ Configured' : '❌ Not configured'
     const walk = (directory: string) => {
       try {
         const files = fs.readdirSync(directory);
-        files.forEach(file => {
+        for (const file of files) {
           const filePath = path.join(directory, file);
           const stats = fs.statSync(filePath);
 
@@ -277,9 +276,9 @@ Status: ${fs.existsSync(mcpConfigPath) ? '✅ Configured' : '❌ Not configured'
           } else if (file.endsWith(extension)) {
             count++;
           }
-        });
+        }
       } catch (err) {
-        // Ignore errors
+        // Directory not accessible - skip it
       }
     };
 

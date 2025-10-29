@@ -2,9 +2,9 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {spawnSync} from 'child_process';
-import * as fs from 'fs';
-import * as path from 'path';
+import {spawnSync} from 'node:child_process';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 
 export interface TemplateFetchOptions {
   repo: string;
@@ -44,77 +44,123 @@ export class TemplateFetcher {
   async fetchFromGitHub(options: TemplateFetchOptions): Promise<void> {
     const {repo, targetDir, branch, removeGit = true} = options;
 
-    // Validate inputs to prevent command injection
+    this.validateInputs(repo, branch);
+    this.validateTargetDirectory(targetDir);
+
+    const branchesToTry = branch ? [branch] : ['main', 'master'];
+    const cloneResult = this.attemptClone(repo, targetDir, branchesToTry);
+
+    if (!cloneResult.success) {
+      throw new Error(
+        `Failed to clone template from ${repo}. Tried branches: ${branchesToTry.join(', ')}. Last error: ${cloneResult.error?.message}`,
+      );
+    }
+
+    if (removeGit) {
+      this.removeGitDirectory(targetDir);
+    }
+
+    // sonar-ignore: User feedback console statement
+    console.log(`✅ Template fetched successfully`);
+  }
+
+  /**
+   * Validate repository and branch inputs
+   */
+  private validateInputs(repo: string, branch?: string): void {
     this.validateRepo(repo);
     if (branch) {
       this.validateBranch(branch);
     }
+  }
 
-    // Check if target directory already exists
+  /**
+   * Validate target directory doesn't exist
+   */
+  private validateTargetDirectory(targetDir: string): void {
     if (fs.existsSync(targetDir)) {
       throw new Error(`Directory ${targetDir} already exists`);
     }
+  }
 
-    // Try specified branch first, then fallback to main/master
-    const branchesToTry = branch ? [branch] : ['main', 'master'];
-    let cloneSucceeded = false;
+  /**
+   * Attempt to clone repository with multiple branches
+   */
+  private attemptClone(
+    repo: string,
+    targetDir: string,
+    branchesToTry: string[],
+  ): {success: boolean; error?: Error} {
     let lastError: Error | undefined;
 
     for (const branchName of branchesToTry) {
-      try {
-        console.log(`Cloning template from ${repo} (branch: ${branchName})...`);
-
-        // Use spawnSync with array arguments to prevent command injection
-        const result = spawnSync(
-          'git',
-          [
-            'clone',
-            '--depth',
-            '1',
-            '--branch',
-            branchName,
-            `https://github.com/${repo}.git`,
-            targetDir,
-          ],
-          {stdio: 'inherit'},
-        );
-
-        if (result.status === 0) {
-          cloneSucceeded = true;
-          break;
-        } else {
-          lastError = new Error(
-            `Git clone failed with status ${result.status}`,
-          );
-          // Clean up failed clone directory
-          if (fs.existsSync(targetDir)) {
-            fs.rmSync(targetDir, {recursive: true, force: true});
-          }
-        }
-      } catch (error) {
-        lastError = error as Error;
-        // Clean up failed clone directory
-        if (fs.existsSync(targetDir)) {
-          fs.rmSync(targetDir, {recursive: true, force: true});
-        }
+      const result = this.tryCloneBranch(repo, targetDir, branchName);
+      if (result.success) {
+        return {success: true};
       }
+      lastError = result.error;
+      this.cleanupFailedClone(targetDir);
     }
 
-    if (!cloneSucceeded) {
-      throw new Error(
-        `Failed to clone template from ${repo}. Tried branches: ${branchesToTry.join(', ')}. Last error: ${lastError?.message}`,
+    return {success: false, error: lastError};
+  }
+
+  /**
+   * Try cloning a specific branch
+   */
+  private tryCloneBranch(
+    repo: string,
+    targetDir: string,
+    branchName: string,
+  ): {success: boolean; error?: Error} {
+    try {
+      // sonar-ignore: User feedback console statement
+      console.log(`Cloning template from ${repo} (branch: ${branchName})...`);
+
+      const result = spawnSync(
+        'git',
+        [
+          'clone',
+          '--depth',
+          '1',
+          '--branch',
+          branchName,
+          `https://github.com/${repo}.git`,
+          targetDir,
+        ],
+        {stdio: 'inherit'},
       );
-    }
 
-    // Remove .git directory if requested
-    if (removeGit) {
-      const gitDir = path.join(targetDir, '.git');
-      if (fs.existsSync(gitDir)) {
-        fs.rmSync(gitDir, {recursive: true, force: true});
+      if (result.status === 0) {
+        return {success: true};
       }
-    }
 
-    console.log(`✅ Template fetched successfully`);
+      return {
+        success: false,
+        error: new Error(`Git clone failed with status ${result.status}`),
+      };
+    } catch (error) {
+      return {success: false, error: error as Error};
+    }
+  }
+
+  /**
+   * Clean up failed clone directory
+   */
+  private cleanupFailedClone(targetDir: string): void {
+    if (fs.existsSync(targetDir)) {
+      fs.rmSync(targetDir, {recursive: true, force: true});
+    }
+  }
+
+  /**
+   * Remove .git directory from cloned repository
+   */
+  private removeGitDirectory(targetDir: string): void {
+    const gitDir = path.join(targetDir, '.git');
+    if (fs.existsSync(gitDir)) {
+      fs.rmSync(gitDir, {recursive: true, force: true});
+    }
   }
 
   /**
@@ -129,6 +175,7 @@ export class TemplateFetcher {
       throw new Error(`Directory ${targetDir} already exists`);
     }
 
+    // sonar-ignore: User feedback console statement
     console.log(`Copying template from ${sourcePath}...`);
 
     try {
@@ -149,6 +196,7 @@ export class TemplateFetcher {
         },
       });
 
+      // sonar-ignore: User feedback console statement
       console.log(`✅ Template copied successfully`);
     } catch (error) {
       throw new Error(`Failed to copy template: ${error}`);
@@ -168,10 +216,12 @@ export class TemplateFetcher {
 
     // Check if local path exists (development mode)
     if (localPath && fs.existsSync(localPath)) {
+      // sonar-ignore: User feedback console statement
       console.log('🔧 Development mode: using local template');
       await this.fetchFromLocal(localPath, targetDir);
     } else {
       // Production mode: clone from GitHub
+      // sonar-ignore: User feedback console statement
       console.log('📦 Production mode: cloning from GitHub');
       await this.fetchFromGitHub({repo, targetDir, branch});
     }

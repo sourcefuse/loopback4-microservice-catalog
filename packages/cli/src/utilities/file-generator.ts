@@ -2,9 +2,9 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {execSync} from 'child_process';
-import * as fs from 'fs';
-import * as path from 'path';
+import {execSync} from 'node:child_process';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 
 export interface GeneratorOptions {
   name: string;
@@ -77,6 +77,7 @@ export class FileGenerator {
     const packageJsonPath = path.join(projectPath, 'package.json');
 
     if (!fs.existsSync(packageJsonPath)) {
+      // sonar-ignore: User feedback console statement
       console.warn('⚠️  package.json not found');
       return;
     }
@@ -94,8 +95,10 @@ export class FileGenerator {
         'utf-8',
       );
 
+      // sonar-ignore: User feedback console statement
       console.log('✅ package.json updated');
     } catch (error) {
+      // sonar-ignore: User feedback console statement
       console.error('❌ Failed to update package.json:', error);
     }
   }
@@ -108,6 +111,7 @@ export class FileGenerator {
 
     if (fs.existsSync(modulePath)) {
       fs.rmSync(modulePath, {recursive: true, force: true});
+      // sonar-ignore: User feedback console statement
       console.log(`✅ Removed module: ${moduleName}`);
     }
   }
@@ -116,6 +120,7 @@ export class FileGenerator {
    * Install dependencies using npm
    */
   installDependencies(projectPath: string): void {
+    // sonar-ignore: User feedback console statement
     console.log('📦 Installing dependencies...');
 
     try {
@@ -123,8 +128,10 @@ export class FileGenerator {
         cwd: projectPath,
         stdio: 'inherit',
       });
+      // sonar-ignore: User feedback console statement
       console.log('✅ Dependencies installed successfully');
     } catch (error) {
+      // sonar-ignore: User feedback console statement
       console.error('❌ Failed to install dependencies:', error);
     }
   }

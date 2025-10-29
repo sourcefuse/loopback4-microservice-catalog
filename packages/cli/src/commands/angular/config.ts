@@ -4,8 +4,8 @@
 // https://opensource.org/licenses/MIT
 import {flags} from '@oclif/command';
 import {IConfig} from '@oclif/config';
-import * as fs from 'fs';
-import * as path from 'path';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 import Base from '../../command-base';
 import {AnyObject, PromptFunction} from '../../types';
 import {FileGenerator} from '../../utilities/file-generator';

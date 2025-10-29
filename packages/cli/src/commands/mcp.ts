@@ -101,32 +101,36 @@ export class Mcp extends Base<{}> {
       Mcp.hooksInstalled = true;
     }
 
-    this.commands.forEach(command => {
+    for (const command of this.commands) {
       const params: Record<string, z.ZodTypeAny> = {};
-      command.args?.forEach(arg => {
-        params[arg.name] = this.argToZod(arg);
-      });
-      Object.entries(command.flags ?? {}).forEach(([name, flag]) => {
+
+      if (command.args) {
+        for (const arg of command.args) {
+          params[arg.name] = this.argToZod(arg);
+        }
+      }
+
+      for (const [name, flag] of Object.entries(command.flags ?? {})) {
         if (name === 'help') {
           // skip help flag as it is not needed in MCP
-          return;
+          continue;
         }
         params[name] = this.flagToZod(flag);
-      });
-      if (this._hasMcpFlags(command)) {
-        Object.entries(command.mcpFlags ?? {}).forEach(
-          ([name, flag]: [string, IFlag<AnyObject>]) => {
-            params[name] = this.flagToZod(flag, true);
-          },
-        );
       }
+
+      if (this._hasMcpFlags(command)) {
+        for (const [name, flag] of Object.entries(command.mcpFlags ?? {})) {
+          params[name] = this.flagToZod(flag as IFlag<AnyObject>, true);
+        }
+      }
+
       this.server.tool<typeof params>(
         command.name,
         command.mcpDescription,
         params,
         async args => command.mcpRun(args as Record<string, AnyObject[string]>),
       );
-    });
+    }
   }
 
   async run() {
@@ -160,9 +164,15 @@ export class Mcp extends Base<{}> {
     console.error = (...args: AnyObject[]) => {
       // log errors to the MCP client
       // Only stringify objects and arrays for performance
-      const formattedArgs = args.map(v =>
-        typeof v === 'object' && v !== null ? JSON.stringify(v) : String(v)
-      );
+      const formattedArgs: string[] = [];
+      for (const v of args) {
+        if (typeof v === 'object' && v !== null) {
+          formattedArgs.push(JSON.stringify(v));
+        } else {
+          formattedArgs.push(String(v));
+        }
+      }
+
       this.server.server
         .sendLoggingMessage({
           level: 'debug',
@@ -181,9 +191,15 @@ export class Mcp extends Base<{}> {
     console.log = (...args: AnyObject[]) => {
       // log messages to the MCP client
       // Only stringify objects and arrays for performance
-      const formattedArgs = args.map(v =>
-        typeof v === 'object' && v !== null ? JSON.stringify(v) : String(v)
-      );
+      const formattedArgs: string[] = [];
+      for (const v of args) {
+        if (typeof v === 'object' && v !== null) {
+          formattedArgs.push(JSON.stringify(v));
+        } else {
+          formattedArgs.push(String(v));
+        }
+      }
+
       this.server.server
         .sendLoggingMessage({
           level: 'info',

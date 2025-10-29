@@ -4,7 +4,7 @@
 // https://opensource.org/licenses/MIT
 import {flags} from '@oclif/command';
 import {IConfig} from '@oclif/config';
-import * as path from 'path';
+import * as path from 'node:path';
 import Base from '../../command-base';
 import {AnyObject, PromptFunction} from '../../types';
 import {FileGenerator} from '../../utilities/file-generator';
@@ -173,14 +173,14 @@ export class AngularScaffold extends Base<{}> {
       },
     ];
 
-    moduleConfigs.forEach(({flag, name, module}) => {
+    for (const {flag, name, module} of moduleConfigs) {
       if (flag === false) {
         this.fileGenerator.removeModule(targetDir, module);
         removedModules.push(name);
       } else {
         includedModules.push(name);
       }
-    });
+    }
 
     if (inputs.withI18n) {
       includedModules.push('Internationalization');
@@ -229,6 +229,7 @@ Next steps:
     const targetDir = path.join(process.cwd(), name);
 
     // Step 1: Fetch template
+    // sonar-ignore: User feedback console statement
     console.log(`\n📦 Scaffolding Angular project '${name}'...`);
     await this.templateFetcher.smartFetch({
       repo: templateRepo,
