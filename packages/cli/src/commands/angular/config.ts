@@ -83,8 +83,8 @@ export class AngularConfig extends Base<{}> {
   static readonly args = [];
 
   async run() {
-    const {flags} = this.parse(AngularConfig);
-    const inputs = {...flags};
+    const {flags: parsedFlags} = this.parse(AngularConfig);
+    const inputs = {...parsedFlags};
 
     const result = await this.updateConfig(inputs);
     this.log(result);

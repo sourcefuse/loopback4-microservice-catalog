@@ -94,8 +94,8 @@ export class ReactConfig extends Base<{}> {
   static readonly args = [];
 
   async run() {
-    const {flags} = this.parse(ReactConfig);
-    const inputs = {...flags};
+    const {flags: parsedFlags} = this.parse(ReactConfig);
+    const inputs = {...parsedFlags};
 
     const result = await this.updateConfig(inputs);
     this.log(result);
