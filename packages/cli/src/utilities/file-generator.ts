@@ -56,7 +56,7 @@ export class FileGenerator {
    * Get project root by looking for package.json
    */
   protected getProjectRoot(startPath?: string): string {
-    let currentPath = startPath || process.cwd();
+    let currentPath = startPath ?? process.cwd();
 
     while (currentPath !== path.parse(currentPath).root) {
       const packageJsonPath = path.join(currentPath, 'package.json');

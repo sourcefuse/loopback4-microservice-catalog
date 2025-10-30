@@ -61,8 +61,8 @@ export class ReactInfo extends Base<{}> {
   static readonly args = [];
 
   async run() {
-    const {flags} = this.parse(ReactInfo);
-    const inputs = {...flags};
+    const {flags: parsedFlags} = this.parse(ReactInfo);
+    const inputs = {...parsedFlags};
 
     const result = await this.getProjectInfo(inputs);
     this.log(result);
