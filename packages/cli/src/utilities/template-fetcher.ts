@@ -117,7 +117,7 @@ export class TemplateFetcher {
       // sonar-ignore: User feedback console statement
       console.log(`Cloning template from ${repo} (branch: ${branchName})...`);
 
-      // sonar-ignore: Using system PATH is required for CLI tool execution
+      // NOSONAR - Using system PATH is required for CLI tool execution
       const result = spawnSync(
         'git',
         [

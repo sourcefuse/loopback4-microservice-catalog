@@ -137,9 +137,9 @@ Description: ${packageJson.description || 'N/A'}
 
   private getEnvironmentInfo(): string {
     try {
-      // sonar-ignore: Using system PATH is required for CLI tool execution
+      // NOSONAR - Using system PATH is required for CLI tool execution
       const nodeVersion = execSync('node --version', {encoding: 'utf-8'}).trim();
-      // sonar-ignore: Using system PATH is required for CLI tool execution
+      // NOSONAR - Using system PATH is required for CLI tool execution
       const npmVersion = execSync('npm --version', {encoding: 'utf-8'}).trim();
       return `🔧 Environment
 ───────────────
