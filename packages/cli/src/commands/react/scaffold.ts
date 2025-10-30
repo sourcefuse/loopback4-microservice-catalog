@@ -159,21 +159,29 @@ export class ReactScaffold extends Base<{}> {
   }
 
   private async scaffoldProject(inputs: AnyObject): Promise<string> {
-    const {
-      name,
-      withAuth,
-      withRedux,
-      withThemes,
-      withRouting,
-      templateRepo,
-      templateVersion,
-      installDeps,
-      localPath,
-    } = inputs;
-
+    const {name, templateRepo, templateVersion, installDeps, localPath} = inputs;
     const targetDir = path.join(process.cwd(), name);
 
     // Step 1: Fetch template
+    await this.fetchTemplate(name, templateRepo, templateVersion, targetDir, localPath);
+
+    // Step 2: Configure modular features
+    const {includedModules, removedModules} = this.configureModules(inputs, targetDir);
+
+    // Step 3: Setup project
+    this.setupProject(targetDir, name, installDeps);
+
+    // Step 4: Build success message
+    return this.buildSuccessMessage(name, targetDir, includedModules, removedModules, installDeps);
+  }
+
+  private async fetchTemplate(
+    name: string,
+    templateRepo: string,
+    templateVersion: string | undefined,
+    targetDir: string,
+    localPath: string | undefined,
+  ): Promise<void> {
     // sonar-ignore: User feedback console statement
     console.log(`\n📦 Scaffolding React project '${name}'...`);
     await this.templateFetcher.smartFetch({
@@ -182,51 +190,95 @@ export class ReactScaffold extends Base<{}> {
       branch: templateVersion,
       localPath,
     });
+  }
 
-    // Step 2: Configure modular features
+  private configureModules(
+    inputs: AnyObject,
+    targetDir: string,
+  ): {includedModules: string[]; removedModules: string[]} {
+    const {withAuth, withRedux, withThemes, withRouting} = inputs;
     const includedModules: string[] = [];
     const removedModules: string[] = [];
 
+    this.configureAuthModule(withAuth, targetDir, includedModules, removedModules);
+    this.configureReduxModule(withRedux, targetDir, includedModules, removedModules);
+    this.configureThemeModule(withThemes, targetDir, includedModules, removedModules);
+    this.configureRoutingModule(withRouting, includedModules, removedModules);
+
+    return {includedModules, removedModules};
+  }
+
+  private configureAuthModule(
+    withAuth: boolean,
+    targetDir: string,
+    includedModules: string[],
+    removedModules: string[],
+  ): void {
     if (!withAuth) {
       this.fileGenerator.removeModule(targetDir, 'auth');
       removedModules.push('Authentication');
     } else {
       includedModules.push('Authentication');
     }
+  }
 
+  private configureReduxModule(
+    withRedux: boolean,
+    targetDir: string,
+    includedModules: string[],
+    removedModules: string[],
+  ): void {
     if (!withRedux) {
       this.fileGenerator.removeModule(targetDir, 'redux');
       removedModules.push('Redux State Management');
     } else {
       includedModules.push('Redux State Management');
     }
+  }
 
+  private configureThemeModule(
+    withThemes: boolean,
+    targetDir: string,
+    includedModules: string[],
+    removedModules: string[],
+  ): void {
     if (!withThemes) {
       this.fileGenerator.removeModule(targetDir, 'theme');
       removedModules.push('Material-UI Themes');
     } else {
       includedModules.push('Material-UI Themes');
     }
+  }
 
+  private configureRoutingModule(
+    withRouting: boolean,
+    includedModules: string[],
+    removedModules: string[],
+  ): void {
     if (!withRouting) {
       // Remove router configuration if needed
       removedModules.push('React Router');
     } else {
       includedModules.push('React Router');
     }
+  }
 
-    // Step 3: Inject MCP configuration
+  private setupProject(targetDir: string, name: string, installDeps: boolean): void {
     this.mcpInjector.injectConfig(targetDir, 'react');
-
-    // Step 4: Update package.json
     this.fileGenerator.updatePackageJson(targetDir, name);
 
-    // Step 5: Install dependencies
     if (installDeps) {
       this.fileGenerator.installDependencies(targetDir);
     }
+  }
 
-    // Build success message
+  private buildSuccessMessage(
+    name: string,
+    targetDir: string,
+    includedModules: string[],
+    removedModules: string[],
+    installDeps: boolean,
+  ): string {
     let result = `
 ✅ React project '${name}' scaffolded successfully!
 

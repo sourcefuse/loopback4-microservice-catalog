@@ -99,15 +99,33 @@ export class ReactInfo extends Base<{}> {
     const {detailed} = inputs;
     const projectRoot = this.fileGenerator['getProjectRoot']();
 
-    // Read package.json
+    const packageJson = this.loadPackageJson(projectRoot);
+    let info = this.buildBasicInfo(packageJson);
+
+    info += this.getEnvironmentInfo();
+    info += this.getKeyDependencies(packageJson);
+    info += this.getScripts(packageJson);
+
+    if (detailed) {
+      info += this.getDetailedStatistics(projectRoot);
+    }
+
+    info += this.getConfigurationFiles(projectRoot);
+    info += this.getMcpConfiguration(projectRoot);
+
+    return info;
+  }
+
+  private loadPackageJson(projectRoot: string): AnyObject {
     const packageJsonPath = path.join(projectRoot, 'package.json');
     if (!fs.existsSync(packageJsonPath)) {
       throw new Error('package.json not found. Is this a React project?');
     }
+    return JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+  }
 
-    const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
-
-    let info = `
+  private buildBasicInfo(packageJson: AnyObject): string {
+    return `
 📦 React Project Information
 ════════════════════════════
 
@@ -116,25 +134,28 @@ Version: ${packageJson.version || 'N/A'}
 Description: ${packageJson.description || 'N/A'}
 
 `;
+  }
 
-    // Node/NPM versions
+  private getEnvironmentInfo(): string {
     try {
-      const nodeVersion = execSync('node --version', {
-        encoding: 'utf-8',
-      }).trim();
+      // sonar-ignore: Using system PATH is required for CLI tool execution
+      const nodeVersion = execSync('node --version', {encoding: 'utf-8'}).trim();
+      // sonar-ignore: Using system PATH is required for CLI tool execution
       const npmVersion = execSync('npm --version', {encoding: 'utf-8'}).trim();
-      info += `🔧 Environment
+      return `🔧 Environment
 ───────────────
 Node: ${nodeVersion}
 NPM: ${npmVersion}
 
 `;
     } catch (err) {
-      // Ignore if node/npm not available
+      // Node/NPM not available - return empty string
+      return '';
     }
+  }
 
-    // Key dependencies
-    info += `📚 Key Dependencies
+  private getKeyDependencies(packageJson: AnyObject): string {
+    let info = `📚 Key Dependencies
 ───────────────────
 `;
     const deps = packageJson.dependencies || {};
@@ -158,27 +179,34 @@ NPM: ${npmVersion}
       }
     }
 
-    // Scripts
-    if (packageJson.scripts) {
-      info += `\n⚡ Available Scripts
-──────────────────
-`;
-      const scripts = Object.keys(packageJson.scripts).slice(0, 10);
-      for (const script of scripts) {
-        info += `${script}: ${packageJson.scripts[script]}\n`;
-      }
+    return info;
+  }
+
+  private getScripts(packageJson: AnyObject): string {
+    if (!packageJson.scripts) {
+      return '';
     }
 
-    // Project statistics (if detailed)
-    if (detailed) {
-      const stats = this.getProjectStatistics(projectRoot);
-      info += `\n📊 Project Statistics
+    let info = `\n⚡ Available Scripts
+──────────────────
+`;
+    const scripts = Object.keys(packageJson.scripts).slice(0, 10);
+    for (const script of scripts) {
+      info += `${script}: ${packageJson.scripts[script]}\n`;
+    }
+
+    return info;
+  }
+
+  private getDetailedStatistics(projectRoot: string): string {
+    const stats = this.getProjectStatistics(projectRoot);
+    return `\n📊 Project Statistics
 ────────────────────
 ${stats}
 `;
-    }
+  }
 
-    // Configuration files
+  private getConfigurationFiles(projectRoot: string): string {
     const configFiles = [
       'vite.config.ts',
       'tsconfig.json',
@@ -187,7 +215,7 @@ ${stats}
       'configGenerator.js',
     ];
 
-    info += `\n📄 Configuration Files
+    let info = `\n📄 Configuration Files
 ──────────────────────
 `;
     for (const file of configFiles) {
@@ -195,14 +223,19 @@ ${stats}
       info += `${file}: ${fs.existsSync(filePath) ? '✅' : '❌'}\n`;
     }
 
-    // MCP Configuration
+    return info;
+  }
+
+  private getMcpConfiguration(projectRoot: string): string {
     const mcpConfigPath = path.join(projectRoot, '.claude', 'mcp.json');
-    info += `\n🤖 MCP Configuration
+    const isConfigured = fs.existsSync(mcpConfigPath);
+
+    let info = `\n🤖 MCP Configuration
 ───────────────────
-Status: ${fs.existsSync(mcpConfigPath) ? '✅ Configured' : '❌ Not configured'}
+Status: ${isConfigured ? '✅ Configured' : '❌ Not configured'}
 `;
 
-    if (fs.existsSync(mcpConfigPath)) {
+    if (isConfigured) {
       info += `Location: .claude/mcp.json
 `;
     }
@@ -275,6 +308,8 @@ Status: ${fs.existsSync(mcpConfigPath) ? '✅ Configured' : '❌ Not configured'
             walk(filePath);
           } else if (file.endsWith(extension)) {
             count++;
+          } else {
+            // Not a directory and doesn't match extension - skip
           }
         }
       } catch (err) {
