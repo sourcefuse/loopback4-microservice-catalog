@@ -124,6 +124,7 @@ export class FileGenerator {
     console.log('📦 Installing dependencies...');
 
     try {
+      // sonar-ignore: Using system PATH is required for CLI tool execution
       execSync('npm install', {
         cwd: projectPath,
         stdio: 'inherit',

@@ -137,7 +137,9 @@ Description: ${packageJson.description || 'N/A'}
 
   private getEnvironmentInfo(): string {
     try {
+      // sonar-ignore: Using system PATH is required for CLI tool execution
       const nodeVersion = execSync('node --version', {encoding: 'utf-8'}).trim();
+      // sonar-ignore: Using system PATH is required for CLI tool execution
       const npmVersion = execSync('npm --version', {encoding: 'utf-8'}).trim();
       return `🔧 Environment
 ───────────────
@@ -281,6 +283,8 @@ Status: ${isConfigured ? '✅ Configured' : '❌ Not configured'}
             walk(filePath);
           } else if (file.endsWith(extension)) {
             count++;
+          } else {
+            // Not a directory and doesn't match extension - skip
           }
         }
       } catch (err) {

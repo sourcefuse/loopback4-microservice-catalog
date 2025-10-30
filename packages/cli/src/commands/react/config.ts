@@ -191,6 +191,7 @@ PROMPT_TIME_BEFORE_IDLE_IN_MINUTE=5
       return updates;
     }
 
+    // sonar-ignore: Using system PATH is required for CLI tool execution
     const result = spawnSync(
       'node',
       [

@@ -102,35 +102,54 @@ export class Mcp extends Base<{}> {
     }
 
     for (const command of this.commands) {
-      const params: Record<string, z.ZodTypeAny> = {};
-
-      if (command.args) {
-        for (const arg of command.args) {
-          params[arg.name] = this.argToZod(arg);
-        }
-      }
-
-      for (const [name, flag] of Object.entries(command.flags ?? {})) {
-        if (name === 'help') {
-          // skip help flag as it is not needed in MCP
-          continue;
-        }
-        params[name] = this.flagToZod(flag);
-      }
-
-      if (this._hasMcpFlags(command)) {
-        for (const [name, flag] of Object.entries(command.mcpFlags ?? {})) {
-          params[name] = this.flagToZod(flag as IFlag<AnyObject>, true);
-        }
-      }
-
-      this.server.tool<typeof params>(
-        command.name,
-        command.mcpDescription,
-        params,
-        async args => command.mcpRun(args as Record<string, AnyObject[string]>),
-      );
+      const params = this.buildCommandParams(command);
+      this.registerTool(command, params);
     }
+  }
+
+  private buildCommandParams(command: ICommandWithMcpFlags): Record<string, z.ZodTypeAny> {
+    const params: Record<string, z.ZodTypeAny> = {};
+
+    this.addArgParams(command, params);
+    this.addFlagParams(command, params);
+    this.addMcpFlagParams(command, params);
+
+    return params;
+  }
+
+  private addArgParams(command: ICommandWithMcpFlags, params: Record<string, z.ZodTypeAny>): void {
+    if (command.args) {
+      for (const arg of command.args) {
+        params[arg.name] = this.argToZod(arg);
+      }
+    }
+  }
+
+  private addFlagParams(command: ICommandWithMcpFlags, params: Record<string, z.ZodTypeAny>): void {
+    for (const [name, flag] of Object.entries(command.flags ?? {})) {
+      if (name === 'help') {
+        // skip help flag as it is not needed in MCP
+        continue;
+      }
+      params[name] = this.flagToZod(flag);
+    }
+  }
+
+  private addMcpFlagParams(command: ICommandWithMcpFlags, params: Record<string, z.ZodTypeAny>): void {
+    if (this._hasMcpFlags(command)) {
+      for (const [name, flag] of Object.entries(command.mcpFlags ?? {})) {
+        params[name] = this.flagToZod(flag as IFlag<AnyObject>, true);
+      }
+    }
+  }
+
+  private registerTool(command: ICommandWithMcpFlags, params: Record<string, z.ZodTypeAny>): void {
+    this.server.tool<typeof params>(
+      command.name,
+      command.mcpDescription,
+      params,
+      async args => command.mcpRun(args as Record<string, AnyObject[string]>),
+    );
   }
 
   async run() {
