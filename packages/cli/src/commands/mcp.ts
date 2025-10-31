@@ -158,6 +158,27 @@ export class Mcp extends Base<{}> {
     await this.server.connect(transport);
   }
 
+  /**
+   * Safely stringify values, handling circular references and errors
+   */
+  private safeStringify(v: AnyObject): string {
+    if (typeof v !== 'object' || v === null) {
+      return String(v);
+    }
+
+    try {
+      return JSON.stringify(v);
+    } catch (error) {
+      // Handle circular references or other serialization errors
+      try {
+        // Fallback: use util.inspect if available
+        return String(v);
+      } catch {
+        return '[Object with circular reference]';
+      }
+    }
+  }
+
   private hookProcessMethods() {
     // Save original references before overwriting
     const originalError = console.error;
@@ -180,14 +201,10 @@ export class Mcp extends Base<{}> {
     // Intercept console.error
     console.error = (...args: AnyObject[]) => {
       // log errors to the MCP client
-      // Only stringify objects and arrays for performance
+      // Only stringify objects and arrays for performance, with safe handling
       const formattedArgs: string[] = [];
       for (const v of args) {
-        if (typeof v === 'object' && v !== null) {
-          formattedArgs.push(JSON.stringify(v));
-        } else {
-          formattedArgs.push(String(v));
-        }
+        formattedArgs.push(this.safeStringify(v));
       }
 
       this.server.server
@@ -205,14 +222,10 @@ export class Mcp extends Base<{}> {
     // Intercept console.log
     console.log = (...args: AnyObject[]) => {
       // log messages to the MCP client
-      // Only stringify objects and arrays for performance
+      // Only stringify objects and arrays for performance, with safe handling
       const formattedArgs: string[] = [];
       for (const v of args) {
-        if (typeof v === 'object' && v !== null) {
-          formattedArgs.push(JSON.stringify(v));
-        } else {
-          formattedArgs.push(String(v));
-        }
+        formattedArgs.push(this.safeStringify(v));
       }
 
       this.server.server
