@@ -14,14 +14,24 @@ import {ICommand} from '../__tests__/helper/command-test.helper';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import Base from '../command-base';
 import {AnyObject, IArg, ICommandWithMcpFlags, PromptFunction} from '../types';
+import {AngularConfig} from './angular/config';
+import {AngularGenerate} from './angular/generate';
+import {AngularInfo} from './angular/info';
+import {AngularScaffold} from './angular/scaffold';
 import {Cdk} from './cdk';
 import {Extension} from './extension';
 import {Microservice} from './microservice';
+import {ReactConfig} from './react/config';
+import {ReactGenerate} from './react/generate';
+import {ReactInfo} from './react/info';
+import {ReactScaffold} from './react/scaffold';
 import {Scaffold} from './scaffold';
 import {Update} from './update';
 
 export class Mcp extends Base<{}> {
   commands: ICommandWithMcpFlags[] = [];
+  private static hooksInstalled = false; // Guard flag to prevent multiple installations
+
   constructor(
     argv: string[],
     config: IConfig,
@@ -33,7 +43,24 @@ export class Mcp extends Base<{}> {
     if (cmds) {
       this.commands = cmds;
     } else {
-      this.commands = [Cdk, Extension, Microservice, Scaffold, Update];
+      this.commands = [
+        // Backend commands
+        Cdk,
+        Extension,
+        Microservice,
+        Scaffold,
+        Update,
+        // Angular commands
+        AngularGenerate,
+        AngularScaffold,
+        AngularConfig,
+        AngularInfo,
+        // React commands
+        ReactGenerate,
+        ReactScaffold,
+        ReactConfig,
+        ReactInfo,
+      ];
     }
   }
   static readonly description = `
@@ -67,33 +94,62 @@ export class Mcp extends Base<{}> {
     },
   );
   setup() {
-    this.commands.forEach(command => {
-      const params: Record<string, z.ZodTypeAny> = {};
-      command.args?.forEach(arg => {
-        params[arg.name] = this.argToZod(arg);
-      });
-      Object.entries(command.flags ?? {}).forEach(([name, flag]) => {
-        if (name === 'help') {
-          // skip help flag as it is not needed in MCP
-          return;
-        }
-        params[name] = this.flagToZod(flag);
-      });
-      if (this._hasMcpFlags(command)) {
-        Object.entries(command.mcpFlags ?? {}).forEach(
-          ([name, flag]: [string, IFlag<AnyObject>]) => {
-            params[name] = this.flagToZod(flag, true);
-          },
-        );
-      }
+    // Hook process methods once before registering tools
+    // Use guard flag to prevent multiple installations
+    if (!Mcp.hooksInstalled) {
       this.hookProcessMethods();
-      this.server.tool<typeof params>(
-        command.name,
-        command.mcpDescription,
-        params,
-        async args => command.mcpRun(args as Record<string, AnyObject[string]>),
-      );
-    });
+      Mcp.hooksInstalled = true;
+    }
+
+    for (const command of this.commands) {
+      const params = this.buildCommandParams(command);
+      this.registerTool(command, params);
+    }
+  }
+
+  private buildCommandParams(command: ICommandWithMcpFlags): Record<string, z.ZodTypeAny> {
+    const params: Record<string, z.ZodTypeAny> = {};
+
+    this.addArgParams(command, params);
+    this.addFlagParams(command, params);
+    this.addMcpFlagParams(command, params);
+
+    return params;
+  }
+
+  private addArgParams(command: ICommandWithMcpFlags, params: Record<string, z.ZodTypeAny>): void {
+    if (command.args) {
+      for (const arg of command.args) {
+        params[arg.name] = this.argToZod(arg);
+      }
+    }
+  }
+
+  private addFlagParams(command: ICommandWithMcpFlags, params: Record<string, z.ZodTypeAny>): void {
+    for (const [name, flag] of Object.entries(command.flags ?? {})) {
+      if (name === 'help') {
+        // skip help flag as it is not needed in MCP
+        continue;
+      }
+      params[name] = this.flagToZod(flag);
+    }
+  }
+
+  private addMcpFlagParams(command: ICommandWithMcpFlags, params: Record<string, z.ZodTypeAny>): void {
+    if (this._hasMcpFlags(command)) {
+      for (const [name, flag] of Object.entries(command.mcpFlags ?? {})) {
+        params[name] = this.flagToZod(flag as IFlag<AnyObject>, true);
+      }
+    }
+  }
+
+  private registerTool(command: ICommandWithMcpFlags, params: Record<string, z.ZodTypeAny>): void {
+    this.server.tool<typeof params>(
+      command.name,
+      command.mcpDescription,
+      params,
+      async args => command.mcpRun(args as Record<string, AnyObject[string]>),
+    );
   }
 
   async run() {
@@ -103,9 +159,11 @@ export class Mcp extends Base<{}> {
   }
 
   private hookProcessMethods() {
-    // stub process.exit to throw an error
-    // so that we can catch it in the MCP client
-    // and handle it gracefully instead of exiting the process
+    // Save original references before overwriting
+    const originalError = console.error;
+    const originalLog = console.log;
+
+    // Stub process.exit to prevent killing the MCP server
     process.exit = () => {
       this.server.server
         .sendLoggingMessage({
@@ -114,47 +172,65 @@ export class Mcp extends Base<{}> {
           timestamp: new Date().toISOString(),
         })
         .catch(err => {
-          // sonarignore:start
-          console.error('Error sending exit message:', err);
-          // sonarignore:end
+          originalError('Error sending exit message:', err);
         });
       return undefined as never;
     };
-    // sonarignore:start
-    const original = console.error;
+
+    // Intercept console.error
     console.error = (...args: AnyObject[]) => {
       // log errors to the MCP client
+      // Only stringify objects and arrays for performance
+      const formattedArgs: string[] = [];
+      for (const v of args) {
+        if (typeof v === 'object' && v !== null) {
+          formattedArgs.push(JSON.stringify(v));
+        } else {
+          formattedArgs.push(String(v));
+        }
+      }
+
       this.server.server
         .sendLoggingMessage({
-          level: 'debug',
-          message: args.map(v => JSON.stringify(v)).join(' '),
+          level: 'error',
+          message: formattedArgs.join(' '),
           timestamp: new Date().toISOString(),
         })
         .catch(err => {
-          original('Error sending logging message:', err);
+          originalError('Error sending logging message:', err);
         });
-      original(...args);
+      originalError(...args);
     };
+
+    // Intercept console.log
     console.log = (...args: AnyObject[]) => {
-      // sonarignore:end
       // log messages to the MCP client
+      // Only stringify objects and arrays for performance
+      const formattedArgs: string[] = [];
+      for (const v of args) {
+        if (typeof v === 'object' && v !== null) {
+          formattedArgs.push(JSON.stringify(v));
+        } else {
+          formattedArgs.push(String(v));
+        }
+      }
+
       this.server.server
         .sendLoggingMessage({
           level: 'info',
-          message: args.map(v => JSON.stringify(v)).join(' '),
+          message: formattedArgs.join(' '),
           timestamp: new Date().toISOString(),
         })
         .catch(err => {
-          // sonarignore:start
-          console.error('Error sending logging message:', err);
-          // sonarignore:end
+          originalError('Error sending logging message:', err);
         });
+      originalLog(...args);
     };
   }
 
   private argToZod(arg: IArg) {
     const option = z.string().describe(arg.description ?? '');
-    return option;
+    return arg.required ? option : option.optional();
   }
 
   private flagToZod<T>(flag: IFlag<T>, checkRequired = false) {
