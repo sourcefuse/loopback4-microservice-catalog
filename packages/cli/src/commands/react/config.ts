@@ -191,7 +191,6 @@ PROMPT_TIME_BEFORE_IDLE_IN_MINUTE=5
       return updates;
     }
 
-    // NOSONAR - Using system PATH is required for CLI tool execution
     const result = spawnSync(
       'node',
       [
@@ -203,7 +202,7 @@ PROMPT_TIME_BEFORE_IDLE_IN_MINUTE=5
         cwd: projectRoot,
         stdio: 'inherit',
       },
-    );
+    ); // NOSONAR - Using system PATH is required for CLI tool execution
 
     if (result.status === 0) {
       updates.push('✅ Regenerated config.json in public directory');
