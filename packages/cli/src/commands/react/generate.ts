@@ -546,7 +546,8 @@ describe('${utilName}', () => {
 
     // Slice TypeScript file
     const sliceContent = `import {PayloadAction, createSlice} from '@reduxjs/toolkit';
-// Note: Adjust the import path for RootState based on your project structure
+// TODO: Update this import path to match your project's store location
+// Default: '../store' - adjust based on your project structure
 import type {RootState} from '../store';
 
 export interface ${typeName}State {
@@ -599,7 +600,8 @@ export const select${typeName}Error = (state: RootState) => state.${sliceName}.e
     // API Slice (RTK Query)
     const sliceUrl = `/${sliceName}`;
     const sliceIdUrl = `${sliceUrl}/\${id}`;
-    const apiSliceContent = `// Note: Adjust the import path for apiSlice based on your project structure
+    const apiSliceContent = `// TODO: Update this import path to match your project's API slice location
+// Default: '../apiSlice' - adjust based on your project structure (may not exist if RTK Query is not configured)
 import {apiSlice} from '../apiSlice';
 
 export const ${sliceName}ApiSlice = apiSlice.injectEndpoints({

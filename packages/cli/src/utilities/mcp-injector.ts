@@ -87,7 +87,7 @@ MCP enables AI assistants (like Claude Code) to interact with your project throu
 
 You can also use the SourceLoop CLI directly:
 
-${framework ? `\`\`\`bash
+${framework === 'angular' || framework === 'react' ? `\`\`\`bash
 # Generate code
 sl ${framework}:generate --type component --name MyComponent
 

@@ -188,15 +188,19 @@ File: ${envFilePath}
     value: string,
   ): string {
     // Match property assignment in TypeScript environment file
-    // Handles both string and non-string values
-    const regex = new RegExp(
-      `(${propertyName}\\s*:\\s*)(['"\`]?)([^'"\`,}\\n]+)(['"\`]?)`,
-      'g',
+    // Improved regex: match property assignment with any value (including multiline, objects, arrays, template strings)
+    // Note: This is still not a full parser, but is more robust than the previous pattern.
+    const testRegex = new RegExp(
+      `${propertyName}\\s*:\\s*(['"\`]?)[\\s\\S]*?(['"\`]?)\\s*[,}]`,
+    );
+    const replaceRegex = new RegExp(
+      `(${propertyName}\\s*:\\s*)(['"\`]?)[\\s\\S]*?(['"\`]?)\\s*([,}])`,
     );
 
-    if (regex.test(content)) {
+    if (testRegex.test(content)) {
       // Property exists, update it
-      return content.replace(regex, `$1'${value}'`);
+      // Replace the property value, preserving the trailing comma or brace
+      return content.replace(replaceRegex, `$1'${value}'$4`);
     } else {
       // Property doesn't exist, add it before the closing brace
       const insertRegex = /};\s*$/;
