@@ -124,11 +124,10 @@ export class FileGenerator {
     console.log('📦 Installing dependencies...');
 
     try {
-      // NOSONAR - Using system PATH is required for CLI tool execution
       execSync('npm install', {
         cwd: projectPath,
         stdio: 'inherit',
-      });
+      }); // NOSONAR - Using system PATH is required for CLI tool execution
       // sonar-ignore: User feedback console statement
       console.log('✅ Dependencies installed successfully');
     } catch (error) {

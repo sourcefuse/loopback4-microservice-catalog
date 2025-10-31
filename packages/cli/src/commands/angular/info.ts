@@ -137,10 +137,8 @@ Description: ${packageJson.description || 'N/A'}
 
   private getEnvironmentInfo(): string {
     try {
-      // NOSONAR - Using system PATH is required for CLI tool execution
-      const nodeVersion = execSync('node --version', {encoding: 'utf-8'}).trim();
-      // NOSONAR - Using system PATH is required for CLI tool execution
-      const npmVersion = execSync('npm --version', {encoding: 'utf-8'}).trim();
+      const nodeVersion = execSync('node --version', {encoding: 'utf-8'}).trim(); // NOSONAR - Using system PATH is required for CLI tool execution
+      const npmVersion = execSync('npm --version', {encoding: 'utf-8'}).trim(); // NOSONAR - Using system PATH is required for CLI tool execution
       return `🔧 Environment
 ───────────────
 Node: ${nodeVersion}
