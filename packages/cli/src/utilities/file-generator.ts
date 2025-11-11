@@ -108,7 +108,7 @@ export class FileGenerator {
             const newContent = content.split(search).join(replace);
             fs.writeFileSync(filePath, newContent, 'utf8');
           }
-        }
+        } else continue;
       }
     };
     try {

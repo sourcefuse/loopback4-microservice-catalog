@@ -198,6 +198,7 @@ export class ReactInfo extends Base<{}> {
         const stat = fs.statSync(p);
         if (stat.isDirectory()) traverse(p);
         else if (p.endsWith(ext)) count++;
+        else continue;
       }
     };
     traverse(dir);
