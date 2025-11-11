@@ -1,7 +1,7 @@
 // Copyright (c) 2023 Sourcefuse Technologies
-//
-// This software is released under the MIT License.
+// Released under the MIT License.
 // https://opensource.org/licenses/MIT
+
 import {flags} from '@oclif/command';
 import {IConfig} from '@oclif/config';
 import * as path from 'node:path';
@@ -12,225 +12,108 @@ import {McpConfigInjector} from '../../utilities/mcp-injector';
 import {TemplateFetcher} from '../../utilities/template-fetcher';
 
 export class AngularScaffold extends Base<{}> {
-  private templateFetcher = new TemplateFetcher();
-  private mcpInjector = new McpConfigInjector();
-  private fileGenerator = new FileGenerator();
+  private readonly templateFetcher = new TemplateFetcher();
+  private readonly mcpInjector = new McpConfigInjector();
+  private readonly fileGen = new FileGenerator();
 
   static readonly description =
     'Scaffold a new Angular project from ARC boilerplate';
-
-  static readonly mcpDescription = `
-    Use this command to scaffold a new Angular project using the ARC boilerplate.
-    The boilerplate includes best practices, Nebular UI, multi-project workspace, and more.
-
-    Features you can enable/disable:
-    - Authentication module (--with-auth)
-    - Theme system (--with-themes)
-    - Breadcrumb navigation (--with-breadcrumbs)
-    - Internationalization (--with-i18n)
-
-    The scaffolded project will automatically include MCP configuration for AI assistance.
-
-    Examples:
-    - Basic scaffold: name=my-app
-    - Full-featured: name=my-app, withAuth=true, withThemes=true, installDeps=true
-    - Custom template: name=my-app, templateRepo=myorg/custom-angular
-  `;
-
-  static readonly mcpFlags = {
-    workingDir: flags.string({
-      name: 'workingDir',
-      description: 'Working directory for scaffolding',
-      required: false,
-    }),
-  };
+  static readonly mcpDescription =
+    'Creates a new Angular project using ARC boilerplate with configurable modules and MCP integration.';
 
   static readonly flags = {
-    help: flags.boolean({
-      name: 'help',
-      description: 'Show manual pages',
-      type: 'boolean',
-    }),
+    help: flags.boolean({description: 'Show manual pages'}),
     withAuth: flags.boolean({
-      name: 'withAuth',
       description: 'Include authentication module',
-      required: false,
       default: true,
     }),
     withThemes: flags.boolean({
-      name: 'withThemes',
       description: 'Include theme system',
-      required: false,
       default: true,
     }),
     withBreadcrumbs: flags.boolean({
-      name: 'withBreadcrumbs',
       description: 'Include breadcrumb navigation',
-      required: false,
       default: true,
     }),
     withI18n: flags.boolean({
-      name: 'withI18n',
       description: 'Include internationalization',
-      required: false,
       default: false,
     }),
     templateRepo: flags.string({
-      name: 'templateRepo',
-      description: 'Custom template repository (e.g., sourcefuse/angular-boilerplate)',
-      required: false,
+      description: 'Template repo (default: sourcefuse/angular-boilerplate)',
       default: 'sourcefuse/angular-boilerplate',
     }),
-    templateVersion: flags.string({
-      name: 'templateVersion',
-      description: 'Template version/branch to use',
-      required: false,
-    }),
+    templateVersion: flags.string({description: 'Template branch/version'}),
     installDeps: flags.boolean({
-      name: 'installDeps',
-      description: 'Install dependencies after scaffolding',
-      required: false,
+      description: 'Install dependencies after scaffold',
       default: false,
     }),
     localPath: flags.string({
-      name: 'localPath',
-      description: 'Local path to template (for development)',
-      required: false,
+      description: 'Local template path (for development)',
     }),
   };
 
-  static readonly args = [
-    {
-      name: 'name',
-      description: 'Name of the project',
-      required: false,
-    },
-  ];
+  static readonly mcpFlags = {
+    workingDir: flags.string({
+      description: 'Working directory for scaffolding',
+    }),
+  };
 
-  async run() {
-    const parsed = this.parse(AngularScaffold);
-    const name = parsed.args.name;
-    const inputs = {name, ...parsed.flags};
+  static readonly args = [{name: 'name', description: 'Project name'}];
 
-    if (!inputs.name) {
-      const answer = await this.prompt([
-        {
-          type: 'input',
-          name: 'name',
-          message: 'What is the name of your project?',
-          validate: (input: string) =>
-            input.length > 0 || 'Name is required',
-        },
-      ]);
-      inputs.name = answer.name;
-    }
-
-    const result = await this.scaffoldProject(inputs);
+  async run(): Promise<void> {
+    const {args, flags: opts} = this.parse(AngularScaffold);
+    const name = args.name ?? (await this.promptProjectName());
+    const result = await this.scaffoldProject({name, ...opts});
     this.log(result);
   }
 
   static async mcpRun(inputs: AnyObject) {
-    const originalCwd = process.cwd();
-    if (inputs.workingDir) {
-      process.chdir(inputs.workingDir);
-    }
-
+    const cwd = process.cwd();
     try {
-      const scaffolder = new AngularScaffold([], {} as unknown as IConfig, {} as unknown as PromptFunction);
-      const result = await scaffolder.scaffoldProject(inputs);
-      process.chdir(originalCwd);
+      if (inputs.workingDir) process.chdir(inputs.workingDir);
+
+      const instance = new AngularScaffold(
+        [],
+        {} as IConfig,
+        {} as PromptFunction,
+      );
+
+      const result = await instance.scaffoldProject(inputs);
+
       return {
-        content: [{type: 'text' as const, text: result, isError: false}],
+        content: [
+          {
+            type: 'text' as const, // ✅ literal type, not generic string
+            text: result,
+            isError: false,
+          },
+        ],
       };
     } catch (err) {
-      process.chdir(originalCwd);
+      const msg = err instanceof Error ? err.message : String(err);
       return {
         content: [
           {
             type: 'text' as const,
-            text: `Error: ${err instanceof Error ? err.message : err}`,
+            text: `Error: ${msg}`,
             isError: true,
           },
         ],
       };
+    } finally {
+      process.chdir(cwd);
     }
   }
 
-  private configureModules(
-    targetDir: string,
-    inputs: AnyObject,
-  ): {includedModules: string[]; removedModules: string[]} {
-    const includedModules: string[] = [];
-    const removedModules: string[] = [];
-
-    const moduleConfigs = [
-      {flag: inputs.withAuth, name: 'Authentication', module: 'auth'},
-      {flag: inputs.withThemes, name: 'Themes', module: 'themes'},
-      {
-        flag: inputs.withBreadcrumbs,
-        name: 'Breadcrumbs',
-        module: 'breadcrumbs',
-      },
-    ];
-
-    for (const {flag, name, module} of moduleConfigs) {
-      if (flag === false) {
-        this.fileGenerator.removeModule(targetDir, module);
-        removedModules.push(name);
-      } else {
-        includedModules.push(name);
-      }
-    }
-
-    if (inputs.withI18n) {
-      includedModules.push('Internationalization');
-    }
-
-    return {includedModules, removedModules};
-  }
-
-  private buildSuccessMessage(
-    name: string,
-    targetDir: string,
-    includedModules: string[],
-    removedModules: string[],
-    installDeps: boolean,
-  ): string {
-    let result = `
-✅ Angular project '${name}' scaffolded successfully!
-
-📁 Location: ${targetDir}
-🔧 MCP Configuration: ✅ Ready for AI assistance
-`;
-
-    if (includedModules.length > 0) {
-      result += `📦 Modules included: ${includedModules.join(', ')}\n`;
-    }
-
-    if (removedModules.length > 0) {
-      result += `🗑️  Modules removed: ${removedModules.join(', ')}\n`;
-    }
-
-    result += `
-Next steps:
-  cd ${name}
-  ${installDeps ? '' : 'npm install\n  '}npm start
-
-💡 Open in Claude Code for AI-powered development!
-`;
-
-    return result;
-  }
-
+  // ---------- MAIN LOGIC ----------
   private async scaffoldProject(inputs: AnyObject): Promise<string> {
     const {name, templateRepo, templateVersion, installDeps, localPath} =
       inputs;
-
     const targetDir = path.join(process.cwd(), name);
 
-    // Step 1: Fetch template
-    // sonar-ignore: User feedback console statement
-    console.log(`\n📦 Scaffolding Angular project '${name}'...`);
+    console.log(`\n📦 Scaffolding Angular project '${name}'...`); // NOSONAR - user feedback
+
     await this.templateFetcher.smartFetch({
       repo: templateRepo,
       targetDir,
@@ -238,24 +121,15 @@ Next steps:
       localPath,
     });
 
-    // Step 2: Configure modular features
     const {includedModules, removedModules} = this.configureModules(
       targetDir,
       inputs,
     );
 
-    // Step 3: Inject MCP configuration
     this.mcpInjector.injectConfig(targetDir, 'angular');
+    this.fileGen.updatePackageJson(targetDir, name);
+    if (installDeps) this.fileGen.installDependencies(targetDir);
 
-    // Step 4: Update package.json
-    this.fileGenerator.updatePackageJson(targetDir, name);
-
-    // Step 5: Install dependencies
-    if (installDeps) {
-      this.fileGenerator.installDependencies(targetDir);
-    }
-
-    // Build success message
     return this.buildSuccessMessage(
       name,
       targetDir,
@@ -263,5 +137,76 @@ Next steps:
       removedModules,
       installDeps,
     );
+  }
+
+  // ---------- PROMPTS ----------
+  private async promptProjectName(): Promise<string> {
+    const {value} = await this.prompt([
+      {
+        type: 'input',
+        name: 'value',
+        message: 'Enter your project name:',
+        validate: (v: string) => !!v || 'Project name is required',
+      },
+    ]);
+    return value;
+  }
+
+  // ---------- MODULE CONFIGURATION ----------
+  private configureModules(
+    targetDir: string,
+    inputs: AnyObject,
+  ): {includedModules: string[]; removedModules: string[]} {
+    const modules = [
+      {flag: inputs.withAuth, label: 'Authentication', dir: 'auth'},
+      {flag: inputs.withThemes, label: 'Themes', dir: 'themes'},
+      {flag: inputs.withBreadcrumbs, label: 'Breadcrumbs', dir: 'breadcrumbs'},
+    ];
+
+    const includedModules: string[] = [];
+    const removedModules: string[] = [];
+
+    modules.forEach(({flag, label, dir}) => {
+      if (flag) includedModules.push(label);
+      else {
+        this.fileGen.removeModule(targetDir, dir);
+        removedModules.push(label);
+      }
+    });
+
+    if (inputs.withI18n) includedModules.push('Internationalization');
+    return {includedModules, removedModules};
+  }
+
+  // ---------- SUCCESS MESSAGE ----------
+  private buildSuccessMessage(
+    name: string,
+    targetDir: string,
+    included: string[],
+    removed: string[],
+    installDeps: boolean,
+  ): string {
+    const lines = [
+      `✅ Angular project '${name}' scaffolded successfully!`,
+      '',
+      `📁 Location: ${targetDir}`,
+      `🔧 MCP Configuration: ✅ Ready for AI assistance`,
+    ];
+
+    if (included.length)
+      lines.push(`📦 Modules included: ${included.join(', ')}`);
+    if (removed.length)
+      lines.push(`🗑️  Modules removed: ${removed.join(', ')}`);
+
+    lines.push(
+      '',
+      'Next steps:',
+      `  cd ${name}`,
+      installDeps ? '  npm start' : '  npm install\n  npm start',
+      '',
+      '💡 Open in Claude Code for AI-powered development!',
+    );
+
+    return lines.join('\n');
   }
 }
