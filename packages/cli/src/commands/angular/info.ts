@@ -182,6 +182,7 @@ export class AngularInfo extends Base<{}> {
         const stat = fs.statSync(p);
         if (stat.isDirectory()) walk(p);
         else if (p.endsWith(ext)) count++;
+        else continue;
       }
     };
     try {

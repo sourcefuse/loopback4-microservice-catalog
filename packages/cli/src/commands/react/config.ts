@@ -92,7 +92,8 @@ export class ReactConfig extends Base<{}> {
     }
 
     if (!updates.length) return '⚠️ No environment variables changed.';
-    return `✅ Updated environment configuration:\n${updates.map(u => `  - ${u}`).join('\n')}\n\nFile: ${envPath}\n`;
+    const items = updates.map(u => '  - ' + u).join('\n');
+    return `✅ Updated environment configuration:\n${items}\n\nFile: ${envPath}\n`;
   }
 
   // ---------- HELPERS ----------
