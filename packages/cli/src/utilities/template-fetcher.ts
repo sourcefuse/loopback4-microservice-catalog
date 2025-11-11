@@ -1,7 +1,3 @@
-// Copyright (c) 2023 Sourcefuse Technologies
-//
-// This software is released under the MIT License.
-// https://opensource.org/licenses/MIT
 import {spawnSync} from 'node:child_process';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
@@ -13,110 +9,80 @@ export interface TemplateFetchOptions {
   removeGit?: boolean;
 }
 
+/**
+ * Handles secure fetching of boilerplate templates
+ * from GitHub or local development directories.
+ */
 export class TemplateFetcher {
-  /**
-   * Validate repository name to prevent injection attacks
-   */
+  private static readonly REPO_PATTERN = /^[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+$/;
+  private static readonly BRANCH_PATTERN = /^[a-zA-Z0-9._/-]+$/;
+
   private validateRepo(repo: string): void {
-    // Only allow alphanumeric, hyphens, underscores, and forward slash for org/repo format
-    const validRepoPattern = /^[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+$/;
-    if (!validRepoPattern.test(repo)) {
-      throw new Error(
-        `Invalid repository format: ${repo}. Expected format: org/repo`,
-      );
+    if (!TemplateFetcher.REPO_PATTERN.test(repo)) {
+      throw new Error(`Invalid repository format: ${repo}. Expected: org/repo`);
     }
   }
 
-  /**
-   * Validate branch name to prevent injection attacks
-   */
   private validateBranch(branch: string): void {
-    // Only allow alphanumeric, hyphens, underscores, dots, and forward slashes
-    const validBranchPattern = /^[a-zA-Z0-9._/-]+$/;
-    if (!validBranchPattern.test(branch)) {
+    if (!TemplateFetcher.BRANCH_PATTERN.test(branch)) {
       throw new Error(`Invalid branch name: ${branch}`);
     }
   }
 
-  /**
-   * Fetch template from GitHub repository with security and fallback for default branch
-   */
+  private validateInputs(repo: string, branch?: string): void {
+    this.validateRepo(repo);
+    if (branch) this.validateBranch(branch);
+  }
+
+  private ensureTargetDirNotExists(targetDir: string): void {
+    if (fs.existsSync(targetDir)) {
+      throw new Error(`Target directory already exists: ${targetDir}`);
+    }
+  }
+
   async fetchFromGitHub(options: TemplateFetchOptions): Promise<void> {
     const {repo, targetDir, branch, removeGit = true} = options;
-
     this.validateInputs(repo, branch);
-    this.validateTargetDirectory(targetDir);
+    this.ensureTargetDirNotExists(targetDir);
 
-    const branchesToTry = branch ? [branch] : ['main', 'master'];
-    const cloneResult = this.attemptClone(repo, targetDir, branchesToTry);
+    const branches = branch ? [branch] : ['main', 'master'];
+    const result = this.tryBranches(repo, targetDir, branches);
 
-    if (!cloneResult.success) {
+    if (!result.success) {
       throw new Error(
-        `Failed to clone template from ${repo}. Tried branches: ${branchesToTry.join(', ')}. Last error: ${cloneResult.error?.message}`,
+        `Failed to clone ${repo}. Tried: ${branches.join(', ')}. Last error: ${
+          result.error?.message ?? 'unknown'
+        }`,
       );
     }
 
-    if (removeGit) {
-      this.removeGitDirectory(targetDir);
-    }
-
-    // sonar-ignore: User feedback console statement
-    console.log(`✅ Template fetched successfully`);
+    if (removeGit) this.removeGitDir(targetDir);
+    console.log('✅ Template fetched successfully'); // NOSONAR
   }
 
-  /**
-   * Validate repository and branch inputs
-   */
-  private validateInputs(repo: string, branch?: string): void {
-    this.validateRepo(repo);
-    if (branch) {
-      this.validateBranch(branch);
-    }
-  }
-
-  /**
-   * Validate target directory doesn't exist
-   */
-  private validateTargetDirectory(targetDir: string): void {
-    if (fs.existsSync(targetDir)) {
-      throw new Error(`Directory ${targetDir} already exists`);
-    }
-  }
-
-  /**
-   * Attempt to clone repository with multiple branches
-   */
-  private attemptClone(
+  private tryBranches(
     repo: string,
     targetDir: string,
-    branchesToTry: string[],
+    branches: string[],
   ): {success: boolean; error?: Error} {
     let lastError: Error | undefined;
 
-    for (const branchName of branchesToTry) {
-      const result = this.tryCloneBranch(repo, targetDir, branchName);
-      if (result.success) {
-        return {success: true};
-      }
-      lastError = result.error;
-      this.cleanupFailedClone(targetDir);
+    for (const b of branches) {
+      if (this.cloneBranch(repo, targetDir, b)) return {success: true};
+      lastError = new Error(`Clone failed for branch: ${b}`);
+      this.cleanupDir(targetDir);
     }
 
     return {success: false, error: lastError};
   }
 
-  /**
-   * Try cloning a specific branch
-   */
-  private tryCloneBranch(
+  private cloneBranch(
     repo: string,
     targetDir: string,
-    branchName: string,
-  ): {success: boolean; error?: Error} {
+    branch: string,
+  ): boolean {
+    console.log(`Cloning ${repo} (branch: ${branch})...`); // NOSONAR
     try {
-      // sonar-ignore: User feedback console statement
-      console.log(`Cloning template from ${repo} (branch: ${branchName})...`);
-
       const result = spawnSync(
         'git',
         [
@@ -124,88 +90,57 @@ export class TemplateFetcher {
           '--depth',
           '1',
           '--branch',
-          branchName,
+          branch,
           `https://github.com/${repo}.git`,
           targetDir,
         ],
         {stdio: 'inherit'},
-      ); // NOSONAR - Using system PATH is required for CLI tool execution
+      ); // NOSONAR
 
-      if (result.status === 0) {
-        return {success: true};
-      }
-
-      return {
-        success: false,
-        error: new Error(`Git clone failed with status ${result.status}`),
-      };
+      return result.status === 0;
     } catch (error) {
-      return {success: false, error: error as Error};
+      console.warn(`Git clone failed: ${error}`); // NOSONAR
+      return false;
     }
   }
 
-  /**
-   * Clean up failed clone directory
-   */
-  private cleanupFailedClone(targetDir: string): void {
-    if (fs.existsSync(targetDir)) {
-      fs.rmSync(targetDir, {recursive: true, force: true});
-    }
+  private cleanupDir(dir: string): void {
+    if (fs.existsSync(dir)) fs.rmSync(dir, {recursive: true, force: true});
   }
 
-  /**
-   * Remove .git directory from cloned repository
-   */
-  private removeGitDirectory(targetDir: string): void {
+  private removeGitDir(targetDir: string): void {
     const gitDir = path.join(targetDir, '.git');
-    if (fs.existsSync(gitDir)) {
+    if (fs.existsSync(gitDir))
       fs.rmSync(gitDir, {recursive: true, force: true});
-    }
   }
 
-  /**
-   * Copy template from local directory (for development)
-   */
   async fetchFromLocal(sourcePath: string, targetDir: string): Promise<void> {
-    if (!fs.existsSync(sourcePath)) {
-      throw new Error(`Source directory ${sourcePath} does not exist`);
-    }
+    if (!fs.existsSync(sourcePath))
+      throw new Error(`Source not found: ${sourcePath}`);
+    this.ensureTargetDirNotExists(targetDir);
 
-    if (fs.existsSync(targetDir)) {
-      throw new Error(`Directory ${targetDir} already exists`);
-    }
+    console.log(`Copying from ${sourcePath}...`); // NOSONAR
 
-    // sonar-ignore: User feedback console statement
-    console.log(`Copying template from ${sourcePath}...`);
+    const exclude = new Set([
+      'node_modules',
+      '.git',
+      'dist',
+      'lib',
+      'build',
+      '.DS_Store',
+    ]);
 
     try {
       fs.cpSync(sourcePath, targetDir, {
         recursive: true,
-        filter: (source: string) => {
-          // Exclude node_modules, .git, and other unnecessary files
-          const exclude = [
-            'node_modules',
-            '.git',
-            'dist',
-            'lib',
-            'build',
-            '.DS_Store',
-          ];
-          const baseName = path.basename(source);
-          return !exclude.includes(baseName);
-        },
+        filter: src => !exclude.has(path.basename(src)),
       });
-
-      // sonar-ignore: User feedback console statement
-      console.log(`✅ Template copied successfully`);
+      console.log('✅ Template copied successfully'); // NOSONAR
     } catch (error) {
-      throw new Error(`Failed to copy template: ${error}`);
+      throw new Error(`Failed to copy template: ${String(error)}`);
     }
   }
 
-  /**
-   * Smart fetch - checks for local development environment first
-   */
   async smartFetch(options: {
     repo: string;
     targetDir: string;
@@ -214,15 +149,11 @@ export class TemplateFetcher {
   }): Promise<void> {
     const {repo, targetDir, branch, localPath} = options;
 
-    // Check if local path exists (development mode)
     if (localPath && fs.existsSync(localPath)) {
-      // sonar-ignore: User feedback console statement
-      console.log('🔧 Development mode: using local template');
+      console.log('🔧 Using local template (development mode)'); // NOSONAR
       await this.fetchFromLocal(localPath, targetDir);
     } else {
-      // Production mode: clone from GitHub
-      // sonar-ignore: User feedback console statement
-      console.log('📦 Production mode: cloning from GitHub');
+      console.log('📦 Cloning from GitHub (production mode)'); // NOSONAR
       await this.fetchFromGitHub({repo, targetDir, branch});
     }
   }
