@@ -120,17 +120,17 @@ USAGE
   $ sl angular:scaffold [NAME]
 
 ARGUMENTS
-  NAME  Name of the project
+  NAME  Project name
 
 OPTIONS
   --help                             Show manual pages
-  --installDeps                      Install dependencies after scaffolding
-  --localPath=localPath              Local path to template (for development)
+  --installDeps                      Install dependencies after scaffold
+  --localPath=localPath              Local template path (for development)
 
-  --templateRepo=templateRepo        [default: sourcefuse/angular-boilerplate] Custom template repository (e.g.,
+  --templateRepo=templateRepo        [default: sourcefuse/angular-boilerplate] Template repo (default:
                                      sourcefuse/angular-boilerplate)
 
-  --templateVersion=templateVersion  Template version/branch to use
+  --templateVersion=templateVersion  Template branch/version
 
   --withAuth                         Include authentication module
 

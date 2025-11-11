@@ -1,186 +1,116 @@
 // Copyright (c) 2023 Sourcefuse Technologies
-//
-// This software is released under the MIT License.
+// Released under the MIT License.
 // https://opensource.org/licenses/MIT
+
 import {flags} from '@oclif/command';
 import {IConfig} from '@oclif/config';
-import * as fs from 'node:fs';
-import * as path from 'node:path';
+import fs from 'node:fs';
+import path from 'node:path';
 import Base from '../../command-base';
 import {AnyObject, PromptFunction} from '../../types';
 import {FileGenerator} from '../../utilities/file-generator';
 
 export class AngularConfig extends Base<{}> {
-  private fileGenerator = new FileGenerator();
+  private readonly fileGen = new FileGenerator();
 
   static readonly description =
     'Update Angular environment configuration files';
-
-  static readonly mcpDescription = `
-    Use this command to update Angular environment configuration.
-    Updates TypeScript files in projects/arc/src/environments/.
-
-    Configuration files:
-    - environment.ts (development)
-    - environment.prod.ts (production)
-    - environment.staging.ts (staging)
-
-    Variables you can configure:
-    - baseApiUrl: Base URL for API calls
-    - authServiceUrl: Authentication service URL
-    - clientId: OAuth client ID
-    - publicKey: Public key for authentication
-    - production: Production flag
-
-    Examples:
-    - Update production: environment=production, apiUrl=https://api.example.com
-    - Update auth: environment=production, authServiceUrl=https://auth.example.com, clientId=prod-123
-  `;
+  static readonly mcpDescription =
+    'Updates Angular environment.ts files across environments (dev, prod, staging) with provided API, auth, and client settings.';
 
   static readonly mcpFlags = {
-    workingDir: flags.string({
-      name: 'workingDir',
-      description: 'Path to the Angular project root directory',
-      required: false,
-    }),
+    workingDir: flags.string({description: 'Angular project root directory'}),
   };
 
   static readonly flags = {
-    help: flags.boolean({
-      name: 'help',
-      description: 'Show manual pages',
-      type: 'boolean',
-    }),
+    help: flags.boolean({description: 'Show manual pages'}),
     environment: flags.enum({
-      name: 'environment',
       description: 'Environment to update',
       options: ['development', 'production', 'staging'],
-      required: false,
       default: 'development',
     }),
-    apiUrl: flags.string({
-      name: 'apiUrl',
-      description: 'Base API URL',
-      required: false,
-    }),
-    authServiceUrl: flags.string({
-      name: 'authServiceUrl',
-      description: 'Authentication service URL',
-      required: false,
-    }),
-    clientId: flags.string({
-      name: 'clientId',
-      description: 'OAuth client ID',
-      required: false,
-    }),
-    publicKey: flags.string({
-      name: 'publicKey',
-      description: 'Public key for authentication',
-      required: false,
-    }),
+    apiUrl: flags.string({description: 'Base API URL'}),
+    authServiceUrl: flags.string({description: 'Authentication service URL'}),
+    clientId: flags.string({description: 'OAuth client ID'}),
+    publicKey: flags.string({description: 'Public key for authentication'}),
   };
 
-  static readonly args = [];
-
-  async run() {
-    const {flags: parsedFlags} = this.parse(AngularConfig);
-    const inputs = {...parsedFlags};
-
-    const result = await this.updateConfig(inputs);
+  async run(): Promise<void> {
+    const {flags: opts} = this.parse(AngularConfig);
+    const result = await this.updateEnvironment(opts);
     this.log(result);
   }
 
-  static async mcpRun(inputs: AnyObject) {
-    const originalCwd = process.cwd();
-    if (inputs.workingDir) {
-      process.chdir(inputs.workingDir);
-    }
-
+  static async mcpRun(
+    inputs: AnyObject,
+  ): Promise<{content: {type: 'text'; text: string; isError?: boolean}[]}> {
+    const cwd = process.cwd();
     try {
-      const configurer = new AngularConfig([], {} as unknown as IConfig, {} as unknown as PromptFunction);
-      const result = await configurer.updateConfig(inputs);
-      process.chdir(originalCwd);
-      return {
-        content: [{type: 'text' as const, text: result, isError: false}],
-      };
+      if (inputs.workingDir) process.chdir(inputs.workingDir);
+      const result = await new AngularConfig(
+        [],
+        {} as IConfig,
+        {} as PromptFunction,
+      ).updateEnvironment(inputs);
+      return {content: [{type: 'text', text: result, isError: false}]};
     } catch (err) {
-      process.chdir(originalCwd);
-      return {
-        content: [
-          {
-            type: 'text' as const,
-            text: `Error: ${err instanceof Error ? err.message : err}`,
-            isError: true,
-          },
-        ],
-      };
+      const msg = err instanceof Error ? err.message : String(err);
+      return {content: [{type: 'text', text: `Error: ${msg}`, isError: true}]};
+    } finally {
+      process.chdir(cwd);
     }
   }
 
-  private async updateConfig(inputs: AnyObject): Promise<string> {
-    const {environment, apiUrl, authServiceUrl, clientId, publicKey} = inputs;
-    const projectRoot = this.fileGenerator['getProjectRoot']();
+  // ---------- CORE ----------
 
-    // Determine environment file
-    const envFileName =
-      environment === 'development'
-        ? 'environment.ts'
-        : `environment.${environment}.ts`;
-    const envFilePath = path.join(
-      projectRoot,
+  private async updateEnvironment(inputs: AnyObject): Promise<string> {
+    const {environment, apiUrl, authServiceUrl, clientId, publicKey} = inputs;
+    const root = this.fileGen['getProjectRoot']();
+
+    const envFile = path.join(
+      root,
       'projects',
       'arc',
       'src',
       'environments',
-      envFileName,
+      environment === 'development'
+        ? 'environment.ts'
+        : `environment.${environment}.ts`,
     );
 
-    if (!fs.existsSync(envFilePath)) {
-      throw new Error(`Environment file not found: ${envFilePath}`);
-    }
+    if (!fs.existsSync(envFile))
+      throw new Error(`Environment file not found: ${envFile}`);
 
-    // Read current environment file
-    let envContent = fs.readFileSync(envFilePath, 'utf-8');
+    let content = fs.readFileSync(envFile, 'utf-8');
     const updates: string[] = [];
 
-    // Update configuration values
-    if (apiUrl) {
-      envContent = this.updateProperty(envContent, 'baseApiUrl', apiUrl);
-      updates.push(`baseApiUrl: ${apiUrl}`);
+    const changes: Record<string, string | undefined> = {
+      baseApiUrl: apiUrl,
+      authServiceUrl,
+      clientId,
+      publicKey,
+    };
+
+    for (const [key, val] of Object.entries(changes)) {
+      if (val) {
+        content = this.setProperty(content, key, val);
+        updates.push(`${key}: ${val}`);
+      }
     }
 
-    if (authServiceUrl) {
-      envContent = this.updateProperty(
-        envContent,
-        'authServiceUrl',
-        authServiceUrl,
-      );
-      updates.push(`authServiceUrl: ${authServiceUrl}`);
-    }
+    fs.writeFileSync(envFile, content, 'utf-8');
 
-    if (clientId) {
-      envContent = this.updateProperty(envContent, 'clientId', clientId);
-      updates.push(`clientId: ${clientId}`);
-    }
+    if (!updates.length) return '⚠️ No configuration changes made.';
 
-    if (publicKey) {
-      envContent = this.updateProperty(envContent, 'publicKey', publicKey);
-      updates.push(`publicKey: ${publicKey}`);
-    }
-
-    // Write updated environment file
-    fs.writeFileSync(envFilePath, envContent, 'utf-8');
-
-    if (updates.length === 0) {
-      return '⚠️  No configuration changes made.';
-    }
-
-    return `✅ Successfully updated ${environment} environment configuration:
-${updates.map(u => `  - ${u}`).join('\n')}
-
-File: ${envFilePath}
-`;
+    return [
+      `✅ Updated ${environment} environment configuration`,
+      ...updates.map(u => `  - ${u}`),
+      '',
+      `File: ${envFile}`,
+    ].join('\n');
   }
+
+  // ---------- HELPERS ----------
 
   private updateProperty(
     content: string,

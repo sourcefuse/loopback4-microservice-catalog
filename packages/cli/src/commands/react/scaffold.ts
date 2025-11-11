@@ -61,7 +61,6 @@ export class ReactScaffold extends Base<{}> {
     this.log(result);
   }
 
-  // ✅ FIXED: typed return signature and use of `'text' as const`
   static async mcpRun(inputs: AnyObject): Promise<{
     content: {type: 'text'; text: string; isError?: boolean}[];
   }> {
