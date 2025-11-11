@@ -570,6 +570,12 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
   )
 ```
 
+The repository by default does not restrict setting up of createdOn and modifiedOn through API or external sources. However, you can restrict it by binding the restrictDateModification property to config like this
+
+```ts
+this.bind(SFCoreBindings.config).to({restrictDateModification: true});
+```
+
 ![Connector](https://loopback.io/images/9830486.png)
 
 #### SequelizeUserModifyCrudRepository

@@ -3,16 +3,17 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
+import {DataObject, Where} from '@loopback/repository';
 import CryptoJS from 'crypto-js';
 import {IncomingMessage, ServerResponse} from 'http';
 import {AnyObject} from 'loopback-datasource-juggler';
 import {SWStats} from 'swagger-stats';
+import {UserModifiableEntity} from './models';
 
 export interface IServiceConfig {
   useCustomSequence?: boolean;
   useSequelize?: boolean;
 }
-
 export type OASPathDefinition = AnyObject;
 export const AuthCacheSourceName = 'AuthCache';
 export const AuthDbSourceName = 'AuthDB';
@@ -54,6 +55,7 @@ export interface CoreConfig {
     username?: string,
     password?: string,
   ) => boolean;
+  restrictDateModification?: boolean;
 }
 
 /**
@@ -90,3 +92,16 @@ export type TenantIdEncryptionFn = (
   secretKey: string,
   tenantId: string,
 ) => Promise<string>;
+
+export interface IDefaultUserModifyCrud<T extends UserModifiableEntity, ID> {
+  create(data: DataObject<T>): Promise<DataObject<T>>;
+  createAll(data: DataObject<T>[]): Promise<DataObject<T>[]>;
+  save(entity: T): Promise<T>;
+  update(data: T): Promise<T>;
+  updateAll(
+    data: DataObject<T>,
+    where?: Where<T>,
+  ): Promise<{data: DataObject<T>; where: Where<T>}>;
+  updateById(id: ID, data: DataObject<T>): Promise<DataObject<T>>;
+  replaceById(id: ID, data: DataObject<T>): Promise<DataObject<T>>;
+}
