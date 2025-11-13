@@ -60,7 +60,10 @@ export class FileGenerator {
     try {
       const pkg = JSON.parse(fs.readFileSync(file, 'utf-8'));
       pkg.name = projectName;
-      pkg.version = '1.0.0';
+      // Only reset version to 1.0.0 if it doesn't exist or is 0.0.0
+      if (!pkg.version || pkg.version === '0.0.0') {
+        pkg.version = '1.0.0';
+      }
       fs.writeFileSync(file, JSON.stringify(pkg, null, 2), 'utf-8');
       console.log('✅ package.json updated'); // NOSONAR
     } catch (err) {
