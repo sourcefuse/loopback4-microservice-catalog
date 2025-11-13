@@ -14,7 +14,7 @@ export interface TemplateFetchOptions {
  * from GitHub or local development directories.
  */
 export class TemplateFetcher {
-  private static readonly REPO_PATTERN = /^[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+$/;
+  private static readonly REPO_PATTERN = /^[a-zA-Z0-9-]+\/[a-zA-Z0-9.-]+$/;
   private static readonly BRANCH_PATTERN = /^[a-zA-Z0-9._/-]+$/;
 
   private validateRepo(repo: string): void {

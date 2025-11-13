@@ -129,7 +129,8 @@ export class ReactConfig extends Base<{}> {
 
     for (const [key, val] of Object.entries(mappings)) {
       if (val === undefined || val === null) continue;
-      const value = String(val);
+      // Convert booleans to 1/0 for better .env compatibility
+      const value = typeof val === 'boolean' ? (val ? '1' : '0') : String(val);
       const pattern = new RegExp(`^${key}=.*$`, 'm');
       updated = pattern.test(updated)
         ? updated.replace(pattern, `${key}=${value}`)

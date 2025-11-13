@@ -31,6 +31,8 @@ import {Update} from './update';
 export class Mcp extends Base<{}> {
   commands: ICommandWithMcpFlags[] = [];
   private static hooksInstalled = false; // Guard flag to prevent multiple installations
+  private static readonly originalConsoleError = console.error;
+  private static readonly originalConsoleLog = console.log;
 
   constructor(
     argv: string[],
@@ -180,10 +182,6 @@ export class Mcp extends Base<{}> {
   }
 
   private hookProcessMethods() {
-    // Save original references before overwriting
-    const originalError = console.error;
-    const originalLog = console.log;
-
     // Stub process.exit to prevent killing the MCP server
     process.exit = () => {
       this.server.server
@@ -193,7 +191,7 @@ export class Mcp extends Base<{}> {
           timestamp: new Date().toISOString(),
         })
         .catch(err => {
-          originalError('Error sending exit message:', err);
+          Mcp.originalConsoleError('Error sending exit message:', err);
         });
       return undefined as never;
     };
@@ -214,9 +212,9 @@ export class Mcp extends Base<{}> {
           timestamp: new Date().toISOString(),
         })
         .catch(err => {
-          originalError('Error sending logging message:', err);
+          Mcp.originalConsoleError('Error sending logging message:', err);
         });
-      originalError(...args);
+      Mcp.originalConsoleError(...args);
     };
 
     // Intercept console.log
@@ -235,15 +233,15 @@ export class Mcp extends Base<{}> {
           timestamp: new Date().toISOString(),
         })
         .catch(err => {
-          originalError('Error sending logging message:', err);
+          Mcp.originalConsoleError('Error sending logging message:', err);
         });
-      originalLog(...args);
+      Mcp.originalConsoleLog(...args);
     };
   }
 
   private argToZod(arg: IArg) {
     const option = z.string().describe(arg.description ?? '');
-    return arg.required ? option : option.optional();
+    return arg.required === true ? option : option.optional();
   }
 
   private flagToZod<T>(flag: IFlag<T>, checkRequired = false) {
