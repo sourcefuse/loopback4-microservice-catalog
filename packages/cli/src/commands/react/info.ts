@@ -1,7 +1,7 @@
 // Copyright (c) 2023 Sourcefuse Technologies
-//
-// This software is released under the MIT License.
+// Released under the MIT License.
 // https://opensource.org/licenses/MIT
+
 import {flags} from '@oclif/command';
 import {IConfig} from '@oclif/config';
 import {execSync} from 'node:child_process';
@@ -11,156 +11,119 @@ import Base from '../../command-base';
 import {AnyObject, PromptFunction} from '../../types';
 import {FileGenerator} from '../../utilities/file-generator';
 
+/**
+ * Displays detailed information about a React project.
+ */
 export class ReactInfo extends Base<{}> {
-  private fileGenerator = new FileGenerator();
-
+  private readonly fileGenerator = new FileGenerator();
 
   static readonly description =
     'Display React project information and statistics';
-
-  static readonly mcpDescription = `
-    Use this command to get comprehensive information about a React project.
-
-    Information provided:
-    - Project name, version, description
-    - Available npm scripts
-    - Key dependencies and versions (React, TypeScript, Material-UI, Redux, etc.)
-    - Node/NPM versions
-    - Project structure and statistics (components, hooks, pages, slices)
-    - Configuration files
-
-    This is useful for:
-    - Understanding project setup
-    - Verifying versions
-    - Getting project statistics
-    - Troubleshooting
-  `;
-
-  static readonly mcpFlags = {
-    workingDir: flags.string({
-      name: 'workingDir',
-      description: 'Path to the React project root directory',
-      required: false,
-    }),
-  };
+  static readonly mcpDescription =
+    'Provides project details: name, version, dependencies, scripts, environment, and structure statistics.';
 
   static readonly flags = {
-    help: flags.boolean({
-      name: 'help',
-      description: 'Show manual pages',
-      type: 'boolean',
-    }),
+    help: flags.boolean({description: 'Show manual pages'}),
     detailed: flags.boolean({
-      name: 'detailed',
-      description: 'Show detailed statistics',
-      required: false,
+      description: 'Show detailed project statistics',
       default: false,
     }),
   };
 
-  static readonly args = [];
+  static readonly mcpFlags = {
+    workingDir: flags.string({description: 'React project root directory'}),
+  };
 
-  async run() {
-    const {flags: parsedFlags} = this.parse(ReactInfo);
-    const inputs = {...parsedFlags};
-
-    const result = await this.getProjectInfo(inputs);
-    this.log(result);
+  async run(): Promise<void> {
+    const {flags: opts} = this.parse(ReactInfo);
+    const info = await this.getProjectInfo(opts);
+    this.log(info);
   }
 
-  static async mcpRun(inputs: AnyObject) {
-    const originalCwd = process.cwd();
-    if (inputs.workingDir) {
-      process.chdir(inputs.workingDir);
-    }
-
+  // ✅ FIXED: Proper MCP return type and 'text' literal
+  static async mcpRun(inputs: AnyObject): Promise<{
+    content: {type: 'text'; text: string; isError?: boolean}[];
+  }> {
+    const cwd = process.cwd();
     try {
-      const infoGatherer = new ReactInfo([], {} as unknown as IConfig, {} as unknown as PromptFunction);
-      const result = await infoGatherer.getProjectInfo(inputs);
-      process.chdir(originalCwd);
+      if (inputs.workingDir) process.chdir(inputs.workingDir);
+      const info = await new ReactInfo(
+        [],
+        {} as IConfig,
+        {} as PromptFunction,
+      ).getProjectInfo(inputs);
       return {
-        content: [{type: 'text' as const, text: result, isError: false}],
+        content: [{type: 'text' as const, text: info, isError: false}],
       };
     } catch (err) {
-      process.chdir(originalCwd);
+      const msg = err instanceof Error ? err.message : String(err);
       return {
         content: [
-          {
-            type: 'text' as const,
-            text: `Error: ${err instanceof Error ? err.message : err}`,
-            isError: true,
-          },
+          {type: 'text' as const, text: `Error: ${msg}`, isError: true},
         ],
       };
+    } finally {
+      process.chdir(cwd);
     }
   }
+
+  // ---------- CORE LOGIC ----------
 
   private async getProjectInfo(inputs: AnyObject): Promise<string> {
-    const {detailed} = inputs;
     const projectRoot = this.fileGenerator['getProjectRoot']();
+    const pkg = this.loadJson(
+      path.join(projectRoot, 'package.json'),
+      'package.json not found',
+    );
+    const sections = [
+      this.section('📦 Project Info', this.projectInfo(pkg)),
+      this.section('🔧 Environment', this.environmentInfo()),
+      this.section('📚 Key Dependencies', this.dependencies(pkg)),
+      this.section('⚡ Scripts', this.scripts(pkg)),
+      this.section('📄 Configuration Files', this.configFiles(projectRoot)),
+      this.section('🤖 MCP Configuration', this.mcpConfig(projectRoot)),
+    ];
 
-    const packageJson = this.loadPackageJson(projectRoot);
-    let info = this.buildBasicInfo(packageJson);
-
-    info += this.getEnvironmentInfo();
-    info += this.getKeyDependencies(packageJson);
-    info += this.getScripts(packageJson);
-
-    if (detailed) {
-      info += this.getDetailedStatistics(projectRoot);
+    if (inputs.detailed) {
+      sections.push(
+        this.section('📊 Project Statistics', this.statistics(projectRoot)),
+      );
     }
 
-    info += this.getConfigurationFiles(projectRoot);
-    info += this.getMcpConfiguration(projectRoot);
-
-    return info;
+    return sections.filter(Boolean).join('\n\n');
   }
 
-  private loadPackageJson(projectRoot: string): AnyObject {
-    const packageJsonPath = path.join(projectRoot, 'package.json');
-    if (!fs.existsSync(packageJsonPath)) {
-      throw new Error('package.json not found. Is this a React project?');
-    }
-    return JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+  // ---------- HELPERS ----------
+
+  private section(title: string, content: string): string {
+    return content ? `${title}\n${'─'.repeat(title.length)}\n${content}` : '';
   }
 
-  private buildBasicInfo(packageJson: AnyObject): string {
-    return `
-📦 React Project Information
-════════════════════════════
-
-Project: ${packageJson.name || 'N/A'}
-Version: ${packageJson.version || 'N/A'}
-Description: ${packageJson.description || 'N/A'}
-
-`;
+  private loadJson(filePath: string, errorMsg?: string): AnyObject {
+    if (!fs.existsSync(filePath))
+      throw new Error(errorMsg ?? `Missing file: ${filePath}`);
+    return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
   }
 
-  private getEnvironmentInfo(): string {
+  private projectInfo(pkg: AnyObject): string {
+    return `Name: ${pkg.name ?? 'N/A'}\nVersion: ${
+      pkg.version ?? 'N/A'
+    }\nDescription: ${pkg.description ?? 'N/A'}`;
+  }
+
+  private environmentInfo(): string {
     try {
-      const nodeVersion = execSync('node --version', {encoding: 'utf-8'}).trim(); // NOSONAR - Using system PATH is required for CLI tool execution
-      const npmVersion = execSync('npm --version', {encoding: 'utf-8'}).trim(); // NOSONAR - Using system PATH is required for CLI tool execution
-      return `🔧 Environment
-───────────────
-Node: ${nodeVersion}
-NPM: ${npmVersion}
-
-`;
-    } catch (err) {
-      // Node/NPM not available - return empty string
-      return '';
+      const node = execSync('node --version', {encoding: 'utf-8'}).trim(); // NOSONAR
+      const npm = execSync('npm --version', {encoding: 'utf-8'}).trim(); // NOSONAR
+      return `Node: ${node}\nNPM: ${npm}`;
+    } catch {
+      return 'Node/NPM environment unavailable';
     }
   }
 
-  private getKeyDependencies(packageJson: AnyObject): string {
-    let info = `📚 Key Dependencies
-───────────────────
-`;
-    const deps = packageJson.dependencies || {};
-    const devDeps = packageJson.devDependencies || {};
-    const allDeps = {...deps, ...devDeps};
-
-    const keyDeps = [
+  private dependencies(pkg: AnyObject): string {
+    const deps = {...pkg.dependencies, ...pkg.devDependencies};
+    const keys = [
       'react',
       'react-dom',
       'typescript',
@@ -170,164 +133,82 @@ NPM: ${npmVersion}
       'react-router-dom',
       'vite',
     ];
-
-    for (const dep of keyDeps) {
-      if (allDeps[dep]) {
-        info += `${dep}: ${allDeps[dep]}\n`;
-      }
-    }
-
-    return info;
+    return (
+      keys
+        .filter(d => deps[d])
+        .map(d => `${d}: ${deps[d]}`)
+        .join('\n') ?? 'No key dependencies found'
+    );
   }
 
-  private getScripts(packageJson: AnyObject): string {
-    if (!packageJson.scripts) {
-      return '';
-    }
-
-    let info = `\n⚡ Available Scripts
-──────────────────
-`;
-    const scripts = Object.keys(packageJson.scripts).slice(0, 10);
-    for (const script of scripts) {
-      info += `${script}: ${packageJson.scripts[script]}\n`;
-    }
-
-    return info;
+  private scripts(pkg: AnyObject): string {
+    const scripts = pkg.scripts ? Object.entries(pkg.scripts).slice(0, 10) : [];
+    return scripts.length
+      ? scripts.map(([k, v]) => `${k}: ${v}`).join('\n')
+      : 'No npm scripts found';
   }
 
-  private getDetailedStatistics(projectRoot: string): string {
-    const stats = this.getProjectStatistics(projectRoot);
-    return `\n📊 Project Statistics
-────────────────────
-${stats}
-`;
-  }
-
-  private getConfigurationFiles(projectRoot: string): string {
-    const configFiles = [
+  private configFiles(root: string): string {
+    const files = [
       'vite.config.ts',
       'tsconfig.json',
       '.env',
       'config.template.json',
-      'configGenerator.js',
     ];
-
-    let info = `\n📄 Configuration Files
-──────────────────────
-`;
-    for (const file of configFiles) {
-      const filePath = path.join(projectRoot, file);
-      info += `${file}: ${fs.existsSync(filePath) ? '✅' : '❌'}\n`;
-    }
-
-    return info;
+    return files
+      .map(f => `${f}: ${fs.existsSync(path.join(root, f)) ? '✅' : '❌'}`)
+      .join('\n');
   }
 
-  private getMcpConfiguration(projectRoot: string): string {
-    const mcpConfigPath = path.join(projectRoot, '.claude', 'mcp.json');
-    const isConfigured = fs.existsSync(mcpConfigPath);
-
-    let info = `\n🤖 MCP Configuration
-───────────────────
-Status: ${isConfigured ? '✅ Configured' : '❌ Not configured'}
-`;
-
-    if (isConfigured) {
-      info += `Location: .claude/mcp.json
-`;
-    }
-
-    return info;
+  private mcpConfig(root: string): string {
+    const file = path.join(root, '.claude', 'mcp.json');
+    return fs.existsSync(file)
+      ? `Status: ✅ Configured\nLocation: .claude/mcp.json`
+      : 'Status: ❌ Not configured';
   }
 
-  private getProjectStatistics(projectRoot: string): string {
-    const srcPath = path.join(projectRoot, 'src');
+  private statistics(root: string): string {
+    const src = path.join(root, 'src');
+    if (!fs.existsSync(src)) return 'Source directory not found';
 
-    if (!fs.existsSync(srcPath)) {
-      return 'Source directory not found';
-    }
-
-    let stats = '';
-
-    try {
-      // Count components
-      const componentsPath = path.join(srcPath, 'Components');
-      const componentCount = fs.existsSync(componentsPath)
-        ? this.countDirectories(componentsPath)
-        : 0;
-      stats += `Components: ${componentCount}\n`;
-
-      // Count pages
-      const pagesPath = path.join(srcPath, 'Pages');
-      const pageCount = fs.existsSync(pagesPath)
-        ? this.countDirectories(pagesPath)
-        : 0;
-      stats += `Pages: ${pageCount}\n`;
-
-      // Count hooks
-      const hooksPath = path.join(srcPath, 'Hooks');
-      const hookCount = fs.existsSync(hooksPath)
-        ? this.countFiles(hooksPath, '.ts')
-        : 0;
-      stats += `Custom Hooks: ${hookCount}\n`;
-
-      // Count Redux slices
-      const reduxPath = path.join(srcPath, 'redux');
-      const sliceCount = fs.existsSync(reduxPath)
-        ? this.countFiles(reduxPath, 'Slice.ts')
-        : 0;
-      stats += `Redux Slices: ${sliceCount}\n`;
-
-      // Count contexts
-      const providersPath = path.join(srcPath, 'Providers');
-      const contextCount = fs.existsSync(providersPath)
-        ? this.countDirectories(providersPath)
-        : 0;
-      stats += `Contexts: ${contextCount}\n`;
-    } catch (err) {
-      stats = 'Unable to gather statistics';
-    }
-
-    return stats;
-  }
-
-  private countFiles(dir: string, extension: string): number {
-    let count = 0;
-
-    const walk = (directory: string) => {
-      try {
-        const files = fs.readdirSync(directory);
-        for (const file of files) {
-          const filePath = path.join(directory, file);
-          const stats = fs.statSync(filePath);
-
-          if (stats.isDirectory()) {
-            walk(filePath);
-          } else if (file.endsWith(extension)) {
-            count++;
-          } else {
-            // Not a directory and doesn't match extension - skip
-          }
-        }
-      } catch (err) {
-        // Directory not accessible - skip it
-      }
+    const dirs = {
+      Components: this.countDirs(path.join(src, 'Components')),
+      Pages: this.countDirs(path.join(src, 'Pages')),
+      Providers: this.countDirs(path.join(src, 'Providers')),
     };
 
-    walk(dir);
+    const hooks = this.countFiles(path.join(src, 'Hooks'), '.ts');
+    const slices = this.countFiles(path.join(src, 'redux'), 'Slice.ts');
+
+    return [
+      `Components: ${dirs.Components}`,
+      `Pages: ${dirs.Pages}`,
+      `Contexts: ${dirs.Providers}`,
+      `Hooks: ${hooks}`,
+      `Redux Slices: ${slices}`,
+    ].join('\n');
+  }
+
+  private countFiles(dir: string, ext: string): number {
+    if (!fs.existsSync(dir)) return 0;
+    let count = 0;
+    const traverse = (d: string): void => {
+      for (const item of fs.readdirSync(d)) {
+        const p = path.join(d, item);
+        const stat = fs.statSync(p);
+        if (stat.isDirectory()) traverse(p);
+        else if (p.endsWith(ext)) count++;
+        else continue;
+      }
+    };
+    traverse(dir);
     return count;
   }
 
-  private countDirectories(dir: string): number {
-    try {
-      const items = fs.readdirSync(dir);
-      return items.filter(item => {
-        const itemPath = path.join(dir, item);
-        return fs.statSync(itemPath).isDirectory();
-      }).length;
-    } catch (err) {
-      return 0;
-    }
+  private countDirs(dir: string): number {
+    if (!fs.existsSync(dir)) return 0;
+    return fs
+      .readdirSync(dir)
+      .filter(i => fs.statSync(path.join(dir, i)).isDirectory()).length;
   }
 }

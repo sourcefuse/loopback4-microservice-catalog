@@ -1,50 +1,40 @@
-// Copyright (c) 2023 Sourcefuse Technologies
-//
-// This software is released under the MIT License.
-// https://opensource.org/licenses/MIT
 import {execSync} from 'node:child_process';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 
-export interface GeneratorOptions {
-  name: string;
-  targetPath: string;
-  skipTests?: boolean;
-}
-
 export class FileGenerator {
-  /**
-   * Write file to disk
-   */
   protected writeFile(filePath: string, content: string): void {
     const dir = path.dirname(filePath);
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, {recursive: true});
-    }
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, {recursive: true});
     fs.writeFileSync(filePath, content, 'utf-8');
   }
 
-  /**
-   * Convert string to PascalCase
-   */
+  removeModule(projectPath: string, moduleName: string): void {
+    try {
+      const modulePath = path.join(projectPath, 'src', 'app', moduleName);
+      if (fs.existsSync(modulePath)) {
+        fs.rmSync(modulePath, {recursive: true, force: true});
+        console.log(`🗑️  Removed module: ${moduleName}`); // NOSONAR
+      } else {
+        console.log(`ℹ️  Module not found: ${moduleName}`); // NOSONAR
+      }
+    } catch (err) {
+      console.error(`❌ Failed to remove module '${moduleName}':`, err); // NOSONAR
+    }
+  }
+
   protected toPascalCase(str: string): string {
     return str
       .split(/[-_]/)
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
       .join('');
   }
 
-  /**
-   * Convert string to camelCase
-   */
   protected toCamelCase(str: string): string {
-    const pascal = this.toPascalCase(str);
-    return pascal.charAt(0).toLowerCase() + pascal.slice(1);
+    const p = this.toPascalCase(str);
+    return p.charAt(0).toLowerCase() + p.slice(1);
   }
 
-  /**
-   * Convert string to kebab-case
-   */
   protected toKebabCase(str: string): string {
     return str
       .replace(/([a-z])([A-Z])/g, '$1-$2')
@@ -52,124 +42,79 @@ export class FileGenerator {
       .toLowerCase();
   }
 
-  /**
-   * Get project root by looking for package.json
-   */
   protected getProjectRoot(startPath?: string): string {
-    let currentPath = startPath ?? process.cwd();
-
-    while (currentPath !== path.parse(currentPath).root) {
-      const packageJsonPath = path.join(currentPath, 'package.json');
-      if (fs.existsSync(packageJsonPath)) {
-        return currentPath;
-      }
-      currentPath = path.dirname(currentPath);
+    let current = startPath ?? process.cwd();
+    while (current !== path.parse(current).root) {
+      if (fs.existsSync(path.join(current, 'package.json'))) return current;
+      current = path.dirname(current);
     }
-
-    // If not found, use current working directory
     return process.cwd();
   }
 
-  /**
-   * Update package.json with new name
-   */
   updatePackageJson(projectPath: string, projectName: string): void {
-    const packageJsonPath = path.join(projectPath, 'package.json');
-
-    if (!fs.existsSync(packageJsonPath)) {
-      // sonar-ignore: User feedback console statement
-      console.warn('⚠️  package.json not found');
+    const file = path.join(projectPath, 'package.json');
+    if (!fs.existsSync(file)) {
+      console.warn('⚠️  package.json not found'); // NOSONAR
       return;
     }
-
     try {
-      const packageJson = JSON.parse(
-        fs.readFileSync(packageJsonPath, 'utf-8'),
-      );
-      packageJson.name = projectName;
-      packageJson.version = '1.0.0';
-
-      fs.writeFileSync(
-        packageJsonPath,
-        JSON.stringify(packageJson, null, 2),
-        'utf-8',
-      );
-
-      // sonar-ignore: User feedback console statement
-      console.log('✅ package.json updated');
-    } catch (error) {
-      // sonar-ignore: User feedback console statement
-      console.error('❌ Failed to update package.json:', error);
+      const pkg = JSON.parse(fs.readFileSync(file, 'utf-8'));
+      pkg.name = projectName;
+      pkg.version = '1.0.0';
+      fs.writeFileSync(file, JSON.stringify(pkg, null, 2), 'utf-8');
+      console.log('✅ package.json updated'); // NOSONAR
+    } catch (err) {
+      console.error('❌ Failed to update package.json:', err); // NOSONAR
     }
   }
 
-  /**
-   * Remove module from project
-   */
-  removeModule(projectPath: string, moduleName: string): void {
-    const modulePath = path.join(projectPath, 'src', moduleName);
-
-    if (fs.existsSync(modulePath)) {
-      fs.rmSync(modulePath, {recursive: true, force: true});
-      // sonar-ignore: User feedback console statement
-      console.log(`✅ Removed module: ${moduleName}`);
-    }
-  }
-
-  /**
-   * Install dependencies using npm
-   */
   installDependencies(projectPath: string): void {
-    // sonar-ignore: User feedback console statement
-    console.log('📦 Installing dependencies...');
-
+    console.log('📦 Installing dependencies...'); // NOSONAR
     try {
-      execSync('npm install', {
-        cwd: projectPath,
-        stdio: 'inherit',
-      }); // NOSONAR - Using system PATH is required for CLI tool execution
-      // sonar-ignore: User feedback console statement
-      console.log('✅ Dependencies installed successfully');
-    } catch (error) {
-      // sonar-ignore: User feedback console statement
-      console.error('❌ Failed to install dependencies:', error);
+      execSync('npm install', {cwd: projectPath, stdio: 'inherit'}); // NOSONAR
+      console.log('✅ Dependencies installed successfully'); // NOSONAR
+    } catch (err) {
+      console.error('❌ Failed to install dependencies:', err); // NOSONAR
     }
   }
 
-  /**
-   * Create directory if it doesn't exist
-   */
   ensureDirectory(dirPath: string): void {
-    if (!fs.existsSync(dirPath)) {
-      fs.mkdirSync(dirPath, {recursive: true});
-    }
+    if (!fs.existsSync(dirPath)) fs.mkdirSync(dirPath, {recursive: true});
   }
 
-  /**
-   * Check if file exists
-   */
-  fileExists(filePath: string): boolean {
-    return fs.existsSync(filePath);
-  }
-
-  /**
-   * Read file content
-   */
   readFile(filePath: string): string {
     return fs.readFileSync(filePath, 'utf-8');
   }
 
-  /**
-   * Delete file or directory
-   */
   delete(targetPath: string): void {
-    if (fs.existsSync(targetPath)) {
-      const stats = fs.statSync(targetPath);
-      if (stats.isDirectory()) {
-        fs.rmSync(targetPath, {recursive: true, force: true});
-      } else {
-        fs.unlinkSync(targetPath);
+    if (!fs.existsSync(targetPath)) return;
+    const stats = fs.statSync(targetPath);
+    if (stats.isDirectory()) {
+      fs.rmSync(targetPath, {recursive: true, force: true});
+    } else {
+      fs.unlinkSync(targetPath);
+    }
+  }
+
+  replaceInFiles(targetDir: string, search: string, replace: string): void {
+    const walk = (dir: string): void => {
+      const entries = fs.readdirSync(dir, {withFileTypes: true});
+      for (const e of entries) {
+        const filePath = path.join(dir, e.name);
+        if (e.isDirectory()) walk(filePath);
+        else if (e.isFile()) {
+          const content = fs.readFileSync(filePath, 'utf8');
+          if (content.includes(search)) {
+            const newContent = content.split(search).join(replace);
+            fs.writeFileSync(filePath, newContent, 'utf8');
+          }
+        } else continue;
       }
+    };
+    try {
+      walk(targetDir);
+    } catch (err) {
+      console.warn(`replaceInFiles: failed for ${targetDir} - ${err}`); // NOSONAR
     }
   }
 }

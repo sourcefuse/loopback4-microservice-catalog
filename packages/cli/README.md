@@ -20,7 +20,7 @@ $ npm install -g @sourceloop/cli
 $ sl COMMAND
 running command...
 $ sl (-v|--version|version)
-@sourceloop/cli/12.0.0 linux-x64 node-v20.19.5
+@sourceloop/cli/12.0.0 darwin-arm64 node-v20.11.0
 $ sl --help [COMMAND]
 USAGE
   $ sl COMMAND
@@ -120,17 +120,17 @@ USAGE
   $ sl angular:scaffold [NAME]
 
 ARGUMENTS
-  NAME  Name of the project
+  NAME  Project name
 
 OPTIONS
   --help                             Show manual pages
-  --installDeps                      Install dependencies after scaffolding
-  --localPath=localPath              Local path to template (for development)
+  --installDeps                      Install dependencies after scaffold
+  --localPath=localPath              Local template path (for development)
 
-  --templateRepo=templateRepo        [default: sourcefuse/angular-boilerplate] Custom template repository (e.g.,
+  --templateRepo=templateRepo        [default: sourcefuse/angular-boilerplate] Template repo (default:
                                      sourcefuse/angular-boilerplate)
 
-  --templateVersion=templateVersion  Template version/branch to use
+  --templateVersion=templateVersion  Template branch/version
 
   --withAuth                         Include authentication module
 
@@ -319,19 +319,19 @@ _See code: [src/commands/react/config.ts](https://github.com/sourcefuse/loopback
 
 ## `sl react:generate [NAME]`
 
-Generate React components, hooks, contexts, pages, and other artifacts
+Generate React components, hooks, contexts, pages, and other artifacts.
 
 ```
 USAGE
   $ sl react:generate [NAME]
 
 ARGUMENTS
-  NAME  Name of the artifact to generate
+  NAME  Artifact name
 
 OPTIONS
   --help                                                   Show manual pages
-  --path=path                                              Path where the artifact should be generated
-  --skipTests                                              Skip generating test files
+  --path=path                                              Target path for the artifact
+  --skipTests                                              Skip test file generation
   --type=(component|hook|context|page|service|util|slice)  Type of artifact to generate
 ```
 
@@ -346,7 +346,7 @@ USAGE
   $ sl react:info
 
 OPTIONS
-  --detailed  Show detailed statistics
+  --detailed  Show detailed project statistics
   --help      Show manual pages
 ```
 
@@ -354,32 +354,21 @@ _See code: [src/commands/react/info.ts](https://github.com/sourcefuse/loopback4-
 
 ## `sl react:scaffold [NAME]`
 
-Scaffold a new React project from ARC boilerplate
+Scaffold a new React UI boilerplate project.
 
 ```
 USAGE
   $ sl react:scaffold [NAME]
 
 ARGUMENTS
-  NAME  Name of the project
+  NAME  Project name
 
 OPTIONS
   --help                             Show manual pages
   --installDeps                      Install dependencies after scaffolding
   --localPath=localPath              Local path to template (for development)
-
-  --templateRepo=templateRepo        [default: sourcefuse/react-boilerplate-ts-ui] Custom template repository (e.g.,
-                                     sourcefuse/react-boilerplate-ts-ui)
-
-  --templateVersion=templateVersion  Template version/branch to use
-
-  --withAuth                         Include authentication module
-
-  --withRedux                        Include Redux Toolkit state management
-
-  --withRouting                      Include React Router
-
-  --withThemes                       Include Material-UI theme system
+  --templateRepo=templateRepo        [default: sourcefuse/react-boilerplate-ts-ui] Template repository (org/repo)
+  --templateVersion=templateVersion  Template branch or version
 ```
 
 _See code: [src/commands/react/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/react/scaffold.ts)_

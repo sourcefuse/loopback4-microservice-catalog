@@ -1,50 +1,25 @@
 // Copyright (c) 2023 Sourcefuse Technologies
-//
-// This software is released under the MIT License.
+// Released under the MIT License.
 // https://opensource.org/licenses/MIT
+
 import {flags} from '@oclif/command';
 import {IConfig} from '@oclif/config';
-import * as path from 'node:path';
+import path from 'node:path';
 import Base from '../../command-base';
 import {AnyObject, PromptFunction} from '../../types';
 import {FileGenerator} from '../../utilities/file-generator';
 
 export class ReactGenerate extends Base<{}> {
-  private fileGenerator = new FileGenerator();
+  private readonly fileGen = new FileGenerator();
 
   static readonly description =
-    'Generate React components, hooks, contexts, pages, and other artifacts';
-
-  static readonly mcpDescription = `
-    Use this command to generate React artifacts like components, custom hooks, contexts, pages, services, utilities, and Redux slices.
-    The generated files follow React best practices and ARC boilerplate conventions with TypeScript and Material-UI support.
-
-    Examples:
-    - Generate a component: type=component, name=UserProfile (defaults to src/Components/)
-    - Generate a custom hook: type=hook, name=useAuth (defaults to src/Hooks/)
-    - Generate a page: type=page, name=Dashboard (defaults to src/Pages/)
-    - Generate a Redux slice: type=slice, name=user (defaults to src/redux/)
-    - Generate a context: type=context, name=Theme (defaults to src/Providers/)
-
-    The command will create the necessary files with Material-UI styling patterns and proper folder structure.
-  `;
-
-  static readonly mcpFlags = {
-    workingDir: flags.string({
-      name: 'workingDir',
-      description: 'Path to the React project root directory',
-      required: false,
-    }),
-  };
+    'Generate React components, hooks, contexts, pages, and other artifacts.';
+  static readonly mcpDescription =
+    'Generates React components, hooks, contexts, pages, utilities, slices, and services based on ARC conventions.';
 
   static readonly flags = {
-    help: flags.boolean({
-      name: 'help',
-      description: 'Show manual pages',
-      type: 'boolean',
-    }),
+    help: flags.boolean({description: 'Show manual pages'}),
     type: flags.enum({
-      name: 'type',
       description: 'Type of artifact to generate',
       options: [
         'component',
@@ -55,585 +30,297 @@ export class ReactGenerate extends Base<{}> {
         'util',
         'slice',
       ],
-      required: false,
     }),
-    path: flags.string({
-      name: 'path',
-      description: 'Path where the artifact should be generated',
-      required: false,
-    }),
-    skipTests: flags.boolean({
-      name: 'skipTests',
-      description: 'Skip generating test files',
-      required: false,
-    }),
+    path: flags.string({description: 'Target path for the artifact'}),
+    skipTests: flags.boolean({description: 'Skip test file generation'}),
   };
 
-  static readonly args = [
-    {
-      name: 'name',
-      description: 'Name of the artifact to generate',
-      required: false,
-    },
-  ];
+  static readonly args = [{name: 'name', description: 'Artifact name'}];
 
-  async run() {
-    const parsed = this.parse(ReactGenerate);
-    const name = parsed.args.name;
-    const inputs = {name, ...parsed.flags};
+  static readonly mcpFlags = {
+    workingDir: flags.string({description: 'React project root directory'}),
+  };
 
-    if (!inputs.name) {
-      const answer = await this.prompt([
-        {
-          type: 'input',
-          name: 'name',
-          message: 'What is the name of the artifact?',
-          validate: (input: string) =>
-            input.length > 0 || 'Name is required',
-        },
-      ]);
-      inputs.name = answer.name;
-    }
-
-    if (!inputs.type) {
-      const answer = await this.prompt([
-        {
-          type: 'list',
-          name: 'type',
-          message: 'What type of artifact do you want to generate?',
-          choices: [
-            'component',
-            'hook',
-            'context',
-            'page',
-            'service',
-            'util',
-            'slice',
-          ],
-        } as Record<string, unknown>,
-      ]);
-      inputs.type = answer.type;
-    }
-
-    const result = await this.generateArtifact(inputs);
+  async run(): Promise<void> {
+    const {args, flags: opts} = this.parse(ReactGenerate);
+    const name =
+      args.name ?? (await this.promptFor('name', 'Enter artifact name'));
+    const type = opts.type ?? (await this.promptForType());
+    const result = await this.generateArtifact({name, ...opts, type});
     this.log(result);
   }
 
   static async mcpRun(inputs: AnyObject) {
-    const originalCwd = process.cwd();
-    if (inputs.workingDir) {
-      process.chdir(inputs.workingDir);
-    }
-
+    const cwd = process.cwd();
     try {
-      const generator = new ReactGenerate([], {} as unknown as IConfig, {} as unknown as PromptFunction);
-      const result = await generator.generateArtifact(inputs);
-      process.chdir(originalCwd);
+      if (inputs.workingDir) process.chdir(inputs.workingDir);
+      const instance = new ReactGenerate(
+        [],
+        {} as IConfig,
+        {} as PromptFunction,
+      );
+      const result = await instance.generateArtifact(inputs);
       return {
         content: [{type: 'text' as const, text: result, isError: false}],
       };
     } catch (err) {
-      process.chdir(originalCwd);
+      const msg = err instanceof Error ? err.message : String(err);
       return {
         content: [
-          {
-            type: 'text' as const,
-            text: `Error: ${err instanceof Error ? err.message : err}`,
-            isError: true,
-          },
+          {type: 'text' as const, text: `Error: ${msg}`, isError: true},
         ],
       };
+    } finally {
+      process.chdir(cwd);
     }
   }
 
-  private getDefaultPathForType(type: string): string {
-    switch (type) {
-      case 'component':
-        return 'src/Components';
-      case 'hook':
-        return 'src/Hooks';
-      case 'context':
-        return 'src/Providers';
-      case 'page':
-        return 'src/Pages';
-      case 'slice':
-        return 'src/redux';
-      default:
-        return 'src';
-    }
-  }
+  // ---------- CORE ----------
 
   private async generateArtifact(inputs: AnyObject): Promise<string> {
-    const {name, type, path: artifactPath, skipTests} = inputs;
-    const projectRoot = this.fileGenerator['getProjectRoot']();
+    const {name, type, path: targetPath, skipTests} = inputs;
+    const root = this.fileGen['getProjectRoot']();
+    const dir = path.join(root, targetPath || this.resolveDir(type));
+    this.fileGen['ensureDirectory'](dir);
 
-    // Determine the target path based on artifact type (matching boilerplate conventions)
-    const defaultPath = this.getDefaultPathForType(type);
+    const generator = this.generators[type];
+    if (!generator) throw new Error(`Unsupported artifact type: ${type}`);
 
-    const targetPath = artifactPath
-      ? path.join(projectRoot, artifactPath)
-      : path.join(projectRoot, defaultPath);
-
-    this.fileGenerator['ensureDirectory'](targetPath);
-
-    const artifacts: string[] = [];
-
-    switch (type) {
-      case 'component':
-        artifacts.push(...this.generateComponent(name, targetPath, skipTests));
-        break;
-      case 'hook':
-        artifacts.push(...this.generateHook(name, targetPath, skipTests));
-        break;
-      case 'context':
-        artifacts.push(...this.generateContext(name, targetPath));
-        break;
-      case 'page':
-        artifacts.push(...this.generatePage(name, targetPath, skipTests));
-        break;
-      case 'service':
-        artifacts.push(...this.generateService(name, targetPath, skipTests));
-        break;
-      case 'util':
-        artifacts.push(...this.generateUtil(name, targetPath, skipTests));
-        break;
-      case 'slice':
-        artifacts.push(...this.generateSlice(name, targetPath, skipTests));
-        break;
-      default:
-        throw new Error(`Unsupported artifact type: ${type}`);
-    }
-
-    return `✅ Successfully generated ${type} '${name}' at:\n${artifacts.map(f => `  - ${f}`).join('\n')}`;
+    const files = generator.call(this, name, dir, skipTests);
+    return `✅ Generated ${type} '${name}' at:\n${files
+      .map(f => `  - ${f}`)
+      .join('\n')}`;
   }
 
-  private generateComponent(
-    name: string,
-    targetPath: string,
-    skipTests?: boolean,
-  ): string[] {
-    const componentPath = path.join(targetPath, name);
-    this.fileGenerator['ensureDirectory'](componentPath);
-
-    const componentName = this.fileGenerator['toPascalCase'](name);
-    const files: string[] = [];
-
-    // Component TypeScript file (using Material-UI pattern)
-    const tsContent = `import {Box} from '@mui/material';
-import React from 'react';
-
-export interface ${componentName}Props {
-  // Define your props here
-}
-
-const ${componentName}: React.FC<${componentName}Props> = (props) => {
-  return (
-    <Box sx={{p: 2}}>
-      <p>${componentName} Component</p>
-    </Box>
-  );
-};
-
-export default ${componentName};
-`;
-    const tsFile = path.join(componentPath, `${componentName}.tsx`);
-    this.fileGenerator['writeFile'](tsFile, tsContent);
-    files.push(tsFile);
-
-    // Index file for easier imports
-    const indexContent = `export {default} from './${componentName}';\n`;
-    const indexFile = path.join(componentPath, 'index.ts');
-    this.fileGenerator['writeFile'](indexFile, indexContent);
-    files.push(indexFile);
-
-    // Test file
-    if (!skipTests) {
-      const testContent = `import {render, screen} from '@testing-library/react';
-import React from 'react';
-import ${componentName} from './${componentName}';
-
-describe('${componentName}', () => {
-  it('should render successfully', () => {
-    render(<${componentName} />);
-    expect(screen.getByText('${componentName} Component')).toBeInTheDocument();
-  });
-});
-`;
-      const testFile = path.join(componentPath, `${componentName}.test.tsx`);
-      this.fileGenerator['writeFile'](testFile, testContent);
-      files.push(testFile);
-    }
-
-    return files;
-  }
-
-  private generateHook(
-    name: string,
-    targetPath: string,
-    skipTests?: boolean,
-  ): string[] {
-    const hookPath = targetPath;
-    this.fileGenerator['ensureDirectory'](hookPath);
-
-    const hookName = name.startsWith('use')
-      ? name
-      : `use${this.fileGenerator['toPascalCase'](name)}`;
-    const files: string[] = [];
-
-    // Hook TypeScript file
-    const tsContent = `import {useState, useEffect} from 'react';
-
-export const ${hookName} = () => {
-  const [state, setState] = useState();
-
-  useEffect(() => {
-    // Add your effect logic here
-  }, []);
-
-  return {
-    state,
-    setState,
+  private readonly generators: Record<
+    string,
+    (name: string, dir: string, skipTests?: boolean) => string[]
+  > = {
+    component: this.makeComponent,
+    hook: this.makeHook,
+    context: this.makeContext,
+    page: this.makePage,
+    service: this.makeService,
+    util: this.makeUtil,
+    slice: this.makeSlice,
   };
-};
-`;
-    const tsFile = path.join(hookPath, `${hookName}.ts`);
-    this.fileGenerator['writeFile'](tsFile, tsContent);
-    files.push(tsFile);
 
-    // Test file
-    if (!skipTests) {
-      const testContent = `import {renderHook} from '@testing-library/react';
-import {${hookName}} from './${hookName}';
+  // ---------- PROMPTS ----------
 
-describe('${hookName}', () => {
-  it('should initialize correctly', () => {
-    const {result} = renderHook(() => ${hookName}());
-    expect(result.current).toBeDefined();
-  });
-});
-`;
-      const testFile = path.join(hookPath, `${hookName}.test.ts`);
-      this.fileGenerator['writeFile'](testFile, testContent);
-      files.push(testFile);
-    }
-
-    return files;
+  private async promptFor(name: string, message: string): Promise<string> {
+    const {value} = await this.prompt([
+      {
+        type: 'input',
+        name: 'value',
+        message,
+        validate: (v: string) => !!v || `${name} is required`,
+      },
+    ]);
+    return value;
   }
 
-  private generateContext(name: string, targetPath: string): string[] {
-    const contextPath = path.join(targetPath, `${name}Context`);
-    this.fileGenerator['ensureDirectory'](contextPath);
+  private async promptForType(): Promise<string> {
+    const {value} = await this.prompt([
+      {
+        type: 'list',
+        name: 'value',
+        message: 'Select artifact type',
+        choices: Object.keys(this.generators),
+      } as Record<string, unknown>,
+    ]);
+    return value;
+  }
 
-    const contextName = this.fileGenerator['toPascalCase'](name);
-    const files: string[] = [];
+  // ---------- DIRECTORY MAP ----------
 
-    // Context TypeScript file
-    const tsContent = `import React, {createContext, useContext, useState, ReactNode} from 'react';
+  private resolveDir(type: string): string {
+    const dirs: Record<string, string> = {
+      component: 'src/Components',
+      hook: 'src/Hooks',
+      context: 'src/Providers',
+      page: 'src/Pages',
+      slice: 'src/redux',
+    };
+    return dirs[type] || 'src';
+  }
 
-export interface ${contextName}State {
-  // Define your state here
-}
+  // ---------- GENERATORS ----------
 
-export interface ${contextName}ContextValue {
-  state: ${contextName}State;
-  setState: React.Dispatch<React.SetStateAction<${contextName}State>>;
-}
+  private makeComponent(
+    name: string,
+    dir: string,
+    skipTests?: boolean,
+  ): string[] {
+    const comp = this.fileGen['toPascalCase'](name);
+    const code = `
+import { Box } from '@mui/material';
+import React from 'react';
 
-const ${contextName}Context = createContext<${contextName}ContextValue | undefined>(undefined);
+export interface ${comp}Props {}
 
-export interface ${contextName}ProviderProps {
-  children: ReactNode;
-}
+const ${comp}: React.FC<${comp}Props> = () => (
+  <Box sx={{ p: 2 }}>
+    <p>${comp} Component</p>
+  </Box>
+);
 
-export const ${contextName}Provider: React.FC<${contextName}ProviderProps> = ({children}) => {
-  const [state, setState] = useState<${contextName}State>({});
+export default ${comp};
+`;
+    return this.writeFiles(dir, comp, code, skipTests, 'tsx');
+  }
 
-  return (
-    <${contextName}Context.Provider value={{state, setState}}>
-      {children}
-    </${contextName}Context.Provider>
-  );
+  private makeHook(name: string, dir: string, skipTests?: boolean): string[] {
+    const hook = name.startsWith('use')
+      ? name
+      : `use${this.fileGen['toPascalCase'](name)}`;
+    const code = `
+import { useState, useEffect } from 'react';
+
+export const ${hook} = () => {
+  const [state, setState] = useState();
+  useEffect(() => {}, []);
+  return { state, setState };
+};
+`;
+    return this.writeFiles(dir, hook, code, skipTests);
+  }
+
+  private makeContext(name: string, dir: string): string[] {
+    const ctx = this.fileGen['toPascalCase'](name);
+    const contextDir = path.join(dir, `${ctx}Context`);
+    const code = `
+import React, { createContext, useContext, useState, ReactNode } from 'react';
+
+interface ${ctx}State {}
+interface ${ctx}Value { state: ${ctx}State; setState: React.Dispatch<React.SetStateAction<${ctx}State>>; }
+
+const ${ctx}Context = createContext<${ctx}Value | undefined>(undefined);
+
+export const ${ctx}Provider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [state, setState] = useState<${ctx}State>({});
+  return <${ctx}Context.Provider value={{ state, setState }}>{children}</${ctx}Context.Provider>;
 };
 
-export const use${contextName} = (): ${contextName}ContextValue => {
-  const context = useContext(${contextName}Context);
-  if (!context) {
-    throw new Error('use${contextName} must be used within a ${contextName}Provider');
-  }
+export const use${ctx} = (): ${ctx}Value => {
+  const context = useContext(${ctx}Context);
+  if (!context) throw new Error('use${ctx} must be used within ${ctx}Provider');
   return context;
 };
 `;
-    const tsFile = path.join(contextPath, `${contextName}Context.tsx`);
-    this.fileGenerator['writeFile'](tsFile, tsContent);
-    files.push(tsFile);
-
-    // Index file
-    const indexContent = `export * from './${contextName}Context';\n`;
-    const indexFile = path.join(contextPath, 'index.ts');
-    this.fileGenerator['writeFile'](indexFile, indexContent);
-    files.push(indexFile);
-
-    return files;
+    return this.writeFiles(
+      contextDir,
+      `${ctx}Context`,
+      code,
+      true,
+      'tsx',
+      true,
+    );
   }
 
-  private generatePage(
-    name: string,
-    targetPath: string,
-    skipTests?: boolean,
-  ): string[] {
-    const pagePath = path.join(targetPath, name);
-    this.fileGenerator['ensureDirectory'](pagePath);
-
-    const pageName = this.fileGenerator['toPascalCase'](name);
-    const files: string[] = [];
-
-    // Page TypeScript file (using Material-UI pattern)
-    const tsContent = `import {Box, Typography} from '@mui/material';
+  private makePage(name: string, dir: string, skipTests?: boolean): string[] {
+    const page = this.fileGen['toPascalCase'](name);
+    const pageDir = path.join(dir, name);
+    const code = `
+import { Box, Typography } from '@mui/material';
 import React from 'react';
 
-const ${pageName}Page: React.FC = () => {
-  return (
-    <Box sx={{p: 3}}>
-      <Typography variant="h4" gutterBottom>
-        ${pageName} Page
-      </Typography>
-      {/* Add your page content here */}
-    </Box>
-  );
-};
+const ${page}Page: React.FC = () => (
+  <Box sx={{ p: 3 }}>
+    <Typography variant="h4">${page} Page</Typography>
+  </Box>
+);
 
-export default ${pageName}Page;
+export default ${page}Page;
 `;
-    const tsFile = path.join(pagePath, `${pageName}.tsx`);
-    this.fileGenerator['writeFile'](tsFile, tsContent);
-    files.push(tsFile);
-
-    // Index file
-    const indexContent = `export {default} from './${pageName}';\n`;
-    const indexFile = path.join(pagePath, 'index.ts');
-    this.fileGenerator['writeFile'](indexFile, indexContent);
-    files.push(indexFile);
-
-    // Test file
-    if (!skipTests) {
-      const testContent = `import {render, screen} from '@testing-library/react';
-import React from 'react';
-import ${pageName}Page from './${pageName}';
-
-describe('${pageName}Page', () => {
-  it('should render successfully', () => {
-    render(<${pageName}Page />);
-    expect(screen.getByText('${pageName} Page')).toBeInTheDocument();
-  });
-});
-`;
-      const testFile = path.join(pagePath, `${pageName}.test.tsx`);
-      this.fileGenerator['writeFile'](testFile, testContent);
-      files.push(testFile);
-    }
-
-    return files;
+    return this.writeFiles(pageDir, page, code, skipTests, 'tsx');
   }
 
-  private generateService(
+  private makeService(
     name: string,
-    targetPath: string,
+    dir: string,
     skipTests?: boolean,
   ): string[] {
-    const servicePath = targetPath;
-    this.fileGenerator['ensureDirectory'](servicePath);
-
-    const serviceName = this.fileGenerator['toPascalCase'](name) + 'Service';
-    const serviceInstanceName = this.fileGenerator['toCamelCase'](name) + 'Service';
-    const files: string[] = [];
-
-    // Service TypeScript file
-    const tsContent = `export class ${serviceName} {
-  async fetchData(): Promise<any> {
-    // Implement your API calls here
-    return {};
-  }
-
-  async postData(data: any): Promise<any> {
-    // Implement your API calls here
-    return {};
-  }
+    const service = this.fileGen['toPascalCase'](name);
+    const camel = this.fileGen['toCamelCase'](name);
+    const code = `
+export class ${service}Service {
+  async fetchData(): Promise<unknown> { return {}; }
+  async postData(data: unknown): Promise<unknown> { return {}; }
 }
 
-export const ${serviceInstanceName} = new ${serviceName}();
+export const ${camel}Service = new ${service}Service();
 `;
-    const tsFile = path.join(servicePath, `${name}.service.ts`);
-    this.fileGenerator['writeFile'](tsFile, tsContent);
-    files.push(tsFile);
-
-    // Test file
-    if (!skipTests) {
-      const testContent = `import {${serviceName}} from './${name}.service';
-
-describe('${serviceName}', () => {
-  let service: ${serviceName};
-
-  beforeEach(() => {
-    service = new ${serviceName}();
-  });
-
-  it('should be created', () => {
-    expect(service).toBeDefined();
-  });
-});
-`;
-      const testFile = path.join(servicePath, `${name}.service.test.ts`);
-      this.fileGenerator['writeFile'](testFile, testContent);
-      files.push(testFile);
-    }
-
-    return files;
+    return this.writeFiles(dir, `${name}.service`, code, skipTests);
   }
 
-  private generateUtil(
-    name: string,
-    targetPath: string,
-    skipTests?: boolean,
-  ): string[] {
-    const utilPath = targetPath;
-    this.fileGenerator['ensureDirectory'](utilPath);
-
-    const utilName = this.fileGenerator['toCamelCase'](name);
-    const files: string[] = [];
-
-    // Util TypeScript file
-    const tsContent = `/**
- * ${utilName} utility functions
- */
-
-export const ${utilName} = {
-  // Add your utility functions here
-};
-`;
-    const tsFile = path.join(utilPath, `${name}.util.ts`);
-    this.fileGenerator['writeFile'](tsFile, tsContent);
-    files.push(tsFile);
-
-    // Test file
-    if (!skipTests) {
-      const testContent = `import {${utilName}} from './${name}.util';
-
-describe('${utilName}', () => {
-  it('should be defined', () => {
-    expect(${utilName}).toBeDefined();
-  });
-});
-`;
-      const testFile = path.join(utilPath, `${name}.util.test.ts`);
-      this.fileGenerator['writeFile'](testFile, testContent);
-      files.push(testFile);
-    }
-
-    return files;
+  private makeUtil(name: string, dir: string, skipTests?: boolean): string[] {
+    const util = this.fileGen['toCamelCase'](name);
+    return this.writeFiles(
+      dir,
+      `${name}.util`,
+      `export const ${util} = {};`,
+      skipTests,
+    );
   }
 
-  private generateSlice(
-    name: string,
-    targetPath: string,
-    skipTests?: boolean,
-  ): string[] {
-    const slicePath = path.join(targetPath, name);
-    this.fileGenerator['ensureDirectory'](slicePath);
+  private makeSlice(name: string, dir: string): string[] {
+    const slice = this.fileGen['toCamelCase'](name);
+    const type = this.fileGen['toPascalCase'](name);
+    const sliceDir = path.join(dir, name);
+    const code = `
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import type { RootState } from '../store';
 
-    const sliceName = this.fileGenerator['toCamelCase'](name);
-    const typeName = this.fileGenerator['toPascalCase'](name);
-    const files: string[] = [];
+interface ${type}State { data: unknown; isLoading: boolean; error: string | null; }
+const initialState: ${type}State = { data: null, isLoading: false, error: null };
 
-    // Slice TypeScript file
-    const sliceContent = `import {PayloadAction, createSlice} from '@reduxjs/toolkit';
-// TODO: Update this import path to match your project's store location
-// Default: '../store' - adjust based on your project structure
-import type {RootState} from '../store';
-
-export interface ${typeName}State {
-  // Define your state properties here
-  data: any;
-  isLoading: boolean;
-  error: string | null;
-}
-
-const initialState: ${typeName}State = {
-  data: null,
-  isLoading: false,
-  error: null,
-};
-
-const ${sliceName}Slice = createSlice({
-  name: '${sliceName}',
+const ${slice}Slice = createSlice({
+  name: '${slice}',
   initialState,
   reducers: {
-    set${typeName}Data: (state, action: PayloadAction<any>) => {
-      state.data = action.payload;
-    },
-    setLoading: (state, action: PayloadAction<boolean>) => {
-      state.isLoading = action.payload;
-    },
-    setError: (state, action: PayloadAction<string | null>) => {
-      state.error = action.payload;
-    },
-    reset${typeName}: state => {
-      state.data = null;
-      state.isLoading = false;
-      state.error = null;
-    },
+    set${type}Data: (s, a: PayloadAction<unknown>) => { s.data = a.payload; },
+    setLoading: (s, a: PayloadAction<boolean>) => { s.isLoading = a.payload; },
+    setError: (s, a: PayloadAction<string | null>) => { s.error = a.payload; },
+    reset${type}: () => initialState,
   },
 });
 
-export const {set${typeName}Data, setLoading, setError, reset${typeName}} = ${sliceName}Slice.actions;
-
-export default ${sliceName}Slice.reducer;
-
-// Selectors
-export const select${typeName}Data = (state: RootState) => state.${sliceName}.data;
-export const select${typeName}Loading = (state: RootState) => state.${sliceName}.isLoading;
-export const select${typeName}Error = (state: RootState) => state.${sliceName}.error;
+export const { set${type}Data, setLoading, setError, reset${type} } = ${slice}Slice.actions;
+export default ${slice}Slice.reducer;
+export const select${type}Data = (s: RootState) => s.${slice}.data;
 `;
-    const sliceFile = path.join(slicePath, `${sliceName}Slice.ts`);
-    this.fileGenerator['writeFile'](sliceFile, sliceContent);
-    files.push(sliceFile);
+    return this.writeFiles(sliceDir, `${slice}Slice`, code, true);
+  }
 
-    // API Slice (RTK Query)
-    const sliceUrl = `/${sliceName}`;
-    const sliceIdUrl = `${sliceUrl}/\${id}`;
-    const apiSliceContent = `// TODO: Update this import path to match your project's API slice location
-// Default: '../apiSlice' - adjust based on your project structure (may not exist if RTK Query is not configured)
-import {apiSlice} from '../apiSlice';
+  // ---------- UTIL ----------
 
-export const ${sliceName}ApiSlice = apiSlice.injectEndpoints({
-  endpoints: builder => ({
-    get${typeName}: builder.query({
-      query: (id: string) => \`${sliceIdUrl}\`,
-    }),
-    create${typeName}: builder.mutation({
-      query: (data: any) => ({
-        url: '${sliceUrl}',
-        method: 'POST',
-        body: data,
-      }),
-    }),
-  }),
-});
+  private writeFiles(
+    dir: string,
+    name: string,
+    content: string,
+    skipTests?: boolean,
+    ext = 'ts',
+    skipIndex = false,
+  ): string[] {
+    const files: string[] = [];
+    this.fileGen['ensureDirectory'](dir);
 
-export const {useGet${typeName}Query, useCreate${typeName}Mutation} = ${sliceName}ApiSlice;
-`;
-    const apiSliceFile = path.join(slicePath, `${sliceName}ApiSlice.ts`);
-    this.fileGenerator['writeFile'](apiSliceFile, apiSliceContent);
-    files.push(apiSliceFile);
+    const mainFile = path.join(dir, `${name}.${ext}`);
+    this.fileGen['writeFile'](mainFile, content.trim());
+    files.push(mainFile);
 
-    // Model file
-    const modelContent = `export interface ${typeName} {
-  id: string;
-  // Add your model properties here
-}
-`;
-    const modelFile = path.join(slicePath, `${sliceName}.model.ts`);
-    this.fileGenerator['writeFile'](modelFile, modelContent);
-    files.push(modelFile);
+    if (!skipIndex) {
+      const indexFile = path.join(dir, 'index.ts');
+      this.fileGen['writeFile'](indexFile, `export * from './${name}';`);
+      files.push(indexFile);
+    }
+
+    if (!skipTests) {
+      const testFile = path.join(dir, `${name}.test.${ext}`);
+      const testCode = `describe('${name}', () => it('should be defined', () => expect(true).toBe(true)));`;
+      this.fileGen['writeFile'](testFile, testCode);
+      files.push(testFile);
+    }
 
     return files;
   }
