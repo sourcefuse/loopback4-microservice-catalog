@@ -1,16 +1,58 @@
 # sourceloop-cli
 
-This is a `sourceloop` based cli that provides commands to scaffold a monorepo, add extensions, facades and microservices to it.
+A unified CLI for scaffolding and managing SourceLoop projects across the full stack - backend (LoopBack4 microservices), Angular, and React applications. The CLI provides AI-powered development assistance through the Model Context Protocol (MCP).
 
-## Building
+## Features
 
-To install sourceloop-cli, run
+- **🏗️ Backend Development**: Scaffold ARC monorepos, microservices, and extensions
+- **⚛️ React Support**: Scaffold and generate React components, hooks, contexts, pages, and more
+- **🅰️ Angular Support**: Scaffold and generate Angular components, services, modules, and more
+- **🤖 AI Integration**: Built-in MCP server for AI-assisted development (Claude Code, etc.)
+- **📦 Template Management**: Smart template fetching from GitHub with local development support
+- **⚙️ Configuration Management**: Update environment files and project configurations
+
+## Installation
 
 ```shell
-npm install @sourceloop/cli
+npm install -g @sourceloop/cli
 ```
 
-Once the above command is executed, you will be able to access the CLI commands directly from your terminal. You can use either `sl` or `arc` as shorthand to run any of the `sourceloop` commands listed below. A sample usage is provided for reference:
+Once installed, you can use either `sl` or `arc` as shorthand to run any command.
+
+## Quick Start
+
+```bash
+# Scaffold a backend ARC monorepo
+sl scaffold my-backend
+
+# Scaffold an Angular project
+sl angular:scaffold my-angular-app
+
+# Scaffold a React project
+sl react:scaffold my-react-app
+
+# Generate a React component
+sl react:generate MyComponent --type component
+
+# Generate an Angular service
+sl angular:generate MyService --type service
+```
+
+## MCP Integration
+
+All scaffolded projects automatically include MCP configuration in `.claude/mcp.json`. This enables AI assistants like Claude Code to interact with your project intelligently.
+
+To use the CLI as an MCP server, add this to your MCP client configuration:
+
+```json
+{
+  "sourceloop": {
+    "command": "npx",
+    "args": ["@sourceloop/cli", "mcp"],
+    "timeout": 300
+  }
+}
+```
 
 ## Usage
 
@@ -412,3 +454,112 @@ OPTIONS
 
 _See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.1.0/src/commands/update.ts)_
 <!-- commandsstop -->
+
+---
+
+## Architecture
+
+### Backend Commands
+
+Backend commands work with the ARC (Accelerated Reference Catalog) monorepo structure:
+
+```
+my-project/
+├── services/         # Microservices
+├── facades/          # Facade services
+├── packages/         # Shared packages
+└── package.json
+```
+
+### Frontend Commands
+
+Frontend commands work with official SourceFuse boilerplates:
+
+**Angular**: Uses [angular-boilerplate](https://github.com/sourcefuse/angular-boilerplate)
+- Multi-project workspace (arc, arc-lib, arc-docs, saas-ui)
+- Material Design components
+- Built-in authentication and theming
+
+**React**: Uses [react-boilerplate-ts-ui](https://github.com/sourcefuse/react-boilerplate-ts-ui)
+- Vite + TypeScript
+- Material-UI (MUI) components
+- Redux Toolkit for state management
+- RTK Query for API calls
+
+### Template Fetching
+
+The CLI uses a smart template fetching strategy:
+
+1. **GitHub Fetching** (Production): Downloads templates from official repositories
+2. **Local Development**: Use `--localPath` to test against local template modifications
+3. **Version Control**: Use `--templateVersion` to pin specific template versions
+
+### MCP Auto-Configuration
+
+When you scaffold any project (backend, Angular, or React), the CLI automatically:
+
+1. Creates `.claude/mcp.json` with SourceLoop CLI server configuration
+2. Generates `.claude/README.md` with usage instructions
+3. Configures the project for AI-assisted development
+
+## Common Workflows
+
+### Full-Stack Development
+
+```bash
+# 1. Create backend monorepo
+sl scaffold my-fullstack-app
+
+# 2. Add authentication microservice
+cd my-fullstack-app
+sl microservice auth-service --baseService=authentication-service
+
+# 3. Create Angular admin panel
+cd ..
+sl angular:scaffold admin-panel
+
+# 4. Create React customer portal
+sl react:scaffold customer-portal
+```
+
+### Component Generation
+
+```bash
+# React: Create a feature component
+sl react:generate UserProfile --type component --path src/Components/User
+
+# React: Create a Redux slice
+sl react:generate user --type slice
+
+# Angular: Create a feature module
+sl angular:generate user --type module --project arc
+
+# Angular: Create a service
+sl angular:generate UserService --type service --path user
+```
+
+### Configuration Updates
+
+```bash
+# Update Angular environment
+sl angular:config --environment production \
+  --apiUrl https://api.production.com \
+  --authServiceUrl https://auth.production.com \
+  --clientId prod-client-123
+
+# Update React environment
+sl react:config \
+  --appApiBaseUrl https://api.production.com \
+  --authApiBaseUrl https://auth.production.com \
+  --clientId prod-client-123
+```
+
+## Related Projects
+
+- [loopback4-microservice-catalog](https://github.com/sourcefuse/loopback4-microservice-catalog) - Backend microservices
+- [angular-boilerplate](https://github.com/sourcefuse/angular-boilerplate) - Angular template
+- [react-boilerplate-ts-ui](https://github.com/sourcefuse/react-boilerplate-ts-ui) - React template
+
+## License
+
+MIT
