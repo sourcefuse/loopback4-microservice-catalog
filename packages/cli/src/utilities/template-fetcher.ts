@@ -83,6 +83,9 @@ export class TemplateFetcher {
   ): boolean {
     console.log(`Cloning ${repo} (branch: ${branch})...`); // NOSONAR
     try {
+      // NOSONAR: Safe usage - repo and branch are validated against strict patterns
+      // (REPO_PATTERN and BRANCH_PATTERN) before reaching this method. All inputs
+      // are sanitized and cannot contain shell injection characters.
       const result = spawnSync(
         'git',
         [
@@ -95,7 +98,7 @@ export class TemplateFetcher {
           targetDir,
         ],
         {stdio: 'inherit'},
-      ); // NOSONAR
+      );
 
       return result.status === 0;
     } catch (error) {
