@@ -150,6 +150,9 @@ export class ReactConfig extends Base<{}> {
     if (!fs.existsSync(tmplPath))
       return '⚠️ config.template.json not found — skipped regeneration';
 
+    // NOSONAR: Safe usage - projectRoot is derived from getProjectRoot() which traverses
+    // up from cwd looking for package.json. genPath is validated to exist before execution.
+    // This is part of the React boilerplate's build process and executes a known script.
     const result = spawnSync(
       'node',
       [
@@ -158,7 +161,7 @@ export class ReactConfig extends Base<{}> {
         '--outConfigPath=./public',
       ],
       {cwd: projectRoot, stdio: 'inherit'},
-    ); // NOSONAR - CLI spawn required
+    );
 
     if (result.status === 0)
       return '✅ Regenerated config.json in public directory';
