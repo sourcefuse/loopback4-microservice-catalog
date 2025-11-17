@@ -17,6 +17,9 @@ export enum SERVICES {
   TASK = 'task-service',
   VIDEO_CONF = 'video-conferencing-service',
   USER_TENANT = 'user-tenant-service',
+  TEANANT_MANAGEMENT = 'ctrl-plane-tenant-management-service',
+  SUBSCRIPTION = 'ctrl-plane-subscription-service',
+  ORCHESTRATOR = 'ctrl-plane-orchestrator-service',
   REPORTING = 'reporting-service',
 }
 
@@ -100,6 +103,28 @@ export const BASESERVICEDSLIST: {
   ],
   'chat-service': [],
   'user-tenant-service': [],
+  'ctrl-plane-tenant-management-service': [
+    {
+      type: 'store',
+      name: 'TenantManagementDbSourceName',
+      fileName: 'tenantManagement',
+    },
+    {type: 'cache', name: 'TenantManagementCacheSourceName', fileName: 'redis'},
+  ],
+
+  'ctrl-plane-subscription-service': [
+    {
+      type: 'store',
+      name: 'SubscriptionDbSourceName',
+      fileName: 'subscription',
+    },
+    {
+      type: 'store',
+      name: 'FeatureToggleDbName',
+      fileName: 'feature',
+    },
+  ],
+  'ctrl-plane-orchestrator-service': [],
 };
 
 export const BASESERVICECOMPONENTLIST: {
@@ -119,12 +144,20 @@ export const BASESERVICECOMPONENTLIST: {
   'video-conferencing-service': 'VideoConfServiceComponent',
   'chat-service': 'ChatServiceComponent',
   'user-tenant-service': 'UserTenantServiceComponent',
-  'reporting-service': 'ReportingServiceComponent'
+  'ctrl-plane-tenant-management-service': 'TenantManagementServiceComponent',
+  'ctrl-plane-subscription-service': 'SubscriptionServiceComponent',
+  'ctrl-plane-orchestrator-service': 'OrchestratorServiceComponent',
+  'reporting-service': 'ReportingServiceComponent',
+};
+export const BASE_SERVICE_SEQUELIZE_COMPONENT_LIST: Partial<
+  Record<SERVICES, string>
+> = {
+  'ctrl-plane-tenant-management-service':
+    'TenantManagementSequelizeServiceComponent',
+  'ctrl-plane-subscription-service': 'SubscriptionSequelizeServiceComponent',
 };
 
-export const BASESERVICEBINDINGLIST: {
-  [key in SERVICES]: string;
-} = {
+export const BASESERVICEBINDINGLIST: Record<SERVICES, string> = {
   'authentication-service': 'AuthServiceBindings',
   'audit-service': 'AuditServiceBindings',
   'notification-service': 'NotifServiceBindings',
@@ -139,7 +172,10 @@ export const BASESERVICEBINDINGLIST: {
   'video-conferencing-service': 'VideoChatBindings',
   'chat-service': 'ChatServiceBindings',
   'user-tenant-service': 'UserTenantServiceComponentBindings',
-  'reporting-service': 'ReportingServiceComponentBindings'
+  'ctrl-plane-tenant-management-service': 'TenantManagementServiceBindings',
+  'ctrl-plane-subscription-service': 'SubscriptionServiceBindings',
+  'ctrl-plane-orchestrator-service': '',
+  'reporting-service': 'ReportingServiceComponentBindings',
 };
 
 export enum SEQUELIZESERVICES {
@@ -153,4 +189,11 @@ export enum SEQUELIZESERVICES {
   SURVEY = 'survey-service',
   VIDEO_CONF = 'video-conferencing-service',
   USER_TENANT = 'user-tenant-service',
+  TEANANT_MANAGEMENT = 'ctrl-plane-tenant-management-service',
+  SUBSCRIPTION = 'ctrl-plane-subscription-service',
 }
+
+export const INCLUDE_SEQUELIZE_COMPONENTS_FOR_SERVICE = [
+  SERVICES.TEANANT_MANAGEMENT,
+  SERVICES.SUBSCRIPTION,
+];

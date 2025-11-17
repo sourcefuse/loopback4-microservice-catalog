@@ -163,7 +163,8 @@ OPTIONS
 
   -s, --baseService=(authentication-service|audit-service|chat-service|notification-service|bpmn-service|feature-toggle-
   service|in-mail-service|payment-service|scheduler-service|search-service|survey-service|task-service|video-conferencin
-  g-service|user-tenant-service|reporting-service)
+  g-service|user-tenant-service|ctrl-plane-tenant-management-service|ctrl-plane-subscription-service|ctrl-plane-orchestr
+  ator-service)
       Base ARC microservice
 
   --[no-]baseOnService

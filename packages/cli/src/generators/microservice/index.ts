@@ -10,8 +10,10 @@ import {
   BASESERVICEBINDINGLIST,
   BASESERVICECOMPONENTLIST,
   BASESERVICEDSLIST,
+  BASE_SERVICE_SEQUELIZE_COMPONENT_LIST,
   DATASOURCES,
   DATASOURCE_CONNECTORS,
+  INCLUDE_SEQUELIZE_COMPONENTS_FOR_SERVICE,
   MIGRATIONS,
   MIGRATION_CONNECTORS,
   SEQUELIZESERVICES,
@@ -353,9 +355,17 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
   }
 
   private _setBaseServiceComponentName() {
-    if (this.options.baseService) {
-      return BASESERVICECOMPONENTLIST[this.options.baseService];
-    } else return undefined;
+    const {baseService, sequelize} = this.options;
+
+    if (!baseService) return undefined;
+
+    const isSequelizeComponent =
+      sequelize &&
+      INCLUDE_SEQUELIZE_COMPONENTS_FOR_SERVICE.includes(baseService);
+
+    return isSequelizeComponent
+      ? BASE_SERVICE_SEQUELIZE_COMPONENT_LIST[baseService]
+      : BASESERVICECOMPONENTLIST[baseService];
   }
 
   private async _createDataSourceAsync() {
@@ -372,13 +382,20 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     } else {
       //do nothing
     }
+
     const promises = baseServiceDSList.map(async ds => {
+      let localProjectInfo = {
+        ...this.projectInfo,
+      };
+
       if (ds.type === 'store') {
-        if (!ds.isNotBase) this.projectInfo.baseServiceStoreName = ds.name;
-        this.projectInfo.datasourceName = ds.fileName;
-        this.projectInfo.datasourceClassName = this._capitalizeFirstLetter(
+        if (!ds.isNotBase) localProjectInfo.baseServiceStoreName = ds.name;
+
+        localProjectInfo.datasourceName = ds.fileName;
+        localProjectInfo.datasourceClassName = this._capitalizeFirstLetter(
           ds.fileName,
         );
+
         /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
         //@ts-ignore
         await this.fs.copyTplAsync(
@@ -387,13 +404,12 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
             join('src', 'datasources', `${ds.fileName}.datasource.ts`),
           ),
           {
-            project: this.projectInfo,
+            project: localProjectInfo,
           },
         );
-
-        this.projectInfo.baseServiceStoreName = undefined; //so that previous value is not used
       } else {
-        this.projectInfo.baseServiceCacheName = ds.name;
+        localProjectInfo.baseServiceCacheName = ds.name;
+
         /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
         //@ts-ignore
         await this.fs.copyTplAsync(
@@ -402,7 +418,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
             join('src', 'datasources', `${ds.fileName}.datasource.ts`),
           ),
           {
-            project: this.projectInfo,
+            project: localProjectInfo,
           },
         );
       }
