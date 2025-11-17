@@ -384,7 +384,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     }
 
     const promises = baseServiceDSList.map(async ds => {
-      let localProjectInfo = {
+      const localProjectInfo = {
         ...this.projectInfo,
       };
 
