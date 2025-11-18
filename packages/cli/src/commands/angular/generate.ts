@@ -3,9 +3,8 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {flags} from '@oclif/command';
-import {IConfig} from '@oclif/config';
 import Base from '../../command-base';
-import {AnyObject, PromptFunction} from '../../types';
+import {AnyObject} from '../../types';
 
 export class AngularGenerate extends Base<{}> {
   static readonly description =
