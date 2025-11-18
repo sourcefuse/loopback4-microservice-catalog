@@ -1,0 +1,13 @@
+import {Component} from '@angular/core';
+import {CommonModule} from '@angular/common';
+
+@Component({
+  selector: 'app-<%= selector %>',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './<%= name %>.component.html',
+  styleUrls: ['./<%= name %>.component.scss']
+})
+export class <%= className %> {
+  constructor() {}
+}
