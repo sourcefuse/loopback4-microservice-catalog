@@ -1,9 +1,0 @@
-import { renderHook } from '@testing-library/react';
-import { <%= hookName %> } from './<%= hookName %>';
-
-describe('<%= hookName %>', () => {
-  it('should initialize correctly', () => {
-    const { result } = renderHook(() => <%= hookName %>());
-    expect(result.current).toBeDefined();
-  });
-});

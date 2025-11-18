@@ -14,16 +14,10 @@ import {ICommand} from '../__tests__/helper/command-test.helper';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import Base from '../command-base';
 import {AnyObject, IArg, ICommandWithMcpFlags, PromptFunction} from '../types';
-import {AngularConfig} from './angular/config';
-import {AngularGenerate} from './angular/generate';
-import {AngularInfo} from './angular/info';
 import {AngularScaffold} from './angular/scaffold';
 import {Cdk} from './cdk';
 import {Extension} from './extension';
 import {Microservice} from './microservice';
-import {ReactConfig} from './react/config';
-import {ReactGenerate} from './react/generate';
-import {ReactInfo} from './react/info';
 import {ReactScaffold} from './react/scaffold';
 import {Scaffold} from './scaffold';
 import {Update} from './update';
@@ -52,16 +46,9 @@ export class Mcp extends Base<{}> {
         Microservice,
         Scaffold,
         Update,
-        // Angular commands
-        AngularGenerate,
+        // Frontend scaffolding commands
         AngularScaffold,
-        AngularConfig,
-        AngularInfo,
-        // React commands
-        ReactGenerate,
         ReactScaffold,
-        ReactConfig,
-        ReactInfo,
       ];
     }
   }
