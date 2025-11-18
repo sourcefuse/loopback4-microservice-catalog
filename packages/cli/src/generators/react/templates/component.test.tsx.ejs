@@ -1,0 +1,10 @@
+import { render, screen } from '@testing-library/react';
+import React from 'react';
+import <%= componentName %> from './<%= componentName %>';
+
+describe('<%= componentName %>', () => {
+  it('should render successfully', () => {
+    render(<<%= componentName %> />);
+    expect(screen.getByText('<%= componentName %> Component')).toBeInTheDocument();
+  });
+});

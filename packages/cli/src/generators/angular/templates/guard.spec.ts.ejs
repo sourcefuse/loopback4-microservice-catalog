@@ -1,0 +1,15 @@
+import {TestBed} from '@angular/core/testing';
+import {<%= className %>} from './<%= name %>.guard';
+
+describe('<%= className %>', () => {
+  let guard: <%= className %>;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    guard = TestBed.inject(<%= className %>);
+  });
+
+  it('should be created', () => {
+    expect(guard).toBeTruthy();
+  });
+});
