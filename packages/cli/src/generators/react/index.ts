@@ -58,7 +58,7 @@ export default class ReactGenerator extends BaseGenerator<ReactGenerateOptions> 
 
   async writing() {
     const {name, type, path: targetPath, skipTests} = this.options;
-    const dir = targetPath || this.getDefaultDir(type);
+    const dir = targetPath ?? this.getDefaultDir(type);
 
     switch (type) {
       case 'component':
