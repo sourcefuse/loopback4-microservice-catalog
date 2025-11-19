@@ -8,6 +8,65 @@ export class FileGenerator {
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, {recursive: true});
     fs.writeFileSync(filePath, content, 'utf-8');
   }
+  public generateReadme(framework?: 'angular' | 'react' | 'backend'): string {
+    const cliCommands =
+      framework === 'angular' ||
+      framework === 'react' ||
+      framework === 'backend'
+        ? `
+\`\`\`bash
+
+# Scaffold new projects
+sl ${framework}:scaffold my-new-project
+
+\`\`\`
+`
+        : `
+\`\`\`bash
+# Scaffold a new ARC monorepo
+sl scaffold my-monorepo
+
+# Add a microservice
+sl microservice auth-service
+
+# Update dependencies
+sl update
+\`\`\`
+`;
+
+    return `# MCP Configuration
+
+This project has been configured with Model Context Protocol (MCP) support.
+
+## Overview
+
+MCP enables AI assistants (like Claude Code) to interact with your project through a standardized interface. It allows AI to:
+- Generate components, services, and other code artifacts
+- Scaffold new features
+- Update configuration files
+- Provide project-specific assistance
+
+## Usage
+
+### In Claude Code
+1. Open this project in an MCP-compatible IDE.
+2. The AI will automatically detect the configuration.
+3. You can ask:
+   - "Generate a new component called UserProfile"
+   - "Create a service for authentication"
+   - "Update the API base URL"
+
+### Manual CLI Usage
+${cliCommands}
+
+## Configuration
+
+- File: \`.claude/mcp.json\`
+- Customizable: timeouts, env variables, command args
+
+Docs: https://docs.anthropic.com/claude/docs/mcp
+`;
+  }
 
   removeModule(projectPath: string, moduleName: string): void {
     try {
