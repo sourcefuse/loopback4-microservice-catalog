@@ -1,5 +1,6 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
+import {FileGenerator} from './file-generator';
 
 export interface McpConfig {
   mcpServers: Record<
@@ -43,46 +44,20 @@ export class McpConfigInjector {
     );
 
     const readmePath = path.join(claudeDir, 'README.md');
-    fs.writeFileSync(readmePath, this.generateReadme(framework), 'utf-8');
+    const fg = new FileGenerator();
+    fs.writeFileSync(readmePath, fg.generateReadme(framework), 'utf-8');
 
-    // sonar-ignore: User feedback console statement
-    console.log('✅ MCP configuration added to project');
-    // sonar-ignore: User feedback console statement
-    console.log('   AI assistants can now interact with this project');
+    console.log('✅ MCP configuration added to project'); // NOSONAR
+    console.log('   AI assistants can now interact with this project'); // NOSONAR
   }
 
-  /**
-   * Generate README for MCP setup
-   */
-  private generateReadme(framework?: string): string {
-    return `# MCP Configuration
-
-This project has been configured with Model Context Protocol (MCP) support.
-
-## What is MCP?
-
-MCP enables AI assistants (like Claude Code) to interact with your project through a standardized interface. This allows AI to:
-- Generate components, services, and other code artifacts
-- Scaffold new features
-- Update configuration files
-- Provide project-specific assistance
-
-## Usage
-
-### With Claude Code
-
-1. Open this project in an editor with Claude Code support
-2. The AI assistant will automatically detect the MCP configuration
-3. Use natural language to interact with your project:
-   - "Generate a new component called UserProfile"
-   - "Create a service for authentication"
-   - "Update the API base URL in configuration"
-
-### Manual Usage
-
-You can also use the SourceLoop CLI directly:
-
-${framework ? `\`\`\`bash
+  private generateReadme(framework?: 'angular' | 'react' | 'backend'): string {
+    const cliCommands =
+      framework === 'angular' ||
+      framework === 'react' ||
+      framework === 'backend'
+        ? `
+\`\`\`bash
 # Generate code
 sl ${framework}:generate --type component --name MyComponent
 
