@@ -101,6 +101,7 @@
     "typescript": "~5.2.2"
   },
   "overrides": {
-    "axios": "^1.12.2"
+    "axios": "^1.12.2",
+    "glob": "^11.1.0"
   }
 }

@@ -84,6 +84,7 @@
     "check-code-coverage": {
       "lodash": "^4.17.21"
     },
-    "axios": "^1.12.2"
+    "axios": "^1.12.2",
+    "glob": "11.1.0"
   }
 }

@@ -83,6 +83,7 @@
   "overrides": {
     "check-code-coverage": {
       "lodash": "^4.17.21"
-    }
+    },
+    "glob": "^11.1.0"
   }
 }

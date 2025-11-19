@@ -97,5 +97,8 @@
     "nyc": "^17.1.0",
     "source-map-support": "^0.5.21",
     "typescript": "~5.2.2"
+  },
+  "overrides": {
+    "glob": "^11.1.0"
   }
 }
