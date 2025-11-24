@@ -24,10 +24,6 @@ import {Update} from './update';
 
 export class Mcp extends Base<{}> {
   commands: ICommandWithMcpFlags[] = [];
-  private static hooksInstalled = false; // Guard flag to prevent multiple installations
-  private static readonly originalConsoleError = console.error;
-  private static readonly originalConsoleLog = console.log;
-
   constructor(
     argv: string[],
     config: IConfig,
@@ -83,62 +79,35 @@ export class Mcp extends Base<{}> {
     },
   );
   setup() {
-    // Hook process methods once before registering tools
-    // Use guard flag to prevent multiple installations
-    if (!Mcp.hooksInstalled) {
-      this.hookProcessMethods();
-      Mcp.hooksInstalled = true;
-    }
-
-    for (const command of this.commands) {
-      const params = this.buildCommandParams(command);
-      this.registerTool(command, params);
-    }
-  }
-
-  private buildCommandParams(command: ICommandWithMcpFlags): Record<string, z.ZodTypeAny> {
-    const params: Record<string, z.ZodTypeAny> = {};
-
-    this.addArgParams(command, params);
-    this.addFlagParams(command, params);
-    this.addMcpFlagParams(command, params);
-
-    return params;
-  }
-
-  private addArgParams(command: ICommandWithMcpFlags, params: Record<string, z.ZodTypeAny>): void {
-    if (command.args) {
-      for (const arg of command.args) {
+    this.commands.forEach(command => {
+      const params: Record<string, z.ZodTypeAny> = {};
+      command.args?.forEach(arg => {
         params[arg.name] = this.argToZod(arg);
+      });
+      Object.entries(command.flags ?? {}).forEach(([name, flag]) => {
+        if (name === 'help') {
+          // skip help flag as it is not needed in MCP
+          return;
+        }
+        params[name] = this.flagToZod(flag);
+      });
+      if (this._hasMcpFlags(command)) {
+        Object.entries(command.mcpFlags ?? {}).forEach(
+          ([name, flag]: [string, IFlag<AnyObject>]) => {
+            params[name] = this.flagToZod(flag, true);
+          },
+        );
       }
-    }
-  }
-
-  private addFlagParams(command: ICommandWithMcpFlags, params: Record<string, z.ZodTypeAny>): void {
-    for (const [name, flag] of Object.entries(command.flags ?? {})) {
-      if (name === 'help') {
-        // skip help flag as it is not needed in MCP
-        continue;
-      }
-      params[name] = this.flagToZod(flag);
-    }
-  }
-
-  private addMcpFlagParams(command: ICommandWithMcpFlags, params: Record<string, z.ZodTypeAny>): void {
-    if (this._hasMcpFlags(command)) {
-      for (const [name, flag] of Object.entries(command.mcpFlags ?? {})) {
-        params[name] = this.flagToZod(flag as IFlag<AnyObject>, true);
-      }
-    }
-  }
-
-  private registerTool(command: ICommandWithMcpFlags, params: Record<string, z.ZodTypeAny>): void {
-    this.server.tool<typeof params>(
-      command.name,
-      command.mcpDescription,
-      params,
-      async args => command.mcpRun(args as Record<string, AnyObject[string]>),
-    );
+      this.hookProcessMethods();
+      this.server.tool<typeof params>(
+        command.name,
+        command.mcpDescription,
+        params,
+        async args => {
+          return command.mcpRun(args as Record<string, AnyObject[string]>);
+        },
+      );
+    });
   }
 
   async run() {
@@ -147,29 +116,10 @@ export class Mcp extends Base<{}> {
     await this.server.connect(transport);
   }
 
-  /**
-   * Safely stringify values, handling circular references and errors
-   */
-  private safeStringify(v: AnyObject): string {
-    if (typeof v !== 'object' || v === null) {
-      return String(v);
-    }
-
-    try {
-      return JSON.stringify(v);
-    } catch (error) {
-      // Handle circular references or other serialization errors
-      try {
-        // Fallback: use util.inspect if available
-        return String(v);
-      } catch {
-        return '[Object with circular reference]';
-      }
-    }
-  }
-
   private hookProcessMethods() {
-    // Stub process.exit to prevent killing the MCP server
+    // stub process.exit to throw an error
+    // so that we can catch it in the MCP client
+    // and handle it gracefully instead of exiting the process
     process.exit = () => {
       this.server.server
         .sendLoggingMessage({
@@ -178,109 +128,117 @@ export class Mcp extends Base<{}> {
           timestamp: new Date().toISOString(),
         })
         .catch(err => {
-          Mcp.originalConsoleError('Error sending exit message:', err);
+          console.error('Error sending exit message:', err);
         });
       return undefined as never;
     };
-
-    // Intercept console.error
+    const original = console.error;
     console.error = (...args: AnyObject[]) => {
       // log errors to the MCP client
-      // Only stringify objects and arrays for performance, with safe handling
-      const formattedArgs: string[] = [];
-      for (const v of args) {
-        formattedArgs.push(this.safeStringify(v));
-      }
-
       this.server.server
         .sendLoggingMessage({
-          level: 'error',
-          message: formattedArgs.join(' '),
+          level: 'debug',
+          message: args.join(' '),
           timestamp: new Date().toISOString(),
         })
         .catch(err => {
-          Mcp.originalConsoleError('Error sending logging message:', err);
+          original('Error sending logging message:', err);
         });
-      Mcp.originalConsoleError(...args);
+      original(...args);
     };
-
-    // Intercept console.log
     console.log = (...args: AnyObject[]) => {
       // log messages to the MCP client
-      // Only stringify objects and arrays for performance, with safe handling
-      const formattedArgs: string[] = [];
-      for (const v of args) {
-        formattedArgs.push(this.safeStringify(v));
-      }
-
       this.server.server
         .sendLoggingMessage({
           level: 'info',
-          message: formattedArgs.join(' '),
+          message: args.join(' '),
           timestamp: new Date().toISOString(),
         })
         .catch(err => {
-          Mcp.originalConsoleError('Error sending logging message:', err);
+          console.error('Error sending logging message:', err);
         });
-      Mcp.originalConsoleLog(...args);
     };
   }
 
   private argToZod(arg: IArg) {
     const option = z.string().describe(arg.description ?? '');
-    return arg.required === true ? option : option.optional();
+    return option;
   }
 
   private flagToZod<T>(flag: IFlag<T>, checkRequired = false) {
-    let option;
-    let description = flag.description ?? '';
+    const descriptionBase = flag.description ?? '';
+    const dependsOn = Array.isArray(flag.dependsOn) ? flag.dependsOn : [];
+    const exclusive = Array.isArray(flag.exclusive) ? flag.exclusive : [];
+    const isRequired = !!flag.required;
+    const shouldMarkNotRequired =
+      !isRequired || (checkRequired && !flag.required);
+    const makeOptional =
+      shouldMarkNotRequired || dependsOn.length > 0 || exclusive.length > 0;
 
-    if (flag.type === 'boolean') {
-      option = z.boolean().optional();
-      option = option.default((flag.default as boolean) ?? false);
-      return this._describeOption(option, description, flag, checkRequired);
-    }
-    if (!this._isOptionFlag(flag)) {
-      throw new Error(
-        'Unsupported flag type. Supported types are boolean, option, enum, and integer.',
-      );
+    const {schema, extraDescription} = this.buildFlagSchema(flag, makeOptional);
+
+    let description = descriptionBase;
+    if (extraDescription) {
+      description += extraDescription;
     }
 
-    const optionFlag = flag as IOptionFlag<T>;
-    if (optionFlag.options !== undefined) {
-      option = z.enum(optionFlag.options as [string, ...string[]]);
-      description += ` (options: ${optionFlag.options?.join(', ')})`;
-      return this._describeOption(option, description, flag, checkRequired);
-    } else {
-      option = z.string().optional();
-      return this._describeOption(option, description, flag, checkRequired);
+    if (dependsOn.length > 0) {
+      const verb = dependsOn.length > 1 ? 'are' : 'is';
+      description += ` (required if ${dependsOn.join(', ')} ${verb} provided)`;
+    } else if (isRequired) {
+      description += ' (required)';
+    } else if (shouldMarkNotRequired) {
+      description += ' (not required)';
     }
+
+    if (exclusive.length > 0) {
+      const suffix = exclusive.length > 1 ? 's' : '';
+      description += ` (can not be provided with ${exclusive.join(', ')} option${suffix})`;
+    }
+
+    return schema.describe(description.trim());
   }
 
-  private _describeOption<T>(
-    option: z.ZodTypeAny,
-    description: string,
+  private buildFlagSchema<T>(
     flag: IFlag<T>,
-    checkRequired: boolean,
-  ) {
-    if (flag.dependsOn) {
-      description += ` (required if ${flag.dependsOn.join(', ')} ${flag.dependsOn.length > 1 ? 'are' : 'is'} provided)`;
-      option = option.optional();
-    } else {
-      description += ' (required)';
+    makeOptional: boolean,
+  ): {schema: z.ZodTypeAny; extraDescription: string} {
+    if (flag.type === 'boolean') {
+      let schema: z.ZodTypeAny = z.boolean();
+      if (makeOptional) {
+        const defaultValue =
+          flag.default === undefined ? false : (flag.default as boolean);
+        schema = schema.optional().default(defaultValue);
+      } else if (flag.default === undefined) {
+        return {schema, extraDescription: ''};
+      } else {
+        schema = schema.default(flag.default as boolean);
+      }
+      return {schema, extraDescription: ''};
     }
 
-    if (checkRequired && !flag.required) {
-      description += ' (not required)';
-      option = option.optional();
+    if (!this._isOptionFlag(flag)) {
+      throw new Error('Unsupported flag provided to flagToZod.');
     }
 
-    if (flag.exclusive) {
-      description += ` (can not be provided with ${flag.exclusive.join(', ')} option${flag.exclusive.length > 1 ? 's' : ''})`;
-      option = option.optional();
+    const hasEnumOptions =
+      Array.isArray(flag.options) && flag.options.length > 0;
+
+    if (hasEnumOptions) {
+      const options = flag.options as [string, ...string[]];
+      let schema: z.ZodTypeAny = z.enum(options);
+      if (makeOptional) {
+        schema = schema.optional();
+      }
+      const description = ` (options: ${options.join(', ')})`;
+      return {schema, extraDescription: description};
     }
 
-    return option.describe(description);
+    let schema: z.ZodTypeAny = z.string();
+    if (makeOptional) {
+      schema = schema.optional();
+    }
+    return {schema, extraDescription: ''};
   }
 
   private _hasMcpFlags<T extends ICommand | ICommandWithMcpFlags>(
