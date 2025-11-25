@@ -5,10 +5,11 @@ A unified CLI for scaffolding and managing SourceLoop projects across the full s
 ## Features
 
 - **🏗️ Backend Development**: Scaffold ARC monorepos, microservices, and extensions
-- **⚛️ React Support**: Scaffold React projects from ARC boilerplate
-- **🅰️ Angular Support**: Scaffold Angular projects from ARC boilerplate
+- **⚛️ React Support**: Scaffold and generate React components, hooks, contexts, pages, and more
+- **🅰️ Angular Support**: Scaffold and generate Angular components, services, modules, and more
 - **🤖 AI Integration**: Built-in MCP server for AI-assisted development (Claude Code, etc.)
 - **📦 Template Management**: Smart template fetching from GitHub with local development support
+- **⚙️ Configuration Management**: Update environment files and project configurations
 
 ## Installation
 
@@ -30,23 +31,29 @@ sl angular:scaffold my-angular-app
 # Scaffold a React project
 sl react:scaffold my-react-app
 
-# For component generation, use the framework-specific CLI:
-# - Angular: Use Angular CLI (ng generate)
-# - React: Use your preferred tool (create-react-app, Vite, etc.)
+# Generate a React component
+sl react:generate MyComponent --type component
+
+# Generate an Angular service
+sl angular:generate MyService --type service
 ```
 
 ## MCP Integration
 
-All scaffolded projects automatically include MCP configuration in `.claude/mcp.json`. This enables AI assistants like Claude Code to interact with your project intelligently.
+All scaffolded projects automatically include MCP configuration in `mcp.json`. This enables AI assistants like Roo Code to interact with your project intelligently.
 
 To use the CLI as an MCP server, add this to your MCP client configuration:
 
 ```json
 {
-  "sourceloop": {
-    "command": "npx",
-    "args": ["@sourceloop/cli", "mcp"],
-    "timeout": 300
+  "mcpServers": {
+    "sourceloop": {
+      "command": "sl",
+      "args": ["mcp"],
+      "alwaysAllow": ["Scaffold", "Microservice", "Extension", "help"],
+      "timeout": 300,
+      "disabled": false
+    }
   }
 }
 ```
@@ -54,6 +61,7 @@ To use the CLI as an MCP server, add this to your MCP client configuration:
 ## Usage
 
 <!-- usage -->
+
 ```sh-session
 $ npm install -g @sourceloop/cli
 $ sl COMMAND
@@ -65,11 +73,15 @@ USAGE
   $ sl COMMAND
 ...
 ```
+
 <!-- usagestop -->
 
 ## Commands
 
 <!-- commands -->
+* [`sl angular:config`](#sl-angularconfig)
+* [`sl angular:generate [NAME]`](#sl-angulargenerate-name)
+* [`sl angular:info`](#sl-angularinfo)
 * [`sl angular:scaffold [NAME]`](#sl-angularscaffold-name)
 * [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
 * [`sl cdk`](#sl-cdk)
@@ -77,9 +89,75 @@ USAGE
 * [`sl help [COMMAND]`](#sl-help-command)
 * [`sl mcp`](#sl-mcp)
 * [`sl microservice [NAME]`](#sl-microservice-name)
+* [`sl react:config`](#sl-reactconfig)
+* [`sl react:generate [NAME]`](#sl-reactgenerate-name)
+* [`sl react:info`](#sl-reactinfo)
 * [`sl react:scaffold [NAME]`](#sl-reactscaffold-name)
 * [`sl scaffold [NAME]`](#sl-scaffold-name)
 * [`sl update`](#sl-update)
+
+## `sl angular:config`
+
+Update Angular environment configuration files
+
+```
+USAGE
+  $ sl angular:config
+
+OPTIONS
+  --apiUrl=apiUrl                                 Base API URL
+  --authServiceUrl=authServiceUrl                 Authentication service URL
+  --clientId=clientId                             OAuth client ID
+  --environment=(development|production|staging)  [default: development] Environment to update
+  --help                                          Show manual pages
+  --publicKey=publicKey                           Public key for authentication
+```
+
+_See code: [src/commands/angular/config.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/angular/config.ts)_
+
+## `sl angular:generate [NAME]`
+
+Generate Angular components, services, modules, and other artifacts
+
+```
+USAGE
+  $ sl angular:generate [NAME]
+
+ARGUMENTS
+  NAME  Name of the artifact to generate
+
+OPTIONS
+  --help                                                  Show manual pages
+
+  --path=path                                             Path where the artifact should be generated (relative to
+                                                          project src/app)
+
+  --project=project                                       [default: arc] Angular project name (arc, arc-lib, arc-docs,
+                                                          saas-ui)
+
+  --skipTests                                             Skip generating test files
+
+  --standalone                                            Generate as a standalone component (Angular 14+)
+
+  --type=(component|service|module|directive|pipe|guard)  Type of artifact to generate
+```
+
+_See code: [src/commands/angular/generate.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/angular/generate.ts)_
+
+## `sl angular:info`
+
+Display Angular project information and statistics
+
+```
+USAGE
+  $ sl angular:info
+
+OPTIONS
+  --detailed  Show detailed statistics
+  --help      Show manual pages
+```
+
+_See code: [src/commands/angular/info.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/angular/info.ts)_
 
 ## `sl angular:scaffold [NAME]`
 
@@ -93,22 +171,9 @@ ARGUMENTS
   NAME  Project name
 
 OPTIONS
-  --help                             Show manual pages
-  --installDeps                      Install dependencies after scaffold
-  --localPath=localPath              Local template path (for development)
-
-  --templateRepo=templateRepo        [default: sourcefuse/angular-boilerplate] Template repo (default:
-                                     sourcefuse/angular-boilerplate)
-
-  --templateVersion=templateVersion  Template branch/version
-
-  --withAuth                         Include authentication module
-
-  --withBreadcrumbs                  Include breadcrumb navigation
-
-  --withI18n                         Include internationalization
-
-  --withThemes                       Include theme system
+  --help                       Show manual pages
+  --installDeps                Install dependencies after scaffolding
+  --templateRepo=templateRepo  [default: sourcefuse/angular-boilerplate] Template repository (owner/repo or local path)
 ```
 
 _See code: [src/commands/angular/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/angular/scaffold.ts)_
@@ -197,7 +262,7 @@ _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.1
 
 ## `sl mcp`
 
-Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by the MCP client to interact with the CLI commands. 
+Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by the MCP client to interact with the CLI commands.
 
 ```
 USAGE
@@ -207,8 +272,8 @@ OPTIONS
   --help  show manual pages
 
 DESCRIPTION
-  Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by 
-  the MCP client to interact with the CLI commands. 
+  Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by
+  the MCP client to interact with the CLI commands.
     You can use it using the following MCP server configuration:
       "sourceloop": {
         "command": "npx",
@@ -267,9 +332,65 @@ OPTIONS
 
 _See code: [src/commands/microservice.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.1.0/src/commands/microservice.ts)_
 
+## `sl react:config`
+
+Update React environment configuration
+
+```
+USAGE
+  $ sl react:config
+
+OPTIONS
+  --appApiBaseUrl=appApiBaseUrl                                Application API base URL
+  --authApiBaseUrl=authApiBaseUrl                              Authentication API base URL
+  --clientId=clientId                                          OAuth client ID
+  --enableSessionTimeout                                       Enable session timeout
+  --expiryTimeInMinute=expiryTimeInMinute                      Session timeout in minutes
+  --help                                                       Show manual pages
+  --promptTimeBeforeIdleInMinute=promptTimeBeforeIdleInMinute  Prompt time before idle in minutes
+  --regenerate                                                 Regenerate config.json after updating .env
+```
+
+_See code: [src/commands/react/config.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/react/config.ts)_
+
+## `sl react:generate [NAME]`
+
+Generate React components, hooks, contexts, pages, and other artifacts.
+
+```
+USAGE
+  $ sl react:generate [NAME]
+
+ARGUMENTS
+  NAME  Artifact name
+
+OPTIONS
+  --help                                                   Show manual pages
+  --path=path                                              Target path for the artifact
+  --skipTests                                              Skip test file generation
+  --type=(component|hook|context|page|service|util|slice)  Type of artifact to generate
+```
+
+_See code: [src/commands/react/generate.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/react/generate.ts)_
+
+## `sl react:info`
+
+Display React project information and statistics
+
+```
+USAGE
+  $ sl react:info
+
+OPTIONS
+  --detailed  Show detailed project statistics
+  --help      Show manual pages
+```
+
+_See code: [src/commands/react/info.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/react/info.ts)_
+
 ## `sl react:scaffold [NAME]`
 
-Scaffold a new React UI boilerplate project.
+Scaffold a new React project from ARC boilerplate
 
 ```
 USAGE
@@ -281,7 +402,6 @@ ARGUMENTS
 OPTIONS
   --help                             Show manual pages
   --installDeps                      Install dependencies after scaffolding
-  --localPath=localPath              Local path to template (for development)
   --templateRepo=templateRepo        [default: sourcefuse/react-boilerplate-ts-ui] Template repository (org/repo)
   --templateVersion=templateVersion  Template branch or version
 ```
@@ -324,7 +444,8 @@ OPTIONS
   --help  show manual pages
 ```
 
-_See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.1.0/src/commands/update.ts)_
+_See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/update.ts)_
+
 <!-- commandsstop -->
 
 ---
@@ -348,11 +469,13 @@ my-project/
 Frontend commands work with official SourceFuse boilerplates:
 
 **Angular**: Uses [angular-boilerplate](https://github.com/sourcefuse/angular-boilerplate)
+
 - Multi-project workspace (arc, arc-lib, arc-docs, saas-ui)
 - Material Design components
 - Built-in authentication and theming
 
 **React**: Uses [react-boilerplate-ts-ui](https://github.com/sourcefuse/react-boilerplate-ts-ui)
+
 - Vite + TypeScript
 - Material-UI (MUI) components
 - Redux Toolkit for state management
@@ -363,8 +486,7 @@ Frontend commands work with official SourceFuse boilerplates:
 The CLI uses a smart template fetching strategy:
 
 1. **GitHub Fetching** (Production): Downloads templates from official repositories
-2. **Local Development**: Use `--localPath` to test against local template modifications
-3. **Version Control**: Use `--templateVersion` to pin specific template versions
+2. **Version Control**: Use `--templateVersion` to pin specific template versions
 
 ### MCP Auto-Configuration
 
@@ -392,38 +514,6 @@ sl angular:scaffold admin-panel
 
 # 4. Create React customer portal
 sl react:scaffold customer-portal
-```
-
-### Component Generation
-
-```bash
-# React: Create a feature component
-sl react:generate UserProfile --type component --path src/Components/User
-
-# React: Create a Redux slice
-sl react:generate user --type slice
-
-# Angular: Create a feature module
-sl angular:generate user --type module --project arc
-
-# Angular: Create a service
-sl angular:generate UserService --type service --path user
-```
-
-### Configuration Updates
-
-```bash
-# Update Angular environment
-sl angular:config --environment production \
-  --apiUrl https://api.production.com \
-  --authServiceUrl https://auth.production.com \
-  --clientId prod-client-123
-
-# Update React environment
-sl react:config \
-  --appApiBaseUrl https://api.production.com \
-  --authApiBaseUrl https://auth.production.com \
-  --clientId prod-client-123
 ```
 
 ## Related Projects

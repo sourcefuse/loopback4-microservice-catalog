@@ -6,33 +6,39 @@ import {flags} from '@oclif/command';
 import {IConfig} from '@oclif/config';
 import * as path from 'node:path';
 import Base from '../../command-base';
-import {AnyObject, PromptFunction} from '../../types';
+import {AnyObject, PromptFunction, ReactScaffoldOptions} from '../../types';
 import {FileGenerator} from '../../utilities/file-generator';
 import {McpConfigInjector} from '../../utilities/mcp-injector';
 import {TemplateFetcher} from '../../utilities/template-fetcher';
 
-export class ReactScaffold extends Base<{}> {
+export class ReactScaffold extends Base<ReactScaffoldOptions> {
   private readonly templateFetcher = new TemplateFetcher();
   private readonly mcpInjector = new McpConfigInjector();
   private readonly fileGenerator = new FileGenerator();
 
-  static readonly description = 'Scaffold a new React UI boilerplate project.';
+  static readonly description =
+    'Scaffold a new React project from ARC boilerplate';
   static readonly mcpDescription =
-    'Creates a React UI boilerplate from a remote or local template and injects MCP configuration.';
+    'Creates a new React project using ARC boilerplate with MCP integration.';
 
   static readonly flags = {
     help: flags.boolean({description: 'Show manual pages'}),
     templateRepo: flags.string({
       description: 'Template repository (org/repo)',
       default: 'sourcefuse/react-boilerplate-ts-ui',
+      required: false,
     }),
     templateVersion: flags.string({description: 'Template branch or version'}),
     installDeps: flags.boolean({
       description: 'Install dependencies after scaffolding',
       default: false,
+      required: false,
     }),
-    localPath: flags.string({
-      description: 'Local path to template (for development)',
+  };
+  static readonly mcpFlags = {
+    workingDir: flags.string({
+      description: 'Working directory for scaffolding',
+      required: false,
     }),
   };
 
@@ -89,8 +95,21 @@ export class ReactScaffold extends Base<{}> {
   }
 
   private async scaffoldProject(inputs: AnyObject): Promise<string> {
-    const {name, templateRepo, templateVersion, installDeps, localPath} =
-      inputs;
+    const {templateVersion, installDeps, localPath} = inputs;
+
+    const name = String(inputs.name ?? '').trim();
+    if (!name) {
+      throw new Error('Project name is required');
+    }
+
+    const templateRepoInput = String(inputs.templateRepo ?? '').trim();
+    const shouldUseDefault =
+      templateRepoInput.length === 0 ||
+      ['undefined', 'null'].includes(templateRepoInput.toLowerCase());
+    const templateRepo = shouldUseDefault
+      ? 'sourcefuse/react-boilerplate-ts-ui'
+      : templateRepoInput;
+
     const targetDir = path.join(process.cwd(), name);
 
     console.info(`Creating React project '${name}'...`); // NOSONAR
