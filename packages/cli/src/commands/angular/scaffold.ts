@@ -97,8 +97,8 @@ export class AngularScaffold extends Base<AngularScaffoldOptions> {
   private async scaffoldProject(
     inputs: AngularScaffoldOptions,
   ): Promise<string> {
-    const name = inputs.name!;
-    if (!name || String(name).trim().length === 0) {
+    const name = inputs.name;
+    if (typeof name !== 'string' || name.trim().length === 0) {
       throw new Error('Project name is required');
     }
 

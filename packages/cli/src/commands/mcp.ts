@@ -79,6 +79,7 @@ export class Mcp extends Base<{}> {
     },
   );
   setup() {
+    this.hookProcessMethods();
     this.commands.forEach(command => {
       const params: Record<string, z.ZodTypeAny> = {};
       command.args?.forEach(arg => {
@@ -98,14 +99,11 @@ export class Mcp extends Base<{}> {
           },
         );
       }
-      this.hookProcessMethods();
       this.server.tool<typeof params>(
         command.name,
         command.mcpDescription,
         params,
-        async args => {
-          return command.mcpRun(args as Record<string, AnyObject[string]>);
-        },
+        async args => command.mcpRun(args as Record<string, AnyObject[string]>),
       );
     });
   }
@@ -116,7 +114,13 @@ export class Mcp extends Base<{}> {
     await this.server.connect(transport);
   }
 
+  private hooksInitialized = false;
+
   private hookProcessMethods() {
+    if (this.hooksInitialized) {
+      return;
+    }
+    this.hooksInitialized = true;
     // stub process.exit to throw an error
     // so that we can catch it in the MCP client
     // and handle it gracefully instead of exiting the process
@@ -128,21 +132,30 @@ export class Mcp extends Base<{}> {
           timestamp: new Date().toISOString(),
         })
         .catch(err => {
+          // sonarignore:start
           console.error('Error sending exit message:', err);
+          // sonarignore:end
         });
       return undefined as never;
     };
+    // sonarignore:start
     const original = console.error;
     console.error = (...args: AnyObject[]) => {
+      // sonarignore:end
+
       // log errors to the MCP client
       this.server.server
         .sendLoggingMessage({
           level: 'debug',
-          message: args.join(' '),
+          message: args
+            .map(a => (typeof a === 'string' ? a : JSON.stringify(a)))
+            .join(' '),
           timestamp: new Date().toISOString(),
         })
         .catch(err => {
+          // sonarignore:start
           original('Error sending logging message:', err);
+          // sonarignore:end
         });
       original(...args);
     };
@@ -151,11 +164,15 @@ export class Mcp extends Base<{}> {
       this.server.server
         .sendLoggingMessage({
           level: 'info',
-          message: args.join(' '),
+          message: args
+            .map(a => (typeof a === 'string' ? a : JSON.stringify(a)))
+            .join(' '),
           timestamp: new Date().toISOString(),
         })
         .catch(err => {
+          // sonarignore:start
           console.error('Error sending logging message:', err);
+          // sonarignore:end
         });
     };
   }
@@ -177,24 +194,14 @@ export class Mcp extends Base<{}> {
 
     const {schema, extraDescription} = this.buildFlagSchema(flag, makeOptional);
 
-    let description = descriptionBase;
-    if (extraDescription) {
-      description += extraDescription;
-    }
-
-    if (dependsOn.length > 0) {
-      const verb = dependsOn.length > 1 ? 'are' : 'is';
-      description += ` (required if ${dependsOn.join(', ')} ${verb} provided)`;
-    } else if (isRequired) {
-      description += ' (required)';
-    } else if (shouldMarkNotRequired) {
-      description += ' (not required)';
-    }
-
-    if (exclusive.length > 0) {
-      const suffix = exclusive.length > 1 ? 's' : '';
-      description += ` (can not be provided with ${exclusive.join(', ')} option${suffix})`;
-    }
+    const description = this.buildFlagDescription(
+      descriptionBase,
+      extraDescription,
+      dependsOn,
+      exclusive,
+      isRequired,
+      shouldMarkNotRequired,
+    );
 
     return schema.describe(description.trim());
   }
@@ -204,34 +211,45 @@ export class Mcp extends Base<{}> {
     makeOptional: boolean,
   ): {schema: z.ZodTypeAny; extraDescription: string} {
     if (flag.type === 'boolean') {
-      let schema: z.ZodTypeAny = z.boolean();
-      if (makeOptional) {
-        const defaultValue =
-          flag.default === undefined ? false : (flag.default as boolean);
-        schema = schema.optional().default(defaultValue);
-      } else if (flag.default === undefined) {
-        return {schema, extraDescription: ''};
-      } else {
-        schema = schema.default(flag.default as boolean);
-      }
-      return {schema, extraDescription: ''};
+      return this.buildBooleanSchema(flag, makeOptional);
     }
 
     if (!this._isOptionFlag(flag)) {
       throw new Error('Unsupported flag provided to flagToZod.');
     }
 
+    return this.buildOptionSchema(flag, makeOptional);
+  }
+
+  private buildBooleanSchema<T>(
+    flag: IFlag<T>,
+    makeOptional: boolean,
+  ): {schema: z.ZodTypeAny; extraDescription: string} {
+    let schema: z.ZodTypeAny = z.boolean();
+
+    if (makeOptional) {
+      const defaultValue =
+        flag.default === undefined ? false : (flag.default as boolean);
+      schema = schema.optional().default(defaultValue);
+      return {schema, extraDescription: ''};
+    }
+
+    if (flag.default !== undefined) {
+      schema = schema.default(flag.default as boolean);
+    }
+
+    return {schema, extraDescription: ''};
+  }
+
+  private buildOptionSchema<T>(
+    flag: IOptionFlag<T>,
+    makeOptional: boolean,
+  ): {schema: z.ZodTypeAny; extraDescription: string} {
     const hasEnumOptions =
       Array.isArray(flag.options) && flag.options.length > 0;
 
     if (hasEnumOptions) {
-      const options = flag.options as [string, ...string[]];
-      let schema: z.ZodTypeAny = z.enum(options);
-      if (makeOptional) {
-        schema = schema.optional();
-      }
-      const description = ` (options: ${options.join(', ')})`;
-      return {schema, extraDescription: description};
+      return this.buildEnumSchema(flag, makeOptional);
     }
 
     let schema: z.ZodTypeAny = z.string();
@@ -239,6 +257,74 @@ export class Mcp extends Base<{}> {
       schema = schema.optional();
     }
     return {schema, extraDescription: ''};
+  }
+
+  private buildEnumSchema<T>(
+    flag: IOptionFlag<T>,
+    makeOptional: boolean,
+  ): {schema: z.ZodTypeAny; extraDescription: string} {
+    const options = flag.options as [string, ...string[]];
+    let schema: z.ZodTypeAny = z.enum(options);
+    if (makeOptional) {
+      schema = schema.optional();
+    }
+    const description = ` (options: ${options.join(', ')})`;
+    return {schema, extraDescription: description};
+  }
+
+  private buildFlagDescription(
+    descriptionBase: string,
+    extraDescription: string,
+    dependsOn: string[],
+    exclusive: string[],
+    isRequired: boolean,
+    shouldMarkNotRequired: boolean,
+  ): string {
+    let description = descriptionBase;
+
+    if (extraDescription) {
+      description += extraDescription;
+    }
+
+    description += this.buildRequirementSuffix(
+      dependsOn,
+      isRequired,
+      shouldMarkNotRequired,
+    );
+
+    description += this.buildExclusiveSuffix(exclusive);
+
+    return description;
+  }
+
+  private buildRequirementSuffix(
+    dependsOn: string[],
+    isRequired: boolean,
+    shouldMarkNotRequired: boolean,
+  ): string {
+    if (dependsOn.length > 0) {
+      const verb = dependsOn.length > 1 ? 'are' : 'is';
+      return ` (required if ${dependsOn.join(', ')} ${verb} provided)`;
+    }
+
+    if (isRequired) {
+      return ' (required)';
+    }
+
+    if (shouldMarkNotRequired) {
+      return ' (not required)';
+    }
+
+    return '';
+  }
+
+  private buildExclusiveSuffix(exclusive: string[]): string {
+    if (exclusive.length === 0) {
+      return '';
+    }
+
+    const suffix = exclusive.length > 1 ? 's' : '';
+    return ` (can not be provided with ${exclusive.join(', ')} option${suffix})`;
   }
 
   private _hasMcpFlags<T extends ICommand | ICommandWithMcpFlags>(

@@ -95,8 +95,21 @@ export class ReactScaffold extends Base<ReactScaffoldOptions> {
   }
 
   private async scaffoldProject(inputs: AnyObject): Promise<string> {
-    const {name, templateRepo, templateVersion, installDeps, localPath} =
-      inputs;
+    const {templateVersion, installDeps, localPath} = inputs;
+
+    const name = String(inputs.name ?? '').trim();
+    if (!name) {
+      throw new Error('Project name is required');
+    }
+
+    const templateRepoInput = String(inputs.templateRepo ?? '').trim();
+    const shouldUseDefault =
+      templateRepoInput.length === 0 ||
+      ['undefined', 'null'].includes(templateRepoInput.toLowerCase());
+    const templateRepo = shouldUseDefault
+      ? 'sourcefuse/react-boilerplate-ts-ui'
+      : templateRepoInput;
+
     const targetDir = path.join(process.cwd(), name);
 
     console.info(`Creating React project '${name}'...`); // NOSONAR

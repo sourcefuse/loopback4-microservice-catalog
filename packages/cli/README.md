@@ -37,16 +37,20 @@ sl react:scaffold my-react-app
 
 ## MCP Integration
 
-All scaffolded projects automatically include MCP configuration in `.claude/mcp.json`. This enables AI assistants like Claude Code to interact with your project intelligently.
+All scaffolded projects automatically include MCP configuration in `mcp.json`. This enables AI assistants like Roo Code to interact with your project intelligently.
 
 To use the CLI as an MCP server, add this to your MCP client configuration:
 
 ```json
 {
-  "sourceloop": {
-    "command": "npx",
-    "args": ["@sourceloop/cli", "mcp"],
-    "timeout": 300
+  "mcpServers": {
+    "sourceloop": {
+      "command": "sl",
+      "args": ["mcp"],
+      "alwaysAllow": ["Scaffold", "Microservice", "Extension", "help"],
+      "timeout": 300,
+      "disabled": false
+    }
   }
 }
 ```
@@ -54,32 +58,35 @@ To use the CLI as an MCP server, add this to your MCP client configuration:
 ## Usage
 
 <!-- usage -->
+
 ```sh-session
 $ npm install -g @sourceloop/cli
 $ sl COMMAND
 running command...
 $ sl (-v|--version|version)
-@sourceloop/cli/12.0.1 darwin-arm64 node-v22.16.0
+@sourceloop/cli/12.0.0 darwin-arm64 node-v22.16.0
 $ sl --help [COMMAND]
 USAGE
   $ sl COMMAND
 ...
 ```
+
 <!-- usagestop -->
 
 ## Commands
 
 <!-- commands -->
-* [`sl angular:scaffold [NAME]`](#sl-angularscaffold-name)
-* [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
-* [`sl cdk`](#sl-cdk)
-* [`sl extension [NAME]`](#sl-extension-name)
-* [`sl help [COMMAND]`](#sl-help-command)
-* [`sl mcp`](#sl-mcp)
-* [`sl microservice [NAME]`](#sl-microservice-name)
-* [`sl react:scaffold [NAME]`](#sl-reactscaffold-name)
-* [`sl scaffold [NAME]`](#sl-scaffold-name)
-* [`sl update`](#sl-update)
+
+- [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
+- [`sl cdk`](#sl-cdk)
+- [`sl extension [NAME]`](#sl-extension-name)
+- [`sl help [COMMAND]`](#sl-help-command)
+- [`sl mcp`](#sl-mcp)
+- [`sl microservice [NAME]`](#sl-microservice-name)
+- [`sl update`](#sl-update)
+- [`sl scaffold [NAME]`](#sl-scaffold-name)
+- [`sl angular:scaffold [NAME]`](#sl-angularscaffold-name)
+- [`sl react:scaffold [NAME]`](#sl-reactscaffold-name)
 
 ## `sl angular:scaffold [NAME]`
 
@@ -98,7 +105,7 @@ OPTIONS
   --templateRepo=templateRepo  [default: sourcefuse/angular-boilerplate] Template repository (owner/repo or local path)
 ```
 
-_See code: [src/commands/angular/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.1/src/commands/angular/scaffold.ts)_
+_See code: [src/commands/angular/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/angular/scaffold.ts)_
 
 ## `sl autocomplete [SHELL]`
 
@@ -146,7 +153,7 @@ OPTIONS
   --help                                           show manual pages
 ```
 
-_See code: [src/commands/cdk.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.1/src/commands/cdk.ts)_
+_See code: [src/commands/cdk.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/cdk.ts)_
 
 ## `sl extension [NAME]`
 
@@ -163,7 +170,7 @@ OPTIONS
   --help  show manual pages
 ```
 
-_See code: [src/commands/extension.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.1/src/commands/extension.ts)_
+_See code: [src/commands/extension.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/extension.ts)_
 
 ## `sl help [COMMAND]`
 
@@ -184,7 +191,7 @@ _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.1
 
 ## `sl mcp`
 
-Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by the MCP client to interact with the CLI commands. 
+Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by the MCP client to interact with the CLI commands.
 
 ```
 USAGE
@@ -194,8 +201,8 @@ OPTIONS
   --help  show manual pages
 
 DESCRIPTION
-  Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by 
-  the MCP client to interact with the CLI commands. 
+  Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by
+  the MCP client to interact with the CLI commands.
     You can use it using the following MCP server configuration:
       "sourceloop": {
         "command": "npx",
@@ -204,7 +211,7 @@ DESCRIPTION
       }
 ```
 
-_See code: [src/commands/mcp.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.1/src/commands/mcp.ts)_
+_See code: [src/commands/mcp.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/mcp.ts)_
 
 ## `sl microservice [NAME]`
 
@@ -251,7 +258,7 @@ OPTIONS
       Include sequelize as ORM in service
 ```
 
-_See code: [src/commands/microservice.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.1/src/commands/microservice.ts)_
+_See code: [src/commands/microservice.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/microservice.ts)_
 
 ## `sl react:scaffold [NAME]`
 
@@ -271,7 +278,7 @@ OPTIONS
   --templateVersion=templateVersion  Template branch or version
 ```
 
-_See code: [src/commands/react/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.1/src/commands/react/scaffold.ts)_
+_See code: [src/commands/react/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/react/scaffold.ts)_
 
 ## `sl scaffold [NAME]`
 
@@ -295,7 +302,7 @@ OPTIONS
   --owner=owner              owner of the repo
 ```
 
-_See code: [src/commands/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.1/src/commands/scaffold.ts)_
+_See code: [src/commands/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/scaffold.ts)_
 
 ## `sl update`
 
@@ -309,7 +316,8 @@ OPTIONS
   --help  show manual pages
 ```
 
-_See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.1/src/commands/update.ts)_
+_See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/update.ts)_
+
 <!-- commandsstop -->
 
 ---
@@ -333,11 +341,13 @@ my-project/
 Frontend commands work with official SourceFuse boilerplates:
 
 **Angular**: Uses [angular-boilerplate](https://github.com/sourcefuse/angular-boilerplate)
+
 - Multi-project workspace (arc, arc-lib, arc-docs, saas-ui)
 - Material Design components
 - Built-in authentication and theming
 
 **React**: Uses [react-boilerplate-ts-ui](https://github.com/sourcefuse/react-boilerplate-ts-ui)
+
 - Vite + TypeScript
 - Material-UI (MUI) components
 - Redux Toolkit for state management
@@ -348,8 +358,7 @@ Frontend commands work with official SourceFuse boilerplates:
 The CLI uses a smart template fetching strategy:
 
 1. **GitHub Fetching** (Production): Downloads templates from official repositories
-2. **Local Development**: Use `--localPath` to test against local template modifications
-3. **Version Control**: Use `--templateVersion` to pin specific template versions
+2. **Version Control**: Use `--templateVersion` to pin specific template versions
 
 ### MCP Auto-Configuration
 
@@ -377,38 +386,6 @@ sl angular:scaffold admin-panel
 
 # 4. Create React customer portal
 sl react:scaffold customer-portal
-```
-
-### Component Generation
-
-```bash
-# React: Create a feature component
-sl react:generate UserProfile --type component --path src/Components/User
-
-# React: Create a Redux slice
-sl react:generate user --type slice
-
-# Angular: Create a feature module
-sl angular:generate user --type module --project arc
-
-# Angular: Create a service
-sl angular:generate UserService --type service --path user
-```
-
-### Configuration Updates
-
-```bash
-# Update Angular environment
-sl angular:config --environment production \
-  --apiUrl https://api.production.com \
-  --authServiceUrl https://auth.production.com \
-  --clientId prod-client-123
-
-# Update React environment
-sl react:config \
-  --appApiBaseUrl https://api.production.com \
-  --authApiBaseUrl https://auth.production.com \
-  --clientId prod-client-123
 ```
 
 ## Related Projects
