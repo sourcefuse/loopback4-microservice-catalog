@@ -11,6 +11,7 @@ install_kubectl() {
   sudo apt-get update -y
   sudo apt-get install -y kubectl
   kubectl cluster-info
+  return 0
 }
 
 install_microk8s() {
@@ -22,6 +23,7 @@ install_microk8s() {
   mkdir -p .kube
   microk8s config >.kube/config
   popd
+  return 0
 }
 
 local_docker_push() {
@@ -35,7 +37,7 @@ local_docker_push() {
   docker push ${LOCAL_REGISTRY}/search-ms-example
   docker push ${LOCAL_REGISTRY}/chat-notification-pubnub-example
   docker push ${LOCAL_REGISTRY}/feature-toggle-example
-
+  return 0
 }
 
 docker_push() {
@@ -60,7 +62,7 @@ docker_push() {
   docker push ${DOCKER_USERNAME}/search-ms-example
   docker push ${DOCKER_USERNAME}/chat-notification-pubnub-example
   docker push ${DOCKER_USERNAME}/feature-toggle-example
-
+  return 0
   # TODO: should we clean up after build? Since agent is ephemeral, some caching may be helpful after an initial run
   # TODO: remove specific images and cache
   #  docker system prune -a -f
@@ -71,26 +73,29 @@ terraform_apply() {
   terraform init
   terraform apply -auto-approve
   popd
+  return 0
 }
 
 terraform_destroy() {
   pushd ${CURRENT_DIR}/k8s/tf-sourceloop-sandbox
   terraform destroy -auto-approve
   popd
+  return 0
 }
 
 run_tests() {
   echo "Sleeping to wait for services to come online."
   sleep 180
   ${CURRENT_DIR}/health_check.sh sourceloop.local true
+  return 0
 }
 
-if [ ! -z "${DOCKER_USERNAME}" ] && [ ! -z "${DOCKER_PASSWORD}" ]; then
+if [[ ! -z "${DOCKER_USERNAME}" ]] && [[ ! -z "${DOCKER_PASSWORD}" ]]; then
   echo "Logging in to Docker"
   echo "${DOCKER_PASSWORD}" | docker login --username ${DOCKER_USERNAME} --password-stdin
 fi
 
-if [ -z "$CURRENT_DIR" ]; then
+if [[ -z "$CURRENT_DIR" ]]; then
   CURRENT_DIR=$(echo $PWD)
 fi
 
@@ -101,7 +106,7 @@ sudo chmod +x ${CURRENT_DIR}/docker-compose
 
 sudo REGISTRY=$LOCAL_REGISTRY ./docker-compose -f "${CURRENT_DIR}/docker-compose.yml" build
 
-if [ "${INSTALL_MICROK8S}" = "true" ]; then
+if [[ "${INSTALL_MICROK8S}" = "true" ]]; then
   install_microk8s
   install_kubectl
 fi

@@ -13,15 +13,13 @@ export class NotificationUserProvider
   value() {
     return {
       getNotifUsers: async (notif: Notification) => {
-        return Promise.resolve(
-          notif.receiver.to.map(to => {
-            const notifUser = new NotificationUser();
-            notifUser.notificationId = notif.id ?? '';
-            notifUser.userId = to.id;
-            notifUser.isDraft = to.isDraft ?? false;
-            return notifUser;
-          }),
-        );
+        return notif.receiver.to.map(to => {
+          const notifUser = new NotificationUser();
+          notifUser.notificationId = notif.id ?? '';
+          notifUser.userId = to.id;
+          notifUser.isDraft = to.isDraft ?? false;
+          return notifUser;
+        });
       },
     };
   }

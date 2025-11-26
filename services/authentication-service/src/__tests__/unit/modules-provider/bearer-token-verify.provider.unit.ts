@@ -12,7 +12,25 @@ import sinon from 'sinon';
 import {BearerTokenVerifyProvider} from '../../../modules/auth/providers/bearer-token-verify.provider';
 import {JWTSymmetricVerifierProvider} from '../../..';
 import {AuthUser} from '../../../modules/auth';
+function log() {
+  // This is intentional
+}
 
+function info() {
+  // This is intentional
+}
+
+function warn() {
+  // This is intentional
+}
+
+function error() {
+  // This is intentional
+}
+
+function debug() {
+  // This is intentional
+}
 describe('Bearer Token Verify Provider', () => {
   let revokedTokenRepo: StubbedInstanceWithSinonAccessor<RevokedTokenRepository>;
   let bearerTokenVerifyProvider: BearerTokenVerifyProvider;
@@ -42,26 +60,6 @@ describe('Bearer Token Verify Provider', () => {
       expect(result).to.be.eql('TokenExpired');
     });
   });
-
-  function log() {
-    // This is intentional
-  }
-
-  function info() {
-    // This is intentional
-  }
-
-  function warn() {
-    // This is intentional
-  }
-
-  function error() {
-    // This is intentional
-  }
-
-  function debug() {
-    // This is intentional
-  }
 
   function setUp() {
     revokedTokenRepo = createStubInstance(RevokedTokenRepository);

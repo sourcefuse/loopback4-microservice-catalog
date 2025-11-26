@@ -4,19 +4,19 @@ CURRENT_DIR=$2
 
 # TODO: remove sudo once build agent is fixed
 
-if [ -z "$REGISTRY" ]; then
+if [[ -z "$REGISTRY" ]]; then
   REGISTRY="localhost:32000"
   echo "${REGISTRY}"
 else
   echo "${REGISTRY}"
 fi
 
-if [ ! -z "${DOCKER_USERNAME}" ] && [ ! -z "${DOCKER_PASSWORD}" ]; then
+if [[ ! -z "${DOCKER_USERNAME}" ]] && [[ ! -z "${DOCKER_PASSWORD}" ]]; then
   echo "Logging in to Docker"
   echo "${DOCKER_PASSWORD}" | docker login --username ${DOCKER_USERNAME} --password-stdin
 fi
 
-if [ -z "$CURRENT_DIR" ]; then
+if [[ -z "$CURRENT_DIR" ]]; then
   CURRENT_DIR=$(echo $PWD)
 fi
 

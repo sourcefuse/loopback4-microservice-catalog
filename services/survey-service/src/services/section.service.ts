@@ -94,25 +94,23 @@ export class SectionService {
           existingSection.displayOrder === orderOfSectionToUpdate,
       )?.id;
 
-      this.surveyQuestionRepository
-        .updateAll({sectionId: sectionIdToUpdate}, {sectionId})
-        .then()
-        .catch(err => Promise.reject(err));
+      await this.surveyQuestionRepository.updateAll(
+        {sectionId: sectionIdToUpdate},
+        {sectionId},
+      );
 
-      this.sectionRepository
+      await this.sectionRepository
         .reorder(surveyId, sectionToDelete.displayOrder)
         .then()
         .catch(err => this.logger.error(JSON.stringify(err)));
     }
     if (existingSections.length === 1) {
-      this.surveyQuestionRepository
+      await this.surveyQuestionRepository
         /* ! is added below because we want to remove the sections
       but keep the questions, adding string|null to the model has a problem 
        while creating the entity it interprets as an object. thus throwing error.
       */
-        .updateAll({sectionId: null!}, {sectionId})
-        .then()
-        .catch(err => Promise.reject(err));
+        .updateAll({sectionId: null!}, {sectionId});
     }
   }
 
