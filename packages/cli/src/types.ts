@@ -100,3 +100,12 @@ export type IArg = {
 export type McpTextResponse = {
   content: {type: 'text'; text: string; isError?: boolean}[];
 };
+
+export interface TemplateScaffoldOptions extends Generator.GeneratorOptions {
+  name?: string;
+  help?: boolean;
+  templateRepo?: string;
+  installDeps?: boolean;
+}
+export type AngularScaffoldOptions = TemplateScaffoldOptions;
+export type ReactScaffoldOptions = TemplateScaffoldOptions;

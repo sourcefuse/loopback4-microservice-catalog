@@ -9,7 +9,7 @@ export class McpAdapter extends TerminalAdapter {
     cb?: (answers: T) => void | Promise<void>,
   ) {
     this.console.error(JSON.stringify(questions, undefined, 2));
-    throw Error(
+    throw new Error(
       `The generator is expecting an input from prompt, please check the inputs`,
     );
   }

@@ -1,44 +1,111 @@
 # sourceloop-cli
 
-This is a `sourceloop` based cli that provides commands to scaffold a monorepo, add extensions, facades and microservices to it.
+A unified CLI for scaffolding and managing SourceLoop projects across the full stack - backend (LoopBack4 microservices), Angular, and React applications. The CLI provides AI-powered development assistance through the Model Context Protocol (MCP).
 
-## Building
+## Features
 
-To install sourceloop-cli, run
+- **🏗️ Backend Development**: Scaffold ARC monorepos, microservices, and extensions
+- **⚛️ React Support**: Scaffold React projects from ARC boilerplate
+- **🅰️ Angular Support**: Scaffold Angular projects from ARC boilerplate
+- **🤖 AI Integration**: Built-in MCP server for AI-assisted development (Claude Code, etc.)
+- **📦 Template Management**: Smart template fetching from GitHub with local development support
+
+## Installation
 
 ```shell
-npm install @sourceloop/cli
+npm install -g @sourceloop/cli
 ```
 
-Once the above command is executed, you will be able to access the CLI commands directly from your terminal. You can use either `sl` or `arc` as shorthand to run any of the `sourceloop` commands listed below. A sample usage is provided for reference:
+Once installed, you can use either `sl` or `arc` as shorthand to run any command.
+
+## Quick Start
+
+```bash
+# Scaffold a backend ARC monorepo
+sl scaffold my-backend
+
+# Scaffold an Angular project
+sl angular:scaffold my-angular-app
+
+# Scaffold a React project
+sl react:scaffold my-react-app
+
+# For component generation, use the framework-specific CLI:
+# - Angular: Use Angular CLI (ng generate)
+# - React: Use your preferred tool (create-react-app, Vite, etc.)
+```
+
+## MCP Integration
+
+All scaffolded projects automatically include MCP configuration in `mcp.json`. This enables AI assistants like Roo Code to interact with your project intelligently.
+
+To use the CLI as an MCP server, add this to your MCP client configuration:
+
+```json
+{
+  "mcpServers": {
+    "sourceloop": {
+      "command": "sl",
+      "args": ["mcp"],
+      "alwaysAllow": ["Scaffold", "Microservice", "Extension", "help"],
+      "timeout": 300,
+      "disabled": false
+    }
+  }
+}
+```
 
 ## Usage
 
 <!-- usage -->
+
 ```sh-session
 $ npm install -g @sourceloop/cli
 $ sl COMMAND
 running command...
 $ sl (-v|--version|version)
-@sourceloop/cli/12.0.0 linux-x64 node-v20.19.5
+@sourceloop/cli/12.0.0 darwin-arm64 node-v22.16.0
 $ sl --help [COMMAND]
 USAGE
   $ sl COMMAND
 ...
 ```
+
 <!-- usagestop -->
 
 ## Commands
 
 <!-- commands -->
-* [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
-* [`sl cdk`](#sl-cdk)
-* [`sl extension [NAME]`](#sl-extension-name)
-* [`sl help [COMMAND]`](#sl-help-command)
-* [`sl mcp`](#sl-mcp)
-* [`sl microservice [NAME]`](#sl-microservice-name)
-* [`sl scaffold [NAME]`](#sl-scaffold-name)
-* [`sl update`](#sl-update)
+
+- [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
+- [`sl cdk`](#sl-cdk)
+- [`sl extension [NAME]`](#sl-extension-name)
+- [`sl help [COMMAND]`](#sl-help-command)
+- [`sl mcp`](#sl-mcp)
+- [`sl microservice [NAME]`](#sl-microservice-name)
+- [`sl update`](#sl-update)
+- [`sl scaffold [NAME]`](#sl-scaffold-name)
+- [`sl angular:scaffold [NAME]`](#sl-angularscaffold-name)
+- [`sl react:scaffold [NAME]`](#sl-reactscaffold-name)
+
+## `sl angular:scaffold [NAME]`
+
+Scaffold a new Angular project from ARC boilerplate
+
+```
+USAGE
+  $ sl angular:scaffold [NAME]
+
+ARGUMENTS
+  NAME  Project name
+
+OPTIONS
+  --help                       Show manual pages
+  --installDeps                Install dependencies after scaffolding
+  --templateRepo=templateRepo  [default: sourcefuse/angular-boilerplate] Template repository (owner/repo or local path)
+```
+
+_See code: [src/commands/angular/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/angular/scaffold.ts)_
 
 ## `sl autocomplete [SHELL]`
 
@@ -124,7 +191,7 @@ _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.1
 
 ## `sl mcp`
 
-Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by the MCP client to interact with the CLI commands. 
+Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by the MCP client to interact with the CLI commands.
 
 ```
 USAGE
@@ -134,8 +201,8 @@ OPTIONS
   --help  show manual pages
 
 DESCRIPTION
-  Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by 
-  the MCP client to interact with the CLI commands. 
+  Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by
+  the MCP client to interact with the CLI commands.
     You can use it using the following MCP server configuration:
       "sourceloop": {
         "command": "npx",
@@ -194,6 +261,26 @@ OPTIONS
 
 _See code: [src/commands/microservice.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/microservice.ts)_
 
+## `sl react:scaffold [NAME]`
+
+Scaffold a new React project from ARC boilerplate
+
+```
+USAGE
+  $ sl react:scaffold [NAME]
+
+ARGUMENTS
+  NAME  Project name
+
+OPTIONS
+  --help                             Show manual pages
+  --installDeps                      Install dependencies after scaffolding
+  --templateRepo=templateRepo        [default: sourcefuse/react-boilerplate-ts-ui] Template repository (org/repo)
+  --templateVersion=templateVersion  Template branch or version
+```
+
+_See code: [src/commands/react/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/react/scaffold.ts)_
+
 ## `sl scaffold [NAME]`
 
 Setup a ARC based monorepo using npm workspaces with an empty services, facades and packages folder
@@ -231,4 +318,83 @@ OPTIONS
 ```
 
 _See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/update.ts)_
+
 <!-- commandsstop -->
+
+---
+
+## Architecture
+
+### Backend Commands
+
+Backend commands work with the ARC (Accelerated Reference Catalog) monorepo structure:
+
+```
+my-project/
+├── services/         # Microservices
+├── facades/          # Facade services
+├── packages/         # Shared packages
+└── package.json
+```
+
+### Frontend Commands
+
+Frontend commands work with official SourceFuse boilerplates:
+
+**Angular**: Uses [angular-boilerplate](https://github.com/sourcefuse/angular-boilerplate)
+
+- Multi-project workspace (arc, arc-lib, arc-docs, saas-ui)
+- Material Design components
+- Built-in authentication and theming
+
+**React**: Uses [react-boilerplate-ts-ui](https://github.com/sourcefuse/react-boilerplate-ts-ui)
+
+- Vite + TypeScript
+- Material-UI (MUI) components
+- Redux Toolkit for state management
+- RTK Query for API calls
+
+### Template Fetching
+
+The CLI uses a smart template fetching strategy:
+
+1. **GitHub Fetching** (Production): Downloads templates from official repositories
+2. **Version Control**: Use `--templateVersion` to pin specific template versions
+
+### MCP Auto-Configuration
+
+When you scaffold any project (backend, Angular, or React), the CLI automatically:
+
+1. Creates `.claude/mcp.json` with SourceLoop CLI server configuration
+2. Generates `.claude/README.md` with usage instructions
+3. Configures the project for AI-assisted development
+
+## Common Workflows
+
+### Full-Stack Development
+
+```bash
+# 1. Create backend monorepo
+sl scaffold my-fullstack-app
+
+# 2. Add authentication microservice
+cd my-fullstack-app
+sl microservice auth-service --baseService=authentication-service
+
+# 3. Create Angular admin panel
+cd ..
+sl angular:scaffold admin-panel
+
+# 4. Create React customer portal
+sl react:scaffold customer-portal
+```
+
+## Related Projects
+
+- [loopback4-microservice-catalog](https://github.com/sourcefuse/loopback4-microservice-catalog) - Backend microservices
+- [angular-boilerplate](https://github.com/sourcefuse/angular-boilerplate) - Angular template
+- [react-boilerplate-ts-ui](https://github.com/sourcefuse/react-boilerplate-ts-ui) - React template
+
+## License
+
+MIT
