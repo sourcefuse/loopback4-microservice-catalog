@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>19.0.1 (2025-11-26)</small>
+
+* refactor(all-services): fix sonarqube issues (#2358) ([3b42d44](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3b42d44)), closes [#2358](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2358) [#2356](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2356) [#2356](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2356)
+
+
+
+
+
 ## 19.0.0 (2025-09-12)
 
 * refactor(chore): dist added (#2343) ([27aefcc](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/27aefcc)), closes [#2343](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2343) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323)

@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.7.0 (2025-11-26)
+
+* refactor(all-services): fix sonarqube issues (#2358) ([3b42d44](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3b42d44)), closes [#2358](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2358) [#2356](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2356) [#2356](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2356)
+* feat(chore): loopback packages upgrade (#2346) ([4a487f8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4a487f8)), closes [#2346](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2346) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323)
+* feat(chore): packages upgrade in CLI (#2349) ([3ad75c2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3ad75c2)), closes [#2349](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2349) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323)
+
+
+### BREAKING CHANGE
+
+* YES
+* YES
+
+
+
+
 ## <small>0.6.1 (2025-09-12)</small>
 
 **Note:** Version bump only for package @sourceloop/telemed-notification-api

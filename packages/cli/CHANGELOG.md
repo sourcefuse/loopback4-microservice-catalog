@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 12.1.0 (2025-11-26)
+
+* feat(cli): add arc saas support in cli (#2271) ([1a0540c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1a0540c)), closes [#2271](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2271) [#2270](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2270) [#2270](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2270)
+
+
+
+
+
 ## 12.0.0 (2025-09-21)
 
 * feat(chore): packages upgrade in CLI (#2349) ([3ad75c2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3ad75c2)), closes [#2349](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2349) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323)

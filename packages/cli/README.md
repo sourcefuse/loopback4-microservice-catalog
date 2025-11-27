@@ -20,7 +20,7 @@ $ npm install -g @sourceloop/cli
 $ sl COMMAND
 running command...
 $ sl (-v|--version|version)
-@sourceloop/cli/12.0.0 linux-x64 node-v20.19.5
+@sourceloop/cli/12.1.0 linux-x64 node-v20.19.5
 $ sl --help [COMMAND]
 USAGE
   $ sl COMMAND
@@ -86,7 +86,7 @@ OPTIONS
   --help                                           show manual pages
 ```
 
-_See code: [src/commands/cdk.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/cdk.ts)_
+_See code: [src/commands/cdk.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.1.0/src/commands/cdk.ts)_
 
 ## `sl extension [NAME]`
 
@@ -103,7 +103,7 @@ OPTIONS
   --help  show manual pages
 ```
 
-_See code: [src/commands/extension.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/extension.ts)_
+_See code: [src/commands/extension.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.1.0/src/commands/extension.ts)_
 
 ## `sl help [COMMAND]`
 
@@ -144,7 +144,7 @@ DESCRIPTION
       }
 ```
 
-_See code: [src/commands/mcp.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/mcp.ts)_
+_See code: [src/commands/mcp.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.1.0/src/commands/mcp.ts)_
 
 ## `sl microservice [NAME]`
 
@@ -163,7 +163,8 @@ OPTIONS
 
   -s, --baseService=(authentication-service|audit-service|chat-service|notification-service|bpmn-service|feature-toggle-
   service|in-mail-service|payment-service|scheduler-service|search-service|survey-service|task-service|video-conferencin
-  g-service|user-tenant-service|reporting-service)
+  g-service|user-tenant-service|ctrl-plane-tenant-management-service|ctrl-plane-subscription-service|ctrl-plane-orchestr
+  ator-service|reporting-service)
       Base ARC microservice
 
   --[no-]baseOnService
@@ -191,7 +192,7 @@ OPTIONS
       Include sequelize as ORM in service
 ```
 
-_See code: [src/commands/microservice.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/microservice.ts)_
+_See code: [src/commands/microservice.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.1.0/src/commands/microservice.ts)_
 
 ## `sl scaffold [NAME]`
 
@@ -215,7 +216,7 @@ OPTIONS
   --owner=owner              owner of the repo
 ```
 
-_See code: [src/commands/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/scaffold.ts)_
+_See code: [src/commands/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.1.0/src/commands/scaffold.ts)_
 
 ## `sl update`
 
@@ -229,5 +230,5 @@ OPTIONS
   --help  show manual pages
 ```
 
-_See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/update.ts)_
+_See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.1.0/src/commands/update.ts)_
 <!-- commandsstop -->
