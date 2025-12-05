@@ -141,6 +141,7 @@ npm i @sourceloop/authentication-service
   - It works for almost all authentication methods provided by this service.
   - Use `/verify-otp` to enter otp or code from authenticator app.
     for using Google Authenticator user needs to pass client id in the payload which is optional in case for OTP
+    
 - **Oauth- using Cognito** -
   - Make sure you have your cognito setup over aws. You can take reference from [here](https://docs.aws.amazon.com/cognito/latest/developerguide/authentication.html).
   - add the below envs-
