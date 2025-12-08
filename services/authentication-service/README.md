@@ -679,6 +679,51 @@ NOTE : For [`@sourceloop/cli`](https://www.npmjs.com/package/@sourceloop/cli?act
 
 ![Auth DB Schema](https://user-images.githubusercontent.com/77672713/126612271-3ce065aa-9f87-45d4-bf9a-c5cc8ad21764.jpg)
 
+- You can use below sql to create first user. Kindly update the name of each field accordingly
+
+  ```
+  -- Set schema
+  SET search_path TO main, public;
+  -- Auth Client
+  INSERT INTO auth_clients (client_id, client_secret, secret)
+  VALUES ('temp_client', 'temp_secret', 'secret');
+  -- Tenant
+  INSERT INTO tenants (name, status, key)
+  VALUES ('Master Tenant', 1, 't1');
+  -- Role
+  INSERT INTO roles (name, permissions, allowed_clients, role_type, tenant_id)
+  SELECT 'SuperAdmin', '{*}', '{temp_client}', 0, id
+  FROM tenants
+  WHERE key = 't1';
+
+  -- User
+  INSERT INTO users (first_name, last_name, username, email, default_tenant_id)
+  SELECT 'John', 'Doe', 'john.doe@example.com', 'john.doe@example.com', id
+  FROM tenants
+  WHERE key = 't1';
+
+  -- Assign User to Tenant with Role
+  INSERT INTO user_tenants (user_id, tenant_id, status, role_id)
+  SELECT 
+      (SELECT id FROM users WHERE username = 'john.doe@example.com'),
+      (SELECT id FROM tenants WHERE key = 't1'),
+      1,
+      (SELECT id FROM roles WHERE role_type = 0 AND tenant_id = (SELECT id FROM tenants WHERE key = 't1') LIMIT 1);
+
+  -- User Credentials (bcrypt hashed password)
+  INSERT INTO user_credentials (user_id, auth_provider, password)
+  SELECT id, 'internal', '$2b$12$mNyM260paivMGoA0gThnkuYpBZ5V0yJHausASJtHINpMeUd9BJkwi'
+  FROM users
+  WHERE username = 'john.doe@example.com';
+
+  -- Update User with Auth Client
+  UPDATE users
+  SET auth_client_ids = ARRAY[
+      (SELECT id FROM auth_clients WHERE client_id = 'temp_client')::integer
+  ]
+  WHERE username = 'john.doe@example.com';
+  ```
+  descrypted password is test123!@#, we stored it after encryption.
 ### Providers
 
 You can find documentation for some of the providers available in this service [here](./src/providers/README.md)
