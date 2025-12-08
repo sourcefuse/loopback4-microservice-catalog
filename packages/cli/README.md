@@ -58,7 +58,6 @@ To use the CLI as an MCP server, add this to your MCP client configuration:
 ## Usage
 
 <!-- usage -->
-
 ```sh-session
 $ npm install -g @sourceloop/cli
 $ sl COMMAND
@@ -70,23 +69,21 @@ USAGE
   $ sl COMMAND
 ...
 ```
-
 <!-- usagestop -->
 
 ## Commands
 
 <!-- commands -->
-
-- [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
-- [`sl cdk`](#sl-cdk)
-- [`sl extension [NAME]`](#sl-extension-name)
-- [`sl help [COMMAND]`](#sl-help-command)
-- [`sl mcp`](#sl-mcp)
-- [`sl microservice [NAME]`](#sl-microservice-name)
-- [`sl update`](#sl-update)
-- [`sl scaffold [NAME]`](#sl-scaffold-name)
-- [`sl angular:scaffold [NAME]`](#sl-angularscaffold-name)
-- [`sl react:scaffold [NAME]`](#sl-reactscaffold-name)
+* [`sl angular:scaffold [NAME]`](#sl-angularscaffold-name)
+* [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
+* [`sl cdk`](#sl-cdk)
+* [`sl extension [NAME]`](#sl-extension-name)
+* [`sl help [COMMAND]`](#sl-help-command)
+* [`sl mcp`](#sl-mcp)
+* [`sl microservice [NAME]`](#sl-microservice-name)
+* [`sl react:scaffold [NAME]`](#sl-reactscaffold-name)
+* [`sl scaffold [NAME]`](#sl-scaffold-name)
+* [`sl update`](#sl-update)
 
 ## `sl angular:scaffold [NAME]`
 
@@ -100,9 +97,14 @@ ARGUMENTS
   NAME  Project name
 
 OPTIONS
-  --help                       Show manual pages
-  --installDeps                Install dependencies after scaffolding
-  --templateRepo=templateRepo  [default: sourcefuse/angular-boilerplate] Template repository (owner/repo or local path)
+  --help                             Show manual pages
+  --installDeps                      Install dependencies after scaffolding
+  --localPath=localPath              Local path to use instead of remote template
+
+  --templateRepo=templateRepo        [default: sourcefuse/angular-boilerplate] Template repository (owner/repo or local
+                                     path)
+
+  --templateVersion=templateVersion  Template branch, tag, or version
 ```
 
 _See code: [src/commands/angular/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/angular/scaffold.ts)_
@@ -191,7 +193,7 @@ _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.1
 
 ## `sl mcp`
 
-Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by the MCP client to interact with the CLI commands.
+Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by the MCP client to interact with the CLI commands. 
 
 ```
 USAGE
@@ -201,8 +203,8 @@ OPTIONS
   --help  show manual pages
 
 DESCRIPTION
-  Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by
-  the MCP client to interact with the CLI commands.
+  Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by 
+  the MCP client to interact with the CLI commands. 
     You can use it using the following MCP server configuration:
       "sourceloop": {
         "command": "npx",
@@ -274,6 +276,7 @@ ARGUMENTS
 OPTIONS
   --help                             Show manual pages
   --installDeps                      Install dependencies after scaffolding
+  --localPath=localPath              Local path to template
   --templateRepo=templateRepo        [default: sourcefuse/react-boilerplate-ts-ui] Template repository (org/repo)
   --templateVersion=templateVersion  Template branch or version
 ```
@@ -317,7 +320,6 @@ OPTIONS
 ```
 
 _See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/update.ts)_
-
 <!-- commandsstop -->
 
 ---

@@ -3,18 +3,10 @@
 // https://opensource.org/licenses/MIT
 
 import {flags} from '@oclif/command';
-import {IConfig} from '@oclif/config';
-import * as path from 'node:path';
 import Base from '../../command-base';
-import {AngularScaffoldOptions, AnyObject, PromptFunction} from '../../types';
-import {FileGenerator} from '../../utilities/file-generator';
-import {McpConfigInjector} from '../../utilities/mcp-injector';
-import {TemplateFetcher} from '../../utilities/template-fetcher';
+import {AngularScaffoldOptions, AnyObject} from '../../types';
 
 export class AngularScaffold extends Base<AngularScaffoldOptions> {
-  private readonly templateFetcher = new TemplateFetcher();
-  private readonly mcpInjector = new McpConfigInjector();
-  private readonly fileGen = new FileGenerator();
   static readonly description =
     'Scaffold a new Angular project from ARC boilerplate';
 
@@ -23,10 +15,17 @@ export class AngularScaffold extends Base<AngularScaffoldOptions> {
 
   static readonly flags = {
     help: flags.boolean({description: 'Show manual pages'}),
-    // Keep only minimal options requested
     templateRepo: flags.string({
       description: 'Template repository (owner/repo or local path)',
       default: 'sourcefuse/angular-boilerplate',
+      required: false,
+    }),
+    templateVersion: flags.string({
+      description: 'Template branch, tag, or version',
+      required: false,
+    }),
+    localPath: flags.string({
+      description: 'Local path to use instead of remote template',
       required: false,
     }),
     installDeps: flags.boolean({
@@ -48,116 +47,10 @@ export class AngularScaffold extends Base<AngularScaffoldOptions> {
   ];
 
   async run(): Promise<void> {
-    const {args, flags: opts} = this.parse(AngularScaffold);
-    const name = args.name ?? (await this.promptProjectName());
-    const result = await this.scaffoldProject({name, ...opts});
-    this.log(result);
+    await super.generate('angular-scaffold', AngularScaffold);
   }
 
   static async mcpRun(inputs: AnyObject) {
-    const cwd = process.cwd();
-    try {
-      if (inputs.workingDir) process.chdir(inputs.workingDir);
-
-      const instance = new AngularScaffold(
-        [],
-        {} as IConfig,
-        {} as PromptFunction,
-      );
-      const result = await instance.scaffoldProject(
-        inputs as AngularScaffoldOptions,
-      );
-
-      return {
-        content: [
-          {
-            type: 'text' as const,
-            text: result,
-            isError: false,
-          },
-        ],
-      };
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : String(err);
-      return {
-        content: [
-          {
-            type: 'text' as const,
-            text: `Error: ${msg}`,
-            isError: true,
-          },
-        ],
-      };
-    } finally {
-      process.chdir(cwd);
-    }
-  }
-
-  // ------------------- MAIN LOGIC -------------------
-  private async scaffoldProject(
-    inputs: AngularScaffoldOptions,
-  ): Promise<string> {
-    const name = inputs.name;
-    if (typeof name !== 'string' || name.trim().length === 0) {
-      throw new Error('Project name is required');
-    }
-
-    const templateRepo =
-      inputs.templateRepo ?? 'sourcefuse/angular-boilerplate';
-    const installDeps = !!inputs.installDeps;
-    const targetDir = path.join(process.cwd(), name);
-
-    // user-visible log (kept intentionally for CLI UX)
-    console.log(`\n📦 Scaffolding Angular project '${name}'...`); // NOSONAR
-
-    await this.templateFetcher.smartFetch({
-      repo: templateRepo,
-      targetDir,
-    });
-
-    // inject MCP config so AI tools can interact with the created project
-    this.mcpInjector.injectConfig(targetDir, 'angular');
-    this.fileGen.updatePackageJson(targetDir, name);
-
-    if (installDeps) {
-      this.fileGen.installDependencies(targetDir);
-    }
-
-    return this.buildSuccessMessage(name, targetDir, installDeps);
-  }
-
-  // ------------------- PROMPT -------------------
-  private async promptProjectName(): Promise<string> {
-    const {value} = await this.prompt([
-      {
-        type: 'input',
-        name: 'value',
-        message: 'Enter your project name:',
-        validate: (v: string) => !!v || 'Project name is required',
-      },
-    ]);
-    return value;
-  }
-
-  // ------------------- SUCCESS MESSAGE -------------------
-  private buildSuccessMessage(
-    name: string,
-    targetDir: string,
-    installDeps: boolean,
-  ) {
-    const lines = [
-      `✅ Angular project '${name}' scaffolded successfully!`,
-      '',
-      `📁 Location: ${targetDir}`,
-      `🔧 MCP Configuration: Ready`,
-      '',
-      'Next steps:',
-      `  cd ${name}`,
-      installDeps ? '  npm start' : '  npm install\n  npm start',
-      '',
-      '💡 Open in Claude or Copilot for AI-assisted development!',
-    ];
-
-    return lines.join('\n');
+    return Base.mcpResponse(inputs, 'angular-scaffold', []);
   }
 }
