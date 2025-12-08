@@ -86,6 +86,7 @@ export class TemplateFetcher {
       // NOSONAR: Safe usage - repo and branch are validated against strict patterns
       // (REPO_PATTERN and BRANCH_PATTERN) before reaching this method. All inputs
       // are sanitized and cannot contain shell injection characters.
+      // sonarignore:start
       const result = spawnSync(
         'git',
         [
@@ -99,6 +100,7 @@ export class TemplateFetcher {
         ],
         {stdio: 'inherit'},
       );
+      // sonarignore:end
 
       return result.status === 0;
     } catch (error) {

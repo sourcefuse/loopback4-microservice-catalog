@@ -89,27 +89,6 @@ Docs: https://docs.anthropic.com/claude/docs/mcp
       .join('');
   }
 
-  protected toCamelCase(str: string): string {
-    const p = this.toPascalCase(str);
-    return p.charAt(0).toLowerCase() + p.slice(1);
-  }
-
-  protected toKebabCase(str: string): string {
-    return str
-      .replace(/([a-z])([A-Z])/g, '$1-$2')
-      .replace(/[\s_]+/g, '-')
-      .toLowerCase();
-  }
-
-  protected getProjectRoot(startPath?: string): string {
-    let current = startPath ?? process.cwd();
-    while (current !== path.parse(current).root) {
-      if (fs.existsSync(path.join(current, 'package.json'))) return current;
-      current = path.dirname(current);
-    }
-    return process.cwd();
-  }
-
   updatePackageJson(projectPath: string, projectName: string): void {
     const file = path.join(projectPath, 'package.json');
     if (!fs.existsSync(file)) {

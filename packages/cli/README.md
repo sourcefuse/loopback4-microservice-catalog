@@ -61,7 +61,6 @@ To use the CLI as an MCP server, add this to your MCP client configuration:
 ## Usage
 
 <!-- usage -->
-
 ```sh-session
 $ npm install -g @sourceloop/cli
 $ sl COMMAND
@@ -73,15 +72,11 @@ USAGE
   $ sl COMMAND
 ...
 ```
-
 <!-- usagestop -->
 
 ## Commands
 
 <!-- commands -->
-* [`sl angular:config`](#sl-angularconfig)
-* [`sl angular:generate [NAME]`](#sl-angulargenerate-name)
-* [`sl angular:info`](#sl-angularinfo)
 * [`sl angular:scaffold [NAME]`](#sl-angularscaffold-name)
 * [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
 * [`sl cdk`](#sl-cdk)
@@ -89,75 +84,9 @@ USAGE
 * [`sl help [COMMAND]`](#sl-help-command)
 * [`sl mcp`](#sl-mcp)
 * [`sl microservice [NAME]`](#sl-microservice-name)
-* [`sl react:config`](#sl-reactconfig)
-* [`sl react:generate [NAME]`](#sl-reactgenerate-name)
-* [`sl react:info`](#sl-reactinfo)
 * [`sl react:scaffold [NAME]`](#sl-reactscaffold-name)
 * [`sl scaffold [NAME]`](#sl-scaffold-name)
 * [`sl update`](#sl-update)
-
-## `sl angular:config`
-
-Update Angular environment configuration files
-
-```
-USAGE
-  $ sl angular:config
-
-OPTIONS
-  --apiUrl=apiUrl                                 Base API URL
-  --authServiceUrl=authServiceUrl                 Authentication service URL
-  --clientId=clientId                             OAuth client ID
-  --environment=(development|production|staging)  [default: development] Environment to update
-  --help                                          Show manual pages
-  --publicKey=publicKey                           Public key for authentication
-```
-
-_See code: [src/commands/angular/config.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/angular/config.ts)_
-
-## `sl angular:generate [NAME]`
-
-Generate Angular components, services, modules, and other artifacts
-
-```
-USAGE
-  $ sl angular:generate [NAME]
-
-ARGUMENTS
-  NAME  Name of the artifact to generate
-
-OPTIONS
-  --help                                                  Show manual pages
-
-  --path=path                                             Path where the artifact should be generated (relative to
-                                                          project src/app)
-
-  --project=project                                       [default: arc] Angular project name (arc, arc-lib, arc-docs,
-                                                          saas-ui)
-
-  --skipTests                                             Skip generating test files
-
-  --standalone                                            Generate as a standalone component (Angular 14+)
-
-  --type=(component|service|module|directive|pipe|guard)  Type of artifact to generate
-```
-
-_See code: [src/commands/angular/generate.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/angular/generate.ts)_
-
-## `sl angular:info`
-
-Display Angular project information and statistics
-
-```
-USAGE
-  $ sl angular:info
-
-OPTIONS
-  --detailed  Show detailed statistics
-  --help      Show manual pages
-```
-
-_See code: [src/commands/angular/info.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/angular/info.ts)_
 
 ## `sl angular:scaffold [NAME]`
 
@@ -171,9 +100,14 @@ ARGUMENTS
   NAME  Project name
 
 OPTIONS
-  --help                       Show manual pages
-  --installDeps                Install dependencies after scaffolding
-  --templateRepo=templateRepo  [default: sourcefuse/angular-boilerplate] Template repository (owner/repo or local path)
+  --help                             Show manual pages
+  --installDeps                      Install dependencies after scaffolding
+  --localPath=localPath              Local path to use instead of remote template
+
+  --templateRepo=templateRepo        [default: sourcefuse/angular-boilerplate] Template repository (owner/repo or local
+                                     path)
+
+  --templateVersion=templateVersion  Template branch, tag, or version
 ```
 
 _See code: [src/commands/angular/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/angular/scaffold.ts)_
@@ -262,7 +196,7 @@ _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.1
 
 ## `sl mcp`
 
-Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by the MCP client to interact with the CLI commands.
+Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by the MCP client to interact with the CLI commands. 
 
 ```
 USAGE
@@ -272,8 +206,8 @@ OPTIONS
   --help  show manual pages
 
 DESCRIPTION
-  Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by
-  the MCP client to interact with the CLI commands.
+  Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by 
+  the MCP client to interact with the CLI commands. 
     You can use it using the following MCP server configuration:
       "sourceloop": {
         "command": "npx",
@@ -402,6 +336,7 @@ ARGUMENTS
 OPTIONS
   --help                             Show manual pages
   --installDeps                      Install dependencies after scaffolding
+  --localPath=localPath              Local path to template
   --templateRepo=templateRepo        [default: sourcefuse/react-boilerplate-ts-ui] Template repository (org/repo)
   --templateVersion=templateVersion  Template branch or version
 ```
@@ -445,7 +380,6 @@ OPTIONS
 ```
 
 _See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/update.ts)_
-
 <!-- commandsstop -->
 
 ---

@@ -161,6 +161,7 @@ export class Mcp extends Base<{}> {
         });
       original(...args);
     };
+    // sonarignore:start
     console.log = (...args: AnyObject[]) => {
       // log messages to the MCP client
       this.server.server
@@ -172,7 +173,6 @@ export class Mcp extends Base<{}> {
           },
         })
         .catch(err => {
-          // sonarignore:start
           console.error('Error sending logging message:', err);
           // sonarignore:end
         });

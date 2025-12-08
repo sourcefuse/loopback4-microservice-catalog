@@ -105,6 +105,8 @@ export interface TemplateScaffoldOptions extends Generator.GeneratorOptions {
   name?: string;
   help?: boolean;
   templateRepo?: string;
+  templateVersion?: string;
+  localPath?: string;
   installDeps?: boolean;
 }
 export type AngularScaffoldOptions = TemplateScaffoldOptions;
