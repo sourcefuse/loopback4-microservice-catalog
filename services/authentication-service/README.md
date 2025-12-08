@@ -679,7 +679,7 @@ NOTE : For [`@sourceloop/cli`](https://www.npmjs.com/package/@sourceloop/cli?act
 
 ![Auth DB Schema](https://user-images.githubusercontent.com/77672713/126612271-3ce065aa-9f87-45d4-bf9a-c5cc8ad21764.jpg)
 
-- You can use below sql to create first user. Kindly update the name of each field accordingly
+- You can use below sql to create first user. Kindly update the value of any field if required as per application requirement.
 
   ```
   -- Set schema
