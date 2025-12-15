@@ -634,7 +634,8 @@ const inputBody = '{
   "endDate": "2019-08-24T14:15:22Z",
   "assigneeId": "string",
   "metadata": {},
-  "externalId": "string"
+  "externalId": "string",
+  "notes": "string"
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -678,7 +679,8 @@ const inputBody = {
   "endDate": "2019-08-24T14:15:22Z",
   "assigneeId": "string",
   "metadata": {},
-  "externalId": "string"
+  "externalId": "string",
+  "notes": "string"
 };
 const headers = {
   'Content-Type':'application/json',
@@ -729,7 +731,8 @@ fetch('/tasks/{id}',
   "endDate": "2019-08-24T14:15:22Z",
   "assigneeId": "string",
   "metadata": {},
-  "externalId": "string"
+  "externalId": "string",
+  "notes": "string"
 }
 ```
 
@@ -840,6 +843,7 @@ fetch('/tasks/{id}',
   "assigneeId": "string",
   "metadata": {},
   "externalId": "string",
+  "notes": "string",
   "userTasks": [
     {
       "deleted": true,
@@ -969,7 +973,8 @@ const inputBody = '{
   "endDate": "2019-08-24T14:15:22Z",
   "assigneeId": "string",
   "metadata": {},
-  "externalId": "string"
+  "externalId": "string",
+  "notes": "string"
 }';
 const headers = {
   'Content-Type':'application/json',
@@ -1013,7 +1018,8 @@ const inputBody = {
   "endDate": "2019-08-24T14:15:22Z",
   "assigneeId": "string",
   "metadata": {},
-  "externalId": "string"
+  "externalId": "string",
+  "notes": "string"
 };
 const headers = {
   'Content-Type':'application/json',
@@ -1064,7 +1070,8 @@ fetch('/tasks',
   "endDate": "2019-08-24T14:15:22Z",
   "assigneeId": "string",
   "metadata": {},
-  "externalId": "string"
+  "externalId": "string",
+  "notes": "string"
 }
 ```
 
@@ -1175,6 +1182,7 @@ fetch('/tasks',
     "assigneeId": "string",
     "metadata": {},
     "externalId": "string",
+    "notes": "string",
     "userTasks": [
       {
         "deleted": true,
@@ -1230,6 +1238,7 @@ Status Code **200**
 |»» assigneeId|string|false|none|none|
 |»» metadata|object|true|none|none|
 |»» externalId|string|false|none|none|
+|»» notes|string|false|none|none|
 |»» userTasks|[[UserTaskWithRelations](#schemausertaskwithrelations)]|false|none|[(tsType: UserTaskWithRelations, schemaOptions: { includeRelations: true })]|
 |»»» UserTaskWithRelations|[UserTaskWithRelations](#schemausertaskwithrelations)|false|none|(tsType: UserTaskWithRelations, schemaOptions: { includeRelations: true })|
 |»»»» deleted|boolean|false|none|none|
@@ -2772,6 +2781,7 @@ UserTaskWithRelations
   "assigneeId": "string",
   "metadata": {},
   "externalId": "string",
+  "notes": "string",
   "userTasks": [
     {
       "deleted": true,
@@ -2819,6 +2829,7 @@ TaskWithRelations
 |assigneeId|string|false|none|none|
 |metadata|object|true|none|none|
 |externalId|string|false|none|none|
+|notes|string|false|none|none|
 |userTasks|[[UserTaskWithRelations](#schemausertaskwithrelations)]|false|none|[(tsType: UserTaskWithRelations, schemaOptions: { includeRelations: true })]|
 
 <h2 id="tocS_TaskWorkFlowMapping">TaskWorkFlowMapping</h2>
@@ -2890,7 +2901,8 @@ TaskWorkFlowMapping
   "endDate": "2019-08-24T14:15:22Z",
   "assigneeId": "string",
   "metadata": {},
-  "externalId": "string"
+  "externalId": "string",
+  "notes": "string"
 }
 
 ```
@@ -2922,6 +2934,7 @@ TaskPartial
 |assigneeId|string|false|none|none|
 |metadata|object|false|none|none|
 |externalId|string|false|none|none|
+|notes|string|false|none|none|
 
 <h2 id="tocS_Task">Task</h2>
 <!-- backwards compatibility -->
@@ -2952,7 +2965,8 @@ TaskPartial
   "endDate": "2019-08-24T14:15:22Z",
   "assigneeId": "string",
   "metadata": {},
-  "externalId": "string"
+  "externalId": "string",
+  "notes": "string"
 }
 
 ```
@@ -2984,6 +2998,7 @@ Task
 |assigneeId|string|false|none|none|
 |metadata|object|true|none|none|
 |externalId|string|false|none|none|
+|notes|string|false|none|none|
 
 <h2 id="tocS_loopback.Count">loopback.Count</h2>
 <!-- backwards compatibility -->
@@ -3467,7 +3482,8 @@ tasks.IncludeFilter.Items
     "endDate": true,
     "assigneeId": true,
     "metadata": true,
-    "externalId": true
+    "externalId": true,
+    "notes": true
   },
   "include": [
     {
@@ -3544,6 +3560,7 @@ oneOf
 |»» assigneeId|boolean|false|none|none|
 |»» metadata|boolean|false|none|none|
 |»» externalId|boolean|false|none|none|
+|»» notes|boolean|false|none|none|
 
 xor
 
@@ -3604,7 +3621,8 @@ or
     "endDate": true,
     "assigneeId": true,
     "metadata": true,
-    "externalId": true
+    "externalId": true,
+    "notes": true
   },
   "include": [
     {
@@ -3682,6 +3700,7 @@ oneOf
 |»» assigneeId|boolean|false|none|none|
 |»» metadata|boolean|false|none|none|
 |»» externalId|boolean|false|none|none|
+|»» notes|boolean|false|none|none|
 
 xor
 

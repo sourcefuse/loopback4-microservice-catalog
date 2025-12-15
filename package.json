@@ -55,6 +55,9 @@
       "twilio": {
         "axios": "^1.12.2"
       }
+    },
+    "read-package-json": {
+      "glob": "^10.5.0"
     }
   },
   "dependencies": {
