@@ -18,6 +18,8 @@ jobs:
 
       - name: Install Monorepo Deps
         run: npm ci --ignore-scripts
+      - name: Run After Install Script  
+        run: npm run afterinstall  
 
       - name: Run npm audit
         run: >

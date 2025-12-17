@@ -20,6 +20,7 @@ jobs:
       - name: Bootstrap
         run: |
           npm ci --ignore-scripts
+          npm run afterinstall
           npx lerna bootstrap
           npx lerna run build
       - name: Install mkdocs deps/plugins
