@@ -20,7 +20,7 @@ $ npm install -g @sourceloop/cli
 $ sl COMMAND
 running command...
 $ sl (-v|--version|version)
-@sourceloop/cli/12.1.0 linux-x64 node-v20.19.5
+@sourceloop/cli/12.1.0 darwin-arm64 node-v20.19.5
 $ sl --help [COMMAND]
 USAGE
   $ sl COMMAND

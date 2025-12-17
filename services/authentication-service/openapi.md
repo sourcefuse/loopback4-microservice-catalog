@@ -997,7 +997,8 @@ This operation does not require authentication
 ```javascript
 const inputBody = '{
   "client_id": "string",
-  "client_secret": "string"
+  "client_secret": "string",
+  "state": "string"
 }';
 const headers = {
   'Content-Type':'application/x-www-form-urlencoded'
@@ -1021,7 +1022,8 @@ fetch('/auth/oauth-apple',
 const fetch = require('node-fetch');
 const inputBody = {
   "client_id": "string",
-  "client_secret": "string"
+  "client_secret": "string",
+  "state": "string"
 };
 const headers = {
   'Content-Type':'application/x-www-form-urlencoded'
@@ -1048,6 +1050,7 @@ fetch('/auth/oauth-apple',
 ```yaml
 client_id: string
 client_secret: string
+state: string
 
 ```
 
@@ -1082,7 +1085,8 @@ This operation does not require authentication
 ```javascript
 const inputBody = '{
   "client_id": "string",
-  "client_secret": "string"
+  "client_secret": "string",
+  "state": "string"
 }';
 const headers = {
   'Content-Type':'application/x-www-form-urlencoded',
@@ -1107,7 +1111,8 @@ fetch('/auth/auth0',
 const fetch = require('node-fetch');
 const inputBody = {
   "client_id": "string",
-  "client_secret": "string"
+  "client_secret": "string",
+  "state": "string"
 };
 const headers = {
   'Content-Type':'application/x-www-form-urlencoded',
@@ -1135,6 +1140,7 @@ fetch('/auth/auth0',
 ```yaml
 client_id: string
 client_secret: string
+state: string
 
 ```
 
@@ -1336,7 +1342,8 @@ This operation does not require authentication
 ```javascript
 const inputBody = '{
   "client_id": "string",
-  "client_secret": "string"
+  "client_secret": "string",
+  "state": "string"
 }';
 const headers = {
   'Content-Type':'application/x-www-form-urlencoded',
@@ -1361,7 +1368,8 @@ fetch('/auth/azure',
 const fetch = require('node-fetch');
 const inputBody = {
   "client_id": "string",
-  "client_secret": "string"
+  "client_secret": "string",
+  "state": "string"
 };
 const headers = {
   'Content-Type':'application/x-www-form-urlencoded',
@@ -1391,6 +1399,7 @@ POST Call for azure based login
 ```yaml
 client_id: string
 client_secret: string
+state: string
 
 ```
 
@@ -2629,7 +2638,8 @@ This operation does not require authentication
 ```javascript
 const inputBody = '{
   "client_id": "string",
-  "client_secret": "string"
+  "client_secret": "string",
+  "state": "string"
 }';
 const headers = {
   'Content-Type':'application/x-www-form-urlencoded',
@@ -2654,7 +2664,8 @@ fetch('/auth/cognito',
 const fetch = require('node-fetch');
 const inputBody = {
   "client_id": "string",
-  "client_secret": "string"
+  "client_secret": "string",
+  "state": "string"
 };
 const headers = {
   'Content-Type':'application/x-www-form-urlencoded',
@@ -2682,6 +2693,7 @@ fetch('/auth/cognito',
 ```yaml
 client_id: string
 client_secret: string
+state: string
 
 ```
 
@@ -2883,7 +2895,8 @@ This operation does not require authentication
 ```javascript
 const inputBody = '{
   "client_id": "string",
-  "client_secret": "string"
+  "client_secret": "string",
+  "state": "string"
 }';
 const headers = {
   'Content-Type':'application/x-www-form-urlencoded',
@@ -2908,7 +2921,8 @@ fetch('/auth/facebook',
 const fetch = require('node-fetch');
 const inputBody = {
   "client_id": "string",
-  "client_secret": "string"
+  "client_secret": "string",
+  "state": "string"
 };
 const headers = {
   'Content-Type':'application/x-www-form-urlencoded',
@@ -2936,6 +2950,7 @@ fetch('/auth/facebook',
 ```yaml
 client_id: string
 client_secret: string
+state: string
 
 ```
 
@@ -3294,7 +3309,8 @@ This operation does not require authentication
 ```javascript
 const inputBody = '{
   "client_id": "string",
-  "client_secret": "string"
+  "client_secret": "string",
+  "state": "string"
 }';
 const headers = {
   'Content-Type':'application/x-www-form-urlencoded',
@@ -3319,7 +3335,8 @@ fetch('/auth/google',
 const fetch = require('node-fetch');
 const inputBody = {
   "client_id": "string",
-  "client_secret": "string"
+  "client_secret": "string",
+  "state": "string"
 };
 const headers = {
   'Content-Type':'application/x-www-form-urlencoded',
@@ -3347,6 +3364,7 @@ fetch('/auth/google',
 ```yaml
 client_id: string
 client_secret: string
+state: string
 
 ```
 
@@ -3550,7 +3568,8 @@ This operation does not require authentication
 ```javascript
 const inputBody = '{
   "client_id": "string",
-  "client_secret": "string"
+  "client_secret": "string",
+  "state": "string"
 }';
 const headers = {
   'Content-Type':'application/x-www-form-urlencoded',
@@ -3575,7 +3594,8 @@ fetch('/auth/instagram',
 const fetch = require('node-fetch');
 const inputBody = {
   "client_id": "string",
-  "client_secret": "string"
+  "client_secret": "string",
+  "state": "string"
 };
 const headers = {
   'Content-Type':'application/x-www-form-urlencoded',
@@ -3603,6 +3623,7 @@ fetch('/auth/instagram',
 ```yaml
 client_id: string
 client_secret: string
+state: string
 
 ```
 
@@ -3725,7 +3746,8 @@ This operation does not require authentication
 ```javascript
 const inputBody = '{
   "client_id": "string",
-  "client_secret": "string"
+  "client_secret": "string",
+  "state": "string"
 }';
 const headers = {
   'Content-Type':'application/x-www-form-urlencoded',
@@ -3750,7 +3772,8 @@ fetch('/auth/keycloak',
 const fetch = require('node-fetch');
 const inputBody = {
   "client_id": "string",
-  "client_secret": "string"
+  "client_secret": "string",
+  "state": "string"
 };
 const headers = {
   'Content-Type':'application/x-www-form-urlencoded',
@@ -3780,6 +3803,7 @@ POST Call for keycloak based login
 ```yaml
 client_id: string
 client_secret: string
+state: string
 
 ```
 
@@ -3981,7 +4005,8 @@ This operation does not require authentication
 ```javascript
 const inputBody = '{
   "client_id": "string",
-  "client_secret": "string"
+  "client_secret": "string",
+  "state": "string"
 }';
 const headers = {
   'Content-Type':'application/x-www-form-urlencoded',
@@ -4006,7 +4031,8 @@ fetch('/auth/saml',
 const fetch = require('node-fetch');
 const inputBody = {
   "client_id": "string",
-  "client_secret": "string"
+  "client_secret": "string",
+  "state": "string"
 };
 const headers = {
   'Content-Type':'application/x-www-form-urlencoded',
@@ -4036,6 +4062,7 @@ POST Call for saml based login
 ```yaml
 client_id: string
 client_secret: string
+state: string
 
 ```
 
@@ -4976,7 +5003,8 @@ ResetPassword
 ```json
 {
   "client_id": "string",
-  "client_secret": "string"
+  "client_secret": "string",
+  "state": "string"
 }
 
 ```
@@ -4989,6 +5017,7 @@ ClientAuthRequest
 |---|---|---|---|---|
 |client_id|string|true|none|This property is supposed to be a string and is a required field|
 |client_secret|string|true|none|This property is supposed to be a string and is a required field|
+|state|string|false|none|none|
 
 <h2 id="tocS_SuccessResponse">SuccessResponse</h2>
 <!-- backwards compatibility -->

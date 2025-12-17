@@ -1403,6 +1403,9 @@
           "externalId": {
             "type": "string"
           },
+          "notes": {
+            "type": "string"
+          },
           "userTasks": {
             "type": "array",
             "items": {
@@ -1550,6 +1553,9 @@
           },
           "externalId": {
             "type": "string"
+          },
+          "notes": {
+            "type": "string"
           }
         },
         "additionalProperties": false,
@@ -1632,6 +1638,9 @@
             "type": "object"
           },
           "externalId": {
+            "type": "string"
+          },
+          "notes": {
             "type": "string"
           }
         },
@@ -2202,6 +2211,9 @@
                   },
                   "externalId": {
                     "type": "boolean"
+                  },
+                  "notes": {
+                    "type": "boolean"
                   }
                 },
                 "additionalProperties": false
@@ -2231,7 +2243,8 @@
                     "endDate",
                     "assigneeId",
                     "metadata",
-                    "externalId"
+                    "externalId",
+                    "notes"
                   ],
                   "example": "deleted"
                 },
@@ -2360,6 +2373,9 @@
                   },
                   "externalId": {
                     "type": "boolean"
+                  },
+                  "notes": {
+                    "type": "boolean"
                   }
                 },
                 "additionalProperties": false
@@ -2389,7 +2405,8 @@
                     "endDate",
                     "assigneeId",
                     "metadata",
-                    "externalId"
+                    "externalId",
+                    "notes"
                   ],
                   "example": "deleted"
                 },

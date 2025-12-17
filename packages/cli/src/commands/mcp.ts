@@ -110,8 +110,10 @@ export class Mcp extends Base<{}> {
       this.server.server
         .sendLoggingMessage({
           level: 'debug',
-          message: `Process exited with code 0 using process.exit()`,
-          timestamp: new Date().toISOString(),
+          data: {
+            message: `Process exited with code 0 using process.exit()`,
+            timestamp: new Date().toISOString(),
+          },
         })
         .catch(err => {
           // sonarignore:start
@@ -127,8 +129,10 @@ export class Mcp extends Base<{}> {
       this.server.server
         .sendLoggingMessage({
           level: 'debug',
-          message: args.map(v => JSON.stringify(v)).join(' '),
-          timestamp: new Date().toISOString(),
+          data: {
+            message: args.map(v => JSON.stringify(v)).join(' '),
+            timestamp: new Date().toISOString(),
+          },
         })
         .catch(err => {
           original('Error sending logging message:', err);
@@ -141,8 +145,10 @@ export class Mcp extends Base<{}> {
       this.server.server
         .sendLoggingMessage({
           level: 'info',
-          message: args.map(v => JSON.stringify(v)).join(' '),
-          timestamp: new Date().toISOString(),
+          data: {
+            message: args.map(v => JSON.stringify(v)).join(' '),
+            timestamp: new Date().toISOString(),
+          },
         })
         .catch(err => {
           // sonarignore:start

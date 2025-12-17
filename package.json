@@ -5,6 +5,7 @@
     "prepare": "husky install",
     "build": "npm run build --workspaces --if-present",
     "postinstall": "npx patch-package",
+    "afterinstall": "npx patch-package && allow-scripts run && npm run build --workspaces --if-present",
     "clean-deps": "lerna clean --yes && lerna exec --no-private \"npm install --ignore-scripts --package-lock-only --no-audit\"",
     "export-typedocs": "npx tsc export-typedocs.ts && node export-typedocs",
     "clean": "npm run clean --workspaces --if-present"
@@ -12,6 +13,7 @@
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^16.2.1",
+    "@lavamoat/preinstall-always-fail": "^2.1.1",
     "commitizen": "^4.2.5",
     "custom-sf-changelog": "file:packages/custom-sf-changelog",
     "cz-conventional-changelog": "^3.3.0",
@@ -55,11 +57,17 @@
       "twilio": {
         "axios": "^1.12.2"
       }
+    },
+    "read-package-json": {
+      "glob": "^10.5.0"
     }
   },
   "dependencies": {
+    "@lavamoat/allow-scripts": "^3.4.1",
+    "bcrypt": "^5.1.1",
     "handlebars": "^4.7.8",
-    "patch-package": "^8.0.0"
+    "patch-package": "^8.0.0",
+    "sqlite3": "^5.1.7"
   },
   "workspaces": [
     "packages/core/",
@@ -70,5 +78,15 @@
     "packages/custom-sf-changelog/",
     "services/*",
     "sandbox/*"
-  ]
+  ],
+  "lavamoat": {
+    "allowScripts": {
+      "$root$": false,
+      "@lavamoat/preinstall-always-fail": false,
+      "lerna>nx": false,
+      "lerna>nx>@parcel/watcher": false,
+      "bcrypt": true,
+      "sqlite3": true
+    }
+  }
 }

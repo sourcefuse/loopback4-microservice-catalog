@@ -2390,6 +2390,9 @@
           "client_secret": {
             "type": "string",
             "description": "This property is supposed to be a string and is a required field"
+          },
+          "state": {
+            "type": "string"
           }
         },
         "required": [

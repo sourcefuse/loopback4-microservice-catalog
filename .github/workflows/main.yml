@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [20]
+        node-version: [20, 22]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -19,6 +19,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install Monorepo Deps
         run: npm ci --ignore-scripts
+      - name: Run After Install Script  
+        run: npm run afterinstall
       - name: Run Test Cases
         run: npm run test --workspaces --if-present
       - name: Run Lint Checks
@@ -30,4 +32,4 @@ jobs:
     if: success()
     steps:
       - name: Final status
-        run: echo "✅ All tests passed for Node.js 20"
+        run: echo "✅ All tests passed for Node.js 20 and 22"

@@ -39,6 +39,8 @@ jobs:
 
       - name: Bootstrap
         run: npm ci --ignore-scripts
+      - name: Run After Install Script  
+        run: npm run afterinstall  
       # this step is added only since this version of nx dependency is not being installed on linux systems
       # can be removed once this issue is fixed or we update to later versions
       - name: nx dependency
