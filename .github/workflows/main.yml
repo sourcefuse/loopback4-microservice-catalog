@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install Monorepo Deps
-        run: npm ci
+        run: npm ci --ignore-scripts
       - name: Run Test Cases
         run: npm run test --workspaces --if-present
       - name: Run Lint Checks
@@ -30,4 +30,4 @@ jobs:
     if: success()
     steps:
       - name: Final status
-        run: echo "✅ All tests passed for Node.js 20, 22, and 24"
+        run: echo "✅ All tests passed for Node.js 20"
