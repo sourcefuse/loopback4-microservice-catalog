@@ -19,13 +19,13 @@ jobs:
           node-version: '20.x'
       - name: Bootstrap
         run: |
-          npm ci
+          npm ci --ignore-scripts
           npx lerna bootstrap
           npx lerna run build
       - name: Install mkdocs deps/plugins
         run: |
-          pip install mkdocs-material
-          pip install mkdocs-include-markdown-plugin
+          pip install mkdocs-material --ignore-scripts
+          pip install mkdocs-include-markdown-plugin --ignore-scripts
       - name: Create the docs directory locally in CI
         run: npm run export-typedocs
       - name: Deploy 🚀
