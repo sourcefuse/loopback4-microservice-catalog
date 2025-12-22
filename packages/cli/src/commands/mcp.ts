@@ -14,9 +14,11 @@ import {ICommand} from '../__tests__/helper/command-test.helper';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import Base from '../command-base';
 import {AnyObject, IArg, ICommandWithMcpFlags, PromptFunction} from '../types';
+import {AngularScaffold} from './angular/scaffold';
 import {Cdk} from './cdk';
 import {Extension} from './extension';
 import {Microservice} from './microservice';
+import {ReactScaffold} from './react/scaffold';
 import {Scaffold} from './scaffold';
 import {Update} from './update';
 
@@ -33,7 +35,17 @@ export class Mcp extends Base<{}> {
     if (cmds) {
       this.commands = cmds;
     } else {
-      this.commands = [Cdk, Extension, Microservice, Scaffold, Update];
+      this.commands = [
+        // Backend commands
+        Cdk,
+        Extension,
+        Microservice,
+        Scaffold,
+        Update,
+        // Frontend scaffolding commands
+        AngularScaffold,
+        ReactScaffold,
+      ];
     }
   }
   static readonly description = `
@@ -67,6 +79,7 @@ export class Mcp extends Base<{}> {
     },
   );
   setup() {
+    this.hookProcessMethods();
     this.commands.forEach(command => {
       const params: Record<string, z.ZodTypeAny> = {};
       command.args?.forEach(arg => {
@@ -86,7 +99,6 @@ export class Mcp extends Base<{}> {
           },
         );
       }
-      this.hookProcessMethods();
       this.server.tool<typeof params>(
         command.name,
         command.mcpDescription,
@@ -102,7 +114,13 @@ export class Mcp extends Base<{}> {
     await this.server.connect(transport);
   }
 
+  private hooksInitialized = false;
+
   private hookProcessMethods() {
+    if (this.hooksInitialized) {
+      return;
+    }
+    this.hooksInitialized = true;
     // stub process.exit to throw an error
     // so that we can catch it in the MCP client
     // and handle it gracefully instead of exiting the process
@@ -125,6 +143,8 @@ export class Mcp extends Base<{}> {
     // sonarignore:start
     const original = console.error;
     console.error = (...args: AnyObject[]) => {
+      // sonarignore:end
+
       // log errors to the MCP client
       this.server.server
         .sendLoggingMessage({
@@ -135,12 +155,14 @@ export class Mcp extends Base<{}> {
           },
         })
         .catch(err => {
+          // sonarignore:start
           original('Error sending logging message:', err);
+          // sonarignore:end
         });
       original(...args);
     };
+    // sonarignore:start
     console.log = (...args: AnyObject[]) => {
-      // sonarignore:end
       // log messages to the MCP client
       this.server.server
         .sendLoggingMessage({
@@ -151,7 +173,6 @@ export class Mcp extends Base<{}> {
           },
         })
         .catch(err => {
-          // sonarignore:start
           console.error('Error sending logging message:', err);
           // sonarignore:end
         });
@@ -164,55 +185,148 @@ export class Mcp extends Base<{}> {
   }
 
   private flagToZod<T>(flag: IFlag<T>, checkRequired = false) {
-    let option;
-    let description = flag.description ?? '';
+    const descriptionBase = flag.description ?? '';
+    const dependsOn = Array.isArray(flag.dependsOn) ? flag.dependsOn : [];
+    const exclusive = Array.isArray(flag.exclusive) ? flag.exclusive : [];
+    const isRequired = !!flag.required;
+    const shouldMarkNotRequired =
+      !isRequired || (checkRequired && !flag.required);
+    const makeOptional =
+      shouldMarkNotRequired || dependsOn.length > 0 || exclusive.length > 0;
 
-    if (flag.type === 'boolean') {
-      option = z.boolean().optional();
-      option = option.default((flag.default as boolean) ?? false);
-      return this._describeOption(option, description, flag, checkRequired);
-    }
-    if (!this._isOptionFlag(flag)) {
-      throw new Error(
-        'Unsupported flag type. Supported types are boolean, option, enum, and integer.',
-      );
-    }
+    const {schema, extraDescription} = this.buildFlagSchema(flag, makeOptional);
 
-    const optionFlag = flag as IOptionFlag<T>;
-    if (optionFlag.options !== undefined) {
-      option = z.enum(optionFlag.options as [string, ...string[]]);
-      description += ` (options: ${optionFlag.options?.join(', ')})`;
-      return this._describeOption(option, description, flag, checkRequired);
-    } else {
-      option = z.string().optional();
-      return this._describeOption(option, description, flag, checkRequired);
-    }
+    const description = this.buildFlagDescription(
+      descriptionBase,
+      extraDescription,
+      dependsOn,
+      exclusive,
+      isRequired,
+      shouldMarkNotRequired,
+    );
+
+    return schema.describe(description.trim());
   }
 
-  private _describeOption<T>(
-    option: z.ZodTypeAny,
-    description: string,
+  private buildFlagSchema<T>(
     flag: IFlag<T>,
-    checkRequired: boolean,
-  ) {
-    if (flag.dependsOn) {
-      description += ` (required if ${flag.dependsOn.join(', ')} ${flag.dependsOn.length > 1 ? 'are' : 'is'} provided)`;
-      option = option.optional();
-    } else {
-      description += ' (required)';
+    makeOptional: boolean,
+  ): {schema: z.ZodTypeAny; extraDescription: string} {
+    if (flag.type === 'boolean') {
+      return this.buildBooleanSchema(flag, makeOptional);
     }
 
-    if (checkRequired && !flag.required) {
-      description += ' (not required)';
-      option = option.optional();
+    if (!this._isOptionFlag(flag)) {
+      throw new Error('Unsupported flag provided to flagToZod.');
     }
 
-    if (flag.exclusive) {
-      description += ` (can not be provided with ${flag.exclusive.join(', ')} option${flag.exclusive.length > 1 ? 's' : ''})`;
-      option = option.optional();
+    return this.buildOptionSchema(flag, makeOptional);
+  }
+
+  private buildBooleanSchema<T>(
+    flag: IFlag<T>,
+    makeOptional: boolean,
+  ): {schema: z.ZodTypeAny; extraDescription: string} {
+    let schema: z.ZodTypeAny = z.boolean();
+
+    if (makeOptional) {
+      const defaultValue =
+        flag.default === undefined ? false : (flag.default as boolean);
+      schema = schema.optional().default(defaultValue);
+      return {schema, extraDescription: ''};
     }
 
-    return option.describe(description);
+    if (flag.default !== undefined) {
+      schema = schema.default(flag.default as boolean);
+    }
+
+    return {schema, extraDescription: ''};
+  }
+
+  private buildOptionSchema<T>(
+    flag: IOptionFlag<T>,
+    makeOptional: boolean,
+  ): {schema: z.ZodTypeAny; extraDescription: string} {
+    const hasEnumOptions =
+      Array.isArray(flag.options) && flag.options.length > 0;
+
+    if (hasEnumOptions) {
+      return this.buildEnumSchema(flag, makeOptional);
+    }
+
+    let schema: z.ZodTypeAny = z.string();
+    if (makeOptional) {
+      schema = schema.optional();
+    }
+    return {schema, extraDescription: ''};
+  }
+
+  private buildEnumSchema<T>(
+    flag: IOptionFlag<T>,
+    makeOptional: boolean,
+  ): {schema: z.ZodTypeAny; extraDescription: string} {
+    const options = flag.options as [string, ...string[]];
+    let schema: z.ZodTypeAny = z.enum(options);
+    if (makeOptional) {
+      schema = schema.optional();
+    }
+    const description = ` (options: ${options.join(', ')})`;
+    return {schema, extraDescription: description};
+  }
+
+  private buildFlagDescription(
+    descriptionBase: string,
+    extraDescription: string,
+    dependsOn: string[],
+    exclusive: string[],
+    isRequired: boolean,
+    shouldMarkNotRequired: boolean,
+  ): string {
+    let description = descriptionBase;
+
+    if (extraDescription) {
+      description += extraDescription;
+    }
+
+    description += this.buildRequirementSuffix(
+      dependsOn,
+      isRequired,
+      shouldMarkNotRequired,
+    );
+
+    description += this.buildExclusiveSuffix(exclusive);
+
+    return description;
+  }
+
+  private buildRequirementSuffix(
+    dependsOn: string[],
+    isRequired: boolean,
+    shouldMarkNotRequired: boolean,
+  ): string {
+    if (dependsOn.length > 0) {
+      const verb = dependsOn.length > 1 ? 'are' : 'is';
+      return ` (required if ${dependsOn.join(', ')} ${verb} provided)`;
+    }
+
+    if (isRequired) {
+      return ' (required)';
+    }
+
+    if (shouldMarkNotRequired) {
+      return ' (not required)';
+    }
+
+    return '';
+  }
+
+  private buildExclusiveSuffix(exclusive: string[]): string {
+    if (exclusive.length === 0) {
+      return '';
+    }
+
+    const suffix = exclusive.length > 1 ? 's' : '';
+    return ` (can not be provided with ${exclusive.join(', ')} option${suffix})`;
   }
 
   private _hasMcpFlags<T extends ICommand | ICommandWithMcpFlags>(
