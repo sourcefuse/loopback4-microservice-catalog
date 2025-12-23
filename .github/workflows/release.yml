@@ -8,16 +8,16 @@ jobs:
   Release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           # fetch-depth is necessary to get all tags
           # otherwise lerna can't detect the changes and will end up bumping the versions for all packages
           fetch-depth: 0
           token: ${{ secrets.RELEASE_COMMIT_GH_PAT }}
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: '22.x'
       - name: Configure CI Git User
         run: |
           git config --global user.name $CONFIG_USERNAME
@@ -29,18 +29,15 @@ jobs:
           CONFIG_EMAIL: ${{ vars.RELEASE_COMMIT_EMAIL }}
       - name: Authenticate with Registry
         run: |
-          echo "@${NPM_USERNAME}:registry=https://registry.npmjs.org/" > .npmrc
-          echo "registry=https://registry.npmjs.org/" >> .npmrc
-          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
+          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
           npm whoami
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_USERNAME: ${{ vars.NPM_USERNAME }}
 
-      - name: Bootstrap
+      - name: Install Dependencies
         run: npm ci --ignore-scripts
-      - name: Run After Install Script  
-        run: npm run afterinstall  
+
       # this step is added only since this version of nx dependency is not being installed on linux systems
       # can be removed once this issue is fixed or we update to later versions
       - name: nx dependency
@@ -53,10 +50,10 @@ jobs:
         run: git stash
       - name: Bump Versions
         # "HUSKY=0" disables pre-commit-msg check (Needed in order to allow lerna perform the release commit)
-        run: HUSKY=0 npx lerna version --yes --ci --conventional-commits
+        run: HUSKY=0 npx lerna version --scope=@sourceloop/cli --yes --ci --conventional-commits
       - name: Publish to NPM 🚀
         # To always compare changes from registry
         # using `from-package` compares version in local package.json with registry and publish it if required.
-        run: npx lerna publish from-package --yes
+        run: npm publish -w @sourceloop/cli --access public
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
