@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.7.0 (2025-12-23)
+
+* fix(cli): vulnerability fix for all services (#2383) ([6e025fd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6e025fd)), closes [#2383](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2383) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382)
+* refactor(all-services): fix sonarqube issues (#2358) ([3b42d44](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3b42d44)), closes [#2358](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2358) [#2356](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2356) [#2356](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2356)
+* feat(chore): packages upgrade in CLI (#2349) ([3ad75c2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3ad75c2)), closes [#2349](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2349) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323)
+
+
+### BREAKING CHANGE
+
+* YES
+
+
+
+
 ## 0.6.0 (2025-09-20)
 
 * Gh 2323 audit log (#2348) ([cb6bd75](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/cb6bd75)), closes [#2348](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2348) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323)

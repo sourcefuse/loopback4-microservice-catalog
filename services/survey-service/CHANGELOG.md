@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>7.0.2 (2025-12-23)</small>
+
+**Note:** Version bump only for package @sourceloop/survey-service
+
+
+
+
+
 ## <small>7.0.1 (2025-11-26)</small>
 
 * refactor(all-services): fix sonarqube issues (#2357) ([937f2db](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/937f2db)), closes [#2357](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2357) [#2356](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2356)

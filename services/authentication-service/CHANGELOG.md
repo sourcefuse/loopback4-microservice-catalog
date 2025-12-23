@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>24.1.1 (2025-12-23)</small>
+
+* fix(cli): vulnerability fix for all services (#2383) ([6e025fd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6e025fd)), closes [#2383](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2383) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382)
+* refactor(all-services): fix sonarqube issues (#2357) ([937f2db](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/937f2db)), closes [#2357](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2357) [#2356](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2356)
+* refactor(all-services): fix sonarqube issues (#2358) ([3b42d44](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/3b42d44)), closes [#2358](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2358) [#2356](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2356) [#2356](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2356)
+
+
+
+
+
 ## 24.1.0 (2025-10-14)
 
 * refactor(authentication-service): streamline state handling in KeycloakLoginController and add optio ([8c8bad2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8c8bad2)), closes [#2355](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2355)

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.9.2 (2025-12-23)</small>
+
+**Note:** Version bump only for package @sourceloop/user-tenant-example
+
+
+
+
+
 ## <small>0.9.1 (2025-09-12)</small>
 
 **Note:** Version bump only for package @sourceloop/user-tenant-example

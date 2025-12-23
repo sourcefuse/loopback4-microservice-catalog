@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.8.3 (2025-12-23)</small>
+
+**Note:** Version bump only for package @sourceloop/payment-example-backend
+
+
+
+
+
 ## <small>0.8.2 (2025-11-26)</small>
 
 **Note:** Version bump only for package @sourceloop/payment-example-backend

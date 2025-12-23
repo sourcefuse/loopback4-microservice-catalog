@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 12.2.0 (2025-12-23)
+
+* feat(cli): Add unified Angular/React support with MCP integration and bug fixes (#2359) ([cc69c8d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/cc69c8d)), closes [#2359](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2359) [#2362](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2362) [#2365](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2365) [#2365](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2365) [#2369](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2369)
+* fix(cli): vulnerability fix for all services (#2383) ([6e025fd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6e025fd)), closes [#2383](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2383) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382)
+
+
+
+
+
 ## 12.1.0 (2025-11-26)
 
 * feat(cli): add arc saas support in cli (#2271) ([1a0540c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1a0540c)), closes [#2271](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2271) [#2270](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2270) [#2270](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2270)

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>20.0.1 (2025-12-23)</small>
+
+* fix(cli): vulnerability fix for all services (#2383) ([6e025fd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6e025fd)), closes [#2383](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2383) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382)
+
+
+
+
+
 ## 20.0.0 (2025-09-12)
 
 * refactor(chore): dist added (#2343) ([27aefcc](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/27aefcc)), closes [#2343](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2343) [#2323](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2323)

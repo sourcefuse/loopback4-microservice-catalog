@@ -66,7 +66,7 @@ $ npm install -g @sourceloop/cli
 $ sl COMMAND
 running command...
 $ sl (-v|--version|version)
-@sourceloop/cli/12.1.0 darwin-arm64 node-v20.19.5
+@sourceloop/cli/12.2.0 linux-x64 node-v22.21.1
 $ sl --help [COMMAND]
 USAGE
   $ sl COMMAND
@@ -110,7 +110,7 @@ OPTIONS
   --templateVersion=templateVersion  Template branch, tag, or version
 ```
 
-_See code: [src/commands/angular/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/angular/scaffold.ts)_
+_See code: [src/commands/angular/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.2.0/src/commands/angular/scaffold.ts)_
 
 ## `sl autocomplete [SHELL]`
 
@@ -158,7 +158,7 @@ OPTIONS
   --help                                           show manual pages
 ```
 
-_See code: [src/commands/cdk.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.1.0/src/commands/cdk.ts)_
+_See code: [src/commands/cdk.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.2.0/src/commands/cdk.ts)_
 
 ## `sl extension [NAME]`
 
@@ -175,7 +175,7 @@ OPTIONS
   --help  show manual pages
 ```
 
-_See code: [src/commands/extension.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.1.0/src/commands/extension.ts)_
+_See code: [src/commands/extension.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.2.0/src/commands/extension.ts)_
 
 ## `sl help [COMMAND]`
 
@@ -216,7 +216,7 @@ DESCRIPTION
       }
 ```
 
-_See code: [src/commands/mcp.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.1.0/src/commands/mcp.ts)_
+_See code: [src/commands/mcp.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.2.0/src/commands/mcp.ts)_
 
 ## `sl microservice [NAME]`
 
@@ -264,63 +264,7 @@ OPTIONS
       Include sequelize as ORM in service
 ```
 
-_See code: [src/commands/microservice.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.1.0/src/commands/microservice.ts)_
-
-## `sl react:config`
-
-Update React environment configuration
-
-```
-USAGE
-  $ sl react:config
-
-OPTIONS
-  --appApiBaseUrl=appApiBaseUrl                                Application API base URL
-  --authApiBaseUrl=authApiBaseUrl                              Authentication API base URL
-  --clientId=clientId                                          OAuth client ID
-  --enableSessionTimeout                                       Enable session timeout
-  --expiryTimeInMinute=expiryTimeInMinute                      Session timeout in minutes
-  --help                                                       Show manual pages
-  --promptTimeBeforeIdleInMinute=promptTimeBeforeIdleInMinute  Prompt time before idle in minutes
-  --regenerate                                                 Regenerate config.json after updating .env
-```
-
-_See code: [src/commands/react/config.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/react/config.ts)_
-
-## `sl react:generate [NAME]`
-
-Generate React components, hooks, contexts, pages, and other artifacts.
-
-```
-USAGE
-  $ sl react:generate [NAME]
-
-ARGUMENTS
-  NAME  Artifact name
-
-OPTIONS
-  --help                                                   Show manual pages
-  --path=path                                              Target path for the artifact
-  --skipTests                                              Skip test file generation
-  --type=(component|hook|context|page|service|util|slice)  Type of artifact to generate
-```
-
-_See code: [src/commands/react/generate.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/react/generate.ts)_
-
-## `sl react:info`
-
-Display React project information and statistics
-
-```
-USAGE
-  $ sl react:info
-
-OPTIONS
-  --detailed  Show detailed project statistics
-  --help      Show manual pages
-```
-
-_See code: [src/commands/react/info.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/react/info.ts)_
+_See code: [src/commands/microservice.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.2.0/src/commands/microservice.ts)_
 
 ## `sl react:scaffold [NAME]`
 
@@ -341,7 +285,7 @@ OPTIONS
   --templateVersion=templateVersion  Template branch or version
 ```
 
-_See code: [src/commands/react/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/react/scaffold.ts)_
+_See code: [src/commands/react/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.2.0/src/commands/react/scaffold.ts)_
 
 ## `sl scaffold [NAME]`
 
@@ -365,7 +309,7 @@ OPTIONS
   --owner=owner              owner of the repo
 ```
 
-_See code: [src/commands/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.1.0/src/commands/scaffold.ts)_
+_See code: [src/commands/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.2.0/src/commands/scaffold.ts)_
 
 ## `sl update`
 
@@ -379,7 +323,7 @@ OPTIONS
   --help  show manual pages
 ```
 
-_See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.0.0/src/commands/update.ts)_
+_See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.2.0/src/commands/update.ts)_
 <!-- commandsstop -->
 
 ---

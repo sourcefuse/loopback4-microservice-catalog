@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.0.3 (2025-12-23)</small>
+
+* fix(cli): vulnerability fix for all services (#2383) ([6e025fd](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6e025fd)), closes [#2383](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2383) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382) [#2382](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2382)
+
+
+
+
+
 ## <small>4.0.2 (2025-10-14)</small>
 
 **Note:** Version bump only for package @sourceloop/nestjs-auth-ms-example
