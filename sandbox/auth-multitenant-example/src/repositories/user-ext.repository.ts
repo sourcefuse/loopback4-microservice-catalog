@@ -129,7 +129,7 @@ export class UserExtRepository extends DefaultSoftCrudRepository<
       }
       await this.credentials(user.id).create(creds, options);
     } catch (err) {
-      super.deleteByIdHard(user.id);
+      void super.deleteByIdHard(user.id);
       throw new HttpErrors.UnprocessableEntity(
         `Error while hashing password ${err.message}`,
       );
