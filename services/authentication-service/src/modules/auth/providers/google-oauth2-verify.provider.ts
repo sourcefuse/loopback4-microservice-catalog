@@ -65,11 +65,7 @@ export class GoogleOauth2VerifyProvider implements Provider<VerifyFunction.Googl
           userId: user.id as string,
         },
       });
-      if (
-        !creds ||
-        creds.authProvider !== 'google' ||
-        creds.authId !== profile.id
-      ) {
+      if (creds?.authProvider !== 'google' || creds?.authId !== profile.id) {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
       }
 

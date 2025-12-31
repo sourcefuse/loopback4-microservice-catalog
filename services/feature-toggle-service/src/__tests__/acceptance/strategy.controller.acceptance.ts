@@ -9,7 +9,7 @@ import * as jwt from 'jsonwebtoken';
 import {setupApplication} from '../fixtures/test-helper';
 import {StrategyKey} from '../../enums';
 import {Strategy} from '../../models';
-
+process.env.JWT_SECRET = 'kdskssdkdfs';
 describe('Strategy Contrtoller', () => {
   let app: TestingApplication;
   let client: Client;
@@ -30,7 +30,7 @@ describe('Strategy Contrtoller', () => {
   };
   const basePath = '/strategies';
 
-  const token = jwt.sign(testUser, 'kdskssdkdfs', {
+  const token = jwt.sign(testUser, process.env.JWT_SECRET ?? 'default_secret', {
     expiresIn: 180000,
     issuer: 'sf',
   });

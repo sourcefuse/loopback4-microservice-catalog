@@ -60,7 +60,7 @@ export class AzureAdVerifyProvider implements Provider<VerifyFunction.AzureADAut
           userId: user.id as string,
         },
       });
-      if (!creds || creds.authProvider !== 'azure') {
+      if (creds?.authProvider !== 'azure') {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
       }
 

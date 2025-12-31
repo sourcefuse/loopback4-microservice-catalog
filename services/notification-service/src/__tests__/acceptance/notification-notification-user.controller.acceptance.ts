@@ -7,7 +7,7 @@ import * as jwt from 'jsonwebtoken';
 import {NotificationRepository} from '../../repositories';
 import {NotificationApplication} from '../application';
 import {setUpApplication} from './helper';
-
+process.env.JWT_SECRET = 'kdskssdkdfs';
 describe('Notification Notification User Controller', () => {
   let app: NotificationApplication;
   let client: Client;
@@ -26,7 +26,7 @@ describe('Notification Notification User Controller', () => {
     ],
   };
 
-  const token = jwt.sign(testUser, 'kdskssdkdfs', {
+  const token = jwt.sign(testUser, process.env.JWT_SECRET ?? 'default_secret', {
     expiresIn: 180000,
     issuer: 'sf',
   });

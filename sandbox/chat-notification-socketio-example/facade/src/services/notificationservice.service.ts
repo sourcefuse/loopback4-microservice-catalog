@@ -18,9 +18,7 @@ export interface Notificationservice {
   ): Promise<SocketNotification>;
 }
 
-export class NotificationserviceProvider
-  implements Provider<Notificationservice>
-{
+export class NotificationserviceProvider implements Provider<Notificationservice> {
   constructor(
     // notification must match the name property in the datasource json file
     @inject('datasources.notification')

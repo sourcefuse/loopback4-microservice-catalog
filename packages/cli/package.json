@@ -70,7 +70,7 @@
     "@types/crypto-random-string": "^1.0.0",
     "@types/dotenv": "^6.1.1",
     "@types/lodash": "^4.14.198",
-    "@types/moment": "^2.11.29",
+    "@types/moment": "2.11.29",
     "@types/node-fetch": "^2.6.4",
     "@types/tar": "^6.1.6",
     "@types/yeoman-environment": "^2.10.8",

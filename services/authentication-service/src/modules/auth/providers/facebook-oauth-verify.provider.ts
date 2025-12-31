@@ -64,11 +64,7 @@ export class FacebookOauth2VerifyProvider implements Provider<VerifyFunction.Fac
           userId: user.id as string,
         },
       });
-      if (
-        !creds ||
-        creds.authProvider !== 'facebook' ||
-        creds.authId !== profile.id
-      ) {
+      if (creds?.authProvider !== 'facebook' || creds?.authId !== profile.id) {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
       }
 

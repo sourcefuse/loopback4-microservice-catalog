@@ -57,7 +57,7 @@
     "@loopback/rest": "^15.0.4",
     "@loopback/rest-explorer": "^8.0.4",
     "@loopback/service-proxy": "^8.0.3",
-    "@sourceloop/core": "^20.0.1",
+    "@sourceloop/core": "^20.0.0",
     "ajv": "^8.11.0",
     "ajv-errors": "^3.0.0",
     "dotenv": "^16.0.3",
@@ -78,11 +78,14 @@
     "@types/node": "^16.18.119",
     "eslint": "^8.57.0",
     "source-map-support": "^0.5.21",
-    "typescript": "~5.2.2"
+    "typescript": "^5.2.2"
   },
   "overrides": {
     "check-code-coverage": {
       "lodash": "^4.17.21"
+    },
+    "postman-request": {
+      "qs": "^6.14.1"
     }
   }
 }

@@ -7,7 +7,7 @@ import * as jwt from 'jsonwebtoken';
 import {CalendarRepository, SubscriptionRepository} from '../../repositories';
 import {SchedulerApplication} from '../application';
 import {setUpApplication} from './helper';
-
+process.env.JWT_SECRET = 'kdskssdkdfs';
 describe('Calendar Event Controller', () => {
   let app: SchedulerApplication;
   let client: Client;
@@ -33,7 +33,7 @@ describe('Calendar Event Controller', () => {
     ],
   };
 
-  const token = jwt.sign(testUser, 'kdskssdkdfs', {
+  const token = jwt.sign(testUser, process.env.JWT_SECRET ?? 'default_secret', {
     expiresIn: 180000,
     issuer: 'sf',
   });

@@ -38,11 +38,7 @@ export class SamlVerifyProvider implements Provider<VerifyFunction.SamlFn> {
           authProvider: 'saml',
         },
       });
-      if (
-        !creds ||
-        creds.authProvider !== 'saml' ||
-        creds.authId !== profile.ID
-      ) {
+      if (creds?.authProvider !== 'saml' || creds?.authId !== profile.ID) {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
       }
 

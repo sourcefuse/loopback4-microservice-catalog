@@ -7,7 +7,7 @@ import * as jwt from 'jsonwebtoken';
 import {NotificationAccessRepository} from '../../repositories';
 import {NotificationApplication} from '../application';
 import {setUpApplication} from './helper';
-
+process.env.JWT_SECRET = 'kdskssdkdfs';
 describe('Pubnub Notification Controller', () => {
   let app: NotificationApplication;
   let client: Client;
@@ -22,7 +22,7 @@ describe('Pubnub Notification Controller', () => {
     permissions: ['CanGetNotificationAccess'],
   };
 
-  const token = jwt.sign(testUser, 'kdskssdkdfs', {
+  const token = jwt.sign(testUser, process.env.JWT_SECRET ?? 'default_secret', {
     expiresIn: 180000,
     issuer: 'sf',
   });

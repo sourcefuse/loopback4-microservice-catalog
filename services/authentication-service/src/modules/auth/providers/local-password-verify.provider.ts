@@ -38,7 +38,7 @@ export class LocalPasswordVerifyProvider implements Provider<VerifyFunction.Loca
         console.error('Password verification failed:', err);
         // sonarignore:end
         const otp: Otp = await this.otpRepository.get(username);
-        if (!otp || otp.otp !== password) {
+        if (otp?.otp !== password) {
           throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
         }
         const user = await this.userRepository.findOne({

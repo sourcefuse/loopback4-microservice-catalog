@@ -66,11 +66,7 @@ export class InstagramOauth2VerifyProvider implements Provider<VerifyFunction.In
           userId: user.id as string,
         },
       });
-      if (
-        !creds ||
-        creds.authProvider !== 'instagram' ||
-        creds.authId !== profile.id
-      ) {
+      if (creds?.authProvider !== 'instagram' || creds?.authId !== profile.id) {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
       }
 
