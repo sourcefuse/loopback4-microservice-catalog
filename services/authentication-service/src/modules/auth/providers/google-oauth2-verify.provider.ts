@@ -67,11 +67,7 @@ export class GoogleOauth2VerifyProvider
           userId: user.id as string,
         },
       });
-      if (
-        !creds ||
-        creds.authProvider !== 'google' ||
-        creds.authId !== profile.id
-      ) {
+      if (creds?.authProvider !== 'google' || creds?.authId !== profile.id) {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
       }
 

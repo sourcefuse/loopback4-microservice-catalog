@@ -60,11 +60,7 @@ export class Auth0VerifyProvider implements Provider<VerifyFunction.Auth0Fn> {
           userId: user.id as string,
         },
       });
-      if (
-        !creds ||
-        creds.authProvider !== 'auth0' ||
-        creds.authId !== profile.id
-      ) {
+      if (creds?.authProvider !== 'auth0' || creds?.authId !== profile.id) {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
       }
 

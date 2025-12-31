@@ -469,8 +469,7 @@ export abstract class SearchQueryBuilder<T extends Model> {
   }
 
   toArrayPropTypes<R>(prop: PropertyDefinition, val: R[] | R) {
-    const isArrayDataType =
-      prop.postgresql && prop.postgresql.dataType === 'varchar[]';
+    const isArrayDataType = prop.postgresql?.dataType === 'varchar[]';
     if (Array.isArray(val)) {
       if (isArrayDataType) {
         return val;

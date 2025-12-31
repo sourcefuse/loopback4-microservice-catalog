@@ -186,7 +186,7 @@ export class UserRepository extends DefaultUserModifyCrudRepository<
     if (oldPassword) {
       // This method considers old password as OTP
       const otp = await (await this.getOtpRepository()).get(username);
-      if (!otp || otp.otp !== oldPassword) {
+      if (otp?.otp !== oldPassword) {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.WrongPassword);
       }
     }

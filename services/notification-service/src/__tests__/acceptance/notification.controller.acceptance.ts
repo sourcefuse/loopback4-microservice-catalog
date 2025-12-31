@@ -11,6 +11,7 @@ import {
 } from '../../repositories';
 import {NotificationApplication} from '../application';
 import {setUpApplication} from './helper';
+process.env.JWT_SECRET = 'kdskssdkdfs';
 describe('Notification Controller', () => {
   let app: NotificationApplication;
   let client: Client;
@@ -37,7 +38,7 @@ describe('Notification Controller', () => {
     ],
   };
 
-  const token = jwt.sign(testUser, 'kdskssdkdfs', {
+  const token = jwt.sign(testUser, process.env.JWT_SECRET ?? 'default_secret', {
     expiresIn: 180000,
     issuer: 'sf',
   });

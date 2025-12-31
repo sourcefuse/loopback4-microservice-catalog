@@ -51,7 +51,7 @@ export class ResourceOwnerVerifyProvider
     } catch {
       const otp = await this.otpRepository.get(username);
 
-      if (!otp || otp.otp !== password) {
+      if (otp?.otp !== password) {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
       }
 

@@ -103,10 +103,7 @@ async function main() {
       path.resolve(pkg.location, 'package.json')
     );
 
-    if (
-      packageJson.typedoc === undefined ||
-      packageJson.typedoc.config === undefined
-    ) {
+    if (!packageJson.typedoc?.config) {
       continue;
     }
 

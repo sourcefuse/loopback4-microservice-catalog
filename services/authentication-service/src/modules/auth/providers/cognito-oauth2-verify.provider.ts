@@ -67,9 +67,8 @@ export class CognitoOauth2VerifyProvider
         },
       });
       if (
-        !creds ||
-        creds.authProvider !== 'aws-cognito' ||
-        creds.authId !== profile.sub
+        creds?.authProvider !== 'aws-cognito' ||
+        creds?.authId !== profile.sub
       ) {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
       }

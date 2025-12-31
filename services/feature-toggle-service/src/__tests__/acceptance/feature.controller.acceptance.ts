@@ -9,7 +9,7 @@ import {FeatureRepository} from '../../repositories';
 import {TestingApplication} from '../fixtures/application';
 import {setupApplication} from '../fixtures/test-helper';
 import {Test} from '../fixtures/test.enum';
-
+process.env.JWT_SECRET = 'kdskssdkdfs';
 describe('Feature Contrtoller', () => {
   let app: TestingApplication;
   let client: Client;
@@ -31,7 +31,7 @@ describe('Feature Contrtoller', () => {
   };
   const basePath = '/features';
 
-  const token = jwt.sign(testUser, 'kdskssdkdfs', {
+  const token = jwt.sign(testUser, process.env.JWT_SECRET ?? 'default_secret', {
     expiresIn: 180000,
     issuer: 'sf',
   });

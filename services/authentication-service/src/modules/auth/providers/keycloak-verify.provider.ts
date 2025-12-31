@@ -67,10 +67,9 @@ export class KeycloakVerifyProvider
         },
       });
       if (
-        !creds ||
-        creds.authProvider !== 'keycloak' ||
-        (creds.authId !== profile.keycloakId &&
-          creds.authId !== profile.username)
+        creds?.authProvider !== 'keycloak' ||
+        (creds?.authId !== profile.keycloakId &&
+          creds?.authId !== profile.username)
       ) {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
       }

@@ -11,6 +11,7 @@ import {setUpApplication} from './helper';
 
 const currentDate = new Date();
 const nextDate = new Date();
+process.env.JWT_SECRET = 'kdskssdkdfs';
 nextDate.setDate(nextDate.getDate() + 1);
 describe('User Notification Settings Controller', () => {
   let app: NotificationApplication;
@@ -30,7 +31,7 @@ describe('User Notification Settings Controller', () => {
     ],
   };
 
-  const token = jwt.sign(testUser, 'kdskssdkdfs', {
+  const token = jwt.sign(testUser, process.env.JWT_SECRET ?? 'default_secret', {
     expiresIn: 180000,
     issuer: 'sf',
   });

@@ -1,5 +1,6 @@
 import * as jwt from 'jsonwebtoken';
 import {PermissionKey} from '../../enums/permission-key.enum';
+process.env.JWT_SECRET = 'kdskssdkdfs';
 //User Creds
 const User = {
   username: 'testuser@example.com',
@@ -23,7 +24,11 @@ export const testUserPayload = {
     PermissionKey.DeleteMessage,
   ],
 };
-export const token = jwt.sign(testUserPayload, 'kdskssdkdfs', {
-  expiresIn: 180000,
-  issuer: 'sf',
-});
+export const token = jwt.sign(
+  testUserPayload,
+  process.env.JWT_SECRET ?? 'default_secret',
+  {
+    expiresIn: 180000,
+    issuer: 'sf',
+  },
+);

@@ -7,7 +7,7 @@ import * as jwt from 'jsonwebtoken';
 import {SettingsRepository} from '../../repositories';
 import {SchedulerApplication} from '../application';
 import {setUpApplication} from './helper';
-
+process.env.JWT_SECRET = 'kdskssdkdfs';
 describe('Settings Controller', () => {
   let app: SchedulerApplication;
   let client: Client;
@@ -25,7 +25,7 @@ describe('Settings Controller', () => {
     ],
   };
 
-  const token = jwt.sign(testUser, 'kdskssdkdfs', {
+  const token = jwt.sign(testUser, process.env.JWT_SECRET ?? 'default_secret', {
     expiresIn: 180000,
     issuer: 'sf',
   });

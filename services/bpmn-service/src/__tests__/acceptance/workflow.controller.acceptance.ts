@@ -13,7 +13,7 @@ import {firstTestBpmn, firstTestBpmnInput} from '../const';
 import {MockEngine} from '../mock-engine';
 import {MOCK_BPMN_ENGINE_KEY} from '../types';
 import {setUpApplication} from './helper';
-
+process.env.JWT_SECRET = 'kdskssdkdfs';
 describe('Workflow Controller', () => {
   let app: WorkflowServiceApplication;
   let client: Client;
@@ -35,7 +35,7 @@ describe('Workflow Controller', () => {
     ],
   };
 
-  const token = jwt.sign(testUser, 'kdskssdkdfs', {
+  const token = jwt.sign(testUser, process.env.JWT_SECRET ?? 'default_secret', {
     expiresIn: 180000,
     issuer: 'sf',
   });

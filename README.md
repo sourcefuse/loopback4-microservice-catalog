@@ -114,6 +114,27 @@ ARC API utilizes many LoopBack extensions in the micro-services provided, which 
     <td><a href="https://npmjs.com/package/loopback4-notifications">NPM</a></td>
   </tr>
   <tr>
+  <tr>
+    <td>loopback4-mcp</td>
+    <td><a href="https://github.com/sourcefuse/loopback4-mcp">GitHub</a></td>
+    <td><a href="https://www.npmjs.com/package/loopback4-mcp">NPM</a></td>
+  </tr>
+  <tr>
+    <td>loopback4-message-bus-connector</td>
+    <td><a href="https://github.com/sourcefuse/loopback4-message-bus-connector">GitHub</a></td>
+    <td><a href="https://www.npmjs.com/package/loopback4-message-bus-connector">NPM</a></td>
+  </tr>
+  <tr>
+    <td>lb4-llm-chat-component</td>
+    <td><a href="https://github.com/sourcefuse/loopback4-llm-chat-extension">GitHub</a></td>
+    <td><a href="https://www.npmjs.com/package/lb4-llm-chat-component">NPM</a></td>
+  </tr>
+  <tr>
+    <td>loopback4-billing</td>
+    <td><a href="https://github.com/sourcefuse/loopback4-billing">GitHub</a></td>
+    <td><a href="https://www.npmjs.com/package/loopback4-billing">NPM</a></td>
+  </tr>
+  <tr>
     <td>@sourceloop/audit-log</td>
     <td><a href="https://github.com/sourcefuse/loopback4-audit-log">GitHub</a></td>
     <td><a href="https://npmjs.com/package/@sourceloop/audit-log">NPM</a></td>
