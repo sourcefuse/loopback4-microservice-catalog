@@ -9,9 +9,7 @@ import {WorkflowServiceBindings} from '../../keys';
 import {MOCK_BPMN_ENGINE_KEY} from '../types';
 import {MockEngine} from '../mock-engine';
 
-export class WorkerMockImplementationProvider
-  implements Provider<WorkerImplementationFn>
-{
+export class WorkerMockImplementationProvider implements Provider<WorkerImplementationFn> {
   constructor(
     @inject(WorkflowServiceBindings.Config)
     config: IWorkflowServiceConfig,

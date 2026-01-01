@@ -20,9 +20,7 @@ import {SignUpBindings, VerifyBindings} from '../../../providers/keys';
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
 import {AuthUser} from '../models/auth-user.model';
 
-export class CognitoOauth2VerifyProvider
-  implements Provider<VerifyFunction.CognitoAuthFn>
-{
+export class CognitoOauth2VerifyProvider implements Provider<VerifyFunction.CognitoAuthFn> {
   constructor(
     @repository(UserRepository)
     public userRepository: UserRepository,

@@ -9,9 +9,7 @@ import * as jwt from 'jsonwebtoken';
 import {VerifyFunction} from 'loopback4-authentication';
 import * as jose from 'node-jose';
 import {IAuthUserWithPermissions} from '../keys';
-export class BearerTokenVerifyProvider
-  implements Provider<VerifyFunction.BearerFn>
-{
+export class BearerTokenVerifyProvider implements Provider<VerifyFunction.BearerFn> {
   constructor(
     @repository(JwtKeysRepository)
     public jwtKeysRepo: JwtKeysRepository,

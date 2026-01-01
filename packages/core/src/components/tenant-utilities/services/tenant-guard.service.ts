@@ -21,9 +21,10 @@ import {
 } from '../types';
 
 @injectable({scope: BindingScope.TRANSIENT})
-export class TenantGuardService<T extends EntityWithTenantId, ID>
-  implements ITenantGuard<T, ID>
-{
+export class TenantGuardService<
+  T extends EntityWithTenantId,
+  ID,
+> implements ITenantGuard<T, ID> {
   constructor(
     @inject.getter(AuthenticationBindings.CURRENT_USER)
     public readonly getCurrentUser: Getter<UserInToken>,

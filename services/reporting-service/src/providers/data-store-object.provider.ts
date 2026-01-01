@@ -7,9 +7,7 @@ import * as AWS from 'aws-sdk';
 export type DataStoreObjectInterface = Sequelize | AWS.S3;
 /* The `DataStoreObjectProvider` class is a TypeScript class that provides a data store object based on
 the configuration provided. */
-export class DataStoreObjectProvider
-  implements Provider<DataStoreObjectInterface>
-{
+export class DataStoreObjectProvider implements Provider<DataStoreObjectInterface> {
   constructor(
     @inject(ReportingServiceComponentBindings.DATA_STORE_CONFIGURATION)
     private readonly config: DataStoreConfiguration,

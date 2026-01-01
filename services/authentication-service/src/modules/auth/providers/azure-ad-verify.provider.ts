@@ -16,9 +16,7 @@ import {
 import {SignUpBindings, VerifyBindings} from '../../../providers/keys';
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
 import {AuthUser} from '../models/auth-user.model';
-export class AzureAdVerifyProvider
-  implements Provider<VerifyFunction.AzureADAuthFn>
-{
+export class AzureAdVerifyProvider implements Provider<VerifyFunction.AzureADAuthFn> {
   constructor(
     @repository(UserRepository)
     public userRepository: UserRepository,

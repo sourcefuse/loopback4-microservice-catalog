@@ -34,9 +34,10 @@ import {
 @extensionPoint(ServiceBuilderExtensionPoint.key, {
   scope: BindingScope.REQUEST,
 })
-export class RestServiceModifier<T extends Entity, S extends Entity>
-  implements Provider<CrudRestServiceModifier<T>>
-{
+export class RestServiceModifier<
+  T extends Entity,
+  S extends Entity,
+> implements Provider<CrudRestServiceModifier<T>> {
   private readonly token: string;
   private resolvers: IRestResolver<T, S>[];
   constructor(

@@ -8,9 +8,7 @@ import {ExecutionInputValidator} from '../types';
 
 import Ajv from 'ajv';
 
-export class ExecutionInputValidationProvider
-  implements Provider<ExecutionInputValidator>
-{
+export class ExecutionInputValidationProvider implements Provider<ExecutionInputValidator> {
   /**
    * The function `value` returns an asynchronous input validator that uses Ajv to validate input
    * against a schema and throws an error if validation fails.

@@ -12,9 +12,7 @@ import {ILogger, LOGGER} from '@sourceloop/core';
 import {MockEngine} from '../camunda/mock-camunda';
 import {MOCK_BPMN_ENGINE_KEY} from '../types';
 
-export class WorkerMockImplementationProvider
-  implements Provider<WorkerImplementationFn>
-{
+export class WorkerMockImplementationProvider implements Provider<WorkerImplementationFn> {
   constructor(
     @inject(WorkflowServiceBindings.Config)
     config: IWorkflowServiceConfig,

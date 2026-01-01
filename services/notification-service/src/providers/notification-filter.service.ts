@@ -7,9 +7,7 @@ import {Notification} from '../models';
 import {INotificationFilterFunc} from '../types';
 
 @bind({scope: BindingScope.TRANSIENT})
-export class NotificationFilterProvider
-  implements Provider<INotificationFilterFunc>
-{
+export class NotificationFilterProvider implements Provider<INotificationFilterFunc> {
   value() {
     return async (notif: Notification) => notif;
   }

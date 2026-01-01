@@ -21,9 +21,7 @@ import {
 import {ILogger, LOGGER} from '../../logger-extension';
 import {IAuthUserWithPermissions} from '../keys';
 
-export class FacadesBearerAsymmetricTokenVerifyProvider
-  implements Provider<VerifyFunction.BearerFn>
-{
+export class FacadesBearerAsymmetricTokenVerifyProvider implements Provider<VerifyFunction.BearerFn> {
   constructor(
     @repository(RevokedTokenRepository)
     public revokedTokenRepository: RevokedTokenRepository,

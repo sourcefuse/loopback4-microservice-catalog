@@ -8,9 +8,7 @@ import {DataSourceConfigProviderFn} from '../types';
  * Can be overriden by implementing a provider for DataSourceConfigProviderFn
  * and binding it to DynamicDataSourceBinding.DATA_SOURCE_CONFIG_PROVIDER key
  */
-export class DataSourceConfigProvider
-  implements Provider<DataSourceConfigProviderFn>
-{
+export class DataSourceConfigProvider implements Provider<DataSourceConfigProviderFn> {
   constructor(
     @service(AwsSsmHelperService)
     public awsSsmHelper: AwsSsmHelperService,

@@ -21,9 +21,7 @@ import {HttpAuthenticationVerifier} from '../types';
 import {STATUS_CODE} from '../../../enums';
 
 @globalInterceptor('auth', {tags: {name: 'AuthenticateSwaggerMiddleware'}})
-export class AuthenticateSwaggerMiddlewareInterceptor
-  implements Provider<Middleware>
-{
+export class AuthenticateSwaggerMiddlewareInterceptor implements Provider<Middleware> {
   constructor(
     @inject(SwaggerAuthenticationBindings.VERIFIER)
     private readonly verifier: HttpAuthenticationVerifier,

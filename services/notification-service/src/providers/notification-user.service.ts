@@ -7,9 +7,7 @@ import {Notification, NotificationUser} from '../models';
 import {INotificationUserManager} from '../types';
 
 @bind({scope: BindingScope.TRANSIENT})
-export class NotificationUserProvider
-  implements Provider<INotificationUserManager>
-{
+export class NotificationUserProvider implements Provider<INotificationUserManager> {
   value() {
     return {
       getNotifUsers: async (notif: Notification) => {

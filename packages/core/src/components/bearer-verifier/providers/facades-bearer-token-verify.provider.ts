@@ -18,9 +18,7 @@ import {RevokedTokenRepository} from '../../../repositories';
 import {ILogger, LOGGER} from '../../logger-extension';
 import {IAuthUserWithPermissions} from '../keys';
 
-export class FacadesBearerTokenVerifyProvider
-  implements Provider<VerifyFunction.BearerFn>
-{
+export class FacadesBearerTokenVerifyProvider implements Provider<VerifyFunction.BearerFn> {
   constructor(
     @repository(RevokedTokenRepository)
     public revokedTokenRepository: RevokedTokenRepository,

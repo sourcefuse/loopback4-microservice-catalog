@@ -19,9 +19,7 @@ import {
   UserRepository,
   UserTenantRepository,
 } from '../../../repositories';
-export class SecureResourceOwnerVerifyProvider
-  implements Provider<VerifyFunction.SecureResourceOwnerPasswordFn>
-{
+export class SecureResourceOwnerVerifyProvider implements Provider<VerifyFunction.SecureResourceOwnerPasswordFn> {
   constructor(
     @repository(UserRepository)
     public userRepository: UserRepository,

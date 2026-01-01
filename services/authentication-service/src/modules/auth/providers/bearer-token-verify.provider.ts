@@ -13,9 +13,7 @@ import {AuthCodeBindings} from '../../../providers/keys';
 import {RevokedTokenRepository} from '../../../repositories';
 import {AuthUser} from '../models/auth-user.model';
 
-export class BearerTokenVerifyProvider
-  implements Provider<VerifyFunction.BearerFn>
-{
+export class BearerTokenVerifyProvider implements Provider<VerifyFunction.BearerFn> {
   constructor(
     @repository(RevokedTokenRepository)
     public revokedTokenRepository: RevokedTokenRepository,

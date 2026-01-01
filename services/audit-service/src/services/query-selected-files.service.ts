@@ -14,9 +14,7 @@ import {AuditLog} from '../models';
 import {QuerySelectedFilesFn} from '../types';
 
 @injectable({scope: BindingScope.TRANSIENT})
-export class QuerySelectedFilesProvider
-  implements Provider<QuerySelectedFilesFn>
-{
+export class QuerySelectedFilesProvider implements Provider<QuerySelectedFilesFn> {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: AuditServiceApplication,

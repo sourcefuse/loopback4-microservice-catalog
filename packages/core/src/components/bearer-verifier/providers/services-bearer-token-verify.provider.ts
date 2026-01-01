@@ -15,9 +15,7 @@ import moment from 'moment-timezone';
 import {ILogger, LOGGER} from '../../logger-extension';
 import {IAuthUserWithPermissions} from '../keys';
 
-export class ServicesBearerTokenVerifyProvider
-  implements Provider<VerifyFunction.BearerFn>
-{
+export class ServicesBearerTokenVerifyProvider implements Provider<VerifyFunction.BearerFn> {
   constructor(
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @inject(AuthenticationBindings.USER_MODEL, {optional: true})

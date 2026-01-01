@@ -7,9 +7,7 @@ import {verify} from 'jsonwebtoken';
 import {VerifyFunction} from 'loopback4-authentication';
 import {IAuthUserWithPermissions} from './keys';
 
-export class BearerTokenVerifyProvider
-  implements Provider<VerifyFunction.BearerFn>
-{
+export class BearerTokenVerifyProvider implements Provider<VerifyFunction.BearerFn> {
   value(): VerifyFunction.BearerFn {
     return async (token: string) => {
       /*

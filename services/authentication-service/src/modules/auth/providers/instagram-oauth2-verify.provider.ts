@@ -22,9 +22,7 @@ import {SignUpBindings, VerifyBindings} from '../../../providers/keys';
 
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
 import {AuthUser} from '../models/auth-user.model';
-export class InstagramOauth2VerifyProvider
-  implements Provider<VerifyFunction.InstagramAuthFn>
-{
+export class InstagramOauth2VerifyProvider implements Provider<VerifyFunction.InstagramAuthFn> {
   constructor(
     @repository(UserRepository)
     public userRepository: UserRepository,

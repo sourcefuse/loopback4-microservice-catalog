@@ -12,9 +12,9 @@ import {SearchFunctionType, SearchServiceConfig} from '../types';
 import {ModelProviderFn} from './model.provider';
 
 @injectable({scope: BindingScope.SINGLETON})
-export class SearchProvider<T extends Model>
-  implements Provider<SearchFunctionType<T>>
-{
+export class SearchProvider<T extends Model> implements Provider<
+  SearchFunctionType<T>
+> {
   constructor(
     @inject(SearchServiceBindings.Config)
     private readonly config: SearchServiceConfig<T>,

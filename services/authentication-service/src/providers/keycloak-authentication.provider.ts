@@ -4,9 +4,7 @@ import {encode} from 'base-64';
 import fetch from 'node-fetch';
 import {AuthenticationProviderFn} from '..';
 
-export class KeycloakAuthenticationProvider
-  implements Provider<AuthenticationProviderFn>
-{
+export class KeycloakAuthenticationProvider implements Provider<AuthenticationProviderFn> {
   constructor(@inject(LOGGER.LOGGER_INJECT) public logger: ILogger) {}
   value(): AuthenticationProviderFn {
     return async (accessToken: string) => this.isAuthenticated(accessToken);

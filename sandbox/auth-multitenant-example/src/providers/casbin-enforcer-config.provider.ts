@@ -16,9 +16,7 @@ import {
 
 import {UserLevelResourceRepository} from '../repositories';
 
-export class CasbinEnforcerConfigProvider
-  implements Provider<CasbinEnforcerConfigGetterFn>
-{
+export class CasbinEnforcerConfigProvider implements Provider<CasbinEnforcerConfigGetterFn> {
   constructor(
     @inject.getter(AuthorizationBindings.METADATA)
     private readonly getCasbinMetadata: Getter<AuthorizationMetadata>,

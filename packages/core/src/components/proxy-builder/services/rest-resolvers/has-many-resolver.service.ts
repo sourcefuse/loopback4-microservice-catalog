@@ -24,9 +24,10 @@ import {
 } from '../types';
 
 @asRestResolver()
-export class HasManyRestResolver<T extends Entity, S extends Entity>
-  implements IRestResolver<T, S>
-{
+export class HasManyRestResolver<
+  T extends Entity,
+  S extends Entity,
+> implements IRestResolver<T, S> {
   constructor(
     @inject.context()
     private readonly context: Context,

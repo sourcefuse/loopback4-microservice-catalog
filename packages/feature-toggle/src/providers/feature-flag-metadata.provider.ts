@@ -12,9 +12,9 @@ import {
 import {FEATURE_FLAG_METADATA_ACCESSOR} from '../keys';
 import {FeatureFlagMetadata} from '../types';
 
-export class FeatureFlagMetadataProvider
-  implements Provider<FeatureFlagMetadata | undefined>
-{
+export class FeatureFlagMetadataProvider implements Provider<
+  FeatureFlagMetadata | undefined
+> {
   constructor(
     @inject(CoreBindings.CONTROLLER_CLASS, {optional: true})
     private readonly controllerClass: Constructor<{}>,

@@ -21,9 +21,7 @@ import {
 import {SignUpBindings, VerifyBindings} from '../../../providers/keys';
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
 import {AuthUser} from '../models/auth-user.model';
-export class AppleOauth2VerifyProvider
-  implements Provider<VerifyFunction.AppleAuthFn>
-{
+export class AppleOauth2VerifyProvider implements Provider<VerifyFunction.AppleAuthFn> {
   constructor(
     @repository(UserRepository)
     public userRepository: UserRepository,

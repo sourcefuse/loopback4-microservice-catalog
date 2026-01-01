@@ -12,9 +12,7 @@ import {
   CasbinResourceModifierFn,
 } from 'loopback4-authorization';
 
-export class CasbinResValModifierProvider
-  implements Provider<CasbinResourceModifierFn>
-{
+export class CasbinResValModifierProvider implements Provider<CasbinResourceModifierFn> {
   constructor(
     @inject.getter(AuthorizationBindings.METADATA)
     private readonly getCasbinMetadata: Getter<AuthorizationMetadata>,

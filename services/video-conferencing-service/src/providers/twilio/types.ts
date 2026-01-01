@@ -28,8 +28,7 @@ export interface TwilioConfig {
 }
 
 export interface TwilioMeetingOptions
-  extends MeetingOptions,
-    RoomListInstanceCreateOptions {
+  extends MeetingOptions, RoomListInstanceCreateOptions {
   endToEndEncryption?: boolean;
   enableArchiving?: boolean;
   isScheduled: boolean;

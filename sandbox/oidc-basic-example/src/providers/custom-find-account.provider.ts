@@ -14,9 +14,7 @@ const claimsProfile =
 @injectable({
   scope: BindingScope.SINGLETON,
 })
-export class CustomFindAccountProvider
-  implements Provider<FindAccountProviderFn>
-{
+export class CustomFindAccountProvider implements Provider<FindAccountProviderFn> {
   constructor(
     @repository(UserRepository)
     protected userRepository: UserRepository,

@@ -9,9 +9,9 @@ import {JwtKeysRepository} from '@sourceloop/core';
 import * as jwt from 'jsonwebtoken';
 import {JWTSignerFn} from './types';
 
-export class JWTAsymmetricSignerProvider<T extends string | object | Buffer>
-  implements Provider<JWTSignerFn<T>>
-{
+export class JWTAsymmetricSignerProvider<
+  T extends string | object | Buffer,
+> implements Provider<JWTSignerFn<T>> {
   constructor(
     @repository(JwtKeysRepository)
     public jwtKeysRepo: JwtKeysRepository,

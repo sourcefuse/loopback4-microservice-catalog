@@ -22,9 +22,10 @@ import {
 } from '../types';
 
 @asRestResolver()
-export class BelongsToRestResolver<T extends Entity, S extends Entity>
-  implements IRestResolver<T, S>
-{
+export class BelongsToRestResolver<
+  T extends Entity,
+  S extends Entity,
+> implements IRestResolver<T, S> {
   type: RelationType = RelationType.belongsTo;
   constructor(
     @inject.context()

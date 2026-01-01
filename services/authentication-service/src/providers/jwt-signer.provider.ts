@@ -11,9 +11,9 @@ import {AuthServiceBindings} from '../keys';
 import {IAuthServiceConfig} from '../types';
 import {JWTSignerFn} from './types';
 
-export class JWTSignerProvider<T extends string | object | Buffer>
-  implements Provider<JWTSignerFn<T>>
-{
+export class JWTSignerProvider<
+  T extends string | object | Buffer,
+> implements Provider<JWTSignerFn<T>> {
   constructor(
     @repository(JwtKeysRepository)
     public jwtKeysRepo: JwtKeysRepository,

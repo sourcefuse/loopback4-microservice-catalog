@@ -7,9 +7,7 @@ import {repository} from '@loopback/repository';
 import {VerifyFunction} from 'loopback4-authentication';
 import {AuthSecureClientRepository} from '../../../repositories';
 
-export class SecureClientPasswordVerifyProvider
-  implements Provider<VerifyFunction.OauthClientPasswordFn>
-{
+export class SecureClientPasswordVerifyProvider implements Provider<VerifyFunction.OauthClientPasswordFn> {
   constructor(
     @repository(AuthSecureClientRepository)
     public authSecureClientRepository: AuthSecureClientRepository,
