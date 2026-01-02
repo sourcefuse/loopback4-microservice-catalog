@@ -4,6 +4,7 @@ name: Release [Manual]
 on: workflow_dispatch
 permissions:
   contents: write
+  id-token: write
 jobs:
   Release:
     runs-on: ubuntu-latest
@@ -18,6 +19,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org'
+          always-auth: false  # important for trusted publishing
       - name: Configure CI Git User
         run: |
           git config --global user.name $CONFIG_USERNAME
@@ -27,13 +30,13 @@ jobs:
           GITHUB_PAT: ${{ secrets.RELEASE_COMMIT_GH_PAT }}
           CONFIG_USERNAME: ${{ vars.RELEASE_COMMIT_USERNAME }}
           CONFIG_EMAIL: ${{ vars.RELEASE_COMMIT_EMAIL }}
-      - name: Authenticate with Registry
-        run: |
-          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
-          npm whoami
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NPM_USERNAME: ${{ vars.NPM_USERNAME }}
+      # - name: Authenticate with Registry
+      #   run: |
+      #     echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+      #     npm whoami
+      #   env:
+      #     NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      #     NPM_USERNAME: ${{ vars.NPM_USERNAME }}
 
       - name: Install Dependencies
         run: npm ci --ignore-scripts
@@ -55,6 +58,6 @@ jobs:
       - name: Publish to NPM 🚀
         # To always compare changes from registry
         # using `from-package` compares version in local package.json with registry and publish it if required.
-        run: npm publish -w @sourceloop/cli --access public
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npx lerna publish from-package --yes
+        # env:
+        #   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
