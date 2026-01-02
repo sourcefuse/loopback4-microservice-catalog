@@ -15,9 +15,7 @@ import {
   UserRepository,
   UserTenantRepository,
 } from '../../../repositories';
-export class ResourceOwnerVerifyProvider
-  implements Provider<VerifyFunction.ResourceOwnerPasswordFn>
-{
+export class ResourceOwnerVerifyProvider implements Provider<VerifyFunction.ResourceOwnerPasswordFn> {
   constructor(
     @repository(UserRepository)
     public userRepository: UserRepository,
@@ -51,7 +49,7 @@ export class ResourceOwnerVerifyProvider
     } catch {
       const otp = await this.otpRepository.get(username);
 
-      if (!otp || otp.otp !== password) {
+      if (otp?.otp !== password) {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
       }
 

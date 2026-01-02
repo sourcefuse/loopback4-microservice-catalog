@@ -6,10 +6,8 @@ import {Provider} from '@loopback/context';
 import {verify} from 'jsonwebtoken';
 import {VerifyFunction} from 'loopback4-authentication';
 import {IAuthUserWithPermissions} from './keys';
-
-export class BearerTokenVerifyProvider
-  implements Provider<VerifyFunction.BearerFn>
-{
+process.env.JWT_SECRET = 'kdskssdkdfs';
+export class BearerTokenVerifyProvider implements Provider<VerifyFunction.BearerFn> {
   value(): VerifyFunction.BearerFn {
     return async (token: string) => {
       /*
@@ -20,7 +18,7 @@ export class BearerTokenVerifyProvider
         database.
         Use global interceptor over this to apply that check on each api.
       */
-      return verify(token, 'kdskssdkdfs', {
+      return verify(token, process.env.JWT_SECRET ?? 'default_secret', {
         issuer: 'sf',
       }) as IAuthUserWithPermissions;
     };

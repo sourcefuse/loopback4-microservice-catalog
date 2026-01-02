@@ -6,9 +6,7 @@ import {Provider, service} from '@loopback/core';
 import {ForgotPasswordHandlerFn} from '../../../providers/types';
 import {TestHelperService} from '../services';
 
-export class TestForgotPasswordTokenHandlerProvider
-  implements Provider<ForgotPasswordHandlerFn>
-{
+export class TestForgotPasswordTokenHandlerProvider implements Provider<ForgotPasswordHandlerFn> {
   constructor(
     @service(TestHelperService)
     private readonly helper: TestHelperService,

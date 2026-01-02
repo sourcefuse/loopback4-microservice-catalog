@@ -20,9 +20,7 @@ import {
 } from '../../../providers/types';
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
 import {AuthUser} from '../models/auth-user.model';
-export class KeycloakVerifyProvider
-  implements Provider<VerifyFunction.KeycloakAuthFn>
-{
+export class KeycloakVerifyProvider implements Provider<VerifyFunction.KeycloakAuthFn> {
   constructor(
     @repository(UserRepository)
     public userRepository: UserRepository,
@@ -67,10 +65,9 @@ export class KeycloakVerifyProvider
         },
       });
       if (
-        !creds ||
-        creds.authProvider !== 'keycloak' ||
-        (creds.authId !== profile.keycloakId &&
-          creds.authId !== profile.username)
+        creds?.authProvider !== 'keycloak' ||
+        (creds?.authId !== profile.keycloakId &&
+          creds?.authId !== profile.username)
       ) {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
       }

@@ -13,9 +13,9 @@ import {AuthServiceBindings} from '../keys';
 import {SignupRequest} from '../models/signup-request.model';
 import {IAuthServiceConfig} from '../types';
 
-export class SignupBearerVerifyProvider
-  implements Provider<VerifyFunction.BearerFn<SignupRequest>>
-{
+export class SignupBearerVerifyProvider implements Provider<
+  VerifyFunction.BearerFn<SignupRequest>
+> {
   constructor(
     @repository(JwtKeysRepository)
     public jwtKeysRepo: JwtKeysRepository,

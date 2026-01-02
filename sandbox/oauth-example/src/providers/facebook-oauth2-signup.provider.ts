@@ -17,9 +17,7 @@ import {
   UserRepository,
 } from '../repositories';
 
-export class FacebookOauth2SignupProvider
-  implements Provider<FacebookSignUpFn>
-{
+export class FacebookOauth2SignupProvider implements Provider<FacebookSignUpFn> {
   constructor(
     @repository(RoleRepository)
     private readonly roleRepo: RoleRepository,

@@ -7,9 +7,7 @@ import {IAuthUserWithPermissions} from '../../bearer-verifier';
  * This provider gives the identifier that can be used to
  * identify which datasource config is to be used.
  */
-export class DatasourceIdentifierProvider
-  implements Provider<DatasourceIdentifierFn>
-{
+export class DatasourceIdentifierProvider implements Provider<DatasourceIdentifierFn> {
   constructor(
     @inject(AuthenticationBindings.CURRENT_USER)
     private readonly user: IAuthUserWithPermissions,

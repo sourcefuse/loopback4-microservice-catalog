@@ -5,9 +5,7 @@ import fetch from 'node-fetch';
 import {AuthenticationProviderFn} from '..';
 import {AuthRefreshTokenRequest} from '../modules/auth';
 
-export class GoogleAuthenticationProvider
-  implements Provider<AuthenticationProviderFn>
-{
+export class GoogleAuthenticationProvider implements Provider<AuthenticationProviderFn> {
   constructor(@inject(LOGGER.LOGGER_INJECT) public logger: ILogger) {}
   value(): AuthenticationProviderFn {
     return async (

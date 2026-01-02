@@ -17,9 +17,7 @@ import {IAuthUserWithPermissions} from '../components/bearer-verifier';
 import {SFCoreBindings} from '../keys';
 import {CoreConfig, TenantIdEncryptionFn} from '../types';
 @globalInterceptor()
-export class TenantContextMiddlewareInterceptorProvider
-  implements Provider<Middleware>
-{
+export class TenantContextMiddlewareInterceptorProvider implements Provider<Middleware> {
   constructor(
     @inject(AuthenticationBindings.CURRENT_USER)
     protected currentUser: IAuthUserWithPermissions,

@@ -7,9 +7,7 @@ import {AuthenticationProviderFn} from '..';
 import {AuthRefreshTokenRequest} from '../modules/auth';
 import {RefreshTokenRepository} from '../repositories';
 
-export class AzureAuthenticationProvider
-  implements Provider<AuthenticationProviderFn>
-{
+export class AzureAuthenticationProvider implements Provider<AuthenticationProviderFn> {
   constructor(
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @repository(RefreshTokenRepository)

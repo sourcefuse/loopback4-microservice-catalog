@@ -14,9 +14,7 @@ import {StrategyBindings} from '../keys';
 import {FeatureFlagFn} from '../types';
 
 @globalInterceptor()
-export class FeatureToggleActionMiddlewareInterceptor
-  implements Provider<Middleware>
-{
+export class FeatureToggleActionMiddlewareInterceptor implements Provider<Middleware> {
   constructor(
     @inject(StrategyBindings.FEATURE_FLAG_ACTION)
     protected checkFeatureFlag: FeatureFlagFn,

@@ -15,9 +15,7 @@ import {
   UserTenantRepository,
 } from '../../../repositories';
 import {AuthUser} from '../models/auth-user.model';
-export class LocalPasswordVerifyProvider
-  implements Provider<VerifyFunction.LocalPasswordFn>
-{
+export class LocalPasswordVerifyProvider implements Provider<VerifyFunction.LocalPasswordFn> {
   constructor(
     @repository(UserRepository)
     public userRepository: UserRepository,
@@ -40,7 +38,7 @@ export class LocalPasswordVerifyProvider
         console.error('Password verification failed:', err);
         // sonarignore:end
         const otp: Otp = await this.otpRepository.get(username);
-        if (!otp || otp.otp !== password) {
+        if (otp?.otp !== password) {
           throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
         }
         const user = await this.userRepository.findOne({

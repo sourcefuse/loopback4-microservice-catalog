@@ -5,9 +5,9 @@
 import {Provider} from '@loopback/core';
 import * as jwt from 'jsonwebtoken';
 import {JWTVerifierFn} from './types';
-export class JWTSymmetricVerifierProvider<T>
-  implements Provider<JWTVerifierFn<T>>
-{
+export class JWTSymmetricVerifierProvider<T> implements Provider<
+  JWTVerifierFn<T>
+> {
   value(): JWTVerifierFn<T> {
     return async (code: string, options: jwt.VerifyOptions) => {
       const secret = process.env.JWT_SECRET as string;

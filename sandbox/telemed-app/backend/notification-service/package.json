@@ -72,8 +72,8 @@
     "@loopback/rest": "^15.0.4",
     "@loopback/rest-explorer": "^8.0.4",
     "@loopback/service-proxy": "^8.0.3",
-    "@sourceloop/core": "^20.0.1",
-    "@sourceloop/notification-service": "^18.0.2",
+    "@sourceloop/core": "^20.0.0",
+    "@sourceloop/notification-service": "^18.0.1",
     "@types/aws-lambda": "^8.10.110",
     "@vendia/serverless-express": "^4.10.1",
     "dotenv": "^16.0.3",
@@ -98,9 +98,12 @@
     "nodemon": "^2.0.21",
     "nyc": "^17.1.0",
     "source-map-support": "^0.5.21",
-    "typescript": "~5.2.2"
+    "typescript": "^5.2.2"
   },
   "overrides": {
-    "axios": "^1.12.2"
+    "axios": "^1.12.2",
+    "postman-request": {
+      "qs": "^6.14.1"
+    }
   }
 }

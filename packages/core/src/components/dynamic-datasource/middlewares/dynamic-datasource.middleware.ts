@@ -13,9 +13,7 @@ import {MIddlewareGroup, MiddlewareChain} from '../../../enums';
     group: MIddlewareGroup.DYNAMIC_DATASOURCE,
   }),
 )
-export class DynamicDatasourceMiddlewareProvider
-  implements Provider<Middleware>
-{
+export class DynamicDatasourceMiddlewareProvider implements Provider<Middleware> {
   constructor(
     @inject(DynamicDatasourceBindings.DYNAMIC_DATASOURCE_ACTION)
     private readonly setupDatasource: SetupDatasourceFn,

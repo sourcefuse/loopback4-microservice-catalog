@@ -7,7 +7,7 @@ import * as jwt from 'jsonwebtoken';
 import {MessageRecipientRepository} from '../../repositories';
 import {ChatApplication} from '../application';
 import {setUpApplication} from './helper';
-
+process.env.JWT_SECRET = 'kdskssdkdfs';
 describe('Message Recipient Controller', () => {
   let app: ChatApplication;
   let client: Client;
@@ -26,7 +26,7 @@ describe('Message Recipient Controller', () => {
     ],
   };
 
-  const token = jwt.sign(testUser, 'kdskssdkdfs', {
+  const token = jwt.sign(testUser, process.env.JWT_SECRET ?? 'default_secret', {
     expiresIn: 180000,
     issuer: 'sf',
   });

@@ -2,9 +2,10 @@ import {EachMessagePayload} from 'kafkajs';
 import {IEvent, IEventAdapter} from '../../interfaces';
 import {Source} from '../../types';
 
-export class KafkaEventAdapter<T>
-  implements IEventAdapter<EachMessagePayload, IEvent>
-{
+export class KafkaEventAdapter<T> implements IEventAdapter<
+  EachMessagePayload,
+  IEvent
+> {
   adaptTo(event: EachMessagePayload): Promise<IEvent<T>> {
     const key = event.topic;
     const timestamp = Number(event.message.timestamp);

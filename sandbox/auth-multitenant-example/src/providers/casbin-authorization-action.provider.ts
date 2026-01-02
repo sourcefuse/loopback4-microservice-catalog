@@ -17,9 +17,7 @@ import {
 
 import * as casbin from 'casbin';
 
-export class CasbinAuthorizationProvider
-  implements Provider<CasbinAuthorizeFn>
-{
+export class CasbinAuthorizationProvider implements Provider<CasbinAuthorizeFn> {
   constructor(
     @inject.getter(AuthorizationBindings.METADATA)
     private readonly getCasbinMetadata: Getter<AuthorizationMetadata>,

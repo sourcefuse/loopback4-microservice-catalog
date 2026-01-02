@@ -16,9 +16,7 @@ import {
 import {INotificationSettingFilterFunc} from '../types';
 
 @injectable({scope: BindingScope.TRANSIENT})
-export class NotificationUserSettingsProvider
-  implements Provider<INotificationSettingFilterFunc>
-{
+export class NotificationUserSettingsProvider implements Provider<INotificationSettingFilterFunc> {
   constructor(
     /* Add @inject to inject parameters */
     @repository(UserNotificationSettingsRepository)

@@ -149,7 +149,8 @@ export class UserRepository extends DefaultSoftCrudRepository<
   ): Promise<User> {
     const user = await super.findOne({where: {username}});
     const creds = user && (await this.credentials(user.id).get());
-    // eslint-disable-next-line
+
+    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
     if (!user || user.deleted || !creds?.password) {
       throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
     } else if (creds.authProvider !== AuthProvider.INTERNAL) {
@@ -182,7 +183,7 @@ export class UserRepository extends DefaultSoftCrudRepository<
     if (oldPassword) {
       // This method considers old password as OTP
       const otp = await (await this.getOtpRepository()).get(username);
-      if (!otp || otp.otp !== oldPassword) {
+      if (otp?.otp !== oldPassword) {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.WrongPassword);
       }
     }
@@ -192,7 +193,7 @@ export class UserRepository extends DefaultSoftCrudRepository<
         AuthenticateErrorKeys.PasswordCannotBeChanged,
       );
     }
-    // eslint-disable-next-line
+    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
     if (!user || user.deleted || !creds?.password) {
       throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.UserDoesNotExist);
     } else if (await bcrypt.compare(newPassword, creds.password)) {

@@ -22,9 +22,10 @@ import {
 } from '../types';
 
 @asRestResolver()
-export class HasOneRestResolver<Source extends Entity, Target extends Entity>
-  implements IRestResolver<Source, Target>
-{
+export class HasOneRestResolver<
+  Source extends Entity,
+  Target extends Entity,
+> implements IRestResolver<Source, Target> {
   type: RelationType = RelationType.hasOne;
   constructor(
     @inject.context()

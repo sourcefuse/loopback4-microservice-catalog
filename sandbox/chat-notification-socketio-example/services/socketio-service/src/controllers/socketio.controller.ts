@@ -79,7 +79,7 @@ export class SocketIoController {
   @socketio.subscribe('subscribe-to-channel')
   async registerChannel(msg: string[]) {
     if (Array.isArray(msg) && msg.length > 0) {
-      for(const item of msg){
+      for (const item of msg) {
         await this.socket.join(item);
       }
     } else {

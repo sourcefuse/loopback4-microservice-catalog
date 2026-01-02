@@ -18,9 +18,7 @@ import {JwtKeysRepository} from '../../../repositories';
 import {ILogger, LOGGER} from '../../logger-extension';
 import {IAuthUserWithPermissions} from '../keys';
 
-export class ServicesBearerAsymmetricTokenVerifyProvider
-  implements Provider<VerifyFunction.BearerFn>
-{
+export class ServicesBearerAsymmetricTokenVerifyProvider implements Provider<VerifyFunction.BearerFn> {
   constructor(
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @repository(JwtKeysRepository)

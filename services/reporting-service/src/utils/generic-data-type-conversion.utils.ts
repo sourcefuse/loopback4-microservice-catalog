@@ -5,9 +5,7 @@ import {
   JSONValueType,
 } from '../interfaces';
 
-export class GenericConversionUtils
-  implements DataStoreDataTypeConversionFunctions
-{
+export class GenericConversionUtils implements DataStoreDataTypeConversionFunctions {
   convertToString(
     value: JSONValueType,
     options?: DataTypeConversionOptions,

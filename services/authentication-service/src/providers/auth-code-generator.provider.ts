@@ -19,9 +19,7 @@ import {
   MfaCheckFn,
 } from './types';
 
-export class AuthCodeGeneratorProvider
-  implements Provider<AuthCodeGeneratorFn>
-{
+export class AuthCodeGeneratorProvider implements Provider<AuthCodeGeneratorFn> {
   constructor(
     @inject('services.otpService')
     private readonly otpService: OtpService,

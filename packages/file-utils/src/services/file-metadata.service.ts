@@ -10,9 +10,9 @@ import {FileUtilBindings} from '../keys';
 import {IFileRequestMetadata} from '../types';
 
 @injectable({scope: BindingScope.TRANSIENT})
-export class FileMetadataProvider
-  implements Provider<IFileRequestMetadata | undefined>
-{
+export class FileMetadataProvider implements Provider<
+  IFileRequestMetadata | undefined
+> {
   constructor(
     @inject(CoreBindings.CONTROLLER_CLASS, {optional: true})
     private readonly controllerClass: Constructor<{}>,

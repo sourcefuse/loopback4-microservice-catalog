@@ -16,9 +16,7 @@ import {
 import {SignUpBindings, VerifyBindings} from '../../../providers/keys';
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
 import {AuthUser} from '../models/auth-user.model';
-export class AzureAdVerifyProvider
-  implements Provider<VerifyFunction.AzureADAuthFn>
-{
+export class AzureAdVerifyProvider implements Provider<VerifyFunction.AzureADAuthFn> {
   constructor(
     @repository(UserRepository)
     public userRepository: UserRepository,
@@ -62,7 +60,7 @@ export class AzureAdVerifyProvider
           userId: user.id as string,
         },
       });
-      if (!creds || creds.authProvider !== 'azure') {
+      if (creds?.authProvider !== 'azure') {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
       }
 

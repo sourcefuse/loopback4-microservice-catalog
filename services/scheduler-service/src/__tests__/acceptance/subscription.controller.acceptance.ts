@@ -8,7 +8,7 @@ import {Subscription} from '../../models';
 import {SubscriptionRepository} from '../../repositories';
 import {SchedulerApplication} from '../application';
 import {setUpApplication} from './helper';
-
+process.env.JWT_SECRET = 'kdskssdkdfs';
 describe('Subscription Controller', () => {
   let app: SchedulerApplication;
   let client: Client;
@@ -26,7 +26,7 @@ describe('Subscription Controller', () => {
     ],
   };
 
-  const token = jwt.sign(testUser, 'kdskssdkdfs', {
+  const token = jwt.sign(testUser, process.env.JWT_SECRET ?? 'default_secret', {
     expiresIn: 180000,
     issuer: 'sf',
   });

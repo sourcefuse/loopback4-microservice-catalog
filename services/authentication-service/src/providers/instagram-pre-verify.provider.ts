@@ -8,9 +8,7 @@ import {IAuthUser} from 'loopback4-authentication';
 import * as InstagramStrategy from 'passport-instagram';
 import {InstagramPreVerifyFn} from './types';
 
-export class InstagramPreVerifyProvider
-  implements Provider<InstagramPreVerifyFn>
-{
+export class InstagramPreVerifyProvider implements Provider<InstagramPreVerifyFn> {
   value(): InstagramPreVerifyFn {
     return async (
       accessToken: string,

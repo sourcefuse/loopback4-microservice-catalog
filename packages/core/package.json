@@ -111,7 +111,7 @@
     "@types/i18n": "^0.13.6",
     "@types/jsonwebtoken": "^9.0.0",
     "@types/lodash": "^4.14.182",
-    "@types/moment": "^2.13.0",
+    "@types/moment": "2.11.29",
     "@types/moment-timezone": "^0.5.30",
     "@types/node": "^20.12.7",
     "@types/node-jose": "^1.1.13",

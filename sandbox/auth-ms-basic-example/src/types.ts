@@ -5,8 +5,11 @@
 import {RoleTypes} from '@sourceloop/core';
 import {IAuthUser} from 'loopback4-authentication';
 
-export interface UserWithPermissions<ID = string, TID = string, UTID = string>
-  extends IAuthUser {
+export interface UserWithPermissions<
+  ID = string,
+  TID = string,
+  UTID = string,
+> extends IAuthUser {
   id?: string;
   identifier?: ID;
   permissions: string[];

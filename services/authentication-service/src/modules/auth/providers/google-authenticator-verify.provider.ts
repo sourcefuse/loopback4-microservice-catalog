@@ -15,9 +15,7 @@ import {
   UserRepository,
 } from '../../../repositories';
 
-export class GoogleAuthenticatorVerifyProvider
-  implements Provider<VerifyFunction.OtpAuthFn>
-{
+export class GoogleAuthenticatorVerifyProvider implements Provider<VerifyFunction.OtpAuthFn> {
   constructor(
     @repository(UserRepository)
     public userRepository: UserRepository,

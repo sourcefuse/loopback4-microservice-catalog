@@ -9,9 +9,9 @@ import * as jwt from 'jsonwebtoken';
 import * as jose from 'node-jose';
 import {JWTVerifierFn} from './types';
 
-export class JWTAsymmetricVerifierProvider<T>
-  implements Provider<JWTVerifierFn<T>>
-{
+export class JWTAsymmetricVerifierProvider<T> implements Provider<
+  JWTVerifierFn<T>
+> {
   constructor(
     @repository(JwtKeysRepository)
     public jwtKeysRepo: JwtKeysRepository,

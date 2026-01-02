@@ -21,9 +21,7 @@ import {
 import {SignUpBindings, VerifyBindings} from '../../../providers/keys';
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
 import {AuthUser} from '../models/auth-user.model';
-export class GoogleOauth2VerifyProvider
-  implements Provider<VerifyFunction.GoogleAuthFn>
-{
+export class GoogleOauth2VerifyProvider implements Provider<VerifyFunction.GoogleAuthFn> {
   constructor(
     @repository(UserRepository)
     public userRepository: UserRepository,
@@ -67,11 +65,7 @@ export class GoogleOauth2VerifyProvider
           userId: user.id as string,
         },
       });
-      if (
-        !creds ||
-        creds.authProvider !== 'google' ||
-        creds.authId !== profile.id
-      ) {
+      if (creds?.authProvider !== 'google' || creds?.authId !== profile.id) {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
       }
 

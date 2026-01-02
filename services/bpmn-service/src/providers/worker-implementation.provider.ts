@@ -9,9 +9,7 @@ import {Client, logger} from 'camunda-external-task-client-js';
 import {WorkflowServiceBindings} from '../keys';
 import {IWorkflowServiceConfig, WorkerImplementationFn} from '../types';
 
-export class WorkerImplementationProvider
-  implements Provider<WorkerImplementationFn>
-{
+export class WorkerImplementationProvider implements Provider<WorkerImplementationFn> {
   client: Client;
   constructor(
     @inject(WorkflowServiceBindings.Config)

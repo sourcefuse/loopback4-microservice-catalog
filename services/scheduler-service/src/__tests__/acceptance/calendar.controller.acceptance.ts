@@ -12,7 +12,7 @@ import {
 import {SchedulerApplication} from '../application';
 import {setUpApplication} from './helper';
 import {Subscription} from '../../models/subscription.model';
-
+process.env.JWT_SECRET = 'kdskssdkdfs';
 describe('Calendar Controller', () => {
   let app: SchedulerApplication;
   let client: Client;
@@ -41,7 +41,7 @@ describe('Calendar Controller', () => {
     ],
   };
 
-  const token = jwt.sign(testUser, 'kdskssdkdfs', {
+  const token = jwt.sign(testUser, process.env.JWT_SECRET ?? 'default_secret', {
     expiresIn: 180000,
     issuer: 'sf',
   });
