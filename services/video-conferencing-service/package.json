@@ -47,7 +47,9 @@
     "postinstall": "node migration.js"
   },
   "repository": {
-    "type": "git"
+    "type": "git",
+    "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
+    "directory": "services/video-conferencing-service"
   },
   "author": "Sourcefuse",
   "license": "MIT",
