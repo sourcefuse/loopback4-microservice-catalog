@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.7.4 (2026-01-02)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-mfa-example
+
+
+
+
+
 ## <small>0.7.3 (2025-12-23)</small>
 
 **Note:** Version bump only for package @sourceloop/auth-mfa-example

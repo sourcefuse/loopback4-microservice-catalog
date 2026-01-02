@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>12.2.1 (2026-01-02)</small>
+
+* chore(deps): fix vulnerability (#2391) ([b82fef5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b82fef5)), closes [#2391](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2391) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
 ## 12.2.0 (2025-12-23)
 
 * feat(cli): Add unified Angular/React support with MCP integration and bug fixes (#2359) ([cc69c8d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/cc69c8d)), closes [#2359](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2359) [#2362](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2362) [#2365](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2365) [#2365](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2365) [#2369](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2369)

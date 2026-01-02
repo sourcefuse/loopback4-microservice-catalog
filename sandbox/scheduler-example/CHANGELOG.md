@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>9.0.2 (2026-01-02)</small>
+
+**Note:** Version bump only for package @sourceloop/schedular-example
+
+
+
+
+
 ## <small>9.0.1 (2025-12-23)</small>
 
 **Note:** Version bump only for package @sourceloop/schedular-example
