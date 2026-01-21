@@ -205,10 +205,9 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         const redisDsPresent = baseServiceDSList.filter(
           ds => ds.type === 'cache',
         );
-
-        this.projectInfo.baseServiceCacheName = redisDsPresent.length
-          ? 'redis'
-          : undefined;
+        this.projectInfo.baseServiceCacheName =
+          redisDsPresent[0]?.name ||
+          (redisDsPresent.length ? 'redis' : undefined);
       }
       this.destinationRoot(join(type, this.options.name ?? DEFAULT_NAME));
       this.projectInfo.dependencies = appendDependencies(
