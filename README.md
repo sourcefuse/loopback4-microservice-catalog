@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://sourcefuse.github.io/arc-docs/arc-api-docs" target="blank"><img src="https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/docs/assets/logo-dark-bg.png?raw=true" width="180" alt="ARC Logo" /></a>
-</p>
+</p> 
 
 <p align="center">
   ARC by SourceFuse is an open-source Rapid Application Development framework for developing cloud-native enterprise applications, utilizing prebuilt microservices and standardized architectures for deployment on private and public clouds.

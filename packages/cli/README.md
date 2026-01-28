@@ -7,7 +7,7 @@ A unified CLI for scaffolding and managing SourceLoop projects across the full s
 - **🏗️ Backend Development**: Scaffold ARC monorepos, microservices, and extensions
 - **⚛️ React Support**: Scaffold and generate React components, hooks, contexts, pages, and more
 - **🅰️ Angular Support**: Scaffold and generate Angular components, services, modules, and more
-- **🤖 AI Integration**: Built-in MCP server for AI-assisted development (Claude Code, etc.)
+- **🤖 AI Integration**: Built-in MCP server for AI-assisted development (Roo Code, etc.)
 - **📦 Template Management**: Smart template fetching from GitHub with local development support
 - **⚙️ Configuration Management**: Update environment files and project configurations
 
@@ -31,11 +31,6 @@ sl angular:scaffold my-angular-app
 # Scaffold a React project
 sl react:scaffold my-react-app
 
-# Generate a React component
-sl react:generate MyComponent --type component
-
-# Generate an Angular service
-sl angular:generate MyService --type service
 ```
 
 ## MCP Integration
@@ -61,6 +56,7 @@ To use the CLI as an MCP server, add this to your MCP client configuration:
 ## Usage
 
 <!-- usage -->
+
 ```sh-session
 $ npm install -g @sourceloop/cli
 $ sl COMMAND
@@ -72,21 +68,23 @@ USAGE
   $ sl COMMAND
 ...
 ```
+
 <!-- usagestop -->
 
 ## Commands
 
 <!-- commands -->
-* [`sl angular:scaffold [NAME]`](#sl-angularscaffold-name)
-* [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
-* [`sl cdk`](#sl-cdk)
-* [`sl extension [NAME]`](#sl-extension-name)
-* [`sl help [COMMAND]`](#sl-help-command)
-* [`sl mcp`](#sl-mcp)
-* [`sl microservice [NAME]`](#sl-microservice-name)
-* [`sl react:scaffold [NAME]`](#sl-reactscaffold-name)
-* [`sl scaffold [NAME]`](#sl-scaffold-name)
-* [`sl update`](#sl-update)
+
+- [`sl angular:scaffold [NAME]`](#sl-angularscaffold-name)
+- [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
+- [`sl cdk`](#sl-cdk)
+- [`sl extension [NAME]`](#sl-extension-name)
+- [`sl help [COMMAND]`](#sl-help-command)
+- [`sl mcp`](#sl-mcp)
+- [`sl microservice [NAME]`](#sl-microservice-name)
+- [`sl react:scaffold [NAME]`](#sl-reactscaffold-name)
+- [`sl scaffold [NAME]`](#sl-scaffold-name)
+- [`sl update`](#sl-update)
 
 ## `sl angular:scaffold [NAME]`
 
@@ -196,7 +194,7 @@ _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.1
 
 ## `sl mcp`
 
-Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by the MCP client to interact with the CLI commands. 
+Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by the MCP client to interact with the CLI commands.
 
 ```
 USAGE
@@ -206,8 +204,8 @@ OPTIONS
   --help  show manual pages
 
 DESCRIPTION
-  Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by 
-  the MCP client to interact with the CLI commands. 
+  Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by
+  the MCP client to interact with the CLI commands.
     You can use it using the following MCP server configuration:
       "sourceloop": {
         "command": "npx",
@@ -324,6 +322,7 @@ OPTIONS
 ```
 
 _See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.2.1/src/commands/update.ts)_
+
 <!-- commandsstop -->
 
 ---

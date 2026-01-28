@@ -88,7 +88,8 @@
     "request-ip": "^3.3.0",
     "swagger-stats": "^0.99.5",
     "tslib": "^2.6.2",
-    "winston": "^3.17.0"
+    "winston": "^3.17.0",
+    "glob": "^11.1.0"
   },
   "peerDependencies": {
     "@loopback/sequelize": "^0.8.0",
