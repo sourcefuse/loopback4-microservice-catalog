@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/core",
-  "version": "20.0.2",
+  "version": "20.0.3",
   "description": "Sourceloop core package",
   "keywords": [
     "loopback-extension",
@@ -70,6 +70,7 @@
     "@loopback/rest": "^15.0.4",
     "@loopback/rest-explorer": "^8.0.4",
     "@loopback/service-proxy": "^8.0.3",
+    "glob": "^11.1.0",
     "i18n": "^0.15.1",
     "jsonwebtoken": "^9.0.0",
     "lodash": "^4.17.21",
@@ -88,8 +89,7 @@
     "request-ip": "^3.3.0",
     "swagger-stats": "^0.99.5",
     "tslib": "^2.6.2",
-    "winston": "^3.17.0",
-    "glob": "^11.1.0"
+    "winston": "^3.17.0"
   },
   "peerDependencies": {
     "@loopback/sequelize": "^0.8.0",

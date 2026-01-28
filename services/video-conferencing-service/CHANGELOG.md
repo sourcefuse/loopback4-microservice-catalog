@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>19.0.4 (2026-01-28)</small>
+
+**Note:** Version bump only for package @sourceloop/video-conferencing-service
+
+
+
+
+
 ## <small>19.0.3 (2026-01-02)</small>
 
 * fix(video-conferencing-service): update the repository url in package ([cf2b2e7](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/cf2b2e7)), closes [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)

@@ -56,35 +56,32 @@ To use the CLI as an MCP server, add this to your MCP client configuration:
 ## Usage
 
 <!-- usage -->
-
 ```sh-session
 $ npm install -g @sourceloop/cli
 $ sl COMMAND
 running command...
 $ sl (-v|--version|version)
-@sourceloop/cli/12.2.1 linux-x64 node-v20.19.6
+@sourceloop/cli/12.2.2 linux-x64 node-v20.20.0
 $ sl --help [COMMAND]
 USAGE
   $ sl COMMAND
 ...
 ```
-
 <!-- usagestop -->
 
 ## Commands
 
 <!-- commands -->
-
-- [`sl angular:scaffold [NAME]`](#sl-angularscaffold-name)
-- [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
-- [`sl cdk`](#sl-cdk)
-- [`sl extension [NAME]`](#sl-extension-name)
-- [`sl help [COMMAND]`](#sl-help-command)
-- [`sl mcp`](#sl-mcp)
-- [`sl microservice [NAME]`](#sl-microservice-name)
-- [`sl react:scaffold [NAME]`](#sl-reactscaffold-name)
-- [`sl scaffold [NAME]`](#sl-scaffold-name)
-- [`sl update`](#sl-update)
+* [`sl angular:scaffold [NAME]`](#sl-angularscaffold-name)
+* [`sl autocomplete [SHELL]`](#sl-autocomplete-shell)
+* [`sl cdk`](#sl-cdk)
+* [`sl extension [NAME]`](#sl-extension-name)
+* [`sl help [COMMAND]`](#sl-help-command)
+* [`sl mcp`](#sl-mcp)
+* [`sl microservice [NAME]`](#sl-microservice-name)
+* [`sl react:scaffold [NAME]`](#sl-reactscaffold-name)
+* [`sl scaffold [NAME]`](#sl-scaffold-name)
+* [`sl update`](#sl-update)
 
 ## `sl angular:scaffold [NAME]`
 
@@ -108,7 +105,7 @@ OPTIONS
   --templateVersion=templateVersion  Template branch, tag, or version
 ```
 
-_See code: [src/commands/angular/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.2.1/src/commands/angular/scaffold.ts)_
+_See code: [src/commands/angular/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.2.2/src/commands/angular/scaffold.ts)_
 
 ## `sl autocomplete [SHELL]`
 
@@ -156,7 +153,7 @@ OPTIONS
   --help                                           show manual pages
 ```
 
-_See code: [src/commands/cdk.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.2.1/src/commands/cdk.ts)_
+_See code: [src/commands/cdk.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.2.2/src/commands/cdk.ts)_
 
 ## `sl extension [NAME]`
 
@@ -173,7 +170,7 @@ OPTIONS
   --help  show manual pages
 ```
 
-_See code: [src/commands/extension.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.2.1/src/commands/extension.ts)_
+_See code: [src/commands/extension.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.2.2/src/commands/extension.ts)_
 
 ## `sl help [COMMAND]`
 
@@ -194,7 +191,7 @@ _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.1
 
 ## `sl mcp`
 
-Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by the MCP client to interact with the CLI commands.
+Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by the MCP client to interact with the CLI commands. 
 
 ```
 USAGE
@@ -204,8 +201,8 @@ OPTIONS
   --help  show manual pages
 
 DESCRIPTION
-  Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by
-  the MCP client to interact with the CLI commands.
+  Command that runs an MCP server for the sourceloop CLI, this is not supposed to be run directly, but rather used by 
+  the MCP client to interact with the CLI commands. 
     You can use it using the following MCP server configuration:
       "sourceloop": {
         "command": "npx",
@@ -214,7 +211,7 @@ DESCRIPTION
       }
 ```
 
-_See code: [src/commands/mcp.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.2.1/src/commands/mcp.ts)_
+_See code: [src/commands/mcp.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.2.2/src/commands/mcp.ts)_
 
 ## `sl microservice [NAME]`
 
@@ -262,7 +259,7 @@ OPTIONS
       Include sequelize as ORM in service
 ```
 
-_See code: [src/commands/microservice.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.2.1/src/commands/microservice.ts)_
+_See code: [src/commands/microservice.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.2.2/src/commands/microservice.ts)_
 
 ## `sl react:scaffold [NAME]`
 
@@ -283,7 +280,7 @@ OPTIONS
   --templateVersion=templateVersion  Template branch or version
 ```
 
-_See code: [src/commands/react/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.2.1/src/commands/react/scaffold.ts)_
+_See code: [src/commands/react/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.2.2/src/commands/react/scaffold.ts)_
 
 ## `sl scaffold [NAME]`
 
@@ -307,7 +304,7 @@ OPTIONS
   --owner=owner              owner of the repo
 ```
 
-_See code: [src/commands/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.2.1/src/commands/scaffold.ts)_
+_See code: [src/commands/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.2.2/src/commands/scaffold.ts)_
 
 ## `sl update`
 
@@ -321,8 +318,7 @@ OPTIONS
   --help  show manual pages
 ```
 
-_See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.2.1/src/commands/update.ts)_
-
+_See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v12.2.2/src/commands/update.ts)_
 <!-- commandsstop -->
 
 ---

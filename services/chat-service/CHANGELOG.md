@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>17.0.3 (2026-01-28)</small>
+
+**Note:** Version bump only for package @sourceloop/chat-service
+
+
+
+
+
 ## <small>17.0.2 (2026-01-02)</small>
 
 * chore(deps): fix vulnerability (#2391) ([b82fef5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b82fef5)), closes [#2391](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2391) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)

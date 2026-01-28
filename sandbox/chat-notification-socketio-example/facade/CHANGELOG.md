@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.7.2 (2026-01-28)</small>
+
+**Note:** Version bump only for package @sourceloop/chat-notif-example-facade-socket
+
+
+
+
+
 ## <small>0.7.1 (2026-01-02)</small>
 
 * chore(deps): fix vulnerability (#2391) ([b82fef5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b82fef5)), closes [#2391](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2391) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)

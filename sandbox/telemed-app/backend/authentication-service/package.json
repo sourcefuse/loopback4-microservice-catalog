@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/telemed-auth-api",
   "private": "true",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "description": "Sourceloop auth service deployed on AWS lambda.",
   "keywords": [
     "loopback-microservice",
@@ -74,8 +74,8 @@
     "@loopback/rest-explorer": "^8.0.4",
     "@loopback/service-proxy": "^8.0.3",
     "@sourceloop/audit-log": "^9.0.0",
-    "@sourceloop/authentication-service": "^24.1.2",
-    "@sourceloop/core": "^20.0.2",
+    "@sourceloop/authentication-service": "^24.1.3",
+    "@sourceloop/core": "^20.0.3",
     "@types/aws-lambda": "^8.10.110",
     "@vendia/serverless-express": "^4.10.1",
     "dotenv": "^16.0.3",
