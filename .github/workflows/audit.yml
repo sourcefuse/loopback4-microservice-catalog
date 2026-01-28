@@ -7,13 +7,12 @@ on:
     branches:
       - master
 jobs:
-  npm_audit:
+  node_matrix_audit:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [20, 22, 24]
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
@@ -25,12 +24,32 @@ jobs:
         run: npm run afterinstall
 
       - name: Run npm audit
-        run: >
-          npm audit --json |
-          node -e '
+        run: |
+          npm audit --json | node -e '
             const fs = require("fs");
-            const auditLevel = (process.argv[1] || "critical").toLowerCase();
-            const { vulnerabilities } = JSON.parse(fs.readFileSync(0).toString("utf-8"));
-            const result = Object.values(vulnerabilities).filter((i) => i.severity.toLowerCase() === auditLevel);
-            console.table(JSON.stringify(result, null, 2));
+            const auditLevel = (process.argv[2] || "critical").toLowerCase();
+            const raw = fs.readFileSync(0).toString("utf-8");
+            let vulnerabilities = {};
+            try {
+              const parsed = JSON.parse(raw || "{}");
+              vulnerabilities = parsed.vulnerabilities || {};
+            } catch (e) {
+              console.error("Failed to parse npm audit output:", e.message || e);
+              process.exit(2);
+            }
+            const result = Object.values(vulnerabilities).filter((i) => i && i.severity && i.severity.toLowerCase() === auditLevel);
+            if (result.length) {
+              console.log(JSON.stringify(result, null, 2));
+              process.exit(1);
+            } else {
+              console.log('[]');
+            }
           ' high
+
+  npm_audit:
+    runs-on: ubuntu-latest
+    needs: node_matrix_audit
+    if: success()
+    steps:
+      - name: Final status
+        run: echo "✅ npm audit passed for Node.js 20, 22 and 24"
