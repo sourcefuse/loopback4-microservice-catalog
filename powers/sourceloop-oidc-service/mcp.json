@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "sourceloop-cli": {
+      "command": "npx",
+      "args": ["-y", "@sourceloop/cli", "mcp"],
+      "env": {}
+    }
+  }
+}
