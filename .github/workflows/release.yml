@@ -46,6 +46,8 @@ jobs:
       # can be removed once this issue is fixed or we update to later versions
       - name: nx dependency
         run: npm i @nx/nx-linux-x64-gnu@16.10.0 --ignore-scripts
+      - name: install lerna
+        run: npm i -g lerna@latest --ignore-scripts
       - name: Test
         run: npm run test --workspaces --if-present
       - name: Lint
