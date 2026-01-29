@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: '20.x'
           registry-url: 'https://registry.npmjs.org'
-          always-auth: false  # important for trusted publishing
+          always-auth: false # important for trusted publishing
       - name: Configure CI Git User
         run: |
           git config --global user.name $CONFIG_USERNAME
@@ -40,8 +40,8 @@ jobs:
 
       - name: Install Dependencies
         run: npm ci --ignore-scripts
-      - name: Run After Install Script  
-        run: npm run afterinstall  
+      - name: Run After Install Script
+        run: npm run afterinstall
       # this step is added only since this version of nx dependency is not being installed on linux systems
       # can be removed once this issue is fixed or we update to later versions
       - name: nx dependency
@@ -54,10 +54,10 @@ jobs:
         run: git stash
       - name: Bump Versions
         # "HUSKY=0" disables pre-commit-msg check (Needed in order to allow lerna perform the release commit)
-        run: HUSKY=0 npx lerna version --yes --ci --conventional-commits
+        run: HUSKY=0 npm_config_ignore_scripts=true npx lerna version --yes --ci --conventional-commits
       - name: Publish to NPM 🚀
         # To always compare changes from registry
         # using `from-package` compares version in local package.json with registry and publish it if required.
-        run: npx lerna publish from-package --yes
+        run: HUSKY=0 npm_config_ignore_scripts=true npx lerna publish from-package --yes
         # env:
         #   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
