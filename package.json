@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/root",
-  "private": false,
+  "private": true,
   "scripts": {
     "prepare": "husky install",
     "build": "npm run build --workspaces --if-present",
