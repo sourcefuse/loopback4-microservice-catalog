@@ -18,7 +18,10 @@ import {
   BearerVerifierComponent,
   BearerVerifierConfig,
   BearerVerifierType,
+  BooterBasePathMixin,
   CoreComponent,
+  CoreControllerBooter,
+  CoreModelBooter,
   ITenantUtilitiesConfig,
   JwtKeysRepository,
   SECURITY_SCHEME_SPEC,
@@ -32,7 +35,8 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import {AuditController} from './controllers';
+// import {AuditController} from './controllers';
+import {Booter} from '@loopback/boot';
 import {
   AuditServiceBindings,
   ColumnBuilderServiceBindings,
@@ -98,6 +102,18 @@ export class AuditServiceComponent implements Component {
       this.setupSequence();
     }
 
+    this.booters = [
+      BooterBasePathMixin(CoreModelBooter, __dirname, {
+        interface: AuditServiceComponent.name,
+      }),
+      BooterBasePathMixin(CoreControllerBooter, __dirname, {
+        dirs: ['controllers'],
+        extensions: ['.controller.js'],
+        nested: true,
+        interface: AuditServiceComponent.name,
+      }),
+    ];
+
     this.services = [JobProcessingService, ColumnBuilderProvider];
 
     if (this.notifConfig?.useSequelize) {
@@ -121,7 +137,7 @@ export class AuditServiceComponent implements Component {
       this.models = [TenantAuditLog, TenantMappingLog, TenantJob];
     }
 
-    this.controllers = [AuditController];
+    // this.controllers = [AuditController];
 
     this.providers[QuerySelectedFilesServiceBindings.QUERY_ARCHIVED_LOGS.key] =
       QuerySelectedFilesProvider;
@@ -139,6 +155,8 @@ export class AuditServiceComponent implements Component {
   bindings?: Binding[] = [];
 
   services?: ServiceOrProviderClass[];
+
+  booters?: Class<Booter>[];
 
   /**
    * An optional list of Repository classes to bind for dependency injection
