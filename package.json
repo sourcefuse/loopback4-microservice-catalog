@@ -19,7 +19,7 @@
     "cz-conventional-changelog": "^3.3.0",
     "cz-format-extension": "1.5.1",
     "husky": "^7.0.4",
-    "lerna": "^9.0.0",
+    "lerna": "^9.0.3",
     "typedoc": "0.23.23",
     "typedoc-plugin-markdown": "3.14.0"
   },
