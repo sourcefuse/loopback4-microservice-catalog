@@ -12,23 +12,23 @@ import {
 import {
   del,
   get,
-  getModelSchemaRef,
   getWhereSchemaFor,
   param,
   patch,
   post,
   requestBody,
 } from '@loopback/rest';
+import {
+  CONTENT_TYPE,
+  getModelSchemaRefSF,
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {Calendar, Subscription} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {CalendarRepository} from '../repositories';
-import {
-  STATUS_CODE,
-  CONTENT_TYPE,
-  OPERATION_SECURITY_SPEC,
-} from '@sourceloop/core';
 
 const basePath = '/calendars/{id}/subscriptions';
 
@@ -58,7 +58,7 @@ export class CalendarSubscriptionController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Subscription),
+              items: getModelSchemaRefSF(Subscription),
             },
           },
         },
@@ -89,7 +89,7 @@ export class CalendarSubscriptionController {
       [STATUS_CODE.OK]: {
         description: 'Calendar model instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Subscription)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Subscription)},
         },
       },
     },
@@ -99,7 +99,7 @@ export class CalendarSubscriptionController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Subscription, {
+          schema: getModelSchemaRefSF(Subscription, {
             title: 'NewSubscriptionInCalendar',
             exclude: ['id'],
             optional: ['calendarId'],
@@ -140,7 +140,7 @@ export class CalendarSubscriptionController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Subscription, {partial: true}),
+          schema: getModelSchemaRefSF(Subscription, {partial: true}),
         },
       },
     })

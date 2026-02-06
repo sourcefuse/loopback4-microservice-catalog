@@ -2,6 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {Booter} from '@loopback/boot';
 import {
   Binding,
   Component,
@@ -13,21 +14,23 @@ import {
 import {Class, Model, Repository} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {
+  BooterBasePathMixin,
   CoreComponent,
+  CoreControllerBooter,
+  CoreModelBooter,
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
+import path from 'path';
+import {OIDCServiceBindings} from './keys';
+import {AuthClient, User} from './models';
+import {FindAccountProvider, OidcProviderProvider} from './providers';
 import {
   AuthClientRepository,
   UserCredentialsRepository,
   UserRepository,
 } from './repositories';
-import {OidcController} from './controllers';
-import {OidcProviderProvider, FindAccountProvider} from './providers';
 import {OidcInitializerService} from './services';
-import {OIDCServiceBindings} from './keys';
-import path from 'path';
-import {AuthClient, User} from './models';
 export class OidcServiceComponent implements Component {
   repositories?: Class<Repository<Model>>[];
 
@@ -36,6 +39,7 @@ export class OidcServiceComponent implements Component {
    * via `app.model()` API.
    */
   models?: Class<Model>[];
+  booters?: Class<Booter>[];
 
   providers: ProviderMap = {
     [OIDCServiceBindings.OIDC_PROVIDER.key]: OidcProviderProvider,
@@ -54,7 +58,6 @@ export class OidcServiceComponent implements Component {
   ) {
     this.application.component(CoreComponent);
     this.models = [User, AuthClient];
-    this.controllers = [OidcController];
     this.repositories = [
       AuthClientRepository,
       UserRepository,
@@ -80,6 +83,17 @@ export class OidcServiceComponent implements Component {
       },
       servers: [{url: '/'}],
     });
+    this.booters = [
+      BooterBasePathMixin(CoreModelBooter, __dirname, {
+        interface: OidcServiceComponent.name,
+      }),
+      BooterBasePathMixin(CoreControllerBooter, __dirname, {
+        dirs: ['controllers'],
+        extensions: ['.controller.js'],
+        nested: true,
+        interface: OidcServiceComponent.name,
+      }),
+    ];
   }
 
   /**

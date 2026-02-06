@@ -2,14 +2,13 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {Getter, inject} from '@loopback/core';
-import {AnyObject, Filter, repository} from '@loopback/repository';
+import { Getter, inject } from '@loopback/core';
+import { AnyObject, Filter, repository } from '@loopback/repository';
 import {
   HttpErrors,
   del,
   get,
   getFilterSchemaFor,
-  getModelSchemaRef,
   param,
   patch,
   post,
@@ -17,19 +16,20 @@ import {
 } from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
-import {STRATEGY, authenticate} from 'loopback4-authentication';
-import {authorize} from 'loopback4-authorization';
-import {ErrorKeys} from '../enums/error-keys.enum';
-import {PermissionKey} from '../enums/permission-key.enum';
-import {WorkflowServiceBindings} from '../keys';
-import {Workflow, WorkflowVersion} from '../models';
-import {ExecuteWorkflowDto} from '../models/execute-workflow-dto';
-import {WorkflowDto} from '../models/workflow-dto.model';
-import {WorkflowRepository} from '../repositories';
-import {WorkflowVersionRepository} from '../repositories/workflow-version.repository';
+import { STRATEGY, authenticate } from 'loopback4-authentication';
+import { authorize } from 'loopback4-authorization';
+import { ErrorKeys } from '../enums/error-keys.enum';
+import { PermissionKey } from '../enums/permission-key.enum';
+import { WorkflowServiceBindings } from '../keys';
+import { Workflow, WorkflowVersion } from '../models';
+import { ExecuteWorkflowDto } from '../models/execute-workflow-dto';
+import { WorkflowDto } from '../models/workflow-dto.model';
+import { WorkflowRepository } from '../repositories';
+import { WorkflowVersionRepository } from '../repositories/workflow-version.repository';
 import {
   ExecutionInputValidator,
   WorflowManager,
@@ -67,7 +67,7 @@ export class WorkflowController {
       [STATUS_CODE.OK]: {
         description: 'Workflow model instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Workflow)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Workflow)},
         },
       },
     },
@@ -76,7 +76,7 @@ export class WorkflowController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(WorkflowDto, {
+          schema: getModelSchemaRefSF(WorkflowDto, {
             title: 'NewWorkflow',
           }),
         },
@@ -133,7 +133,7 @@ export class WorkflowController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(WorkflowDto, {partial: true}),
+          schema: getModelSchemaRefSF(WorkflowDto, {partial: true}),
         },
       },
     })
@@ -185,7 +185,7 @@ export class WorkflowController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(ExecuteWorkflowDto),
+          schema: getModelSchemaRefSF(ExecuteWorkflowDto),
         },
       },
     })
@@ -235,7 +235,7 @@ export class WorkflowController {
         description: 'Array of Workflow model instances',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: {type: 'array', items: getModelSchemaRef(Workflow)},
+            schema: {type: 'array', items: getModelSchemaRefSF(Workflow)},
           },
         },
       },

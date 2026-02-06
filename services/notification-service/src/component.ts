@@ -10,41 +10,36 @@ import {
   inject,
   ProviderMap,
 } from '@loopback/core';
-import {Class, Model, Repository} from '@loopback/repository';
-import {RestApplication} from '@loopback/rest';
+import { Class, Model, Repository } from '@loopback/repository';
+import { RestApplication } from '@loopback/rest';
 import {
   BearerVerifierBindings,
   BearerVerifierComponent,
   BearerVerifierConfig,
   BearerVerifierType,
+  BooterBasePathMixin,
   CoreComponent,
+  CoreControllerBooter,
+  CoreModelBooter,
   JwtKeysRepository,
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
-import {JwtKeysRepository as SequelizeJwtKeysRepository} from '@sourceloop/core/sequelize';
-import {AuthenticationComponent} from 'loopback4-authentication';
+import { JwtKeysRepository as SequelizeJwtKeysRepository } from '@sourceloop/core/sequelize';
+import { AuthenticationComponent } from 'loopback4-authentication';
 import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import {NotificationsComponent} from 'loopback4-notifications';
-import {
-  NotificationController,
-  NotificationNotificationUserController,
-  NotificationUserController,
-  NotificationUserNotificationController,
-  PubnubNotificationController,
-  UserNotificationSettingsController,
-} from './controllers';
-import {NotifServiceBindings} from './keys';
-import {Notification, NotificationAccess, NotificationUser} from './models';
+import { NotificationsComponent } from 'loopback4-notifications';
+import { NotifServiceBindings } from './keys';
+import { Notification, NotificationAccess, NotificationUser } from './models';
 import {
   ChannelManagerProvider,
   NotificationFilterProvider,
   NotificationUserSettingsProvider,
 } from './providers';
-import {NotificationUserProvider} from './providers/notification-user.service';
+import { NotificationUserProvider } from './providers/notification-user.service';
 import {
   NotificationAccessRepository,
   NotificationRepository,
@@ -52,13 +47,14 @@ import {
   UserNotificationSettingsRepository,
 } from './repositories';
 
+import { Booter } from '@loopback/boot';
 import {
   NotificationRepository as NotificationSequelizeRepository,
   NotificationUserRepository as NotificationUserSequelizeRepository,
   UserNotificationSettingsRepository as UserNotificationSettingsSequelizeRepository,
 } from './repositories/sequelize';
-import {ProcessNotificationService} from './services';
-import {INotifServiceConfig} from './types';
+import { ProcessNotificationService } from './services';
+import { INotifServiceConfig } from './types';
 export class NotificationServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
@@ -92,6 +88,19 @@ export class NotificationServiceComponent implements Component {
       // Mount default sequence if needed
       this.setupSequence();
     }
+
+       this.booters = [
+      BooterBasePathMixin(CoreModelBooter, __dirname, {
+        interface: NotificationServiceComponent.name,
+      }),
+      BooterBasePathMixin(CoreControllerBooter, __dirname, {
+        dirs: ['controllers'],
+        extensions: ['.controller.js'],
+        nested: true,
+        interface: NotificationServiceComponent.name,
+      }),
+    ];
+
     if (this.notifConfig?.useSequelize) {
       this.repositories = [
         NotificationAccessRepository,
@@ -121,14 +130,7 @@ export class NotificationServiceComponent implements Component {
         NotificationUserSettingsProvider,
     };
 
-    this.controllers = [
-      NotificationController,
-      NotificationUserController,
-      PubnubNotificationController,
-      NotificationNotificationUserController,
-      NotificationUserNotificationController,
-      UserNotificationSettingsController,
-    ];
+
 
     this.application
       .bind('services.ProcessNotificationService')
@@ -155,6 +157,8 @@ export class NotificationServiceComponent implements Component {
    * An array of controller classes
    */
   controllers?: ControllerClass[];
+
+  booters?: Class<Booter>[];
 
   /**
    * Setup ServiceSequence by default if no other sequnce provided

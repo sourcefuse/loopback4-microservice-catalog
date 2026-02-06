@@ -9,7 +9,6 @@ import {
 import {
   del,
   get,
-  getModelSchemaRef,
   param,
   patch,
   post,
@@ -19,15 +18,16 @@ import {
 } from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
-import {authenticate, STRATEGY} from 'loopback4-authentication';
-import {authorize} from 'loopback4-authorization';
-import {PermissionKey} from '../enums';
-import {AttachmentFile} from '../models/attachment-file.model';
-import {AttachmentFileDto} from '../models/attachment-file-dto.model';
-import {AttachmentFileRepository} from '../repositories/attachment-file.repository';
+import { authenticate, STRATEGY } from 'loopback4-authentication';
+import { authorize } from 'loopback4-authorization';
+import { PermissionKey } from '../enums';
+import { AttachmentFileDto } from '../models/attachment-file-dto.model';
+import { AttachmentFile } from '../models/attachment-file.model';
+import { AttachmentFileRepository } from '../repositories/attachment-file.repository';
 const basePath = '/attach-files';
 export class AttachmentFileController {
   constructor(
@@ -45,7 +45,7 @@ export class AttachmentFileController {
       [STATUS_CODE.OK]: {
         description: 'Attachment model instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(AttachmentFile)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(AttachmentFile)},
         },
       },
     },
@@ -54,7 +54,7 @@ export class AttachmentFileController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(AttachmentFile, {
+          schema: getModelSchemaRefSF(AttachmentFile, {
             title: 'NewAttachmentFile',
             exclude: ['id'],
           }),
@@ -75,7 +75,7 @@ export class AttachmentFileController {
       [STATUS_CODE.OK]: {
         description: 'Attachment model instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(AttachmentFileDto)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(AttachmentFileDto)},
         },
       },
     },
@@ -84,7 +84,7 @@ export class AttachmentFileController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(AttachmentFileDto, {
+          schema: getModelSchemaRefSF(AttachmentFileDto, {
             title: 'New Attachment Files',
           }),
         },
@@ -130,7 +130,7 @@ export class AttachmentFileController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(AttachmentFile, {
+              items: getModelSchemaRefSF(AttachmentFile, {
                 includeRelations: true,
               }),
             },
@@ -162,7 +162,7 @@ export class AttachmentFileController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(AttachmentFile, {partial: true}),
+          schema: getModelSchemaRefSF(AttachmentFile, {partial: true}),
         },
       },
     })
@@ -183,7 +183,7 @@ export class AttachmentFileController {
         description: 'AttachmentFile model instance',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(AttachmentFile, {includeRelations: true}),
+            schema: getModelSchemaRefSF(AttachmentFile, {includeRelations: true}),
           },
         },
       },
@@ -214,7 +214,7 @@ export class AttachmentFileController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(AttachmentFile, {partial: true}),
+          schema: getModelSchemaRefSF(AttachmentFile, {partial: true}),
         },
       },
     })

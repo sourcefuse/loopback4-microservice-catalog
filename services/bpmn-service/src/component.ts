@@ -2,6 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import { Booter } from '@loopback/boot';
 import {
   Binding,
   Component,
@@ -10,37 +11,39 @@ import {
   inject,
   ProviderMap,
 } from '@loopback/core';
-import {Class, Model, Repository} from '@loopback/repository';
-import {RestApplication} from '@loopback/rest';
+import { Class, Model, Repository } from '@loopback/repository';
+import { RestApplication } from '@loopback/rest';
 import {
   BearerVerifierBindings,
   BearerVerifierComponent,
   BearerVerifierConfig,
   BearerVerifierType,
+  BooterBasePathMixin,
   CoreComponent,
+  CoreControllerBooter,
+  CoreModelBooter,
   JwtKeysRepository,
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
-import {JwtKeysRepository as SequelizeJwtKeysRepository} from '@sourceloop/core/sequelize';
-import {AuthenticationComponent} from 'loopback4-authentication';
+import { JwtKeysRepository as SequelizeJwtKeysRepository } from '@sourceloop/core/sequelize';
+import { AuthenticationComponent } from 'loopback4-authentication';
 import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import {WorkflowController} from './controllers';
-import {WorkflowServiceBindings} from './keys';
-import {Workflow} from './models';
-import {WorkflowProvider} from './providers';
-import {ExecutionInputValidationProvider} from './providers/execution-input-validator.provider';
-import {WorkerRegisterFnProvider} from './providers/register-worker.service';
-import {WorkerImplementationProvider} from './providers/worker-implementation.provider';
-import {WorkflowRepository, WorkflowVersionRepository} from './repositories';
+import { WorkflowServiceBindings } from './keys';
+import { Workflow } from './models';
+import { WorkflowProvider } from './providers';
+import { ExecutionInputValidationProvider } from './providers/execution-input-validator.provider';
+import { WorkerRegisterFnProvider } from './providers/register-worker.service';
+import { WorkerImplementationProvider } from './providers/worker-implementation.provider';
+import { WorkflowRepository, WorkflowVersionRepository } from './repositories';
 import {
   WorkflowRepository as WorkflowSequelizeRepository,
   WorkflowVersionRepository as WorkflowVersionSequelizeRepository,
 } from './repositories/sequelize';
-import {IWorkflowServiceConfig} from './types';
+import { IWorkflowServiceConfig } from './types';
 
 export class WorkflowServiceComponent implements Component {
   constructor(
@@ -72,6 +75,19 @@ export class WorkflowServiceComponent implements Component {
       // Mount default sequence if needed
       this.setupSequence();
     }
+
+    this.booters = [
+      BooterBasePathMixin(CoreModelBooter, __dirname, {
+        interface: WorkflowServiceComponent.name,
+      }),
+      BooterBasePathMixin(CoreControllerBooter, __dirname, {
+        dirs: ['controllers'],
+        extensions: ['.controller.js'],
+        nested: true,
+        interface: WorkflowServiceComponent.name,
+      }),
+    ];
+
     if (this.workflowSvcConfig?.useSequelize) {
       this.repositories = [
         WorkflowSequelizeRepository,
@@ -102,8 +118,6 @@ export class WorkflowServiceComponent implements Component {
       .toDynamicValue(() => {
         return {};
       });
-
-    this.controllers = [WorkflowController];
   }
 
   providers?: ProviderMap = {};
@@ -126,6 +140,8 @@ export class WorkflowServiceComponent implements Component {
    * An array of controller classes
    */
   controllers?: ControllerClass[];
+
+  booters?: Class<Booter>[];
 
   /**
    * Setup ServiceSequence by default if no other sequnce provided

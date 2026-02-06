@@ -1,4 +1,4 @@
-import {loadClassesFromFiles} from '@loopback/boot';
+import { loadClassesFromFiles } from '@loopback/boot';
 import {
   BindingScope,
   Component,
@@ -7,10 +7,10 @@ import {
   injectable,
   MetadataInspector,
 } from '@loopback/core';
-import {glob} from 'glob';
+import { glob } from 'glob';
 import path from 'path';
-import {OVERRIDE_MODEL_SCHEMA_KEY} from '../build-schema';
-import {BaseBooter} from './base.booter';
+import { OVERRIDE_MODEL_SCHEMA_KEY } from '../build-schema';
+import { BaseBooter } from './base.booter';
 
 @injectable({scope: BindingScope.SINGLETON})
 export class CoreModelBooter extends BaseBooter {
@@ -23,7 +23,10 @@ export class CoreModelBooter extends BaseBooter {
 
   async discover(): Promise<void> {
     const pattern = path.join(this.projectRoot, '**', '*component.js');
-    const filePaths = glob.sync(pattern, {nodir: true});
+    const filePaths = glob.sync(pattern, {
+      nodir: true,
+      ignore: ['**/__tests__/**', '**/node_modules/**'],
+    });
     this.classes = loadClassesFromFiles(filePaths, this.projectRoot);
   }
   async load(): Promise<void> {
