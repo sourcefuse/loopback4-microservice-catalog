@@ -29,7 +29,6 @@
     }
   },
   "overrides": {
-    "tar": "^7.5.7",
     "semver": "^7.5.4",
     "multer": "^2.0.2",
     "tough-cookie": "^4.1.3",
