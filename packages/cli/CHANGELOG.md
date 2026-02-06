@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>12.2.4 (2026-02-06)</small>
+
+* revert(chore): downgrade tar due to lerna release incompatibility (#2406)2 ([100563e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/100563e)), closes [#2406](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2406) [#2405](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2405) [#2405](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2405) [#2405](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2405)
+
+
+
+
+
 ## <small>12.2.3 (2026-01-29)</small>
 
 * fix(workflows): fix lerna publish by disabling scripts and husky in CI (#2401) ([fec0945](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/fec0945)), closes [#2401](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2401) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
