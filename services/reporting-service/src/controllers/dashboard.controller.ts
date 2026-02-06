@@ -1,14 +1,6 @@
 import {Filter, repository} from '@loopback/repository';
-import {
-  del,
-  get,
-  getModelSchemaRef,
-  param,
-  patch,
-  post,
-  requestBody,
-} from '@loopback/rest';
-import {CONTENT_TYPE} from '@sourceloop/core';
+import {del, get, param, patch, post, requestBody} from '@loopback/rest';
+import {CONTENT_TYPE, getModelSchemaRefSF} from '@sourceloop/core';
 import {STRATEGY, authenticate} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKeys} from '../enums';
@@ -44,7 +36,7 @@ export class DashboardController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(CreateDashboardDto, {
+          schema: getModelSchemaRefSF(CreateDashboardDto, {
             title: 'NewDashboard',
           }),
         },
@@ -80,7 +72,7 @@ export class DashboardController {
         description: 'Array of Dashboard model instances',
         content: {
           'application/json': {
-            schema: getModelSchemaRef(Dashboard, {includeRelations: true}),
+            schema: getModelSchemaRefSF(Dashboard, {includeRelations: true}),
           },
         },
       },
@@ -163,7 +155,7 @@ export class DashboardController {
         description: 'Dashboard model instance',
         content: {
           'application/json': {
-            schema: getModelSchemaRef(Dashboard),
+            schema: getModelSchemaRefSF(Dashboard),
           },
         },
       },

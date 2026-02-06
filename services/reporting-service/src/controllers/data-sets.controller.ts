@@ -1,21 +1,12 @@
-import {AnyObject, Count, CountSchema, Filter} from '@loopback/repository';
-import {
-  del,
-  get,
-  getModelSchemaRef,
-  param,
-  patch,
-  post,
-  requestBody,
-} from '@loopback/rest';
-import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
-import {STRATEGY, authenticate} from 'loopback4-authentication';
-import {authorize} from 'loopback4-authorization';
-import {DataSet} from '../models';
-
 import {service} from '@loopback/core';
+import {AnyObject, Count, CountSchema, Filter} from '@loopback/repository';
+import {del, get, param, patch, post, requestBody} from '@loopback/rest';
+import {CONTENT_TYPE, getModelSchemaRefSF, STATUS_CODE} from '@sourceloop/core';
+import {authenticate, STRATEGY} from 'loopback4-authentication';
+import {authorize} from 'loopback4-authorization';
 import {PermissionKeys} from '../enums';
 import {CustomFilter} from '../interfaces';
+import {DataSet} from '../models';
 import {DataSetsService} from '../services/data-sets.service';
 const DATASET_URL = '/data-sets/{id}';
 
@@ -51,7 +42,7 @@ export class DataSetsController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(DataSet, {
+          schema: getModelSchemaRefSF(DataSet, {
             title: 'NewDataSet',
             exclude: ['id'],
           }),
@@ -196,7 +187,7 @@ export class DataSetsController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(DataSet, {
+          schema: getModelSchemaRefSF(DataSet, {
             title: 'updateDataSet',
             partial: true,
           }),

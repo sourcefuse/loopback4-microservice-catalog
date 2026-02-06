@@ -10,26 +10,18 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
+import {del, get, param, patch, post, put, requestBody} from '@loopback/rest';
 import {
-  del,
-  get,
-  getModelSchemaRef,
-  param,
-  patch,
-  post,
-  put,
-  requestBody,
-} from '@loopback/rest';
+  CONTENT_TYPE,
+  getModelSchemaRefSF,
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {Settings} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {SettingsRepository} from '../repositories';
-import {
-  STATUS_CODE,
-  CONTENT_TYPE,
-  OPERATION_SECURITY_SPEC,
-} from '@sourceloop/core';
 
 const basePath = '/settings';
 
@@ -54,7 +46,7 @@ export class SettingsController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Settings model instance',
-        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Settings)}},
+        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Settings)}},
       },
     },
   })
@@ -62,7 +54,7 @@ export class SettingsController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Settings, {
+          schema: getModelSchemaRefSF(Settings, {
             title: 'NewSettings',
             exclude: ['id'],
           }),
@@ -108,7 +100,7 @@ export class SettingsController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Settings, {includeRelations: true}),
+              items: getModelSchemaRefSF(Settings, {includeRelations: true}),
             },
           },
         },
@@ -143,7 +135,7 @@ export class SettingsController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Settings, {partial: true}),
+          schema: getModelSchemaRefSF(Settings, {partial: true}),
         },
       },
     })
@@ -168,7 +160,7 @@ export class SettingsController {
         description: 'Settings model instance',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(Settings, {includeRelations: true}),
+            schema: getModelSchemaRefSF(Settings, {includeRelations: true}),
           },
         },
       },
@@ -204,7 +196,7 @@ export class SettingsController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Settings, {partial: true}),
+          schema: getModelSchemaRefSF(Settings, {partial: true}),
         },
       },
     })

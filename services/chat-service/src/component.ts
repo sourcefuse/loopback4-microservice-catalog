@@ -2,6 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import { Booter } from '@loopback/boot';
 import {
   Binding,
   Component,
@@ -10,33 +11,28 @@ import {
   inject,
   ProviderMap,
 } from '@loopback/core';
-import {Class, Model, Repository} from '@loopback/repository';
-import {RestApplication} from '@loopback/rest';
+import { Class, Model, Repository } from '@loopback/repository';
+import { RestApplication } from '@loopback/rest';
 import {
   BearerVerifierBindings,
   BearerVerifierComponent,
   BearerVerifierConfig,
   BearerVerifierType,
+  BooterBasePathMixin,
   CoreComponent,
+  CoreControllerBooter,
+  CoreModelBooter,
   JwtKeysRepository,
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
-import {JwtKeysRepository as SequelizeJwtKeysRepository} from '@sourceloop/core/sequelize';
-import {AuthenticationComponent} from 'loopback4-authentication';
+import { JwtKeysRepository as SequelizeJwtKeysRepository } from '@sourceloop/core/sequelize';
+import { AuthenticationComponent } from 'loopback4-authentication';
 import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import {
-  AttachmentFileController,
-  MessageController,
-  MessageMessageController,
-  MessageMessageRecipientController,
-  MessageRecipientController,
-  MessageRecipientMessageController,
-} from './controllers';
-import {ChatServiceBindings} from './keys';
+import { ChatServiceBindings } from './keys';
 import {
   AttachmentFile,
   AttachmentFileDto,
@@ -53,7 +49,7 @@ import {
   MessageRecipientRepository as MessageRecipientSequelizeRepository,
   MessageRepository as MessageSequelizeRepository,
 } from './repositories/sequelize';
-import {IChatServiceConfig} from './types';
+import { IChatServiceConfig } from './types';
 
 export class ChatServiceComponent implements Component {
   constructor(
@@ -85,6 +81,17 @@ export class ChatServiceComponent implements Component {
       // Mount default sequence if needed
       this.setupSequence();
     }
+       this.booters = [
+      BooterBasePathMixin(CoreModelBooter, __dirname, {
+        interface: ChatServiceComponent.name,
+      }),
+      BooterBasePathMixin(CoreControllerBooter, __dirname, {
+        dirs: ['controllers'],
+        extensions: ['.controller.js'],
+        nested: true,
+        interface: ChatServiceComponent.name,
+      }),
+    ];
     if (this.chatConfig?.useSequelize) {
       this.repositories = [
         MessageSequelizeRepository,
@@ -106,15 +113,6 @@ export class ChatServiceComponent implements Component {
       MessageRecipient,
       AttachmentFile,
       AttachmentFileDto,
-    ];
-
-    this.controllers = [
-      MessageController,
-      MessageRecipientController,
-      MessageMessageController,
-      MessageRecipientMessageController,
-      MessageMessageRecipientController,
-      AttachmentFileController,
     ];
   }
 
@@ -138,6 +136,7 @@ export class ChatServiceComponent implements Component {
    */
   controllers?: ControllerClass[];
 
+    booters?: Class<Booter>[];
   /**
    * Setup ServiceSequence by default if no other sequnce provided
    *

@@ -8,7 +8,6 @@ import {
 import {
   del,
   get,
-  getModelSchemaRef,
   HttpErrors,
   param,
   patch,
@@ -17,13 +16,13 @@ import {
   requestBody,
   response,
 } from '@loopback/rest';
-import {authenticate, STRATEGY} from 'loopback4-authentication';
-import {UserNotificationSettings} from '../models';
-import {UserNotificationSettingsRepository} from '../repositories';
+import { authenticate, STRATEGY } from 'loopback4-authentication';
+import { UserNotificationSettings } from '../models';
+import { UserNotificationSettingsRepository } from '../repositories';
 
-import {STATUS_CODE} from '@sourceloop/core';
-import {authorize} from 'loopback4-authorization';
-import {PermissionKey} from '../enums';
+import { getModelSchemaRefSF, STATUS_CODE } from '@sourceloop/core';
+import { authorize } from 'loopback4-authorization';
+import { PermissionKey } from '../enums';
 const basePath = '/user-notification-settings';
 export class UserNotificationSettingsController {
   constructor(
@@ -39,14 +38,14 @@ export class UserNotificationSettingsController {
   @response(STATUS_CODE.OK, {
     description: 'UserNotificationSettings model instance',
     content: {
-      'application/json': {schema: getModelSchemaRef(UserNotificationSettings)},
+      'application/json': {schema: getModelSchemaRefSF(UserNotificationSettings)},
     },
   })
   async create(
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(UserNotificationSettings, {
+          schema: getModelSchemaRefSF(UserNotificationSettings, {
             title: 'NewUserNotificationSettings',
             exclude: ['id'],
           }),
@@ -93,7 +92,7 @@ export class UserNotificationSettingsController {
       'application/json': {
         schema: {
           type: 'array',
-          items: getModelSchemaRef(UserNotificationSettings, {
+          items: getModelSchemaRefSF(UserNotificationSettings, {
             includeRelations: true,
           }),
         },
@@ -120,7 +119,7 @@ export class UserNotificationSettingsController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(UserNotificationSettings, {partial: true}),
+          schema: getModelSchemaRefSF(UserNotificationSettings, {partial: true}),
         },
       },
     })
@@ -140,7 +139,7 @@ export class UserNotificationSettingsController {
     description: 'UserNotificationSettings model instance',
     content: {
       'application/json': {
-        schema: getModelSchemaRef(UserNotificationSettings, {
+        schema: getModelSchemaRefSF(UserNotificationSettings, {
           includeRelations: true,
         }),
       },
@@ -165,7 +164,7 @@ export class UserNotificationSettingsController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(UserNotificationSettings, {partial: true}),
+          schema: getModelSchemaRefSF(UserNotificationSettings, {partial: true}),
         },
       },
     })

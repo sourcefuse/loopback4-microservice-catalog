@@ -2,6 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {Booter} from '@loopback/boot';
 import {
   Binding,
   Component,
@@ -17,7 +18,10 @@ import {
   BearerVerifierComponent,
   BearerVerifierConfig,
   BearerVerifierType,
+  BooterBasePathMixin,
   CoreComponent,
+  CoreControllerBooter,
+  CoreModelBooter,
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
@@ -26,11 +30,6 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import {
-  FeatureController,
-  FeatureValuesController,
-  StrategyController,
-} from './controllers';
 import {FeatureToggleBindings} from './keys';
 import {Feature, FeatureValues, Strategy} from './models';
 import {
@@ -70,18 +69,23 @@ export class FeatureToggleServiceComponent implements Component {
       // Mount default sequence if needed
       this.setupSequence();
     }
+    this.booters = [
+      BooterBasePathMixin(CoreModelBooter, __dirname, {
+        interface: FeatureToggleServiceComponent.name,
+      }),
+      BooterBasePathMixin(CoreControllerBooter, __dirname, {
+        dirs: ['controllers'],
+        extensions: ['.controller.js'],
+        nested: true,
+        interface: FeatureToggleServiceComponent.name,
+      }),
+    ];
     this.repositories = [
       FeatureRepository,
       FeatureValuesRepository,
       StrategyRepository,
     ];
     this.models = [Feature, FeatureValues, Strategy];
-
-    this.controllers = [
-      FeatureController,
-      FeatureValuesController,
-      StrategyController,
-    ];
   }
   providers?: ProviderMap = {};
 
@@ -97,6 +101,7 @@ export class FeatureToggleServiceComponent implements Component {
    * via `app.model()` API.
    */
   models?: Class<Model>[];
+  booters?: Class<Booter>[];
 
   /**
    * An array of controller classes

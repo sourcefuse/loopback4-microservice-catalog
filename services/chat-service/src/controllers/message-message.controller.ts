@@ -12,7 +12,6 @@ import {
 import {
   del,
   get,
-  getModelSchemaRef,
   getWhereSchemaFor,
   param,
   patch,
@@ -21,14 +20,15 @@ import {
 } from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   OPERATION_SECURITY_SPEC,
-  STATUS_CODE,
+  STATUS_CODE
 } from '@sourceloop/core';
-import {authenticate, STRATEGY} from 'loopback4-authentication';
-import {authorize} from 'loopback4-authorization';
-import {PermissionKey} from '../enums';
-import {Message} from '../models';
-import {MessageRepository} from '../repositories';
+import { authenticate, STRATEGY } from 'loopback4-authentication';
+import { authorize } from 'loopback4-authorization';
+import { PermissionKey } from '../enums';
+import { Message } from '../models';
+import { MessageRepository } from '../repositories';
 
 const basePath = '/messages/{id}/messages';
 
@@ -49,7 +49,7 @@ export class MessageMessageController {
         description: 'Array of Message has many Message',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: {type: 'array', items: getModelSchemaRef(Message)},
+            schema: {type: 'array', items: getModelSchemaRefSF(Message)},
           },
         },
       },
@@ -71,7 +71,7 @@ export class MessageMessageController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Message model instance',
-        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Message)}},
+        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Message)}},
       },
     },
   })
@@ -81,7 +81,7 @@ export class MessageMessageController {
       security: OPERATION_SECURITY_SPEC,
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Message, {
+          schema: getModelSchemaRefSF(Message, {
             title: 'NewMessageInMessage',
             exclude: ['id'],
             optional: ['parentMessageId'],
@@ -112,7 +112,7 @@ export class MessageMessageController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Message, {partial: true}),
+          schema: getModelSchemaRefSF(Message, {partial: true}),
         },
       },
     })

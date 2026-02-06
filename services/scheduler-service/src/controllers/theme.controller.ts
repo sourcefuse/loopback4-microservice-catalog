@@ -10,26 +10,18 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
+import {del, get, param, patch, post, put, requestBody} from '@loopback/rest';
 import {
-  del,
-  get,
-  getModelSchemaRef,
-  param,
-  patch,
-  post,
-  put,
-  requestBody,
-} from '@loopback/rest';
+  CONTENT_TYPE,
+  getModelSchemaRefSF,
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {Theme} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {ThemeRepository} from '../repositories';
-import {
-  STATUS_CODE,
-  CONTENT_TYPE,
-  OPERATION_SECURITY_SPEC,
-} from '@sourceloop/core';
 
 const basePath = '/themes';
 
@@ -50,7 +42,7 @@ export class ThemeController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Theme model instance',
-        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Theme)}},
+        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Theme)}},
       },
     },
   })
@@ -58,7 +50,7 @@ export class ThemeController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Theme, {
+          schema: getModelSchemaRefSF(Theme, {
             title: 'NewTheme',
             exclude: ['id'],
           }),
@@ -104,7 +96,7 @@ export class ThemeController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Theme, {includeRelations: true}),
+              items: getModelSchemaRefSF(Theme, {includeRelations: true}),
             },
           },
         },
@@ -134,7 +126,7 @@ export class ThemeController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Theme, {partial: true}),
+          schema: getModelSchemaRefSF(Theme, {partial: true}),
         },
       },
     })
@@ -157,7 +149,7 @@ export class ThemeController {
         description: 'Theme model instance',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(Theme, {includeRelations: true}),
+            schema: getModelSchemaRefSF(Theme, {includeRelations: true}),
           },
         },
       },
@@ -188,7 +180,7 @@ export class ThemeController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Theme, {partial: true}),
+          schema: getModelSchemaRefSF(Theme, {partial: true}),
         },
       },
     })

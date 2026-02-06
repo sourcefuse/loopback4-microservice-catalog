@@ -10,18 +10,13 @@ import {
   repository,
   WhereBuilder,
 } from '@loopback/repository';
-import {
-  get,
-  getModelSchemaRef,
-  HttpErrors,
-  param,
-  ResponseObject,
-} from '@loopback/rest';
+import {get, HttpErrors, param, ResponseObject} from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   IAuthUserWithPermissions,
-  STATUS_CODE,
   OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
 } from '@sourceloop/core';
 import {
   authenticate,
@@ -78,7 +73,7 @@ export class CollectorController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               properties: {
-                item: getModelSchemaRef(Thread),
+                item: getModelSchemaRefSF(Thread),
               },
             },
           },
@@ -160,7 +155,7 @@ export class CollectorController {
               properties: {
                 item: {
                   type: 'string',
-                  item: getModelSchemaRef(Message, {
+                  item: getModelSchemaRefSF(Message, {
                     exclude: ['deleted'],
                     includeRelations: true,
                   }),
@@ -252,7 +247,7 @@ export class CollectorController {
                 },
                 items: {
                   type: 'array',
-                  items: getModelSchemaRef(Thread),
+                  items: getModelSchemaRefSF(Thread),
                 },
               },
             },
@@ -319,7 +314,7 @@ export class CollectorController {
               },
               items: {
                 type: 'array',
-                schema: getModelSchemaRef(Message),
+                schema: getModelSchemaRefSF(Message),
               },
             },
             nullable: true,

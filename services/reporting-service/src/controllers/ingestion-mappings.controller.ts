@@ -1,16 +1,8 @@
 import {inject} from '@loopback/core';
 import {Count, CountSchema} from '@loopback/repository';
-import {
-  del,
-  get,
-  getModelSchemaRef,
-  param,
-  patch,
-  post,
-  requestBody,
-} from '@loopback/rest';
-import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
-import {STRATEGY, authenticate} from 'loopback4-authentication';
+import {del, get, param, patch, post, requestBody} from '@loopback/rest';
+import {CONTENT_TYPE, getModelSchemaRefSF, STATUS_CODE} from '@sourceloop/core';
+import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKeys} from '../enums';
 import {IngestionMapping as ingestionMappingsModel} from '../models';
@@ -52,7 +44,7 @@ export class IngestionMappingsController {
         description: 'Create a new mapping for data ingestion',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(ingestionMappingsModel),
+            schema: getModelSchemaRefSF(ingestionMappingsModel),
           },
         },
       },
@@ -71,7 +63,7 @@ export class IngestionMappingsController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(ingestionMappingsModel),
+          schema: getModelSchemaRefSF(ingestionMappingsModel),
         },
       },
     })
@@ -88,7 +80,7 @@ export class IngestionMappingsController {
         description: 'Get a list of mapping for data ingestion',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(ingestionMappingsModel),
+            schema: getModelSchemaRefSF(ingestionMappingsModel),
           },
         },
       },
@@ -113,7 +105,7 @@ export class IngestionMappingsController {
         description: 'Update a mapping for data ingestion',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(ingestionMappingsModel),
+            schema: getModelSchemaRefSF(ingestionMappingsModel),
           },
         },
       },
@@ -134,7 +126,7 @@ export class IngestionMappingsController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(ingestionMappingsModel, {partial: true}),
+          schema: getModelSchemaRefSF(ingestionMappingsModel, {partial: true}),
         },
       },
     })
@@ -151,7 +143,7 @@ export class IngestionMappingsController {
         description: 'Get a mapping for data ingestion',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(ingestionMappingsModel),
+            schema: getModelSchemaRefSF(ingestionMappingsModel),
           },
         },
       },
@@ -179,7 +171,7 @@ export class IngestionMappingsController {
         description: 'Delete a mapping for data ingestion',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(ingestionMappingsModel),
+            schema: getModelSchemaRefSF(ingestionMappingsModel),
           },
         },
       },

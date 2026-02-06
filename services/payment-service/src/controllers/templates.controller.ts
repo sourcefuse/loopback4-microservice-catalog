@@ -10,18 +10,10 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
-import {
-  del,
-  get,
-  getModelSchemaRef,
-  param,
-  patch,
-  post,
-  put,
-  requestBody,
-} from '@loopback/rest';
+import {del, get, param, patch, post, put, requestBody} from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
@@ -52,7 +44,9 @@ export class TemplatesController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Templates model instance',
-        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Templates)}},
+        content: {
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Templates)},
+        },
       },
     },
   })
@@ -60,7 +54,7 @@ export class TemplatesController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Templates, {
+          schema: getModelSchemaRefSF(Templates, {
             title: 'NewTemplates',
           }),
         },
@@ -103,7 +97,7 @@ export class TemplatesController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Templates, {includeRelations: true}),
+              items: getModelSchemaRefSF(Templates, {includeRelations: true}),
             },
           },
         },
@@ -136,7 +130,7 @@ export class TemplatesController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Templates, {partial: true}),
+          schema: getModelSchemaRefSF(Templates, {partial: true}),
         },
       },
     })
@@ -157,7 +151,7 @@ export class TemplatesController {
         description: 'Templates model instance',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(Templates, {includeRelations: true}),
+            schema: getModelSchemaRefSF(Templates, {includeRelations: true}),
           },
         },
       },
@@ -191,7 +185,7 @@ export class TemplatesController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Templates, {partial: true}),
+          schema: getModelSchemaRefSF(Templates, {partial: true}),
         },
       },
     })

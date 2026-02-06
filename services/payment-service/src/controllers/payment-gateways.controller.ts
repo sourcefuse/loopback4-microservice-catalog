@@ -10,18 +10,10 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
-import {
-  del,
-  get,
-  getModelSchemaRef,
-  param,
-  patch,
-  post,
-  put,
-  requestBody,
-} from '@loopback/rest';
+import {del, get, param, patch, post, put, requestBody} from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
@@ -49,7 +41,7 @@ export class PaymentGatewaysController {
       [STATUS_CODE.OK]: {
         description: 'PaymentGateways model instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(PaymentGateways)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(PaymentGateways)},
         },
       },
     },
@@ -58,7 +50,7 @@ export class PaymentGatewaysController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(PaymentGateways, {
+          schema: getModelSchemaRefSF(PaymentGateways, {
             title: 'NewPaymentGateways',
           }),
         },
@@ -101,7 +93,7 @@ export class PaymentGatewaysController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(PaymentGateways, {
+              items: getModelSchemaRefSF(PaymentGateways, {
                 includeRelations: true,
               }),
             },
@@ -133,7 +125,7 @@ export class PaymentGatewaysController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(PaymentGateways, {partial: true}),
+          schema: getModelSchemaRefSF(PaymentGateways, {partial: true}),
         },
       },
     })
@@ -154,7 +146,7 @@ export class PaymentGatewaysController {
         description: 'PaymentGateways model instance',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(PaymentGateways, {
+            schema: getModelSchemaRefSF(PaymentGateways, {
               includeRelations: true,
             }),
           },
@@ -187,7 +179,7 @@ export class PaymentGatewaysController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(PaymentGateways, {partial: true}),
+          schema: getModelSchemaRefSF(PaymentGateways, {partial: true}),
         },
       },
     })

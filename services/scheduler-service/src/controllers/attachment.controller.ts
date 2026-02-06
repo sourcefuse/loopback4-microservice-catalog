@@ -10,26 +10,18 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
+import {del, get, param, patch, post, put, requestBody} from '@loopback/rest';
 import {
-  del,
-  get,
-  getModelSchemaRef,
-  param,
-  patch,
-  post,
-  put,
-  requestBody,
-} from '@loopback/rest';
+  CONTENT_TYPE,
+  getModelSchemaRefSF,
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {Attachment} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {AttachmentRepository} from '../repositories';
-import {
-  STATUS_CODE,
-  CONTENT_TYPE,
-  OPERATION_SECURITY_SPEC,
-} from '@sourceloop/core';
 
 const basePath = '/attachments';
 
@@ -53,7 +45,9 @@ export class AttachmentController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Attachment model instance',
-        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Attachment)}},
+        content: {
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Attachment)},
+        },
       },
     },
   })
@@ -69,7 +63,7 @@ export class AttachmentController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Attachment, {
+          schema: getModelSchemaRefSF(Attachment, {
             title: 'NewAttachment',
             exclude: ['id'],
           }),
@@ -123,7 +117,7 @@ export class AttachmentController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Attachment, {includeRelations: true}),
+              items: getModelSchemaRefSF(Attachment, {includeRelations: true}),
             },
           },
         },
@@ -158,7 +152,7 @@ export class AttachmentController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Attachment, {partial: true}),
+          schema: getModelSchemaRefSF(Attachment, {partial: true}),
         },
       },
     })
@@ -184,7 +178,7 @@ export class AttachmentController {
         description: 'Attachment model instance',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(Attachment, {includeRelations: true}),
+            schema: getModelSchemaRefSF(Attachment, {includeRelations: true}),
           },
         },
       },
@@ -220,7 +214,7 @@ export class AttachmentController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Attachment, {partial: true}),
+          schema: getModelSchemaRefSF(Attachment, {partial: true}),
         },
       },
     })

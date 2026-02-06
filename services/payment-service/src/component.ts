@@ -23,15 +23,6 @@ import {
   TenantUtilitiesComponent,
 } from '@sourceloop/core';
 import {JwtKeysRepository as SequelizeJwtKeysRepository} from '@sourceloop/core/sequelize';
-import {
-  OrdersController,
-  PaymentGatewaysController,
-  SubscriptionTransactionsController,
-  SubscriptionsController,
-  TemplatesController,
-  TransactionSubscriptionsController,
-  TransactionsController,
-} from './controllers';
 import {PaymentServiceBindings, PaymentServiceComponentBindings} from './keys';
 import {
   Orders,
@@ -76,6 +67,7 @@ import {
   PaymentServiceComponentOptions,
   PaymentServiceConfig,
 } from './types';
+import { Booter } from '@loopback/boot';
 
 // Configure the binding for PaymentServiceComponent
 @injectable({
@@ -89,6 +81,7 @@ export class PaymentServiceComponent implements Component {
    * via `app.model()` API.
    */
   models?: Class<Model>[];
+  booters?: Class<Booter>[];
 
   /**
    * An array of controller classes
@@ -132,15 +125,6 @@ export class PaymentServiceComponent implements Component {
       ];
     }
 
-    this.controllers = [
-      OrdersController,
-      TransactionsController,
-      PaymentGatewaysController,
-      TemplatesController,
-      SubscriptionsController,
-      SubscriptionTransactionsController,
-      TransactionSubscriptionsController,
-    ];
     if (this.paymentConfig?.useSequelize) {
       this.repositories = [
         OrdersSequelizeRepository,

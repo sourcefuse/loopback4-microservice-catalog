@@ -10,26 +10,18 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
+import {del, get, param, patch, post, put, requestBody} from '@loopback/rest';
 import {
-  del,
-  get,
-  getModelSchemaRef,
-  param,
-  patch,
-  post,
-  put,
-  requestBody,
-} from '@loopback/rest';
+  CONTENT_TYPE,
+  getModelSchemaRefSF,
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {Attendee} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {AttendeeRepository} from '../repositories';
-import {
-  STATUS_CODE,
-  CONTENT_TYPE,
-  OPERATION_SECURITY_SPEC,
-} from '@sourceloop/core';
 
 const basePath = '/attendees';
 
@@ -53,7 +45,7 @@ export class AttendeeController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Attendee model instance',
-        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Attendee)}},
+        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Attendee)}},
       },
     },
   })
@@ -61,7 +53,7 @@ export class AttendeeController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Attendee, {
+          schema: getModelSchemaRefSF(Attendee, {
             title: 'NewAttendee',
             exclude: ['id'],
           }),
@@ -107,7 +99,7 @@ export class AttendeeController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Attendee, {includeRelations: true}),
+              items: getModelSchemaRefSF(Attendee, {includeRelations: true}),
             },
           },
         },
@@ -142,7 +134,7 @@ export class AttendeeController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Attendee, {partial: true}),
+          schema: getModelSchemaRefSF(Attendee, {partial: true}),
         },
       },
     })
@@ -165,7 +157,7 @@ export class AttendeeController {
         description: 'Attendee model instance',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(Attendee, {includeRelations: true}),
+            schema: getModelSchemaRefSF(Attendee, {includeRelations: true}),
           },
         },
       },
@@ -200,7 +192,7 @@ export class AttendeeController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Attendee, {partial: true}),
+          schema: getModelSchemaRefSF(Attendee, {partial: true}),
         },
       },
     })

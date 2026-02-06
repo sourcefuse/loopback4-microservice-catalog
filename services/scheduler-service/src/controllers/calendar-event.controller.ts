@@ -13,7 +13,6 @@ import {
 import {
   del,
   get,
-  getModelSchemaRef,
   getWhereSchemaFor,
   HttpErrors,
   param,
@@ -23,6 +22,7 @@ import {
 } from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
@@ -70,7 +70,7 @@ export class CalendarEventController {
         description: 'Array of Calendar has many Event',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: {type: 'array', items: getModelSchemaRef(Event)},
+            schema: {type: 'array', items: getModelSchemaRefSF(Event)},
           },
         },
       },
@@ -136,7 +136,7 @@ export class CalendarEventController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Calendar model instance',
-        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Event)}},
+        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Event)}},
       },
     },
   })
@@ -145,7 +145,7 @@ export class CalendarEventController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Event, {
+          schema: getModelSchemaRefSF(Event, {
             title: 'NewEventInCalendar',
             exclude: ['id'],
             optional: ['calendarId'],
@@ -178,7 +178,7 @@ export class CalendarEventController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Event, {partial: true}),
+          schema: getModelSchemaRefSF(Event, {partial: true}),
         },
       },
     })

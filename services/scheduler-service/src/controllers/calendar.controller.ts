@@ -14,7 +14,6 @@ import {
 import {
   del,
   get,
-  getModelSchemaRef,
   HttpErrors,
   param,
   patch,
@@ -24,6 +23,7 @@ import {
 } from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   IAuthUserWithPermissions,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
@@ -85,7 +85,7 @@ export class CalendarController {
     responses: {
       [STATUS_CODE.OK]: {
         description: calendarModelInstance,
-        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Calendar)}},
+        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Calendar)}},
       },
     },
   })
@@ -93,7 +93,7 @@ export class CalendarController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(CalendarDTO, {
+          schema: getModelSchemaRefSF(CalendarDTO, {
             title: 'NewCalendar',
             exclude: ['id'],
           }),
@@ -120,7 +120,7 @@ export class CalendarController {
       [STATUS_CODE.OK]: {
         description: calendarModelInstance,
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(CalendarDTO)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(CalendarDTO)},
         },
       },
     },
@@ -129,7 +129,7 @@ export class CalendarController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(CalendarDTO, {
+          schema: getModelSchemaRefSF(CalendarDTO, {
             title: 'NewCalendar',
             exclude: ['id'],
           }),
@@ -221,7 +221,7 @@ export class CalendarController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Calendar, {includeRelations: true}),
+              items: getModelSchemaRefSF(Calendar, {includeRelations: true}),
             },
           },
         },
@@ -256,7 +256,7 @@ export class CalendarController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Calendar, {partial: true}),
+          schema: getModelSchemaRefSF(Calendar, {partial: true}),
         },
       },
     })
@@ -281,7 +281,7 @@ export class CalendarController {
         description: calendarModelInstance,
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(Calendar, {includeRelations: true}),
+            schema: getModelSchemaRefSF(Calendar, {includeRelations: true}),
           },
         },
       },
@@ -317,7 +317,7 @@ export class CalendarController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Calendar, {partial: true}),
+          schema: getModelSchemaRefSF(Calendar, {partial: true}),
         },
       },
     })

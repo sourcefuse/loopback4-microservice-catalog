@@ -2698,6 +2698,174 @@ HTTPBearer
 
 # Schemas
 
+<h2 id="tocS_Strategy">Strategy</h2>
+<!-- backwards compatibility -->
+<a id="schemastrategy"></a>
+<a id="schema_Strategy"></a>
+<a id="tocSstrategy"></a>
+<a id="tocsstrategy"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "name": "string",
+  "key": "string",
+  "priority": 0
+}
+
+```
+
+Strategy
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|name|string|true|none|none|
+|key|string|true|none|none|
+|priority|number|false|none|none|
+
+<h2 id="tocS_NewStrategy">NewStrategy</h2>
+<!-- backwards compatibility -->
+<a id="schemanewstrategy"></a>
+<a id="schema_NewStrategy"></a>
+<a id="tocSnewstrategy"></a>
+<a id="tocsnewstrategy"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "name": "string",
+  "key": "string",
+  "priority": 0
+}
+
+```
+
+NewStrategy
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|name|string|true|none|none|
+|key|string|true|none|none|
+|priority|number|false|none|none|
+
+<h2 id="tocS_StrategyWithRelations">StrategyWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemastrategywithrelations"></a>
+<a id="schema_StrategyWithRelations"></a>
+<a id="tocSstrategywithrelations"></a>
+<a id="tocsstrategywithrelations"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "name": "string",
+  "key": "string",
+  "priority": 0
+}
+
+```
+
+StrategyWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|name|string|true|none|none|
+|key|string|true|none|none|
+|priority|number|false|none|none|
+
+<h2 id="tocS_StrategyPartial">StrategyPartial</h2>
+<!-- backwards compatibility -->
+<a id="schemastrategypartial"></a>
+<a id="schema_StrategyPartial"></a>
+<a id="tocSstrategypartial"></a>
+<a id="tocsstrategypartial"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "name": "string",
+  "key": "string",
+  "priority": 0
+}
+
+```
+
+StrategyPartial
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|name|string|false|none|none|
+|key|string|false|none|none|
+|priority|number|false|none|none|
+
 <h2 id="tocS_Feature">Feature</h2>
 <!-- backwards compatibility -->
 <a id="schemafeature"></a>
@@ -3073,174 +3241,6 @@ FeatureValuesPartial
 |strategyEntityId|string|false|none|none|
 |status|boolean|false|none|none|
 |value|string|false|none|none|
-
-<h2 id="tocS_Strategy">Strategy</h2>
-<!-- backwards compatibility -->
-<a id="schemastrategy"></a>
-<a id="schema_Strategy"></a>
-<a id="tocSstrategy"></a>
-<a id="tocsstrategy"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "key": "string",
-  "priority": 0
-}
-
-```
-
-Strategy
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|name|string|true|none|none|
-|key|string|true|none|none|
-|priority|number|false|none|none|
-
-<h2 id="tocS_NewStrategy">NewStrategy</h2>
-<!-- backwards compatibility -->
-<a id="schemanewstrategy"></a>
-<a id="schema_NewStrategy"></a>
-<a id="tocSnewstrategy"></a>
-<a id="tocsnewstrategy"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "key": "string",
-  "priority": 0
-}
-
-```
-
-NewStrategy
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|name|string|true|none|none|
-|key|string|true|none|none|
-|priority|number|false|none|none|
-
-<h2 id="tocS_StrategyWithRelations">StrategyWithRelations</h2>
-<!-- backwards compatibility -->
-<a id="schemastrategywithrelations"></a>
-<a id="schema_StrategyWithRelations"></a>
-<a id="tocSstrategywithrelations"></a>
-<a id="tocsstrategywithrelations"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "key": "string",
-  "priority": 0
-}
-
-```
-
-StrategyWithRelations
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|name|string|true|none|none|
-|key|string|true|none|none|
-|priority|number|false|none|none|
-
-<h2 id="tocS_StrategyPartial">StrategyPartial</h2>
-<!-- backwards compatibility -->
-<a id="schemastrategypartial"></a>
-<a id="schema_StrategyPartial"></a>
-<a id="tocSstrategypartial"></a>
-<a id="tocsstrategypartial"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "key": "string",
-  "priority": 0
-}
-
-```
-
-StrategyPartial
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|name|string|false|none|none|
-|key|string|false|none|none|
-|priority|number|false|none|none|
 
 <h2 id="tocS_loopback.Count">loopback.Count</h2>
 <!-- backwards compatibility -->

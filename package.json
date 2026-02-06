@@ -62,7 +62,8 @@
     },
     "read-package-json": {
       "glob": "^10.5.0"
-    }
+    },
+    "fast-xml-parser": "^5.3.4"
   },
   "dependencies": {
     "@lavamoat/allow-scripts": "^3.4.1",

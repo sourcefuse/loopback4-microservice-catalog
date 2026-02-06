@@ -2,7 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {BindingScope, Getter, bind, inject} from '@loopback/core';
+import { BindingScope, Getter, bind, inject } from '@loopback/core';
 import {
   Count,
   CountSchema,
@@ -15,7 +15,6 @@ import {
   del,
   get,
   getFilterSchemaFor,
-  getModelSchemaRef,
   getWhereSchemaFor,
   param,
   patch,
@@ -24,15 +23,16 @@ import {
 } from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
-import {AuthErrorKeys, STRATEGY, authenticate} from 'loopback4-authentication';
-import {authorize} from 'loopback4-authorization';
-import {INotification, NotificationBindings} from 'loopback4-notifications';
-import {ErrorKeys} from '../enums/error-keys.enum';
-import {PermissionKey} from '../enums/permission-key.enum';
-import {NotifServiceBindings} from '../keys';
+import { AuthErrorKeys, STRATEGY, authenticate } from 'loopback4-authentication';
+import { authorize } from 'loopback4-authorization';
+import { INotification, NotificationBindings } from 'loopback4-notifications';
+import { ErrorKeys } from '../enums/error-keys.enum';
+import { PermissionKey } from '../enums/permission-key.enum';
+import { NotifServiceBindings } from '../keys';
 import {
   Notification,
   NotificationDto,
@@ -43,8 +43,8 @@ import {
   NotificationRepository,
   NotificationUserRepository,
 } from '../repositories';
-import {ProcessNotificationService} from '../services';
-import {INotificationFilterFunc, INotificationUserManager} from '../types';
+import { ProcessNotificationService } from '../services';
+import { INotificationFilterFunc, INotificationUserManager } from '../types';
 const basePath = '/notifications';
 
 const maxBodyLen = parseInt(String(process.env.MAX_LENGTH)) ?? 1000;
@@ -79,7 +79,7 @@ export class NotificationController {
         description:
           'Notification model instance, This API end point will be used to send the notification to the user.',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Notification)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Notification)},
         },
       },
     },
@@ -90,7 +90,7 @@ export class NotificationController {
         'This API is used to send notifications, the request body contains the object of notification model.',
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Notification, {
+          schema: getModelSchemaRefSF(Notification, {
             exclude: ['id', 'isDraft'],
           }),
         },
@@ -133,7 +133,7 @@ export class NotificationController {
           'This API is used to send notification by grouping by given key in the end point.',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(NotificationDto, {
+            schema: getModelSchemaRefSF(NotificationDto, {
               exclude: ['id'],
             }),
           },
@@ -145,7 +145,7 @@ export class NotificationController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(NotificationDto, {
+          schema: getModelSchemaRefSF(NotificationDto, {
             exclude: ['id', 'groupKey'],
           }),
         },
@@ -186,7 +186,7 @@ export class NotificationController {
           'This API is used to draft notifications, here in case isDraft .',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(Notification, {
+            schema: getModelSchemaRefSF(Notification, {
               exclude: ['id', 'isDraft'],
             }),
           },
@@ -198,7 +198,7 @@ export class NotificationController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Notification, {
+          schema: getModelSchemaRefSF(Notification, {
             exclude: ['id', 'isDraft'],
           }),
         },
@@ -252,7 +252,7 @@ export class NotificationController {
           'This API is used to send notifications for given Notification Id.',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(NotificationDto, {
+            schema: getModelSchemaRefSF(NotificationDto, {
               exclude: [
                 'id',
                 'groupKey',
@@ -271,7 +271,7 @@ export class NotificationController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(NotificationDto, {
+          schema: getModelSchemaRefSF(NotificationDto, {
             exclude: ['id', 'groupKey', 'receiver', 'subject', 'body', 'type'],
           }),
         },
@@ -311,7 +311,7 @@ export class NotificationController {
           'This API is used to send notifications for given search criteria.',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(NotificationSettingsDto, {}),
+            schema: getModelSchemaRefSF(NotificationSettingsDto, {}),
           },
         },
       },
@@ -321,7 +321,7 @@ export class NotificationController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(NotificationSettingsDto, {}),
+          schema: getModelSchemaRefSF(NotificationSettingsDto, {}),
         },
       },
     })
@@ -347,7 +347,7 @@ export class NotificationController {
         content: {
           [CONTENT_TYPE.JSON]: {
             type: 'array',
-            items: getModelSchemaRef(Notification),
+            items: getModelSchemaRefSF(Notification),
           },
         },
       },
@@ -359,7 +359,7 @@ export class NotificationController {
         [CONTENT_TYPE.JSON]: {
           schema: {
             type: 'array',
-            items: getModelSchemaRef(Notification, {exclude: ['id']}),
+            items: getModelSchemaRefSF(Notification, {exclude: ['id']}),
           },
         },
       },
@@ -420,7 +420,7 @@ export class NotificationController {
           'Array of Notification model instances, To get the notifications',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: {type: 'array', items: getModelSchemaRef(Notification)},
+            schema: {type: 'array', items: getModelSchemaRefSF(Notification)},
           },
         },
       },
@@ -445,7 +445,7 @@ export class NotificationController {
       [STATUS_CODE.OK]: {
         description: ', to get the notification by ID',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Notification)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Notification)},
         },
       },
     },
@@ -476,7 +476,7 @@ export class NotificationController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Notification, {partial: true}),
+          schema: getModelSchemaRefSF(Notification, {partial: true}),
         },
       },
     })
@@ -509,7 +509,7 @@ export class NotificationController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Notification, {partial: true}),
+          schema: getModelSchemaRefSF(Notification, {partial: true}),
         },
       },
     })

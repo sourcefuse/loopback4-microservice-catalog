@@ -2,6 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {Booter} from '@loopback/boot';
 import {
   Binding,
   Component,
@@ -18,7 +19,10 @@ import {
   BearerVerifierComponent,
   BearerVerifierConfig,
   BearerVerifierType,
+  BooterBasePathMixin,
   CoreComponent,
+  CoreControllerBooter,
+  CoreModelBooter,
   IServiceConfig,
   JwtKeysRepository,
   SECURITY_SCHEME_SPEC,
@@ -30,21 +34,6 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import {
-  AttachmentController,
-  AttendeeController,
-  CalendarController,
-  CalendarEventController,
-  CalendarSubscriptionController,
-  CalendarWorkingHourController,
-  EventAttendeeController,
-  EventController,
-  SettingsController,
-  SubscriptionController,
-  ThemeController,
-  WorkingHourController,
-} from './controllers';
-import {EventAttachmentController} from './controllers/event-attachment.controller';
 import {CoreSchedulerBindings, SchedulerBindings} from './keys';
 import {
   Attachment,
@@ -165,21 +154,16 @@ export class SchedulerServiceComponent implements Component {
     ];
 
     this.providers = {};
-
-    this.controllers = [
-      AttachmentController,
-      AttendeeController,
-      CalendarController,
-      EventController,
-      SettingsController,
-      SubscriptionController,
-      ThemeController,
-      WorkingHourController,
-      CalendarEventController,
-      CalendarSubscriptionController,
-      CalendarWorkingHourController,
-      EventAttachmentController,
-      EventAttendeeController,
+    this.booters = [
+      BooterBasePathMixin(CoreModelBooter, __dirname, {
+        interface: SchedulerServiceComponent.name,
+      }),
+      BooterBasePathMixin(CoreControllerBooter, __dirname, {
+        dirs: ['controllers'],
+        extensions: ['.controller.js'],
+        nested: true,
+        interface: SchedulerServiceComponent.name,
+      }),
     ];
   }
 
@@ -203,6 +187,7 @@ export class SchedulerServiceComponent implements Component {
    * An array of controller classes
    */
   controllers?: ControllerClass[];
+  booters?: Class<Booter>[];
 
   /**
    * Setup ServiceSequence by default if no other sequnce provided

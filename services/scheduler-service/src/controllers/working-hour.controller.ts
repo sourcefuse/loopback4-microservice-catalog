@@ -10,26 +10,18 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
+import {del, get, param, patch, post, put, requestBody} from '@loopback/rest';
 import {
-  del,
-  get,
-  getModelSchemaRef,
-  param,
-  patch,
-  post,
-  put,
-  requestBody,
-} from '@loopback/rest';
+  CONTENT_TYPE,
+  getModelSchemaRefSF,
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {WorkingHour} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {WorkingHourRepository} from '../repositories';
-import {
-  STATUS_CODE,
-  CONTENT_TYPE,
-  OPERATION_SECURITY_SPEC,
-} from '@sourceloop/core';
 
 const basePath = '/working-hours';
 
@@ -54,7 +46,7 @@ export class WorkingHourController {
       [STATUS_CODE.OK]: {
         description: 'WorkingHour model instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(WorkingHour)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(WorkingHour)},
         },
       },
     },
@@ -63,7 +55,7 @@ export class WorkingHourController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(WorkingHour, {
+          schema: getModelSchemaRefSF(WorkingHour, {
             title: 'NewWorkingHour',
             exclude: ['id'],
           }),
@@ -117,7 +109,7 @@ export class WorkingHourController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(WorkingHour, {includeRelations: true}),
+              items: getModelSchemaRefSF(WorkingHour, {includeRelations: true}),
             },
           },
         },
@@ -152,7 +144,7 @@ export class WorkingHourController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(WorkingHour, {partial: true}),
+          schema: getModelSchemaRefSF(WorkingHour, {partial: true}),
         },
       },
     })
@@ -180,7 +172,7 @@ export class WorkingHourController {
         description: 'WorkingHour model instance',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(WorkingHour, {includeRelations: true}),
+            schema: getModelSchemaRefSF(WorkingHour, {includeRelations: true}),
           },
         },
       },
@@ -216,7 +208,7 @@ export class WorkingHourController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(WorkingHour, {partial: true}),
+          schema: getModelSchemaRefSF(WorkingHour, {partial: true}),
         },
       },
     })

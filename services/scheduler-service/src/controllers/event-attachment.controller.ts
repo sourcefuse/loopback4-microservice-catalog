@@ -12,23 +12,23 @@ import {
 import {
   del,
   get,
-  getModelSchemaRef,
   getWhereSchemaFor,
   param,
   patch,
   post,
   requestBody,
 } from '@loopback/rest';
+import {
+  CONTENT_TYPE,
+  getModelSchemaRefSF,
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {Attachment, Event} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {EventRepository} from '../repositories';
-import {
-  STATUS_CODE,
-  CONTENT_TYPE,
-  OPERATION_SECURITY_SPEC,
-} from '@sourceloop/core';
 
 const basePath = '/events/{id}/attachments';
 
@@ -55,7 +55,7 @@ export class EventAttachmentController {
         description: 'Array of Event has many Attachment',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: {type: 'array', items: getModelSchemaRef(Attachment)},
+            schema: {type: 'array', items: getModelSchemaRefSF(Attachment)},
           },
         },
       },
@@ -85,7 +85,7 @@ export class EventAttachmentController {
       [STATUS_CODE.OK]: {
         description: 'Event model instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Attachment)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Attachment)},
         },
       },
     },
@@ -95,7 +95,7 @@ export class EventAttachmentController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Attachment, {
+          schema: getModelSchemaRefSF(Attachment, {
             title: 'NewAttachmentInEvent',
             exclude: ['id'],
             optional: ['eventId'],
@@ -132,7 +132,7 @@ export class EventAttachmentController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Attachment, {partial: true}),
+          schema: getModelSchemaRefSF(Attachment, {partial: true}),
         },
       },
     })

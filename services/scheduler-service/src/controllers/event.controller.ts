@@ -14,7 +14,6 @@ import {
 import {
   del,
   get,
-  getModelSchemaRef,
   HttpErrors,
   param,
   patch,
@@ -22,26 +21,27 @@ import {
   put,
   requestBody,
 } from '@loopback/rest';
+import {
+  CONTENT_TYPE,
+  getModelSchemaRefSF,
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {Attachment, Attendee, Event, EventAttendeeView} from '../models';
+import {ErrorKeys} from '../models/enums/error-keys';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {EventDTO} from '../models/event.dto';
+import {FreeBusyDTO} from '../models/free-busy.dto';
 import {
   AttachmentRepository,
   AttendeeRepository,
-  EventRepository,
   EventAttendeeViewRepository,
+  EventRepository,
 } from '../repositories';
-import {ValidatorService} from '../services/validator.service';
-import {ErrorKeys} from '../models/enums/error-keys';
-import {
-  STATUS_CODE,
-  CONTENT_TYPE,
-  OPERATION_SECURITY_SPEC,
-} from '@sourceloop/core';
-import {FreeBusyDTO} from '../models/free-busy.dto';
 import {EventService} from '../services';
+import {ValidatorService} from '../services/validator.service';
 
 const basePath = '/events';
 
@@ -76,7 +76,7 @@ export class EventController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Event model instance',
-        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Event)}},
+        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Event)}},
       },
     },
   })
@@ -84,7 +84,7 @@ export class EventController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(EventDTO, {
+          schema: getModelSchemaRefSF(EventDTO, {
             title: 'NewEvent',
             exclude: ['id'],
           }),
@@ -147,7 +147,7 @@ export class EventController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Event model freeBusy',
-        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Event)}},
+        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Event)}},
       },
     },
   })
@@ -155,7 +155,7 @@ export class EventController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(FreeBusyDTO, {
+          schema: getModelSchemaRefSF(FreeBusyDTO, {
             title: 'FreeBusyRequest',
           }),
         },
@@ -236,7 +236,7 @@ export class EventController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Event, {includeRelations: true}),
+              items: getModelSchemaRefSF(Event, {includeRelations: true}),
             },
           },
         },
@@ -281,7 +281,7 @@ export class EventController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Event, {partial: true}),
+          schema: getModelSchemaRefSF(Event, {partial: true}),
         },
       },
     })
@@ -306,7 +306,7 @@ export class EventController {
         description: 'Event model instance',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(Event, {includeRelations: true}),
+            schema: getModelSchemaRefSF(Event, {includeRelations: true}),
           },
         },
       },
@@ -341,7 +341,7 @@ export class EventController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Event, {partial: true}),
+          schema: getModelSchemaRefSF(Event, {partial: true}),
         },
       },
     })

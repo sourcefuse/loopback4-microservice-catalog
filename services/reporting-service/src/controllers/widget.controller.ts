@@ -1,14 +1,6 @@
 import {Filter, repository} from '@loopback/repository';
-import {
-  del,
-  get,
-  getModelSchemaRef,
-  param,
-  patch,
-  post,
-  requestBody,
-} from '@loopback/rest';
-import {CONTENT_TYPE} from '@sourceloop/core';
+import {del, get, param, patch, post, requestBody} from '@loopback/rest';
+import {CONTENT_TYPE, getModelSchemaRefSF} from '@sourceloop/core';
 import {STRATEGY, authenticate} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKeys} from '../enums';
@@ -41,7 +33,7 @@ export class WidgetController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Widget, {
+          schema: getModelSchemaRefSF(Widget, {
             title: 'new Widget',
             exclude: ['id'],
           }),

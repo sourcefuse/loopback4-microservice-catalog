@@ -2,6 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {Booter} from '@loopback/boot';
 import {
   Binding,
   Component,
@@ -16,7 +17,10 @@ import {
   BearerVerifierComponent,
   BearerVerifierConfig,
   BearerVerifierType,
+  BooterBasePathMixin,
   CoreComponent,
+  CoreControllerBooter,
+  CoreModelBooter,
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
@@ -25,11 +29,6 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import {
-  CollectorController,
-  OriginatorController,
-  ReplyAndForwardController,
-} from './controllers';
 import {InMailBindings} from './keys';
 import {Attachment, Group, Message, Meta, Thread} from './models';
 import {
@@ -51,6 +50,8 @@ export class InMailServiceComponent implements Component {
    */
   models?: Class<Model>[];
 
+  booters?: Class<Booter>[];
+
   /**
    * An array of controller classes
    */
@@ -64,11 +65,6 @@ export class InMailServiceComponent implements Component {
   ) {
     this.application.component(CoreComponent);
     this.models = [Meta, Thread, Message, Group, Attachment];
-    this.controllers = [
-      OriginatorController,
-      CollectorController,
-      ReplyAndForwardController,
-    ];
     this.repositories = [
       MetaRepository,
       ThreadRepository,
@@ -82,7 +78,17 @@ export class InMailServiceComponent implements Component {
       // Mount default sequence if needed
       this.setupSequence();
     }
-
+    this.booters = [
+      BooterBasePathMixin(CoreModelBooter, __dirname, {
+        interface: InMailServiceComponent.name,
+      }),
+      BooterBasePathMixin(CoreControllerBooter, __dirname, {
+        dirs: ['controllers'],
+        extensions: ['.controller.js'],
+        nested: true,
+        interface: InMailServiceComponent.name,
+      }),
+    ];
     // Set up default home page
     this.application.component(AuthenticationComponent);
     this.application.bind(BearerVerifierBindings.Config).to({

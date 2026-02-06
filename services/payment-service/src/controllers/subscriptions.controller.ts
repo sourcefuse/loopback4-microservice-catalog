@@ -10,18 +10,10 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
-import {
-  del,
-  get,
-  getModelSchemaRef,
-  param,
-  patch,
-  post,
-  put,
-  requestBody,
-} from '@loopback/rest';
+import {del, get, param, patch, post, put, requestBody} from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
@@ -52,7 +44,7 @@ export class SubscriptionsController {
       [STATUS_CODE.OK]: {
         description: 'Subscriptions model instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Subscriptions)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Subscriptions)},
         },
       },
     },
@@ -61,7 +53,7 @@ export class SubscriptionsController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Subscriptions, {
+          schema: getModelSchemaRefSF(Subscriptions, {
             title: 'NewSubscriptions',
           }),
         },
@@ -110,7 +102,9 @@ export class SubscriptionsController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Subscriptions, {includeRelations: true}),
+              items: getModelSchemaRefSF(Subscriptions, {
+                includeRelations: true,
+              }),
             },
           },
         },
@@ -143,7 +137,7 @@ export class SubscriptionsController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Subscriptions, {partial: true}),
+          schema: getModelSchemaRefSF(Subscriptions, {partial: true}),
         },
       },
     })
@@ -167,7 +161,9 @@ export class SubscriptionsController {
         description: 'Subscriptions model instance',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(Subscriptions, {includeRelations: true}),
+            schema: getModelSchemaRefSF(Subscriptions, {
+              includeRelations: true,
+            }),
           },
         },
       },
@@ -201,7 +197,7 @@ export class SubscriptionsController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Subscriptions, {partial: true}),
+          schema: getModelSchemaRefSF(Subscriptions, {partial: true}),
         },
       },
     })

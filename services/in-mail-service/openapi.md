@@ -2349,56 +2349,6 @@ false
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
 
-<h2 id="tocS_Attachment">Attachment</h2>
-<!-- backwards compatibility -->
-<a id="schemaattachment"></a>
-<a id="schema_Attachment"></a>
-<a id="tocSattachment"></a>
-<a id="tocsattachment"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "path": "string",
-  "thumbnail": "string",
-  "mime": "string",
-  "extId": "string",
-  "extMetadata": {},
-  "messageId": "string"
-}
-
-```
-
-Attachment
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|name|string|true|none|none|
-|path|string|true|none|none|
-|thumbnail|string|true|none|none|
-|mime|string|true|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-|messageId|string|false|none|none|
-
 <h2 id="tocS_AttachmentPartial">AttachmentPartial</h2>
 <!-- backwards compatibility -->
 <a id="schemaattachmentpartial"></a>
@@ -2448,62 +2398,6 @@ AttachmentPartial
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
 |messageId|string|false|none|none|
-
-<h2 id="tocS_IdArraysPartial">IdArraysPartial</h2>
-<!-- backwards compatibility -->
-<a id="schemaidarrayspartial"></a>
-<a id="schema_IdArraysPartial"></a>
-<a id="tocSidarrayspartial"></a>
-<a id="tocsidarrayspartial"></a>
-
-```json
-{
-  "messageIds": [
-    "string"
-  ],
-  "threadIds": [
-    "string"
-  ]
-}
-
-```
-
-IdArraysPartial
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|messageIds|[string]|false|none|none|
-|threadIds|[string]|false|none|none|
-
-<h2 id="tocS_IdArrays">IdArrays</h2>
-<!-- backwards compatibility -->
-<a id="schemaidarrays"></a>
-<a id="schema_IdArrays"></a>
-<a id="tocSidarrays"></a>
-<a id="tocsidarrays"></a>
-
-```json
-{
-  "messageIds": [
-    "string"
-  ],
-  "threadIds": [
-    "string"
-  ]
-}
-
-```
-
-IdArrays
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|messageIds|[string]|false|none|none|
-|threadIds|[string]|false|none|none|
 
 <h2 id="tocS_MetaPartial">MetaPartial</h2>
 <!-- backwards compatibility -->
@@ -2622,6 +2516,112 @@ GroupPartial
 |visibility|unread|
 |visibility|important|
 |visibility|not-important|
+
+<h2 id="tocS_Attachment">Attachment</h2>
+<!-- backwards compatibility -->
+<a id="schemaattachment"></a>
+<a id="schema_Attachment"></a>
+<a id="tocSattachment"></a>
+<a id="tocsattachment"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "name": "string",
+  "path": "string",
+  "thumbnail": "string",
+  "mime": "string",
+  "extId": "string",
+  "extMetadata": {},
+  "messageId": "string"
+}
+
+```
+
+Attachment
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|name|string|true|none|none|
+|path|string|true|none|none|
+|thumbnail|string|true|none|none|
+|mime|string|true|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+|messageId|string|false|none|none|
+
+<h2 id="tocS_IdArraysPartial">IdArraysPartial</h2>
+<!-- backwards compatibility -->
+<a id="schemaidarrayspartial"></a>
+<a id="schema_IdArraysPartial"></a>
+<a id="tocSidarrayspartial"></a>
+<a id="tocsidarrayspartial"></a>
+
+```json
+{
+  "messageIds": [
+    "string"
+  ],
+  "threadIds": [
+    "string"
+  ]
+}
+
+```
+
+IdArraysPartial
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|messageIds|[string]|false|none|none|
+|threadIds|[string]|false|none|none|
+
+<h2 id="tocS_IdArrays">IdArrays</h2>
+<!-- backwards compatibility -->
+<a id="schemaidarrays"></a>
+<a id="schema_IdArrays"></a>
+<a id="tocSidarrays"></a>
+<a id="tocsidarrays"></a>
+
+```json
+{
+  "messageIds": [
+    "string"
+  ],
+  "threadIds": [
+    "string"
+  ]
+}
+
+```
+
+IdArrays
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|messageIds|[string]|false|none|none|
+|threadIds|[string]|false|none|none|
 
 <h2 id="tocS_Attachment add response schema">Attachment add response schema</h2>
 <!-- backwards compatibility -->

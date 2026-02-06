@@ -15,7 +15,6 @@ import {
 import {
   del,
   get,
-  getModelSchemaRef,
   param,
   patch,
   post,
@@ -27,6 +26,7 @@ import {
 } from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
@@ -77,7 +77,7 @@ export class TransactionsController {
       [STATUS_CODE.OK]: {
         description: 'Transactions model instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Transactions)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Transactions)},
         },
       },
     },
@@ -86,7 +86,7 @@ export class TransactionsController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Transactions, {
+          schema: getModelSchemaRefSF(Transactions, {
             title: 'NewTransactions',
           }),
         },
@@ -135,7 +135,9 @@ export class TransactionsController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Transactions, {includeRelations: true}),
+              items: getModelSchemaRefSF(Transactions, {
+                includeRelations: true,
+              }),
             },
           },
         },
@@ -168,7 +170,7 @@ export class TransactionsController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Transactions, {partial: true}),
+          schema: getModelSchemaRefSF(Transactions, {partial: true}),
         },
       },
     })
@@ -192,7 +194,7 @@ export class TransactionsController {
         description: 'Transactions model instance',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(Transactions, {includeRelations: true}),
+            schema: getModelSchemaRefSF(Transactions, {includeRelations: true}),
           },
         },
       },
@@ -226,7 +228,7 @@ export class TransactionsController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Transactions, {partial: true}),
+          schema: getModelSchemaRefSF(Transactions, {partial: true}),
         },
       },
     })

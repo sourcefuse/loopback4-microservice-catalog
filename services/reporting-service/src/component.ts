@@ -1,8 +1,8 @@
+import {Booter} from '@loopback/boot';
 import {
   Binding,
   BindingScope,
   ContextTags,
-  ControllerClass,
   CoreBindings,
   ProviderMap,
   inject,
@@ -25,15 +25,13 @@ import {
 } from './services';
 
 import {Class, Model, Repository} from '@loopback/repository';
-import {CoreComponent, ILogger} from '@sourceloop/core';
 import {
-  DashboardController,
-  DataSetsController,
-  DataSourcesController,
-  IngestionMappingsController,
-  StateTrackingController,
-  WidgetController,
-} from './controllers';
+  BooterBasePathMixin,
+  CoreComponent,
+  CoreControllerBooter,
+  CoreModelBooter,
+  ILogger,
+} from '@sourceloop/core';
 import {ReportingServiceComponentBindings} from './keys';
 import {ReportingServiceInitializer} from './observers';
 import {DataStoreObjectProvider} from './providers/data-store-object.provider';
@@ -49,15 +47,8 @@ import {SequelizeQueryUtility} from './utils/sequelize-query.utils';
   tags: {[ContextTags.KEY]: ReportingServiceComponentBindings.COMPONENT},
 })
 export class ReportingServiceComponent {
-  controllers?: ControllerClass[] = [
-    DataSetsController,
-    IngestionMappingsController,
-    DataSourcesController,
-    StateTrackingController,
-    WidgetController,
-    DashboardController,
-  ];
   models?: Class<Model>[] = [];
+  booters?: Class<Booter>[];
   repositories: Class<Repository<Model>>[] = [
     IngestionMappingsRepository,
     StateTrackingRepository,
@@ -106,5 +97,16 @@ export class ReportingServiceComponent {
       .toClass(QueryBindingManager)
       .inScope(BindingScope.TRANSIENT);
     this.application.lifeCycleObserver(ReportingServiceInitializer);
+    this.booters = [
+      BooterBasePathMixin(CoreModelBooter, __dirname, {
+        interface: ReportingServiceComponent.name,
+      }),
+      BooterBasePathMixin(CoreControllerBooter, __dirname, {
+        dirs: ['controllers'],
+        extensions: ['.controller.js'],
+        nested: true,
+        interface: ReportingServiceComponent.name,
+      }),
+    ];
   }
 }

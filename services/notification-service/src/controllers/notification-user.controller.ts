@@ -17,7 +17,6 @@ import {
   del,
   get,
   getFilterSchemaFor,
-  getModelSchemaRef,
   getWhereSchemaFor,
   param,
   patch,
@@ -27,6 +26,7 @@ import {
 } from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   IAuthUserWithPermissions,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
@@ -61,7 +61,7 @@ export class NotificationUserController {
       [STATUS_CODE.OK]: {
         description: 'NotificationUser model instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(NotificationUser)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(NotificationUser)},
         },
       },
     },
@@ -70,7 +70,7 @@ export class NotificationUserController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(NotificationUser, {
+          schema: getModelSchemaRefSF(NotificationUser, {
             title: 'NewNotificationUser',
             exclude: ['id'],
           }),
@@ -102,7 +102,7 @@ export class NotificationUserController {
       [STATUS_CODE.OK]: {
         description: 'Notification User model instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(NotificationUser)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(NotificationUser)},
         },
       },
     },
@@ -113,7 +113,7 @@ export class NotificationUserController {
         [CONTENT_TYPE.JSON]: {
           schema: {
             type: 'array',
-            items: getModelSchemaRef(NotificationUser, {
+            items: getModelSchemaRefSF(NotificationUser, {
               title: 'NewNotificationUser',
               exclude: ['id'],
             }),
@@ -179,7 +179,7 @@ export class NotificationUserController {
         description: 'Array of NotificationUser model instances',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: {type: 'array', items: getModelSchemaRef(NotificationUser)},
+            schema: {type: 'array', items: getModelSchemaRefSF(NotificationUser)},
           },
         },
       },
@@ -218,7 +218,7 @@ export class NotificationUserController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(NotificationUser, {partial: true}),
+          schema: getModelSchemaRefSF(NotificationUser, {partial: true}),
         },
       },
     })
@@ -249,7 +249,7 @@ export class NotificationUserController {
       [STATUS_CODE.OK]: {
         description: 'NotificationUser instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(NotificationUser)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(NotificationUser)},
         },
       },
     },
@@ -284,7 +284,7 @@ export class NotificationUserController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(NotificationUser, {partial: true}),
+          schema: getModelSchemaRefSF(NotificationUser, {partial: true}),
         },
       },
     })
