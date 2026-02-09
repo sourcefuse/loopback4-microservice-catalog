@@ -197,7 +197,9 @@ export class LoginController {
         payload.user?.id &&
         !(await this.userRepo.firstTimeUser(payload.user.id))
       ) {
-        await this.userRepo.updateLastLogin(payload.user.id);
+        const time = Date.now();
+        await this.userRepo.updateLastLogin(payload.user.id, time);
+        payload.user.lastLogin = new Date(time);
       }
 
       return await this.idpLoginService.createJWT(
