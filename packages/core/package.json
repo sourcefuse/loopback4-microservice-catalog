@@ -87,7 +87,7 @@
     "node-jose": "^2.2.0",
     "openapi3-ts": "^2.0.2",
     "request-ip": "^3.3.0",
-    "swagger-stats": "^0.99.5",
+    "swagger-stats": "https://github.com/yeshamavani/swagger-stats.git#master",
     "tslib": "^2.6.2",
     "winston": "^3.17.0"
   },
