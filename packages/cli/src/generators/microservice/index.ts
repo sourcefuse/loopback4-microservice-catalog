@@ -238,7 +238,10 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     if (!this.shouldExit()) {
       const packageJsonFile = join(this.destinationPath(), 'package.json');
       const packageJson = this.fs.readJSON(packageJsonFile) as AnyObject;
-      packageJson.name = `${this.options.uniquePrefix}-${packageJson.name}`;
+      const prefix = this.options.uniquePrefix?.trim();
+      if (prefix) {
+        packageJson.name = `${prefix}-${packageJson.name}`;
+      }
       packageJson.license = 'MIT';
       const scripts = packageJson.scripts;
       const symlinkresolver = 'symlink-resolver';
