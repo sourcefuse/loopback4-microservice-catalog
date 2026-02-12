@@ -7,7 +7,12 @@ import {ExpressRequestHandler} from '@loopback/rest';
 import {SetupDatasourceFn} from 'loopback4-dynamic-datasource';
 import {BINDING_PREFIX} from './constants';
 import {HttpMethod} from './enums';
-import {CoreConfig, TenantIdEncryptionFn} from './types';
+import {UserModifiableEntity} from './models';
+import {
+  CoreConfig,
+  IDefaultUserModifyCrud,
+  TenantIdEncryptionFn,
+} from './types';
 
 export namespace SFCoreBindings {
   export const i18n = BindingKey.create<i18nAPI>(`${BINDING_PREFIX}.i18n`);
@@ -27,6 +32,10 @@ export namespace SFCoreBindings {
     BindingKey.create<SetupDatasourceFn>(
       `sf.packages.core.dynamicDatasourceMiddleware`,
     );
+
+  export const DEFAULT_USER_MODIFY_CRUD_SERVICE = BindingKey.create<
+    IDefaultUserModifyCrud<UserModifiableEntity, string | number>
+  >(`${BINDING_PREFIX}.services.defaultUserModifyCrudService`);
 }
 
 const hiddenKey = 'sf.oas.hiddenEndpoints';
