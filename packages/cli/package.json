@@ -37,7 +37,7 @@
   "author": "SourceFuse",
   "license": "MIT",
   "dependencies": {
-    "@loopback/cli": "^5.2.1",
+    "@loopback/cli": "^7.0.6",
     "@modelcontextprotocol/sdk": "^1.24.3",
     "@oclif/command": "^1.8.16",
     "@oclif/config": "^1.18.17",
