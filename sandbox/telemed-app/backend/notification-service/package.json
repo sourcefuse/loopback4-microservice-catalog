@@ -102,6 +102,7 @@
   },
   "overrides": {
     "axios": "^1.12.2",
+    "fast-xml-parser": "^5.3.4",
     "postman-request": {
       "qs": "^6.14.1"
     }
