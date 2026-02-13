@@ -93,9 +93,11 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
   _setupGenerator() {
     return super._setupGenerator();
   }
-
   async setOptions() {
     if (this.shouldExit()) return;
+    if (this.options.name) {
+      this.options.name = this._normalizeServiceName(this.options.name);
+    }
     return super.setOptions();
   }
 
@@ -153,6 +155,9 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       this.projectInfo.baseServiceBindingName =
         this._setBaseServiceBindingName();
     }
+  }
+  private _normalizeServiceName(name: string): string {
+    return name.replaceAll(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
   }
   private _setBaseServiceBindingName() {
     if (this.options.baseService) {
