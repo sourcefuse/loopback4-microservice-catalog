@@ -2,6 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {Booter} from '@loopback/boot';
 import {
   Binding,
   Component,
@@ -23,7 +24,10 @@ import {
   BearerVerifierComponent,
   BearerVerifierConfig,
   BearerVerifierType,
+  BooterBasePathMixin,
   CoreComponent,
+  CoreControllerBooter,
+  CoreModelBooter,
   JwtKeysRepository,
   ServiceSequence,
 } from '@sourceloop/core';
@@ -81,6 +85,18 @@ export class SearchServiceComponent<T extends Model> implements Component {
     this.application
       .bind(SearchServiceBindings.FetchedColumns)
       .to(DEFAULT_COLUMNS);
+
+    this.booters = [
+      BooterBasePathMixin(CoreModelBooter, __dirname, {
+        interface: SearchServiceComponent.name,
+      }),
+      BooterBasePathMixin(CoreControllerBooter, __dirname, {
+        dirs: ['controllers'],
+        extensions: ['.controller.js'],
+        nested: true,
+        interface: SearchServiceComponent.name,
+      }),
+    ];
 
     this._setupSearchController();
   }
@@ -169,6 +185,8 @@ export class SearchServiceComponent<T extends Model> implements Component {
   providers: ProviderMap = {};
 
   bindings: Binding[] = [];
+
+  booters?: Class<Booter>[];
 
   /**
    * An optional list of Repository classes to bind for dependency injection

@@ -3,9 +3,10 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {AnyObject, Model} from '@loopback/repository';
-import {api, get, getModelSchemaRef, HttpErrors, param} from '@loopback/rest';
+import {api, get, HttpErrors, param} from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   IAuthUserWithPermissions,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
@@ -99,7 +100,7 @@ export function defineSearchController<T extends Model>(
           description: 'RecentQuery model instance',
           content: {
             [CONTENT_TYPE.JSON]: {
-              schema: getModelSchemaRef(SearchQuery, {
+              schema: getModelSchemaRefSF(SearchQuery, {
                 exclude: EXCLUDED_COLUMNS,
               }),
             },
