@@ -6,14 +6,8 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
-import {
-  get,
-  getModelSchemaRef,
-  HttpErrors,
-  param,
-  response,
-} from '@loopback/rest';
-import {STATUS_CODE} from '@sourceloop/core';
+import {get, HttpErrors, param, response} from '@loopback/rest';
+import {getModelSchemaRefSF, STATUS_CODE} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../enum/permission-key.enum';
@@ -59,7 +53,7 @@ export class SurveyResponseDetailViewController {
       'application/json': {
         schema: {
           type: 'array',
-          items: getModelSchemaRef(SurveyResponseDetail, {
+          items: getModelSchemaRefSF(SurveyResponseDetail, {
             includeRelations: true,
           }),
         },
@@ -85,7 +79,7 @@ export class SurveyResponseDetailViewController {
     description: 'SurveyResponseDetailView model instance',
     content: {
       'application/json': {
-        schema: getModelSchemaRef(SurveyResponseDetail, {
+        schema: getModelSchemaRefSF(SurveyResponseDetail, {
           includeRelations: true,
         }),
       },

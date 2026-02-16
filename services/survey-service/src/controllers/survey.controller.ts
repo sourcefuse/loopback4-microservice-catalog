@@ -12,14 +12,19 @@ import {
   RestBindings,
   del,
   get,
-  getModelSchemaRef,
   param,
   patch,
   post,
   requestBody,
   response,
 } from '@loopback/rest';
-import {CONTENT_TYPE, ILogger, LOGGER, STATUS_CODE} from '@sourceloop/core';
+import {
+  CONTENT_TYPE,
+  ILogger,
+  LOGGER,
+  STATUS_CODE,
+  getModelSchemaRefSF,
+} from '@sourceloop/core';
 import {JwtPayload, Secret, verify} from 'jsonwebtoken';
 import {STRATEGY, authenticate} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
@@ -50,13 +55,13 @@ export class SurveyController {
   @post(basePath)
   @response(STATUS_CODE.OK, {
     description: 'Survey model instance',
-    content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Survey)}},
+    content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Survey)}},
   })
   async create(
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(SurveyDto, {
+          schema: getModelSchemaRefSF(SurveyDto, {
             title: 'NewSurvey',
             exclude: ['id'],
           }),
@@ -96,7 +101,7 @@ export class SurveyController {
       'application/json': {
         schema: {
           type: 'array',
-          items: getModelSchemaRef(SurveyDto, {includeRelations: true}),
+          items: getModelSchemaRefSF(SurveyDto, {includeRelations: true}),
         },
       },
     },
@@ -122,7 +127,7 @@ export class SurveyController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Survey, {partial: true}),
+          schema: getModelSchemaRefSF(Survey, {partial: true}),
         },
       },
     })
@@ -143,7 +148,7 @@ export class SurveyController {
     description: 'Survey model instance',
     content: {
       'application/json': {
-        schema: getModelSchemaRef(Survey, {includeRelations: true}),
+        schema: getModelSchemaRefSF(Survey, {includeRelations: true}),
       },
     },
   })
@@ -198,7 +203,7 @@ export class SurveyController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(SurveyDto, {partial: true}),
+          schema: getModelSchemaRefSF(SurveyDto, {partial: true}),
         },
       },
     })
