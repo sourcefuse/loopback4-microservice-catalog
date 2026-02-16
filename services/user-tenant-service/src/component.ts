@@ -2,6 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {Booter} from '@loopback/boot';
 import {
   Binding,
   Component,
@@ -20,7 +21,10 @@ import {
   BearerVerifierComponent,
   BearerVerifierConfig,
   BearerVerifierType,
+  BooterBasePathMixin,
   CoreComponent,
+  CoreControllerBooter,
+  CoreModelBooter,
   JwtKeysRepository,
   ServiceSequence,
   TenantUtilitiesComponent,
@@ -31,19 +35,7 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import {
-  GroupUserController,
-  TenantController,
-  TenantGroupController,
-  TenantRoleController,
-  TenantTenantConfigController,
-  TenantUserController,
-  UserTenantController,
-  UserTenantPrefsController,
-  UserTenantUserGroupController,
-  UserTenantUserLevelPermissionController,
-  UserWebhookController,
-} from './controllers';
+
 import {
   GroupTenantInterceptor,
   TenantInterceptorInterceptor,
@@ -123,6 +115,8 @@ export class UserTenantServiceComponent implements Component {
    */
   models?: Class<Model>[];
 
+  booters?: Class<Booter>[];
+
   /**
    * An array of controller classes
    */
@@ -178,18 +172,16 @@ export class UserTenantServiceComponent implements Component {
       UserDto,
       UserWebhookDTO,
     ];
-    this.controllers = [
-      TenantRoleController,
-      TenantController,
-      UserTenantController,
-      GroupUserController,
-      TenantTenantConfigController,
-      TenantGroupController,
-      TenantUserController,
-      UserTenantPrefsController,
-      UserTenantUserGroupController,
-      UserTenantUserLevelPermissionController,
-      UserWebhookController,
+    this.booters = [
+      BooterBasePathMixin(CoreModelBooter, __dirname, {
+        interface: UserTenantServiceComponent.name,
+      }),
+      BooterBasePathMixin(CoreControllerBooter, __dirname, {
+        dirs: ['controllers'],
+        extensions: ['.controller.js'],
+        nested: true,
+        interface: UserTenantServiceComponent.name,
+      }),
     ];
     if (this.config?.useSequelize) {
       this.repositories = [
