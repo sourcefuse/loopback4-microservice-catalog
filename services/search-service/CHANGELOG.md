@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>9.0.4 (2026-02-17)</small>
+
+**Note:** Version bump only for package @sourceloop/search-service
+
+
+
+
+
 ## <small>9.0.3 (2026-01-28)</small>
 
 **Note:** Version bump only for package @sourceloop/search-service

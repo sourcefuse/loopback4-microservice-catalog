@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>20.0.4 (2026-02-17)</small>
+
+* fix(core): using forked swagger stats with resolved vulnerabilities (#2423) ([008e367](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/008e367)), closes [#2423](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2423) [#2422](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2422) [#2422](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2422)
+
+
+
+
+
 ## <small>20.0.3 (2026-01-28)</small>
 
 * chore(deps): update hono from v4.11.3 to fix high severity (#2393) ([4079b1b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4079b1b)), closes [#2393](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2393) [#2392](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2392) [#2392](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2392) [#2392](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2392) [#2392](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2392)

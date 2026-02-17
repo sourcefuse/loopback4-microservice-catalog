@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.0.6 (2026-02-17)</small>
+
+**Note:** Version bump only for package @sourceloop/nestjs-auth-ms-example
+
+
+
+
+
 ## <small>4.0.5 (2026-01-28)</small>
 
 * chore(deps): update hono from v4.11.3 to fix high severity (#2393) ([4079b1b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4079b1b)), closes [#2393](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2393) [#2392](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2392) [#2392](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2392) [#2392](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2392) [#2392](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2392)

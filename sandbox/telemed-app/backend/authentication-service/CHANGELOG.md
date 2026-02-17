@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.8.5 (2026-02-17)</small>
+
+* fix(chore): fix trivy vulnerability (#2424) ([d0e5065](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d0e5065)), closes [#2424](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2424)
+* fix(sandbox): dummy commit for version bump ([964955f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/964955f)), closes [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* fix(workflows): fix lerna publish by disabling scripts and husky in CI (#2401) ([fec0945](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/fec0945)), closes [#2401](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2401) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* revert(chore): downgrade tar due to lerna release incompatibility (#2406)2 ([100563e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/100563e)), closes [#2406](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2406) [#2405](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2405) [#2405](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2405) [#2405](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2405)
+
+
+
+
+
 ## <small>0.8.3 (2026-01-28)</small>
 
 * chore(deps): update hono from v4.11.3 to fix high severity (#2393) ([4079b1b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/4079b1b)), closes [#2393](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2393) [#2392](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2392) [#2392](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2392) [#2392](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2392) [#2392](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2392)
