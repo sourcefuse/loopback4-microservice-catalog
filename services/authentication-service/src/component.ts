@@ -218,7 +218,7 @@ export class AuthenticationServiceComponent implements Component {
         interface: AuthenticationServiceComponent.name,
       }),
       BooterBasePathMixin(CoreControllerBooter, __dirname, {
-        dirs: ['controllers'],
+        dirs: ['controllers', 'modules'],
         extensions: ['.controller.js'],
         nested: true,
         interface: AuthenticationServiceComponent.name,

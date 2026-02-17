@@ -1,7 +1,6 @@
 import {inject} from '@loopback/context';
 import {AnyObject, repository} from '@loopback/repository';
 import {
-  getModelSchemaRef,
   HttpErrors,
   param,
   post,
@@ -12,6 +11,7 @@ import {
 } from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   ILogger,
   LOGGER,
   STATUS_CODE,
@@ -72,7 +72,7 @@ export class SamlLoginController {
     @requestBody({
       content: {
         [CONTENT_TYPE.FORM_URLENCODED]: {
-          schema: getModelSchemaRef(ClientAuthRequest),
+          schema: getModelSchemaRefSF(ClientAuthRequest),
         },
       },
     })

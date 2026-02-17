@@ -16,7 +16,10 @@ import {
 } from '@loopback/core';
 import {Class, Model, Repository} from '@loopback/repository';
 import {
+  BooterBasePathMixin,
   CoreComponent,
+  CoreControllerBooter,
+  CoreModelBooter,
   ITenantUtilitiesConfig,
   JwtKeysRepository,
   TenantUtilitiesBindings,
@@ -32,6 +35,7 @@ import {
   Transactions,
 } from './models';
 
+import {Booter} from '@loopback/boot';
 import {
   Orders as TenantOrders,
   PaymentGateways as TenantPaymentGateways,
@@ -67,7 +71,6 @@ import {
   PaymentServiceComponentOptions,
   PaymentServiceConfig,
 } from './types';
-import { Booter } from '@loopback/boot';
 
 // Configure the binding for PaymentServiceComponent
 @injectable({
@@ -124,7 +127,17 @@ export class PaymentServiceComponent implements Component {
         TenantTransactions,
       ];
     }
-
+    this.booters = [
+      BooterBasePathMixin(CoreModelBooter, __dirname, {
+        interface: PaymentServiceComponent.name,
+      }),
+      BooterBasePathMixin(CoreControllerBooter, __dirname, {
+        dirs: ['controllers'],
+        extensions: ['.controller.js'],
+        nested: true,
+        interface: PaymentServiceComponent.name,
+      }),
+    ];
     if (this.paymentConfig?.useSequelize) {
       this.repositories = [
         OrdersSequelizeRepository,

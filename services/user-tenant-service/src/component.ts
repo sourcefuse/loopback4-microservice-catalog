@@ -179,7 +179,6 @@ export class UserTenantServiceComponent implements Component {
       BooterBasePathMixin(CoreControllerBooter, __dirname, {
         dirs: ['controllers'],
         extensions: ['.controller.js'],
-        nested: true,
         interface: UserTenantServiceComponent.name,
       }),
     ];
