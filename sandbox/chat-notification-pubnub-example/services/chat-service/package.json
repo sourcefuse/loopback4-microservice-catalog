@@ -81,6 +81,7 @@
     "typescript": "^5.2.2"
   },
   "overrides": {
+    "@isaacs/brace-expansion": "^5.0.1",
     "check-code-coverage": {
       "lodash": "^4.17.21"
     },
