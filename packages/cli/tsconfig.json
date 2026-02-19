@@ -7,7 +7,7 @@
     "outDir": "lib",
     "rootDir": "src",
     "strict": true,
-    "target": "es2017",
+    "target": "es2021",
     "composite": false,
     "typeRoots": [
       "./../../node_modules/@types",
