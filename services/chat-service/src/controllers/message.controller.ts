@@ -11,25 +11,25 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
-  put,
   del,
+  get,
+  param,
+  patch,
+  post,
+  put,
   requestBody,
 } from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
-import {authenticate, STRATEGY} from 'loopback4-authentication';
-import {authorize} from 'loopback4-authorization';
-import {PermissionKey} from '../enums';
-import {Message} from '../models';
-import {MessageRepository} from '../repositories';
+import { authenticate, STRATEGY } from 'loopback4-authentication';
+import { authorize } from 'loopback4-authorization';
+import { PermissionKey } from '../enums';
+import { Message } from '../models';
+import { MessageRepository } from '../repositories';
 
 const basePath = '/messages';
 
@@ -48,7 +48,7 @@ export class MessageController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Message model instance',
-        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Message)}},
+        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Message)}},
       },
     },
   })
@@ -56,7 +56,7 @@ export class MessageController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Message, {
+          schema: getModelSchemaRefSF(Message, {
             title: 'NewMessage',
             exclude: ['id'],
           }),
@@ -98,7 +98,7 @@ export class MessageController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Message, {includeRelations: true}),
+              items: getModelSchemaRefSF(Message, {includeRelations: true}),
             },
           },
         },
@@ -128,7 +128,7 @@ export class MessageController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Message, {partial: true}),
+          schema: getModelSchemaRefSF(Message, {partial: true}),
         },
       },
     })
@@ -149,7 +149,7 @@ export class MessageController {
         description: 'Message model instance',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(Message, {includeRelations: true}),
+            schema: getModelSchemaRefSF(Message, {includeRelations: true}),
           },
         },
       },
@@ -180,7 +180,7 @@ export class MessageController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Message, {partial: true}),
+          schema: getModelSchemaRefSF(Message, {partial: true}),
         },
       },
     })
