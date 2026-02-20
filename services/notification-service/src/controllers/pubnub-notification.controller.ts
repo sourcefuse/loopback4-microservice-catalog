@@ -2,15 +2,9 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import { inject } from '@loopback/core';
-import { repository } from '@loopback/repository';
-import {
-  del,
-  HttpErrors,
-  param,
-  patch,
-  requestBody,
-} from '@loopback/rest';
+import {inject} from '@loopback/core';
+import {repository} from '@loopback/repository';
+import {del, HttpErrors, param, patch, requestBody} from '@loopback/rest';
 import {
   CONTENT_TYPE,
   getModelSchemaRefSF,
@@ -24,18 +18,18 @@ import {
   AuthenticationBindings,
   STRATEGY,
 } from 'loopback4-authentication';
-import { authorize, AuthorizeErrorKeys } from 'loopback4-authorization';
+import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
 import {
   Config,
   MessageType,
   NotificationBindings,
 } from 'loopback4-notifications';
-import { PubNubNotification } from 'loopback4-notifications/pubnub';
-import { PermissionKey } from '../enums/permission-key.enum';
-import { NotifServiceBindings } from '../keys';
-import { AccessResponseDto, NotificationAccess } from '../models';
-import { NotificationAccessRepository } from '../repositories';
-import { IChannelManager } from '../types';
+import {PubNubNotification} from 'loopback4-notifications/pubnub';
+import {PermissionKey} from '../enums/permission-key.enum';
+import {NotifServiceBindings} from '../keys';
+import {AccessResponseDto, NotificationAccess} from '../models';
+import {NotificationAccessRepository} from '../repositories';
+import {IChannelManager} from '../types';
 
 export class PubnubNotificationController {
   constructor(

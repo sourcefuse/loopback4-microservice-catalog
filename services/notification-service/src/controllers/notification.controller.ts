@@ -2,7 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import { BindingScope, Getter, bind, inject } from '@loopback/core';
+import {BindingScope, Getter, bind, inject} from '@loopback/core';
 import {
   Count,
   CountSchema,
@@ -27,12 +27,12 @@ import {
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
-import { AuthErrorKeys, STRATEGY, authenticate } from 'loopback4-authentication';
-import { authorize } from 'loopback4-authorization';
-import { INotification, NotificationBindings } from 'loopback4-notifications';
-import { ErrorKeys } from '../enums/error-keys.enum';
-import { PermissionKey } from '../enums/permission-key.enum';
-import { NotifServiceBindings } from '../keys';
+import {AuthErrorKeys, STRATEGY, authenticate} from 'loopback4-authentication';
+import {authorize} from 'loopback4-authorization';
+import {INotification, NotificationBindings} from 'loopback4-notifications';
+import {ErrorKeys} from '../enums/error-keys.enum';
+import {PermissionKey} from '../enums/permission-key.enum';
+import {NotifServiceBindings} from '../keys';
 import {
   Notification,
   NotificationDto,
@@ -43,8 +43,8 @@ import {
   NotificationRepository,
   NotificationUserRepository,
 } from '../repositories';
-import { ProcessNotificationService } from '../services';
-import { INotificationFilterFunc, INotificationUserManager } from '../types';
+import {ProcessNotificationService} from '../services';
+import {INotificationFilterFunc, INotificationUserManager} from '../types';
 const basePath = '/notifications';
 
 const maxBodyLen = parseInt(String(process.env.MAX_LENGTH)) ?? 1000;

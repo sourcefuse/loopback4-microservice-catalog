@@ -24,11 +24,11 @@ import {
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
-import { authenticate, STRATEGY } from 'loopback4-authentication';
-import { authorize } from 'loopback4-authorization';
-import { PermissionKey } from '../enums/permission-key.enum';
-import { Notification, NotificationUser } from '../models';
-import { NotificationRepository } from '../repositories';
+import {authenticate, STRATEGY} from 'loopback4-authentication';
+import {authorize} from 'loopback4-authorization';
+import {PermissionKey} from '../enums/permission-key.enum';
+import {Notification, NotificationUser} from '../models';
+import {NotificationRepository} from '../repositories';
 const basePath = '/notifications/{id}/notification-users';
 
 export class NotificationNotificationUserController {

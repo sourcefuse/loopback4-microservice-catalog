@@ -109,7 +109,9 @@ export class FeatureValuesController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRefSF(FeatureValues, {includeRelations: true}),
+              items: getModelSchemaRefSF(FeatureValues, {
+                includeRelations: true,
+              }),
             },
           },
         },
@@ -166,7 +168,9 @@ export class FeatureValuesController {
         description: 'FeatureValues model instance',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRefSF(FeatureValues, {includeRelations: true}),
+            schema: getModelSchemaRefSF(FeatureValues, {
+              includeRelations: true,
+            }),
           },
         },
       },

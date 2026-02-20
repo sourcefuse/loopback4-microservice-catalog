@@ -22,12 +22,12 @@ import {
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
-import { authenticate, STRATEGY } from 'loopback4-authentication';
-import { authorize } from 'loopback4-authorization';
-import { PermissionKey } from '../enums';
-import { AttachmentFileDto } from '../models/attachment-file-dto.model';
-import { AttachmentFile } from '../models/attachment-file.model';
-import { AttachmentFileRepository } from '../repositories/attachment-file.repository';
+import {authenticate, STRATEGY} from 'loopback4-authentication';
+import {authorize} from 'loopback4-authorization';
+import {PermissionKey} from '../enums';
+import {AttachmentFileDto} from '../models/attachment-file-dto.model';
+import {AttachmentFile} from '../models/attachment-file.model';
+import {AttachmentFileRepository} from '../repositories/attachment-file.repository';
 const basePath = '/attach-files';
 export class AttachmentFileController {
   constructor(
@@ -183,7 +183,9 @@ export class AttachmentFileController {
         description: 'AttachmentFile model instance',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRefSF(AttachmentFile, {includeRelations: true}),
+            schema: getModelSchemaRefSF(AttachmentFile, {
+              includeRelations: true,
+            }),
           },
         },
       },

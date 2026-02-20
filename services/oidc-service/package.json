@@ -24,7 +24,7 @@
     "eslint:fix": "npm run eslint -- --fix",
     "openapi-spec": "node ./dist/openapi-spec",
     "apidocs": "npx widdershins --search false --language_tabs 'javascript:JavaScript:request' 'javascript--nodejs:Node.JS' --summary openapi.json -o openapi.md",
-    "pretest": "npm run build",
+    "pretest": "lb-tsc",
     "test": "echo \"No tests !\"",
     "coverage": "nyc npm run test",
     "prepublishOnly": "npm run test",

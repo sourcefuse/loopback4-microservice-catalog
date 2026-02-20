@@ -24,11 +24,11 @@ import {
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
-import { authenticate, STRATEGY } from 'loopback4-authentication';
-import { authorize } from 'loopback4-authorization';
-import { PermissionKey } from '../enums';
-import { Message, MessageRecipient } from '../models';
-import { MessageRepository } from '../repositories';
+import {authenticate, STRATEGY} from 'loopback4-authentication';
+import {authorize} from 'loopback4-authorization';
+import {PermissionKey} from '../enums';
+import {Message, MessageRecipient} from '../models';
+import {MessageRepository} from '../repositories';
 
 const basePath = '/messages/{id}/message-recipients';
 
@@ -52,7 +52,10 @@ export class MessageMessageRecipientController {
         description: 'Array of Message has many MessageRecipient',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: {type: 'array', items: getModelSchemaRefSF(MessageRecipient)},
+            schema: {
+              type: 'array',
+              items: getModelSchemaRefSF(MessageRecipient),
+            },
           },
         },
       },

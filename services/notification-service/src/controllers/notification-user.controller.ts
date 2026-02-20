@@ -179,7 +179,10 @@ export class NotificationUserController {
         description: 'Array of NotificationUser model instances',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: {type: 'array', items: getModelSchemaRefSF(NotificationUser)},
+            schema: {
+              type: 'array',
+              items: getModelSchemaRefSF(NotificationUser),
+            },
           },
         },
       },

@@ -10,8 +10,8 @@ import {
   inject,
   ProviderMap,
 } from '@loopback/core';
-import { Class, Model, Repository } from '@loopback/repository';
-import { RestApplication } from '@loopback/rest';
+import {Class, Model, Repository} from '@loopback/repository';
+import {RestApplication} from '@loopback/rest';
 import {
   BearerVerifierBindings,
   BearerVerifierComponent,
@@ -25,21 +25,21 @@ import {
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
 } from '@sourceloop/core';
-import { JwtKeysRepository as SequelizeJwtKeysRepository } from '@sourceloop/core/sequelize';
-import { AuthenticationComponent } from 'loopback4-authentication';
+import {JwtKeysRepository as SequelizeJwtKeysRepository} from '@sourceloop/core/sequelize';
+import {AuthenticationComponent} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import { NotificationsComponent } from 'loopback4-notifications';
-import { NotifServiceBindings } from './keys';
-import { Notification, NotificationAccess, NotificationUser } from './models';
+import {NotificationsComponent} from 'loopback4-notifications';
+import {NotifServiceBindings} from './keys';
+import {Notification, NotificationAccess, NotificationUser} from './models';
 import {
   ChannelManagerProvider,
   NotificationFilterProvider,
   NotificationUserSettingsProvider,
 } from './providers';
-import { NotificationUserProvider } from './providers/notification-user.service';
+import {NotificationUserProvider} from './providers/notification-user.service';
 import {
   NotificationAccessRepository,
   NotificationRepository,
@@ -47,14 +47,14 @@ import {
   UserNotificationSettingsRepository,
 } from './repositories';
 
-import { Booter } from '@loopback/boot';
+import {Booter} from '@loopback/boot';
 import {
   NotificationRepository as NotificationSequelizeRepository,
   NotificationUserRepository as NotificationUserSequelizeRepository,
   UserNotificationSettingsRepository as UserNotificationSettingsSequelizeRepository,
 } from './repositories/sequelize';
-import { ProcessNotificationService } from './services';
-import { INotifServiceConfig } from './types';
+import {ProcessNotificationService} from './services';
+import {INotifServiceConfig} from './types';
 export class NotificationServiceComponent implements Component {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
@@ -89,7 +89,7 @@ export class NotificationServiceComponent implements Component {
       this.setupSequence();
     }
 
-       this.booters = [
+    this.booters = [
       BooterBasePathMixin(CoreModelBooter, __dirname, {
         interface: NotificationServiceComponent.name,
       }),
@@ -129,8 +129,6 @@ export class NotificationServiceComponent implements Component {
       [NotifServiceBindings.NotificationSettingFilter.key]:
         NotificationUserSettingsProvider,
     };
-
-
 
     this.application
       .bind('services.ProcessNotificationService')
