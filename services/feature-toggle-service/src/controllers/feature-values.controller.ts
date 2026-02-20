@@ -10,18 +10,10 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
-import {
-  del,
-  get,
-  getModelSchemaRef,
-  param,
-  patch,
-  post,
-  put,
-  requestBody,
-} from '@loopback/rest';
+import {del, get, param, patch, post, put, requestBody} from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
@@ -51,7 +43,7 @@ export class FeatureValuesController {
       [STATUS_CODE.OK]: {
         description: 'FeatureValues model instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(FeatureValues)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(FeatureValues)},
         },
       },
     },
@@ -68,7 +60,7 @@ export class FeatureValuesController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(FeatureValues, {
+          schema: getModelSchemaRefSF(FeatureValues, {
             title: 'NewFeatureValues',
           }),
         },
@@ -117,7 +109,7 @@ export class FeatureValuesController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(FeatureValues, {includeRelations: true}),
+              items: getModelSchemaRefSF(FeatureValues, {includeRelations: true}),
             },
           },
         },
@@ -150,7 +142,7 @@ export class FeatureValuesController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(FeatureValues, {partial: true}),
+          schema: getModelSchemaRefSF(FeatureValues, {partial: true}),
         },
       },
     })
@@ -174,7 +166,7 @@ export class FeatureValuesController {
         description: 'FeatureValues model instance',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(FeatureValues, {includeRelations: true}),
+            schema: getModelSchemaRefSF(FeatureValues, {includeRelations: true}),
           },
         },
       },
@@ -208,7 +200,7 @@ export class FeatureValuesController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(FeatureValues, {partial: true}),
+          schema: getModelSchemaRefSF(FeatureValues, {partial: true}),
         },
       },
     })
