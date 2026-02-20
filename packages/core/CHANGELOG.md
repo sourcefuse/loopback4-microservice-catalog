@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>20.0.5 (2026-02-20)</small>
+
+* fix(cli): replace swagger-stats to swagger-stats-sf (#2437) ([832c180](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/832c180)), closes [#2437](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2437)
+
+
+
+
+
 ## <small>20.0.4 (2026-02-17)</small>
 
 * fix(core): using forked swagger stats with resolved vulnerabilities (#2423) ([008e367](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/008e367)), closes [#2423](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2423) [#2422](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2422) [#2422](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2422)

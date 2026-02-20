@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>12.2.5 (2026-02-20)</small>
+
+* fix(cli): replace swagger-stats to swagger-stats-sf (#2437) ([832c180](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/832c180)), closes [#2437](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2437)
+* fix(cli): skipping optional docker prefix should not causes invalid package name (#2436) ([5d97f56](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/5d97f56)), closes [#2436](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2436) [#2420](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2420)
+
+
+
+
+
 ## <small>12.2.4 (2026-02-06)</small>
 
 * revert(chore): downgrade tar due to lerna release incompatibility (#2406)2 ([100563e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/100563e)), closes [#2406](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2406) [#2405](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2405) [#2405](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2405) [#2405](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2405)

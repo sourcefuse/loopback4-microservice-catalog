@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/chat-notif-example_facade",
-  "version": "0.9.3",
+  "version": "0.9.4",
   "description": "facade.",
   "keywords": [
     "loopback-application",
@@ -57,7 +57,7 @@
     "@loopback/rest": "^15.0.4",
     "@loopback/rest-explorer": "^8.0.4",
     "@loopback/service-proxy": "^8.0.3",
-    "@sourceloop/core": "^20.0.4",
+    "@sourceloop/core": "^20.0.5",
     "ajv": "^8.11.0",
     "ajv-errors": "^3.0.0",
     "dotenv": "^16.0.3",
