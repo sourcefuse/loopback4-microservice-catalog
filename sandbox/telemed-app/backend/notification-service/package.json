@@ -83,7 +83,7 @@
     "loopback4-authorization": "^8.0.0",
     "loopback4-notifications": "^10.0.0",
     "pubnub": "^7.2.3",
-    "swagger-stats": "^0.99.5",
+    "swagger-stats-sf": "^0.99.9",
     "symlink-resolver": "0.2.1",
     "tslib": "^2.0.0"
   },
