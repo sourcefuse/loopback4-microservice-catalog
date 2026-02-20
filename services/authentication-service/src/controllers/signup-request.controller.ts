@@ -6,17 +6,18 @@
 
 import {inject} from '@loopback/core';
 import {AnyObject} from '@loopback/repository';
-import {get, getModelSchemaRef, post, requestBody} from '@loopback/rest';
+import {get, post, requestBody} from '@loopback/rest';
 import {
   CONTENT_TYPE,
   ErrorCodes,
+  getModelSchemaRefSF,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
 import {
+  authenticate,
   AuthenticationBindings,
   STRATEGY,
-  authenticate,
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {LocalUserProfileDto} from '../models/local-user-profile';
@@ -90,7 +91,7 @@ export class SignupRequestController {
         description: successResponse,
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(LocalUserProfileDto),
+            schema: getModelSchemaRefSF(LocalUserProfileDto),
           },
         },
       },

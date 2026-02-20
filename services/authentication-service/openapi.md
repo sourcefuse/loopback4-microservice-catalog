@@ -1074,263 +1074,6 @@ state: string
 This operation does not require authentication
 </aside>
 
-<h1 id="authentication-service-auth0logincontroller">Auth0LoginController</h1>
-
-## Auth0LoginController.postLoginViaAuth0
-
-<a id="opIdAuth0LoginController.postLoginViaAuth0"></a>
-
-> Code samples
-
-```javascript
-const inputBody = '{
-  "client_id": "string",
-  "client_secret": "string",
-  "state": "string"
-}';
-const headers = {
-  'Content-Type':'application/x-www-form-urlencoded',
-  'Accept':'application/json'
-};
-
-fetch('/auth/auth0',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-const inputBody = {
-  "client_id": "string",
-  "client_secret": "string",
-  "state": "string"
-};
-const headers = {
-  'Content-Type':'application/x-www-form-urlencoded',
-  'Accept':'application/json'
-};
-
-fetch('/auth/auth0',
-{
-  method: 'POST',
-  body: JSON.stringify(inputBody),
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`POST /auth/auth0`
-
-> Body parameter
-
-```yaml
-client_id: string
-client_secret: string
-state: string
-
-```
-
-<h3 id="auth0logincontroller.postloginviaauth0-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|body|body|[ClientAuthRequest](#schemaclientauthrequest)|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "accessToken": "string",
-  "refreshToken": "string",
-  "expires": 0,
-  "pubnubToken": "string"
-}
-```
-
-<h3 id="auth0logincontroller.postloginviaauth0-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|POST Call for auth0 based login|[TokenResponse](#schematokenresponse)|
-
-<aside class="success">
-This operation does not require authentication
-</aside>
-
-## Auth0LoginController.loginViaAuth0
-
-<a id="opIdAuth0LoginController.loginViaAuth0"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/auth/auth0',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/auth/auth0',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /auth/auth0`
-
-<h3 id="auth0logincontroller.loginviaauth0-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|client_id|query|string|false|none|
-|client_secret|query|string|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "accessToken": "string",
-  "refreshToken": "string",
-  "expires": 0,
-  "pubnubToken": "string"
-}
-```
-
-<h3 id="auth0logincontroller.loginviaauth0-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|POST Call for auth0 based login|[TokenResponse](#schematokenresponse)|
-
-<aside class="success">
-This operation does not require authentication
-</aside>
-
-## Auth0LoginController.auth0Callback
-
-<a id="opIdAuth0LoginController.auth0Callback"></a>
-
-> Code samples
-
-```javascript
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/auth/auth0-auth-redirect',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-```javascript--nodejs
-const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('/auth/auth0-auth-redirect',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
-```
-
-`GET /auth/auth0-auth-redirect`
-
-<h3 id="auth0logincontroller.auth0callback-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|code|query|string|false|none|
-|state|query|string|false|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "accessToken": "string",
-  "refreshToken": "string",
-  "expires": 0,
-  "pubnubToken": "string"
-}
-```
-
-<h3 id="auth0logincontroller.auth0callback-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Redirect Token Response|[TokenResponse](#schematokenresponse)|
-
-<aside class="success">
-This operation does not require authentication
-</aside>
-
 <h1 id="authentication-service-azurelogincontroller">AzureLoginController</h1>
 
 ## AzureLoginController.postLoginViaAzure
@@ -4833,33 +4576,275 @@ HTTPBearer
 
 # Schemas
 
-<h2 id="tocS_LoginRequest">LoginRequest</h2>
+<h2 id="tocS_SignupRequestDto">SignupRequestDto</h2>
 <!-- backwards compatibility -->
-<a id="schemaloginrequest"></a>
-<a id="schema_LoginRequest"></a>
-<a id="tocSloginrequest"></a>
-<a id="tocsloginrequest"></a>
+<a id="schemasignuprequestdto"></a>
+<a id="schema_SignupRequestDto"></a>
+<a id="tocSsignuprequestdto"></a>
+<a id="tocssignuprequestdto"></a>
 
 ```json
 {
-  "client_id": "string",
-  "client_secret": "string",
-  "username": "string",
-  "password": "string"
+  "email": "string",
+  "data": {}
 }
 
 ```
 
-LoginRequest
+SignupRequestDto
 
 ### Properties
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|client_id|string|true|none|This property is supposed to be a string and is a required field|
-|client_secret|string|false|none|This property is supposed to be a string and is a required field|
-|username|string|true|none|This property is supposed to be a string and is a required field|
-|password|string|true|none|This property is supposed to be a string and is a required field|
+|email|string|true|none|none|
+|data|object|false|none|none|
+
+<h2 id="tocS_Function">Function</h2>
+<!-- backwards compatibility -->
+<a id="schemafunction"></a>
+<a id="schema_Function"></a>
+<a id="tocSfunction"></a>
+<a id="tocsfunction"></a>
+
+```json
+null
+
+```
+
+### Properties
+
+*None*
+
+<h2 id="tocS_LocalUserProfileDto">LocalUserProfileDto</h2>
+<!-- backwards compatibility -->
+<a id="schemalocaluserprofiledto"></a>
+<a id="schema_LocalUserProfileDto"></a>
+<a id="tocSlocaluserprofiledto"></a>
+<a id="tocslocaluserprofiledto"></a>
+
+```json
+{
+  "email": "string",
+  "password": "string"
+}
+
+```
+
+LocalUserProfileDto
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|email|string|true|none|none|
+|password|string|true|none|none|
+
+<h2 id="tocS_SignupRequest">SignupRequest</h2>
+<!-- backwards compatibility -->
+<a id="schemasignuprequest"></a>
+<a id="schema_SignupRequest"></a>
+<a id="tocSsignuprequest"></a>
+<a id="tocssignuprequest"></a>
+
+```json
+{
+  "email": "string",
+  "expiry": "string"
+}
+
+```
+
+SignupRequest
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|email|string|true|none|none|
+|expiry|string|false|none|none|
+
+<h2 id="tocS_LoginActivityWithRelations">LoginActivityWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemaloginactivitywithrelations"></a>
+<a id="schema_LoginActivityWithRelations"></a>
+<a id="tocSloginactivitywithrelations"></a>
+<a id="tocsloginactivitywithrelations"></a>
+
+```json
+{
+  "id": "string",
+  "actor": "string",
+  "tenantId": "string",
+  "loginTime": "2019-08-24T14:15:22Z",
+  "tokenPayload": "string",
+  "loginType": "string",
+  "deviceInfo": "string",
+  "ipAddress": "string"
+}
+
+```
+
+LoginActivityWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|false|none|none|
+|actor|string|false|none|none|
+|tenantId|string|false|none|none|
+|loginTime|string(date-time)|false|none|none|
+|tokenPayload|string|false|none|none|
+|loginType|string|false|none|none|
+|deviceInfo|string|false|none|none|
+|ipAddress|string|false|none|none|
+
+<h2 id="tocS_Date">Date</h2>
+<!-- backwards compatibility -->
+<a id="schemadate"></a>
+<a id="schema_Date"></a>
+<a id="tocSdate"></a>
+<a id="tocsdate"></a>
+
+```json
+null
+
+```
+
+### Properties
+
+*None*
+
+<h2 id="tocS_ActiveUsersFilter">ActiveUsersFilter</h2>
+<!-- backwards compatibility -->
+<a id="schemaactiveusersfilter"></a>
+<a id="schema_ActiveUsersFilter"></a>
+<a id="tocSactiveusersfilter"></a>
+<a id="tocsactiveusersfilter"></a>
+
+```json
+{
+  "inclusion": true,
+  "userIdentity": "string",
+  "userIdentifier": {}
+}
+
+```
+
+ActiveUsersFilter
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|inclusion|boolean|true|none|none|
+|userIdentity|string|true|none|none|
+|userIdentifier|object|true|none|none|
+
+<h2 id="tocS_ForgetPasswordDto">ForgetPasswordDto</h2>
+<!-- backwards compatibility -->
+<a id="schemaforgetpassworddto"></a>
+<a id="schema_ForgetPasswordDto"></a>
+<a id="tocSforgetpassworddto"></a>
+<a id="tocsforgetpassworddto"></a>
+
+```json
+{
+  "username": "string",
+  "client_id": "string",
+  "client_secret": "string"
+}
+
+```
+
+ForgetPasswordDto
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|username|string|true|none|none|
+|client_id|string|true|none|none|
+|client_secret|string|true|none|none|
+
+<h2 id="tocS_AuthClient">AuthClient</h2>
+<!-- backwards compatibility -->
+<a id="schemaauthclient"></a>
+<a id="schema_AuthClient"></a>
+<a id="tocSauthclient"></a>
+<a id="tocsauthclient"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": 0,
+  "clientId": "string",
+  "clientSecret": "string",
+  "secret": "string",
+  "redirectUrl": "string",
+  "accessTokenExpiration": 0,
+  "refreshTokenExpiration": 0,
+  "authCodeExpiration": 0
+}
+
+```
+
+AuthClient
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|number|false|none|none|
+|clientId|string|true|none|none|
+|clientSecret|string|true|none|none|
+|secret|string|true|none|Value can be a string or a private key.|
+|redirectUrl|string|false|none|none|
+|accessTokenExpiration|number|true|none|none|
+|refreshTokenExpiration|number|true|none|none|
+|authCodeExpiration|number|true|none|none|
+
+<h2 id="tocS_ResetPasswordWithClient">ResetPasswordWithClient</h2>
+<!-- backwards compatibility -->
+<a id="schemaresetpasswordwithclient"></a>
+<a id="schema_ResetPasswordWithClient"></a>
+<a id="tocSresetpasswordwithclient"></a>
+<a id="tocsresetpasswordwithclient"></a>
+
+```json
+{
+  "token": "string",
+  "password": "string",
+  "client_id": "string",
+  "client_secret": "string"
+}
+
+```
+
+ResetPasswordWithClient
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|token|string|true|none|none|
+|password|string|true|none|none|
+|client_id|string|true|none|none|
+|client_secret|string|true|none|none|
 
 <h2 id="tocS_TokenResponse">TokenResponse</h2>
 <!-- backwards compatibility -->
@@ -4889,110 +4874,6 @@ TokenResponse
 |expires|number|true|none|none|
 |pubnubToken|string|false|none|none|
 
-<h2 id="tocS_AuthTokenRequest">AuthTokenRequest</h2>
-<!-- backwards compatibility -->
-<a id="schemaauthtokenrequest"></a>
-<a id="schema_AuthTokenRequest"></a>
-<a id="tocSauthtokenrequest"></a>
-<a id="tocsauthtokenrequest"></a>
-
-```json
-{
-  "code": "string",
-  "clientId": "string"
-}
-
-```
-
-AuthTokenRequest
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|code|string|true|none|none|
-|clientId|string|true|none|none|
-
-<h2 id="tocS_AuthRefreshTokenRequest">AuthRefreshTokenRequest</h2>
-<!-- backwards compatibility -->
-<a id="schemaauthrefreshtokenrequest"></a>
-<a id="schema_AuthRefreshTokenRequest"></a>
-<a id="tocSauthrefreshtokenrequest"></a>
-<a id="tocsauthrefreshtokenrequest"></a>
-
-```json
-{
-  "refreshToken": "string",
-  "tenantId": "string"
-}
-
-```
-
-AuthRefreshTokenRequest
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|refreshToken|string|true|none|none|
-|tenantId|string|false|none|none|
-
-<h2 id="tocS_ResetPasswordPartial">ResetPasswordPartial</h2>
-<!-- backwards compatibility -->
-<a id="schemaresetpasswordpartial"></a>
-<a id="schema_ResetPasswordPartial"></a>
-<a id="tocSresetpasswordpartial"></a>
-<a id="tocsresetpasswordpartial"></a>
-
-```json
-{
-  "refreshToken": "string",
-  "username": "string",
-  "password": "string",
-  "oldPassword": "string"
-}
-
-```
-
-ResetPasswordPartial
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|refreshToken|string|false|none|none|
-|username|string|false|none|This property is supposed to be a string and is a required field|
-|password|string|false|none|This property is supposed to be a string and is a required field|
-|oldPassword|string|false|none|This property is supposed to be a string and is a required field|
-
-<h2 id="tocS_ResetPassword">ResetPassword</h2>
-<!-- backwards compatibility -->
-<a id="schemaresetpassword"></a>
-<a id="schema_ResetPassword"></a>
-<a id="tocSresetpassword"></a>
-<a id="tocsresetpassword"></a>
-
-```json
-{
-  "refreshToken": "string",
-  "username": "string",
-  "password": "string",
-  "oldPassword": "string"
-}
-
-```
-
-ResetPassword
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|refreshToken|string|true|none|none|
-|username|string|true|none|This property is supposed to be a string and is a required field|
-|password|string|true|none|This property is supposed to be a string and is a required field|
-|oldPassword|string|false|none|This property is supposed to be a string and is a required field|
-
 <h2 id="tocS_ClientAuthRequest">ClientAuthRequest</h2>
 <!-- backwards compatibility -->
 <a id="schemaclientauthrequest"></a>
@@ -5018,72 +4899,6 @@ ClientAuthRequest
 |client_id|string|true|none|This property is supposed to be a string and is a required field|
 |client_secret|string|true|none|This property is supposed to be a string and is a required field|
 |state|string|false|none|none|
-
-<h2 id="tocS_SuccessResponse">SuccessResponse</h2>
-<!-- backwards compatibility -->
-<a id="schemasuccessresponse"></a>
-<a id="schema_SuccessResponse"></a>
-<a id="tocSsuccessresponse"></a>
-<a id="tocssuccessresponse"></a>
-
-```json
-{
-  "success": true
-}
-
-```
-
-SuccessResponse
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|success|boolean|false|none|none|
-
-<h2 id="tocS_RefreshTokenRequestPartial">RefreshTokenRequestPartial</h2>
-<!-- backwards compatibility -->
-<a id="schemarefreshtokenrequestpartial"></a>
-<a id="schema_RefreshTokenRequestPartial"></a>
-<a id="tocSrefreshtokenrequestpartial"></a>
-<a id="tocsrefreshtokenrequestpartial"></a>
-
-```json
-{
-  "refreshToken": "string"
-}
-
-```
-
-RefreshTokenRequestPartial
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|refreshToken|string|false|none|none|
-
-<h2 id="tocS_RefreshTokenRequest">RefreshTokenRequest</h2>
-<!-- backwards compatibility -->
-<a id="schemarefreshtokenrequest"></a>
-<a id="schema_RefreshTokenRequest"></a>
-<a id="tocSrefreshtokenrequest"></a>
-<a id="tocsrefreshtokenrequest"></a>
-
-```json
-{
-  "refreshToken": "string"
-}
-
-```
-
-RefreshTokenRequest
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|refreshToken|string|true|none|none|
 
 <h2 id="tocS_OtpSendRequest">OtpSendRequest</h2>
 <!-- backwards compatibility -->
@@ -5238,275 +5053,203 @@ AuthUser
 |status|0|
 |status|4|
 
-<h2 id="tocS_Function">Function</h2>
+<h2 id="tocS_AuthTokenRequest">AuthTokenRequest</h2>
 <!-- backwards compatibility -->
-<a id="schemafunction"></a>
-<a id="schema_Function"></a>
-<a id="tocSfunction"></a>
-<a id="tocsfunction"></a>
-
-```json
-null
-
-```
-
-### Properties
-
-*None*
-
-<h2 id="tocS_ForgetPasswordDto">ForgetPasswordDto</h2>
-<!-- backwards compatibility -->
-<a id="schemaforgetpassworddto"></a>
-<a id="schema_ForgetPasswordDto"></a>
-<a id="tocSforgetpassworddto"></a>
-<a id="tocsforgetpassworddto"></a>
+<a id="schemaauthtokenrequest"></a>
+<a id="schema_AuthTokenRequest"></a>
+<a id="tocSauthtokenrequest"></a>
+<a id="tocsauthtokenrequest"></a>
 
 ```json
 {
-  "username": "string",
-  "client_id": "string",
-  "client_secret": "string"
+  "code": "string",
+  "clientId": "string"
 }
 
 ```
 
-ForgetPasswordDto
+AuthTokenRequest
 
 ### Properties
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|username|string|true|none|none|
-|client_id|string|true|none|none|
-|client_secret|string|true|none|none|
-
-<h2 id="tocS_AuthClient">AuthClient</h2>
-<!-- backwards compatibility -->
-<a id="schemaauthclient"></a>
-<a id="schema_AuthClient"></a>
-<a id="tocSauthclient"></a>
-<a id="tocsauthclient"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": 0,
-  "clientId": "string",
-  "clientSecret": "string",
-  "secret": "string",
-  "redirectUrl": "string",
-  "accessTokenExpiration": 0,
-  "refreshTokenExpiration": 0,
-  "authCodeExpiration": 0
-}
-
-```
-
-AuthClient
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|number|false|none|none|
+|code|string|true|none|none|
 |clientId|string|true|none|none|
-|clientSecret|string|true|none|none|
-|secret|string|true|none|Value can be a string or a private key.|
-|redirectUrl|string|false|none|none|
-|accessTokenExpiration|number|true|none|none|
-|refreshTokenExpiration|number|true|none|none|
-|authCodeExpiration|number|true|none|none|
 
-<h2 id="tocS_ResetPasswordWithClient">ResetPasswordWithClient</h2>
+<h2 id="tocS_SuccessResponse">SuccessResponse</h2>
 <!-- backwards compatibility -->
-<a id="schemaresetpasswordwithclient"></a>
-<a id="schema_ResetPasswordWithClient"></a>
-<a id="tocSresetpasswordwithclient"></a>
-<a id="tocsresetpasswordwithclient"></a>
+<a id="schemasuccessresponse"></a>
+<a id="schema_SuccessResponse"></a>
+<a id="tocSsuccessresponse"></a>
+<a id="tocssuccessresponse"></a>
 
 ```json
 {
-  "token": "string",
-  "password": "string",
+  "success": true
+}
+
+```
+
+SuccessResponse
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|success|boolean|false|none|none|
+
+<h2 id="tocS_RefreshTokenRequestPartial">RefreshTokenRequestPartial</h2>
+<!-- backwards compatibility -->
+<a id="schemarefreshtokenrequestpartial"></a>
+<a id="schema_RefreshTokenRequestPartial"></a>
+<a id="tocSrefreshtokenrequestpartial"></a>
+<a id="tocsrefreshtokenrequestpartial"></a>
+
+```json
+{
+  "refreshToken": "string"
+}
+
+```
+
+RefreshTokenRequestPartial
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|refreshToken|string|false|none|none|
+
+<h2 id="tocS_RefreshTokenRequest">RefreshTokenRequest</h2>
+<!-- backwards compatibility -->
+<a id="schemarefreshtokenrequest"></a>
+<a id="schema_RefreshTokenRequest"></a>
+<a id="tocSrefreshtokenrequest"></a>
+<a id="tocsrefreshtokenrequest"></a>
+
+```json
+{
+  "refreshToken": "string"
+}
+
+```
+
+RefreshTokenRequest
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|refreshToken|string|true|none|none|
+
+<h2 id="tocS_LoginRequest">LoginRequest</h2>
+<!-- backwards compatibility -->
+<a id="schemaloginrequest"></a>
+<a id="schema_LoginRequest"></a>
+<a id="tocSloginrequest"></a>
+<a id="tocsloginrequest"></a>
+
+```json
+{
   "client_id": "string",
-  "client_secret": "string"
-}
-
-```
-
-ResetPasswordWithClient
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|token|string|true|none|none|
-|password|string|true|none|none|
-|client_id|string|true|none|none|
-|client_secret|string|true|none|none|
-
-<h2 id="tocS_SignupRequestDto">SignupRequestDto</h2>
-<!-- backwards compatibility -->
-<a id="schemasignuprequestdto"></a>
-<a id="schema_SignupRequestDto"></a>
-<a id="tocSsignuprequestdto"></a>
-<a id="tocssignuprequestdto"></a>
-
-```json
-{
-  "email": "string",
-  "data": {}
-}
-
-```
-
-SignupRequestDto
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|email|string|true|none|none|
-|data|object|false|none|none|
-
-<h2 id="tocS_LocalUserProfileDto">LocalUserProfileDto</h2>
-<!-- backwards compatibility -->
-<a id="schemalocaluserprofiledto"></a>
-<a id="schema_LocalUserProfileDto"></a>
-<a id="tocSlocaluserprofiledto"></a>
-<a id="tocslocaluserprofiledto"></a>
-
-```json
-{
-  "email": "string",
+  "client_secret": "string",
+  "username": "string",
   "password": "string"
 }
 
 ```
 
-LocalUserProfileDto
+LoginRequest
 
 ### Properties
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|email|string|true|none|none|
-|password|string|true|none|none|
+|client_id|string|true|none|This property is supposed to be a string and is a required field|
+|client_secret|string|false|none|This property is supposed to be a string and is a required field|
+|username|string|true|none|This property is supposed to be a string and is a required field|
+|password|string|true|none|This property is supposed to be a string and is a required field|
 
-<h2 id="tocS_SignupRequest">SignupRequest</h2>
+<h2 id="tocS_AuthRefreshTokenRequest">AuthRefreshTokenRequest</h2>
 <!-- backwards compatibility -->
-<a id="schemasignuprequest"></a>
-<a id="schema_SignupRequest"></a>
-<a id="tocSsignuprequest"></a>
-<a id="tocssignuprequest"></a>
+<a id="schemaauthrefreshtokenrequest"></a>
+<a id="schema_AuthRefreshTokenRequest"></a>
+<a id="tocSauthrefreshtokenrequest"></a>
+<a id="tocsauthrefreshtokenrequest"></a>
 
 ```json
 {
-  "email": "string",
-  "expiry": "string"
+  "refreshToken": "string",
+  "tenantId": "string"
 }
 
 ```
 
-SignupRequest
+AuthRefreshTokenRequest
 
 ### Properties
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|email|string|true|none|none|
-|expiry|string|false|none|none|
-
-<h2 id="tocS_LoginActivityWithRelations">LoginActivityWithRelations</h2>
-<!-- backwards compatibility -->
-<a id="schemaloginactivitywithrelations"></a>
-<a id="schema_LoginActivityWithRelations"></a>
-<a id="tocSloginactivitywithrelations"></a>
-<a id="tocsloginactivitywithrelations"></a>
-
-```json
-{
-  "id": "string",
-  "actor": "string",
-  "tenantId": "string",
-  "loginTime": "2019-08-24T14:15:22Z",
-  "tokenPayload": "string",
-  "loginType": "string",
-  "deviceInfo": "string",
-  "ipAddress": "string"
-}
-
-```
-
-LoginActivityWithRelations
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|id|string|false|none|none|
-|actor|string|false|none|none|
+|refreshToken|string|true|none|none|
 |tenantId|string|false|none|none|
-|loginTime|string(date-time)|false|none|none|
-|tokenPayload|string|false|none|none|
-|loginType|string|false|none|none|
-|deviceInfo|string|false|none|none|
-|ipAddress|string|false|none|none|
 
-<h2 id="tocS_Date">Date</h2>
+<h2 id="tocS_ResetPasswordPartial">ResetPasswordPartial</h2>
 <!-- backwards compatibility -->
-<a id="schemadate"></a>
-<a id="schema_Date"></a>
-<a id="tocSdate"></a>
-<a id="tocsdate"></a>
-
-```json
-null
-
-```
-
-### Properties
-
-*None*
-
-<h2 id="tocS_ActiveUsersFilter">ActiveUsersFilter</h2>
-<!-- backwards compatibility -->
-<a id="schemaactiveusersfilter"></a>
-<a id="schema_ActiveUsersFilter"></a>
-<a id="tocSactiveusersfilter"></a>
-<a id="tocsactiveusersfilter"></a>
+<a id="schemaresetpasswordpartial"></a>
+<a id="schema_ResetPasswordPartial"></a>
+<a id="tocSresetpasswordpartial"></a>
+<a id="tocsresetpasswordpartial"></a>
 
 ```json
 {
-  "inclusion": true,
-  "userIdentity": "string",
-  "userIdentifier": {}
+  "refreshToken": "string",
+  "username": "string",
+  "password": "string",
+  "oldPassword": "string"
 }
 
 ```
 
-ActiveUsersFilter
+ResetPasswordPartial
 
 ### Properties
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|inclusion|boolean|true|none|none|
-|userIdentity|string|true|none|none|
-|userIdentifier|object|true|none|none|
+|refreshToken|string|false|none|none|
+|username|string|false|none|This property is supposed to be a string and is a required field|
+|password|string|false|none|This property is supposed to be a string and is a required field|
+|oldPassword|string|false|none|This property is supposed to be a string and is a required field|
+
+<h2 id="tocS_ResetPassword">ResetPassword</h2>
+<!-- backwards compatibility -->
+<a id="schemaresetpassword"></a>
+<a id="schema_ResetPassword"></a>
+<a id="tocSresetpassword"></a>
+<a id="tocsresetpassword"></a>
+
+```json
+{
+  "refreshToken": "string",
+  "username": "string",
+  "password": "string",
+  "oldPassword": "string"
+}
+
+```
+
+ResetPassword
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|refreshToken|string|true|none|none|
+|username|string|true|none|This property is supposed to be a string and is a required field|
+|password|string|true|none|This property is supposed to be a string and is a required field|
+|oldPassword|string|false|none|This property is supposed to be a string and is a required field|
 
 <h2 id="tocS_AuthRefreshTokenRequestPartial">AuthRefreshTokenRequestPartial</h2>
 <!-- backwards compatibility -->

@@ -3,16 +3,16 @@ import {Count, CountSchema, Filter, Where} from '@loopback/repository';
 import {
   get,
   getFilterSchemaFor,
-  getModelSchemaRef,
   getWhereSchemaFor,
   param,
 } from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
-import {STRATEGY, authenticate} from 'loopback4-authentication';
+import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import moment from 'moment';
 import {ActiveUsersRange, PermissionKey} from '../enums';
@@ -67,7 +67,9 @@ export class LoginActivityController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(LoginActivity, {includeRelations: true}),
+              items: getModelSchemaRefSF(LoginActivity, {
+                includeRelations: true,
+              }),
             },
           },
         },
@@ -94,7 +96,9 @@ export class LoginActivityController {
         description: 'LoginActivity model instance',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(LoginActivity, {includeRelations: true}),
+            schema: getModelSchemaRefSF(LoginActivity, {
+              includeRelations: true,
+            }),
           },
         },
       },
@@ -121,7 +125,7 @@ export class LoginActivityController {
         description: 'LoginActivity model instance',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(Object, {includeRelations: true}),
+            schema: getModelSchemaRefSF(Object, {includeRelations: true}),
           },
         },
       },
