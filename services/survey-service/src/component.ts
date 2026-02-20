@@ -1,3 +1,4 @@
+import {Booter} from '@loopback/boot';
 import {
   Binding,
   Component,
@@ -14,7 +15,10 @@ import {
   BearerVerifierComponent,
   BearerVerifierConfig,
   BearerVerifierType,
+  BooterBasePathMixin,
   CoreComponent,
+  CoreControllerBooter,
+  CoreModelBooter,
   JwtKeysRepository,
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
@@ -25,19 +29,6 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import {
-  OptionController,
-  QuestionController,
-  SectionController,
-  SurveyCycleController,
-} from './controllers';
-import {TemplateController} from './controllers/question-template.controller';
-import {SurveyQuestionController} from './controllers/survey-question.controller';
-import {SurveyResponderController} from './controllers/survey-responder.controller';
-import {SurveyResponseDetailViewController} from './controllers/survey-response-detail.controller';
-import {SurveyResponseController} from './controllers/survey-response.controller';
-import {SurveyController} from './controllers/survey.controller';
-import {TemplateQuestionController} from './controllers/template-question.controller';
 import {SurveyServiceBindings} from './keys';
 import {
   Options,
@@ -170,18 +161,16 @@ export class SurveyServiceComponent implements Component {
       SurveyResponseDetail,
     ];
 
-    this.controllers = [
-      QuestionController,
-      OptionController,
-      TemplateQuestionController,
-      TemplateController,
-      SurveyController,
-      SurveyQuestionController,
-      SectionController,
-      SurveyCycleController,
-      SurveyResponderController,
-      SurveyResponseController,
-      SurveyResponseDetailViewController,
+    this.booters = [
+      BooterBasePathMixin(CoreModelBooter, __dirname, {
+        interface: SurveyServiceComponent.name,
+      }),
+      BooterBasePathMixin(CoreControllerBooter, __dirname, {
+        dirs: ['controllers'],
+        extensions: ['.controller.js'],
+        nested: true,
+        interface: SurveyServiceComponent.name,
+      }),
     ];
 
     // Mount core component
@@ -215,6 +204,7 @@ export class SurveyServiceComponent implements Component {
    */
   repositories?: Class<Repository<Model>>[];
   services?: ServiceOrProviderClass[];
+  booters?: Class<Booter>[];
 
   /**
    * An optional list of Model classes to bind for dependency injection
