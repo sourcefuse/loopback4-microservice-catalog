@@ -4,10 +4,11 @@
 // https://opensource.org/licenses/MIT
 import {inject} from '@loopback/core';
 import {Filter, repository} from '@loopback/repository';
-import {HttpErrors, get, getModelSchemaRef, param} from '@loopback/rest';
+import {HttpErrors, get, param} from '@loopback/rest';
 import {
   IAuthUserWithPermissions,
   OPERATION_SECURITY_SPEC,
+  getModelSchemaRefSF,
 } from '@sourceloop/core';
 import {
   AuthenticationBindings,
@@ -43,7 +44,7 @@ export class UserTenantController {
         description: 'Array of Tenants to Which the User Belongs',
         content: {
           'application/json': {
-            schema: {type: 'array', items: getModelSchemaRef(Tenant)},
+            schema: {type: 'array', items: getModelSchemaRefSF(Tenant)},
           },
         },
       },

@@ -7,14 +7,13 @@ import {Filter, Where, repository} from '@loopback/repository';
 import {
   del,
   get,
-  getModelSchemaRef,
   getWhereSchemaFor,
   param,
   patch,
   post,
   requestBody,
 } from '@loopback/rest';
-import {OPERATION_SECURITY_SPEC} from '@sourceloop/core';
+import {OPERATION_SECURITY_SPEC, getModelSchemaRefSF} from '@sourceloop/core';
 import {STRATEGY, authenticate} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKey, STATUS_CODE} from '../enums';
@@ -49,7 +48,7 @@ export class TenantUserController {
         description: 'Array of Users of Tenant',
         content: {
           'application/json': {
-            schema: {type: 'array', items: getModelSchemaRef(User)},
+            schema: {type: 'array', items: getModelSchemaRefSF(User)},
           },
         },
       },
@@ -76,7 +75,7 @@ export class TenantUserController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'User model instance',
-        content: {'application/json': {schema: getModelSchemaRef(User)}},
+        content: {'application/json': {schema: getModelSchemaRefSF(User)}},
       },
     },
   })
@@ -85,7 +84,7 @@ export class TenantUserController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(UserDto, {
+          schema: getModelSchemaRefSF(UserDto, {
             title: 'NewUserInTenant',
             exclude: ['id', 'defaultTenantId'],
           }),
@@ -121,7 +120,7 @@ export class TenantUserController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(UserView, {
+          schema: getModelSchemaRefSF(UserView, {
             partial: true,
             exclude: [
               'id',

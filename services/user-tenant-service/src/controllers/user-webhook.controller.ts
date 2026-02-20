@@ -1,6 +1,6 @@
 import {intercept, service} from '@loopback/core';
-import {getModelSchemaRef, param, post, requestBody} from '@loopback/rest';
-import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
+import {param, post, requestBody} from '@loopback/rest';
+import {CONTENT_TYPE, STATUS_CODE, getModelSchemaRefSF} from '@sourceloop/core';
 import {authorize} from 'loopback4-authorization';
 import {USER_CALLBACK} from '../keys';
 import {UserWebhookDTO} from '../models';
@@ -28,7 +28,7 @@ export class UserWebhookController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(UserWebhookDTO, {
+          schema: getModelSchemaRefSF(UserWebhookDTO, {
             title: 'UserWebhookDTO',
           }),
         },
