@@ -20,7 +20,7 @@ import {IncomingMessage, ServerResponse} from 'http';
 
 import {Loopback4HelmetComponent} from 'loopback4-helmet';
 import {RateLimiterComponent} from 'loopback4-ratelimiter';
-import * as swstats from 'swagger-stats';
+import * as swstats from 'swagger-stats-sf';
 import {
   LoggerExtensionComponent,
   SwaggerAuthenticationComponent,
