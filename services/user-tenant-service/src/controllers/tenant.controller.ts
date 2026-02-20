@@ -10,17 +10,8 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
-import {
-  del,
-  get,
-  getModelSchemaRef,
-  param,
-  patch,
-  post,
-  put,
-  requestBody,
-} from '@loopback/rest';
-import {OPERATION_SECURITY_SPEC} from '@sourceloop/core';
+import {del, get, param, patch, post, put, requestBody} from '@loopback/rest';
+import {getModelSchemaRefSF, OPERATION_SECURITY_SPEC} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKey, STATUS_CODE} from '../enums';
@@ -46,7 +37,7 @@ export class TenantController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Tenant model instance',
-        content: {'application/json': {schema: getModelSchemaRef(Tenant)}},
+        content: {'application/json': {schema: getModelSchemaRefSF(Tenant)}},
       },
     },
   })
@@ -54,7 +45,7 @@ export class TenantController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Tenant, {
+          schema: getModelSchemaRefSF(Tenant, {
             title: 'NewTenant',
             exclude: ['id'],
           }),
@@ -100,7 +91,7 @@ export class TenantController {
           'application/json': {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Tenant, {includeRelations: true}),
+              items: getModelSchemaRefSF(Tenant, {includeRelations: true}),
             },
           },
         },
@@ -130,7 +121,7 @@ export class TenantController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Tenant, {partial: true}),
+          schema: getModelSchemaRefSF(Tenant, {partial: true}),
         },
       },
     })
@@ -153,7 +144,7 @@ export class TenantController {
         description: 'Tenant model instance',
         content: {
           'application/json': {
-            schema: getModelSchemaRef(Tenant, {includeRelations: true}),
+            schema: getModelSchemaRefSF(Tenant, {includeRelations: true}),
           },
         },
       },
@@ -186,7 +177,7 @@ export class TenantController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Tenant, {partial: true}),
+          schema: getModelSchemaRefSF(Tenant, {partial: true}),
         },
       },
     })

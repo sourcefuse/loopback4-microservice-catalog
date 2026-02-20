@@ -10,7 +10,6 @@ import {
   RestBindings,
   del,
   get,
-  getModelSchemaRef,
   getWhereSchemaFor,
   param,
   post,
@@ -19,6 +18,7 @@ import {
 import {
   IAuthUserWithPermissions,
   OPERATION_SECURITY_SPEC,
+  getModelSchemaRefSF,
 } from '@sourceloop/core';
 import {
   AuthenticationBindings,
@@ -64,7 +64,7 @@ export class GroupUserController {
         description: 'Array of UserGroup of a Group',
         content: {
           'application/json': {
-            schema: {type: 'array', items: getModelSchemaRef(UserGroup)},
+            schema: {type: 'array', items: getModelSchemaRefSF(UserGroup)},
           },
         },
       },
@@ -91,7 +91,7 @@ export class GroupUserController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'UserGroup model instance',
-        content: {'application/json': {schema: getModelSchemaRef(UserGroup)}},
+        content: {'application/json': {schema: getModelSchemaRefSF(UserGroup)}},
       },
     },
   })
@@ -100,7 +100,7 @@ export class GroupUserController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(UserGroup, {
+          schema: getModelSchemaRefSF(UserGroup, {
             title: 'NewUserGroupInGroup',
             exclude: ['id', 'groupId'],
           }),
@@ -129,7 +129,7 @@ export class GroupUserController {
         description: 'UserGroup model instance',
         content: {
           'application/json': {
-            schema: {type: 'array', items: getModelSchemaRef(UserGroup)},
+            schema: {type: 'array', items: getModelSchemaRefSF(UserGroup)},
           },
         },
       },
@@ -142,7 +142,7 @@ export class GroupUserController {
         'application/json': {
           schema: {
             type: 'array',
-            items: getModelSchemaRef(UserGroup, {
+            items: getModelSchemaRefSF(UserGroup, {
               title: 'NewUserGroupInGroup',
               exclude: ['id', 'groupId'],
             }),
