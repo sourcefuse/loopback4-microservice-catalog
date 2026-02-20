@@ -11,21 +11,13 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
+import {del, get, param, patch, post, put, requestBody} from '@loopback/rest';
 import {
-  del,
-  get,
-  getModelSchemaRef,
-  param,
-  patch,
-  post,
-  put,
-  requestBody,
-} from '@loopback/rest';
-import {
-  IAuthUserWithPermissions,
-  STATUS_CODE,
   CONTENT_TYPE,
+  getModelSchemaRefSF,
+  IAuthUserWithPermissions,
   OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
 } from '@sourceloop/core';
 import {
   authenticate,
@@ -33,13 +25,13 @@ import {
   STRATEGY,
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
+import {SchedulerBindings} from '../keys';
 import {Subscription} from '../models';
+import {IdentifierType} from '../models/enums/identifier-type.enum';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {SubscriptionRepository} from '../repositories';
 import {ValidatorService} from '../services/validator.service';
 import {ISchedulerConfig} from '../types';
-import {SchedulerBindings} from '../keys';
-import {IdentifierType} from '../models/enums/identifier-type.enum';
 
 const basePath = '/subscriptions';
 
@@ -71,7 +63,7 @@ export class SubscriptionController {
       [STATUS_CODE.OK]: {
         description: 'Subscription model instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Subscription)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Subscription)},
         },
       },
     },
@@ -80,7 +72,7 @@ export class SubscriptionController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Subscription, {
+          schema: getModelSchemaRefSF(Subscription, {
             title: 'NewSubscription',
             exclude: ['id'],
           }),
@@ -134,7 +126,9 @@ export class SubscriptionController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Subscription, {includeRelations: true}),
+              items: getModelSchemaRefSF(Subscription, {
+                includeRelations: true,
+              }),
             },
           },
         },
@@ -181,7 +175,9 @@ export class SubscriptionController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Subscription, {includeRelations: true}),
+              items: getModelSchemaRefSF(Subscription, {
+                includeRelations: true,
+              }),
             },
           },
         },
@@ -216,7 +212,7 @@ export class SubscriptionController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Subscription, {partial: true}),
+          schema: getModelSchemaRefSF(Subscription, {partial: true}),
         },
       },
     })
@@ -242,7 +238,7 @@ export class SubscriptionController {
         description: 'Subscription model instance',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(Subscription, {includeRelations: true}),
+            schema: getModelSchemaRefSF(Subscription, {includeRelations: true}),
           },
         },
       },
@@ -278,7 +274,7 @@ export class SubscriptionController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Subscription, {partial: true}),
+          schema: getModelSchemaRefSF(Subscription, {partial: true}),
         },
       },
     })
