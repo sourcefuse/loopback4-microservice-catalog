@@ -1,16 +1,10 @@
 import {inject} from '@loopback/core';
 import {repository} from '@loopback/repository';
-import {
-  get,
-  getModelSchemaRef,
-  HttpErrors,
-  param,
-  post,
-  requestBody,
-} from '@loopback/rest';
+import {get, HttpErrors, param, post, requestBody} from '@loopback/rest';
 import {
   CONTENT_TYPE,
   ErrorCodes,
+  getModelSchemaRefSF,
   JwtKeysRepository,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
@@ -135,7 +129,7 @@ export class IdentityServerController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(AuthRefreshTokenRequest, {
+          schema: getModelSchemaRefSF(AuthRefreshTokenRequest, {
             partial: true,
           }),
         },

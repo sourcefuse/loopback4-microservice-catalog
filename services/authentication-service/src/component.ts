@@ -2,6 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {Booter} from '@loopback/boot';
 import {
   Binding,
   Component,
@@ -13,7 +14,10 @@ import {
 import {Class, Model, Repository} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {
+  BooterBasePathMixin,
   CoreComponent,
+  CoreControllerBooter,
+  CoreModelBooter,
   SECURITY_SCHEME_SPEC,
   SFCoreBindings,
   TenantGuardService,
@@ -32,7 +36,7 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import {controllers} from './controllers';
+// import {controllers} from './controllers';
 import {OtpMethodType} from './enums';
 import {AuthServiceBindings} from './keys';
 import {models} from './models';
@@ -209,12 +213,26 @@ export class AuthenticationServiceComponent implements Component {
       .toClass(ActiveUserFilterBuilderService);
     this.application.bind(AuthServiceBindings.ActorIdKey).to('userId');
 
-    this.controllers = controllers;
+    this.booters = [
+      BooterBasePathMixin(CoreModelBooter, __dirname, {
+        interface: AuthenticationServiceComponent.name,
+      }),
+      BooterBasePathMixin(CoreControllerBooter, __dirname, {
+        dirs: ['controllers', 'modules'],
+        extensions: ['.controller.js'],
+        nested: true,
+        interface: AuthenticationServiceComponent.name,
+      }),
+    ];
+
+    // this.controllers = controllers;
   }
 
   providers: ProviderMap = {};
 
   bindings: Binding[] = [];
+
+  booters?: Class<Booter>[];
 
   /**
    * An optional list of Repository classes to bind for dependency injection
