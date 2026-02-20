@@ -2,6 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {Booter} from '@loopback/boot';
 import {
   Binding,
   Component,
@@ -25,7 +26,10 @@ import {
   WorkflowVersionRepository as WorkflowVersionSequelizeRepository,
 } from '@sourceloop/bpmn-service/sequelize';
 import {
+  BooterBasePathMixin,
   CoreComponent,
+  CoreControllerBooter,
+  CoreModelBooter,
   JwtKeysRepository,
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
@@ -33,7 +37,6 @@ import {
 import {JwtKeysRepository as SequelizeJwtKeysRepository} from '@sourceloop/core/sequelize';
 import {AuthenticationComponent} from 'loopback4-authentication';
 import {AuthorizationComponent} from 'loopback4-authorization';
-import * as controllers from './controllers';
 import {TaskServiceBindings} from './keys';
 import {CommandObserver, EventStreamObserver} from './lifecycle-observers';
 import {Event, EventWorkflow, Task, TaskWorkflow, UserTask} from './models';
@@ -75,6 +78,8 @@ export class TaskServiceComponent implements Component {
 
   services?: ServiceOrProviderClass[];
 
+  booters?: Class<Booter>[];
+
   /**
    * An array of controller classes
    */
@@ -101,10 +106,16 @@ export class TaskServiceComponent implements Component {
       servers: [{url: '/'}],
     });
     this.application.component(WorkflowServiceComponent);
-    this.controllers = [
-      controllers.EventController,
-      controllers.TaskController,
-      controllers.TaskUserTaskController,
+    this.booters = [
+      BooterBasePathMixin(CoreModelBooter, __dirname, {
+        interface: TaskServiceComponent.name,
+      }),
+      BooterBasePathMixin(CoreControllerBooter, __dirname, {
+        dirs: ['controllers'],
+        extensions: ['.controller.js'],
+        nested: true,
+        interface: TaskServiceComponent.name,
+      }),
     ];
     if (config?.useSequelize) {
       this.repositories = [

@@ -1,11 +1,11 @@
-import {RestApplication} from '@loopback/rest';
 import {Client, expect, sinon} from '@loopback/testlab';
+import {ReportingServiceApplication} from '../../application';
 import {StateTracking} from '../../models';
 import {StateTrackingRepository} from '../../repositories';
 import {setUpApplication} from './helper';
 
 describe('StateTrackingController', () => {
-  let app: RestApplication;
+  let app: ReportingServiceApplication;
   let client: Client;
   let stateTrackingRepo: StateTrackingRepository;
   let sandbox: sinon.SinonSandbox;

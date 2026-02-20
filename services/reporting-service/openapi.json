@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "@sourceloop/reporting-service",
-    "version": "7.0.4",
+    "version": "7.0.8",
     "description": "reporting-service.",
     "contact": {
       "name": "Sourav Bhargava",
@@ -1103,6 +1103,322 @@
   ],
   "components": {
     "schemas": {
+      "Widget": {
+        "title": "Widget",
+        "type": "object",
+        "description": "This model represents a widget",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for a widget"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the widget"
+          },
+          "datasetId": {
+            "type": "string",
+            "description": "The id of the dataset that is to be used for the widget"
+          },
+          "visualizationType": {
+            "type": "string",
+            "description": "The type of visualization to be used for the widget"
+          },
+          "extId": {
+            "type": "string",
+            "description": "The external id of the widget"
+          },
+          "extMetadata": {
+            "type": "object",
+            "description": "The external metadata of the widget"
+          }
+        },
+        "required": [
+          "datasetId"
+        ],
+        "additionalProperties": false
+      },
+      "new Widget": {
+        "title": "new Widget",
+        "type": "object",
+        "description": "This model represents a widget (tsType: Omit<Widget, 'id'>, schemaOptions: { title: 'new Widget', exclude: [ 'id' ] })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the widget"
+          },
+          "datasetId": {
+            "type": "string",
+            "description": "The id of the dataset that is to be used for the widget"
+          },
+          "visualizationType": {
+            "type": "string",
+            "description": "The type of visualization to be used for the widget"
+          },
+          "extId": {
+            "type": "string",
+            "description": "The external id of the widget"
+          },
+          "extMetadata": {
+            "type": "object",
+            "description": "The external metadata of the widget"
+          }
+        },
+        "required": [
+          "datasetId"
+        ],
+        "additionalProperties": false
+      },
+      "StateTracking": {
+        "title": "StateTracking",
+        "type": "object",
+        "description": "This model represents a state tracking for the ingested data",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for a state tracking"
+          },
+          "state": {
+            "type": "string",
+            "description": "The state of the ingested data"
+          },
+          "payload": {
+            "type": "string",
+            "description": "The payload of the ingested data"
+          },
+          "recordType": {
+            "type": "string",
+            "description": "The type of the ingested data"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp of the ingested data"
+          },
+          "error": {
+            "type": "string",
+            "description": "The error of the ingested data if any"
+          },
+          "recordId": {
+            "type": "string",
+            "description": "The id of the ingested data"
+          }
+        },
+        "required": [
+          "state",
+          "recordType",
+          "timestamp",
+          "recordId"
+        ],
+        "additionalProperties": false
+      },
+      "IngestionMapping": {
+        "title": "IngestionMapping",
+        "type": "object",
+        "description": "This model represents a ingestion mapping, it maps the datasource to the record type",
+        "properties": {
+          "dataSourceName": {
+            "type": "string",
+            "description": "The datasource name for the ingestion mapping"
+          },
+          "recordType": {
+            "type": "string",
+            "description": "The record type for the ingestion mapping"
+          },
+          "primaryColumn": {
+            "type": "string",
+            "description": "The primary column for the ingestion mapping"
+          },
+          "columnTransformations": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "typeConversion": {
+                  "type": "object",
+                  "properties": {
+                    "expectedType": {
+                      "type": "string"
+                    },
+                    "dataStoreKey": {
+                      "type": "string"
+                    },
+                    "customHandler": {
+                      "type": "string"
+                    },
+                    "ConversionOptions": {
+                      "type": "object"
+                    }
+                  }
+                },
+                "dataStoreKey": {
+                  "type": "string"
+                },
+                "skip": {
+                  "type": "boolean"
+                }
+              }
+            },
+            "description": "The column transformations for the ingestion mapping, refer to ColumnMappings interface"
+          },
+          "permissions": {
+            "type": "object",
+            "description": "The permissions for the ingestion mapping"
+          }
+        },
+        "required": [
+          "dataSourceName",
+          "recordType",
+          "primaryColumn"
+        ],
+        "additionalProperties": false
+      },
+      "IngestionMappingPartial": {
+        "title": "IngestionMappingPartial",
+        "type": "object",
+        "description": "This model represents a ingestion mapping, it maps the datasource to the record type (tsType: Partial<IngestionMapping>, schemaOptions: { partial: true })",
+        "properties": {
+          "dataSourceName": {
+            "type": "string",
+            "description": "The datasource name for the ingestion mapping"
+          },
+          "recordType": {
+            "type": "string",
+            "description": "The record type for the ingestion mapping"
+          },
+          "primaryColumn": {
+            "type": "string",
+            "description": "The primary column for the ingestion mapping"
+          },
+          "columnTransformations": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "typeConversion": {
+                  "type": "object",
+                  "properties": {
+                    "expectedType": {
+                      "type": "string"
+                    },
+                    "dataStoreKey": {
+                      "type": "string"
+                    },
+                    "customHandler": {
+                      "type": "string"
+                    },
+                    "ConversionOptions": {
+                      "type": "object"
+                    }
+                  }
+                },
+                "dataStoreKey": {
+                  "type": "string"
+                },
+                "skip": {
+                  "type": "boolean"
+                }
+              }
+            },
+            "description": "The column transformations for the ingestion mapping, refer to ColumnMappings interface"
+          },
+          "permissions": {
+            "type": "object",
+            "description": "The permissions for the ingestion mapping"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ColumnForDataSourceModel": {
+        "title": "ColumnForDataSourceModel",
+        "type": "object",
+        "description": "Schema for ColumnForDataSource",
+        "properties": {
+          "columnName": {
+            "type": "string",
+            "description": "The name of the column"
+          },
+          "dataSourceName": {
+            "type": "string",
+            "description": "Name of the data source"
+          },
+          "displayName": {
+            "type": "string",
+            "description": "Display name of the column"
+          },
+          "originalDataType": {
+            "type": "string",
+            "description": "Original data type of the column"
+          },
+          "dataType": {
+            "type": "string",
+            "description": "Data type of the column",
+            "enum": [
+              "String",
+              "Number",
+              "Boolean",
+              "Array",
+              "Object",
+              "Json",
+              "Date",
+              "Unknown"
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
       "NewDataSet": {
         "title": "NewDataSet",
         "type": "object",
@@ -1288,322 +1604,6 @@
         },
         "required": [
           "name"
-        ],
-        "additionalProperties": false
-      },
-      "IngestionMapping": {
-        "title": "IngestionMapping",
-        "type": "object",
-        "description": "This model represents a ingestion mapping, it maps the datasource to the record type",
-        "properties": {
-          "dataSourceName": {
-            "type": "string",
-            "description": "The datasource name for the ingestion mapping"
-          },
-          "recordType": {
-            "type": "string",
-            "description": "The record type for the ingestion mapping"
-          },
-          "primaryColumn": {
-            "type": "string",
-            "description": "The primary column for the ingestion mapping"
-          },
-          "columnTransformations": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "object",
-              "properties": {
-                "typeConversion": {
-                  "type": "object",
-                  "properties": {
-                    "expectedType": {
-                      "type": "string"
-                    },
-                    "dataStoreKey": {
-                      "type": "string"
-                    },
-                    "customHandler": {
-                      "type": "string"
-                    },
-                    "ConversionOptions": {
-                      "type": "object"
-                    }
-                  }
-                },
-                "dataStoreKey": {
-                  "type": "string"
-                },
-                "skip": {
-                  "type": "boolean"
-                }
-              }
-            },
-            "description": "The column transformations for the ingestion mapping, refer to ColumnMappings interface"
-          },
-          "permissions": {
-            "type": "object",
-            "description": "The permissions for the ingestion mapping"
-          }
-        },
-        "required": [
-          "dataSourceName",
-          "recordType",
-          "primaryColumn"
-        ],
-        "additionalProperties": false
-      },
-      "IngestionMappingPartial": {
-        "title": "IngestionMappingPartial",
-        "type": "object",
-        "description": "This model represents a ingestion mapping, it maps the datasource to the record type (tsType: Partial<IngestionMapping>, schemaOptions: { partial: true })",
-        "properties": {
-          "dataSourceName": {
-            "type": "string",
-            "description": "The datasource name for the ingestion mapping"
-          },
-          "recordType": {
-            "type": "string",
-            "description": "The record type for the ingestion mapping"
-          },
-          "primaryColumn": {
-            "type": "string",
-            "description": "The primary column for the ingestion mapping"
-          },
-          "columnTransformations": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "object",
-              "properties": {
-                "typeConversion": {
-                  "type": "object",
-                  "properties": {
-                    "expectedType": {
-                      "type": "string"
-                    },
-                    "dataStoreKey": {
-                      "type": "string"
-                    },
-                    "customHandler": {
-                      "type": "string"
-                    },
-                    "ConversionOptions": {
-                      "type": "object"
-                    }
-                  }
-                },
-                "dataStoreKey": {
-                  "type": "string"
-                },
-                "skip": {
-                  "type": "boolean"
-                }
-              }
-            },
-            "description": "The column transformations for the ingestion mapping, refer to ColumnMappings interface"
-          },
-          "permissions": {
-            "type": "object",
-            "description": "The permissions for the ingestion mapping"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ColumnForDataSourceModel": {
-        "title": "ColumnForDataSourceModel",
-        "type": "object",
-        "description": "Schema for ColumnForDataSource",
-        "properties": {
-          "columnName": {
-            "type": "string",
-            "description": "The name of the column"
-          },
-          "dataSourceName": {
-            "type": "string",
-            "description": "Name of the data source"
-          },
-          "displayName": {
-            "type": "string",
-            "description": "Display name of the column"
-          },
-          "originalDataType": {
-            "type": "string",
-            "description": "Original data type of the column"
-          },
-          "dataType": {
-            "type": "string",
-            "description": "Data type of the column",
-            "enum": [
-              "String",
-              "Number",
-              "Boolean",
-              "Array",
-              "Object",
-              "Json",
-              "Date",
-              "Unknown"
-            ]
-          }
-        },
-        "additionalProperties": false
-      },
-      "StateTracking": {
-        "title": "StateTracking",
-        "type": "object",
-        "description": "This model represents a state tracking for the ingested data",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "The unique identifier for a state tracking"
-          },
-          "state": {
-            "type": "string",
-            "description": "The state of the ingested data"
-          },
-          "payload": {
-            "type": "string",
-            "description": "The payload of the ingested data"
-          },
-          "recordType": {
-            "type": "string",
-            "description": "The type of the ingested data"
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time",
-            "description": "The timestamp of the ingested data"
-          },
-          "error": {
-            "type": "string",
-            "description": "The error of the ingested data if any"
-          },
-          "recordId": {
-            "type": "string",
-            "description": "The id of the ingested data"
-          }
-        },
-        "required": [
-          "state",
-          "recordType",
-          "timestamp",
-          "recordId"
-        ],
-        "additionalProperties": false
-      },
-      "Widget": {
-        "title": "Widget",
-        "type": "object",
-        "description": "This model represents a widget",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string",
-            "description": "The unique identifier for a widget"
-          },
-          "name": {
-            "type": "string",
-            "description": "The name of the widget"
-          },
-          "datasetId": {
-            "type": "string",
-            "description": "The id of the dataset that is to be used for the widget"
-          },
-          "visualizationType": {
-            "type": "string",
-            "description": "The type of visualization to be used for the widget"
-          },
-          "extId": {
-            "type": "string",
-            "description": "The external id of the widget"
-          },
-          "extMetadata": {
-            "type": "object",
-            "description": "The external metadata of the widget"
-          }
-        },
-        "required": [
-          "datasetId"
-        ],
-        "additionalProperties": false
-      },
-      "new Widget": {
-        "title": "new Widget",
-        "type": "object",
-        "description": "This model represents a widget (tsType: Omit<Widget, 'id'>, schemaOptions: { title: 'new Widget', exclude: [ 'id' ] })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string",
-            "description": "The name of the widget"
-          },
-          "datasetId": {
-            "type": "string",
-            "description": "The id of the dataset that is to be used for the widget"
-          },
-          "visualizationType": {
-            "type": "string",
-            "description": "The type of visualization to be used for the widget"
-          },
-          "extId": {
-            "type": "string",
-            "description": "The external id of the widget"
-          },
-          "extMetadata": {
-            "type": "object",
-            "description": "The external metadata of the widget"
-          }
-        },
-        "required": [
-          "datasetId"
         ],
         "additionalProperties": false
       },

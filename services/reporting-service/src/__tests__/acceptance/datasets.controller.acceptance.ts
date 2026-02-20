@@ -1,10 +1,10 @@
-import {RestApplication} from '@loopback/rest';
 import {Client, expect} from '@loopback/testlab';
+import {ReportingServiceApplication} from '../../application';
 import {DataSet} from '../../models';
 import {setUpApplication} from './helper';
 
 describe('DataSetsController', () => {
-  let app: RestApplication;
+  let app: ReportingServiceApplication;
   let client: Client;
   let dataSetId: string;
 

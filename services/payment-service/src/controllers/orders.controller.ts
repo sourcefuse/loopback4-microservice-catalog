@@ -10,18 +10,10 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
-import {
-  del,
-  get,
-  getModelSchemaRef,
-  param,
-  patch,
-  post,
-  put,
-  requestBody,
-} from '@loopback/rest';
+import {del, get, param, patch, post, put, requestBody} from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
@@ -46,7 +38,7 @@ export class OrdersController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Orders model instance',
-        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Orders)}},
+        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Orders)}},
       },
     },
   })
@@ -54,7 +46,7 @@ export class OrdersController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Orders, {
+          schema: getModelSchemaRefSF(Orders, {
             title: 'NewOrders',
           }),
         },
@@ -95,7 +87,7 @@ export class OrdersController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Orders, {includeRelations: true}),
+              items: getModelSchemaRefSF(Orders, {includeRelations: true}),
             },
           },
         },
@@ -123,7 +115,7 @@ export class OrdersController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Orders, {partial: true}),
+          schema: getModelSchemaRefSF(Orders, {partial: true}),
         },
       },
     })
@@ -144,7 +136,7 @@ export class OrdersController {
         description: 'Orders model instance',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(Orders, {includeRelations: true}),
+            schema: getModelSchemaRefSF(Orders, {includeRelations: true}),
           },
         },
       },
@@ -175,7 +167,7 @@ export class OrdersController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Orders, {partial: true}),
+          schema: getModelSchemaRefSF(Orders, {partial: true}),
         },
       },
     })

@@ -16,22 +16,16 @@ import {
 } from '@loopback/core';
 import {Class, Model, Repository} from '@loopback/repository';
 import {
+  BooterBasePathMixin,
   CoreComponent,
+  CoreControllerBooter,
+  CoreModelBooter,
   ITenantUtilitiesConfig,
   JwtKeysRepository,
   TenantUtilitiesBindings,
   TenantUtilitiesComponent,
 } from '@sourceloop/core';
 import {JwtKeysRepository as SequelizeJwtKeysRepository} from '@sourceloop/core/sequelize';
-import {
-  OrdersController,
-  PaymentGatewaysController,
-  SubscriptionTransactionsController,
-  SubscriptionsController,
-  TemplatesController,
-  TransactionSubscriptionsController,
-  TransactionsController,
-} from './controllers';
 import {PaymentServiceBindings, PaymentServiceComponentBindings} from './keys';
 import {
   Orders,
@@ -41,6 +35,7 @@ import {
   Transactions,
 } from './models';
 
+import {Booter} from '@loopback/boot';
 import {
   Orders as TenantOrders,
   PaymentGateways as TenantPaymentGateways,
@@ -89,6 +84,7 @@ export class PaymentServiceComponent implements Component {
    * via `app.model()` API.
    */
   models?: Class<Model>[];
+  booters?: Class<Booter>[];
 
   /**
    * An array of controller classes
@@ -131,15 +127,16 @@ export class PaymentServiceComponent implements Component {
         TenantTransactions,
       ];
     }
-
-    this.controllers = [
-      OrdersController,
-      TransactionsController,
-      PaymentGatewaysController,
-      TemplatesController,
-      SubscriptionsController,
-      SubscriptionTransactionsController,
-      TransactionSubscriptionsController,
+    this.booters = [
+      BooterBasePathMixin(CoreModelBooter, __dirname, {
+        interface: PaymentServiceComponent.name,
+      }),
+      BooterBasePathMixin(CoreControllerBooter, __dirname, {
+        dirs: ['controllers'],
+        extensions: ['.controller.js'],
+        nested: true,
+        interface: PaymentServiceComponent.name,
+      }),
     ];
     if (this.paymentConfig?.useSequelize) {
       this.repositories = [

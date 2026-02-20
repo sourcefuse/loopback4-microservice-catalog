@@ -1,12 +1,12 @@
-import {RestApplication} from '@loopback/rest';
 import {Client, expect, sinon} from '@loopback/testlab';
+import {ReportingServiceApplication} from '../../application';
 import {IngestionMapping} from '../../models';
 import {IngestionMappingsRepository} from '../../repositories';
 import {IngestionMappingsService} from '../../services';
 import {setUpApplication} from './helper';
 
 describe('IngestionMappingsController', () => {
-  let app: RestApplication;
+  let app: ReportingServiceApplication;
   let client: Client;
   let ingestionMappingsService: IngestionMappingsService;
   let sandbox: sinon.SinonSandbox;

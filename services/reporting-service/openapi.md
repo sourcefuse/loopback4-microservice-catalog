@@ -1,5 +1,5 @@
 ---
-title: "@sourceloop/reporting-service v7.0.4"
+title: "@sourceloop/reporting-service v7.0.8"
 language_tabs:
   - javascript: JavaScript
   - javascript--nodejs: Node.JS
@@ -16,7 +16,7 @@ headingLevel: 2
 
 <!-- Generator: Widdershins v4.0.1 -->
 
-<h1 id="-sourceloop-reporting-service">@sourceloop/reporting-service v7.0.4</h1>
+<h1 id="-sourceloop-reporting-service">@sourceloop/reporting-service v7.0.8</h1>
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
@@ -3149,58 +3149,12 @@ This operation does not require authentication
 
 # Schemas
 
-<h2 id="tocS_NewDataSet">NewDataSet</h2>
+<h2 id="tocS_Widget">Widget</h2>
 <!-- backwards compatibility -->
-<a id="schemanewdataset"></a>
-<a id="schema_NewDataSet"></a>
-<a id="tocSnewdataset"></a>
-<a id="tocsnewdataset"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "name": "string",
-  "dataSetQuery": {},
-  "dataSetQuerySQL": "string",
-  "dataSetQueryHash": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-NewDataSet
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|name|string|true|none|The name of the data set|
-|dataSetQuery|object|false|none|The query for the data set refer to StructuredQueryInterface|
-|dataSetQuerySQL|string|false|none|The query for the data set refer to standard SQL|
-|dataSetQueryHash|string|false|none|The hash of the query for the data set|
-|extId|string|false|none|The external id of the data set|
-|extMetadata|object|false|none|The external metadata of the data set|
-
-<h2 id="tocS_updateDataSet">updateDataSet</h2>
-<!-- backwards compatibility -->
-<a id="schemaupdatedataset"></a>
-<a id="schema_updateDataSet"></a>
-<a id="tocSupdatedataset"></a>
-<a id="tocsupdatedataset"></a>
+<a id="schemawidget"></a>
+<a id="schema_Widget"></a>
+<a id="tocSwidget"></a>
+<a id="tocswidget"></a>
 
 ```json
 {
@@ -3213,16 +3167,15 @@ NewDataSet
   "modifiedBy": "string",
   "id": "string",
   "name": "string",
-  "dataSetQuery": {},
-  "dataSetQuerySQL": "string",
-  "dataSetQueryHash": "string",
+  "datasetId": "string",
+  "visualizationType": "string",
   "extId": "string",
   "extMetadata": {}
 }
 
 ```
 
-updateDataSet
+Widget
 
 ### Properties
 
@@ -3235,20 +3188,19 @@ updateDataSet
 |modifiedOn|string(date-time)|false|none|none|
 |createdBy|string|false|none|none|
 |modifiedBy|string|false|none|none|
-|id|string|false|none|The unique identifier for a data set|
-|name|string|false|none|The name of the data set|
-|dataSetQuery|object|false|none|The query for the data set refer to StructuredQueryInterface|
-|dataSetQuerySQL|string|false|none|The query for the data set refer to standard SQL|
-|dataSetQueryHash|string|false|none|The hash of the query for the data set|
-|extId|string|false|none|The external id of the data set|
-|extMetadata|object|false|none|The external metadata of the data set|
+|id|string|false|none|The unique identifier for a widget|
+|name|string|false|none|The name of the widget|
+|datasetId|string|true|none|The id of the dataset that is to be used for the widget|
+|visualizationType|string|false|none|The type of visualization to be used for the widget|
+|extId|string|false|none|The external id of the widget|
+|extMetadata|object|false|none|The external metadata of the widget|
 
-<h2 id="tocS_DataSet">DataSet</h2>
+<h2 id="tocS_new Widget">new Widget</h2>
 <!-- backwards compatibility -->
-<a id="schemadataset"></a>
-<a id="schema_DataSet"></a>
-<a id="tocSdataset"></a>
-<a id="tocsdataset"></a>
+<a id="schemanew widget"></a>
+<a id="schema_new Widget"></a>
+<a id="tocSnew widget"></a>
+<a id="tocsnew widget"></a>
 
 ```json
 {
@@ -3259,18 +3211,16 @@ updateDataSet
   "modifiedOn": "2019-08-24T14:15:22Z",
   "createdBy": "string",
   "modifiedBy": "string",
-  "id": "string",
   "name": "string",
-  "dataSetQuery": {},
-  "dataSetQuerySQL": "string",
-  "dataSetQueryHash": "string",
+  "datasetId": "string",
+  "visualizationType": "string",
   "extId": "string",
   "extMetadata": {}
 }
 
 ```
 
-DataSet
+new Widget
 
 ### Properties
 
@@ -3283,13 +3233,45 @@ DataSet
 |modifiedOn|string(date-time)|false|none|none|
 |createdBy|string|false|none|none|
 |modifiedBy|string|false|none|none|
-|id|string|false|none|The unique identifier for a data set|
-|name|string|true|none|The name of the data set|
-|dataSetQuery|object|false|none|The query for the data set refer to StructuredQueryInterface|
-|dataSetQuerySQL|string|false|none|The query for the data set refer to standard SQL|
-|dataSetQueryHash|string|false|none|The hash of the query for the data set|
-|extId|string|false|none|The external id of the data set|
-|extMetadata|object|false|none|The external metadata of the data set|
+|name|string|false|none|The name of the widget|
+|datasetId|string|true|none|The id of the dataset that is to be used for the widget|
+|visualizationType|string|false|none|The type of visualization to be used for the widget|
+|extId|string|false|none|The external id of the widget|
+|extMetadata|object|false|none|The external metadata of the widget|
+
+<h2 id="tocS_StateTracking">StateTracking</h2>
+<!-- backwards compatibility -->
+<a id="schemastatetracking"></a>
+<a id="schema_StateTracking"></a>
+<a id="tocSstatetracking"></a>
+<a id="tocsstatetracking"></a>
+
+```json
+{
+  "id": "string",
+  "state": "string",
+  "payload": "string",
+  "recordType": "string",
+  "timestamp": "2019-08-24T14:15:22Z",
+  "error": "string",
+  "recordId": "string"
+}
+
+```
+
+StateTracking
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|false|none|The unique identifier for a state tracking|
+|state|string|true|none|The state of the ingested data|
+|payload|string|false|none|The payload of the ingested data|
+|recordType|string|true|none|The type of the ingested data|
+|timestamp|string(date-time)|true|none|The timestamp of the ingested data|
+|error|string|false|none|The error of the ingested data if any|
+|recordId|string|true|none|The id of the ingested data|
 
 <h2 id="tocS_IngestionMapping">IngestionMapping</h2>
 <!-- backwards compatibility -->
@@ -3452,46 +3434,12 @@ ColumnForDataSourceModel
 |dataType|Date|
 |dataType|Unknown|
 
-<h2 id="tocS_StateTracking">StateTracking</h2>
+<h2 id="tocS_NewDataSet">NewDataSet</h2>
 <!-- backwards compatibility -->
-<a id="schemastatetracking"></a>
-<a id="schema_StateTracking"></a>
-<a id="tocSstatetracking"></a>
-<a id="tocsstatetracking"></a>
-
-```json
-{
-  "id": "string",
-  "state": "string",
-  "payload": "string",
-  "recordType": "string",
-  "timestamp": "2019-08-24T14:15:22Z",
-  "error": "string",
-  "recordId": "string"
-}
-
-```
-
-StateTracking
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|id|string|false|none|The unique identifier for a state tracking|
-|state|string|true|none|The state of the ingested data|
-|payload|string|false|none|The payload of the ingested data|
-|recordType|string|true|none|The type of the ingested data|
-|timestamp|string(date-time)|true|none|The timestamp of the ingested data|
-|error|string|false|none|The error of the ingested data if any|
-|recordId|string|true|none|The id of the ingested data|
-
-<h2 id="tocS_Widget">Widget</h2>
-<!-- backwards compatibility -->
-<a id="schemawidget"></a>
-<a id="schema_Widget"></a>
-<a id="tocSwidget"></a>
-<a id="tocswidget"></a>
+<a id="schemanewdataset"></a>
+<a id="schema_NewDataSet"></a>
+<a id="tocSnewdataset"></a>
+<a id="tocsnewdataset"></a>
 
 ```json
 {
@@ -3502,17 +3450,17 @@ StateTracking
   "modifiedOn": "2019-08-24T14:15:22Z",
   "createdBy": "string",
   "modifiedBy": "string",
-  "id": "string",
   "name": "string",
-  "datasetId": "string",
-  "visualizationType": "string",
+  "dataSetQuery": {},
+  "dataSetQuerySQL": "string",
+  "dataSetQueryHash": "string",
   "extId": "string",
   "extMetadata": {}
 }
 
 ```
 
-Widget
+NewDataSet
 
 ### Properties
 
@@ -3525,19 +3473,19 @@ Widget
 |modifiedOn|string(date-time)|false|none|none|
 |createdBy|string|false|none|none|
 |modifiedBy|string|false|none|none|
-|id|string|false|none|The unique identifier for a widget|
-|name|string|false|none|The name of the widget|
-|datasetId|string|true|none|The id of the dataset that is to be used for the widget|
-|visualizationType|string|false|none|The type of visualization to be used for the widget|
-|extId|string|false|none|The external id of the widget|
-|extMetadata|object|false|none|The external metadata of the widget|
+|name|string|true|none|The name of the data set|
+|dataSetQuery|object|false|none|The query for the data set refer to StructuredQueryInterface|
+|dataSetQuerySQL|string|false|none|The query for the data set refer to standard SQL|
+|dataSetQueryHash|string|false|none|The hash of the query for the data set|
+|extId|string|false|none|The external id of the data set|
+|extMetadata|object|false|none|The external metadata of the data set|
 
-<h2 id="tocS_new Widget">new Widget</h2>
+<h2 id="tocS_updateDataSet">updateDataSet</h2>
 <!-- backwards compatibility -->
-<a id="schemanew widget"></a>
-<a id="schema_new Widget"></a>
-<a id="tocSnew widget"></a>
-<a id="tocsnew widget"></a>
+<a id="schemaupdatedataset"></a>
+<a id="schema_updateDataSet"></a>
+<a id="tocSupdatedataset"></a>
+<a id="tocsupdatedataset"></a>
 
 ```json
 {
@@ -3548,16 +3496,18 @@ Widget
   "modifiedOn": "2019-08-24T14:15:22Z",
   "createdBy": "string",
   "modifiedBy": "string",
+  "id": "string",
   "name": "string",
-  "datasetId": "string",
-  "visualizationType": "string",
+  "dataSetQuery": {},
+  "dataSetQuerySQL": "string",
+  "dataSetQueryHash": "string",
   "extId": "string",
   "extMetadata": {}
 }
 
 ```
 
-new Widget
+updateDataSet
 
 ### Properties
 
@@ -3570,11 +3520,61 @@ new Widget
 |modifiedOn|string(date-time)|false|none|none|
 |createdBy|string|false|none|none|
 |modifiedBy|string|false|none|none|
-|name|string|false|none|The name of the widget|
-|datasetId|string|true|none|The id of the dataset that is to be used for the widget|
-|visualizationType|string|false|none|The type of visualization to be used for the widget|
-|extId|string|false|none|The external id of the widget|
-|extMetadata|object|false|none|The external metadata of the widget|
+|id|string|false|none|The unique identifier for a data set|
+|name|string|false|none|The name of the data set|
+|dataSetQuery|object|false|none|The query for the data set refer to StructuredQueryInterface|
+|dataSetQuerySQL|string|false|none|The query for the data set refer to standard SQL|
+|dataSetQueryHash|string|false|none|The hash of the query for the data set|
+|extId|string|false|none|The external id of the data set|
+|extMetadata|object|false|none|The external metadata of the data set|
+
+<h2 id="tocS_DataSet">DataSet</h2>
+<!-- backwards compatibility -->
+<a id="schemadataset"></a>
+<a id="schema_DataSet"></a>
+<a id="tocSdataset"></a>
+<a id="tocsdataset"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "name": "string",
+  "dataSetQuery": {},
+  "dataSetQuerySQL": "string",
+  "dataSetQueryHash": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+DataSet
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|The unique identifier for a data set|
+|name|string|true|none|The name of the data set|
+|dataSetQuery|object|false|none|The query for the data set refer to StructuredQueryInterface|
+|dataSetQuerySQL|string|false|none|The query for the data set refer to standard SQL|
+|dataSetQueryHash|string|false|none|The hash of the query for the data set|
+|extId|string|false|none|The external id of the data set|
+|extMetadata|object|false|none|The external metadata of the data set|
 
 <h2 id="tocS_Dashboard">Dashboard</h2>
 <!-- backwards compatibility -->

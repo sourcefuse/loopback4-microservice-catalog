@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "@sourceloop/payment-service",
-    "version": "19.0.2",
+    "version": "19.0.6",
     "description": "payment microservice",
     "contact": {
       "name": "Sourcefuse"
@@ -1950,142 +1950,6 @@
   ],
   "components": {
     "schemas": {
-      "Orders": {
-        "title": "Orders",
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "totalAmount": {
-            "type": "number"
-          },
-          "currency": {
-            "type": "string"
-          },
-          "status": {
-            "type": "string"
-          },
-          "paymentGatewayId": {
-            "type": "string"
-          },
-          "paymentmethod": {
-            "type": "string"
-          },
-          "metaData": {
-            "type": "object"
-          }
-        },
-        "required": [
-          "totalAmount",
-          "currency",
-          "status",
-          "paymentGatewayId"
-        ],
-        "additionalProperties": false
-      },
-      "NewOrders": {
-        "title": "NewOrders",
-        "type": "object",
-        "description": "(tsType: Orders, schemaOptions: { title: 'NewOrders' })",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "totalAmount": {
-            "type": "number"
-          },
-          "currency": {
-            "type": "string"
-          },
-          "status": {
-            "type": "string"
-          },
-          "paymentGatewayId": {
-            "type": "string"
-          },
-          "paymentmethod": {
-            "type": "string"
-          },
-          "metaData": {
-            "type": "object"
-          }
-        },
-        "required": [
-          "totalAmount",
-          "currency",
-          "status",
-          "paymentGatewayId"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "Orders"
-      },
-      "OrdersWithRelations": {
-        "title": "OrdersWithRelations",
-        "type": "object",
-        "description": "(tsType: OrdersWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "totalAmount": {
-            "type": "number"
-          },
-          "currency": {
-            "type": "string"
-          },
-          "status": {
-            "type": "string"
-          },
-          "paymentGatewayId": {
-            "type": "string"
-          },
-          "paymentmethod": {
-            "type": "string"
-          },
-          "metaData": {
-            "type": "object"
-          }
-        },
-        "required": [
-          "totalAmount",
-          "currency",
-          "status",
-          "paymentGatewayId"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "OrdersWithRelations"
-      },
-      "OrdersPartial": {
-        "title": "OrdersPartial",
-        "type": "object",
-        "description": "(tsType: Partial<Orders>, schemaOptions: { partial: true })",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "totalAmount": {
-            "type": "number"
-          },
-          "currency": {
-            "type": "string"
-          },
-          "status": {
-            "type": "string"
-          },
-          "paymentGatewayId": {
-            "type": "string"
-          },
-          "paymentmethod": {
-            "type": "string"
-          },
-          "metaData": {
-            "type": "object"
-          }
-        },
-        "additionalProperties": false,
-        "x-typescript-type": "Partial<Orders>"
-      },
       "Transactions": {
         "title": "Transactions",
         "type": "object",
@@ -2238,105 +2102,39 @@
         "additionalProperties": false,
         "x-typescript-type": "Partial<Transactions>"
       },
-      "PaymentGateways": {
-        "title": "PaymentGateways",
+      "Orders": {
+        "title": "Orders",
         "type": "object",
         "properties": {
           "id": {
             "type": "string"
           },
-          "name": {
+          "totalAmount": {
+            "type": "number"
+          },
+          "currency": {
             "type": "string"
           },
-          "gatewayType": {
+          "status": {
             "type": "string"
           },
-          "enabled": {
-            "type": "boolean"
+          "paymentGatewayId": {
+            "type": "string"
+          },
+          "paymentmethod": {
+            "type": "string"
+          },
+          "metaData": {
+            "type": "object"
           }
         },
         "required": [
-          "id",
-          "name",
-          "gatewayType",
-          "enabled"
+          "totalAmount",
+          "currency",
+          "status",
+          "paymentGatewayId"
         ],
         "additionalProperties": false
-      },
-      "NewPaymentGateways": {
-        "title": "NewPaymentGateways",
-        "type": "object",
-        "description": "(tsType: PaymentGateways, schemaOptions: { title: 'NewPaymentGateways' })",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "gatewayType": {
-            "type": "string"
-          },
-          "enabled": {
-            "type": "boolean"
-          }
-        },
-        "required": [
-          "id",
-          "name",
-          "gatewayType",
-          "enabled"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "PaymentGateways"
-      },
-      "PaymentGatewaysWithRelations": {
-        "title": "PaymentGatewaysWithRelations",
-        "type": "object",
-        "description": "(tsType: PaymentGatewaysWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "gatewayType": {
-            "type": "string"
-          },
-          "enabled": {
-            "type": "boolean"
-          }
-        },
-        "required": [
-          "id",
-          "name",
-          "gatewayType",
-          "enabled"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "PaymentGatewaysWithRelations"
-      },
-      "PaymentGatewaysPartial": {
-        "title": "PaymentGatewaysPartial",
-        "type": "object",
-        "description": "(tsType: Partial<PaymentGateways>, schemaOptions: { partial: true })",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "gatewayType": {
-            "type": "string"
-          },
-          "enabled": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": false,
-        "x-typescript-type": "Partial<PaymentGateways>"
       },
       "Templates": {
         "title": "Templates",
@@ -2641,6 +2439,208 @@
         },
         "additionalProperties": false,
         "x-typescript-type": "Partial<Subscriptions>"
+      },
+      "PaymentGateways": {
+        "title": "PaymentGateways",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "gatewayType": {
+            "type": "string"
+          },
+          "enabled": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "gatewayType",
+          "enabled"
+        ],
+        "additionalProperties": false
+      },
+      "NewPaymentGateways": {
+        "title": "NewPaymentGateways",
+        "type": "object",
+        "description": "(tsType: PaymentGateways, schemaOptions: { title: 'NewPaymentGateways' })",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "gatewayType": {
+            "type": "string"
+          },
+          "enabled": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "gatewayType",
+          "enabled"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "PaymentGateways"
+      },
+      "PaymentGatewaysWithRelations": {
+        "title": "PaymentGatewaysWithRelations",
+        "type": "object",
+        "description": "(tsType: PaymentGatewaysWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "gatewayType": {
+            "type": "string"
+          },
+          "enabled": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "gatewayType",
+          "enabled"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "PaymentGatewaysWithRelations"
+      },
+      "PaymentGatewaysPartial": {
+        "title": "PaymentGatewaysPartial",
+        "type": "object",
+        "description": "(tsType: Partial<PaymentGateways>, schemaOptions: { partial: true })",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "gatewayType": {
+            "type": "string"
+          },
+          "enabled": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<PaymentGateways>"
+      },
+      "NewOrders": {
+        "title": "NewOrders",
+        "type": "object",
+        "description": "(tsType: Orders, schemaOptions: { title: 'NewOrders' })",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "totalAmount": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "paymentGatewayId": {
+            "type": "string"
+          },
+          "paymentmethod": {
+            "type": "string"
+          },
+          "metaData": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "totalAmount",
+          "currency",
+          "status",
+          "paymentGatewayId"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Orders"
+      },
+      "OrdersWithRelations": {
+        "title": "OrdersWithRelations",
+        "type": "object",
+        "description": "(tsType: OrdersWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "totalAmount": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "paymentGatewayId": {
+            "type": "string"
+          },
+          "paymentmethod": {
+            "type": "string"
+          },
+          "metaData": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "totalAmount",
+          "currency",
+          "status",
+          "paymentGatewayId"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "OrdersWithRelations"
+      },
+      "OrdersPartial": {
+        "title": "OrdersPartial",
+        "type": "object",
+        "description": "(tsType: Partial<Orders>, schemaOptions: { partial: true })",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "totalAmount": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "paymentGatewayId": {
+            "type": "string"
+          },
+          "paymentmethod": {
+            "type": "string"
+          },
+          "metaData": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<Orders>"
       },
       "loopback.Count": {
         "type": "object",

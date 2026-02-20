@@ -1,10 +1,10 @@
-import {RestApplication} from '@loopback/rest';
 import {Client, expect} from '@loopback/testlab';
+import {ReportingServiceApplication} from '../../application';
 import {WidgetsRepository} from '../../repositories';
 import {setUpApplication} from './helper';
 
 describe('WidgetController', () => {
-  let app: RestApplication;
+  let app: ReportingServiceApplication;
   let client: Client;
   let widgetId: string;
   before(async () => {

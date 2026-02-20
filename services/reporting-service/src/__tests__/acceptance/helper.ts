@@ -1,12 +1,11 @@
 import {BindingScope} from '@loopback/core';
 import {AnyObject, juggler} from '@loopback/repository';
-import {RestApplication} from '@loopback/rest';
 import {
   Client,
   createRestAppClient,
   givenHttpServerConfig,
 } from '@loopback/testlab';
-import {ReportingServiceComponent} from '../../component';
+import {ReportingServiceApplication} from '../../application';
 import {DbName, Strategies} from '../../enums';
 import {
   ColumnEntityPair,
@@ -121,7 +120,7 @@ class MockDataStoreAdapter implements DataStoreAdapter {
   }
 }
 export async function setUpApplication(): Promise<AppWithClient> {
-  const app = new RestApplication({
+  const app = new ReportingServiceApplication({
     rest: givenHttpServerConfig(),
   });
 
@@ -151,9 +150,6 @@ export async function setUpApplication(): Promise<AppWithClient> {
     .bind(ReportingServiceComponentBindings.DATA_STORE_CONFIGURATION)
     .to(mockSqlConfig);
 
-  // Bind the Reporting Service Component
-  app.component(ReportingServiceComponent);
-
   // Bind in-memory datasource to the IngestionMappingsRepository
   app
     .bind('repositories.IngestionMappingsRepository')
@@ -171,6 +167,20 @@ export async function setUpApplication(): Promise<AppWithClient> {
   app
     .bind(ReportingServiceComponentBindings.QUERY_UTILITY)
     .toClass(SequelizeQueryUtility);
+
+  // Provide the missing binding required by ReportIngestionMessagingService
+  app
+    .bind(ReportingServiceComponentBindings.MAPPING_WITHOUT_CUSTOM_LISTENERS)
+    .to(new Set<string>());
+  app.bind(ReportingServiceComponentBindings.SERVICE_MAPPING).to({});
+  app
+    .bind(ReportingServiceComponentBindings.CUSTOM_TYPE_CONVERTER_MAPPING)
+    .to({});
+  app.bind(ReportingServiceComponentBindings.INGESTION_MAPPINGS_LIST).to({});
+
+  // Boot the application to trigger booters and load controllers
+  await app.boot();
+
   // Start the application
   await app.start();
 
@@ -180,6 +190,6 @@ export async function setUpApplication(): Promise<AppWithClient> {
 }
 
 export interface AppWithClient {
-  app: RestApplication;
+  app: ReportingServiceApplication;
   client: Client;
 }

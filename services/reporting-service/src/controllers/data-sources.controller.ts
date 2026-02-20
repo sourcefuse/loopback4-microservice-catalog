@@ -1,8 +1,8 @@
 import {inject} from '@loopback/core';
 import {Count, CountSchema} from '@loopback/repository';
-import {get, getModelSchemaRef, param} from '@loopback/rest';
-import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
-import {STRATEGY, authenticate} from 'loopback4-authentication';
+import {get, param} from '@loopback/rest';
+import {CONTENT_TYPE, getModelSchemaRefSF, STATUS_CODE} from '@sourceloop/core';
+import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKeys} from '../enums';
 import {ColumnForDataSourceModel, DataSourceList} from '../interfaces';
@@ -93,7 +93,7 @@ export class DataSourcesController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(ColumnForDataSourceModel),
+              items: getModelSchemaRefSF(ColumnForDataSourceModel),
             },
           },
         },

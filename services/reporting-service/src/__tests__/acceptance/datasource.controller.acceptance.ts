@@ -1,11 +1,11 @@
-import {RestApplication} from '@loopback/rest';
 import {Client, expect} from '@loopback/testlab';
+import {ReportingServiceApplication} from '../../application';
 import {ColumnForDataSourceModel} from '../../interfaces';
 import {DataSourcesService} from '../../services/data-sources.service';
 import {setUpApplication} from './helper';
 
 describe('DataSourcesController', () => {
-  let app: RestApplication;
+  let app: ReportingServiceApplication;
   let client: Client;
   let dataSourcesService: DataSourcesService;
 

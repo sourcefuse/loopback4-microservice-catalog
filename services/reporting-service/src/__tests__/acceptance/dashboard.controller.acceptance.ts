@@ -1,5 +1,5 @@
-import {RestApplication} from '@loopback/rest';
 import {Client, expect} from '@loopback/testlab';
+import {ReportingServiceApplication} from '../../application';
 import {CreateDashboardDto} from '../../models';
 import {
   DashboardRepository,
@@ -8,7 +8,7 @@ import {
 import {setUpApplication} from './helper';
 
 describe('DashboardController', () => {
-  let app: RestApplication;
+  let app: ReportingServiceApplication;
   let client: Client;
   let dashboardId: string;
 

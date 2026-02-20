@@ -1,5 +1,5 @@
 ---
-title: "@sourceloop/payment-service v19.0.2"
+title: "@sourceloop/payment-service v19.0.6"
 language_tabs:
   - javascript: JavaScript
   - javascript--nodejs: Node.JS
@@ -16,7 +16,7 @@ headingLevel: 2
 
 <!-- Generator: Widdershins v4.0.1 -->
 
-<h1 id="-sourceloop-payment-service">@sourceloop/payment-service v19.0.2</h1>
+<h1 id="-sourceloop-payment-service">@sourceloop/payment-service v19.0.6</h1>
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
@@ -4659,142 +4659,6 @@ This operation does not require authentication
 
 # Schemas
 
-<h2 id="tocS_Orders">Orders</h2>
-<!-- backwards compatibility -->
-<a id="schemaorders"></a>
-<a id="schema_Orders"></a>
-<a id="tocSorders"></a>
-<a id="tocsorders"></a>
-
-```json
-{
-  "id": "string",
-  "totalAmount": 0,
-  "currency": "string",
-  "status": "string",
-  "paymentGatewayId": "string",
-  "paymentmethod": "string",
-  "metaData": {}
-}
-
-```
-
-Orders
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|id|string|false|none|none|
-|totalAmount|number|true|none|none|
-|currency|string|true|none|none|
-|status|string|true|none|none|
-|paymentGatewayId|string|true|none|none|
-|paymentmethod|string|false|none|none|
-|metaData|object|false|none|none|
-
-<h2 id="tocS_NewOrders">NewOrders</h2>
-<!-- backwards compatibility -->
-<a id="schemaneworders"></a>
-<a id="schema_NewOrders"></a>
-<a id="tocSneworders"></a>
-<a id="tocsneworders"></a>
-
-```json
-{
-  "id": "string",
-  "totalAmount": 0,
-  "currency": "string",
-  "status": "string",
-  "paymentGatewayId": "string",
-  "paymentmethod": "string",
-  "metaData": {}
-}
-
-```
-
-NewOrders
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|id|string|false|none|none|
-|totalAmount|number|true|none|none|
-|currency|string|true|none|none|
-|status|string|true|none|none|
-|paymentGatewayId|string|true|none|none|
-|paymentmethod|string|false|none|none|
-|metaData|object|false|none|none|
-
-<h2 id="tocS_OrdersWithRelations">OrdersWithRelations</h2>
-<!-- backwards compatibility -->
-<a id="schemaorderswithrelations"></a>
-<a id="schema_OrdersWithRelations"></a>
-<a id="tocSorderswithrelations"></a>
-<a id="tocsorderswithrelations"></a>
-
-```json
-{
-  "id": "string",
-  "totalAmount": 0,
-  "currency": "string",
-  "status": "string",
-  "paymentGatewayId": "string",
-  "paymentmethod": "string",
-  "metaData": {}
-}
-
-```
-
-OrdersWithRelations
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|id|string|false|none|none|
-|totalAmount|number|true|none|none|
-|currency|string|true|none|none|
-|status|string|true|none|none|
-|paymentGatewayId|string|true|none|none|
-|paymentmethod|string|false|none|none|
-|metaData|object|false|none|none|
-
-<h2 id="tocS_OrdersPartial">OrdersPartial</h2>
-<!-- backwards compatibility -->
-<a id="schemaorderspartial"></a>
-<a id="schema_OrdersPartial"></a>
-<a id="tocSorderspartial"></a>
-<a id="tocsorderspartial"></a>
-
-```json
-{
-  "id": "string",
-  "totalAmount": 0,
-  "currency": "string",
-  "status": "string",
-  "paymentGatewayId": "string",
-  "paymentmethod": "string",
-  "metaData": {}
-}
-
-```
-
-OrdersPartial
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|id|string|false|none|none|
-|totalAmount|number|false|none|none|
-|currency|string|false|none|none|
-|status|string|false|none|none|
-|paymentGatewayId|string|false|none|none|
-|paymentmethod|string|false|none|none|
-|metaData|object|false|none|none|
-
 <h2 id="tocS_Transactions">Transactions</h2>
 <!-- backwards compatibility -->
 <a id="schematransactions"></a>
@@ -4939,117 +4803,39 @@ TransactionsPartial
 |orderId|string|false|none|none|
 |res|object|false|none|none|
 
-<h2 id="tocS_PaymentGateways">PaymentGateways</h2>
+<h2 id="tocS_Orders">Orders</h2>
 <!-- backwards compatibility -->
-<a id="schemapaymentgateways"></a>
-<a id="schema_PaymentGateways"></a>
-<a id="tocSpaymentgateways"></a>
-<a id="tocspaymentgateways"></a>
+<a id="schemaorders"></a>
+<a id="schema_Orders"></a>
+<a id="tocSorders"></a>
+<a id="tocsorders"></a>
 
 ```json
 {
   "id": "string",
-  "name": "string",
-  "gatewayType": "string",
-  "enabled": true
+  "totalAmount": 0,
+  "currency": "string",
+  "status": "string",
+  "paymentGatewayId": "string",
+  "paymentmethod": "string",
+  "metaData": {}
 }
 
 ```
 
-PaymentGateways
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|id|string|true|none|none|
-|name|string|true|none|none|
-|gatewayType|string|true|none|none|
-|enabled|boolean|true|none|none|
-
-<h2 id="tocS_NewPaymentGateways">NewPaymentGateways</h2>
-<!-- backwards compatibility -->
-<a id="schemanewpaymentgateways"></a>
-<a id="schema_NewPaymentGateways"></a>
-<a id="tocSnewpaymentgateways"></a>
-<a id="tocsnewpaymentgateways"></a>
-
-```json
-{
-  "id": "string",
-  "name": "string",
-  "gatewayType": "string",
-  "enabled": true
-}
-
-```
-
-NewPaymentGateways
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|id|string|true|none|none|
-|name|string|true|none|none|
-|gatewayType|string|true|none|none|
-|enabled|boolean|true|none|none|
-
-<h2 id="tocS_PaymentGatewaysWithRelations">PaymentGatewaysWithRelations</h2>
-<!-- backwards compatibility -->
-<a id="schemapaymentgatewayswithrelations"></a>
-<a id="schema_PaymentGatewaysWithRelations"></a>
-<a id="tocSpaymentgatewayswithrelations"></a>
-<a id="tocspaymentgatewayswithrelations"></a>
-
-```json
-{
-  "id": "string",
-  "name": "string",
-  "gatewayType": "string",
-  "enabled": true
-}
-
-```
-
-PaymentGatewaysWithRelations
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|id|string|true|none|none|
-|name|string|true|none|none|
-|gatewayType|string|true|none|none|
-|enabled|boolean|true|none|none|
-
-<h2 id="tocS_PaymentGatewaysPartial">PaymentGatewaysPartial</h2>
-<!-- backwards compatibility -->
-<a id="schemapaymentgatewayspartial"></a>
-<a id="schema_PaymentGatewaysPartial"></a>
-<a id="tocSpaymentgatewayspartial"></a>
-<a id="tocspaymentgatewayspartial"></a>
-
-```json
-{
-  "id": "string",
-  "name": "string",
-  "gatewayType": "string",
-  "enabled": true
-}
-
-```
-
-PaymentGatewaysPartial
+Orders
 
 ### Properties
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |id|string|false|none|none|
-|name|string|false|none|none|
-|gatewayType|string|false|none|none|
-|enabled|boolean|false|none|none|
+|totalAmount|number|true|none|none|
+|currency|string|true|none|none|
+|status|string|true|none|none|
+|paymentGatewayId|string|true|none|none|
+|paymentmethod|string|false|none|none|
+|metaData|object|false|none|none|
 
 <h2 id="tocS_Templates">Templates</h2>
 <!-- backwards compatibility -->
@@ -5338,6 +5124,220 @@ SubscriptionsPartial
 |endDate|string(date-time)|false|none|none|
 |gatewaySubscriptionId|string|false|none|none|
 |planId|string|false|none|none|
+
+<h2 id="tocS_PaymentGateways">PaymentGateways</h2>
+<!-- backwards compatibility -->
+<a id="schemapaymentgateways"></a>
+<a id="schema_PaymentGateways"></a>
+<a id="tocSpaymentgateways"></a>
+<a id="tocspaymentgateways"></a>
+
+```json
+{
+  "id": "string",
+  "name": "string",
+  "gatewayType": "string",
+  "enabled": true
+}
+
+```
+
+PaymentGateways
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|true|none|none|
+|name|string|true|none|none|
+|gatewayType|string|true|none|none|
+|enabled|boolean|true|none|none|
+
+<h2 id="tocS_NewPaymentGateways">NewPaymentGateways</h2>
+<!-- backwards compatibility -->
+<a id="schemanewpaymentgateways"></a>
+<a id="schema_NewPaymentGateways"></a>
+<a id="tocSnewpaymentgateways"></a>
+<a id="tocsnewpaymentgateways"></a>
+
+```json
+{
+  "id": "string",
+  "name": "string",
+  "gatewayType": "string",
+  "enabled": true
+}
+
+```
+
+NewPaymentGateways
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|true|none|none|
+|name|string|true|none|none|
+|gatewayType|string|true|none|none|
+|enabled|boolean|true|none|none|
+
+<h2 id="tocS_PaymentGatewaysWithRelations">PaymentGatewaysWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemapaymentgatewayswithrelations"></a>
+<a id="schema_PaymentGatewaysWithRelations"></a>
+<a id="tocSpaymentgatewayswithrelations"></a>
+<a id="tocspaymentgatewayswithrelations"></a>
+
+```json
+{
+  "id": "string",
+  "name": "string",
+  "gatewayType": "string",
+  "enabled": true
+}
+
+```
+
+PaymentGatewaysWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|true|none|none|
+|name|string|true|none|none|
+|gatewayType|string|true|none|none|
+|enabled|boolean|true|none|none|
+
+<h2 id="tocS_PaymentGatewaysPartial">PaymentGatewaysPartial</h2>
+<!-- backwards compatibility -->
+<a id="schemapaymentgatewayspartial"></a>
+<a id="schema_PaymentGatewaysPartial"></a>
+<a id="tocSpaymentgatewayspartial"></a>
+<a id="tocspaymentgatewayspartial"></a>
+
+```json
+{
+  "id": "string",
+  "name": "string",
+  "gatewayType": "string",
+  "enabled": true
+}
+
+```
+
+PaymentGatewaysPartial
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|false|none|none|
+|name|string|false|none|none|
+|gatewayType|string|false|none|none|
+|enabled|boolean|false|none|none|
+
+<h2 id="tocS_NewOrders">NewOrders</h2>
+<!-- backwards compatibility -->
+<a id="schemaneworders"></a>
+<a id="schema_NewOrders"></a>
+<a id="tocSneworders"></a>
+<a id="tocsneworders"></a>
+
+```json
+{
+  "id": "string",
+  "totalAmount": 0,
+  "currency": "string",
+  "status": "string",
+  "paymentGatewayId": "string",
+  "paymentmethod": "string",
+  "metaData": {}
+}
+
+```
+
+NewOrders
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|false|none|none|
+|totalAmount|number|true|none|none|
+|currency|string|true|none|none|
+|status|string|true|none|none|
+|paymentGatewayId|string|true|none|none|
+|paymentmethod|string|false|none|none|
+|metaData|object|false|none|none|
+
+<h2 id="tocS_OrdersWithRelations">OrdersWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemaorderswithrelations"></a>
+<a id="schema_OrdersWithRelations"></a>
+<a id="tocSorderswithrelations"></a>
+<a id="tocsorderswithrelations"></a>
+
+```json
+{
+  "id": "string",
+  "totalAmount": 0,
+  "currency": "string",
+  "status": "string",
+  "paymentGatewayId": "string",
+  "paymentmethod": "string",
+  "metaData": {}
+}
+
+```
+
+OrdersWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|false|none|none|
+|totalAmount|number|true|none|none|
+|currency|string|true|none|none|
+|status|string|true|none|none|
+|paymentGatewayId|string|true|none|none|
+|paymentmethod|string|false|none|none|
+|metaData|object|false|none|none|
+
+<h2 id="tocS_OrdersPartial">OrdersPartial</h2>
+<!-- backwards compatibility -->
+<a id="schemaorderspartial"></a>
+<a id="schema_OrdersPartial"></a>
+<a id="tocSorderspartial"></a>
+<a id="tocsorderspartial"></a>
+
+```json
+{
+  "id": "string",
+  "totalAmount": 0,
+  "currency": "string",
+  "status": "string",
+  "paymentGatewayId": "string",
+  "paymentmethod": "string",
+  "metaData": {}
+}
+
+```
+
+OrdersPartial
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|false|none|none|
+|totalAmount|number|false|none|none|
+|currency|string|false|none|none|
+|status|string|false|none|none|
+|paymentGatewayId|string|false|none|none|
+|paymentmethod|string|false|none|none|
+|metaData|object|false|none|none|
 
 <h2 id="tocS_loopback.Count">loopback.Count</h2>
 <!-- backwards compatibility -->

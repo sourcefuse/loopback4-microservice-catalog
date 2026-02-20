@@ -1025,248 +1025,6 @@
       }
     },
     "schemas": {
-      "Workflow": {
-        "title": "Workflow",
-        "type": "object",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "workflowVersion": {
-            "type": "number",
-            "description": "Last deployed workflow version"
-          },
-          "externalIdentifier": {
-            "type": "string",
-            "description": "The key that is used to identify the workflow in the respective workflow engine."
-          },
-          "name": {
-            "type": "string",
-            "description": "Name of the workflow"
-          },
-          "provider": {
-            "type": "string",
-            "description": "Provider could be the engine that will handle the workflow - camunda, zeebe, etc"
-          },
-          "inputSchema": {
-            "type": "object",
-            "description": "Schema used for validation during workflow execution"
-          },
-          "description": {
-            "type": "string",
-            "description": "Description of the workflow"
-          }
-        },
-        "required": [
-          "workflowVersion",
-          "externalIdentifier",
-          "provider",
-          "inputSchema"
-        ],
-        "additionalProperties": false
-      },
-      "NewWorkflow": {
-        "title": "NewWorkflow",
-        "type": "object",
-        "description": "(tsType: WorkflowDto, schemaOptions: { title: 'NewWorkflow' })",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "bpmnFile": {
-            "type": "string"
-          },
-          "inputSchema": {
-            "type": "object"
-          },
-          "description": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "name",
-          "bpmnFile",
-          "inputSchema"
-        ],
-        "additionalProperties": true,
-        "x-typescript-type": "WorkflowDto"
-      },
-      "WorkflowDto": {
-        "title": "WorkflowDto",
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "bpmnFile": {
-            "type": "string"
-          },
-          "inputSchema": {
-            "type": "object"
-          },
-          "description": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "name",
-          "bpmnFile",
-          "inputSchema"
-        ],
-        "additionalProperties": true
-      },
-      "WorkflowDtoPartial": {
-        "title": "WorkflowDtoPartial",
-        "type": "object",
-        "description": "(tsType: Partial<WorkflowDto>, schemaOptions: { partial: true })",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "bpmnFile": {
-            "type": "string"
-          },
-          "inputSchema": {
-            "type": "object"
-          },
-          "description": {
-            "type": "string"
-          }
-        },
-        "additionalProperties": true,
-        "x-typescript-type": "Partial<WorkflowDto>"
-      },
-      "ExecuteWorkflowDto": {
-        "title": "ExecuteWorkflowDto",
-        "type": "object",
-        "properties": {
-          "workflowVersion": {
-            "type": "number"
-          },
-          "input": {
-            "type": "object"
-          }
-        },
-        "required": [
-          "input"
-        ],
-        "additionalProperties": false
-      },
-      "EventWithRelations": {
-        "title": "EventWithRelations",
-        "type": "object",
-        "description": "(tsType: EventWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "key": {
-            "type": "string",
-            "description": "An identifier for a particular event queued by a service or a user"
-          },
-          "description": {
-            "type": "string",
-            "description": "A short description of an event"
-          },
-          "source": {
-            "type": "string",
-            "description": "Origination of an event- can be a service or from a user"
-          },
-          "payload": {
-            "type": "object",
-            "description": "A dynamic object that contains information to be run in the workers of a bpmn engine"
-          },
-          "timestamp": {
-            "type": "number",
-            "description": "A short message to indicate the progression of the event"
-          }
-        },
-        "required": [
-          "key",
-          "description",
-          "source",
-          "payload",
-          "timestamp"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "EventWithRelations"
-      },
-      "EventWorkflowMapping": {
-        "title": "EventWorkflowMapping",
-        "type": "object",
-        "description": "(tsType: EventWorkflow, schemaOptions: { title: 'EventWorkflowMapping' })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "eventKey": {
-            "type": "string",
-            "description": "An identifier for a particular event queued by a service or a user"
-          },
-          "workflowKey": {
-            "type": "string",
-            "description": "An identifier for a particular workflow"
-          }
-        },
-        "required": [
-          "eventKey",
-          "workflowKey"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "EventWorkflow"
-      },
       "UserTaskWithRelations": {
         "title": "UserTaskWithRelations",
         "type": "object",
@@ -1651,6 +1409,248 @@
           "severity",
           "type",
           "metadata"
+        ],
+        "additionalProperties": false
+      },
+      "EventWithRelations": {
+        "title": "EventWithRelations",
+        "type": "object",
+        "description": "(tsType: EventWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string",
+            "description": "An identifier for a particular event queued by a service or a user"
+          },
+          "description": {
+            "type": "string",
+            "description": "A short description of an event"
+          },
+          "source": {
+            "type": "string",
+            "description": "Origination of an event- can be a service or from a user"
+          },
+          "payload": {
+            "type": "object",
+            "description": "A dynamic object that contains information to be run in the workers of a bpmn engine"
+          },
+          "timestamp": {
+            "type": "number",
+            "description": "A short message to indicate the progression of the event"
+          }
+        },
+        "required": [
+          "key",
+          "description",
+          "source",
+          "payload",
+          "timestamp"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "EventWithRelations"
+      },
+      "EventWorkflowMapping": {
+        "title": "EventWorkflowMapping",
+        "type": "object",
+        "description": "(tsType: EventWorkflow, schemaOptions: { title: 'EventWorkflowMapping' })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "eventKey": {
+            "type": "string",
+            "description": "An identifier for a particular event queued by a service or a user"
+          },
+          "workflowKey": {
+            "type": "string",
+            "description": "An identifier for a particular workflow"
+          }
+        },
+        "required": [
+          "eventKey",
+          "workflowKey"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "EventWorkflow"
+      },
+      "Workflow": {
+        "title": "Workflow",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "workflowVersion": {
+            "type": "number",
+            "description": "Last deployed workflow version"
+          },
+          "externalIdentifier": {
+            "type": "string",
+            "description": "The key that is used to identify the workflow in the respective workflow engine."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the workflow"
+          },
+          "provider": {
+            "type": "string",
+            "description": "Provider could be the engine that will handle the workflow - camunda, zeebe, etc"
+          },
+          "inputSchema": {
+            "type": "object",
+            "description": "Schema used for validation during workflow execution"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the workflow"
+          }
+        },
+        "required": [
+          "workflowVersion",
+          "externalIdentifier",
+          "provider",
+          "inputSchema"
+        ],
+        "additionalProperties": false
+      },
+      "NewWorkflow": {
+        "title": "NewWorkflow",
+        "type": "object",
+        "description": "(tsType: WorkflowDto, schemaOptions: { title: 'NewWorkflow' })",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "bpmnFile": {
+            "type": "string"
+          },
+          "inputSchema": {
+            "type": "object"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "bpmnFile",
+          "inputSchema"
+        ],
+        "additionalProperties": true,
+        "x-typescript-type": "WorkflowDto"
+      },
+      "WorkflowDto": {
+        "title": "WorkflowDto",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "bpmnFile": {
+            "type": "string"
+          },
+          "inputSchema": {
+            "type": "object"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "bpmnFile",
+          "inputSchema"
+        ],
+        "additionalProperties": true
+      },
+      "WorkflowDtoPartial": {
+        "title": "WorkflowDtoPartial",
+        "type": "object",
+        "description": "(tsType: Partial<WorkflowDto>, schemaOptions: { partial: true })",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "bpmnFile": {
+            "type": "string"
+          },
+          "inputSchema": {
+            "type": "object"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true,
+        "x-typescript-type": "Partial<WorkflowDto>"
+      },
+      "ExecuteWorkflowDto": {
+        "title": "ExecuteWorkflowDto",
+        "type": "object",
+        "properties": {
+          "workflowVersion": {
+            "type": "number"
+          },
+          "input": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "input"
         ],
         "additionalProperties": false
       },
