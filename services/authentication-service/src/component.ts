@@ -36,7 +36,6 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-// import {controllers} from './controllers';
 import {OtpMethodType} from './enums';
 import {AuthServiceBindings} from './keys';
 import {models} from './models';
@@ -225,7 +224,6 @@ export class AuthenticationServiceComponent implements Component {
       }),
     ];
 
-    // this.controllers = controllers;
   }
 
   providers: ProviderMap = {};

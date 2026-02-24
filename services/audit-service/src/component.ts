@@ -35,7 +35,6 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-// import {AuditController} from './controllers';
 import {Booter} from '@loopback/boot';
 import {
   AuditServiceBindings,
@@ -136,8 +135,6 @@ export class AuditServiceComponent implements Component {
     } else {
       this.models = [TenantAuditLog, TenantMappingLog, TenantJob];
     }
-
-    // this.controllers = [AuditController];
 
     this.providers[QuerySelectedFilesServiceBindings.QUERY_ARCHIVED_LOGS.key] =
       QuerySelectedFilesProvider;
