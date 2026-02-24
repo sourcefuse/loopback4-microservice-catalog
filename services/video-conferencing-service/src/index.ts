@@ -4,11 +4,10 @@
 // https://opensource.org/licenses/MIT
 
 export * from './component';
-export * from './controllers';
 export * from './enums';
 export * from './keys';
 export * from './models';
 export * from './providers';
 export * from './repositories';
-export * from './types';
 export * from './services';
+export * from './types';

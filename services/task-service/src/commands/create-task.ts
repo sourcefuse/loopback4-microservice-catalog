@@ -1,9 +1,6 @@
 import {Context} from '@loopback/core';
-import {
-  ExecuteWorkflowDto,
-  WorkflowController,
-  WorkflowRepository,
-} from '@sourceloop/bpmn-service';
+import {ExecuteWorkflowDto, WorkflowRepository} from '@sourceloop/bpmn-service';
+import {WorkflowController} from '@sourceloop/bpmn-service/controllers';
 import {ILogger, LOGGER} from '@sourceloop/core';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {

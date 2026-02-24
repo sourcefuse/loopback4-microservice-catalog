@@ -15,12 +15,19 @@
     ".": "./dist/index.js",
     "./sequelize": {
       "types": "./dist/repositories/sequelize/index.d.ts"
+    },
+    "./controllers": {
+      "types": "./dist/controllers/index.d.ts",
+      "default": "./dist/controllers/index.js"
     }
   },
   "typesVersions": {
     "*": {
       "sequelize": [
         "./dist/repositories/sequelize/index.d.ts"
+      ],
+      "controllers": [
+        "./dist/controllers/index.d.ts"
       ]
     }
   },

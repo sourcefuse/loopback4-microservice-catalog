@@ -13,12 +13,19 @@
     "./sequelize": {
       "types": "./dist/repositories/sequelize/index.d.ts",
       "default": "./dist/repositories/sequelize/index.js"
+    },
+    "./controllers": {
+      "types": "./dist/controllers/index.d.ts",
+      "default": "./dist/controllers/index.js"
     }
   },
   "typesVersions": {
     "*": {
       "sequelize": [
         "./dist/repositories/sequelize/index.d.ts"
+      ],
+      "controllers": [
+        "./dist/controllers/index.d.ts"
       ]
     }
   },

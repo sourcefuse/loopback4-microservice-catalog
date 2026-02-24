@@ -19,8 +19,12 @@
       "default": "./dist/connectors/sqs/index.js"
     },
     "./http": {
-      "type": "./dist/connectors/http/index.d.ts",
+      "types": "./dist/connectors/http/index.d.ts",
       "default": "./dist/connectors/http/index.js"
+    },
+    "./controllers": {
+      "types": "./dist/controllers/index.d.ts",
+      "default": "./dist/controllers/index.js"
     }
   },
   "typesVersions": {
@@ -33,6 +37,9 @@
       ],
       "http": [
         "./dist/connectors/http/index.d.ts"
+      ],
+      "controllers": [
+        "./dist/controllers/index.d.ts"
       ]
     }
   },
