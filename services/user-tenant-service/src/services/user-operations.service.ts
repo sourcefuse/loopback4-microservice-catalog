@@ -225,7 +225,7 @@ export class UserOperationsService {
       defaultTenantId = ut.tenantId;
     }
     await this.userRepository.updateById(id, {
-      // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-ignore
       defaultTenantId: defaultTenantId,
     });

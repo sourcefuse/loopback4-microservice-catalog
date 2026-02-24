@@ -34,7 +34,7 @@ if (require.main === module) {
       },
     },
   };
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   getSecretValue().then(res => {
     Object.assign(process.env, res);
     main(config).catch(err => {
