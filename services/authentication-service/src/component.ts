@@ -223,7 +223,6 @@ export class AuthenticationServiceComponent implements Component {
         interface: AuthenticationServiceComponent.name,
       }),
     ];
-
   }
 
   providers: ProviderMap = {};

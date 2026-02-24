@@ -8,18 +8,12 @@ import {
   WhereBuilder,
   repository,
 } from '@loopback/repository';
-import {
-  HttpErrors,
-  del,
-  get,
-  getModelSchemaRef,
-  param,
-  patch,
-} from '@loopback/rest';
+import {HttpErrors, del, get, param, patch} from '@loopback/rest';
 import {
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
+  getModelSchemaRefSF,
 } from '@sourceloop/core';
 import {STRATEGY, authenticate} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
@@ -67,7 +61,7 @@ export class TaskUserTaskController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(UserTask, {includeRelations: true}),
+              items: getModelSchemaRefSF(UserTask, {includeRelations: true}),
             },
           },
         },
@@ -92,7 +86,7 @@ export class TaskUserTaskController {
         description: 'UserTask model instance',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(UserTask, {includeRelations: true}),
+            schema: getModelSchemaRefSF(UserTask, {includeRelations: true}),
           },
         },
       },
