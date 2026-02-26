@@ -76,8 +76,8 @@ describe('Authentication microservice', () => {
   });
   it('should give status 401 for login request with wrong client credentials', async () => {
     const reqData = {
-      // eslint-disable-next-line
-      client_id: 'web1', // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      client_id: 'web1', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'blah1',
       username: 'someuser',
       password: 'somepassword',
@@ -87,8 +87,8 @@ describe('Authentication microservice', () => {
   });
   it('should give status 401 for login request with wrong user credentials', async () => {
     const reqData = {
-      // eslint-disable-next-line
-      client_id: 'web', // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'someuser',
       password: 'somepassword',
@@ -98,8 +98,8 @@ describe('Authentication microservice', () => {
   });
   it('should give status 401 for login request with user credentials not belonging to client', async () => {
     const reqData = {
-      // eslint-disable-next-line
-      client_id: 'mobile', // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      client_id: 'mobile', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
       password: 'temp123!@',
@@ -112,8 +112,8 @@ describe('Authentication microservice', () => {
   });
   it('should give status 200 for login request', async () => {
     const reqData = {
-      // eslint-disable-next-line
-      client_id: 'web', // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
       password: 'temp123!@',
@@ -124,8 +124,8 @@ describe('Authentication microservice', () => {
 
   it('should return code in response', async () => {
     const reqData = {
-      // eslint-disable-next-line
-      client_id: 'web', // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
       password: 'temp123!@',
@@ -140,8 +140,8 @@ describe('Authentication microservice', () => {
 
   it('should return refresh token, access token, expires in response', async () => {
     const reqData = {
-      // eslint-disable-next-line
-      client_id: 'web', // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
       password: 'temp123!@',
@@ -169,8 +169,8 @@ describe('Authentication microservice', () => {
 
   it('should return refresh token and access token for token refresh request', async () => {
     const reqData = {
-      // eslint-disable-next-line
-      client_id: 'web', // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
       password: 'temp123!@',
@@ -198,8 +198,8 @@ describe('Authentication microservice', () => {
 
   it('should throw error when login for external user', async () => {
     const reqData = {
-      // eslint-disable-next-line
-      client_id: 'web', // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_teacher',
       password: 'temp123!@',
@@ -218,8 +218,8 @@ describe('Authentication microservice', () => {
 
   it('should change password successfully for internal user', async () => {
     const reqData = {
-      // eslint-disable-next-line
-      client_id: 'web', // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
       password: 'temp123!@',
@@ -247,8 +247,8 @@ describe('Authentication microservice', () => {
 
   it('should return refresh token and access token for token refresh request with new password', async () => {
     const reqData = {
-      // eslint-disable-next-line
-      client_id: 'web', // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
       password: 'new_test_password',
@@ -276,8 +276,8 @@ describe('Authentication microservice', () => {
 
   it('should revert to previous password successfully for internal user', async () => {
     const reqData = {
-      // eslint-disable-next-line
-      client_id: 'web', // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
       password: 'new_test_password',
@@ -305,8 +305,8 @@ describe('Authentication microservice', () => {
 
   it('should return 401 for token refresh request when Authentication token invalid', async () => {
     const reqData = {
-      // eslint-disable-next-line
-      client_id: 'web', // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
       password: 'temp123!@',
@@ -333,8 +333,8 @@ describe('Authentication microservice', () => {
   });
   it('should return 401 for token refresh request when Authentication token missing', async () => {
     const reqData = {
-      // eslint-disable-next-line
-      client_id: 'web', // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
       password: 'temp123!@',
@@ -360,8 +360,8 @@ describe('Authentication microservice', () => {
   });
   it('should throw error if user does not belong to client id in forgot password request', async () => {
     const reqData = {
-      // eslint-disable-next-line
-      client_id: 'web1', // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      client_id: 'web1', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
     };
@@ -377,8 +377,8 @@ describe('Authentication microservice', () => {
 
   it('should send forgot password request successfully', async () => {
     const reqData = {
-      // eslint-disable-next-line
-      client_id: 'web', // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
     };
@@ -391,8 +391,8 @@ describe('Authentication microservice', () => {
 
   it('should throw error on forgot password request for external user', async () => {
     const reqData = {
-      // eslint-disable-next-line
-      client_id: 'web', // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_teacher',
     };
@@ -408,8 +408,8 @@ describe('Authentication microservice', () => {
 
   it('should return empty response even if the user does not exist', async () => {
     const reqData = {
-      // eslint-disable-next-line
-      client_id: 'web', // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'testuser',
     };
@@ -421,8 +421,8 @@ describe('Authentication microservice', () => {
   });
   it('should verify reset password token successfully', async () => {
     const reqData = {
-      // eslint-disable-next-line
-      client_id: 'web', // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
     };
@@ -438,8 +438,8 @@ describe('Authentication microservice', () => {
   });
   it('should give token missing error when no token passed in verify reset password', async () => {
     const reqData = {
-      // eslint-disable-next-line
-      client_id: 'web', // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
     };
@@ -453,16 +453,16 @@ describe('Authentication microservice', () => {
   });
   it('should return error for token missing when no token passed in reset password', async () => {
     const reqData = {
-      // eslint-disable-next-line
-      client_id: 'web', // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
     };
     process.env.JWT_ISSUER = 'test';
     await client.post(`/auth/forget-password`).send(reqData).expect(204);
     const request = {
-      // eslint-disable-next-line
-      client_id: 'web', // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       password: 'test123',
     };
@@ -470,8 +470,8 @@ describe('Authentication microservice', () => {
   });
   it('should return error for password missing when new password not sent in reset password', async () => {
     const reqData = {
-      // eslint-disable-next-line
-      client_id: 'web', // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
     };
@@ -479,8 +479,8 @@ describe('Authentication microservice', () => {
     await client.post(`/auth/forget-password`).send(reqData).expect(204);
     const token = helper.get('TOKEN');
     const request = {
-      // eslint-disable-next-line
-      client_id: 'web', // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       token,
     };
@@ -488,8 +488,8 @@ describe('Authentication microservice', () => {
   });
   it('should throw error when reset password to previous password', async () => {
     const reqData = {
-      // eslint-disable-next-line
-      client_id: 'web', // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
     };
@@ -497,8 +497,8 @@ describe('Authentication microservice', () => {
     await client.post(`/auth/forget-password`).send(reqData).expect(204);
     const token = helper.get('TOKEN');
     const request = {
-      // eslint-disable-next-line
-      client_id: 'web', // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       token,
       password: 'temp123!@',
@@ -508,8 +508,8 @@ describe('Authentication microservice', () => {
 
   it('should reset password successfully', async () => {
     const reqData = {
-      // eslint-disable-next-line
-      client_id: 'web', // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
     };
@@ -517,8 +517,8 @@ describe('Authentication microservice', () => {
     await client.post(`/auth/forget-password`).send(reqData).expect(204);
     const token = helper.get('TOKEN');
     const request = {
-      // eslint-disable-next-line
-      client_id: 'web', // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       token,
       password: 'test123#@',
@@ -528,8 +528,8 @@ describe('Authentication microservice', () => {
 
   it('should return true on logout', async () => {
     const reqData = {
-      // eslint-disable-next-line
-      client_id: 'web', // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
       password: 'test123#@',
@@ -559,8 +559,8 @@ describe('Authentication microservice', () => {
   });
   it('should return error for wrong token on logout', async () => {
     const reqData = {
-      // eslint-disable-next-line
-      client_id: 'web', // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
       password: 'test123#@',
