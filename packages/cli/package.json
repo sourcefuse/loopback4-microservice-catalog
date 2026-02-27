@@ -53,7 +53,7 @@
     "simple-git": "^3.19.1",
     "sinon": "^15.2.0",
     "tar": "^6.2.0",
-    "ts-morph": "^19.0.0",
+    "ts-morph": "^27.0.2",
     "tslib": "^2.6.2",
     "yeoman-environment": "^3.19.3",
     "yeoman-generator": "^5.10.0",
@@ -98,6 +98,9 @@
       "@types/minimatch": "^5.1.2",
       "inquirer": "8.2.6",
       "@types/inquirer": "8.2.6"
+    },
+    "yeoman-environment": {
+      "mem-fs-editor": "^11.0.0"
     }
   },
   "oclif": {
