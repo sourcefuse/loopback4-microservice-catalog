@@ -98,7 +98,7 @@
     },
     "axios": "^1.8.2",
     "fast-xml-parser": "^5.3.6",
-    "minimatch": "^10.2.1",
+    "minimatch": "^10.2.3",
     "twilio": {
       "axios": "^1.8.2"
     },

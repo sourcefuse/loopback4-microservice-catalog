@@ -102,7 +102,7 @@
   },
   "overrides": {
     "axios": "^1.12.2",
-    "minimatch": "^10.2.1",
+    "minimatch": "^10.2.3",
     "fast-xml-parser": "^5.3.6",
     "postman-request": {
       "qs": "^6.14.1"
