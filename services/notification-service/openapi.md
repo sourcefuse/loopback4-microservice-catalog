@@ -4106,6 +4106,214 @@ This operation does not require authentication
 
 # Schemas
 
+<h2 id="tocS_UserNotificationSettings">UserNotificationSettings</h2>
+<!-- backwards compatibility -->
+<a id="schemausernotificationsettings"></a>
+<a id="schema_UserNotificationSettings"></a>
+<a id="tocSusernotificationsettings"></a>
+<a id="tocsusernotificationsettings"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+}
+
+```
+
+UserNotificationSettings
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|id|string|false|none|none|
+|userId|string|true|none|none|
+|sleepStartTime|string(date-time)|true|none|none|
+|sleepEndTime|string(date-time)|true|none|none|
+|type|number|true|none|none|
+
+<h2 id="tocS_NewUserNotificationSettings">NewUserNotificationSettings</h2>
+<!-- backwards compatibility -->
+<a id="schemanewusernotificationsettings"></a>
+<a id="schema_NewUserNotificationSettings"></a>
+<a id="tocSnewusernotificationsettings"></a>
+<a id="tocsnewusernotificationsettings"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+}
+
+```
+
+NewUserNotificationSettings
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|userId|string|true|none|none|
+|sleepStartTime|string(date-time)|true|none|none|
+|sleepEndTime|string(date-time)|true|none|none|
+|type|number|true|none|none|
+
+<h2 id="tocS_UserNotificationSettingsWithRelations">UserNotificationSettingsWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemausernotificationsettingswithrelations"></a>
+<a id="schema_UserNotificationSettingsWithRelations"></a>
+<a id="tocSusernotificationsettingswithrelations"></a>
+<a id="tocsusernotificationsettingswithrelations"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+}
+
+```
+
+UserNotificationSettingsWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|id|string|false|none|none|
+|userId|string|true|none|none|
+|sleepStartTime|string(date-time)|true|none|none|
+|sleepEndTime|string(date-time)|true|none|none|
+|type|number|true|none|none|
+
+<h2 id="tocS_UserNotificationSettingsPartial">UserNotificationSettingsPartial</h2>
+<!-- backwards compatibility -->
+<a id="schemausernotificationsettingspartial"></a>
+<a id="schema_UserNotificationSettingsPartial"></a>
+<a id="tocSusernotificationsettingspartial"></a>
+<a id="tocsusernotificationsettingspartial"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "id": "string",
+  "userId": "string",
+  "sleepStartTime": "2019-08-24T14:15:22Z",
+  "sleepEndTime": "2019-08-24T14:15:22Z",
+  "type": 0
+}
+
+```
+
+UserNotificationSettingsPartial
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|id|string|false|none|none|
+|userId|string|false|none|none|
+|sleepStartTime|string(date-time)|false|none|none|
+|sleepEndTime|string(date-time)|false|none|none|
+|type|number|false|none|none|
+
+<h2 id="tocS_AccessResponseDto">AccessResponseDto</h2>
+<!-- backwards compatibility -->
+<a id="schemaaccessresponsedto"></a>
+<a id="schema_AccessResponseDto"></a>
+<a id="tocSaccessresponsedto"></a>
+<a id="tocsaccessresponsedto"></a>
+
+```json
+{
+  "ttl": 0,
+  "cipherKey": "string"
+}
+
+```
+
+AccessResponseDto
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|ttl|number|false|none|none|
+|cipherKey|string|false|none|none|
+
+<h2 id="tocS_NotificationAccess">NotificationAccess</h2>
+<!-- backwards compatibility -->
+<a id="schemanotificationaccess"></a>
+<a id="schema_NotificationAccess"></a>
+<a id="tocSnotificationaccess"></a>
+<a id="tocsnotificationaccess"></a>
+
+```json
+{
+  "receiver": {},
+  "type": 0,
+  "options": {}
+}
+
+```
+
+NotificationAccess
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|receiver|object|true|none|this will contain the list of reciever to give access|
+|type|number|true|none|none|
+|options|object|false|none|this will contain the ttl property for now|
+
 <h2 id="tocS_Notification">Notification</h2>
 <!-- backwards compatibility -->
 <a id="schemanotification"></a>
@@ -4550,56 +4758,6 @@ NotificationUserPartial
 |actionMeta|object|false|none|none|
 |isDraft|boolean|false|none|none|
 
-<h2 id="tocS_AccessResponseDto">AccessResponseDto</h2>
-<!-- backwards compatibility -->
-<a id="schemaaccessresponsedto"></a>
-<a id="schema_AccessResponseDto"></a>
-<a id="tocSaccessresponsedto"></a>
-<a id="tocsaccessresponsedto"></a>
-
-```json
-{
-  "ttl": 0,
-  "cipherKey": "string"
-}
-
-```
-
-AccessResponseDto
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|ttl|number|false|none|none|
-|cipherKey|string|false|none|none|
-
-<h2 id="tocS_NotificationAccess">NotificationAccess</h2>
-<!-- backwards compatibility -->
-<a id="schemanotificationaccess"></a>
-<a id="schema_NotificationAccess"></a>
-<a id="tocSnotificationaccess"></a>
-<a id="tocsnotificationaccess"></a>
-
-```json
-{
-  "receiver": {},
-  "type": 0,
-  "options": {}
-}
-
-```
-
-NotificationAccess
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|receiver|object|true|none|this will contain the list of reciever to give access|
-|type|number|true|none|none|
-|options|object|false|none|this will contain the ttl property for now|
-
 <h2 id="tocS_NewNotificationUserInNotification">NewNotificationUserInNotification</h2>
 <!-- backwards compatibility -->
 <a id="schemanewnotificationuserinnotification"></a>
@@ -4639,164 +4797,6 @@ NewNotificationUserInNotification
 |isRead|boolean|false|none|none|
 |actionMeta|object|false|none|none|
 |isDraft|boolean|false|none|none|
-
-<h2 id="tocS_UserNotificationSettings">UserNotificationSettings</h2>
-<!-- backwards compatibility -->
-<a id="schemausernotificationsettings"></a>
-<a id="schema_UserNotificationSettings"></a>
-<a id="tocSusernotificationsettings"></a>
-<a id="tocsusernotificationsettings"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "id": "string",
-  "userId": "string",
-  "sleepStartTime": "2019-08-24T14:15:22Z",
-  "sleepEndTime": "2019-08-24T14:15:22Z",
-  "type": 0
-}
-
-```
-
-UserNotificationSettings
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|id|string|false|none|none|
-|userId|string|true|none|none|
-|sleepStartTime|string(date-time)|true|none|none|
-|sleepEndTime|string(date-time)|true|none|none|
-|type|number|true|none|none|
-
-<h2 id="tocS_NewUserNotificationSettings">NewUserNotificationSettings</h2>
-<!-- backwards compatibility -->
-<a id="schemanewusernotificationsettings"></a>
-<a id="schema_NewUserNotificationSettings"></a>
-<a id="tocSnewusernotificationsettings"></a>
-<a id="tocsnewusernotificationsettings"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "userId": "string",
-  "sleepStartTime": "2019-08-24T14:15:22Z",
-  "sleepEndTime": "2019-08-24T14:15:22Z",
-  "type": 0
-}
-
-```
-
-NewUserNotificationSettings
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|userId|string|true|none|none|
-|sleepStartTime|string(date-time)|true|none|none|
-|sleepEndTime|string(date-time)|true|none|none|
-|type|number|true|none|none|
-
-<h2 id="tocS_UserNotificationSettingsWithRelations">UserNotificationSettingsWithRelations</h2>
-<!-- backwards compatibility -->
-<a id="schemausernotificationsettingswithrelations"></a>
-<a id="schema_UserNotificationSettingsWithRelations"></a>
-<a id="tocSusernotificationsettingswithrelations"></a>
-<a id="tocsusernotificationsettingswithrelations"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "id": "string",
-  "userId": "string",
-  "sleepStartTime": "2019-08-24T14:15:22Z",
-  "sleepEndTime": "2019-08-24T14:15:22Z",
-  "type": 0
-}
-
-```
-
-UserNotificationSettingsWithRelations
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|id|string|false|none|none|
-|userId|string|true|none|none|
-|sleepStartTime|string(date-time)|true|none|none|
-|sleepEndTime|string(date-time)|true|none|none|
-|type|number|true|none|none|
-
-<h2 id="tocS_UserNotificationSettingsPartial">UserNotificationSettingsPartial</h2>
-<!-- backwards compatibility -->
-<a id="schemausernotificationsettingspartial"></a>
-<a id="schema_UserNotificationSettingsPartial"></a>
-<a id="tocSusernotificationsettingspartial"></a>
-<a id="tocsusernotificationsettingspartial"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "id": "string",
-  "userId": "string",
-  "sleepStartTime": "2019-08-24T14:15:22Z",
-  "sleepEndTime": "2019-08-24T14:15:22Z",
-  "type": 0
-}
-
-```
-
-UserNotificationSettingsPartial
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|id|string|false|none|none|
-|userId|string|false|none|none|
-|sleepStartTime|string(date-time)|false|none|none|
-|sleepEndTime|string(date-time)|false|none|none|
-|type|number|false|none|none|
 
 <h2 id="tocS_loopback.Count">loopback.Count</h2>
 <!-- backwards compatibility -->

@@ -3,39 +3,33 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {inject} from '@loopback/core';
-import {
-  patch,
-  getModelSchemaRef,
-  requestBody,
-  param,
-  HttpErrors,
-  del,
-} from '@loopback/rest';
 import {repository} from '@loopback/repository';
+import {del, HttpErrors, param, patch, requestBody} from '@loopback/rest';
 import {
-  NotificationBindings,
-  Config,
-  MessageType,
-} from 'loopback4-notifications';
-import {PubNubNotification} from 'loopback4-notifications/pubnub';
-import {NotifServiceBindings} from '../keys';
+  CONTENT_TYPE,
+  getModelSchemaRefSF,
+  IAuthUserWithPermissions,
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+  SuccessResponse,
+} from '@sourceloop/core';
 import {
   authenticate,
-  STRATEGY,
   AuthenticationBindings,
+  STRATEGY,
 } from 'loopback4-authentication';
 import {authorize, AuthorizeErrorKeys} from 'loopback4-authorization';
-import {PermissionKey} from '../enums/permission-key.enum';
 import {
-  STATUS_CODE,
-  CONTENT_TYPE,
-  IAuthUserWithPermissions,
-  SuccessResponse,
-  OPERATION_SECURITY_SPEC,
-} from '@sourceloop/core';
+  Config,
+  MessageType,
+  NotificationBindings,
+} from 'loopback4-notifications';
+import {PubNubNotification} from 'loopback4-notifications/pubnub';
+import {PermissionKey} from '../enums/permission-key.enum';
+import {NotifServiceBindings} from '../keys';
 import {AccessResponseDto, NotificationAccess} from '../models';
-import {IChannelManager} from '../types';
 import {NotificationAccessRepository} from '../repositories';
+import {IChannelManager} from '../types';
 
 export class PubnubNotificationController {
   constructor(
@@ -62,7 +56,7 @@ export class PubnubNotificationController {
       [STATUS_CODE.OK]: {
         description: 'Access response',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(AccessResponseDto)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(AccessResponseDto)},
         },
       },
     },
@@ -71,7 +65,7 @@ export class PubnubNotificationController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(NotificationAccess),
+          schema: getModelSchemaRefSF(NotificationAccess),
         },
       },
     })

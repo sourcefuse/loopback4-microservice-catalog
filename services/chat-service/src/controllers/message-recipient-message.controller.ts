@@ -3,9 +3,10 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {repository} from '@loopback/repository';
-import {get, getModelSchemaRef, param} from '@loopback/rest';
+import {get, param} from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
@@ -34,7 +35,7 @@ export class MessageRecipientMessageController {
         description: 'Message belonging to MessageRecipient',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: {type: 'array', items: getModelSchemaRef(Message)},
+            schema: {type: 'array', items: getModelSchemaRefSF(Message)},
           },
         },
       },

@@ -7,7 +7,6 @@ import {AnyObject, DataObject, Model, repository} from '@loopback/repository';
 import {
   HttpErrors,
   get,
-  getModelSchemaRef,
   oas,
   param,
   patch,
@@ -26,6 +25,7 @@ import {
   SuccessResponse,
   UserStatus,
   X_TS_TYPE,
+  getModelSchemaRefSF,
 } from '@sourceloop/core';
 import {
   AuthErrorKeys,
@@ -298,7 +298,7 @@ export class LoginController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(ResetPassword, {partial: true}),
+          schema: getModelSchemaRefSF(ResetPassword, {partial: true}),
         },
       },
     })

@@ -8,7 +8,6 @@ import {
 } from '@loopback/repository';
 import {
   get,
-  getModelSchemaRef,
   HttpErrors,
   param,
   post,
@@ -17,7 +16,7 @@ import {
   response,
   RestBindings,
 } from '@loopback/rest';
-import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
+import {CONTENT_TYPE, getModelSchemaRefSF, STATUS_CODE} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../enum/permission-key.enum';
@@ -51,13 +50,15 @@ export class SurveyResponseController {
   @post(basePath)
   @response(STATUS_CODE.OK, {
     description: 'SurveyResponse model instance',
-    content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(SurveyResponse)}},
+    content: {
+      [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(SurveyResponse)},
+    },
   })
   async create(
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(SurveyResponseDto, {
+          schema: getModelSchemaRefSF(SurveyResponseDto, {
             title: 'NewSurveyResponse',
           }),
         },
@@ -108,7 +109,7 @@ export class SurveyResponseController {
       'application/json': {
         schema: {
           type: 'array',
-          items: getModelSchemaRef(SurveyResponse, {includeRelations: true}),
+          items: getModelSchemaRefSF(SurveyResponse, {includeRelations: true}),
         },
       },
     },
@@ -130,7 +131,7 @@ export class SurveyResponseController {
     description: 'SurveyResponse model instance',
     content: {
       'application/json': {
-        schema: getModelSchemaRef(SurveyResponse, {includeRelations: true}),
+        schema: getModelSchemaRefSF(SurveyResponse, {includeRelations: true}),
       },
     },
   })

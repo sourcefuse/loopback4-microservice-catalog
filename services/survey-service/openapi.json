@@ -3270,1113 +3270,6 @@
       }
     },
     "schemas": {
-      "Question": {
-        "title": "Question",
-        "type": "object",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "uid": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string",
-            "maxLength": 1000
-          },
-          "status": {
-            "type": "string"
-          },
-          "questionType": {
-            "type": "string",
-            "enum": [
-              "Multi Selection",
-              "Scale",
-              "Single Selection",
-              "Text",
-              "Drop Down",
-              null
-            ]
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          },
-          "isScoreEnabled": {
-            "type": "boolean"
-          },
-          "isFollowupEnabled": {
-            "type": "boolean"
-          },
-          "validation": {
-            "type": "object"
-          },
-          "rootQuestionId": {
-            "type": "string"
-          },
-          "parentQuestionId": {
-            "type": "string",
-            "nullable": true
-          },
-          "surveyId": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "uid",
-          "status",
-          "questionType"
-        ],
-        "additionalProperties": false
-      },
-      "NewQuestion": {
-        "title": "NewQuestion",
-        "type": "object",
-        "description": "(tsType: Omit<QuestionDto, 'id'>, schemaOptions: { title: 'NewQuestion', exclude: [ 'id' ] })",
-        "properties": {
-          "questionType": {
-            "type": "string"
-          },
-          "rootQuestionId": {
-            "type": "string"
-          },
-          "parentQuestionId": {
-            "type": "string"
-          },
-          "optionId": {
-            "type": "string"
-          },
-          "surveyId": {
-            "type": "string"
-          },
-          "status": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string",
-            "maxLength": 1000
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          }
-        },
-        "required": [
-          "questionType"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "Omit<QuestionDto, 'id'>"
-      },
-      "SurveyCycleWithRelations": {
-        "title": "SurveyCycleWithRelations",
-        "type": "object",
-        "description": "(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "startDate": {
-            "type": "string",
-            "description": "Start date of the first survey cycle"
-          },
-          "endDate": {
-            "type": "string",
-            "description": "End date of the first survey cycle"
-          },
-          "isActivated": {
-            "type": "boolean"
-          },
-          "surveyId": {
-            "type": "string"
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          },
-          "survey": {
-            "$ref": "#/components/schemas/SurveyWithRelations"
-          },
-          "foreignKey": {}
-        },
-        "additionalProperties": false,
-        "x-typescript-type": "SurveyCycleWithRelations"
-      },
-      "SectionWithRelations": {
-        "title": "SectionWithRelations",
-        "type": "object",
-        "description": "(tsType: SectionWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string",
-            "maxLength": 500
-          },
-          "displayOrder": {
-            "type": "number"
-          },
-          "surveyId": {
-            "type": "string"
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          }
-        },
-        "additionalProperties": false,
-        "x-typescript-type": "SectionWithRelations"
-      },
-      "SurveyWithRelations": {
-        "title": "SurveyWithRelations",
-        "type": "object",
-        "description": "(tsType: SurveyWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "uid": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string",
-            "minLength": 3,
-            "maxLength": 500
-          },
-          "surveyText": {
-            "type": "string"
-          },
-          "startDate": {
-            "type": "string",
-            "description": "Start date of the survey"
-          },
-          "endDate": {
-            "type": "string",
-            "description": "End date of the survey"
-          },
-          "status": {
-            "type": "string"
-          },
-          "isEnableWeights": {
-            "type": "boolean"
-          },
-          "baseSurveyId": {
-            "type": "string",
-            "nullable": true
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          },
-          "questions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/QuestionWithRelations"
-            }
-          },
-          "surveyCycles": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SurveyCycleWithRelations"
-            }
-          },
-          "surveyResponders": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SurveyResponderWithRelations"
-            }
-          },
-          "sections": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SectionWithRelations"
-            }
-          }
-        },
-        "required": [
-          "name",
-          "surveyText",
-          "status"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "SurveyWithRelations"
-      },
-      "SurveyResponderWithRelations": {
-        "title": "SurveyResponderWithRelations",
-        "type": "object",
-        "description": "(tsType: SurveyResponderWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "firstName": {
-            "type": "string",
-            "nullable": true
-          },
-          "lastName": {
-            "type": "string",
-            "nullable": true
-          },
-          "email": {
-            "type": "string",
-            "pattern": "[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?)+",
-            "minLength": 3,
-            "maxLength": 150
-          },
-          "fullName": {
-            "type": "string"
-          },
-          "userId": {
-            "type": "string",
-            "nullable": true
-          },
-          "surveyId": {
-            "type": "string"
-          },
-          "surveyCycleId": {
-            "type": "string"
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          },
-          "survey": {
-            "$ref": "#/components/schemas/SurveyWithRelations"
-          },
-          "foreignKey": {},
-          "surveyCycle": {
-            "$ref": "#/components/schemas/SurveyCycleWithRelations"
-          }
-        },
-        "additionalProperties": false,
-        "x-typescript-type": "SurveyResponderWithRelations"
-      },
-      "SurveyResponseWithRelations": {
-        "title": "SurveyResponseWithRelations",
-        "type": "object",
-        "description": "(tsType: SurveyResponseWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "surveyResponderId": {
-            "type": "string"
-          },
-          "surveyCycleId": {
-            "type": "string"
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          },
-          "surveyResponder": {
-            "$ref": "#/components/schemas/SurveyResponderWithRelations"
-          },
-          "foreignKey": {},
-          "surveyCycle": {
-            "$ref": "#/components/schemas/SurveyCycleWithRelations"
-          },
-          "surveyResponseDetails": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SurveyResponseDetailWithRelations"
-            }
-          }
-        },
-        "required": [
-          "surveyResponderId",
-          "surveyCycleId"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "SurveyResponseWithRelations"
-      },
-      "OptionsWithRelations": {
-        "title": "OptionsWithRelations",
-        "type": "object",
-        "description": "(tsType: OptionsWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string",
-            "maxLength": 500
-          },
-          "displayOrder": {
-            "type": "number"
-          },
-          "score": {
-            "type": "number",
-            "nullable": true
-          },
-          "questionId": {
-            "type": "string"
-          },
-          "followupQuestionId": {
-            "type": "string",
-            "nullable": true
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          },
-          "question": {
-            "$ref": "#/components/schemas/QuestionWithRelations"
-          },
-          "foreignKey": {},
-          "followupQuestion": {
-            "$ref": "#/components/schemas/QuestionWithRelations"
-          }
-        },
-        "required": [
-          "displayOrder"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "OptionsWithRelations"
-      },
-      "SurveyResponseDetailWithRelations": {
-        "title": "SurveyResponseDetailWithRelations",
-        "type": "object",
-        "description": "(tsType: SurveyResponseDetailWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "surveyResponseId": {
-            "type": "string"
-          },
-          "questionId": {
-            "type": "string"
-          },
-          "score": {
-            "type": "string",
-            "maximum": 100,
-            "minimum": 0
-          },
-          "responseType": {
-            "type": "string",
-            "enum": [
-              "Multi Selection",
-              "Scale",
-              "Single Selection",
-              "Text",
-              "Drop Down",
-              null
-            ]
-          },
-          "textAnswer": {
-            "type": "string"
-          },
-          "optionId": {
-            "type": "string"
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          },
-          "surveyResponse": {
-            "$ref": "#/components/schemas/SurveyResponseWithRelations"
-          },
-          "foreignKey": {},
-          "question": {
-            "$ref": "#/components/schemas/QuestionWithRelations"
-          },
-          "option": {
-            "$ref": "#/components/schemas/OptionsWithRelations"
-          }
-        },
-        "required": [
-          "surveyResponseId",
-          "questionId",
-          "responseType"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "SurveyResponseDetailWithRelations"
-      },
-      "QuestionWithRelations": {
-        "title": "QuestionWithRelations",
-        "type": "object",
-        "description": "(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "uid": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string",
-            "maxLength": 1000
-          },
-          "status": {
-            "type": "string"
-          },
-          "questionType": {
-            "type": "string",
-            "enum": [
-              "Multi Selection",
-              "Scale",
-              "Single Selection",
-              "Text",
-              "Drop Down",
-              null
-            ]
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          },
-          "isScoreEnabled": {
-            "type": "boolean"
-          },
-          "isFollowupEnabled": {
-            "type": "boolean"
-          },
-          "validation": {
-            "type": "object"
-          },
-          "rootQuestionId": {
-            "type": "string"
-          },
-          "parentQuestionId": {
-            "type": "string",
-            "nullable": true
-          },
-          "surveyId": {
-            "type": "string"
-          },
-          "rootQuestion": {
-            "$ref": "#/components/schemas/QuestionWithRelations"
-          },
-          "foreignKey": {},
-          "parentQuestion": {
-            "$ref": "#/components/schemas/QuestionWithRelations"
-          },
-          "options": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/OptionsWithRelations"
-            }
-          },
-          "followUpQuestions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/QuestionWithRelations"
-            }
-          },
-          "surveyResponseDetail": {
-            "$ref": "#/components/schemas/SurveyResponseDetailWithRelations"
-          },
-          "survey": {
-            "$ref": "#/components/schemas/SurveyWithRelations"
-          }
-        },
-        "required": [
-          "uid",
-          "status",
-          "questionType"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "QuestionWithRelations"
-      },
-      "QuestionPartial": {
-        "title": "QuestionPartial",
-        "type": "object",
-        "description": "(tsType: Partial<Question>, schemaOptions: { partial: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "uid": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string",
-            "maxLength": 1000
-          },
-          "status": {
-            "type": "string"
-          },
-          "questionType": {
-            "type": "string",
-            "enum": [
-              "Multi Selection",
-              "Scale",
-              "Single Selection",
-              "Text",
-              "Drop Down",
-              null
-            ]
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          },
-          "isScoreEnabled": {
-            "type": "boolean"
-          },
-          "isFollowupEnabled": {
-            "type": "boolean"
-          },
-          "validation": {
-            "type": "object"
-          },
-          "rootQuestionId": {
-            "type": "string"
-          },
-          "parentQuestionId": {
-            "type": "string",
-            "nullable": true
-          },
-          "surveyId": {
-            "type": "string"
-          }
-        },
-        "additionalProperties": false,
-        "x-typescript-type": "Partial<Question>"
-      },
-      "BulkDeleteQuestion": {
-        "title": "BulkDeleteQuestion",
-        "type": "object",
-        "description": "(tsType: BulkDeleteDto, schemaOptions: { title: 'BulkDeleteQuestion' })",
-        "properties": {
-          "ids": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        },
-        "required": [
-          "ids"
-        ],
-        "additionalProperties": true,
-        "x-typescript-type": "BulkDeleteDto"
-      },
-      "BulkDeleteDto": {
-        "title": "BulkDeleteDto",
-        "type": "object",
-        "properties": {
-          "ids": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        },
-        "required": [
-          "ids"
-        ],
-        "additionalProperties": true
-      },
-      "QuestionDuplicateDto": {
-        "title": "QuestionDuplicateDto",
-        "type": "object",
-        "description": "(tsType: QuestionDuplicateDto, schemaOptions: { title: 'QuestionDuplicateDto' })",
-        "properties": {
-          "includeBatchId": {
-            "type": "boolean"
-          },
-          "displayOrder": {
-            "type": "number"
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          }
-        },
-        "additionalProperties": false,
-        "x-typescript-type": "QuestionDuplicateDto"
-      },
-      "Options": {
-        "title": "Options",
-        "type": "object",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string",
-            "maxLength": 500
-          },
-          "displayOrder": {
-            "type": "number"
-          },
-          "score": {
-            "type": "number",
-            "nullable": true
-          },
-          "questionId": {
-            "type": "string"
-          },
-          "followupQuestionId": {
-            "type": "string",
-            "nullable": true
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          }
-        },
-        "required": [
-          "displayOrder"
-        ],
-        "additionalProperties": false
-      },
-      "NewOptions": {
-        "title": "NewOptions",
-        "type": "object",
-        "description": "(tsType: Omit<Options, 'id'>, schemaOptions: { title: 'NewOptions', exclude: [ 'id' ] })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string",
-            "maxLength": 500
-          },
-          "displayOrder": {
-            "type": "number"
-          },
-          "score": {
-            "type": "number",
-            "nullable": true
-          },
-          "questionId": {
-            "type": "string"
-          },
-          "followupQuestionId": {
-            "type": "string",
-            "nullable": true
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          }
-        },
-        "required": [
-          "displayOrder"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "Omit<Options, 'id'>"
-      },
-      "OptionsPartial": {
-        "title": "OptionsPartial",
-        "type": "object",
-        "description": "(tsType: Partial<Options>, schemaOptions: { partial: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string",
-            "maxLength": 500
-          },
-          "displayOrder": {
-            "type": "number"
-          },
-          "score": {
-            "type": "number",
-            "nullable": true
-          },
-          "questionId": {
-            "type": "string"
-          },
-          "followupQuestionId": {
-            "type": "string",
-            "nullable": true
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          }
-        },
-        "additionalProperties": false,
-        "x-typescript-type": "Partial<Options>"
-      },
-      "BulkDeleteOption": {
-        "title": "BulkDeleteOption",
-        "type": "object",
-        "description": "(tsType: BulkDeleteDto, schemaOptions: { title: 'BulkDeleteOption' })",
-        "properties": {
-          "ids": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        },
-        "required": [
-          "ids"
-        ],
-        "additionalProperties": true,
-        "x-typescript-type": "BulkDeleteDto"
-      },
       "TemplateQuestion": {
         "title": "TemplateQuestion",
         "type": "object",
@@ -4642,373 +3535,6 @@
         "additionalProperties": false,
         "x-typescript-type": "Partial<TemplateQuestion>"
       },
-      "QuestionTemplate": {
-        "title": "QuestionTemplate",
-        "type": "object",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "uid": {
-            "type": "string",
-            "description": "an identifier id to display in UI"
-          },
-          "name": {
-            "type": "string"
-          },
-          "status": {
-            "type": "string"
-          },
-          "isEnableWeight": {
-            "type": "boolean"
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          }
-        },
-        "required": [
-          "name",
-          "status"
-        ],
-        "additionalProperties": false
-      },
-      "NewTemplate": {
-        "title": "NewTemplate",
-        "type": "object",
-        "description": "(tsType: Omit<QuestionTemplatesDto, 'id'>, schemaOptions: { title: 'NewTemplate', exclude: [ 'id' ] })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "uid": {
-            "type": "string",
-            "description": "an identifier id to display in UI"
-          },
-          "name": {
-            "type": "string"
-          },
-          "status": {
-            "type": "string"
-          },
-          "isEnableWeight": {
-            "type": "boolean"
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          },
-          "existingTemplateId": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "name",
-          "status"
-        ],
-        "additionalProperties": true,
-        "x-typescript-type": "Omit<QuestionTemplatesDto, 'id'>"
-      },
-      "QuestionTemplateResponseWithRelations": {
-        "title": "QuestionTemplateResponseWithRelations",
-        "type": "object",
-        "description": "(tsType: QuestionTemplateResponseWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "uid": {
-            "type": "string",
-            "description": "an identifier id to display in UI"
-          },
-          "name": {
-            "type": "string"
-          },
-          "status": {
-            "type": "string"
-          },
-          "isEnableWeight": {
-            "type": "boolean"
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          },
-          "createdByName": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "name",
-          "status"
-        ],
-        "additionalProperties": true,
-        "x-typescript-type": "QuestionTemplateResponseWithRelations"
-      },
-      "QuestionTemplateWithRelations": {
-        "title": "QuestionTemplateWithRelations",
-        "type": "object",
-        "description": "(tsType: QuestionTemplateWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "uid": {
-            "type": "string",
-            "description": "an identifier id to display in UI"
-          },
-          "name": {
-            "type": "string"
-          },
-          "status": {
-            "type": "string"
-          },
-          "isEnableWeight": {
-            "type": "boolean"
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          }
-        },
-        "required": [
-          "name",
-          "status"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "QuestionTemplateWithRelations"
-      },
-      "QuestionTemplatesDtoPartial": {
-        "title": "QuestionTemplatesDtoPartial",
-        "type": "object",
-        "description": "(tsType: Partial<QuestionTemplatesDto>, schemaOptions: { partial: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "uid": {
-            "type": "string",
-            "description": "an identifier id to display in UI"
-          },
-          "name": {
-            "type": "string"
-          },
-          "status": {
-            "type": "string"
-          },
-          "isEnableWeight": {
-            "type": "boolean"
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          },
-          "existingTemplateId": {
-            "type": "string"
-          }
-        },
-        "additionalProperties": true,
-        "x-typescript-type": "Partial<QuestionTemplatesDto>"
-      },
-      "QuestionTemplatesDto": {
-        "title": "QuestionTemplatesDto",
-        "type": "object",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "uid": {
-            "type": "string",
-            "description": "an identifier id to display in UI"
-          },
-          "name": {
-            "type": "string"
-          },
-          "status": {
-            "type": "string"
-          },
-          "isEnableWeight": {
-            "type": "boolean"
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          },
-          "existingTemplateId": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "name",
-          "status"
-        ],
-        "additionalProperties": true
-      },
       "Survey": {
         "title": "Survey",
         "type": "object",
@@ -5165,6 +3691,314 @@
         ],
         "additionalProperties": false,
         "x-typescript-type": "Omit<SurveyDto, 'id'>"
+      },
+      "QuestionWithRelations": {
+        "title": "QuestionWithRelations",
+        "type": "object",
+        "description": "(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "uid": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 1000
+          },
+          "status": {
+            "type": "string"
+          },
+          "questionType": {
+            "type": "string",
+            "enum": [
+              "Multi Selection",
+              "Scale",
+              "Single Selection",
+              "Text",
+              "Drop Down",
+              null
+            ]
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          },
+          "isScoreEnabled": {
+            "type": "boolean"
+          },
+          "isFollowupEnabled": {
+            "type": "boolean"
+          },
+          "validation": {
+            "type": "object"
+          },
+          "rootQuestionId": {
+            "type": "string"
+          },
+          "parentQuestionId": {
+            "type": "string",
+            "nullable": true
+          },
+          "surveyId": {
+            "type": "string"
+          },
+          "rootQuestion": {
+            "$ref": "#/components/schemas/QuestionWithRelations"
+          },
+          "foreignKey": {},
+          "parentQuestion": {
+            "$ref": "#/components/schemas/QuestionWithRelations"
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OptionsWithRelations"
+            }
+          },
+          "followUpQuestions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuestionWithRelations"
+            }
+          },
+          "surveyResponseDetail": {
+            "$ref": "#/components/schemas/SurveyResponseDetailWithRelations"
+          },
+          "survey": {
+            "$ref": "#/components/schemas/SurveyWithRelations"
+          }
+        },
+        "required": [
+          "uid",
+          "status",
+          "questionType"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "QuestionWithRelations"
+      },
+      "SurveyCycleWithRelations": {
+        "title": "SurveyCycleWithRelations",
+        "type": "object",
+        "description": "(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string",
+            "description": "Start date of the first survey cycle"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "End date of the first survey cycle"
+          },
+          "isActivated": {
+            "type": "boolean"
+          },
+          "surveyId": {
+            "type": "string"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          },
+          "survey": {
+            "$ref": "#/components/schemas/SurveyWithRelations"
+          },
+          "foreignKey": {}
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "SurveyCycleWithRelations"
+      },
+      "SurveyResponderWithRelations": {
+        "title": "SurveyResponderWithRelations",
+        "type": "object",
+        "description": "(tsType: SurveyResponderWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "pattern": "[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?)+",
+            "minLength": 3,
+            "maxLength": 150
+          },
+          "fullName": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string",
+            "nullable": true
+          },
+          "surveyId": {
+            "type": "string"
+          },
+          "surveyCycleId": {
+            "type": "string"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          },
+          "survey": {
+            "$ref": "#/components/schemas/SurveyWithRelations"
+          },
+          "foreignKey": {},
+          "surveyCycle": {
+            "$ref": "#/components/schemas/SurveyCycleWithRelations"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "SurveyResponderWithRelations"
+      },
+      "SectionWithRelations": {
+        "title": "SectionWithRelations",
+        "type": "object",
+        "description": "(tsType: SectionWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "displayOrder": {
+            "type": "number"
+          },
+          "surveyId": {
+            "type": "string"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "SectionWithRelations"
       },
       "SurveyDtoWithRelations": {
         "title": "SurveyDtoWithRelations",
@@ -5347,6 +4181,108 @@
         "additionalProperties": false,
         "x-typescript-type": "Partial<Survey>"
       },
+      "SurveyWithRelations": {
+        "title": "SurveyWithRelations",
+        "type": "object",
+        "description": "(tsType: SurveyWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "uid": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 500
+          },
+          "surveyText": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string",
+            "description": "Start date of the survey"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "End date of the survey"
+          },
+          "status": {
+            "type": "string"
+          },
+          "isEnableWeights": {
+            "type": "boolean"
+          },
+          "baseSurveyId": {
+            "type": "string",
+            "nullable": true
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          },
+          "questions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuestionWithRelations"
+            }
+          },
+          "surveyCycles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SurveyCycleWithRelations"
+            }
+          },
+          "surveyResponders": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SurveyResponderWithRelations"
+            }
+          },
+          "sections": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SectionWithRelations"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "surveyText",
+          "status"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "SurveyWithRelations"
+      },
       "SurveyDtoPartial": {
         "title": "SurveyDtoPartial",
         "type": "object",
@@ -5507,6 +4443,482 @@
           "status"
         ],
         "additionalProperties": false
+      },
+      "SurveyResponse": {
+        "title": "SurveyResponse",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "surveyResponderId": {
+            "type": "string"
+          },
+          "surveyCycleId": {
+            "type": "string"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "surveyResponderId",
+          "surveyCycleId"
+        ],
+        "additionalProperties": false
+      },
+      "NewSurveyResponse": {
+        "title": "NewSurveyResponse",
+        "type": "object",
+        "description": "(tsType: SurveyResponseDto, schemaOptions: { title: 'NewSurveyResponse' })",
+        "properties": {
+          "surveyResponseDetailArray": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "surveyResponderId": {
+            "type": "string"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "SurveyResponseDto"
+      },
+      "SurveyResponseDto": {
+        "title": "SurveyResponseDto",
+        "type": "object",
+        "properties": {
+          "surveyResponseDetailArray": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "surveyResponderId": {
+            "type": "string"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SurveyResponseWithRelations": {
+        "title": "SurveyResponseWithRelations",
+        "type": "object",
+        "description": "(tsType: SurveyResponseWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "surveyResponderId": {
+            "type": "string"
+          },
+          "surveyCycleId": {
+            "type": "string"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          },
+          "surveyResponder": {
+            "$ref": "#/components/schemas/SurveyResponderWithRelations"
+          },
+          "foreignKey": {},
+          "surveyCycle": {
+            "$ref": "#/components/schemas/SurveyCycleWithRelations"
+          },
+          "surveyResponseDetails": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SurveyResponseDetailWithRelations"
+            }
+          }
+        },
+        "required": [
+          "surveyResponderId",
+          "surveyCycleId"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "SurveyResponseWithRelations"
+      },
+      "SurveyResponseDetailWithRelations": {
+        "title": "SurveyResponseDetailWithRelations",
+        "type": "object",
+        "description": "(tsType: SurveyResponseDetailWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "surveyResponseId": {
+            "type": "string"
+          },
+          "questionId": {
+            "type": "string"
+          },
+          "score": {
+            "type": "string",
+            "maximum": 100,
+            "minimum": 0
+          },
+          "responseType": {
+            "type": "string",
+            "enum": [
+              "Multi Selection",
+              "Scale",
+              "Single Selection",
+              "Text",
+              "Drop Down",
+              null
+            ]
+          },
+          "textAnswer": {
+            "type": "string"
+          },
+          "optionId": {
+            "type": "string"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          },
+          "surveyResponse": {
+            "$ref": "#/components/schemas/SurveyResponseWithRelations"
+          },
+          "foreignKey": {},
+          "question": {
+            "$ref": "#/components/schemas/QuestionWithRelations"
+          },
+          "option": {
+            "$ref": "#/components/schemas/OptionsWithRelations"
+          }
+        },
+        "required": [
+          "surveyResponseId",
+          "questionId",
+          "responseType"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "SurveyResponseDetailWithRelations"
+      },
+      "SurveyResponder": {
+        "title": "SurveyResponder",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "pattern": "[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?)+",
+            "minLength": 3,
+            "maxLength": 150
+          },
+          "fullName": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string",
+            "nullable": true
+          },
+          "surveyId": {
+            "type": "string"
+          },
+          "surveyCycleId": {
+            "type": "string"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false
+      },
+      "NewSurveyResponderInSurvey": {
+        "title": "NewSurveyResponderInSurvey",
+        "type": "object",
+        "description": "(tsType: @loopback/repository-json-schema#Optional<Omit<SurveyResponder, 'id'>, 'surveyId'>, schemaOptions: { title: 'NewSurveyResponderInSurvey', exclude: [ 'id' ], optional: [ 'surveyId' ] })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "pattern": "[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?)+",
+            "minLength": 3,
+            "maxLength": 150
+          },
+          "fullName": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string",
+            "nullable": true
+          },
+          "surveyId": {
+            "type": "string"
+          },
+          "surveyCycleId": {
+            "type": "string"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository-json-schema#Optional<Omit<SurveyResponder, 'id'>, 'surveyId'>"
+      },
+      "ResponderReminderDto": {
+        "title": "ResponderReminderDto",
+        "type": "object",
+        "properties": {
+          "surveyResponderIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "surveyResponderIds"
+        ],
+        "additionalProperties": false
+      },
+      "SurveyResponderPartial": {
+        "title": "SurveyResponderPartial",
+        "type": "object",
+        "description": "(tsType: Partial<SurveyResponder>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "pattern": "[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?)+",
+            "minLength": 3,
+            "maxLength": 150
+          },
+          "fullName": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string",
+            "nullable": true
+          },
+          "surveyId": {
+            "type": "string"
+          },
+          "surveyCycleId": {
+            "type": "string"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<SurveyResponder>"
       },
       "SurveyQuestionDto": {
         "title": "SurveyQuestionDto",
@@ -5877,163 +5289,6 @@
         ],
         "additionalProperties": false
       },
-      "Section": {
-        "title": "Section",
-        "type": "object",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string",
-            "maxLength": 500
-          },
-          "displayOrder": {
-            "type": "number"
-          },
-          "surveyId": {
-            "type": "string"
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          }
-        },
-        "additionalProperties": false
-      },
-      "NewSection": {
-        "title": "NewSection",
-        "type": "object",
-        "description": "(tsType: Omit<Section, 'id'>, schemaOptions: { title: 'NewSection', exclude: [ 'id' ] })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string",
-            "maxLength": 500
-          },
-          "displayOrder": {
-            "type": "number"
-          },
-          "surveyId": {
-            "type": "string"
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          }
-        },
-        "additionalProperties": false,
-        "x-typescript-type": "Omit<Section, 'id'>"
-      },
-      "SectionPartial": {
-        "title": "SectionPartial",
-        "type": "object",
-        "description": "(tsType: Partial<Section>, schemaOptions: { partial: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string",
-            "maxLength": 500
-          },
-          "displayOrder": {
-            "type": "number"
-          },
-          "surveyId": {
-            "type": "string"
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          }
-        },
-        "additionalProperties": false,
-        "x-typescript-type": "Partial<Section>"
-      },
       "SurveyCycle": {
         "title": "SurveyCycle",
         "type": "object",
@@ -6203,8 +5458,8 @@
         "additionalProperties": false,
         "x-typescript-type": "Partial<SurveyCycle>"
       },
-      "SurveyResponder": {
-        "title": "SurveyResponder",
+      "Section": {
+        "title": "Section",
         "type": "object",
         "properties": {
           "deleted": {
@@ -6236,31 +5491,14 @@
           "id": {
             "type": "string"
           },
-          "firstName": {
+          "name": {
             "type": "string",
-            "nullable": true
+            "maxLength": 500
           },
-          "lastName": {
-            "type": "string",
-            "nullable": true
-          },
-          "email": {
-            "type": "string",
-            "pattern": "[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?)+",
-            "minLength": 3,
-            "maxLength": 150
-          },
-          "fullName": {
-            "type": "string"
-          },
-          "userId": {
-            "type": "string",
-            "nullable": true
+          "displayOrder": {
+            "type": "number"
           },
           "surveyId": {
-            "type": "string"
-          },
-          "surveyCycleId": {
             "type": "string"
           },
           "extId": {
@@ -6272,10 +5510,10 @@
         },
         "additionalProperties": false
       },
-      "NewSurveyResponderInSurvey": {
-        "title": "NewSurveyResponderInSurvey",
+      "NewSection": {
+        "title": "NewSection",
         "type": "object",
-        "description": "(tsType: @loopback/repository-json-schema#Optional<Omit<SurveyResponder, 'id'>, 'surveyId'>, schemaOptions: { title: 'NewSurveyResponderInSurvey', exclude: [ 'id' ], optional: [ 'surveyId' ] })",
+        "description": "(tsType: Omit<Section, 'id'>, schemaOptions: { title: 'NewSection', exclude: [ 'id' ] })",
         "properties": {
           "deleted": {
             "type": "boolean"
@@ -6303,31 +5541,14 @@
           "modifiedBy": {
             "type": "string"
           },
-          "firstName": {
+          "name": {
             "type": "string",
-            "nullable": true
+            "maxLength": 500
           },
-          "lastName": {
-            "type": "string",
-            "nullable": true
-          },
-          "email": {
-            "type": "string",
-            "pattern": "[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?)+",
-            "minLength": 3,
-            "maxLength": 150
-          },
-          "fullName": {
-            "type": "string"
-          },
-          "userId": {
-            "type": "string",
-            "nullable": true
+          "displayOrder": {
+            "type": "number"
           },
           "surveyId": {
-            "type": "string"
-          },
-          "surveyCycleId": {
             "type": "string"
           },
           "extId": {
@@ -6338,13 +5559,279 @@
           }
         },
         "additionalProperties": false,
-        "x-typescript-type": "@loopback/repository-json-schema#Optional<Omit<SurveyResponder, 'id'>, 'surveyId'>"
+        "x-typescript-type": "Omit<Section, 'id'>"
       },
-      "ResponderReminderDto": {
-        "title": "ResponderReminderDto",
+      "SectionPartial": {
+        "title": "SectionPartial",
+        "type": "object",
+        "description": "(tsType: Partial<Section>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "displayOrder": {
+            "type": "number"
+          },
+          "surveyId": {
+            "type": "string"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<Section>"
+      },
+      "Question": {
+        "title": "Question",
         "type": "object",
         "properties": {
-          "surveyResponderIds": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "uid": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 1000
+          },
+          "status": {
+            "type": "string"
+          },
+          "questionType": {
+            "type": "string",
+            "enum": [
+              "Multi Selection",
+              "Scale",
+              "Single Selection",
+              "Text",
+              "Drop Down",
+              null
+            ]
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          },
+          "isScoreEnabled": {
+            "type": "boolean"
+          },
+          "isFollowupEnabled": {
+            "type": "boolean"
+          },
+          "validation": {
+            "type": "object"
+          },
+          "rootQuestionId": {
+            "type": "string"
+          },
+          "parentQuestionId": {
+            "type": "string",
+            "nullable": true
+          },
+          "surveyId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "uid",
+          "status",
+          "questionType"
+        ],
+        "additionalProperties": false
+      },
+      "NewQuestion": {
+        "title": "NewQuestion",
+        "type": "object",
+        "description": "(tsType: Omit<QuestionDto, 'id'>, schemaOptions: { title: 'NewQuestion', exclude: [ 'id' ] })",
+        "properties": {
+          "questionType": {
+            "type": "string"
+          },
+          "rootQuestionId": {
+            "type": "string"
+          },
+          "parentQuestionId": {
+            "type": "string"
+          },
+          "optionId": {
+            "type": "string"
+          },
+          "surveyId": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 1000
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "questionType"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<QuestionDto, 'id'>"
+      },
+      "QuestionPartial": {
+        "title": "QuestionPartial",
+        "type": "object",
+        "description": "(tsType: Partial<Question>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "uid": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 1000
+          },
+          "status": {
+            "type": "string"
+          },
+          "questionType": {
+            "type": "string",
+            "enum": [
+              "Multi Selection",
+              "Scale",
+              "Single Selection",
+              "Text",
+              "Drop Down",
+              null
+            ]
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          },
+          "isScoreEnabled": {
+            "type": "boolean"
+          },
+          "isFollowupEnabled": {
+            "type": "boolean"
+          },
+          "validation": {
+            "type": "object"
+          },
+          "rootQuestionId": {
+            "type": "string"
+          },
+          "parentQuestionId": {
+            "type": "string",
+            "nullable": true
+          },
+          "surveyId": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<Question>"
+      },
+      "BulkDeleteQuestion": {
+        "title": "BulkDeleteQuestion",
+        "type": "object",
+        "description": "(tsType: BulkDeleteDto, schemaOptions: { title: 'BulkDeleteQuestion' })",
+        "properties": {
+          "ids": {
             "type": "array",
             "items": {
               "type": "string"
@@ -6352,70 +5839,37 @@
           }
         },
         "required": [
-          "surveyResponderIds"
+          "ids"
         ],
-        "additionalProperties": false
+        "additionalProperties": true,
+        "x-typescript-type": "BulkDeleteDto"
       },
-      "SurveyResponderPartial": {
-        "title": "SurveyResponderPartial",
+      "BulkDeleteDto": {
+        "title": "BulkDeleteDto",
         "type": "object",
-        "description": "(tsType: Partial<SurveyResponder>, schemaOptions: { partial: true })",
         "properties": {
-          "deleted": {
+          "ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "ids"
+        ],
+        "additionalProperties": true
+      },
+      "QuestionDuplicateDto": {
+        "title": "QuestionDuplicateDto",
+        "type": "object",
+        "description": "(tsType: QuestionDuplicateDto, schemaOptions: { title: 'QuestionDuplicateDto' })",
+        "properties": {
+          "includeBatchId": {
             "type": "boolean"
           },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "firstName": {
-            "type": "string",
-            "nullable": true
-          },
-          "lastName": {
-            "type": "string",
-            "nullable": true
-          },
-          "email": {
-            "type": "string",
-            "pattern": "[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?)+",
-            "minLength": 3,
-            "maxLength": 150
-          },
-          "fullName": {
-            "type": "string"
-          },
-          "userId": {
-            "type": "string",
-            "nullable": true
-          },
-          "surveyId": {
-            "type": "string"
-          },
-          "surveyCycleId": {
-            "type": "string"
+          "displayOrder": {
+            "type": "number"
           },
           "extId": {
             "type": "string"
@@ -6425,10 +5879,10 @@
           }
         },
         "additionalProperties": false,
-        "x-typescript-type": "Partial<SurveyResponder>"
+        "x-typescript-type": "QuestionDuplicateDto"
       },
-      "SurveyResponse": {
-        "title": "SurveyResponse",
+      "QuestionTemplate": {
+        "title": "QuestionTemplate",
         "type": "object",
         "properties": {
           "deleted": {
@@ -6460,11 +5914,18 @@
           "id": {
             "type": "string"
           },
-          "surveyResponderId": {
+          "uid": {
+            "type": "string",
+            "description": "an identifier id to display in UI"
+          },
+          "name": {
             "type": "string"
           },
-          "surveyCycleId": {
+          "status": {
             "type": "string"
+          },
+          "isEnableWeight": {
+            "type": "boolean"
           },
           "extId": {
             "type": "string"
@@ -6474,24 +5935,567 @@
           }
         },
         "required": [
-          "surveyResponderId",
-          "surveyCycleId"
+          "name",
+          "status"
         ],
         "additionalProperties": false
       },
-      "NewSurveyResponse": {
-        "title": "NewSurveyResponse",
+      "NewTemplate": {
+        "title": "NewTemplate",
         "type": "object",
-        "description": "(tsType: SurveyResponseDto, schemaOptions: { title: 'NewSurveyResponse' })",
+        "description": "(tsType: Omit<QuestionTemplatesDto, 'id'>, schemaOptions: { title: 'NewTemplate', exclude: [ 'id' ] })",
         "properties": {
-          "surveyResponseDetailArray": {
-            "type": "array",
-            "items": {
-              "type": "object"
-            }
+          "deleted": {
+            "type": "boolean"
           },
-          "surveyResponderId": {
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
             "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "uid": {
+            "type": "string",
+            "description": "an identifier id to display in UI"
+          },
+          "name": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "isEnableWeight": {
+            "type": "boolean"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          },
+          "existingTemplateId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "status"
+        ],
+        "additionalProperties": true,
+        "x-typescript-type": "Omit<QuestionTemplatesDto, 'id'>"
+      },
+      "QuestionTemplateResponseWithRelations": {
+        "title": "QuestionTemplateResponseWithRelations",
+        "type": "object",
+        "description": "(tsType: QuestionTemplateResponseWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "uid": {
+            "type": "string",
+            "description": "an identifier id to display in UI"
+          },
+          "name": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "isEnableWeight": {
+            "type": "boolean"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          },
+          "createdByName": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "status"
+        ],
+        "additionalProperties": true,
+        "x-typescript-type": "QuestionTemplateResponseWithRelations"
+      },
+      "QuestionTemplateWithRelations": {
+        "title": "QuestionTemplateWithRelations",
+        "type": "object",
+        "description": "(tsType: QuestionTemplateWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "uid": {
+            "type": "string",
+            "description": "an identifier id to display in UI"
+          },
+          "name": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "isEnableWeight": {
+            "type": "boolean"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "name",
+          "status"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "QuestionTemplateWithRelations"
+      },
+      "QuestionTemplatesDtoPartial": {
+        "title": "QuestionTemplatesDtoPartial",
+        "type": "object",
+        "description": "(tsType: Partial<QuestionTemplatesDto>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "uid": {
+            "type": "string",
+            "description": "an identifier id to display in UI"
+          },
+          "name": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "isEnableWeight": {
+            "type": "boolean"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          },
+          "existingTemplateId": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true,
+        "x-typescript-type": "Partial<QuestionTemplatesDto>"
+      },
+      "QuestionTemplatesDto": {
+        "title": "QuestionTemplatesDto",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "uid": {
+            "type": "string",
+            "description": "an identifier id to display in UI"
+          },
+          "name": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "isEnableWeight": {
+            "type": "boolean"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          },
+          "existingTemplateId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "status"
+        ],
+        "additionalProperties": true
+      },
+      "Options": {
+        "title": "Options",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "displayOrder": {
+            "type": "number"
+          },
+          "score": {
+            "type": "number",
+            "nullable": true
+          },
+          "questionId": {
+            "type": "string"
+          },
+          "followupQuestionId": {
+            "type": "string",
+            "nullable": true
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "displayOrder"
+        ],
+        "additionalProperties": false
+      },
+      "NewOptions": {
+        "title": "NewOptions",
+        "type": "object",
+        "description": "(tsType: Omit<Options, 'id'>, schemaOptions: { title: 'NewOptions', exclude: [ 'id' ] })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "displayOrder": {
+            "type": "number"
+          },
+          "score": {
+            "type": "number",
+            "nullable": true
+          },
+          "questionId": {
+            "type": "string"
+          },
+          "followupQuestionId": {
+            "type": "string",
+            "nullable": true
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "displayOrder"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<Options, 'id'>"
+      },
+      "OptionsWithRelations": {
+        "title": "OptionsWithRelations",
+        "type": "object",
+        "description": "(tsType: OptionsWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "displayOrder": {
+            "type": "number"
+          },
+          "score": {
+            "type": "number",
+            "nullable": true
+          },
+          "questionId": {
+            "type": "string"
+          },
+          "followupQuestionId": {
+            "type": "string",
+            "nullable": true
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          },
+          "question": {
+            "$ref": "#/components/schemas/QuestionWithRelations"
+          },
+          "foreignKey": {},
+          "followupQuestion": {
+            "$ref": "#/components/schemas/QuestionWithRelations"
+          }
+        },
+        "required": [
+          "displayOrder"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "OptionsWithRelations"
+      },
+      "OptionsPartial": {
+        "title": "OptionsPartial",
+        "type": "object",
+        "description": "(tsType: Partial<Options>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "displayOrder": {
+            "type": "number"
+          },
+          "score": {
+            "type": "number",
+            "nullable": true
+          },
+          "questionId": {
+            "type": "string"
+          },
+          "followupQuestionId": {
+            "type": "string",
+            "nullable": true
           },
           "extId": {
             "type": "string"
@@ -6501,29 +6505,25 @@
           }
         },
         "additionalProperties": false,
-        "x-typescript-type": "SurveyResponseDto"
+        "x-typescript-type": "Partial<Options>"
       },
-      "SurveyResponseDto": {
-        "title": "SurveyResponseDto",
+      "BulkDeleteOption": {
+        "title": "BulkDeleteOption",
         "type": "object",
+        "description": "(tsType: BulkDeleteDto, schemaOptions: { title: 'BulkDeleteOption' })",
         "properties": {
-          "surveyResponseDetailArray": {
+          "ids": {
             "type": "array",
             "items": {
-              "type": "object"
+              "type": "string"
             }
-          },
-          "surveyResponderId": {
-            "type": "string"
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
           }
         },
-        "additionalProperties": false
+        "required": [
+          "ids"
+        ],
+        "additionalProperties": true,
+        "x-typescript-type": "BulkDeleteDto"
       },
       "loopback.Count": {
         "type": "object",

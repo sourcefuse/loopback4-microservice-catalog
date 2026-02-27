@@ -9,7 +9,6 @@ import {
 import {
   del,
   get,
-  getModelSchemaRef,
   HttpErrors,
   param,
   patch,
@@ -17,7 +16,7 @@ import {
   requestBody,
   response,
 } from '@loopback/rest';
-import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
+import {CONTENT_TYPE, getModelSchemaRefSF, STATUS_CODE} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../enum';
@@ -49,13 +48,13 @@ export class QuestionController {
   @post(basePath)
   @response(STATUS_CODE.OK, {
     description: 'Question model instance',
-    content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Question)}},
+    content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Question)}},
   })
   async create(
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(QuestionDto, {
+          schema: getModelSchemaRefSF(QuestionDto, {
             title: 'NewQuestion',
             exclude: ['id'],
           }),
@@ -95,7 +94,7 @@ export class QuestionController {
       [CONTENT_TYPE.JSON]: {
         schema: {
           type: 'array',
-          items: getModelSchemaRef(Question, {includeRelations: true}),
+          items: getModelSchemaRefSF(Question, {includeRelations: true}),
         },
       },
     },
@@ -121,7 +120,7 @@ export class QuestionController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Question, {partial: true}),
+          schema: getModelSchemaRefSF(Question, {partial: true}),
         },
       },
     })
@@ -142,7 +141,7 @@ export class QuestionController {
     description: 'Question model instance',
     content: {
       [CONTENT_TYPE.JSON]: {
-        schema: getModelSchemaRef(Question, {includeRelations: true}),
+        schema: getModelSchemaRefSF(Question, {includeRelations: true}),
       },
     },
   })
@@ -169,7 +168,7 @@ export class QuestionController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Question, {partial: true}),
+          schema: getModelSchemaRefSF(Question, {partial: true}),
         },
       },
     })
@@ -206,7 +205,7 @@ export class QuestionController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(BulkDeleteDto, {
+          schema: getModelSchemaRefSF(BulkDeleteDto, {
             title: 'BulkDeleteQuestion',
           }),
         },
@@ -229,14 +228,14 @@ export class QuestionController {
   @post(`${basePath}/{id}/duplicate`)
   @response(STATUS_CODE.OK, {
     description: 'Question Duplicate model instance',
-    content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Question)}},
+    content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Question)}},
   })
   async duplicate(
     @param.path.string('id') id: string,
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(QuestionDuplicateDto, {
+          schema: getModelSchemaRefSF(QuestionDuplicateDto, {
             title: 'QuestionDuplicateDto',
           }),
         },

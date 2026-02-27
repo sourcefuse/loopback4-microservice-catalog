@@ -14562,12 +14562,12 @@ HTTPBearer
 
 # Schemas
 
-<h2 id="tocS_Attachment">Attachment</h2>
+<h2 id="tocS_WorkingHour">WorkingHour</h2>
 <!-- backwards compatibility -->
-<a id="schemaattachment"></a>
-<a id="schema_Attachment"></a>
-<a id="tocSattachment"></a>
-<a id="tocsattachment"></a>
+<a id="schemaworkinghour"></a>
+<a id="schema_WorkingHour"></a>
+<a id="tocSworkinghour"></a>
+<a id="tocsworkinghour"></a>
 
 ```json
 {
@@ -14579,18 +14579,17 @@ HTTPBearer
   "createdBy": "string",
   "modifiedBy": "string",
   "id": "string",
-  "fileUrl": "string",
-  "iconLink": "string",
-  "mimeType": "string",
-  "title": "string",
-  "eventId": "string",
+  "dayOfWeek": 0,
+  "end": "string",
+  "start": "string",
+  "calendarId": "string",
   "extId": "string",
   "extMetadata": {}
 }
 
 ```
 
-Attachment
+WorkingHour
 
 ### Properties
 
@@ -14604,20 +14603,31 @@ Attachment
 |createdBy|string|false|none|none|
 |modifiedBy|string|false|none|none|
 |id|string|false|none|none|
-|fileUrl|string|true|none|none|
-|iconLink|string|false|none|none|
-|mimeType|string|false|none|none|
-|title|string|false|none|none|
-|eventId|string|true|none|none|
+|dayOfWeek|number|false|none|none|
+|end|string|false|none|none|
+|start|string|false|none|none|
+|calendarId|string|true|none|none|
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
 
-<h2 id="tocS_NewAttachment">NewAttachment</h2>
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|dayOfWeek|0|
+|dayOfWeek|1|
+|dayOfWeek|2|
+|dayOfWeek|3|
+|dayOfWeek|4|
+|dayOfWeek|5|
+|dayOfWeek|6|
+
+<h2 id="tocS_NewWorkingHour">NewWorkingHour</h2>
 <!-- backwards compatibility -->
-<a id="schemanewattachment"></a>
-<a id="schema_NewAttachment"></a>
-<a id="tocSnewattachment"></a>
-<a id="tocsnewattachment"></a>
+<a id="schemanewworkinghour"></a>
+<a id="schema_NewWorkingHour"></a>
+<a id="tocSnewworkinghour"></a>
+<a id="tocsnewworkinghour"></a>
 
 ```json
 {
@@ -14628,18 +14638,17 @@ Attachment
   "modifiedOn": "2019-08-24T14:15:22Z",
   "createdBy": "string",
   "modifiedBy": "string",
-  "fileUrl": "string",
-  "iconLink": "string",
-  "mimeType": "string",
-  "title": "string",
-  "eventId": "string",
+  "dayOfWeek": 0,
+  "end": "string",
+  "start": "string",
+  "calendarId": "string",
   "extId": "string",
   "extMetadata": {}
 }
 
 ```
 
-NewAttachment
+NewWorkingHour
 
 ### Properties
 
@@ -14652,13 +14661,24 @@ NewAttachment
 |modifiedOn|string(date-time)|false|none|none|
 |createdBy|string|false|none|none|
 |modifiedBy|string|false|none|none|
-|fileUrl|string|true|none|none|
-|iconLink|string|false|none|none|
-|mimeType|string|false|none|none|
-|title|string|false|none|none|
-|eventId|string|true|none|none|
+|dayOfWeek|number|false|none|none|
+|end|string|false|none|none|
+|start|string|false|none|none|
+|calendarId|string|true|none|none|
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|dayOfWeek|0|
+|dayOfWeek|1|
+|dayOfWeek|2|
+|dayOfWeek|3|
+|dayOfWeek|4|
+|dayOfWeek|5|
+|dayOfWeek|6|
 
 <h2 id="tocS_AttendeeWithRelations">AttendeeWithRelations</h2>
 <!-- backwards compatibility -->
@@ -14863,6 +14883,199 @@ AttendeeWithRelations
 |responseStatus|tentative|
 |responseStatus|accepted|
 |responseStatus|declined|
+
+<h2 id="tocS_AttachmentWithRelations">AttachmentWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemaattachmentwithrelations"></a>
+<a id="schema_AttachmentWithRelations"></a>
+<a id="tocSattachmentwithrelations"></a>
+<a id="tocsattachmentwithrelations"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "fileUrl": "string",
+  "iconLink": "string",
+  "mimeType": "string",
+  "title": "string",
+  "eventId": "string",
+  "extId": "string",
+  "extMetadata": {},
+  "event": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "bgColor": "string",
+    "description": "string",
+    "endDateTime": "2019-08-24T14:15:22Z",
+    "fgColor": "string",
+    "iCalUid": "string",
+    "isFullDayEvent": true,
+    "isLocked": true,
+    "link": "string",
+    "location": "string",
+    "meetingLink": "string",
+    "identifier": "string",
+    "startDateTime": "2019-08-24T14:15:22Z",
+    "status": "confirmed",
+    "summary": "string",
+    "timezone": "string",
+    "calendarId": "string",
+    "parentEventId": "string",
+    "extId": "string",
+    "extMetadata": {},
+    "calendar": {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "source": "string",
+      "enableWorkingHours": true,
+      "location": "string",
+      "identifier": "string",
+      "summary": "string",
+      "timezone": "string",
+      "extId": "string",
+      "extMetadata": {},
+      "events": [
+        {}
+      ],
+      "workingHours": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "dayOfWeek": 0,
+          "end": "string",
+          "start": "string",
+          "calendarId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "calendar": {},
+          "foreignKey": null
+        }
+      ],
+      "subscriptions": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "accessRole": "freeBusyReader",
+          "bgColor": "string",
+          "fgColor": "string",
+          "isHidden": true,
+          "isPrimary": true,
+          "identifier": "string",
+          "defaultReminders": {},
+          "notificationSettings": {},
+          "calendarId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "calendar": {},
+          "foreignKey": null
+        }
+      ]
+    },
+    "foreignKey": null,
+    "parentEvent": {},
+    "attendees": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "identifier": "string",
+        "isOptional": true,
+        "isOrganizer": true,
+        "messages": "string",
+        "responseStatus": "needsAction",
+        "eventId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "event": {},
+        "foreignKey": null
+      }
+    ],
+    "attachments": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "fileUrl": "string",
+        "iconLink": "string",
+        "mimeType": "string",
+        "title": "string",
+        "eventId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "event": {},
+        "foreignKey": null
+      }
+    ]
+  },
+  "foreignKey": null
+}
+
+```
+
+AttachmentWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|fileUrl|string|true|none|none|
+|iconLink|string|false|none|none|
+|mimeType|string|false|none|none|
+|title|string|false|none|none|
+|eventId|string|true|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+|event|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
+|foreignKey|any|false|none|none|
 
 <h2 id="tocS_EventWithRelations">EventWithRelations</h2>
 <!-- backwards compatibility -->
@@ -15513,12 +15726,12 @@ EventWithRelations
 |status|cancelled|
 |status|completed|
 
-<h2 id="tocS_AttachmentWithRelations">AttachmentWithRelations</h2>
+<h2 id="tocS_SubscriptionWithRelations">SubscriptionWithRelations</h2>
 <!-- backwards compatibility -->
-<a id="schemaattachmentwithrelations"></a>
-<a id="schema_AttachmentWithRelations"></a>
-<a id="tocSattachmentwithrelations"></a>
-<a id="tocsattachmentwithrelations"></a>
+<a id="schemasubscriptionwithrelations"></a>
+<a id="schema_SubscriptionWithRelations"></a>
+<a id="tocSsubscriptionwithrelations"></a>
+<a id="tocssubscriptionwithrelations"></a>
 
 ```json
 {
@@ -15530,14 +15743,18 @@ EventWithRelations
   "createdBy": "string",
   "modifiedBy": "string",
   "id": "string",
-  "fileUrl": "string",
-  "iconLink": "string",
-  "mimeType": "string",
-  "title": "string",
-  "eventId": "string",
+  "accessRole": "freeBusyReader",
+  "bgColor": "string",
+  "fgColor": "string",
+  "isHidden": true,
+  "isPrimary": true,
+  "identifier": "string",
+  "defaultReminders": {},
+  "notificationSettings": {},
+  "calendarId": "string",
   "extId": "string",
   "extMetadata": {},
-  "event": {
+  "calendar": {
     "deleted": true,
     "deletedOn": "2019-08-24T14:15:22Z",
     "deletedBy": "string",
@@ -15546,94 +15763,15 @@ EventWithRelations
     "createdBy": "string",
     "modifiedBy": "string",
     "id": "string",
-    "bgColor": "string",
-    "description": "string",
-    "endDateTime": "2019-08-24T14:15:22Z",
-    "fgColor": "string",
-    "iCalUid": "string",
-    "isFullDayEvent": true,
-    "isLocked": true,
-    "link": "string",
+    "source": "string",
+    "enableWorkingHours": true,
     "location": "string",
-    "meetingLink": "string",
     "identifier": "string",
-    "startDateTime": "2019-08-24T14:15:22Z",
-    "status": "confirmed",
     "summary": "string",
     "timezone": "string",
-    "calendarId": "string",
-    "parentEventId": "string",
     "extId": "string",
     "extMetadata": {},
-    "calendar": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "source": "string",
-      "enableWorkingHours": true,
-      "location": "string",
-      "identifier": "string",
-      "summary": "string",
-      "timezone": "string",
-      "extId": "string",
-      "extMetadata": {},
-      "events": [
-        {}
-      ],
-      "workingHours": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "dayOfWeek": 0,
-          "end": "string",
-          "start": "string",
-          "calendarId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "calendar": {},
-          "foreignKey": null
-        }
-      ],
-      "subscriptions": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "accessRole": "freeBusyReader",
-          "bgColor": "string",
-          "fgColor": "string",
-          "isHidden": true,
-          "isPrimary": true,
-          "identifier": "string",
-          "defaultReminders": {},
-          "notificationSettings": {},
-          "calendarId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "calendar": {},
-          "foreignKey": null
-        }
-      ]
-    },
-    "foreignKey": null,
-    "parentEvent": {},
-    "attendees": [
+    "events": [
       {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -15643,19 +15781,94 @@ EventWithRelations
         "createdBy": "string",
         "modifiedBy": "string",
         "id": "string",
+        "bgColor": "string",
+        "description": "string",
+        "endDateTime": "2019-08-24T14:15:22Z",
+        "fgColor": "string",
+        "iCalUid": "string",
+        "isFullDayEvent": true,
+        "isLocked": true,
+        "link": "string",
+        "location": "string",
+        "meetingLink": "string",
         "identifier": "string",
-        "isOptional": true,
-        "isOrganizer": true,
-        "messages": "string",
-        "responseStatus": "needsAction",
-        "eventId": "string",
+        "startDateTime": "2019-08-24T14:15:22Z",
+        "status": "confirmed",
+        "summary": "string",
+        "timezone": "string",
+        "calendarId": "string",
+        "parentEventId": "string",
         "extId": "string",
         "extMetadata": {},
-        "event": {},
+        "calendar": {},
+        "foreignKey": null,
+        "parentEvent": {},
+        "attendees": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "identifier": "string",
+            "isOptional": true,
+            "isOrganizer": true,
+            "messages": "string",
+            "responseStatus": "needsAction",
+            "eventId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "event": {},
+            "foreignKey": null
+          }
+        ],
+        "attachments": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "fileUrl": "string",
+            "iconLink": "string",
+            "mimeType": "string",
+            "title": "string",
+            "eventId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "event": {},
+            "foreignKey": null
+          }
+        ]
+      }
+    ],
+    "workingHours": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "dayOfWeek": 0,
+        "end": "string",
+        "start": "string",
+        "calendarId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "calendar": {},
         "foreignKey": null
       }
     ],
-    "attachments": [
+    "subscriptions": [
       {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -15665,14 +15878,18 @@ EventWithRelations
         "createdBy": "string",
         "modifiedBy": "string",
         "id": "string",
-        "fileUrl": "string",
-        "iconLink": "string",
-        "mimeType": "string",
-        "title": "string",
-        "eventId": "string",
+        "accessRole": "freeBusyReader",
+        "bgColor": "string",
+        "fgColor": "string",
+        "isHidden": true,
+        "isPrimary": true,
+        "identifier": "string",
+        "defaultReminders": {},
+        "notificationSettings": {},
+        "calendarId": "string",
         "extId": "string",
         "extMetadata": {},
-        "event": {},
+        "calendar": {},
         "foreignKey": null
       }
     ]
@@ -15682,7 +15899,7 @@ EventWithRelations
 
 ```
 
-AttachmentWithRelations
+SubscriptionWithRelations
 
 ### Properties
 
@@ -15696,474 +15913,28 @@ AttachmentWithRelations
 |createdBy|string|false|none|none|
 |modifiedBy|string|false|none|none|
 |id|string|false|none|none|
-|fileUrl|string|true|none|none|
-|iconLink|string|false|none|none|
-|mimeType|string|false|none|none|
-|title|string|false|none|none|
-|eventId|string|true|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-|event|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|foreignKey|any|false|none|none|
-
-<h2 id="tocS_AttachmentPartial">AttachmentPartial</h2>
-<!-- backwards compatibility -->
-<a id="schemaattachmentpartial"></a>
-<a id="schema_AttachmentPartial"></a>
-<a id="tocSattachmentpartial"></a>
-<a id="tocsattachmentpartial"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "fileUrl": "string",
-  "iconLink": "string",
-  "mimeType": "string",
-  "title": "string",
-  "eventId": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-AttachmentPartial
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|fileUrl|string|false|none|none|
-|iconLink|string|false|none|none|
-|mimeType|string|false|none|none|
-|title|string|false|none|none|
-|eventId|string|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-<h2 id="tocS_Attendee">Attendee</h2>
-<!-- backwards compatibility -->
-<a id="schemaattendee"></a>
-<a id="schema_Attendee"></a>
-<a id="tocSattendee"></a>
-<a id="tocsattendee"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "identifier": "string",
-  "isOptional": true,
-  "isOrganizer": true,
-  "messages": "string",
-  "responseStatus": "needsAction",
-  "eventId": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-Attendee
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
+|accessRole|string|false|none|none|
+|bgColor|string|false|none|none|
+|fgColor|string|false|none|none|
+|isHidden|boolean|false|none|none|
+|isPrimary|boolean|false|none|none|
 |identifier|string|true|none|none|
-|isOptional|boolean|false|none|none|
-|isOrganizer|boolean|false|none|none|
-|messages|string|false|none|none|
-|responseStatus|string|false|none|none|
-|eventId|string|true|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|responseStatus|needsAction|
-|responseStatus|tentative|
-|responseStatus|accepted|
-|responseStatus|declined|
-
-<h2 id="tocS_NewAttendee">NewAttendee</h2>
-<!-- backwards compatibility -->
-<a id="schemanewattendee"></a>
-<a id="schema_NewAttendee"></a>
-<a id="tocSnewattendee"></a>
-<a id="tocsnewattendee"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "identifier": "string",
-  "isOptional": true,
-  "isOrganizer": true,
-  "messages": "string",
-  "responseStatus": "needsAction",
-  "eventId": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-NewAttendee
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|identifier|string|true|none|none|
-|isOptional|boolean|false|none|none|
-|isOrganizer|boolean|false|none|none|
-|messages|string|false|none|none|
-|responseStatus|string|false|none|none|
-|eventId|string|true|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|responseStatus|needsAction|
-|responseStatus|tentative|
-|responseStatus|accepted|
-|responseStatus|declined|
-
-<h2 id="tocS_AttendeePartial">AttendeePartial</h2>
-<!-- backwards compatibility -->
-<a id="schemaattendeepartial"></a>
-<a id="schema_AttendeePartial"></a>
-<a id="tocSattendeepartial"></a>
-<a id="tocsattendeepartial"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "identifier": "string",
-  "isOptional": true,
-  "isOrganizer": true,
-  "messages": "string",
-  "responseStatus": "needsAction",
-  "eventId": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-AttendeePartial
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|identifier|string|false|none|none|
-|isOptional|boolean|false|none|none|
-|isOrganizer|boolean|false|none|none|
-|messages|string|false|none|none|
-|responseStatus|string|false|none|none|
-|eventId|string|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|responseStatus|needsAction|
-|responseStatus|tentative|
-|responseStatus|accepted|
-|responseStatus|declined|
-
-<h2 id="tocS_Calendar">Calendar</h2>
-<!-- backwards compatibility -->
-<a id="schemacalendar"></a>
-<a id="schema_Calendar"></a>
-<a id="tocScalendar"></a>
-<a id="tocscalendar"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "source": "string",
-  "enableWorkingHours": true,
-  "location": "string",
-  "identifier": "string",
-  "summary": "string",
-  "timezone": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-Calendar
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|source|string|false|none|none|
-|enableWorkingHours|boolean|false|none|none|
-|location|string|false|none|none|
-|identifier|string|true|none|none|
-|summary|string|false|none|none|
-|timezone|string|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-<h2 id="tocS_WorkingHour">WorkingHour</h2>
-<!-- backwards compatibility -->
-<a id="schemaworkinghour"></a>
-<a id="schema_WorkingHour"></a>
-<a id="tocSworkinghour"></a>
-<a id="tocsworkinghour"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "dayOfWeek": 0,
-  "end": "string",
-  "start": "string",
-  "calendarId": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-WorkingHour
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|dayOfWeek|number|false|none|none|
-|end|string|false|none|none|
-|start|string|false|none|none|
+|defaultReminders|object|false|none|none|
+|notificationSettings|object|false|none|none|
 |calendarId|string|true|none|none|
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
+|calendar|[CalendarWithRelations](#schemacalendarwithrelations)|false|none|(tsType: CalendarWithRelations, schemaOptions: { includeRelations: true })|
+|foreignKey|any|false|none|none|
 
 #### Enumerated Values
 
 |Property|Value|
 |---|---|
-|dayOfWeek|0|
-|dayOfWeek|1|
-|dayOfWeek|2|
-|dayOfWeek|3|
-|dayOfWeek|4|
-|dayOfWeek|5|
-|dayOfWeek|6|
-
-<h2 id="tocS_NewCalendar">NewCalendar</h2>
-<!-- backwards compatibility -->
-<a id="schemanewcalendar"></a>
-<a id="schema_NewCalendar"></a>
-<a id="tocSnewcalendar"></a>
-<a id="tocsnewcalendar"></a>
-
-```json
-{
-  "source": "string",
-  "enableWorkingHours": true,
-  "location": "string",
-  "identifier": "string",
-  "summary": "string",
-  "timezone": "string",
-  "extId": "string",
-  "extMetadata": {},
-  "workingHours": [
-    {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "dayOfWeek": 0,
-      "end": "string",
-      "start": "string",
-      "calendarId": "string",
-      "extId": "string",
-      "extMetadata": {}
-    }
-  ],
-  "subscription": {}
-}
-
-```
-
-NewCalendar
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|source|string|false|none|none|
-|enableWorkingHours|boolean|false|none|none|
-|location|string|false|none|none|
-|identifier|string|true|none|none|
-|summary|string|false|none|none|
-|timezone|string|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-|workingHours|[[WorkingHour](#schemaworkinghour)]|false|none|none|
-|subscription|object|false|none|none|
-
-<h2 id="tocS_CalendarDTO">CalendarDTO</h2>
-<!-- backwards compatibility -->
-<a id="schemacalendardto"></a>
-<a id="schema_CalendarDTO"></a>
-<a id="tocScalendardto"></a>
-<a id="tocscalendardto"></a>
-
-```json
-{
-  "id": "string",
-  "source": "string",
-  "enableWorkingHours": true,
-  "location": "string",
-  "identifier": "string",
-  "summary": "string",
-  "timezone": "string",
-  "extId": "string",
-  "extMetadata": {},
-  "workingHours": [
-    {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "dayOfWeek": 0,
-      "end": "string",
-      "start": "string",
-      "calendarId": "string",
-      "extId": "string",
-      "extMetadata": {}
-    }
-  ],
-  "subscription": {}
-}
-
-```
-
-CalendarDTO
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|id|string|false|none|none|
-|source|string|false|none|none|
-|enableWorkingHours|boolean|false|none|none|
-|location|string|false|none|none|
-|identifier|string|true|none|none|
-|summary|string|false|none|none|
-|timezone|string|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-|workingHours|[[WorkingHour](#schemaworkinghour)]|false|none|none|
-|subscription|object|false|none|none|
+|accessRole|freeBusyReader|
+|accessRole|reader|
+|accessRole|writer|
+|accessRole|owner|
 
 <h2 id="tocS_CalendarWithRelations">CalendarWithRelations</h2>
 <!-- backwards compatibility -->
@@ -16640,12 +16411,12 @@ CalendarWithRelations
 |workingHours|[[WorkingHourWithRelations](#schemaworkinghourwithrelations)]|false|none|[(tsType: WorkingHourWithRelations, schemaOptions: { includeRelations: true })]|
 |subscriptions|[[SubscriptionWithRelations](#schemasubscriptionwithrelations)]|false|none|[(tsType: SubscriptionWithRelations, schemaOptions: { includeRelations: true })]|
 
-<h2 id="tocS_CalendarPartial">CalendarPartial</h2>
+<h2 id="tocS_WorkingHourWithRelations">WorkingHourWithRelations</h2>
 <!-- backwards compatibility -->
-<a id="schemacalendarpartial"></a>
-<a id="schema_CalendarPartial"></a>
-<a id="tocScalendarpartial"></a>
-<a id="tocscalendarpartial"></a>
+<a id="schemaworkinghourwithrelations"></a>
+<a id="schema_WorkingHourWithRelations"></a>
+<a id="tocSworkinghourwithrelations"></a>
+<a id="tocsworkinghourwithrelations"></a>
 
 ```json
 {
@@ -16657,19 +16428,158 @@ CalendarWithRelations
   "createdBy": "string",
   "modifiedBy": "string",
   "id": "string",
-  "source": "string",
-  "enableWorkingHours": true,
-  "location": "string",
-  "identifier": "string",
-  "summary": "string",
-  "timezone": "string",
+  "dayOfWeek": 0,
+  "end": "string",
+  "start": "string",
+  "calendarId": "string",
   "extId": "string",
-  "extMetadata": {}
+  "extMetadata": {},
+  "calendar": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "source": "string",
+    "enableWorkingHours": true,
+    "location": "string",
+    "identifier": "string",
+    "summary": "string",
+    "timezone": "string",
+    "extId": "string",
+    "extMetadata": {},
+    "events": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "bgColor": "string",
+        "description": "string",
+        "endDateTime": "2019-08-24T14:15:22Z",
+        "fgColor": "string",
+        "iCalUid": "string",
+        "isFullDayEvent": true,
+        "isLocked": true,
+        "link": "string",
+        "location": "string",
+        "meetingLink": "string",
+        "identifier": "string",
+        "startDateTime": "2019-08-24T14:15:22Z",
+        "status": "confirmed",
+        "summary": "string",
+        "timezone": "string",
+        "calendarId": "string",
+        "parentEventId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "calendar": {},
+        "foreignKey": null,
+        "parentEvent": {},
+        "attendees": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "identifier": "string",
+            "isOptional": true,
+            "isOrganizer": true,
+            "messages": "string",
+            "responseStatus": "needsAction",
+            "eventId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "event": {},
+            "foreignKey": null
+          }
+        ],
+        "attachments": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "fileUrl": "string",
+            "iconLink": "string",
+            "mimeType": "string",
+            "title": "string",
+            "eventId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "event": {},
+            "foreignKey": null
+          }
+        ]
+      }
+    ],
+    "workingHours": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "dayOfWeek": 0,
+        "end": "string",
+        "start": "string",
+        "calendarId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "calendar": {},
+        "foreignKey": null
+      }
+    ],
+    "subscriptions": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "accessRole": "freeBusyReader",
+        "bgColor": "string",
+        "fgColor": "string",
+        "isHidden": true,
+        "isPrimary": true,
+        "identifier": "string",
+        "defaultReminders": {},
+        "notificationSettings": {},
+        "calendarId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "calendar": {},
+        "foreignKey": null
+      }
+    ]
+  },
+  "foreignKey": null
 }
 
 ```
 
-CalendarPartial
+WorkingHourWithRelations
 
 ### Properties
 
@@ -16683,14 +16593,701 @@ CalendarPartial
 |createdBy|string|false|none|none|
 |modifiedBy|string|false|none|none|
 |id|string|false|none|none|
-|source|string|false|none|none|
-|enableWorkingHours|boolean|false|none|none|
-|location|string|false|none|none|
-|identifier|string|false|none|none|
-|summary|string|false|none|none|
-|timezone|string|false|none|none|
+|dayOfWeek|number|false|none|none|
+|end|string|false|none|none|
+|start|string|false|none|none|
+|calendarId|string|true|none|none|
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
+|calendar|[CalendarWithRelations](#schemacalendarwithrelations)|false|none|(tsType: CalendarWithRelations, schemaOptions: { includeRelations: true })|
+|foreignKey|any|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|dayOfWeek|0|
+|dayOfWeek|1|
+|dayOfWeek|2|
+|dayOfWeek|3|
+|dayOfWeek|4|
+|dayOfWeek|5|
+|dayOfWeek|6|
+
+<h2 id="tocS_WorkingHourPartial">WorkingHourPartial</h2>
+<!-- backwards compatibility -->
+<a id="schemaworkinghourpartial"></a>
+<a id="schema_WorkingHourPartial"></a>
+<a id="tocSworkinghourpartial"></a>
+<a id="tocsworkinghourpartial"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "dayOfWeek": 0,
+  "end": "string",
+  "start": "string",
+  "calendarId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+WorkingHourPartial
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|dayOfWeek|number|false|none|none|
+|end|string|false|none|none|
+|start|string|false|none|none|
+|calendarId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|dayOfWeek|0|
+|dayOfWeek|1|
+|dayOfWeek|2|
+|dayOfWeek|3|
+|dayOfWeek|4|
+|dayOfWeek|5|
+|dayOfWeek|6|
+
+<h2 id="tocS_Theme">Theme</h2>
+<!-- backwards compatibility -->
+<a id="schematheme"></a>
+<a id="schema_Theme"></a>
+<a id="tocStheme"></a>
+<a id="tocstheme"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "calBg": "string",
+  "calFg": "string",
+  "eventBg": "string",
+  "eventFg": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+Theme
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|calBg|string|false|none|none|
+|calFg|string|false|none|none|
+|eventBg|string|false|none|none|
+|eventFg|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+
+<h2 id="tocS_NewTheme">NewTheme</h2>
+<!-- backwards compatibility -->
+<a id="schemanewtheme"></a>
+<a id="schema_NewTheme"></a>
+<a id="tocSnewtheme"></a>
+<a id="tocsnewtheme"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "calBg": "string",
+  "calFg": "string",
+  "eventBg": "string",
+  "eventFg": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+NewTheme
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|calBg|string|false|none|none|
+|calFg|string|false|none|none|
+|eventBg|string|false|none|none|
+|eventFg|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+
+<h2 id="tocS_ThemeWithRelations">ThemeWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemathemewithrelations"></a>
+<a id="schema_ThemeWithRelations"></a>
+<a id="tocSthemewithrelations"></a>
+<a id="tocsthemewithrelations"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "calBg": "string",
+  "calFg": "string",
+  "eventBg": "string",
+  "eventFg": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+ThemeWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|calBg|string|false|none|none|
+|calFg|string|false|none|none|
+|eventBg|string|false|none|none|
+|eventFg|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+
+<h2 id="tocS_ThemePartial">ThemePartial</h2>
+<!-- backwards compatibility -->
+<a id="schemathemepartial"></a>
+<a id="schema_ThemePartial"></a>
+<a id="tocSthemepartial"></a>
+<a id="tocsthemepartial"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "calBg": "string",
+  "calFg": "string",
+  "eventBg": "string",
+  "eventFg": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+ThemePartial
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|calBg|string|false|none|none|
+|calFg|string|false|none|none|
+|eventBg|string|false|none|none|
+|eventFg|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+
+<h2 id="tocS_Subscription">Subscription</h2>
+<!-- backwards compatibility -->
+<a id="schemasubscription"></a>
+<a id="schema_Subscription"></a>
+<a id="tocSsubscription"></a>
+<a id="tocssubscription"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "accessRole": "freeBusyReader",
+  "bgColor": "string",
+  "fgColor": "string",
+  "isHidden": true,
+  "isPrimary": true,
+  "identifier": "string",
+  "defaultReminders": {},
+  "notificationSettings": {},
+  "calendarId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+Subscription
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|accessRole|string|false|none|none|
+|bgColor|string|false|none|none|
+|fgColor|string|false|none|none|
+|isHidden|boolean|false|none|none|
+|isPrimary|boolean|false|none|none|
+|identifier|string|true|none|none|
+|defaultReminders|object|false|none|none|
+|notificationSettings|object|false|none|none|
+|calendarId|string|true|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|accessRole|freeBusyReader|
+|accessRole|reader|
+|accessRole|writer|
+|accessRole|owner|
+
+<h2 id="tocS_NewSubscription">NewSubscription</h2>
+<!-- backwards compatibility -->
+<a id="schemanewsubscription"></a>
+<a id="schema_NewSubscription"></a>
+<a id="tocSnewsubscription"></a>
+<a id="tocsnewsubscription"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "accessRole": "freeBusyReader",
+  "bgColor": "string",
+  "fgColor": "string",
+  "isHidden": true,
+  "isPrimary": true,
+  "identifier": "string",
+  "defaultReminders": {},
+  "notificationSettings": {},
+  "calendarId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+NewSubscription
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|accessRole|string|false|none|none|
+|bgColor|string|false|none|none|
+|fgColor|string|false|none|none|
+|isHidden|boolean|false|none|none|
+|isPrimary|boolean|false|none|none|
+|identifier|string|true|none|none|
+|defaultReminders|object|false|none|none|
+|notificationSettings|object|false|none|none|
+|calendarId|string|true|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|accessRole|freeBusyReader|
+|accessRole|reader|
+|accessRole|writer|
+|accessRole|owner|
+
+<h2 id="tocS_SubscriptionPartial">SubscriptionPartial</h2>
+<!-- backwards compatibility -->
+<a id="schemasubscriptionpartial"></a>
+<a id="schema_SubscriptionPartial"></a>
+<a id="tocSsubscriptionpartial"></a>
+<a id="tocssubscriptionpartial"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "accessRole": "freeBusyReader",
+  "bgColor": "string",
+  "fgColor": "string",
+  "isHidden": true,
+  "isPrimary": true,
+  "identifier": "string",
+  "defaultReminders": {},
+  "notificationSettings": {},
+  "calendarId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+SubscriptionPartial
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|accessRole|string|false|none|none|
+|bgColor|string|false|none|none|
+|fgColor|string|false|none|none|
+|isHidden|boolean|false|none|none|
+|isPrimary|boolean|false|none|none|
+|identifier|string|false|none|none|
+|defaultReminders|object|false|none|none|
+|notificationSettings|object|false|none|none|
+|calendarId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|accessRole|freeBusyReader|
+|accessRole|reader|
+|accessRole|writer|
+|accessRole|owner|
+
+<h2 id="tocS_Settings">Settings</h2>
+<!-- backwards compatibility -->
+<a id="schemasettings"></a>
+<a id="schema_Settings"></a>
+<a id="tocSsettings"></a>
+<a id="tocssettings"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "ownerId": "string",
+  "ownerType": "global",
+  "settingName": "string",
+  "settingValue": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+Settings
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|ownerId|string|true|none|none|
+|ownerType|string|false|none|none|
+|settingName|string|false|none|none|
+|settingValue|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|ownerType|global|
+|ownerType|user|
+|ownerType|calendar|
+|ownerType|event|
+
+<h2 id="tocS_NewSettings">NewSettings</h2>
+<!-- backwards compatibility -->
+<a id="schemanewsettings"></a>
+<a id="schema_NewSettings"></a>
+<a id="tocSnewsettings"></a>
+<a id="tocsnewsettings"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "ownerId": "string",
+  "ownerType": "global",
+  "settingName": "string",
+  "settingValue": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+NewSettings
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|ownerId|string|true|none|none|
+|ownerType|string|false|none|none|
+|settingName|string|false|none|none|
+|settingValue|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|ownerType|global|
+|ownerType|user|
+|ownerType|calendar|
+|ownerType|event|
+
+<h2 id="tocS_SettingsWithRelations">SettingsWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemasettingswithrelations"></a>
+<a id="schema_SettingsWithRelations"></a>
+<a id="tocSsettingswithrelations"></a>
+<a id="tocssettingswithrelations"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "ownerId": "string",
+  "ownerType": "global",
+  "settingName": "string",
+  "settingValue": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+SettingsWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|ownerId|string|true|none|none|
+|ownerType|string|false|none|none|
+|settingName|string|false|none|none|
+|settingValue|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|ownerType|global|
+|ownerType|user|
+|ownerType|calendar|
+|ownerType|event|
+
+<h2 id="tocS_SettingsPartial">SettingsPartial</h2>
+<!-- backwards compatibility -->
+<a id="schemasettingspartial"></a>
+<a id="schema_SettingsPartial"></a>
+<a id="tocSsettingspartial"></a>
+<a id="tocssettingspartial"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "ownerId": "string",
+  "ownerType": "global",
+  "settingName": "string",
+  "settingValue": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+SettingsPartial
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|ownerId|string|false|none|none|
+|ownerType|string|false|none|none|
+|settingName|string|false|none|none|
+|settingValue|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|ownerType|global|
+|ownerType|user|
+|ownerType|calendar|
+|ownerType|event|
 
 <h2 id="tocS_Event">Event</h2>
 <!-- backwards compatibility -->
@@ -16774,6 +17371,117 @@ Event
 |status|tentative|
 |status|cancelled|
 |status|completed|
+
+<h2 id="tocS_Attachment">Attachment</h2>
+<!-- backwards compatibility -->
+<a id="schemaattachment"></a>
+<a id="schema_Attachment"></a>
+<a id="tocSattachment"></a>
+<a id="tocsattachment"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "fileUrl": "string",
+  "iconLink": "string",
+  "mimeType": "string",
+  "title": "string",
+  "eventId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+Attachment
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|fileUrl|string|true|none|none|
+|iconLink|string|false|none|none|
+|mimeType|string|false|none|none|
+|title|string|false|none|none|
+|eventId|string|true|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+
+<h2 id="tocS_Attendee">Attendee</h2>
+<!-- backwards compatibility -->
+<a id="schemaattendee"></a>
+<a id="schema_Attendee"></a>
+<a id="tocSattendee"></a>
+<a id="tocsattendee"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "identifier": "string",
+  "isOptional": true,
+  "isOrganizer": true,
+  "messages": "string",
+  "responseStatus": "needsAction",
+  "eventId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+Attendee
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|identifier|string|true|none|none|
+|isOptional|boolean|false|none|none|
+|isOrganizer|boolean|false|none|none|
+|messages|string|false|none|none|
+|responseStatus|string|false|none|none|
+|eventId|string|true|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|responseStatus|needsAction|
+|responseStatus|tentative|
+|responseStatus|accepted|
+|responseStatus|declined|
 
 <h2 id="tocS_NewEvent">NewEvent</h2>
 <!-- backwards compatibility -->
@@ -17149,12 +17857,12 @@ EventPartial
 |status|cancelled|
 |status|completed|
 
-<h2 id="tocS_Settings">Settings</h2>
+<h2 id="tocS_NewAttendeeInEvent">NewAttendeeInEvent</h2>
 <!-- backwards compatibility -->
-<a id="schemasettings"></a>
-<a id="schema_Settings"></a>
-<a id="tocSsettings"></a>
-<a id="tocssettings"></a>
+<a id="schemanewattendeeinevent"></a>
+<a id="schema_NewAttendeeInEvent"></a>
+<a id="tocSnewattendeeinevent"></a>
+<a id="tocsnewattendeeinevent"></a>
 
 ```json
 {
@@ -17165,249 +17873,19 @@ EventPartial
   "modifiedOn": "2019-08-24T14:15:22Z",
   "createdBy": "string",
   "modifiedBy": "string",
-  "id": "string",
-  "ownerId": "string",
-  "ownerType": "global",
-  "settingName": "string",
-  "settingValue": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-Settings
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|ownerId|string|true|none|none|
-|ownerType|string|false|none|none|
-|settingName|string|false|none|none|
-|settingValue|string|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|ownerType|global|
-|ownerType|user|
-|ownerType|calendar|
-|ownerType|event|
-
-<h2 id="tocS_NewSettings">NewSettings</h2>
-<!-- backwards compatibility -->
-<a id="schemanewsettings"></a>
-<a id="schema_NewSettings"></a>
-<a id="tocSnewsettings"></a>
-<a id="tocsnewsettings"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "ownerId": "string",
-  "ownerType": "global",
-  "settingName": "string",
-  "settingValue": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-NewSettings
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|ownerId|string|true|none|none|
-|ownerType|string|false|none|none|
-|settingName|string|false|none|none|
-|settingValue|string|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|ownerType|global|
-|ownerType|user|
-|ownerType|calendar|
-|ownerType|event|
-
-<h2 id="tocS_SettingsWithRelations">SettingsWithRelations</h2>
-<!-- backwards compatibility -->
-<a id="schemasettingswithrelations"></a>
-<a id="schema_SettingsWithRelations"></a>
-<a id="tocSsettingswithrelations"></a>
-<a id="tocssettingswithrelations"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "ownerId": "string",
-  "ownerType": "global",
-  "settingName": "string",
-  "settingValue": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-SettingsWithRelations
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|ownerId|string|true|none|none|
-|ownerType|string|false|none|none|
-|settingName|string|false|none|none|
-|settingValue|string|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|ownerType|global|
-|ownerType|user|
-|ownerType|calendar|
-|ownerType|event|
-
-<h2 id="tocS_SettingsPartial">SettingsPartial</h2>
-<!-- backwards compatibility -->
-<a id="schemasettingspartial"></a>
-<a id="schema_SettingsPartial"></a>
-<a id="tocSsettingspartial"></a>
-<a id="tocssettingspartial"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "ownerId": "string",
-  "ownerType": "global",
-  "settingName": "string",
-  "settingValue": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-SettingsPartial
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|ownerId|string|false|none|none|
-|ownerType|string|false|none|none|
-|settingName|string|false|none|none|
-|settingValue|string|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|ownerType|global|
-|ownerType|user|
-|ownerType|calendar|
-|ownerType|event|
-
-<h2 id="tocS_Subscription">Subscription</h2>
-<!-- backwards compatibility -->
-<a id="schemasubscription"></a>
-<a id="schema_Subscription"></a>
-<a id="tocSsubscription"></a>
-<a id="tocssubscription"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "accessRole": "freeBusyReader",
-  "bgColor": "string",
-  "fgColor": "string",
-  "isHidden": true,
-  "isPrimary": true,
   "identifier": "string",
-  "defaultReminders": {},
-  "notificationSettings": {},
-  "calendarId": "string",
+  "isOptional": true,
+  "isOrganizer": true,
+  "messages": "string",
+  "responseStatus": "needsAction",
+  "eventId": "string",
   "extId": "string",
   "extMetadata": {}
 }
 
 ```
 
-Subscription
+NewAttendeeInEvent
 
 ### Properties
 
@@ -17420,16 +17898,12 @@ Subscription
 |modifiedOn|string(date-time)|false|none|none|
 |createdBy|string|false|none|none|
 |modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|accessRole|string|false|none|none|
-|bgColor|string|false|none|none|
-|fgColor|string|false|none|none|
-|isHidden|boolean|false|none|none|
-|isPrimary|boolean|false|none|none|
 |identifier|string|true|none|none|
-|defaultReminders|object|false|none|none|
-|notificationSettings|object|false|none|none|
-|calendarId|string|true|none|none|
+|isOptional|boolean|false|none|none|
+|isOrganizer|boolean|false|none|none|
+|messages|string|false|none|none|
+|responseStatus|string|false|none|none|
+|eventId|string|false|none|none|
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
 
@@ -17437,82 +17911,17 @@ Subscription
 
 |Property|Value|
 |---|---|
-|accessRole|freeBusyReader|
-|accessRole|reader|
-|accessRole|writer|
-|accessRole|owner|
+|responseStatus|needsAction|
+|responseStatus|tentative|
+|responseStatus|accepted|
+|responseStatus|declined|
 
-<h2 id="tocS_NewSubscription">NewSubscription</h2>
+<h2 id="tocS_AttendeePartial">AttendeePartial</h2>
 <!-- backwards compatibility -->
-<a id="schemanewsubscription"></a>
-<a id="schema_NewSubscription"></a>
-<a id="tocSnewsubscription"></a>
-<a id="tocsnewsubscription"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "accessRole": "freeBusyReader",
-  "bgColor": "string",
-  "fgColor": "string",
-  "isHidden": true,
-  "isPrimary": true,
-  "identifier": "string",
-  "defaultReminders": {},
-  "notificationSettings": {},
-  "calendarId": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-NewSubscription
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|accessRole|string|false|none|none|
-|bgColor|string|false|none|none|
-|fgColor|string|false|none|none|
-|isHidden|boolean|false|none|none|
-|isPrimary|boolean|false|none|none|
-|identifier|string|true|none|none|
-|defaultReminders|object|false|none|none|
-|notificationSettings|object|false|none|none|
-|calendarId|string|true|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|accessRole|freeBusyReader|
-|accessRole|reader|
-|accessRole|writer|
-|accessRole|owner|
-
-<h2 id="tocS_SubscriptionWithRelations">SubscriptionWithRelations</h2>
-<!-- backwards compatibility -->
-<a id="schemasubscriptionwithrelations"></a>
-<a id="schema_SubscriptionWithRelations"></a>
-<a id="tocSsubscriptionwithrelations"></a>
-<a id="tocssubscriptionwithrelations"></a>
+<a id="schemaattendeepartial"></a>
+<a id="schema_AttendeePartial"></a>
+<a id="tocSattendeepartial"></a>
+<a id="tocsattendeepartial"></a>
 
 ```json
 {
@@ -17524,163 +17933,19 @@ NewSubscription
   "createdBy": "string",
   "modifiedBy": "string",
   "id": "string",
-  "accessRole": "freeBusyReader",
-  "bgColor": "string",
-  "fgColor": "string",
-  "isHidden": true,
-  "isPrimary": true,
   "identifier": "string",
-  "defaultReminders": {},
-  "notificationSettings": {},
-  "calendarId": "string",
+  "isOptional": true,
+  "isOrganizer": true,
+  "messages": "string",
+  "responseStatus": "needsAction",
+  "eventId": "string",
   "extId": "string",
-  "extMetadata": {},
-  "calendar": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "source": "string",
-    "enableWorkingHours": true,
-    "location": "string",
-    "identifier": "string",
-    "summary": "string",
-    "timezone": "string",
-    "extId": "string",
-    "extMetadata": {},
-    "events": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "bgColor": "string",
-        "description": "string",
-        "endDateTime": "2019-08-24T14:15:22Z",
-        "fgColor": "string",
-        "iCalUid": "string",
-        "isFullDayEvent": true,
-        "isLocked": true,
-        "link": "string",
-        "location": "string",
-        "meetingLink": "string",
-        "identifier": "string",
-        "startDateTime": "2019-08-24T14:15:22Z",
-        "status": "confirmed",
-        "summary": "string",
-        "timezone": "string",
-        "calendarId": "string",
-        "parentEventId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "calendar": {},
-        "foreignKey": null,
-        "parentEvent": {},
-        "attendees": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "identifier": "string",
-            "isOptional": true,
-            "isOrganizer": true,
-            "messages": "string",
-            "responseStatus": "needsAction",
-            "eventId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "event": {},
-            "foreignKey": null
-          }
-        ],
-        "attachments": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "fileUrl": "string",
-            "iconLink": "string",
-            "mimeType": "string",
-            "title": "string",
-            "eventId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "event": {},
-            "foreignKey": null
-          }
-        ]
-      }
-    ],
-    "workingHours": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "dayOfWeek": 0,
-        "end": "string",
-        "start": "string",
-        "calendarId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "calendar": {},
-        "foreignKey": null
-      }
-    ],
-    "subscriptions": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "accessRole": "freeBusyReader",
-        "bgColor": "string",
-        "fgColor": "string",
-        "isHidden": true,
-        "isPrimary": true,
-        "identifier": "string",
-        "defaultReminders": {},
-        "notificationSettings": {},
-        "calendarId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "calendar": {},
-        "foreignKey": null
-      }
-    ]
-  },
-  "foreignKey": null
+  "extMetadata": {}
 }
 
 ```
 
-SubscriptionWithRelations
+AttendeePartial
 
 ### Properties
 
@@ -17694,81 +17959,450 @@ SubscriptionWithRelations
 |createdBy|string|false|none|none|
 |modifiedBy|string|false|none|none|
 |id|string|false|none|none|
-|accessRole|string|false|none|none|
-|bgColor|string|false|none|none|
-|fgColor|string|false|none|none|
-|isHidden|boolean|false|none|none|
-|isPrimary|boolean|false|none|none|
-|identifier|string|true|none|none|
-|defaultReminders|object|false|none|none|
-|notificationSettings|object|false|none|none|
-|calendarId|string|true|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-|calendar|[CalendarWithRelations](#schemacalendarwithrelations)|false|none|(tsType: CalendarWithRelations, schemaOptions: { includeRelations: true })|
-|foreignKey|any|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|accessRole|freeBusyReader|
-|accessRole|reader|
-|accessRole|writer|
-|accessRole|owner|
-
-<h2 id="tocS_SubscriptionPartial">SubscriptionPartial</h2>
-<!-- backwards compatibility -->
-<a id="schemasubscriptionpartial"></a>
-<a id="schema_SubscriptionPartial"></a>
-<a id="tocSsubscriptionpartial"></a>
-<a id="tocssubscriptionpartial"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "accessRole": "freeBusyReader",
-  "bgColor": "string",
-  "fgColor": "string",
-  "isHidden": true,
-  "isPrimary": true,
-  "identifier": "string",
-  "defaultReminders": {},
-  "notificationSettings": {},
-  "calendarId": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-SubscriptionPartial
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|accessRole|string|false|none|none|
-|bgColor|string|false|none|none|
-|fgColor|string|false|none|none|
-|isHidden|boolean|false|none|none|
-|isPrimary|boolean|false|none|none|
 |identifier|string|false|none|none|
+|isOptional|boolean|false|none|none|
+|isOrganizer|boolean|false|none|none|
+|messages|string|false|none|none|
+|responseStatus|string|false|none|none|
+|eventId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|responseStatus|needsAction|
+|responseStatus|tentative|
+|responseStatus|accepted|
+|responseStatus|declined|
+
+<h2 id="tocS_NewAttachmentInEvent">NewAttachmentInEvent</h2>
+<!-- backwards compatibility -->
+<a id="schemanewattachmentinevent"></a>
+<a id="schema_NewAttachmentInEvent"></a>
+<a id="tocSnewattachmentinevent"></a>
+<a id="tocsnewattachmentinevent"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "fileUrl": "string",
+  "iconLink": "string",
+  "mimeType": "string",
+  "title": "string",
+  "eventId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+NewAttachmentInEvent
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|fileUrl|string|true|none|none|
+|iconLink|string|false|none|none|
+|mimeType|string|false|none|none|
+|title|string|false|none|none|
+|eventId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+
+<h2 id="tocS_AttachmentPartial">AttachmentPartial</h2>
+<!-- backwards compatibility -->
+<a id="schemaattachmentpartial"></a>
+<a id="schema_AttachmentPartial"></a>
+<a id="tocSattachmentpartial"></a>
+<a id="tocsattachmentpartial"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "fileUrl": "string",
+  "iconLink": "string",
+  "mimeType": "string",
+  "title": "string",
+  "eventId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+AttachmentPartial
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|fileUrl|string|false|none|none|
+|iconLink|string|false|none|none|
+|mimeType|string|false|none|none|
+|title|string|false|none|none|
+|eventId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+
+<h2 id="tocS_Calendar">Calendar</h2>
+<!-- backwards compatibility -->
+<a id="schemacalendar"></a>
+<a id="schema_Calendar"></a>
+<a id="tocScalendar"></a>
+<a id="tocscalendar"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "source": "string",
+  "enableWorkingHours": true,
+  "location": "string",
+  "identifier": "string",
+  "summary": "string",
+  "timezone": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+Calendar
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|source|string|false|none|none|
+|enableWorkingHours|boolean|false|none|none|
+|location|string|false|none|none|
+|identifier|string|true|none|none|
+|summary|string|false|none|none|
+|timezone|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+
+<h2 id="tocS_NewCalendar">NewCalendar</h2>
+<!-- backwards compatibility -->
+<a id="schemanewcalendar"></a>
+<a id="schema_NewCalendar"></a>
+<a id="tocSnewcalendar"></a>
+<a id="tocsnewcalendar"></a>
+
+```json
+{
+  "source": "string",
+  "enableWorkingHours": true,
+  "location": "string",
+  "identifier": "string",
+  "summary": "string",
+  "timezone": "string",
+  "extId": "string",
+  "extMetadata": {},
+  "workingHours": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "dayOfWeek": 0,
+      "end": "string",
+      "start": "string",
+      "calendarId": "string",
+      "extId": "string",
+      "extMetadata": {}
+    }
+  ],
+  "subscription": {}
+}
+
+```
+
+NewCalendar
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|source|string|false|none|none|
+|enableWorkingHours|boolean|false|none|none|
+|location|string|false|none|none|
+|identifier|string|true|none|none|
+|summary|string|false|none|none|
+|timezone|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+|workingHours|[[WorkingHour](#schemaworkinghour)]|false|none|none|
+|subscription|object|false|none|none|
+
+<h2 id="tocS_CalendarDTO">CalendarDTO</h2>
+<!-- backwards compatibility -->
+<a id="schemacalendardto"></a>
+<a id="schema_CalendarDTO"></a>
+<a id="tocScalendardto"></a>
+<a id="tocscalendardto"></a>
+
+```json
+{
+  "id": "string",
+  "source": "string",
+  "enableWorkingHours": true,
+  "location": "string",
+  "identifier": "string",
+  "summary": "string",
+  "timezone": "string",
+  "extId": "string",
+  "extMetadata": {},
+  "workingHours": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "dayOfWeek": 0,
+      "end": "string",
+      "start": "string",
+      "calendarId": "string",
+      "extId": "string",
+      "extMetadata": {}
+    }
+  ],
+  "subscription": {}
+}
+
+```
+
+CalendarDTO
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|false|none|none|
+|source|string|false|none|none|
+|enableWorkingHours|boolean|false|none|none|
+|location|string|false|none|none|
+|identifier|string|true|none|none|
+|summary|string|false|none|none|
+|timezone|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+|workingHours|[[WorkingHour](#schemaworkinghour)]|false|none|none|
+|subscription|object|false|none|none|
+
+<h2 id="tocS_CalendarPartial">CalendarPartial</h2>
+<!-- backwards compatibility -->
+<a id="schemacalendarpartial"></a>
+<a id="schema_CalendarPartial"></a>
+<a id="tocScalendarpartial"></a>
+<a id="tocscalendarpartial"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "source": "string",
+  "enableWorkingHours": true,
+  "location": "string",
+  "identifier": "string",
+  "summary": "string",
+  "timezone": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+CalendarPartial
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|source|string|false|none|none|
+|enableWorkingHours|boolean|false|none|none|
+|location|string|false|none|none|
+|identifier|string|false|none|none|
+|summary|string|false|none|none|
+|timezone|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+
+<h2 id="tocS_NewWorkingHourInCalendar">NewWorkingHourInCalendar</h2>
+<!-- backwards compatibility -->
+<a id="schemanewworkinghourincalendar"></a>
+<a id="schema_NewWorkingHourInCalendar"></a>
+<a id="tocSnewworkinghourincalendar"></a>
+<a id="tocsnewworkinghourincalendar"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "dayOfWeek": 0,
+  "end": "string",
+  "start": "string",
+  "calendarId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+NewWorkingHourInCalendar
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|dayOfWeek|number|false|none|none|
+|end|string|false|none|none|
+|start|string|false|none|none|
+|calendarId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|dayOfWeek|0|
+|dayOfWeek|1|
+|dayOfWeek|2|
+|dayOfWeek|3|
+|dayOfWeek|4|
+|dayOfWeek|5|
+|dayOfWeek|6|
+
+<h2 id="tocS_NewSubscriptionInCalendar">NewSubscriptionInCalendar</h2>
+<!-- backwards compatibility -->
+<a id="schemanewsubscriptionincalendar"></a>
+<a id="schema_NewSubscriptionInCalendar"></a>
+<a id="tocSnewsubscriptionincalendar"></a>
+<a id="tocsnewsubscriptionincalendar"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "accessRole": "freeBusyReader",
+  "bgColor": "string",
+  "fgColor": "string",
+  "isHidden": true,
+  "isPrimary": true,
+  "identifier": "string",
+  "defaultReminders": {},
+  "notificationSettings": {},
+  "calendarId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+NewSubscriptionInCalendar
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|accessRole|string|false|none|none|
+|bgColor|string|false|none|none|
+|fgColor|string|false|none|none|
+|isHidden|boolean|false|none|none|
+|isPrimary|boolean|false|none|none|
+|identifier|string|true|none|none|
 |defaultReminders|object|false|none|none|
 |notificationSettings|object|false|none|none|
 |calendarId|string|false|none|none|
@@ -17783,517 +18417,6 @@ SubscriptionPartial
 |accessRole|reader|
 |accessRole|writer|
 |accessRole|owner|
-
-<h2 id="tocS_Theme">Theme</h2>
-<!-- backwards compatibility -->
-<a id="schematheme"></a>
-<a id="schema_Theme"></a>
-<a id="tocStheme"></a>
-<a id="tocstheme"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "calBg": "string",
-  "calFg": "string",
-  "eventBg": "string",
-  "eventFg": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-Theme
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|calBg|string|false|none|none|
-|calFg|string|false|none|none|
-|eventBg|string|false|none|none|
-|eventFg|string|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-<h2 id="tocS_NewTheme">NewTheme</h2>
-<!-- backwards compatibility -->
-<a id="schemanewtheme"></a>
-<a id="schema_NewTheme"></a>
-<a id="tocSnewtheme"></a>
-<a id="tocsnewtheme"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "calBg": "string",
-  "calFg": "string",
-  "eventBg": "string",
-  "eventFg": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-NewTheme
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|calBg|string|false|none|none|
-|calFg|string|false|none|none|
-|eventBg|string|false|none|none|
-|eventFg|string|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-<h2 id="tocS_ThemeWithRelations">ThemeWithRelations</h2>
-<!-- backwards compatibility -->
-<a id="schemathemewithrelations"></a>
-<a id="schema_ThemeWithRelations"></a>
-<a id="tocSthemewithrelations"></a>
-<a id="tocsthemewithrelations"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "calBg": "string",
-  "calFg": "string",
-  "eventBg": "string",
-  "eventFg": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-ThemeWithRelations
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|calBg|string|false|none|none|
-|calFg|string|false|none|none|
-|eventBg|string|false|none|none|
-|eventFg|string|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-<h2 id="tocS_ThemePartial">ThemePartial</h2>
-<!-- backwards compatibility -->
-<a id="schemathemepartial"></a>
-<a id="schema_ThemePartial"></a>
-<a id="tocSthemepartial"></a>
-<a id="tocsthemepartial"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "calBg": "string",
-  "calFg": "string",
-  "eventBg": "string",
-  "eventFg": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-ThemePartial
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|calBg|string|false|none|none|
-|calFg|string|false|none|none|
-|eventBg|string|false|none|none|
-|eventFg|string|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-<h2 id="tocS_NewWorkingHour">NewWorkingHour</h2>
-<!-- backwards compatibility -->
-<a id="schemanewworkinghour"></a>
-<a id="schema_NewWorkingHour"></a>
-<a id="tocSnewworkinghour"></a>
-<a id="tocsnewworkinghour"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "dayOfWeek": 0,
-  "end": "string",
-  "start": "string",
-  "calendarId": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-NewWorkingHour
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|dayOfWeek|number|false|none|none|
-|end|string|false|none|none|
-|start|string|false|none|none|
-|calendarId|string|true|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|dayOfWeek|0|
-|dayOfWeek|1|
-|dayOfWeek|2|
-|dayOfWeek|3|
-|dayOfWeek|4|
-|dayOfWeek|5|
-|dayOfWeek|6|
-
-<h2 id="tocS_WorkingHourWithRelations">WorkingHourWithRelations</h2>
-<!-- backwards compatibility -->
-<a id="schemaworkinghourwithrelations"></a>
-<a id="schema_WorkingHourWithRelations"></a>
-<a id="tocSworkinghourwithrelations"></a>
-<a id="tocsworkinghourwithrelations"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "dayOfWeek": 0,
-  "end": "string",
-  "start": "string",
-  "calendarId": "string",
-  "extId": "string",
-  "extMetadata": {},
-  "calendar": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "source": "string",
-    "enableWorkingHours": true,
-    "location": "string",
-    "identifier": "string",
-    "summary": "string",
-    "timezone": "string",
-    "extId": "string",
-    "extMetadata": {},
-    "events": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "bgColor": "string",
-        "description": "string",
-        "endDateTime": "2019-08-24T14:15:22Z",
-        "fgColor": "string",
-        "iCalUid": "string",
-        "isFullDayEvent": true,
-        "isLocked": true,
-        "link": "string",
-        "location": "string",
-        "meetingLink": "string",
-        "identifier": "string",
-        "startDateTime": "2019-08-24T14:15:22Z",
-        "status": "confirmed",
-        "summary": "string",
-        "timezone": "string",
-        "calendarId": "string",
-        "parentEventId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "calendar": {},
-        "foreignKey": null,
-        "parentEvent": {},
-        "attendees": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "identifier": "string",
-            "isOptional": true,
-            "isOrganizer": true,
-            "messages": "string",
-            "responseStatus": "needsAction",
-            "eventId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "event": {},
-            "foreignKey": null
-          }
-        ],
-        "attachments": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "fileUrl": "string",
-            "iconLink": "string",
-            "mimeType": "string",
-            "title": "string",
-            "eventId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "event": {},
-            "foreignKey": null
-          }
-        ]
-      }
-    ],
-    "workingHours": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "dayOfWeek": 0,
-        "end": "string",
-        "start": "string",
-        "calendarId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "calendar": {},
-        "foreignKey": null
-      }
-    ],
-    "subscriptions": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "accessRole": "freeBusyReader",
-        "bgColor": "string",
-        "fgColor": "string",
-        "isHidden": true,
-        "isPrimary": true,
-        "identifier": "string",
-        "defaultReminders": {},
-        "notificationSettings": {},
-        "calendarId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "calendar": {},
-        "foreignKey": null
-      }
-    ]
-  },
-  "foreignKey": null
-}
-
-```
-
-WorkingHourWithRelations
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|dayOfWeek|number|false|none|none|
-|end|string|false|none|none|
-|start|string|false|none|none|
-|calendarId|string|true|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-|calendar|[CalendarWithRelations](#schemacalendarwithrelations)|false|none|(tsType: CalendarWithRelations, schemaOptions: { includeRelations: true })|
-|foreignKey|any|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|dayOfWeek|0|
-|dayOfWeek|1|
-|dayOfWeek|2|
-|dayOfWeek|3|
-|dayOfWeek|4|
-|dayOfWeek|5|
-|dayOfWeek|6|
-
-<h2 id="tocS_WorkingHourPartial">WorkingHourPartial</h2>
-<!-- backwards compatibility -->
-<a id="schemaworkinghourpartial"></a>
-<a id="schema_WorkingHourPartial"></a>
-<a id="tocSworkinghourpartial"></a>
-<a id="tocsworkinghourpartial"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "dayOfWeek": 0,
-  "end": "string",
-  "start": "string",
-  "calendarId": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-WorkingHourPartial
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|dayOfWeek|number|false|none|none|
-|end|string|false|none|none|
-|start|string|false|none|none|
-|calendarId|string|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|dayOfWeek|0|
-|dayOfWeek|1|
-|dayOfWeek|2|
-|dayOfWeek|3|
-|dayOfWeek|4|
-|dayOfWeek|5|
-|dayOfWeek|6|
 
 <h2 id="tocS_Date">Date</h2>
 <!-- backwards compatibility -->
@@ -18392,183 +18515,12 @@ NewEventInCalendar
 |status|cancelled|
 |status|completed|
 
-<h2 id="tocS_NewSubscriptionInCalendar">NewSubscriptionInCalendar</h2>
+<h2 id="tocS_NewAttendee">NewAttendee</h2>
 <!-- backwards compatibility -->
-<a id="schemanewsubscriptionincalendar"></a>
-<a id="schema_NewSubscriptionInCalendar"></a>
-<a id="tocSnewsubscriptionincalendar"></a>
-<a id="tocsnewsubscriptionincalendar"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "accessRole": "freeBusyReader",
-  "bgColor": "string",
-  "fgColor": "string",
-  "isHidden": true,
-  "isPrimary": true,
-  "identifier": "string",
-  "defaultReminders": {},
-  "notificationSettings": {},
-  "calendarId": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-NewSubscriptionInCalendar
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|accessRole|string|false|none|none|
-|bgColor|string|false|none|none|
-|fgColor|string|false|none|none|
-|isHidden|boolean|false|none|none|
-|isPrimary|boolean|false|none|none|
-|identifier|string|true|none|none|
-|defaultReminders|object|false|none|none|
-|notificationSettings|object|false|none|none|
-|calendarId|string|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|accessRole|freeBusyReader|
-|accessRole|reader|
-|accessRole|writer|
-|accessRole|owner|
-
-<h2 id="tocS_NewWorkingHourInCalendar">NewWorkingHourInCalendar</h2>
-<!-- backwards compatibility -->
-<a id="schemanewworkinghourincalendar"></a>
-<a id="schema_NewWorkingHourInCalendar"></a>
-<a id="tocSnewworkinghourincalendar"></a>
-<a id="tocsnewworkinghourincalendar"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "dayOfWeek": 0,
-  "end": "string",
-  "start": "string",
-  "calendarId": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-NewWorkingHourInCalendar
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|dayOfWeek|number|false|none|none|
-|end|string|false|none|none|
-|start|string|false|none|none|
-|calendarId|string|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|dayOfWeek|0|
-|dayOfWeek|1|
-|dayOfWeek|2|
-|dayOfWeek|3|
-|dayOfWeek|4|
-|dayOfWeek|5|
-|dayOfWeek|6|
-
-<h2 id="tocS_NewAttachmentInEvent">NewAttachmentInEvent</h2>
-<!-- backwards compatibility -->
-<a id="schemanewattachmentinevent"></a>
-<a id="schema_NewAttachmentInEvent"></a>
-<a id="tocSnewattachmentinevent"></a>
-<a id="tocsnewattachmentinevent"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "fileUrl": "string",
-  "iconLink": "string",
-  "mimeType": "string",
-  "title": "string",
-  "eventId": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-NewAttachmentInEvent
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|fileUrl|string|true|none|none|
-|iconLink|string|false|none|none|
-|mimeType|string|false|none|none|
-|title|string|false|none|none|
-|eventId|string|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-<h2 id="tocS_NewAttendeeInEvent">NewAttendeeInEvent</h2>
-<!-- backwards compatibility -->
-<a id="schemanewattendeeinevent"></a>
-<a id="schema_NewAttendeeInEvent"></a>
-<a id="tocSnewattendeeinevent"></a>
-<a id="tocsnewattendeeinevent"></a>
+<a id="schemanewattendee"></a>
+<a id="schema_NewAttendee"></a>
+<a id="tocSnewattendee"></a>
+<a id="tocsnewattendee"></a>
 
 ```json
 {
@@ -18591,7 +18543,7 @@ NewAttachmentInEvent
 
 ```
 
-NewAttendeeInEvent
+NewAttendee
 
 ### Properties
 
@@ -18609,7 +18561,7 @@ NewAttendeeInEvent
 |isOrganizer|boolean|false|none|none|
 |messages|string|false|none|none|
 |responseStatus|string|false|none|none|
-|eventId|string|false|none|none|
+|eventId|string|true|none|none|
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
 
@@ -18621,6 +18573,54 @@ NewAttendeeInEvent
 |responseStatus|tentative|
 |responseStatus|accepted|
 |responseStatus|declined|
+
+<h2 id="tocS_NewAttachment">NewAttachment</h2>
+<!-- backwards compatibility -->
+<a id="schemanewattachment"></a>
+<a id="schema_NewAttachment"></a>
+<a id="tocSnewattachment"></a>
+<a id="tocsnewattachment"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "fileUrl": "string",
+  "iconLink": "string",
+  "mimeType": "string",
+  "title": "string",
+  "eventId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+NewAttachment
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|fileUrl|string|true|none|none|
+|iconLink|string|false|none|none|
+|mimeType|string|false|none|none|
+|title|string|false|none|none|
+|eventId|string|true|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 
 <h2 id="tocS_loopback.Count">loopback.Count</h2>
 <!-- backwards compatibility -->

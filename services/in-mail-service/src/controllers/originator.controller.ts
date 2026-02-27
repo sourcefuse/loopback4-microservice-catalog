@@ -3,17 +3,12 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {inject} from '@loopback/context';
-import {
-  getModelSchemaRef,
-  param,
-  patch,
-  put,
-  requestBody,
-} from '@loopback/openapi-v3';
+import {param, patch, put, requestBody} from '@loopback/openapi-v3';
 import {DataObject, Filter, repository} from '@loopback/repository';
 import {HttpErrors, ResponseObject, api, del, post} from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   IAuthUserWithPermissions,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
@@ -57,7 +52,7 @@ const COMPOSE_MAIL_SCHEMA = '#/components/schemas/composeMailBody';
   paths: {},
   components: {
     schemas: {
-      idResponse: getModelSchemaRef(IdResponse),
+      idResponse: getModelSchemaRefSF(IdResponse),
       composeMailBody: {
         type: 'object',
         properties: {
@@ -66,19 +61,19 @@ const COMPOSE_MAIL_SCHEMA = '#/components/schemas/composeMailBody';
           },
           groups: {
             type: 'array',
-            items: getModelSchemaRef(Group, {
+            items: getModelSchemaRefSF(Group, {
               partial: true,
             }),
           },
           attachments: {
             type: 'array',
-            items: getModelSchemaRef(Attachment, {
+            items: getModelSchemaRefSF(Attachment, {
               partial: true,
             }),
           },
           meta: {
             type: 'array',
-            items: getModelSchemaRef(Meta, {
+            items: getModelSchemaRefSF(Meta, {
               partial: true,
             }),
           },
@@ -405,7 +400,7 @@ export class OriginatorController {
               properties: {
                 items: {
                   type: 'array',
-                  items: getModelSchemaRef(Attachment),
+                  items: getModelSchemaRefSF(Attachment),
                 },
               },
             },
@@ -425,7 +420,7 @@ export class OriginatorController {
             properties: {
               attachments: {
                 type: 'array',
-                items: getModelSchemaRef(Attachment, {
+                items: getModelSchemaRefSF(Attachment, {
                   partial: true,
                 }),
               },
@@ -544,7 +539,7 @@ export class OriginatorController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(IdArrays, {
+          schema: getModelSchemaRefSF(IdArrays, {
             partial: true,
           }),
         },
@@ -677,7 +672,7 @@ export class OriginatorController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(IdArrays, {
+          schema: getModelSchemaRefSF(IdArrays, {
             partial: true,
           }),
         },
@@ -815,7 +810,7 @@ export class OriginatorController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(IdArrays, {
+          schema: getModelSchemaRefSF(IdArrays, {
             partial: true,
           }),
         },

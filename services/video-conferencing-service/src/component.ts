@@ -2,6 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {Booter} from '@loopback/boot';
 import {
   Binding,
   Component,
@@ -17,7 +18,10 @@ import {
   BearerVerifierComponent,
   BearerVerifierConfig,
   BearerVerifierType,
+  BooterBasePathMixin,
   CoreComponent,
+  CoreControllerBooter,
+  CoreModelBooter,
   IServiceConfig,
   JwtKeysRepository,
   SECURITY_SCHEME_SPEC,
@@ -29,8 +33,6 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import {VideoChatArchiveController} from './controllers/video-chat-archive.controller';
-import {VideoChatSessionController} from './controllers/video-chat-session.controller';
 import {
   MeetLinkGeneratorProvider,
   ServiceBindings,
@@ -123,12 +125,24 @@ export class VideoConfServiceComponent implements Component {
       TwilioProvider,
     };
 
-    this.controllers = [VideoChatArchiveController, VideoChatSessionController];
+    this.booters = [
+      BooterBasePathMixin(CoreModelBooter, __dirname, {
+        interface: VideoConfServiceComponent.name,
+      }),
+      BooterBasePathMixin(CoreControllerBooter, __dirname, {
+        dirs: ['controllers'],
+        extensions: ['.controller.js'],
+        nested: true,
+        interface: VideoConfServiceComponent.name,
+      }),
+    ];
   }
 
   providers?: ProviderMap = {};
 
   bindings?: Binding[] = [];
+
+  booters?: Class<Booter>[];
 
   /**
    * An optional list of Repository classes to bind for dependency injection

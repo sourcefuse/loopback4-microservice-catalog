@@ -10,7 +10,6 @@ import {
 import {
   del,
   get,
-  getModelSchemaRef,
   HttpErrors,
   param,
   patch,
@@ -18,7 +17,7 @@ import {
   requestBody,
   response,
 } from '@loopback/rest';
-import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
+import {CONTENT_TYPE, getModelSchemaRefSF, STATUS_CODE} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../enum/permission-key.enum';
@@ -51,13 +50,13 @@ export class OptionController {
   @post(basePath)
   @response(STATUS_CODE.OK, {
     description: 'Options model instance',
-    content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Options)}},
+    content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Options)}},
   })
   async create(
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Options, {
+          schema: getModelSchemaRefSF(Options, {
             title: 'NewOptions',
             exclude: ['id'],
           }),
@@ -114,7 +113,7 @@ export class OptionController {
       [CONTENT_TYPE.JSON]: {
         schema: {
           type: 'array',
-          items: getModelSchemaRef(Options, {includeRelations: true}),
+          items: getModelSchemaRefSF(Options, {includeRelations: true}),
         },
       },
     },
@@ -141,7 +140,7 @@ export class OptionController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Options, {partial: true}),
+          schema: getModelSchemaRefSF(Options, {partial: true}),
         },
       },
     })
@@ -163,7 +162,7 @@ export class OptionController {
     description: 'Options model instance',
     content: {
       [CONTENT_TYPE.JSON]: {
-        schema: getModelSchemaRef(Options, {includeRelations: true}),
+        schema: getModelSchemaRefSF(Options, {includeRelations: true}),
       },
     },
   })
@@ -195,7 +194,7 @@ export class OptionController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Options, {partial: true}),
+          schema: getModelSchemaRefSF(Options, {partial: true}),
         },
       },
     })
@@ -239,7 +238,7 @@ export class OptionController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(BulkDeleteDto, {
+          schema: getModelSchemaRefSF(BulkDeleteDto, {
             title: 'BulkDeleteOption',
           }),
         },
@@ -270,7 +269,7 @@ export class OptionController {
         [CONTENT_TYPE.JSON]: {
           schema: {
             type: 'array',
-            items: getModelSchemaRef(Options, {partial: true}),
+            items: getModelSchemaRefSF(Options, {partial: true}),
           },
         },
       },
