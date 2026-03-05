@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/video-conferencing-service",
-  "version": "19.0.5",
+  "version": "19.0.6",
   "description": "Microservice providing Video-Conferencing functionality",
   "keywords": [
     "loopback-extension",
@@ -15,12 +15,19 @@
     ".": "./dist/index.js",
     "./sequelize": {
       "types": "./dist/repositories/sequelize/index.d.ts"
+    },
+    "./controllers": {
+      "types": "./dist/controllers/index.d.ts",
+      "default": "./dist/controllers/index.js"
     }
   },
   "typesVersions": {
     "*": {
       "sequelize": [
         "./dist/repositories/sequelize/index.d.ts"
+      ],
+      "controllers": [
+        "./dist/controllers/index.d.ts"
       ]
     }
   },
@@ -36,9 +43,10 @@
     "prettier:fix": "npm run prettier:cli -- --write",
     "eslint": "eslint --report-unused-disable-directives .",
     "eslint:fix": "npm run eslint -- --fix",
+    "preopenapi-spec": "rm -rf dist/__tests__",
     "openapi-spec": "node ./dist/openapi-spec",
     "apidocs": "npx widdershins --language_tabs 'javascript:JavaScript:request' 'javascript--nodejs:Node.JS' --summary openapi.json -o openapi.md",
-    "pretest": "npm run build",
+    "pretest": "npm run clean && lb-tsc",
     "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
     "test:dev": "lb-nyc lb-mocha --allow-console-logs dist/__tests__/**/*.js",
     "migrate": "node ./dist/migrate",
@@ -81,7 +89,7 @@
     "@loopback/rest-explorer": "^8.0.4",
     "@loopback/service-proxy": "^8.0.3",
     "@sourceloop/audit-log": "^9.0.0",
-    "@sourceloop/core": "^20.0.4",
+    "@sourceloop/core": "^20.0.5",
     "@types/proxyquire": "^1.3.28",
     "axios": "^1.6.0",
     "dotenv": "^16.4.5",

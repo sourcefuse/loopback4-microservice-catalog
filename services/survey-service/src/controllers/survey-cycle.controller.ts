@@ -10,7 +10,6 @@ import {
 import {
   del,
   get,
-  getModelSchemaRef,
   HttpErrors,
   param,
   patch,
@@ -18,7 +17,7 @@ import {
   requestBody,
   response,
 } from '@loopback/rest';
-import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
+import {CONTENT_TYPE, getModelSchemaRefSF, STATUS_CODE} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../enum/permission-key.enum';
@@ -51,13 +50,13 @@ export class SurveyCycleController {
   @post(basePath)
   @response(STATUS_CODE.OK, {
     description: 'SurveyCycle model instance',
-    content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(SurveyCycle)}},
+    content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(SurveyCycle)}},
   })
   async create(
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(SurveyCycle, {
+          schema: getModelSchemaRefSF(SurveyCycle, {
             title: 'NewSurveyCycle',
             exclude: ['id'],
           }),
@@ -102,7 +101,7 @@ export class SurveyCycleController {
       'application/json': {
         schema: {
           type: 'array',
-          items: getModelSchemaRef(SurveyCycle, {includeRelations: true}),
+          items: getModelSchemaRefSF(SurveyCycle, {includeRelations: true}),
         },
       },
     },
@@ -130,7 +129,7 @@ export class SurveyCycleController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(SurveyCycle, {partial: true}),
+          schema: getModelSchemaRefSF(SurveyCycle, {partial: true}),
         },
       },
     })
@@ -151,7 +150,7 @@ export class SurveyCycleController {
     description: 'SurveyCycle model instance',
     content: {
       'application/json': {
-        schema: getModelSchemaRef(SurveyCycle, {includeRelations: true}),
+        schema: getModelSchemaRefSF(SurveyCycle, {includeRelations: true}),
       },
     },
   })
@@ -187,7 +186,7 @@ export class SurveyCycleController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(SurveyCycle, {partial: true}),
+          schema: getModelSchemaRefSF(SurveyCycle, {partial: true}),
         },
       },
     })

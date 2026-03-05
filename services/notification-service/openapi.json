@@ -1578,6 +1578,238 @@
       }
     },
     "schemas": {
+      "UserNotificationSettings": {
+        "title": "UserNotificationSettings",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sleepStartTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sleepEndTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "type": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "userId",
+          "sleepStartTime",
+          "sleepEndTime",
+          "type"
+        ],
+        "additionalProperties": true
+      },
+      "NewUserNotificationSettings": {
+        "title": "NewUserNotificationSettings",
+        "type": "object",
+        "description": "(tsType: Omit<UserNotificationSettings, 'id'>, schemaOptions: { title: 'NewUserNotificationSettings', exclude: [ 'id' ] })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sleepStartTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sleepEndTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "type": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "userId",
+          "sleepStartTime",
+          "sleepEndTime",
+          "type"
+        ],
+        "additionalProperties": true,
+        "x-typescript-type": "Omit<UserNotificationSettings, 'id'>"
+      },
+      "UserNotificationSettingsWithRelations": {
+        "title": "UserNotificationSettingsWithRelations",
+        "type": "object",
+        "description": "(tsType: UserNotificationSettingsWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sleepStartTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sleepEndTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "type": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "userId",
+          "sleepStartTime",
+          "sleepEndTime",
+          "type"
+        ],
+        "additionalProperties": true,
+        "x-typescript-type": "UserNotificationSettingsWithRelations"
+      },
+      "UserNotificationSettingsPartial": {
+        "title": "UserNotificationSettingsPartial",
+        "type": "object",
+        "description": "(tsType: Partial<UserNotificationSettings>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "sleepStartTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sleepEndTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "type": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": true,
+        "x-typescript-type": "Partial<UserNotificationSettings>"
+      },
+      "AccessResponseDto": {
+        "title": "AccessResponseDto",
+        "type": "object",
+        "properties": {
+          "ttl": {
+            "type": "number"
+          },
+          "cipherKey": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "NotificationAccess": {
+        "title": "NotificationAccess",
+        "type": "object",
+        "properties": {
+          "receiver": {
+            "type": "object",
+            "description": "this will contain the list of reciever to give access"
+          },
+          "type": {
+            "type": "number"
+          },
+          "options": {
+            "type": "object",
+            "description": "this will contain the ttl property for now"
+          }
+        },
+        "required": [
+          "receiver",
+          "type"
+        ],
+        "additionalProperties": false
+      },
       "Notification": {
         "title": "Notification",
         "type": "object",
@@ -2045,41 +2277,6 @@
         "additionalProperties": true,
         "x-typescript-type": "Partial<NotificationUser>"
       },
-      "AccessResponseDto": {
-        "title": "AccessResponseDto",
-        "type": "object",
-        "properties": {
-          "ttl": {
-            "type": "number"
-          },
-          "cipherKey": {
-            "type": "string"
-          }
-        },
-        "additionalProperties": false
-      },
-      "NotificationAccess": {
-        "title": "NotificationAccess",
-        "type": "object",
-        "properties": {
-          "receiver": {
-            "type": "object",
-            "description": "this will contain the list of reciever to give access"
-          },
-          "type": {
-            "type": "number"
-          },
-          "options": {
-            "type": "object",
-            "description": "this will contain the ttl property for now"
-          }
-        },
-        "required": [
-          "receiver",
-          "type"
-        ],
-        "additionalProperties": false
-      },
       "NewNotificationUserInNotification": {
         "title": "NewNotificationUserInNotification",
         "type": "object",
@@ -2126,203 +2323,6 @@
         ],
         "additionalProperties": true,
         "x-typescript-type": "@loopback/repository-json-schema#Optional<Omit<NotificationUser, 'id'>, 'notificationId'>"
-      },
-      "UserNotificationSettings": {
-        "title": "UserNotificationSettings",
-        "type": "object",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "id": {
-            "type": "string"
-          },
-          "userId": {
-            "type": "string"
-          },
-          "sleepStartTime": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "sleepEndTime": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "type": {
-            "type": "number"
-          }
-        },
-        "required": [
-          "userId",
-          "sleepStartTime",
-          "sleepEndTime",
-          "type"
-        ],
-        "additionalProperties": true
-      },
-      "NewUserNotificationSettings": {
-        "title": "NewUserNotificationSettings",
-        "type": "object",
-        "description": "(tsType: Omit<UserNotificationSettings, 'id'>, schemaOptions: { title: 'NewUserNotificationSettings', exclude: [ 'id' ] })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "userId": {
-            "type": "string"
-          },
-          "sleepStartTime": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "sleepEndTime": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "type": {
-            "type": "number"
-          }
-        },
-        "required": [
-          "userId",
-          "sleepStartTime",
-          "sleepEndTime",
-          "type"
-        ],
-        "additionalProperties": true,
-        "x-typescript-type": "Omit<UserNotificationSettings, 'id'>"
-      },
-      "UserNotificationSettingsWithRelations": {
-        "title": "UserNotificationSettingsWithRelations",
-        "type": "object",
-        "description": "(tsType: UserNotificationSettingsWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "id": {
-            "type": "string"
-          },
-          "userId": {
-            "type": "string"
-          },
-          "sleepStartTime": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "sleepEndTime": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "type": {
-            "type": "number"
-          }
-        },
-        "required": [
-          "userId",
-          "sleepStartTime",
-          "sleepEndTime",
-          "type"
-        ],
-        "additionalProperties": true,
-        "x-typescript-type": "UserNotificationSettingsWithRelations"
-      },
-      "UserNotificationSettingsPartial": {
-        "title": "UserNotificationSettingsPartial",
-        "type": "object",
-        "description": "(tsType: Partial<UserNotificationSettings>, schemaOptions: { partial: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "id": {
-            "type": "string"
-          },
-          "userId": {
-            "type": "string"
-          },
-          "sleepStartTime": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "sleepEndTime": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "type": {
-            "type": "number"
-          }
-        },
-        "additionalProperties": true,
-        "x-typescript-type": "Partial<UserNotificationSettings>"
       },
       "loopback.Count": {
         "type": "object",

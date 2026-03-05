@@ -8,14 +8,13 @@ import {
   repository,
 } from '@loopback/repository';
 import {
+  HttpErrors,
   del,
   get,
-  getModelSchemaRef,
   param,
+  patch,
   post,
   requestBody,
-  patch,
-  HttpErrors,
 } from '@loopback/rest';
 import {
   CONTENT_TYPE,
@@ -23,6 +22,7 @@ import {
   LOGGER,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
+  getModelSchemaRefSF,
 } from '@sourceloop/core';
 import {STRATEGY, authenticate} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
@@ -64,7 +64,7 @@ export class TaskController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Task, {includeRelations: true}),
+              items: getModelSchemaRefSF(Task, {includeRelations: true}),
             },
           },
         },
@@ -86,7 +86,7 @@ export class TaskController {
         description: 'Task model instance',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(Task, {includeRelations: true}),
+            schema: getModelSchemaRefSF(Task, {includeRelations: true}),
           },
         },
       },
@@ -127,7 +127,7 @@ export class TaskController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(TaskWorkflow, {
+          schema: getModelSchemaRefSF(TaskWorkflow, {
             title: 'TaskWorkFlowMapping',
           }),
         },
@@ -157,7 +157,7 @@ export class TaskController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Task, {partial: true}),
+          schema: getModelSchemaRefSF(Task, {partial: true}),
         },
       },
     })
@@ -195,7 +195,7 @@ export class TaskController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Task, {partial: true}),
+          schema: getModelSchemaRefSF(Task, {partial: true}),
         },
       },
     })

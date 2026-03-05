@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/cli",
-  "version": "12.2.4",
+  "version": "12.2.5",
   "description": "Custom ARC CLI.",
   "bin": {
     "arc": "./bin/run",
@@ -37,7 +37,7 @@
   "author": "SourceFuse",
   "license": "MIT",
   "dependencies": {
-    "@loopback/cli": "^5.2.1",
+    "@loopback/cli": "^7.0.6",
     "@modelcontextprotocol/sdk": "^1.24.3",
     "@oclif/command": "^1.8.16",
     "@oclif/config": "^1.18.17",
@@ -53,7 +53,7 @@
     "simple-git": "^3.19.1",
     "sinon": "^15.2.0",
     "tar": "^6.2.0",
-    "ts-morph": "^19.0.0",
+    "ts-morph": "^27.0.2",
     "tslib": "^2.6.2",
     "yeoman-environment": "^3.19.3",
     "yeoman-generator": "^5.10.0",
@@ -98,6 +98,9 @@
       "@types/minimatch": "^5.1.2",
       "inquirer": "8.2.6",
       "@types/inquirer": "8.2.6"
+    },
+    "yeoman-environment": {
+      "mem-fs-editor": "^11.0.0"
     }
   },
   "oclif": {
@@ -236,7 +239,7 @@
       "loopback4-helmet": "^8.0.0",
       "loopback4-notifications": "^10.0.0",
       "loopback4-dynamic-datasource": "^3.0.0",
-      "swagger-stats": "^0.99.5",
+      "swagger-stats-sf": "^0.99.9",
       "@opentelemetry/exporter-jaeger": "^1.15.0",
       "@opentelemetry/sdk-trace-node": "^1.15.0",
       "@opentelemetry/plugin-dns": "^0.15.0",

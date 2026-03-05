@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.7.7 (2026-02-20)</small>
+
+* fix(cli): replace swagger-stats to swagger-stats-sf (#2437) ([832c180](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/832c180)), closes [#2437](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2437)
+
+
+
+
+
 ## <small>0.7.6 (2026-02-17)</small>
 
 **Note:** Version bump only for package @sourceloop/auth-mfa-example

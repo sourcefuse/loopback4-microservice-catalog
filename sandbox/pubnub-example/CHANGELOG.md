@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.9.7 (2026-02-20)</small>
+
+**Note:** Version bump only for package @sourceloop/pubnub-example
+
+
+
+
+
 ## <small>0.9.6 (2026-02-17)</small>
 
 * fix(chore): fix trivy vulnerability (#2424) ([d0e5065](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d0e5065)), closes [#2424](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2424)

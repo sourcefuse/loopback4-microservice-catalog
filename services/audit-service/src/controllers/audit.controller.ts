@@ -11,16 +11,10 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
-import {
-  get,
-  getModelSchemaRef,
-  param,
-  post,
-  requestBody,
-  response,
-} from '@loopback/rest';
+import {get, param, post, requestBody, response} from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   IAuthUserWithPermissions,
   ITenantUtilitiesConfig,
   OPERATION_SECURITY_SPEC,
@@ -92,7 +86,7 @@ export class AuditController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'AuditLog model instance',
-        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(AuditLog)}},
+        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(AuditLog)}},
       },
     },
   })
@@ -100,7 +94,7 @@ export class AuditController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(AuditLog, {
+          schema: getModelSchemaRefSF(AuditLog, {
             title: 'NewAuditLog',
             exclude: ['id', 'tenantId'],
           }),
@@ -145,7 +139,7 @@ export class AuditController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Job, {includeRelations: true}),
+              items: getModelSchemaRefSF(Job, {includeRelations: true}),
             },
           },
         },
@@ -175,7 +169,7 @@ export class AuditController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(AuditLog, {includeRelations: true}),
+              items: getModelSchemaRefSF(AuditLog, {includeRelations: true}),
             },
           },
         },
@@ -215,7 +209,7 @@ export class AuditController {
         description: 'AuditLog model instance',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(AuditLog, {includeRelations: true}),
+            schema: getModelSchemaRefSF(AuditLog, {includeRelations: true}),
           },
         },
       },
@@ -266,7 +260,7 @@ export class AuditController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(CustomFilter, {
+          schema: getModelSchemaRefSF(CustomFilter, {
             title: 'CustomFilter',
             exclude: [],
           }),

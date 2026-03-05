@@ -76,8 +76,8 @@ describe('OTP Controller', () => {
   });
   it('should have property isGenerated', async () => {
     const reqData = {
-      // eslint-disable-next-line
-      client_id: 'web', // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
       password: 'temp123!@',
@@ -122,8 +122,8 @@ describe('OTP Controller', () => {
   });
   it('should have property qrCode', async () => {
     const reqData = {
-      // eslint-disable-next-line
-      client_id: 'web', // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
       password: 'temp123!@',
@@ -142,8 +142,8 @@ describe('OTP Controller', () => {
 
   it('should give status 204 for send-otp request with incorrect code', async () => {
     const reqData = {
-      // eslint-disable-next-line
-      client_id: 'web', // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       key: 'test_user',
     };

@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/telemed-notification-api",
   "private": "true",
-  "version": "0.7.4",
+  "version": "0.7.5",
   "description": "notification.",
   "keywords": [
     "loopback-microservice",
@@ -72,8 +72,8 @@
     "@loopback/rest": "^15.0.4",
     "@loopback/rest-explorer": "^8.0.4",
     "@loopback/service-proxy": "^8.0.3",
-    "@sourceloop/core": "^20.0.4",
-    "@sourceloop/notification-service": "^18.0.5",
+    "@sourceloop/core": "^20.0.5",
+    "@sourceloop/notification-service": "^18.0.6",
     "@types/aws-lambda": "^8.10.110",
     "@vendia/serverless-express": "^4.10.1",
     "dotenv": "^16.0.3",
@@ -83,7 +83,7 @@
     "loopback4-authorization": "^8.0.0",
     "loopback4-notifications": "^10.0.0",
     "pubnub": "^7.2.3",
-    "swagger-stats": "^0.99.5",
+    "swagger-stats-sf": "^0.99.9",
     "symlink-resolver": "0.2.1",
     "tslib": "^2.0.0"
   },
@@ -102,6 +102,7 @@
   },
   "overrides": {
     "axios": "^1.12.2",
+    "minimatch": "^10.2.1",
     "fast-xml-parser": "^5.3.6",
     "postman-request": {
       "qs": "^6.14.1"

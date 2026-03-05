@@ -10,18 +10,10 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
-import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
-  put,
-  del,
-  requestBody,
-} from '@loopback/rest';
+import {del, get, param, patch, post, put, requestBody} from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
@@ -52,7 +44,7 @@ export class MessageRecipientController {
       [STATUS_CODE.OK]: {
         description: 'MessageRecipient model instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(MessageRecipient)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(MessageRecipient)},
         },
       },
     },
@@ -61,7 +53,7 @@ export class MessageRecipientController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(MessageRecipient, {
+          schema: getModelSchemaRefSF(MessageRecipient, {
             title: 'NewMessageRecipient',
             exclude: ['id'],
           }),
@@ -111,7 +103,7 @@ export class MessageRecipientController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(MessageRecipient, {
+              items: getModelSchemaRefSF(MessageRecipient, {
                 includeRelations: true,
               }),
             },
@@ -146,7 +138,7 @@ export class MessageRecipientController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(MessageRecipient, {partial: true}),
+          schema: getModelSchemaRefSF(MessageRecipient, {partial: true}),
         },
       },
     })
@@ -170,7 +162,7 @@ export class MessageRecipientController {
         description: 'MessageRecipient model instance',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(MessageRecipient, {
+            schema: getModelSchemaRefSF(MessageRecipient, {
               includeRelations: true,
             }),
           },
@@ -206,7 +198,7 @@ export class MessageRecipientController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(MessageRecipient, {partial: true}),
+          schema: getModelSchemaRefSF(MessageRecipient, {partial: true}),
         },
       },
     })

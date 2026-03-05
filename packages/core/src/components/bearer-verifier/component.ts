@@ -29,14 +29,14 @@ export class BearerVerifierComponent implements Component {
     this.models = [RevokedToken, JwtKeys];
     this.repositories = [RevokedTokenRepository, PublicKeysRepository];
 
-    if (this.config && this.config.type === BearerVerifierType.service) {
+    if (this.config?.type === BearerVerifierType.service) {
       this.providers[Strategies.Passport.BEARER_TOKEN_VERIFIER.key] =
         ServicesBearerAsymmetricTokenVerifyProvider;
       if (this.config.useSymmetricEncryption) {
         this.providers[Strategies.Passport.BEARER_TOKEN_VERIFIER.key] =
           ServicesBearerTokenVerifyProvider;
       }
-    } else if (this.config && this.config.type === BearerVerifierType.facade) {
+    } else if (this.config?.type === BearerVerifierType.facade) {
       this.providers[Strategies.Passport.BEARER_TOKEN_VERIFIER.key] =
         FacadesBearerAsymmetricTokenVerifyProvider;
       if (this.config.useSymmetricEncryption) {

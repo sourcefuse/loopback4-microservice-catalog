@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/task-service",
-  "version": "9.0.4",
+  "version": "9.0.5",
   "description": "a Reusable, customizable and workflow based task service.",
   "keywords": [
     "loopback-extension",
@@ -19,8 +19,12 @@
       "default": "./dist/connectors/sqs/index.js"
     },
     "./http": {
-      "type": "./dist/connectors/http/index.d.ts",
+      "types": "./dist/connectors/http/index.d.ts",
       "default": "./dist/connectors/http/index.js"
+    },
+    "./controllers": {
+      "types": "./dist/controllers/index.d.ts",
+      "default": "./dist/controllers/index.js"
     }
   },
   "typesVersions": {
@@ -33,6 +37,9 @@
       ],
       "http": [
         "./dist/connectors/http/index.d.ts"
+      ],
+      "controllers": [
+        "./dist/controllers/index.d.ts"
       ]
     }
   },
@@ -50,9 +57,10 @@
     "prettier:fix": "npm run prettier:cli -- --write",
     "eslint": "eslint --report-unused-disable-directives .",
     "eslint:fix": "npm run eslint -- --fix",
+    "preopenapi-spec": "rm -rf dist/__tests__",
     "openapi-spec": "node ./dist/openapi-spec",
     "apidocs": "npx widdershins --search false --language_tabs 'javascript:JavaScript:request' 'javascript--nodejs:Node.JS' --summary openapi.json -o openapi.md",
-    "pretest": "npm run build",
+    "pretest": "npm run clean && lb-tsc",
     "test": "lb-mocha --allow-console-logs \"dist/__tests__/acceptance/task-user-task.controller.js\"",
     "coverage": "nyc npm run test",
     "posttest": "npm run lint",
@@ -78,8 +86,8 @@
     "!*/__tests__"
   ],
   "dependencies": {
-    "@sourceloop/bpmn-service": "^18.0.4",
-    "@sourceloop/core": "^20.0.4",
+    "@sourceloop/bpmn-service": "^18.0.5",
+    "@sourceloop/core": "^20.0.5",
     "camunda-external-task-client-js": "^2.3.1",
     "check-code-coverage": "^1.10.0",
     "dotenv": "^16.4.5",

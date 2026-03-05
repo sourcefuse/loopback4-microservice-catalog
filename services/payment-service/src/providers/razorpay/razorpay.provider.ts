@@ -45,9 +45,9 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
   ) {}
 
   instance = new Razorpay({
-    // eslint-disable-next-line
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     key_id: this.config?.dataKey,
-    // eslint-disable-next-line
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     key_secret: this.config?.publishKey,
   });
   razorpayKey = this.config?.dataKey;
@@ -62,11 +62,11 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
 
     const razorpayPlan = await this.instance.plans.fetch(subscription.planId);
     const params = {
-      // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       plan_id: razorpayPlan.id,
-      // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       total_count: monthDiff(subscription.startDate, subscription.endDate),
-      // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       expire_by: subscription.endDate?.valueOf(),
     };
     const response = await this.instance.subscriptions.create(params);

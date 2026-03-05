@@ -2,7 +2,6 @@ import {inject} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {
   get,
-  getModelSchemaRef,
   HttpErrors,
   oas,
   param,
@@ -14,6 +13,7 @@ import {
 } from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   ILogger,
   LOGGER,
   STATUS_CODE,
@@ -165,7 +165,7 @@ export class AzureLoginController {
     @requestBody({
       content: {
         [CONTENT_TYPE.FORM_URLENCODED]: {
-          schema: getModelSchemaRef(ClientAuthRequest),
+          schema: getModelSchemaRefSF(ClientAuthRequest),
         },
       },
     })

@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/scheduler-service",
-  "version": "18.0.4",
+  "version": "18.0.5",
   "description": "Scheduler Microservice.",
   "keywords": [
     "loopback-extension",
@@ -34,9 +34,10 @@
     "prettier:fix": "npm run prettier:cli -- --write",
     "eslint": "eslint --report-unused-disable-directives .",
     "eslint:fix": "npm run eslint -- --fix",
+    "preopenapi-spec": "rm -rf dist/__tests__",
     "openapi-spec": "node ./dist/openapi-spec",
     "apidocs": "npx widdershins --language_tabs 'javascript:JavaScript:request' 'javascript--nodejs:Node.JS' --summary openapi.json -o openapi.md",
-    "pretest": "npm run build",
+    "pretest": "npm run clean && lb-tsc",
     "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
     "prepublishOnly": "npm run test",
     "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js",
@@ -76,7 +77,7 @@
     "@loopback/rest-explorer": "^8.0.4",
     "@loopback/service-proxy": "^8.0.3",
     "@sourceloop/audit-log": "^9.0.0",
-    "@sourceloop/core": "^20.0.4",
+    "@sourceloop/core": "^20.0.5",
     "dotenv": "^16.4.5",
     "dotenv-extended": "^2.9.0",
     "jsonwebtoken": "^9.0.0",

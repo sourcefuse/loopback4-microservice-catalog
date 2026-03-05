@@ -3869,8 +3869,8 @@
       }
     },
     "schemas": {
-      "Attachment": {
-        "title": "Attachment",
+      "WorkingHour": {
+        "title": "WorkingHour",
         "type": "object",
         "properties": {
           "deleted": {
@@ -3902,21 +3902,25 @@
           "id": {
             "type": "string"
           },
-          "fileUrl": {
+          "dayOfWeek": {
+            "type": "number",
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          },
+          "end": {
             "type": "string"
           },
-          "iconLink": {
+          "start": {
             "type": "string"
           },
-          "mimeType": {
-            "type": "string",
-            "maxLength": 200
-          },
-          "title": {
-            "type": "string",
-            "maxLength": 400
-          },
-          "eventId": {
+          "calendarId": {
             "type": "string"
           },
           "extId": {
@@ -3927,15 +3931,14 @@
           }
         },
         "required": [
-          "fileUrl",
-          "eventId"
+          "calendarId"
         ],
         "additionalProperties": false
       },
-      "NewAttachment": {
-        "title": "NewAttachment",
+      "NewWorkingHour": {
+        "title": "NewWorkingHour",
         "type": "object",
-        "description": "(tsType: Omit<Attachment, 'id'>, schemaOptions: { title: 'NewAttachment', exclude: [ 'id' ] })",
+        "description": "(tsType: Omit<WorkingHour, 'id'>, schemaOptions: { title: 'NewWorkingHour', exclude: [ 'id' ] })",
         "properties": {
           "deleted": {
             "type": "boolean"
@@ -3963,21 +3966,25 @@
           "modifiedBy": {
             "type": "string"
           },
-          "fileUrl": {
+          "dayOfWeek": {
+            "type": "number",
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          },
+          "end": {
             "type": "string"
           },
-          "iconLink": {
+          "start": {
             "type": "string"
           },
-          "mimeType": {
-            "type": "string",
-            "maxLength": 200
-          },
-          "title": {
-            "type": "string",
-            "maxLength": 400
-          },
-          "eventId": {
+          "calendarId": {
             "type": "string"
           },
           "extId": {
@@ -3988,11 +3995,10 @@
           }
         },
         "required": [
-          "fileUrl",
-          "eventId"
+          "calendarId"
         ],
         "additionalProperties": false,
-        "x-typescript-type": "Omit<Attachment, 'id'>"
+        "x-typescript-type": "Omit<WorkingHour, 'id'>"
       },
       "AttendeeWithRelations": {
         "title": "AttendeeWithRelations",
@@ -4070,6 +4076,75 @@
         ],
         "additionalProperties": false,
         "x-typescript-type": "AttendeeWithRelations"
+      },
+      "AttachmentWithRelations": {
+        "title": "AttachmentWithRelations",
+        "type": "object",
+        "description": "(tsType: AttachmentWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "fileUrl": {
+            "type": "string"
+          },
+          "iconLink": {
+            "type": "string"
+          },
+          "mimeType": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 400
+          },
+          "eventId": {
+            "type": "string"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          },
+          "event": {
+            "$ref": "#/components/schemas/EventWithRelations"
+          },
+          "foreignKey": {}
+        },
+        "required": [
+          "fileUrl",
+          "eventId"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "AttachmentWithRelations"
       },
       "EventWithRelations": {
         "title": "EventWithRelations",
@@ -4198,10 +4273,10 @@
         "additionalProperties": false,
         "x-typescript-type": "EventWithRelations"
       },
-      "AttachmentWithRelations": {
-        "title": "AttachmentWithRelations",
+      "SubscriptionWithRelations": {
+        "title": "SubscriptionWithRelations",
         "type": "object",
-        "description": "(tsType: AttachmentWithRelations, schemaOptions: { includeRelations: true })",
+        "description": "(tsType: SubscriptionWithRelations, schemaOptions: { includeRelations: true })",
         "properties": {
           "deleted": {
             "type": "boolean"
@@ -4232,429 +4307,35 @@
           "id": {
             "type": "string"
           },
-          "fileUrl": {
-            "type": "string"
-          },
-          "iconLink": {
-            "type": "string"
-          },
-          "mimeType": {
-            "type": "string",
-            "maxLength": 200
-          },
-          "title": {
-            "type": "string",
-            "maxLength": 400
-          },
-          "eventId": {
-            "type": "string"
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          },
-          "event": {
-            "$ref": "#/components/schemas/EventWithRelations"
-          },
-          "foreignKey": {}
-        },
-        "required": [
-          "fileUrl",
-          "eventId"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "AttachmentWithRelations"
-      },
-      "AttachmentPartial": {
-        "title": "AttachmentPartial",
-        "type": "object",
-        "description": "(tsType: Partial<Attachment>, schemaOptions: { partial: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "fileUrl": {
-            "type": "string"
-          },
-          "iconLink": {
-            "type": "string"
-          },
-          "mimeType": {
-            "type": "string",
-            "maxLength": 200
-          },
-          "title": {
-            "type": "string",
-            "maxLength": 400
-          },
-          "eventId": {
-            "type": "string"
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          }
-        },
-        "additionalProperties": false,
-        "x-typescript-type": "Partial<Attachment>"
-      },
-      "Attendee": {
-        "title": "Attendee",
-        "type": "object",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "identifier": {
-            "type": "string",
-            "maxLength": 200
-          },
-          "isOptional": {
-            "type": "boolean"
-          },
-          "isOrganizer": {
-            "type": "boolean"
-          },
-          "messages": {
-            "type": "string"
-          },
-          "responseStatus": {
+          "accessRole": {
             "type": "string",
             "enum": [
-              "needsAction",
-              "tentative",
-              "accepted",
-              "declined"
+              "freeBusyReader",
+              "reader",
+              "writer",
+              "owner"
             ]
           },
-          "eventId": {
+          "bgColor": {
             "type": "string"
           },
-          "extId": {
+          "fgColor": {
             "type": "string"
           },
-          "extMetadata": {
-            "type": "object"
-          }
-        },
-        "required": [
-          "identifier",
-          "eventId"
-        ],
-        "additionalProperties": false
-      },
-      "NewAttendee": {
-        "title": "NewAttendee",
-        "type": "object",
-        "description": "(tsType: Omit<Attendee, 'id'>, schemaOptions: { title: 'NewAttendee', exclude: [ 'id' ] })",
-        "properties": {
-          "deleted": {
+          "isHidden": {
             "type": "boolean"
           },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
+          "isPrimary": {
+            "type": "boolean"
           },
           "identifier": {
-            "type": "string",
-            "maxLength": 200
-          },
-          "isOptional": {
-            "type": "boolean"
-          },
-          "isOrganizer": {
-            "type": "boolean"
-          },
-          "messages": {
             "type": "string"
           },
-          "responseStatus": {
-            "type": "string",
-            "enum": [
-              "needsAction",
-              "tentative",
-              "accepted",
-              "declined"
-            ]
-          },
-          "eventId": {
-            "type": "string"
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
+          "defaultReminders": {
             "type": "object"
-          }
-        },
-        "required": [
-          "identifier",
-          "eventId"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "Omit<Attendee, 'id'>"
-      },
-      "AttendeePartial": {
-        "title": "AttendeePartial",
-        "type": "object",
-        "description": "(tsType: Partial<Attendee>, schemaOptions: { partial: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
           },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "identifier": {
-            "type": "string",
-            "maxLength": 200
-          },
-          "isOptional": {
-            "type": "boolean"
-          },
-          "isOrganizer": {
-            "type": "boolean"
-          },
-          "messages": {
-            "type": "string"
-          },
-          "responseStatus": {
-            "type": "string",
-            "enum": [
-              "needsAction",
-              "tentative",
-              "accepted",
-              "declined"
-            ]
-          },
-          "eventId": {
-            "type": "string"
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
+          "notificationSettings": {
             "type": "object"
-          }
-        },
-        "additionalProperties": false,
-        "x-typescript-type": "Partial<Attendee>"
-      },
-      "Calendar": {
-        "title": "Calendar",
-        "type": "object",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "source": {
-            "type": "string"
-          },
-          "enableWorkingHours": {
-            "type": "boolean"
-          },
-          "location": {
-            "type": "string",
-            "maxLength": 300
-          },
-          "identifier": {
-            "type": "string",
-            "maxLength": 200
-          },
-          "summary": {
-            "type": "string",
-            "maxLength": 100
-          },
-          "timezone": {
-            "type": "string",
-            "maxLength": 120
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          }
-        },
-        "required": [
-          "identifier"
-        ],
-        "additionalProperties": false
-      },
-      "WorkingHour": {
-        "title": "WorkingHour",
-        "type": "object",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "dayOfWeek": {
-            "type": "number",
-            "enum": [
-              0,
-              1,
-              2,
-              3,
-              4,
-              5,
-              6
-            ]
-          },
-          "end": {
-            "type": "string"
-          },
-          "start": {
-            "type": "string"
           },
           "calendarId": {
             "type": "string"
@@ -4664,111 +4345,18 @@
           },
           "extMetadata": {
             "type": "object"
-          }
+          },
+          "calendar": {
+            "$ref": "#/components/schemas/CalendarWithRelations"
+          },
+          "foreignKey": {}
         },
         "required": [
+          "identifier",
           "calendarId"
         ],
-        "additionalProperties": false
-      },
-      "NewCalendar": {
-        "title": "NewCalendar",
-        "type": "object",
-        "description": "(tsType: Omit<CalendarDTO, 'id'>, schemaOptions: { title: 'NewCalendar', exclude: [ 'id' ] })",
-        "properties": {
-          "source": {
-            "type": "string"
-          },
-          "enableWorkingHours": {
-            "type": "boolean"
-          },
-          "location": {
-            "type": "string",
-            "maxLength": 300
-          },
-          "identifier": {
-            "type": "string",
-            "maxLength": 200
-          },
-          "summary": {
-            "type": "string",
-            "maxLength": 100
-          },
-          "timezone": {
-            "type": "string",
-            "maxLength": 120
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          },
-          "workingHours": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/WorkingHour"
-            }
-          },
-          "subscription": {
-            "type": "object"
-          }
-        },
-        "required": [
-          "identifier"
-        ],
         "additionalProperties": false,
-        "x-typescript-type": "Omit<CalendarDTO, 'id'>"
-      },
-      "CalendarDTO": {
-        "title": "CalendarDTO",
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "source": {
-            "type": "string"
-          },
-          "enableWorkingHours": {
-            "type": "boolean"
-          },
-          "location": {
-            "type": "string",
-            "maxLength": 300
-          },
-          "identifier": {
-            "type": "string",
-            "maxLength": 200
-          },
-          "summary": {
-            "type": "string",
-            "maxLength": 100
-          },
-          "timezone": {
-            "type": "string",
-            "maxLength": 120
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          },
-          "workingHours": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/WorkingHour"
-            }
-          },
-          "subscription": {
-            "type": "object"
-          }
-        },
-        "required": [
-          "identifier"
-        ],
-        "additionalProperties": false
+        "x-typescript-type": "SubscriptionWithRelations"
       },
       "CalendarWithRelations": {
         "title": "CalendarWithRelations",
@@ -4857,10 +4445,10 @@
         "additionalProperties": false,
         "x-typescript-type": "CalendarWithRelations"
       },
-      "CalendarPartial": {
-        "title": "CalendarPartial",
+      "WorkingHourWithRelations": {
+        "title": "WorkingHourWithRelations",
         "type": "object",
-        "description": "(tsType: Partial<Calendar>, schemaOptions: { partial: true })",
+        "description": "(tsType: WorkingHourWithRelations, schemaOptions: { includeRelations: true })",
         "properties": {
           "deleted": {
             "type": "boolean"
@@ -4891,27 +4479,98 @@
           "id": {
             "type": "string"
           },
-          "source": {
+          "dayOfWeek": {
+            "type": "number",
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          },
+          "end": {
             "type": "string"
           },
-          "enableWorkingHours": {
+          "start": {
+            "type": "string"
+          },
+          "calendarId": {
+            "type": "string"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          },
+          "calendar": {
+            "$ref": "#/components/schemas/CalendarWithRelations"
+          },
+          "foreignKey": {}
+        },
+        "required": [
+          "calendarId"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "WorkingHourWithRelations"
+      },
+      "WorkingHourPartial": {
+        "title": "WorkingHourPartial",
+        "type": "object",
+        "description": "(tsType: Partial<WorkingHour>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
             "type": "boolean"
           },
-          "location": {
+          "deletedOn": {
             "type": "string",
-            "maxLength": 300
+            "format": "date-time",
+            "nullable": true
           },
-          "identifier": {
+          "deletedBy": {
             "type": "string",
-            "maxLength": 200
+            "nullable": true
           },
-          "summary": {
+          "createdOn": {
             "type": "string",
-            "maxLength": 100
+            "format": "date-time"
           },
-          "timezone": {
+          "modifiedOn": {
             "type": "string",
-            "maxLength": 120
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "dayOfWeek": {
+            "type": "number",
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          },
+          "end": {
+            "type": "string"
+          },
+          "start": {
+            "type": "string"
+          },
+          "calendarId": {
+            "type": "string"
           },
           "extId": {
             "type": "string"
@@ -4921,7 +4580,740 @@
           }
         },
         "additionalProperties": false,
-        "x-typescript-type": "Partial<Calendar>"
+        "x-typescript-type": "Partial<WorkingHour>"
+      },
+      "Theme": {
+        "title": "Theme",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "calBg": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "calFg": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "eventBg": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "eventFg": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false
+      },
+      "NewTheme": {
+        "title": "NewTheme",
+        "type": "object",
+        "description": "(tsType: Omit<Theme, 'id'>, schemaOptions: { title: 'NewTheme', exclude: [ 'id' ] })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "calBg": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "calFg": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "eventBg": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "eventFg": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<Theme, 'id'>"
+      },
+      "ThemeWithRelations": {
+        "title": "ThemeWithRelations",
+        "type": "object",
+        "description": "(tsType: ThemeWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "calBg": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "calFg": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "eventBg": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "eventFg": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "ThemeWithRelations"
+      },
+      "ThemePartial": {
+        "title": "ThemePartial",
+        "type": "object",
+        "description": "(tsType: Partial<Theme>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "calBg": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "calFg": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "eventBg": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "eventFg": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<Theme>"
+      },
+      "Subscription": {
+        "title": "Subscription",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "accessRole": {
+            "type": "string",
+            "enum": [
+              "freeBusyReader",
+              "reader",
+              "writer",
+              "owner"
+            ]
+          },
+          "bgColor": {
+            "type": "string"
+          },
+          "fgColor": {
+            "type": "string"
+          },
+          "isHidden": {
+            "type": "boolean"
+          },
+          "isPrimary": {
+            "type": "boolean"
+          },
+          "identifier": {
+            "type": "string"
+          },
+          "defaultReminders": {
+            "type": "object"
+          },
+          "notificationSettings": {
+            "type": "object"
+          },
+          "calendarId": {
+            "type": "string"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "identifier",
+          "calendarId"
+        ],
+        "additionalProperties": false
+      },
+      "NewSubscription": {
+        "title": "NewSubscription",
+        "type": "object",
+        "description": "(tsType: Omit<Subscription, 'id'>, schemaOptions: { title: 'NewSubscription', exclude: [ 'id' ] })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "accessRole": {
+            "type": "string",
+            "enum": [
+              "freeBusyReader",
+              "reader",
+              "writer",
+              "owner"
+            ]
+          },
+          "bgColor": {
+            "type": "string"
+          },
+          "fgColor": {
+            "type": "string"
+          },
+          "isHidden": {
+            "type": "boolean"
+          },
+          "isPrimary": {
+            "type": "boolean"
+          },
+          "identifier": {
+            "type": "string"
+          },
+          "defaultReminders": {
+            "type": "object"
+          },
+          "notificationSettings": {
+            "type": "object"
+          },
+          "calendarId": {
+            "type": "string"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "identifier",
+          "calendarId"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<Subscription, 'id'>"
+      },
+      "SubscriptionPartial": {
+        "title": "SubscriptionPartial",
+        "type": "object",
+        "description": "(tsType: Partial<Subscription>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "accessRole": {
+            "type": "string",
+            "enum": [
+              "freeBusyReader",
+              "reader",
+              "writer",
+              "owner"
+            ]
+          },
+          "bgColor": {
+            "type": "string"
+          },
+          "fgColor": {
+            "type": "string"
+          },
+          "isHidden": {
+            "type": "boolean"
+          },
+          "isPrimary": {
+            "type": "boolean"
+          },
+          "identifier": {
+            "type": "string"
+          },
+          "defaultReminders": {
+            "type": "object"
+          },
+          "notificationSettings": {
+            "type": "object"
+          },
+          "calendarId": {
+            "type": "string"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<Subscription>"
+      },
+      "Settings": {
+        "title": "Settings",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "ownerId": {
+            "type": "string",
+            "maxLength": 225
+          },
+          "ownerType": {
+            "type": "string",
+            "enum": [
+              "global",
+              "user",
+              "calendar",
+              "event"
+            ]
+          },
+          "settingName": {
+            "type": "string",
+            "maxLength": 225
+          },
+          "settingValue": {
+            "type": "string",
+            "maxLength": 1500
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "ownerId"
+        ],
+        "additionalProperties": false
+      },
+      "NewSettings": {
+        "title": "NewSettings",
+        "type": "object",
+        "description": "(tsType: Omit<Settings, 'id'>, schemaOptions: { title: 'NewSettings', exclude: [ 'id' ] })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "ownerId": {
+            "type": "string",
+            "maxLength": 225
+          },
+          "ownerType": {
+            "type": "string",
+            "enum": [
+              "global",
+              "user",
+              "calendar",
+              "event"
+            ]
+          },
+          "settingName": {
+            "type": "string",
+            "maxLength": 225
+          },
+          "settingValue": {
+            "type": "string",
+            "maxLength": 1500
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "ownerId"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<Settings, 'id'>"
+      },
+      "SettingsWithRelations": {
+        "title": "SettingsWithRelations",
+        "type": "object",
+        "description": "(tsType: SettingsWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "ownerId": {
+            "type": "string",
+            "maxLength": 225
+          },
+          "ownerType": {
+            "type": "string",
+            "enum": [
+              "global",
+              "user",
+              "calendar",
+              "event"
+            ]
+          },
+          "settingName": {
+            "type": "string",
+            "maxLength": 225
+          },
+          "settingValue": {
+            "type": "string",
+            "maxLength": 1500
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "ownerId"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "SettingsWithRelations"
+      },
+      "SettingsPartial": {
+        "title": "SettingsPartial",
+        "type": "object",
+        "description": "(tsType: Partial<Settings>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "ownerId": {
+            "type": "string",
+            "maxLength": 225
+          },
+          "ownerType": {
+            "type": "string",
+            "enum": [
+              "global",
+              "user",
+              "calendar",
+              "event"
+            ]
+          },
+          "settingName": {
+            "type": "string",
+            "maxLength": 225
+          },
+          "settingValue": {
+            "type": "string",
+            "maxLength": 1500
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<Settings>"
       },
       "Event": {
         "title": "Event",
@@ -5026,6 +5418,140 @@
         },
         "required": [
           "calendarId"
+        ],
+        "additionalProperties": false
+      },
+      "Attachment": {
+        "title": "Attachment",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "fileUrl": {
+            "type": "string"
+          },
+          "iconLink": {
+            "type": "string"
+          },
+          "mimeType": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 400
+          },
+          "eventId": {
+            "type": "string"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "fileUrl",
+          "eventId"
+        ],
+        "additionalProperties": false
+      },
+      "Attendee": {
+        "title": "Attendee",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "identifier": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "isOptional": {
+            "type": "boolean"
+          },
+          "isOrganizer": {
+            "type": "boolean"
+          },
+          "messages": {
+            "type": "string"
+          },
+          "responseStatus": {
+            "type": "string",
+            "enum": [
+              "needsAction",
+              "tentative",
+              "accepted",
+              "declined"
+            ]
+          },
+          "eventId": {
+            "type": "string"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "identifier",
+          "eventId"
         ],
         "additionalProperties": false
       },
@@ -5366,8 +5892,268 @@
         "additionalProperties": false,
         "x-typescript-type": "Partial<Event>"
       },
-      "Settings": {
-        "title": "Settings",
+      "NewAttendeeInEvent": {
+        "title": "NewAttendeeInEvent",
+        "type": "object",
+        "description": "(tsType: @loopback/repository-json-schema#Optional<Omit<Attendee, 'id'>, 'eventId'>, schemaOptions: { title: 'NewAttendeeInEvent', exclude: [ 'id' ], optional: [ 'eventId' ] })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "identifier": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "isOptional": {
+            "type": "boolean"
+          },
+          "isOrganizer": {
+            "type": "boolean"
+          },
+          "messages": {
+            "type": "string"
+          },
+          "responseStatus": {
+            "type": "string",
+            "enum": [
+              "needsAction",
+              "tentative",
+              "accepted",
+              "declined"
+            ]
+          },
+          "eventId": {
+            "type": "string"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "identifier"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository-json-schema#Optional<Omit<Attendee, 'id'>, 'eventId'>"
+      },
+      "AttendeePartial": {
+        "title": "AttendeePartial",
+        "type": "object",
+        "description": "(tsType: Partial<Attendee>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "identifier": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "isOptional": {
+            "type": "boolean"
+          },
+          "isOrganizer": {
+            "type": "boolean"
+          },
+          "messages": {
+            "type": "string"
+          },
+          "responseStatus": {
+            "type": "string",
+            "enum": [
+              "needsAction",
+              "tentative",
+              "accepted",
+              "declined"
+            ]
+          },
+          "eventId": {
+            "type": "string"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<Attendee>"
+      },
+      "NewAttachmentInEvent": {
+        "title": "NewAttachmentInEvent",
+        "type": "object",
+        "description": "(tsType: @loopback/repository-json-schema#Optional<Omit<Attachment, 'id'>, 'eventId'>, schemaOptions: { title: 'NewAttachmentInEvent', exclude: [ 'id' ], optional: [ 'eventId' ] })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "fileUrl": {
+            "type": "string"
+          },
+          "iconLink": {
+            "type": "string"
+          },
+          "mimeType": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 400
+          },
+          "eventId": {
+            "type": "string"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "fileUrl"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository-json-schema#Optional<Omit<Attachment, 'id'>, 'eventId'>"
+      },
+      "AttachmentPartial": {
+        "title": "AttachmentPartial",
+        "type": "object",
+        "description": "(tsType: Partial<Attachment>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "fileUrl": {
+            "type": "string"
+          },
+          "iconLink": {
+            "type": "string"
+          },
+          "mimeType": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 400
+          },
+          "eventId": {
+            "type": "string"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<Attachment>"
+      },
+      "Calendar": {
+        "title": "Calendar",
         "type": "object",
         "properties": {
           "deleted": {
@@ -5399,26 +6185,27 @@
           "id": {
             "type": "string"
           },
-          "ownerId": {
-            "type": "string",
-            "maxLength": 225
+          "source": {
+            "type": "string"
           },
-          "ownerType": {
-            "type": "string",
-            "enum": [
-              "global",
-              "user",
-              "calendar",
-              "event"
-            ]
+          "enableWorkingHours": {
+            "type": "boolean"
           },
-          "settingName": {
+          "location": {
             "type": "string",
-            "maxLength": 225
+            "maxLength": 300
           },
-          "settingValue": {
+          "identifier": {
             "type": "string",
-            "maxLength": 1500
+            "maxLength": 200
+          },
+          "summary": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "timezone": {
+            "type": "string",
+            "maxLength": 120
           },
           "extId": {
             "type": "string"
@@ -5428,291 +6215,113 @@
           }
         },
         "required": [
-          "ownerId"
+          "identifier"
         ],
         "additionalProperties": false
       },
-      "NewSettings": {
-        "title": "NewSettings",
+      "NewCalendar": {
+        "title": "NewCalendar",
         "type": "object",
-        "description": "(tsType: Omit<Settings, 'id'>, schemaOptions: { title: 'NewSettings', exclude: [ 'id' ] })",
+        "description": "(tsType: Omit<CalendarDTO, 'id'>, schemaOptions: { title: 'NewCalendar', exclude: [ 'id' ] })",
         "properties": {
-          "deleted": {
+          "source": {
+            "type": "string"
+          },
+          "enableWorkingHours": {
             "type": "boolean"
           },
-          "deletedOn": {
+          "location": {
             "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "ownerId": {
-            "type": "string",
-            "maxLength": 225
-          },
-          "ownerType": {
-            "type": "string",
-            "enum": [
-              "global",
-              "user",
-              "calendar",
-              "event"
-            ]
-          },
-          "settingName": {
-            "type": "string",
-            "maxLength": 225
-          },
-          "settingValue": {
-            "type": "string",
-            "maxLength": 1500
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          }
-        },
-        "required": [
-          "ownerId"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "Omit<Settings, 'id'>"
-      },
-      "SettingsWithRelations": {
-        "title": "SettingsWithRelations",
-        "type": "object",
-        "description": "(tsType: SettingsWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "ownerId": {
-            "type": "string",
-            "maxLength": 225
-          },
-          "ownerType": {
-            "type": "string",
-            "enum": [
-              "global",
-              "user",
-              "calendar",
-              "event"
-            ]
-          },
-          "settingName": {
-            "type": "string",
-            "maxLength": 225
-          },
-          "settingValue": {
-            "type": "string",
-            "maxLength": 1500
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          }
-        },
-        "required": [
-          "ownerId"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "SettingsWithRelations"
-      },
-      "SettingsPartial": {
-        "title": "SettingsPartial",
-        "type": "object",
-        "description": "(tsType: Partial<Settings>, schemaOptions: { partial: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "ownerId": {
-            "type": "string",
-            "maxLength": 225
-          },
-          "ownerType": {
-            "type": "string",
-            "enum": [
-              "global",
-              "user",
-              "calendar",
-              "event"
-            ]
-          },
-          "settingName": {
-            "type": "string",
-            "maxLength": 225
-          },
-          "settingValue": {
-            "type": "string",
-            "maxLength": 1500
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          }
-        },
-        "additionalProperties": false,
-        "x-typescript-type": "Partial<Settings>"
-      },
-      "Subscription": {
-        "title": "Subscription",
-        "type": "object",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "accessRole": {
-            "type": "string",
-            "enum": [
-              "freeBusyReader",
-              "reader",
-              "writer",
-              "owner"
-            ]
-          },
-          "bgColor": {
-            "type": "string"
-          },
-          "fgColor": {
-            "type": "string"
-          },
-          "isHidden": {
-            "type": "boolean"
-          },
-          "isPrimary": {
-            "type": "boolean"
+            "maxLength": 300
           },
           "identifier": {
-            "type": "string"
+            "type": "string",
+            "maxLength": 200
           },
-          "defaultReminders": {
-            "type": "object"
+          "summary": {
+            "type": "string",
+            "maxLength": 100
           },
-          "notificationSettings": {
-            "type": "object"
-          },
-          "calendarId": {
-            "type": "string"
+          "timezone": {
+            "type": "string",
+            "maxLength": 120
           },
           "extId": {
             "type": "string"
           },
           "extMetadata": {
             "type": "object"
+          },
+          "workingHours": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkingHour"
+            }
+          },
+          "subscription": {
+            "type": "object"
           }
         },
         "required": [
-          "identifier",
-          "calendarId"
+          "identifier"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<CalendarDTO, 'id'>"
+      },
+      "CalendarDTO": {
+        "title": "CalendarDTO",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "enableWorkingHours": {
+            "type": "boolean"
+          },
+          "location": {
+            "type": "string",
+            "maxLength": 300
+          },
+          "identifier": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "summary": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "timezone": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          },
+          "workingHours": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkingHour"
+            }
+          },
+          "subscription": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "identifier"
         ],
         "additionalProperties": false
       },
-      "NewSubscription": {
-        "title": "NewSubscription",
+      "CalendarPartial": {
+        "title": "CalendarPartial",
         "type": "object",
-        "description": "(tsType: Omit<Subscription, 'id'>, schemaOptions: { title: 'NewSubscription', exclude: [ 'id' ] })",
+        "description": "(tsType: Partial<Calendar>, schemaOptions: { partial: true })",
         "properties": {
           "deleted": {
             "type": "boolean"
@@ -5740,204 +6349,30 @@
           "modifiedBy": {
             "type": "string"
           },
-          "accessRole": {
+          "id": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "enableWorkingHours": {
+            "type": "boolean"
+          },
+          "location": {
             "type": "string",
-            "enum": [
-              "freeBusyReader",
-              "reader",
-              "writer",
-              "owner"
-            ]
-          },
-          "bgColor": {
-            "type": "string"
-          },
-          "fgColor": {
-            "type": "string"
-          },
-          "isHidden": {
-            "type": "boolean"
-          },
-          "isPrimary": {
-            "type": "boolean"
+            "maxLength": 300
           },
           "identifier": {
-            "type": "string"
-          },
-          "defaultReminders": {
-            "type": "object"
-          },
-          "notificationSettings": {
-            "type": "object"
-          },
-          "calendarId": {
-            "type": "string"
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          }
-        },
-        "required": [
-          "identifier",
-          "calendarId"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "Omit<Subscription, 'id'>"
-      },
-      "SubscriptionWithRelations": {
-        "title": "SubscriptionWithRelations",
-        "type": "object",
-        "description": "(tsType: SubscriptionWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
             "type": "string",
-            "format": "date-time",
-            "nullable": true
+            "maxLength": 200
           },
-          "deletedBy": {
+          "summary": {
             "type": "string",
-            "nullable": true
+            "maxLength": 100
           },
-          "createdOn": {
+          "timezone": {
             "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "accessRole": {
-            "type": "string",
-            "enum": [
-              "freeBusyReader",
-              "reader",
-              "writer",
-              "owner"
-            ]
-          },
-          "bgColor": {
-            "type": "string"
-          },
-          "fgColor": {
-            "type": "string"
-          },
-          "isHidden": {
-            "type": "boolean"
-          },
-          "isPrimary": {
-            "type": "boolean"
-          },
-          "identifier": {
-            "type": "string"
-          },
-          "defaultReminders": {
-            "type": "object"
-          },
-          "notificationSettings": {
-            "type": "object"
-          },
-          "calendarId": {
-            "type": "string"
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          },
-          "calendar": {
-            "$ref": "#/components/schemas/CalendarWithRelations"
-          },
-          "foreignKey": {}
-        },
-        "required": [
-          "identifier",
-          "calendarId"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "SubscriptionWithRelations"
-      },
-      "SubscriptionPartial": {
-        "title": "SubscriptionPartial",
-        "type": "object",
-        "description": "(tsType: Partial<Subscription>, schemaOptions: { partial: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "accessRole": {
-            "type": "string",
-            "enum": [
-              "freeBusyReader",
-              "reader",
-              "writer",
-              "owner"
-            ]
-          },
-          "bgColor": {
-            "type": "string"
-          },
-          "fgColor": {
-            "type": "string"
-          },
-          "isHidden": {
-            "type": "boolean"
-          },
-          "isPrimary": {
-            "type": "boolean"
-          },
-          "identifier": {
-            "type": "string"
-          },
-          "defaultReminders": {
-            "type": "object"
-          },
-          "notificationSettings": {
-            "type": "object"
-          },
-          "calendarId": {
-            "type": "string"
+            "maxLength": 120
           },
           "extId": {
             "type": "string"
@@ -5947,247 +6382,12 @@
           }
         },
         "additionalProperties": false,
-        "x-typescript-type": "Partial<Subscription>"
+        "x-typescript-type": "Partial<Calendar>"
       },
-      "Theme": {
-        "title": "Theme",
+      "NewWorkingHourInCalendar": {
+        "title": "NewWorkingHourInCalendar",
         "type": "object",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "calBg": {
-            "type": "string",
-            "maxLength": 200
-          },
-          "calFg": {
-            "type": "string",
-            "maxLength": 200
-          },
-          "eventBg": {
-            "type": "string",
-            "maxLength": 200
-          },
-          "eventFg": {
-            "type": "string",
-            "maxLength": 200
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          }
-        },
-        "additionalProperties": false
-      },
-      "NewTheme": {
-        "title": "NewTheme",
-        "type": "object",
-        "description": "(tsType: Omit<Theme, 'id'>, schemaOptions: { title: 'NewTheme', exclude: [ 'id' ] })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "calBg": {
-            "type": "string",
-            "maxLength": 200
-          },
-          "calFg": {
-            "type": "string",
-            "maxLength": 200
-          },
-          "eventBg": {
-            "type": "string",
-            "maxLength": 200
-          },
-          "eventFg": {
-            "type": "string",
-            "maxLength": 200
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          }
-        },
-        "additionalProperties": false,
-        "x-typescript-type": "Omit<Theme, 'id'>"
-      },
-      "ThemeWithRelations": {
-        "title": "ThemeWithRelations",
-        "type": "object",
-        "description": "(tsType: ThemeWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "calBg": {
-            "type": "string",
-            "maxLength": 200
-          },
-          "calFg": {
-            "type": "string",
-            "maxLength": 200
-          },
-          "eventBg": {
-            "type": "string",
-            "maxLength": 200
-          },
-          "eventFg": {
-            "type": "string",
-            "maxLength": 200
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          }
-        },
-        "additionalProperties": false,
-        "x-typescript-type": "ThemeWithRelations"
-      },
-      "ThemePartial": {
-        "title": "ThemePartial",
-        "type": "object",
-        "description": "(tsType: Partial<Theme>, schemaOptions: { partial: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "calBg": {
-            "type": "string",
-            "maxLength": 200
-          },
-          "calFg": {
-            "type": "string",
-            "maxLength": 200
-          },
-          "eventBg": {
-            "type": "string",
-            "maxLength": 200
-          },
-          "eventFg": {
-            "type": "string",
-            "maxLength": 200
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          }
-        },
-        "additionalProperties": false,
-        "x-typescript-type": "Partial<Theme>"
-      },
-      "NewWorkingHour": {
-        "title": "NewWorkingHour",
-        "type": "object",
-        "description": "(tsType: Omit<WorkingHour, 'id'>, schemaOptions: { title: 'NewWorkingHour', exclude: [ 'id' ] })",
+        "description": "(tsType: @loopback/repository-json-schema#Optional<Omit<WorkingHour, 'id'>, 'calendarId'>, schemaOptions: { title: 'NewWorkingHourInCalendar', exclude: [ 'id' ], optional: [ 'calendarId' ] })",
         "properties": {
           "deleted": {
             "type": "boolean"
@@ -6243,16 +6443,13 @@
             "type": "object"
           }
         },
-        "required": [
-          "calendarId"
-        ],
         "additionalProperties": false,
-        "x-typescript-type": "Omit<WorkingHour, 'id'>"
+        "x-typescript-type": "@loopback/repository-json-schema#Optional<Omit<WorkingHour, 'id'>, 'calendarId'>"
       },
-      "WorkingHourWithRelations": {
-        "title": "WorkingHourWithRelations",
+      "NewSubscriptionInCalendar": {
+        "title": "NewSubscriptionInCalendar",
         "type": "object",
-        "description": "(tsType: WorkingHourWithRelations, schemaOptions: { includeRelations: true })",
+        "description": "(tsType: @loopback/repository-json-schema#Optional<Omit<Subscription, 'id'>, 'calendarId'>, schemaOptions: { title: 'NewSubscriptionInCalendar', exclude: [ 'id' ], optional: [ 'calendarId' ] })",
         "properties": {
           "deleted": {
             "type": "boolean"
@@ -6280,98 +6477,35 @@
           "modifiedBy": {
             "type": "string"
           },
-          "id": {
-            "type": "string"
-          },
-          "dayOfWeek": {
-            "type": "number",
+          "accessRole": {
+            "type": "string",
             "enum": [
-              0,
-              1,
-              2,
-              3,
-              4,
-              5,
-              6
+              "freeBusyReader",
+              "reader",
+              "writer",
+              "owner"
             ]
           },
-          "end": {
+          "bgColor": {
             "type": "string"
           },
-          "start": {
+          "fgColor": {
             "type": "string"
           },
-          "calendarId": {
+          "isHidden": {
+            "type": "boolean"
+          },
+          "isPrimary": {
+            "type": "boolean"
+          },
+          "identifier": {
             "type": "string"
           },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
+          "defaultReminders": {
             "type": "object"
           },
-          "calendar": {
-            "$ref": "#/components/schemas/CalendarWithRelations"
-          },
-          "foreignKey": {}
-        },
-        "required": [
-          "calendarId"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "WorkingHourWithRelations"
-      },
-      "WorkingHourPartial": {
-        "title": "WorkingHourPartial",
-        "type": "object",
-        "description": "(tsType: Partial<WorkingHour>, schemaOptions: { partial: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "dayOfWeek": {
-            "type": "number",
-            "enum": [
-              0,
-              1,
-              2,
-              3,
-              4,
-              5,
-              6
-            ]
-          },
-          "end": {
-            "type": "string"
-          },
-          "start": {
-            "type": "string"
+          "notificationSettings": {
+            "type": "object"
           },
           "calendarId": {
             "type": "string"
@@ -6383,8 +6517,11 @@
             "type": "object"
           }
         },
+        "required": [
+          "identifier"
+        ],
         "additionalProperties": false,
-        "x-typescript-type": "Partial<WorkingHour>"
+        "x-typescript-type": "@loopback/repository-json-schema#Optional<Omit<Subscription, 'id'>, 'calendarId'>"
       },
       "Date": {},
       "NewEventInCalendar": {
@@ -6489,210 +6626,10 @@
         "additionalProperties": false,
         "x-typescript-type": "@loopback/repository-json-schema#Optional<Omit<Event, 'id'>, 'calendarId'>"
       },
-      "NewSubscriptionInCalendar": {
-        "title": "NewSubscriptionInCalendar",
+      "NewAttendee": {
+        "title": "NewAttendee",
         "type": "object",
-        "description": "(tsType: @loopback/repository-json-schema#Optional<Omit<Subscription, 'id'>, 'calendarId'>, schemaOptions: { title: 'NewSubscriptionInCalendar', exclude: [ 'id' ], optional: [ 'calendarId' ] })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "accessRole": {
-            "type": "string",
-            "enum": [
-              "freeBusyReader",
-              "reader",
-              "writer",
-              "owner"
-            ]
-          },
-          "bgColor": {
-            "type": "string"
-          },
-          "fgColor": {
-            "type": "string"
-          },
-          "isHidden": {
-            "type": "boolean"
-          },
-          "isPrimary": {
-            "type": "boolean"
-          },
-          "identifier": {
-            "type": "string"
-          },
-          "defaultReminders": {
-            "type": "object"
-          },
-          "notificationSettings": {
-            "type": "object"
-          },
-          "calendarId": {
-            "type": "string"
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          }
-        },
-        "required": [
-          "identifier"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "@loopback/repository-json-schema#Optional<Omit<Subscription, 'id'>, 'calendarId'>"
-      },
-      "NewWorkingHourInCalendar": {
-        "title": "NewWorkingHourInCalendar",
-        "type": "object",
-        "description": "(tsType: @loopback/repository-json-schema#Optional<Omit<WorkingHour, 'id'>, 'calendarId'>, schemaOptions: { title: 'NewWorkingHourInCalendar', exclude: [ 'id' ], optional: [ 'calendarId' ] })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "dayOfWeek": {
-            "type": "number",
-            "enum": [
-              0,
-              1,
-              2,
-              3,
-              4,
-              5,
-              6
-            ]
-          },
-          "end": {
-            "type": "string"
-          },
-          "start": {
-            "type": "string"
-          },
-          "calendarId": {
-            "type": "string"
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          }
-        },
-        "additionalProperties": false,
-        "x-typescript-type": "@loopback/repository-json-schema#Optional<Omit<WorkingHour, 'id'>, 'calendarId'>"
-      },
-      "NewAttachmentInEvent": {
-        "title": "NewAttachmentInEvent",
-        "type": "object",
-        "description": "(tsType: @loopback/repository-json-schema#Optional<Omit<Attachment, 'id'>, 'eventId'>, schemaOptions: { title: 'NewAttachmentInEvent', exclude: [ 'id' ], optional: [ 'eventId' ] })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "fileUrl": {
-            "type": "string"
-          },
-          "iconLink": {
-            "type": "string"
-          },
-          "mimeType": {
-            "type": "string",
-            "maxLength": 200
-          },
-          "title": {
-            "type": "string",
-            "maxLength": 400
-          },
-          "eventId": {
-            "type": "string"
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          }
-        },
-        "required": [
-          "fileUrl"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "@loopback/repository-json-schema#Optional<Omit<Attachment, 'id'>, 'eventId'>"
-      },
-      "NewAttendeeInEvent": {
-        "title": "NewAttendeeInEvent",
-        "type": "object",
-        "description": "(tsType: @loopback/repository-json-schema#Optional<Omit<Attendee, 'id'>, 'eventId'>, schemaOptions: { title: 'NewAttendeeInEvent', exclude: [ 'id' ], optional: [ 'eventId' ] })",
+        "description": "(tsType: Omit<Attendee, 'id'>, schemaOptions: { title: 'NewAttendee', exclude: [ 'id' ] })",
         "properties": {
           "deleted": {
             "type": "boolean"
@@ -6753,10 +6690,73 @@
           }
         },
         "required": [
-          "identifier"
+          "identifier",
+          "eventId"
         ],
         "additionalProperties": false,
-        "x-typescript-type": "@loopback/repository-json-schema#Optional<Omit<Attendee, 'id'>, 'eventId'>"
+        "x-typescript-type": "Omit<Attendee, 'id'>"
+      },
+      "NewAttachment": {
+        "title": "NewAttachment",
+        "type": "object",
+        "description": "(tsType: Omit<Attachment, 'id'>, schemaOptions: { title: 'NewAttachment', exclude: [ 'id' ] })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "fileUrl": {
+            "type": "string"
+          },
+          "iconLink": {
+            "type": "string"
+          },
+          "mimeType": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 400
+          },
+          "eventId": {
+            "type": "string"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "fileUrl",
+          "eventId"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<Attachment, 'id'>"
       },
       "loopback.Count": {
         "type": "object",

@@ -14,7 +14,6 @@ import {
   HttpErrors,
   del,
   get,
-  getModelSchemaRef,
   getWhereSchemaFor,
   param,
   patch,
@@ -24,6 +23,7 @@ import {
 import {
   IAuthUserWithPermissions,
   OPERATION_SECURITY_SPEC,
+  getModelSchemaRefSF,
 } from '@sourceloop/core';
 import {
   AuthenticationBindings,
@@ -62,7 +62,7 @@ export class UserTenantUserLevelPermissionController {
           'application/json': {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(UserLevelPermission),
+              items: getModelSchemaRefSF(UserLevelPermission),
             },
           },
         },
@@ -91,7 +91,9 @@ export class UserTenantUserLevelPermissionController {
       [STATUS_CODE.OK]: {
         description: 'UserLevelPermission model instance',
         content: {
-          'application/json': {schema: getModelSchemaRef(UserLevelPermission)},
+          'application/json': {
+            schema: getModelSchemaRefSF(UserLevelPermission),
+          },
         },
       },
     },
@@ -101,7 +103,7 @@ export class UserTenantUserLevelPermissionController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(UserLevelPermission, {
+          schema: getModelSchemaRefSF(UserLevelPermission, {
             title: 'NewUserLevelPermissionInUserTenant',
             exclude: ['id'],
             optional: ['userTenantId'],
@@ -142,7 +144,7 @@ export class UserTenantUserLevelPermissionController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(UserLevelPermission, {partial: true}),
+          schema: getModelSchemaRefSF(UserLevelPermission, {partial: true}),
         },
       },
     })

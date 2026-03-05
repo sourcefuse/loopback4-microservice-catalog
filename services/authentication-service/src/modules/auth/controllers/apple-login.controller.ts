@@ -6,7 +6,6 @@ import {inject} from '@loopback/context';
 import {repository} from '@loopback/repository';
 import {
   get,
-  getModelSchemaRef,
   HttpErrors,
   param,
   post,
@@ -17,6 +16,7 @@ import {
 } from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   ILogger,
   LOGGER,
   STATUS_CODE,
@@ -79,7 +79,7 @@ export class AppleLoginController {
     @requestBody({
       content: {
         [CONTENT_TYPE.FORM_URLENCODED]: {
-          schema: getModelSchemaRef(ClientAuthRequest),
+          schema: getModelSchemaRefSF(ClientAuthRequest),
         },
       },
     })

@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.7.5 (2026-02-20)</small>
+
+* fix(cache): fix catch statment in redis response (#2432) ([1fdaa13](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1fdaa13)), closes [#2432](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2432) [#2429](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2429) [#2429](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2429)
+* fix(chore): fix trivy vulnerability (#2431) ([84526a6](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/84526a6)), closes [#2431](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2431) [#2430](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2430)
+* fix(cli): replace swagger-stats to swagger-stats-sf (#2437) ([832c180](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/832c180)), closes [#2437](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2437)
+
+
+
+
+
 ## <small>0.7.4 (2026-02-17)</small>
 
 * fix(chore): fix trivy vulnerability (#2424) ([d0e5065](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d0e5065)), closes [#2424](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2424)

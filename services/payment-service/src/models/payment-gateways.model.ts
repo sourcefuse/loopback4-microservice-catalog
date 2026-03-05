@@ -40,6 +40,6 @@ export class PaymentGateways extends CoreEntity<PaymentGateways> {
   // Define well-known properties here
 
   // Indexer property to allow additional data
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [prop: string]: any; //NOSONAR
 }

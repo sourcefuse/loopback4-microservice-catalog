@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/reporting-service",
-  "version": "7.0.7",
+  "version": "7.0.8",
   "description": "reporting-service.",
   "keywords": [
     "loopback-extension",
@@ -22,7 +22,7 @@
     "prettier:fix": "npm run prettier:cli -- --write",
     "eslint": "eslint --report-unused-disable-directives .",
     "eslint:fix": "npm run eslint -- --fix",
-    "pretest": "npm run rebuild",
+    "pretest": "npm run clean && lb-tsc",
     "test": "lb-mocha --allow-console-logs \"dist/__tests__\" --timeout 5000",
     "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js",
     "docker:build": "docker build -t reporting-service .",
@@ -32,6 +32,7 @@
     "db:migrate": "./node_modules/db-migrate/bin/db-migrate up --config './migrations/database.json'",
     "db:migrate:down": "./node_modules/db-migrate/bin/db-migrate down --config './migrations/database.json'",
     "db:migrate:reset": "./node_modules/db-migrate/bin/db-migrate reset --config './migrations/database.json'",
+    "preopenapi-spec": "rm -rf dist/__tests__",
     "openapi-spec": "node ./dist/openapi-spec && npm run apidocs",
     "prestart": "npm run rebuild",
     "start": "node -r source-map-support/register .",
@@ -65,7 +66,7 @@
     "@loopback/openapi-v3": "^11.0.4",
     "@loopback/repository": "^8.0.3",
     "@loopback/rest": "^15.0.4",
-    "@sourceloop/core": "^20.0.4",
+    "@sourceloop/core": "^20.0.5",
     "aws-sdk": "^2.1691.0",
     "crypto-js": "^4.2.0",
     "db-migrate": "^1.0.0-beta.21",

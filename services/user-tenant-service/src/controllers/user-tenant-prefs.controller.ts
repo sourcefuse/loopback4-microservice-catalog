@@ -13,7 +13,6 @@ import {
 import {
   del,
   get,
-  getModelSchemaRef,
   HttpErrors,
   param,
   post,
@@ -21,6 +20,7 @@ import {
   response,
 } from '@loopback/rest';
 import {
+  getModelSchemaRefSF,
   IAuthUserWithPermissions,
   OPERATION_SECURITY_SPEC,
 } from '@sourceloop/core';
@@ -56,13 +56,15 @@ export class UserTenantPrefsController {
   @post(baseUrl, {security: OPERATION_SECURITY_SPEC, responses: {}})
   @response(STATUS_CODE.OK, {
     description: 'UserTenantPrefs model instance',
-    content: {'application/json': {schema: getModelSchemaRef(UserTenantPrefs)}},
+    content: {
+      'application/json': {schema: getModelSchemaRefSF(UserTenantPrefs)},
+    },
   })
   async create(
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(UserTenantPrefs, {
+          schema: getModelSchemaRefSF(UserTenantPrefs, {
             title: 'NewUserTenantPrefs',
             exclude: ['id', 'userTenantId'],
           }),
@@ -131,7 +133,7 @@ export class UserTenantPrefsController {
       'application/json': {
         schema: {
           type: 'array',
-          items: getModelSchemaRef(UserTenantPrefs, {includeRelations: true}),
+          items: getModelSchemaRefSF(UserTenantPrefs, {includeRelations: true}),
         },
       },
     },

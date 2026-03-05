@@ -4,14 +4,7 @@
 // https://opensource.org/licenses/MIT
 import {inject} from '@loopback/context';
 
-import {
-  get,
-  getModelSchemaRef,
-  param,
-  patch,
-  post,
-  requestBody,
-} from '@loopback/rest';
+import {get, param, patch, post, requestBody} from '@loopback/rest';
 import {authorize} from 'loopback4-authorization';
 import {
   MeetingLink,
@@ -22,10 +15,11 @@ import {
 
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
-import {STRATEGY, authenticate} from 'loopback4-authentication';
+import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {PermissionKeys} from '../enums/permission-keys.enum';
 import {ServiceBindings} from '../keys';
 import {SessionAttendees, VideoChatSession} from '../models';
@@ -111,7 +105,7 @@ export class VideoChatSessionController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(VideoChatSession, {partial: true}),
+          schema: getModelSchemaRefSF(VideoChatSession, {partial: true}),
         },
       },
     })

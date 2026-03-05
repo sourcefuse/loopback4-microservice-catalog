@@ -77,11 +77,13 @@ export class RedisStoreStrategy implements ICacheStore {
     }
     if (Buffer.isBuffer(res)) {
       let value = this.decoder.decode(res);
+      // sonarignore:start
       try {
         value = JSON.parse(value);
       } catch (e) {
-        throw new Error(`Failed to parse value: ${e.message}`);
+        // do nothing
       }
+      // sonarignore:end
       return value as T;
     } else if (typeof res === 'number') {
       return res as unknown as T;
@@ -91,11 +93,13 @@ export class RedisStoreStrategy implements ICacheStore {
           return undefined;
         }
         let decoded = this.decoder.decode(value);
+        // sonarignore:start
         try {
           decoded = JSON.parse(decoded);
         } catch (e) {
-          throw new Error(`Failed to parse value: ${e.message}`);
+          // do nothing
         }
+        // sonarignore:end
         return decoded;
       }) as T;
     }

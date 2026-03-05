@@ -12,23 +12,23 @@ import {
 import {
   del,
   get,
-  getModelSchemaRef,
   getWhereSchemaFor,
   param,
   patch,
   post,
   requestBody,
 } from '@loopback/rest';
+import {
+  CONTENT_TYPE,
+  getModelSchemaRefSF,
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {Attendee, Event} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {EventRepository} from '../repositories';
-import {
-  STATUS_CODE,
-  CONTENT_TYPE,
-  OPERATION_SECURITY_SPEC,
-} from '@sourceloop/core';
 
 const basePath = '/events/{id}/attendees';
 
@@ -52,7 +52,7 @@ export class EventAttendeeController {
         description: 'Array of Event has many Attendee',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: {type: 'array', items: getModelSchemaRef(Attendee)},
+            schema: {type: 'array', items: getModelSchemaRefSF(Attendee)},
           },
         },
       },
@@ -82,7 +82,7 @@ export class EventAttendeeController {
       [STATUS_CODE.OK]: {
         description: 'Event model instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Attendee)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Attendee)},
         },
       },
     },
@@ -92,7 +92,7 @@ export class EventAttendeeController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Attendee, {
+          schema: getModelSchemaRefSF(Attendee, {
             title: 'NewAttendeeInEvent',
             exclude: ['id'],
             optional: ['eventId'],
@@ -130,7 +130,7 @@ export class EventAttendeeController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Attendee, {partial: true}),
+          schema: getModelSchemaRefSF(Attendee, {partial: true}),
         },
       },
     })

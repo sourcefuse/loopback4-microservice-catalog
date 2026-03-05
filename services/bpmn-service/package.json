@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/bpmn-service",
-  "version": "18.0.4",
+  "version": "18.0.5",
   "description": "BPMN microservice.",
   "keywords": [
     "loopback-extension",
@@ -13,12 +13,19 @@
     "./sequelize": {
       "types": "./dist/repositories/sequelize/index.d.ts",
       "default": "./dist/repositories/sequelize/index.js"
+    },
+    "./controllers": {
+      "types": "./dist/controllers/index.d.ts",
+      "default": "./dist/controllers/index.js"
     }
   },
   "typesVersions": {
     "*": {
       "sequelize": [
         "./dist/repositories/sequelize/index.d.ts"
+      ],
+      "controllers": [
+        "./dist/controllers/index.d.ts"
       ]
     }
   },
@@ -35,9 +42,10 @@
     "prettier:fix": "npm run prettier:cli -- --write",
     "eslint": "eslint --report-unused-disable-directives .",
     "eslint:fix": "npm run eslint -- --fix",
+    "preopenapi-spec": "rm -rf dist/__tests__",
     "openapi-spec": "node ./dist/openapi-spec",
     "apidocs": "npx widdershins --language_tabs 'javascript:JavaScript:request' 'javascript--nodejs:Node.JS' --summary openapi.json -o openapi.md",
-    "pretest": "npm run build",
+    "pretest": "npm run clean && lb-tsc",
     "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
     "coverage": "lb-nyc npm run test",
     "coverage:ci": "lb-nyc report --reporter=text-lcov | coveralls",
@@ -73,7 +81,7 @@
     "@loopback/openapi-v3": "^11.0.4",
     "@loopback/repository": "^8.0.3",
     "@loopback/rest": "^15.0.4",
-    "@sourceloop/core": "^20.0.4",
+    "@sourceloop/core": "^20.0.5",
     "ajv": "^8.11.0",
     "camunda-external-task-client-js": "^2.3.1",
     "dotenv": "^16.4.5",
