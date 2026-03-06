@@ -12,7 +12,6 @@ import {
 import {
   del,
   get,
-  getModelSchemaRef,
   getWhereSchemaFor,
   param,
   patch,
@@ -21,6 +20,7 @@ import {
 } from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
@@ -52,7 +52,10 @@ export class MessageMessageRecipientController {
         description: 'Array of Message has many MessageRecipient',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: {type: 'array', items: getModelSchemaRef(MessageRecipient)},
+            schema: {
+              type: 'array',
+              items: getModelSchemaRefSF(MessageRecipient),
+            },
           },
         },
       },
@@ -78,7 +81,7 @@ export class MessageMessageRecipientController {
       [STATUS_CODE.OK]: {
         description: 'Message model instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(MessageRecipient)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(MessageRecipient)},
         },
       },
     },
@@ -88,7 +91,7 @@ export class MessageMessageRecipientController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(MessageRecipient, {
+          schema: getModelSchemaRefSF(MessageRecipient, {
             title: 'NewMessageRecipientInMessage',
             exclude: ['id'],
             optional: ['messageId'],
@@ -124,7 +127,7 @@ export class MessageMessageRecipientController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(MessageRecipient, {partial: true}),
+          schema: getModelSchemaRefSF(MessageRecipient, {partial: true}),
         },
       },
     })

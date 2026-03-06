@@ -10,7 +10,6 @@ import {
 import {
   del,
   get,
-  getModelSchemaRef,
   HttpErrors,
   param,
   patch,
@@ -18,7 +17,13 @@ import {
   requestBody,
   response,
 } from '@loopback/rest';
-import {CONTENT_TYPE, ILogger, LOGGER, STATUS_CODE} from '@sourceloop/core';
+import {
+  CONTENT_TYPE,
+  getModelSchemaRefSF,
+  ILogger,
+  LOGGER,
+  STATUS_CODE,
+} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../enum/permission-key.enum';
@@ -48,13 +53,13 @@ export class SectionController {
   @post(basePath)
   @response(STATUS_CODE.OK, {
     description: 'Section model instance',
-    content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Section)}},
+    content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Section)}},
   })
   async create(
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Section, {
+          schema: getModelSchemaRefSF(Section, {
             title: 'NewSection',
             exclude: ['id'],
           }),
@@ -98,7 +103,7 @@ export class SectionController {
       'application/json': {
         schema: {
           type: 'array',
-          items: getModelSchemaRef(Section, {includeRelations: true}),
+          items: getModelSchemaRefSF(Section, {includeRelations: true}),
         },
       },
     },
@@ -121,7 +126,7 @@ export class SectionController {
     description: 'Section model instance',
     content: {
       'application/json': {
-        schema: getModelSchemaRef(Section, {includeRelations: true}),
+        schema: getModelSchemaRefSF(Section, {includeRelations: true}),
       },
     },
   })
@@ -155,7 +160,7 @@ export class SectionController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Section, {partial: true}),
+          schema: getModelSchemaRefSF(Section, {partial: true}),
         },
       },
     })

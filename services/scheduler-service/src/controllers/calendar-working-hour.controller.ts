@@ -12,23 +12,23 @@ import {
 import {
   del,
   get,
-  getModelSchemaRef,
   getWhereSchemaFor,
   param,
   patch,
   post,
   requestBody,
 } from '@loopback/rest';
+import {
+  CONTENT_TYPE,
+  getModelSchemaRefSF,
+  OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
+} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {Calendar, WorkingHour} from '../models';
 import {PermissionKey} from '../models/enums/permission-key.enum';
 import {CalendarRepository} from '../repositories';
-import {
-  STATUS_CODE,
-  CONTENT_TYPE,
-  OPERATION_SECURITY_SPEC,
-} from '@sourceloop/core';
 
 const basePath = '/calendars/{id}/working-hours';
 
@@ -54,7 +54,7 @@ export class CalendarWorkingHourController {
         description: 'Array of Calendar has many WorkingHour',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: {type: 'array', items: getModelSchemaRef(WorkingHour)},
+            schema: {type: 'array', items: getModelSchemaRefSF(WorkingHour)},
           },
         },
       },
@@ -83,7 +83,7 @@ export class CalendarWorkingHourController {
       [STATUS_CODE.OK]: {
         description: 'Calendar model instance',
         content: {
-          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(WorkingHour)},
+          [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(WorkingHour)},
         },
       },
     },
@@ -93,7 +93,7 @@ export class CalendarWorkingHourController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(WorkingHour, {
+          schema: getModelSchemaRefSF(WorkingHour, {
             title: 'NewWorkingHourInCalendar',
             exclude: ['id'],
             optional: ['calendarId'],
@@ -129,7 +129,7 @@ export class CalendarWorkingHourController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(WorkingHour, {partial: true}),
+          schema: getModelSchemaRefSF(WorkingHour, {partial: true}),
         },
       },
     })

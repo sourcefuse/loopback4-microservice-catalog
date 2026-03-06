@@ -144,115 +144,6 @@
         "operationId": "AppleLoginController.appleCallback"
       }
     },
-    "/auth/auth0": {
-      "post": {
-        "x-controller-name": "Auth0LoginController",
-        "x-operation-name": "postLoginViaAuth0",
-        "tags": [
-          "Auth0LoginController"
-        ],
-        "responses": {
-          "200": {
-            "description": "POST Call for auth0 based login",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TokenResponse"
-                }
-              }
-            }
-          }
-        },
-        "description": "",
-        "requestBody": {
-          "content": {
-            "application/x-www-form-urlencoded": {
-              "schema": {
-                "$ref": "#/components/schemas/ClientAuthRequest"
-              }
-            }
-          }
-        },
-        "operationId": "Auth0LoginController.postLoginViaAuth0"
-      },
-      "get": {
-        "x-controller-name": "Auth0LoginController",
-        "x-operation-name": "loginViaAuth0",
-        "tags": [
-          "Auth0LoginController"
-        ],
-        "responses": {
-          "200": {
-            "description": "POST Call for auth0 based login",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TokenResponse"
-                }
-              }
-            }
-          }
-        },
-        "description": "",
-        "deprecated": true,
-        "parameters": [
-          {
-            "name": "client_id",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "client_secret",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "operationId": "Auth0LoginController.loginViaAuth0"
-      }
-    },
-    "/auth/auth0-auth-redirect": {
-      "get": {
-        "x-controller-name": "Auth0LoginController",
-        "x-operation-name": "auth0Callback",
-        "tags": [
-          "Auth0LoginController"
-        ],
-        "responses": {
-          "200": {
-            "description": "Redirect Token Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TokenResponse"
-                }
-              }
-            }
-          }
-        },
-        "description": "",
-        "parameters": [
-          {
-            "name": "code",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "state",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "operationId": "Auth0LoginController.auth0Callback"
-      }
-    },
     "/auth/azure": {
       "post": {
         "x-controller-name": "AzureLoginController",
@@ -2237,32 +2128,220 @@
       }
     },
     "schemas": {
-      "LoginRequest": {
-        "title": "LoginRequest",
+      "SignupRequestDto": {
+        "title": "SignupRequestDto",
         "type": "object",
-        "description": "This is the signature for login request.",
         "properties": {
-          "client_id": {
-            "type": "string",
-            "description": "This property is supposed to be a string and is a required field"
+          "email": {
+            "type": "string"
           },
-          "client_secret": {
-            "type": "string",
-            "description": "This property is supposed to be a string and is a required field"
-          },
-          "username": {
-            "type": "string",
-            "description": "This property is supposed to be a string and is a required field"
-          },
-          "password": {
-            "type": "string",
-            "description": "This property is supposed to be a string and is a required field"
+          "data": {
+            "type": "object"
           }
         },
         "required": [
-          "client_id",
-          "username",
+          "email"
+        ],
+        "additionalProperties": false
+      },
+      "Function": {},
+      "LocalUserProfileDto": {
+        "title": "LocalUserProfileDto",
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "email",
           "password"
+        ],
+        "additionalProperties": true
+      },
+      "SignupRequest": {
+        "title": "SignupRequest",
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "expiry": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "email"
+        ],
+        "additionalProperties": false
+      },
+      "LoginActivityWithRelations": {
+        "title": "LoginActivityWithRelations",
+        "type": "object",
+        "description": "This is to maintain the daily login activity. (tsType: LoginActivityWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "actor": {
+            "type": "string"
+          },
+          "tenantId": {
+            "type": "string"
+          },
+          "loginTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "tokenPayload": {
+            "type": "string"
+          },
+          "loginType": {
+            "type": "string"
+          },
+          "deviceInfo": {
+            "type": "string"
+          },
+          "ipAddress": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Date": {},
+      "ActiveUsersFilter": {
+        "title": "ActiveUsersFilter",
+        "type": "object",
+        "properties": {
+          "inclusion": {
+            "type": "boolean"
+          },
+          "userIdentity": {
+            "type": "string"
+          },
+          "userIdentifier": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "inclusion",
+          "userIdentity",
+          "userIdentifier"
+        ],
+        "additionalProperties": false
+      },
+      "ForgetPasswordDto": {
+        "title": "ForgetPasswordDto",
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "client_id": {
+            "type": "string"
+          },
+          "client_secret": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "username",
+          "client_id",
+          "client_secret"
+        ],
+        "additionalProperties": false
+      },
+      "AuthClient": {
+        "title": "AuthClient",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "number"
+          },
+          "clientId": {
+            "type": "string"
+          },
+          "clientSecret": {
+            "type": "string"
+          },
+          "secret": {
+            "type": "string",
+            "description": "Value can be a string or a private key."
+          },
+          "redirectUrl": {
+            "type": "string"
+          },
+          "accessTokenExpiration": {
+            "type": "number"
+          },
+          "refreshTokenExpiration": {
+            "type": "number"
+          },
+          "authCodeExpiration": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "clientId",
+          "clientSecret",
+          "secret",
+          "accessTokenExpiration",
+          "refreshTokenExpiration",
+          "authCodeExpiration"
+        ],
+        "additionalProperties": false
+      },
+      "ResetPasswordWithClient": {
+        "title": "ResetPasswordWithClient",
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "client_id": {
+            "type": "string"
+          },
+          "client_secret": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "token",
+          "password",
+          "client_id",
+          "client_secret"
         ],
         "additionalProperties": false
       },
@@ -2293,91 +2372,6 @@
         ],
         "additionalProperties": false
       },
-      "AuthTokenRequest": {
-        "title": "AuthTokenRequest",
-        "type": "object",
-        "description": "This is the signature for requesting the accessToken and refreshToken.",
-        "properties": {
-          "code": {
-            "type": "string"
-          },
-          "clientId": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "code",
-          "clientId"
-        ],
-        "additionalProperties": false
-      },
-      "AuthRefreshTokenRequest": {
-        "title": "AuthRefreshTokenRequest",
-        "type": "object",
-        "properties": {
-          "refreshToken": {
-            "type": "string"
-          },
-          "tenantId": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "refreshToken"
-        ],
-        "additionalProperties": false
-      },
-      "ResetPasswordPartial": {
-        "title": "ResetPasswordPartial",
-        "type": "object",
-        "description": "This is a signature for reset password. (tsType: Partial<ResetPassword>, schemaOptions: { partial: true })",
-        "properties": {
-          "refreshToken": {
-            "type": "string"
-          },
-          "username": {
-            "type": "string",
-            "description": "This property is supposed to be a string and is a required field"
-          },
-          "password": {
-            "type": "string",
-            "description": "This property is supposed to be a string and is a required field"
-          },
-          "oldPassword": {
-            "type": "string",
-            "description": "This property is supposed to be a string and is a required field"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ResetPassword": {
-        "title": "ResetPassword",
-        "type": "object",
-        "description": "This is a signature for reset password.",
-        "properties": {
-          "refreshToken": {
-            "type": "string"
-          },
-          "username": {
-            "type": "string",
-            "description": "This property is supposed to be a string and is a required field"
-          },
-          "password": {
-            "type": "string",
-            "description": "This property is supposed to be a string and is a required field"
-          },
-          "oldPassword": {
-            "type": "string",
-            "description": "This property is supposed to be a string and is a required field"
-          }
-        },
-        "required": [
-          "refreshToken",
-          "username",
-          "password"
-        ],
-        "additionalProperties": false
-      },
       "ClientAuthRequest": {
         "title": "ClientAuthRequest",
         "type": "object",
@@ -2398,41 +2392,6 @@
         "required": [
           "client_id",
           "client_secret"
-        ],
-        "additionalProperties": false
-      },
-      "SuccessResponse": {
-        "title": "SuccessResponse",
-        "type": "object",
-        "properties": {
-          "success": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": true
-      },
-      "RefreshTokenRequestPartial": {
-        "title": "RefreshTokenRequestPartial",
-        "type": "object",
-        "description": "(tsType: Partial<RefreshTokenRequest>, schemaOptions: { partial: true })",
-        "properties": {
-          "refreshToken": {
-            "type": "string"
-          }
-        },
-        "additionalProperties": false,
-        "x-typescript-type": "Partial<RefreshTokenRequest>"
-      },
-      "RefreshTokenRequest": {
-        "title": "RefreshTokenRequest",
-        "type": "object",
-        "properties": {
-          "refreshToken": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "refreshToken"
         ],
         "additionalProperties": false
       },
@@ -2622,220 +2581,152 @@
         ],
         "additionalProperties": false
       },
-      "Function": {},
-      "ForgetPasswordDto": {
-        "title": "ForgetPasswordDto",
+      "AuthTokenRequest": {
+        "title": "AuthTokenRequest",
         "type": "object",
+        "description": "This is the signature for requesting the accessToken and refreshToken.",
         "properties": {
-          "username": {
+          "code": {
             "type": "string"
-          },
-          "client_id": {
-            "type": "string"
-          },
-          "client_secret": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "username",
-          "client_id",
-          "client_secret"
-        ],
-        "additionalProperties": false
-      },
-      "AuthClient": {
-        "title": "AuthClient",
-        "type": "object",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "number"
           },
           "clientId": {
             "type": "string"
-          },
-          "clientSecret": {
-            "type": "string"
-          },
-          "secret": {
-            "type": "string",
-            "description": "Value can be a string or a private key."
-          },
-          "redirectUrl": {
-            "type": "string"
-          },
-          "accessTokenExpiration": {
-            "type": "number"
-          },
-          "refreshTokenExpiration": {
-            "type": "number"
-          },
-          "authCodeExpiration": {
-            "type": "number"
           }
         },
         "required": [
-          "clientId",
-          "clientSecret",
-          "secret",
-          "accessTokenExpiration",
-          "refreshTokenExpiration",
-          "authCodeExpiration"
+          "code",
+          "clientId"
         ],
         "additionalProperties": false
       },
-      "ResetPasswordWithClient": {
-        "title": "ResetPasswordWithClient",
+      "SuccessResponse": {
+        "title": "SuccessResponse",
         "type": "object",
         "properties": {
-          "token": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          },
-          "client_id": {
-            "type": "string"
-          },
-          "client_secret": {
-            "type": "string"
+          "success": {
+            "type": "boolean"
           }
         },
-        "required": [
-          "token",
-          "password",
-          "client_id",
-          "client_secret"
-        ],
-        "additionalProperties": false
-      },
-      "SignupRequestDto": {
-        "title": "SignupRequestDto",
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string"
-          },
-          "data": {
-            "type": "object"
-          }
-        },
-        "required": [
-          "email"
-        ],
-        "additionalProperties": false
-      },
-      "LocalUserProfileDto": {
-        "title": "LocalUserProfileDto",
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "email",
-          "password"
-        ],
         "additionalProperties": true
       },
-      "SignupRequest": {
-        "title": "SignupRequest",
+      "RefreshTokenRequestPartial": {
+        "title": "RefreshTokenRequestPartial",
+        "type": "object",
+        "description": "(tsType: Partial<RefreshTokenRequest>, schemaOptions: { partial: true })",
+        "properties": {
+          "refreshToken": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<RefreshTokenRequest>"
+      },
+      "RefreshTokenRequest": {
+        "title": "RefreshTokenRequest",
         "type": "object",
         "properties": {
-          "email": {
-            "type": "string"
-          },
-          "expiry": {
+          "refreshToken": {
             "type": "string"
           }
         },
         "required": [
-          "email"
+          "refreshToken"
         ],
         "additionalProperties": false
       },
-      "LoginActivityWithRelations": {
-        "title": "LoginActivityWithRelations",
+      "LoginRequest": {
+        "title": "LoginRequest",
         "type": "object",
-        "description": "This is to maintain the daily login activity. (tsType: LoginActivityWithRelations, schemaOptions: { includeRelations: true })",
+        "description": "This is the signature for login request.",
         "properties": {
-          "id": {
-            "type": "string"
+          "client_id": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
           },
-          "actor": {
+          "client_secret": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          },
+          "username": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          },
+          "password": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          }
+        },
+        "required": [
+          "client_id",
+          "username",
+          "password"
+        ],
+        "additionalProperties": false
+      },
+      "AuthRefreshTokenRequest": {
+        "title": "AuthRefreshTokenRequest",
+        "type": "object",
+        "properties": {
+          "refreshToken": {
             "type": "string"
           },
           "tenantId": {
             "type": "string"
+          }
+        },
+        "required": [
+          "refreshToken"
+        ],
+        "additionalProperties": false
+      },
+      "ResetPasswordPartial": {
+        "title": "ResetPasswordPartial",
+        "type": "object",
+        "description": "This is a signature for reset password. (tsType: Partial<ResetPassword>, schemaOptions: { partial: true })",
+        "properties": {
+          "refreshToken": {
+            "type": "string"
           },
-          "loginTime": {
+          "username": {
             "type": "string",
-            "format": "date-time"
+            "description": "This property is supposed to be a string and is a required field"
           },
-          "tokenPayload": {
-            "type": "string"
+          "password": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
           },
-          "loginType": {
-            "type": "string"
-          },
-          "deviceInfo": {
-            "type": "string"
-          },
-          "ipAddress": {
-            "type": "string"
+          "oldPassword": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
           }
         },
         "additionalProperties": false
       },
-      "Date": {},
-      "ActiveUsersFilter": {
-        "title": "ActiveUsersFilter",
+      "ResetPassword": {
+        "title": "ResetPassword",
         "type": "object",
+        "description": "This is a signature for reset password.",
         "properties": {
-          "inclusion": {
-            "type": "boolean"
-          },
-          "userIdentity": {
+          "refreshToken": {
             "type": "string"
           },
-          "userIdentifier": {
-            "type": "object"
+          "username": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          },
+          "password": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
+          },
+          "oldPassword": {
+            "type": "string",
+            "description": "This property is supposed to be a string and is a required field"
           }
         },
         "required": [
-          "inclusion",
-          "userIdentity",
-          "userIdentifier"
+          "refreshToken",
+          "username",
+          "password"
         ],
         "additionalProperties": false
       },

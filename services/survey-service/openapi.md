@@ -27328,12 +27328,12 @@ This operation does not require authentication
 
 # Schemas
 
-<h2 id="tocS_Question">Question</h2>
+<h2 id="tocS_TemplateQuestion">TemplateQuestion</h2>
 <!-- backwards compatibility -->
-<a id="schemaquestion"></a>
-<a id="schema_Question"></a>
-<a id="tocSquestion"></a>
-<a id="tocsquestion"></a>
+<a id="schematemplatequestion"></a>
+<a id="schema_TemplateQuestion"></a>
+<a id="tocStemplatequestion"></a>
+<a id="tocstemplatequestion"></a>
 
 ```json
 {
@@ -27345,23 +27345,19 @@ This operation does not require authentication
   "createdBy": "string",
   "modifiedBy": "string",
   "id": "string",
-  "uid": "string",
-  "name": "string",
-  "status": "string",
-  "questionType": "Multi Selection",
+  "displayOrder": 0,
+  "isMandatory": true,
+  "weight": 100,
+  "templateId": "string",
+  "questionId": "string",
+  "dependentOnQuestionId": "string",
   "extId": "string",
-  "extMetadata": {},
-  "isScoreEnabled": true,
-  "isFollowupEnabled": true,
-  "validation": {},
-  "rootQuestionId": "string",
-  "parentQuestionId": "string",
-  "surveyId": "string"
+  "extMetadata": {}
 }
 
 ```
 
-Question
+TemplateQuestion
 
 ### Properties
 
@@ -27375,74 +27371,71 @@ Question
 |createdBy|string|false|none|none|
 |modifiedBy|string|false|none|none|
 |id|string|false|none|none|
-|uid|string|true|none|none|
-|name|string|false|none|none|
-|status|string|true|none|none|
-|questionType|string|true|none|none|
+|displayOrder|number|false|none|none|
+|isMandatory|boolean|false|none|none|
+|weight|number|false|none|none|
+|templateId|string|false|none|none|
+|questionId|string|false|none|none|
+|dependentOnQuestionId|string¦null|false|none|none|
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
-|isScoreEnabled|boolean|false|none|none|
-|isFollowupEnabled|boolean|false|none|none|
-|validation|object|false|none|none|
-|rootQuestionId|string|false|none|none|
-|parentQuestionId|string¦null|false|none|none|
-|surveyId|string|false|none|none|
 
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|questionType|Multi Selection|
-|questionType|Scale|
-|questionType|Single Selection|
-|questionType|Text|
-|questionType|Drop Down|
-|questionType|null|
-
-<h2 id="tocS_NewQuestion">NewQuestion</h2>
+<h2 id="tocS_NewTemplateQuestion">NewTemplateQuestion</h2>
 <!-- backwards compatibility -->
-<a id="schemanewquestion"></a>
-<a id="schema_NewQuestion"></a>
-<a id="tocSnewquestion"></a>
-<a id="tocsnewquestion"></a>
+<a id="schemanewtemplatequestion"></a>
+<a id="schema_NewTemplateQuestion"></a>
+<a id="tocSnewtemplatequestion"></a>
+<a id="tocsnewtemplatequestion"></a>
 
 ```json
 {
-  "questionType": "string",
-  "rootQuestionId": "string",
-  "parentQuestionId": "string",
-  "optionId": "string",
-  "surveyId": "string",
-  "status": "string",
-  "name": "string",
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "displayOrder": 0,
+  "isMandatory": true,
+  "weight": 100,
+  "templateId": "string",
+  "questionId": "string",
+  "dependentOnQuestionId": "string",
   "extId": "string",
   "extMetadata": {}
 }
 
 ```
 
-NewQuestion
+NewTemplateQuestion
 
 ### Properties
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|questionType|string|true|none|none|
-|rootQuestionId|string|false|none|none|
-|parentQuestionId|string|false|none|none|
-|optionId|string|false|none|none|
-|surveyId|string|false|none|none|
-|status|string|false|none|none|
-|name|string|false|none|none|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|displayOrder|number|false|none|none|
+|isMandatory|boolean|false|none|none|
+|weight|number|false|none|none|
+|templateId|string|false|none|none|
+|questionId|string|false|none|none|
+|dependentOnQuestionId|string¦null|false|none|none|
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
 
-<h2 id="tocS_SurveyCycleWithRelations">SurveyCycleWithRelations</h2>
+<h2 id="tocS_TemplateQuestionWithRelations">TemplateQuestionWithRelations</h2>
 <!-- backwards compatibility -->
-<a id="schemasurveycyclewithrelations"></a>
-<a id="schema_SurveyCycleWithRelations"></a>
-<a id="tocSsurveycyclewithrelations"></a>
-<a id="tocssurveycyclewithrelations"></a>
+<a id="schematemplatequestionwithrelations"></a>
+<a id="schema_TemplateQuestionWithRelations"></a>
+<a id="tocStemplatequestionwithrelations"></a>
+<a id="tocstemplatequestionwithrelations"></a>
 
 ```json
 {
@@ -27454,13 +27447,15 @@ NewQuestion
   "createdBy": "string",
   "modifiedBy": "string",
   "id": "string",
-  "startDate": "string",
-  "endDate": "string",
-  "isActivated": true,
-  "surveyId": "string",
+  "displayOrder": 0,
+  "isMandatory": true,
+  "weight": 100,
+  "templateId": "string",
+  "questionId": "string",
+  "dependentOnQuestionId": "string",
   "extId": "string",
   "extMetadata": {},
-  "survey": {
+  "template": {
     "deleted": true,
     "deletedOn": "2019-08-24T14:15:22Z",
     "deletedBy": "string",
@@ -27471,15 +27466,37 @@ NewQuestion
     "id": "string",
     "uid": "string",
     "name": "string",
-    "surveyText": "string",
-    "startDate": "string",
-    "endDate": "string",
     "status": "string",
-    "isEnableWeights": true,
-    "baseSurveyId": "string",
+    "isEnableWeight": true,
+    "extId": "string",
+    "extMetadata": {}
+  },
+  "foreignKey": null,
+  "question": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "uid": "string",
+    "name": "string",
+    "status": "string",
+    "questionType": "Multi Selection",
     "extId": "string",
     "extMetadata": {},
-    "questions": [
+    "isScoreEnabled": true,
+    "isFollowupEnabled": true,
+    "validation": {},
+    "rootQuestionId": "string",
+    "parentQuestionId": "string",
+    "surveyId": "string",
+    "rootQuestion": {},
+    "foreignKey": null,
+    "parentQuestion": {},
+    "options": [
       {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -27489,47 +27506,52 @@ NewQuestion
         "createdBy": "string",
         "modifiedBy": "string",
         "id": "string",
-        "uid": "string",
         "name": "string",
-        "status": "string",
-        "questionType": "Multi Selection",
+        "displayOrder": 0,
+        "score": 0,
+        "questionId": "string",
+        "followupQuestionId": "string",
         "extId": "string",
         "extMetadata": {},
-        "isScoreEnabled": true,
-        "isFollowupEnabled": true,
-        "validation": {},
-        "rootQuestionId": "string",
-        "parentQuestionId": "string",
-        "surveyId": "string",
-        "rootQuestion": {},
+        "question": {},
         "foreignKey": null,
-        "parentQuestion": {},
-        "options": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "name": "string",
-            "displayOrder": 0,
-            "score": 0,
-            "questionId": "string",
-            "followupQuestionId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "question": {},
-            "foreignKey": null,
-            "followupQuestion": {}
-          }
-        ],
-        "followUpQuestions": [
-          {}
-        ],
-        "surveyResponseDetail": {
+        "followupQuestion": {}
+      }
+    ],
+    "followUpQuestions": [
+      {}
+    ],
+    "surveyResponseDetail": {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "surveyResponseId": "string",
+      "questionId": "string",
+      "score": "string",
+      "responseType": "Multi Selection",
+      "textAnswer": "string",
+      "optionId": "string",
+      "extId": "string",
+      "extMetadata": {},
+      "surveyResponse": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "surveyResponderId": "string",
+        "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "surveyResponder": {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
           "deletedBy": "string",
@@ -27538,15 +27560,16 @@ NewQuestion
           "createdBy": "string",
           "modifiedBy": "string",
           "id": "string",
-          "surveyResponseId": "string",
-          "questionId": "string",
-          "score": "string",
-          "responseType": "Multi Selection",
-          "textAnswer": "string",
-          "optionId": "string",
+          "firstName": "string",
+          "lastName": "string",
+          "email": "string",
+          "fullName": "string",
+          "userId": "string",
+          "surveyId": "string",
+          "surveyCycleId": "string",
           "extId": "string",
           "extMetadata": {},
-          "surveyResponse": {
+          "survey": {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
             "deletedBy": "string",
@@ -27555,31 +27578,21 @@ NewQuestion
             "createdBy": "string",
             "modifiedBy": "string",
             "id": "string",
-            "surveyResponderId": "string",
-            "surveyCycleId": "string",
+            "uid": "string",
+            "name": "string",
+            "surveyText": "string",
+            "startDate": "string",
+            "endDate": "string",
+            "status": "string",
+            "isEnableWeights": true,
+            "baseSurveyId": "string",
             "extId": "string",
             "extMetadata": {},
-            "surveyResponder": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "firstName": "string",
-              "lastName": "string",
-              "email": "string",
-              "fullName": "string",
-              "userId": "string",
-              "surveyId": "string",
-              "surveyCycleId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "survey": {},
-              "foreignKey": null,
-              "surveyCycle": {
+            "questions": [
+              {}
+            ],
+            "surveyCycles": [
+              {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
                 "deletedBy": "string",
@@ -27597,412 +27610,12 @@ NewQuestion
                 "survey": {},
                 "foreignKey": null
               }
-            },
-            "foreignKey": null,
-            "surveyCycle": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "startDate": "string",
-              "endDate": "string",
-              "isActivated": true,
-              "surveyId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "survey": {},
-              "foreignKey": null
-            },
-            "surveyResponseDetails": [
+            ],
+            "surveyResponders": [
               {}
-            ]
-          },
-          "foreignKey": null,
-          "question": {},
-          "option": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "name": "string",
-            "displayOrder": 0,
-            "score": 0,
-            "questionId": "string",
-            "followupQuestionId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "question": {},
-            "foreignKey": null,
-            "followupQuestion": {}
-          }
-        },
-        "survey": {}
-      }
-    ],
-    "surveyCycles": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "startDate": "string",
-        "endDate": "string",
-        "isActivated": true,
-        "surveyId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "survey": {},
-        "foreignKey": null
-      }
-    ],
-    "surveyResponders": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "firstName": "string",
-        "lastName": "string",
-        "email": "string",
-        "fullName": "string",
-        "userId": "string",
-        "surveyId": "string",
-        "surveyCycleId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "survey": {},
-        "foreignKey": null,
-        "surveyCycle": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "startDate": "string",
-          "endDate": "string",
-          "isActivated": true,
-          "surveyId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "survey": {},
-          "foreignKey": null
-        }
-      }
-    ],
-    "sections": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "name": "string",
-        "displayOrder": 0,
-        "surveyId": "string",
-        "extId": "string",
-        "extMetadata": {}
-      }
-    ]
-  },
-  "foreignKey": null
-}
-
-```
-
-SurveyCycleWithRelations
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|startDate|string|false|none|Start date of the first survey cycle|
-|endDate|string|false|none|End date of the first survey cycle|
-|isActivated|boolean|false|none|none|
-|surveyId|string|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-|survey|[SurveyWithRelations](#schemasurveywithrelations)|false|none|(tsType: SurveyWithRelations, schemaOptions: { includeRelations: true })|
-|foreignKey|any|false|none|none|
-
-<h2 id="tocS_SectionWithRelations">SectionWithRelations</h2>
-<!-- backwards compatibility -->
-<a id="schemasectionwithrelations"></a>
-<a id="schema_SectionWithRelations"></a>
-<a id="tocSsectionwithrelations"></a>
-<a id="tocssectionwithrelations"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "displayOrder": 0,
-  "surveyId": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-SectionWithRelations
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|name|string|false|none|none|
-|displayOrder|number|false|none|none|
-|surveyId|string|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-<h2 id="tocS_SurveyWithRelations">SurveyWithRelations</h2>
-<!-- backwards compatibility -->
-<a id="schemasurveywithrelations"></a>
-<a id="schema_SurveyWithRelations"></a>
-<a id="tocSsurveywithrelations"></a>
-<a id="tocssurveywithrelations"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "uid": "string",
-  "name": "string",
-  "surveyText": "string",
-  "startDate": "string",
-  "endDate": "string",
-  "status": "string",
-  "isEnableWeights": true,
-  "baseSurveyId": "string",
-  "extId": "string",
-  "extMetadata": {},
-  "questions": [
-    {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "uid": "string",
-      "name": "string",
-      "status": "string",
-      "questionType": "Multi Selection",
-      "extId": "string",
-      "extMetadata": {},
-      "isScoreEnabled": true,
-      "isFollowupEnabled": true,
-      "validation": {},
-      "rootQuestionId": "string",
-      "parentQuestionId": "string",
-      "surveyId": "string",
-      "rootQuestion": {},
-      "foreignKey": null,
-      "parentQuestion": {},
-      "options": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "name": "string",
-          "displayOrder": 0,
-          "score": 0,
-          "questionId": "string",
-          "followupQuestionId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "question": {},
-          "foreignKey": null,
-          "followupQuestion": {}
-        }
-      ],
-      "followUpQuestions": [
-        {}
-      ],
-      "surveyResponseDetail": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "surveyResponseId": "string",
-        "questionId": "string",
-        "score": "string",
-        "responseType": "Multi Selection",
-        "textAnswer": "string",
-        "optionId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "surveyResponse": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "surveyResponderId": "string",
-          "surveyCycleId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "surveyResponder": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "firstName": "string",
-            "lastName": "string",
-            "email": "string",
-            "fullName": "string",
-            "userId": "string",
-            "surveyId": "string",
-            "surveyCycleId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "survey": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "uid": "string",
-              "name": "string",
-              "surveyText": "string",
-              "startDate": "string",
-              "endDate": "string",
-              "status": "string",
-              "isEnableWeights": true,
-              "baseSurveyId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "questions": [],
-              "surveyCycles": [
-                {
-                  "deleted": true,
-                  "deletedOn": "2019-08-24T14:15:22Z",
-                  "deletedBy": "string",
-                  "createdOn": "2019-08-24T14:15:22Z",
-                  "modifiedOn": "2019-08-24T14:15:22Z",
-                  "createdBy": "string",
-                  "modifiedBy": "string",
-                  "id": "string",
-                  "startDate": "string",
-                  "endDate": "string",
-                  "isActivated": true,
-                  "surveyId": "string",
-                  "extId": "string",
-                  "extMetadata": {},
-                  "survey": {},
-                  "foreignKey": null
-                }
-              ],
-              "surveyResponders": [
-                {}
-              ],
-              "sections": [
-                {
-                  "deleted": true,
-                  "deletedOn": "2019-08-24T14:15:22Z",
-                  "deletedBy": "string",
-                  "createdOn": "2019-08-24T14:15:22Z",
-                  "modifiedOn": "2019-08-24T14:15:22Z",
-                  "createdBy": "string",
-                  "modifiedBy": "string",
-                  "id": "string",
-                  "name": "string",
-                  "displayOrder": 0,
-                  "surveyId": "string",
-                  "extId": "string",
-                  "extMetadata": {}
-                }
-              ]
-            },
-            "foreignKey": null,
-            "surveyCycle": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "startDate": "string",
-              "endDate": "string",
-              "isActivated": true,
-              "surveyId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "survey": {
+            ],
+            "sections": [
+              {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
                 "deletedBy": "string",
@@ -28011,43 +27624,13 @@ SectionWithRelations
                 "createdBy": "string",
                 "modifiedBy": "string",
                 "id": "string",
-                "uid": "string",
                 "name": "string",
-                "surveyText": "string",
-                "startDate": "string",
-                "endDate": "string",
-                "status": "string",
-                "isEnableWeights": true,
-                "baseSurveyId": "string",
+                "displayOrder": 0,
+                "surveyId": "string",
                 "extId": "string",
-                "extMetadata": {},
-                "questions": [],
-                "surveyCycles": [
-                  {}
-                ],
-                "surveyResponders": [
-                  {}
-                ],
-                "sections": [
-                  {
-                    "deleted": true,
-                    "deletedOn": "2019-08-24T14:15:22Z",
-                    "deletedBy": "string",
-                    "createdOn": "2019-08-24T14:15:22Z",
-                    "modifiedOn": "2019-08-24T14:15:22Z",
-                    "createdBy": "string",
-                    "modifiedBy": "string",
-                    "id": "string",
-                    "name": "string",
-                    "displayOrder": 0,
-                    "surveyId": "string",
-                    "extId": "string",
-                    "extMetadata": {}
-                  }
-                ]
-              },
-              "foreignKey": null
-            }
+                "extMetadata": {}
+              }
+            ]
           },
           "foreignKey": null,
           "surveyCycle": {
@@ -28084,33 +27667,14 @@ SectionWithRelations
               "baseSurveyId": "string",
               "extId": "string",
               "extMetadata": {},
-              "questions": [],
+              "questions": [
+                {}
+              ],
               "surveyCycles": [
                 {}
               ],
               "surveyResponders": [
-                {
-                  "deleted": true,
-                  "deletedOn": "2019-08-24T14:15:22Z",
-                  "deletedBy": "string",
-                  "createdOn": "2019-08-24T14:15:22Z",
-                  "modifiedOn": "2019-08-24T14:15:22Z",
-                  "createdBy": "string",
-                  "modifiedBy": "string",
-                  "id": "string",
-                  "firstName": "string",
-                  "lastName": "string",
-                  "email": "string",
-                  "fullName": "string",
-                  "userId": "string",
-                  "surveyId": "string",
-                  "surveyCycleId": "string",
-                  "extId": "string",
-                  "extMetadata": {},
-                  "survey": {},
-                  "foreignKey": null,
-                  "surveyCycle": {}
-                }
+                {}
               ],
               "sections": [
                 {
@@ -28131,14 +27695,205 @@ SectionWithRelations
               ]
             },
             "foreignKey": null
-          },
-          "surveyResponseDetails": [
-            {}
-          ]
+          }
         },
         "foreignKey": null,
+        "surveyCycle": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "startDate": "string",
+          "endDate": "string",
+          "isActivated": true,
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "survey": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "uid": "string",
+            "name": "string",
+            "surveyText": "string",
+            "startDate": "string",
+            "endDate": "string",
+            "status": "string",
+            "isEnableWeights": true,
+            "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "questions": [
+              {}
+            ],
+            "surveyCycles": [
+              {}
+            ],
+            "surveyResponders": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "email": "string",
+                "fullName": "string",
+                "userId": "string",
+                "surveyId": "string",
+                "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "survey": {},
+                "foreignKey": null,
+                "surveyCycle": {}
+              }
+            ],
+            "sections": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "displayOrder": 0,
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
+              }
+            ]
+          },
+          "foreignKey": null
+        },
+        "surveyResponseDetails": [
+          {}
+        ]
+      },
+      "foreignKey": null,
+      "question": {},
+      "option": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "name": "string",
+        "displayOrder": 0,
+        "score": 0,
+        "questionId": "string",
+        "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
         "question": {},
-        "option": {
+        "foreignKey": null,
+        "followupQuestion": {}
+      }
+    },
+    "survey": {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "uid": "string",
+      "name": "string",
+      "surveyText": "string",
+      "startDate": "string",
+      "endDate": "string",
+      "status": "string",
+      "isEnableWeights": true,
+      "baseSurveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
+      "questions": [
+        {}
+      ],
+      "surveyCycles": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "startDate": "string",
+          "endDate": "string",
+          "isActivated": true,
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "survey": {},
+          "foreignKey": null
+        }
+      ],
+      "surveyResponders": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "firstName": "string",
+          "lastName": "string",
+          "email": "string",
+          "fullName": "string",
+          "userId": "string",
+          "surveyId": "string",
+          "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "survey": {},
+          "foreignKey": null,
+          "surveyCycle": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "startDate": "string",
+            "endDate": "string",
+            "isActivated": true,
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "survey": {},
+            "foreignKey": null
+          }
+        }
+      ],
+      "sections": [
+        {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
           "deletedBy": "string",
@@ -28149,119 +27904,31 @@ SectionWithRelations
           "id": "string",
           "name": "string",
           "displayOrder": 0,
-          "score": 0,
-          "questionId": "string",
-          "followupQuestionId": "string",
+          "surveyId": "string",
           "extId": "string",
-          "extMetadata": {},
-          "question": {},
-          "foreignKey": null,
-          "followupQuestion": {}
+          "extMetadata": {}
         }
-      },
-      "survey": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "uid": "string",
-        "name": "string",
-        "surveyText": "string",
-        "startDate": "string",
-        "endDate": "string",
-        "status": "string",
-        "isEnableWeights": true,
-        "baseSurveyId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "questions": [],
-        "surveyCycles": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "startDate": "string",
-            "endDate": "string",
-            "isActivated": true,
-            "surveyId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "survey": {},
-            "foreignKey": null
-          }
-        ],
-        "surveyResponders": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "firstName": "string",
-            "lastName": "string",
-            "email": "string",
-            "fullName": "string",
-            "userId": "string",
-            "surveyId": "string",
-            "surveyCycleId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "survey": {},
-            "foreignKey": null,
-            "surveyCycle": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "startDate": "string",
-              "endDate": "string",
-              "isActivated": true,
-              "surveyId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "survey": {},
-              "foreignKey": null
-            }
-          }
-        ],
-        "sections": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "name": "string",
-            "displayOrder": 0,
-            "surveyId": "string",
-            "extId": "string",
-            "extMetadata": {}
-          }
-        ]
-      }
+      ]
     }
-  ],
-  "surveyCycles": [
-    {
+  },
+  "dependentOnQuestion": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "displayOrder": 0,
+    "isMandatory": true,
+    "weight": 100,
+    "templateId": "string",
+    "questionId": "string",
+    "dependentOnQuestionId": "string",
+    "extId": "string",
+    "extMetadata": {},
+    "template": {
       "deleted": true,
       "deletedOn": "2019-08-24T14:15:22Z",
       "deletedBy": "string",
@@ -28270,5054 +27937,14 @@ SectionWithRelations
       "createdBy": "string",
       "modifiedBy": "string",
       "id": "string",
-      "startDate": "string",
-      "endDate": "string",
-      "isActivated": true,
-      "surveyId": "string",
-      "extId": "string",
-      "extMetadata": {},
-      "survey": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "uid": "string",
-        "name": "string",
-        "surveyText": "string",
-        "startDate": "string",
-        "endDate": "string",
-        "status": "string",
-        "isEnableWeights": true,
-        "baseSurveyId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "questions": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "uid": "string",
-            "name": "string",
-            "status": "string",
-            "questionType": "Multi Selection",
-            "extId": "string",
-            "extMetadata": {},
-            "isScoreEnabled": true,
-            "isFollowupEnabled": true,
-            "validation": {},
-            "rootQuestionId": "string",
-            "parentQuestionId": "string",
-            "surveyId": "string",
-            "rootQuestion": {},
-            "foreignKey": null,
-            "parentQuestion": {},
-            "options": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "name": "string",
-                "displayOrder": 0,
-                "score": 0,
-                "questionId": "string",
-                "followupQuestionId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "question": {},
-                "foreignKey": null,
-                "followupQuestion": {}
-              }
-            ],
-            "followUpQuestions": [
-              {}
-            ],
-            "surveyResponseDetail": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "surveyResponseId": "string",
-              "questionId": "string",
-              "score": "string",
-              "responseType": "Multi Selection",
-              "textAnswer": "string",
-              "optionId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "surveyResponse": {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "surveyResponderId": "string",
-                "surveyCycleId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "surveyResponder": {
-                  "deleted": true,
-                  "deletedOn": "2019-08-24T14:15:22Z",
-                  "deletedBy": "string",
-                  "createdOn": "2019-08-24T14:15:22Z",
-                  "modifiedOn": "2019-08-24T14:15:22Z",
-                  "createdBy": "string",
-                  "modifiedBy": "string",
-                  "id": "string",
-                  "firstName": "string",
-                  "lastName": "string",
-                  "email": "string",
-                  "fullName": "string",
-                  "userId": "string",
-                  "surveyId": "string",
-                  "surveyCycleId": "string",
-                  "extId": "string",
-                  "extMetadata": {},
-                  "survey": {},
-                  "foreignKey": null,
-                  "surveyCycle": {}
-                },
-                "foreignKey": null,
-                "surveyCycle": {},
-                "surveyResponseDetails": [
-                  {}
-                ]
-              },
-              "foreignKey": null,
-              "question": {},
-              "option": {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "name": "string",
-                "displayOrder": 0,
-                "score": 0,
-                "questionId": "string",
-                "followupQuestionId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "question": {},
-                "foreignKey": null,
-                "followupQuestion": {}
-              }
-            },
-            "survey": {}
-          }
-        ],
-        "surveyCycles": [],
-        "surveyResponders": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "firstName": "string",
-            "lastName": "string",
-            "email": "string",
-            "fullName": "string",
-            "userId": "string",
-            "surveyId": "string",
-            "surveyCycleId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "survey": {},
-            "foreignKey": null,
-            "surveyCycle": {}
-          }
-        ],
-        "sections": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "name": "string",
-            "displayOrder": 0,
-            "surveyId": "string",
-            "extId": "string",
-            "extMetadata": {}
-          }
-        ]
-      },
-      "foreignKey": null
-    }
-  ],
-  "surveyResponders": [
-    {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "firstName": "string",
-      "lastName": "string",
-      "email": "string",
-      "fullName": "string",
-      "userId": "string",
-      "surveyId": "string",
-      "surveyCycleId": "string",
-      "extId": "string",
-      "extMetadata": {},
-      "survey": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "uid": "string",
-        "name": "string",
-        "surveyText": "string",
-        "startDate": "string",
-        "endDate": "string",
-        "status": "string",
-        "isEnableWeights": true,
-        "baseSurveyId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "questions": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "uid": "string",
-            "name": "string",
-            "status": "string",
-            "questionType": "Multi Selection",
-            "extId": "string",
-            "extMetadata": {},
-            "isScoreEnabled": true,
-            "isFollowupEnabled": true,
-            "validation": {},
-            "rootQuestionId": "string",
-            "parentQuestionId": "string",
-            "surveyId": "string",
-            "rootQuestion": {},
-            "foreignKey": null,
-            "parentQuestion": {},
-            "options": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "name": "string",
-                "displayOrder": 0,
-                "score": 0,
-                "questionId": "string",
-                "followupQuestionId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "question": {},
-                "foreignKey": null,
-                "followupQuestion": {}
-              }
-            ],
-            "followUpQuestions": [
-              {}
-            ],
-            "surveyResponseDetail": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "surveyResponseId": "string",
-              "questionId": "string",
-              "score": "string",
-              "responseType": "Multi Selection",
-              "textAnswer": "string",
-              "optionId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "surveyResponse": {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "surveyResponderId": "string",
-                "surveyCycleId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "surveyResponder": {},
-                "foreignKey": null,
-                "surveyCycle": {
-                  "deleted": true,
-                  "deletedOn": "2019-08-24T14:15:22Z",
-                  "deletedBy": "string",
-                  "createdOn": "2019-08-24T14:15:22Z",
-                  "modifiedOn": "2019-08-24T14:15:22Z",
-                  "createdBy": "string",
-                  "modifiedBy": "string",
-                  "id": "string",
-                  "startDate": "string",
-                  "endDate": "string",
-                  "isActivated": true,
-                  "surveyId": "string",
-                  "extId": "string",
-                  "extMetadata": {},
-                  "survey": {},
-                  "foreignKey": null
-                },
-                "surveyResponseDetails": [
-                  {}
-                ]
-              },
-              "foreignKey": null,
-              "question": {},
-              "option": {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "name": "string",
-                "displayOrder": 0,
-                "score": 0,
-                "questionId": "string",
-                "followupQuestionId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "question": {},
-                "foreignKey": null,
-                "followupQuestion": {}
-              }
-            },
-            "survey": {}
-          }
-        ],
-        "surveyCycles": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "startDate": "string",
-            "endDate": "string",
-            "isActivated": true,
-            "surveyId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "survey": {},
-            "foreignKey": null
-          }
-        ],
-        "surveyResponders": [],
-        "sections": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "name": "string",
-            "displayOrder": 0,
-            "surveyId": "string",
-            "extId": "string",
-            "extMetadata": {}
-          }
-        ]
-      },
-      "foreignKey": null,
-      "surveyCycle": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "startDate": "string",
-        "endDate": "string",
-        "isActivated": true,
-        "surveyId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "survey": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "uid": "string",
-          "name": "string",
-          "surveyText": "string",
-          "startDate": "string",
-          "endDate": "string",
-          "status": "string",
-          "isEnableWeights": true,
-          "baseSurveyId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "questions": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "uid": "string",
-              "name": "string",
-              "status": "string",
-              "questionType": "Multi Selection",
-              "extId": "string",
-              "extMetadata": {},
-              "isScoreEnabled": true,
-              "isFollowupEnabled": true,
-              "validation": {},
-              "rootQuestionId": "string",
-              "parentQuestionId": "string",
-              "surveyId": "string",
-              "rootQuestion": {},
-              "foreignKey": null,
-              "parentQuestion": {},
-              "options": [
-                {
-                  "deleted": true,
-                  "deletedOn": "2019-08-24T14:15:22Z",
-                  "deletedBy": "string",
-                  "createdOn": "2019-08-24T14:15:22Z",
-                  "modifiedOn": "2019-08-24T14:15:22Z",
-                  "createdBy": "string",
-                  "modifiedBy": "string",
-                  "id": "string",
-                  "name": "string",
-                  "displayOrder": 0,
-                  "score": 0,
-                  "questionId": "string",
-                  "followupQuestionId": "string",
-                  "extId": "string",
-                  "extMetadata": {},
-                  "question": {},
-                  "foreignKey": null,
-                  "followupQuestion": {}
-                }
-              ],
-              "followUpQuestions": [
-                {}
-              ],
-              "surveyResponseDetail": {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "surveyResponseId": "string",
-                "questionId": "string",
-                "score": "string",
-                "responseType": "Multi Selection",
-                "textAnswer": "string",
-                "optionId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "surveyResponse": {
-                  "deleted": true,
-                  "deletedOn": "2019-08-24T14:15:22Z",
-                  "deletedBy": "string",
-                  "createdOn": "2019-08-24T14:15:22Z",
-                  "modifiedOn": "2019-08-24T14:15:22Z",
-                  "createdBy": "string",
-                  "modifiedBy": "string",
-                  "id": "string",
-                  "surveyResponderId": "string",
-                  "surveyCycleId": "string",
-                  "extId": "string",
-                  "extMetadata": {},
-                  "surveyResponder": {},
-                  "foreignKey": null,
-                  "surveyCycle": {},
-                  "surveyResponseDetails": [
-                    {}
-                  ]
-                },
-                "foreignKey": null,
-                "question": {},
-                "option": {
-                  "deleted": true,
-                  "deletedOn": "2019-08-24T14:15:22Z",
-                  "deletedBy": "string",
-                  "createdOn": "2019-08-24T14:15:22Z",
-                  "modifiedOn": "2019-08-24T14:15:22Z",
-                  "createdBy": "string",
-                  "modifiedBy": "string",
-                  "id": "string",
-                  "name": "string",
-                  "displayOrder": 0,
-                  "score": 0,
-                  "questionId": "string",
-                  "followupQuestionId": "string",
-                  "extId": "string",
-                  "extMetadata": {},
-                  "question": {},
-                  "foreignKey": null,
-                  "followupQuestion": {}
-                }
-              },
-              "survey": {}
-            }
-          ],
-          "surveyCycles": [
-            {}
-          ],
-          "surveyResponders": [],
-          "sections": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "name": "string",
-              "displayOrder": 0,
-              "surveyId": "string",
-              "extId": "string",
-              "extMetadata": {}
-            }
-          ]
-        },
-        "foreignKey": null
-      }
-    }
-  ],
-  "sections": [
-    {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
+      "uid": "string",
       "name": "string",
-      "displayOrder": 0,
-      "surveyId": "string",
+      "status": "string",
+      "isEnableWeight": true,
       "extId": "string",
       "extMetadata": {}
-    }
-  ]
-}
-
-```
-
-SurveyWithRelations
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|uid|string|false|none|none|
-|name|string|true|none|none|
-|surveyText|string|true|none|none|
-|startDate|string|false|none|Start date of the survey|
-|endDate|string|false|none|End date of the survey|
-|status|string|true|none|none|
-|isEnableWeights|boolean|false|none|none|
-|baseSurveyId|string¦null|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-|questions|[[QuestionWithRelations](#schemaquestionwithrelations)]|false|none|[(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })]|
-|surveyCycles|[[SurveyCycleWithRelations](#schemasurveycyclewithrelations)]|false|none|[(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })]|
-|surveyResponders|[[SurveyResponderWithRelations](#schemasurveyresponderwithrelations)]|false|none|[(tsType: SurveyResponderWithRelations, schemaOptions: { includeRelations: true })]|
-|sections|[[SectionWithRelations](#schemasectionwithrelations)]|false|none|[(tsType: SectionWithRelations, schemaOptions: { includeRelations: true })]|
-
-<h2 id="tocS_SurveyResponderWithRelations">SurveyResponderWithRelations</h2>
-<!-- backwards compatibility -->
-<a id="schemasurveyresponderwithrelations"></a>
-<a id="schema_SurveyResponderWithRelations"></a>
-<a id="tocSsurveyresponderwithrelations"></a>
-<a id="tocssurveyresponderwithrelations"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "firstName": "string",
-  "lastName": "string",
-  "email": "string",
-  "fullName": "string",
-  "userId": "string",
-  "surveyId": "string",
-  "surveyCycleId": "string",
-  "extId": "string",
-  "extMetadata": {},
-  "survey": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "uid": "string",
-    "name": "string",
-    "surveyText": "string",
-    "startDate": "string",
-    "endDate": "string",
-    "status": "string",
-    "isEnableWeights": true,
-    "baseSurveyId": "string",
-    "extId": "string",
-    "extMetadata": {},
-    "questions": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "uid": "string",
-        "name": "string",
-        "status": "string",
-        "questionType": "Multi Selection",
-        "extId": "string",
-        "extMetadata": {},
-        "isScoreEnabled": true,
-        "isFollowupEnabled": true,
-        "validation": {},
-        "rootQuestionId": "string",
-        "parentQuestionId": "string",
-        "surveyId": "string",
-        "rootQuestion": {},
-        "foreignKey": null,
-        "parentQuestion": {},
-        "options": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "name": "string",
-            "displayOrder": 0,
-            "score": 0,
-            "questionId": "string",
-            "followupQuestionId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "question": {},
-            "foreignKey": null,
-            "followupQuestion": {}
-          }
-        ],
-        "followUpQuestions": [
-          {}
-        ],
-        "surveyResponseDetail": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "surveyResponseId": "string",
-          "questionId": "string",
-          "score": "string",
-          "responseType": "Multi Selection",
-          "textAnswer": "string",
-          "optionId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "surveyResponse": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "surveyResponderId": "string",
-            "surveyCycleId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "surveyResponder": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "firstName": "string",
-              "lastName": "string",
-              "email": "string",
-              "fullName": "string",
-              "userId": "string",
-              "surveyId": "string",
-              "surveyCycleId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "survey": {},
-              "foreignKey": null,
-              "surveyCycle": {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "startDate": "string",
-                "endDate": "string",
-                "isActivated": true,
-                "surveyId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "survey": {},
-                "foreignKey": null
-              }
-            },
-            "foreignKey": null,
-            "surveyCycle": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "startDate": "string",
-              "endDate": "string",
-              "isActivated": true,
-              "surveyId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "survey": {},
-              "foreignKey": null
-            },
-            "surveyResponseDetails": [
-              {}
-            ]
-          },
-          "foreignKey": null,
-          "question": {},
-          "option": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "name": "string",
-            "displayOrder": 0,
-            "score": 0,
-            "questionId": "string",
-            "followupQuestionId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "question": {},
-            "foreignKey": null,
-            "followupQuestion": {}
-          }
-        },
-        "survey": {}
-      }
-    ],
-    "surveyCycles": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "startDate": "string",
-        "endDate": "string",
-        "isActivated": true,
-        "surveyId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "survey": {},
-        "foreignKey": null
-      }
-    ],
-    "surveyResponders": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "firstName": "string",
-        "lastName": "string",
-        "email": "string",
-        "fullName": "string",
-        "userId": "string",
-        "surveyId": "string",
-        "surveyCycleId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "survey": {},
-        "foreignKey": null,
-        "surveyCycle": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "startDate": "string",
-          "endDate": "string",
-          "isActivated": true,
-          "surveyId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "survey": {},
-          "foreignKey": null
-        }
-      }
-    ],
-    "sections": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "name": "string",
-        "displayOrder": 0,
-        "surveyId": "string",
-        "extId": "string",
-        "extMetadata": {}
-      }
-    ]
-  },
-  "foreignKey": null,
-  "surveyCycle": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "startDate": "string",
-    "endDate": "string",
-    "isActivated": true,
-    "surveyId": "string",
-    "extId": "string",
-    "extMetadata": {},
-    "survey": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "uid": "string",
-      "name": "string",
-      "surveyText": "string",
-      "startDate": "string",
-      "endDate": "string",
-      "status": "string",
-      "isEnableWeights": true,
-      "baseSurveyId": "string",
-      "extId": "string",
-      "extMetadata": {},
-      "questions": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "uid": "string",
-          "name": "string",
-          "status": "string",
-          "questionType": "Multi Selection",
-          "extId": "string",
-          "extMetadata": {},
-          "isScoreEnabled": true,
-          "isFollowupEnabled": true,
-          "validation": {},
-          "rootQuestionId": "string",
-          "parentQuestionId": "string",
-          "surveyId": "string",
-          "rootQuestion": {},
-          "foreignKey": null,
-          "parentQuestion": {},
-          "options": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "name": "string",
-              "displayOrder": 0,
-              "score": 0,
-              "questionId": "string",
-              "followupQuestionId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "question": {},
-              "foreignKey": null,
-              "followupQuestion": {}
-            }
-          ],
-          "followUpQuestions": [
-            {}
-          ],
-          "surveyResponseDetail": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "surveyResponseId": "string",
-            "questionId": "string",
-            "score": "string",
-            "responseType": "Multi Selection",
-            "textAnswer": "string",
-            "optionId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "surveyResponse": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "surveyResponderId": "string",
-              "surveyCycleId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "surveyResponder": {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "firstName": "string",
-                "lastName": "string",
-                "email": "string",
-                "fullName": "string",
-                "userId": "string",
-                "surveyId": "string",
-                "surveyCycleId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "survey": {},
-                "foreignKey": null,
-                "surveyCycle": {}
-              },
-              "foreignKey": null,
-              "surveyCycle": {},
-              "surveyResponseDetails": [
-                {}
-              ]
-            },
-            "foreignKey": null,
-            "question": {},
-            "option": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "name": "string",
-              "displayOrder": 0,
-              "score": 0,
-              "questionId": "string",
-              "followupQuestionId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "question": {},
-              "foreignKey": null,
-              "followupQuestion": {}
-            }
-          },
-          "survey": {}
-        }
-      ],
-      "surveyCycles": [
-        {}
-      ],
-      "surveyResponders": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "firstName": "string",
-          "lastName": "string",
-          "email": "string",
-          "fullName": "string",
-          "userId": "string",
-          "surveyId": "string",
-          "surveyCycleId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "survey": {},
-          "foreignKey": null,
-          "surveyCycle": {}
-        }
-      ],
-      "sections": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "name": "string",
-          "displayOrder": 0,
-          "surveyId": "string",
-          "extId": "string",
-          "extMetadata": {}
-        }
-      ]
-    },
-    "foreignKey": null
-  }
-}
-
-```
-
-SurveyResponderWithRelations
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|firstName|string¦null|false|none|none|
-|lastName|string¦null|false|none|none|
-|email|string|false|none|none|
-|fullName|string|false|none|none|
-|userId|string¦null|false|none|none|
-|surveyId|string|false|none|none|
-|surveyCycleId|string|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-|survey|[SurveyWithRelations](#schemasurveywithrelations)|false|none|(tsType: SurveyWithRelations, schemaOptions: { includeRelations: true })|
-|foreignKey|any|false|none|none|
-|surveyCycle|[SurveyCycleWithRelations](#schemasurveycyclewithrelations)|false|none|(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })|
-
-<h2 id="tocS_SurveyResponseWithRelations">SurveyResponseWithRelations</h2>
-<!-- backwards compatibility -->
-<a id="schemasurveyresponsewithrelations"></a>
-<a id="schema_SurveyResponseWithRelations"></a>
-<a id="tocSsurveyresponsewithrelations"></a>
-<a id="tocssurveyresponsewithrelations"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "surveyResponderId": "string",
-  "surveyCycleId": "string",
-  "extId": "string",
-  "extMetadata": {},
-  "surveyResponder": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "firstName": "string",
-    "lastName": "string",
-    "email": "string",
-    "fullName": "string",
-    "userId": "string",
-    "surveyId": "string",
-    "surveyCycleId": "string",
-    "extId": "string",
-    "extMetadata": {},
-    "survey": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "uid": "string",
-      "name": "string",
-      "surveyText": "string",
-      "startDate": "string",
-      "endDate": "string",
-      "status": "string",
-      "isEnableWeights": true,
-      "baseSurveyId": "string",
-      "extId": "string",
-      "extMetadata": {},
-      "questions": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "uid": "string",
-          "name": "string",
-          "status": "string",
-          "questionType": "Multi Selection",
-          "extId": "string",
-          "extMetadata": {},
-          "isScoreEnabled": true,
-          "isFollowupEnabled": true,
-          "validation": {},
-          "rootQuestionId": "string",
-          "parentQuestionId": "string",
-          "surveyId": "string",
-          "rootQuestion": {},
-          "foreignKey": null,
-          "parentQuestion": {},
-          "options": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "name": "string",
-              "displayOrder": 0,
-              "score": 0,
-              "questionId": "string",
-              "followupQuestionId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "question": {},
-              "foreignKey": null,
-              "followupQuestion": {}
-            }
-          ],
-          "followUpQuestions": [
-            {}
-          ],
-          "surveyResponseDetail": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "surveyResponseId": "string",
-            "questionId": "string",
-            "score": "string",
-            "responseType": "Multi Selection",
-            "textAnswer": "string",
-            "optionId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "surveyResponse": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "surveyResponderId": "string",
-              "surveyCycleId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "surveyResponder": {},
-              "foreignKey": null,
-              "surveyCycle": {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "startDate": "string",
-                "endDate": "string",
-                "isActivated": true,
-                "surveyId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "survey": {},
-                "foreignKey": null
-              },
-              "surveyResponseDetails": [
-                {}
-              ]
-            },
-            "foreignKey": null,
-            "question": {},
-            "option": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "name": "string",
-              "displayOrder": 0,
-              "score": 0,
-              "questionId": "string",
-              "followupQuestionId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "question": {},
-              "foreignKey": null,
-              "followupQuestion": {}
-            }
-          },
-          "survey": {}
-        }
-      ],
-      "surveyCycles": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "startDate": "string",
-          "endDate": "string",
-          "isActivated": true,
-          "surveyId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "survey": {},
-          "foreignKey": null
-        }
-      ],
-      "surveyResponders": [
-        {}
-      ],
-      "sections": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "name": "string",
-          "displayOrder": 0,
-          "surveyId": "string",
-          "extId": "string",
-          "extMetadata": {}
-        }
-      ]
     },
     "foreignKey": null,
-    "surveyCycle": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "startDate": "string",
-      "endDate": "string",
-      "isActivated": true,
-      "surveyId": "string",
-      "extId": "string",
-      "extMetadata": {},
-      "survey": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "uid": "string",
-        "name": "string",
-        "surveyText": "string",
-        "startDate": "string",
-        "endDate": "string",
-        "status": "string",
-        "isEnableWeights": true,
-        "baseSurveyId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "questions": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "uid": "string",
-            "name": "string",
-            "status": "string",
-            "questionType": "Multi Selection",
-            "extId": "string",
-            "extMetadata": {},
-            "isScoreEnabled": true,
-            "isFollowupEnabled": true,
-            "validation": {},
-            "rootQuestionId": "string",
-            "parentQuestionId": "string",
-            "surveyId": "string",
-            "rootQuestion": {},
-            "foreignKey": null,
-            "parentQuestion": {},
-            "options": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "name": "string",
-                "displayOrder": 0,
-                "score": 0,
-                "questionId": "string",
-                "followupQuestionId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "question": {},
-                "foreignKey": null,
-                "followupQuestion": {}
-              }
-            ],
-            "followUpQuestions": [
-              {}
-            ],
-            "surveyResponseDetail": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "surveyResponseId": "string",
-              "questionId": "string",
-              "score": "string",
-              "responseType": "Multi Selection",
-              "textAnswer": "string",
-              "optionId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "surveyResponse": {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "surveyResponderId": "string",
-                "surveyCycleId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "surveyResponder": {},
-                "foreignKey": null,
-                "surveyCycle": {},
-                "surveyResponseDetails": [
-                  {}
-                ]
-              },
-              "foreignKey": null,
-              "question": {},
-              "option": {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "name": "string",
-                "displayOrder": 0,
-                "score": 0,
-                "questionId": "string",
-                "followupQuestionId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "question": {},
-                "foreignKey": null,
-                "followupQuestion": {}
-              }
-            },
-            "survey": {}
-          }
-        ],
-        "surveyCycles": [
-          {}
-        ],
-        "surveyResponders": [
-          {}
-        ],
-        "sections": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "name": "string",
-            "displayOrder": 0,
-            "surveyId": "string",
-            "extId": "string",
-            "extMetadata": {}
-          }
-        ]
-      },
-      "foreignKey": null
-    }
-  },
-  "foreignKey": null,
-  "surveyCycle": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "startDate": "string",
-    "endDate": "string",
-    "isActivated": true,
-    "surveyId": "string",
-    "extId": "string",
-    "extMetadata": {},
-    "survey": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "uid": "string",
-      "name": "string",
-      "surveyText": "string",
-      "startDate": "string",
-      "endDate": "string",
-      "status": "string",
-      "isEnableWeights": true,
-      "baseSurveyId": "string",
-      "extId": "string",
-      "extMetadata": {},
-      "questions": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "uid": "string",
-          "name": "string",
-          "status": "string",
-          "questionType": "Multi Selection",
-          "extId": "string",
-          "extMetadata": {},
-          "isScoreEnabled": true,
-          "isFollowupEnabled": true,
-          "validation": {},
-          "rootQuestionId": "string",
-          "parentQuestionId": "string",
-          "surveyId": "string",
-          "rootQuestion": {},
-          "foreignKey": null,
-          "parentQuestion": {},
-          "options": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "name": "string",
-              "displayOrder": 0,
-              "score": 0,
-              "questionId": "string",
-              "followupQuestionId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "question": {},
-              "foreignKey": null,
-              "followupQuestion": {}
-            }
-          ],
-          "followUpQuestions": [
-            {}
-          ],
-          "surveyResponseDetail": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "surveyResponseId": "string",
-            "questionId": "string",
-            "score": "string",
-            "responseType": "Multi Selection",
-            "textAnswer": "string",
-            "optionId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "surveyResponse": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "surveyResponderId": "string",
-              "surveyCycleId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "surveyResponder": {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "firstName": "string",
-                "lastName": "string",
-                "email": "string",
-                "fullName": "string",
-                "userId": "string",
-                "surveyId": "string",
-                "surveyCycleId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "survey": {},
-                "foreignKey": null,
-                "surveyCycle": {}
-              },
-              "foreignKey": null,
-              "surveyCycle": {},
-              "surveyResponseDetails": [
-                {}
-              ]
-            },
-            "foreignKey": null,
-            "question": {},
-            "option": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "name": "string",
-              "displayOrder": 0,
-              "score": 0,
-              "questionId": "string",
-              "followupQuestionId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "question": {},
-              "foreignKey": null,
-              "followupQuestion": {}
-            }
-          },
-          "survey": {}
-        }
-      ],
-      "surveyCycles": [
-        {}
-      ],
-      "surveyResponders": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "firstName": "string",
-          "lastName": "string",
-          "email": "string",
-          "fullName": "string",
-          "userId": "string",
-          "surveyId": "string",
-          "surveyCycleId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "survey": {},
-          "foreignKey": null,
-          "surveyCycle": {}
-        }
-      ],
-      "sections": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "name": "string",
-          "displayOrder": 0,
-          "surveyId": "string",
-          "extId": "string",
-          "extMetadata": {}
-        }
-      ]
-    },
-    "foreignKey": null
-  },
-  "surveyResponseDetails": [
-    {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "surveyResponseId": "string",
-      "questionId": "string",
-      "score": "string",
-      "responseType": "Multi Selection",
-      "textAnswer": "string",
-      "optionId": "string",
-      "extId": "string",
-      "extMetadata": {},
-      "surveyResponse": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "surveyResponderId": "string",
-        "surveyCycleId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "surveyResponder": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "firstName": "string",
-          "lastName": "string",
-          "email": "string",
-          "fullName": "string",
-          "userId": "string",
-          "surveyId": "string",
-          "surveyCycleId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "survey": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "uid": "string",
-            "name": "string",
-            "surveyText": "string",
-            "startDate": "string",
-            "endDate": "string",
-            "status": "string",
-            "isEnableWeights": true,
-            "baseSurveyId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "questions": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "uid": "string",
-                "name": "string",
-                "status": "string",
-                "questionType": "Multi Selection",
-                "extId": "string",
-                "extMetadata": {},
-                "isScoreEnabled": true,
-                "isFollowupEnabled": true,
-                "validation": {},
-                "rootQuestionId": "string",
-                "parentQuestionId": "string",
-                "surveyId": "string",
-                "rootQuestion": {},
-                "foreignKey": null,
-                "parentQuestion": {},
-                "options": [
-                  {
-                    "deleted": true,
-                    "deletedOn": "2019-08-24T14:15:22Z",
-                    "deletedBy": "string",
-                    "createdOn": "2019-08-24T14:15:22Z",
-                    "modifiedOn": "2019-08-24T14:15:22Z",
-                    "createdBy": "string",
-                    "modifiedBy": "string",
-                    "id": "string",
-                    "name": "string",
-                    "displayOrder": 0,
-                    "score": 0,
-                    "questionId": "string",
-                    "followupQuestionId": "string",
-                    "extId": "string",
-                    "extMetadata": {},
-                    "question": {},
-                    "foreignKey": null,
-                    "followupQuestion": {}
-                  }
-                ],
-                "followUpQuestions": [
-                  {}
-                ],
-                "surveyResponseDetail": {},
-                "survey": {}
-              }
-            ],
-            "surveyCycles": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "startDate": "string",
-                "endDate": "string",
-                "isActivated": true,
-                "surveyId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "survey": {},
-                "foreignKey": null
-              }
-            ],
-            "surveyResponders": [
-              {}
-            ],
-            "sections": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "name": "string",
-                "displayOrder": 0,
-                "surveyId": "string",
-                "extId": "string",
-                "extMetadata": {}
-              }
-            ]
-          },
-          "foreignKey": null,
-          "surveyCycle": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "startDate": "string",
-            "endDate": "string",
-            "isActivated": true,
-            "surveyId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "survey": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "uid": "string",
-              "name": "string",
-              "surveyText": "string",
-              "startDate": "string",
-              "endDate": "string",
-              "status": "string",
-              "isEnableWeights": true,
-              "baseSurveyId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "questions": [
-                {
-                  "deleted": true,
-                  "deletedOn": "2019-08-24T14:15:22Z",
-                  "deletedBy": "string",
-                  "createdOn": "2019-08-24T14:15:22Z",
-                  "modifiedOn": "2019-08-24T14:15:22Z",
-                  "createdBy": "string",
-                  "modifiedBy": "string",
-                  "id": "string",
-                  "uid": "string",
-                  "name": "string",
-                  "status": "string",
-                  "questionType": "Multi Selection",
-                  "extId": "string",
-                  "extMetadata": {},
-                  "isScoreEnabled": true,
-                  "isFollowupEnabled": true,
-                  "validation": {},
-                  "rootQuestionId": "string",
-                  "parentQuestionId": "string",
-                  "surveyId": "string",
-                  "rootQuestion": {},
-                  "foreignKey": null,
-                  "parentQuestion": {},
-                  "options": [
-                    {}
-                  ],
-                  "followUpQuestions": [
-                    {}
-                  ],
-                  "surveyResponseDetail": {},
-                  "survey": {}
-                }
-              ],
-              "surveyCycles": [
-                {}
-              ],
-              "surveyResponders": [
-                {}
-              ],
-              "sections": [
-                {
-                  "deleted": true,
-                  "deletedOn": "2019-08-24T14:15:22Z",
-                  "deletedBy": "string",
-                  "createdOn": "2019-08-24T14:15:22Z",
-                  "modifiedOn": "2019-08-24T14:15:22Z",
-                  "createdBy": "string",
-                  "modifiedBy": "string",
-                  "id": "string",
-                  "name": "string",
-                  "displayOrder": 0,
-                  "surveyId": "string",
-                  "extId": "string",
-                  "extMetadata": {}
-                }
-              ]
-            },
-            "foreignKey": null
-          }
-        },
-        "foreignKey": null,
-        "surveyCycle": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "startDate": "string",
-          "endDate": "string",
-          "isActivated": true,
-          "surveyId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "survey": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "uid": "string",
-            "name": "string",
-            "surveyText": "string",
-            "startDate": "string",
-            "endDate": "string",
-            "status": "string",
-            "isEnableWeights": true,
-            "baseSurveyId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "questions": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "uid": "string",
-                "name": "string",
-                "status": "string",
-                "questionType": "Multi Selection",
-                "extId": "string",
-                "extMetadata": {},
-                "isScoreEnabled": true,
-                "isFollowupEnabled": true,
-                "validation": {},
-                "rootQuestionId": "string",
-                "parentQuestionId": "string",
-                "surveyId": "string",
-                "rootQuestion": {},
-                "foreignKey": null,
-                "parentQuestion": {},
-                "options": [
-                  {
-                    "deleted": true,
-                    "deletedOn": "2019-08-24T14:15:22Z",
-                    "deletedBy": "string",
-                    "createdOn": "2019-08-24T14:15:22Z",
-                    "modifiedOn": "2019-08-24T14:15:22Z",
-                    "createdBy": "string",
-                    "modifiedBy": "string",
-                    "id": "string",
-                    "name": "string",
-                    "displayOrder": 0,
-                    "score": 0,
-                    "questionId": "string",
-                    "followupQuestionId": "string",
-                    "extId": "string",
-                    "extMetadata": {},
-                    "question": {},
-                    "foreignKey": null,
-                    "followupQuestion": {}
-                  }
-                ],
-                "followUpQuestions": [
-                  {}
-                ],
-                "surveyResponseDetail": {},
-                "survey": {}
-              }
-            ],
-            "surveyCycles": [
-              {}
-            ],
-            "surveyResponders": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "firstName": "string",
-                "lastName": "string",
-                "email": "string",
-                "fullName": "string",
-                "userId": "string",
-                "surveyId": "string",
-                "surveyCycleId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "survey": {},
-                "foreignKey": null,
-                "surveyCycle": {}
-              }
-            ],
-            "sections": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "name": "string",
-                "displayOrder": 0,
-                "surveyId": "string",
-                "extId": "string",
-                "extMetadata": {}
-              }
-            ]
-          },
-          "foreignKey": null
-        },
-        "surveyResponseDetails": []
-      },
-      "foreignKey": null,
-      "question": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "uid": "string",
-        "name": "string",
-        "status": "string",
-        "questionType": "Multi Selection",
-        "extId": "string",
-        "extMetadata": {},
-        "isScoreEnabled": true,
-        "isFollowupEnabled": true,
-        "validation": {},
-        "rootQuestionId": "string",
-        "parentQuestionId": "string",
-        "surveyId": "string",
-        "rootQuestion": {},
-        "foreignKey": null,
-        "parentQuestion": {},
-        "options": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "name": "string",
-            "displayOrder": 0,
-            "score": 0,
-            "questionId": "string",
-            "followupQuestionId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "question": {},
-            "foreignKey": null,
-            "followupQuestion": {}
-          }
-        ],
-        "followUpQuestions": [
-          {}
-        ],
-        "surveyResponseDetail": {},
-        "survey": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "uid": "string",
-          "name": "string",
-          "surveyText": "string",
-          "startDate": "string",
-          "endDate": "string",
-          "status": "string",
-          "isEnableWeights": true,
-          "baseSurveyId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "questions": [
-            {}
-          ],
-          "surveyCycles": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "startDate": "string",
-              "endDate": "string",
-              "isActivated": true,
-              "surveyId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "survey": {},
-              "foreignKey": null
-            }
-          ],
-          "surveyResponders": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "firstName": "string",
-              "lastName": "string",
-              "email": "string",
-              "fullName": "string",
-              "userId": "string",
-              "surveyId": "string",
-              "surveyCycleId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "survey": {},
-              "foreignKey": null,
-              "surveyCycle": {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "startDate": "string",
-                "endDate": "string",
-                "isActivated": true,
-                "surveyId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "survey": {},
-                "foreignKey": null
-              }
-            }
-          ],
-          "sections": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "name": "string",
-              "displayOrder": 0,
-              "surveyId": "string",
-              "extId": "string",
-              "extMetadata": {}
-            }
-          ]
-        }
-      },
-      "option": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "name": "string",
-        "displayOrder": 0,
-        "score": 0,
-        "questionId": "string",
-        "followupQuestionId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "question": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "uid": "string",
-          "name": "string",
-          "status": "string",
-          "questionType": "Multi Selection",
-          "extId": "string",
-          "extMetadata": {},
-          "isScoreEnabled": true,
-          "isFollowupEnabled": true,
-          "validation": {},
-          "rootQuestionId": "string",
-          "parentQuestionId": "string",
-          "surveyId": "string",
-          "rootQuestion": {},
-          "foreignKey": null,
-          "parentQuestion": {},
-          "options": [
-            {}
-          ],
-          "followUpQuestions": [
-            {}
-          ],
-          "surveyResponseDetail": {},
-          "survey": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "uid": "string",
-            "name": "string",
-            "surveyText": "string",
-            "startDate": "string",
-            "endDate": "string",
-            "status": "string",
-            "isEnableWeights": true,
-            "baseSurveyId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "questions": [
-              {}
-            ],
-            "surveyCycles": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "startDate": "string",
-                "endDate": "string",
-                "isActivated": true,
-                "surveyId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "survey": {},
-                "foreignKey": null
-              }
-            ],
-            "surveyResponders": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "firstName": "string",
-                "lastName": "string",
-                "email": "string",
-                "fullName": "string",
-                "userId": "string",
-                "surveyId": "string",
-                "surveyCycleId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "survey": {},
-                "foreignKey": null,
-                "surveyCycle": {
-                  "deleted": true,
-                  "deletedOn": "2019-08-24T14:15:22Z",
-                  "deletedBy": "string",
-                  "createdOn": "2019-08-24T14:15:22Z",
-                  "modifiedOn": "2019-08-24T14:15:22Z",
-                  "createdBy": "string",
-                  "modifiedBy": "string",
-                  "id": "string",
-                  "startDate": "string",
-                  "endDate": "string",
-                  "isActivated": true,
-                  "surveyId": "string",
-                  "extId": "string",
-                  "extMetadata": {},
-                  "survey": {},
-                  "foreignKey": null
-                }
-              }
-            ],
-            "sections": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "name": "string",
-                "displayOrder": 0,
-                "surveyId": "string",
-                "extId": "string",
-                "extMetadata": {}
-              }
-            ]
-          }
-        },
-        "foreignKey": null,
-        "followupQuestion": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "uid": "string",
-          "name": "string",
-          "status": "string",
-          "questionType": "Multi Selection",
-          "extId": "string",
-          "extMetadata": {},
-          "isScoreEnabled": true,
-          "isFollowupEnabled": true,
-          "validation": {},
-          "rootQuestionId": "string",
-          "parentQuestionId": "string",
-          "surveyId": "string",
-          "rootQuestion": {},
-          "foreignKey": null,
-          "parentQuestion": {},
-          "options": [
-            {}
-          ],
-          "followUpQuestions": [
-            {}
-          ],
-          "surveyResponseDetail": {},
-          "survey": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "uid": "string",
-            "name": "string",
-            "surveyText": "string",
-            "startDate": "string",
-            "endDate": "string",
-            "status": "string",
-            "isEnableWeights": true,
-            "baseSurveyId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "questions": [
-              {}
-            ],
-            "surveyCycles": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "startDate": "string",
-                "endDate": "string",
-                "isActivated": true,
-                "surveyId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "survey": {},
-                "foreignKey": null
-              }
-            ],
-            "surveyResponders": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "firstName": "string",
-                "lastName": "string",
-                "email": "string",
-                "fullName": "string",
-                "userId": "string",
-                "surveyId": "string",
-                "surveyCycleId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "survey": {},
-                "foreignKey": null,
-                "surveyCycle": {
-                  "deleted": true,
-                  "deletedOn": "2019-08-24T14:15:22Z",
-                  "deletedBy": "string",
-                  "createdOn": "2019-08-24T14:15:22Z",
-                  "modifiedOn": "2019-08-24T14:15:22Z",
-                  "createdBy": "string",
-                  "modifiedBy": "string",
-                  "id": "string",
-                  "startDate": "string",
-                  "endDate": "string",
-                  "isActivated": true,
-                  "surveyId": "string",
-                  "extId": "string",
-                  "extMetadata": {},
-                  "survey": {},
-                  "foreignKey": null
-                }
-              }
-            ],
-            "sections": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "name": "string",
-                "displayOrder": 0,
-                "surveyId": "string",
-                "extId": "string",
-                "extMetadata": {}
-              }
-            ]
-          }
-        }
-      }
-    }
-  ]
-}
-
-```
-
-SurveyResponseWithRelations
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|surveyResponderId|string|true|none|none|
-|surveyCycleId|string|true|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-|surveyResponder|[SurveyResponderWithRelations](#schemasurveyresponderwithrelations)|false|none|(tsType: SurveyResponderWithRelations, schemaOptions: { includeRelations: true })|
-|foreignKey|any|false|none|none|
-|surveyCycle|[SurveyCycleWithRelations](#schemasurveycyclewithrelations)|false|none|(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })|
-|surveyResponseDetails|[[SurveyResponseDetailWithRelations](#schemasurveyresponsedetailwithrelations)]|false|none|[(tsType: SurveyResponseDetailWithRelations, schemaOptions: { includeRelations: true })]|
-
-<h2 id="tocS_OptionsWithRelations">OptionsWithRelations</h2>
-<!-- backwards compatibility -->
-<a id="schemaoptionswithrelations"></a>
-<a id="schema_OptionsWithRelations"></a>
-<a id="tocSoptionswithrelations"></a>
-<a id="tocsoptionswithrelations"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "displayOrder": 0,
-  "score": 0,
-  "questionId": "string",
-  "followupQuestionId": "string",
-  "extId": "string",
-  "extMetadata": {},
-  "question": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "uid": "string",
-    "name": "string",
-    "status": "string",
-    "questionType": "Multi Selection",
-    "extId": "string",
-    "extMetadata": {},
-    "isScoreEnabled": true,
-    "isFollowupEnabled": true,
-    "validation": {},
-    "rootQuestionId": "string",
-    "parentQuestionId": "string",
-    "surveyId": "string",
-    "rootQuestion": {},
-    "foreignKey": null,
-    "parentQuestion": {},
-    "options": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "name": "string",
-        "displayOrder": 0,
-        "score": 0,
-        "questionId": "string",
-        "followupQuestionId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "question": {},
-        "foreignKey": null,
-        "followupQuestion": {}
-      }
-    ],
-    "followUpQuestions": [
-      {}
-    ],
-    "surveyResponseDetail": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "surveyResponseId": "string",
-      "questionId": "string",
-      "score": "string",
-      "responseType": "Multi Selection",
-      "textAnswer": "string",
-      "optionId": "string",
-      "extId": "string",
-      "extMetadata": {},
-      "surveyResponse": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "surveyResponderId": "string",
-        "surveyCycleId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "surveyResponder": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "firstName": "string",
-          "lastName": "string",
-          "email": "string",
-          "fullName": "string",
-          "userId": "string",
-          "surveyId": "string",
-          "surveyCycleId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "survey": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "uid": "string",
-            "name": "string",
-            "surveyText": "string",
-            "startDate": "string",
-            "endDate": "string",
-            "status": "string",
-            "isEnableWeights": true,
-            "baseSurveyId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "questions": [
-              {}
-            ],
-            "surveyCycles": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "startDate": "string",
-                "endDate": "string",
-                "isActivated": true,
-                "surveyId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "survey": {},
-                "foreignKey": null
-              }
-            ],
-            "surveyResponders": [
-              {}
-            ],
-            "sections": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "name": "string",
-                "displayOrder": 0,
-                "surveyId": "string",
-                "extId": "string",
-                "extMetadata": {}
-              }
-            ]
-          },
-          "foreignKey": null,
-          "surveyCycle": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "startDate": "string",
-            "endDate": "string",
-            "isActivated": true,
-            "surveyId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "survey": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "uid": "string",
-              "name": "string",
-              "surveyText": "string",
-              "startDate": "string",
-              "endDate": "string",
-              "status": "string",
-              "isEnableWeights": true,
-              "baseSurveyId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "questions": [
-                {}
-              ],
-              "surveyCycles": [
-                {}
-              ],
-              "surveyResponders": [
-                {}
-              ],
-              "sections": [
-                {
-                  "deleted": true,
-                  "deletedOn": "2019-08-24T14:15:22Z",
-                  "deletedBy": "string",
-                  "createdOn": "2019-08-24T14:15:22Z",
-                  "modifiedOn": "2019-08-24T14:15:22Z",
-                  "createdBy": "string",
-                  "modifiedBy": "string",
-                  "id": "string",
-                  "name": "string",
-                  "displayOrder": 0,
-                  "surveyId": "string",
-                  "extId": "string",
-                  "extMetadata": {}
-                }
-              ]
-            },
-            "foreignKey": null
-          }
-        },
-        "foreignKey": null,
-        "surveyCycle": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "startDate": "string",
-          "endDate": "string",
-          "isActivated": true,
-          "surveyId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "survey": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "uid": "string",
-            "name": "string",
-            "surveyText": "string",
-            "startDate": "string",
-            "endDate": "string",
-            "status": "string",
-            "isEnableWeights": true,
-            "baseSurveyId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "questions": [
-              {}
-            ],
-            "surveyCycles": [
-              {}
-            ],
-            "surveyResponders": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "firstName": "string",
-                "lastName": "string",
-                "email": "string",
-                "fullName": "string",
-                "userId": "string",
-                "surveyId": "string",
-                "surveyCycleId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "survey": {},
-                "foreignKey": null,
-                "surveyCycle": {}
-              }
-            ],
-            "sections": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "name": "string",
-                "displayOrder": 0,
-                "surveyId": "string",
-                "extId": "string",
-                "extMetadata": {}
-              }
-            ]
-          },
-          "foreignKey": null
-        },
-        "surveyResponseDetails": [
-          {}
-        ]
-      },
-      "foreignKey": null,
-      "question": {},
-      "option": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "name": "string",
-        "displayOrder": 0,
-        "score": 0,
-        "questionId": "string",
-        "followupQuestionId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "question": {},
-        "foreignKey": null,
-        "followupQuestion": {}
-      }
-    },
-    "survey": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "uid": "string",
-      "name": "string",
-      "surveyText": "string",
-      "startDate": "string",
-      "endDate": "string",
-      "status": "string",
-      "isEnableWeights": true,
-      "baseSurveyId": "string",
-      "extId": "string",
-      "extMetadata": {},
-      "questions": [
-        {}
-      ],
-      "surveyCycles": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "startDate": "string",
-          "endDate": "string",
-          "isActivated": true,
-          "surveyId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "survey": {},
-          "foreignKey": null
-        }
-      ],
-      "surveyResponders": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "firstName": "string",
-          "lastName": "string",
-          "email": "string",
-          "fullName": "string",
-          "userId": "string",
-          "surveyId": "string",
-          "surveyCycleId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "survey": {},
-          "foreignKey": null,
-          "surveyCycle": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "startDate": "string",
-            "endDate": "string",
-            "isActivated": true,
-            "surveyId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "survey": {},
-            "foreignKey": null
-          }
-        }
-      ],
-      "sections": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "name": "string",
-          "displayOrder": 0,
-          "surveyId": "string",
-          "extId": "string",
-          "extMetadata": {}
-        }
-      ]
-    }
-  },
-  "foreignKey": null,
-  "followupQuestion": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "uid": "string",
-    "name": "string",
-    "status": "string",
-    "questionType": "Multi Selection",
-    "extId": "string",
-    "extMetadata": {},
-    "isScoreEnabled": true,
-    "isFollowupEnabled": true,
-    "validation": {},
-    "rootQuestionId": "string",
-    "parentQuestionId": "string",
-    "surveyId": "string",
-    "rootQuestion": {},
-    "foreignKey": null,
-    "parentQuestion": {},
-    "options": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "name": "string",
-        "displayOrder": 0,
-        "score": 0,
-        "questionId": "string",
-        "followupQuestionId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "question": {},
-        "foreignKey": null,
-        "followupQuestion": {}
-      }
-    ],
-    "followUpQuestions": [
-      {}
-    ],
-    "surveyResponseDetail": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "surveyResponseId": "string",
-      "questionId": "string",
-      "score": "string",
-      "responseType": "Multi Selection",
-      "textAnswer": "string",
-      "optionId": "string",
-      "extId": "string",
-      "extMetadata": {},
-      "surveyResponse": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "surveyResponderId": "string",
-        "surveyCycleId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "surveyResponder": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "firstName": "string",
-          "lastName": "string",
-          "email": "string",
-          "fullName": "string",
-          "userId": "string",
-          "surveyId": "string",
-          "surveyCycleId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "survey": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "uid": "string",
-            "name": "string",
-            "surveyText": "string",
-            "startDate": "string",
-            "endDate": "string",
-            "status": "string",
-            "isEnableWeights": true,
-            "baseSurveyId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "questions": [
-              {}
-            ],
-            "surveyCycles": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "startDate": "string",
-                "endDate": "string",
-                "isActivated": true,
-                "surveyId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "survey": {},
-                "foreignKey": null
-              }
-            ],
-            "surveyResponders": [
-              {}
-            ],
-            "sections": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "name": "string",
-                "displayOrder": 0,
-                "surveyId": "string",
-                "extId": "string",
-                "extMetadata": {}
-              }
-            ]
-          },
-          "foreignKey": null,
-          "surveyCycle": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "startDate": "string",
-            "endDate": "string",
-            "isActivated": true,
-            "surveyId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "survey": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "uid": "string",
-              "name": "string",
-              "surveyText": "string",
-              "startDate": "string",
-              "endDate": "string",
-              "status": "string",
-              "isEnableWeights": true,
-              "baseSurveyId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "questions": [
-                {}
-              ],
-              "surveyCycles": [
-                {}
-              ],
-              "surveyResponders": [
-                {}
-              ],
-              "sections": [
-                {
-                  "deleted": true,
-                  "deletedOn": "2019-08-24T14:15:22Z",
-                  "deletedBy": "string",
-                  "createdOn": "2019-08-24T14:15:22Z",
-                  "modifiedOn": "2019-08-24T14:15:22Z",
-                  "createdBy": "string",
-                  "modifiedBy": "string",
-                  "id": "string",
-                  "name": "string",
-                  "displayOrder": 0,
-                  "surveyId": "string",
-                  "extId": "string",
-                  "extMetadata": {}
-                }
-              ]
-            },
-            "foreignKey": null
-          }
-        },
-        "foreignKey": null,
-        "surveyCycle": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "startDate": "string",
-          "endDate": "string",
-          "isActivated": true,
-          "surveyId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "survey": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "uid": "string",
-            "name": "string",
-            "surveyText": "string",
-            "startDate": "string",
-            "endDate": "string",
-            "status": "string",
-            "isEnableWeights": true,
-            "baseSurveyId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "questions": [
-              {}
-            ],
-            "surveyCycles": [
-              {}
-            ],
-            "surveyResponders": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "firstName": "string",
-                "lastName": "string",
-                "email": "string",
-                "fullName": "string",
-                "userId": "string",
-                "surveyId": "string",
-                "surveyCycleId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "survey": {},
-                "foreignKey": null,
-                "surveyCycle": {}
-              }
-            ],
-            "sections": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "name": "string",
-                "displayOrder": 0,
-                "surveyId": "string",
-                "extId": "string",
-                "extMetadata": {}
-              }
-            ]
-          },
-          "foreignKey": null
-        },
-        "surveyResponseDetails": [
-          {}
-        ]
-      },
-      "foreignKey": null,
-      "question": {},
-      "option": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "name": "string",
-        "displayOrder": 0,
-        "score": 0,
-        "questionId": "string",
-        "followupQuestionId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "question": {},
-        "foreignKey": null,
-        "followupQuestion": {}
-      }
-    },
-    "survey": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "uid": "string",
-      "name": "string",
-      "surveyText": "string",
-      "startDate": "string",
-      "endDate": "string",
-      "status": "string",
-      "isEnableWeights": true,
-      "baseSurveyId": "string",
-      "extId": "string",
-      "extMetadata": {},
-      "questions": [
-        {}
-      ],
-      "surveyCycles": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "startDate": "string",
-          "endDate": "string",
-          "isActivated": true,
-          "surveyId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "survey": {},
-          "foreignKey": null
-        }
-      ],
-      "surveyResponders": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "firstName": "string",
-          "lastName": "string",
-          "email": "string",
-          "fullName": "string",
-          "userId": "string",
-          "surveyId": "string",
-          "surveyCycleId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "survey": {},
-          "foreignKey": null,
-          "surveyCycle": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "startDate": "string",
-            "endDate": "string",
-            "isActivated": true,
-            "surveyId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "survey": {},
-            "foreignKey": null
-          }
-        }
-      ],
-      "sections": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "name": "string",
-          "displayOrder": 0,
-          "surveyId": "string",
-          "extId": "string",
-          "extMetadata": {}
-        }
-      ]
-    }
-  }
-}
-
-```
-
-OptionsWithRelations
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|name|string|false|none|none|
-|displayOrder|number|true|none|none|
-|score|number¦null|false|none|none|
-|questionId|string|false|none|none|
-|followupQuestionId|string¦null|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-|question|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
-|foreignKey|any|false|none|none|
-|followupQuestion|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
-
-<h2 id="tocS_SurveyResponseDetailWithRelations">SurveyResponseDetailWithRelations</h2>
-<!-- backwards compatibility -->
-<a id="schemasurveyresponsedetailwithrelations"></a>
-<a id="schema_SurveyResponseDetailWithRelations"></a>
-<a id="tocSsurveyresponsedetailwithrelations"></a>
-<a id="tocssurveyresponsedetailwithrelations"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "surveyResponseId": "string",
-  "questionId": "string",
-  "score": "string",
-  "responseType": "Multi Selection",
-  "textAnswer": "string",
-  "optionId": "string",
-  "extId": "string",
-  "extMetadata": {},
-  "surveyResponse": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "surveyResponderId": "string",
-    "surveyCycleId": "string",
-    "extId": "string",
-    "extMetadata": {},
-    "surveyResponder": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "firstName": "string",
-      "lastName": "string",
-      "email": "string",
-      "fullName": "string",
-      "userId": "string",
-      "surveyId": "string",
-      "surveyCycleId": "string",
-      "extId": "string",
-      "extMetadata": {},
-      "survey": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "uid": "string",
-        "name": "string",
-        "surveyText": "string",
-        "startDate": "string",
-        "endDate": "string",
-        "status": "string",
-        "isEnableWeights": true,
-        "baseSurveyId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "questions": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "uid": "string",
-            "name": "string",
-            "status": "string",
-            "questionType": "Multi Selection",
-            "extId": "string",
-            "extMetadata": {},
-            "isScoreEnabled": true,
-            "isFollowupEnabled": true,
-            "validation": {},
-            "rootQuestionId": "string",
-            "parentQuestionId": "string",
-            "surveyId": "string",
-            "rootQuestion": {},
-            "foreignKey": null,
-            "parentQuestion": {},
-            "options": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "name": "string",
-                "displayOrder": 0,
-                "score": 0,
-                "questionId": "string",
-                "followupQuestionId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "question": {},
-                "foreignKey": null,
-                "followupQuestion": {}
-              }
-            ],
-            "followUpQuestions": [
-              {}
-            ],
-            "surveyResponseDetail": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "surveyResponseId": "string",
-              "questionId": "string",
-              "score": "string",
-              "responseType": "Multi Selection",
-              "textAnswer": "string",
-              "optionId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "surveyResponse": {},
-              "foreignKey": null,
-              "question": {},
-              "option": {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "name": "string",
-                "displayOrder": 0,
-                "score": 0,
-                "questionId": "string",
-                "followupQuestionId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "question": {},
-                "foreignKey": null,
-                "followupQuestion": {}
-              }
-            },
-            "survey": {}
-          }
-        ],
-        "surveyCycles": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "startDate": "string",
-            "endDate": "string",
-            "isActivated": true,
-            "surveyId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "survey": {},
-            "foreignKey": null
-          }
-        ],
-        "surveyResponders": [
-          {}
-        ],
-        "sections": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "name": "string",
-            "displayOrder": 0,
-            "surveyId": "string",
-            "extId": "string",
-            "extMetadata": {}
-          }
-        ]
-      },
-      "foreignKey": null,
-      "surveyCycle": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "startDate": "string",
-        "endDate": "string",
-        "isActivated": true,
-        "surveyId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "survey": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "uid": "string",
-          "name": "string",
-          "surveyText": "string",
-          "startDate": "string",
-          "endDate": "string",
-          "status": "string",
-          "isEnableWeights": true,
-          "baseSurveyId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "questions": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "uid": "string",
-              "name": "string",
-              "status": "string",
-              "questionType": "Multi Selection",
-              "extId": "string",
-              "extMetadata": {},
-              "isScoreEnabled": true,
-              "isFollowupEnabled": true,
-              "validation": {},
-              "rootQuestionId": "string",
-              "parentQuestionId": "string",
-              "surveyId": "string",
-              "rootQuestion": {},
-              "foreignKey": null,
-              "parentQuestion": {},
-              "options": [
-                {
-                  "deleted": true,
-                  "deletedOn": "2019-08-24T14:15:22Z",
-                  "deletedBy": "string",
-                  "createdOn": "2019-08-24T14:15:22Z",
-                  "modifiedOn": "2019-08-24T14:15:22Z",
-                  "createdBy": "string",
-                  "modifiedBy": "string",
-                  "id": "string",
-                  "name": "string",
-                  "displayOrder": 0,
-                  "score": 0,
-                  "questionId": "string",
-                  "followupQuestionId": "string",
-                  "extId": "string",
-                  "extMetadata": {},
-                  "question": {},
-                  "foreignKey": null,
-                  "followupQuestion": {}
-                }
-              ],
-              "followUpQuestions": [
-                {}
-              ],
-              "surveyResponseDetail": {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "surveyResponseId": "string",
-                "questionId": "string",
-                "score": "string",
-                "responseType": "Multi Selection",
-                "textAnswer": "string",
-                "optionId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "surveyResponse": {},
-                "foreignKey": null,
-                "question": {},
-                "option": {
-                  "deleted": true,
-                  "deletedOn": "2019-08-24T14:15:22Z",
-                  "deletedBy": "string",
-                  "createdOn": "2019-08-24T14:15:22Z",
-                  "modifiedOn": "2019-08-24T14:15:22Z",
-                  "createdBy": "string",
-                  "modifiedBy": "string",
-                  "id": "string",
-                  "name": "string",
-                  "displayOrder": 0,
-                  "score": 0,
-                  "questionId": "string",
-                  "followupQuestionId": "string",
-                  "extId": "string",
-                  "extMetadata": {},
-                  "question": {},
-                  "foreignKey": null,
-                  "followupQuestion": {}
-                }
-              },
-              "survey": {}
-            }
-          ],
-          "surveyCycles": [
-            {}
-          ],
-          "surveyResponders": [
-            {}
-          ],
-          "sections": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "name": "string",
-              "displayOrder": 0,
-              "surveyId": "string",
-              "extId": "string",
-              "extMetadata": {}
-            }
-          ]
-        },
-        "foreignKey": null
-      }
-    },
-    "foreignKey": null,
-    "surveyCycle": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "startDate": "string",
-      "endDate": "string",
-      "isActivated": true,
-      "surveyId": "string",
-      "extId": "string",
-      "extMetadata": {},
-      "survey": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "uid": "string",
-        "name": "string",
-        "surveyText": "string",
-        "startDate": "string",
-        "endDate": "string",
-        "status": "string",
-        "isEnableWeights": true,
-        "baseSurveyId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "questions": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "uid": "string",
-            "name": "string",
-            "status": "string",
-            "questionType": "Multi Selection",
-            "extId": "string",
-            "extMetadata": {},
-            "isScoreEnabled": true,
-            "isFollowupEnabled": true,
-            "validation": {},
-            "rootQuestionId": "string",
-            "parentQuestionId": "string",
-            "surveyId": "string",
-            "rootQuestion": {},
-            "foreignKey": null,
-            "parentQuestion": {},
-            "options": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "name": "string",
-                "displayOrder": 0,
-                "score": 0,
-                "questionId": "string",
-                "followupQuestionId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "question": {},
-                "foreignKey": null,
-                "followupQuestion": {}
-              }
-            ],
-            "followUpQuestions": [
-              {}
-            ],
-            "surveyResponseDetail": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "surveyResponseId": "string",
-              "questionId": "string",
-              "score": "string",
-              "responseType": "Multi Selection",
-              "textAnswer": "string",
-              "optionId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "surveyResponse": {},
-              "foreignKey": null,
-              "question": {},
-              "option": {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "name": "string",
-                "displayOrder": 0,
-                "score": 0,
-                "questionId": "string",
-                "followupQuestionId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "question": {},
-                "foreignKey": null,
-                "followupQuestion": {}
-              }
-            },
-            "survey": {}
-          }
-        ],
-        "surveyCycles": [
-          {}
-        ],
-        "surveyResponders": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "firstName": "string",
-            "lastName": "string",
-            "email": "string",
-            "fullName": "string",
-            "userId": "string",
-            "surveyId": "string",
-            "surveyCycleId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "survey": {},
-            "foreignKey": null,
-            "surveyCycle": {}
-          }
-        ],
-        "sections": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "name": "string",
-            "displayOrder": 0,
-            "surveyId": "string",
-            "extId": "string",
-            "extMetadata": {}
-          }
-        ]
-      },
-      "foreignKey": null
-    },
-    "surveyResponseDetails": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "surveyResponseId": "string",
-        "questionId": "string",
-        "score": "string",
-        "responseType": "Multi Selection",
-        "textAnswer": "string",
-        "optionId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "surveyResponse": {},
-        "foreignKey": null,
-        "question": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "uid": "string",
-          "name": "string",
-          "status": "string",
-          "questionType": "Multi Selection",
-          "extId": "string",
-          "extMetadata": {},
-          "isScoreEnabled": true,
-          "isFollowupEnabled": true,
-          "validation": {},
-          "rootQuestionId": "string",
-          "parentQuestionId": "string",
-          "surveyId": "string",
-          "rootQuestion": {},
-          "foreignKey": null,
-          "parentQuestion": {},
-          "options": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "name": "string",
-              "displayOrder": 0,
-              "score": 0,
-              "questionId": "string",
-              "followupQuestionId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "question": {},
-              "foreignKey": null,
-              "followupQuestion": {}
-            }
-          ],
-          "followUpQuestions": [
-            {}
-          ],
-          "surveyResponseDetail": {},
-          "survey": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "uid": "string",
-            "name": "string",
-            "surveyText": "string",
-            "startDate": "string",
-            "endDate": "string",
-            "status": "string",
-            "isEnableWeights": true,
-            "baseSurveyId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "questions": [
-              {}
-            ],
-            "surveyCycles": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "startDate": "string",
-                "endDate": "string",
-                "isActivated": true,
-                "surveyId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "survey": {},
-                "foreignKey": null
-              }
-            ],
-            "surveyResponders": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "firstName": "string",
-                "lastName": "string",
-                "email": "string",
-                "fullName": "string",
-                "userId": "string",
-                "surveyId": "string",
-                "surveyCycleId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "survey": {},
-                "foreignKey": null,
-                "surveyCycle": {
-                  "deleted": true,
-                  "deletedOn": "2019-08-24T14:15:22Z",
-                  "deletedBy": "string",
-                  "createdOn": "2019-08-24T14:15:22Z",
-                  "modifiedOn": "2019-08-24T14:15:22Z",
-                  "createdBy": "string",
-                  "modifiedBy": "string",
-                  "id": "string",
-                  "startDate": "string",
-                  "endDate": "string",
-                  "isActivated": true,
-                  "surveyId": "string",
-                  "extId": "string",
-                  "extMetadata": {},
-                  "survey": {},
-                  "foreignKey": null
-                }
-              }
-            ],
-            "sections": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "name": "string",
-                "displayOrder": 0,
-                "surveyId": "string",
-                "extId": "string",
-                "extMetadata": {}
-              }
-            ]
-          }
-        },
-        "option": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "name": "string",
-          "displayOrder": 0,
-          "score": 0,
-          "questionId": "string",
-          "followupQuestionId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "question": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "uid": "string",
-            "name": "string",
-            "status": "string",
-            "questionType": "Multi Selection",
-            "extId": "string",
-            "extMetadata": {},
-            "isScoreEnabled": true,
-            "isFollowupEnabled": true,
-            "validation": {},
-            "rootQuestionId": "string",
-            "parentQuestionId": "string",
-            "surveyId": "string",
-            "rootQuestion": {},
-            "foreignKey": null,
-            "parentQuestion": {},
-            "options": [
-              {}
-            ],
-            "followUpQuestions": [
-              {}
-            ],
-            "surveyResponseDetail": {},
-            "survey": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "uid": "string",
-              "name": "string",
-              "surveyText": "string",
-              "startDate": "string",
-              "endDate": "string",
-              "status": "string",
-              "isEnableWeights": true,
-              "baseSurveyId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "questions": [
-                {}
-              ],
-              "surveyCycles": [
-                {
-                  "deleted": true,
-                  "deletedOn": "2019-08-24T14:15:22Z",
-                  "deletedBy": "string",
-                  "createdOn": "2019-08-24T14:15:22Z",
-                  "modifiedOn": "2019-08-24T14:15:22Z",
-                  "createdBy": "string",
-                  "modifiedBy": "string",
-                  "id": "string",
-                  "startDate": "string",
-                  "endDate": "string",
-                  "isActivated": true,
-                  "surveyId": "string",
-                  "extId": "string",
-                  "extMetadata": {},
-                  "survey": {},
-                  "foreignKey": null
-                }
-              ],
-              "surveyResponders": [
-                {
-                  "deleted": true,
-                  "deletedOn": "2019-08-24T14:15:22Z",
-                  "deletedBy": "string",
-                  "createdOn": "2019-08-24T14:15:22Z",
-                  "modifiedOn": "2019-08-24T14:15:22Z",
-                  "createdBy": "string",
-                  "modifiedBy": "string",
-                  "id": "string",
-                  "firstName": "string",
-                  "lastName": "string",
-                  "email": "string",
-                  "fullName": "string",
-                  "userId": "string",
-                  "surveyId": "string",
-                  "surveyCycleId": "string",
-                  "extId": "string",
-                  "extMetadata": {},
-                  "survey": {},
-                  "foreignKey": null,
-                  "surveyCycle": {
-                    "deleted": true,
-                    "deletedOn": "2019-08-24T14:15:22Z",
-                    "deletedBy": "string",
-                    "createdOn": "2019-08-24T14:15:22Z",
-                    "modifiedOn": "2019-08-24T14:15:22Z",
-                    "createdBy": "string",
-                    "modifiedBy": "string",
-                    "id": "string",
-                    "startDate": "string",
-                    "endDate": "string",
-                    "isActivated": true,
-                    "surveyId": "string",
-                    "extId": "string",
-                    "extMetadata": {},
-                    "survey": {},
-                    "foreignKey": null
-                  }
-                }
-              ],
-              "sections": [
-                {
-                  "deleted": true,
-                  "deletedOn": "2019-08-24T14:15:22Z",
-                  "deletedBy": "string",
-                  "createdOn": "2019-08-24T14:15:22Z",
-                  "modifiedOn": "2019-08-24T14:15:22Z",
-                  "createdBy": "string",
-                  "modifiedBy": "string",
-                  "id": "string",
-                  "name": "string",
-                  "displayOrder": 0,
-                  "surveyId": "string",
-                  "extId": "string",
-                  "extMetadata": {}
-                }
-              ]
-            }
-          },
-          "foreignKey": null,
-          "followupQuestion": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "uid": "string",
-            "name": "string",
-            "status": "string",
-            "questionType": "Multi Selection",
-            "extId": "string",
-            "extMetadata": {},
-            "isScoreEnabled": true,
-            "isFollowupEnabled": true,
-            "validation": {},
-            "rootQuestionId": "string",
-            "parentQuestionId": "string",
-            "surveyId": "string",
-            "rootQuestion": {},
-            "foreignKey": null,
-            "parentQuestion": {},
-            "options": [
-              {}
-            ],
-            "followUpQuestions": [
-              {}
-            ],
-            "surveyResponseDetail": {},
-            "survey": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "uid": "string",
-              "name": "string",
-              "surveyText": "string",
-              "startDate": "string",
-              "endDate": "string",
-              "status": "string",
-              "isEnableWeights": true,
-              "baseSurveyId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "questions": [
-                {}
-              ],
-              "surveyCycles": [
-                {
-                  "deleted": true,
-                  "deletedOn": "2019-08-24T14:15:22Z",
-                  "deletedBy": "string",
-                  "createdOn": "2019-08-24T14:15:22Z",
-                  "modifiedOn": "2019-08-24T14:15:22Z",
-                  "createdBy": "string",
-                  "modifiedBy": "string",
-                  "id": "string",
-                  "startDate": "string",
-                  "endDate": "string",
-                  "isActivated": true,
-                  "surveyId": "string",
-                  "extId": "string",
-                  "extMetadata": {},
-                  "survey": {},
-                  "foreignKey": null
-                }
-              ],
-              "surveyResponders": [
-                {
-                  "deleted": true,
-                  "deletedOn": "2019-08-24T14:15:22Z",
-                  "deletedBy": "string",
-                  "createdOn": "2019-08-24T14:15:22Z",
-                  "modifiedOn": "2019-08-24T14:15:22Z",
-                  "createdBy": "string",
-                  "modifiedBy": "string",
-                  "id": "string",
-                  "firstName": "string",
-                  "lastName": "string",
-                  "email": "string",
-                  "fullName": "string",
-                  "userId": "string",
-                  "surveyId": "string",
-                  "surveyCycleId": "string",
-                  "extId": "string",
-                  "extMetadata": {},
-                  "survey": {},
-                  "foreignKey": null,
-                  "surveyCycle": {
-                    "deleted": true,
-                    "deletedOn": "2019-08-24T14:15:22Z",
-                    "deletedBy": "string",
-                    "createdOn": "2019-08-24T14:15:22Z",
-                    "modifiedOn": "2019-08-24T14:15:22Z",
-                    "createdBy": "string",
-                    "modifiedBy": "string",
-                    "id": "string",
-                    "startDate": "string",
-                    "endDate": "string",
-                    "isActivated": true,
-                    "surveyId": "string",
-                    "extId": "string",
-                    "extMetadata": {},
-                    "survey": {},
-                    "foreignKey": null
-                  }
-                }
-              ],
-              "sections": [
-                {
-                  "deleted": true,
-                  "deletedOn": "2019-08-24T14:15:22Z",
-                  "deletedBy": "string",
-                  "createdOn": "2019-08-24T14:15:22Z",
-                  "modifiedOn": "2019-08-24T14:15:22Z",
-                  "createdBy": "string",
-                  "modifiedBy": "string",
-                  "id": "string",
-                  "name": "string",
-                  "displayOrder": 0,
-                  "surveyId": "string",
-                  "extId": "string",
-                  "extMetadata": {}
-                }
-              ]
-            }
-          }
-        }
-      }
-    ]
-  },
-  "foreignKey": null,
-  "question": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "uid": "string",
-    "name": "string",
-    "status": "string",
-    "questionType": "Multi Selection",
-    "extId": "string",
-    "extMetadata": {},
-    "isScoreEnabled": true,
-    "isFollowupEnabled": true,
-    "validation": {},
-    "rootQuestionId": "string",
-    "parentQuestionId": "string",
-    "surveyId": "string",
-    "rootQuestion": {},
-    "foreignKey": null,
-    "parentQuestion": {},
-    "options": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "name": "string",
-        "displayOrder": 0,
-        "score": 0,
-        "questionId": "string",
-        "followupQuestionId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "question": {},
-        "foreignKey": null,
-        "followupQuestion": {}
-      }
-    ],
-    "followUpQuestions": [
-      {}
-    ],
-    "surveyResponseDetail": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "surveyResponseId": "string",
-      "questionId": "string",
-      "score": "string",
-      "responseType": "Multi Selection",
-      "textAnswer": "string",
-      "optionId": "string",
-      "extId": "string",
-      "extMetadata": {},
-      "surveyResponse": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "surveyResponderId": "string",
-        "surveyCycleId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "surveyResponder": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "firstName": "string",
-          "lastName": "string",
-          "email": "string",
-          "fullName": "string",
-          "userId": "string",
-          "surveyId": "string",
-          "surveyCycleId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "survey": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "uid": "string",
-            "name": "string",
-            "surveyText": "string",
-            "startDate": "string",
-            "endDate": "string",
-            "status": "string",
-            "isEnableWeights": true,
-            "baseSurveyId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "questions": [
-              {}
-            ],
-            "surveyCycles": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "startDate": "string",
-                "endDate": "string",
-                "isActivated": true,
-                "surveyId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "survey": {},
-                "foreignKey": null
-              }
-            ],
-            "surveyResponders": [
-              {}
-            ],
-            "sections": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "name": "string",
-                "displayOrder": 0,
-                "surveyId": "string",
-                "extId": "string",
-                "extMetadata": {}
-              }
-            ]
-          },
-          "foreignKey": null,
-          "surveyCycle": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "startDate": "string",
-            "endDate": "string",
-            "isActivated": true,
-            "surveyId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "survey": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "uid": "string",
-              "name": "string",
-              "surveyText": "string",
-              "startDate": "string",
-              "endDate": "string",
-              "status": "string",
-              "isEnableWeights": true,
-              "baseSurveyId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "questions": [
-                {}
-              ],
-              "surveyCycles": [
-                {}
-              ],
-              "surveyResponders": [
-                {}
-              ],
-              "sections": [
-                {
-                  "deleted": true,
-                  "deletedOn": "2019-08-24T14:15:22Z",
-                  "deletedBy": "string",
-                  "createdOn": "2019-08-24T14:15:22Z",
-                  "modifiedOn": "2019-08-24T14:15:22Z",
-                  "createdBy": "string",
-                  "modifiedBy": "string",
-                  "id": "string",
-                  "name": "string",
-                  "displayOrder": 0,
-                  "surveyId": "string",
-                  "extId": "string",
-                  "extMetadata": {}
-                }
-              ]
-            },
-            "foreignKey": null
-          }
-        },
-        "foreignKey": null,
-        "surveyCycle": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "startDate": "string",
-          "endDate": "string",
-          "isActivated": true,
-          "surveyId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "survey": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "uid": "string",
-            "name": "string",
-            "surveyText": "string",
-            "startDate": "string",
-            "endDate": "string",
-            "status": "string",
-            "isEnableWeights": true,
-            "baseSurveyId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "questions": [
-              {}
-            ],
-            "surveyCycles": [
-              {}
-            ],
-            "surveyResponders": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "firstName": "string",
-                "lastName": "string",
-                "email": "string",
-                "fullName": "string",
-                "userId": "string",
-                "surveyId": "string",
-                "surveyCycleId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "survey": {},
-                "foreignKey": null,
-                "surveyCycle": {}
-              }
-            ],
-            "sections": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "name": "string",
-                "displayOrder": 0,
-                "surveyId": "string",
-                "extId": "string",
-                "extMetadata": {}
-              }
-            ]
-          },
-          "foreignKey": null
-        },
-        "surveyResponseDetails": [
-          {}
-        ]
-      },
-      "foreignKey": null,
-      "question": {},
-      "option": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "name": "string",
-        "displayOrder": 0,
-        "score": 0,
-        "questionId": "string",
-        "followupQuestionId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "question": {},
-        "foreignKey": null,
-        "followupQuestion": {}
-      }
-    },
-    "survey": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "uid": "string",
-      "name": "string",
-      "surveyText": "string",
-      "startDate": "string",
-      "endDate": "string",
-      "status": "string",
-      "isEnableWeights": true,
-      "baseSurveyId": "string",
-      "extId": "string",
-      "extMetadata": {},
-      "questions": [
-        {}
-      ],
-      "surveyCycles": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "startDate": "string",
-          "endDate": "string",
-          "isActivated": true,
-          "surveyId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "survey": {},
-          "foreignKey": null
-        }
-      ],
-      "surveyResponders": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "firstName": "string",
-          "lastName": "string",
-          "email": "string",
-          "fullName": "string",
-          "userId": "string",
-          "surveyId": "string",
-          "surveyCycleId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "survey": {},
-          "foreignKey": null,
-          "surveyCycle": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "startDate": "string",
-            "endDate": "string",
-            "isActivated": true,
-            "surveyId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "survey": {},
-            "foreignKey": null
-          }
-        }
-      ],
-      "sections": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "name": "string",
-          "displayOrder": 0,
-          "surveyId": "string",
-          "extId": "string",
-          "extMetadata": {}
-        }
-      ]
-    }
-  },
-  "option": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "name": "string",
-    "displayOrder": 0,
-    "score": 0,
-    "questionId": "string",
-    "followupQuestionId": "string",
-    "extId": "string",
-    "extMetadata": {},
     "question": {
       "deleted": true,
       "deletedOn": "2019-08-24T14:15:22Z",
@@ -33343,7 +27970,26 @@ OptionsWithRelations
       "foreignKey": null,
       "parentQuestion": {},
       "options": [
-        {}
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "displayOrder": 0,
+          "score": 0,
+          "questionId": "string",
+          "followupQuestionId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "question": {},
+          "foreignKey": null,
+          "followupQuestion": {}
+        }
       ],
       "followUpQuestions": [
         {}
@@ -33615,7 +28261,26 @@ OptionsWithRelations
         },
         "foreignKey": null,
         "question": {},
-        "option": {}
+        "option": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "displayOrder": 0,
+          "score": 0,
+          "questionId": "string",
+          "followupQuestionId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "question": {},
+          "foreignKey": null,
+          "followupQuestion": {}
+        }
       },
       "survey": {
         "deleted": true,
@@ -33719,414 +28384,13 @@ OptionsWithRelations
         ]
       }
     },
-    "foreignKey": null,
-    "followupQuestion": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "uid": "string",
-      "name": "string",
-      "status": "string",
-      "questionType": "Multi Selection",
-      "extId": "string",
-      "extMetadata": {},
-      "isScoreEnabled": true,
-      "isFollowupEnabled": true,
-      "validation": {},
-      "rootQuestionId": "string",
-      "parentQuestionId": "string",
-      "surveyId": "string",
-      "rootQuestion": {},
-      "foreignKey": null,
-      "parentQuestion": {},
-      "options": [
-        {}
-      ],
-      "followUpQuestions": [
-        {}
-      ],
-      "surveyResponseDetail": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "surveyResponseId": "string",
-        "questionId": "string",
-        "score": "string",
-        "responseType": "Multi Selection",
-        "textAnswer": "string",
-        "optionId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "surveyResponse": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "surveyResponderId": "string",
-          "surveyCycleId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "surveyResponder": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "firstName": "string",
-            "lastName": "string",
-            "email": "string",
-            "fullName": "string",
-            "userId": "string",
-            "surveyId": "string",
-            "surveyCycleId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "survey": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "uid": "string",
-              "name": "string",
-              "surveyText": "string",
-              "startDate": "string",
-              "endDate": "string",
-              "status": "string",
-              "isEnableWeights": true,
-              "baseSurveyId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "questions": [
-                {}
-              ],
-              "surveyCycles": [
-                {
-                  "deleted": true,
-                  "deletedOn": "2019-08-24T14:15:22Z",
-                  "deletedBy": "string",
-                  "createdOn": "2019-08-24T14:15:22Z",
-                  "modifiedOn": "2019-08-24T14:15:22Z",
-                  "createdBy": "string",
-                  "modifiedBy": "string",
-                  "id": "string",
-                  "startDate": "string",
-                  "endDate": "string",
-                  "isActivated": true,
-                  "surveyId": "string",
-                  "extId": "string",
-                  "extMetadata": {},
-                  "survey": {},
-                  "foreignKey": null
-                }
-              ],
-              "surveyResponders": [
-                {}
-              ],
-              "sections": [
-                {
-                  "deleted": true,
-                  "deletedOn": "2019-08-24T14:15:22Z",
-                  "deletedBy": "string",
-                  "createdOn": "2019-08-24T14:15:22Z",
-                  "modifiedOn": "2019-08-24T14:15:22Z",
-                  "createdBy": "string",
-                  "modifiedBy": "string",
-                  "id": "string",
-                  "name": "string",
-                  "displayOrder": 0,
-                  "surveyId": "string",
-                  "extId": "string",
-                  "extMetadata": {}
-                }
-              ]
-            },
-            "foreignKey": null,
-            "surveyCycle": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "startDate": "string",
-              "endDate": "string",
-              "isActivated": true,
-              "surveyId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "survey": {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "uid": "string",
-                "name": "string",
-                "surveyText": "string",
-                "startDate": "string",
-                "endDate": "string",
-                "status": "string",
-                "isEnableWeights": true,
-                "baseSurveyId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "questions": [
-                  {}
-                ],
-                "surveyCycles": [
-                  {}
-                ],
-                "surveyResponders": [
-                  {}
-                ],
-                "sections": [
-                  {
-                    "deleted": true,
-                    "deletedOn": "2019-08-24T14:15:22Z",
-                    "deletedBy": "string",
-                    "createdOn": "2019-08-24T14:15:22Z",
-                    "modifiedOn": "2019-08-24T14:15:22Z",
-                    "createdBy": "string",
-                    "modifiedBy": "string",
-                    "id": "string",
-                    "name": "string",
-                    "displayOrder": 0,
-                    "surveyId": "string",
-                    "extId": "string",
-                    "extMetadata": {}
-                  }
-                ]
-              },
-              "foreignKey": null
-            }
-          },
-          "foreignKey": null,
-          "surveyCycle": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "startDate": "string",
-            "endDate": "string",
-            "isActivated": true,
-            "surveyId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "survey": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "uid": "string",
-              "name": "string",
-              "surveyText": "string",
-              "startDate": "string",
-              "endDate": "string",
-              "status": "string",
-              "isEnableWeights": true,
-              "baseSurveyId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "questions": [
-                {}
-              ],
-              "surveyCycles": [
-                {}
-              ],
-              "surveyResponders": [
-                {
-                  "deleted": true,
-                  "deletedOn": "2019-08-24T14:15:22Z",
-                  "deletedBy": "string",
-                  "createdOn": "2019-08-24T14:15:22Z",
-                  "modifiedOn": "2019-08-24T14:15:22Z",
-                  "createdBy": "string",
-                  "modifiedBy": "string",
-                  "id": "string",
-                  "firstName": "string",
-                  "lastName": "string",
-                  "email": "string",
-                  "fullName": "string",
-                  "userId": "string",
-                  "surveyId": "string",
-                  "surveyCycleId": "string",
-                  "extId": "string",
-                  "extMetadata": {},
-                  "survey": {},
-                  "foreignKey": null,
-                  "surveyCycle": {}
-                }
-              ],
-              "sections": [
-                {
-                  "deleted": true,
-                  "deletedOn": "2019-08-24T14:15:22Z",
-                  "deletedBy": "string",
-                  "createdOn": "2019-08-24T14:15:22Z",
-                  "modifiedOn": "2019-08-24T14:15:22Z",
-                  "createdBy": "string",
-                  "modifiedBy": "string",
-                  "id": "string",
-                  "name": "string",
-                  "displayOrder": 0,
-                  "surveyId": "string",
-                  "extId": "string",
-                  "extMetadata": {}
-                }
-              ]
-            },
-            "foreignKey": null
-          },
-          "surveyResponseDetails": [
-            {}
-          ]
-        },
-        "foreignKey": null,
-        "question": {},
-        "option": {}
-      },
-      "survey": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "uid": "string",
-        "name": "string",
-        "surveyText": "string",
-        "startDate": "string",
-        "endDate": "string",
-        "status": "string",
-        "isEnableWeights": true,
-        "baseSurveyId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "questions": [
-          {}
-        ],
-        "surveyCycles": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "startDate": "string",
-            "endDate": "string",
-            "isActivated": true,
-            "surveyId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "survey": {},
-            "foreignKey": null
-          }
-        ],
-        "surveyResponders": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "firstName": "string",
-            "lastName": "string",
-            "email": "string",
-            "fullName": "string",
-            "userId": "string",
-            "surveyId": "string",
-            "surveyCycleId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "survey": {},
-            "foreignKey": null,
-            "surveyCycle": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "startDate": "string",
-              "endDate": "string",
-              "isActivated": true,
-              "surveyId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "survey": {},
-              "foreignKey": null
-            }
-          }
-        ],
-        "sections": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "name": "string",
-            "displayOrder": 0,
-            "surveyId": "string",
-            "extId": "string",
-            "extMetadata": {}
-          }
-        ]
-      }
-    }
+    "dependentOnQuestion": {}
   }
 }
 
 ```
 
-SurveyResponseDetailWithRelations
+TemplateQuestionWithRelations
 
 ### Properties
 
@@ -34140,29 +28404,184 @@ SurveyResponseDetailWithRelations
 |createdBy|string|false|none|none|
 |modifiedBy|string|false|none|none|
 |id|string|false|none|none|
-|surveyResponseId|string|true|none|none|
-|questionId|string|true|none|none|
-|score|string|false|none|none|
-|responseType|string|true|none|none|
-|textAnswer|string|false|none|none|
-|optionId|string|false|none|none|
+|displayOrder|number|false|none|none|
+|isMandatory|boolean|false|none|none|
+|weight|number|false|none|none|
+|templateId|string|false|none|none|
+|questionId|string|false|none|none|
+|dependentOnQuestionId|string¦null|false|none|none|
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
-|surveyResponse|[SurveyResponseWithRelations](#schemasurveyresponsewithrelations)|false|none|(tsType: SurveyResponseWithRelations, schemaOptions: { includeRelations: true })|
+|template|[QuestionTemplateWithRelations](#schemaquestiontemplatewithrelations)|false|none|(tsType: QuestionTemplateWithRelations, schemaOptions: { includeRelations: true })|
 |foreignKey|any|false|none|none|
 |question|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
-|option|[OptionsWithRelations](#schemaoptionswithrelations)|false|none|(tsType: OptionsWithRelations, schemaOptions: { includeRelations: true })|
+|dependentOnQuestion|[TemplateQuestionWithRelations](#schematemplatequestionwithrelations)|false|none|(tsType: TemplateQuestionWithRelations, schemaOptions: { includeRelations: true })|
 
-#### Enumerated Values
+<h2 id="tocS_TemplateQuestionPartial">TemplateQuestionPartial</h2>
+<!-- backwards compatibility -->
+<a id="schematemplatequestionpartial"></a>
+<a id="schema_TemplateQuestionPartial"></a>
+<a id="tocStemplatequestionpartial"></a>
+<a id="tocstemplatequestionpartial"></a>
 
-|Property|Value|
-|---|---|
-|responseType|Multi Selection|
-|responseType|Scale|
-|responseType|Single Selection|
-|responseType|Text|
-|responseType|Drop Down|
-|responseType|null|
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "displayOrder": 0,
+  "isMandatory": true,
+  "weight": 100,
+  "templateId": "string",
+  "questionId": "string",
+  "dependentOnQuestionId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+TemplateQuestionPartial
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|displayOrder|number|false|none|none|
+|isMandatory|boolean|false|none|none|
+|weight|number|false|none|none|
+|templateId|string|false|none|none|
+|questionId|string|false|none|none|
+|dependentOnQuestionId|string¦null|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+
+<h2 id="tocS_Survey">Survey</h2>
+<!-- backwards compatibility -->
+<a id="schemasurvey"></a>
+<a id="schema_Survey"></a>
+<a id="tocSsurvey"></a>
+<a id="tocssurvey"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "uid": "string",
+  "name": "string",
+  "surveyText": "string",
+  "startDate": "string",
+  "endDate": "string",
+  "status": "string",
+  "isEnableWeights": true,
+  "baseSurveyId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+Survey
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|uid|string|false|none|none|
+|name|string|true|none|none|
+|surveyText|string|true|none|none|
+|startDate|string|false|none|Start date of the survey|
+|endDate|string|false|none|End date of the survey|
+|status|string|true|none|none|
+|isEnableWeights|boolean|false|none|none|
+|baseSurveyId|string¦null|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+
+<h2 id="tocS_NewSurvey">NewSurvey</h2>
+<!-- backwards compatibility -->
+<a id="schemanewsurvey"></a>
+<a id="schema_NewSurvey"></a>
+<a id="tocSnewsurvey"></a>
+<a id="tocsnewsurvey"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "uid": "string",
+  "name": "string",
+  "surveyText": "string",
+  "startDate": "string",
+  "endDate": "string",
+  "status": "string",
+  "isEnableWeights": true,
+  "baseSurveyId": "string",
+  "extId": "string",
+  "extMetadata": {},
+  "createdByName": "string",
+  "existingTemplateId": "string"
+}
+
+```
+
+NewSurvey
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|uid|string|false|none|none|
+|name|string|true|none|none|
+|surveyText|string|true|none|none|
+|startDate|string|false|none|Start date of the survey|
+|endDate|string|false|none|End date of the survey|
+|status|string|true|none|none|
+|isEnableWeights|boolean|false|none|none|
+|baseSurveyId|string¦null|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+|createdByName|string|false|none|none|
+|existingTemplateId|string|false|none|none|
 
 <h2 id="tocS_QuestionWithRelations">QuestionWithRelations</h2>
 <!-- backwards compatibility -->
@@ -37472,12 +31891,12 @@ QuestionWithRelations
 |questionType|Drop Down|
 |questionType|null|
 
-<h2 id="tocS_QuestionPartial">QuestionPartial</h2>
+<h2 id="tocS_SurveyCycleWithRelations">SurveyCycleWithRelations</h2>
 <!-- backwards compatibility -->
-<a id="schemaquestionpartial"></a>
-<a id="schema_QuestionPartial"></a>
-<a id="tocSquestionpartial"></a>
-<a id="tocsquestionpartial"></a>
+<a id="schemasurveycyclewithrelations"></a>
+<a id="schema_SurveyCycleWithRelations"></a>
+<a id="tocSsurveycyclewithrelations"></a>
+<a id="tocssurveycyclewithrelations"></a>
 
 ```json
 {
@@ -37489,436 +31908,13 @@ QuestionWithRelations
   "createdBy": "string",
   "modifiedBy": "string",
   "id": "string",
-  "uid": "string",
-  "name": "string",
-  "status": "string",
-  "questionType": "Multi Selection",
+  "startDate": "string",
+  "endDate": "string",
+  "isActivated": true,
+  "surveyId": "string",
   "extId": "string",
   "extMetadata": {},
-  "isScoreEnabled": true,
-  "isFollowupEnabled": true,
-  "validation": {},
-  "rootQuestionId": "string",
-  "parentQuestionId": "string",
-  "surveyId": "string"
-}
-
-```
-
-QuestionPartial
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|uid|string|false|none|none|
-|name|string|false|none|none|
-|status|string|false|none|none|
-|questionType|string|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-|isScoreEnabled|boolean|false|none|none|
-|isFollowupEnabled|boolean|false|none|none|
-|validation|object|false|none|none|
-|rootQuestionId|string|false|none|none|
-|parentQuestionId|string¦null|false|none|none|
-|surveyId|string|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|questionType|Multi Selection|
-|questionType|Scale|
-|questionType|Single Selection|
-|questionType|Text|
-|questionType|Drop Down|
-|questionType|null|
-
-<h2 id="tocS_BulkDeleteQuestion">BulkDeleteQuestion</h2>
-<!-- backwards compatibility -->
-<a id="schemabulkdeletequestion"></a>
-<a id="schema_BulkDeleteQuestion"></a>
-<a id="tocSbulkdeletequestion"></a>
-<a id="tocsbulkdeletequestion"></a>
-
-```json
-{
-  "ids": [
-    "string"
-  ]
-}
-
-```
-
-BulkDeleteQuestion
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|ids|[string]|true|none|none|
-
-<h2 id="tocS_BulkDeleteDto">BulkDeleteDto</h2>
-<!-- backwards compatibility -->
-<a id="schemabulkdeletedto"></a>
-<a id="schema_BulkDeleteDto"></a>
-<a id="tocSbulkdeletedto"></a>
-<a id="tocsbulkdeletedto"></a>
-
-```json
-{
-  "ids": [
-    "string"
-  ]
-}
-
-```
-
-BulkDeleteDto
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|ids|[string]|true|none|none|
-
-<h2 id="tocS_QuestionDuplicateDto">QuestionDuplicateDto</h2>
-<!-- backwards compatibility -->
-<a id="schemaquestionduplicatedto"></a>
-<a id="schema_QuestionDuplicateDto"></a>
-<a id="tocSquestionduplicatedto"></a>
-<a id="tocsquestionduplicatedto"></a>
-
-```json
-{
-  "includeBatchId": true,
-  "displayOrder": 0,
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-QuestionDuplicateDto
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|includeBatchId|boolean|false|none|none|
-|displayOrder|number|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-<h2 id="tocS_Options">Options</h2>
-<!-- backwards compatibility -->
-<a id="schemaoptions"></a>
-<a id="schema_Options"></a>
-<a id="tocSoptions"></a>
-<a id="tocsoptions"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "displayOrder": 0,
-  "score": 0,
-  "questionId": "string",
-  "followupQuestionId": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-Options
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|name|string|false|none|none|
-|displayOrder|number|true|none|none|
-|score|number¦null|false|none|none|
-|questionId|string|false|none|none|
-|followupQuestionId|string¦null|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-<h2 id="tocS_NewOptions">NewOptions</h2>
-<!-- backwards compatibility -->
-<a id="schemanewoptions"></a>
-<a id="schema_NewOptions"></a>
-<a id="tocSnewoptions"></a>
-<a id="tocsnewoptions"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "name": "string",
-  "displayOrder": 0,
-  "score": 0,
-  "questionId": "string",
-  "followupQuestionId": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-NewOptions
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|name|string|false|none|none|
-|displayOrder|number|true|none|none|
-|score|number¦null|false|none|none|
-|questionId|string|false|none|none|
-|followupQuestionId|string¦null|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-<h2 id="tocS_OptionsPartial">OptionsPartial</h2>
-<!-- backwards compatibility -->
-<a id="schemaoptionspartial"></a>
-<a id="schema_OptionsPartial"></a>
-<a id="tocSoptionspartial"></a>
-<a id="tocsoptionspartial"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "displayOrder": 0,
-  "score": 0,
-  "questionId": "string",
-  "followupQuestionId": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-OptionsPartial
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|name|string|false|none|none|
-|displayOrder|number|false|none|none|
-|score|number¦null|false|none|none|
-|questionId|string|false|none|none|
-|followupQuestionId|string¦null|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-<h2 id="tocS_BulkDeleteOption">BulkDeleteOption</h2>
-<!-- backwards compatibility -->
-<a id="schemabulkdeleteoption"></a>
-<a id="schema_BulkDeleteOption"></a>
-<a id="tocSbulkdeleteoption"></a>
-<a id="tocsbulkdeleteoption"></a>
-
-```json
-{
-  "ids": [
-    "string"
-  ]
-}
-
-```
-
-BulkDeleteOption
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|ids|[string]|true|none|none|
-
-<h2 id="tocS_TemplateQuestion">TemplateQuestion</h2>
-<!-- backwards compatibility -->
-<a id="schematemplatequestion"></a>
-<a id="schema_TemplateQuestion"></a>
-<a id="tocStemplatequestion"></a>
-<a id="tocstemplatequestion"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "displayOrder": 0,
-  "isMandatory": true,
-  "weight": 100,
-  "templateId": "string",
-  "questionId": "string",
-  "dependentOnQuestionId": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-TemplateQuestion
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|displayOrder|number|false|none|none|
-|isMandatory|boolean|false|none|none|
-|weight|number|false|none|none|
-|templateId|string|false|none|none|
-|questionId|string|false|none|none|
-|dependentOnQuestionId|string¦null|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-<h2 id="tocS_NewTemplateQuestion">NewTemplateQuestion</h2>
-<!-- backwards compatibility -->
-<a id="schemanewtemplatequestion"></a>
-<a id="schema_NewTemplateQuestion"></a>
-<a id="tocSnewtemplatequestion"></a>
-<a id="tocsnewtemplatequestion"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "displayOrder": 0,
-  "isMandatory": true,
-  "weight": 100,
-  "templateId": "string",
-  "questionId": "string",
-  "dependentOnQuestionId": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-NewTemplateQuestion
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|displayOrder|number|false|none|none|
-|isMandatory|boolean|false|none|none|
-|weight|number|false|none|none|
-|templateId|string|false|none|none|
-|questionId|string|false|none|none|
-|dependentOnQuestionId|string¦null|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-<h2 id="tocS_TemplateQuestionWithRelations">TemplateQuestionWithRelations</h2>
-<!-- backwards compatibility -->
-<a id="schematemplatequestionwithrelations"></a>
-<a id="schema_TemplateQuestionWithRelations"></a>
-<a id="tocStemplatequestionwithrelations"></a>
-<a id="tocstemplatequestionwithrelations"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "displayOrder": 0,
-  "isMandatory": true,
-  "weight": 100,
-  "templateId": "string",
-  "questionId": "string",
-  "dependentOnQuestionId": "string",
-  "extId": "string",
-  "extMetadata": {},
-  "template": {
+  "survey": {
     "deleted": true,
     "deletedOn": "2019-08-24T14:15:22Z",
     "deletedBy": "string",
@@ -37929,37 +31925,15 @@ NewTemplateQuestion
     "id": "string",
     "uid": "string",
     "name": "string",
+    "surveyText": "string",
+    "startDate": "string",
+    "endDate": "string",
     "status": "string",
-    "isEnableWeight": true,
-    "extId": "string",
-    "extMetadata": {}
-  },
-  "foreignKey": null,
-  "question": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "uid": "string",
-    "name": "string",
-    "status": "string",
-    "questionType": "Multi Selection",
+    "isEnableWeights": true,
+    "baseSurveyId": "string",
     "extId": "string",
     "extMetadata": {},
-    "isScoreEnabled": true,
-    "isFollowupEnabled": true,
-    "validation": {},
-    "rootQuestionId": "string",
-    "parentQuestionId": "string",
-    "surveyId": "string",
-    "rootQuestion": {},
-    "foreignKey": null,
-    "parentQuestion": {},
-    "options": [
+    "questions": [
       {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
@@ -37969,70 +31943,23 @@ NewTemplateQuestion
         "createdBy": "string",
         "modifiedBy": "string",
         "id": "string",
+        "uid": "string",
         "name": "string",
-        "displayOrder": 0,
-        "score": 0,
-        "questionId": "string",
-        "followupQuestionId": "string",
+        "status": "string",
+        "questionType": "Multi Selection",
         "extId": "string",
         "extMetadata": {},
-        "question": {},
+        "isScoreEnabled": true,
+        "isFollowupEnabled": true,
+        "validation": {},
+        "rootQuestionId": "string",
+        "parentQuestionId": "string",
+        "surveyId": "string",
+        "rootQuestion": {},
         "foreignKey": null,
-        "followupQuestion": {}
-      }
-    ],
-    "followUpQuestions": [
-      {}
-    ],
-    "surveyResponseDetail": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "surveyResponseId": "string",
-      "questionId": "string",
-      "score": "string",
-      "responseType": "Multi Selection",
-      "textAnswer": "string",
-      "optionId": "string",
-      "extId": "string",
-      "extMetadata": {},
-      "surveyResponse": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "surveyResponderId": "string",
-        "surveyCycleId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "surveyResponder": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "firstName": "string",
-          "lastName": "string",
-          "email": "string",
-          "fullName": "string",
-          "userId": "string",
-          "surveyId": "string",
-          "surveyCycleId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "survey": {
+        "parentQuestion": {},
+        "options": [
+          {
             "deleted": true,
             "deletedOn": "2019-08-24T14:15:22Z",
             "deletedBy": "string",
@@ -38041,21 +31968,72 @@ NewTemplateQuestion
             "createdBy": "string",
             "modifiedBy": "string",
             "id": "string",
-            "uid": "string",
             "name": "string",
-            "surveyText": "string",
-            "startDate": "string",
-            "endDate": "string",
-            "status": "string",
-            "isEnableWeights": true,
-            "baseSurveyId": "string",
+            "displayOrder": 0,
+            "score": 0,
+            "questionId": "string",
+            "followupQuestionId": "string",
             "extId": "string",
             "extMetadata": {},
-            "questions": [
-              {}
-            ],
-            "surveyCycles": [
-              {
+            "question": {},
+            "foreignKey": null,
+            "followupQuestion": {}
+          }
+        ],
+        "followUpQuestions": [
+          {}
+        ],
+        "surveyResponseDetail": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "surveyResponseId": "string",
+          "questionId": "string",
+          "score": "string",
+          "responseType": "Multi Selection",
+          "textAnswer": "string",
+          "optionId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "surveyResponse": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "surveyResponderId": "string",
+            "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "surveyResponder": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "email": "string",
+              "fullName": "string",
+              "userId": "string",
+              "surveyId": "string",
+              "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "survey": {},
+              "foreignKey": null,
+              "surveyCycle": {
                 "deleted": true,
                 "deletedOn": "2019-08-24T14:15:22Z",
                 "deletedBy": "string",
@@ -38073,45 +32051,9 @@ NewTemplateQuestion
                 "survey": {},
                 "foreignKey": null
               }
-            ],
-            "surveyResponders": [
-              {}
-            ],
-            "sections": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "name": "string",
-                "displayOrder": 0,
-                "surveyId": "string",
-                "extId": "string",
-                "extMetadata": {}
-              }
-            ]
-          },
-          "foreignKey": null,
-          "surveyCycle": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "startDate": "string",
-            "endDate": "string",
-            "isActivated": true,
-            "surveyId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "survey": {
+            },
+            "foreignKey": null,
+            "surveyCycle": {
               "deleted": true,
               "deletedOn": "2019-08-24T14:15:22Z",
               "deletedBy": "string",
@@ -38120,46 +32062,85 @@ NewTemplateQuestion
               "createdBy": "string",
               "modifiedBy": "string",
               "id": "string",
-              "uid": "string",
-              "name": "string",
-              "surveyText": "string",
               "startDate": "string",
               "endDate": "string",
-              "status": "string",
-              "isEnableWeights": true,
-              "baseSurveyId": "string",
+              "isActivated": true,
+              "surveyId": "string",
               "extId": "string",
               "extMetadata": {},
-              "questions": [
-                {}
-              ],
-              "surveyCycles": [
-                {}
-              ],
-              "surveyResponders": [
-                {}
-              ],
-              "sections": [
-                {
-                  "deleted": true,
-                  "deletedOn": "2019-08-24T14:15:22Z",
-                  "deletedBy": "string",
-                  "createdOn": "2019-08-24T14:15:22Z",
-                  "modifiedOn": "2019-08-24T14:15:22Z",
-                  "createdBy": "string",
-                  "modifiedBy": "string",
-                  "id": "string",
-                  "name": "string",
-                  "displayOrder": 0,
-                  "surveyId": "string",
-                  "extId": "string",
-                  "extMetadata": {}
-                }
-              ]
+              "survey": {},
+              "foreignKey": null
             },
-            "foreignKey": null
+            "surveyResponseDetails": [
+              {}
+            ]
+          },
+          "foreignKey": null,
+          "question": {},
+          "option": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "displayOrder": 0,
+            "score": 0,
+            "questionId": "string",
+            "followupQuestionId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "question": {},
+            "foreignKey": null,
+            "followupQuestion": {}
           }
         },
+        "survey": {}
+      }
+    ],
+    "surveyCycles": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "startDate": "string",
+        "endDate": "string",
+        "isActivated": true,
+        "surveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "survey": {},
+        "foreignKey": null
+      }
+    ],
+    "surveyResponders": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "firstName": "string",
+        "lastName": "string",
+        "email": "string",
+        "fullName": "string",
+        "userId": "string",
+        "surveyId": "string",
+        "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "survey": {},
         "foreignKey": null,
         "surveyCycle": {
           "deleted": true,
@@ -38176,82 +32157,13 @@ NewTemplateQuestion
           "surveyId": "string",
           "extId": "string",
           "extMetadata": {},
-          "survey": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "uid": "string",
-            "name": "string",
-            "surveyText": "string",
-            "startDate": "string",
-            "endDate": "string",
-            "status": "string",
-            "isEnableWeights": true,
-            "baseSurveyId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "questions": [
-              {}
-            ],
-            "surveyCycles": [
-              {}
-            ],
-            "surveyResponders": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "firstName": "string",
-                "lastName": "string",
-                "email": "string",
-                "fullName": "string",
-                "userId": "string",
-                "surveyId": "string",
-                "surveyCycleId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "survey": {},
-                "foreignKey": null,
-                "surveyCycle": {}
-              }
-            ],
-            "sections": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "name": "string",
-                "displayOrder": 0,
-                "surveyId": "string",
-                "extId": "string",
-                "extMetadata": {}
-              }
-            ]
-          },
+          "survey": {},
           "foreignKey": null
-        },
-        "surveyResponseDetails": [
-          {}
-        ]
-      },
-      "foreignKey": null,
-      "question": {},
-      "option": {
+        }
+      }
+    ],
+    "sections": [
+      {
         "deleted": true,
         "deletedOn": "2019-08-24T14:15:22Z",
         "deletedBy": "string",
@@ -38262,16 +32174,348 @@ NewTemplateQuestion
         "id": "string",
         "name": "string",
         "displayOrder": 0,
-        "score": 0,
-        "questionId": "string",
-        "followupQuestionId": "string",
+        "surveyId": "string",
+        "extId": "string",
+        "extMetadata": {}
+      }
+    ]
+  },
+  "foreignKey": null
+}
+
+```
+
+SurveyCycleWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|startDate|string|false|none|Start date of the first survey cycle|
+|endDate|string|false|none|End date of the first survey cycle|
+|isActivated|boolean|false|none|none|
+|surveyId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+|survey|[SurveyWithRelations](#schemasurveywithrelations)|false|none|(tsType: SurveyWithRelations, schemaOptions: { includeRelations: true })|
+|foreignKey|any|false|none|none|
+
+<h2 id="tocS_SurveyResponderWithRelations">SurveyResponderWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemasurveyresponderwithrelations"></a>
+<a id="schema_SurveyResponderWithRelations"></a>
+<a id="tocSsurveyresponderwithrelations"></a>
+<a id="tocssurveyresponderwithrelations"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "firstName": "string",
+  "lastName": "string",
+  "email": "string",
+  "fullName": "string",
+  "userId": "string",
+  "surveyId": "string",
+  "surveyCycleId": "string",
+  "extId": "string",
+  "extMetadata": {},
+  "survey": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "uid": "string",
+    "name": "string",
+    "surveyText": "string",
+    "startDate": "string",
+    "endDate": "string",
+    "status": "string",
+    "isEnableWeights": true,
+    "baseSurveyId": "string",
+    "extId": "string",
+    "extMetadata": {},
+    "questions": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "uid": "string",
+        "name": "string",
+        "status": "string",
+        "questionType": "Multi Selection",
         "extId": "string",
         "extMetadata": {},
-        "question": {},
+        "isScoreEnabled": true,
+        "isFollowupEnabled": true,
+        "validation": {},
+        "rootQuestionId": "string",
+        "parentQuestionId": "string",
+        "surveyId": "string",
+        "rootQuestion": {},
         "foreignKey": null,
-        "followupQuestion": {}
+        "parentQuestion": {},
+        "options": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "displayOrder": 0,
+            "score": 0,
+            "questionId": "string",
+            "followupQuestionId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "question": {},
+            "foreignKey": null,
+            "followupQuestion": {}
+          }
+        ],
+        "followUpQuestions": [
+          {}
+        ],
+        "surveyResponseDetail": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "surveyResponseId": "string",
+          "questionId": "string",
+          "score": "string",
+          "responseType": "Multi Selection",
+          "textAnswer": "string",
+          "optionId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "surveyResponse": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "surveyResponderId": "string",
+            "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "surveyResponder": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "email": "string",
+              "fullName": "string",
+              "userId": "string",
+              "surveyId": "string",
+              "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "survey": {},
+              "foreignKey": null,
+              "surveyCycle": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "startDate": "string",
+                "endDate": "string",
+                "isActivated": true,
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "survey": {},
+                "foreignKey": null
+              }
+            },
+            "foreignKey": null,
+            "surveyCycle": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "startDate": "string",
+              "endDate": "string",
+              "isActivated": true,
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "survey": {},
+              "foreignKey": null
+            },
+            "surveyResponseDetails": [
+              {}
+            ]
+          },
+          "foreignKey": null,
+          "question": {},
+          "option": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "displayOrder": 0,
+            "score": 0,
+            "questionId": "string",
+            "followupQuestionId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "question": {},
+            "foreignKey": null,
+            "followupQuestion": {}
+          }
+        },
+        "survey": {}
       }
-    },
+    ],
+    "surveyCycles": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "startDate": "string",
+        "endDate": "string",
+        "isActivated": true,
+        "surveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "survey": {},
+        "foreignKey": null
+      }
+    ],
+    "surveyResponders": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "firstName": "string",
+        "lastName": "string",
+        "email": "string",
+        "fullName": "string",
+        "userId": "string",
+        "surveyId": "string",
+        "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "survey": {},
+        "foreignKey": null,
+        "surveyCycle": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "startDate": "string",
+          "endDate": "string",
+          "isActivated": true,
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "survey": {},
+          "foreignKey": null
+        }
+      }
+    ],
+    "sections": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "name": "string",
+        "displayOrder": 0,
+        "surveyId": "string",
+        "extId": "string",
+        "extMetadata": {}
+      }
+    ]
+  },
+  "foreignKey": null,
+  "surveyCycle": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "startDate": "string",
+    "endDate": "string",
+    "isActivated": true,
+    "surveyId": "string",
+    "extId": "string",
+    "extMetadata": {},
     "survey": {
       "deleted": true,
       "deletedOn": "2019-08-24T14:15:22Z",
@@ -38292,9 +32536,6 @@ NewTemplateQuestion
       "extId": "string",
       "extMetadata": {},
       "questions": [
-        {}
-      ],
-      "surveyCycles": [
         {
           "deleted": true,
           "deletedOn": "2019-08-24T14:15:22Z",
@@ -38304,15 +32545,132 @@ NewTemplateQuestion
           "createdBy": "string",
           "modifiedBy": "string",
           "id": "string",
-          "startDate": "string",
-          "endDate": "string",
-          "isActivated": true,
-          "surveyId": "string",
+          "uid": "string",
+          "name": "string",
+          "status": "string",
+          "questionType": "Multi Selection",
           "extId": "string",
           "extMetadata": {},
-          "survey": {},
-          "foreignKey": null
+          "isScoreEnabled": true,
+          "isFollowupEnabled": true,
+          "validation": {},
+          "rootQuestionId": "string",
+          "parentQuestionId": "string",
+          "surveyId": "string",
+          "rootQuestion": {},
+          "foreignKey": null,
+          "parentQuestion": {},
+          "options": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "displayOrder": 0,
+              "score": 0,
+              "questionId": "string",
+              "followupQuestionId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "question": {},
+              "foreignKey": null,
+              "followupQuestion": {}
+            }
+          ],
+          "followUpQuestions": [
+            {}
+          ],
+          "surveyResponseDetail": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "surveyResponseId": "string",
+            "questionId": "string",
+            "score": "string",
+            "responseType": "Multi Selection",
+            "textAnswer": "string",
+            "optionId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "surveyResponse": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "surveyResponderId": "string",
+              "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "surveyResponder": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "email": "string",
+                "fullName": "string",
+                "userId": "string",
+                "surveyId": "string",
+                "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "survey": {},
+                "foreignKey": null,
+                "surveyCycle": {}
+              },
+              "foreignKey": null,
+              "surveyCycle": {},
+              "surveyResponseDetails": [
+                {}
+              ]
+            },
+            "foreignKey": null,
+            "question": {},
+            "option": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "displayOrder": 0,
+              "score": 0,
+              "questionId": "string",
+              "followupQuestionId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "question": {},
+              "foreignKey": null,
+              "followupQuestion": {}
+            }
+          },
+          "survey": {}
         }
+      ],
+      "surveyCycles": [
+        {}
       ],
       "surveyResponders": [
         {
@@ -38335,24 +32693,7 @@ NewTemplateQuestion
           "extMetadata": {},
           "survey": {},
           "foreignKey": null,
-          "surveyCycle": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "startDate": "string",
-            "endDate": "string",
-            "isActivated": true,
-            "surveyId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "survey": {},
-            "foreignKey": null
-          }
+          "surveyCycle": {}
         }
       ],
       "sections": [
@@ -38372,488 +32713,14 @@ NewTemplateQuestion
           "extMetadata": {}
         }
       ]
-    }
-  },
-  "dependentOnQuestion": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "displayOrder": 0,
-    "isMandatory": true,
-    "weight": 100,
-    "templateId": "string",
-    "questionId": "string",
-    "dependentOnQuestionId": "string",
-    "extId": "string",
-    "extMetadata": {},
-    "template": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "uid": "string",
-      "name": "string",
-      "status": "string",
-      "isEnableWeight": true,
-      "extId": "string",
-      "extMetadata": {}
     },
-    "foreignKey": null,
-    "question": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "uid": "string",
-      "name": "string",
-      "status": "string",
-      "questionType": "Multi Selection",
-      "extId": "string",
-      "extMetadata": {},
-      "isScoreEnabled": true,
-      "isFollowupEnabled": true,
-      "validation": {},
-      "rootQuestionId": "string",
-      "parentQuestionId": "string",
-      "surveyId": "string",
-      "rootQuestion": {},
-      "foreignKey": null,
-      "parentQuestion": {},
-      "options": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "name": "string",
-          "displayOrder": 0,
-          "score": 0,
-          "questionId": "string",
-          "followupQuestionId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "question": {},
-          "foreignKey": null,
-          "followupQuestion": {}
-        }
-      ],
-      "followUpQuestions": [
-        {}
-      ],
-      "surveyResponseDetail": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "surveyResponseId": "string",
-        "questionId": "string",
-        "score": "string",
-        "responseType": "Multi Selection",
-        "textAnswer": "string",
-        "optionId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "surveyResponse": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "surveyResponderId": "string",
-          "surveyCycleId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "surveyResponder": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "firstName": "string",
-            "lastName": "string",
-            "email": "string",
-            "fullName": "string",
-            "userId": "string",
-            "surveyId": "string",
-            "surveyCycleId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "survey": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "uid": "string",
-              "name": "string",
-              "surveyText": "string",
-              "startDate": "string",
-              "endDate": "string",
-              "status": "string",
-              "isEnableWeights": true,
-              "baseSurveyId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "questions": [
-                {}
-              ],
-              "surveyCycles": [
-                {
-                  "deleted": true,
-                  "deletedOn": "2019-08-24T14:15:22Z",
-                  "deletedBy": "string",
-                  "createdOn": "2019-08-24T14:15:22Z",
-                  "modifiedOn": "2019-08-24T14:15:22Z",
-                  "createdBy": "string",
-                  "modifiedBy": "string",
-                  "id": "string",
-                  "startDate": "string",
-                  "endDate": "string",
-                  "isActivated": true,
-                  "surveyId": "string",
-                  "extId": "string",
-                  "extMetadata": {},
-                  "survey": {},
-                  "foreignKey": null
-                }
-              ],
-              "surveyResponders": [
-                {}
-              ],
-              "sections": [
-                {
-                  "deleted": true,
-                  "deletedOn": "2019-08-24T14:15:22Z",
-                  "deletedBy": "string",
-                  "createdOn": "2019-08-24T14:15:22Z",
-                  "modifiedOn": "2019-08-24T14:15:22Z",
-                  "createdBy": "string",
-                  "modifiedBy": "string",
-                  "id": "string",
-                  "name": "string",
-                  "displayOrder": 0,
-                  "surveyId": "string",
-                  "extId": "string",
-                  "extMetadata": {}
-                }
-              ]
-            },
-            "foreignKey": null,
-            "surveyCycle": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "startDate": "string",
-              "endDate": "string",
-              "isActivated": true,
-              "surveyId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "survey": {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "uid": "string",
-                "name": "string",
-                "surveyText": "string",
-                "startDate": "string",
-                "endDate": "string",
-                "status": "string",
-                "isEnableWeights": true,
-                "baseSurveyId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "questions": [
-                  {}
-                ],
-                "surveyCycles": [
-                  {}
-                ],
-                "surveyResponders": [
-                  {}
-                ],
-                "sections": [
-                  {
-                    "deleted": true,
-                    "deletedOn": "2019-08-24T14:15:22Z",
-                    "deletedBy": "string",
-                    "createdOn": "2019-08-24T14:15:22Z",
-                    "modifiedOn": "2019-08-24T14:15:22Z",
-                    "createdBy": "string",
-                    "modifiedBy": "string",
-                    "id": "string",
-                    "name": "string",
-                    "displayOrder": 0,
-                    "surveyId": "string",
-                    "extId": "string",
-                    "extMetadata": {}
-                  }
-                ]
-              },
-              "foreignKey": null
-            }
-          },
-          "foreignKey": null,
-          "surveyCycle": {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "startDate": "string",
-            "endDate": "string",
-            "isActivated": true,
-            "surveyId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "survey": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "uid": "string",
-              "name": "string",
-              "surveyText": "string",
-              "startDate": "string",
-              "endDate": "string",
-              "status": "string",
-              "isEnableWeights": true,
-              "baseSurveyId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "questions": [
-                {}
-              ],
-              "surveyCycles": [
-                {}
-              ],
-              "surveyResponders": [
-                {
-                  "deleted": true,
-                  "deletedOn": "2019-08-24T14:15:22Z",
-                  "deletedBy": "string",
-                  "createdOn": "2019-08-24T14:15:22Z",
-                  "modifiedOn": "2019-08-24T14:15:22Z",
-                  "createdBy": "string",
-                  "modifiedBy": "string",
-                  "id": "string",
-                  "firstName": "string",
-                  "lastName": "string",
-                  "email": "string",
-                  "fullName": "string",
-                  "userId": "string",
-                  "surveyId": "string",
-                  "surveyCycleId": "string",
-                  "extId": "string",
-                  "extMetadata": {},
-                  "survey": {},
-                  "foreignKey": null,
-                  "surveyCycle": {}
-                }
-              ],
-              "sections": [
-                {
-                  "deleted": true,
-                  "deletedOn": "2019-08-24T14:15:22Z",
-                  "deletedBy": "string",
-                  "createdOn": "2019-08-24T14:15:22Z",
-                  "modifiedOn": "2019-08-24T14:15:22Z",
-                  "createdBy": "string",
-                  "modifiedBy": "string",
-                  "id": "string",
-                  "name": "string",
-                  "displayOrder": 0,
-                  "surveyId": "string",
-                  "extId": "string",
-                  "extMetadata": {}
-                }
-              ]
-            },
-            "foreignKey": null
-          },
-          "surveyResponseDetails": [
-            {}
-          ]
-        },
-        "foreignKey": null,
-        "question": {},
-        "option": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "name": "string",
-          "displayOrder": 0,
-          "score": 0,
-          "questionId": "string",
-          "followupQuestionId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "question": {},
-          "foreignKey": null,
-          "followupQuestion": {}
-        }
-      },
-      "survey": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "uid": "string",
-        "name": "string",
-        "surveyText": "string",
-        "startDate": "string",
-        "endDate": "string",
-        "status": "string",
-        "isEnableWeights": true,
-        "baseSurveyId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "questions": [
-          {}
-        ],
-        "surveyCycles": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "startDate": "string",
-            "endDate": "string",
-            "isActivated": true,
-            "surveyId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "survey": {},
-            "foreignKey": null
-          }
-        ],
-        "surveyResponders": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "firstName": "string",
-            "lastName": "string",
-            "email": "string",
-            "fullName": "string",
-            "userId": "string",
-            "surveyId": "string",
-            "surveyCycleId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "survey": {},
-            "foreignKey": null,
-            "surveyCycle": {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "startDate": "string",
-              "endDate": "string",
-              "isActivated": true,
-              "surveyId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "survey": {},
-              "foreignKey": null
-            }
-          }
-        ],
-        "sections": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "name": "string",
-            "displayOrder": 0,
-            "surveyId": "string",
-            "extId": "string",
-            "extMetadata": {}
-          }
-        ]
-      }
-    },
-    "dependentOnQuestion": {}
+    "foreignKey": null
   }
 }
 
 ```
 
-TemplateQuestionWithRelations
+SurveyResponderWithRelations
 
 ### Properties
 
@@ -38867,25 +32734,25 @@ TemplateQuestionWithRelations
 |createdBy|string|false|none|none|
 |modifiedBy|string|false|none|none|
 |id|string|false|none|none|
-|displayOrder|number|false|none|none|
-|isMandatory|boolean|false|none|none|
-|weight|number|false|none|none|
-|templateId|string|false|none|none|
-|questionId|string|false|none|none|
-|dependentOnQuestionId|string¦null|false|none|none|
+|firstName|string¦null|false|none|none|
+|lastName|string¦null|false|none|none|
+|email|string|false|none|none|
+|fullName|string|false|none|none|
+|userId|string¦null|false|none|none|
+|surveyId|string|false|none|none|
+|surveyCycleId|string|false|none|none|
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
-|template|[QuestionTemplateWithRelations](#schemaquestiontemplatewithrelations)|false|none|(tsType: QuestionTemplateWithRelations, schemaOptions: { includeRelations: true })|
+|survey|[SurveyWithRelations](#schemasurveywithrelations)|false|none|(tsType: SurveyWithRelations, schemaOptions: { includeRelations: true })|
 |foreignKey|any|false|none|none|
-|question|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
-|dependentOnQuestion|[TemplateQuestionWithRelations](#schematemplatequestionwithrelations)|false|none|(tsType: TemplateQuestionWithRelations, schemaOptions: { includeRelations: true })|
+|surveyCycle|[SurveyCycleWithRelations](#schemasurveycyclewithrelations)|false|none|(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })|
 
-<h2 id="tocS_TemplateQuestionPartial">TemplateQuestionPartial</h2>
+<h2 id="tocS_SectionWithRelations">SectionWithRelations</h2>
 <!-- backwards compatibility -->
-<a id="schematemplatequestionpartial"></a>
-<a id="schema_TemplateQuestionPartial"></a>
-<a id="tocStemplatequestionpartial"></a>
-<a id="tocstemplatequestionpartial"></a>
+<a id="schemasectionwithrelations"></a>
+<a id="schema_SectionWithRelations"></a>
+<a id="tocSsectionwithrelations"></a>
+<a id="tocssectionwithrelations"></a>
 
 ```json
 {
@@ -38897,19 +32764,16 @@ TemplateQuestionWithRelations
   "createdBy": "string",
   "modifiedBy": "string",
   "id": "string",
+  "name": "string",
   "displayOrder": 0,
-  "isMandatory": true,
-  "weight": 100,
-  "templateId": "string",
-  "questionId": "string",
-  "dependentOnQuestionId": "string",
+  "surveyId": "string",
   "extId": "string",
   "extMetadata": {}
 }
 
 ```
 
-TemplateQuestionPartial
+SectionWithRelations
 
 ### Properties
 
@@ -38923,422 +32787,11 @@ TemplateQuestionPartial
 |createdBy|string|false|none|none|
 |modifiedBy|string|false|none|none|
 |id|string|false|none|none|
-|displayOrder|number|false|none|none|
-|isMandatory|boolean|false|none|none|
-|weight|number|false|none|none|
-|templateId|string|false|none|none|
-|questionId|string|false|none|none|
-|dependentOnQuestionId|string¦null|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-<h2 id="tocS_QuestionTemplate">QuestionTemplate</h2>
-<!-- backwards compatibility -->
-<a id="schemaquestiontemplate"></a>
-<a id="schema_QuestionTemplate"></a>
-<a id="tocSquestiontemplate"></a>
-<a id="tocsquestiontemplate"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "uid": "string",
-  "name": "string",
-  "status": "string",
-  "isEnableWeight": true,
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-QuestionTemplate
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|uid|string|false|none|an identifier id to display in UI|
-|name|string|true|none|none|
-|status|string|true|none|none|
-|isEnableWeight|boolean|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-<h2 id="tocS_NewTemplate">NewTemplate</h2>
-<!-- backwards compatibility -->
-<a id="schemanewtemplate"></a>
-<a id="schema_NewTemplate"></a>
-<a id="tocSnewtemplate"></a>
-<a id="tocsnewtemplate"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "uid": "string",
-  "name": "string",
-  "status": "string",
-  "isEnableWeight": true,
-  "extId": "string",
-  "extMetadata": {},
-  "existingTemplateId": "string"
-}
-
-```
-
-NewTemplate
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|uid|string|false|none|an identifier id to display in UI|
-|name|string|true|none|none|
-|status|string|true|none|none|
-|isEnableWeight|boolean|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-|existingTemplateId|string|false|none|none|
-
-<h2 id="tocS_QuestionTemplateResponseWithRelations">QuestionTemplateResponseWithRelations</h2>
-<!-- backwards compatibility -->
-<a id="schemaquestiontemplateresponsewithrelations"></a>
-<a id="schema_QuestionTemplateResponseWithRelations"></a>
-<a id="tocSquestiontemplateresponsewithrelations"></a>
-<a id="tocsquestiontemplateresponsewithrelations"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "uid": "string",
-  "name": "string",
-  "status": "string",
-  "isEnableWeight": true,
-  "extId": "string",
-  "extMetadata": {},
-  "createdByName": "string"
-}
-
-```
-
-QuestionTemplateResponseWithRelations
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|uid|string|false|none|an identifier id to display in UI|
-|name|string|true|none|none|
-|status|string|true|none|none|
-|isEnableWeight|boolean|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-|createdByName|string|false|none|none|
-
-<h2 id="tocS_QuestionTemplateWithRelations">QuestionTemplateWithRelations</h2>
-<!-- backwards compatibility -->
-<a id="schemaquestiontemplatewithrelations"></a>
-<a id="schema_QuestionTemplateWithRelations"></a>
-<a id="tocSquestiontemplatewithrelations"></a>
-<a id="tocsquestiontemplatewithrelations"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "uid": "string",
-  "name": "string",
-  "status": "string",
-  "isEnableWeight": true,
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-QuestionTemplateWithRelations
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|uid|string|false|none|an identifier id to display in UI|
-|name|string|true|none|none|
-|status|string|true|none|none|
-|isEnableWeight|boolean|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-<h2 id="tocS_QuestionTemplatesDtoPartial">QuestionTemplatesDtoPartial</h2>
-<!-- backwards compatibility -->
-<a id="schemaquestiontemplatesdtopartial"></a>
-<a id="schema_QuestionTemplatesDtoPartial"></a>
-<a id="tocSquestiontemplatesdtopartial"></a>
-<a id="tocsquestiontemplatesdtopartial"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "uid": "string",
-  "name": "string",
-  "status": "string",
-  "isEnableWeight": true,
-  "extId": "string",
-  "extMetadata": {},
-  "existingTemplateId": "string"
-}
-
-```
-
-QuestionTemplatesDtoPartial
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|uid|string|false|none|an identifier id to display in UI|
 |name|string|false|none|none|
-|status|string|false|none|none|
-|isEnableWeight|boolean|false|none|none|
+|displayOrder|number|false|none|none|
+|surveyId|string|false|none|none|
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
-|existingTemplateId|string|false|none|none|
-
-<h2 id="tocS_QuestionTemplatesDto">QuestionTemplatesDto</h2>
-<!-- backwards compatibility -->
-<a id="schemaquestiontemplatesdto"></a>
-<a id="schema_QuestionTemplatesDto"></a>
-<a id="tocSquestiontemplatesdto"></a>
-<a id="tocsquestiontemplatesdto"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "uid": "string",
-  "name": "string",
-  "status": "string",
-  "isEnableWeight": true,
-  "extId": "string",
-  "extMetadata": {},
-  "existingTemplateId": "string"
-}
-
-```
-
-QuestionTemplatesDto
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|uid|string|false|none|an identifier id to display in UI|
-|name|string|true|none|none|
-|status|string|true|none|none|
-|isEnableWeight|boolean|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-|existingTemplateId|string|false|none|none|
-
-<h2 id="tocS_Survey">Survey</h2>
-<!-- backwards compatibility -->
-<a id="schemasurvey"></a>
-<a id="schema_Survey"></a>
-<a id="tocSsurvey"></a>
-<a id="tocssurvey"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "uid": "string",
-  "name": "string",
-  "surveyText": "string",
-  "startDate": "string",
-  "endDate": "string",
-  "status": "string",
-  "isEnableWeights": true,
-  "baseSurveyId": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-Survey
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|uid|string|false|none|none|
-|name|string|true|none|none|
-|surveyText|string|true|none|none|
-|startDate|string|false|none|Start date of the survey|
-|endDate|string|false|none|End date of the survey|
-|status|string|true|none|none|
-|isEnableWeights|boolean|false|none|none|
-|baseSurveyId|string¦null|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-<h2 id="tocS_NewSurvey">NewSurvey</h2>
-<!-- backwards compatibility -->
-<a id="schemanewsurvey"></a>
-<a id="schema_NewSurvey"></a>
-<a id="tocSnewsurvey"></a>
-<a id="tocsnewsurvey"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "uid": "string",
-  "name": "string",
-  "surveyText": "string",
-  "startDate": "string",
-  "endDate": "string",
-  "status": "string",
-  "isEnableWeights": true,
-  "baseSurveyId": "string",
-  "extId": "string",
-  "extMetadata": {},
-  "createdByName": "string",
-  "existingTemplateId": "string"
-}
-
-```
-
-NewSurvey
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|uid|string|false|none|none|
-|name|string|true|none|none|
-|surveyText|string|true|none|none|
-|startDate|string|false|none|Start date of the survey|
-|endDate|string|false|none|End date of the survey|
-|status|string|true|none|none|
-|isEnableWeights|boolean|false|none|none|
-|baseSurveyId|string¦null|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-|createdByName|string|false|none|none|
-|existingTemplateId|string|false|none|none|
 
 <h2 id="tocS_SurveyDtoWithRelations">SurveyDtoWithRelations</h2>
 <!-- backwards compatibility -->
@@ -40520,6 +33973,1112 @@ SurveyPartial
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
 
+<h2 id="tocS_SurveyWithRelations">SurveyWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemasurveywithrelations"></a>
+<a id="schema_SurveyWithRelations"></a>
+<a id="tocSsurveywithrelations"></a>
+<a id="tocssurveywithrelations"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "uid": "string",
+  "name": "string",
+  "surveyText": "string",
+  "startDate": "string",
+  "endDate": "string",
+  "status": "string",
+  "isEnableWeights": true,
+  "baseSurveyId": "string",
+  "extId": "string",
+  "extMetadata": {},
+  "questions": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "uid": "string",
+      "name": "string",
+      "status": "string",
+      "questionType": "Multi Selection",
+      "extId": "string",
+      "extMetadata": {},
+      "isScoreEnabled": true,
+      "isFollowupEnabled": true,
+      "validation": {},
+      "rootQuestionId": "string",
+      "parentQuestionId": "string",
+      "surveyId": "string",
+      "rootQuestion": {},
+      "foreignKey": null,
+      "parentQuestion": {},
+      "options": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "displayOrder": 0,
+          "score": 0,
+          "questionId": "string",
+          "followupQuestionId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "question": {},
+          "foreignKey": null,
+          "followupQuestion": {}
+        }
+      ],
+      "followUpQuestions": [
+        {}
+      ],
+      "surveyResponseDetail": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "surveyResponseId": "string",
+        "questionId": "string",
+        "score": "string",
+        "responseType": "Multi Selection",
+        "textAnswer": "string",
+        "optionId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "surveyResponse": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "surveyResponderId": "string",
+          "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "surveyResponder": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "email": "string",
+            "fullName": "string",
+            "userId": "string",
+            "surveyId": "string",
+            "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "survey": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "uid": "string",
+              "name": "string",
+              "surveyText": "string",
+              "startDate": "string",
+              "endDate": "string",
+              "status": "string",
+              "isEnableWeights": true,
+              "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "questions": [],
+              "surveyCycles": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "startDate": "string",
+                  "endDate": "string",
+                  "isActivated": true,
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
+                  "survey": {},
+                  "foreignKey": null
+                }
+              ],
+              "surveyResponders": [
+                {}
+              ],
+              "sections": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "displayOrder": 0,
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
+                }
+              ]
+            },
+            "foreignKey": null,
+            "surveyCycle": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "startDate": "string",
+              "endDate": "string",
+              "isActivated": true,
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "survey": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "uid": "string",
+                "name": "string",
+                "surveyText": "string",
+                "startDate": "string",
+                "endDate": "string",
+                "status": "string",
+                "isEnableWeights": true,
+                "baseSurveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "questions": [],
+                "surveyCycles": [
+                  {}
+                ],
+                "surveyResponders": [
+                  {}
+                ],
+                "sections": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "name": "string",
+                    "displayOrder": 0,
+                    "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {}
+                  }
+                ]
+              },
+              "foreignKey": null
+            }
+          },
+          "foreignKey": null,
+          "surveyCycle": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "startDate": "string",
+            "endDate": "string",
+            "isActivated": true,
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "survey": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "uid": "string",
+              "name": "string",
+              "surveyText": "string",
+              "startDate": "string",
+              "endDate": "string",
+              "status": "string",
+              "isEnableWeights": true,
+              "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "questions": [],
+              "surveyCycles": [
+                {}
+              ],
+              "surveyResponders": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "email": "string",
+                  "fullName": "string",
+                  "userId": "string",
+                  "surveyId": "string",
+                  "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
+                  "survey": {},
+                  "foreignKey": null,
+                  "surveyCycle": {}
+                }
+              ],
+              "sections": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "displayOrder": 0,
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
+                }
+              ]
+            },
+            "foreignKey": null
+          },
+          "surveyResponseDetails": [
+            {}
+          ]
+        },
+        "foreignKey": null,
+        "question": {},
+        "option": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "displayOrder": 0,
+          "score": 0,
+          "questionId": "string",
+          "followupQuestionId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "question": {},
+          "foreignKey": null,
+          "followupQuestion": {}
+        }
+      },
+      "survey": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "uid": "string",
+        "name": "string",
+        "surveyText": "string",
+        "startDate": "string",
+        "endDate": "string",
+        "status": "string",
+        "isEnableWeights": true,
+        "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "questions": [],
+        "surveyCycles": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "startDate": "string",
+            "endDate": "string",
+            "isActivated": true,
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "survey": {},
+            "foreignKey": null
+          }
+        ],
+        "surveyResponders": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "email": "string",
+            "fullName": "string",
+            "userId": "string",
+            "surveyId": "string",
+            "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "survey": {},
+            "foreignKey": null,
+            "surveyCycle": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "startDate": "string",
+              "endDate": "string",
+              "isActivated": true,
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "survey": {},
+              "foreignKey": null
+            }
+          }
+        ],
+        "sections": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "displayOrder": 0,
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
+          }
+        ]
+      }
+    }
+  ],
+  "surveyCycles": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "startDate": "string",
+      "endDate": "string",
+      "isActivated": true,
+      "surveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
+      "survey": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "uid": "string",
+        "name": "string",
+        "surveyText": "string",
+        "startDate": "string",
+        "endDate": "string",
+        "status": "string",
+        "isEnableWeights": true,
+        "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "questions": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "uid": "string",
+            "name": "string",
+            "status": "string",
+            "questionType": "Multi Selection",
+            "extId": "string",
+            "extMetadata": {},
+            "isScoreEnabled": true,
+            "isFollowupEnabled": true,
+            "validation": {},
+            "rootQuestionId": "string",
+            "parentQuestionId": "string",
+            "surveyId": "string",
+            "rootQuestion": {},
+            "foreignKey": null,
+            "parentQuestion": {},
+            "options": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "displayOrder": 0,
+                "score": 0,
+                "questionId": "string",
+                "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "question": {},
+                "foreignKey": null,
+                "followupQuestion": {}
+              }
+            ],
+            "followUpQuestions": [
+              {}
+            ],
+            "surveyResponseDetail": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "surveyResponseId": "string",
+              "questionId": "string",
+              "score": "string",
+              "responseType": "Multi Selection",
+              "textAnswer": "string",
+              "optionId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "surveyResponse": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "surveyResponderId": "string",
+                "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "surveyResponder": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "email": "string",
+                  "fullName": "string",
+                  "userId": "string",
+                  "surveyId": "string",
+                  "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
+                  "survey": {},
+                  "foreignKey": null,
+                  "surveyCycle": {}
+                },
+                "foreignKey": null,
+                "surveyCycle": {},
+                "surveyResponseDetails": [
+                  {}
+                ]
+              },
+              "foreignKey": null,
+              "question": {},
+              "option": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "displayOrder": 0,
+                "score": 0,
+                "questionId": "string",
+                "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "question": {},
+                "foreignKey": null,
+                "followupQuestion": {}
+              }
+            },
+            "survey": {}
+          }
+        ],
+        "surveyCycles": [],
+        "surveyResponders": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "email": "string",
+            "fullName": "string",
+            "userId": "string",
+            "surveyId": "string",
+            "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "survey": {},
+            "foreignKey": null,
+            "surveyCycle": {}
+          }
+        ],
+        "sections": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "displayOrder": 0,
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
+          }
+        ]
+      },
+      "foreignKey": null
+    }
+  ],
+  "surveyResponders": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "firstName": "string",
+      "lastName": "string",
+      "email": "string",
+      "fullName": "string",
+      "userId": "string",
+      "surveyId": "string",
+      "surveyCycleId": "string",
+      "extId": "string",
+      "extMetadata": {},
+      "survey": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "uid": "string",
+        "name": "string",
+        "surveyText": "string",
+        "startDate": "string",
+        "endDate": "string",
+        "status": "string",
+        "isEnableWeights": true,
+        "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "questions": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "uid": "string",
+            "name": "string",
+            "status": "string",
+            "questionType": "Multi Selection",
+            "extId": "string",
+            "extMetadata": {},
+            "isScoreEnabled": true,
+            "isFollowupEnabled": true,
+            "validation": {},
+            "rootQuestionId": "string",
+            "parentQuestionId": "string",
+            "surveyId": "string",
+            "rootQuestion": {},
+            "foreignKey": null,
+            "parentQuestion": {},
+            "options": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "displayOrder": 0,
+                "score": 0,
+                "questionId": "string",
+                "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "question": {},
+                "foreignKey": null,
+                "followupQuestion": {}
+              }
+            ],
+            "followUpQuestions": [
+              {}
+            ],
+            "surveyResponseDetail": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "surveyResponseId": "string",
+              "questionId": "string",
+              "score": "string",
+              "responseType": "Multi Selection",
+              "textAnswer": "string",
+              "optionId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "surveyResponse": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "surveyResponderId": "string",
+                "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "surveyResponder": {},
+                "foreignKey": null,
+                "surveyCycle": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "startDate": "string",
+                  "endDate": "string",
+                  "isActivated": true,
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
+                  "survey": {},
+                  "foreignKey": null
+                },
+                "surveyResponseDetails": [
+                  {}
+                ]
+              },
+              "foreignKey": null,
+              "question": {},
+              "option": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "displayOrder": 0,
+                "score": 0,
+                "questionId": "string",
+                "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "question": {},
+                "foreignKey": null,
+                "followupQuestion": {}
+              }
+            },
+            "survey": {}
+          }
+        ],
+        "surveyCycles": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "startDate": "string",
+            "endDate": "string",
+            "isActivated": true,
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "survey": {},
+            "foreignKey": null
+          }
+        ],
+        "surveyResponders": [],
+        "sections": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "displayOrder": 0,
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
+          }
+        ]
+      },
+      "foreignKey": null,
+      "surveyCycle": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "startDate": "string",
+        "endDate": "string",
+        "isActivated": true,
+        "surveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "survey": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "uid": "string",
+          "name": "string",
+          "surveyText": "string",
+          "startDate": "string",
+          "endDate": "string",
+          "status": "string",
+          "isEnableWeights": true,
+          "baseSurveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "questions": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "uid": "string",
+              "name": "string",
+              "status": "string",
+              "questionType": "Multi Selection",
+              "extId": "string",
+              "extMetadata": {},
+              "isScoreEnabled": true,
+              "isFollowupEnabled": true,
+              "validation": {},
+              "rootQuestionId": "string",
+              "parentQuestionId": "string",
+              "surveyId": "string",
+              "rootQuestion": {},
+              "foreignKey": null,
+              "parentQuestion": {},
+              "options": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "displayOrder": 0,
+                  "score": 0,
+                  "questionId": "string",
+                  "followupQuestionId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
+                  "question": {},
+                  "foreignKey": null,
+                  "followupQuestion": {}
+                }
+              ],
+              "followUpQuestions": [
+                {}
+              ],
+              "surveyResponseDetail": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "surveyResponseId": "string",
+                "questionId": "string",
+                "score": "string",
+                "responseType": "Multi Selection",
+                "textAnswer": "string",
+                "optionId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "surveyResponse": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "surveyResponderId": "string",
+                  "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
+                  "surveyResponder": {},
+                  "foreignKey": null,
+                  "surveyCycle": {},
+                  "surveyResponseDetails": [
+                    {}
+                  ]
+                },
+                "foreignKey": null,
+                "question": {},
+                "option": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "displayOrder": 0,
+                  "score": 0,
+                  "questionId": "string",
+                  "followupQuestionId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
+                  "question": {},
+                  "foreignKey": null,
+                  "followupQuestion": {}
+                }
+              },
+              "survey": {}
+            }
+          ],
+          "surveyCycles": [
+            {}
+          ],
+          "surveyResponders": [],
+          "sections": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "displayOrder": 0,
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {}
+            }
+          ]
+        },
+        "foreignKey": null
+      }
+    }
+  ],
+  "sections": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "name": "string",
+      "displayOrder": 0,
+      "surveyId": "string",
+      "extId": "string",
+      "extMetadata": {}
+    }
+  ]
+}
+
+```
+
+SurveyWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|uid|string|false|none|none|
+|name|string|true|none|none|
+|surveyText|string|true|none|none|
+|startDate|string|false|none|Start date of the survey|
+|endDate|string|false|none|End date of the survey|
+|status|string|true|none|none|
+|isEnableWeights|boolean|false|none|none|
+|baseSurveyId|string¦null|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+|questions|[[QuestionWithRelations](#schemaquestionwithrelations)]|false|none|[(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })]|
+|surveyCycles|[[SurveyCycleWithRelations](#schemasurveycyclewithrelations)]|false|none|[(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })]|
+|surveyResponders|[[SurveyResponderWithRelations](#schemasurveyresponderwithrelations)]|false|none|[(tsType: SurveyResponderWithRelations, schemaOptions: { includeRelations: true })]|
+|sections|[[SectionWithRelations](#schemasectionwithrelations)]|false|none|[(tsType: SectionWithRelations, schemaOptions: { includeRelations: true })]|
+
 <h2 id="tocS_SurveyDtoPartial">SurveyDtoPartial</h2>
 <!-- backwards compatibility -->
 <a id="schemasurveydtopartial"></a>
@@ -40639,6 +35198,4081 @@ SurveyDto
 |extMetadata|object|false|none|none|
 |createdByName|string|false|none|none|
 |existingTemplateId|string|false|none|none|
+
+<h2 id="tocS_SurveyResponse">SurveyResponse</h2>
+<!-- backwards compatibility -->
+<a id="schemasurveyresponse"></a>
+<a id="schema_SurveyResponse"></a>
+<a id="tocSsurveyresponse"></a>
+<a id="tocssurveyresponse"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "surveyResponderId": "string",
+  "surveyCycleId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+SurveyResponse
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|surveyResponderId|string|true|none|none|
+|surveyCycleId|string|true|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+
+<h2 id="tocS_NewSurveyResponse">NewSurveyResponse</h2>
+<!-- backwards compatibility -->
+<a id="schemanewsurveyresponse"></a>
+<a id="schema_NewSurveyResponse"></a>
+<a id="tocSnewsurveyresponse"></a>
+<a id="tocsnewsurveyresponse"></a>
+
+```json
+{
+  "surveyResponseDetailArray": [
+    {}
+  ],
+  "surveyResponderId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+NewSurveyResponse
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|surveyResponseDetailArray|[object]|false|none|none|
+|surveyResponderId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+
+<h2 id="tocS_SurveyResponseDto">SurveyResponseDto</h2>
+<!-- backwards compatibility -->
+<a id="schemasurveyresponsedto"></a>
+<a id="schema_SurveyResponseDto"></a>
+<a id="tocSsurveyresponsedto"></a>
+<a id="tocssurveyresponsedto"></a>
+
+```json
+{
+  "surveyResponseDetailArray": [
+    {}
+  ],
+  "surveyResponderId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+SurveyResponseDto
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|surveyResponseDetailArray|[object]|false|none|none|
+|surveyResponderId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+
+<h2 id="tocS_SurveyResponseWithRelations">SurveyResponseWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemasurveyresponsewithrelations"></a>
+<a id="schema_SurveyResponseWithRelations"></a>
+<a id="tocSsurveyresponsewithrelations"></a>
+<a id="tocssurveyresponsewithrelations"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "surveyResponderId": "string",
+  "surveyCycleId": "string",
+  "extId": "string",
+  "extMetadata": {},
+  "surveyResponder": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "firstName": "string",
+    "lastName": "string",
+    "email": "string",
+    "fullName": "string",
+    "userId": "string",
+    "surveyId": "string",
+    "surveyCycleId": "string",
+    "extId": "string",
+    "extMetadata": {},
+    "survey": {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "uid": "string",
+      "name": "string",
+      "surveyText": "string",
+      "startDate": "string",
+      "endDate": "string",
+      "status": "string",
+      "isEnableWeights": true,
+      "baseSurveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
+      "questions": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "uid": "string",
+          "name": "string",
+          "status": "string",
+          "questionType": "Multi Selection",
+          "extId": "string",
+          "extMetadata": {},
+          "isScoreEnabled": true,
+          "isFollowupEnabled": true,
+          "validation": {},
+          "rootQuestionId": "string",
+          "parentQuestionId": "string",
+          "surveyId": "string",
+          "rootQuestion": {},
+          "foreignKey": null,
+          "parentQuestion": {},
+          "options": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "displayOrder": 0,
+              "score": 0,
+              "questionId": "string",
+              "followupQuestionId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "question": {},
+              "foreignKey": null,
+              "followupQuestion": {}
+            }
+          ],
+          "followUpQuestions": [
+            {}
+          ],
+          "surveyResponseDetail": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "surveyResponseId": "string",
+            "questionId": "string",
+            "score": "string",
+            "responseType": "Multi Selection",
+            "textAnswer": "string",
+            "optionId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "surveyResponse": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "surveyResponderId": "string",
+              "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "surveyResponder": {},
+              "foreignKey": null,
+              "surveyCycle": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "startDate": "string",
+                "endDate": "string",
+                "isActivated": true,
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "survey": {},
+                "foreignKey": null
+              },
+              "surveyResponseDetails": [
+                {}
+              ]
+            },
+            "foreignKey": null,
+            "question": {},
+            "option": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "displayOrder": 0,
+              "score": 0,
+              "questionId": "string",
+              "followupQuestionId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "question": {},
+              "foreignKey": null,
+              "followupQuestion": {}
+            }
+          },
+          "survey": {}
+        }
+      ],
+      "surveyCycles": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "startDate": "string",
+          "endDate": "string",
+          "isActivated": true,
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "survey": {},
+          "foreignKey": null
+        }
+      ],
+      "surveyResponders": [
+        {}
+      ],
+      "sections": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "displayOrder": 0,
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {}
+        }
+      ]
+    },
+    "foreignKey": null,
+    "surveyCycle": {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "startDate": "string",
+      "endDate": "string",
+      "isActivated": true,
+      "surveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
+      "survey": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "uid": "string",
+        "name": "string",
+        "surveyText": "string",
+        "startDate": "string",
+        "endDate": "string",
+        "status": "string",
+        "isEnableWeights": true,
+        "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "questions": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "uid": "string",
+            "name": "string",
+            "status": "string",
+            "questionType": "Multi Selection",
+            "extId": "string",
+            "extMetadata": {},
+            "isScoreEnabled": true,
+            "isFollowupEnabled": true,
+            "validation": {},
+            "rootQuestionId": "string",
+            "parentQuestionId": "string",
+            "surveyId": "string",
+            "rootQuestion": {},
+            "foreignKey": null,
+            "parentQuestion": {},
+            "options": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "displayOrder": 0,
+                "score": 0,
+                "questionId": "string",
+                "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "question": {},
+                "foreignKey": null,
+                "followupQuestion": {}
+              }
+            ],
+            "followUpQuestions": [
+              {}
+            ],
+            "surveyResponseDetail": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "surveyResponseId": "string",
+              "questionId": "string",
+              "score": "string",
+              "responseType": "Multi Selection",
+              "textAnswer": "string",
+              "optionId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "surveyResponse": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "surveyResponderId": "string",
+                "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "surveyResponder": {},
+                "foreignKey": null,
+                "surveyCycle": {},
+                "surveyResponseDetails": [
+                  {}
+                ]
+              },
+              "foreignKey": null,
+              "question": {},
+              "option": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "displayOrder": 0,
+                "score": 0,
+                "questionId": "string",
+                "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "question": {},
+                "foreignKey": null,
+                "followupQuestion": {}
+              }
+            },
+            "survey": {}
+          }
+        ],
+        "surveyCycles": [
+          {}
+        ],
+        "surveyResponders": [
+          {}
+        ],
+        "sections": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "displayOrder": 0,
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
+          }
+        ]
+      },
+      "foreignKey": null
+    }
+  },
+  "foreignKey": null,
+  "surveyCycle": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "startDate": "string",
+    "endDate": "string",
+    "isActivated": true,
+    "surveyId": "string",
+    "extId": "string",
+    "extMetadata": {},
+    "survey": {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "uid": "string",
+      "name": "string",
+      "surveyText": "string",
+      "startDate": "string",
+      "endDate": "string",
+      "status": "string",
+      "isEnableWeights": true,
+      "baseSurveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
+      "questions": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "uid": "string",
+          "name": "string",
+          "status": "string",
+          "questionType": "Multi Selection",
+          "extId": "string",
+          "extMetadata": {},
+          "isScoreEnabled": true,
+          "isFollowupEnabled": true,
+          "validation": {},
+          "rootQuestionId": "string",
+          "parentQuestionId": "string",
+          "surveyId": "string",
+          "rootQuestion": {},
+          "foreignKey": null,
+          "parentQuestion": {},
+          "options": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "displayOrder": 0,
+              "score": 0,
+              "questionId": "string",
+              "followupQuestionId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "question": {},
+              "foreignKey": null,
+              "followupQuestion": {}
+            }
+          ],
+          "followUpQuestions": [
+            {}
+          ],
+          "surveyResponseDetail": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "surveyResponseId": "string",
+            "questionId": "string",
+            "score": "string",
+            "responseType": "Multi Selection",
+            "textAnswer": "string",
+            "optionId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "surveyResponse": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "surveyResponderId": "string",
+              "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "surveyResponder": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "email": "string",
+                "fullName": "string",
+                "userId": "string",
+                "surveyId": "string",
+                "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "survey": {},
+                "foreignKey": null,
+                "surveyCycle": {}
+              },
+              "foreignKey": null,
+              "surveyCycle": {},
+              "surveyResponseDetails": [
+                {}
+              ]
+            },
+            "foreignKey": null,
+            "question": {},
+            "option": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "displayOrder": 0,
+              "score": 0,
+              "questionId": "string",
+              "followupQuestionId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "question": {},
+              "foreignKey": null,
+              "followupQuestion": {}
+            }
+          },
+          "survey": {}
+        }
+      ],
+      "surveyCycles": [
+        {}
+      ],
+      "surveyResponders": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "firstName": "string",
+          "lastName": "string",
+          "email": "string",
+          "fullName": "string",
+          "userId": "string",
+          "surveyId": "string",
+          "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "survey": {},
+          "foreignKey": null,
+          "surveyCycle": {}
+        }
+      ],
+      "sections": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "displayOrder": 0,
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {}
+        }
+      ]
+    },
+    "foreignKey": null
+  },
+  "surveyResponseDetails": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "surveyResponseId": "string",
+      "questionId": "string",
+      "score": "string",
+      "responseType": "Multi Selection",
+      "textAnswer": "string",
+      "optionId": "string",
+      "extId": "string",
+      "extMetadata": {},
+      "surveyResponse": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "surveyResponderId": "string",
+        "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "surveyResponder": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "firstName": "string",
+          "lastName": "string",
+          "email": "string",
+          "fullName": "string",
+          "userId": "string",
+          "surveyId": "string",
+          "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "survey": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "uid": "string",
+            "name": "string",
+            "surveyText": "string",
+            "startDate": "string",
+            "endDate": "string",
+            "status": "string",
+            "isEnableWeights": true,
+            "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "questions": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "uid": "string",
+                "name": "string",
+                "status": "string",
+                "questionType": "Multi Selection",
+                "extId": "string",
+                "extMetadata": {},
+                "isScoreEnabled": true,
+                "isFollowupEnabled": true,
+                "validation": {},
+                "rootQuestionId": "string",
+                "parentQuestionId": "string",
+                "surveyId": "string",
+                "rootQuestion": {},
+                "foreignKey": null,
+                "parentQuestion": {},
+                "options": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "name": "string",
+                    "displayOrder": 0,
+                    "score": 0,
+                    "questionId": "string",
+                    "followupQuestionId": "string",
+                    "extId": "string",
+                    "extMetadata": {},
+                    "question": {},
+                    "foreignKey": null,
+                    "followupQuestion": {}
+                  }
+                ],
+                "followUpQuestions": [
+                  {}
+                ],
+                "surveyResponseDetail": {},
+                "survey": {}
+              }
+            ],
+            "surveyCycles": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "startDate": "string",
+                "endDate": "string",
+                "isActivated": true,
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "survey": {},
+                "foreignKey": null
+              }
+            ],
+            "surveyResponders": [
+              {}
+            ],
+            "sections": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "displayOrder": 0,
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
+              }
+            ]
+          },
+          "foreignKey": null,
+          "surveyCycle": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "startDate": "string",
+            "endDate": "string",
+            "isActivated": true,
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "survey": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "uid": "string",
+              "name": "string",
+              "surveyText": "string",
+              "startDate": "string",
+              "endDate": "string",
+              "status": "string",
+              "isEnableWeights": true,
+              "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "questions": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "uid": "string",
+                  "name": "string",
+                  "status": "string",
+                  "questionType": "Multi Selection",
+                  "extId": "string",
+                  "extMetadata": {},
+                  "isScoreEnabled": true,
+                  "isFollowupEnabled": true,
+                  "validation": {},
+                  "rootQuestionId": "string",
+                  "parentQuestionId": "string",
+                  "surveyId": "string",
+                  "rootQuestion": {},
+                  "foreignKey": null,
+                  "parentQuestion": {},
+                  "options": [
+                    {}
+                  ],
+                  "followUpQuestions": [
+                    {}
+                  ],
+                  "surveyResponseDetail": {},
+                  "survey": {}
+                }
+              ],
+              "surveyCycles": [
+                {}
+              ],
+              "surveyResponders": [
+                {}
+              ],
+              "sections": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "displayOrder": 0,
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
+                }
+              ]
+            },
+            "foreignKey": null
+          }
+        },
+        "foreignKey": null,
+        "surveyCycle": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "startDate": "string",
+          "endDate": "string",
+          "isActivated": true,
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "survey": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "uid": "string",
+            "name": "string",
+            "surveyText": "string",
+            "startDate": "string",
+            "endDate": "string",
+            "status": "string",
+            "isEnableWeights": true,
+            "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "questions": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "uid": "string",
+                "name": "string",
+                "status": "string",
+                "questionType": "Multi Selection",
+                "extId": "string",
+                "extMetadata": {},
+                "isScoreEnabled": true,
+                "isFollowupEnabled": true,
+                "validation": {},
+                "rootQuestionId": "string",
+                "parentQuestionId": "string",
+                "surveyId": "string",
+                "rootQuestion": {},
+                "foreignKey": null,
+                "parentQuestion": {},
+                "options": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "name": "string",
+                    "displayOrder": 0,
+                    "score": 0,
+                    "questionId": "string",
+                    "followupQuestionId": "string",
+                    "extId": "string",
+                    "extMetadata": {},
+                    "question": {},
+                    "foreignKey": null,
+                    "followupQuestion": {}
+                  }
+                ],
+                "followUpQuestions": [
+                  {}
+                ],
+                "surveyResponseDetail": {},
+                "survey": {}
+              }
+            ],
+            "surveyCycles": [
+              {}
+            ],
+            "surveyResponders": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "email": "string",
+                "fullName": "string",
+                "userId": "string",
+                "surveyId": "string",
+                "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "survey": {},
+                "foreignKey": null,
+                "surveyCycle": {}
+              }
+            ],
+            "sections": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "displayOrder": 0,
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
+              }
+            ]
+          },
+          "foreignKey": null
+        },
+        "surveyResponseDetails": []
+      },
+      "foreignKey": null,
+      "question": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "uid": "string",
+        "name": "string",
+        "status": "string",
+        "questionType": "Multi Selection",
+        "extId": "string",
+        "extMetadata": {},
+        "isScoreEnabled": true,
+        "isFollowupEnabled": true,
+        "validation": {},
+        "rootQuestionId": "string",
+        "parentQuestionId": "string",
+        "surveyId": "string",
+        "rootQuestion": {},
+        "foreignKey": null,
+        "parentQuestion": {},
+        "options": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "displayOrder": 0,
+            "score": 0,
+            "questionId": "string",
+            "followupQuestionId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "question": {},
+            "foreignKey": null,
+            "followupQuestion": {}
+          }
+        ],
+        "followUpQuestions": [
+          {}
+        ],
+        "surveyResponseDetail": {},
+        "survey": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "uid": "string",
+          "name": "string",
+          "surveyText": "string",
+          "startDate": "string",
+          "endDate": "string",
+          "status": "string",
+          "isEnableWeights": true,
+          "baseSurveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "questions": [
+            {}
+          ],
+          "surveyCycles": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "startDate": "string",
+              "endDate": "string",
+              "isActivated": true,
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "survey": {},
+              "foreignKey": null
+            }
+          ],
+          "surveyResponders": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "firstName": "string",
+              "lastName": "string",
+              "email": "string",
+              "fullName": "string",
+              "userId": "string",
+              "surveyId": "string",
+              "surveyCycleId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "survey": {},
+              "foreignKey": null,
+              "surveyCycle": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "startDate": "string",
+                "endDate": "string",
+                "isActivated": true,
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "survey": {},
+                "foreignKey": null
+              }
+            }
+          ],
+          "sections": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "displayOrder": 0,
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {}
+            }
+          ]
+        }
+      },
+      "option": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "name": "string",
+        "displayOrder": 0,
+        "score": 0,
+        "questionId": "string",
+        "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "question": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "uid": "string",
+          "name": "string",
+          "status": "string",
+          "questionType": "Multi Selection",
+          "extId": "string",
+          "extMetadata": {},
+          "isScoreEnabled": true,
+          "isFollowupEnabled": true,
+          "validation": {},
+          "rootQuestionId": "string",
+          "parentQuestionId": "string",
+          "surveyId": "string",
+          "rootQuestion": {},
+          "foreignKey": null,
+          "parentQuestion": {},
+          "options": [
+            {}
+          ],
+          "followUpQuestions": [
+            {}
+          ],
+          "surveyResponseDetail": {},
+          "survey": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "uid": "string",
+            "name": "string",
+            "surveyText": "string",
+            "startDate": "string",
+            "endDate": "string",
+            "status": "string",
+            "isEnableWeights": true,
+            "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "questions": [
+              {}
+            ],
+            "surveyCycles": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "startDate": "string",
+                "endDate": "string",
+                "isActivated": true,
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "survey": {},
+                "foreignKey": null
+              }
+            ],
+            "surveyResponders": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "email": "string",
+                "fullName": "string",
+                "userId": "string",
+                "surveyId": "string",
+                "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "survey": {},
+                "foreignKey": null,
+                "surveyCycle": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "startDate": "string",
+                  "endDate": "string",
+                  "isActivated": true,
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
+                  "survey": {},
+                  "foreignKey": null
+                }
+              }
+            ],
+            "sections": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "displayOrder": 0,
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
+              }
+            ]
+          }
+        },
+        "foreignKey": null,
+        "followupQuestion": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "uid": "string",
+          "name": "string",
+          "status": "string",
+          "questionType": "Multi Selection",
+          "extId": "string",
+          "extMetadata": {},
+          "isScoreEnabled": true,
+          "isFollowupEnabled": true,
+          "validation": {},
+          "rootQuestionId": "string",
+          "parentQuestionId": "string",
+          "surveyId": "string",
+          "rootQuestion": {},
+          "foreignKey": null,
+          "parentQuestion": {},
+          "options": [
+            {}
+          ],
+          "followUpQuestions": [
+            {}
+          ],
+          "surveyResponseDetail": {},
+          "survey": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "uid": "string",
+            "name": "string",
+            "surveyText": "string",
+            "startDate": "string",
+            "endDate": "string",
+            "status": "string",
+            "isEnableWeights": true,
+            "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "questions": [
+              {}
+            ],
+            "surveyCycles": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "startDate": "string",
+                "endDate": "string",
+                "isActivated": true,
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "survey": {},
+                "foreignKey": null
+              }
+            ],
+            "surveyResponders": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "email": "string",
+                "fullName": "string",
+                "userId": "string",
+                "surveyId": "string",
+                "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "survey": {},
+                "foreignKey": null,
+                "surveyCycle": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "startDate": "string",
+                  "endDate": "string",
+                  "isActivated": true,
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
+                  "survey": {},
+                  "foreignKey": null
+                }
+              }
+            ],
+            "sections": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "displayOrder": 0,
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}
+
+```
+
+SurveyResponseWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|surveyResponderId|string|true|none|none|
+|surveyCycleId|string|true|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+|surveyResponder|[SurveyResponderWithRelations](#schemasurveyresponderwithrelations)|false|none|(tsType: SurveyResponderWithRelations, schemaOptions: { includeRelations: true })|
+|foreignKey|any|false|none|none|
+|surveyCycle|[SurveyCycleWithRelations](#schemasurveycyclewithrelations)|false|none|(tsType: SurveyCycleWithRelations, schemaOptions: { includeRelations: true })|
+|surveyResponseDetails|[[SurveyResponseDetailWithRelations](#schemasurveyresponsedetailwithrelations)]|false|none|[(tsType: SurveyResponseDetailWithRelations, schemaOptions: { includeRelations: true })]|
+
+<h2 id="tocS_SurveyResponseDetailWithRelations">SurveyResponseDetailWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemasurveyresponsedetailwithrelations"></a>
+<a id="schema_SurveyResponseDetailWithRelations"></a>
+<a id="tocSsurveyresponsedetailwithrelations"></a>
+<a id="tocssurveyresponsedetailwithrelations"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "surveyResponseId": "string",
+  "questionId": "string",
+  "score": "string",
+  "responseType": "Multi Selection",
+  "textAnswer": "string",
+  "optionId": "string",
+  "extId": "string",
+  "extMetadata": {},
+  "surveyResponse": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "surveyResponderId": "string",
+    "surveyCycleId": "string",
+    "extId": "string",
+    "extMetadata": {},
+    "surveyResponder": {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "firstName": "string",
+      "lastName": "string",
+      "email": "string",
+      "fullName": "string",
+      "userId": "string",
+      "surveyId": "string",
+      "surveyCycleId": "string",
+      "extId": "string",
+      "extMetadata": {},
+      "survey": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "uid": "string",
+        "name": "string",
+        "surveyText": "string",
+        "startDate": "string",
+        "endDate": "string",
+        "status": "string",
+        "isEnableWeights": true,
+        "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "questions": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "uid": "string",
+            "name": "string",
+            "status": "string",
+            "questionType": "Multi Selection",
+            "extId": "string",
+            "extMetadata": {},
+            "isScoreEnabled": true,
+            "isFollowupEnabled": true,
+            "validation": {},
+            "rootQuestionId": "string",
+            "parentQuestionId": "string",
+            "surveyId": "string",
+            "rootQuestion": {},
+            "foreignKey": null,
+            "parentQuestion": {},
+            "options": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "displayOrder": 0,
+                "score": 0,
+                "questionId": "string",
+                "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "question": {},
+                "foreignKey": null,
+                "followupQuestion": {}
+              }
+            ],
+            "followUpQuestions": [
+              {}
+            ],
+            "surveyResponseDetail": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "surveyResponseId": "string",
+              "questionId": "string",
+              "score": "string",
+              "responseType": "Multi Selection",
+              "textAnswer": "string",
+              "optionId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "surveyResponse": {},
+              "foreignKey": null,
+              "question": {},
+              "option": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "displayOrder": 0,
+                "score": 0,
+                "questionId": "string",
+                "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "question": {},
+                "foreignKey": null,
+                "followupQuestion": {}
+              }
+            },
+            "survey": {}
+          }
+        ],
+        "surveyCycles": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "startDate": "string",
+            "endDate": "string",
+            "isActivated": true,
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "survey": {},
+            "foreignKey": null
+          }
+        ],
+        "surveyResponders": [
+          {}
+        ],
+        "sections": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "displayOrder": 0,
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
+          }
+        ]
+      },
+      "foreignKey": null,
+      "surveyCycle": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "startDate": "string",
+        "endDate": "string",
+        "isActivated": true,
+        "surveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "survey": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "uid": "string",
+          "name": "string",
+          "surveyText": "string",
+          "startDate": "string",
+          "endDate": "string",
+          "status": "string",
+          "isEnableWeights": true,
+          "baseSurveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "questions": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "uid": "string",
+              "name": "string",
+              "status": "string",
+              "questionType": "Multi Selection",
+              "extId": "string",
+              "extMetadata": {},
+              "isScoreEnabled": true,
+              "isFollowupEnabled": true,
+              "validation": {},
+              "rootQuestionId": "string",
+              "parentQuestionId": "string",
+              "surveyId": "string",
+              "rootQuestion": {},
+              "foreignKey": null,
+              "parentQuestion": {},
+              "options": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "displayOrder": 0,
+                  "score": 0,
+                  "questionId": "string",
+                  "followupQuestionId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
+                  "question": {},
+                  "foreignKey": null,
+                  "followupQuestion": {}
+                }
+              ],
+              "followUpQuestions": [
+                {}
+              ],
+              "surveyResponseDetail": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "surveyResponseId": "string",
+                "questionId": "string",
+                "score": "string",
+                "responseType": "Multi Selection",
+                "textAnswer": "string",
+                "optionId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "surveyResponse": {},
+                "foreignKey": null,
+                "question": {},
+                "option": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "displayOrder": 0,
+                  "score": 0,
+                  "questionId": "string",
+                  "followupQuestionId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
+                  "question": {},
+                  "foreignKey": null,
+                  "followupQuestion": {}
+                }
+              },
+              "survey": {}
+            }
+          ],
+          "surveyCycles": [
+            {}
+          ],
+          "surveyResponders": [
+            {}
+          ],
+          "sections": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "displayOrder": 0,
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {}
+            }
+          ]
+        },
+        "foreignKey": null
+      }
+    },
+    "foreignKey": null,
+    "surveyCycle": {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "startDate": "string",
+      "endDate": "string",
+      "isActivated": true,
+      "surveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
+      "survey": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "uid": "string",
+        "name": "string",
+        "surveyText": "string",
+        "startDate": "string",
+        "endDate": "string",
+        "status": "string",
+        "isEnableWeights": true,
+        "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "questions": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "uid": "string",
+            "name": "string",
+            "status": "string",
+            "questionType": "Multi Selection",
+            "extId": "string",
+            "extMetadata": {},
+            "isScoreEnabled": true,
+            "isFollowupEnabled": true,
+            "validation": {},
+            "rootQuestionId": "string",
+            "parentQuestionId": "string",
+            "surveyId": "string",
+            "rootQuestion": {},
+            "foreignKey": null,
+            "parentQuestion": {},
+            "options": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "displayOrder": 0,
+                "score": 0,
+                "questionId": "string",
+                "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "question": {},
+                "foreignKey": null,
+                "followupQuestion": {}
+              }
+            ],
+            "followUpQuestions": [
+              {}
+            ],
+            "surveyResponseDetail": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "surveyResponseId": "string",
+              "questionId": "string",
+              "score": "string",
+              "responseType": "Multi Selection",
+              "textAnswer": "string",
+              "optionId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "surveyResponse": {},
+              "foreignKey": null,
+              "question": {},
+              "option": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "displayOrder": 0,
+                "score": 0,
+                "questionId": "string",
+                "followupQuestionId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "question": {},
+                "foreignKey": null,
+                "followupQuestion": {}
+              }
+            },
+            "survey": {}
+          }
+        ],
+        "surveyCycles": [
+          {}
+        ],
+        "surveyResponders": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "email": "string",
+            "fullName": "string",
+            "userId": "string",
+            "surveyId": "string",
+            "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "survey": {},
+            "foreignKey": null,
+            "surveyCycle": {}
+          }
+        ],
+        "sections": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "displayOrder": 0,
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
+          }
+        ]
+      },
+      "foreignKey": null
+    },
+    "surveyResponseDetails": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "surveyResponseId": "string",
+        "questionId": "string",
+        "score": "string",
+        "responseType": "Multi Selection",
+        "textAnswer": "string",
+        "optionId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "surveyResponse": {},
+        "foreignKey": null,
+        "question": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "uid": "string",
+          "name": "string",
+          "status": "string",
+          "questionType": "Multi Selection",
+          "extId": "string",
+          "extMetadata": {},
+          "isScoreEnabled": true,
+          "isFollowupEnabled": true,
+          "validation": {},
+          "rootQuestionId": "string",
+          "parentQuestionId": "string",
+          "surveyId": "string",
+          "rootQuestion": {},
+          "foreignKey": null,
+          "parentQuestion": {},
+          "options": [
+            {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "name": "string",
+              "displayOrder": 0,
+              "score": 0,
+              "questionId": "string",
+              "followupQuestionId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "question": {},
+              "foreignKey": null,
+              "followupQuestion": {}
+            }
+          ],
+          "followUpQuestions": [
+            {}
+          ],
+          "surveyResponseDetail": {},
+          "survey": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "uid": "string",
+            "name": "string",
+            "surveyText": "string",
+            "startDate": "string",
+            "endDate": "string",
+            "status": "string",
+            "isEnableWeights": true,
+            "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "questions": [
+              {}
+            ],
+            "surveyCycles": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "startDate": "string",
+                "endDate": "string",
+                "isActivated": true,
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "survey": {},
+                "foreignKey": null
+              }
+            ],
+            "surveyResponders": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "email": "string",
+                "fullName": "string",
+                "userId": "string",
+                "surveyId": "string",
+                "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "survey": {},
+                "foreignKey": null,
+                "surveyCycle": {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "startDate": "string",
+                  "endDate": "string",
+                  "isActivated": true,
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
+                  "survey": {},
+                  "foreignKey": null
+                }
+              }
+            ],
+            "sections": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "displayOrder": 0,
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
+              }
+            ]
+          }
+        },
+        "option": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "displayOrder": 0,
+          "score": 0,
+          "questionId": "string",
+          "followupQuestionId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "question": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "uid": "string",
+            "name": "string",
+            "status": "string",
+            "questionType": "Multi Selection",
+            "extId": "string",
+            "extMetadata": {},
+            "isScoreEnabled": true,
+            "isFollowupEnabled": true,
+            "validation": {},
+            "rootQuestionId": "string",
+            "parentQuestionId": "string",
+            "surveyId": "string",
+            "rootQuestion": {},
+            "foreignKey": null,
+            "parentQuestion": {},
+            "options": [
+              {}
+            ],
+            "followUpQuestions": [
+              {}
+            ],
+            "surveyResponseDetail": {},
+            "survey": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "uid": "string",
+              "name": "string",
+              "surveyText": "string",
+              "startDate": "string",
+              "endDate": "string",
+              "status": "string",
+              "isEnableWeights": true,
+              "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "questions": [
+                {}
+              ],
+              "surveyCycles": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "startDate": "string",
+                  "endDate": "string",
+                  "isActivated": true,
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
+                  "survey": {},
+                  "foreignKey": null
+                }
+              ],
+              "surveyResponders": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "email": "string",
+                  "fullName": "string",
+                  "userId": "string",
+                  "surveyId": "string",
+                  "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
+                  "survey": {},
+                  "foreignKey": null,
+                  "surveyCycle": {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "startDate": "string",
+                    "endDate": "string",
+                    "isActivated": true,
+                    "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {},
+                    "survey": {},
+                    "foreignKey": null
+                  }
+                }
+              ],
+              "sections": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "displayOrder": 0,
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
+                }
+              ]
+            }
+          },
+          "foreignKey": null,
+          "followupQuestion": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "uid": "string",
+            "name": "string",
+            "status": "string",
+            "questionType": "Multi Selection",
+            "extId": "string",
+            "extMetadata": {},
+            "isScoreEnabled": true,
+            "isFollowupEnabled": true,
+            "validation": {},
+            "rootQuestionId": "string",
+            "parentQuestionId": "string",
+            "surveyId": "string",
+            "rootQuestion": {},
+            "foreignKey": null,
+            "parentQuestion": {},
+            "options": [
+              {}
+            ],
+            "followUpQuestions": [
+              {}
+            ],
+            "surveyResponseDetail": {},
+            "survey": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "uid": "string",
+              "name": "string",
+              "surveyText": "string",
+              "startDate": "string",
+              "endDate": "string",
+              "status": "string",
+              "isEnableWeights": true,
+              "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "questions": [
+                {}
+              ],
+              "surveyCycles": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "startDate": "string",
+                  "endDate": "string",
+                  "isActivated": true,
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
+                  "survey": {},
+                  "foreignKey": null
+                }
+              ],
+              "surveyResponders": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "email": "string",
+                  "fullName": "string",
+                  "userId": "string",
+                  "surveyId": "string",
+                  "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
+                  "survey": {},
+                  "foreignKey": null,
+                  "surveyCycle": {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "startDate": "string",
+                    "endDate": "string",
+                    "isActivated": true,
+                    "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {},
+                    "survey": {},
+                    "foreignKey": null
+                  }
+                }
+              ],
+              "sections": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "displayOrder": 0,
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  "foreignKey": null,
+  "question": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "uid": "string",
+    "name": "string",
+    "status": "string",
+    "questionType": "Multi Selection",
+    "extId": "string",
+    "extMetadata": {},
+    "isScoreEnabled": true,
+    "isFollowupEnabled": true,
+    "validation": {},
+    "rootQuestionId": "string",
+    "parentQuestionId": "string",
+    "surveyId": "string",
+    "rootQuestion": {},
+    "foreignKey": null,
+    "parentQuestion": {},
+    "options": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "name": "string",
+        "displayOrder": 0,
+        "score": 0,
+        "questionId": "string",
+        "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "question": {},
+        "foreignKey": null,
+        "followupQuestion": {}
+      }
+    ],
+    "followUpQuestions": [
+      {}
+    ],
+    "surveyResponseDetail": {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "surveyResponseId": "string",
+      "questionId": "string",
+      "score": "string",
+      "responseType": "Multi Selection",
+      "textAnswer": "string",
+      "optionId": "string",
+      "extId": "string",
+      "extMetadata": {},
+      "surveyResponse": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "surveyResponderId": "string",
+        "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "surveyResponder": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "firstName": "string",
+          "lastName": "string",
+          "email": "string",
+          "fullName": "string",
+          "userId": "string",
+          "surveyId": "string",
+          "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "survey": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "uid": "string",
+            "name": "string",
+            "surveyText": "string",
+            "startDate": "string",
+            "endDate": "string",
+            "status": "string",
+            "isEnableWeights": true,
+            "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "questions": [
+              {}
+            ],
+            "surveyCycles": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "startDate": "string",
+                "endDate": "string",
+                "isActivated": true,
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "survey": {},
+                "foreignKey": null
+              }
+            ],
+            "surveyResponders": [
+              {}
+            ],
+            "sections": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "displayOrder": 0,
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
+              }
+            ]
+          },
+          "foreignKey": null,
+          "surveyCycle": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "startDate": "string",
+            "endDate": "string",
+            "isActivated": true,
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "survey": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "uid": "string",
+              "name": "string",
+              "surveyText": "string",
+              "startDate": "string",
+              "endDate": "string",
+              "status": "string",
+              "isEnableWeights": true,
+              "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "questions": [
+                {}
+              ],
+              "surveyCycles": [
+                {}
+              ],
+              "surveyResponders": [
+                {}
+              ],
+              "sections": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "displayOrder": 0,
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
+                }
+              ]
+            },
+            "foreignKey": null
+          }
+        },
+        "foreignKey": null,
+        "surveyCycle": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "startDate": "string",
+          "endDate": "string",
+          "isActivated": true,
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "survey": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "uid": "string",
+            "name": "string",
+            "surveyText": "string",
+            "startDate": "string",
+            "endDate": "string",
+            "status": "string",
+            "isEnableWeights": true,
+            "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "questions": [
+              {}
+            ],
+            "surveyCycles": [
+              {}
+            ],
+            "surveyResponders": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "email": "string",
+                "fullName": "string",
+                "userId": "string",
+                "surveyId": "string",
+                "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "survey": {},
+                "foreignKey": null,
+                "surveyCycle": {}
+              }
+            ],
+            "sections": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "displayOrder": 0,
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
+              }
+            ]
+          },
+          "foreignKey": null
+        },
+        "surveyResponseDetails": [
+          {}
+        ]
+      },
+      "foreignKey": null,
+      "question": {},
+      "option": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "name": "string",
+        "displayOrder": 0,
+        "score": 0,
+        "questionId": "string",
+        "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "question": {},
+        "foreignKey": null,
+        "followupQuestion": {}
+      }
+    },
+    "survey": {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "uid": "string",
+      "name": "string",
+      "surveyText": "string",
+      "startDate": "string",
+      "endDate": "string",
+      "status": "string",
+      "isEnableWeights": true,
+      "baseSurveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
+      "questions": [
+        {}
+      ],
+      "surveyCycles": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "startDate": "string",
+          "endDate": "string",
+          "isActivated": true,
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "survey": {},
+          "foreignKey": null
+        }
+      ],
+      "surveyResponders": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "firstName": "string",
+          "lastName": "string",
+          "email": "string",
+          "fullName": "string",
+          "userId": "string",
+          "surveyId": "string",
+          "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "survey": {},
+          "foreignKey": null,
+          "surveyCycle": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "startDate": "string",
+            "endDate": "string",
+            "isActivated": true,
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "survey": {},
+            "foreignKey": null
+          }
+        }
+      ],
+      "sections": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "displayOrder": 0,
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {}
+        }
+      ]
+    }
+  },
+  "option": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "name": "string",
+    "displayOrder": 0,
+    "score": 0,
+    "questionId": "string",
+    "followupQuestionId": "string",
+    "extId": "string",
+    "extMetadata": {},
+    "question": {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "uid": "string",
+      "name": "string",
+      "status": "string",
+      "questionType": "Multi Selection",
+      "extId": "string",
+      "extMetadata": {},
+      "isScoreEnabled": true,
+      "isFollowupEnabled": true,
+      "validation": {},
+      "rootQuestionId": "string",
+      "parentQuestionId": "string",
+      "surveyId": "string",
+      "rootQuestion": {},
+      "foreignKey": null,
+      "parentQuestion": {},
+      "options": [
+        {}
+      ],
+      "followUpQuestions": [
+        {}
+      ],
+      "surveyResponseDetail": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "surveyResponseId": "string",
+        "questionId": "string",
+        "score": "string",
+        "responseType": "Multi Selection",
+        "textAnswer": "string",
+        "optionId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "surveyResponse": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "surveyResponderId": "string",
+          "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "surveyResponder": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "email": "string",
+            "fullName": "string",
+            "userId": "string",
+            "surveyId": "string",
+            "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "survey": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "uid": "string",
+              "name": "string",
+              "surveyText": "string",
+              "startDate": "string",
+              "endDate": "string",
+              "status": "string",
+              "isEnableWeights": true,
+              "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "questions": [
+                {}
+              ],
+              "surveyCycles": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "startDate": "string",
+                  "endDate": "string",
+                  "isActivated": true,
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
+                  "survey": {},
+                  "foreignKey": null
+                }
+              ],
+              "surveyResponders": [
+                {}
+              ],
+              "sections": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "displayOrder": 0,
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
+                }
+              ]
+            },
+            "foreignKey": null,
+            "surveyCycle": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "startDate": "string",
+              "endDate": "string",
+              "isActivated": true,
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "survey": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "uid": "string",
+                "name": "string",
+                "surveyText": "string",
+                "startDate": "string",
+                "endDate": "string",
+                "status": "string",
+                "isEnableWeights": true,
+                "baseSurveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "questions": [
+                  {}
+                ],
+                "surveyCycles": [
+                  {}
+                ],
+                "surveyResponders": [
+                  {}
+                ],
+                "sections": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "name": "string",
+                    "displayOrder": 0,
+                    "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {}
+                  }
+                ]
+              },
+              "foreignKey": null
+            }
+          },
+          "foreignKey": null,
+          "surveyCycle": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "startDate": "string",
+            "endDate": "string",
+            "isActivated": true,
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "survey": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "uid": "string",
+              "name": "string",
+              "surveyText": "string",
+              "startDate": "string",
+              "endDate": "string",
+              "status": "string",
+              "isEnableWeights": true,
+              "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "questions": [
+                {}
+              ],
+              "surveyCycles": [
+                {}
+              ],
+              "surveyResponders": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "email": "string",
+                  "fullName": "string",
+                  "userId": "string",
+                  "surveyId": "string",
+                  "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
+                  "survey": {},
+                  "foreignKey": null,
+                  "surveyCycle": {}
+                }
+              ],
+              "sections": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "displayOrder": 0,
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
+                }
+              ]
+            },
+            "foreignKey": null
+          },
+          "surveyResponseDetails": [
+            {}
+          ]
+        },
+        "foreignKey": null,
+        "question": {},
+        "option": {}
+      },
+      "survey": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "uid": "string",
+        "name": "string",
+        "surveyText": "string",
+        "startDate": "string",
+        "endDate": "string",
+        "status": "string",
+        "isEnableWeights": true,
+        "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "questions": [
+          {}
+        ],
+        "surveyCycles": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "startDate": "string",
+            "endDate": "string",
+            "isActivated": true,
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "survey": {},
+            "foreignKey": null
+          }
+        ],
+        "surveyResponders": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "email": "string",
+            "fullName": "string",
+            "userId": "string",
+            "surveyId": "string",
+            "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "survey": {},
+            "foreignKey": null,
+            "surveyCycle": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "startDate": "string",
+              "endDate": "string",
+              "isActivated": true,
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "survey": {},
+              "foreignKey": null
+            }
+          }
+        ],
+        "sections": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "displayOrder": 0,
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
+          }
+        ]
+      }
+    },
+    "foreignKey": null,
+    "followupQuestion": {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "uid": "string",
+      "name": "string",
+      "status": "string",
+      "questionType": "Multi Selection",
+      "extId": "string",
+      "extMetadata": {},
+      "isScoreEnabled": true,
+      "isFollowupEnabled": true,
+      "validation": {},
+      "rootQuestionId": "string",
+      "parentQuestionId": "string",
+      "surveyId": "string",
+      "rootQuestion": {},
+      "foreignKey": null,
+      "parentQuestion": {},
+      "options": [
+        {}
+      ],
+      "followUpQuestions": [
+        {}
+      ],
+      "surveyResponseDetail": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "surveyResponseId": "string",
+        "questionId": "string",
+        "score": "string",
+        "responseType": "Multi Selection",
+        "textAnswer": "string",
+        "optionId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "surveyResponse": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "surveyResponderId": "string",
+          "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "surveyResponder": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "email": "string",
+            "fullName": "string",
+            "userId": "string",
+            "surveyId": "string",
+            "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "survey": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "uid": "string",
+              "name": "string",
+              "surveyText": "string",
+              "startDate": "string",
+              "endDate": "string",
+              "status": "string",
+              "isEnableWeights": true,
+              "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "questions": [
+                {}
+              ],
+              "surveyCycles": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "startDate": "string",
+                  "endDate": "string",
+                  "isActivated": true,
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
+                  "survey": {},
+                  "foreignKey": null
+                }
+              ],
+              "surveyResponders": [
+                {}
+              ],
+              "sections": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "displayOrder": 0,
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
+                }
+              ]
+            },
+            "foreignKey": null,
+            "surveyCycle": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "startDate": "string",
+              "endDate": "string",
+              "isActivated": true,
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "survey": {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "uid": "string",
+                "name": "string",
+                "surveyText": "string",
+                "startDate": "string",
+                "endDate": "string",
+                "status": "string",
+                "isEnableWeights": true,
+                "baseSurveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "questions": [
+                  {}
+                ],
+                "surveyCycles": [
+                  {}
+                ],
+                "surveyResponders": [
+                  {}
+                ],
+                "sections": [
+                  {
+                    "deleted": true,
+                    "deletedOn": "2019-08-24T14:15:22Z",
+                    "deletedBy": "string",
+                    "createdOn": "2019-08-24T14:15:22Z",
+                    "modifiedOn": "2019-08-24T14:15:22Z",
+                    "createdBy": "string",
+                    "modifiedBy": "string",
+                    "id": "string",
+                    "name": "string",
+                    "displayOrder": 0,
+                    "surveyId": "string",
+                    "extId": "string",
+                    "extMetadata": {}
+                  }
+                ]
+              },
+              "foreignKey": null
+            }
+          },
+          "foreignKey": null,
+          "surveyCycle": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "startDate": "string",
+            "endDate": "string",
+            "isActivated": true,
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "survey": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "uid": "string",
+              "name": "string",
+              "surveyText": "string",
+              "startDate": "string",
+              "endDate": "string",
+              "status": "string",
+              "isEnableWeights": true,
+              "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "questions": [
+                {}
+              ],
+              "surveyCycles": [
+                {}
+              ],
+              "surveyResponders": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "email": "string",
+                  "fullName": "string",
+                  "userId": "string",
+                  "surveyId": "string",
+                  "surveyCycleId": "string",
+                  "extId": "string",
+                  "extMetadata": {},
+                  "survey": {},
+                  "foreignKey": null,
+                  "surveyCycle": {}
+                }
+              ],
+              "sections": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "displayOrder": 0,
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
+                }
+              ]
+            },
+            "foreignKey": null
+          },
+          "surveyResponseDetails": [
+            {}
+          ]
+        },
+        "foreignKey": null,
+        "question": {},
+        "option": {}
+      },
+      "survey": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "uid": "string",
+        "name": "string",
+        "surveyText": "string",
+        "startDate": "string",
+        "endDate": "string",
+        "status": "string",
+        "isEnableWeights": true,
+        "baseSurveyId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "questions": [
+          {}
+        ],
+        "surveyCycles": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "startDate": "string",
+            "endDate": "string",
+            "isActivated": true,
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "survey": {},
+            "foreignKey": null
+          }
+        ],
+        "surveyResponders": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "email": "string",
+            "fullName": "string",
+            "userId": "string",
+            "surveyId": "string",
+            "surveyCycleId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "survey": {},
+            "foreignKey": null,
+            "surveyCycle": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "startDate": "string",
+              "endDate": "string",
+              "isActivated": true,
+              "surveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "survey": {},
+              "foreignKey": null
+            }
+          }
+        ],
+        "sections": [
+          {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "name": "string",
+            "displayOrder": 0,
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {}
+          }
+        ]
+      }
+    }
+  }
+}
+
+```
+
+SurveyResponseDetailWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|surveyResponseId|string|true|none|none|
+|questionId|string|true|none|none|
+|score|string|false|none|none|
+|responseType|string|true|none|none|
+|textAnswer|string|false|none|none|
+|optionId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+|surveyResponse|[SurveyResponseWithRelations](#schemasurveyresponsewithrelations)|false|none|(tsType: SurveyResponseWithRelations, schemaOptions: { includeRelations: true })|
+|foreignKey|any|false|none|none|
+|question|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
+|option|[OptionsWithRelations](#schemaoptionswithrelations)|false|none|(tsType: OptionsWithRelations, schemaOptions: { includeRelations: true })|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|responseType|Multi Selection|
+|responseType|Scale|
+|responseType|Single Selection|
+|responseType|Text|
+|responseType|Drop Down|
+|responseType|null|
+
+<h2 id="tocS_SurveyResponder">SurveyResponder</h2>
+<!-- backwards compatibility -->
+<a id="schemasurveyresponder"></a>
+<a id="schema_SurveyResponder"></a>
+<a id="tocSsurveyresponder"></a>
+<a id="tocssurveyresponder"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "firstName": "string",
+  "lastName": "string",
+  "email": "string",
+  "fullName": "string",
+  "userId": "string",
+  "surveyId": "string",
+  "surveyCycleId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+SurveyResponder
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|firstName|string¦null|false|none|none|
+|lastName|string¦null|false|none|none|
+|email|string|false|none|none|
+|fullName|string|false|none|none|
+|userId|string¦null|false|none|none|
+|surveyId|string|false|none|none|
+|surveyCycleId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+
+<h2 id="tocS_NewSurveyResponderInSurvey">NewSurveyResponderInSurvey</h2>
+<!-- backwards compatibility -->
+<a id="schemanewsurveyresponderinsurvey"></a>
+<a id="schema_NewSurveyResponderInSurvey"></a>
+<a id="tocSnewsurveyresponderinsurvey"></a>
+<a id="tocsnewsurveyresponderinsurvey"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "firstName": "string",
+  "lastName": "string",
+  "email": "string",
+  "fullName": "string",
+  "userId": "string",
+  "surveyId": "string",
+  "surveyCycleId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+NewSurveyResponderInSurvey
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|firstName|string¦null|false|none|none|
+|lastName|string¦null|false|none|none|
+|email|string|false|none|none|
+|fullName|string|false|none|none|
+|userId|string¦null|false|none|none|
+|surveyId|string|false|none|none|
+|surveyCycleId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+
+<h2 id="tocS_ResponderReminderDto">ResponderReminderDto</h2>
+<!-- backwards compatibility -->
+<a id="schemaresponderreminderdto"></a>
+<a id="schema_ResponderReminderDto"></a>
+<a id="tocSresponderreminderdto"></a>
+<a id="tocsresponderreminderdto"></a>
+
+```json
+{
+  "surveyResponderIds": [
+    "string"
+  ]
+}
+
+```
+
+ResponderReminderDto
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|surveyResponderIds|[string]|true|none|none|
+
+<h2 id="tocS_SurveyResponderPartial">SurveyResponderPartial</h2>
+<!-- backwards compatibility -->
+<a id="schemasurveyresponderpartial"></a>
+<a id="schema_SurveyResponderPartial"></a>
+<a id="tocSsurveyresponderpartial"></a>
+<a id="tocssurveyresponderpartial"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "firstName": "string",
+  "lastName": "string",
+  "email": "string",
+  "fullName": "string",
+  "userId": "string",
+  "surveyId": "string",
+  "surveyCycleId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+SurveyResponderPartial
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|firstName|string¦null|false|none|none|
+|lastName|string¦null|false|none|none|
+|email|string|false|none|none|
+|fullName|string|false|none|none|
+|userId|string¦null|false|none|none|
+|surveyId|string|false|none|none|
+|surveyCycleId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 
 <h2 id="tocS_SurveyQuestionDto">SurveyQuestionDto</h2>
 <!-- backwards compatibility -->
@@ -42379,142 +41013,6 @@ SurveyQuestion
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
 
-<h2 id="tocS_Section">Section</h2>
-<!-- backwards compatibility -->
-<a id="schemasection"></a>
-<a id="schema_Section"></a>
-<a id="tocSsection"></a>
-<a id="tocssection"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "displayOrder": 0,
-  "surveyId": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-Section
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|name|string|false|none|none|
-|displayOrder|number|false|none|none|
-|surveyId|string|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-<h2 id="tocS_NewSection">NewSection</h2>
-<!-- backwards compatibility -->
-<a id="schemanewsection"></a>
-<a id="schema_NewSection"></a>
-<a id="tocSnewsection"></a>
-<a id="tocsnewsection"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "name": "string",
-  "displayOrder": 0,
-  "surveyId": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-NewSection
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|name|string|false|none|none|
-|displayOrder|number|false|none|none|
-|surveyId|string|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
-<h2 id="tocS_SectionPartial">SectionPartial</h2>
-<!-- backwards compatibility -->
-<a id="schemasectionpartial"></a>
-<a id="schema_SectionPartial"></a>
-<a id="tocSsectionpartial"></a>
-<a id="tocssectionpartial"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "displayOrder": 0,
-  "surveyId": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-SectionPartial
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|name|string|false|none|none|
-|displayOrder|number|false|none|none|
-|surveyId|string|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
 <h2 id="tocS_SurveyCycle">SurveyCycle</h2>
 <!-- backwards compatibility -->
 <a id="schemasurveycycle"></a>
@@ -42657,12 +41155,12 @@ SurveyCyclePartial
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
 
-<h2 id="tocS_SurveyResponder">SurveyResponder</h2>
+<h2 id="tocS_Section">Section</h2>
 <!-- backwards compatibility -->
-<a id="schemasurveyresponder"></a>
-<a id="schema_SurveyResponder"></a>
-<a id="tocSsurveyresponder"></a>
-<a id="tocssurveyresponder"></a>
+<a id="schemasection"></a>
+<a id="schema_Section"></a>
+<a id="tocSsection"></a>
+<a id="tocssection"></a>
 
 ```json
 {
@@ -42674,20 +41172,16 @@ SurveyCyclePartial
   "createdBy": "string",
   "modifiedBy": "string",
   "id": "string",
-  "firstName": "string",
-  "lastName": "string",
-  "email": "string",
-  "fullName": "string",
-  "userId": "string",
+  "name": "string",
+  "displayOrder": 0,
   "surveyId": "string",
-  "surveyCycleId": "string",
   "extId": "string",
   "extMetadata": {}
 }
 
 ```
 
-SurveyResponder
+Section
 
 ### Properties
 
@@ -42701,22 +41195,18 @@ SurveyResponder
 |createdBy|string|false|none|none|
 |modifiedBy|string|false|none|none|
 |id|string|false|none|none|
-|firstName|string¦null|false|none|none|
-|lastName|string¦null|false|none|none|
-|email|string|false|none|none|
-|fullName|string|false|none|none|
-|userId|string¦null|false|none|none|
+|name|string|false|none|none|
+|displayOrder|number|false|none|none|
 |surveyId|string|false|none|none|
-|surveyCycleId|string|false|none|none|
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
 
-<h2 id="tocS_NewSurveyResponderInSurvey">NewSurveyResponderInSurvey</h2>
+<h2 id="tocS_NewSection">NewSection</h2>
 <!-- backwards compatibility -->
-<a id="schemanewsurveyresponderinsurvey"></a>
-<a id="schema_NewSurveyResponderInSurvey"></a>
-<a id="tocSnewsurveyresponderinsurvey"></a>
-<a id="tocsnewsurveyresponderinsurvey"></a>
+<a id="schemanewsection"></a>
+<a id="schema_NewSection"></a>
+<a id="tocSnewsection"></a>
+<a id="tocsnewsection"></a>
 
 ```json
 {
@@ -42727,20 +41217,16 @@ SurveyResponder
   "modifiedOn": "2019-08-24T14:15:22Z",
   "createdBy": "string",
   "modifiedBy": "string",
-  "firstName": "string",
-  "lastName": "string",
-  "email": "string",
-  "fullName": "string",
-  "userId": "string",
+  "name": "string",
+  "displayOrder": 0,
   "surveyId": "string",
-  "surveyCycleId": "string",
   "extId": "string",
   "extMetadata": {}
 }
 
 ```
 
-NewSurveyResponderInSurvey
+NewSection
 
 ### Properties
 
@@ -42753,46 +41239,320 @@ NewSurveyResponderInSurvey
 |modifiedOn|string(date-time)|false|none|none|
 |createdBy|string|false|none|none|
 |modifiedBy|string|false|none|none|
-|firstName|string¦null|false|none|none|
-|lastName|string¦null|false|none|none|
-|email|string|false|none|none|
-|fullName|string|false|none|none|
-|userId|string¦null|false|none|none|
+|name|string|false|none|none|
+|displayOrder|number|false|none|none|
 |surveyId|string|false|none|none|
-|surveyCycleId|string|false|none|none|
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
 
-<h2 id="tocS_ResponderReminderDto">ResponderReminderDto</h2>
+<h2 id="tocS_SectionPartial">SectionPartial</h2>
 <!-- backwards compatibility -->
-<a id="schemaresponderreminderdto"></a>
-<a id="schema_ResponderReminderDto"></a>
-<a id="tocSresponderreminderdto"></a>
-<a id="tocsresponderreminderdto"></a>
+<a id="schemasectionpartial"></a>
+<a id="schema_SectionPartial"></a>
+<a id="tocSsectionpartial"></a>
+<a id="tocssectionpartial"></a>
 
 ```json
 {
-  "surveyResponderIds": [
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "name": "string",
+  "displayOrder": 0,
+  "surveyId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+SectionPartial
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|name|string|false|none|none|
+|displayOrder|number|false|none|none|
+|surveyId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+
+<h2 id="tocS_Question">Question</h2>
+<!-- backwards compatibility -->
+<a id="schemaquestion"></a>
+<a id="schema_Question"></a>
+<a id="tocSquestion"></a>
+<a id="tocsquestion"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "uid": "string",
+  "name": "string",
+  "status": "string",
+  "questionType": "Multi Selection",
+  "extId": "string",
+  "extMetadata": {},
+  "isScoreEnabled": true,
+  "isFollowupEnabled": true,
+  "validation": {},
+  "rootQuestionId": "string",
+  "parentQuestionId": "string",
+  "surveyId": "string"
+}
+
+```
+
+Question
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|uid|string|true|none|none|
+|name|string|false|none|none|
+|status|string|true|none|none|
+|questionType|string|true|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+|isScoreEnabled|boolean|false|none|none|
+|isFollowupEnabled|boolean|false|none|none|
+|validation|object|false|none|none|
+|rootQuestionId|string|false|none|none|
+|parentQuestionId|string¦null|false|none|none|
+|surveyId|string|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|questionType|Multi Selection|
+|questionType|Scale|
+|questionType|Single Selection|
+|questionType|Text|
+|questionType|Drop Down|
+|questionType|null|
+
+<h2 id="tocS_NewQuestion">NewQuestion</h2>
+<!-- backwards compatibility -->
+<a id="schemanewquestion"></a>
+<a id="schema_NewQuestion"></a>
+<a id="tocSnewquestion"></a>
+<a id="tocsnewquestion"></a>
+
+```json
+{
+  "questionType": "string",
+  "rootQuestionId": "string",
+  "parentQuestionId": "string",
+  "optionId": "string",
+  "surveyId": "string",
+  "status": "string",
+  "name": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+NewQuestion
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|questionType|string|true|none|none|
+|rootQuestionId|string|false|none|none|
+|parentQuestionId|string|false|none|none|
+|optionId|string|false|none|none|
+|surveyId|string|false|none|none|
+|status|string|false|none|none|
+|name|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+
+<h2 id="tocS_QuestionPartial">QuestionPartial</h2>
+<!-- backwards compatibility -->
+<a id="schemaquestionpartial"></a>
+<a id="schema_QuestionPartial"></a>
+<a id="tocSquestionpartial"></a>
+<a id="tocsquestionpartial"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "uid": "string",
+  "name": "string",
+  "status": "string",
+  "questionType": "Multi Selection",
+  "extId": "string",
+  "extMetadata": {},
+  "isScoreEnabled": true,
+  "isFollowupEnabled": true,
+  "validation": {},
+  "rootQuestionId": "string",
+  "parentQuestionId": "string",
+  "surveyId": "string"
+}
+
+```
+
+QuestionPartial
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|uid|string|false|none|none|
+|name|string|false|none|none|
+|status|string|false|none|none|
+|questionType|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+|isScoreEnabled|boolean|false|none|none|
+|isFollowupEnabled|boolean|false|none|none|
+|validation|object|false|none|none|
+|rootQuestionId|string|false|none|none|
+|parentQuestionId|string¦null|false|none|none|
+|surveyId|string|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|questionType|Multi Selection|
+|questionType|Scale|
+|questionType|Single Selection|
+|questionType|Text|
+|questionType|Drop Down|
+|questionType|null|
+
+<h2 id="tocS_BulkDeleteQuestion">BulkDeleteQuestion</h2>
+<!-- backwards compatibility -->
+<a id="schemabulkdeletequestion"></a>
+<a id="schema_BulkDeleteQuestion"></a>
+<a id="tocSbulkdeletequestion"></a>
+<a id="tocsbulkdeletequestion"></a>
+
+```json
+{
+  "ids": [
     "string"
   ]
 }
 
 ```
 
-ResponderReminderDto
+BulkDeleteQuestion
 
 ### Properties
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|surveyResponderIds|[string]|true|none|none|
+|ids|[string]|true|none|none|
 
-<h2 id="tocS_SurveyResponderPartial">SurveyResponderPartial</h2>
+<h2 id="tocS_BulkDeleteDto">BulkDeleteDto</h2>
 <!-- backwards compatibility -->
-<a id="schemasurveyresponderpartial"></a>
-<a id="schema_SurveyResponderPartial"></a>
-<a id="tocSsurveyresponderpartial"></a>
-<a id="tocssurveyresponderpartial"></a>
+<a id="schemabulkdeletedto"></a>
+<a id="schema_BulkDeleteDto"></a>
+<a id="tocSbulkdeletedto"></a>
+<a id="tocsbulkdeletedto"></a>
+
+```json
+{
+  "ids": [
+    "string"
+  ]
+}
+
+```
+
+BulkDeleteDto
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|ids|[string]|true|none|none|
+
+<h2 id="tocS_QuestionDuplicateDto">QuestionDuplicateDto</h2>
+<!-- backwards compatibility -->
+<a id="schemaquestionduplicatedto"></a>
+<a id="schema_QuestionDuplicateDto"></a>
+<a id="tocSquestionduplicatedto"></a>
+<a id="tocsquestionduplicatedto"></a>
+
+```json
+{
+  "includeBatchId": true,
+  "displayOrder": 0,
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+QuestionDuplicateDto
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|includeBatchId|boolean|false|none|none|
+|displayOrder|number|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+
+<h2 id="tocS_QuestionTemplate">QuestionTemplate</h2>
+<!-- backwards compatibility -->
+<a id="schemaquestiontemplate"></a>
+<a id="schema_QuestionTemplate"></a>
+<a id="tocSquestiontemplate"></a>
+<a id="tocsquestiontemplate"></a>
 
 ```json
 {
@@ -42804,20 +41564,17 @@ ResponderReminderDto
   "createdBy": "string",
   "modifiedBy": "string",
   "id": "string",
-  "firstName": "string",
-  "lastName": "string",
-  "email": "string",
-  "fullName": "string",
-  "userId": "string",
-  "surveyId": "string",
-  "surveyCycleId": "string",
+  "uid": "string",
+  "name": "string",
+  "status": "string",
+  "isEnableWeight": true,
   "extId": "string",
   "extMetadata": {}
 }
 
 ```
 
-SurveyResponderPartial
+QuestionTemplate
 
 ### Properties
 
@@ -42831,22 +41588,67 @@ SurveyResponderPartial
 |createdBy|string|false|none|none|
 |modifiedBy|string|false|none|none|
 |id|string|false|none|none|
-|firstName|string¦null|false|none|none|
-|lastName|string¦null|false|none|none|
-|email|string|false|none|none|
-|fullName|string|false|none|none|
-|userId|string¦null|false|none|none|
-|surveyId|string|false|none|none|
-|surveyCycleId|string|false|none|none|
+|uid|string|false|none|an identifier id to display in UI|
+|name|string|true|none|none|
+|status|string|true|none|none|
+|isEnableWeight|boolean|false|none|none|
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
 
-<h2 id="tocS_SurveyResponse">SurveyResponse</h2>
+<h2 id="tocS_NewTemplate">NewTemplate</h2>
 <!-- backwards compatibility -->
-<a id="schemasurveyresponse"></a>
-<a id="schema_SurveyResponse"></a>
-<a id="tocSsurveyresponse"></a>
-<a id="tocssurveyresponse"></a>
+<a id="schemanewtemplate"></a>
+<a id="schema_NewTemplate"></a>
+<a id="tocSnewtemplate"></a>
+<a id="tocsnewtemplate"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "uid": "string",
+  "name": "string",
+  "status": "string",
+  "isEnableWeight": true,
+  "extId": "string",
+  "extMetadata": {},
+  "existingTemplateId": "string"
+}
+
+```
+
+NewTemplate
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|uid|string|false|none|an identifier id to display in UI|
+|name|string|true|none|none|
+|status|string|true|none|none|
+|isEnableWeight|boolean|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+|existingTemplateId|string|false|none|none|
+
+<h2 id="tocS_QuestionTemplateResponseWithRelations">QuestionTemplateResponseWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemaquestiontemplateresponsewithrelations"></a>
+<a id="schema_QuestionTemplateResponseWithRelations"></a>
+<a id="tocSquestiontemplateresponsewithrelations"></a>
+<a id="tocsquestiontemplateresponsewithrelations"></a>
 
 ```json
 {
@@ -42858,15 +41660,18 @@ SurveyResponderPartial
   "createdBy": "string",
   "modifiedBy": "string",
   "id": "string",
-  "surveyResponderId": "string",
-  "surveyCycleId": "string",
+  "uid": "string",
+  "name": "string",
+  "status": "string",
+  "isEnableWeight": true,
   "extId": "string",
-  "extMetadata": {}
+  "extMetadata": {},
+  "createdByName": "string"
 }
 
 ```
 
-SurveyResponse
+QuestionTemplateResponseWithRelations
 
 ### Properties
 
@@ -42880,70 +41685,1265 @@ SurveyResponse
 |createdBy|string|false|none|none|
 |modifiedBy|string|false|none|none|
 |id|string|false|none|none|
-|surveyResponderId|string|true|none|none|
-|surveyCycleId|string|true|none|none|
+|uid|string|false|none|an identifier id to display in UI|
+|name|string|true|none|none|
+|status|string|true|none|none|
+|isEnableWeight|boolean|false|none|none|
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
+|createdByName|string|false|none|none|
 
-<h2 id="tocS_NewSurveyResponse">NewSurveyResponse</h2>
+<h2 id="tocS_QuestionTemplateWithRelations">QuestionTemplateWithRelations</h2>
 <!-- backwards compatibility -->
-<a id="schemanewsurveyresponse"></a>
-<a id="schema_NewSurveyResponse"></a>
-<a id="tocSnewsurveyresponse"></a>
-<a id="tocsnewsurveyresponse"></a>
+<a id="schemaquestiontemplatewithrelations"></a>
+<a id="schema_QuestionTemplateWithRelations"></a>
+<a id="tocSquestiontemplatewithrelations"></a>
+<a id="tocsquestiontemplatewithrelations"></a>
 
 ```json
 {
-  "surveyResponseDetailArray": [
-    {}
-  ],
-  "surveyResponderId": "string",
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "uid": "string",
+  "name": "string",
+  "status": "string",
+  "isEnableWeight": true,
   "extId": "string",
   "extMetadata": {}
 }
 
 ```
 
-NewSurveyResponse
+QuestionTemplateWithRelations
 
 ### Properties
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|surveyResponseDetailArray|[object]|false|none|none|
-|surveyResponderId|string|false|none|none|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|uid|string|false|none|an identifier id to display in UI|
+|name|string|true|none|none|
+|status|string|true|none|none|
+|isEnableWeight|boolean|false|none|none|
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
 
-<h2 id="tocS_SurveyResponseDto">SurveyResponseDto</h2>
+<h2 id="tocS_QuestionTemplatesDtoPartial">QuestionTemplatesDtoPartial</h2>
 <!-- backwards compatibility -->
-<a id="schemasurveyresponsedto"></a>
-<a id="schema_SurveyResponseDto"></a>
-<a id="tocSsurveyresponsedto"></a>
-<a id="tocssurveyresponsedto"></a>
+<a id="schemaquestiontemplatesdtopartial"></a>
+<a id="schema_QuestionTemplatesDtoPartial"></a>
+<a id="tocSquestiontemplatesdtopartial"></a>
+<a id="tocsquestiontemplatesdtopartial"></a>
 
 ```json
 {
-  "surveyResponseDetailArray": [
-    {}
-  ],
-  "surveyResponderId": "string",
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "uid": "string",
+  "name": "string",
+  "status": "string",
+  "isEnableWeight": true,
+  "extId": "string",
+  "extMetadata": {},
+  "existingTemplateId": "string"
+}
+
+```
+
+QuestionTemplatesDtoPartial
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|uid|string|false|none|an identifier id to display in UI|
+|name|string|false|none|none|
+|status|string|false|none|none|
+|isEnableWeight|boolean|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+|existingTemplateId|string|false|none|none|
+
+<h2 id="tocS_QuestionTemplatesDto">QuestionTemplatesDto</h2>
+<!-- backwards compatibility -->
+<a id="schemaquestiontemplatesdto"></a>
+<a id="schema_QuestionTemplatesDto"></a>
+<a id="tocSquestiontemplatesdto"></a>
+<a id="tocsquestiontemplatesdto"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "uid": "string",
+  "name": "string",
+  "status": "string",
+  "isEnableWeight": true,
+  "extId": "string",
+  "extMetadata": {},
+  "existingTemplateId": "string"
+}
+
+```
+
+QuestionTemplatesDto
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|uid|string|false|none|an identifier id to display in UI|
+|name|string|true|none|none|
+|status|string|true|none|none|
+|isEnableWeight|boolean|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+|existingTemplateId|string|false|none|none|
+
+<h2 id="tocS_Options">Options</h2>
+<!-- backwards compatibility -->
+<a id="schemaoptions"></a>
+<a id="schema_Options"></a>
+<a id="tocSoptions"></a>
+<a id="tocsoptions"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "name": "string",
+  "displayOrder": 0,
+  "score": 0,
+  "questionId": "string",
+  "followupQuestionId": "string",
   "extId": "string",
   "extMetadata": {}
 }
 
 ```
 
-SurveyResponseDto
+Options
 
 ### Properties
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|surveyResponseDetailArray|[object]|false|none|none|
-|surveyResponderId|string|false|none|none|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|name|string|false|none|none|
+|displayOrder|number|true|none|none|
+|score|number¦null|false|none|none|
+|questionId|string|false|none|none|
+|followupQuestionId|string¦null|false|none|none|
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
+
+<h2 id="tocS_NewOptions">NewOptions</h2>
+<!-- backwards compatibility -->
+<a id="schemanewoptions"></a>
+<a id="schema_NewOptions"></a>
+<a id="tocSnewoptions"></a>
+<a id="tocsnewoptions"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "name": "string",
+  "displayOrder": 0,
+  "score": 0,
+  "questionId": "string",
+  "followupQuestionId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+NewOptions
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|name|string|false|none|none|
+|displayOrder|number|true|none|none|
+|score|number¦null|false|none|none|
+|questionId|string|false|none|none|
+|followupQuestionId|string¦null|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+
+<h2 id="tocS_OptionsWithRelations">OptionsWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemaoptionswithrelations"></a>
+<a id="schema_OptionsWithRelations"></a>
+<a id="tocSoptionswithrelations"></a>
+<a id="tocsoptionswithrelations"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "name": "string",
+  "displayOrder": 0,
+  "score": 0,
+  "questionId": "string",
+  "followupQuestionId": "string",
+  "extId": "string",
+  "extMetadata": {},
+  "question": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "uid": "string",
+    "name": "string",
+    "status": "string",
+    "questionType": "Multi Selection",
+    "extId": "string",
+    "extMetadata": {},
+    "isScoreEnabled": true,
+    "isFollowupEnabled": true,
+    "validation": {},
+    "rootQuestionId": "string",
+    "parentQuestionId": "string",
+    "surveyId": "string",
+    "rootQuestion": {},
+    "foreignKey": null,
+    "parentQuestion": {},
+    "options": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "name": "string",
+        "displayOrder": 0,
+        "score": 0,
+        "questionId": "string",
+        "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "question": {},
+        "foreignKey": null,
+        "followupQuestion": {}
+      }
+    ],
+    "followUpQuestions": [
+      {}
+    ],
+    "surveyResponseDetail": {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "surveyResponseId": "string",
+      "questionId": "string",
+      "score": "string",
+      "responseType": "Multi Selection",
+      "textAnswer": "string",
+      "optionId": "string",
+      "extId": "string",
+      "extMetadata": {},
+      "surveyResponse": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "surveyResponderId": "string",
+        "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "surveyResponder": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "firstName": "string",
+          "lastName": "string",
+          "email": "string",
+          "fullName": "string",
+          "userId": "string",
+          "surveyId": "string",
+          "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "survey": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "uid": "string",
+            "name": "string",
+            "surveyText": "string",
+            "startDate": "string",
+            "endDate": "string",
+            "status": "string",
+            "isEnableWeights": true,
+            "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "questions": [
+              {}
+            ],
+            "surveyCycles": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "startDate": "string",
+                "endDate": "string",
+                "isActivated": true,
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "survey": {},
+                "foreignKey": null
+              }
+            ],
+            "surveyResponders": [
+              {}
+            ],
+            "sections": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "displayOrder": 0,
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
+              }
+            ]
+          },
+          "foreignKey": null,
+          "surveyCycle": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "startDate": "string",
+            "endDate": "string",
+            "isActivated": true,
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "survey": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "uid": "string",
+              "name": "string",
+              "surveyText": "string",
+              "startDate": "string",
+              "endDate": "string",
+              "status": "string",
+              "isEnableWeights": true,
+              "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "questions": [
+                {}
+              ],
+              "surveyCycles": [
+                {}
+              ],
+              "surveyResponders": [
+                {}
+              ],
+              "sections": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "displayOrder": 0,
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
+                }
+              ]
+            },
+            "foreignKey": null
+          }
+        },
+        "foreignKey": null,
+        "surveyCycle": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "startDate": "string",
+          "endDate": "string",
+          "isActivated": true,
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "survey": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "uid": "string",
+            "name": "string",
+            "surveyText": "string",
+            "startDate": "string",
+            "endDate": "string",
+            "status": "string",
+            "isEnableWeights": true,
+            "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "questions": [
+              {}
+            ],
+            "surveyCycles": [
+              {}
+            ],
+            "surveyResponders": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "email": "string",
+                "fullName": "string",
+                "userId": "string",
+                "surveyId": "string",
+                "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "survey": {},
+                "foreignKey": null,
+                "surveyCycle": {}
+              }
+            ],
+            "sections": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "displayOrder": 0,
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
+              }
+            ]
+          },
+          "foreignKey": null
+        },
+        "surveyResponseDetails": [
+          {}
+        ]
+      },
+      "foreignKey": null,
+      "question": {},
+      "option": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "name": "string",
+        "displayOrder": 0,
+        "score": 0,
+        "questionId": "string",
+        "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "question": {},
+        "foreignKey": null,
+        "followupQuestion": {}
+      }
+    },
+    "survey": {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "uid": "string",
+      "name": "string",
+      "surveyText": "string",
+      "startDate": "string",
+      "endDate": "string",
+      "status": "string",
+      "isEnableWeights": true,
+      "baseSurveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
+      "questions": [
+        {}
+      ],
+      "surveyCycles": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "startDate": "string",
+          "endDate": "string",
+          "isActivated": true,
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "survey": {},
+          "foreignKey": null
+        }
+      ],
+      "surveyResponders": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "firstName": "string",
+          "lastName": "string",
+          "email": "string",
+          "fullName": "string",
+          "userId": "string",
+          "surveyId": "string",
+          "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "survey": {},
+          "foreignKey": null,
+          "surveyCycle": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "startDate": "string",
+            "endDate": "string",
+            "isActivated": true,
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "survey": {},
+            "foreignKey": null
+          }
+        }
+      ],
+      "sections": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "displayOrder": 0,
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {}
+        }
+      ]
+    }
+  },
+  "foreignKey": null,
+  "followupQuestion": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "uid": "string",
+    "name": "string",
+    "status": "string",
+    "questionType": "Multi Selection",
+    "extId": "string",
+    "extMetadata": {},
+    "isScoreEnabled": true,
+    "isFollowupEnabled": true,
+    "validation": {},
+    "rootQuestionId": "string",
+    "parentQuestionId": "string",
+    "surveyId": "string",
+    "rootQuestion": {},
+    "foreignKey": null,
+    "parentQuestion": {},
+    "options": [
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "name": "string",
+        "displayOrder": 0,
+        "score": 0,
+        "questionId": "string",
+        "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "question": {},
+        "foreignKey": null,
+        "followupQuestion": {}
+      }
+    ],
+    "followUpQuestions": [
+      {}
+    ],
+    "surveyResponseDetail": {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "surveyResponseId": "string",
+      "questionId": "string",
+      "score": "string",
+      "responseType": "Multi Selection",
+      "textAnswer": "string",
+      "optionId": "string",
+      "extId": "string",
+      "extMetadata": {},
+      "surveyResponse": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "surveyResponderId": "string",
+        "surveyCycleId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "surveyResponder": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "firstName": "string",
+          "lastName": "string",
+          "email": "string",
+          "fullName": "string",
+          "userId": "string",
+          "surveyId": "string",
+          "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "survey": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "uid": "string",
+            "name": "string",
+            "surveyText": "string",
+            "startDate": "string",
+            "endDate": "string",
+            "status": "string",
+            "isEnableWeights": true,
+            "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "questions": [
+              {}
+            ],
+            "surveyCycles": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "startDate": "string",
+                "endDate": "string",
+                "isActivated": true,
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "survey": {},
+                "foreignKey": null
+              }
+            ],
+            "surveyResponders": [
+              {}
+            ],
+            "sections": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "displayOrder": 0,
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
+              }
+            ]
+          },
+          "foreignKey": null,
+          "surveyCycle": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "startDate": "string",
+            "endDate": "string",
+            "isActivated": true,
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "survey": {
+              "deleted": true,
+              "deletedOn": "2019-08-24T14:15:22Z",
+              "deletedBy": "string",
+              "createdOn": "2019-08-24T14:15:22Z",
+              "modifiedOn": "2019-08-24T14:15:22Z",
+              "createdBy": "string",
+              "modifiedBy": "string",
+              "id": "string",
+              "uid": "string",
+              "name": "string",
+              "surveyText": "string",
+              "startDate": "string",
+              "endDate": "string",
+              "status": "string",
+              "isEnableWeights": true,
+              "baseSurveyId": "string",
+              "extId": "string",
+              "extMetadata": {},
+              "questions": [
+                {}
+              ],
+              "surveyCycles": [
+                {}
+              ],
+              "surveyResponders": [
+                {}
+              ],
+              "sections": [
+                {
+                  "deleted": true,
+                  "deletedOn": "2019-08-24T14:15:22Z",
+                  "deletedBy": "string",
+                  "createdOn": "2019-08-24T14:15:22Z",
+                  "modifiedOn": "2019-08-24T14:15:22Z",
+                  "createdBy": "string",
+                  "modifiedBy": "string",
+                  "id": "string",
+                  "name": "string",
+                  "displayOrder": 0,
+                  "surveyId": "string",
+                  "extId": "string",
+                  "extMetadata": {}
+                }
+              ]
+            },
+            "foreignKey": null
+          }
+        },
+        "foreignKey": null,
+        "surveyCycle": {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "startDate": "string",
+          "endDate": "string",
+          "isActivated": true,
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "survey": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "uid": "string",
+            "name": "string",
+            "surveyText": "string",
+            "startDate": "string",
+            "endDate": "string",
+            "status": "string",
+            "isEnableWeights": true,
+            "baseSurveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "questions": [
+              {}
+            ],
+            "surveyCycles": [
+              {}
+            ],
+            "surveyResponders": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "firstName": "string",
+                "lastName": "string",
+                "email": "string",
+                "fullName": "string",
+                "userId": "string",
+                "surveyId": "string",
+                "surveyCycleId": "string",
+                "extId": "string",
+                "extMetadata": {},
+                "survey": {},
+                "foreignKey": null,
+                "surveyCycle": {}
+              }
+            ],
+            "sections": [
+              {
+                "deleted": true,
+                "deletedOn": "2019-08-24T14:15:22Z",
+                "deletedBy": "string",
+                "createdOn": "2019-08-24T14:15:22Z",
+                "modifiedOn": "2019-08-24T14:15:22Z",
+                "createdBy": "string",
+                "modifiedBy": "string",
+                "id": "string",
+                "name": "string",
+                "displayOrder": 0,
+                "surveyId": "string",
+                "extId": "string",
+                "extMetadata": {}
+              }
+            ]
+          },
+          "foreignKey": null
+        },
+        "surveyResponseDetails": [
+          {}
+        ]
+      },
+      "foreignKey": null,
+      "question": {},
+      "option": {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "name": "string",
+        "displayOrder": 0,
+        "score": 0,
+        "questionId": "string",
+        "followupQuestionId": "string",
+        "extId": "string",
+        "extMetadata": {},
+        "question": {},
+        "foreignKey": null,
+        "followupQuestion": {}
+      }
+    },
+    "survey": {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "uid": "string",
+      "name": "string",
+      "surveyText": "string",
+      "startDate": "string",
+      "endDate": "string",
+      "status": "string",
+      "isEnableWeights": true,
+      "baseSurveyId": "string",
+      "extId": "string",
+      "extMetadata": {},
+      "questions": [
+        {}
+      ],
+      "surveyCycles": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "startDate": "string",
+          "endDate": "string",
+          "isActivated": true,
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "survey": {},
+          "foreignKey": null
+        }
+      ],
+      "surveyResponders": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "firstName": "string",
+          "lastName": "string",
+          "email": "string",
+          "fullName": "string",
+          "userId": "string",
+          "surveyId": "string",
+          "surveyCycleId": "string",
+          "extId": "string",
+          "extMetadata": {},
+          "survey": {},
+          "foreignKey": null,
+          "surveyCycle": {
+            "deleted": true,
+            "deletedOn": "2019-08-24T14:15:22Z",
+            "deletedBy": "string",
+            "createdOn": "2019-08-24T14:15:22Z",
+            "modifiedOn": "2019-08-24T14:15:22Z",
+            "createdBy": "string",
+            "modifiedBy": "string",
+            "id": "string",
+            "startDate": "string",
+            "endDate": "string",
+            "isActivated": true,
+            "surveyId": "string",
+            "extId": "string",
+            "extMetadata": {},
+            "survey": {},
+            "foreignKey": null
+          }
+        }
+      ],
+      "sections": [
+        {
+          "deleted": true,
+          "deletedOn": "2019-08-24T14:15:22Z",
+          "deletedBy": "string",
+          "createdOn": "2019-08-24T14:15:22Z",
+          "modifiedOn": "2019-08-24T14:15:22Z",
+          "createdBy": "string",
+          "modifiedBy": "string",
+          "id": "string",
+          "name": "string",
+          "displayOrder": 0,
+          "surveyId": "string",
+          "extId": "string",
+          "extMetadata": {}
+        }
+      ]
+    }
+  }
+}
+
+```
+
+OptionsWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|name|string|false|none|none|
+|displayOrder|number|true|none|none|
+|score|number¦null|false|none|none|
+|questionId|string|false|none|none|
+|followupQuestionId|string¦null|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+|question|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
+|foreignKey|any|false|none|none|
+|followupQuestion|[QuestionWithRelations](#schemaquestionwithrelations)|false|none|(tsType: QuestionWithRelations, schemaOptions: { includeRelations: true })|
+
+<h2 id="tocS_OptionsPartial">OptionsPartial</h2>
+<!-- backwards compatibility -->
+<a id="schemaoptionspartial"></a>
+<a id="schema_OptionsPartial"></a>
+<a id="tocSoptionspartial"></a>
+<a id="tocsoptionspartial"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "name": "string",
+  "displayOrder": 0,
+  "score": 0,
+  "questionId": "string",
+  "followupQuestionId": "string",
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+OptionsPartial
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|name|string|false|none|none|
+|displayOrder|number|false|none|none|
+|score|number¦null|false|none|none|
+|questionId|string|false|none|none|
+|followupQuestionId|string¦null|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+
+<h2 id="tocS_BulkDeleteOption">BulkDeleteOption</h2>
+<!-- backwards compatibility -->
+<a id="schemabulkdeleteoption"></a>
+<a id="schema_BulkDeleteOption"></a>
+<a id="tocSbulkdeleteoption"></a>
+<a id="tocsbulkdeleteoption"></a>
+
+```json
+{
+  "ids": [
+    "string"
+  ]
+}
+
+```
+
+BulkDeleteOption
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|ids|[string]|true|none|none|
 
 <h2 id="tocS_loopback.Count">loopback.Count</h2>
 <!-- backwards compatibility -->

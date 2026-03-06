@@ -11,7 +11,6 @@ import {
   HttpErrors,
   del,
   get,
-  getModelSchemaRef,
   param,
   patch,
   post,
@@ -24,6 +23,7 @@ import {
   LOGGER,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
+  getModelSchemaRefSF,
 } from '@sourceloop/core';
 import {STRATEGY, authenticate} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
@@ -58,14 +58,14 @@ export class TemplateQuestionController {
   @response(STATUS_CODE.OK, {
     description: 'Template Question model instance',
     content: {
-      [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(TemplateQuestion)},
+      [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(TemplateQuestion)},
     },
   })
   async create(
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(TemplateQuestion, {
+          schema: getModelSchemaRefSF(TemplateQuestion, {
             title: 'NewTemplateQuestion',
             exclude: ['id'],
           }),
@@ -148,7 +148,7 @@ export class TemplateQuestionController {
       [CONTENT_TYPE.JSON]: {
         schema: {
           type: 'array',
-          items: getModelSchemaRef(TemplateQuestion, {
+          items: getModelSchemaRefSF(TemplateQuestion, {
             includeRelations: true,
           }),
         },
@@ -173,7 +173,7 @@ export class TemplateQuestionController {
     description: 'Question Question model instance',
     content: {
       [CONTENT_TYPE.JSON]: {
-        schema: getModelSchemaRef(TemplateQuestion, {
+        schema: getModelSchemaRefSF(TemplateQuestion, {
           includeRelations: true,
         }),
       },
@@ -215,7 +215,7 @@ export class TemplateQuestionController {
         'application/json': {
           schema: {
             type: 'array',
-            items: getModelSchemaRef(TemplateQuestion, {partial: true}),
+            items: getModelSchemaRefSF(TemplateQuestion, {partial: true}),
           },
         },
       },
@@ -257,7 +257,7 @@ export class TemplateQuestionController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(TemplateQuestion, {partial: true}),
+          schema: getModelSchemaRefSF(TemplateQuestion, {partial: true}),
         },
       },
     })

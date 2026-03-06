@@ -13,7 +13,6 @@ import {
 import {
   del,
   get,
-  getModelSchemaRef,
   getWhereSchemaFor,
   param,
   patch,
@@ -23,6 +22,7 @@ import {
 import {
   IAuthUserWithPermissions,
   OPERATION_SECURITY_SPEC,
+  getModelSchemaRefSF,
 } from '@sourceloop/core';
 import {
   AuthenticationBindings,
@@ -59,7 +59,7 @@ export class TenantTenantConfigController {
         description: 'Array of TenantConfigs of Tenant',
         content: {
           'application/json': {
-            schema: {type: 'array', items: getModelSchemaRef(TenantConfig)},
+            schema: {type: 'array', items: getModelSchemaRefSF(TenantConfig)},
           },
         },
       },
@@ -84,7 +84,7 @@ export class TenantTenantConfigController {
       [STATUS_CODE.OK]: {
         description: 'TenantConfig model instance',
         content: {
-          'application/json': {schema: getModelSchemaRef(TenantConfig)},
+          'application/json': {schema: getModelSchemaRefSF(TenantConfig)},
         },
       },
     },
@@ -94,7 +94,7 @@ export class TenantTenantConfigController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(TenantConfig, {
+          schema: getModelSchemaRefSF(TenantConfig, {
             title: 'NewTenantConfigInTenant',
             exclude: ['id', 'tenantId'],
           }),
@@ -142,7 +142,7 @@ export class TenantTenantConfigController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(TenantConfig, {
+          schema: getModelSchemaRefSF(TenantConfig, {
             title: 'NewTenantConfigInTenant',
             exclude: ['id', 'tenantId'],
             partial: true,

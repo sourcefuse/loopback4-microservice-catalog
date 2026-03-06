@@ -5,7 +5,6 @@
 import {inject} from '@loopback/context';
 import {repository} from '@loopback/repository';
 import {
-  getModelSchemaRef,
   HttpErrors,
   param,
   post,
@@ -18,6 +17,7 @@ import {
   AuthenticateErrorKeys,
   CONTENT_TYPE,
   ErrorCodes,
+  getModelSchemaRefSF,
   ILogger,
   LOGGER,
   OPERATION_SECURITY_SPEC,
@@ -103,7 +103,7 @@ export class LogoutController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(RefreshTokenRequest, {
+          schema: getModelSchemaRefSF(RefreshTokenRequest, {
             partial: true,
           }),
         },
@@ -142,7 +142,7 @@ export class LogoutController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(RefreshTokenRequest, {
+          schema: getModelSchemaRefSF(RefreshTokenRequest, {
             partial: true,
           }),
         },
@@ -233,7 +233,7 @@ export class LogoutController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(RefreshTokenRequest, {
+          schema: getModelSchemaRefSF(RefreshTokenRequest, {
             partial: true,
           }),
         },
@@ -323,7 +323,7 @@ export class LogoutController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(RefreshTokenRequest, {
+          schema: getModelSchemaRefSF(RefreshTokenRequest, {
             partial: true,
           }),
         },

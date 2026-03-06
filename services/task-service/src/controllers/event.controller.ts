@@ -6,12 +6,13 @@ import {
   Where,
   repository,
 } from '@loopback/repository';
-import {get, getModelSchemaRef, param, post, requestBody} from '@loopback/rest';
+import {get, param, post, requestBody} from '@loopback/rest';
 import {WorkflowRepository} from '@sourceloop/bpmn-service';
 import {
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
+  getModelSchemaRefSF,
 } from '@sourceloop/core';
 import {STRATEGY, authenticate} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
@@ -44,7 +45,7 @@ export class EventController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Event, {includeRelations: true}),
+              items: getModelSchemaRefSF(Event, {includeRelations: true}),
             },
           },
         },
@@ -66,7 +67,7 @@ export class EventController {
         description: 'Event model instance',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(Event, {includeRelations: true}),
+            schema: getModelSchemaRefSF(Event, {includeRelations: true}),
           },
         },
       },
@@ -107,7 +108,7 @@ export class EventController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(EventWorkflow, {
+          schema: getModelSchemaRefSF(EventWorkflow, {
             title: 'EventWorkflowMapping',
           }),
         },

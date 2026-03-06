@@ -1189,69 +1189,6 @@
           "status"
         ]
       },
-      "Attachment": {
-        "title": "Attachment",
-        "type": "object",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "path": {
-            "type": "string"
-          },
-          "thumbnail": {
-            "type": "string"
-          },
-          "mime": {
-            "type": "string"
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          },
-          "messageId": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "name",
-          "path",
-          "thumbnail",
-          "mime"
-        ],
-        "additionalProperties": false
-      },
       "AttachmentPartial": {
         "title": "AttachmentPartial",
         "type": "object",
@@ -1310,46 +1247,6 @@
         },
         "additionalProperties": false,
         "x-typescript-type": "Partial<Attachment>"
-      },
-      "IdArraysPartial": {
-        "title": "IdArraysPartial",
-        "type": "object",
-        "description": "(tsType: Partial<IdArrays>, schemaOptions: { partial: true })",
-        "properties": {
-          "messageIds": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "threadIds": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        },
-        "additionalProperties": false,
-        "x-typescript-type": "Partial<IdArrays>"
-      },
-      "IdArrays": {
-        "title": "IdArrays",
-        "type": "object",
-        "properties": {
-          "messageIds": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "threadIds": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        },
-        "additionalProperties": false
       },
       "MetaPartial": {
         "title": "MetaPartial",
@@ -1489,6 +1386,109 @@
         },
         "additionalProperties": false,
         "x-typescript-type": "Partial<Group>"
+      },
+      "Attachment": {
+        "title": "Attachment",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "thumbnail": {
+            "type": "string"
+          },
+          "mime": {
+            "type": "string"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          },
+          "messageId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "path",
+          "thumbnail",
+          "mime"
+        ],
+        "additionalProperties": false
+      },
+      "IdArraysPartial": {
+        "title": "IdArraysPartial",
+        "type": "object",
+        "description": "(tsType: Partial<IdArrays>, schemaOptions: { partial: true })",
+        "properties": {
+          "messageIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "threadIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<IdArrays>"
+      },
+      "IdArrays": {
+        "title": "IdArrays",
+        "type": "object",
+        "properties": {
+          "messageIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "threadIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false
       },
       "Attachment add response schema": {
         "type": "object",

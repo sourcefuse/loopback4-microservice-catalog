@@ -12,7 +12,6 @@ import {
 import {
   del,
   get,
-  getModelSchemaRef,
   getWhereSchemaFor,
   param,
   patch,
@@ -21,6 +20,7 @@ import {
 } from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
@@ -53,7 +53,7 @@ export class NotificationNotificationUserController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(NotificationUser),
+              items: getModelSchemaRefSF(NotificationUser),
             },
           },
         },
@@ -81,7 +81,7 @@ export class NotificationNotificationUserController {
         description: 'Notification model instance',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(NotificationUser),
+            schema: getModelSchemaRefSF(NotificationUser),
           },
         },
       },
@@ -92,7 +92,7 @@ export class NotificationNotificationUserController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(NotificationUser, {
+          schema: getModelSchemaRefSF(NotificationUser, {
             title: 'NewNotificationUserInNotification',
             exclude: ['id'],
             optional: ['notificationId'],
@@ -128,7 +128,7 @@ export class NotificationNotificationUserController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(NotificationUser, {partial: true}),
+          schema: getModelSchemaRefSF(NotificationUser, {partial: true}),
         },
       },
     })

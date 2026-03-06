@@ -3,19 +3,15 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {inject} from '@loopback/context';
-import {
-  getModelSchemaRef,
-  param,
-  patch,
-  requestBody,
-} from '@loopback/openapi-v3';
+import {param, patch, requestBody} from '@loopback/openapi-v3';
 import {Filter, repository} from '@loopback/repository';
 import {api, HttpErrors, ResponseObject} from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   IAuthUserWithPermissions,
-  STATUS_CODE,
   OPERATION_SECURITY_SPEC,
+  STATUS_CODE,
 } from '@sourceloop/core';
 import {
   authenticate,
@@ -45,7 +41,7 @@ const ID_RESPONSE_SCHEMA = '#/components/schemas/idResponse';
   paths: {},
   components: {
     schemas: {
-      idResponse: getModelSchemaRef(IdResponse),
+      idResponse: getModelSchemaRefSF(IdResponse),
       composeMailBody: {
         type: 'object',
         properties: {
@@ -54,19 +50,19 @@ const ID_RESPONSE_SCHEMA = '#/components/schemas/idResponse';
           },
           groups: {
             type: 'array',
-            items: getModelSchemaRef(Group, {
+            items: getModelSchemaRefSF(Group, {
               partial: true,
             }),
           },
           attachments: {
             type: 'array',
-            items: getModelSchemaRef(Attachment, {
+            items: getModelSchemaRefSF(Attachment, {
               partial: true,
             }),
           },
           meta: {
             type: 'array',
-            items: getModelSchemaRef(Meta, {
+            items: getModelSchemaRefSF(Meta, {
               partial: true,
             }),
           },
@@ -132,13 +128,13 @@ export class ReplyAndForwardController {
             properties: {
               attachments: {
                 type: 'array',
-                items: getModelSchemaRef(Attachment, {
+                items: getModelSchemaRefSF(Attachment, {
                   partial: true,
                 }),
               },
               meta: {
                 type: 'array',
-                items: getModelSchemaRef(Meta, {
+                items: getModelSchemaRefSF(Meta, {
                   partial: true,
                 }),
               },
@@ -303,7 +299,7 @@ export class ReplyAndForwardController {
             properties: {
               groups: {
                 type: 'array',
-                items: getModelSchemaRef(Group, {
+                items: getModelSchemaRefSF(Group, {
                   partial: true,
                 }),
               },
@@ -315,13 +311,13 @@ export class ReplyAndForwardController {
               },
               attachments: {
                 type: 'array',
-                items: getModelSchemaRef(Attachment, {
+                items: getModelSchemaRefSF(Attachment, {
                   partial: true,
                 }),
               },
               meta: {
                 type: 'array',
-                items: getModelSchemaRef(Meta, {
+                items: getModelSchemaRefSF(Meta, {
                   partial: true,
                 }),
               },

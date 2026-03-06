@@ -10,18 +10,10 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
-import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
-  put,
-  del,
-  requestBody,
-} from '@loopback/rest';
+import {del, get, param, patch, post, put, requestBody} from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
@@ -50,7 +42,7 @@ export class StrategyController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Strategy model instance',
-        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Strategy)}},
+        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Strategy)}},
       },
     },
   })
@@ -58,7 +50,7 @@ export class StrategyController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Strategy, {
+          schema: getModelSchemaRefSF(Strategy, {
             title: 'NewStrategy',
           }),
         },
@@ -99,7 +91,7 @@ export class StrategyController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Strategy, {includeRelations: true}),
+              items: getModelSchemaRefSF(Strategy, {includeRelations: true}),
             },
           },
         },
@@ -132,7 +124,7 @@ export class StrategyController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Strategy, {partial: true}),
+          schema: getModelSchemaRefSF(Strategy, {partial: true}),
         },
       },
     })
@@ -153,7 +145,7 @@ export class StrategyController {
         description: 'Strategy model instance',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(Strategy, {includeRelations: true}),
+            schema: getModelSchemaRefSF(Strategy, {includeRelations: true}),
           },
         },
       },
@@ -187,7 +179,7 @@ export class StrategyController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Strategy, {partial: true}),
+          schema: getModelSchemaRefSF(Strategy, {partial: true}),
         },
       },
     })

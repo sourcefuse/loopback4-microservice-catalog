@@ -10,7 +10,6 @@ import {
 import {
   del,
   get,
-  getModelSchemaRef,
   HttpErrors,
   param,
   patch,
@@ -18,7 +17,7 @@ import {
   requestBody,
   response,
 } from '@loopback/rest';
-import {CONTENT_TYPE, STATUS_CODE} from '@sourceloop/core';
+import {CONTENT_TYPE, getModelSchemaRefSF, STATUS_CODE} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {PermissionKey} from '../enum/permission-key.enum';
@@ -47,14 +46,14 @@ export class TemplateController {
   @response(STATUS_CODE.OK, {
     description: 'Template model instance',
     content: {
-      [CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(QuestionTemplate)},
+      [CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(QuestionTemplate)},
     },
   })
   async create(
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(QuestionTemplatesDto, {
+          schema: getModelSchemaRefSF(QuestionTemplatesDto, {
             title: 'NewTemplate',
             exclude: ['id'],
           }),
@@ -96,7 +95,7 @@ export class TemplateController {
       [CONTENT_TYPE.JSON]: {
         schema: {
           type: 'array',
-          items: getModelSchemaRef(QuestionTemplateResponse, {
+          items: getModelSchemaRefSF(QuestionTemplateResponse, {
             includeRelations: true,
           }),
         },
@@ -120,7 +119,7 @@ export class TemplateController {
     description: 'QuestionTemplate model instance',
     content: {
       [CONTENT_TYPE.JSON]: {
-        schema: getModelSchemaRef(QuestionTemplate, {includeRelations: true}),
+        schema: getModelSchemaRefSF(QuestionTemplate, {includeRelations: true}),
       },
     },
   })
@@ -154,7 +153,7 @@ export class TemplateController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(QuestionTemplatesDto, {partial: true}),
+          schema: getModelSchemaRefSF(QuestionTemplatesDto, {partial: true}),
         },
       },
     })

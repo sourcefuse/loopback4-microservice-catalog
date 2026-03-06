@@ -10,18 +10,10 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
-import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
-  put,
-  requestBody,
-  del,
-} from '@loopback/rest';
+import {del, get, param, patch, post, put, requestBody} from '@loopback/rest';
 import {
   CONTENT_TYPE,
+  getModelSchemaRefSF,
   OPERATION_SECURITY_SPEC,
   STATUS_CODE,
 } from '@sourceloop/core';
@@ -47,7 +39,7 @@ export class FeatureController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Feature model instance',
-        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRef(Feature)}},
+        content: {[CONTENT_TYPE.JSON]: {schema: getModelSchemaRefSF(Feature)}},
       },
     },
   })
@@ -55,7 +47,7 @@ export class FeatureController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Feature, {
+          schema: getModelSchemaRefSF(Feature, {
             title: 'NewFeature',
           }),
         },
@@ -96,7 +88,7 @@ export class FeatureController {
           [CONTENT_TYPE.JSON]: {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Feature, {includeRelations: true}),
+              items: getModelSchemaRefSF(Feature, {includeRelations: true}),
             },
           },
         },
@@ -128,7 +120,7 @@ export class FeatureController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Feature, {partial: true}),
+          schema: getModelSchemaRefSF(Feature, {partial: true}),
         },
       },
     })
@@ -149,7 +141,7 @@ export class FeatureController {
         description: 'Feature model instance',
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: getModelSchemaRef(Feature, {includeRelations: true}),
+            schema: getModelSchemaRefSF(Feature, {includeRelations: true}),
           },
         },
       },
@@ -180,7 +172,7 @@ export class FeatureController {
     @requestBody({
       content: {
         [CONTENT_TYPE.JSON]: {
-          schema: getModelSchemaRef(Feature, {partial: true}),
+          schema: getModelSchemaRefSF(Feature, {partial: true}),
         },
       },
     })

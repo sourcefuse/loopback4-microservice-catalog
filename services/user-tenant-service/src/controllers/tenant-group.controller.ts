@@ -14,7 +14,6 @@ import {
   HttpErrors,
   del,
   get,
-  getModelSchemaRef,
   getWhereSchemaFor,
   param,
   patch,
@@ -24,6 +23,7 @@ import {
 import {
   IAuthUserWithPermissions,
   OPERATION_SECURITY_SPEC,
+  getModelSchemaRefSF,
 } from '@sourceloop/core';
 import {
   AuthenticationBindings,
@@ -63,7 +63,7 @@ export class TenantGroupController {
         description: 'Array of Groups of Tenant',
         content: {
           'application/json': {
-            schema: {type: 'array', items: getModelSchemaRef(Group)},
+            schema: {type: 'array', items: getModelSchemaRefSF(Group)},
           },
         },
       },
@@ -87,7 +87,7 @@ export class TenantGroupController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Group model instance',
-        content: {'application/json': {schema: getModelSchemaRef(Group)}},
+        content: {'application/json': {schema: getModelSchemaRefSF(Group)}},
       },
     },
   })
@@ -96,7 +96,7 @@ export class TenantGroupController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Group, {
+          schema: getModelSchemaRefSF(Group, {
             title: 'NewGroupInTenant',
             exclude: ['id', 'tenantId'],
           }),
@@ -143,7 +143,7 @@ export class TenantGroupController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Group, {partial: true}),
+          schema: getModelSchemaRefSF(Group, {partial: true}),
         },
       },
     })

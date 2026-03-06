@@ -4,10 +4,11 @@
 // https://opensource.org/licenses/MIT
 import {inject, intercept} from '@loopback/core';
 import {Filter, repository} from '@loopback/repository';
-import {get, getModelSchemaRef, param} from '@loopback/rest';
+import {get, param} from '@loopback/rest';
 import {
   IAuthUserWithPermissions,
   OPERATION_SECURITY_SPEC,
+  getModelSchemaRefSF,
 } from '@sourceloop/core';
 import {
   AuthenticationBindings,
@@ -44,7 +45,7 @@ export class UserTenantUserGroupController {
         description: 'Array of UserGroups of UserTenant',
         content: {
           'application/json': {
-            schema: {type: 'array', items: getModelSchemaRef(UserGroup)},
+            schema: {type: 'array', items: getModelSchemaRefSF(UserGroup)},
           },
         },
       },

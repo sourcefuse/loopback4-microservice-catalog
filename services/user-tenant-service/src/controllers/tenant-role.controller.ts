@@ -13,7 +13,6 @@ import {
 import {
   del,
   get,
-  getModelSchemaRef,
   getWhereSchemaFor,
   param,
   patch,
@@ -23,6 +22,7 @@ import {
 import {
   IAuthUserWithPermissions,
   OPERATION_SECURITY_SPEC,
+  getModelSchemaRefSF,
 } from '@sourceloop/core';
 import {
   AuthenticationBindings,
@@ -68,7 +68,7 @@ export class TenantRoleController {
         description: 'Array of Roles of Tenant',
         content: {
           'application/json': {
-            schema: {type: 'array', items: getModelSchemaRef(Role)},
+            schema: {type: 'array', items: getModelSchemaRefSF(Role)},
           },
         },
       },
@@ -92,7 +92,7 @@ export class TenantRoleController {
     responses: {
       [STATUS_CODE.OK]: {
         description: 'Role model instance',
-        content: {'application/json': {schema: getModelSchemaRef(Role)}},
+        content: {'application/json': {schema: getModelSchemaRefSF(Role)}},
       },
     },
   })
@@ -101,7 +101,7 @@ export class TenantRoleController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Role, {
+          schema: getModelSchemaRefSF(Role, {
             title: 'NewRoleInTenant',
             exclude: ['id', 'tenantId'],
           }),
@@ -133,7 +133,7 @@ export class TenantRoleController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Role, {
+          schema: getModelSchemaRefSF(Role, {
             partial: true,
             exclude: ['id', 'tenantId'],
           }),

@@ -517,6 +517,47 @@ In order to use models provided, in your application:
 
 For all models provided in here, see [here]`packages/core/src/models`.
 
+### getModelSchemaRefSF
+
+`getModelSchemaRefSF` is a small helper provided by `@sourceloop/core` that
+returns the OpenAPI schema reference for a model while preferring any runtime
+schema overrides registered by Sourceloop booters.
+
+When to use `getModelSchemaRefSF`:
+
+- Use in services that leverage Sourceloop's dynamic booters for models and
+  controllers.
+- Use when your application extends base models or alters model definitions
+  at runtime and you need controllers to validate against the latest model
+  shape.
+- Use when you register custom model schemas via the `OVERRIDE_MODEL_SCHEMA_KEY`
+  metadata key.
+
+When to use LoopBack's `getModelSchemaRef` instead:
+
+- For standard LoopBack apps with static model schemas that don't require
+  runtime overrides.
+
+Example usage in a controller:
+
+```ts
+import {getModelSchemaRefSF} from '@sourceloop/core';
+
+@post('/leads', {
+  responses: {
+    200: {
+      description: 'Lead model instance',
+      content: {
+        'application/json': {schema: getModelSchemaRefSF(Lead)},
+      },
+    },
+  },
+})
+async create(@requestBody() lead: Lead): Promise<Lead> {
+  // ... implementation
+}
+```
+
 ### Providers
 
 You can find documentation for the providers available .[here](/src/providers)

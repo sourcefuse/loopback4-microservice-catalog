@@ -17,7 +17,10 @@ import {
   BearerVerifierComponent,
   BearerVerifierConfig,
   BearerVerifierType,
+  BooterBasePathMixin,
   CoreComponent,
+  CoreControllerBooter,
+  CoreModelBooter,
   JwtKeysRepository,
   SECURITY_SCHEME_SPEC,
   ServiceSequence,
@@ -29,14 +32,6 @@ import {
   AuthorizationComponent,
 } from 'loopback4-authorization';
 import {NotificationsComponent} from 'loopback4-notifications';
-import {
-  NotificationController,
-  NotificationNotificationUserController,
-  NotificationUserController,
-  NotificationUserNotificationController,
-  PubnubNotificationController,
-  UserNotificationSettingsController,
-} from './controllers';
 import {NotifServiceBindings} from './keys';
 import {Notification, NotificationAccess, NotificationUser} from './models';
 import {
@@ -52,6 +47,7 @@ import {
   UserNotificationSettingsRepository,
 } from './repositories';
 
+import {Booter} from '@loopback/boot';
 import {
   NotificationRepository as NotificationSequelizeRepository,
   NotificationUserRepository as NotificationUserSequelizeRepository,
@@ -92,6 +88,19 @@ export class NotificationServiceComponent implements Component {
       // Mount default sequence if needed
       this.setupSequence();
     }
+
+    this.booters = [
+      BooterBasePathMixin(CoreModelBooter, __dirname, {
+        interface: NotificationServiceComponent.name,
+      }),
+      BooterBasePathMixin(CoreControllerBooter, __dirname, {
+        dirs: ['controllers'],
+        extensions: ['.controller.js'],
+        nested: true,
+        interface: NotificationServiceComponent.name,
+      }),
+    ];
+
     if (this.notifConfig?.useSequelize) {
       this.repositories = [
         NotificationAccessRepository,
@@ -121,15 +130,6 @@ export class NotificationServiceComponent implements Component {
         NotificationUserSettingsProvider,
     };
 
-    this.controllers = [
-      NotificationController,
-      NotificationUserController,
-      PubnubNotificationController,
-      NotificationNotificationUserController,
-      NotificationUserNotificationController,
-      UserNotificationSettingsController,
-    ];
-
     this.application
       .bind('services.ProcessNotificationService')
       .toClass(ProcessNotificationService);
@@ -155,6 +155,8 @@ export class NotificationServiceComponent implements Component {
    * An array of controller classes
    */
   controllers?: ControllerClass[];
+
+  booters?: Class<Booter>[];
 
   /**
    * Setup ServiceSequence by default if no other sequnce provided
