@@ -25,6 +25,9 @@
 <a href="https://nestjs.com/" target="_blank">
   <img alt="Pb Loopback" src="https://img.shields.io/badge/Compatible%20With-NestJS-brightgreen?style=for-the-badge" />
 </a>
+<a href="https://kiro.dev/" target="_blank">
+<img alt="Static Badge" src="https://img.shields.io/badge/Enabled-kiro_power-brightgreen?style=for-the-badge">
+</a>
 
 </p>
 
@@ -150,6 +153,13 @@ ARC API utilizes many LoopBack extensions in the micro-services provided, which 
     <td><a href="https://npmjs.com/package/@loopback/sequelize">NPM</a></td>
   </tr>
 </table>
+
+## ARC by SourceLoop – Kiro Powers
+ARC now provides official Kiro Powers to enhance developer productivity when working with ARC microservices inside the Kiro IDE.
+
+Kiro Powers provide contextual intelligence, best practices, and CLI automation tailored specifically for ARC (SourceLoop) services and LoopBack 4-based microservice architectures.
+
+For more details, please refer to the [Kiro Powers documentation](./powers/README.md).
 
 ## Example Implementations
 
