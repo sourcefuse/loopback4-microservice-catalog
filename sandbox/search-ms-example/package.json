@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/search-ms-example",
-  "version": "0.11.6",
+  "version": "0.11.7",
   "description": "Search service basic example.",
   "keywords": [
     "loopback-application",
@@ -58,8 +58,8 @@
     "@loopback/rest": "^15.0.4",
     "@loopback/rest-explorer": "^8.0.4",
     "@loopback/service-proxy": "^8.0.3",
-    "@sourceloop/core": "^20.0.5",
-    "@sourceloop/search-service": "^9.0.5",
+    "@sourceloop/core": "^20.0.6",
+    "@sourceloop/search-service": "^10.0.0",
     "ajv": "^8.11.0",
     "ajv-errors": "^3.0.0",
     "db-migrate": "^1.0.0-beta.21",

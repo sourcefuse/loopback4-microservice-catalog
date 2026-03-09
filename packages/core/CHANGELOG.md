@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>20.0.6 (2026-03-09)</small>
+
+* fix(core): upadte the ratelimiter to latest (#2446) ([bfb512c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bfb512c)), closes [#2446](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2446) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+* feat:Standardize Usage of New @sourceloop/core Controller Enhancements Across All ARC Services (#243 ([624e968](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/624e968)), closes [#2438](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2438) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399)
+* chore(all-services): fix sonarqube issues (#2441) ([6747ab5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6747ab5)), closes [#2441](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2441)
+
+
+
+
+
 ## <small>20.0.5 (2026-02-20)</small>
 
 * fix(cli): replace swagger-stats to swagger-stats-sf (#2437) ([832c180](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/832c180)), closes [#2437](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2437)

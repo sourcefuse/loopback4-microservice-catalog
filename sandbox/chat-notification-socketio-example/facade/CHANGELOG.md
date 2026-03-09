@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.7.5 (2026-03-09)</small>
+
+* fix(cli): fix the vulnerabilities in cli (#2443) ([b2b7351](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b2b7351)), closes [#2443](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2443) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
 ## <small>0.7.4 (2026-02-20)</small>
 
 * fix(cache): fix catch statment in redis response (#2432) ([1fdaa13](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1fdaa13)), closes [#2432](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2432) [#2429](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2429) [#2429](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2429)

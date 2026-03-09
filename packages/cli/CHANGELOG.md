@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>12.2.6 (2026-03-09)</small>
+
+* fix(cli): fix the vulnerabilities in cli (#2443) ([b2b7351](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b2b7351)), closes [#2443](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2443) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
 ## <small>12.2.5 (2026-02-20)</small>
 
 * fix(cli): replace swagger-stats to swagger-stats-sf (#2437) ([832c180](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/832c180)), closes [#2437](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2437)

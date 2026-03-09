@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>7.0.9 (2026-03-09)</small>
+
+* feat:Standardize Usage of New @sourceloop/core Controller Enhancements Across All ARC Services (#243 ([624e968](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/624e968)), closes [#2438](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2438) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399)
+* fix(cli): fix the vulnerabilities in cli (#2443) ([b2b7351](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b2b7351)), closes [#2443](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2443) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
+
+
+
+
+
 ## <small>7.0.8 (2026-02-20)</small>
 
 **Note:** Version bump only for package @sourceloop/reporting-service
