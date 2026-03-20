@@ -1,0 +1,129 @@
+# ARC API by SourceFuse
+
+> ARC API is an open-source Rapid Application Development framework built on LoopBack 4 for developing cloud-native enterprise microservices. It provides 16 pre-built, production-ready microservices with multi-tenant support, standardized authentication, and deployment flexibility across private and public clouds.
+
+## Overview
+
+- License: MIT
+- Framework: LoopBack 4 (TypeScript/Node.js), NestJS compatible
+- Monorepo: Lerna + npm Workspaces (independent versioning)
+- Documentation: https://sourcefuse.github.io/arc-docs/arc-api-docs
+- Repository: https://github.com/sourcefuse/loopback4-microservice-catalog
+- CLI: `npm install -g @sourceloop/cli`
+
+## Core Packages
+
+- @sourceloop/core: Foundation framework — models, components, sequences, decorators, mixins, multi-tenancy, authentication/authorization utilities
+- @sourceloop/cli: Scaffolding CLI for backend (LoopBack 4), Angular, and React apps with MCP integration
+- @sourceloop/cache: Redis-based caching extension with repository mixin and decorators
+- @sourceloop/feature-toggle: Feature flag extension with method-level decorator support
+- @sourceloop/file-utils: File upload utilities with S3 storage and ClamAV virus scanning
+- @sourceloop/ocr-parser: Angular module for OCR-based document clause extraction
+
+## Microservices
+
+### Authentication & Identity
+- @sourceloop/authentication-service: Multi-tenant auth with OAuth (Google, Apple, Facebook, Keycloak, Azure AD, Auth0), SAML, MFA, JWT management
+- @sourceloop/oidc-service: OpenID Connect identity provider (DEPRECATED)
+- @sourceloop/user-tenant-service: User, tenant, team, role, and permission management with RBAC
+
+### Communication
+- @sourceloop/notification-service: Multi-channel notifications — email (SES/Nodemailer), SMS (SNS), push (PubNub/Socket.io)
+- @sourceloop/in-mail-service: Internal mail system with threads, attachments, and bulk operations
+- @sourceloop/chat-service: Real-time messaging with individual/group chat and file attachments
+- @sourceloop/video-conferencing-service: Video conferencing via Vonage and Twilio with archive support
+
+### Workflow & Tasks
+- @sourceloop/bpmn-service: BPMN workflow management with Camunda engine
+- @sourceloop/task-service: Event-driven task management with Kafka/SQS/HTTP connectors
+- @sourceloop/scheduler-service: Calendar and event scheduling with attendees and working hours
+
+### Data & Analytics
+- @sourceloop/audit-service: Audit logging with S3 archival and Excel export
+- @sourceloop/reporting-service: Dashboard and widget-based reporting with S3 export
+- @sourceloop/search-service: Full-text search across multiple models (PostgreSQL/MySQL)
+- @sourceloop/survey-service: Survey creation with question types, sections, cycles, and response tracking
+
+### Commerce
+- @sourceloop/payment-service: Payment processing via PayPal, Stripe, and Razorpay
+- @sourceloop/feature-toggle-service: Feature flag management at system, tenant, and user levels
+
+## Quick Start
+
+```bash
+# Install the CLI
+npm install -g @sourceloop/cli
+
+# Scaffold a new project
+sourceloop scaffold
+
+# Create a microservice
+sourceloop microservice
+
+# Run database migrations
+npm run db:migrate
+```
+
+## Common Environment Variables
+
+All services share these base environment variables:
+
+| Variable | Description |
+|----------|-------------|
+| NODE_ENV | Environment (production/development) |
+| LOG_LEVEL | Logging level (info/debug/error) |
+| DB_HOST | Database hostname |
+| DB_PORT | Database port |
+| DB_USER | Database username |
+| DB_PASSWORD | Database password |
+| DB_DATABASE | Database name |
+| DB_SCHEMA | Database schema |
+| REDIS_HOST | Redis hostname |
+| REDIS_PORT | Redis port |
+| REDIS_URL | Redis connection URL |
+| REDIS_PASSWORD | Redis password |
+| JWT_SECRET | JWT signing secret |
+| JWT_ISSUER | JWT token issuer |
+
+## Database Support
+
+- Primary: PostgreSQL
+- Secondary: MySQL (survey-service)
+- ORM: LoopBack 4 Repository pattern with optional Sequelize support
+- Migrations: db-migrate with per-service environment variable controls
+- Soft Delete: Built-in via loopback4-soft-delete mixin
+
+## Migration Environment Variables
+
+Each service uses a dedicated environment variable to control migrations:
+
+| Service | Migration Variable |
+|---------|-------------------|
+| Authentication | AUTH_MIGRATION |
+| Audit | AUDIT_MIGRATION |
+| BPMN | WORKFLOW_MIGRATION |
+| Chat | CHAT_MIGRATION |
+| Feature Toggle | FEATURETOGGLE_MIGRATION |
+| In-Mail | INMAIL_MIGRATION |
+| Notification | NOTIF_MIGRATION |
+| OIDC | OIDC_MIGRATION |
+| Payment | PAYMENT_MIGRATION |
+| Reporting | REPORTS_MIGRATION |
+| Scheduler | SCHEDULER_MIGRATION |
+| Search | SEARCH_MIGRATION |
+| Survey | SURVEY_MIGRATION |
+| User-Tenant | AUTH_MIGRATION |
+
+## Deployment
+
+- Docker: Dockerfiles provided for all services and sandbox examples
+- Docker Compose: Full-stack compose file in `/sandbox/docker-compose.yml`
+- AWS CDK: CDK deployment stacks with migration support
+- Infrastructure: PostgreSQL + Redis minimum; Camunda for BPMN; Vonage/Twilio for video
+
+## Links
+
+- Main Documentation: https://sourcefuse.github.io/arc-docs/arc-api-docs
+- Website: https://www.sourcefuse.com/arc-by-sourcefuse/
+- GitHub: https://github.com/sourcefuse/loopback4-microservice-catalog
+- Contributing: https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/.github/CONTRIBUTING.md
