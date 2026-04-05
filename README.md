@@ -175,22 +175,36 @@ Let's talk about accelerating your next project with ARC API:
 
 https://www.sourcefuse.com/lets-talk/
 
-## People
+## Team
 
-### Contributors
+### Project Architect
 
-- [@samarpan-b](http://github.com/samarpan-b) (Project Architect)
-- [@akshatdubeysf](http://github.com/akshatdubeysf)
-- [@yeshamavani](http://github.com/yeshamavani)
-- [@shubhamp-sf](http://github.com/shubhamp-sf)
-- [@barleendhaliwal](http://github.com/barleendhaliwal)
-- [@AnkurBansalSF](http://github.com/AnkurBansalSF)
-- [@Surbhi-sharma1](http://github.com/Surbhi-sharma1)
-- [@Tyagi-Sunny](http://github.com/Tyagi-Sunny)
-- [@antriksha102](http://github.com/antriksha102)
-- [@arpit1503khanna](http://github.com/arpit1503khanna)
+|                          Samarpan Bhattacharya                           |
+| :----------------------------------------------------------------------: |
+| [![samarpan-b]](http://github.com/samarpan-b) |
+
+### Maintainers
+
+|                           Akshat Dubey                            |                          Yesha Mavani                           |                         Shubham P                          |
+| :---------------------------------------------------------------: | :-------------------------------------------------------------: | :--------------------------------------------------------: |
+| [![akshatdubeysf]](https://github.com/akshatdubeysf) | [![yeshamavani]](https://github.com/yeshamavani) | [![shubhamp-sf]](https://github.com/shubhamp-sf) |
+|                       **Barleen Dhaliwal**                        |                       **Ankur Bansal**                          |                       **Surbhi Sharma**                    |
+| [![barleendhaliwal]](https://github.com/barleendhaliwal) | [![AnkurBansalSF]](https://github.com/AnkurBansalSF) | [![Surbhi-sharma1]](https://github.com/Surbhi-sharma1) |
+|                        **Sunny Tyagi**                            |                       **Antriksha**                             |                    **Arpit Khanna**                        |
+| [![Tyagi-Sunny]](https://github.com/Tyagi-Sunny) | [![antriksha102]](https://github.com/antriksha102) | [![arpit1503khanna]](https://github.com/arpit1503khanna) |
 
 See [all contributors](https://github.com/sourcefuse/loopback4-microservice-catalog/graphs/contributors).
+
+[samarpan-b]: https://avatars.githubusercontent.com/u/39519829?v=3&s=60
+[akshatdubeysf]: https://avatars.githubusercontent.com/u/77672713?v=3&s=60
+[yeshamavani]: https://avatars.githubusercontent.com/u/83634146?v=3&s=60
+[shubhamp-sf]: https://avatars.githubusercontent.com/u/110156023?v=3&s=60
+[barleendhaliwal]: https://avatars.githubusercontent.com/u/85155575?v=3&s=60
+[AnkurBansalSF]: https://avatars.githubusercontent.com/u/85155003?v=3&s=60
+[Surbhi-sharma1]: https://avatars.githubusercontent.com/u/98279679?v=3&s=60
+[Tyagi-Sunny]: https://avatars.githubusercontent.com/u/107617248?v=3&s=60
+[antriksha102]: https://avatars.githubusercontent.com/u/128211984?v=3&s=60
+[arpit1503khanna]: https://avatars.githubusercontent.com/u/108673359?v=3&s=60
 
 ## Reference Links
 
