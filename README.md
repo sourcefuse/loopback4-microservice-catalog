@@ -175,20 +175,42 @@ Let's talk about accelerating your next project with ARC API:
 
 https://www.sourcefuse.com/lets-talk/
 
-## People
+## Team
+
+### Project Architect
+
+| Samarpan Bhattacharya |
+| :-------------------: |
+| [![samarpanb]](https://github.com/samarpanB) |
+
+### Technical Steering Committee
+
+| Samarpan Bhattacharya | Abir Ganguly |
+| :-------------------: | :----------: |
+| [![samarpanb]](https://github.com/samarpanB) | [<img src="https://github.com/a-ganguly.png?size=60" width="60" height="60" />](https://github.com/a-ganguly) |
+
+### Lead Maintainer
+
+| Yesha Mavani |
+| :----------: |
+| [![yeshamavani]](https://github.com/yeshamavani) |
+
+### Maintainers
+
+| Akshat Dubey | Vaibhav Bhalla | Piyush Singh Gaur | Sunny Tyagi |
+| :----------: | :------------: | :---------------: | :---------: |
+| [<img src="https://github.com/akshatdubeysf.png?size=60" width="60" height="60" />](https://github.com/akshatdubeysf) | [![vaibhavbhalla2505]](https://github.com/vaibhavbhalla2505) | [![piyushsinghgaur1]](https://github.com/piyushsinghgaur1) | [![tyagi-sunny]](https://github.com/Tyagi-Sunny) |
 
 ### Contributors
 
-- [@samarpan-b](http://github.com/samarpan-b) (Project Architect)
-- [@akshatdubeysf](http://github.com/akshatdubeysf)
-- [@yeshamavani](http://github.com/yeshamavani)
-- [@shubhamp-sf](http://github.com/shubhamp-sf)
-- [@barleendhaliwal](http://github.com/barleendhaliwal)
-- [@AnkurBansalSF](http://github.com/AnkurBansalSF)
-- [@Surbhi-sharma1](http://github.com/Surbhi-sharma1)
-- [@Tyagi-Sunny](http://github.com/Tyagi-Sunny)
-- [@antriksha102](http://github.com/antriksha102)
-- [@arpit1503khanna](http://github.com/arpit1503khanna)
+- [@shubhamp-sf](https://github.com/shubhamp-sf) (Shubham Prajapat)
+- [@barleendhaliwal](https://github.com/barleendhaliwal) (Barleen Dhaliwal)
+- [@AnkurBansalSF](https://github.com/AnkurBansalSF) (Ankur Bansal)
+- [@Surbhi-sharma1](https://github.com/Surbhi-sharma1) (Surbhi Sharma)
+- [@antriksha102](https://github.com/antriksha102) (Antriksha Somani)
+- [@arpit1503khanna](https://github.com/arpit1503khanna) (Arpit Khanna)
+- [@subhamjagurisf](https://github.com/subhamjagurisf) (Subham Jaguri)
+- [@rohit-sourcefuse](https://github.com/rohit-sourcefuse) (Rohit Wadhwa)
 
 See [all contributors](https://github.com/sourcefuse/loopback4-microservice-catalog/graphs/contributors).
 
@@ -204,3 +226,9 @@ See [all contributors](https://github.com/sourcefuse/loopback4-microservice-cata
 ## License
 
 Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
+
+[samarpanb]: https://github.com/samarpanB.png?size=60
+[yeshamavani]: https://github.com/yeshamavani.png?size=60
+[vaibhavbhalla2505]: https://github.com/vaibhavbhalla2505.png?size=60
+[piyushsinghgaur1]: https://github.com/piyushsinghgaur1.png?size=60
+[tyagi-sunny]: https://github.com/Tyagi-Sunny.png?size=60
