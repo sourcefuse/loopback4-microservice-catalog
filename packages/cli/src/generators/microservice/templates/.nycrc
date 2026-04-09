@@ -1,5 +1,9 @@
 {
-  "extends": "@istanbuljs/nyc-config-typescript",
-  "all": true,
-  "reporter": ["html", "text-summary"]
+  "include": ["dist"],
+  "exclude": ["dist/__tests__/", "dist/index.js"],
+  "extension": [".js", ".ts"],
+  "reporter": ["text", "html", "json"],
+  "exclude-after-remap": false,
+  "check-coverage": true,
+  "lines": 80
 }
