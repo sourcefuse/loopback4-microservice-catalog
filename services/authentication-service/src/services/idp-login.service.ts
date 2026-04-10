@@ -88,7 +88,7 @@ export class IdpLoginService {
     @inject(AuthServiceBindings.MarkUserActivity, {optional: true})
     private readonly userActivity?: IUserActivity,
   ) {}
-  
+
   private readonly msInSecond = 1000;
 
   /**
