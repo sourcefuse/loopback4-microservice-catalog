@@ -1,0 +1,65 @@
+{
+  "name": "@sourceloop/observability",
+  "version": "0.0.1",
+  "description": "OpenTelemetry-first observability bootstrap and LoopBack integration for Sourceloop services",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=20"
+  },
+  "files": [
+    "README.md",
+    "dist",
+    "src",
+    "!*/__tests__"
+  ],
+  "scripts": {
+    "build": "lb-tsc",
+    "build:watch": "lb-tsc --watch",
+    "lint": "npm run eslint && npm run prettier:check",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+    "prettier:cli": "prettier \"**/*.ts\" \"**/*.js\"",
+    "prettier:check": "npm run prettier:cli -- -l",
+    "prettier:fix": "npm run prettier:cli -- --write",
+    "eslint": "eslint --report-unused-disable-directives .",
+    "eslint:fix": "npm run eslint -- --fix",
+    "pretest": "npm run rebuild",
+    "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
+    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js",
+    "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
+    "rebuild": "npm run clean && npm run build",
+    "prune": "npm prune --production",
+    "coverage": "nyc npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
+    "directory": "packages/observability"
+  },
+  "author": "Sourcefuse",
+  "license": "MIT",
+  "dependencies": {
+    "@loopback/core": "^7.0.3",
+    "@loopback/rest": "^15.0.4",
+    "@opentelemetry/api": "^1.9.0",
+    "@opentelemetry/exporter-trace-otlp-grpc": "^0.57.2",
+    "@opentelemetry/exporter-trace-otlp-http": "^0.57.2",
+    "@opentelemetry/resources": "^1.30.1",
+    "@opentelemetry/sdk-trace-base": "^1.30.1",
+    "@opentelemetry/sdk-trace-node": "^1.30.1",
+    "@opentelemetry/semantic-conventions": "^1.28.0",
+    "tslib": "^2.6.2"
+  },
+  "devDependencies": {
+    "@loopback/eslint-config": "16.0.1",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.19.37",
+    "eslint": "8.57.1",
+    "mocha": "11.7.5",
+    "typescript": "5.9.3"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  }
+}
