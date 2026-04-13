@@ -557,6 +557,43 @@ describe('Authentication microservice', () => {
       })
       .expect(200);
   });
+  it('should return 401 when the same auth code is used more than once', async () => {
+    const reqData = {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
+      client_secret: 'test',
+      username: 'test_user',
+      password: 'test123#@',
+    };
+    process.env.JWT_ISSUER = 'test';
+    process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
+    const reqForCode = await client
+      .post(`/auth/login`)
+      .send(reqData)
+      .expect(200);
+    const authCode = reqForCode.body.code;
+
+    // First use of the auth code — should succeed
+    await client
+      .post(`/auth/token`)
+      .set(deviceIdName, deviceId)
+      .set(useragentName, useragent)
+      .send({clientId: 'web', code: authCode})
+      .expect(200);
+
+    // Second use of the same auth code — must be rejected
+    const replayResponse = await client
+      .post(`/auth/token`)
+      .set(deviceIdName, deviceId)
+      .set(useragentName, useragent)
+      .send({clientId: 'web', code: authCode})
+      .expect(401);
+
+    expect(replayResponse.body.error.message).to.equal(
+      AuthErrorKeys.CodeExpired,
+    );
+  });
+
   it('should return error for wrong token on logout', async () => {
     const reqData = {
       // eslint-disable-next-line @typescript-eslint/naming-convention

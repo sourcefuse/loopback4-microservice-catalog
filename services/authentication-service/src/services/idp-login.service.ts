@@ -90,6 +90,7 @@ export class IdpLoginService {
   ) {}
 
   private readonly msInSecond = 1000;
+  private static readonly REVOKED_AUTH_CODE_PREFIX = 'auth_code' as const;
 
   /**
    * Retrieves OpenID Connect configuration settings.
@@ -169,7 +170,9 @@ export class IdpLoginService {
       const resultCode = await this.codeReader(request.code);
 
       // Check if the authorization code has already been used (one-time-use enforcement)
-      const isCodeRevoked = await this.revokedTokensRepo.get(resultCode);
+      const revokedAuthCodeKey = `${IdpLoginService.REVOKED_AUTH_CODE_PREFIX}:${resultCode}`;
+      const isCodeRevoked =
+        await this.revokedTokensRepo.get(revokedAuthCodeKey);
       if (isCodeRevoked) {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.CodeExpired);
       }
@@ -183,7 +186,7 @@ export class IdpLoginService {
 
       // Revoke the auth code immediately after verification to prevent reuse
       await this.revokedTokensRepo.set(
-        resultCode,
+        revokedAuthCodeKey,
         {token: resultCode},
         {ttl: authClient.authCodeExpiration * this.msInSecond},
       );
