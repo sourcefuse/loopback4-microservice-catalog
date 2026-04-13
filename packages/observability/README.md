@@ -48,6 +48,24 @@ bootstrapObservability({
 });
 ```
 
+Startup-only instrumentation toggles are also configured here:
+
+```ts
+bootstrapObservability({
+  enabled: true,
+  profile: 'default',
+  serviceName: 'audit-service',
+  instrumentations: {
+    http: true,
+    express: true,
+    pg: false,
+    mysql: true,
+    redis: false,
+    kafka: false,
+  },
+});
+```
+
 ### Optional: LoopBack component
 
 Use the component only if you want framework-native bindings and DI config.
@@ -73,6 +91,7 @@ Important:
 
 - Bootstrap controls startup-critical config.
 - DI config is meant for component-level enrichment, not for replacing early bootstrap.
+- Instrumentation toggles and custom instrumentations are bootstrap concerns, not DI concerns.
 - If you skip bootstrap and rely only on DI config, early instrumentation will not be enabled.
 
 ## Config Resolution
@@ -97,6 +116,49 @@ Precedence:
 1. bootstrap overrides
 2. environment variables
 3. defaults
+
+Instrumentation toggles can be set either in `instrumentations` during bootstrap or through environment variables:
+
+- `OBSERVABILITY_INSTRUMENT_HTTP`
+- `OBSERVABILITY_INSTRUMENT_EXPRESS`
+- `OBSERVABILITY_INSTRUMENT_PG`
+- `OBSERVABILITY_INSTRUMENT_MYSQL`
+- `OBSERVABILITY_INSTRUMENT_REDIS`
+- `OBSERVABILITY_INSTRUMENT_KAFKA`
+
+Set each one to `true` or `false` to enable or disable that instrumentation. `express` requires `http` to remain enabled.
+
+The same toggles can be set programmatically through `bootstrapObservability({...})` using the `instrumentations` object shown above. That is the preferred non-env path.
+
+You can also attach your own instrumentation instances during bootstrap:
+
+```ts
+import {
+  bootstrapObservability,
+  ObservabilityInstrumentation,
+} from '@sourceloop/observability';
+
+const customInstrumentation: ObservabilityInstrumentation = {
+  enable() {
+    // initialize your instrumentation
+  },
+  disable() {
+    // clean up your instrumentation
+  },
+  setTracerProvider(tracerProvider) {
+    // optional: keep the tracer provider if your instrumentation needs it
+  },
+};
+
+bootstrapObservability({
+  enabled: true,
+  profile: 'default',
+  serviceName: 'audit-service',
+  customInstrumentations: [customInstrumentation],
+});
+```
+
+Use `customInstrumentations` when you need a package-specific or in-house instrumentation that is not built into `@sourceloop/observability`.
 
 ### Component config
 
@@ -131,6 +193,18 @@ These profiles are implemented by profile classes inside the package. Custom pro
 OTLP exporters are bundled as package dependencies because OTLP is the built-in transport path for all current profiles.
 
 There are currently no vendor-native SDK dependencies in the package. The built-in `newrelic`, `signoz`, and `datadog` profiles are OTLP-oriented presets, not native agent integrations.
+
+OpenTelemetry instrumentation libraries are optional peer dependencies so consumers can cherry-pick only the instrumentations they want to use:
+
+- `@opentelemetry/instrumentation-http`
+- `@opentelemetry/instrumentation-express`
+- `@opentelemetry/instrumentation-pg`
+- `@opentelemetry/instrumentation-redis`
+- `@opentelemetry/instrumentation-kafkajs`
+- `@opentelemetry/instrumentation-mysql`
+- `@opentelemetry/instrumentation-mysql2`
+
+If an instrumentation is enabled in config but its package is not installed, bootstrap will fail fast with a clear startup error.
 
 ## Public API
 
