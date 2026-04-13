@@ -20,9 +20,18 @@ export class NewRelicObservabilityProfile
   applyDefaults(
     config: ResolvedObservabilityConfig,
   ): ResolvedObservabilityConfig {
+    const licenseKey = process.env.NEW_RELIC_LICENSE_KEY?.trim();
+    const otlpEndpoint =
+      config.otlpEndpoint ??
+      (config.exporterProtocol === 'grpc'
+        ? 'https://otlp.nr-data.net:4317'
+        : 'https://otlp.nr-data.net:4318/v1/traces');
+
     return {
       ...config,
+      otlpEndpoint,
       otlpHeaders: {
+        ...(licenseKey ? {'api-key': licenseKey} : {}),
         ...config.otlpHeaders,
       },
       resourceAttributes: {

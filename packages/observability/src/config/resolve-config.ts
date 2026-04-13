@@ -89,6 +89,10 @@ function startupInstrumentationConfig(
       overrides?.pg ??
       parseBoolean(env.OBSERVABILITY_INSTRUMENT_PG) ??
       DEFAULT_INSTRUMENTATIONS.pg,
+    mysql:
+      overrides?.mysql ??
+      parseBoolean(env.OBSERVABILITY_INSTRUMENT_MYSQL) ??
+      DEFAULT_INSTRUMENTATIONS.mysql,
     redis:
       overrides?.redis ??
       parseBoolean(env.OBSERVABILITY_INSTRUMENT_REDIS) ??
@@ -169,6 +173,7 @@ export function resolveBootstrapConfig(
     instrumentations: startupInstrumentationConfig(
       bootstrapOverrides?.instrumentations,
     ),
+    customInstrumentations: bootstrapOverrides?.customInstrumentations ?? [],
     resourceAttributes,
   };
 }
