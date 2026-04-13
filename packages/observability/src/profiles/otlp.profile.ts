@@ -20,6 +20,10 @@ import {
   ProfileInitResult,
   ResolvedObservabilityConfig,
 } from '../types';
+import {
+  createAutoInstrumentations,
+  ManagedInstrumentation,
+} from './instrumentations';
 
 function resolveSampler(config: ResolvedObservabilityConfig) {
   switch (config.sampler) {
@@ -78,11 +82,10 @@ function loadOtlpExporter(config: ResolvedObservabilityConfig): SpanExporter {
   });
 }
 
-export abstract class BaseOtlpObservabilityProfile
-  implements ObservabilityProfile
-{
+export abstract class BaseOtlpObservabilityProfile implements ObservabilityProfile {
   abstract name: ObservabilityProfileName;
 
+  private instrumentations: ManagedInstrumentation[] = [];
   private tracerProvider?: NodeTracerProvider;
 
   supports(profile: ObservabilityProfileName): boolean {
@@ -107,6 +110,7 @@ export abstract class BaseOtlpObservabilityProfile
     });
 
     tracerProvider.register();
+    this.instrumentations = createAutoInstrumentations(config, tracerProvider);
     this.tracerProvider = tracerProvider;
 
     return {
@@ -115,8 +119,14 @@ export abstract class BaseOtlpObservabilityProfile
     };
   }
 
-  shutdown(): Promise<void> {
-    return this.tracerProvider?.shutdown() ?? Promise.resolve();
+  async shutdown(): Promise<void> {
+    for (const instrumentation of this.instrumentations) {
+      instrumentation.disable();
+    }
+    this.instrumentations = [];
+
+    await (this.tracerProvider?.shutdown() ?? Promise.resolve());
+    this.tracerProvider = undefined;
   }
 }
 

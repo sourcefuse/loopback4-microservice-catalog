@@ -50,8 +50,47 @@
     "@opentelemetry/semantic-conventions": "^1.28.0",
     "tslib": "^2.6.2"
   },
+  "peerDependencies": {
+    "@opentelemetry/instrumentation-express": "^0.62.0",
+    "@opentelemetry/instrumentation-http": "^0.214.0",
+    "@opentelemetry/instrumentation-kafkajs": "^0.23.0",
+    "@opentelemetry/instrumentation-mysql": "^0.60.0",
+    "@opentelemetry/instrumentation-mysql2": "^0.60.0",
+    "@opentelemetry/instrumentation-pg": "^0.66.0",
+    "@opentelemetry/instrumentation-redis": "^0.62.0"
+  },
+  "peerDependenciesMeta": {
+    "@opentelemetry/instrumentation-express": {
+      "optional": true
+    },
+    "@opentelemetry/instrumentation-http": {
+      "optional": true
+    },
+    "@opentelemetry/instrumentation-kafkajs": {
+      "optional": true
+    },
+    "@opentelemetry/instrumentation-mysql": {
+      "optional": true
+    },
+    "@opentelemetry/instrumentation-mysql2": {
+      "optional": true
+    },
+    "@opentelemetry/instrumentation-pg": {
+      "optional": true
+    },
+    "@opentelemetry/instrumentation-redis": {
+      "optional": true
+    }
+  },
   "devDependencies": {
     "@loopback/eslint-config": "16.0.1",
+    "@opentelemetry/instrumentation-express": "^0.62.0",
+    "@opentelemetry/instrumentation-http": "^0.214.0",
+    "@opentelemetry/instrumentation-kafkajs": "^0.23.0",
+    "@opentelemetry/instrumentation-mysql": "^0.60.0",
+    "@opentelemetry/instrumentation-mysql2": "^0.60.0",
+    "@opentelemetry/instrumentation-pg": "^0.66.0",
+    "@opentelemetry/instrumentation-redis": "^0.62.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "20.19.37",
     "eslint": "8.57.1",

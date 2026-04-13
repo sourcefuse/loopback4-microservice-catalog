@@ -1,4 +1,25 @@
 import {ResolvedObservabilityConfig} from '../types';
+import {
+  getEnabledInstrumentations,
+  INSTRUMENTATION_MODULE_REQUIREMENTS,
+} from '../profiles/instrumentations';
+
+function assertDependencyInstalled(moduleName: string, message: string): void {
+  try {
+    require.resolve(moduleName);
+  } catch {
+    throw new Error(message);
+  }
+}
+
+function isDependencyInstalled(moduleName: string): boolean {
+  try {
+    require.resolve(moduleName);
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 export function validateObservabilityConfig(
   config: ResolvedObservabilityConfig,
@@ -18,5 +39,35 @@ export function validateObservabilityConfig(
 
   if (!config.enabled || config.profile === 'none') {
     return;
+  }
+
+  if (config.instrumentations.express && !config.instrumentations.http) {
+    throw new Error(
+      'Observability express instrumentation requires http instrumentation to be enabled.',
+    );
+  }
+
+  for (const instrumentation of getEnabledInstrumentations(config)) {
+    for (const requirement of INSTRUMENTATION_MODULE_REQUIREMENTS[
+      instrumentation
+    ]) {
+      if (requirement.type === 'all') {
+        for (const moduleName of requirement.modules) {
+          assertDependencyInstalled(
+            moduleName,
+            `Install the optional peer dependency "${moduleName}" or disable the "${instrumentation}" instrumentation.`,
+          );
+        }
+        continue;
+      }
+
+      if (!requirement.modules.some(isDependencyInstalled)) {
+        throw new Error(
+          `Install one of the optional peer dependencies "${requirement.modules.join(
+            '" or "',
+          )}" or disable the "${instrumentation}" instrumentation.`,
+        );
+      }
+    }
   }
 }

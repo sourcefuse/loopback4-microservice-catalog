@@ -16,10 +16,17 @@ export type ExporterProtocol = 'grpc' | 'http/protobuf';
 
 export type SamplerName = 'always_on' | 'always_off' | 'traceidratio';
 
+export interface ObservabilityInstrumentation {
+  disable(): void;
+  enable(): void;
+  setTracerProvider?(tracerProvider: NodeTracerProvider): void;
+}
+
 export interface InstrumentationToggles {
   http: boolean;
   express: boolean;
   pg: boolean;
+  mysql: boolean;
   redis: boolean;
   kafka: boolean;
 }
@@ -36,6 +43,7 @@ export interface ObservabilityConfig {
   sampler?: SamplerName;
   samplerArg?: number;
   instrumentations?: Partial<InstrumentationToggles>;
+  customInstrumentations?: ObservabilityInstrumentation[];
   resourceAttributes?: Record<string, string>;
 }
 
@@ -51,6 +59,7 @@ export interface ResolvedObservabilityConfig {
   sampler: SamplerName;
   samplerArg: number;
   instrumentations: InstrumentationToggles;
+  customInstrumentations: ObservabilityInstrumentation[];
   resourceAttributes: Record<string, string>;
 }
 
