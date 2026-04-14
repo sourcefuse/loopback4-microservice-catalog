@@ -1,6 +1,8 @@
 import {ResolvedObservabilityConfig} from '../types';
 import {
   getEnabledInstrumentations,
+  InstrumentationModuleRequirement,
+  InstrumentationName,
   INSTRUMENTATION_MODULE_REQUIREMENTS,
 } from '../profiles/instrumentations';
 
@@ -48,26 +50,34 @@ export function validateObservabilityConfig(
   }
 
   for (const instrumentation of getEnabledInstrumentations(config)) {
-    for (const requirement of INSTRUMENTATION_MODULE_REQUIREMENTS[
-      instrumentation
-    ]) {
-      if (requirement.type === 'all') {
-        for (const moduleName of requirement.modules) {
-          assertDependencyInstalled(
-            moduleName,
-            `Install the optional peer dependency "${moduleName}" or disable the "${instrumentation}" instrumentation.`,
-          );
-        }
-        continue;
-      }
+    validateInstrumentationRequirements(
+      instrumentation,
+      INSTRUMENTATION_MODULE_REQUIREMENTS[instrumentation],
+    );
+  }
+}
 
-      if (!requirement.modules.some(isDependencyInstalled)) {
-        throw new Error(
-          `Install one of the optional peer dependencies "${requirement.modules.join(
-            '" or "',
-          )}" or disable the "${instrumentation}" instrumentation.`,
+function validateInstrumentationRequirements(
+  instrumentation: InstrumentationName,
+  requirements: InstrumentationModuleRequirement[],
+): void {
+  for (const requirement of requirements) {
+    if (requirement.type === 'all') {
+      for (const moduleName of requirement.modules) {
+        assertDependencyInstalled(
+          moduleName,
+          `Install the optional peer dependency "${moduleName}" or disable the "${instrumentation}" instrumentation.`,
         );
       }
+      continue;
+    }
+
+    if (!requirement.modules.some(isDependencyInstalled)) {
+      throw new Error(
+        `Install one of the optional peer dependencies "${requirement.modules.join(
+          '" or "',
+        )}" or disable the "${instrumentation}" instrumentation.`,
+      );
     }
   }
 }
