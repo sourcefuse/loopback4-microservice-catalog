@@ -71,37 +71,95 @@ function parseResourceAttributes(
   return parseHeaders(value);
 }
 
+const INSTRUMENTATION_ENV_VARS: Record<keyof InstrumentationToggles, string> = {
+  http: 'OBSERVABILITY_INSTRUMENT_HTTP',
+  express: 'OBSERVABILITY_INSTRUMENT_EXPRESS',
+  pg: 'OBSERVABILITY_INSTRUMENT_PG',
+  mysql: 'OBSERVABILITY_INSTRUMENT_MYSQL',
+  redis: 'OBSERVABILITY_INSTRUMENT_REDIS',
+  kafka: 'OBSERVABILITY_INSTRUMENT_KAFKA',
+};
+
+function resolveInstrumentationToggle(
+  key: keyof InstrumentationToggles,
+  overrides?: Partial<InstrumentationToggles>,
+): boolean {
+  return (
+    overrides?.[key] ??
+    parseBoolean(process.env[INSTRUMENTATION_ENV_VARS[key]]) ??
+    DEFAULT_INSTRUMENTATIONS[key]
+  );
+}
+
 function startupInstrumentationConfig(
   overrides?: Partial<InstrumentationToggles>,
 ): InstrumentationToggles {
-  const env = process.env;
+  const keys = Object.keys(
+    DEFAULT_INSTRUMENTATIONS,
+  ) as (keyof InstrumentationToggles)[];
+
+  return keys.reduce(
+    (result, key) => {
+      result[key] = resolveInstrumentationToggle(key, overrides);
+      return result;
+    },
+    {} as InstrumentationToggles,
+  );
+}
+
+function resolveServiceInfo(
+  overrides: Partial<ObservabilityConfig> | undefined,
+  env: NodeJS.ProcessEnv,
+  enabled: boolean,
+) {
+  const profile =
+    overrides?.profile ??
+    env.OBSERVABILITY_PROFILE ??
+    env.OBSERVABILITY_PROVIDER ??
+    (enabled ? 'default' : DEFAULT_OBSERVABILITY_CONFIG.profile);
+
+  const serviceName =
+    overrides?.serviceName ??
+    env.OTEL_SERVICE_NAME ??
+    env.MS_NAME ??
+    DEFAULT_OBSERVABILITY_CONFIG.serviceName;
 
   return {
-    http:
-      overrides?.http ??
-      parseBoolean(env.OBSERVABILITY_INSTRUMENT_HTTP) ??
-      DEFAULT_INSTRUMENTATIONS.http,
-    express:
-      overrides?.express ??
-      parseBoolean(env.OBSERVABILITY_INSTRUMENT_EXPRESS) ??
-      DEFAULT_INSTRUMENTATIONS.express,
-    pg:
-      overrides?.pg ??
-      parseBoolean(env.OBSERVABILITY_INSTRUMENT_PG) ??
-      DEFAULT_INSTRUMENTATIONS.pg,
-    mysql:
-      overrides?.mysql ??
-      parseBoolean(env.OBSERVABILITY_INSTRUMENT_MYSQL) ??
-      DEFAULT_INSTRUMENTATIONS.mysql,
-    redis:
-      overrides?.redis ??
-      parseBoolean(env.OBSERVABILITY_INSTRUMENT_REDIS) ??
-      DEFAULT_INSTRUMENTATIONS.redis,
-    kafka:
-      overrides?.kafka ??
-      parseBoolean(env.OBSERVABILITY_INSTRUMENT_KAFKA) ??
-      DEFAULT_INSTRUMENTATIONS.kafka,
+    profile,
+    serviceName,
+    serviceVersion: overrides?.serviceVersion ?? env.SERVICE_VERSION,
+    environment: overrides?.environment ?? env.NODE_ENV,
   };
+}
+
+function resolveExporterConfig(
+  overrides: Partial<ObservabilityConfig> | undefined,
+  env: NodeJS.ProcessEnv,
+) {
+  const exporterProtocol = (overrides?.exporterProtocol ??
+    (env.OTEL_EXPORTER_OTLP_PROTOCOL as ExporterProtocol | undefined) ??
+    DEFAULT_OBSERVABILITY_CONFIG.exporterProtocol) as ExporterProtocol;
+
+  const sampler = (overrides?.sampler ??
+    (env.OTEL_TRACES_SAMPLER as SamplerName | undefined) ??
+    DEFAULT_OBSERVABILITY_CONFIG.sampler) as SamplerName;
+
+  const samplerArg =
+    overrides?.samplerArg ??
+    parseNumber(env.OTEL_TRACES_SAMPLER_ARG) ??
+    DEFAULT_OBSERVABILITY_CONFIG.samplerArg;
+
+  const otlpEndpoint =
+    overrides?.otlpEndpoint ??
+    env.OTEL_EXPORTER_OTLP_TRACES_ENDPOINT ??
+    env.OTEL_EXPORTER_OTLP_ENDPOINT;
+
+  const otlpHeaders = {
+    ...parseHeaders(env.OTEL_EXPORTER_OTLP_HEADERS),
+    ...overrides?.otlpHeaders,
+  };
+
+  return {exporterProtocol, sampler, samplerArg, otlpEndpoint, otlpHeaders};
 }
 
 export function resolveBootstrapConfig(
@@ -114,45 +172,8 @@ export function resolveBootstrapConfig(
     parseBoolean(env.OBSERVABILITY_ENABLED) ??
     DEFAULT_OBSERVABILITY_CONFIG.enabled;
 
-  const profile =
-    bootstrapOverrides?.profile ??
-    env.OBSERVABILITY_PROFILE ??
-    env.OBSERVABILITY_PROVIDER ??
-    (enabled ? 'default' : DEFAULT_OBSERVABILITY_CONFIG.profile);
-
-  const serviceName =
-    bootstrapOverrides?.serviceName ??
-    env.OTEL_SERVICE_NAME ??
-    env.MS_NAME ??
-    DEFAULT_OBSERVABILITY_CONFIG.serviceName;
-
-  const serviceVersion =
-    bootstrapOverrides?.serviceVersion ?? env.SERVICE_VERSION;
-
-  const environment = bootstrapOverrides?.environment ?? env.NODE_ENV;
-
-  const exporterProtocol = (bootstrapOverrides?.exporterProtocol ??
-    (env.OTEL_EXPORTER_OTLP_PROTOCOL as ExporterProtocol | undefined) ??
-    DEFAULT_OBSERVABILITY_CONFIG.exporterProtocol) as ExporterProtocol;
-
-  const sampler = (bootstrapOverrides?.sampler ??
-    (env.OTEL_TRACES_SAMPLER as SamplerName | undefined) ??
-    DEFAULT_OBSERVABILITY_CONFIG.sampler) as SamplerName;
-
-  const samplerArg =
-    bootstrapOverrides?.samplerArg ??
-    parseNumber(env.OTEL_TRACES_SAMPLER_ARG) ??
-    DEFAULT_OBSERVABILITY_CONFIG.samplerArg;
-
-  const otlpEndpoint =
-    bootstrapOverrides?.otlpEndpoint ??
-    env.OTEL_EXPORTER_OTLP_TRACES_ENDPOINT ??
-    env.OTEL_EXPORTER_OTLP_ENDPOINT;
-
-  const otlpHeaders = {
-    ...parseHeaders(env.OTEL_EXPORTER_OTLP_HEADERS),
-    ...bootstrapOverrides?.otlpHeaders,
-  };
+  const serviceInfo = resolveServiceInfo(bootstrapOverrides, env, enabled);
+  const exporterConfig = resolveExporterConfig(bootstrapOverrides, env);
 
   const resourceAttributes = {
     ...parseResourceAttributes(env.OTEL_RESOURCE_ATTRIBUTES),
@@ -161,15 +182,8 @@ export function resolveBootstrapConfig(
 
   return {
     enabled,
-    profile,
-    serviceName,
-    serviceVersion,
-    environment,
-    otlpEndpoint,
-    otlpHeaders,
-    exporterProtocol,
-    sampler,
-    samplerArg,
+    ...serviceInfo,
+    ...exporterConfig,
     instrumentations: startupInstrumentationConfig(
       bootstrapOverrides?.instrumentations,
     ),
