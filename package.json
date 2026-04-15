@@ -19,7 +19,7 @@
     "cz-conventional-changelog": "^3.3.0",
     "cz-format-extension": "1.5.1",
     "husky": "^7.0.4",
-    "lerna": "^9.0.5",
+    "lerna": "^9.0.7",
     "typedoc": "0.23.23",
     "typedoc-plugin-markdown": "3.14.0"
   },
@@ -54,20 +54,18 @@
     "oidc-provider": {
       "@koa/cors": "^5.0.0"
     },
-    "loopback4-notifications": {
-      "twilio": {
-        "axios": "^1.12.2"
-      }
-    },
     "read-package-json": {
       "glob": "^10.5.0"
     },
-    "fast-xml-parser": "^5.3.6"
+    "fast-xml-parser": "^5.5.6",
+    "lodash": "^4.18.0",
+    "undici": "^6.24.0",
+    "axios": "1.15.0"
   },
   "dependencies": {
     "@lavamoat/allow-scripts": "^3.4.1",
     "bcrypt": "^5.1.1",
-    "handlebars": "^4.7.8",
+    "handlebars": "^4.7.9",
     "patch-package": "^8.0.0",
     "sqlite3": "^5.1.7"
   },

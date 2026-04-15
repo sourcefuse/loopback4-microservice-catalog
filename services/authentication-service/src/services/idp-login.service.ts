@@ -89,6 +89,9 @@ export class IdpLoginService {
     private readonly userActivity?: IUserActivity,
   ) {}
 
+  private readonly msInSecond = 1000;
+  private static readonly REVOKED_AUTH_CODE_PREFIX = 'auth_code' as const;
+
   /**
    * Retrieves OpenID Connect configuration settings.
    * This method constructs and returns an IdpConfiguration object containing
@@ -165,12 +168,28 @@ export class IdpLoginService {
     }
     try {
       const resultCode = await this.codeReader(request.code);
+
+      // Check if the authorization code has already been used (one-time-use enforcement)
+      const revokedAuthCodeKey = `${IdpLoginService.REVOKED_AUTH_CODE_PREFIX}:${resultCode}`;
+      const isCodeRevoked =
+        await this.revokedTokensRepo.get(revokedAuthCodeKey);
+      if (isCodeRevoked) {
+        throw new HttpErrors.Unauthorized(AuthErrorKeys.CodeExpired);
+      }
+
       const payload = (await this.jwtVerifier(resultCode, {
         audience: request.clientId,
       })) as ClientAuthCode<User, typeof User.prototype.id>;
       if (payload.mfa) {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.UserVerificationFailed);
       }
+
+      // Revoke the auth code immediately after verification to prevent reuse
+      await this.revokedTokensRepo.set(
+        revokedAuthCodeKey,
+        {token: resultCode},
+        {ttl: authClient.authCodeExpiration * this.msInSecond},
+      );
 
       if (
         payload.user?.id &&
@@ -211,7 +230,6 @@ export class IdpLoginService {
     accessToken: string,
     data: AnyObject,
   ): Promise<void> {
-    const ms = 1000;
     await this.refreshTokenRepo.set(
       refreshToken,
       {
@@ -223,7 +241,7 @@ export class IdpLoginService {
         externalRefreshToken: (user as AuthUser).externalRefreshToken,
         tenantId: data.tenantId,
       },
-      {ttl: authClient.refreshTokenExpiration * ms},
+      {ttl: authClient.refreshTokenExpiration * this.msInSecond},
     );
   }
 
@@ -292,7 +310,6 @@ export class IdpLoginService {
     tenantId?: string,
   ): Promise<TokenResponse> {
     const size = 32;
-    const ms = 1000;
     try {
       const user = await this.getUser(payload);
       const data: AnyObject = await this.getJwtPayload(
@@ -323,7 +340,7 @@ export class IdpLoginService {
             publicKey: key.publicKey,
           },
           {
-            ttl: authClient.accessTokenExpiration * ms,
+            ttl: authClient.accessTokenExpiration * this.msInSecond,
           },
         );
       }
@@ -602,7 +619,6 @@ export class IdpLoginService {
         this.currentUser?.authClientId,
       );
 
-      const ms = 1000;
       // Save the public key to the cache for retrieval on facade
       await this.publicKeyRepo.set(
         key.kid,
@@ -611,7 +627,7 @@ export class IdpLoginService {
           publicKey,
         },
         {
-          ttl: authClient.accessTokenExpiration * ms,
+          ttl: authClient.accessTokenExpiration * this.msInSecond,
         },
       );
     }
@@ -637,10 +653,9 @@ export class IdpLoginService {
    */
   private decodeAndGetExpiry(token: string): number | null {
     const tokenData = jwt.decode(token) as TokenPayload | null; // handle null result from decode
-    const ms = 1000;
 
     if (tokenData?.exp) {
-      return tokenData.exp * ms;
+      return tokenData.exp * this.msInSecond;
     }
 
     // If tokenData or exp is missing, return null to indicate no expiry
