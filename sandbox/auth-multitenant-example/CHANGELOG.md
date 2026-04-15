@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>10.0.7 (2026-04-15)</small>
+
+**Note:** Version bump only for package @sourceloop/auth-multitenant-example
+
+
+
+
+
 ## <small>10.0.6 (2026-03-09)</small>
 
 * fix(core): upadte the ratelimiter to latest (#2446) ([bfb512c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bfb512c)), closes [#2446](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2446) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)

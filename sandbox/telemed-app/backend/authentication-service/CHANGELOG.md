@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.8.8 (2026-04-15)</small>
+
+* fix(authentication-service): make authorization code one-time-use (#2497) ([b75ea4f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b75ea4f)), closes [#2497](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2497) [#2495](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2495) [#2495](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2495) [#2495](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2495) [#2495](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2495)
+
+
+
+
+
 ## <small>0.8.7 (2026-03-09)</small>
 
 * fix(cli): fix the vulnerabilities in cli (#2443) ([b2b7351](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b2b7351)), closes [#2443](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2443) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)
