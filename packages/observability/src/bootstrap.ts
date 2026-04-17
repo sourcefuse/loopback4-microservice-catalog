@@ -56,6 +56,11 @@ function buildDisabledRuntime(): ObservabilityRuntime {
   };
 }
 
+function discardProfileState(profile: ObservabilityProfile): void {
+  profile.shutdown?.().catch(() => undefined);
+  clearRuntimeState();
+}
+
 export function bootstrapObservability(
   overrides?: Partial<ObservabilityConfig>,
 ): ObservabilityRuntime {
@@ -78,9 +83,15 @@ export function bootstrapObservability(
   const profileConfig = profile.applyDefaults(resolvedConfig);
   validateObservabilityConfig(profileConfig);
 
-  const initResult = profile.initialize(profileConfig, {
-    createExporter: createOtlpExporter,
-  });
+  let initResult;
+  try {
+    initResult = profile.initialize(profileConfig, {
+      createExporter: createOtlpExporter,
+    });
+  } catch (error) {
+    discardProfileState(profile);
+    throw error;
+  }
 
   updateRuntimeState({
     profile,
@@ -93,8 +104,13 @@ export function bootstrapObservability(
     config: profileConfig,
     tracerProvider: initResult.tracerProvider,
     async shutdown() {
-      await profile.shutdown?.();
-      clearRuntimeState();
+      try {
+        await profile.shutdown?.();
+      } catch {
+        return;
+      } finally {
+        clearRuntimeState();
+      }
     },
   };
 
@@ -112,7 +128,11 @@ export async function shutdownObservability(): Promise<void> {
     return;
   }
 
-  await runtime.shutdown();
+  try {
+    await runtime.shutdown();
+  } catch {
+    clearRuntimeState();
+  }
 }
 
 export function isObservabilityEnabled(): boolean {

@@ -1,4 +1,4 @@
-import {context, trace} from '@opentelemetry/api';
+import {context, SpanStatusCode, trace} from '@opentelemetry/api';
 import {AttributeValue} from './types';
 
 function getTracer() {
@@ -19,6 +19,10 @@ export async function withSpan<T>(
       return await fn();
     } catch (error) {
       span.recordException(error as Error);
+      span.setStatus({
+        code: SpanStatusCode.ERROR,
+        message: error instanceof Error ? error.message : String(error),
+      });
       throw error;
     } finally {
       span.end();

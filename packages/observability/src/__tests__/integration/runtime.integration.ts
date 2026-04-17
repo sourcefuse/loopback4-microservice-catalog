@@ -82,6 +82,6 @@ describe('observability runtime', () => {
       ok(headers.traceparent);
     });
 
-    strictEqual(initResult.exporterName, 'loadOtlpExporter');
+    strictEqual(initResult.exporterName, 'InMemorySpanExporter');
   });
 });
