@@ -1,8 +1,6 @@
 import {
   ObservabilityProfileName,
   ObservabilityProfile,
-  ProfileBootstrapContext,
-  ProfileInitResult,
   ResolvedObservabilityConfig,
 } from '../types';
 import {BaseOtlpObservabilityProfile} from './otlp.profile';
@@ -39,12 +37,5 @@ export class DatadogObservabilityProfile
         ...config.resourceAttributes,
       },
     };
-  }
-
-  initialize(
-    config: ResolvedObservabilityConfig,
-    context: ProfileBootstrapContext,
-  ): ProfileInitResult {
-    return super.initialize(this.applyDefaults(config), context);
   }
 }

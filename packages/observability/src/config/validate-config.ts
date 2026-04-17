@@ -4,22 +4,12 @@ import {
   InstrumentationModuleRequirement,
   InstrumentationName,
   INSTRUMENTATION_MODULE_REQUIREMENTS,
+  isModuleInstalled,
 } from '../profiles/instrumentations';
 
 function assertDependencyInstalled(moduleName: string, message: string): void {
-  try {
-    require.resolve(moduleName);
-  } catch {
+  if (!isModuleInstalled(moduleName)) {
     throw new Error(message);
-  }
-}
-
-function isDependencyInstalled(moduleName: string): boolean {
-  try {
-    require.resolve(moduleName);
-    return true;
-  } catch {
-    return false;
   }
 }
 
@@ -72,7 +62,7 @@ function validateInstrumentationRequirements(
       continue;
     }
 
-    if (!requirement.modules.some(isDependencyInstalled)) {
+    if (!requirement.modules.some(isModuleInstalled)) {
       throw new Error(
         `Install one of the optional peer dependencies "${requirement.modules.join(
           '" or "',

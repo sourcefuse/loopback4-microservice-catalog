@@ -42,7 +42,7 @@ export type InstrumentationLoader = (
   name: InstrumentationName,
 ) => ManagedInstrumentation[];
 
-function isModuleInstalled(moduleName: string): boolean {
+export function isModuleInstalled(moduleName: string): boolean {
   try {
     require.resolve(moduleName);
     return true;

@@ -25,6 +25,10 @@ import {
   ManagedInstrumentation,
 } from './instrumentations';
 
+type OtlpGrpcModule = typeof import('@opentelemetry/exporter-trace-otlp-grpc');
+type OtlpHttpModule = typeof import('@opentelemetry/exporter-trace-otlp-http');
+type GrpcJsModule = typeof import('@grpc/grpc-js');
+
 function resolveSampler(config: ResolvedObservabilityConfig) {
   switch (config.sampler) {
     case 'always_off':
@@ -56,23 +60,34 @@ function buildResource(config: ResolvedObservabilityConfig): Resource {
   return detectResourcesSync().merge(new Resource(attributes));
 }
 
+function buildGrpcMetadata(headers: Record<string, string>) {
+  if (!Object.keys(headers).length) {
+    return undefined;
+  }
+
+  const {Metadata} = require('@grpc/grpc-js') as GrpcJsModule;
+  const metadata = new Metadata();
+
+  for (const [key, value] of Object.entries(headers)) {
+    metadata.set(key, value);
+  }
+
+  return metadata;
+}
+
 function loadOtlpExporter(config: ResolvedObservabilityConfig): SpanExporter {
   if (config.exporterProtocol === 'grpc') {
-    const otlpGrpc = require('@opentelemetry/exporter-trace-otlp-grpc') as {
-      OTLPTraceExporter: new (options?: object) => SpanExporter;
-    };
+    const otlpGrpc =
+      require('@opentelemetry/exporter-trace-otlp-grpc') as OtlpGrpcModule;
 
     return new otlpGrpc.OTLPTraceExporter({
       url: config.otlpEndpoint,
-      metadata: Object.keys(config.otlpHeaders).length
-        ? config.otlpHeaders
-        : undefined,
+      metadata: buildGrpcMetadata(config.otlpHeaders),
     });
   }
 
-  const otlpHttp = require('@opentelemetry/exporter-trace-otlp-http') as {
-    OTLPTraceExporter: new (options?: object) => SpanExporter;
-  };
+  const otlpHttp =
+    require('@opentelemetry/exporter-trace-otlp-http') as OtlpHttpModule;
 
   return new otlpHttp.OTLPTraceExporter({
     url: config.otlpEndpoint,
@@ -114,7 +129,7 @@ export abstract class BaseOtlpObservabilityProfile implements ObservabilityProfi
     this.tracerProvider = tracerProvider;
 
     return {
-      exporterName: loadOtlpExporter.name,
+      exporterName: exporter.constructor?.name ?? 'SpanExporter',
       tracerProvider,
     };
   }

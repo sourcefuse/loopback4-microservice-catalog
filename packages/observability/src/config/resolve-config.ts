@@ -41,6 +41,28 @@ function parseNumber(value: string | undefined): number | undefined {
   return Number.isFinite(parsed) ? parsed : undefined;
 }
 
+function parseExporterProtocol(
+  value: string | undefined,
+): ExporterProtocol | undefined {
+  if (value === 'grpc' || value === 'http/protobuf') {
+    return value;
+  }
+
+  return undefined;
+}
+
+function parseSamplerName(value: string | undefined): SamplerName | undefined {
+  if (
+    value === 'always_on' ||
+    value === 'always_off' ||
+    value === 'traceidratio'
+  ) {
+    return value;
+  }
+
+  return undefined;
+}
+
 function parseHeaders(value: string | undefined): Record<string, string> {
   if (!value) {
     return {};
@@ -98,13 +120,10 @@ function startupInstrumentationConfig(
     DEFAULT_INSTRUMENTATIONS,
   ) as (keyof InstrumentationToggles)[];
 
-  return keys.reduce(
-    (result, key) => {
-      result[key] = resolveInstrumentationToggle(key, overrides);
-      return result;
-    },
-    {} as InstrumentationToggles,
-  );
+  return keys.reduce((result, key) => {
+    result[key] = resolveInstrumentationToggle(key, overrides);
+    return result;
+  }, {} as InstrumentationToggles);
 }
 
 function resolveServiceInfo(
@@ -136,13 +155,15 @@ function resolveExporterConfig(
   overrides: Partial<ObservabilityConfig> | undefined,
   env: NodeJS.ProcessEnv,
 ) {
-  const exporterProtocol = (overrides?.exporterProtocol ??
-    (env.OTEL_EXPORTER_OTLP_PROTOCOL as ExporterProtocol | undefined) ??
-    DEFAULT_OBSERVABILITY_CONFIG.exporterProtocol) as ExporterProtocol;
+  const exporterProtocol =
+    overrides?.exporterProtocol ??
+    parseExporterProtocol(env.OTEL_EXPORTER_OTLP_PROTOCOL) ??
+    DEFAULT_OBSERVABILITY_CONFIG.exporterProtocol;
 
-  const sampler = (overrides?.sampler ??
-    (env.OTEL_TRACES_SAMPLER as SamplerName | undefined) ??
-    DEFAULT_OBSERVABILITY_CONFIG.sampler) as SamplerName;
+  const sampler =
+    overrides?.sampler ??
+    parseSamplerName(env.OTEL_TRACES_SAMPLER) ??
+    DEFAULT_OBSERVABILITY_CONFIG.sampler;
 
   const samplerArg =
     overrides?.samplerArg ??
@@ -159,7 +180,13 @@ function resolveExporterConfig(
     ...overrides?.otlpHeaders,
   };
 
-  return {exporterProtocol, sampler, samplerArg, otlpEndpoint, otlpHeaders};
+  return {
+    exporterProtocol,
+    sampler,
+    samplerArg,
+    otlpEndpoint,
+    otlpHeaders,
+  };
 }
 
 export function resolveBootstrapConfig(
