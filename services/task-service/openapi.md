@@ -2479,234 +2479,6 @@ HTTPBearer
 
 # Schemas
 
-<h2 id="tocS_Workflow">Workflow</h2>
-<!-- backwards compatibility -->
-<a id="schemaworkflow"></a>
-<a id="schema_Workflow"></a>
-<a id="tocSworkflow"></a>
-<a id="tocsworkflow"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "workflowVersion": 0,
-  "externalIdentifier": "string",
-  "name": "string",
-  "provider": "string",
-  "inputSchema": {},
-  "description": "string"
-}
-
-```
-
-Workflow
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|workflowVersion|number|true|none|Last deployed workflow version|
-|externalIdentifier|string|true|none|The key that is used to identify the workflow in the respective workflow engine.|
-|name|string|false|none|Name of the workflow|
-|provider|string|true|none|Provider could be the engine that will handle the workflow - camunda, zeebe, etc|
-|inputSchema|object|true|none|Schema used for validation during workflow execution|
-|description|string|false|none|Description of the workflow|
-
-<h2 id="tocS_NewWorkflow">NewWorkflow</h2>
-<!-- backwards compatibility -->
-<a id="schemanewworkflow"></a>
-<a id="schema_NewWorkflow"></a>
-<a id="tocSnewworkflow"></a>
-<a id="tocsnewworkflow"></a>
-
-```json
-{
-  "name": "string",
-  "bpmnFile": "string",
-  "inputSchema": {},
-  "description": "string"
-}
-
-```
-
-NewWorkflow
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|name|string|true|none|none|
-|bpmnFile|string|true|none|none|
-|inputSchema|object|true|none|none|
-|description|string|false|none|none|
-
-<h2 id="tocS_WorkflowDto">WorkflowDto</h2>
-<!-- backwards compatibility -->
-<a id="schemaworkflowdto"></a>
-<a id="schema_WorkflowDto"></a>
-<a id="tocSworkflowdto"></a>
-<a id="tocsworkflowdto"></a>
-
-```json
-{
-  "name": "string",
-  "bpmnFile": "string",
-  "inputSchema": {},
-  "description": "string"
-}
-
-```
-
-WorkflowDto
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|name|string|true|none|none|
-|bpmnFile|string|true|none|none|
-|inputSchema|object|true|none|none|
-|description|string|false|none|none|
-
-<h2 id="tocS_WorkflowDtoPartial">WorkflowDtoPartial</h2>
-<!-- backwards compatibility -->
-<a id="schemaworkflowdtopartial"></a>
-<a id="schema_WorkflowDtoPartial"></a>
-<a id="tocSworkflowdtopartial"></a>
-<a id="tocsworkflowdtopartial"></a>
-
-```json
-{
-  "name": "string",
-  "bpmnFile": "string",
-  "inputSchema": {},
-  "description": "string"
-}
-
-```
-
-WorkflowDtoPartial
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|name|string|false|none|none|
-|bpmnFile|string|false|none|none|
-|inputSchema|object|false|none|none|
-|description|string|false|none|none|
-
-<h2 id="tocS_ExecuteWorkflowDto">ExecuteWorkflowDto</h2>
-<!-- backwards compatibility -->
-<a id="schemaexecuteworkflowdto"></a>
-<a id="schema_ExecuteWorkflowDto"></a>
-<a id="tocSexecuteworkflowdto"></a>
-<a id="tocsexecuteworkflowdto"></a>
-
-```json
-{
-  "workflowVersion": 0,
-  "input": {}
-}
-
-```
-
-ExecuteWorkflowDto
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|workflowVersion|number|false|none|none|
-|input|object|true|none|none|
-
-<h2 id="tocS_EventWithRelations">EventWithRelations</h2>
-<!-- backwards compatibility -->
-<a id="schemaeventwithrelations"></a>
-<a id="schema_EventWithRelations"></a>
-<a id="tocSeventwithrelations"></a>
-<a id="tocseventwithrelations"></a>
-
-```json
-{
-  "id": "string",
-  "key": "string",
-  "description": "string",
-  "source": "string",
-  "payload": {},
-  "timestamp": 0
-}
-
-```
-
-EventWithRelations
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|id|string|false|none|none|
-|key|string|true|none|An identifier for a particular event queued by a service or a user|
-|description|string|true|none|A short description of an event|
-|source|string|true|none|Origination of an event- can be a service or from a user|
-|payload|object|true|none|A dynamic object that contains information to be run in the workers of a bpmn engine|
-|timestamp|number|true|none|A short message to indicate the progression of the event|
-
-<h2 id="tocS_EventWorkflowMapping">EventWorkflowMapping</h2>
-<!-- backwards compatibility -->
-<a id="schemaeventworkflowmapping"></a>
-<a id="schema_EventWorkflowMapping"></a>
-<a id="tocSeventworkflowmapping"></a>
-<a id="tocseventworkflowmapping"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "eventKey": "string",
-  "workflowKey": "string"
-}
-
-```
-
-EventWorkflowMapping
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|eventKey|string|true|none|An identifier for a particular event queued by a service or a user|
-|workflowKey|string|true|none|An identifier for a particular workflow|
-
 <h2 id="tocS_UserTaskWithRelations">UserTaskWithRelations</h2>
 <!-- backwards compatibility -->
 <a id="schemausertaskwithrelations"></a>
@@ -2999,6 +2771,234 @@ Task
 |metadata|object|true|none|none|
 |externalId|string|false|none|none|
 |notes|string|false|none|none|
+
+<h2 id="tocS_EventWithRelations">EventWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemaeventwithrelations"></a>
+<a id="schema_EventWithRelations"></a>
+<a id="tocSeventwithrelations"></a>
+<a id="tocseventwithrelations"></a>
+
+```json
+{
+  "id": "string",
+  "key": "string",
+  "description": "string",
+  "source": "string",
+  "payload": {},
+  "timestamp": 0
+}
+
+```
+
+EventWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|false|none|none|
+|key|string|true|none|An identifier for a particular event queued by a service or a user|
+|description|string|true|none|A short description of an event|
+|source|string|true|none|Origination of an event- can be a service or from a user|
+|payload|object|true|none|A dynamic object that contains information to be run in the workers of a bpmn engine|
+|timestamp|number|true|none|A short message to indicate the progression of the event|
+
+<h2 id="tocS_EventWorkflowMapping">EventWorkflowMapping</h2>
+<!-- backwards compatibility -->
+<a id="schemaeventworkflowmapping"></a>
+<a id="schema_EventWorkflowMapping"></a>
+<a id="tocSeventworkflowmapping"></a>
+<a id="tocseventworkflowmapping"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "eventKey": "string",
+  "workflowKey": "string"
+}
+
+```
+
+EventWorkflowMapping
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|eventKey|string|true|none|An identifier for a particular event queued by a service or a user|
+|workflowKey|string|true|none|An identifier for a particular workflow|
+
+<h2 id="tocS_Workflow">Workflow</h2>
+<!-- backwards compatibility -->
+<a id="schemaworkflow"></a>
+<a id="schema_Workflow"></a>
+<a id="tocSworkflow"></a>
+<a id="tocsworkflow"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "workflowVersion": 0,
+  "externalIdentifier": "string",
+  "name": "string",
+  "provider": "string",
+  "inputSchema": {},
+  "description": "string"
+}
+
+```
+
+Workflow
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|workflowVersion|number|true|none|Last deployed workflow version|
+|externalIdentifier|string|true|none|The key that is used to identify the workflow in the respective workflow engine.|
+|name|string|false|none|Name of the workflow|
+|provider|string|true|none|Provider could be the engine that will handle the workflow - camunda, zeebe, etc|
+|inputSchema|object|true|none|Schema used for validation during workflow execution|
+|description|string|false|none|Description of the workflow|
+
+<h2 id="tocS_NewWorkflow">NewWorkflow</h2>
+<!-- backwards compatibility -->
+<a id="schemanewworkflow"></a>
+<a id="schema_NewWorkflow"></a>
+<a id="tocSnewworkflow"></a>
+<a id="tocsnewworkflow"></a>
+
+```json
+{
+  "name": "string",
+  "bpmnFile": "string",
+  "inputSchema": {},
+  "description": "string"
+}
+
+```
+
+NewWorkflow
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|name|string|true|none|none|
+|bpmnFile|string|true|none|none|
+|inputSchema|object|true|none|none|
+|description|string|false|none|none|
+
+<h2 id="tocS_WorkflowDto">WorkflowDto</h2>
+<!-- backwards compatibility -->
+<a id="schemaworkflowdto"></a>
+<a id="schema_WorkflowDto"></a>
+<a id="tocSworkflowdto"></a>
+<a id="tocsworkflowdto"></a>
+
+```json
+{
+  "name": "string",
+  "bpmnFile": "string",
+  "inputSchema": {},
+  "description": "string"
+}
+
+```
+
+WorkflowDto
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|name|string|true|none|none|
+|bpmnFile|string|true|none|none|
+|inputSchema|object|true|none|none|
+|description|string|false|none|none|
+
+<h2 id="tocS_WorkflowDtoPartial">WorkflowDtoPartial</h2>
+<!-- backwards compatibility -->
+<a id="schemaworkflowdtopartial"></a>
+<a id="schema_WorkflowDtoPartial"></a>
+<a id="tocSworkflowdtopartial"></a>
+<a id="tocsworkflowdtopartial"></a>
+
+```json
+{
+  "name": "string",
+  "bpmnFile": "string",
+  "inputSchema": {},
+  "description": "string"
+}
+
+```
+
+WorkflowDtoPartial
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|name|string|false|none|none|
+|bpmnFile|string|false|none|none|
+|inputSchema|object|false|none|none|
+|description|string|false|none|none|
+
+<h2 id="tocS_ExecuteWorkflowDto">ExecuteWorkflowDto</h2>
+<!-- backwards compatibility -->
+<a id="schemaexecuteworkflowdto"></a>
+<a id="schema_ExecuteWorkflowDto"></a>
+<a id="tocSexecuteworkflowdto"></a>
+<a id="tocsexecuteworkflowdto"></a>
+
+```json
+{
+  "workflowVersion": 0,
+  "input": {}
+}
+
+```
+
+ExecuteWorkflowDto
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|workflowVersion|number|false|none|none|
+|input|object|true|none|none|
 
 <h2 id="tocS_loopback.Count">loopback.Count</h2>
 <!-- backwards compatibility -->

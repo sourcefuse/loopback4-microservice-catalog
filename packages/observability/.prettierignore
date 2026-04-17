@@ -1,0 +1,4 @@
+dist
+*.json
+node_modules/
+mochawesome-report/
