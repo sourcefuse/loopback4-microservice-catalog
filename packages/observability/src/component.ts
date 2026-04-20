@@ -7,7 +7,6 @@ import {
   inject,
 } from '@loopback/core';
 import {RestApplication} from '@loopback/rest';
-import {bootstrapObservability} from './bootstrap';
 import {resolveComponentConfig} from './config/resolve-config';
 import {ObservabilityBindings} from './keys';
 import {getRuntimeState} from './runtime';
@@ -37,7 +36,13 @@ export class ObservabilityComponent implements Component {
     @inject(ObservabilityBindings.config, {optional: true})
     private readonly config?: ObservabilityConfig,
   ) {
-    const runtime = getRuntimeState().runtime ?? bootstrapObservability();
+    const runtime = getRuntimeState().runtime;
+    if (!runtime) {
+      throw new Error(
+        'ObservabilityComponent requires observability to be bootstrapped before the component is mounted.',
+      );
+    }
+
     const resolvedConfig = resolveComponentConfig(this.config);
 
     this.application.bind(ObservabilityBindings.runtime).to(runtime);

@@ -15,11 +15,20 @@ export function getTraceContext(): {
 } {
   const activeSpan = trace.getSpan(context.active());
   const spanContext = activeSpan?.spanContext();
+  if (!spanContext) {
+    return {
+      traceId: undefined,
+      spanId: undefined,
+      traceparent: undefined,
+      tracestate: undefined,
+    };
+  }
+
   const carrier = createPropagationHeaders();
 
   return {
-    traceId: spanContext?.traceId,
-    spanId: spanContext?.spanId,
+    traceId: spanContext.traceId,
+    spanId: spanContext.spanId,
     traceparent: carrier.traceparent,
     tracestate: carrier.tracestate,
   };
