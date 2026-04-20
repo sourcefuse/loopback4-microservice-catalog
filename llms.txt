@@ -1,129 +1,3602 @@
-# ARC API by SourceFuse
+# ARC API by SourceFuse — Full Documentation
 
 > ARC API is an open-source Rapid Application Development framework built on LoopBack 4 for developing cloud-native enterprise microservices. It provides 16 pre-built, production-ready microservices with multi-tenant support, standardized authentication, and deployment flexibility across private and public clouds.
 
+## Table of Contents
+
+1. [Overview](#overview)
+2. [Architecture](#architecture)
+3. [Core Packages](#core-packages)
+4. [Microservices — Detailed API Documentation](#microservices)
+5. [Database Schemas](#database-schemas)
+6. [Configuration & Environment Variables](#configuration)
+7. [Migration Guide](#migration-guide)
+8. [Deployment Instructions](#deployment)
+9. [Troubleshooting FAQs](#troubleshooting)
+
+---
+
 ## Overview
 
-- License: MIT
-- Framework: LoopBack 4 (TypeScript/Node.js), NestJS compatible
-- Monorepo: Lerna + npm Workspaces (independent versioning)
-- Documentation: https://sourcefuse.github.io/arc-docs/arc-api-docs
-- Repository: https://github.com/sourcefuse/loopback4-microservice-catalog
-- CLI: `npm install -g @sourceloop/cli`
+- **License:** MIT
+- **Framework:** LoopBack 4 (TypeScript/Node.js), NestJS compatible
+- **Monorepo:** Lerna 9.x + npm Workspaces (independent versioning)
+- **Documentation:** https://sourcefuse.github.io/arc-docs/arc-api-docs
+- **Repository:** https://github.com/sourcefuse/loopback4-microservice-catalog
+- **CLI:** `npm install -g @sourceloop/cli`
+- **Node.js:** Required (LTS recommended)
+- **From v5 onwards:** CLI supports workspaces with npm managing dependencies (migration from Lerna v4)
+
+---
+
+## Architecture
+
+### Monorepo Structure
+
+```
+loopback4-microservice-catalog/
+├── packages/          # 7 Core packages and utilities
+│   ├── core/          # @sourceloop/core — Foundation framework
+│   ├── cli/           # @sourceloop/cli — Scaffolding CLI
+│   ├── cache/         # @sourceloop/cache — Caching utilities
+│   ├── feature-toggle/# @sourceloop/feature-toggle — Feature flags
+│   ├── file-utils/    # @sourceloop/file-utils — File handling
+│   ├── ocr-parser/    # @sourceloop/ocr-parser — OCR parsing
+│   └── custom-sf-changelog/ # Changelog generator
+├── services/          # 16 Microservices
+│   ├── audit-service/
+│   ├── authentication-service/
+│   ├── bpmn-service/
+│   ├── chat-service/
+│   ├── feature-toggle-service/
+│   ├── in-mail-service/
+│   ├── notification-service/
+│   ├── oidc-service/
+│   ├── payment-service/
+│   ├── reporting-service/
+│   ├── scheduler-service/
+│   ├── search-service/
+│   ├── survey-service/
+│   ├── task-service/
+│   ├── user-tenant-service/
+│   └── video-conferencing-service/
+├── sandbox/           # 30+ Example/demo applications
+├── powers/            # 17 Kiro IDE Powers
+├── lerna.json         # Lerna monorepo configuration
+└── package.json       # Root workspace configuration
+```
+
+### Common Patterns Across All Services
+
+- **Authentication & Authorization:** loopback4-authentication and loopback4-authorization
+- **JWT Support:** Symmetric and asymmetric key verification
+- **Multi-Tenancy:** Built-in tenant isolation via TenantGuardMixin
+- **Soft Delete:** loopback4-soft-delete mixin for logical deletes
+- **Audit Logging:** @sourceloop/audit-log integration
+- **ORM:** LoopBack 4 Repository pattern with optional Sequelize support
+- **API Docs:** OpenAPI/Swagger auto-generated specifications
+- **Sequence Handlers:** ServiceSequence (internal), SecureSequence (with helmet + rate limiting), CasbinSecureSequence (resource-level authz)
+
+---
 
 ## Core Packages
 
-- @sourceloop/core: Foundation framework — models, components, sequences, decorators, mixins, multi-tenancy, authentication/authorization utilities
-- @sourceloop/cli: Scaffolding CLI for backend (LoopBack 4), Angular, and React apps with MCP integration
-- @sourceloop/cache: Redis-based caching extension with repository mixin and decorators
-- @sourceloop/feature-toggle: Feature flag extension with method-level decorator support
-- @sourceloop/file-utils: File upload utilities with S3 storage and ClamAV virus scanning
-- @sourceloop/ocr-parser: Angular module for OCR-based document clause extraction
+### @sourceloop/core (v20.0.6)
 
-## Microservices
+The foundation package providing shared utilities for all services.
 
-### Authentication & Identity
-- @sourceloop/authentication-service: Multi-tenant auth with OAuth (Google, Apple, Facebook, Keycloak, Azure AD, Auth0), SAML, MFA, JWT management
-- @sourceloop/oidc-service: OpenID Connect identity provider (DEPRECATED)
-- @sourceloop/user-tenant-service: User, tenant, team, role, and permission management with RBAC
+**Components:**
+1. `BearerVerifierComponent` — Asymmetric/symmetric JWT token verification
+2. `LoggerExtensionComponent` — Structured logging with context and status codes
+3. `SwaggerAuthenticateComponent` — Swagger UI authentication
+4. `TenantUtilitiesComponent` — Multi-tenancy support with tenant guard
+5. `DynamicDatasourceComponent` — Dynamic datasource switching based on tenant/conditions
+6. `ProxyBuilderComponent` — Proxy building utilities
 
-### Communication
-- @sourceloop/notification-service: Multi-channel notifications — email (SES/Nodemailer), SMS (SNS), push (PubNub/Socket.io)
-- @sourceloop/in-mail-service: Internal mail system with threads, attachments, and bulk operations
-- @sourceloop/chat-service: Real-time messaging with individual/group chat and file attachments
-- @sourceloop/video-conferencing-service: Video conferencing via Vonage and Twilio with archive support
+**Models:**
+- `BaseEntity` — Base model with ID and timestamps
+- `UserModifiableEntity` — Adds createdBy/modifiedBy tracking
+- `SuccessResponse` — Standard success API response
+- `UpsertResponse` — Upsert operation response
 
-### Workflow & Tasks
-- @sourceloop/bpmn-service: BPMN workflow management with Camunda engine
-- @sourceloop/task-service: Event-driven task management with Kafka/SQS/HTTP connectors
-- @sourceloop/scheduler-service: Calendar and event scheduling with attendees and working hours
+**Repositories:**
+- `DefaultUserModifyCrudRepository` — CRUD operations with user modification tracking
+- `SequelizeUserModifyCrudRepository` — Sequelize ORM variant
 
-### Data & Analytics
-- @sourceloop/audit-service: Audit logging with S3 archival and Excel export
-- @sourceloop/reporting-service: Dashboard and widget-based reporting with S3 export
-- @sourceloop/search-service: Full-text search across multiple models (PostgreSQL/MySQL)
-- @sourceloop/survey-service: Survey creation with question types, sections, cycles, and response tracking
+**Mixins:**
+- `CacheMixin` — Repository caching support
+- `TenantGuardMixin` — Tenant isolation enforcement
 
-### Commerce
-- @sourceloop/payment-service: Payment processing via PayPal, Stripe, and Razorpay
-- @sourceloop/feature-toggle-service: Feature flag management at system, tenant, and user levels
+**Decorators:**
+- `@txIdFromHeader()` — Transaction ID from request headers
+- `@tenantGuard()` — Repository-level tenant isolation
 
-## Quick Start
+**Sequence Handlers:**
+- `ServiceSequence` — Internal secure API authentication/authorization
+- `SecureSequence` — Includes helmet, rate limiting, auth, authz
+- `CasbinSecureSequence` — Resource-level authorization using Casbin
 
-```bash
-# Install the CLI
-npm install -g @sourceloop/cli
+**Sub-exports:**
+- `@sourceloop/core/sequelize` — Sequelize support
+- `@sourceloop/core/dynamic-datasource` — Dynamic datasource component
 
-# Scaffold a new project
-sourceloop scaffold
+### @sourceloop/cli (v12.2.6)
 
-# Create a microservice
-sourceloop microservice
+Unified CLI for scaffolding and managing SourceLoop projects.
 
-# Run database migrations
-npm run db:migrate
+**Commands:**
+- `sourceloop scaffold` — Scaffold new applications
+- `sourceloop microservice` — Create a new microservice
+- `sourceloop extension` — Create a local extension package
+- `sourceloop angular:scaffold` — Scaffold Angular frontend
+- `sourceloop react:scaffold` — Scaffold React frontend
+- `sourceloop update` — Update dependencies
+- `sourceloop cdk` — AWS CDK deployment setup
+- `sourceloop mcp` — MCP server for AI integration
+
+### @sourceloop/cache (v6.0.6)
+
+Redis-based caching extension for LoopBack 4 microservices.
+
+**Usage:**
+```typescript
+// Apply CacheMixin to a repository
+export class MyRepository extends CacheMixin(DefaultCrudRepository) {
+  // Repository methods are automatically cached
+}
+
+// Use decorators on controller methods
+@cachedItem()
+async find(): Promise<MyModel[]> { ... }
+
+@cacheInvalidator()
+async create(data: MyModel): Promise<MyModel> { ... }
 ```
 
-## Common Environment Variables
+### @sourceloop/feature-toggle (v6.0.6)
 
-All services share these base environment variables:
+Feature flag extension with decorator-based feature checking.
 
-| Variable | Description |
-|----------|-------------|
-| NODE_ENV | Environment (production/development) |
-| LOG_LEVEL | Logging level (info/debug/error) |
-| DB_HOST | Database hostname |
-| DB_PORT | Database port |
-| DB_USER | Database username |
-| DB_PASSWORD | Database password |
-| DB_DATABASE | Database name |
-| DB_SCHEMA | Database schema |
-| REDIS_HOST | Redis hostname |
-| REDIS_PORT | Redis port |
-| REDIS_URL | Redis connection URL |
-| REDIS_PASSWORD | Redis password |
-| JWT_SECRET | JWT signing secret |
-| JWT_ISSUER | JWT token issuer |
+**Usage:**
+```typescript
+// Single feature check
+@featureFlag({featureKey: 'FEATURE_KEY'})
+async myMethod() { ... }
 
-## Database Support
+// Multiple features with AND/OR logic
+@featureFlag({featureKey: ['FEATURE_A', 'FEATURE_B'], options: {operator: 'AND'}})
+async myMethod() { ... }
+```
 
-- Primary: PostgreSQL
-- Secondary: MySQL (survey-service)
-- ORM: LoopBack 4 Repository pattern with optional Sequelize support
-- Migrations: db-migrate with per-service environment variable controls
-- Soft Delete: Built-in via loopback4-soft-delete mixin
+**Filtering Strategies:**
+- `AndFilterStrategy` — Requires all features enabled
+- `OrFilterStrategy` — Requires at least one feature enabled
 
-## Migration Environment Variables
+### @sourceloop/file-utils (v0.5.6)
 
-Each service uses a dedicated environment variable to control migrations:
+File upload and multipart utilities.
 
-| Service | Migration Variable |
-|---------|-------------------|
-| Authentication | AUTH_MIGRATION |
-| Audit | AUDIT_MIGRATION |
-| BPMN | WORKFLOW_MIGRATION |
-| Chat | CHAT_MIGRATION |
-| Feature Toggle | FEATURETOGGLE_MIGRATION |
-| In-Mail | INMAIL_MIGRATION |
-| Notification | NOTIF_MIGRATION |
-| OIDC | OIDC_MIGRATION |
-| Payment | PAYMENT_MIGRATION |
-| Reporting | REPORTS_MIGRATION |
-| Scheduler | SCHEDULER_MIGRATION |
-| Search | SEARCH_MIGRATION |
-| Survey | SURVEY_MIGRATION |
-| User-Tenant | AUTH_MIGRATION |
+**Decorators:**
+- `@multipartRequestBody(Model)` — Multipart/form-data requests
+- `@file(schema, fileFields, allowedExtensions)` — Single file upload
+- `@fileProperty()` — Model property for file fields
 
-## Deployment
+**Storage Engines:**
+- In-memory storage (default)
+- `MulterS3Storage` — AWS S3 integration (via `@sourceloop/file-utils/s3`)
 
-- Docker: Dockerfiles provided for all services and sandbox examples
-- Docker Compose: Full-stack compose file in `/sandbox/docker-compose.yml`
-- AWS CDK: CDK deployment stacks with migration support
-- Infrastructure: PostgreSQL + Redis minimum; Camunda for BPMN; Vonage/Twilio for video
+**Validators:**
+- `FileTypeValidator` — MIME type validation
+- `FileNameValidator` — Filename character validation
+- `ClamAVValidator` — Virus scanning (via `@sourceloop/file-utils/clamav`)
 
-## Links
+---
 
-- Main Documentation: https://sourcefuse.github.io/arc-docs/arc-api-docs
-- Website: https://www.sourcefuse.com/arc-by-sourcefuse/
-- GitHub: https://github.com/sourcefuse/loopback4-microservice-catalog
-- Contributing: https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/.github/CONTRIBUTING.md
+## Microservices — Detailed API Documentation
+
+### 1. Authentication Service (@sourceloop/authentication-service v24.1.6)
+
+Multi-tenant authentication microservice with comprehensive OAuth support.
+
+**Features:**
+- OAuth providers: Google, Apple, Facebook, Instagram, Keycloak, Azure AD, Auth0
+- SAML authentication
+- OTP and Two-Factor Authentication (TOTP via authenticator apps)
+- JWT token generation, validation, and rotation
+- Multi-tenant user management
+- Daily active user tracking
+- Login activity logging
+
+**API Endpoints:**
+
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/.well-known/openid-configuration` | Get OpenID Connect discovery configuration |
+| POST | `/connect/token` | Get access and refresh tokens |
+| POST | `/connect/endsession` | Logout user and invalidate session |
+| POST | `/connect/generate-keys` | Generate public and private JWT key pairs |
+| GET | `/connect/get-keys` | Get public keys for token verification |
+| POST | `/connect/rotate-keys` | Rotate JWT signing keys |
+| GET | `/connect/userinfo` | Get current authenticated user details |
+| GET | `/active-users/{range}` | Get active user count for date range |
+
+**Environment Variables:**
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| NODE_ENV | Yes | Environment (production/development) |
+| LOG_LEVEL | Yes | Logging level |
+| DB_HOST | Yes | PostgreSQL host |
+| DB_PORT | Yes | PostgreSQL port |
+| DB_USER | Yes | Database username |
+| DB_PASSWORD | Yes | Database password |
+| DB_DATABASE | Yes | Database name |
+| DB_SCHEMA | Yes | Database schema |
+| REDIS_HOST | Yes | Redis host for token caching |
+| REDIS_PORT | Yes | Redis port |
+| REDIS_URL | No | Redis connection URL |
+| REDIS_PASSWORD | No | Redis password |
+| REDIS_DATABASE | No | Redis database index |
+| JWT_SECRET | Yes | JWT signing secret (symmetric) |
+| JWT_ISSUER | Yes | JWT token issuer |
+| PRIVATE_DECRYPTION_KEY | No | Private key for asymmetric JWT |
+| USER_TEMP_PASSWORD | No | Default temp password for new users |
+| FORGOT_PASSWORD_LINK_EXPIRY | No | Password reset link TTL in minutes (default: 30) |
+| MAX_JWT_KEYS | No | Maximum JWT key pairs to maintain (default: 2) |
+| JWT_PRIVATE_KEY_PASSPHRASE | No | Passphrase for JWT private key |
+| API_BASE_URL | No | Base URL for API |
+| AUTH_MIGRATION | No | Set to run database migrations on startup |
+| GOOGLE_AUTH_URL | No | Google OAuth authorization URL |
+| GOOGLE_AUTH_CLIENT_ID | No | Google OAuth client ID |
+| GOOGLE_AUTH_CLIENT_SECRET | No | Google OAuth client secret |
+| GOOGLE_AUTH_TOKEN_URL | No | Google OAuth token URL |
+| GOOGLE_AUTH_CALLBACK_URL | No | Google OAuth callback URL |
+| GOOGLE_TOKEN_INFO_URL | No | Google token info verification URL |
+| FACEBOOK_AUTH_URL | No | Facebook OAuth URL |
+| FACEBOOK_AUTH_CLIENT_ID | No | Facebook OAuth client ID |
+| FACEBOOK_AUTH_CLIENT_SECRET | No | Facebook OAuth client secret |
+| FACEBOOK_AUTH_TOKEN_URL | No | Facebook OAuth token URL |
+| FACEBOOK_AUTH_CALLBACK_URL | No | Facebook OAuth callback URL |
+| APPLE_AUTH_URL | No | Apple OAuth URL |
+| APPLE_AUTH_CLIENT_ID | No | Apple OAuth client ID |
+| APPLE_AUTH_TEAM_ID | No | Apple developer team ID |
+| APPLE_AUTH_KEY_ID | No | Apple key ID |
+| APPLE_AUTH_CALLBACK_URL | No | Apple OAuth callback URL |
+| INSTAGRAM_AUTH_URL | No | Instagram OAuth URL |
+| INSTAGRAM_AUTH_CLIENT_ID | No | Instagram OAuth client ID |
+| INSTAGRAM_AUTH_CLIENT_SECRET | No | Instagram OAuth client secret |
+| INSTAGRAM_AUTH_TOKEN_URL | No | Instagram OAuth token URL |
+| INSTAGRAM_AUTH_CALLBACK_URL | No | Instagram OAuth callback URL |
+| SAML_URL | No | SAML Identity Provider URL |
+| SAML_CLIENT_ID | No | SAML client ID |
+| SAML_CLIENT_SECRET | No | SAML client secret |
+| SAML_TOKEN_URL | No | SAML token URL |
+| SAML_CALLBACK_URL | No | SAML callback URL |
+| KEYCLOAK_HOST | No | Keycloak server host |
+| KEYCLOAK_REALM | No | Keycloak realm |
+| KEYCLOAK_CLIENT_ID | No | Keycloak client ID |
+| KEYCLOAK_CLIENT_SECRET | No | Keycloak client secret |
+| KEYCLOAK_CALLBACK_URL | No | Keycloak callback URL |
+| AZURE_AUTH_ENABLED | No | Enable Azure AD authentication (0/1) |
+| AZURE_IDENTITY_METADATA | No | Azure AD OpenID configuration URL |
+| AZURE_AUTH_CLIENT_ID | No | Azure AD application client ID |
+| AZURE_AUTH_REDIRECT_URL | No | Azure AD redirect URL |
+| AZURE_AUTH_CLIENT_SECRET | No | Azure AD client secret |
+| AZURE_AUTH_ALLOW_HTTP_REDIRECT | No | Allow HTTP redirects (0/1) |
+| AZURE_AUTH_VALIDATE_ISSUER | No | Validate Azure AD issuer (0/1) |
+| AZURE_AUTH_CLOCK_SKEW | No | Clock skew tolerance in seconds (default: 300) |
+| AUTH0_DOMAIN | No | Auth0 domain |
+| AUTH0_CLIENT_ID | No | Auth0 client ID |
+| AUTH0_CLIENT_SECRET | No | Auth0 client secret |
+| AUTH0_CALLBACK_URL | No | Auth0 callback URL |
+
+---
+
+### 2. User-Tenant Service (@sourceloop/user-tenant-service v7.0.6)
+
+Multi-tenant user management with RBAC.
+
+**Features:**
+- Tenant creation and management
+- Team management within tenants
+- User CRUD with tenant association
+- Role and permission management
+- Group-based access control
+- User invitation workflow
+
+**API Endpoints:**
+
+| Method | Path | Description |
+|--------|------|-------------|
+| POST | `/groups/{id}/user/bulk` | Bulk add users to group |
+| DELETE | `/groups/{id}/user/{userId}` | Remove user from group |
+| POST | `/groups/{id}/user` | Add user to group |
+| GET | `/groups/{id}/user` | Get users in group |
+| GET | `/tenants/count` | Get tenant count |
+| PUT | `/tenants/{id}` | Replace tenant |
+| PATCH | `/tenants/{id}` | Update tenant |
+| GET | `/tenants/{id}` | Get tenant by ID |
+| DELETE | `/tenants/{id}` | Delete tenant |
+| POST | `/tenants` | Create tenant |
+| GET | `/tenants` | List tenants |
+| GET | `/roles/count` | Get role count |
+| POST | `/roles` | Create role |
+| GET | `/roles` | List roles |
+| GET | `/users/count` | Get user count |
+| POST | `/users` | Create user |
+| GET | `/users` | List users |
+| PATCH | `/users/{id}` | Update user |
+| GET | `/users/{id}` | Get user by ID |
+| DELETE | `/users/{id}` | Delete user |
+
+**Environment Variables:**
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| DB_HOST | Yes | PostgreSQL host |
+| DB_PORT | Yes | PostgreSQL port |
+| DB_USER | Yes | Database username |
+| DB_PASSWORD | Yes | Database password |
+| DB_DATABASE | Yes | Database name |
+| DB_SCHEMA | Yes | Database schema |
+| REDIS_HOST | Yes | Redis host |
+| REDIS_PORT | Yes | Redis port |
+| JWT_SECRET | Yes | JWT signing secret |
+| JWT_ISSUER | Yes | JWT token issuer |
+| AUTH_MIGRATION | No | Run migrations on startup |
+
+---
+
+### 3. Audit Service (@sourceloop/audit-service v19.0.6)
+
+Audit logging microservice for tracking user actions.
+
+**Features:**
+- Track inserts, updates, and deletes across services
+- Archive audit logs to AWS S3
+- Export logs to Excel format
+- Repository mixin for automatic audit trail
+- Background job processing for exports
+
+**API Endpoints:**
+
+| Method | Path | Description |
+|--------|------|-------------|
+| POST | `/audit-logs/archive` | Archive audit logs by filter criteria |
+| GET | `/audit-logs/count` | Get total count of audit logs |
+| GET | `/audit-logs/export` | Export audit logs to Excel |
+| GET | `/audit-logs/jobs/{jobId}` | Get export job status |
+| GET | `/audit-logs/{id}` | Get specific audit log by ID |
+| POST | `/audit-logs` | Create new audit log entry |
+| GET | `/audit-logs` | List audit logs with filters |
+
+**Environment Variables:**
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| DB_HOST | Yes | PostgreSQL host |
+| DB_PORT | Yes | PostgreSQL port |
+| DB_USER | Yes | Database username |
+| DB_PASSWORD | Yes | Database password |
+| DB_DATABASE | Yes | Database name |
+| DB_SCHEMA | Yes | Database schema |
+| JWT_SECRET | Yes | JWT signing secret |
+| JWT_ISSUER | Yes | JWT token issuer |
+| AUDIT_MIGRATION | No | Run migrations on startup |
+| AWS_ACCESS_KEY_ID | No | AWS access key for S3 archival |
+| AWS_SECRET_ACCESS_KEY | No | AWS secret key for S3 archival |
+| AWS_S3_BUCKET | No | S3 bucket for archive storage |
+
+---
+
+### 4. Notification Service (@sourceloop/notification-service v18.0.7)
+
+Multi-channel notification delivery.
+
+**Features:**
+- Email via AWS SES or Nodemailer
+- SMS via AWS SNS
+- Push notifications via PubNub or Socket.io
+- Notification drafting and grouping
+- User sleep time/quiet hours settings
+- Bulk notification support
+
+**API Endpoints:**
+
+| Method | Path | Description |
+|--------|------|-------------|
+| POST | `/notification-users/bulk` | Create bulk notification-user mappings |
+| GET | `/notification-users/count` | Get notification user count |
+| DELETE | `/notification-users/hard` | Hard delete notification users |
+| PUT | `/notification-users/{id}` | Replace notification user |
+| PATCH | `/notification-users/{id}` | Update notification user |
+| GET | `/notification-users/{id}` | Get notification user by ID |
+| DELETE | `/notification-users/{id}` | Delete notification user |
+| POST | `/notification-users` | Create notification user |
+| GET | `/notification-users` | List notification users |
+| POST | `/notifications/bulk` | Send bulk notifications |
+| GET | `/notifications/count` | Get notification count |
+| POST | `/notifications` | Send notification |
+| GET | `/notifications` | List notifications |
+| PATCH | `/notifications/{id}` | Update notification |
+| GET | `/notifications/{id}` | Get notification by ID |
+| DELETE | `/notifications/{id}` | Delete notification |
+
+**Environment Variables:**
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| DB_HOST | Yes | PostgreSQL host |
+| DB_PORT | Yes | PostgreSQL port |
+| DB_USER | Yes | Database username |
+| DB_PASSWORD | Yes | Database password |
+| DB_DATABASE | Yes | Database name |
+| DB_SCHEMA | Yes | Database schema |
+| JWT_SECRET | Yes | JWT signing secret |
+| JWT_ISSUER | Yes | JWT token issuer |
+| NOTIF_MIGRATION | No | Run migrations on startup |
+
+---
+
+### 5. Chat Service (@sourceloop/chat-service v17.0.6)
+
+Real-time communication microservice.
+
+**Features:**
+- Individual and group messaging
+- File attachments with secure download URLs
+- Message threading (parent/child messages)
+- Read/unread tracking per recipient
+- Favorite and forwarded message support
+- Audit tracking for file downloads
+
+**API Endpoints:**
+
+| Method | Path | Description |
+|--------|------|-------------|
+| POST | `/attach-files/bulk` | Bulk create attachment files |
+| GET | `/attach-files/count` | Get attachment file count |
+| PUT | `/attach-files/{id}` | Replace attachment file |
+| PATCH | `/attach-files/{id}` | Update attachment file |
+| GET | `/attach-files/{id}` | Get attachment file by ID |
+| DELETE | `/attach-files/{id}` | Delete attachment file |
+| POST | `/attach-files` | Create attachment file |
+| GET | `/attach-files` | List attachment files |
+| POST | `/messages` | Send message |
+| GET | `/messages` | List messages |
+| PATCH | `/messages/{id}` | Update message |
+| GET | `/messages/{id}` | Get message by ID |
+| DELETE | `/messages/{id}` | Delete message |
+| GET | `/message-recipients` | List message recipients |
+| PATCH | `/message-recipients/{id}` | Update recipient status |
+
+**Environment Variables:**
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| DB_HOST | Yes | PostgreSQL host |
+| DB_PORT | Yes | PostgreSQL port |
+| DB_USER | Yes | Database username |
+| DB_PASSWORD | Yes | Database password |
+| DB_DATABASE | Yes | Database name |
+| DB_SCHEMA | Yes | Database schema |
+| JWT_SECRET | Yes | JWT signing secret |
+| JWT_ISSUER | Yes | JWT token issuer |
+| CHAT_MIGRATION | No | Run migrations on startup |
+
+---
+
+### 6. In-Mail Service (@sourceloop/in-mail-service v16.0.6)
+
+Internal mail system for composing and managing messages.
+
+**Features:**
+- Compose, draft, and send internal messages
+- Mail threads and conversations
+- Attachments and metadata support
+- Mark as read/unread/important
+- Bulk operations: trash, delete, restore
+- Storage categories: inbox, sent, draft, trash
+
+**API Endpoints:**
+
+| Method | Path | Description |
+|--------|------|-------------|
+| PATCH | `/mails/bulk/restore` | Restore messages from trash |
+| DELETE | `/mails/bulk/{storage}/{action}` | Bulk move to trash or delete |
+| PATCH | `/mails/marking/{markType}` | Mark mails as read/unread/important |
+| DELETE | `/mails/{messageId}/attachments/{attachmentId}` | Remove attachment |
+| POST | `/mails/{messageId}/attachments` | Add attachments to message |
+| GET | `/mails/{messageId}/attachments` | List message attachments |
+| POST | `/mails` | Compose new mail |
+| GET | `/mails` | List mails |
+| PATCH | `/mails/{id}` | Update mail |
+| GET | `/mails/{id}` | Get mail by ID |
+| DELETE | `/mails/{id}` | Delete mail |
+| GET | `/threads` | List mail threads |
+| GET | `/threads/{id}` | Get thread by ID |
+| DELETE | `/threads/{id}` | Delete thread |
+
+**Environment Variables:**
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| DB_HOST | Yes | PostgreSQL host |
+| DB_PORT | Yes | PostgreSQL port |
+| DB_USER | Yes | Database username |
+| DB_PASSWORD | Yes | Database password |
+| DB_DATABASE | Yes | Database name |
+| DB_SCHEMA | Yes | Database schema |
+| JWT_SECRET | Yes | JWT signing secret |
+| JWT_ISSUER | Yes | JWT token issuer |
+| INMAIL_MIGRATION | No | Run migrations on startup |
+
+---
+
+### 7. Video Conferencing Service (@sourceloop/video-conferencing-service v20.0.0)
+
+Video conferencing with Vonage and Twilio integration.
+
+**Features:**
+- Meeting scheduling and management
+- Token generation for session participants
+- Vonage (OpenTok) and Twilio provider support
+- Archive listing and management
+- Storage target configuration (AWS S3, Azure Blob)
+- Webhook events for session lifecycle
+- Session attendee tracking
+
+**API Endpoints:**
+
+| Method | Path | Description |
+|--------|------|-------------|
+| PUT | `/archives/storage-target` | Configure archive storage target |
+| GET | `/archives/{archiveId}` | Get archive by ID |
+| DELETE | `/archives/{archiveId}` | Delete archive |
+| GET | `/archives` | List archives |
+| GET | `/session/{meetingLinkId}/attendees` | Get session attendees |
+| PATCH | `/session/{meetingLinkId}/end` | End meeting session |
+| POST | `/session/{meetingLinkId}/token` | Generate session token |
+| POST | `/session/schedule` | Schedule a meeting |
+| PATCH | `/session/{meetingLinkId}` | Update session |
+| GET | `/session/{meetingLinkId}` | Get session details |
+
+**Environment Variables:**
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| DB_HOST | Yes | PostgreSQL host (default: localhost) |
+| DB_PORT | Yes | PostgreSQL port (default: 5432) |
+| DB_USER | Yes | Database username |
+| DB_PASSWORD | Yes | Database password |
+| DB_DATABASE | Yes | Database name (default: video) |
+| DB_SCHEMA | Yes | Database schema (default: main) |
+| JWT_SECRET | Yes | JWT signing secret |
+| JWT_ISSUER | Yes | JWT token issuer |
+| VONAGE_API_KEY | No | Vonage API key |
+| VONAGE_API_SECRET | No | Vonage API secret |
+| TWILIO_ACCOUNT_SID | No | Twilio account SID |
+| TWILIO_AUTH_TOKEN | No | Twilio auth token |
+| TWILIO_API_KEY | No | Twilio API key |
+| TWILIO_API_SECRET | No | Twilio API secret |
+| AWS_ACCESS_KEY | No | AWS key for S3 archive storage |
+| AWS_SECRET_KEY | No | AWS secret for S3 archive storage |
+| AZURE_ACCOUNT_KEY | No | Azure key for blob archive storage |
+| AZURE_CONTAINER | No | Azure container name |
+
+---
+
+### 8. Scheduler Service (@sourceloop/scheduler-service v18.0.6)
+
+Calendar and event scheduling microservice.
+
+**Features:**
+- Calendar management (CRUD)
+- Event scheduling with recurrence
+- Attendee management with RSVP
+- Working hours configuration
+- Event attachments
+- iCal import/export
+- Subscription support
+
+**API Endpoints:**
+
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/attachments/count` | Get attachment count |
+| PUT | `/attachments/{id}` | Replace attachment |
+| PATCH | `/attachments/{id}` | Update attachment |
+| GET | `/attachments/{id}` | Get attachment by ID |
+| DELETE | `/attachments/{id}` | Delete attachment |
+| POST | `/attachments` | Create attachment |
+| GET | `/attachments` | List attachments |
+| POST | `/calendars` | Create calendar |
+| GET | `/calendars` | List calendars |
+| PATCH | `/calendars/{id}` | Update calendar |
+| GET | `/calendars/{id}` | Get calendar by ID |
+| DELETE | `/calendars/{id}` | Delete calendar |
+| POST | `/events` | Create event |
+| GET | `/events` | List events |
+| PATCH | `/events/{id}` | Update event |
+| GET | `/events/{id}` | Get event by ID |
+| DELETE | `/events/{id}` | Delete event |
+| POST | `/events/{id}/attendees` | Add attendees to event |
+| GET | `/events/{id}/attendees` | List event attendees |
+| GET | `/calendars/{id}/working-hours` | Get working hours |
+| POST | `/calendars/{id}/working-hours` | Set working hours |
+| POST | `/calendars/{id}/subscriptions` | Create subscription |
+| GET | `/calendars/{id}/subscriptions` | List subscriptions |
+
+**Environment Variables:**
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| DB_HOST | Yes | PostgreSQL host |
+| DB_PORT | Yes | PostgreSQL port |
+| DB_USER | Yes | Database username |
+| DB_PASSWORD | Yes | Database password |
+| DB_DATABASE | Yes | Database name |
+| DB_SCHEMA | Yes | Database schema |
+| REDIS_HOST | Yes | Redis host |
+| REDIS_PORT | Yes | Redis port |
+| JWT_SECRET | Yes | JWT signing secret |
+| JWT_ISSUER | Yes | JWT token issuer |
+| SCHEDULER_MIGRATION | No | Run migrations on startup |
+
+---
+
+### 9. BPMN Service (@sourceloop/bpmn-service v19.0.0)
+
+BPMN workflow management with Camunda engine.
+
+**Features:**
+- Workflow deployment and management
+- Process versioning
+- Workflow execution with input schema validation
+- External task worker support
+- Event-to-workflow mapping
+
+**API Endpoints:**
+
+| Method | Path | Description |
+|--------|------|-------------|
+| POST | `/workflows/{id}/execute` | Start/execute a workflow |
+| DELETE | `/workflows/{id}/version/{version}` | Delete specific workflow version |
+| PATCH | `/workflows/{id}` | Update workflow |
+| GET | `/workflows/{id}` | Get workflow by ID |
+| DELETE | `/workflows/{id}` | Delete workflow |
+| POST | `/workflows` | Create/deploy new workflow |
+| GET | `/workflows` | List workflows |
+| GET | `/events/count` | Get event count |
+| POST | `/events/mapping` | Map event to workflow |
+| GET | `/events/{id}` | Get event by ID |
+| GET | `/events` | List events |
+| GET | `/tasks/count` | Get task count |
+| POST | `/tasks/mapping` | Map task to workflow |
+
+**Environment Variables:**
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| DB_HOST | Yes | PostgreSQL host |
+| DB_PORT | Yes | PostgreSQL port |
+| DB_USER | Yes | Database username |
+| DB_PASSWORD | Yes | Database password |
+| DB_DATABASE | Yes | Database name |
+| DB_SCHEMA | Yes | Database schema |
+| JWT_SECRET | Yes | JWT signing secret |
+| JWT_ISSUER | Yes | JWT token issuer |
+| CAMUNDA_URL | Yes | Camunda engine REST API URL |
+| WORKFLOW_MIGRATION | No | Run migrations on startup |
+
+---
+
+### 10. Task Service (@sourceloop/task-service v10.0.0)
+
+Event-driven task management with workflow integration.
+
+**Features:**
+- Task creation based on events
+- Workflow integration via Camunda
+- Incoming connectors: Kafka, HTTP, AWS SQS
+- Outgoing connectors: Kafka, HTTP
+- Webhook subscriptions
+- HMAC signature validation for webhooks
+- Task assignment and status tracking
+
+**API Endpoints:**
+
+| Method | Path | Description |
+|--------|------|-------------|
+| POST | `/tasks` | Create new task |
+| GET | `/tasks` | List tasks |
+| PATCH | `/tasks/{id}` | Update task |
+| GET | `/tasks/{id}` | Get task by ID |
+| DELETE | `/tasks/{id}` | Delete task |
+| POST | `/events` | Create event (triggers workflow) |
+| GET | `/events` | List events |
+| POST | `/webhooks` | Webhook endpoint for incoming events |
+
+**Environment Variables:**
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| DB_HOST | Yes | PostgreSQL host |
+| DB_PORT | Yes | PostgreSQL port |
+| DB_USER | Yes | Database username |
+| DB_PASSWORD | Yes | Database password |
+| DB_DATABASE | Yes | Database name |
+| DB_SCHEMA | Yes | Database schema |
+| JWT_SECRET | Yes | JWT signing secret |
+| JWT_ISSUER | Yes | JWT token issuer |
+| CAMUNDA_URL | No | Camunda engine URL (for workflow integration) |
+
+---
+
+### 11. Payment Service (@sourceloop/payment-service v19.0.7)
+
+Payment processing with multiple gateway support.
+
+**Features:**
+- PayPal integration
+- Stripe integration
+- Razorpay integration
+- Order creation and payment processing
+- Subscription management
+- Transaction tracking
+- Refund processing
+
+**API Endpoints:**
+
+| Method | Path | Description |
+|--------|------|-------------|
+| POST | `/create-subscription-and-pay` | Create subscription and charge |
+| POST | `/subscription/transaction/charge` | Charge subscription |
+| GET | `/orders/count` | Get order count |
+| PUT | `/orders/{id}` | Replace order |
+| PATCH | `/orders/{id}` | Update order |
+| GET | `/orders/{id}` | Get order by ID |
+| DELETE | `/orders/{id}` | Delete order |
+| POST | `/orders` | Create order |
+| GET | `/orders` | List orders |
+| GET | `/transactions/count` | Get transaction count |
+| GET | `/transactions/{id}` | Get transaction by ID |
+| GET | `/transactions` | List transactions |
+| POST | `/place-order-and-pay` | Create order and process payment |
+
+**Environment Variables:**
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| DB_HOST | Yes | PostgreSQL host |
+| DB_PORT | Yes | PostgreSQL port |
+| DB_USER | Yes | Database username |
+| DB_PASSWORD | Yes | Database password |
+| DB_DATABASE | Yes | Database name |
+| DB_SCHEMA | Yes | Database schema |
+| JWT_SECRET | Yes | JWT signing secret |
+| JWT_ISSUER | Yes | JWT token issuer |
+| PAYMENT_MIGRATION | No | Run migrations on startup |
+
+---
+
+### 12. Reporting Service (@sourceloop/reporting-service v7.0.9)
+
+Data ingestion, processing, and dashboard reporting.
+
+**Features:**
+- Data ingestion from multiple sources
+- Data storage in PostgreSQL or S3
+- Dataset creation with JSON queries
+- Widget and dashboard management
+- Hash-based data duplication detection
+- SQL query validation
+
+**API Endpoints:**
+
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/dashboards/count` | Get dashboard count |
+| PATCH | `/dashboards/{id}` | Update dashboard |
+| GET | `/dashboards/{id}` | Get dashboard by ID |
+| DELETE | `/dashboards/{id}` | Delete dashboard |
+| POST | `/dashboards` | Create dashboard |
+| GET | `/dashboards` | List dashboards |
+| GET | `/datasets/count` | Get dataset count |
+| POST | `/datasets` | Create dataset |
+| GET | `/datasets` | List datasets |
+| PATCH | `/datasets/{id}` | Update dataset |
+| GET | `/datasets/{id}` | Get dataset by ID |
+| DELETE | `/datasets/{id}` | Delete dataset |
+| GET | `/widgets/count` | Get widget count |
+| POST | `/widgets` | Create widget |
+| GET | `/widgets` | List widgets |
+| PATCH | `/widgets/{id}` | Update widget |
+| GET | `/widgets/{id}` | Get widget by ID |
+| DELETE | `/widgets/{id}` | Delete widget |
+
+**Environment Variables:**
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| DB_HOST | Yes | PostgreSQL host |
+| DB_PORT | Yes | PostgreSQL port |
+| DB_USER | Yes | Database username |
+| DB_PASSWORD | Yes | Database password |
+| DB_DATABASE | Yes | Database name |
+| DB_SCHEMA | Yes | Database schema |
+| JWT_SECRET | Yes | JWT signing secret |
+| JWT_ISSUER | Yes | JWT token issuer |
+| REPORTS_MIGRATION | No | Run migrations on startup |
+
+---
+
+### 13. Search Service (@sourceloop/search-service v10.0.0)
+
+Full-text search across multiple data models.
+
+**Features:**
+- Full-text search using PostgreSQL or MySQL
+- Search across multiple configured models
+- Column mapping for search indexes
+- Recent search tracking per user
+- Configurable result limits and ordering
+
+**API Endpoints:**
+
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/search` | Perform full-text search |
+| POST | `/search` | Perform search with body filters |
+| GET | `/recent-searches` | Get recent searches for user |
+| DELETE | `/recent-searches/{id}` | Delete recent search |
+| GET | `/recent-searches` | List recent searches |
+
+**Environment Variables:**
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| DB_HOST | Yes | PostgreSQL/MySQL host |
+| DB_PORT | Yes | Database port |
+| DB_USER | Yes | Database username |
+| DB_PASSWORD | Yes | Database password |
+| DB_DATABASE | Yes | Database name |
+| DB_SCHEMA | Yes | Database schema |
+| JWT_SECRET | Yes | JWT signing secret |
+| JWT_ISSUER | Yes | JWT token issuer |
+| SEARCH_MIGRATION | No | Run migrations on startup |
+
+---
+
+### 14. Survey Service (@sourceloop/survey-service v7.0.7)
+
+Survey creation and response management.
+
+**Features:**
+- Question types: Multiple choice, Single choice, Text, Dropdown, Scale
+- Question templates for reuse
+- Survey sections for organization
+- Survey cycles (recurring assessments)
+- Survey responder management
+- Response collection and tracking
+- Weight-based scoring
+
+**API Endpoints:**
+
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/question/{questionId}/options/count` | Get option count |
+| POST | `/question/{questionId}/options/delete/bulk` | Bulk delete options |
+| PATCH | `/question/{questionId}/options/many` | Bulk update options |
+| PATCH | `/question/{questionId}/options/{id}` | Update option |
+| GET | `/question/{questionId}/options/{id}` | Get option by ID |
+| DELETE | `/question/{questionId}/options/{id}` | Delete option |
+| POST | `/question/{questionId}/options` | Create option |
+| GET | `/question/{questionId}/options` | List options |
+| POST | `/questions` | Create question |
+| GET | `/questions` | List questions |
+| PATCH | `/questions/{id}` | Update question |
+| GET | `/questions/{id}` | Get question by ID |
+| DELETE | `/questions/{id}` | Delete question |
+| POST | `/surveys` | Create survey |
+| GET | `/surveys` | List surveys |
+| PATCH | `/surveys/{id}` | Update survey |
+| GET | `/surveys/{id}` | Get survey by ID |
+| DELETE | `/surveys/{id}` | Delete survey |
+| POST | `/surveys/{id}/sections` | Create section |
+| GET | `/surveys/{id}/sections` | List sections |
+| POST | `/surveys/{id}/survey-cycles` | Create survey cycle |
+| GET | `/surveys/{id}/survey-cycles` | List survey cycles |
+| POST | `/surveys/{id}/survey-responders` | Add responder |
+| GET | `/surveys/{id}/survey-responders` | List responders |
+
+**Environment Variables:**
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| DB_HOST | Yes | MySQL/PostgreSQL host |
+| DB_PORT | Yes | Database port |
+| DB_USER | Yes | Database username |
+| DB_PASSWORD | Yes | Database password |
+| DB_DATABASE | Yes | Database name |
+| DB_SCHEMA | Yes | Database schema |
+| JWT_SECRET | Yes | JWT signing secret |
+| JWT_ISSUER | Yes | JWT token issuer |
+| SURVEY_MIGRATION | No | Run migrations on startup |
+
+---
+
+### 15. Feature Toggle Service (@sourceloop/feature-toggle-service v8.0.6)
+
+Feature flag management at system, tenant, and user levels.
+
+**Features:**
+- System-level feature flags
+- Tenant-level feature toggles
+- User-level feature overrides
+- Strategy-based rollout
+- Method-level decorator support
+
+**API Endpoints:**
+
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/feature-values/count` | Get feature value count |
+| PUT | `/feature-values/{id}` | Replace feature value |
+| PATCH | `/feature-values/{id}` | Update feature value |
+| GET | `/feature-values/{id}` | Get feature value by ID |
+| DELETE | `/feature-values/{id}` | Delete feature value |
+| POST | `/feature-values` | Create feature value |
+| GET | `/feature-values` | List feature values |
+| GET | `/features/count` | Get feature count |
+| POST | `/features` | Create feature |
+| GET | `/features` | List features |
+| PATCH | `/features/{id}` | Update feature |
+| GET | `/features/{id}` | Get feature by ID |
+| DELETE | `/features/{id}` | Delete feature |
+| POST | `/strategies` | Create strategy |
+| GET | `/strategies` | List strategies |
+
+**Environment Variables:**
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| DB_HOST | Yes | PostgreSQL host |
+| DB_PORT | Yes | PostgreSQL port |
+| DB_USER | Yes | Database username |
+| DB_PASSWORD | Yes | Database password |
+| DB_DATABASE | Yes | Database name |
+| DB_SCHEMA | Yes | Database schema |
+| JWT_SECRET | Yes | JWT signing secret |
+| JWT_ISSUER | Yes | JWT token issuer |
+| FEATURETOGGLE_MIGRATION | No | Run migrations on startup |
+
+---
+
+### 16. OIDC Service (@sourceloop/oidc-service v7.0.6) — DEPRECATED
+
+OpenID Connect identity provider.
+
+**Features:**
+- OpenID Connect compliant provider
+- Token management (access, refresh, ID tokens)
+- User info endpoint
+- Discovery endpoint
+- Interaction-based login flow
+- Session management
+
+**API Endpoints:**
+
+| Method | Path | Description |
+|--------|------|-------------|
+| POST | `/interaction/{uid}/confirm` | Confirm OIDC interaction |
+| POST | `/interaction/{uid}/login` | OIDC login |
+| GET | `/interaction/{uid}` | Get interaction (renders login page) |
+
+**Environment Variables:**
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| NODE_ENV | Yes | Environment |
+| DB_HOST | Yes | PostgreSQL host |
+| DB_PORT | Yes | PostgreSQL port |
+| DB_USER | Yes | Database username |
+| DB_PASSWORD | Yes | Database password |
+| DB_DATABASE | Yes | Database name |
+| DB_SCHEMA | Yes | Database schema |
+| REDIS_HOST | Yes | Redis host |
+| REDIS_PORT | Yes | Redis port (default: 6379) |
+| REDIS_URL | No | Redis URL |
+| REDIS_PASSWORD | No | Redis password |
+| REDIS_DATABASE | No | Redis database (default: 0) |
+| JWT_SECRET | Yes | JWT signing secret |
+| JWT_ISSUER | Yes | JWT issuer |
+| OIDC_CLAIMS_PROFILE | No | OIDC claims profile |
+| OIDC_ISSUER_URL | No | OIDC issuer URL |
+| OIDC_INTERACTION_TIME | No | Interaction TTL |
+| OIDC_SESSION_TIME | No | Session TTL |
+| OIDC_GRANT_TIME | No | Grant TTL |
+| OIDC_ID_TOKEN_TIME | No | ID token TTL |
+| OIDC_JWKS_* | No | JWKS key configuration (KTY, ALG, USE, D, DP, DQ, E, N, P, Q, QI, KID) |
+| OIDC_COOKIES | No | Cookie configuration |
+| OIDC_MIGRATION | No | Run migrations on startup |
+
+---
+
+### 17 loopback4-authentication
+
+**Overview:** LoopBack 4 extension for adding authentication layer to REST applications using Passport.js strategies. Provides 13+ authentication strategies including OAuth2, JWT, SAML, OTP, and social logins.
+
+**Installation:**
+```bash
+npm install loopback4-authentication
+```
+
+**Supported Strategies (13 total):**
+1. **passport-oauth2-client-password** - OAuth 2.0 client password authentication
+2. **passport-http-bearer** - HTTP Bearer token authentication (JWT tokens)
+3. **passport-local** - Username/password authentication
+4. **passport-oauth2-resource-owner-password** - OAuth 2.0 resource owner password
+5. **passport-google-oauth2** - Google OAuth 2.0
+6. **keycloak-passport** - Keycloak authentication
+7. **passport-instagram** - Instagram OAuth 2.0
+8. **passport-apple** - Apple OAuth 2.0
+9. **passport-facebook** - Facebook OAuth 2.0
+10. **passport-cognito-oauth2** - AWS Cognito OAuth 2.0
+11. **passport-SAML** - SAML 2.0 authentication
+12. **custom-passport-otp** - Custom OTP-based 2FA
+13. **passport-auth0** - Auth0 authentication
+
+**Quick Start:**
+```typescript
+import {AuthenticationComponent} from 'loopback4-authentication';
+
+// Add authentication component to application
+this.component(AuthenticationComponent);
+```
+
+**Strategy Configuration Example - HTTP Bearer (JWT):**
+
+1. Create User model implementing IAuthUser:
+```typescript
+import {IAuthUser} from 'loopback4-authentication';
+
+@model({name: "users"})
+export class User extends Entity implements IAuthUser {
+  @property({type: "number", id: true})
+  id?: number;
+
+  @property({type: "string", required: true})
+  username: string;
+
+  @property({type: "string"})
+  email?: string;
+
+  @property({type: "string"})
+  password?: string;
+}
+```
+
+2. Bind User model:
+```typescript
+import {AuthenticationBindings} from 'loopback4-authentication';
+
+this.bind(AuthenticationBindings.USER_MODEL).to(User);
+```
+
+3. Create verifier provider:
+```typescript
+import {Provider} from "@loopback/context";
+import {VerifyFunction} from "loopback4-authentication";
+import {verify} from "jsonwebtoken";
+
+export class BearerTokenVerifyProvider implements Provider<VerifyFunction.BearerFn> {
+  value(): VerifyFunction.BearerFn {
+    return async (token) => {
+      const user = verify(token, process.env.JWT_SECRET, {
+        issuer: process.env.JWT_ISSUER,
+      }) as User;
+      return user;
+    };
+  }
+}
+```
+
+4. Bind verifier:
+```typescript
+import {AuthenticationComponent, Strategies} from "loopback4-authentication";
+
+this.component(AuthenticationComponent);
+this.bind(Strategies.Passport.BEARER_TOKEN_VERIFIER).toProvider(
+  BearerTokenVerifyProvider,
+);
+```
+
+5. Add to sequence:
+```typescript
+import {AuthenticationBindings, AuthenticateFn} from "loopback4-authentication";
+
+export class MySequence implements SequenceHandler {
+  constructor(
+    @inject(AuthenticationBindings.USER_AUTH_ACTION)
+    protected authenticateRequest: AuthenticateFn<User>,
+  ) {}
+
+  async handle(context: RequestContext) {
+    const {request, response} = context;
+    const route = this.findRoute(request);
+    const args = await this.parseParams(request, route);
+    request.body = args[args.length - 1];
+
+    // Authenticate request
+    const authUser = await this.authenticateRequest(request);
+
+    const result = await this.invoke(route, args);
+    this.send(response, result);
+  }
+}
+```
+
+6. Use decorator in controllers:
+```typescript
+import {authenticate, STRATEGY} from 'loopback4-authentication';
+
+@authenticate(STRATEGY.BEARER)
+@get('/users')
+async find(): Promise<User[]> {
+  return await this.userRepository.find();
+}
+```
+
+7. Inject authenticated user:
+```typescript
+@inject.getter(AuthenticationBindings.CURRENT_USER)
+private readonly getCurrentUser: Getter<User>,
+```
+
+**Strategy Configuration Example - OAuth2 Client Password:**
+
+1. Create AuthClient model:
+```typescript
+import {IAuthClient} from 'loopback4-authentication';
+
+@model({name: "auth_clients"})
+export class AuthClient extends Entity implements IAuthClient {
+  @property({type: "number", id: true})
+  id?: number;
+
+  @property({type: "string", required: true, name: "client_id"})
+  clientId: string;
+
+  @property({type: "string", required: true, name: "client_secret"})
+  clientSecret: string;
+
+  @property({type: "array", itemType: "number", name: "user_ids"})
+  userIds: number[];
+}
+```
+
+2. Create verifier:
+```typescript
+export class ClientPasswordVerifyProvider implements Provider<VerifyFunction.OauthClientPasswordFn> {
+  constructor(
+    @repository(AuthClientRepository)
+    public authClientRepository: AuthClientRepository,
+  ) {}
+
+  value(): VerifyFunction.OauthClientPasswordFn {
+    return async (clientId, clientSecret) => {
+      return this.authClientRepository.findOne({
+        where: {clientId, clientSecret},
+      });
+    };
+  }
+}
+```
+
+3. Bind and use:
+```typescript
+this.bind(Strategies.Passport.OAUTH2_CLIENT_PASSWORD_VERIFIER).toProvider(
+  ClientPasswordVerifyProvider,
+);
+
+// In sequence
+@inject(AuthenticationBindings.CLIENT_AUTH_ACTION)
+protected authenticateRequestClient: AuthenticateFn<AuthClient>,
+
+// In controller
+@authenticateClient(STRATEGY.CLIENT_PASSWORD)
+@post('/auth/login')
+async login(): Promise<{code: string}> {
+  // ...
+}
+```
+
+**Additional Strategy Installations:**
+```bash
+# For local strategy
+npm install passport-local
+
+# For Google OAuth
+npm install passport-google-oauth2
+
+# For Facebook
+npm install passport-facebook
+
+# For Apple
+npm install passport-apple
+
+# For SAML
+npm install passport-SAML
+```
+
+**Key Bindings:**
+- `AuthenticationBindings.USER_MODEL` - User model class
+- `AuthenticationBindings.CURRENT_USER` - Getter for authenticated user
+- `AuthenticationBindings.CURRENT_CLIENT` - Getter for authenticated client
+- `AuthenticationBindings.USER_AUTH_ACTION` - User authentication action
+- `AuthenticationBindings.CLIENT_AUTH_ACTION` - Client authentication action
+- `Strategies.Passport.BEARER_TOKEN_VERIFIER` - Bearer token verifier
+- `Strategies.Passport.OAUTH2_CLIENT_PASSWORD_VERIFIER` - OAuth2 client verifier
+- `Strategies.Passport.LOCAL_PASSWORD_VERIFIER` - Local password verifier
+
+**Decorators:**
+- `@authenticate(strategy, options?)` - Authenticate user endpoints
+- `@authenticateClient(strategy, options?)` - Authenticate client endpoints
+
+**Quick Starter Reference:**
+https://github.com/sourcefuse/loopback4-starter
+
+**Resources:**
+- GitHub: https://github.com/sourcefuse/loopback4-authentication
+- NPM: https://www.npmjs.com/package/loopback4-authentication
+- LoopBack Authentication: https://github.com/strongloop/loopback-next/blob/master/packages/authentication/README.md
+
+---
+
+### 18 loopback4-authorization
+
+**Overview:** A LoopBack 4 extension for Authorization Capabilities. Simple to integrate yet powerful and effective with three ways of integration.
+
+**Installation:**
+```bash
+npm install loopback4-authorization
+```
+
+**Key Features:**
+- User Level Permissions (permissions associated directly to user)
+- Role Based Permissions (permissions associated with roles)
+- Role Based Permissions with User Level Flexibility (most flexible)
+- Permission inheritance and overriding
+- Resource-level authorization with Casbin
+- Method-level and route-level decorators
+- Explicit allow/deny permissions at user-level
+
+**Integration Methods:**
+
+#### 1. User Level Permissions Only
+Permissions are associated directly with users in the database.
+
+#### 2. Role Based Permissions
+Permissions associated with roles, users have specific roles attached. Reduces DB redundancy.
+
+#### 3. Role Based Permissions with User Level Flexibility
+Most flexible architecture - method #2 plus user-level permissions override.
+
+**Setup Steps:**
+
+**1. Bind Component:**
+```typescript
+import {AuthorizationComponent, AuthorizationBindings} from 'loopback4-authorization';
+
+this.bind(AuthorizationBindings.CONFIG).to({
+  allowAlwaysPaths: ["/explorer"],
+});
+this.component(AuthorizationComponent);
+```
+
+**2. Implement Permission Interface (for User-level permissions):**
+```typescript
+import {Permissions} from 'loopback4-authorization';
+
+@model({name: "users"})
+export class User extends Entity implements Permissions<string> {
+  @property({
+    type: "array",
+    itemType: "string",
+  })
+  permissions: string[];
+}
+```
+
+**3. Implement Permission Interface (for Role-based):**
+```typescript
+import {Permissions} from 'loopback4-authorization';
+
+@model({name: "roles"})
+export class Role extends Entity implements Permissions<string> {
+  @property({
+    type: "array",
+    itemType: "string",
+  })
+  permissions: string[];
+}
+```
+
+**4. Implement UserPermissionsOverride (for method #3):**
+```typescript
+import {UserPermissionsOverride} from 'loopback4-authorization';
+
+@model({name: "users"})
+export class User extends Entity implements UserPermissionsOverride<string> {
+  @property({
+    type: "array",
+    itemType: "object",
+  })
+  permissions: UserPermission<string>[];
+}
+```
+
+**5. Inject User Permissions Provider (for method #3):**
+```typescript
+import {AuthorizationBindings} from 'loopback4-authorization';
+
+@inject(AuthorizationBindings.USER_PERMISSIONS)
+private readonly getUserPermissions: UserPermissionsFn<string>;
+
+// Usage:
+const permissions = this.getUserPermissions(user.permissions, role.permissions);
+```
+
+**6. Add Authorization to Sequence:**
+```typescript
+import {
+  AuthorizeFn,
+  AuthorizationBindings,
+} from "loopback4-authorization";
+
+export class MySequence implements SequenceHandler {
+  constructor(
+    @inject(AuthorizationBindings.AUTHORIZE_ACTION)
+    protected authorizeFn: AuthorizeFn,
+  ) {}
+
+  async handle(context: RequestContext) {
+    // ... other sequence code
+    try {
+      await this.authorizeFn(context.request, context.response);
+      // ... continue
+    }
+  }
+}
+```
+
+**Quick Start:**
+Refer to [loopback 4 starter](https://github.com/sourcefuse/loopback4-starter) application for method #3 implementation in a multi-tenant application.
+
+**Authorization Decorators:**
+```typescript
+@authorize({permissions: ['create-user']})
+@post('/users')
+async createUser(@requestBody() userData: User): Promise<User> {
+  // Create user logic
+}
+```
+
+**Permission Overriding:**
+```typescript
+this.bind(AuthorizationBindings.PERMISSION).to({
+  ControllerName: {
+    methodName: ['permission1', 'permission2'],
+  },
+});
+```
+
+---
+
+### 19 loopback4-helmet
+
+**Overview:** Security extension for helmet.js integration in LoopBack applications.
+
+**Installation:**
+```bash
+npm install loopback4-helmet
+```
+
+**Key Features:**
+- HTTP security headers middleware
+- Default helmet middlewares enabled
+- Customizable security policies
+- Content Security Policy (CSP) configuration
+- Referrer policy control
+- Frame source protection
+
+**Setup:**
+```typescript
+import {Loopback4HelmetComponent, HelmetSecurityBindings} from 'loopback4-helmet';
+
+this.component(Loopback4HelmetComponent);
+
+// Optional: Override default settings
+this.bind(HelmetSecurityBindings.CONFIG).to({
+  referrerPolicy: {policy: 'same-origin'},
+  contentSecurityPolicy: {
+    directives: {frameSrc: ["'self'"]},
+  },
+});
+```
+
+**Sequence Integration:**
+```typescript
+import {HelmetSecurityBindings} from 'loopback4-helmet';
+
+export class MySequence implements SequenceHandler {
+  constructor(
+    @inject(HelmetSecurityBindings.HELMET_SECURITY_ACTION)
+    protected helmetAction: HelmetAction,
+  ) {}
+
+  async handle(context: RequestContext) {
+    const {request, response} = context;
+    await this.helmetAction(request, response);
+    // Continue with sequence...
+  }
+}
+```
+
+---
+
+### 20 loopback4-ratelimiter
+
+**Overview:** A simple LoopBack 4 extension for rate limiting using express-rate-limit with Redis, Memcached, or MongoDB stores.
+
+**Installation:**
+```bash
+npm install loopback4-ratelimiter
+```
+
+**Key Features:**
+- Rate limiting using express-rate-limit
+- Support for multiple stores: Redis, Memcached, MongoDB
+- Configurable rate limits per endpoint
+- Custom key generation (user-based, IP-based, token-based)
+- enabledByDefault option for selective rate limiting
+- Decorator-based enable/disable per endpoint
+
+**Basic Setup:**
+```typescript
+import {RateLimiterComponent, RateLimitSecurityBindings} from 'loopback4-ratelimiter';
+
+this.component(RateLimiterComponent);
+```
+
+**Configuration - Redis Store:**
+```typescript
+this.bind(RateLimitSecurityBindings.CONFIG).to({
+  name: 'redis',
+  type: 'RedisStore',
+  max: 60, // max requests per window
+  keyGenerator: (req: Request) => {
+    // Use token from authorization header
+    const token =
+      (req.headers &&
+        req.headers.authorization &&
+        req.headers.authorization.replace(/bearer /i, '')) ||
+      '';
+    return token;
+  },
+});
+```
+
+**Configuration - Memcached Store:**
+```typescript
+this.bind(RateLimitSecurityBindings.CONFIG).to({
+  client: memoryClient,
+  type: 'MemcachedStore',
+});
+```
+
+**Configuration - MongoDB Store:**
+```typescript
+this.bind(RateLimitSecurityBindings.CONFIG).to({
+  name: 'mongo',
+  type: 'MongoStore',
+  uri: 'mongodb://127.0.0.1:27017/test_db',
+  collectionName: 'expressRateRecords',
+});
+```
+
+**enabledByDefault Option:**
+```typescript
+// Enable rate limiting for all APIs except those disabled with decorator
+this.bind(RateLimitSecurityBindings.CONFIG).to({
+  name: 'redis',
+  type: 'RedisStore',
+  max: 60,
+  enabledByDefault: true, // default
+});
+
+// Disable rate limiting for all APIs except those enabled with decorator
+this.bind(RateLimitSecurityBindings.CONFIG).to({
+  name: 'redis',
+  type: 'RedisStore',
+  max: 60,
+  enabledByDefault: false,
+});
+```
+
+**Add to Sequence:**
+```typescript
+import {RateLimitSecurityBindings, RateLimitAction} from 'loopback4-ratelimiter';
+
+export class MySequence implements SequenceHandler {
+  constructor(
+    @inject(RateLimitSecurityBindings.RATELIMIT_SECURITY_ACTION)
+    protected rateLimitAction: RateLimitAction,
+  ) {}
+
+  async handle(context: RequestContext) {
+    const {request, response} = context;
+    const route = this.findRoute(request);
+    const args = await this.parseParams(request, route);
+
+    // Apply rate limiting
+    await this.rateLimitAction(request, response);
+
+    const result = await this.invoke(route, args);
+    this.send(response, result);
+  }
+}
+```
+
+**Resources:**
+- GitHub: https://github.com/sourcefuse/loopback4-ratelimiter
+- NPM: https://www.npmjs.com/package/loopback4-ratelimiter
+- express-rate-limit: https://github.com/nfriedly/express-rate-limit
+
+---
+
+### 21 loopback4-s3
+
+**Overview:** A simple LoopBack 4 extension for AWS S3 integration with support for aws-sdk v3.
+
+**Installation:**
+```bash
+npm install loopback4-s3
+```
+
+**Key Features:**
+- AWS S3 integration for file storage
+- Signed URL generation for secure access
+- Extended S3 client with getPresignedUrl method
+- Based on aws-sdk v3 (versions after 4.0.0)
+- Backward compatible S3 client interface (no need to create commands)
+- Support for all AWS S3 configuration options
+
+**Basic Setup:**
+```typescript
+import {AWSS3Bindings, AwsS3Component, AwsS3Config} from 'loopback4-s3';
+
+this.bind(AWSS3Bindings.Config).to({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: process.env.AWS_REGION,
+} as AwsS3Config);
+
+this.component(AwsS3Component);
+```
+
+**Injecting S3 Provider:**
+```typescript
+import {S3WithSigner, AWSS3Bindings} from 'loopback4-s3';
+
+class FileService {
+  constructor(
+    @inject(AWSS3Bindings.AwsS3Provider) private s3: S3WithSigner
+  ) {}
+
+  async uploadFile(bucket: string, key: string, body: Buffer) {
+    return await this.s3.putObject({
+      Bucket: bucket,
+      Key: key,
+      Body: body,
+    });
+  }
+
+  async getSignedUrl(bucket: string, key: string) {
+    return await this.s3.getPresignedUrl('getObject', {
+      Bucket: bucket,
+      Key: key,
+    });
+  }
+}
+```
+
+**Migration Notes (aws-sdk v3):**
+- Version 4.0.0+ uses aws-sdk v3
+- No need for `.promise()` method (v3 returns promises directly)
+- Extended client provides `getPresignedUrl` method (missing in aws-sdk v3)
+- Client extends `S3` class, not `S3Client` (no need to create commands)
+- May require `cmake 3.1+` for aws-crt package compilation
+
+**Environment Variables:**
+```bash
+AWS_ACCESS_KEY_ID=your_access_key
+AWS_SECRET_ACCESS_KEY=your_secret_key
+AWS_REGION=us-east-1
+```
+
+**Resources:**
+- GitHub: https://github.com/sourcefuse/loopback4-s3
+- NPM: https://www.npmjs.com/package/loopback4-s3
+- AWS S3 Config: https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Config.html
+
+---
+
+### 22 loopback4-soft-delete
+
+**Overview:** LoopBack 4 extension for soft delete functionality. Provides classes and mixins for logical deletion instead of permanent deletion.
+
+**Installation:**
+```bash
+npm install loopback4-soft-delete
+```
+
+**Quick Start:**
+Refer to [loopback 4 starter](https://github.com/sourcefuse/loopback4-starter) application for soft-delete implementation in multi-tenant applications.
+
+**Exported Classes and Mixins:**
+
+1. **SoftDeleteEntity** - Base class adding soft delete props
+2. **SoftCrudRepository** - Soft delete capabilities for repositories
+3. **SoftCrudRepositoryMixin** - Mixin for adding soft delete to any repository
+4. **SoftDeleteEntityMixin** - Mixin for adding soft delete props to models
+5. **DefaultTransactionSoftCrudRepository** (Deprecated) - Transaction support
+6. **SequelizeSoftCrudRepository** - For @loopback/sequelize package
+
+**Detailed Usage:**
+
+**SoftDeleteEntity:**
+Abstract base class adding three attributes for soft delete handling:
+- `deleted` - Boolean flag
+- `deletedOn` - Timestamp when deleted
+- `deletedBy` - User who deleted
+
+Required DB columns: 'deleted', 'deleted_on', 'deleted_by'
+
+```typescript
+import {SoftDeleteEntity} from 'loopback4-soft-delete';
+
+@model({name: 'users'})
+export class User extends SoftDeleteEntity {
+  @property({type: 'number', id: true})
+  id?: number;
+
+  @property({type: 'string'})
+  username: string;
+}
+```
+
+**SoftCrudRepository:**
+Abstract base class handling soft delete operations, ensures soft deleted entries aren't returned by default.
+
+```typescript
+import {Getter, inject} from '@loopback/core';
+import {SoftCrudRepository} from 'loopback4-soft-delete';
+import {AuthenticationBindings, IAuthUser} from 'loopback4-authentication';
+import {PgdbDataSource} from '../datasources';
+import {User, UserRelations} from '../models';
+
+export class UserRepository extends SoftCrudRepository<
+  User,
+  typeof User.prototype.id,
+  UserRelations
+> {
+  constructor(
+    @inject('datasources.pgdb') dataSource: PgdbDataSource,
+    @inject.getter(AuthenticationBindings.CURRENT_USER, {optional: true})
+    protected readonly getCurrentUser: Getter<IAuthUser | undefined>,
+  ) {
+    super(User, dataSource, getCurrentUser);
+  }
+
+  // find() excludes soft deleted entries
+  // findOneIncludeSoftDelete() includes soft deleted entries
+  // findAll() excludes soft deleted entries
+  // findByIdIncludeSoftDelete() includes soft deleted entries
+}
+```
+
+**SoftCrudRepositoryMixin (Recommended for transactions):**
+Wrapper around DefaultTransactionalRepository for transaction support.
+
+```typescript
+import {Getter, inject} from '@loopback/core';
+import {SoftCrudRepositoryMixin} from 'loopback4-soft-delete';
+import {AuthenticationBindings, IAuthUser} from 'loopback4-authentication';
+import {DefaultTransactionalRepository} from '@loopback/repository';
+import {User, UserRelations} from '../models';
+
+export class UserRepository extends SoftCrudRepositoryMixin<
+  User,
+  typeof User.prototype.id,
+  UserRelations
+>(DefaultTransactionalRepository) {
+  constructor(
+    @inject('datasources.pgdb') dataSource: PgdbDataSource,
+    @inject.getter(AuthenticationBindings.CURRENT_USER, {optional: true})
+    protected readonly getCurrentUser: Getter<IAuthUser | undefined>,
+  ) {
+    super(User, dataSource, getCurrentUser);
+  }
+}
+```
+
+**SoftDeleteEntityMixin:**
+Adds soft delete properties to existing models without extending base class.
+
+```typescript
+import {SoftDeleteEntityMixin} from 'loopback4-soft-delete';
+
+class Item extends Entity {
+  @property({type: 'number', id: true, generated: true})
+  id?: number;
+
+  @property({type: 'string', required: true})
+  name: string;
+}
+
+@model()
+export class ItemSoftDelete extends SoftDeleteEntityMixin(Item, {
+  deletedBy: {
+    name: 'deleted_by_userid',
+  },
+}) {}
+```
+
+**SequelizeSoftCrudRepository:**
+For projects using @loopback/sequelize package, similar functionality but for Sequelize.
+
+**DefaultTransactionSoftCrudRepository (Deprecated):**
+Use SoftCrudRepositoryMixin instead for transaction support.
+
+**Usage:**
+```typescript
+import {SoftDeleteEntity} from 'loopback4-soft-delete';
+
+@model()
+export class User extends SoftDeleteEntity {
+  @property({type: 'number', id: true})
+  id?: number;
+
+  @property({type: 'string'})
+  name: string;
+
+  // Soft delete properties automatically added:
+  // - deletedAt: Date
+  // - deletedBy: number (optional)
+}
+```
+
+---
+
+### 23 loopback4-kafka-client
+
+**Overview:** A Kafka Client for LoopBack 4 built on top of KafkaJS for event-driven messaging with producers and consumers.
+
+**Installation:**
+```bash
+npm install loopback4-kafka-client
+# or
+yarn add loopback4-kafka-client
+```
+
+**Key Features:**
+- Event-driven messaging with Kafka
+- Producer and consumer support
+- Stream-based event management with `IStreamDefinition`
+- Multiple consumer types: IConsumer, ISharedConsumer, IGenericConsumer
+- Consumer lifecycle observers with `initObservers` option
+- Producer/Consumer configuration via KafkaJS options
+- Event handler binding with `eventHandlerKey` decorator
+- Support for generic topics and events
+
+**Basic Setup:**
+```typescript
+import {
+  KafkaClientBindings,
+  KafkaClientComponent,
+  KafkaClientOptions,
+} from 'loopback4-kafka-client';
+
+export class MyApplication extends BootMixin(
+  ServiceMixin(RepositoryMixin(RestApplication)),
+) {
+  constructor(options: ApplicationConfig = {}) {
+    this.configure<KafkaClientOptions>(KafkaClientBindings.Component).to({
+      initObservers: true, // if you want to init consumer lifeCycleObserver
+      topics: [Topics.First], // if you want to use producers for given topics
+      connection: {
+        // refer https://kafka.js.org/docs/configuration
+        brokers: [process.env.KAFKA_SERVER ?? 'localhost:9092'],
+      },
+    });
+
+    this.bind(KafkaClientBindings.ProducerConfiguration).to({
+      // your producer config
+      // refer https://kafka.js.org/docs/producing#options
+    });
+
+    this.bind(KafkaClientBindings.ConsumerConfiguration).to({
+      // refer https://kafka.js.org/docs/consuming#options
+      groupId: process.env.KAFKA_CONSUMER_GROUP,
+      // alwaysRunGenericConsumer: true // optional: runs generic consumer even if specific consumers exist
+    });
+
+    this.component(KafkaClientComponent);
+  }
+}
+```
+
+**Stream Definition:**
+```typescript
+import {IStreamDefinition} from 'loopback4-kafka-client';
+
+export class TestStream implements IStreamDefinition {
+  topic = Topics.First;
+  messages: {
+    // [<event type key from enum>] : <event type or interface>
+    [Events.start]: StartEvent;
+    [Events.stop]: StopEvent;
+  };
+}
+```
+
+**Consumer Implementation:**
+
+Simple consumer for single event:
+```typescript
+import {consumer, IConsumer} from 'loopback4-kafka-client';
+
+@consumer<TestStream, Events.start>()
+export class StartConsumer implements IConsumer<TestStream, Events.start> {
+  constructor(
+    @inject('test.handler.start')
+    public handler: StreamHandler<TestStream, Events.start>,
+  ) {}
+
+  topic = Topics.First;
+  event: Events.start = Events.start;
+
+  // you can write the handler as a method
+  handler(payload: StartEvent) {
+    console.log(payload);
+  }
+}
+```
+
+Shared handler for different events (in application.ts):
+```typescript
+import {eventHandlerKey} from 'loopback4-kafka-client';
+
+this.bind(eventHandlerKey(Events.Start)).to((payload: StartEvent) => {
+  console.log(payload);
+});
+```
+
+**Consumer Types:**
+- **IConsumer** - Simple consumer for 1 event in a stream
+- **ISharedConsumer** - Consumer for multiple events in a stream (defined with an array of events)
+- **IGenericConsumer** - Consumer for all events in a stream/topic (defined without any event). By default not triggered if a more specific consumer exists unless `alwaysRunGenericConsumer` option is set
+
+**Producer Usage:**
+```typescript
+import {producer} from 'loopback4-kafka-client';
+
+class TestService {
+  constructor(
+    @producer(Topics.First)
+    private producer: Producer<TestStream>
+  ) {}
+
+  async sendMessage() {
+    await this.producer.send(Events.start, {data: 'test'});
+  }
+}
+```
+
+For raw messages without event type, use `@genericProducer(TOPIC_NAME)` and configure `genericTopics` in component configuration.
+
+**Environment Variables:**
+```bash
+KAFKA_SERVER=localhost:9092
+KAFKA_CONSUMER_GROUP=my-consumer-group
+```
+
+**Resources:**
+- GitHub: https://github.com/sourcefuse/loopback4-kafka-client
+- NPM: https://www.npmjs.com/package/loopback4-kafka-client
+- KafkaJS Docs: https://kafka.js.org/docs/configuration
+
+---
+
+### 24 @sourceloop/vault
+
+**Overview:** Vault integration for secure secrets management and configuration.
+
+**Installation:**
+```bash
+npm install @sourceloop/vault
+```
+
+**Key Features:**
+- Secure secret storage
+- Dynamic configuration
+- Environment-specific secrets
+- HashiCorp Vault integration
+- Secret rotation support
+- Encrypted configuration values
+
+**Basic Setup:**
+```typescript
+import {VaultComponent} from '@sourceloop/vault';
+
+this.bind('vault.config').to({
+  endpoint: process.env.VAULT_ENDPOINT,
+  token: process.env.VAULT_TOKEN,
+});
+
+this.component(VaultComponent);
+```
+
+---
+
+### 25 loopback4-mcp
+
+**Overview:** Model Context Protocol (MCP) integration for AI-powered development assistance.
+
+**Installation:**
+```bash
+npm install loopback4-mcp
+```
+
+**Key Features:**
+- AI integration capabilities
+- Context-aware development assistance
+- Support for AI-powered code generation
+- Integration with various AI providers
+- MCP server implementation
+- AI chat component integration
+
+---
+
+### 26 loopback4-message-bus-connector
+
+**Overview:** Message bus connector for integrating with various messaging systems and event brokers.
+
+**Installation:**
+```bash
+npm install loopback4-message-bus-connector
+```
+
+**Key Features:**
+- Multiple message broker support
+- Event-driven architecture integration
+- Support for Kafka, RabbitMQ, ActiveMQ, etc.
+- Message transformation and routing
+- Dead letter queue handling
+- Message acknowledgment patterns
+
+---
+
+### 27 loopback4-billing
+
+**Overview:** Billing and payment management extension for subscription-based services.
+
+**Installation:**
+```bash
+npm install loopback4-billing
+```
+
+**Key Features:**
+- Subscription management
+- Payment processing integration
+- Invoice generation and tracking
+- Usage-based billing
+- Multi-currency support
+- Payment gateway integration
+- Billing cycle management
+- Proration and refunds
+
+---
+
+### 28 lb4-llm-chat-component
+
+**Overview:** LoopBack 4 based component to integrate a basic Langgraph.js based endpoint in your application which can use any tool that you register using the provided decorator.
+
+**Installation:**
+```bash
+npm install lb4-llm-chat-component
+```
+
+**Key Features:**
+- AI chat integration with Langgraph.js
+- Multi-LLM provider support (Ollama, Gemini, Cerebras, Anthropic, OpenAI, Bedrock)
+- Tool registration system with decorators
+- `/generate` endpoint for user queries
+- Limiting strategies (ChatCountStrategy, TokenCountStrategy, TokenCountPerUserStrategy)
+- DbQueryComponent with pre-built database tools
+- Custom sequence support
+- Core component mounting options
+
+**Basic Setup:**
+```typescript
+import {AiIntegrationsComponent} from 'lb4-llm-chat-component';
+// ...
+export class MyApplication extends BootMixin(
+  ServiceMixin(RepositoryMixin(RestApplication)),
+) {
+  constructor(options: ApplicationConfig = {}) {
+    // could be any LLM provider or your own LangGraph supported LLM provider
+    // you can also have different LLM for different LLM type - cheap, smart and multimodal
+    this.bind(AiIntegrationBindings.CheapLLM).toProvider(Ollama);
+    this.bind(AiIntegrationBindings.SmartLLM).toProvider(Ollama);
+    this.bind(AiIntegrationBindings.FileLLM).toProvider(Ollama);
+    // configuration
+    this.bind(AiIntegrationBindings.Config).to({
+      // if not set to true, it will bind a ARC based sequence from @sourceloop/core with authentication and authorization
+      useCustomSequence: true,
+      // if not set to false, it will bind the core component from @sourceloop/core by default
+      mountCore: false
+      // if not set to false, it will bind @sourceloop/file-utils component with defaults config
+      mountFileUtils: false
+    });
+    this.component(AiIntegrationsComponent);
+
+    // ...
+  }
+  // ...
+}
+```
+
+**LLM Provider Examples:**
+
+For Ollama (install `@langchain/ollama`):
+```typescript
+this.bind(AiIntegrationBindings.CheapLLM).toProvider(Ollama);
+this.bind(AiIntegrationBindings.SmartLLM).toProvider(Ollama);
+this.bind(AiIntegrationBindings.FileLLM).toProvider(Ollama);
+```
+
+For Gemini (install `@google/generative-ai` and `@langchain/google-genai`):
+```typescript
+this.bind(AiIntegrationBindings.CheapLLM).toProvider(Gemini);
+this.bind(AiIntegrationBindings.SmartLLM).toProvider(Gemini);
+this.bind(AiIntegrationBindings.FileLLM).toProvider(Gemini);
+```
+
+For Cerebras (install `@langchain/cerebras`):
+```typescript
+this.bind(AiIntegrationBindings.CheapLLM).toProvider(Cerebras);
+this.bind(AiIntegrationBindings.SmartLLM).toProvider(Cerebras);
+this.bind(AiIntegrationBindings.FileLLM).toProvider(Cerebras);
+```
+
+For Anthropic (install `@langchain/anthropic`):
+```typescript
+this.bind(AiIntegrationBindings.CheapLLM).toProvider(Anthropic);
+this.bind(AiIntegrationBindings.SmartLLM).toProvider(Anthropic);
+this.bind(AiIntegrationBindings.FileLLM).toProvider(Anthropic);
+```
+
+For OpenAI (install `@langchain/openai`):
+```typescript
+this.bind(AiIntegrationBindings.CheapLLM).toProvider(OpenAI);
+this.bind(AiIntegrationBindings.SmartLLM).toProvider(OpenAI);
+this.bind(AiIntegrationBindings.FileLLM).toProvider(OpenAI);
+```
+
+For Bedrock (install `@langchain/aws`):
+```typescript
+this.bind(AiIntegrationBindings.CheapLLM).toProvider(Bedrock);
+this.bind(AiIntegrationBindings.SmartLLM).toProvider(Bedrock);
+this.bind(AiIntegrationBindings.FileLLM).toProvider(Bedrock);
+```
+
+**Limiting Strategies:**
+- **ChatCountStrategy**: Applies limits per user based on number of chats (requires `chatLimit` and `period` in `tokenCounterConfig`)
+- **TokenCountStrategy**: Applies fixed token limit per user (requires `tokenLimit` and `period` with optional `bufferToken`)
+- **TokenCountPerUserStrategy**: Token limit from user permission `TokenUsage:NUMBER` (requires only `period`)
+
+---
+
+### 29 @sourceloop/audit-log
+
+**Overview:** Powerful LoopBack 4 extension designed to seamlessly implement audit logs in your LoopBack applications. Track and record audit data for all database transactions with compatibility for any datasource (MySQL, PostgreSQL, MongoDB, etc.).
+
+**Installation:**
+```bash
+npm install @sourceloop/audit-log
+```
+
+**Key Features:**
+- Generic model for audit log storage
+- Support for any datasource
+- Audit trail for data changes, user actions, and system events
+- Automatic audit logging with AuditRepositoryMixin
+- Conditional audit logging with ConditionalAuditRepositoryMixin
+- Customizable audit model and repository
+- Configurable actor field (userId, username, etc.)
+- Extra attributes support via method options
+- Disable audit logging per operation with `noAudit` flag
+
+**AuditLog Model Properties:**
+- `id`: string (UUID) - Primary key
+- `action`: Action enum - Required action performed
+- `actedAt`: Date - Required timestamp of action
+- `actedOn`: string - Entity type acted upon
+- `actionKey`: string - Required key for action categorization
+- `entityId`: string - Required ID of affected entity
+- `actor`: string - Required user who performed action
+- `before`: object - State before change
+- `after`: object - State after change
+
+**Basic Setup:**
+
+1. Create AuditLog model (optional - default model provided):
+```typescript
+import { Entity, model, property } from "@loopback/repository";
+import { Action } from "@sourceloop/audit-log";
+
+@model({
+  name: "audit_logs",
+  settings: {
+    strict: false,
+  },
+})
+export class AuditLog extends Entity {
+  @property({
+    type: "string",
+    id: true,
+    generated: false,
+  })
+  id?: string;
+
+  @property({
+    type: "string",
+    required: true,
+  })
+  action: Action;
+
+  @property({
+    name: "acted_at",
+    type: "date",
+    required: true,
+  })
+  actedAt: Date;
+
+  @property({
+    name: "acted_on",
+    type: "string",
+  })
+  actedOn?: string;
+
+  @property({
+    name: "action_key",
+    type: "string",
+    required: true,
+  })
+  actionKey: string;
+
+  @property({
+    name: "entity_id",
+    type: "string",
+    required: true,
+  })
+  entityId: string;
+
+  @property({
+    type: "string",
+    required: true,
+  })
+  actor: string;
+
+  @property({
+    type: "object",
+  })
+  before?: object;
+
+  @property({
+    type: "object",
+  })
+  after?: object;
+
+  // Indexer property to allow additional data
+  [prop: string]: any;
+
+  constructor(data?: Partial<AuditLog>) {
+    super(data);
+  }
+}
+```
+
+2. Create AuditDataSource with correct name:
+```typescript
+import { inject, lifeCycleObserver, LifeCycleObserver } from "@loopback/core";
+import { juggler } from "@loopback/repository";
+import { AuditDbSourceName } from "@sourceloop/audit-log";
+
+const config = {
+  name: "audit",
+  connector: "postgresql",
+  url: "",
+  host: "",
+  port: 0,
+  user: "",
+  password: "",
+  database: "",
+};
+
+@lifeCycleObserver("datasource")
+export class AuditDataSource
+  extends juggler.DataSource
+  implements LifeCycleObserver
+{
+  static dataSourceName = AuditDbSourceName;
+  static readonly defaultConfig = config;
+
+  constructor(
+    @inject("datasources.config.audit", { optional: true })
+    dsConfig: object = config,
+  ) {
+    super(dsConfig);
+  }
+}
+```
+
+3. Create AuditLogRepository:
+```typescript
+import { inject } from "@loopback/core";
+import { DefaultCrudRepository } from "@loopback/repository";
+import { AuditDbSourceName } from "@sourceloop/audit-log";
+import { AuditDataSource } from "../datasources";
+import { AuditLog } from "../models";
+
+export class AuditLogRepository extends DefaultCrudRepository<
+  AuditLog,
+  typeof AuditLog.prototype.id
+> {
+  constructor(
+    @inject(`datasources.${AuditDbSourceName}`) dataSource: AuditDataSource,
+  ) {
+    super(AuditLog, dataSource);
+  }
+}
+```
+
+4. Extend repository with AuditRepositoryMixin:
+```typescript
+import { repository } from "@loopback/repository";
+import { Group, GroupRelations } from "../models";
+import { PgdbDataSource } from "../datasources";
+import { inject, Getter, Constructor } from "@loopback/core";
+import { AuthenticationBindings, IAuthUser } from "loopback4-authentication";
+import {
+  AuditRepositoryMixin,
+  AuditLogRepository,
+} from "@sourceloop/audit-log";
+
+const groupAuditOpts: IAuditMixinOptions = {
+  actionKey: "Group_Logs",
+};
+
+export class GroupRepository extends AuditRepositoryMixin<
+  Group,
+  typeof Group.prototype.id,
+  GroupRelations,
+  string,
+  Constructor<
+    DefaultCrudRepository<Group, typeof Group.prototype.id, GroupRelations>
+  >
+>(DefaultCrudRepository, groupAuditOpts) {
+  constructor(
+    @inject("datasources.pgdb") dataSource: PgdbDataSource,
+    @inject.getter(AuthenticationBindings.CURRENT_USER)
+    public getCurrentUser: Getter<IAuthUser>,
+    @repository.getter(AuditLogRepository)
+    public getAuditLogRepository: Getter<AuditLogRepository>,
+  ) {
+    super(Group, dataSource, getCurrentUser);
+  }
+}
+```
+
+5. Bind component in application.ts:
+```typescript
+import { AuditLogComponent } from "@sourceloop/audit-log";
+
+this.component(AuditLogComponent);
+```
+
+**Advanced Usage:**
+
+Custom model and repository:
+```typescript
+export class GroupRepository extends AuditRepositoryMixin<
+  Group,
+  typeof Group.prototype.id,
+  GroupRelations,
+  string,
+  Constructor<
+    DefaultCrudRepository<Group, typeof Group.prototype.id, GroupRelations>
+  >,
+  CustomAuditLogModel,
+  CustomAuditLogRepository
+>(DefaultCrudRepository, groupAuditOpts) {
+  constructor(
+    @inject("datasources.pgdb") dataSource: PgdbDataSource,
+    @inject.getter(AuthenticationBindings.CURRENT_USER)
+    public getCurrentUser: Getter<IAuthUser>,
+    @repository.getter(CustomAuditLogRepository)
+    public getAuditLogRepository: Getter<CustomAuditLogRepository>,
+  ) {
+    super(Group, dataSource, getCurrentUser);
+  }
+}
+```
+
+Pass extra attributes:
+```typescript
+const groupAuditOpts: IAuditMixinOptions = {
+  actionKey: "Group_Logs",
+  extra: "static value",
+};
+
+// Method options override mixin options
+repo.create(data, { extra: "random calculated value" });
+```
+
+Disable audit for specific operation:
+```typescript
+create(data, { noAudit: true });
+```
+
+Configure actor field (default is userId):
+```typescript
+// In application.ts
+this.bind(AuthServiceBindings.ActorIdKey).to("username");
+
+// In repository constructor
+@inject(AuditBindings.ActorIdKey, {optional: true})
+public actorIdKey?: ActorId,
+```
+
+Use without current user:
+```typescript
+await productRepo.create(product, { noAudit: false, actorId: "userId" });
+```
+
+---
+
+### 30 loopback4-notifications
+
+**Overview:** LoopBack 4 extension for adding multi-channel notification mechanisms (Push, SMS, Email) to any LoopBack 4 REST API application or microservice. Generic provider-based framework with support for 8 external services.
+
+**Installation:**
+```bash
+npm install loopback4-notifications
+```
+
+**Supported Providers (8 total):**
+
+**Email Providers:**
+1. **AWS SES** (Amazon Simple Email Service) - EmailProvider
+2. **Nodemailer** - EmailProvider
+
+**SMS Providers:**
+3. **AWS SNS** (Amazon Simple Notification Service) - SMSProvider
+4. **Twilio SMS** - SMSProvider (supports SMS and WhatsApp)
+
+**Push Providers:**
+5. **PubNub** - PushProvider for real-time push notifications
+6. **Socket.IO** - PushProvider for web/mobile push
+7. **FCM** (Firebase Cloud Messaging) - PushProvider
+8. **Apple Push Notification service (APNS)** - PushProvider for Apple devices
+
+**Basic Setup:**
+```typescript
+import {NotificationsComponent} from 'loopback4-notifications';
+
+export class MyApplication extends BootMixin(
+  ServiceMixin(RepositoryMixin(RestApplication)),
+) {
+  constructor(options: ApplicationConfig = {}) {
+    // Add notification component
+    this.component(NotificationsComponent);
+  }
+}
+```
+
+**Email Notifications - AWS SES:**
+
+Install: `npm install aws-sdk`
+
+```typescript
+import {
+  NotificationsComponent,
+  NotificationBindings,
+} from 'loopback4-notifications';
+import {SesProvider, SESBindings} from 'loopback4-notifications/ses';
+
+this.component(NotificationsComponent);
+
+// AWS SES Configuration
+this.bind(SESBindings.Config).to({
+  accessKeyId: process.env.SES_ACCESS_KEY_ID,
+  secretAccessKey: process.env.SES_SECRET_ACCESS_KEY,
+  region: process.env.SES_REGION,
+});
+
+// Optional: General notification settings
+this.bind(NotificationBindings.Config).to({
+  sendToMultipleReceivers: false, // Single email to all vs individual emails
+  senderEmail: 'support@myapp.com',
+});
+
+// Bind SES provider
+this.bind(NotificationBindings.EmailProvider).toProvider(SesProvider);
+```
+
+**Email Notifications - Nodemailer:**
+
+Install: `npm install nodemailer`
+
+```typescript
+import {
+  NotificationsComponent,
+  NotificationBindings,
+} from 'loopback4-notifications';
+import {NodemailerProvider, NodemailerBindings} from 'loopback4-notifications/nodemailer';
+
+this.component(NotificationsComponent);
+
+// Nodemailer SMTP Configuration
+this.bind(NodemailerBindings.Config).to({
+  pool: true,
+  maxConnections: 100,
+  url: '',
+  host: 'smtp.example.com',
+  port: 587,
+  secure: false,
+  auth: {
+    user: 'username',
+    pass: 'password',
+  },
+  tls: {
+    rejectUnauthorized: true,
+  },
+});
+
+// Optional: General settings
+this.bind(NotificationBindings.Config).to({
+  sendToMultipleReceivers: false,
+  senderEmail: 'support@myapp.com',
+});
+
+// Bind Nodemailer provider
+this.bind(NotificationBindings.EmailProvider).toProvider(NodemailerProvider);
+```
+
+**SMS Notifications - AWS SNS:**
+
+Install: `npm install aws-sdk`
+
+```typescript
+import {
+  NotificationsComponent,
+  NotificationBindings,
+} from 'loopback4-notifications';
+import {SnsProvider, SNSBindings} from 'loopback4-notifications/sns';
+
+this.component(NotificationsComponent);
+
+// AWS SNS Configuration
+this.bind(SNSBindings.Config).to({
+  accessKeyId: process.env.SNS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.SNS_SECRET_ACCESS_KEY,
+  region: process.env.SNS_REGION,
+});
+
+// Bind SNS provider
+this.bind(NotificationBindings.SMSProvider).toProvider(SnsProvider);
+```
+
+**SMS/WhatsApp Notifications - Twilio:**
+
+Install: `npm install twilio`
+
+```typescript
+import {
+  NotificationsComponent,
+  NotificationBindings,
+} from 'loopback4-notifications';
+import {TwilioProvider, TwilioBindings} from 'loopback4-notifications/twilio';
+
+this.component(NotificationsComponent);
+
+// Twilio Configuration
+this.bind(TwilioBindings.Config).to({
+  accountSid: process.env.TWILIO_ACCOUNT_SID,
+  authToken: process.env.TWILIO_AUTH_TOKEN,
+  waFrom: process.env.TWILIO_WA_FROM, // WhatsApp number
+  smsFrom: process.env.TWILIO_SMS_FROM, // SMS number or messaging service ID
+  waStatusCallback: process.env.TWILIO_WA_STATUS_CALLBACK,
+  smsStatusCallback: process.env.TWILIO_SMS_STATUS_CALLBACK,
+});
+
+// Bind Twilio provider
+this.bind(NotificationBindings.SMSProvider).toProvider(TwilioProvider);
+```
+
+**Push Notifications - PubNub:**
+
+Install: `npm install pubnub`
+
+```typescript
+import {
+  NotificationsComponent,
+  NotificationBindings,
+} from 'loopback4-notifications';
+import {PubNubProvider, PubNubBindings} from 'loopback4-notifications/pubnub';
+
+this.component(NotificationsComponent);
+
+// PubNub Configuration
+this.bind(PubNubBindings.Config).to({
+  subscribeKey: process.env.PUBNUB_SUBSCRIBE_KEY,
+  publishKey: process.env.PUBNUB_PUBLISH_KEY,
+  secretKey: process.env.PUBNUB_SECRET_KEY,
+});
+
+// Bind PubNub provider
+this.bind(NotificationBindings.PushProvider).toProvider(PubNubProvider);
+```
+
+**Push Notifications - Socket.IO:**
+
+Install: `npm install socket.io`
+
+```typescript
+import {
+  NotificationsComponent,
+  NotificationBindings,
+} from 'loopback4-notifications';
+import {SocketIoProvider, SocketIoBindings} from 'loopback4-notifications/socket-io';
+
+this.component(NotificationsComponent);
+
+// Socket.IO Configuration
+this.bind(SocketIoBindings.Config).to({
+  port: process.env.SOCKET_PORT || 3000,
+  path: '/socket.io',
+});
+
+// Bind Socket.IO provider
+this.bind(NotificationBindings.PushProvider).toProvider(SocketIoProvider);
+```
+
+**Push Notifications - FCM:**
+
+Install: `npm install firebase-admin`
+
+```typescript
+import {
+  NotificationsComponent,
+  NotificationBindings,
+} from 'loopback4-notifications';
+import {FcmProvider, FcmBindings} from 'loopback4-notifications/fcm';
+
+this.component(NotificationsComponent);
+
+// FCM Configuration
+this.bind(FcmBindings.Config).to({
+  credentials: require('./firebase-service-account.json'),
+});
+
+// Bind FCM provider
+this.bind(NotificationBindings.PushProvider).toProvider(FcmProvider);
+```
+
+**Custom Provider:**
+
+You can create your own provider by implementing the provider interfaces:
+
+```typescript
+import {EmailProvider} from 'loopback4-notifications';
+
+class MyCustomEmailProvider implements EmailProvider {
+  async send(notification: NotificationSettings) {
+    // Your custom email sending logic
+  }
+}
+
+// Bind your custom provider
+this.bind(NotificationBindings.EmailProvider).toProvider(MyCustomEmailProvider);
+```
+
+**Provider Bindings:**
+- `NotificationBindings.EmailProvider` - Email notification provider
+- `NotificationBindings.SMSProvider` - SMS notification provider
+- `NotificationBindings.PushProvider` - Push notification provider
+
+**Configuration Bindings:**
+- `NotificationBindings.Config` - General notification settings
+- `SESBindings.Config` - AWS SES configuration
+- `NodemailerBindings.Config` - Nodemailer SMTP configuration
+- `SNSBindings.Config` - AWS SNS configuration
+- `TwilioBindings.Config` - Twilio configuration
+- `PubNubBindings.Config` - PubNub configuration
+- `SocketIoBindings.Config` - Socket.IO configuration
+- `FcmBindings.Config` - Firebase FCM configuration
+
+**Environment Variables:**
+```bash
+# AWS SES
+SES_ACCESS_KEY_ID=your_access_key
+SES_SECRET_ACCESS_KEY=your_secret_key
+SES_REGION=us-east-1
+
+# AWS SNS
+SNS_ACCESS_KEY_ID=your_access_key
+SNS_SECRET_ACCESS_KEY=your_secret_key
+SNS_REGION=us-east-1
+
+# Twilio
+TWILIO_ACCOUNT_SID=your_account_sid
+TWILIO_AUTH_TOKEN=your_auth_token
+TWILIO_SMS_FROM=+1234567890
+TWILIO_WA_FROM=+1234567890
+
+# PubNub
+PUBNUB_SUBSCRIBE_KEY=your_subscribe_key
+PUBNUB_PUBLISH_KEY=your_publish_key
+PUBNUB_SECRET_KEY=your_secret_key
+
+# General
+SENDER_EMAIL=noreply@myapp.com
+```
+
+**Resources:**
+- GitHub: https://github.com/sourcefuse/loopback4-notifications
+- NPM: https://www.npmjs.com/package/loopback4-notifications
+- AWS SES: https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/SES.html
+- AWS SNS: https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/SNS.html
+- Nodemailer: https://nodemailer.com/smtp/
+- Twilio: https://www.twilio.com/docs/sms
+- PubNub: https://www.pubnub.com/docs/nodejs-javascript/pubnub-javascript-sdk
+- Socket.IO: https://socket.io/docs/
+- FCM: https://firebase.google.com/docs/cloud-messaging
+
+---
+
+## Database Schemas
+
+All services use LoopBack 4 model definitions which map to database tables. Below are the key models for each service.
+
+### Authentication Service Models
+
+**users**
+| Column | Type | Required | Description |
+|--------|------|----------|-------------|
+| id | string (UUID) | Yes | Primary key |
+| first_name | string | Yes | User's first name |
+| last_name | string | No | User's last name |
+| middle_name | string | No | User's middle name |
+| username | string | Yes | Unique login username |
+| email | string | No | Email address |
+| phone | string | No | Phone (E.164 format) |
+| auth_client_ids | string | No | Allowed auth client IDs |
+| last_login | date | No | Last login timestamp |
+| photo_url | string | No | Profile photo URL |
+| designation | string | No | Job title |
+| dob | date | No | Date of birth |
+| gender | enum (M/F/O) | No | Gender |
+| default_tenant_id | string (FK) | No | Default tenant |
+
+**tenants**
+| Column | Type | Required | Description |
+|--------|------|----------|-------------|
+| id | string (UUID) | Yes | Primary key |
+| name | string | Yes | Tenant name |
+| key | string | Yes | Unique tenant key |
+| status | enum (ACTIVE/INACTIVE) | Yes | Tenant status |
+| address | string | No | Address |
+| website | string | No | Website URL |
+| city | string | No | City |
+| state | string | No | State |
+| zip | string | No | ZIP code |
+| country | string | No | Country |
+
+**user_credentials**
+| Column | Type | Required | Description |
+|--------|------|----------|-------------|
+| id | string (UUID) | Yes | Primary key |
+| user_id | string (FK) | Yes | Reference to users |
+| auth_provider | string | Yes | Authentication provider |
+| auth_id | string | No | External auth ID |
+| auth_token | string | No | Auth token |
+| secret_key | string | No | TOTP secret key |
+| password | string | No | Hashed password |
+
+**user_tenants**
+| Column | Type | Required | Description |
+|--------|------|----------|-------------|
+| id | string (UUID) | Yes | Primary key |
+| user_id | string (FK) | Yes | Reference to users |
+| tenant_id | string (FK) | Yes | Reference to tenants |
+| role_id | string (FK) | No | Reference to roles |
+
+**roles**
+| Column | Type | Required | Description |
+|--------|------|----------|-------------|
+| id | string (UUID) | Yes | Primary key |
+| name | string | Yes | Role name |
+| permissions | array | No | Permission list |
+| tenant_id | string (FK) | No | Tenant scope |
+
+**auth_clients**
+| Column | Type | Required | Description |
+|--------|------|----------|-------------|
+| id | string | Yes | Primary key |
+| client_id | string | Yes | OAuth client ID |
+| client_secret | string | Yes | OAuth client secret |
+| redirect_url | string | No | Redirect URLs |
+
+### Chat Service Models
+
+**messages**
+| Column | Type | Required | Description |
+|--------|------|----------|-------------|
+| id | string (UUID) | Yes | Primary key |
+| body | string | Yes | Message content |
+| channel_id | string | Yes | Channel identifier |
+| channel_type | string | Yes | Channel type |
+| status | number | No | Message status (default: 0) |
+| subject | string | No | Message subject |
+| to_user_id | string | No | Direct recipient |
+| parent_message_id | string | No | Parent for threading |
+
+**message_recipients**
+| Column | Type | Required | Description |
+|--------|------|----------|-------------|
+| id | string (UUID) | Yes | Primary key |
+| channel_id | string | Yes | Channel identifier |
+| is_favorite | boolean | No | Favorited (default: false) |
+| is_forwarded | boolean | No | Forwarded (default: false) |
+| is_read | boolean | No | Read status (default: false) |
+| recipient_id | string | Yes | Recipient user ID |
+| message_id | string (FK) | Yes | Reference to messages |
+
+### Notification Service Models
+
+**notifications**
+| Column | Type | Required | Description |
+|--------|------|----------|-------------|
+| id | string (UUID) | Yes | Primary key |
+| subject | string | No | Notification subject |
+| body | string | Yes | Notification body |
+| receiver | object | Yes | Recipient information |
+| type | enum | Yes | MessageType (email/SMS/push) |
+| sent_date | date | No | When sent |
+| is_draft | boolean | No | Draft status |
+| group_key | string | No | Grouping key |
+| is_critical | boolean | No | Critical flag |
+
+**notification_users**
+| Column | Type | Required | Description |
+|--------|------|----------|-------------|
+| id | string (UUID) | Yes | Primary key |
+| notification_id | string (FK) | Yes | Reference to notifications |
+| user_id | string | Yes | User ID |
+| is_read | boolean | No | Read status (default: false) |
+| is_draft | boolean | No | Draft (default: false) |
+
+### Scheduler Service Models
+
+**events**
+| Column | Type | Required | Description |
+|--------|------|----------|-------------|
+| id | string (UUID) | Yes | Primary key |
+| summary | string | No | Event title |
+| description | string | No | Event description |
+| start_date_time | date | No | Start time |
+| end_date_time | date | No | End time |
+| is_full_day_event | boolean | No | All-day (default: false) |
+| is_locked | boolean | No | Locked (default: false) |
+| location | string | No | Event location (max 300) |
+| meeting_link | string | No | Virtual meeting URL |
+| status | enum | No | Confirmed/Tentative/Cancelled/Completed |
+| timezone | string | No | Event timezone |
+| calendar_id | string (FK) | Yes | Reference to calendars |
+
+**calendars**
+| Column | Type | Required | Description |
+|--------|------|----------|-------------|
+| id | string (UUID) | Yes | Primary key |
+| source | string | No | Calendar source |
+| enable_working_hours | boolean | No | Enable working hours (default: false) |
+| identifier | string | Yes | Unique identifier (max 200) |
+| summary | string | No | Calendar name (max 100) |
+| timezone | string | No | Calendar timezone |
+
+**attendees**
+| Column | Type | Required | Description |
+|--------|------|----------|-------------|
+| id | string (UUID) | Yes | Primary key |
+| identifier | string | Yes | Attendee identifier (max 200) |
+| is_optional | boolean | No | Optional (default: false) |
+| is_organizer | boolean | No | Organizer (default: false) |
+| response_status | enum | No | NeedsAction/Tentative/Accepted/Declined |
+| event_id | string (FK) | Yes | Reference to events |
+
+### Video Conferencing Service Models
+
+**video_chat_sessions**
+| Column | Type | Required | Description |
+|--------|------|----------|-------------|
+| id | number | Yes | Auto-generated primary key |
+| session_id | string | Yes | Provider session ID |
+| meeting_link | string | Yes | Meeting URL |
+| is_scheduled | boolean | Yes | Scheduled (default: false) |
+| schedule_time | date | No | Scheduled time |
+| is_archived | boolean | Yes | Archived (default: false) |
+| archive_id | string | No | Archive reference |
+| start_time | date | No | Session start |
+| end_time | date | No | Session end |
+
+**session_attendees**
+| Column | Type | Required | Description |
+|--------|------|----------|-------------|
+| id | number | Yes | Auto-generated primary key |
+| session_id | string | Yes | Session reference |
+| attendee | string | Yes | Attendee identifier |
+| created_on | date | Yes | Created timestamp |
+| is_deleted | boolean | Yes | Soft delete flag |
+
+### Payment Service Models
+
+**orders**
+| Column | Type | Required | Description |
+|--------|------|----------|-------------|
+| id | string (UUID) | Yes | Primary key |
+| total_amount | number | Yes | Order total |
+| currency | string | Yes | Currency code |
+| status | string | Yes | Order status |
+| payment_gateway_id | string | Yes | Gateway identifier |
+| payment_method | string | No | Payment method |
+| meta_data | object | No | Additional metadata |
+
+**transactions**
+| Column | Type | Required | Description |
+|--------|------|----------|-------------|
+| id | string (UUID) | Yes | Primary key |
+| amount_paid | number | Yes | Amount paid |
+| currency | string | Yes | Currency code |
+| status | string | Yes | Transaction status |
+| paid_date | date | No | Payment date |
+| payment_gateway_id | string | No | Gateway ID |
+| order_id | string (FK) | No | Reference to orders |
+| res | object | No | Gateway response |
+
+**subscriptions**
+| Column | Type | Required | Description |
+|--------|------|----------|-------------|
+| id | string | Yes | Primary key |
+| total_amount | number | Yes | Subscription amount |
+| currency | string | No | Currency code |
+| status | string | Yes | Subscription status |
+| start_date | date | No | Start date |
+| end_date | date | No | End date |
+| plan_id | string | No | Plan identifier |
+
+### Survey Service Models
+
+**surveys**
+| Column | Type | Required | Description |
+|--------|------|----------|-------------|
+| id | string (UUID) | Yes | Primary key |
+| uid | string | No | External UID |
+| name | string | Yes | Survey name (3-500 chars) |
+| survey_text | string | Yes | Survey description |
+| start_date | string | No | Start date |
+| end_date | string | No | End date |
+| status | string | Yes | Survey status |
+| is_enable_weights | boolean | No | Enable scoring (default: false) |
+
+**questions**
+| Column | Type | Required | Description |
+|--------|------|----------|-------------|
+| id | string (UUID) | Yes | Primary key |
+| uid | string | Yes | External UID |
+| name | string | No | Question text (max 1000) |
+| status | string | Yes | Question status |
+| question_type | enum | Yes | Type (MultiChoice/SingleChoice/Text/Dropdown/Scale) |
+| is_score_enabled | boolean | No | Enable scoring (default: false) |
+| is_followup_enabled | boolean | No | Enable follow-up (default: false) |
+
+### Workflow Service Models
+
+**workflows**
+| Column | Type | Required | Description |
+|--------|------|----------|-------------|
+| id | string (UUID) | Yes | Primary key |
+| workflow_version | number | Yes | Version number |
+| external_identifier | string | Yes | External ID |
+| name | string | No | Workflow name |
+| provider | string | Yes | Engine (camunda/zeebe) |
+| input_schema | object | Yes | Input validation schema |
+| description | string | No | Description |
+
+**workflow_versions**
+| Column | Type | Required | Description |
+|--------|------|----------|-------------|
+| id | string (UUID) | Yes | Primary key |
+| version | number | Yes | Version number |
+| bpmn_diagram | string | No | BPMN XML definition |
+| external_workflow_id | string | Yes | External engine ID |
+| input_schema | object | Yes | Input schema |
+| workflow_id | string (FK) | Yes | Reference to workflows |
+
+### Task Service Models
+
+**tasks**
+| Column | Type | Required | Description |
+|--------|------|----------|-------------|
+| id | string (UUID) | Yes | Primary key |
+| key | string | Yes | Task key |
+| name | string | Yes | Task name |
+| description | string | No | Description |
+| status | enum | No | Pending/InProgress/Completed/Cancelled |
+| priority | string | Yes | Priority level |
+| severity | string | Yes | Severity level |
+| type | string | Yes | Task type |
+| start_date | date | No | Start date |
+| due_date | date | No | Due date |
+| end_date | date | No | End date |
+| assignee_id | string | No | Assigned user |
+| metadata | object | Yes | Additional data |
+| external_id | string | No | External reference |
+
+### In-Mail Service Models
+
+**messages**
+| Column | Type | Required | Description |
+|--------|------|----------|-------------|
+| id | string (UUID) | Yes | Primary key |
+| sender | string | Yes | Sender identifier |
+| subject | string | Yes | Message subject |
+| body | string | Yes | Message body |
+| status | enum | Yes | draft/send (default: draft) |
+
+**threads**
+| Column | Type | Required | Description |
+|--------|------|----------|-------------|
+| id | string (UUID) | Yes | Primary key |
+| subject | string | Yes | Thread subject |
+| message_counts | number | No | Message count (default: 1) |
+
+**groups** (mail categorization)
+| Column | Type | Required | Description |
+|--------|------|----------|-------------|
+| id | string (UUID) | Yes | Primary key |
+| party | string | Yes | Participant |
+| type | enum | Yes | PartyType |
+| is_important | boolean | No | Important flag |
+| storage | enum | No | inbox/sent/draft/trash (default: inbox) |
+| visibility | enum | No | new/read/archived (default: new) |
+
+### Reporting Service Models
+
+**dashboards**
+| Column | Type | Required | Description |
+|--------|------|----------|-------------|
+| id | string (UUID) | Yes | Primary key |
+| name | string | Yes | Dashboard name |
+| description | string | No | Description |
+| layout | object | No | Layout configuration |
+
+**widgets**
+| Column | Type | Required | Description |
+|--------|------|----------|-------------|
+| id | string (UUID) | Yes | Primary key |
+| title | string | No | Widget title |
+| widget_type | string | No | Visualization type |
+
+**data_sets**
+| Column | Type | Required | Description |
+|--------|------|----------|-------------|
+| id | string (UUID) | Yes | Primary key |
+| name | string | Yes | Dataset name |
+| data_set_query | object | No | Structured query |
+| data_set_query_sql | string | No | Raw SQL query |
+| data_set_query_hash | string | No | Query hash for dedup |
+
+### Feature Toggle Service Models
+
+**features**
+| Column | Type | Required | Description |
+|--------|------|----------|-------------|
+| id | string (UUID) | Yes | Primary key |
+| name | string | Yes | Feature name |
+| key | string | Yes | Unique feature key |
+| description | string | No | Description |
+| default_value | string | No | Default value |
+| type | string | No | Feature type |
+
+**feature_values**
+| Column | Type | Required | Description |
+|--------|------|----------|-------------|
+| id | string (UUID) | Yes | Primary key |
+| feature_key | string | No | Feature reference |
+| strategy_key | string | No | Strategy reference |
+| strategy_entity_id | string | No | Entity ID for strategy |
+| status | boolean | No | Enabled/disabled |
+| value | string | No | Feature value |
+
+---
+
+## Configuration & Environment Variables
+
+### Common Variables (All Services)
+
+```bash
+# Application
+NODE_ENV=production              # Environment: production, development, test
+LOG_LEVEL=info                   # Log level: error, warn, info, debug
+PORT=3000                        # HTTP port
+
+# Database (PostgreSQL)
+DB_HOST=localhost                 # Database hostname
+DB_PORT=5432                     # Database port
+DB_USER=postgres                 # Database username
+DB_PASSWORD=                     # Database password
+DB_DATABASE=mydb                 # Database name
+DB_SCHEMA=public                 # Database schema
+
+# Redis
+REDIS_HOST=localhost             # Redis hostname
+REDIS_PORT=6379                  # Redis port
+REDIS_URL=                       # Redis connection URL (alternative)
+REDIS_PASSWORD=                  # Redis password
+REDIS_DATABASE=0                 # Redis database index
+
+# JWT Authentication
+JWT_SECRET=                      # JWT signing secret (symmetric)
+JWT_ISSUER=                      # JWT token issuer claim
+PRIVATE_DECRYPTION_KEY=          # Private key for asymmetric JWT (optional)
+```
+
+### Service-Specific Variables
+
+**Authentication Service:**
+```bash
+# Password Management
+USER_TEMP_PASSWORD=temp123!@     # Default temporary password
+FORGOT_PASSWORD_LINK_EXPIRY=30   # Password reset link TTL (minutes)
+REQUEST_SIGNUP_LINK_EXPIRY=30    # Signup link TTL (minutes)
+
+# JWT Key Management
+MAX_JWT_KEYS=2                   # Max JWT key pairs to maintain
+JWT_PRIVATE_KEY_PASSPHRASE=      # JWT private key passphrase
+API_BASE_URL=                    # Base URL for API
+
+# OAuth Providers (set as needed)
+GOOGLE_AUTH_URL=                  # Google OAuth URL
+GOOGLE_AUTH_CLIENT_ID=            # Google client ID
+GOOGLE_AUTH_CLIENT_SECRET=        # Google client secret
+GOOGLE_AUTH_TOKEN_URL=            # Google token URL
+GOOGLE_AUTH_CALLBACK_URL=         # Google callback URL
+
+FACEBOOK_AUTH_URL=                # Facebook OAuth URL
+FACEBOOK_AUTH_CLIENT_ID=          # Facebook client ID
+FACEBOOK_AUTH_CLIENT_SECRET=      # Facebook client secret
+
+APPLE_AUTH_URL=                   # Apple OAuth URL
+APPLE_AUTH_CLIENT_ID=             # Apple client ID
+APPLE_AUTH_TEAM_ID=               # Apple team ID
+APPLE_AUTH_KEY_ID=                # Apple key ID
+
+KEYCLOAK_HOST=                    # Keycloak server host
+KEYCLOAK_REALM=                   # Keycloak realm
+KEYCLOAK_CLIENT_ID=               # Keycloak client ID
+KEYCLOAK_CLIENT_SECRET=           # Keycloak client secret
+
+AUTH0_DOMAIN=                     # Auth0 domain
+AUTH0_CLIENT_ID=                  # Auth0 client ID
+AUTH0_CLIENT_SECRET=              # Auth0 client secret
+
+# Azure AD
+AZURE_AUTH_ENABLED=0              # Enable Azure AD (0/1)
+AZURE_IDENTITY_METADATA=         # Azure OpenID config URL
+AZURE_AUTH_CLIENT_ID=             # Azure app client ID
+AZURE_AUTH_CLIENT_SECRET=         # Azure client secret
+AZURE_AUTH_REDIRECT_URL=          # Azure redirect URL
+AZURE_AUTH_VALIDATE_ISSUER=0      # Validate issuer (0/1)
+AZURE_AUTH_CLOCK_SKEW=300         # Clock skew tolerance (seconds)
+
+# SAML
+SAML_URL=                         # SAML IdP URL
+SAML_CLIENT_ID=                   # SAML client ID
+SAML_CLIENT_SECRET=               # SAML client secret
+```
+
+**Video Conferencing Service:**
+```bash
+# Vonage
+VONAGE_API_KEY=                   # Vonage API key
+VONAGE_API_SECRET=                # Vonage API secret
+
+# Twilio
+TWILIO_ACCOUNT_SID=               # Twilio account SID
+TWILIO_AUTH_TOKEN=                 # Twilio auth token
+TWILIO_API_KEY=                    # Twilio API key
+TWILIO_API_SECRET=                 # Twilio API secret
+
+# Archive Storage
+AWS_ACCESS_KEY=                   # AWS S3 access key
+AWS_SECRET_KEY=                   # AWS S3 secret key
+AZURE_ACCOUNT_KEY=                # Azure blob account key
+AZURE_CONTAINER=                  # Azure blob container name
+```
+
+**OIDC Service:**
+```bash
+OIDC_CLAIMS_PROFILE=              # OIDC claims profile
+OIDC_ISSUER_URL=                  # OIDC issuer URL
+OIDC_INTERACTION_TIME=            # Interaction TTL
+OIDC_SESSION_TIME=                # Session TTL
+OIDC_GRANT_TIME=                  # Grant TTL
+OIDC_ID_TOKEN_TIME=               # ID token TTL
+OIDC_JWKS_KTY=                   # JWKS key type
+OIDC_JWKS_ALG=                   # JWKS algorithm
+OIDC_JWKS_KID=                   # JWKS key ID
+OIDC_COOKIES=                    # Cookie configuration
+```
+
+### Migration Control Variables
+
+Each service uses a specific environment variable to trigger database migrations on startup:
+
+```bash
+AUTH_MIGRATION=true               # Authentication & User-Tenant services
+AUDIT_MIGRATION=true              # Audit service
+WORKFLOW_MIGRATION=true           # BPMN service
+CHAT_MIGRATION=true               # Chat service
+FEATURETOGGLE_MIGRATION=true      # Feature Toggle service
+INMAIL_MIGRATION=true             # In-Mail service
+NOTIF_MIGRATION=true              # Notification service
+OIDC_MIGRATION=true               # OIDC service
+PAYMENT_MIGRATION=true            # Payment service
+REPORTS_MIGRATION=true            # Reporting service
+SCHEDULER_MIGRATION=true          # Scheduler service
+SEARCH_MIGRATION=true             # Search service
+SURVEY_MIGRATION=true             # Survey service
+```
+
+---
+
+## Migration Guide
+
+### Database Migrations
+
+All services use `db-migrate` for database schema management. Migrations are located in each service's `migrations/` directory.
+
+**Directory Structure:**
+```
+services/<service-name>/
+├── migrations/
+│   ├── pg/                      # PostgreSQL migrations
+│   │   └── migrations/
+│   │       ├── <timestamp>-init.js
+│   │       └── sqls/
+│   │           ├── <timestamp>-init-up.sql
+│   │           └── <timestamp>-init-down.sql
+│   ├── mysql/                   # MySQL migrations (if supported)
+│   │   └── migrations/
+│   └── database.json            # db-migrate configuration
+├── migration.js                 # Migration entry point
+└── package.json                 # Contains db:migrate scripts
+```
+
+**Running Migrations:**
+
+```bash
+# Run migrations for a specific service
+cd services/<service-name>
+npm run db:migrate
+
+# Or set the migration env variable and restart the service
+# The service will run migrations automatically on startup
+export AUTH_MIGRATION=true
+npm start
+
+# Run migration up
+npx db-migrate up
+
+# Run migration down (rollback)
+npx db-migrate down
+
+# Create a new migration
+npx db-migrate create <migration-name>
+```
+
+### Upgrading from Lerna v4 to npm Workspaces (v5+)
+
+From v5 onwards, the CLI supports workspaces with npm managing dependencies instead of Lerna v4:
+
+1. Remove `node_modules` and lock files across the monorepo
+2. Update root `package.json` to include `workspaces` field
+3. Run `npm install` from root (npm will handle hoisting)
+4. Update build scripts to use `npm run -w <workspace>` syntax
+
+### Upgrading LoopBack 4 Dependencies
+
+From `DEVELOPING.md`:
+
+1. Identify the target LoopBack version
+2. Update `@loopback/*` packages in each service's `package.json`
+3. Run `npm install` from the monorepo root
+4. Build and test each service: `npm run build && npm test`
+5. Fix any breaking API changes
+
+### Adding a New Microservice
+
+From `DEVELOPING.md`, follow these 14 steps:
+
+1. Use `sourceloop microservice` CLI command to scaffold
+2. Configure the datasource (PostgreSQL/MySQL)
+3. Create models extending `UserModifiableEntity` or `BaseEntity`
+4. Create repositories extending `DefaultUserModifyCrudRepository`
+5. Create controllers with OpenAPI decorators
+6. Set up the service component
+7. Configure authentication and authorization
+8. Add migration scripts
+9. Create `.env.example` and `.env.defaults`
+10. Write unit and integration tests
+11. Add OpenAPI spec generation script
+12. Update the service README
+13. Add to the root workspace configuration
+14. Submit PR following conventional commit guidelines
+
+---
+
+## Deployment Instructions
+
+### Prerequisites
+
+- **Node.js:** LTS version (18+ recommended)
+- **PostgreSQL:** 12+ (primary database for most services)
+- **Redis:** 6+ (required for authentication, scheduling, caching)
+- **Camunda:** Required for BPMN and Task services
+- **Docker:** For containerized deployment
+
+### Local Development Setup
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/sourcefuse/loopback4-microservice-catalog.git
+cd loopback4-microservice-catalog
+
+# 2. Install dependencies
+npm install
+
+# 3. Build all packages
+npm run build
+
+# 4. Set up environment files for the service you want to run
+cp services/<service-name>/.env.example services/<service-name>/.env
+# Edit .env with your configuration
+
+# 5. Run database migrations
+cd services/<service-name>
+npm run db:migrate
+
+# 6. Start the service
+npm start
+```
+
+### Docker Deployment
+
+Each service includes a Dockerfile. The standard Dockerfile pattern:
+
+```dockerfile
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci --only=production
+
+COPY . .
+RUN npm run build
+
+EXPOSE 3000
+
+CMD ["node", "."]
+```
+
+### Docker Compose (Full Stack)
+
+A comprehensive `docker-compose.yml` is available in `/sandbox/docker-compose.yml` that includes:
+
+**Infrastructure Services:**
+- `postgres` — PostgreSQL database (port 5432)
+- `redis` — Redis cache (port 6379)
+- `camunda` — Camunda BPM engine (port 8080)
+- `pgadmin` — PostgreSQL admin UI (port 80)
+
+**Application Services (example configuration):**
+```yaml
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: changeme
+      POSTGRES_DB: sourceloop
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+
+  camunda:
+    image: camunda/camunda-bpm-platform:latest
+    ports:
+      - "8080:8080"
+
+  auth-service:
+    build: ./services/authentication-service
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: changeme
+      DB_DATABASE: auth_db
+      DB_SCHEMA: main
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      JWT_SECRET: your-secret
+      JWT_ISSUER: sourceloop
+      AUTH_MIGRATION: true
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+      - redis
+```
+
+### AWS CDK Deployment
+
+CDK deployment stacks are available in `sandbox/telemed-app/backend/*/cdk/`:
+
+```bash
+# Install CDK CLI
+npm install -g aws-cdk
+
+# Navigate to CDK directory
+cd sandbox/telemed-app/backend/<service>/cdk
+
+# Deploy
+cdk deploy
+```
+
+The CDK stacks include:
+- Migration stack (runs db-migrate as a Lambda function)
+- Service stack (ECS Fargate or Lambda deployment)
+- Infrastructure stack (VPC, RDS, ElastiCache)
+
+### Production Checklist
+
+1. **Security:**
+   - Set strong JWT_SECRET (use asymmetric keys in production)
+   - Configure CORS appropriately
+   - Enable rate limiting via SecureSequence
+   - Use TLS/SSL for all connections
+   - Never commit `.env` files
+
+2. **Database:**
+   - Use connection pooling
+   - Enable SSL for database connections
+   - Set up automated backups
+   - Run migrations as a separate step (not on startup)
+
+3. **Redis:**
+   - Use Redis Cluster for high availability
+   - Enable persistence (AOF or RDB)
+   - Set maxmemory policy
+
+4. **Monitoring:**
+   - Enable structured logging (LOG_LEVEL=info)
+   - Set up health check endpoints
+   - Configure Grafana dashboards (if available)
+
+5. **Scaling:**
+   - Services are stateless — scale horizontally
+   - Use a load balancer for multiple instances
+   - Redis handles session/token state
+
+---
+
+## Troubleshooting FAQs
+
+### General Issues
+
+**Q: How do I run migrations for a service?**
+A: Each service has a `migration.js` file and migration scripts in `migrations/`. Run:
+```bash
+cd services/<service-name>
+npm run db:migrate
+```
+Or set the service's migration environment variable (e.g., `AUTH_MIGRATION=true`) and restart. The service will run migrations automatically on startup.
+
+**Q: Build fails with TypeScript errors after updating packages.**
+A: Run a clean build:
+```bash
+npm run clean
+npm install
+npm run build
+```
+
+**Q: How do I add a new service to the monorepo?**
+A: Use the CLI: `sourceloop microservice`. This scaffolds the complete service structure including models, repositories, controllers, migrations, and configuration files.
+
+**Q: Services fail to start with "Cannot find module" errors.**
+A: This usually means dependencies aren't properly installed or built:
+```bash
+# From monorepo root
+npm run clean-deps
+npm install
+npm run build
+```
+
+### Authentication Issues
+
+**Q: JWT token validation fails.**
+A: Check:
+1. `JWT_SECRET` matches between the auth service and consuming services
+2. `JWT_ISSUER` is consistent across services
+3. Token hasn't expired
+4. If using asymmetric keys, ensure public key is available
+
+**Q: OAuth callback fails with redirect mismatch.**
+A: Ensure the callback URL in your environment variables exactly matches the one registered with the OAuth provider (Google, Facebook, etc.), including protocol (http vs https) and trailing slashes.
+
+**Q: "Invalid client" error during authentication.**
+A: Verify that:
+1. The auth client exists in the `auth_clients` database table
+2. `client_id` and `client_secret` are correct
+3. The client has the correct `redirect_url` configured
+
+### Database Issues
+
+**Q: Migration fails with "relation already exists".**
+A: The migration has partially run before. Options:
+1. Check the `migrations` tracking table to see which migrations have been applied
+2. Manually mark the migration as complete if the table already exists
+3. Run `npx db-migrate down` to rollback, then retry
+
+**Q: Connection refused to PostgreSQL.**
+A: Verify:
+1. PostgreSQL is running and accepting connections
+2. `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD` are correct
+3. The database and schema exist
+4. pg_hba.conf allows connections from your host
+
+**Q: "Schema does not exist" error.**
+A: Create the schema manually:
+```sql
+CREATE SCHEMA IF NOT EXISTS main;
+```
+Or set `DB_SCHEMA=public` to use the default schema.
+
+### Redis Issues
+
+**Q: Redis connection errors.**
+A: Check:
+1. Redis is running on the specified host and port
+2. `REDIS_PASSWORD` is correct (if authentication is enabled)
+3. `REDIS_URL` format: `redis://[:password@]host:port[/db-number]`
+4. Firewall allows connections to the Redis port
+
+### Docker Issues
+
+**Q: Docker build fails with npm install errors.**
+A: Common fixes:
+1. Ensure `.dockerignore` excludes `node_modules`
+2. Use `npm ci` instead of `npm install` in Dockerfile
+3. Check that the base Node.js image version is compatible
+
+**Q: Services can't connect to each other in Docker Compose.**
+A: Use Docker service names (not `localhost`) as hostnames. For example, `DB_HOST=postgres` instead of `DB_HOST=localhost`.
+
+### Multi-Tenancy Issues
+
+**Q: Tenant isolation not working.**
+A: Ensure:
+1. `TenantGuardMixin` is applied to repositories
+2. The JWT token includes the correct `tenantId` claim
+3. `TenantUtilitiesComponent` is bound in the application
+
+**Q: "Tenant not found" error.**
+A: Verify:
+1. The tenant exists in the database with status ACTIVE
+2. The user has a `user_tenants` entry for the requested tenant
+3. The `tenantId` in the JWT matches an existing tenant
+
+### Performance Issues
+
+**Q: API responses are slow.**
+A: Consider:
+1. Enable caching with `@sourceloop/cache` and Redis
+2. Add database indexes for frequently queried columns
+3. Use pagination (limit/offset) for list endpoints
+4. Check for N+1 query issues in relations
+5. Enable connection pooling for the database
+
+**Q: Memory leaks in production.**
+A: Common causes:
+1. Unbounded Redis cache — set TTL on cached items
+2. Large audit logs — archive periodically using the audit service's archive endpoint
+3. Set `--max-old-space-size` Node.js flag appropriately
+
+### Development Workflow
+
+**Q: How do I run tests?**
+A: From the monorepo root:
+```bash
+npm test                          # Run all tests
+npm test -w services/<name>       # Run tests for specific service
+```
+
+**Q: What commit message format is required?**
+A: Conventional Commits format:
+```
+<type>(<scope>): <subject>
+
+Types: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert
+Example: feat(authentication-service): add MFA support
+```
+
+**Q: How do I generate OpenAPI documentation?**
+A: Most services have an `openapi-spec` npm script:
+```bash
+cd services/<service-name>
+npm run openapi-spec
+```
+This generates `openapi.json` and `openapi.md` files.
+
+**Q: How do I set up VS Code for development?**
+A: Install recommended extensions:
+- ESLint
+- Prettier
+- SonarLint
+- EditorConfig
+
+Configure settings as described in `DEVELOPING.md`.
+
+---
+
+## Links and Resources
+
+- **Main Documentation:** https://sourcefuse.github.io/arc-docs/arc-api-docs
+- **Website:** https://www.sourcefuse.com/arc-by-sourcefuse/
+- **GitHub Repository:** https://github.com/sourcefuse/loopback4-microservice-catalog
+- **Contributing Guide:** https://github.com/sourcefuse/loopback4-microservice-catalog/blob/master/.github/CONTRIBUTING.md
+- **LoopBack 4 Documentation:** https://loopback.io/doc/en/lb4/
+- **Camunda Documentation:** https://docs.camunda.org/
+- **License:** MIT
