@@ -25,10 +25,7 @@ export class InMemoryStoreStrategy implements ICacheStore {
     this.setWithTime(key, value, ttl);
   }
   async setMany<T>(keys: [string, T, number][]): Promise<void> {
-    const setPromises = keys.map(([key, value, ttl]) =>
-      this.setWithTime(key, value, ttl),
-    );
-    await Promise.all(setPromises);
+    keys.forEach(([key, value, ttl]) => this.setWithTime(key, value, ttl));
   }
 
   async delete(key: string): Promise<void> {
