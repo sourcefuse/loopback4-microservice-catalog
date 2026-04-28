@@ -110,7 +110,6 @@
     "postman-request": {
       "qs": "^6.14.1"
     },
-    "@xmldom/xmldom": "^0.8.13",
     "semver": "^7.5.4",
     "axios": "^1.13.5",
     "fast-xml-parser": "^5.3.6",

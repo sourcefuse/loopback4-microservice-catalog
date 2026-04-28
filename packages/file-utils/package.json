@@ -97,7 +97,6 @@
     "form-data": "^4.0.0",
     "loopback4-s3": "^9.0.3",
     "mochawesome": "^7.1.3",
-    "peek-readable": "^4.1.0",
     "source-map-support": "^0.5.21",
     "typescript": "^5.4.5"
   },
