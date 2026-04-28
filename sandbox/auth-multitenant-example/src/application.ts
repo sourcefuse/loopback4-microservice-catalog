@@ -79,14 +79,8 @@ export class AuthMultitenantExampleApplication extends BootMixin(
       windowMs: parseInt(process.env.RATE_LIMITER_WINDOW_MS as string),
       keyGenerator: rateLimitKeyGen,
     });
-    const frameOption = process.env.X_FRAME_OPTIONS;
-
-    const frameguardAction =
-      frameOption === 'deny' || frameOption === 'sameorigin'
-        ? frameOption
-        : undefined;
     this.bind(HelmetSecurityBindings.CONFIG).to({
-      frameguard: {action: frameguardAction},
+      frameguard: {action: process.env.X_FRAME_OPTIONS},
     });
     this.bind('datasources.redis').to(RedisDataSource);
 
