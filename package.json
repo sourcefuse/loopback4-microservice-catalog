@@ -74,6 +74,7 @@
     "packages/cli/",
     "packages/cache/",
     "packages/feature-toggle/",
+    "packages/observability/",
     "packages/file-utils/",
     "packages/custom-sf-changelog/",
     "services/*",

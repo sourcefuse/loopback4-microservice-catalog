@@ -1,0 +1,73 @@
+import {ResolvedObservabilityConfig} from '../types';
+import {
+  getEnabledInstrumentations,
+  InstrumentationModuleRequirement,
+  InstrumentationName,
+  INSTRUMENTATION_MODULE_REQUIREMENTS,
+  isModuleInstalled,
+} from '../profiles/instrumentations';
+
+function assertDependencyInstalled(moduleName: string, message: string): void {
+  if (!isModuleInstalled(moduleName)) {
+    throw new Error(message);
+  }
+}
+
+export function validateObservabilityConfig(
+  config: ResolvedObservabilityConfig,
+): void {
+  if (!config.serviceName.trim()) {
+    throw new Error('Observability serviceName must be a non-empty string.');
+  }
+
+  if (
+    config.sampler === 'traceidratio' &&
+    (config.samplerArg < 0 || config.samplerArg > 1)
+  ) {
+    throw new Error(
+      'Observability samplerArg must be between 0 and 1 for traceidratio.',
+    );
+  }
+
+  if (!config.enabled || config.profile === 'none') {
+    return;
+  }
+
+  if (config.instrumentations.express && !config.instrumentations.http) {
+    throw new Error(
+      'Observability express instrumentation requires http instrumentation to be enabled.',
+    );
+  }
+
+  for (const instrumentation of getEnabledInstrumentations(config)) {
+    validateInstrumentationRequirements(
+      instrumentation,
+      INSTRUMENTATION_MODULE_REQUIREMENTS[instrumentation],
+    );
+  }
+}
+
+function validateInstrumentationRequirements(
+  instrumentation: InstrumentationName,
+  requirements: InstrumentationModuleRequirement[],
+): void {
+  for (const requirement of requirements) {
+    if (requirement.type === 'all') {
+      for (const moduleName of requirement.modules) {
+        assertDependencyInstalled(
+          moduleName,
+          `Install the optional peer dependency "${moduleName}" or disable the "${instrumentation}" instrumentation.`,
+        );
+      }
+      continue;
+    }
+
+    if (!requirement.modules.some(isModuleInstalled)) {
+      throw new Error(
+        `Install one of the optional peer dependencies "${requirement.modules.join(
+          '" or "',
+        )}" or disable the "${instrumentation}" instrumentation.`,
+      );
+    }
+  }
+}
