@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/cache",
-  "version": "6.0.6",
+  "version": "6.0.7",
   "description": "A caching extension to cache methods.",
   "keywords": [
     "loopback-extension",

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>6.0.7 (2026-04-29)</small>
+
+* refactor(chore): fix sonar issue (#2512) ([0a9c337](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0a9c337)), closes [#2512](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2512) [#2511](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2511)
+
+
+
+
+
 ## <small>6.0.6 (2026-03-09)</small>
 
 **Note:** Version bump only for package @sourceloop/cache

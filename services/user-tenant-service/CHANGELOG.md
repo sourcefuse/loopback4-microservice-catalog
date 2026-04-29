@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.1.0 (2026-04-29)
+
+* feat(observability): add @sourceloop/observability with OTEL-first bootstrap, profiles, and pluggabl ([c3d46e8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c3d46e8)), closes [#2502](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2502) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#2502](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2502) [#2503](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2503)
+
+
+
+
+
 ## <small>7.0.6 (2026-03-09)</small>
 
 * feat:Standardize Usage of New @sourceloop/core Controller Enhancements Across All ARC Services (#243 ([624e968](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/624e968)), closes [#2438](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2438) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#0](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/0) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399) [#2399](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2399)
