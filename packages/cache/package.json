@@ -48,27 +48,27 @@
     "@loopback/core": "^7.0.3"
   },
   "dependencies": {
-    "@loopback/core": "^7.0.3",
-    "@loopback/repository": "^8.0.3",
-    "@loopback/rest": "^15.0.4",
-    "@loopback/rest-explorer": "^8.0.4",
+    "@loopback/core": "^7.0.11",
+    "@loopback/repository": "^8.0.11",
+    "@loopback/rest": "^15.0.12",
+    "@loopback/rest-explorer": "^8.0.12",
     "@sourceloop/core": "^20.0.6",
-    "tslib": "^2.6.2",
-    "winston": "^3.17.0"
+    "tslib": "^2.8.1",
+    "winston": "^3.19.0"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
-    "@loopback/build": "^12.0.3",
+    "@loopback/build": "^12.0.11",
     "@loopback/eslint-config": "^16.0.1",
-    "@loopback/testlab": "^8.0.3",
-    "@types/dotenv": "^8.2.0",
-    "@types/node": "^20.12.7",
-    "dotenv": "^16.4.5",
-    "eslint": "^8.57.0",
+    "@loopback/testlab": "^8.0.11",
+    "@types/dotenv": "^8.2.3",
+    "@types/node": "^20.19.39",
+    "dotenv": "^16.6.1",
+    "eslint": "^8.57.1",
     "loopback-connector-kv-redis": "^4.0.0",
-    "mochawesome": "^7.1.3",
+    "mochawesome": "^7.1.4",
     "source-map-support": "^0.5.21",
-    "typescript": "^5.4.5"
+    "typescript": "^5.9.3"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
