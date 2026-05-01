@@ -25,6 +25,7 @@ import {
   LoginActivity,
   RefreshToken,
   RefreshTokenRequest,
+  RevokedToken,
   User,
   UserTenant,
 } from '../models';
@@ -90,7 +91,6 @@ export class IdpLoginService {
   ) {}
 
   private readonly msInSecond = 1000;
-  private static readonly REVOKED_AUTH_CODE_PREFIX = 'auth_code' as const;
 
   /**
    * Retrieves OpenID Connect configuration settings.
@@ -169,27 +169,37 @@ export class IdpLoginService {
     try {
       const resultCode = await this.codeReader(request.code);
 
-      // Check if the authorization code has already been used (one-time-use enforcement)
-      const revokedAuthCodeKey = `${IdpLoginService.REVOKED_AUTH_CODE_PREFIX}:${resultCode}`;
-      const isCodeRevoked =
-        await this.revokedTokensRepo.get(revokedAuthCodeKey);
-      if (isCodeRevoked) {
+      const authCodeKeyPrefix = 'revoked:auth_code';
+      const revokedAuthCodeKey = `${authCodeKeyPrefix}:${resultCode}`;
+      let codeWasNew: boolean;
+      try {
+        codeWasNew = await this.revokedTokensRepo.setIfNotExists(
+          revokedAuthCodeKey,
+          new RevokedToken({token: resultCode}),
+          {ttl: authClient.authCodeExpiration * this.msInSecond},
+        );
+      } catch (repoError) {
+        this.logger.error(
+          `[AUTH] Revocation store error during auth code exchange.`,
+          repoError,
+        );
+        throw new HttpErrors.ServiceUnavailable(
+          'Authentication service temporarily unavailable. Please retry.',
+        );
+      }
+
+      if (!codeWasNew) {
+        this.logger.warn(`[AUTH][SECURITY] Auth code replay attempt.`);
         throw new HttpErrors.Unauthorized(AuthErrorKeys.CodeExpired);
       }
 
+      // No separate set() call needed — code is already atomically marked above
       const payload = (await this.jwtVerifier(resultCode, {
         audience: request.clientId,
       })) as ClientAuthCode<User, typeof User.prototype.id>;
       if (payload.mfa) {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.UserVerificationFailed);
       }
-
-      // Revoke the auth code immediately after verification to prevent reuse
-      await this.revokedTokensRepo.set(
-        revokedAuthCodeKey,
-        {token: resultCode},
-        {ttl: authClient.authCodeExpiration * this.msInSecond},
-      );
 
       if (
         payload.user?.id &&
