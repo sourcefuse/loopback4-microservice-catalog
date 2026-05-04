@@ -1,18 +1,12 @@
-﻿// Copyright (c) 2023 Sourcefuse Technologies
+// Copyright (c) 2023 Sourcefuse Technologies
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {inject} from '@loopback/core';
-import {DefaultKeyValueRepository, juggler} from '@loopback/repository';
+import {RevokedTokenRepository as CoreRevokedTokenRepository} from '@sourceloop/core';
 
-import {RevokedToken} from '../models';
-import {AuthCacheSourceName} from '../types';
-
-export class RevokedTokenRepository extends DefaultKeyValueRepository<RevokedToken> {
-  constructor(
-    @inject(`datasources.${AuthCacheSourceName}`)
-    dataSource: juggler.DataSource,
-  ) {
-    super(RevokedToken, dataSource);
-  }
-}
+/**
+ * Authentication service extends the core's RevokedTokenRepository
+ * All functionality is inherited from the core package
+ * This follows the single source of truth principle
+ */
+export class RevokedTokenRepository extends CoreRevokedTokenRepository {}

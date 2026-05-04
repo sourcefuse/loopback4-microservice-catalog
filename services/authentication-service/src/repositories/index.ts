@@ -2,14 +2,17 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {JwtKeysRepository, PublicKeysRepository} from '@sourceloop/core';
+import {
+  JwtKeysRepository,
+  PublicKeysRepository,
+  RevokedTokenRepository,
+} from '@sourceloop/core';
 import {AuthClientRepository} from './auth-client.repository';
 import {AuthSecureClientRepository} from './auth-secure-client.repository';
 import {LoginActivityRepository} from './login-activity.repository';
 import {OtpCacheRepository} from './otp-cache.repository';
 import {OtpRepository} from './otp.repository';
 import {RefreshTokenRepository} from './refresh-token.repository';
-import {RevokedTokenRepository} from './revoked-token.repository';
 import {RoleRepository} from './role.repository';
 import {TenantConfigRepository} from './tenant-config.repository';
 import {TenantRepository} from './tenant.repository';
