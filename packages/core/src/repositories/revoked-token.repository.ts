@@ -37,8 +37,7 @@ export class RevokedTokenRepository extends DefaultKeyValueRepository<RevokedTok
       try {
         const executeFn = connector.execute;
         const result = await new Promise<boolean>((resolve, reject) => {
-          // eslint-disable-next-line no-void
-          void executeFn(
+          executeFn(
             'SET',
             [key, JSON.stringify(value), 'NX', 'EX', ttlSeconds],
             (err: Error, res: Buffer) => {
@@ -48,7 +47,7 @@ export class RevokedTokenRepository extends DefaultKeyValueRepository<RevokedTok
                 resolve(res?.toString() === 'OK');
               }
             },
-          );
+          ) as unknown;
         });
         if (!result) {
           return false;

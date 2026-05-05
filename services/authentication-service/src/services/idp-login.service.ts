@@ -169,32 +169,8 @@ export class IdpLoginService {
     }
     try {
       const resultCode = await this.codeReader(request.code);
+      await this.validateAuthCode(resultCode, authClient);
 
-      // Check if the authorization code has already been used (one-time-use enforcement)
-      const revokedAuthCodeKey = `${IdpLoginService.REVOKED_AUTH_CODE_PREFIX}:${resultCode}`;
-      let codeWasNew: boolean;
-      try {
-        codeWasNew = await this.revokedTokensRepo.setIfNotExists(
-          revokedAuthCodeKey,
-          new RevokedToken({token: resultCode}),
-          {ttl: authClient.authCodeExpiration * this.msInSecond},
-        );
-      } catch (repoError) {
-        this.logger.error(
-          `[AUTH] Revocation store error during auth code exchange.`,
-          repoError,
-        );
-        throw new HttpErrors.ServiceUnavailable(
-          'Authentication service temporarily unavailable. Please retry.',
-        );
-      }
-
-      if (!codeWasNew) {
-        this.logger.warn(`[AUTH][SECURITY] Auth code replay attempt.`);
-        throw new HttpErrors.Unauthorized(AuthErrorKeys.CodeExpired);
-      }
-
-      // No separate set() call needed — code is already atomically marked above
       const payload = (await this.jwtVerifier(resultCode, {
         audience: request.clientId,
       })) as ClientAuthCode<User, typeof User.prototype.id>;
@@ -219,6 +195,34 @@ export class IdpLoginService {
       } else {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
       }
+    }
+  }
+
+  private async validateAuthCode(
+    authCode: string,
+    authClient: AuthClient,
+  ): Promise<void> {
+    const revokedAuthCodeKey = `${IdpLoginService.REVOKED_AUTH_CODE_PREFIX}:${authCode}`;
+    let codeWasNew: boolean;
+    try {
+      codeWasNew = await this.revokedTokensRepo.setIfNotExists(
+        revokedAuthCodeKey,
+        new RevokedToken({token: authCode}),
+        {ttl: authClient.authCodeExpiration * this.msInSecond},
+      );
+    } catch (repoError) {
+      this.logger.error(
+        `[AUTH] Revocation store error during auth code exchange.`,
+        repoError,
+      );
+      throw new HttpErrors.ServiceUnavailable(
+        'Authentication service temporarily unavailable. Please retry.',
+      );
+    }
+
+    if (!codeWasNew) {
+      this.logger.warn(`[AUTH][SECURITY] Auth code replay attempt.`);
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.CodeExpired);
     }
   }
 
