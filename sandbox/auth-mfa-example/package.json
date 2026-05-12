@@ -10,7 +10,7 @@
     "private": true,
     "types": "dist/index.d.ts",
     "engines": {
-        "node": ">=20"
+        "node": ">=22"
     },
     "scripts": {
         "build": "lb-tsc",
