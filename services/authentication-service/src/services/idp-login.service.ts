@@ -25,6 +25,7 @@ import {
   LoginActivity,
   RefreshToken,
   RefreshTokenRequest,
+  RevokedToken,
   User,
   UserTenant,
 } from '../models';
@@ -168,14 +169,7 @@ export class IdpLoginService {
     }
     try {
       const resultCode = await this.codeReader(request.code);
-
-      // Check if the authorization code has already been used (one-time-use enforcement)
-      const revokedAuthCodeKey = `${IdpLoginService.REVOKED_AUTH_CODE_PREFIX}:${resultCode}`;
-      const isCodeRevoked =
-        await this.revokedTokensRepo.get(revokedAuthCodeKey);
-      if (isCodeRevoked) {
-        throw new HttpErrors.Unauthorized(AuthErrorKeys.CodeExpired);
-      }
+      await this.validateAuthCode(resultCode, authClient);
 
       const payload = (await this.jwtVerifier(resultCode, {
         audience: request.clientId,
@@ -183,13 +177,6 @@ export class IdpLoginService {
       if (payload.mfa) {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.UserVerificationFailed);
       }
-
-      // Revoke the auth code immediately after verification to prevent reuse
-      await this.revokedTokensRepo.set(
-        revokedAuthCodeKey,
-        {token: resultCode},
-        {ttl: authClient.authCodeExpiration * this.msInSecond},
-      );
 
       if (
         payload.user?.id &&
@@ -208,6 +195,34 @@ export class IdpLoginService {
       } else {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
       }
+    }
+  }
+
+  private async validateAuthCode(
+    authCode: string,
+    authClient: AuthClient,
+  ): Promise<void> {
+    const revokedAuthCodeKey = `${IdpLoginService.REVOKED_AUTH_CODE_PREFIX}:${authCode}`;
+    let codeWasNew: boolean;
+    try {
+      codeWasNew = await this.revokedTokensRepo.setIfNotExists(
+        revokedAuthCodeKey,
+        new RevokedToken({token: authCode}),
+        {ttl: authClient.authCodeExpiration * this.msInSecond},
+      );
+    } catch (repoError) {
+      this.logger.error(
+        `[AUTH] Revocation store error during auth code exchange.`,
+        repoError,
+      );
+      throw new HttpErrors.ServiceUnavailable(
+        'Authentication service temporarily unavailable. Please retry.',
+      );
+    }
+
+    if (!codeWasNew) {
+      this.logger.warn(`[AUTH][SECURITY] Auth code replay attempt.`);
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.CodeExpired);
     }
   }
 
