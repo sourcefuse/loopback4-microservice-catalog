@@ -1,7 +1,7 @@
 {
     "name": "@sourceloop/auth-mfa-example",
     "version": "0.7.9",
-    "description": "Authentication google authenticator mfa exmaple.",
+    "description": "Authentication google authenticator mfa exmaple",
     "keywords": [
         "loopback-microservice",
         "loopback"

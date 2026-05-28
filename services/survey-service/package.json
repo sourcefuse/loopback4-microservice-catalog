@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/survey-service",
   "version": "7.0.7",
-  "description": "Survey microservice.",
+  "description": "Survey microservice",
   "keywords": [
     "loopback-extension",
     "loopback"

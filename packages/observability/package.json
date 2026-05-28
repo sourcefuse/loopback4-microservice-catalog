@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/observability",
   "version": "0.0.1",
-  "description": "OpenTelemetry-first observability bootstrap and LoopBack integration for Sourceloop services",
+  "description": "OpenTelemetry-first observability bootstrap and LoopBack integration for Sourceloop services.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {

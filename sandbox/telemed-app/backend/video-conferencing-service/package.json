@@ -2,7 +2,7 @@
   "name": "@sourceloop/telemed-video-conferencing-api",
   "private": "true",
   "version": "0.7.6",
-  "description": "video-conferencing.",
+  "description": "video-conferencing",
   "keywords": [
     "loopback-microservice",
     "loopback"
