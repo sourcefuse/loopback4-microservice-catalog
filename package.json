@@ -1,5 +1,6 @@
 {
   "name": "@sourceloop/root",
+  "description": "root of the monorepo",
   "private": true,
   "scripts": {
     "prepare": "husky install",
