@@ -1,50 +1,55 @@
+// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
 import {
   AnyObject,
   Count,
   DataObject,
-  DefaultCrudRepository,
   Entity,
   Filter,
   FilterExcludingWhere,
   Where,
 } from '@loopback/repository';
+import {SequelizeCrudRepository} from '@loopback/sequelize';
 import {
   AbstractConstructor,
   ICacheMixinOptions,
   ICacheService,
   ICachedMethodOptions,
-  ICachedRepository,
+  ICachedSequelizeRepository,
   ICachedService,
-} from '../types';
+} from '../../types';
 import {inject} from '@loopback/core';
-import {CacheComponentBindings} from '../keys';
-import {cacheInvalidator} from '../decorators/cache-invalidator.decorator';
+import {CacheComponentBindings} from '../../keys';
+import {cacheInvalidator} from '../../decorators/cache-invalidator.decorator';
 
 // sonarignore:start
 /**
- * This is a mixin function that adds caching functionality to a given repository class.
+ * This is a mixin function that adds caching functionality to a Sequelize-based repository class.
  * @param superClass - The superclass is a generic type parameter that extends the
- * `DefaultCrudRepository` class. It represents the base repository class that the `CacheMixin` will
+ * `SequelizeCrudRepository` class. It represents the base repository class that the `SequelizeCacheMixin` will
  * extend and add caching functionality to.
  * @param {ICacheMixinOptions} [cacheOptions] - `cacheOptions` is an optional parameter of type
  * `ICacheMixinOptions`. It is used to configure the caching behavior of the repository.
  */
-export function CacheMixin<
+export function SequelizeCacheMixin<
   // sonarignore:end
   M extends Entity,
   ID,
   Relations extends object,
-  S extends AbstractConstructor<DefaultCrudRepository<M, ID, Relations>>,
+  S extends AbstractConstructor<SequelizeCrudRepository<M, ID, Relations>>,
 >(
-  superClass: S & AbstractConstructor<DefaultCrudRepository<M, ID, Relations>>,
+  superClass: S &
+    AbstractConstructor<SequelizeCrudRepository<M, ID, Relations>>,
   cacheOptions?: ICacheMixinOptions,
 ): typeof superClass &
-  AbstractConstructor<ICachedRepository<M, ID, Relations>> & {
-    prototype: ICachedRepository<M, ID, Relations>;
+  AbstractConstructor<ICachedSequelizeRepository<M, ID, Relations>> & {
+    prototype: ICachedSequelizeRepository<M, ID, Relations>;
   } {
   abstract class CachedRepo
     extends superClass
-    implements ICachedService, ICachedRepository<M, ID, Relations>
+    implements ICachedService, ICachedSequelizeRepository<M, ID, Relations>
   {
     @inject(CacheComponentBindings.CacheService)
     cache: ICacheService;
@@ -73,10 +78,10 @@ export function CacheMixin<
       filter?: Filter<M>,
       options?: ICachedMethodOptions,
     ): Promise<(M & Relations) | null> {
+      options = addTagsToOptions(options, cacheOptions?.cachedItemTags);
       if (cacheOptions?.disableCachedFetch) {
         return super.findOne(filter, options);
       }
-      options = addTagsToOptions(options, cacheOptions?.cachedItemTags);
       return this.cache.executeAndSave(
         super.findOne.bind(this),
         [filter, options],

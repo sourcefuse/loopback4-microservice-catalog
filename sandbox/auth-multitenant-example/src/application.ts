@@ -81,11 +81,10 @@ export class AuthMultitenantExampleApplication extends BootMixin(
     });
     this.bind(HelmetSecurityBindings.CONFIG).to({
       frameguard: {
-        action:
-          process.env.X_FRAME_OPTIONS === 'deny' ||
-          process.env.X_FRAME_OPTIONS === 'sameorigin'
-            ? process.env.X_FRAME_OPTIONS
-            : 'deny',
+        action: process.env.X_FRAME_OPTIONS as
+          | 'deny'
+          | 'sameorigin'
+          | undefined,
       },
     });
     this.bind('datasources.redis').to(RedisDataSource);
