@@ -9,10 +9,10 @@ import {
 } from '@opentelemetry/sdk-trace-base';
 import {NodeTracerProvider} from '@opentelemetry/sdk-trace-node';
 import {
+  ATTR_DEPLOYMENT_ENVIRONMENT_NAME,
   ATTR_SERVICE_NAME,
   ATTR_SERVICE_VERSION,
 } from '@opentelemetry/semantic-conventions';
-import {ATTR_DEPLOYMENT_ENVIRONMENT} from '@opentelemetry/semantic-conventions/incubating';
 import {
   ObservabilityProfileName,
   ObservabilityProfile,
@@ -54,7 +54,7 @@ function buildResource(config: ResolvedObservabilityConfig): Resource {
   }
 
   if (config.environment) {
-    attributes[ATTR_DEPLOYMENT_ENVIRONMENT] = config.environment;
+    attributes[ATTR_DEPLOYMENT_ENVIRONMENT_NAME] = config.environment;
   }
 
   return detectResourcesSync().merge(new Resource(attributes));
