@@ -101,7 +101,7 @@
     "typescript": "^5.2.2"
   },
   "overrides": {
-    "axios": "^1.15.2",
+    "axios": "^1.16.1",
     "minimatch": "^10.2.1",
     "fast-xml-parser": "^5.3.6",
     "fast-uri": "^3.1.2",
