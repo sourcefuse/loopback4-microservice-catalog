@@ -80,7 +80,13 @@ export class AuthMultitenantExampleApplication extends BootMixin(
       keyGenerator: rateLimitKeyGen,
     });
     this.bind(HelmetSecurityBindings.CONFIG).to({
-      frameguard: {action: process.env.X_FRAME_OPTIONS},
+      frameguard: {
+        action:
+          process.env.X_FRAME_OPTIONS === 'deny' ||
+          process.env.X_FRAME_OPTIONS === 'sameorigin'
+            ? process.env.X_FRAME_OPTIONS
+            : 'deny',
+      },
     });
     this.bind('datasources.redis').to(RedisDataSource);
 

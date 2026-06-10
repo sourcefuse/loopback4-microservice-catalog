@@ -1,7 +1,7 @@
 {
   "name": "custom-sf-changelog",
   "version": "3.0.0",
-  "description": "conventional-changelog angular preset",
+  "description": "conventional-changelog angular preset.",
   "main": "index.js",
   "private": true,
   "scripts": {
@@ -22,7 +22,7 @@
   ],
   "author": "Akshat Dubey",
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "license": "ISC",
   "dependencies": {
