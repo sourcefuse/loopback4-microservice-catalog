@@ -73,7 +73,7 @@
     "db-migrate-pg": "^1.5.2",
     "dotenv": "^16.6.1",
     "dotenv-extended": "^2.9.0",
-    "joi": "^17.13.3",
+    "joi": "^17.13.4",
     "loopback-connector-postgresql": "^7.2.3",
     "sequelize": "^6.37.8",
     "tslib": "^2.8.1",
