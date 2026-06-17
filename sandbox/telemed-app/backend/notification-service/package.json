@@ -10,7 +10,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
-    "node": ">=22"
+    "node": "22 || 24"
   },
   "scripts": {
     "build:layers": "scripts/build-dependency-layer.sh",
@@ -79,9 +79,9 @@
     "dotenv": "^16.6.1",
     "dotenv-extended": "^2.9.0",
     "loopback-connector-postgresql": "^7.2.3",
-    "loopback4-authentication": "^13.1.0",
-    "loopback4-authorization": "^8.1.5",
-    "loopback4-notifications": "^10.1.0",
+    "loopback4-authentication": "^14.0.0",
+    "loopback4-authorization": "^9.0.0",
+    "loopback4-notifications": "^11.0.0",
     "pubnub": "^7.6.3",
     "swagger-stats-sf": "^0.99.9",
     "symlink-resolver": "0.2.1",
