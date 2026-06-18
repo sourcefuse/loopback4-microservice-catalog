@@ -9,7 +9,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
-    "node": ">=22"
+    "node": "22 || 24"
   },
   "scripts": {
     "prebuild": "npm run clean",
@@ -74,9 +74,9 @@
     "dotenv": "^16.6.1",
     "dotenv-extended": "^2.9.0",
     "lodash": "^4.18.1",
-    "loopback4-authentication": "^13.1.0",
-    "loopback4-authorization": "^8.1.5",
-    "loopback4-soft-delete": "^11.1.0",
+    "loopback4-authentication": "^14.0.0",
+    "loopback4-authorization": "^9.0.0",
+    "loopback4-soft-delete": "^12.0.0",
     "proxyquire": "^2.1.3",
     "tslib": "^2.8.1"
   },

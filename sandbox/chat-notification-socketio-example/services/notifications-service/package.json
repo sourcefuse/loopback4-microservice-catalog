@@ -9,7 +9,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
-    "node": ">=22"
+    "node": "22 || 24"
   },
   "private": true,
   "scripts": {
@@ -67,8 +67,8 @@
     "firebase-admin": "^13.8.0",
     "loopback-connector-kv-redis": "^4.0.0",
     "loopback-connector-postgresql": "^7.2.3",
-    "loopback4-authorization": "^8.1.5",
-    "loopback4-notifications": "^10.1.0",
+    "loopback4-authorization": "^9.0.0",
+    "loopback4-notifications": "^11.0.0",
     "nodemailer": "^7.0.13",
     "prom-client": "^14.2.0",
     "socket.io-client": "^4.8.3",

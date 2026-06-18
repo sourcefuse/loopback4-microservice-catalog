@@ -17,7 +17,7 @@
     "directory": "examples/socketio"
   },
   "engines": {
-    "node": ">=22"
+    "node": "22 || 24"
   },
   "private": true,
   "scripts": {
