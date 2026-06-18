@@ -30,7 +30,7 @@
     }
   },
   "engines": {
-    "node": ">=22"
+    "node": "22 || 24"
   },
   "scripts": {
     "build": "lb-tsc",
@@ -95,7 +95,7 @@
     "dotenv": "^16.6.1",
     "eslint": "^8.57.1",
     "form-data": "^4.0.5",
-    "loopback4-s3": "^9.0.3",
+    "loopback4-s3": "^11.0.0",
     "mochawesome": "^7.1.4",
     "source-map-support": "^0.5.21",
     "typescript": "^5.9.3"

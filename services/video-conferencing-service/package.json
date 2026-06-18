@@ -9,7 +9,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
-    "node": ">=22"
+    "node": "22 || 24"
   },
   "exports": {
     ".": "./dist/index.js",
@@ -96,9 +96,9 @@
     "dotenv-extended": "^2.9.0",
     "jsonwebtoken": "^9.0.3",
     "loopback-connector-postgresql": "^7.2.3",
-    "loopback4-authentication": "^13.1.0",
-    "loopback4-authorization": "^8.1.5",
-    "loopback4-soft-delete": "^11.1.0",
+    "loopback4-authentication": "^14.0.0",
+    "loopback4-authorization": "^9.0.0",
+    "loopback4-soft-delete": "^12.0.0",
     "moment": "^2.30.1",
     "nanoid": "^3.3.11",
     "opentok": "^2.23.1",
