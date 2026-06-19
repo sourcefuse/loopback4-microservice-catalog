@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.10.0 (2026-06-19)
+
+* refactor(chore): fix sonar issue (#2512) ([0a9c337](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0a9c337)), closes [#2512](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2512) [#2511](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2511)
+* refactor(deps): update catalog extension to latest version (#2565) ([d2c2fd8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d2c2fd8)), closes [#2565](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2565) [#2564](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2564)
+* chore(deps): upgrade catalog dependencies to latest versions (#2521) ([f5ecddf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f5ecddf)), closes [#2521](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2521) [#2510](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2510) [#2510](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2510) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#2510](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2510) [#2510](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2510)
+* Race condition (TOCTOU) issue fix (#2522) ([cedd708](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/cedd708)), closes [#2522](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2522) [#2504](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2504) [#2504](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2504) [#2504](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2504) [#2504](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2504) [#2504](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2504)
+* fix(authentication-service): make authorization code one-time-use (#2497) ([b75ea4f](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b75ea4f)), closes [#2497](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2497) [#2495](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2495) [#2495](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2495) [#2495](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2495) [#2495](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2495)
+
+
+### BREAKING CHANGE
+
+* yes
+* yes
+* YES
+
+
+
+
 ## <small>0.9.6 (2026-03-09)</small>
 
 * fix(cli): fix the vulnerabilities in cli (#2443) ([b2b7351](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/b2b7351)), closes [#2443](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2443) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00)

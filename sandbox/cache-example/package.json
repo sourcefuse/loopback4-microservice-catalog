@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/cache-example",
-  "version": "0.8.8",
+  "version": "0.9.0",
   "description": "cache example",
   "keywords": [
     "loopback-application",
@@ -57,8 +57,8 @@
     "@loopback/rest": "^15.0.12",
     "@loopback/rest-explorer": "^8.0.12",
     "@loopback/service-proxy": "^8.0.11",
-    "@sourceloop/cache": "^6.0.6",
-    "@sourceloop/core": "^20.0.6",
+    "@sourceloop/cache": "^7.0.0",
+    "@sourceloop/core": "^21.0.0",
     "db-migrate": "^1.0.0-beta.35",
     "db-migrate-pg": "^1.5.2",
     "dotenv": "^16.6.1",
