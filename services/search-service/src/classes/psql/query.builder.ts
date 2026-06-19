@@ -78,11 +78,17 @@ export class PsqlQueryBuilder<T extends Model> extends SearchQueryBuilder<T> {
   }
 
   _formatAndSanitize(param: string) {
-    return param
-      .replace(/[^A-Za-z\s0-9]/g, ' ')
-      .split(' ')
-      .filter(p => p)
-      .map(p => `${p}:*`)
-      .join('<->');
+    let result = param;
+    while (result.endsWith('.')) {
+      result = result.slice(0, -1);
+    }
+
+    return result
+      .replace(/[!&|<>():'"]/g, ' ') // Remove PostgreSQL tsquery special chars
+      .replace(/[^A-Za-z0-9.\s]/g, ' ') // Keep dots, remove other symbols
+      .split(/\s+/) // Split on any whitespace (not just spaces)
+      .filter(p => p && p !== '.') // Filter empty and standalone dots
+      .map(p => `${p}:*`) // Add prefix match operator
+      .join('<->'); // Join with followed-by operator
   }
 }
