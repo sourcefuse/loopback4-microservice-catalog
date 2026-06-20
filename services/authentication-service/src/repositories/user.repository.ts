@@ -222,11 +222,11 @@ export class UserRepository extends DefaultSoftCrudRepository<
     return user;
   }
 
-  async updateLastLogin(userId: string): Promise<void> {
+  async updateLastLogin(userId: string, time?: number): Promise<void> {
     await super.updateById(
       userId,
       {
-        lastLogin: Date.now(),
+        lastLogin: time ?? Date.now(),
       },
       {
         currentUser: {id: userId},
