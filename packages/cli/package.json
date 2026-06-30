@@ -230,7 +230,7 @@
       "@sourceloop/task-service": "^9.0.0",
       "@sourceloop/user-tenant-service": "^7.0.0",
       "@sourceloop/video-conferencing-service": "^19.0.0",
-      "@sourceloop/audit-log": "^9.0.0",
+      "@sourceloop/audit-log": "^10.0.1",
       "@sourceloop/vault": "^8.0.0",
       "loopback4-authentication": "^14.0.0",
       "loopback4-authorization": "^9.0.0",
