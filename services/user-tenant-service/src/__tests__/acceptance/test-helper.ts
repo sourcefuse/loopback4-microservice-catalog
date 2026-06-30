@@ -8,7 +8,10 @@ import {
   givenHttpServerConfig,
 } from '@loopback/testlab';
 import {UserTenantServiceApplication} from '../../application';
-import {AuthenticationDbDataSource} from '../datasources';
+import {
+  AuthenticationCacheDbDataSource,
+  AuthenticationDbDataSource,
+} from '../datasources';
 
 export async function setupApplication(): Promise<AppWithClient> {
   const restConfig = givenHttpServerConfig({
@@ -28,7 +31,12 @@ export async function setupApplication(): Promise<AppWithClient> {
     name: 'AuthDB',
     connector: 'memory',
   });
+  app.bind('datasources.AuthCache').to({
+    name: 'AuthCache',
+    connector: 'memory',
+  });
   app.dataSource(AuthenticationDbDataSource);
+  app.dataSource(AuthenticationCacheDbDataSource);
   await app.boot();
   await app.start();
 

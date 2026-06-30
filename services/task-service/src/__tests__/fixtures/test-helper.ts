@@ -38,6 +38,12 @@ export async function setupApplication(loggerStub?: ILogger) {
   });
   app.dataSource(AuthenticationDbDataSource);
 
+  app.bind(`datasources.${AuthCacheSourceName}`).to(
+    new juggler.DataSource({
+      name: AuthCacheSourceName,
+      connector: 'memory',
+    }),
+  );
   app.bind(`datasources.config.${AuthCacheSourceName}`).to({
     name: 'redis',
     connector: 'kv-memory',
