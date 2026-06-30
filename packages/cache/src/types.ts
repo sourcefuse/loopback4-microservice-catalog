@@ -1,6 +1,6 @@
 import {ILogger} from '@sourceloop/core';
 import {Constructor} from '@loopback/core';
-import {Entity, Filter} from '@loopback/repository';
+import {Entity, Filter, FilterExcludingWhere} from '@loopback/repository';
 
 /* `ICacheComponentOptions` is an interface that extends `ICacheOptions` and adds two additional
 properties:
@@ -95,6 +95,24 @@ export interface ICachedRepository<E extends Entity, ID, R extends Object> {
   findById(
     id: ID,
     filter?: Filter<E>,
+    options?: ICachedMethodOptions,
+  ): Promise<E & R>;
+  findOne(
+    filter?: Filter<E>,
+    options?: ICachedMethodOptions,
+  ): Promise<(E & R) | null>;
+}
+
+/* Sequelize-specific cached repository interface for use with Sequelize-based repositories */
+export interface ICachedSequelizeRepository<
+  E extends Entity,
+  ID,
+  R extends object = {},
+> {
+  find(filter?: Filter<E>, options?: ICachedMethodOptions): Promise<(E & R)[]>;
+  findById(
+    id: ID,
+    filter?: FilterExcludingWhere<E>,
     options?: ICachedMethodOptions,
   ): Promise<E & R>;
   findOne(

@@ -10,6 +10,20 @@
   ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js",
+    "./sequelize": {
+      "types": "./dist/mixins/sequelize/index.d.ts",
+      "default": "./dist/mixins/sequelize/index.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "sequelize": [
+        "./dist/mixins/sequelize/index.d.ts"
+      ]
+    }
+  },
   "engines": {
     "node": "22 || 24"
   },
@@ -45,7 +59,13 @@
     "!*/__tests__"
   ],
   "peerDependencies": {
-    "@loopback/core": "^7.0.3"
+    "@loopback/core": "^7.0.3",
+    "@loopback/sequelize": "^0.8.0"
+  },
+  "peerDependenciesMeta": {
+    "@loopback/sequelize": {
+      "optional": true
+    }
   },
   "dependencies": {
     "@loopback/core": "^7.0.11",
