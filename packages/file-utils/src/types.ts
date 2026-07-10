@@ -48,8 +48,7 @@ export type IModelWithFileMetadata<T = AnyObject> = {
 };
 
 export type IFileRequestMetadata<T = AnyObject> =
-  | IBaseMetadata<T>
-  | IModelWithFileMetadata<T>;
+  IBaseMetadata<T> | IModelWithFileMetadata<T>;
 
 export function getConfigProperty<T, S extends keyof IBaseMetadata<T>>(
   config: IFileRequestMetadata<T>,

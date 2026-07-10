@@ -21,8 +21,7 @@ export interface Searchable {
 }
 
 export type SearchableModelsList<T extends Model> = (
-  | SearchableModel<T>
-  | typeof Model
+  SearchableModel<T> | typeof Model
 )[];
 export interface SearchServiceConfig<T extends Model = SearchResult> {
   useCustomSequence?: boolean;
@@ -71,9 +70,7 @@ export type SearchWhereFilterMap = {
 };
 
 export declare type SearchWhereFilter<MT extends object = AnyObject> =
-  | Condition<MT>
-  | AndClause<MT>
-  | OrClause<MT>;
+  Condition<MT> | AndClause<MT> | OrClause<MT>;
 export interface AndClause<MT extends object> {
   and: SearchWhereFilter<MT>[];
 }

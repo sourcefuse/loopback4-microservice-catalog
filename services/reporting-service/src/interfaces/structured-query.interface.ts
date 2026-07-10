@@ -17,10 +17,7 @@ export type JoinType = 'INNER' | 'LEFT' | 'RIGHT' | 'FULL';
 
 // Simplified FieldExpression for easier usage
 export type FieldExpression =
-  | string
-  | AliasExpression
-  | FunctionExpression
-  | SubQueryWithAlias;
+  string | AliasExpression | FunctionExpression | SubQueryWithAlias;
 
 export interface AliasExpression {
   field: FieldExpression;

@@ -5,16 +5,10 @@ import {
 } from '../types';
 
 export type InstrumentationName =
-  | 'http'
-  | 'express'
-  | 'pg'
-  | 'mysql'
-  | 'redis'
-  | 'kafka';
+  'http' | 'express' | 'pg' | 'mysql' | 'redis' | 'kafka';
 
 export type InstrumentationModuleRequirement =
-  | {type: 'all'; modules: string[]}
-  | {type: 'any'; modules: string[]};
+  {type: 'all'; modules: string[]} | {type: 'any'; modules: string[]};
 
 export const INSTRUMENTATION_MODULE_REQUIREMENTS: Record<
   InstrumentationName,

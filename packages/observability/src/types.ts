@@ -5,12 +5,7 @@ import {NodeTracerProvider} from '@opentelemetry/sdk-trace-node';
 export type AttributeValue = string | number | boolean;
 
 export type ObservabilityProfileName =
-  | 'none'
-  | 'default'
-  | 'newrelic'
-  | 'signoz'
-  | 'datadog'
-  | (string & {});
+  'none' | 'default' | 'newrelic' | 'signoz' | 'datadog' | (string & {});
 
 export type ExporterProtocol = 'grpc' | 'http/protobuf';
 
