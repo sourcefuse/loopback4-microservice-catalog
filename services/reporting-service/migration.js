@@ -23,9 +23,9 @@ try {
 
 if (isLocal) {
   console.info(`Skipping migrations`);
-} else if (
-  !(process.env[`${type}_MIGRATION`] || process.env.SOURCELOOP_MIGRATION)
-) {
+} else if (!(
+  process.env[`${type}_MIGRATION`] || process.env.SOURCELOOP_MIGRATION
+)) {
   console.warn(
     `${type}_MIGRATION or SOURCELOOP_MIGRATION variables not found in the environment, skipping automigration.`,
   );

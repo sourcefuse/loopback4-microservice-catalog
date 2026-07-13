@@ -169,8 +169,7 @@ export class HasManyRestResolver<
 
     for (const result of results) {
       const throughData = result[throughModelProperty] as
-        | AnyObject[]
-        | undefined;
+        AnyObject[] | undefined;
       if (throughData) {
         throughData.forEach(d => {
           idsSet.add(d[keyToThrough]);
