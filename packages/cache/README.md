@@ -25,7 +25,7 @@ export class MyApplication extends BootMixin(
 ) {
   constructor(options: ApplicationConfig = {}) {
     this.bind(CacheComponentBindings.CacheConfig).to({
-      ttl: 1000,
+      ttl: 86400000, // 1 day (default)
       strategy: RedisStoreStrategy,
       datasourceName: 'redisCacheStore',
     });
@@ -62,7 +62,7 @@ import {SequelizeCrudRepository, SequelizeDataSource} from '@loopback/sequelize'
 export class UserRepository extends SequelizeCacheMixin(
   SequelizeCrudRepository<User, number, {}>,
   {
-    ttl: 1800,                    // Time to live in seconds (optional)
+    ttl: 1800000,                 // Time to live in milliseconds (optional, 30 minutes)
     invalidationTags: ['users'],   // Tags for cache invalidation on writes
     cachedItemTags: ['user-item'], // Tags for individual cache entries
     disableCachedFetch: false,     // Disable caching if needed (optional)
@@ -89,7 +89,7 @@ export class UserRepository extends SequelizeCacheMixin(
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `ttl` | `number` | `86400` (1 day) | Cache expiration time in seconds |
+| `ttl` | `number` | `86400000` (1 day) | Cache expiration time in milliseconds |
 | `invalidationTags` | `string[]` | `[]` | Tags to invalidate on create/update/delete |
 | `cachedItemTags` | `string[]` | `[]` | Tags to apply to cached items |
 | `disableCachedFetch` | `boolean` | `false` | Bypass cache for all reads |
@@ -156,7 +156,7 @@ Uses an in-memory Map. Suitable for development and single-instance deployments.
 import {InMemoryStoreStrategy} from '@sourceloop/cache';
 
 this.bind(CacheComponentBindings.CacheConfig).to({
-  ttl: 3600,
+  ttl: 3600000, // 1 hour
   strategy: InMemoryStoreStrategy,
 });
 ```
@@ -180,7 +180,7 @@ const redisDs = new juggler.DataSource({
 this.dataSource(redisDs);
 
 this.bind(CacheComponentBindings.CacheConfig).to({
-  ttl: 3600,
+  ttl: 3600000, // 1 hour
   strategy: RedisStoreStrategy,
   datasourceName: 'redisCacheStore',
 });
@@ -269,7 +269,7 @@ Configuration options for cache mixins.
 
 ```ts
 interface ICacheMixinOptions {
-  ttl?: number;                    // Time to live in seconds
+  ttl?: number;                    // Time to live in milliseconds
   invalidationTags?: string[];     // Tags for write operations
   cachedItemTags?: string[];       // Tags for read operations
   disableCachedFetch?: boolean;    // Disable caching

@@ -19,6 +19,7 @@ import {
 import {inject} from '@loopback/core';
 import {CacheComponentBindings} from '../keys';
 import {cacheInvalidator} from '../decorators/cache-invalidator.decorator';
+import {addTagsToOptions} from '../utils';
 
 // sonarignore:start
 /**
@@ -55,10 +56,10 @@ export function CacheMixin<
       filter?: Filter<M>,
       options?: ICachedMethodOptions,
     ): Promise<(M & Relations)[]> {
-      options = addTagsToOptions(options, cacheOptions?.cachedItemTags);
       if (cacheOptions?.disableCachedFetch) {
         return super.find(filter, options);
       }
+      options = addTagsToOptions(options, cacheOptions?.cachedItemTags);
       return this.cache.executeAndSave(
         super.find.bind(this),
         [filter, options],
@@ -202,17 +203,4 @@ export function CacheMixin<
     }
   }
   return CachedRepo;
-}
-
-function addTagsToOptions(
-  options?: ICachedMethodOptions,
-  tags?: string[],
-): ICachedMethodOptions {
-  if (!options) {
-    options = {};
-  }
-  if (tags?.length) {
-    options.tags = (options.tags ?? []).concat(tags);
-  }
-  return options;
 }
