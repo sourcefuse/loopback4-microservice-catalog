@@ -36,6 +36,7 @@ import {
   authenticateClient,
 } from 'loopback4-authentication';
 import {AuthorizeErrorKeys, authorize} from 'loopback4-authorization';
+import * as jwt from 'jsonwebtoken';
 import {LoginType} from '../../../enums';
 import {AuthClient, RefreshToken, User} from '../../../models';
 import {
@@ -69,6 +70,11 @@ import {
 import {CodeResponse} from '../types';
 
 export class LoginController {
+  /**
+   * Default maximum TTL for a revoked access token retained in Redis (1 hour).
+   */
+  private static readonly DEFAULT_REVOKED_TOKEN_TTL_SECONDS = 60 * 60;
+
   constructor(
     @inject(AuthenticationBindings.CURRENT_CLIENT)
     private readonly client: AuthClient | undefined,
@@ -318,7 +324,13 @@ export class LoginController {
       await this._verifyUserTenant(changePassword.id, currentUser.tenantId);
     }
 
-    await this.revokedTokensRepo.set(token, {token});
+    await this.revokedTokensRepo.set(
+      token,
+      {token},
+      {
+        ttl: this.revokedTokenTtlMs(token),
+      },
+    );
     await this.refreshTokenRepo.delete(req.refreshToken);
     return new SuccessResponse({
       success: true,
@@ -437,6 +449,63 @@ export class LoginController {
     }
   }
 
+  /**
+   * Resolves the maximum TTL (in ms) for a revoked access token from config.
+   *
+   * Reads `REVOKED_TOKEN_MAX_TTL` (in seconds, consistent with other expiry
+   * env vars such as `FORGOT_PASSWORD_LINK_EXPIRY`) and falls back to a 1-hour
+   * default. Invalid or non-positive values fall back to the default as well.
+   * The result is always at least 1 second.
+   */
+  private get revokedTokenMaxTtlMs(): number {
+    const configured = parseInt(
+      process.env.REVOKED_TOKEN_MAX_TTL ??
+        `${LoginController.DEFAULT_REVOKED_TOKEN_TTL_SECONDS}`,
+      10,
+    );
+    const ttlSeconds =
+      Number.isFinite(configured) && configured > 0
+        ? configured
+        : LoginController.DEFAULT_REVOKED_TOKEN_TTL_SECONDS;
+    return ttlSeconds * 1000;
+  }
+
+  /**
+   * Calculates the TTL for a revoked token based on its remaining validity.
+   *
+   * The TTL is set to the token's remaining time until expiration plus a 60-second
+   * grace period for clock skew. If the token's exp claim is missing or invalid,
+   * the configured maximum TTL (default 1 hour) is used.
+   *
+   * @param token - The JWT token to calculate TTL for
+   * @returns TTL in milliseconds
+   */
+  private revokedTokenTtlMs(token: string): number {
+    const maxTtlMs = this.revokedTokenMaxTtlMs;
+    try {
+      const decoded = jwt.decode(token) as {exp?: number} | null;
+
+      if (decoded?.exp) {
+        const nowInSeconds = Math.floor(Date.now() / 1000);
+        const remainingSeconds = decoded.exp - nowInSeconds;
+
+        // Add 60-second grace period for clock skew
+        const ttlSeconds = remainingSeconds + 60;
+
+        // Ensure minimum of 1 second and maximum of the configured cap
+        return Math.max(1000, Math.min(ttlSeconds * 1000, maxTtlMs));
+      }
+    } catch (error) {
+      this.logger.warn(
+        '[AUTH] Failed to decode JWT for TTL calculation, using default',
+        error,
+      );
+    }
+
+    // Fallback to the configured cap if exp is missing or decode fails
+    return maxTtlMs;
+  }
+
   async getPasswordResponse(
     userName: string,
     password: string,
@@ -553,9 +622,15 @@ export class LoginController {
     if (!accessToken || refreshPayload.accessToken !== accessToken) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenInvalid);
     }
-    await this.revokedTokensRepo.set(refreshPayload.accessToken, {
-      token: refreshPayload.accessToken,
-    });
+    await this.revokedTokensRepo.set(
+      refreshPayload.accessToken,
+      {
+        token: refreshPayload.accessToken,
+      },
+      {
+        ttl: this.revokedTokenTtlMs(refreshPayload.accessToken),
+      },
+    );
     await this.refreshTokenRepo.delete(req.refreshToken);
     return {
       refreshPayload: refreshPayload,
