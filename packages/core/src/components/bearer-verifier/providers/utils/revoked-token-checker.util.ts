@@ -14,31 +14,26 @@ import {ILogger} from '../../../../components/logger-extension';
  * has been revoked. If the token is found in the revoked list, an Unauthorized
  * error is thrown, preventing the use of previously logged-out tokens.
  *
+ * **Security posture (fail-closed)**: If the revoked token repository is unavailable
+ * (Redis down, timeout, connection errors), the error propagates and the request is
+ * denied. This ensures that logout always takes effect - if we cannot verify a token
+ * is not revoked, we reject it. This matches the established pattern from
+ * authentication-service's bearer-token-verify.provider.ts.
+ *
  * @param token - The JWT token to check for revocation
  * @param revokedTokenRepo - The repository to check for revoked tokens
- * @param logger - Logger instance for security and error logging
+ * @param logger - Logger instance for security logging
  * @throws {HttpErrors.Unauthorized} When the token has been revoked
+ * @throws When the revoked token repository is unavailable
  */
 export async function checkIfTokenRevoked(
   token: string,
   revokedTokenRepo: RevokedTokenRepository,
   logger: ILogger,
 ): Promise<void> {
-  try {
-    const isRevoked = await revokedTokenRepo.get(token);
-    if (isRevoked?.token) {
-      logger.warn(`[SECURITY] Attempt to use revoked token detected`);
-      throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.TokenRevoked);
-    }
-  } catch (error) {
-    // Re-throw HTTP errors (like our TokenRevoked error)
-    if (HttpErrors.HttpError.prototype.isPrototypeOf(error)) {
-      throw error;
-    }
-    // Log but don't fail on repository errors to allow graceful degradation
-    logger.error(
-      `[AUTH] Revoked token repository error during token verification.`,
-      error,
-    );
+  const isRevoked = await revokedTokenRepo.get(token);
+  if (isRevoked?.token) {
+    logger.warn(`[SECURITY] Attempt to use revoked token detected`);
+    throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.TokenRevoked);
   }
 }

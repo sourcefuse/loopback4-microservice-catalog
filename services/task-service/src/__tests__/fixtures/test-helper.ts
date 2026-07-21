@@ -41,7 +41,7 @@ export async function setupApplication(loggerStub?: ILogger) {
   app.bind(`datasources.${AuthCacheSourceName}`).to(
     new juggler.DataSource({
       name: AuthCacheSourceName,
-      connector: 'memory',
+      connector: 'kv-memory',
     }),
   );
   app.bind(`datasources.config.${AuthCacheSourceName}`).to({
