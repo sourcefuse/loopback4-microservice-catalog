@@ -33,7 +33,7 @@ export async function setupApplication(): Promise<AppWithClient> {
   });
   app.bind('datasources.AuthCache').to({
     name: 'AuthCache',
-    connector: 'memory',
+    connector: 'kv-memory',
   });
   app.dataSource(AuthenticationDbDataSource);
   app.dataSource(AuthenticationCacheDbDataSource);
