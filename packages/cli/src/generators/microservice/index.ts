@@ -213,7 +213,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
         );
 
         this.projectInfo.baseServiceCacheName = redisDsPresent.length
-          ? 'redis'
+          ? redisDsPresent[0].name
           : undefined;
       }
       this.destinationRoot(join(type, this.options.name ?? DEFAULT_NAME));
