@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>5.0.1 (2026-08-16)</small>
+
+**Note:** Version bump only for package @sourceloop/nestjs-auth-ms-example
+
+
+
+
+
 ## 5.0.0 (2026-06-19)
 
 * chore(deps): upgrade catalog dependencies to latest versions (#2521) ([f5ecddf](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f5ecddf)), closes [#2521](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2521) [#2510](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2510) [#2510](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2510) [#00](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/00) [#2510](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2510) [#2510](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2510)

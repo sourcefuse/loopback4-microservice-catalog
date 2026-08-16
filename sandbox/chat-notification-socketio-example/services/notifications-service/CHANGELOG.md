@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.11.0 (2026-08-16)
+
+* fix(cli): pin trivy-action to commit sha in scaffold template (#2598) ([f1b989a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f1b989a)), closes [#2598](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2598) [#2597](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2597)
+* feat(cache): add sequelize support (#2554) ([d724198](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d724198)), closes [#2554](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2554) [#2552](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2552) [#2552](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2552) [#2552](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2552)
+
+
+
+
+
 ## 0.10.0 (2026-06-19)
 
 * refactor(chore): fix sonar issue (#2512) ([0a9c337](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0a9c337)), closes [#2512](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2512) [#2511](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2511)

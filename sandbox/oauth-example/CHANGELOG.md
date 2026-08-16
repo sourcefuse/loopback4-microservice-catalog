@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.8.1 (2026-08-16)</small>
+
+**Note:** Version bump only for package @sourceloop/oauth-example-api
+
+
+
+
+
 ## 0.8.0 (2026-06-19)
 
 * refactor(deps): update catalog extension to latest version (#2565) ([d2c2fd8](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d2c2fd8)), closes [#2565](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2565) [#2564](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2564)

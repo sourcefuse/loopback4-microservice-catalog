@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 11.1.0 (2026-08-16)
+
+* feat(cache): add sequelize support (#2554) ([d724198](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d724198)), closes [#2554](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2554) [#2552](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2552) [#2552](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2552) [#2552](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2552)
+
+
+
+
+
 ## 11.0.0 (2026-06-19)
 
 * fix(search-service): fix global search issue (#2561) ([560af9d](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/560af9d)), closes [#2561](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2561) [#2553](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2553)
