@@ -458,7 +458,7 @@ export class LoginController {
    * The result is always at least 1 second.
    */
   private get revokedTokenMaxTtlMs(): number {
-    const configured = parseInt(
+    const configured = Number.parseInt(
       process.env.REVOKED_TOKEN_MAX_TTL ??
         `${LoginController.DEFAULT_REVOKED_TOKEN_TTL_SECONDS}`,
       10,
