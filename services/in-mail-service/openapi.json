@@ -3,7 +3,7 @@
   "info": {
     "title": "In-mail Service",
     "version": "1.0.0",
-    "description": "In mail microservice.",
+    "description": "In mail microservice",
     "contact": {
       "name": "Sourcefuse"
     }
@@ -430,17 +430,17 @@
                       "item": {
                         "$ref": "#/components/schemas/MessageExcluding_deleted_WithRelations",
                         "definitions": {
-                          "AttachmentExcluding_deleted_WithRelations": {
-                            "$ref": "#/components/schemas/AttachmentExcluding_deleted_WithRelations"
+                          "AttachmentExcluding_deleted_": {
+                            "$ref": "#/components/schemas/AttachmentExcluding_deleted_"
                           },
-                          "ThreadExcluding_deleted_WithRelations": {
-                            "$ref": "#/components/schemas/ThreadExcluding_deleted_WithRelations"
+                          "GroupExcluding_deleted_": {
+                            "$ref": "#/components/schemas/GroupExcluding_deleted_"
                           },
-                          "GroupExcluding_deleted_WithRelations": {
-                            "$ref": "#/components/schemas/GroupExcluding_deleted_WithRelations"
+                          "MetaExcluding_deleted_": {
+                            "$ref": "#/components/schemas/MetaExcluding_deleted_"
                           },
-                          "MetaExcluding_deleted_WithRelations": {
-                            "$ref": "#/components/schemas/MetaExcluding_deleted_WithRelations"
+                          "ThreadExcluding_deleted_": {
+                            "$ref": "#/components/schemas/ThreadExcluding_deleted_"
                           },
                           "MessageExcluding_deleted_WithRelations": {
                             "$ref": "#/components/schemas/MessageExcluding_deleted_WithRelations"
@@ -1502,10 +1502,10 @@
           }
         }
       },
-      "AttachmentExcluding_deleted_WithRelations": {
-        "title": "AttachmentExcluding_deleted_WithRelations",
+      "AttachmentExcluding_deleted_": {
+        "title": "AttachmentExcluding_deleted_",
         "type": "object",
-        "description": "(tsType: Omit<AttachmentWithRelations, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ], includeRelations: true })",
+        "description": "(tsType: Omit<Attachment, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ] })",
         "properties": {
           "deletedOn": {
             "type": "string",
@@ -1553,11 +1553,7 @@
           },
           "messageId": {
             "type": "string"
-          },
-          "message": {
-            "$ref": "#/components/schemas/MessageExcluding_deleted_WithRelations"
-          },
-          "foreignKey": {}
+          }
         },
         "required": [
           "name",
@@ -1566,75 +1562,12 @@
           "mime"
         ],
         "additionalProperties": false,
-        "x-typescript-type": "Omit<AttachmentWithRelations, 'deleted'>"
+        "x-typescript-type": "Omit<Attachment, 'deleted'>"
       },
-      "ThreadExcluding_deleted_WithRelations": {
-        "title": "ThreadExcluding_deleted_WithRelations",
+      "GroupExcluding_deleted_": {
+        "title": "GroupExcluding_deleted_",
         "type": "object",
-        "description": "(tsType: Omit<ThreadWithRelations, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ], includeRelations: true })",
-        "properties": {
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "subject": {
-            "type": "string"
-          },
-          "messageCounts": {
-            "type": "number"
-          },
-          "extId": {
-            "type": "string"
-          },
-          "extMetadata": {
-            "type": "object"
-          },
-          "message": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/MessageExcluding_deleted_WithRelations"
-            }
-          },
-          "foreignKey": {},
-          "group": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/GroupExcluding_deleted_WithRelations"
-            }
-          }
-        },
-        "required": [
-          "subject"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "Omit<ThreadWithRelations, 'deleted'>"
-      },
-      "GroupExcluding_deleted_WithRelations": {
-        "title": "GroupExcluding_deleted_WithRelations",
-        "type": "object",
-        "description": "(tsType: Omit<GroupWithRelations, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ], includeRelations: true })",
+        "description": "(tsType: Omit<Group, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ] })",
         "properties": {
           "deletedOn": {
             "type": "string",
@@ -1709,13 +1642,6 @@
           },
           "threadId": {
             "type": "string"
-          },
-          "message": {
-            "$ref": "#/components/schemas/MessageExcluding_deleted_WithRelations"
-          },
-          "foreignKey": {},
-          "thread": {
-            "$ref": "#/components/schemas/ThreadExcluding_deleted_WithRelations"
           }
         },
         "required": [
@@ -1723,12 +1649,12 @@
           "type"
         ],
         "additionalProperties": false,
-        "x-typescript-type": "Omit<GroupWithRelations, 'deleted'>"
+        "x-typescript-type": "Omit<Group, 'deleted'>"
       },
-      "MetaExcluding_deleted_WithRelations": {
-        "title": "MetaExcluding_deleted_WithRelations",
+      "MetaExcluding_deleted_": {
+        "title": "MetaExcluding_deleted_",
         "type": "object",
-        "description": "(tsType: Omit<MetaWithRelations, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ], includeRelations: true })",
+        "description": "(tsType: Omit<Meta, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ] })",
         "properties": {
           "deletedOn": {
             "type": "string",
@@ -1770,17 +1696,63 @@
           },
           "messageId": {
             "type": "string"
-          },
-          "message": {
-            "$ref": "#/components/schemas/MessageExcluding_deleted_WithRelations"
-          },
-          "foreignKey": {}
+          }
         },
         "required": [
           "key"
         ],
         "additionalProperties": false,
-        "x-typescript-type": "Omit<MetaWithRelations, 'deleted'>"
+        "x-typescript-type": "Omit<Meta, 'deleted'>"
+      },
+      "ThreadExcluding_deleted_": {
+        "title": "ThreadExcluding_deleted_",
+        "type": "object",
+        "description": "(tsType: Omit<Thread, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ] })",
+        "properties": {
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "messageCounts": {
+            "type": "number"
+          },
+          "extId": {
+            "type": "string"
+          },
+          "extMetadata": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "subject"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<Thread, 'deleted'>"
       },
       "MessageExcluding_deleted_WithRelations": {
         "title": "MessageExcluding_deleted_WithRelations",
@@ -1841,24 +1813,24 @@
           "attachment": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/AttachmentExcluding_deleted_WithRelations"
+              "$ref": "#/components/schemas/AttachmentExcluding_deleted_"
             }
           },
           "foreignKey": {},
           "group": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/GroupExcluding_deleted_WithRelations"
+              "$ref": "#/components/schemas/GroupExcluding_deleted_"
             }
           },
           "meta": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/MetaExcluding_deleted_WithRelations"
+              "$ref": "#/components/schemas/MetaExcluding_deleted_"
             }
           },
           "thread": {
-            "$ref": "#/components/schemas/ThreadExcluding_deleted_WithRelations"
+            "$ref": "#/components/schemas/ThreadExcluding_deleted_"
           }
         },
         "required": [

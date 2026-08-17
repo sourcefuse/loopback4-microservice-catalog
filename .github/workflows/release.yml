@@ -9,14 +9,14 @@ jobs:
   Release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           # fetch-depth is necessary to get all tags
           # otherwise lerna can't detect the changes and will end up bumping the versions for all packages
           fetch-depth: 0
           token: ${{ secrets.RELEASE_COMMIT_GH_PAT }}
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: '24.x'
           registry-url: 'https://registry.npmjs.org'

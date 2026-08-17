@@ -14,7 +14,7 @@ jobs:
   Pre-Release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
         with:
           # fetch-depth is necessary to get all tags
           # otherwise lerna can't detect the changes and will end up bumping the versions for all packages
@@ -22,12 +22,12 @@ jobs:
           token: ${{ secrets.RELEASE_COMMIT_GH_PAT }}
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v5
         with:
-          node-version: '22.x'
+          node-version: '24.x'
 
       - name: Checkout Automation Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
         with:
           token: ${{env.GITHUB_TOKEN}}
           repository: ${{env.AUTOMATION_REPO}}

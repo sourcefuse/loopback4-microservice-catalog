@@ -13,10 +13,10 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
-          node-version: '18.x'
+          node-version: '24.x'
 
       - name: Install Monorepo Deps
         run: npm i
@@ -28,7 +28,7 @@ jobs:
         run: npm run lint --workspaces --if-present
 
       - name: lerna-coverage
-        run: "npx lerna run coverage --concurrency 2"
+        run: 'npx lerna run coverage --concurrency 2'
 
       - name: coverage report
         id: coverage

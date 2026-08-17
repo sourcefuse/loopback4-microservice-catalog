@@ -20,7 +20,7 @@ headingLevel: 2
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-a Reusable, customizable and workflow based task service.
+a Reusable, customizable and workflow based task service
 
 Base URLs:
 
@@ -1239,8 +1239,8 @@ Status Code **200**
 |»» metadata|object|true|none|none|
 |»» externalId|string|false|none|none|
 |»» notes|string|false|none|none|
-|»» userTasks|[[UserTaskWithRelations](#schemausertaskwithrelations)]|false|none|[(tsType: UserTaskWithRelations, schemaOptions: { includeRelations: true })]|
-|»»» UserTaskWithRelations|[UserTaskWithRelations](#schemausertaskwithrelations)|false|none|(tsType: UserTaskWithRelations, schemaOptions: { includeRelations: true })|
+|»» userTasks|[[UserTask](#schemausertask)]|false|none|none|
+|»»» UserTask|[UserTask](#schemausertask)|false|none|none|
 |»»»» deleted|boolean|false|none|none|
 |»»»» deletedOn|string(date-time)¦null|false|none|none|
 |»»»» deletedBy|string¦null|false|none|none|
@@ -2479,12 +2479,12 @@ HTTPBearer
 
 # Schemas
 
-<h2 id="tocS_UserTaskWithRelations">UserTaskWithRelations</h2>
+<h2 id="tocS_UserTask">UserTask</h2>
 <!-- backwards compatibility -->
-<a id="schemausertaskwithrelations"></a>
-<a id="schema_UserTaskWithRelations"></a>
-<a id="tocSusertaskwithrelations"></a>
-<a id="tocsusertaskwithrelations"></a>
+<a id="schemausertask"></a>
+<a id="schema_UserTask"></a>
+<a id="tocSusertask"></a>
+<a id="tocsusertask"></a>
 
 ```json
 {
@@ -2504,7 +2504,7 @@ HTTPBearer
 
 ```
 
-UserTaskWithRelations
+UserTask
 
 ### Properties
 
@@ -2602,7 +2602,7 @@ TaskWithRelations
 |metadata|object|true|none|none|
 |externalId|string|false|none|none|
 |notes|string|false|none|none|
-|userTasks|[[UserTaskWithRelations](#schemausertaskwithrelations)]|false|none|[(tsType: UserTaskWithRelations, schemaOptions: { includeRelations: true })]|
+|userTasks|[[UserTask](#schemausertask)]|false|none|none|
 
 <h2 id="tocS_TaskWorkFlowMapping">TaskWorkFlowMapping</h2>
 <!-- backwards compatibility -->
@@ -2771,6 +2771,50 @@ Task
 |metadata|object|true|none|none|
 |externalId|string|false|none|none|
 |notes|string|false|none|none|
+
+<h2 id="tocS_UserTaskWithRelations">UserTaskWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemausertaskwithrelations"></a>
+<a id="schema_UserTaskWithRelations"></a>
+<a id="tocSusertaskwithrelations"></a>
+<a id="tocsusertaskwithrelations"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "name": "string",
+  "taskId": "string",
+  "status": "string",
+  "externalId": "string"
+}
+
+```
+
+UserTaskWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|name|string|true|none|none|
+|taskId|string|true|none|none|
+|status|string|true|none|none|
+|externalId|string|true|none|none|
 
 <h2 id="tocS_EventWithRelations">EventWithRelations</h2>
 <!-- backwards compatibility -->

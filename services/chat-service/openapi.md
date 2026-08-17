@@ -20,7 +20,7 @@ headingLevel: 2
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-chat-service microservice.
+chat-service microservice
 
 Base URLs:
 
@@ -594,51 +594,7 @@ fetch('/attach-files/{id}',
     "status": 0,
     "subject": "string",
     "toUserId": "string",
-    "parentMessageId": "string",
-    "messageRecipients": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "channelId": "string",
-        "forwardedBy": "string",
-        "isFavorite": true,
-        "isForwarded": true,
-        "isRead": true,
-        "recipientId": "string",
-        "messageId": "string",
-        "message": {},
-        "foreignKey": null
-      }
-    ],
-    "attachmentFiles": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "channelId": "string",
-        "fileKey": "string",
-        "messageId": "string",
-        "metaData": {},
-        "message": {},
-        "foreignKey": null
-      }
-    ],
-    "parentMessage": {},
-    "foreignKey": null,
-    "messages": [
-      {}
-    ]
+    "parentMessageId": "string"
   },
   "foreignKey": null
 }
@@ -1104,36 +1060,7 @@ fetch('/attach-files',
       "status": 0,
       "subject": "string",
       "toUserId": "string",
-      "parentMessageId": "string",
-      "messageRecipients": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "channelId": "string",
-          "forwardedBy": "string",
-          "isFavorite": true,
-          "isForwarded": true,
-          "isRead": true,
-          "recipientId": "string",
-          "messageId": "string",
-          "message": {},
-          "foreignKey": null
-        }
-      ],
-      "attachmentFiles": [
-        {}
-      ],
-      "parentMessage": {},
-      "foreignKey": null,
-      "messages": [
-        {}
-      ]
+      "parentMessageId": "string"
     },
     "foreignKey": null
   }
@@ -1166,7 +1093,7 @@ Status Code **200**
 |»» fileKey|string|false|none|none|
 |»» messageId|string|false|none|none|
 |»» metaData|object|false|none|none|
-|»» message|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
+|»» message|[Message](#schemamessage)|false|none|none|
 |»»» deleted|boolean|false|none|none|
 |»»» deletedOn|string(date-time)¦null|false|none|none|
 |»»» deletedBy|string¦null|false|none|none|
@@ -1182,31 +1109,6 @@ Status Code **200**
 |»»» subject|string|false|none|none|
 |»»» toUserId|string|false|none|none|
 |»»» parentMessageId|string|false|none|none|
-|»»» messageRecipients|[[MessageRecipientWithRelations](#schemamessagerecipientwithrelations)]|false|none|(tsType: MessageRecipientWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» MessageRecipientWithRelations|[MessageRecipientWithRelations](#schemamessagerecipientwithrelations)|false|none|(tsType: MessageRecipientWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» deleted|boolean|false|none|none|
-|»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»» deletedBy|string¦null|false|none|none|
-|»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»» createdBy|string|false|none|none|
-|»»»»» modifiedBy|string|false|none|none|
-|»»»»» id|string|false|none|none|
-|»»»»» channelId|string|true|none|none|
-|»»»»» forwardedBy|string|false|none|none|
-|»»»»» isFavorite|boolean|false|none|none|
-|»»»»» isForwarded|boolean|false|none|none|
-|»»»»» isRead|boolean|false|none|none|
-|»»»»» recipientId|string|true|none|none|
-|»»»»» messageId|string|true|none|none|
-|»»»»» message|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» foreignKey|any|false|none|none|
-|»»» attachmentFiles|[[AttachmentFileWithRelations](#schemaattachmentfilewithrelations)]|false|none|(tsType: AttachmentFileWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» AttachmentFileWithRelations|[AttachmentFileWithRelations](#schemaattachmentfilewithrelations)|false|none|(tsType: AttachmentFileWithRelations, schemaOptions: { includeRelations: true })|
-|»»» parentMessage|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
-|»»» foreignKey|any|false|none|none|
-|»»» messages|[[MessageWithRelations](#schemamessagewithrelations)]|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» MessageWithRelations|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
 |»» foreignKey|any|false|none|none|
 
 <aside class="warning">
@@ -1654,51 +1556,7 @@ fetch('/message-recipients/{id}',
     "status": 0,
     "subject": "string",
     "toUserId": "string",
-    "parentMessageId": "string",
-    "messageRecipients": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "channelId": "string",
-        "forwardedBy": "string",
-        "isFavorite": true,
-        "isForwarded": true,
-        "isRead": true,
-        "recipientId": "string",
-        "messageId": "string",
-        "message": {},
-        "foreignKey": null
-      }
-    ],
-    "attachmentFiles": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "channelId": "string",
-        "fileKey": "string",
-        "messageId": "string",
-        "metaData": {},
-        "message": {},
-        "foreignKey": null
-      }
-    ],
-    "parentMessage": {},
-    "foreignKey": null,
-    "messages": [
-      {}
-    ]
+    "parentMessageId": "string"
   },
   "foreignKey": null
 }
@@ -2175,33 +2033,7 @@ fetch('/message-recipients',
       "status": 0,
       "subject": "string",
       "toUserId": "string",
-      "parentMessageId": "string",
-      "messageRecipients": [
-        {}
-      ],
-      "attachmentFiles": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "channelId": "string",
-          "fileKey": "string",
-          "messageId": "string",
-          "metaData": {},
-          "message": {},
-          "foreignKey": null
-        }
-      ],
-      "parentMessage": {},
-      "foreignKey": null,
-      "messages": [
-        {}
-      ]
+      "parentMessageId": "string"
     },
     "foreignKey": null
   }
@@ -2237,7 +2069,7 @@ Status Code **200**
 |»» isRead|boolean|false|none|none|
 |»» recipientId|string|true|none|none|
 |»» messageId|string|true|none|none|
-|»» message|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
+|»» message|[Message](#schemamessage)|false|none|none|
 |»»» deleted|boolean|false|none|none|
 |»»» deletedOn|string(date-time)¦null|false|none|none|
 |»»» deletedBy|string¦null|false|none|none|
@@ -2253,28 +2085,6 @@ Status Code **200**
 |»»» subject|string|false|none|none|
 |»»» toUserId|string|false|none|none|
 |»»» parentMessageId|string|false|none|none|
-|»»» messageRecipients|[[MessageRecipientWithRelations](#schemamessagerecipientwithrelations)]|false|none|(tsType: MessageRecipientWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» MessageRecipientWithRelations|[MessageRecipientWithRelations](#schemamessagerecipientwithrelations)|false|none|(tsType: MessageRecipientWithRelations, schemaOptions: { includeRelations: true })|
-|»»» attachmentFiles|[[AttachmentFileWithRelations](#schemaattachmentfilewithrelations)]|false|none|(tsType: AttachmentFileWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» AttachmentFileWithRelations|[AttachmentFileWithRelations](#schemaattachmentfilewithrelations)|false|none|(tsType: AttachmentFileWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» deleted|boolean|false|none|none|
-|»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»» deletedBy|string¦null|false|none|none|
-|»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»» createdBy|string|false|none|none|
-|»»»»» modifiedBy|string|false|none|none|
-|»»»»» id|string|false|none|none|
-|»»»»» channelId|string|false|none|none|
-|»»»»» fileKey|string|false|none|none|
-|»»»»» messageId|string|false|none|none|
-|»»»»» metaData|object|false|none|none|
-|»»»»» message|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» foreignKey|any|false|none|none|
-|»»» parentMessage|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
-|»»» foreignKey|any|false|none|none|
-|»»» messages|[[MessageWithRelations](#schemamessagewithrelations)]|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» MessageWithRelations|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
 |»» foreignKey|any|false|none|none|
 
 <aside class="warning">
@@ -2848,49 +2658,7 @@ fetch('/messages/{id}',
       "isForwarded": true,
       "isRead": true,
       "recipientId": "string",
-      "messageId": "string",
-      "message": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "body": "string",
-        "channelId": "string",
-        "channelType": "string",
-        "status": 0,
-        "subject": "string",
-        "toUserId": "string",
-        "parentMessageId": "string",
-        "messageRecipients": [],
-        "attachmentFiles": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "channelId": "string",
-            "fileKey": "string",
-            "messageId": "string",
-            "metaData": {},
-            "message": {},
-            "foreignKey": null
-          }
-        ],
-        "parentMessage": {},
-        "foreignKey": null,
-        "messages": [
-          {}
-        ]
-      },
-      "foreignKey": null
+      "messageId": "string"
     }
   ],
   "attachmentFiles": [
@@ -2906,52 +2674,7 @@ fetch('/messages/{id}',
       "channelId": "string",
       "fileKey": "string",
       "messageId": "string",
-      "metaData": {},
-      "message": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "body": "string",
-        "channelId": "string",
-        "channelType": "string",
-        "status": 0,
-        "subject": "string",
-        "toUserId": "string",
-        "parentMessageId": "string",
-        "messageRecipients": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "channelId": "string",
-            "forwardedBy": "string",
-            "isFavorite": true,
-            "isForwarded": true,
-            "isRead": true,
-            "recipientId": "string",
-            "messageId": "string",
-            "message": {},
-            "foreignKey": null
-          }
-        ],
-        "attachmentFiles": [],
-        "parentMessage": {},
-        "foreignKey": null,
-        "messages": [
-          {}
-        ]
-      },
-      "foreignKey": null
+      "metaData": {}
     }
   ],
   "parentMessage": {
@@ -2969,51 +2692,7 @@ fetch('/messages/{id}',
     "status": 0,
     "subject": "string",
     "toUserId": "string",
-    "parentMessageId": "string",
-    "messageRecipients": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "channelId": "string",
-        "forwardedBy": "string",
-        "isFavorite": true,
-        "isForwarded": true,
-        "isRead": true,
-        "recipientId": "string",
-        "messageId": "string",
-        "message": {},
-        "foreignKey": null
-      }
-    ],
-    "attachmentFiles": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "channelId": "string",
-        "fileKey": "string",
-        "messageId": "string",
-        "metaData": {},
-        "message": {},
-        "foreignKey": null
-      }
-    ],
-    "parentMessage": {},
-    "foreignKey": null,
-    "messages": [
-      {}
-    ]
+    "parentMessageId": "string"
   },
   "foreignKey": null,
   "messages": [
@@ -3032,49 +2711,7 @@ fetch('/messages/{id}',
       "status": 0,
       "subject": "string",
       "toUserId": "string",
-      "parentMessageId": "string",
-      "messageRecipients": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "channelId": "string",
-          "forwardedBy": "string",
-          "isFavorite": true,
-          "isForwarded": true,
-          "isRead": true,
-          "recipientId": "string",
-          "messageId": "string",
-          "message": {},
-          "foreignKey": null
-        }
-      ],
-      "attachmentFiles": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "channelId": "string",
-          "fileKey": "string",
-          "messageId": "string",
-          "metaData": {},
-          "message": {},
-          "foreignKey": null
-        }
-      ],
-      "parentMessage": {},
-      "foreignKey": null,
-      "messages": []
+      "parentMessageId": "string"
     }
   ]
 }
@@ -3552,9 +3189,7 @@ fetch('/messages',
         "isForwarded": true,
         "isRead": true,
         "recipientId": "string",
-        "messageId": "string",
-        "message": {},
-        "foreignKey": null
+        "messageId": "string"
       }
     ],
     "attachmentFiles": [
@@ -3570,15 +3205,45 @@ fetch('/messages',
         "channelId": "string",
         "fileKey": "string",
         "messageId": "string",
-        "metaData": {},
-        "message": {},
-        "foreignKey": null
+        "metaData": {}
       }
     ],
-    "parentMessage": {},
+    "parentMessage": {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "body": "string",
+      "channelId": "string",
+      "channelType": "string",
+      "status": 0,
+      "subject": "string",
+      "toUserId": "string",
+      "parentMessageId": "string"
+    },
     "foreignKey": null,
     "messages": [
-      {}
+      {
+        "deleted": true,
+        "deletedOn": "2019-08-24T14:15:22Z",
+        "deletedBy": "string",
+        "createdOn": "2019-08-24T14:15:22Z",
+        "modifiedOn": "2019-08-24T14:15:22Z",
+        "createdBy": "string",
+        "modifiedBy": "string",
+        "id": "string",
+        "body": "string",
+        "channelId": "string",
+        "channelType": "string",
+        "status": 0,
+        "subject": "string",
+        "toUserId": "string",
+        "parentMessageId": "string"
+      }
     ]
   }
 ]
@@ -3613,8 +3278,8 @@ Status Code **200**
 |»» subject|string|false|none|none|
 |»» toUserId|string|false|none|none|
 |»» parentMessageId|string|false|none|none|
-|»» messageRecipients|[[MessageRecipientWithRelations](#schemamessagerecipientwithrelations)]|false|none|(tsType: MessageRecipientWithRelations, schemaOptions: { includeRelations: true })|
-|»»» MessageRecipientWithRelations|[MessageRecipientWithRelations](#schemamessagerecipientwithrelations)|false|none|(tsType: MessageRecipientWithRelations, schemaOptions: { includeRelations: true })|
+|»» messageRecipients|[[MessageRecipient](#schemamessagerecipient)]|false|none|none|
+|»»» MessageRecipient|[MessageRecipient](#schemamessagerecipient)|false|none|none|
 |»»»» deleted|boolean|false|none|none|
 |»»»» deletedOn|string(date-time)¦null|false|none|none|
 |»»»» deletedBy|string¦null|false|none|none|
@@ -3630,10 +3295,8 @@ Status Code **200**
 |»»»» isRead|boolean|false|none|none|
 |»»»» recipientId|string|true|none|none|
 |»»»» messageId|string|true|none|none|
-|»»»» message|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» foreignKey|any|false|none|none|
-|»» attachmentFiles|[[AttachmentFileWithRelations](#schemaattachmentfilewithrelations)]|false|none|(tsType: AttachmentFileWithRelations, schemaOptions: { includeRelations: true })|
-|»»» AttachmentFileWithRelations|[AttachmentFileWithRelations](#schemaattachmentfilewithrelations)|false|none|(tsType: AttachmentFileWithRelations, schemaOptions: { includeRelations: true })|
+|»» attachmentFiles|[[AttachmentFile](#schemaattachmentfile)]|false|none|none|
+|»»» AttachmentFile|[AttachmentFile](#schemaattachmentfile)|false|none|none|
 |»»»» deleted|boolean|false|none|none|
 |»»»» deletedOn|string(date-time)¦null|false|none|none|
 |»»»» deletedBy|string¦null|false|none|none|
@@ -3646,12 +3309,25 @@ Status Code **200**
 |»»»» fileKey|string|false|none|none|
 |»»»» messageId|string|false|none|none|
 |»»»» metaData|object|false|none|none|
-|»»»» message|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» foreignKey|any|false|none|none|
-|»» parentMessage|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
+|»» parentMessage|[Message](#schemamessage)|false|none|none|
+|»»» deleted|boolean|false|none|none|
+|»»» deletedOn|string(date-time)¦null|false|none|none|
+|»»» deletedBy|string¦null|false|none|none|
+|»»» createdOn|string(date-time)|false|none|none|
+|»»» modifiedOn|string(date-time)|false|none|none|
+|»»» createdBy|string|false|none|none|
+|»»» modifiedBy|string|false|none|none|
+|»»» id|string|false|none|none|
+|»»» body|string|true|none|none|
+|»»» channelId|string|true|none|none|
+|»»» channelType|string|true|none|none|
+|»»» status|number|false|none|none|
+|»»» subject|string|false|none|none|
+|»»» toUserId|string|false|none|none|
+|»»» parentMessageId|string|false|none|none|
 |»» foreignKey|any|false|none|none|
-|»» messages|[[MessageWithRelations](#schemamessagewithrelations)]|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
-|»»» MessageWithRelations|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
+|»» messages|[[Message](#schemamessage)]|false|none|none|
+|»»» Message|[Message](#schemamessage)|false|none|none|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -4762,6 +4438,100 @@ NewMessage
 |toUserId|string|false|none|none|
 |parentMessageId|string|false|none|none|
 
+<h2 id="tocS_MessageRecipient">MessageRecipient</h2>
+<!-- backwards compatibility -->
+<a id="schemamessagerecipient"></a>
+<a id="schema_MessageRecipient"></a>
+<a id="tocSmessagerecipient"></a>
+<a id="tocsmessagerecipient"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "channelId": "string",
+  "forwardedBy": "string",
+  "isFavorite": true,
+  "isForwarded": true,
+  "isRead": true,
+  "recipientId": "string",
+  "messageId": "string"
+}
+
+```
+
+MessageRecipient
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|channelId|string|true|none|none|
+|forwardedBy|string|false|none|none|
+|isFavorite|boolean|false|none|none|
+|isForwarded|boolean|false|none|none|
+|isRead|boolean|false|none|none|
+|recipientId|string|true|none|none|
+|messageId|string|true|none|none|
+
+<h2 id="tocS_AttachmentFile">AttachmentFile</h2>
+<!-- backwards compatibility -->
+<a id="schemaattachmentfile"></a>
+<a id="schema_AttachmentFile"></a>
+<a id="tocSattachmentfile"></a>
+<a id="tocsattachmentfile"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "channelId": "string",
+  "fileKey": "string",
+  "messageId": "string",
+  "metaData": {}
+}
+
+```
+
+AttachmentFile
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|channelId|string|false|none|none|
+|fileKey|string|false|none|none|
+|messageId|string|false|none|none|
+|metaData|object|false|none|none|
+
 <h2 id="tocS_MessageWithRelations">MessageWithRelations</h2>
 <!-- backwards compatibility -->
 <a id="schemamessagewithrelations"></a>
@@ -4802,49 +4572,7 @@ NewMessage
       "isForwarded": true,
       "isRead": true,
       "recipientId": "string",
-      "messageId": "string",
-      "message": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "body": "string",
-        "channelId": "string",
-        "channelType": "string",
-        "status": 0,
-        "subject": "string",
-        "toUserId": "string",
-        "parentMessageId": "string",
-        "messageRecipients": [],
-        "attachmentFiles": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "channelId": "string",
-            "fileKey": "string",
-            "messageId": "string",
-            "metaData": {},
-            "message": {},
-            "foreignKey": null
-          }
-        ],
-        "parentMessage": {},
-        "foreignKey": null,
-        "messages": [
-          {}
-        ]
-      },
-      "foreignKey": null
+      "messageId": "string"
     }
   ],
   "attachmentFiles": [
@@ -4860,52 +4588,7 @@ NewMessage
       "channelId": "string",
       "fileKey": "string",
       "messageId": "string",
-      "metaData": {},
-      "message": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "body": "string",
-        "channelId": "string",
-        "channelType": "string",
-        "status": 0,
-        "subject": "string",
-        "toUserId": "string",
-        "parentMessageId": "string",
-        "messageRecipients": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "channelId": "string",
-            "forwardedBy": "string",
-            "isFavorite": true,
-            "isForwarded": true,
-            "isRead": true,
-            "recipientId": "string",
-            "messageId": "string",
-            "message": {},
-            "foreignKey": null
-          }
-        ],
-        "attachmentFiles": [],
-        "parentMessage": {},
-        "foreignKey": null,
-        "messages": [
-          {}
-        ]
-      },
-      "foreignKey": null
+      "metaData": {}
     }
   ],
   "parentMessage": {
@@ -4923,51 +4606,7 @@ NewMessage
     "status": 0,
     "subject": "string",
     "toUserId": "string",
-    "parentMessageId": "string",
-    "messageRecipients": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "channelId": "string",
-        "forwardedBy": "string",
-        "isFavorite": true,
-        "isForwarded": true,
-        "isRead": true,
-        "recipientId": "string",
-        "messageId": "string",
-        "message": {},
-        "foreignKey": null
-      }
-    ],
-    "attachmentFiles": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "channelId": "string",
-        "fileKey": "string",
-        "messageId": "string",
-        "metaData": {},
-        "message": {},
-        "foreignKey": null
-      }
-    ],
-    "parentMessage": {},
-    "foreignKey": null,
-    "messages": [
-      {}
-    ]
+    "parentMessageId": "string"
   },
   "foreignKey": null,
   "messages": [
@@ -4986,49 +4625,7 @@ NewMessage
       "status": 0,
       "subject": "string",
       "toUserId": "string",
-      "parentMessageId": "string",
-      "messageRecipients": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "channelId": "string",
-          "forwardedBy": "string",
-          "isFavorite": true,
-          "isForwarded": true,
-          "isRead": true,
-          "recipientId": "string",
-          "messageId": "string",
-          "message": {},
-          "foreignKey": null
-        }
-      ],
-      "attachmentFiles": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "channelId": "string",
-          "fileKey": "string",
-          "messageId": "string",
-          "metaData": {},
-          "message": {},
-          "foreignKey": null
-        }
-      ],
-      "parentMessage": {},
-      "foreignKey": null,
-      "messages": []
+      "parentMessageId": "string"
     }
   ]
 }
@@ -5056,11 +4653,11 @@ MessageWithRelations
 |subject|string|false|none|none|
 |toUserId|string|false|none|none|
 |parentMessageId|string|false|none|none|
-|messageRecipients|[[MessageRecipientWithRelations](#schemamessagerecipientwithrelations)]|false|none|[(tsType: MessageRecipientWithRelations, schemaOptions: { includeRelations: true })]|
-|attachmentFiles|[[AttachmentFileWithRelations](#schemaattachmentfilewithrelations)]|false|none|[(tsType: AttachmentFileWithRelations, schemaOptions: { includeRelations: true })]|
-|parentMessage|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
+|messageRecipients|[[MessageRecipient](#schemamessagerecipient)]|false|none|none|
+|attachmentFiles|[[AttachmentFile](#schemaattachmentfile)]|false|none|none|
+|parentMessage|[Message](#schemamessage)|false|none|none|
 |foreignKey|any|false|none|none|
-|messages|[[MessageWithRelations](#schemamessagewithrelations)]|false|none|[(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })]|
+|messages|[[Message](#schemamessage)]|false|none|none|
 
 <h2 id="tocS_MessagePartial">MessagePartial</h2>
 <!-- backwards compatibility -->
@@ -5111,56 +4708,6 @@ MessagePartial
 |subject|string|false|none|none|
 |toUserId|string|false|none|none|
 |parentMessageId|string|false|none|none|
-
-<h2 id="tocS_MessageRecipient">MessageRecipient</h2>
-<!-- backwards compatibility -->
-<a id="schemamessagerecipient"></a>
-<a id="schema_MessageRecipient"></a>
-<a id="tocSmessagerecipient"></a>
-<a id="tocsmessagerecipient"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "channelId": "string",
-  "forwardedBy": "string",
-  "isFavorite": true,
-  "isForwarded": true,
-  "isRead": true,
-  "recipientId": "string",
-  "messageId": "string"
-}
-
-```
-
-MessageRecipient
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|channelId|string|true|none|none|
-|forwardedBy|string|false|none|none|
-|isFavorite|boolean|false|none|none|
-|isForwarded|boolean|false|none|none|
-|isRead|boolean|false|none|none|
-|recipientId|string|true|none|none|
-|messageId|string|true|none|none|
 
 <h2 id="tocS_NewMessageRecipient">NewMessageRecipient</h2>
 <!-- backwards compatibility -->
@@ -5249,51 +4796,7 @@ NewMessageRecipient
     "status": 0,
     "subject": "string",
     "toUserId": "string",
-    "parentMessageId": "string",
-    "messageRecipients": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "channelId": "string",
-        "forwardedBy": "string",
-        "isFavorite": true,
-        "isForwarded": true,
-        "isRead": true,
-        "recipientId": "string",
-        "messageId": "string",
-        "message": {},
-        "foreignKey": null
-      }
-    ],
-    "attachmentFiles": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "channelId": "string",
-        "fileKey": "string",
-        "messageId": "string",
-        "metaData": {},
-        "message": {},
-        "foreignKey": null
-      }
-    ],
-    "parentMessage": {},
-    "foreignKey": null,
-    "messages": [
-      {}
-    ]
+    "parentMessageId": "string"
   },
   "foreignKey": null
 }
@@ -5321,7 +4824,7 @@ MessageRecipientWithRelations
 |isRead|boolean|false|none|none|
 |recipientId|string|true|none|none|
 |messageId|string|true|none|none|
-|message|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
+|message|[Message](#schemamessage)|false|none|none|
 |foreignKey|any|false|none|none|
 
 <h2 id="tocS_MessageRecipientPartial">MessageRecipientPartial</h2>
@@ -5469,50 +4972,6 @@ NewMessageRecipientInMessage
 |isRead|boolean|false|none|none|
 |recipientId|string|true|none|none|
 |messageId|string|false|none|none|
-
-<h2 id="tocS_AttachmentFile">AttachmentFile</h2>
-<!-- backwards compatibility -->
-<a id="schemaattachmentfile"></a>
-<a id="schema_AttachmentFile"></a>
-<a id="tocSattachmentfile"></a>
-<a id="tocsattachmentfile"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "channelId": "string",
-  "fileKey": "string",
-  "messageId": "string",
-  "metaData": {}
-}
-
-```
-
-AttachmentFile
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|channelId|string|false|none|none|
-|fileKey|string|false|none|none|
-|messageId|string|false|none|none|
-|metaData|object|false|none|none|
 
 <h2 id="tocS_NewAttachmentFile">NewAttachmentFile</h2>
 <!-- backwards compatibility -->
@@ -5668,51 +5127,7 @@ New Attachment Files
     "status": 0,
     "subject": "string",
     "toUserId": "string",
-    "parentMessageId": "string",
-    "messageRecipients": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "channelId": "string",
-        "forwardedBy": "string",
-        "isFavorite": true,
-        "isForwarded": true,
-        "isRead": true,
-        "recipientId": "string",
-        "messageId": "string",
-        "message": {},
-        "foreignKey": null
-      }
-    ],
-    "attachmentFiles": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "channelId": "string",
-        "fileKey": "string",
-        "messageId": "string",
-        "metaData": {},
-        "message": {},
-        "foreignKey": null
-      }
-    ],
-    "parentMessage": {},
-    "foreignKey": null,
-    "messages": [
-      {}
-    ]
+    "parentMessageId": "string"
   },
   "foreignKey": null
 }
@@ -5737,7 +5152,7 @@ AttachmentFileWithRelations
 |fileKey|string|false|none|none|
 |messageId|string|false|none|none|
 |metaData|object|false|none|none|
-|message|[MessageWithRelations](#schemamessagewithrelations)|false|none|(tsType: MessageWithRelations, schemaOptions: { includeRelations: true })|
+|message|[Message](#schemamessage)|false|none|none|
 |foreignKey|any|false|none|none|
 
 <h2 id="tocS_AttachmentFilePartial">AttachmentFilePartial</h2>
