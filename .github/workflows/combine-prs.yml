@@ -34,13 +34,13 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: actions/github-script@v6
+      - uses: actions/github-script@v9
         id: create-combined-pr
         name: Create Combined PR
         with:
           github-token: ${{secrets.COMBINED_PR_GITHUB_PAT}}
           script: |
-            const pulls = await github.paginate('GET /repos/:owner/:repo/pulls', {
+            const pulls = await github.paginate('GET /repos/{owner}/{repo}/pulls', {
               owner: context.repo.owner,
               repo: context.repo.repo
             });

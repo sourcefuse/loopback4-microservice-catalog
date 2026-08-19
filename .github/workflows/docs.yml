@@ -9,14 +9,14 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: 3.x
       - name: Setup Node
-        uses: actions/setup-node@v3.6.0
+        uses: actions/setup-node@v5
         with:
-          node-version: '22.x'
+          node-version: '24.x'
       - name: Bootstrap
         run: |
           npm ci --ignore-scripts

@@ -2,8 +2,8 @@
   "openapi": "3.0.0",
   "info": {
     "title": "@sourceloop/reporting-service",
-    "version": "7.0.9",
-    "description": "reporting-service.",
+    "version": "8.1.0",
+    "description": "reporting-service",
     "contact": {
       "name": "Sourav Bhargava",
       "email": "sourav.bhargava@sourcefuse.com"
@@ -1726,67 +1726,6 @@
         ],
         "additionalProperties": false
       },
-      "WidgetWithRelations": {
-        "title": "WidgetWithRelations",
-        "type": "object",
-        "description": "This model represents a widget (tsType: WidgetWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string",
-            "description": "The unique identifier for a widget"
-          },
-          "name": {
-            "type": "string",
-            "description": "The name of the widget"
-          },
-          "datasetId": {
-            "type": "string",
-            "description": "The id of the dataset that is to be used for the widget"
-          },
-          "visualizationType": {
-            "type": "string",
-            "description": "The type of visualization to be used for the widget"
-          },
-          "extId": {
-            "type": "string",
-            "description": "The external id of the widget"
-          },
-          "extMetadata": {
-            "type": "object",
-            "description": "The external metadata of the widget"
-          }
-        },
-        "required": [
-          "datasetId"
-        ],
-        "additionalProperties": false
-      },
       "DashboardWithRelations": {
         "title": "DashboardWithRelations",
         "type": "object",
@@ -1845,7 +1784,7 @@
           "widgets": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/WidgetWithRelations"
+              "$ref": "#/components/schemas/Widget"
             }
           }
         },

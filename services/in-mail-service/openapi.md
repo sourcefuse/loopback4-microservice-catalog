@@ -20,7 +20,7 @@ headingLevel: 2
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-In mail microservice.
+In mail microservice
 
 Base URLs:
 
@@ -2663,12 +2663,12 @@ Attachment add response schema
 |---|---|---|---|---|
 |items|[[Attachment](#schemaattachment)]|false|none|none|
 
-<h2 id="tocS_AttachmentExcluding_deleted_WithRelations">AttachmentExcluding_deleted_WithRelations</h2>
+<h2 id="tocS_AttachmentExcluding_deleted_">AttachmentExcluding_deleted_</h2>
 <!-- backwards compatibility -->
-<a id="schemaattachmentexcluding_deleted_withrelations"></a>
-<a id="schema_AttachmentExcluding_deleted_WithRelations"></a>
-<a id="tocSattachmentexcluding_deleted_withrelations"></a>
-<a id="tocsattachmentexcluding_deleted_withrelations"></a>
+<a id="schemaattachmentexcluding_deleted_"></a>
+<a id="schema_AttachmentExcluding_deleted_"></a>
+<a id="tocSattachmentexcluding_deleted_"></a>
+<a id="tocsattachmentexcluding_deleted_"></a>
 
 ```json
 {
@@ -2685,150 +2685,12 @@ Attachment add response schema
   "mime": "string",
   "extId": "string",
   "extMetadata": {},
-  "messageId": "string",
-  "message": {
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "sender": "string",
-    "subject": "string",
-    "body": "string",
-    "status": "draft",
-    "extId": "string",
-    "extMetadata": {},
-    "threadId": "string",
-    "attachment": [
-      {
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "name": "string",
-        "path": "string",
-        "thumbnail": "string",
-        "mime": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "messageId": "string",
-        "message": {},
-        "foreignKey": null
-      }
-    ],
-    "foreignKey": null,
-    "group": [
-      {
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "party": "string",
-        "type": "from",
-        "isImportant": true,
-        "storage": "draft",
-        "visibility": "read",
-        "extId": "string",
-        "extMetadata": {},
-        "messageId": "string",
-        "threadId": "string",
-        "message": {},
-        "foreignKey": null,
-        "thread": {
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "subject": "string",
-          "messageCounts": 0,
-          "extId": "string",
-          "extMetadata": {},
-          "message": [
-            {}
-          ],
-          "foreignKey": null,
-          "group": [
-            {}
-          ]
-        }
-      }
-    ],
-    "meta": [
-      {
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "key": "string",
-        "value": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "messageId": "string",
-        "message": {},
-        "foreignKey": null
-      }
-    ],
-    "thread": {
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "subject": "string",
-      "messageCounts": 0,
-      "extId": "string",
-      "extMetadata": {},
-      "message": [
-        {}
-      ],
-      "foreignKey": null,
-      "group": [
-        {
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "party": "string",
-          "type": "from",
-          "isImportant": true,
-          "storage": "draft",
-          "visibility": "read",
-          "extId": "string",
-          "extMetadata": {},
-          "messageId": "string",
-          "threadId": "string",
-          "message": {},
-          "foreignKey": null,
-          "thread": {}
-        }
-      ]
-    }
-  },
-  "foreignKey": null
+  "messageId": "string"
 }
 
 ```
 
-AttachmentExcluding_deleted_WithRelations
+AttachmentExcluding_deleted_
 
 ### Properties
 
@@ -2848,369 +2710,13 @@ AttachmentExcluding_deleted_WithRelations
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
 |messageId|string|false|none|none|
-|message|[MessageExcluding_deleted_WithRelations](#schemamessageexcluding_deleted_withrelations)|false|none|(tsType: Omit<MessageWithRelations, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ], includeRelations: true })|
-|foreignKey|any|false|none|none|
 
-<h2 id="tocS_ThreadExcluding_deleted_WithRelations">ThreadExcluding_deleted_WithRelations</h2>
+<h2 id="tocS_GroupExcluding_deleted_">GroupExcluding_deleted_</h2>
 <!-- backwards compatibility -->
-<a id="schemathreadexcluding_deleted_withrelations"></a>
-<a id="schema_ThreadExcluding_deleted_WithRelations"></a>
-<a id="tocSthreadexcluding_deleted_withrelations"></a>
-<a id="tocsthreadexcluding_deleted_withrelations"></a>
-
-```json
-{
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "subject": "string",
-  "messageCounts": 0,
-  "extId": "string",
-  "extMetadata": {},
-  "message": [
-    {
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "sender": "string",
-      "subject": "string",
-      "body": "string",
-      "status": "draft",
-      "extId": "string",
-      "extMetadata": {},
-      "threadId": "string",
-      "attachment": [
-        {
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "name": "string",
-          "path": "string",
-          "thumbnail": "string",
-          "mime": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "messageId": "string",
-          "message": {},
-          "foreignKey": null
-        }
-      ],
-      "foreignKey": null,
-      "group": [
-        {
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "party": "string",
-          "type": "from",
-          "isImportant": true,
-          "storage": "draft",
-          "visibility": "read",
-          "extId": "string",
-          "extMetadata": {},
-          "messageId": "string",
-          "threadId": "string",
-          "message": {},
-          "foreignKey": null,
-          "thread": {
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "subject": "string",
-            "messageCounts": 0,
-            "extId": "string",
-            "extMetadata": {},
-            "message": [],
-            "foreignKey": null,
-            "group": [
-              {}
-            ]
-          }
-        }
-      ],
-      "meta": [
-        {
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "key": "string",
-          "value": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "messageId": "string",
-          "message": {},
-          "foreignKey": null
-        }
-      ],
-      "thread": {
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "subject": "string",
-        "messageCounts": 0,
-        "extId": "string",
-        "extMetadata": {},
-        "message": [],
-        "foreignKey": null,
-        "group": [
-          {
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "party": "string",
-            "type": "from",
-            "isImportant": true,
-            "storage": "draft",
-            "visibility": "read",
-            "extId": "string",
-            "extMetadata": {},
-            "messageId": "string",
-            "threadId": "string",
-            "message": {},
-            "foreignKey": null,
-            "thread": {}
-          }
-        ]
-      }
-    }
-  ],
-  "foreignKey": null,
-  "group": [
-    {
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "party": "string",
-      "type": "from",
-      "isImportant": true,
-      "storage": "draft",
-      "visibility": "read",
-      "extId": "string",
-      "extMetadata": {},
-      "messageId": "string",
-      "threadId": "string",
-      "message": {
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "sender": "string",
-        "subject": "string",
-        "body": "string",
-        "status": "draft",
-        "extId": "string",
-        "extMetadata": {},
-        "threadId": "string",
-        "attachment": [
-          {
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "name": "string",
-            "path": "string",
-            "thumbnail": "string",
-            "mime": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "messageId": "string",
-            "message": {},
-            "foreignKey": null
-          }
-        ],
-        "foreignKey": null,
-        "group": [
-          {}
-        ],
-        "meta": [
-          {
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "key": "string",
-            "value": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "messageId": "string",
-            "message": {},
-            "foreignKey": null
-          }
-        ],
-        "thread": {
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "subject": "string",
-          "messageCounts": 0,
-          "extId": "string",
-          "extMetadata": {},
-          "message": [
-            {}
-          ],
-          "foreignKey": null,
-          "group": []
-        }
-      },
-      "foreignKey": null,
-      "thread": {
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "subject": "string",
-        "messageCounts": 0,
-        "extId": "string",
-        "extMetadata": {},
-        "message": [
-          {
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "sender": "string",
-            "subject": "string",
-            "body": "string",
-            "status": "draft",
-            "extId": "string",
-            "extMetadata": {},
-            "threadId": "string",
-            "attachment": [
-              {
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "name": "string",
-                "path": "string",
-                "thumbnail": "string",
-                "mime": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "messageId": "string",
-                "message": {},
-                "foreignKey": null
-              }
-            ],
-            "foreignKey": null,
-            "group": [
-              {}
-            ],
-            "meta": [
-              {
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "key": "string",
-                "value": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "messageId": "string",
-                "message": {},
-                "foreignKey": null
-              }
-            ],
-            "thread": {}
-          }
-        ],
-        "foreignKey": null,
-        "group": []
-      }
-    }
-  ]
-}
-
-```
-
-ThreadExcluding_deleted_WithRelations
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|subject|string|true|none|none|
-|messageCounts|number|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-|message|[[MessageExcluding_deleted_WithRelations](#schemamessageexcluding_deleted_withrelations)]|false|none|[(tsType: Omit<MessageWithRelations, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ], includeRelations: true })]|
-|foreignKey|any|false|none|none|
-|group|[[GroupExcluding_deleted_WithRelations](#schemagroupexcluding_deleted_withrelations)]|false|none|[(tsType: Omit<GroupWithRelations, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ], includeRelations: true })]|
-
-<h2 id="tocS_GroupExcluding_deleted_WithRelations">GroupExcluding_deleted_WithRelations</h2>
-<!-- backwards compatibility -->
-<a id="schemagroupexcluding_deleted_withrelations"></a>
-<a id="schema_GroupExcluding_deleted_WithRelations"></a>
-<a id="tocSgroupexcluding_deleted_withrelations"></a>
-<a id="tocsgroupexcluding_deleted_withrelations"></a>
+<a id="schemagroupexcluding_deleted_"></a>
+<a id="schema_GroupExcluding_deleted_"></a>
+<a id="tocSgroupexcluding_deleted_"></a>
+<a id="tocsgroupexcluding_deleted_"></a>
 
 ```json
 {
@@ -3229,326 +2735,12 @@ ThreadExcluding_deleted_WithRelations
   "extId": "string",
   "extMetadata": {},
   "messageId": "string",
-  "threadId": "string",
-  "message": {
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "sender": "string",
-    "subject": "string",
-    "body": "string",
-    "status": "draft",
-    "extId": "string",
-    "extMetadata": {},
-    "threadId": "string",
-    "attachment": [
-      {
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "name": "string",
-        "path": "string",
-        "thumbnail": "string",
-        "mime": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "messageId": "string",
-        "message": {},
-        "foreignKey": null
-      }
-    ],
-    "foreignKey": null,
-    "group": [
-      {
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "party": "string",
-        "type": "from",
-        "isImportant": true,
-        "storage": "draft",
-        "visibility": "read",
-        "extId": "string",
-        "extMetadata": {},
-        "messageId": "string",
-        "threadId": "string",
-        "message": {},
-        "foreignKey": null,
-        "thread": {
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "subject": "string",
-          "messageCounts": 0,
-          "extId": "string",
-          "extMetadata": {},
-          "message": [
-            {}
-          ],
-          "foreignKey": null,
-          "group": [
-            {}
-          ]
-        }
-      }
-    ],
-    "meta": [
-      {
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "key": "string",
-        "value": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "messageId": "string",
-        "message": {},
-        "foreignKey": null
-      }
-    ],
-    "thread": {
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "subject": "string",
-      "messageCounts": 0,
-      "extId": "string",
-      "extMetadata": {},
-      "message": [
-        {}
-      ],
-      "foreignKey": null,
-      "group": [
-        {
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "party": "string",
-          "type": "from",
-          "isImportant": true,
-          "storage": "draft",
-          "visibility": "read",
-          "extId": "string",
-          "extMetadata": {},
-          "messageId": "string",
-          "threadId": "string",
-          "message": {},
-          "foreignKey": null,
-          "thread": {}
-        }
-      ]
-    }
-  },
-  "foreignKey": null,
-  "thread": {
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "subject": "string",
-    "messageCounts": 0,
-    "extId": "string",
-    "extMetadata": {},
-    "message": [
-      {
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "sender": "string",
-        "subject": "string",
-        "body": "string",
-        "status": "draft",
-        "extId": "string",
-        "extMetadata": {},
-        "threadId": "string",
-        "attachment": [
-          {
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "name": "string",
-            "path": "string",
-            "thumbnail": "string",
-            "mime": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "messageId": "string",
-            "message": {},
-            "foreignKey": null
-          }
-        ],
-        "foreignKey": null,
-        "group": [
-          {
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "party": "string",
-            "type": "from",
-            "isImportant": true,
-            "storage": "draft",
-            "visibility": "read",
-            "extId": "string",
-            "extMetadata": {},
-            "messageId": "string",
-            "threadId": "string",
-            "message": {},
-            "foreignKey": null,
-            "thread": {}
-          }
-        ],
-        "meta": [
-          {
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "key": "string",
-            "value": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "messageId": "string",
-            "message": {},
-            "foreignKey": null
-          }
-        ],
-        "thread": {}
-      }
-    ],
-    "foreignKey": null,
-    "group": [
-      {
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "party": "string",
-        "type": "from",
-        "isImportant": true,
-        "storage": "draft",
-        "visibility": "read",
-        "extId": "string",
-        "extMetadata": {},
-        "messageId": "string",
-        "threadId": "string",
-        "message": {
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "sender": "string",
-          "subject": "string",
-          "body": "string",
-          "status": "draft",
-          "extId": "string",
-          "extMetadata": {},
-          "threadId": "string",
-          "attachment": [
-            {
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "name": "string",
-              "path": "string",
-              "thumbnail": "string",
-              "mime": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "messageId": "string",
-              "message": {},
-              "foreignKey": null
-            }
-          ],
-          "foreignKey": null,
-          "group": [
-            {}
-          ],
-          "meta": [
-            {
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "key": "string",
-              "value": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "messageId": "string",
-              "message": {},
-              "foreignKey": null
-            }
-          ],
-          "thread": {}
-        },
-        "foreignKey": null,
-        "thread": {}
-      }
-    ]
-  }
+  "threadId": "string"
 }
 
 ```
 
-GroupExcluding_deleted_WithRelations
+GroupExcluding_deleted_
 
 ### Properties
 
@@ -3570,9 +2762,6 @@ GroupExcluding_deleted_WithRelations
 |extMetadata|object|false|none|none|
 |messageId|string|false|none|none|
 |threadId|string|false|none|none|
-|message|[MessageExcluding_deleted_WithRelations](#schemamessageexcluding_deleted_withrelations)|false|none|(tsType: Omit<MessageWithRelations, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ], includeRelations: true })|
-|foreignKey|any|false|none|none|
-|thread|[ThreadExcluding_deleted_WithRelations](#schemathreadexcluding_deleted_withrelations)|false|none|(tsType: Omit<ThreadWithRelations, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ], includeRelations: true })|
 
 #### Enumerated Values
 
@@ -3592,12 +2781,12 @@ GroupExcluding_deleted_WithRelations
 |visibility|important|
 |visibility|not-important|
 
-<h2 id="tocS_MetaExcluding_deleted_WithRelations">MetaExcluding_deleted_WithRelations</h2>
+<h2 id="tocS_MetaExcluding_deleted_">MetaExcluding_deleted_</h2>
 <!-- backwards compatibility -->
-<a id="schemametaexcluding_deleted_withrelations"></a>
-<a id="schema_MetaExcluding_deleted_WithRelations"></a>
-<a id="tocSmetaexcluding_deleted_withrelations"></a>
-<a id="tocsmetaexcluding_deleted_withrelations"></a>
+<a id="schemametaexcluding_deleted_"></a>
+<a id="schema_MetaExcluding_deleted_"></a>
+<a id="tocSmetaexcluding_deleted_"></a>
+<a id="tocsmetaexcluding_deleted_"></a>
 
 ```json
 {
@@ -3612,150 +2801,12 @@ GroupExcluding_deleted_WithRelations
   "value": "string",
   "extId": "string",
   "extMetadata": {},
-  "messageId": "string",
-  "message": {
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "sender": "string",
-    "subject": "string",
-    "body": "string",
-    "status": "draft",
-    "extId": "string",
-    "extMetadata": {},
-    "threadId": "string",
-    "attachment": [
-      {
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "name": "string",
-        "path": "string",
-        "thumbnail": "string",
-        "mime": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "messageId": "string",
-        "message": {},
-        "foreignKey": null
-      }
-    ],
-    "foreignKey": null,
-    "group": [
-      {
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "party": "string",
-        "type": "from",
-        "isImportant": true,
-        "storage": "draft",
-        "visibility": "read",
-        "extId": "string",
-        "extMetadata": {},
-        "messageId": "string",
-        "threadId": "string",
-        "message": {},
-        "foreignKey": null,
-        "thread": {
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "subject": "string",
-          "messageCounts": 0,
-          "extId": "string",
-          "extMetadata": {},
-          "message": [
-            {}
-          ],
-          "foreignKey": null,
-          "group": [
-            {}
-          ]
-        }
-      }
-    ],
-    "meta": [
-      {
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "key": "string",
-        "value": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "messageId": "string",
-        "message": {},
-        "foreignKey": null
-      }
-    ],
-    "thread": {
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "subject": "string",
-      "messageCounts": 0,
-      "extId": "string",
-      "extMetadata": {},
-      "message": [
-        {}
-      ],
-      "foreignKey": null,
-      "group": [
-        {
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "party": "string",
-          "type": "from",
-          "isImportant": true,
-          "storage": "draft",
-          "visibility": "read",
-          "extId": "string",
-          "extMetadata": {},
-          "messageId": "string",
-          "threadId": "string",
-          "message": {},
-          "foreignKey": null,
-          "thread": {}
-        }
-      ]
-    }
-  },
-  "foreignKey": null
+  "messageId": "string"
 }
 
 ```
 
-MetaExcluding_deleted_WithRelations
+MetaExcluding_deleted_
 
 ### Properties
 
@@ -3773,8 +2824,48 @@ MetaExcluding_deleted_WithRelations
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
 |messageId|string|false|none|none|
-|message|[MessageExcluding_deleted_WithRelations](#schemamessageexcluding_deleted_withrelations)|false|none|(tsType: Omit<MessageWithRelations, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ], includeRelations: true })|
-|foreignKey|any|false|none|none|
+
+<h2 id="tocS_ThreadExcluding_deleted_">ThreadExcluding_deleted_</h2>
+<!-- backwards compatibility -->
+<a id="schemathreadexcluding_deleted_"></a>
+<a id="schema_ThreadExcluding_deleted_"></a>
+<a id="tocSthreadexcluding_deleted_"></a>
+<a id="tocsthreadexcluding_deleted_"></a>
+
+```json
+{
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "subject": "string",
+  "messageCounts": 0,
+  "extId": "string",
+  "extMetadata": {}
+}
+
+```
+
+ThreadExcluding_deleted_
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|subject|string|true|none|none|
+|messageCounts|number|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
 
 <h2 id="tocS_MessageExcluding_deleted_WithRelations">MessageExcluding_deleted_WithRelations</h2>
 <!-- backwards compatibility -->
@@ -3814,126 +2905,7 @@ MetaExcluding_deleted_WithRelations
       "mime": "string",
       "extId": "string",
       "extMetadata": {},
-      "messageId": "string",
-      "message": {
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "sender": "string",
-        "subject": "string",
-        "body": "string",
-        "status": "draft",
-        "extId": "string",
-        "extMetadata": {},
-        "threadId": "string",
-        "attachment": [],
-        "foreignKey": null,
-        "group": [
-          {
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "party": "string",
-            "type": "from",
-            "isImportant": true,
-            "storage": "draft",
-            "visibility": "read",
-            "extId": "string",
-            "extMetadata": {},
-            "messageId": "string",
-            "threadId": "string",
-            "message": {},
-            "foreignKey": null,
-            "thread": {
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "subject": "string",
-              "messageCounts": 0,
-              "extId": "string",
-              "extMetadata": {},
-              "message": [
-                {}
-              ],
-              "foreignKey": null,
-              "group": [
-                {}
-              ]
-            }
-          }
-        ],
-        "meta": [
-          {
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "key": "string",
-            "value": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "messageId": "string",
-            "message": {},
-            "foreignKey": null
-          }
-        ],
-        "thread": {
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "subject": "string",
-          "messageCounts": 0,
-          "extId": "string",
-          "extMetadata": {},
-          "message": [
-            {}
-          ],
-          "foreignKey": null,
-          "group": [
-            {
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "party": "string",
-              "type": "from",
-              "isImportant": true,
-              "storage": "draft",
-              "visibility": "read",
-              "extId": "string",
-              "extMetadata": {},
-              "messageId": "string",
-              "threadId": "string",
-              "message": {},
-              "foreignKey": null,
-              "thread": {}
-            }
-          ]
-        }
-      },
-      "foreignKey": null
+      "messageId": "string"
     }
   ],
   "foreignKey": null,
@@ -3954,160 +2926,7 @@ MetaExcluding_deleted_WithRelations
       "extId": "string",
       "extMetadata": {},
       "messageId": "string",
-      "threadId": "string",
-      "message": {
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "sender": "string",
-        "subject": "string",
-        "body": "string",
-        "status": "draft",
-        "extId": "string",
-        "extMetadata": {},
-        "threadId": "string",
-        "attachment": [
-          {
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "name": "string",
-            "path": "string",
-            "thumbnail": "string",
-            "mime": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "messageId": "string",
-            "message": {},
-            "foreignKey": null
-          }
-        ],
-        "foreignKey": null,
-        "group": [],
-        "meta": [
-          {
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "key": "string",
-            "value": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "messageId": "string",
-            "message": {},
-            "foreignKey": null
-          }
-        ],
-        "thread": {
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "subject": "string",
-          "messageCounts": 0,
-          "extId": "string",
-          "extMetadata": {},
-          "message": [
-            {}
-          ],
-          "foreignKey": null,
-          "group": [
-            {}
-          ]
-        }
-      },
-      "foreignKey": null,
-      "thread": {
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "subject": "string",
-        "messageCounts": 0,
-        "extId": "string",
-        "extMetadata": {},
-        "message": [
-          {
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "sender": "string",
-            "subject": "string",
-            "body": "string",
-            "status": "draft",
-            "extId": "string",
-            "extMetadata": {},
-            "threadId": "string",
-            "attachment": [
-              {
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "name": "string",
-                "path": "string",
-                "thumbnail": "string",
-                "mime": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "messageId": "string",
-                "message": {},
-                "foreignKey": null
-              }
-            ],
-            "foreignKey": null,
-            "group": [],
-            "meta": [
-              {
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "key": "string",
-                "value": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "messageId": "string",
-                "message": {},
-                "foreignKey": null
-              }
-            ],
-            "thread": {}
-          }
-        ],
-        "foreignKey": null,
-        "group": [
-          {}
-        ]
-      }
+      "threadId": "string"
     }
   ],
   "meta": [
@@ -4123,128 +2942,7 @@ MetaExcluding_deleted_WithRelations
       "value": "string",
       "extId": "string",
       "extMetadata": {},
-      "messageId": "string",
-      "message": {
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "sender": "string",
-        "subject": "string",
-        "body": "string",
-        "status": "draft",
-        "extId": "string",
-        "extMetadata": {},
-        "threadId": "string",
-        "attachment": [
-          {
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "name": "string",
-            "path": "string",
-            "thumbnail": "string",
-            "mime": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "messageId": "string",
-            "message": {},
-            "foreignKey": null
-          }
-        ],
-        "foreignKey": null,
-        "group": [
-          {
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "party": "string",
-            "type": "from",
-            "isImportant": true,
-            "storage": "draft",
-            "visibility": "read",
-            "extId": "string",
-            "extMetadata": {},
-            "messageId": "string",
-            "threadId": "string",
-            "message": {},
-            "foreignKey": null,
-            "thread": {
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "subject": "string",
-              "messageCounts": 0,
-              "extId": "string",
-              "extMetadata": {},
-              "message": [
-                {}
-              ],
-              "foreignKey": null,
-              "group": [
-                {}
-              ]
-            }
-          }
-        ],
-        "meta": [],
-        "thread": {
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "subject": "string",
-          "messageCounts": 0,
-          "extId": "string",
-          "extMetadata": {},
-          "message": [
-            {}
-          ],
-          "foreignKey": null,
-          "group": [
-            {
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "party": "string",
-              "type": "from",
-              "isImportant": true,
-              "storage": "draft",
-              "visibility": "read",
-              "extId": "string",
-              "extMetadata": {},
-              "messageId": "string",
-              "threadId": "string",
-              "message": {},
-              "foreignKey": null,
-              "thread": {}
-            }
-          ]
-        }
-      },
-      "foreignKey": null
+      "messageId": "string"
     }
   ],
   "thread": {
@@ -4258,170 +2956,7 @@ MetaExcluding_deleted_WithRelations
     "subject": "string",
     "messageCounts": 0,
     "extId": "string",
-    "extMetadata": {},
-    "message": [
-      {
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "sender": "string",
-        "subject": "string",
-        "body": "string",
-        "status": "draft",
-        "extId": "string",
-        "extMetadata": {},
-        "threadId": "string",
-        "attachment": [
-          {
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "name": "string",
-            "path": "string",
-            "thumbnail": "string",
-            "mime": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "messageId": "string",
-            "message": {},
-            "foreignKey": null
-          }
-        ],
-        "foreignKey": null,
-        "group": [
-          {
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "party": "string",
-            "type": "from",
-            "isImportant": true,
-            "storage": "draft",
-            "visibility": "read",
-            "extId": "string",
-            "extMetadata": {},
-            "messageId": "string",
-            "threadId": "string",
-            "message": {},
-            "foreignKey": null,
-            "thread": {}
-          }
-        ],
-        "meta": [
-          {
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "key": "string",
-            "value": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "messageId": "string",
-            "message": {},
-            "foreignKey": null
-          }
-        ],
-        "thread": {}
-      }
-    ],
-    "foreignKey": null,
-    "group": [
-      {
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "party": "string",
-        "type": "from",
-        "isImportant": true,
-        "storage": "draft",
-        "visibility": "read",
-        "extId": "string",
-        "extMetadata": {},
-        "messageId": "string",
-        "threadId": "string",
-        "message": {
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "sender": "string",
-          "subject": "string",
-          "body": "string",
-          "status": "draft",
-          "extId": "string",
-          "extMetadata": {},
-          "threadId": "string",
-          "attachment": [
-            {
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "name": "string",
-              "path": "string",
-              "thumbnail": "string",
-              "mime": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "messageId": "string",
-              "message": {},
-              "foreignKey": null
-            }
-          ],
-          "foreignKey": null,
-          "group": [
-            {}
-          ],
-          "meta": [
-            {
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "key": "string",
-              "value": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "messageId": "string",
-              "message": {},
-              "foreignKey": null
-            }
-          ],
-          "thread": {}
-        },
-        "foreignKey": null,
-        "thread": {}
-      }
-    ]
+    "extMetadata": {}
   }
 }
 
@@ -4447,11 +2982,11 @@ MessageExcluding_deleted_WithRelations
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
 |threadId|string|false|none|none|
-|attachment|[[AttachmentExcluding_deleted_WithRelations](#schemaattachmentexcluding_deleted_withrelations)]|false|none|[(tsType: Omit<AttachmentWithRelations, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ], includeRelations: true })]|
+|attachment|[[AttachmentExcluding_deleted_](#schemaattachmentexcluding_deleted_)]|false|none|[(tsType: Omit<Attachment, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ] })]|
 |foreignKey|any|false|none|none|
-|group|[[GroupExcluding_deleted_WithRelations](#schemagroupexcluding_deleted_withrelations)]|false|none|[(tsType: Omit<GroupWithRelations, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ], includeRelations: true })]|
-|meta|[[MetaExcluding_deleted_WithRelations](#schemametaexcluding_deleted_withrelations)]|false|none|[(tsType: Omit<MetaWithRelations, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ], includeRelations: true })]|
-|thread|[ThreadExcluding_deleted_WithRelations](#schemathreadexcluding_deleted_withrelations)|false|none|(tsType: Omit<ThreadWithRelations, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ], includeRelations: true })|
+|group|[[GroupExcluding_deleted_](#schemagroupexcluding_deleted_)]|false|none|[(tsType: Omit<Group, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ] })]|
+|meta|[[MetaExcluding_deleted_](#schemametaexcluding_deleted_)]|false|none|[(tsType: Omit<Meta, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ] })]|
+|thread|[ThreadExcluding_deleted_](#schemathreadexcluding_deleted_)|false|none|(tsType: Omit<Thread, 'deleted'>, schemaOptions: { exclude: [ 'deleted' ] })|
 
 #### Enumerated Values
 

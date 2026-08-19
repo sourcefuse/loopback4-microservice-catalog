@@ -3,7 +3,7 @@
   "info": {
     "title": "Chat Service",
     "version": "1.0.0",
-    "description": "chat-service microservice.",
+    "description": "chat-service microservice",
     "contact": {
       "name": "Sourcefuse"
     }
@@ -1645,6 +1645,116 @@
         "additionalProperties": false,
         "x-typescript-type": "Omit<Message, 'id'>"
       },
+      "MessageRecipient": {
+        "title": "MessageRecipient",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "channelId": {
+            "type": "string"
+          },
+          "forwardedBy": {
+            "type": "string"
+          },
+          "isFavorite": {
+            "type": "boolean"
+          },
+          "isForwarded": {
+            "type": "boolean"
+          },
+          "isRead": {
+            "type": "boolean"
+          },
+          "recipientId": {
+            "type": "string"
+          },
+          "messageId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "channelId",
+          "recipientId",
+          "messageId"
+        ],
+        "additionalProperties": false
+      },
+      "AttachmentFile": {
+        "title": "AttachmentFile",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "channelId": {
+            "type": "string"
+          },
+          "fileKey": {
+            "type": "string"
+          },
+          "messageId": {
+            "type": "string"
+          },
+          "metaData": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false
+      },
       "MessageWithRelations": {
         "title": "MessageWithRelations",
         "type": "object",
@@ -1703,23 +1813,23 @@
           "messageRecipients": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/MessageRecipientWithRelations"
+              "$ref": "#/components/schemas/MessageRecipient"
             }
           },
           "attachmentFiles": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/AttachmentFileWithRelations"
+              "$ref": "#/components/schemas/AttachmentFile"
             }
           },
           "parentMessage": {
-            "$ref": "#/components/schemas/MessageWithRelations"
+            "$ref": "#/components/schemas/Message"
           },
           "foreignKey": {},
           "messages": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/MessageWithRelations"
+              "$ref": "#/components/schemas/Message"
             }
           }
         },
@@ -1789,68 +1899,6 @@
         },
         "additionalProperties": false,
         "x-typescript-type": "Partial<Message>"
-      },
-      "MessageRecipient": {
-        "title": "MessageRecipient",
-        "type": "object",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "channelId": {
-            "type": "string"
-          },
-          "forwardedBy": {
-            "type": "string"
-          },
-          "isFavorite": {
-            "type": "boolean"
-          },
-          "isForwarded": {
-            "type": "boolean"
-          },
-          "isRead": {
-            "type": "boolean"
-          },
-          "recipientId": {
-            "type": "string"
-          },
-          "messageId": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "channelId",
-          "recipientId",
-          "messageId"
-        ],
-        "additionalProperties": false
       },
       "NewMessageRecipient": {
         "title": "NewMessageRecipient",
@@ -1969,7 +2017,7 @@
             "type": "string"
           },
           "message": {
-            "$ref": "#/components/schemas/MessageWithRelations"
+            "$ref": "#/components/schemas/Message"
           },
           "foreignKey": {}
         },
@@ -2161,54 +2209,6 @@
         "additionalProperties": false,
         "x-typescript-type": "@loopback/repository-json-schema#Optional<Omit<MessageRecipient, 'id'>, 'messageId'>"
       },
-      "AttachmentFile": {
-        "title": "AttachmentFile",
-        "type": "object",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "channelId": {
-            "type": "string"
-          },
-          "fileKey": {
-            "type": "string"
-          },
-          "messageId": {
-            "type": "string"
-          },
-          "metaData": {
-            "type": "object"
-          }
-        },
-        "additionalProperties": false
-      },
       "NewAttachmentFile": {
         "title": "NewAttachmentFile",
         "type": "object",
@@ -2385,7 +2385,7 @@
             "type": "object"
           },
           "message": {
-            "$ref": "#/components/schemas/MessageWithRelations"
+            "$ref": "#/components/schemas/Message"
           },
           "foreignKey": {}
         },

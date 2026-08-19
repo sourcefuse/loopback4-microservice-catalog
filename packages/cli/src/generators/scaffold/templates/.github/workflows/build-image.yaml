@@ -21,12 +21,12 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
-          node-version: "18"
-          cache: "npm"
-          cache-dependency-path: "**/package-lock.json"
+          node-version: '24'
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -35,16 +35,16 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: setup packages
-        run: "npm i"
+        run: 'npm i'
 
       - name: lerna build
-        run: "npm run build --workspaces --if-present"
+        run: 'npm run build --workspaces --if-present'
 
       - name: lerna test
-        run: "npm run test --workspaces --if-present"
+        run: 'npm run test --workspaces --if-present'
 
       - name: lerna docker build
-        run: "npx lerna run docker:build --stream --concurrency 2"
+        run: 'npx lerna run docker:build --stream --concurrency 2'
 
       - name: Login to Docker Hub
         uses: docker/login-action@v2
@@ -53,4 +53,4 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: lerna docker push
-        run: "npx lerna run docker:push"
+        run: 'npx lerna run docker:push'

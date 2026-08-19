@@ -1,5 +1,5 @@
 ---
-title: "@sourceloop/reporting-service v7.0.9"
+title: "@sourceloop/reporting-service v8.1.0"
 language_tabs:
   - javascript: JavaScript
   - javascript--nodejs: Node.JS
@@ -16,11 +16,11 @@ headingLevel: 2
 
 <!-- Generator: Widdershins v4.0.1 -->
 
-<h1 id="-sourceloop-reporting-service">@sourceloop/reporting-service v7.0.9</h1>
+<h1 id="-sourceloop-reporting-service">@sourceloop/reporting-service v8.1.0</h1>
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-reporting-service.
+reporting-service
 
 Base URLs:
 
@@ -3682,52 +3682,6 @@ CreateDashboardDto
 |layout|object|false|none|The layout of the dashboard|
 |widgetIds|[string]|false|none|none|
 
-<h2 id="tocS_WidgetWithRelations">WidgetWithRelations</h2>
-<!-- backwards compatibility -->
-<a id="schemawidgetwithrelations"></a>
-<a id="schema_WidgetWithRelations"></a>
-<a id="tocSwidgetwithrelations"></a>
-<a id="tocswidgetwithrelations"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "name": "string",
-  "datasetId": "string",
-  "visualizationType": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-WidgetWithRelations
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|The unique identifier for a widget|
-|name|string|false|none|The name of the widget|
-|datasetId|string|true|none|The id of the dataset that is to be used for the widget|
-|visualizationType|string|false|none|The type of visualization to be used for the widget|
-|extId|string|false|none|The external id of the widget|
-|extMetadata|object|false|none|The external metadata of the widget|
-
 <h2 id="tocS_DashboardWithRelations">DashboardWithRelations</h2>
 <!-- backwards compatibility -->
 <a id="schemadashboardwithrelations"></a>
@@ -3790,7 +3744,7 @@ DashboardWithRelations
 |layout|object|false|none|The layout of the dashboard|
 |extId|string|false|none|The external id of the dashboard|
 |extMetadata|object|false|none|The external metadata of the dashboard|
-|widgets|[[WidgetWithRelations](#schemawidgetwithrelations)]|false|none|[This model represents a widget (tsType: WidgetWithRelations, schemaOptions: { includeRelations: true })]|
+|widgets|[[Widget](#schemawidget)]|false|none|[This model represents a widget]|
 
 <h2 id="tocS_dashboards.ScopeFilter">dashboards.ScopeFilter</h2>
 <!-- backwards compatibility -->

@@ -3,7 +3,7 @@
   "info": {
     "title": "Bpmn Service",
     "version": "1.0.0",
-    "description": "a Reusable, customizable and workflow based task service.",
+    "description": "a Reusable, customizable and workflow based task service",
     "contact": {
       "name": "SourceFuse"
     }
@@ -1025,10 +1025,9 @@
       }
     },
     "schemas": {
-      "UserTaskWithRelations": {
-        "title": "UserTaskWithRelations",
+      "UserTask": {
+        "title": "UserTask",
         "type": "object",
-        "description": "(tsType: UserTaskWithRelations, schemaOptions: { includeRelations: true })",
         "properties": {
           "deleted": {
             "type": "boolean"
@@ -1078,8 +1077,7 @@
           "status",
           "externalId"
         ],
-        "additionalProperties": false,
-        "x-typescript-type": "UserTaskWithRelations"
+        "additionalProperties": false
       },
       "TaskWithRelations": {
         "title": "TaskWithRelations",
@@ -1167,7 +1165,7 @@
           "userTasks": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/UserTaskWithRelations"
+              "$ref": "#/components/schemas/UserTask"
             }
           }
         },
@@ -1411,6 +1409,62 @@
           "metadata"
         ],
         "additionalProperties": false
+      },
+      "UserTaskWithRelations": {
+        "title": "UserTaskWithRelations",
+        "type": "object",
+        "description": "(tsType: UserTaskWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "taskId": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "externalId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "taskId",
+          "status",
+          "externalId"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "UserTaskWithRelations"
       },
       "EventWithRelations": {
         "title": "EventWithRelations",

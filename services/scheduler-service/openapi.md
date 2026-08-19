@@ -20,7 +20,7 @@ headingLevel: 2
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-Scheduler Microservice.
+Scheduler Microservice
 
 Base URLs:
 
@@ -482,118 +482,7 @@ fetch('/attachments/{id}',
     "calendarId": "string",
     "parentEventId": "string",
     "extId": "string",
-    "extMetadata": {},
-    "calendar": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "source": "string",
-      "enableWorkingHours": true,
-      "location": "string",
-      "identifier": "string",
-      "summary": "string",
-      "timezone": "string",
-      "extId": "string",
-      "extMetadata": {},
-      "events": [
-        {}
-      ],
-      "workingHours": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "dayOfWeek": 0,
-          "end": "string",
-          "start": "string",
-          "calendarId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "calendar": {},
-          "foreignKey": null
-        }
-      ],
-      "subscriptions": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "accessRole": "freeBusyReader",
-          "bgColor": "string",
-          "fgColor": "string",
-          "isHidden": true,
-          "isPrimary": true,
-          "identifier": "string",
-          "defaultReminders": {},
-          "notificationSettings": {},
-          "calendarId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "calendar": {},
-          "foreignKey": null
-        }
-      ]
-    },
-    "foreignKey": null,
-    "parentEvent": {},
-    "attendees": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "identifier": "string",
-        "isOptional": true,
-        "isOrganizer": true,
-        "messages": "string",
-        "responseStatus": "needsAction",
-        "eventId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "event": {},
-        "foreignKey": null
-      }
-    ],
-    "attachments": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "fileUrl": "string",
-        "iconLink": "string",
-        "mimeType": "string",
-        "title": "string",
-        "eventId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "event": {},
-        "foreignKey": null
-      }
-    ]
+    "extMetadata": {}
   },
   "foreignKey": null
 }
@@ -1082,100 +971,7 @@ fetch('/attachments',
       "calendarId": "string",
       "parentEventId": "string",
       "extId": "string",
-      "extMetadata": {},
-      "calendar": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "source": "string",
-        "enableWorkingHours": true,
-        "location": "string",
-        "identifier": "string",
-        "summary": "string",
-        "timezone": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "events": [
-          {}
-        ],
-        "workingHours": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "dayOfWeek": 0,
-            "end": "string",
-            "start": "string",
-            "calendarId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "calendar": {},
-            "foreignKey": null
-          }
-        ],
-        "subscriptions": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "accessRole": "freeBusyReader",
-            "bgColor": "string",
-            "fgColor": "string",
-            "isHidden": true,
-            "isPrimary": true,
-            "identifier": "string",
-            "defaultReminders": {},
-            "notificationSettings": {},
-            "calendarId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "calendar": {},
-            "foreignKey": null
-          }
-        ]
-      },
-      "foreignKey": null,
-      "parentEvent": {},
-      "attendees": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "identifier": "string",
-          "isOptional": true,
-          "isOrganizer": true,
-          "messages": "string",
-          "responseStatus": "needsAction",
-          "eventId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "event": {},
-          "foreignKey": null
-        }
-      ],
-      "attachments": [
-        {}
-      ]
+      "extMetadata": {}
     },
     "foreignKey": null
   }
@@ -1211,7 +1007,7 @@ Status Code **200**
 |»» eventId|string|true|none|none|
 |»» extId|string|false|none|none|
 |»» extMetadata|object|false|none|none|
-|»» event|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
+|»» event|[Event](#schemaevent)|false|none|none|
 |»»» deleted|boolean|false|none|none|
 |»»» deletedOn|string(date-time)¦null|false|none|none|
 |»»» deletedBy|string¦null|false|none|none|
@@ -1239,90 +1035,6 @@ Status Code **200**
 |»»» parentEventId|string|false|none|none|
 |»»» extId|string|false|none|none|
 |»»» extMetadata|object|false|none|none|
-|»»» calendar|[CalendarWithRelations](#schemacalendarwithrelations)|false|none|(tsType: CalendarWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» deleted|boolean|false|none|none|
-|»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»» deletedBy|string¦null|false|none|none|
-|»»»» createdOn|string(date-time)|false|none|none|
-|»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»» createdBy|string|false|none|none|
-|»»»» modifiedBy|string|false|none|none|
-|»»»» id|string|false|none|none|
-|»»»» source|string|false|none|none|
-|»»»» enableWorkingHours|boolean|false|none|none|
-|»»»» location|string|false|none|none|
-|»»»» identifier|string|true|none|none|
-|»»»» summary|string|false|none|none|
-|»»»» timezone|string|false|none|none|
-|»»»» extId|string|false|none|none|
-|»»»» extMetadata|object|false|none|none|
-|»»»» events|[[EventWithRelations](#schemaeventwithrelations)]|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» EventWithRelations|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» workingHours|[[WorkingHourWithRelations](#schemaworkinghourwithrelations)]|false|none|(tsType: WorkingHourWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» WorkingHourWithRelations|[WorkingHourWithRelations](#schemaworkinghourwithrelations)|false|none|(tsType: WorkingHourWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»» deleted|boolean|false|none|none|
-|»»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»»» deletedBy|string¦null|false|none|none|
-|»»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»»» createdBy|string|false|none|none|
-|»»»»»» modifiedBy|string|false|none|none|
-|»»»»»» id|string|false|none|none|
-|»»»»»» dayOfWeek|number|false|none|none|
-|»»»»»» end|string|false|none|none|
-|»»»»»» start|string|false|none|none|
-|»»»»»» calendarId|string|true|none|none|
-|»»»»»» extId|string|false|none|none|
-|»»»»»» extMetadata|object|false|none|none|
-|»»»»»» calendar|[CalendarWithRelations](#schemacalendarwithrelations)|false|none|(tsType: CalendarWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»» foreignKey|any|false|none|none|
-|»»»» subscriptions|[[SubscriptionWithRelations](#schemasubscriptionwithrelations)]|false|none|(tsType: SubscriptionWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» SubscriptionWithRelations|[SubscriptionWithRelations](#schemasubscriptionwithrelations)|false|none|(tsType: SubscriptionWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»» deleted|boolean|false|none|none|
-|»»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»»» deletedBy|string¦null|false|none|none|
-|»»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»»» createdBy|string|false|none|none|
-|»»»»»» modifiedBy|string|false|none|none|
-|»»»»»» id|string|false|none|none|
-|»»»»»» accessRole|string|false|none|none|
-|»»»»»» bgColor|string|false|none|none|
-|»»»»»» fgColor|string|false|none|none|
-|»»»»»» isHidden|boolean|false|none|none|
-|»»»»»» isPrimary|boolean|false|none|none|
-|»»»»»» identifier|string|true|none|none|
-|»»»»»» defaultReminders|object|false|none|none|
-|»»»»»» notificationSettings|object|false|none|none|
-|»»»»»» calendarId|string|true|none|none|
-|»»»»»» extId|string|false|none|none|
-|»»»»»» extMetadata|object|false|none|none|
-|»»»»»» calendar|[CalendarWithRelations](#schemacalendarwithrelations)|false|none|(tsType: CalendarWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»» foreignKey|any|false|none|none|
-|»»» foreignKey|any|false|none|none|
-|»»» parentEvent|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|»»» attendees|[[AttendeeWithRelations](#schemaattendeewithrelations)]|false|none|(tsType: AttendeeWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» AttendeeWithRelations|[AttendeeWithRelations](#schemaattendeewithrelations)|false|none|(tsType: AttendeeWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» deleted|boolean|false|none|none|
-|»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»» deletedBy|string¦null|false|none|none|
-|»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»» createdBy|string|false|none|none|
-|»»»»» modifiedBy|string|false|none|none|
-|»»»»» id|string|false|none|none|
-|»»»»» identifier|string|true|none|none|
-|»»»»» isOptional|boolean|false|none|none|
-|»»»»» isOrganizer|boolean|false|none|none|
-|»»»»» messages|string|false|none|none|
-|»»»»» responseStatus|string|false|none|none|
-|»»»»» eventId|string|true|none|none|
-|»»»»» extId|string|false|none|none|
-|»»»»» extMetadata|object|false|none|none|
-|»»»»» event|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» foreignKey|any|false|none|none|
-|»»» attachments|[[AttachmentWithRelations](#schemaattachmentwithrelations)]|false|none|(tsType: AttachmentWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» AttachmentWithRelations|[AttachmentWithRelations](#schemaattachmentwithrelations)|false|none|(tsType: AttachmentWithRelations, schemaOptions: { includeRelations: true })|
 |»» foreignKey|any|false|none|none|
 
 #### Enumerated Values
@@ -1333,21 +1045,6 @@ Status Code **200**
 |status|tentative|
 |status|cancelled|
 |status|completed|
-|dayOfWeek|0|
-|dayOfWeek|1|
-|dayOfWeek|2|
-|dayOfWeek|3|
-|dayOfWeek|4|
-|dayOfWeek|5|
-|dayOfWeek|6|
-|accessRole|freeBusyReader|
-|accessRole|reader|
-|accessRole|writer|
-|accessRole|owner|
-|responseStatus|needsAction|
-|responseStatus|tentative|
-|responseStatus|accepted|
-|responseStatus|declined|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -1813,118 +1510,7 @@ fetch('/attendees/{id}',
     "calendarId": "string",
     "parentEventId": "string",
     "extId": "string",
-    "extMetadata": {},
-    "calendar": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "source": "string",
-      "enableWorkingHours": true,
-      "location": "string",
-      "identifier": "string",
-      "summary": "string",
-      "timezone": "string",
-      "extId": "string",
-      "extMetadata": {},
-      "events": [
-        {}
-      ],
-      "workingHours": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "dayOfWeek": 0,
-          "end": "string",
-          "start": "string",
-          "calendarId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "calendar": {},
-          "foreignKey": null
-        }
-      ],
-      "subscriptions": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "accessRole": "freeBusyReader",
-          "bgColor": "string",
-          "fgColor": "string",
-          "isHidden": true,
-          "isPrimary": true,
-          "identifier": "string",
-          "defaultReminders": {},
-          "notificationSettings": {},
-          "calendarId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "calendar": {},
-          "foreignKey": null
-        }
-      ]
-    },
-    "foreignKey": null,
-    "parentEvent": {},
-    "attendees": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "identifier": "string",
-        "isOptional": true,
-        "isOrganizer": true,
-        "messages": "string",
-        "responseStatus": "needsAction",
-        "eventId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "event": {},
-        "foreignKey": null
-      }
-    ],
-    "attachments": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "fileUrl": "string",
-        "iconLink": "string",
-        "mimeType": "string",
-        "title": "string",
-        "eventId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "event": {},
-        "foreignKey": null
-      }
-    ]
+    "extMetadata": {}
   },
   "foreignKey": null
 }
@@ -2421,99 +2007,7 @@ fetch('/attendees',
       "calendarId": "string",
       "parentEventId": "string",
       "extId": "string",
-      "extMetadata": {},
-      "calendar": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "source": "string",
-        "enableWorkingHours": true,
-        "location": "string",
-        "identifier": "string",
-        "summary": "string",
-        "timezone": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "events": [
-          {}
-        ],
-        "workingHours": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "dayOfWeek": 0,
-            "end": "string",
-            "start": "string",
-            "calendarId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "calendar": {},
-            "foreignKey": null
-          }
-        ],
-        "subscriptions": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "accessRole": "freeBusyReader",
-            "bgColor": "string",
-            "fgColor": "string",
-            "isHidden": true,
-            "isPrimary": true,
-            "identifier": "string",
-            "defaultReminders": {},
-            "notificationSettings": {},
-            "calendarId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "calendar": {},
-            "foreignKey": null
-          }
-        ]
-      },
-      "foreignKey": null,
-      "parentEvent": {},
-      "attendees": [
-        {}
-      ],
-      "attachments": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "fileUrl": "string",
-          "iconLink": "string",
-          "mimeType": "string",
-          "title": "string",
-          "eventId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "event": {},
-          "foreignKey": null
-        }
-      ]
+      "extMetadata": {}
     },
     "foreignKey": null
   }
@@ -2550,7 +2044,7 @@ Status Code **200**
 |»» eventId|string|true|none|none|
 |»» extId|string|false|none|none|
 |»» extMetadata|object|false|none|none|
-|»» event|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
+|»» event|[Event](#schemaevent)|false|none|none|
 |»»» deleted|boolean|false|none|none|
 |»»» deletedOn|string(date-time)¦null|false|none|none|
 |»»» deletedBy|string¦null|false|none|none|
@@ -2578,89 +2072,6 @@ Status Code **200**
 |»»» parentEventId|string|false|none|none|
 |»»» extId|string|false|none|none|
 |»»» extMetadata|object|false|none|none|
-|»»» calendar|[CalendarWithRelations](#schemacalendarwithrelations)|false|none|(tsType: CalendarWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» deleted|boolean|false|none|none|
-|»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»» deletedBy|string¦null|false|none|none|
-|»»»» createdOn|string(date-time)|false|none|none|
-|»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»» createdBy|string|false|none|none|
-|»»»» modifiedBy|string|false|none|none|
-|»»»» id|string|false|none|none|
-|»»»» source|string|false|none|none|
-|»»»» enableWorkingHours|boolean|false|none|none|
-|»»»» location|string|false|none|none|
-|»»»» identifier|string|true|none|none|
-|»»»» summary|string|false|none|none|
-|»»»» timezone|string|false|none|none|
-|»»»» extId|string|false|none|none|
-|»»»» extMetadata|object|false|none|none|
-|»»»» events|[[EventWithRelations](#schemaeventwithrelations)]|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» EventWithRelations|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» workingHours|[[WorkingHourWithRelations](#schemaworkinghourwithrelations)]|false|none|(tsType: WorkingHourWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» WorkingHourWithRelations|[WorkingHourWithRelations](#schemaworkinghourwithrelations)|false|none|(tsType: WorkingHourWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»» deleted|boolean|false|none|none|
-|»»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»»» deletedBy|string¦null|false|none|none|
-|»»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»»» createdBy|string|false|none|none|
-|»»»»»» modifiedBy|string|false|none|none|
-|»»»»»» id|string|false|none|none|
-|»»»»»» dayOfWeek|number|false|none|none|
-|»»»»»» end|string|false|none|none|
-|»»»»»» start|string|false|none|none|
-|»»»»»» calendarId|string|true|none|none|
-|»»»»»» extId|string|false|none|none|
-|»»»»»» extMetadata|object|false|none|none|
-|»»»»»» calendar|[CalendarWithRelations](#schemacalendarwithrelations)|false|none|(tsType: CalendarWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»» foreignKey|any|false|none|none|
-|»»»» subscriptions|[[SubscriptionWithRelations](#schemasubscriptionwithrelations)]|false|none|(tsType: SubscriptionWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» SubscriptionWithRelations|[SubscriptionWithRelations](#schemasubscriptionwithrelations)|false|none|(tsType: SubscriptionWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»» deleted|boolean|false|none|none|
-|»»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»»» deletedBy|string¦null|false|none|none|
-|»»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»»» createdBy|string|false|none|none|
-|»»»»»» modifiedBy|string|false|none|none|
-|»»»»»» id|string|false|none|none|
-|»»»»»» accessRole|string|false|none|none|
-|»»»»»» bgColor|string|false|none|none|
-|»»»»»» fgColor|string|false|none|none|
-|»»»»»» isHidden|boolean|false|none|none|
-|»»»»»» isPrimary|boolean|false|none|none|
-|»»»»»» identifier|string|true|none|none|
-|»»»»»» defaultReminders|object|false|none|none|
-|»»»»»» notificationSettings|object|false|none|none|
-|»»»»»» calendarId|string|true|none|none|
-|»»»»»» extId|string|false|none|none|
-|»»»»»» extMetadata|object|false|none|none|
-|»»»»»» calendar|[CalendarWithRelations](#schemacalendarwithrelations)|false|none|(tsType: CalendarWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»» foreignKey|any|false|none|none|
-|»»» foreignKey|any|false|none|none|
-|»»» parentEvent|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|»»» attendees|[[AttendeeWithRelations](#schemaattendeewithrelations)]|false|none|(tsType: AttendeeWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» AttendeeWithRelations|[AttendeeWithRelations](#schemaattendeewithrelations)|false|none|(tsType: AttendeeWithRelations, schemaOptions: { includeRelations: true })|
-|»»» attachments|[[AttachmentWithRelations](#schemaattachmentwithrelations)]|false|none|(tsType: AttachmentWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» AttachmentWithRelations|[AttachmentWithRelations](#schemaattachmentwithrelations)|false|none|(tsType: AttachmentWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» deleted|boolean|false|none|none|
-|»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»» deletedBy|string¦null|false|none|none|
-|»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»» createdBy|string|false|none|none|
-|»»»»» modifiedBy|string|false|none|none|
-|»»»»» id|string|false|none|none|
-|»»»»» fileUrl|string|true|none|none|
-|»»»»» iconLink|string|false|none|none|
-|»»»»» mimeType|string|false|none|none|
-|»»»»» title|string|false|none|none|
-|»»»»» eventId|string|true|none|none|
-|»»»»» extId|string|false|none|none|
-|»»»»» extMetadata|object|false|none|none|
-|»»»»» event|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» foreignKey|any|false|none|none|
 |»» foreignKey|any|false|none|none|
 
 #### Enumerated Values
@@ -2675,17 +2086,6 @@ Status Code **200**
 |status|tentative|
 |status|cancelled|
 |status|completed|
-|dayOfWeek|0|
-|dayOfWeek|1|
-|dayOfWeek|2|
-|dayOfWeek|3|
-|dayOfWeek|4|
-|dayOfWeek|5|
-|dayOfWeek|6|
-|accessRole|freeBusyReader|
-|accessRole|reader|
-|accessRole|writer|
-|accessRole|owner|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -3398,116 +2798,7 @@ These requests will be available to everyone in the event to look at.
       "calendarId": "string",
       "parentEventId": "string",
       "extId": "string",
-      "extMetadata": {},
-      "calendar": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "source": "string",
-        "enableWorkingHours": true,
-        "location": "string",
-        "identifier": "string",
-        "summary": "string",
-        "timezone": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "events": [],
-        "workingHours": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "dayOfWeek": 0,
-            "end": "string",
-            "start": "string",
-            "calendarId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "calendar": {},
-            "foreignKey": null
-          }
-        ],
-        "subscriptions": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "accessRole": "freeBusyReader",
-            "bgColor": "string",
-            "fgColor": "string",
-            "isHidden": true,
-            "isPrimary": true,
-            "identifier": "string",
-            "defaultReminders": {},
-            "notificationSettings": {},
-            "calendarId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "calendar": {},
-            "foreignKey": null
-          }
-        ]
-      },
-      "foreignKey": null,
-      "parentEvent": {},
-      "attendees": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "identifier": "string",
-          "isOptional": true,
-          "isOrganizer": true,
-          "messages": "string",
-          "responseStatus": "needsAction",
-          "eventId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "event": {},
-          "foreignKey": null
-        }
-      ],
-      "attachments": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "fileUrl": "string",
-          "iconLink": "string",
-          "mimeType": "string",
-          "title": "string",
-          "eventId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "event": {},
-          "foreignKey": null
-        }
-      ]
+      "extMetadata": {}
     }
   ],
   "workingHours": [
@@ -3525,129 +2816,7 @@ These requests will be available to everyone in the event to look at.
       "start": "string",
       "calendarId": "string",
       "extId": "string",
-      "extMetadata": {},
-      "calendar": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "source": "string",
-        "enableWorkingHours": true,
-        "location": "string",
-        "identifier": "string",
-        "summary": "string",
-        "timezone": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "events": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "bgColor": "string",
-            "description": "string",
-            "endDateTime": "2019-08-24T14:15:22Z",
-            "fgColor": "string",
-            "iCalUid": "string",
-            "isFullDayEvent": true,
-            "isLocked": true,
-            "link": "string",
-            "location": "string",
-            "meetingLink": "string",
-            "identifier": "string",
-            "startDateTime": "2019-08-24T14:15:22Z",
-            "status": "confirmed",
-            "summary": "string",
-            "timezone": "string",
-            "calendarId": "string",
-            "parentEventId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "calendar": {},
-            "foreignKey": null,
-            "parentEvent": {},
-            "attendees": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "identifier": "string",
-                "isOptional": true,
-                "isOrganizer": true,
-                "messages": "string",
-                "responseStatus": "needsAction",
-                "eventId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "event": {},
-                "foreignKey": null
-              }
-            ],
-            "attachments": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "fileUrl": "string",
-                "iconLink": "string",
-                "mimeType": "string",
-                "title": "string",
-                "eventId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "event": {},
-                "foreignKey": null
-              }
-            ]
-          }
-        ],
-        "workingHours": [],
-        "subscriptions": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "accessRole": "freeBusyReader",
-            "bgColor": "string",
-            "fgColor": "string",
-            "isHidden": true,
-            "isPrimary": true,
-            "identifier": "string",
-            "defaultReminders": {},
-            "notificationSettings": {},
-            "calendarId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "calendar": {},
-            "foreignKey": null
-          }
-        ]
-      },
-      "foreignKey": null
+      "extMetadata": {}
     }
   ],
   "subscriptions": [
@@ -3670,124 +2839,7 @@ These requests will be available to everyone in the event to look at.
       "notificationSettings": {},
       "calendarId": "string",
       "extId": "string",
-      "extMetadata": {},
-      "calendar": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "source": "string",
-        "enableWorkingHours": true,
-        "location": "string",
-        "identifier": "string",
-        "summary": "string",
-        "timezone": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "events": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "bgColor": "string",
-            "description": "string",
-            "endDateTime": "2019-08-24T14:15:22Z",
-            "fgColor": "string",
-            "iCalUid": "string",
-            "isFullDayEvent": true,
-            "isLocked": true,
-            "link": "string",
-            "location": "string",
-            "meetingLink": "string",
-            "identifier": "string",
-            "startDateTime": "2019-08-24T14:15:22Z",
-            "status": "confirmed",
-            "summary": "string",
-            "timezone": "string",
-            "calendarId": "string",
-            "parentEventId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "calendar": {},
-            "foreignKey": null,
-            "parentEvent": {},
-            "attendees": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "identifier": "string",
-                "isOptional": true,
-                "isOrganizer": true,
-                "messages": "string",
-                "responseStatus": "needsAction",
-                "eventId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "event": {},
-                "foreignKey": null
-              }
-            ],
-            "attachments": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "fileUrl": "string",
-                "iconLink": "string",
-                "mimeType": "string",
-                "title": "string",
-                "eventId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "event": {},
-                "foreignKey": null
-              }
-            ]
-          }
-        ],
-        "workingHours": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "dayOfWeek": 0,
-            "end": "string",
-            "start": "string",
-            "calendarId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "calendar": {},
-            "foreignKey": null
-          }
-        ],
-        "subscriptions": []
-      },
-      "foreignKey": null
+      "extMetadata": {}
     }
   ]
 }
@@ -4333,53 +3385,7 @@ These requests will be available to everyone in the event to look at.
         "calendarId": "string",
         "parentEventId": "string",
         "extId": "string",
-        "extMetadata": {},
-        "calendar": {},
-        "foreignKey": null,
-        "parentEvent": {},
-        "attendees": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "identifier": "string",
-            "isOptional": true,
-            "isOrganizer": true,
-            "messages": "string",
-            "responseStatus": "needsAction",
-            "eventId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "event": {},
-            "foreignKey": null
-          }
-        ],
-        "attachments": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "fileUrl": "string",
-            "iconLink": "string",
-            "mimeType": "string",
-            "title": "string",
-            "eventId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "event": {},
-            "foreignKey": null
-          }
-        ]
+        "extMetadata": {}
       }
     ],
     "workingHours": [
@@ -4397,9 +3403,7 @@ These requests will be available to everyone in the event to look at.
         "start": "string",
         "calendarId": "string",
         "extId": "string",
-        "extMetadata": {},
-        "calendar": {},
-        "foreignKey": null
+        "extMetadata": {}
       }
     ],
     "subscriptions": [
@@ -4422,9 +3426,7 @@ These requests will be available to everyone in the event to look at.
         "notificationSettings": {},
         "calendarId": "string",
         "extId": "string",
-        "extMetadata": {},
-        "calendar": {},
-        "foreignKey": null
+        "extMetadata": {}
       }
     ]
   }
@@ -4461,8 +3463,8 @@ Status Code **200**
 |»» timezone|string|false|none|none|
 |»» extId|string|false|none|none|
 |»» extMetadata|object|false|none|none|
-|»» events|[[EventWithRelations](#schemaeventwithrelations)]|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|»»» EventWithRelations|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
+|»» events|[[Event](#schemaevent)]|false|none|none|
+|»»» Event|[Event](#schemaevent)|false|none|none|
 |»»»» deleted|boolean|false|none|none|
 |»»»» deletedOn|string(date-time)¦null|false|none|none|
 |»»»» deletedBy|string¦null|false|none|none|
@@ -4490,50 +3492,8 @@ Status Code **200**
 |»»»» parentEventId|string|false|none|none|
 |»»»» extId|string|false|none|none|
 |»»»» extMetadata|object|false|none|none|
-|»»»» calendar|[CalendarWithRelations](#schemacalendarwithrelations)|false|none|(tsType: CalendarWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» foreignKey|any|false|none|none|
-|»»»» parentEvent|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» attendees|[[AttendeeWithRelations](#schemaattendeewithrelations)]|false|none|(tsType: AttendeeWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» AttendeeWithRelations|[AttendeeWithRelations](#schemaattendeewithrelations)|false|none|(tsType: AttendeeWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»» deleted|boolean|false|none|none|
-|»»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»»» deletedBy|string¦null|false|none|none|
-|»»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»»» createdBy|string|false|none|none|
-|»»»»»» modifiedBy|string|false|none|none|
-|»»»»»» id|string|false|none|none|
-|»»»»»» identifier|string|true|none|none|
-|»»»»»» isOptional|boolean|false|none|none|
-|»»»»»» isOrganizer|boolean|false|none|none|
-|»»»»»» messages|string|false|none|none|
-|»»»»»» responseStatus|string|false|none|none|
-|»»»»»» eventId|string|true|none|none|
-|»»»»»» extId|string|false|none|none|
-|»»»»»» extMetadata|object|false|none|none|
-|»»»»»» event|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»» foreignKey|any|false|none|none|
-|»»»» attachments|[[AttachmentWithRelations](#schemaattachmentwithrelations)]|false|none|(tsType: AttachmentWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» AttachmentWithRelations|[AttachmentWithRelations](#schemaattachmentwithrelations)|false|none|(tsType: AttachmentWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»» deleted|boolean|false|none|none|
-|»»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»»» deletedBy|string¦null|false|none|none|
-|»»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»»» createdBy|string|false|none|none|
-|»»»»»» modifiedBy|string|false|none|none|
-|»»»»»» id|string|false|none|none|
-|»»»»»» fileUrl|string|true|none|none|
-|»»»»»» iconLink|string|false|none|none|
-|»»»»»» mimeType|string|false|none|none|
-|»»»»»» title|string|false|none|none|
-|»»»»»» eventId|string|true|none|none|
-|»»»»»» extId|string|false|none|none|
-|»»»»»» extMetadata|object|false|none|none|
-|»»»»»» event|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»» foreignKey|any|false|none|none|
-|»» workingHours|[[WorkingHourWithRelations](#schemaworkinghourwithrelations)]|false|none|(tsType: WorkingHourWithRelations, schemaOptions: { includeRelations: true })|
-|»»» WorkingHourWithRelations|[WorkingHourWithRelations](#schemaworkinghourwithrelations)|false|none|(tsType: WorkingHourWithRelations, schemaOptions: { includeRelations: true })|
+|»» workingHours|[[WorkingHour](#schemaworkinghour)]|false|none|none|
+|»»» WorkingHour|[WorkingHour](#schemaworkinghour)|false|none|none|
 |»»»» deleted|boolean|false|none|none|
 |»»»» deletedOn|string(date-time)¦null|false|none|none|
 |»»»» deletedBy|string¦null|false|none|none|
@@ -4548,10 +3508,8 @@ Status Code **200**
 |»»»» calendarId|string|true|none|none|
 |»»»» extId|string|false|none|none|
 |»»»» extMetadata|object|false|none|none|
-|»»»» calendar|[CalendarWithRelations](#schemacalendarwithrelations)|false|none|(tsType: CalendarWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» foreignKey|any|false|none|none|
-|»» subscriptions|[[SubscriptionWithRelations](#schemasubscriptionwithrelations)]|false|none|(tsType: SubscriptionWithRelations, schemaOptions: { includeRelations: true })|
-|»»» SubscriptionWithRelations|[SubscriptionWithRelations](#schemasubscriptionwithrelations)|false|none|(tsType: SubscriptionWithRelations, schemaOptions: { includeRelations: true })|
+|»» subscriptions|[[Subscription](#schemasubscription)]|false|none|none|
+|»»» Subscription|[Subscription](#schemasubscription)|false|none|none|
 |»»»» deleted|boolean|false|none|none|
 |»»»» deletedOn|string(date-time)¦null|false|none|none|
 |»»»» deletedBy|string¦null|false|none|none|
@@ -4571,8 +3529,6 @@ Status Code **200**
 |»»»» calendarId|string|true|none|none|
 |»»»» extId|string|false|none|none|
 |»»»» extMetadata|object|false|none|none|
-|»»»» calendar|[CalendarWithRelations](#schemacalendarwithrelations)|false|none|(tsType: CalendarWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» foreignKey|any|false|none|none|
 
 #### Enumerated Values
 
@@ -4582,10 +3538,6 @@ Status Code **200**
 |status|tentative|
 |status|cancelled|
 |status|completed|
-|responseStatus|needsAction|
-|responseStatus|tentative|
-|responseStatus|accepted|
-|responseStatus|declined|
 |dayOfWeek|0|
 |dayOfWeek|1|
 |dayOfWeek|2|
@@ -4709,107 +3661,7 @@ fetch('/calendars/subscriptions/me',
       "summary": "string",
       "timezone": "string",
       "extId": "string",
-      "extMetadata": {},
-      "events": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "bgColor": "string",
-          "description": "string",
-          "endDateTime": "2019-08-24T14:15:22Z",
-          "fgColor": "string",
-          "iCalUid": "string",
-          "isFullDayEvent": true,
-          "isLocked": true,
-          "link": "string",
-          "location": "string",
-          "meetingLink": "string",
-          "identifier": "string",
-          "startDateTime": "2019-08-24T14:15:22Z",
-          "status": "confirmed",
-          "summary": "string",
-          "timezone": "string",
-          "calendarId": "string",
-          "parentEventId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "calendar": {},
-          "foreignKey": null,
-          "parentEvent": {},
-          "attendees": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "identifier": "string",
-              "isOptional": true,
-              "isOrganizer": true,
-              "messages": "string",
-              "responseStatus": "needsAction",
-              "eventId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "event": {},
-              "foreignKey": null
-            }
-          ],
-          "attachments": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "fileUrl": "string",
-              "iconLink": "string",
-              "mimeType": "string",
-              "title": "string",
-              "eventId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "event": {},
-              "foreignKey": null
-            }
-          ]
-        }
-      ],
-      "workingHours": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "dayOfWeek": 0,
-          "end": "string",
-          "start": "string",
-          "calendarId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "calendar": {},
-          "foreignKey": null
-        }
-      ],
-      "subscriptions": [
-        {}
-      ]
+      "extMetadata": {}
     },
     "foreignKey": null
   }
@@ -4849,7 +3701,7 @@ Status Code **200**
 |»» calendarId|string|true|none|none|
 |»» extId|string|false|none|none|
 |»» extMetadata|object|false|none|none|
-|»» calendar|[CalendarWithRelations](#schemacalendarwithrelations)|false|none|(tsType: CalendarWithRelations, schemaOptions: { includeRelations: true })|
+|»» calendar|[Calendar](#schemacalendar)|false|none|none|
 |»»» deleted|boolean|false|none|none|
 |»»» deletedOn|string(date-time)¦null|false|none|none|
 |»»» deletedBy|string¦null|false|none|none|
@@ -4866,97 +3718,6 @@ Status Code **200**
 |»»» timezone|string|false|none|none|
 |»»» extId|string|false|none|none|
 |»»» extMetadata|object|false|none|none|
-|»»» events|[[EventWithRelations](#schemaeventwithrelations)]|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» EventWithRelations|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» deleted|boolean|false|none|none|
-|»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»» deletedBy|string¦null|false|none|none|
-|»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»» createdBy|string|false|none|none|
-|»»»»» modifiedBy|string|false|none|none|
-|»»»»» id|string|false|none|none|
-|»»»»» bgColor|string|false|none|none|
-|»»»»» description|string|false|none|none|
-|»»»»» endDateTime|string(date-time)|false|none|none|
-|»»»»» fgColor|string|false|none|none|
-|»»»»» iCalUid|string|false|none|none|
-|»»»»» isFullDayEvent|boolean|false|none|none|
-|»»»»» isLocked|boolean|false|none|none|
-|»»»»» link|string|false|none|none|
-|»»»»» location|string|false|none|none|
-|»»»»» meetingLink|string|false|none|none|
-|»»»»» identifier|string|false|none|none|
-|»»»»» startDateTime|string(date-time)|false|none|none|
-|»»»»» status|string|false|none|none|
-|»»»»» summary|string|false|none|none|
-|»»»»» timezone|string|false|none|none|
-|»»»»» calendarId|string|true|none|none|
-|»»»»» parentEventId|string|false|none|none|
-|»»»»» extId|string|false|none|none|
-|»»»»» extMetadata|object|false|none|none|
-|»»»»» calendar|[CalendarWithRelations](#schemacalendarwithrelations)|false|none|(tsType: CalendarWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» foreignKey|any|false|none|none|
-|»»»»» parentEvent|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» attendees|[[AttendeeWithRelations](#schemaattendeewithrelations)]|false|none|(tsType: AttendeeWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»» AttendeeWithRelations|[AttendeeWithRelations](#schemaattendeewithrelations)|false|none|(tsType: AttendeeWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»»» deleted|boolean|false|none|none|
-|»»»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»»»» deletedBy|string¦null|false|none|none|
-|»»»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»»»» createdBy|string|false|none|none|
-|»»»»»»» modifiedBy|string|false|none|none|
-|»»»»»»» id|string|false|none|none|
-|»»»»»»» identifier|string|true|none|none|
-|»»»»»»» isOptional|boolean|false|none|none|
-|»»»»»»» isOrganizer|boolean|false|none|none|
-|»»»»»»» messages|string|false|none|none|
-|»»»»»»» responseStatus|string|false|none|none|
-|»»»»»»» eventId|string|true|none|none|
-|»»»»»»» extId|string|false|none|none|
-|»»»»»»» extMetadata|object|false|none|none|
-|»»»»»»» event|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»»» foreignKey|any|false|none|none|
-|»»»»» attachments|[[AttachmentWithRelations](#schemaattachmentwithrelations)]|false|none|(tsType: AttachmentWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»» AttachmentWithRelations|[AttachmentWithRelations](#schemaattachmentwithrelations)|false|none|(tsType: AttachmentWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»»» deleted|boolean|false|none|none|
-|»»»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»»»» deletedBy|string¦null|false|none|none|
-|»»»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»»»» createdBy|string|false|none|none|
-|»»»»»»» modifiedBy|string|false|none|none|
-|»»»»»»» id|string|false|none|none|
-|»»»»»»» fileUrl|string|true|none|none|
-|»»»»»»» iconLink|string|false|none|none|
-|»»»»»»» mimeType|string|false|none|none|
-|»»»»»»» title|string|false|none|none|
-|»»»»»»» eventId|string|true|none|none|
-|»»»»»»» extId|string|false|none|none|
-|»»»»»»» extMetadata|object|false|none|none|
-|»»»»»»» event|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»»» foreignKey|any|false|none|none|
-|»»» workingHours|[[WorkingHourWithRelations](#schemaworkinghourwithrelations)]|false|none|(tsType: WorkingHourWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» WorkingHourWithRelations|[WorkingHourWithRelations](#schemaworkinghourwithrelations)|false|none|(tsType: WorkingHourWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» deleted|boolean|false|none|none|
-|»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»» deletedBy|string¦null|false|none|none|
-|»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»» createdBy|string|false|none|none|
-|»»»»» modifiedBy|string|false|none|none|
-|»»»»» id|string|false|none|none|
-|»»»»» dayOfWeek|number|false|none|none|
-|»»»»» end|string|false|none|none|
-|»»»»» start|string|false|none|none|
-|»»»»» calendarId|string|true|none|none|
-|»»»»» extId|string|false|none|none|
-|»»»»» extMetadata|object|false|none|none|
-|»»»»» calendar|[CalendarWithRelations](#schemacalendarwithrelations)|false|none|(tsType: CalendarWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» foreignKey|any|false|none|none|
-|»»» subscriptions|[[SubscriptionWithRelations](#schemasubscriptionwithrelations)]|false|none|(tsType: SubscriptionWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» SubscriptionWithRelations|[SubscriptionWithRelations](#schemasubscriptionwithrelations)|false|none|(tsType: SubscriptionWithRelations, schemaOptions: { includeRelations: true })|
 |»» foreignKey|any|false|none|none|
 
 #### Enumerated Values
@@ -4967,21 +3728,6 @@ Status Code **200**
 |accessRole|reader|
 |accessRole|writer|
 |accessRole|owner|
-|status|confirmed|
-|status|tentative|
-|status|cancelled|
-|status|completed|
-|responseStatus|needsAction|
-|responseStatus|tentative|
-|responseStatus|accepted|
-|responseStatus|declined|
-|dayOfWeek|0|
-|dayOfWeek|1|
-|dayOfWeek|2|
-|dayOfWeek|3|
-|dayOfWeek|4|
-|dayOfWeek|5|
-|dayOfWeek|6|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -5455,129 +4201,7 @@ fetch('/subscriptions/{id}',
     "summary": "string",
     "timezone": "string",
     "extId": "string",
-    "extMetadata": {},
-    "events": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "bgColor": "string",
-        "description": "string",
-        "endDateTime": "2019-08-24T14:15:22Z",
-        "fgColor": "string",
-        "iCalUid": "string",
-        "isFullDayEvent": true,
-        "isLocked": true,
-        "link": "string",
-        "location": "string",
-        "meetingLink": "string",
-        "identifier": "string",
-        "startDateTime": "2019-08-24T14:15:22Z",
-        "status": "confirmed",
-        "summary": "string",
-        "timezone": "string",
-        "calendarId": "string",
-        "parentEventId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "calendar": {},
-        "foreignKey": null,
-        "parentEvent": {},
-        "attendees": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "identifier": "string",
-            "isOptional": true,
-            "isOrganizer": true,
-            "messages": "string",
-            "responseStatus": "needsAction",
-            "eventId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "event": {},
-            "foreignKey": null
-          }
-        ],
-        "attachments": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "fileUrl": "string",
-            "iconLink": "string",
-            "mimeType": "string",
-            "title": "string",
-            "eventId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "event": {},
-            "foreignKey": null
-          }
-        ]
-      }
-    ],
-    "workingHours": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "dayOfWeek": 0,
-        "end": "string",
-        "start": "string",
-        "calendarId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "calendar": {},
-        "foreignKey": null
-      }
-    ],
-    "subscriptions": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "accessRole": "freeBusyReader",
-        "bgColor": "string",
-        "fgColor": "string",
-        "isHidden": true,
-        "isPrimary": true,
-        "identifier": "string",
-        "defaultReminders": {},
-        "notificationSettings": {},
-        "calendarId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "calendar": {},
-        "foreignKey": null
-      }
-    ]
+    "extMetadata": {}
   },
   "foreignKey": null
 }
@@ -6087,107 +4711,7 @@ fetch('/subscriptions',
       "summary": "string",
       "timezone": "string",
       "extId": "string",
-      "extMetadata": {},
-      "events": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "bgColor": "string",
-          "description": "string",
-          "endDateTime": "2019-08-24T14:15:22Z",
-          "fgColor": "string",
-          "iCalUid": "string",
-          "isFullDayEvent": true,
-          "isLocked": true,
-          "link": "string",
-          "location": "string",
-          "meetingLink": "string",
-          "identifier": "string",
-          "startDateTime": "2019-08-24T14:15:22Z",
-          "status": "confirmed",
-          "summary": "string",
-          "timezone": "string",
-          "calendarId": "string",
-          "parentEventId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "calendar": {},
-          "foreignKey": null,
-          "parentEvent": {},
-          "attendees": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "identifier": "string",
-              "isOptional": true,
-              "isOrganizer": true,
-              "messages": "string",
-              "responseStatus": "needsAction",
-              "eventId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "event": {},
-              "foreignKey": null
-            }
-          ],
-          "attachments": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "fileUrl": "string",
-              "iconLink": "string",
-              "mimeType": "string",
-              "title": "string",
-              "eventId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "event": {},
-              "foreignKey": null
-            }
-          ]
-        }
-      ],
-      "workingHours": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "dayOfWeek": 0,
-          "end": "string",
-          "start": "string",
-          "calendarId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "calendar": {},
-          "foreignKey": null
-        }
-      ],
-      "subscriptions": [
-        {}
-      ]
+      "extMetadata": {}
     },
     "foreignKey": null
   }
@@ -6227,7 +4751,7 @@ Status Code **200**
 |»» calendarId|string|true|none|none|
 |»» extId|string|false|none|none|
 |»» extMetadata|object|false|none|none|
-|»» calendar|[CalendarWithRelations](#schemacalendarwithrelations)|false|none|(tsType: CalendarWithRelations, schemaOptions: { includeRelations: true })|
+|»» calendar|[Calendar](#schemacalendar)|false|none|none|
 |»»» deleted|boolean|false|none|none|
 |»»» deletedOn|string(date-time)¦null|false|none|none|
 |»»» deletedBy|string¦null|false|none|none|
@@ -6244,97 +4768,6 @@ Status Code **200**
 |»»» timezone|string|false|none|none|
 |»»» extId|string|false|none|none|
 |»»» extMetadata|object|false|none|none|
-|»»» events|[[EventWithRelations](#schemaeventwithrelations)]|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» EventWithRelations|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» deleted|boolean|false|none|none|
-|»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»» deletedBy|string¦null|false|none|none|
-|»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»» createdBy|string|false|none|none|
-|»»»»» modifiedBy|string|false|none|none|
-|»»»»» id|string|false|none|none|
-|»»»»» bgColor|string|false|none|none|
-|»»»»» description|string|false|none|none|
-|»»»»» endDateTime|string(date-time)|false|none|none|
-|»»»»» fgColor|string|false|none|none|
-|»»»»» iCalUid|string|false|none|none|
-|»»»»» isFullDayEvent|boolean|false|none|none|
-|»»»»» isLocked|boolean|false|none|none|
-|»»»»» link|string|false|none|none|
-|»»»»» location|string|false|none|none|
-|»»»»» meetingLink|string|false|none|none|
-|»»»»» identifier|string|false|none|none|
-|»»»»» startDateTime|string(date-time)|false|none|none|
-|»»»»» status|string|false|none|none|
-|»»»»» summary|string|false|none|none|
-|»»»»» timezone|string|false|none|none|
-|»»»»» calendarId|string|true|none|none|
-|»»»»» parentEventId|string|false|none|none|
-|»»»»» extId|string|false|none|none|
-|»»»»» extMetadata|object|false|none|none|
-|»»»»» calendar|[CalendarWithRelations](#schemacalendarwithrelations)|false|none|(tsType: CalendarWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» foreignKey|any|false|none|none|
-|»»»»» parentEvent|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» attendees|[[AttendeeWithRelations](#schemaattendeewithrelations)]|false|none|(tsType: AttendeeWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»» AttendeeWithRelations|[AttendeeWithRelations](#schemaattendeewithrelations)|false|none|(tsType: AttendeeWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»»» deleted|boolean|false|none|none|
-|»»»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»»»» deletedBy|string¦null|false|none|none|
-|»»»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»»»» createdBy|string|false|none|none|
-|»»»»»»» modifiedBy|string|false|none|none|
-|»»»»»»» id|string|false|none|none|
-|»»»»»»» identifier|string|true|none|none|
-|»»»»»»» isOptional|boolean|false|none|none|
-|»»»»»»» isOrganizer|boolean|false|none|none|
-|»»»»»»» messages|string|false|none|none|
-|»»»»»»» responseStatus|string|false|none|none|
-|»»»»»»» eventId|string|true|none|none|
-|»»»»»»» extId|string|false|none|none|
-|»»»»»»» extMetadata|object|false|none|none|
-|»»»»»»» event|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»»» foreignKey|any|false|none|none|
-|»»»»» attachments|[[AttachmentWithRelations](#schemaattachmentwithrelations)]|false|none|(tsType: AttachmentWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»» AttachmentWithRelations|[AttachmentWithRelations](#schemaattachmentwithrelations)|false|none|(tsType: AttachmentWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»»» deleted|boolean|false|none|none|
-|»»»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»»»» deletedBy|string¦null|false|none|none|
-|»»»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»»»» createdBy|string|false|none|none|
-|»»»»»»» modifiedBy|string|false|none|none|
-|»»»»»»» id|string|false|none|none|
-|»»»»»»» fileUrl|string|true|none|none|
-|»»»»»»» iconLink|string|false|none|none|
-|»»»»»»» mimeType|string|false|none|none|
-|»»»»»»» title|string|false|none|none|
-|»»»»»»» eventId|string|true|none|none|
-|»»»»»»» extId|string|false|none|none|
-|»»»»»»» extMetadata|object|false|none|none|
-|»»»»»»» event|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»»» foreignKey|any|false|none|none|
-|»»» workingHours|[[WorkingHourWithRelations](#schemaworkinghourwithrelations)]|false|none|(tsType: WorkingHourWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» WorkingHourWithRelations|[WorkingHourWithRelations](#schemaworkinghourwithrelations)|false|none|(tsType: WorkingHourWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» deleted|boolean|false|none|none|
-|»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»» deletedBy|string¦null|false|none|none|
-|»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»» createdBy|string|false|none|none|
-|»»»»» modifiedBy|string|false|none|none|
-|»»»»» id|string|false|none|none|
-|»»»»» dayOfWeek|number|false|none|none|
-|»»»»» end|string|false|none|none|
-|»»»»» start|string|false|none|none|
-|»»»»» calendarId|string|true|none|none|
-|»»»»» extId|string|false|none|none|
-|»»»»» extMetadata|object|false|none|none|
-|»»»»» calendar|[CalendarWithRelations](#schemacalendarwithrelations)|false|none|(tsType: CalendarWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» foreignKey|any|false|none|none|
-|»»» subscriptions|[[SubscriptionWithRelations](#schemasubscriptionwithrelations)]|false|none|(tsType: SubscriptionWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» SubscriptionWithRelations|[SubscriptionWithRelations](#schemasubscriptionwithrelations)|false|none|(tsType: SubscriptionWithRelations, schemaOptions: { includeRelations: true })|
 |»» foreignKey|any|false|none|none|
 
 #### Enumerated Values
@@ -6345,21 +4778,6 @@ Status Code **200**
 |accessRole|reader|
 |accessRole|writer|
 |accessRole|owner|
-|status|confirmed|
-|status|tentative|
-|status|cancelled|
-|status|completed|
-|responseStatus|needsAction|
-|responseStatus|tentative|
-|responseStatus|accepted|
-|responseStatus|declined|
-|dayOfWeek|0|
-|dayOfWeek|1|
-|dayOfWeek|2|
-|dayOfWeek|3|
-|dayOfWeek|4|
-|dayOfWeek|5|
-|dayOfWeek|6|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -8873,129 +7291,7 @@ This api will return events data based on the id.
     "summary": "string",
     "timezone": "string",
     "extId": "string",
-    "extMetadata": {},
-    "events": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "bgColor": "string",
-        "description": "string",
-        "endDateTime": "2019-08-24T14:15:22Z",
-        "fgColor": "string",
-        "iCalUid": "string",
-        "isFullDayEvent": true,
-        "isLocked": true,
-        "link": "string",
-        "location": "string",
-        "meetingLink": "string",
-        "identifier": "string",
-        "startDateTime": "2019-08-24T14:15:22Z",
-        "status": "confirmed",
-        "summary": "string",
-        "timezone": "string",
-        "calendarId": "string",
-        "parentEventId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "calendar": {},
-        "foreignKey": null,
-        "parentEvent": {},
-        "attendees": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "identifier": "string",
-            "isOptional": true,
-            "isOrganizer": true,
-            "messages": "string",
-            "responseStatus": "needsAction",
-            "eventId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "event": {},
-            "foreignKey": null
-          }
-        ],
-        "attachments": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "fileUrl": "string",
-            "iconLink": "string",
-            "mimeType": "string",
-            "title": "string",
-            "eventId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "event": {},
-            "foreignKey": null
-          }
-        ]
-      }
-    ],
-    "workingHours": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "dayOfWeek": 0,
-        "end": "string",
-        "start": "string",
-        "calendarId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "calendar": {},
-        "foreignKey": null
-      }
-    ],
-    "subscriptions": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "accessRole": "freeBusyReader",
-        "bgColor": "string",
-        "fgColor": "string",
-        "isHidden": true,
-        "isPrimary": true,
-        "identifier": "string",
-        "defaultReminders": {},
-        "notificationSettings": {},
-        "calendarId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "calendar": {},
-        "foreignKey": null
-      }
-    ]
+    "extMetadata": {}
   },
   "foreignKey": null,
   "parentEvent": {
@@ -9025,118 +7321,7 @@ This api will return events data based on the id.
     "calendarId": "string",
     "parentEventId": "string",
     "extId": "string",
-    "extMetadata": {},
-    "calendar": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "source": "string",
-      "enableWorkingHours": true,
-      "location": "string",
-      "identifier": "string",
-      "summary": "string",
-      "timezone": "string",
-      "extId": "string",
-      "extMetadata": {},
-      "events": [
-        {}
-      ],
-      "workingHours": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "dayOfWeek": 0,
-          "end": "string",
-          "start": "string",
-          "calendarId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "calendar": {},
-          "foreignKey": null
-        }
-      ],
-      "subscriptions": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "accessRole": "freeBusyReader",
-          "bgColor": "string",
-          "fgColor": "string",
-          "isHidden": true,
-          "isPrimary": true,
-          "identifier": "string",
-          "defaultReminders": {},
-          "notificationSettings": {},
-          "calendarId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "calendar": {},
-          "foreignKey": null
-        }
-      ]
-    },
-    "foreignKey": null,
-    "parentEvent": {},
-    "attendees": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "identifier": "string",
-        "isOptional": true,
-        "isOrganizer": true,
-        "messages": "string",
-        "responseStatus": "needsAction",
-        "eventId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "event": {},
-        "foreignKey": null
-      }
-    ],
-    "attachments": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "fileUrl": "string",
-        "iconLink": "string",
-        "mimeType": "string",
-        "title": "string",
-        "eventId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "event": {},
-        "foreignKey": null
-      }
-    ]
+    "extMetadata": {}
   },
   "attendees": [
     {
@@ -9155,127 +7340,7 @@ This api will return events data based on the id.
       "responseStatus": "needsAction",
       "eventId": "string",
       "extId": "string",
-      "extMetadata": {},
-      "event": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "bgColor": "string",
-        "description": "string",
-        "endDateTime": "2019-08-24T14:15:22Z",
-        "fgColor": "string",
-        "iCalUid": "string",
-        "isFullDayEvent": true,
-        "isLocked": true,
-        "link": "string",
-        "location": "string",
-        "meetingLink": "string",
-        "identifier": "string",
-        "startDateTime": "2019-08-24T14:15:22Z",
-        "status": "confirmed",
-        "summary": "string",
-        "timezone": "string",
-        "calendarId": "string",
-        "parentEventId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "calendar": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "source": "string",
-          "enableWorkingHours": true,
-          "location": "string",
-          "identifier": "string",
-          "summary": "string",
-          "timezone": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "events": [
-            {}
-          ],
-          "workingHours": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "dayOfWeek": 0,
-              "end": "string",
-              "start": "string",
-              "calendarId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "calendar": {},
-              "foreignKey": null
-            }
-          ],
-          "subscriptions": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "accessRole": "freeBusyReader",
-              "bgColor": "string",
-              "fgColor": "string",
-              "isHidden": true,
-              "isPrimary": true,
-              "identifier": "string",
-              "defaultReminders": {},
-              "notificationSettings": {},
-              "calendarId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "calendar": {},
-              "foreignKey": null
-            }
-          ]
-        },
-        "foreignKey": null,
-        "parentEvent": {},
-        "attendees": [],
-        "attachments": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "fileUrl": "string",
-            "iconLink": "string",
-            "mimeType": "string",
-            "title": "string",
-            "eventId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "event": {},
-            "foreignKey": null
-          }
-        ]
-      },
-      "foreignKey": null
+      "extMetadata": {}
     }
   ],
   "attachments": [
@@ -9294,128 +7359,7 @@ This api will return events data based on the id.
       "title": "string",
       "eventId": "string",
       "extId": "string",
-      "extMetadata": {},
-      "event": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "bgColor": "string",
-        "description": "string",
-        "endDateTime": "2019-08-24T14:15:22Z",
-        "fgColor": "string",
-        "iCalUid": "string",
-        "isFullDayEvent": true,
-        "isLocked": true,
-        "link": "string",
-        "location": "string",
-        "meetingLink": "string",
-        "identifier": "string",
-        "startDateTime": "2019-08-24T14:15:22Z",
-        "status": "confirmed",
-        "summary": "string",
-        "timezone": "string",
-        "calendarId": "string",
-        "parentEventId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "calendar": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "source": "string",
-          "enableWorkingHours": true,
-          "location": "string",
-          "identifier": "string",
-          "summary": "string",
-          "timezone": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "events": [
-            {}
-          ],
-          "workingHours": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "dayOfWeek": 0,
-              "end": "string",
-              "start": "string",
-              "calendarId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "calendar": {},
-              "foreignKey": null
-            }
-          ],
-          "subscriptions": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "accessRole": "freeBusyReader",
-              "bgColor": "string",
-              "fgColor": "string",
-              "isHidden": true,
-              "isPrimary": true,
-              "identifier": "string",
-              "defaultReminders": {},
-              "notificationSettings": {},
-              "calendarId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "calendar": {},
-              "foreignKey": null
-            }
-          ]
-        },
-        "foreignKey": null,
-        "parentEvent": {},
-        "attendees": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "identifier": "string",
-            "isOptional": true,
-            "isOrganizer": true,
-            "messages": "string",
-            "responseStatus": "needsAction",
-            "eventId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "event": {},
-            "foreignKey": null
-          }
-        ],
-        "attachments": []
-      },
-      "foreignKey": null
+      "extMetadata": {}
     }
   ]
 }
@@ -10098,58 +8042,38 @@ This api will return the events data, based on the filter provided.
       "summary": "string",
       "timezone": "string",
       "extId": "string",
-      "extMetadata": {},
-      "events": [
-        {}
-      ],
-      "workingHours": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "dayOfWeek": 0,
-          "end": "string",
-          "start": "string",
-          "calendarId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "calendar": {},
-          "foreignKey": null
-        }
-      ],
-      "subscriptions": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "accessRole": "freeBusyReader",
-          "bgColor": "string",
-          "fgColor": "string",
-          "isHidden": true,
-          "isPrimary": true,
-          "identifier": "string",
-          "defaultReminders": {},
-          "notificationSettings": {},
-          "calendarId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "calendar": {},
-          "foreignKey": null
-        }
-      ]
+      "extMetadata": {}
     },
     "foreignKey": null,
-    "parentEvent": {},
+    "parentEvent": {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "bgColor": "string",
+      "description": "string",
+      "endDateTime": "2019-08-24T14:15:22Z",
+      "fgColor": "string",
+      "iCalUid": "string",
+      "isFullDayEvent": true,
+      "isLocked": true,
+      "link": "string",
+      "location": "string",
+      "meetingLink": "string",
+      "identifier": "string",
+      "startDateTime": "2019-08-24T14:15:22Z",
+      "status": "confirmed",
+      "summary": "string",
+      "timezone": "string",
+      "calendarId": "string",
+      "parentEventId": "string",
+      "extId": "string",
+      "extMetadata": {}
+    },
     "attendees": [
       {
         "deleted": true,
@@ -10167,9 +8091,7 @@ This api will return the events data, based on the filter provided.
         "responseStatus": "needsAction",
         "eventId": "string",
         "extId": "string",
-        "extMetadata": {},
-        "event": {},
-        "foreignKey": null
+        "extMetadata": {}
       }
     ],
     "attachments": [
@@ -10188,9 +8110,7 @@ This api will return the events data, based on the filter provided.
         "title": "string",
         "eventId": "string",
         "extId": "string",
-        "extMetadata": {},
-        "event": {},
-        "foreignKey": null
+        "extMetadata": {}
       }
     ]
   }
@@ -10238,7 +8158,7 @@ Status Code **200**
 |»» parentEventId|string|false|none|none|
 |»» extId|string|false|none|none|
 |»» extMetadata|object|false|none|none|
-|»» calendar|[CalendarWithRelations](#schemacalendarwithrelations)|false|none|(tsType: CalendarWithRelations, schemaOptions: { includeRelations: true })|
+|»» calendar|[Calendar](#schemacalendar)|false|none|none|
 |»»» deleted|boolean|false|none|none|
 |»»» deletedOn|string(date-time)¦null|false|none|none|
 |»»» deletedBy|string¦null|false|none|none|
@@ -10255,53 +8175,37 @@ Status Code **200**
 |»»» timezone|string|false|none|none|
 |»»» extId|string|false|none|none|
 |»»» extMetadata|object|false|none|none|
-|»»» events|[[EventWithRelations](#schemaeventwithrelations)]|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» EventWithRelations|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|»»» workingHours|[[WorkingHourWithRelations](#schemaworkinghourwithrelations)]|false|none|(tsType: WorkingHourWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» WorkingHourWithRelations|[WorkingHourWithRelations](#schemaworkinghourwithrelations)|false|none|(tsType: WorkingHourWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» deleted|boolean|false|none|none|
-|»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»» deletedBy|string¦null|false|none|none|
-|»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»» createdBy|string|false|none|none|
-|»»»»» modifiedBy|string|false|none|none|
-|»»»»» id|string|false|none|none|
-|»»»»» dayOfWeek|number|false|none|none|
-|»»»»» end|string|false|none|none|
-|»»»»» start|string|false|none|none|
-|»»»»» calendarId|string|true|none|none|
-|»»»»» extId|string|false|none|none|
-|»»»»» extMetadata|object|false|none|none|
-|»»»»» calendar|[CalendarWithRelations](#schemacalendarwithrelations)|false|none|(tsType: CalendarWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» foreignKey|any|false|none|none|
-|»»» subscriptions|[[SubscriptionWithRelations](#schemasubscriptionwithrelations)]|false|none|(tsType: SubscriptionWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» SubscriptionWithRelations|[SubscriptionWithRelations](#schemasubscriptionwithrelations)|false|none|(tsType: SubscriptionWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» deleted|boolean|false|none|none|
-|»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»» deletedBy|string¦null|false|none|none|
-|»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»» createdBy|string|false|none|none|
-|»»»»» modifiedBy|string|false|none|none|
-|»»»»» id|string|false|none|none|
-|»»»»» accessRole|string|false|none|none|
-|»»»»» bgColor|string|false|none|none|
-|»»»»» fgColor|string|false|none|none|
-|»»»»» isHidden|boolean|false|none|none|
-|»»»»» isPrimary|boolean|false|none|none|
-|»»»»» identifier|string|true|none|none|
-|»»»»» defaultReminders|object|false|none|none|
-|»»»»» notificationSettings|object|false|none|none|
-|»»»»» calendarId|string|true|none|none|
-|»»»»» extId|string|false|none|none|
-|»»»»» extMetadata|object|false|none|none|
-|»»»»» calendar|[CalendarWithRelations](#schemacalendarwithrelations)|false|none|(tsType: CalendarWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» foreignKey|any|false|none|none|
 |»» foreignKey|any|false|none|none|
-|»» parentEvent|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|»» attendees|[[AttendeeWithRelations](#schemaattendeewithrelations)]|false|none|(tsType: AttendeeWithRelations, schemaOptions: { includeRelations: true })|
-|»»» AttendeeWithRelations|[AttendeeWithRelations](#schemaattendeewithrelations)|false|none|(tsType: AttendeeWithRelations, schemaOptions: { includeRelations: true })|
+|»» parentEvent|[Event](#schemaevent)|false|none|none|
+|»»» deleted|boolean|false|none|none|
+|»»» deletedOn|string(date-time)¦null|false|none|none|
+|»»» deletedBy|string¦null|false|none|none|
+|»»» createdOn|string(date-time)|false|none|none|
+|»»» modifiedOn|string(date-time)|false|none|none|
+|»»» createdBy|string|false|none|none|
+|»»» modifiedBy|string|false|none|none|
+|»»» id|string|false|none|none|
+|»»» bgColor|string|false|none|none|
+|»»» description|string|false|none|none|
+|»»» endDateTime|string(date-time)|false|none|none|
+|»»» fgColor|string|false|none|none|
+|»»» iCalUid|string|false|none|none|
+|»»» isFullDayEvent|boolean|false|none|none|
+|»»» isLocked|boolean|false|none|none|
+|»»» link|string|false|none|none|
+|»»» location|string|false|none|none|
+|»»» meetingLink|string|false|none|none|
+|»»» identifier|string|false|none|none|
+|»»» startDateTime|string(date-time)|false|none|none|
+|»»» status|string|false|none|none|
+|»»» summary|string|false|none|none|
+|»»» timezone|string|false|none|none|
+|»»» calendarId|string|true|none|none|
+|»»» parentEventId|string|false|none|none|
+|»»» extId|string|false|none|none|
+|»»» extMetadata|object|false|none|none|
+|»» attendees|[[Attendee](#schemaattendee)]|false|none|none|
+|»»» Attendee|[Attendee](#schemaattendee)|false|none|none|
 |»»»» deleted|boolean|false|none|none|
 |»»»» deletedOn|string(date-time)¦null|false|none|none|
 |»»»» deletedBy|string¦null|false|none|none|
@@ -10318,10 +8222,8 @@ Status Code **200**
 |»»»» eventId|string|true|none|none|
 |»»»» extId|string|false|none|none|
 |»»»» extMetadata|object|false|none|none|
-|»»»» event|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» foreignKey|any|false|none|none|
-|»» attachments|[[AttachmentWithRelations](#schemaattachmentwithrelations)]|false|none|(tsType: AttachmentWithRelations, schemaOptions: { includeRelations: true })|
-|»»» AttachmentWithRelations|[AttachmentWithRelations](#schemaattachmentwithrelations)|false|none|(tsType: AttachmentWithRelations, schemaOptions: { includeRelations: true })|
+|»» attachments|[[Attachment](#schemaattachment)]|false|none|none|
+|»»» Attachment|[Attachment](#schemaattachment)|false|none|none|
 |»»»» deleted|boolean|false|none|none|
 |»»»» deletedOn|string(date-time)¦null|false|none|none|
 |»»»» deletedBy|string¦null|false|none|none|
@@ -10337,8 +8239,6 @@ Status Code **200**
 |»»»» eventId|string|true|none|none|
 |»»»» extId|string|false|none|none|
 |»»»» extMetadata|object|false|none|none|
-|»»»» event|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» foreignKey|any|false|none|none|
 
 #### Enumerated Values
 
@@ -10348,17 +8248,10 @@ Status Code **200**
 |status|tentative|
 |status|cancelled|
 |status|completed|
-|dayOfWeek|0|
-|dayOfWeek|1|
-|dayOfWeek|2|
-|dayOfWeek|3|
-|dayOfWeek|4|
-|dayOfWeek|5|
-|dayOfWeek|6|
-|accessRole|freeBusyReader|
-|accessRole|reader|
-|accessRole|writer|
-|accessRole|owner|
+|status|confirmed|
+|status|tentative|
+|status|cancelled|
+|status|completed|
 |responseStatus|needsAction|
 |responseStatus|tentative|
 |responseStatus|accepted|
@@ -13679,129 +11572,7 @@ These requests will be available to everyone to look at.
     "summary": "string",
     "timezone": "string",
     "extId": "string",
-    "extMetadata": {},
-    "events": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "bgColor": "string",
-        "description": "string",
-        "endDateTime": "2019-08-24T14:15:22Z",
-        "fgColor": "string",
-        "iCalUid": "string",
-        "isFullDayEvent": true,
-        "isLocked": true,
-        "link": "string",
-        "location": "string",
-        "meetingLink": "string",
-        "identifier": "string",
-        "startDateTime": "2019-08-24T14:15:22Z",
-        "status": "confirmed",
-        "summary": "string",
-        "timezone": "string",
-        "calendarId": "string",
-        "parentEventId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "calendar": {},
-        "foreignKey": null,
-        "parentEvent": {},
-        "attendees": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "identifier": "string",
-            "isOptional": true,
-            "isOrganizer": true,
-            "messages": "string",
-            "responseStatus": "needsAction",
-            "eventId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "event": {},
-            "foreignKey": null
-          }
-        ],
-        "attachments": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "fileUrl": "string",
-            "iconLink": "string",
-            "mimeType": "string",
-            "title": "string",
-            "eventId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "event": {},
-            "foreignKey": null
-          }
-        ]
-      }
-    ],
-    "workingHours": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "dayOfWeek": 0,
-        "end": "string",
-        "start": "string",
-        "calendarId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "calendar": {},
-        "foreignKey": null
-      }
-    ],
-    "subscriptions": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "accessRole": "freeBusyReader",
-        "bgColor": "string",
-        "fgColor": "string",
-        "isHidden": true,
-        "isPrimary": true,
-        "identifier": "string",
-        "defaultReminders": {},
-        "notificationSettings": {},
-        "calendarId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "calendar": {},
-        "foreignKey": null
-      }
-    ]
+    "extMetadata": {}
   },
   "foreignKey": null
 }
@@ -14276,112 +12047,7 @@ fetch('/working-hours',
       "summary": "string",
       "timezone": "string",
       "extId": "string",
-      "extMetadata": {},
-      "events": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "bgColor": "string",
-          "description": "string",
-          "endDateTime": "2019-08-24T14:15:22Z",
-          "fgColor": "string",
-          "iCalUid": "string",
-          "isFullDayEvent": true,
-          "isLocked": true,
-          "link": "string",
-          "location": "string",
-          "meetingLink": "string",
-          "identifier": "string",
-          "startDateTime": "2019-08-24T14:15:22Z",
-          "status": "confirmed",
-          "summary": "string",
-          "timezone": "string",
-          "calendarId": "string",
-          "parentEventId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "calendar": {},
-          "foreignKey": null,
-          "parentEvent": {},
-          "attendees": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "identifier": "string",
-              "isOptional": true,
-              "isOrganizer": true,
-              "messages": "string",
-              "responseStatus": "needsAction",
-              "eventId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "event": {},
-              "foreignKey": null
-            }
-          ],
-          "attachments": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "fileUrl": "string",
-              "iconLink": "string",
-              "mimeType": "string",
-              "title": "string",
-              "eventId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "event": {},
-              "foreignKey": null
-            }
-          ]
-        }
-      ],
-      "workingHours": [
-        {}
-      ],
-      "subscriptions": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "accessRole": "freeBusyReader",
-          "bgColor": "string",
-          "fgColor": "string",
-          "isHidden": true,
-          "isPrimary": true,
-          "identifier": "string",
-          "defaultReminders": {},
-          "notificationSettings": {},
-          "calendarId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "calendar": {},
-          "foreignKey": null
-        }
-      ]
+      "extMetadata": {}
     },
     "foreignKey": null
   }
@@ -14416,7 +12082,7 @@ Status Code **200**
 |»» calendarId|string|true|none|none|
 |»» extId|string|false|none|none|
 |»» extMetadata|object|false|none|none|
-|»» calendar|[CalendarWithRelations](#schemacalendarwithrelations)|false|none|(tsType: CalendarWithRelations, schemaOptions: { includeRelations: true })|
+|»» calendar|[Calendar](#schemacalendar)|false|none|none|
 |»»» deleted|boolean|false|none|none|
 |»»» deletedOn|string(date-time)¦null|false|none|none|
 |»»» deletedBy|string¦null|false|none|none|
@@ -14433,102 +12099,6 @@ Status Code **200**
 |»»» timezone|string|false|none|none|
 |»»» extId|string|false|none|none|
 |»»» extMetadata|object|false|none|none|
-|»»» events|[[EventWithRelations](#schemaeventwithrelations)]|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» EventWithRelations|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» deleted|boolean|false|none|none|
-|»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»» deletedBy|string¦null|false|none|none|
-|»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»» createdBy|string|false|none|none|
-|»»»»» modifiedBy|string|false|none|none|
-|»»»»» id|string|false|none|none|
-|»»»»» bgColor|string|false|none|none|
-|»»»»» description|string|false|none|none|
-|»»»»» endDateTime|string(date-time)|false|none|none|
-|»»»»» fgColor|string|false|none|none|
-|»»»»» iCalUid|string|false|none|none|
-|»»»»» isFullDayEvent|boolean|false|none|none|
-|»»»»» isLocked|boolean|false|none|none|
-|»»»»» link|string|false|none|none|
-|»»»»» location|string|false|none|none|
-|»»»»» meetingLink|string|false|none|none|
-|»»»»» identifier|string|false|none|none|
-|»»»»» startDateTime|string(date-time)|false|none|none|
-|»»»»» status|string|false|none|none|
-|»»»»» summary|string|false|none|none|
-|»»»»» timezone|string|false|none|none|
-|»»»»» calendarId|string|true|none|none|
-|»»»»» parentEventId|string|false|none|none|
-|»»»»» extId|string|false|none|none|
-|»»»»» extMetadata|object|false|none|none|
-|»»»»» calendar|[CalendarWithRelations](#schemacalendarwithrelations)|false|none|(tsType: CalendarWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» foreignKey|any|false|none|none|
-|»»»»» parentEvent|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» attendees|[[AttendeeWithRelations](#schemaattendeewithrelations)]|false|none|(tsType: AttendeeWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»» AttendeeWithRelations|[AttendeeWithRelations](#schemaattendeewithrelations)|false|none|(tsType: AttendeeWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»»» deleted|boolean|false|none|none|
-|»»»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»»»» deletedBy|string¦null|false|none|none|
-|»»»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»»»» createdBy|string|false|none|none|
-|»»»»»»» modifiedBy|string|false|none|none|
-|»»»»»»» id|string|false|none|none|
-|»»»»»»» identifier|string|true|none|none|
-|»»»»»»» isOptional|boolean|false|none|none|
-|»»»»»»» isOrganizer|boolean|false|none|none|
-|»»»»»»» messages|string|false|none|none|
-|»»»»»»» responseStatus|string|false|none|none|
-|»»»»»»» eventId|string|true|none|none|
-|»»»»»»» extId|string|false|none|none|
-|»»»»»»» extMetadata|object|false|none|none|
-|»»»»»»» event|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»»» foreignKey|any|false|none|none|
-|»»»»» attachments|[[AttachmentWithRelations](#schemaattachmentwithrelations)]|false|none|(tsType: AttachmentWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»» AttachmentWithRelations|[AttachmentWithRelations](#schemaattachmentwithrelations)|false|none|(tsType: AttachmentWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»»» deleted|boolean|false|none|none|
-|»»»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»»»» deletedBy|string¦null|false|none|none|
-|»»»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»»»» createdBy|string|false|none|none|
-|»»»»»»» modifiedBy|string|false|none|none|
-|»»»»»»» id|string|false|none|none|
-|»»»»»»» fileUrl|string|true|none|none|
-|»»»»»»» iconLink|string|false|none|none|
-|»»»»»»» mimeType|string|false|none|none|
-|»»»»»»» title|string|false|none|none|
-|»»»»»»» eventId|string|true|none|none|
-|»»»»»»» extId|string|false|none|none|
-|»»»»»»» extMetadata|object|false|none|none|
-|»»»»»»» event|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»»»» foreignKey|any|false|none|none|
-|»»» workingHours|[[WorkingHourWithRelations](#schemaworkinghourwithrelations)]|false|none|(tsType: WorkingHourWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» WorkingHourWithRelations|[WorkingHourWithRelations](#schemaworkinghourwithrelations)|false|none|(tsType: WorkingHourWithRelations, schemaOptions: { includeRelations: true })|
-|»»» subscriptions|[[SubscriptionWithRelations](#schemasubscriptionwithrelations)]|false|none|(tsType: SubscriptionWithRelations, schemaOptions: { includeRelations: true })|
-|»»»» SubscriptionWithRelations|[SubscriptionWithRelations](#schemasubscriptionwithrelations)|false|none|(tsType: SubscriptionWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» deleted|boolean|false|none|none|
-|»»»»» deletedOn|string(date-time)¦null|false|none|none|
-|»»»»» deletedBy|string¦null|false|none|none|
-|»»»»» createdOn|string(date-time)|false|none|none|
-|»»»»» modifiedOn|string(date-time)|false|none|none|
-|»»»»» createdBy|string|false|none|none|
-|»»»»» modifiedBy|string|false|none|none|
-|»»»»» id|string|false|none|none|
-|»»»»» accessRole|string|false|none|none|
-|»»»»» bgColor|string|false|none|none|
-|»»»»» fgColor|string|false|none|none|
-|»»»»» isHidden|boolean|false|none|none|
-|»»»»» isPrimary|boolean|false|none|none|
-|»»»»» identifier|string|true|none|none|
-|»»»»» defaultReminders|object|false|none|none|
-|»»»»» notificationSettings|object|false|none|none|
-|»»»»» calendarId|string|true|none|none|
-|»»»»» extId|string|false|none|none|
-|»»»»» extMetadata|object|false|none|none|
-|»»»»» calendar|[CalendarWithRelations](#schemacalendarwithrelations)|false|none|(tsType: CalendarWithRelations, schemaOptions: { includeRelations: true })|
-|»»»»» foreignKey|any|false|none|none|
 |»» foreignKey|any|false|none|none|
 
 #### Enumerated Values
@@ -14542,18 +12112,6 @@ Status Code **200**
 |dayOfWeek|4|
 |dayOfWeek|5|
 |dayOfWeek|6|
-|status|confirmed|
-|status|tentative|
-|status|cancelled|
-|status|completed|
-|responseStatus|needsAction|
-|responseStatus|tentative|
-|responseStatus|accepted|
-|responseStatus|declined|
-|accessRole|freeBusyReader|
-|accessRole|reader|
-|accessRole|writer|
-|accessRole|owner|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -14680,1268 +12238,12 @@ NewWorkingHour
 |dayOfWeek|5|
 |dayOfWeek|6|
 
-<h2 id="tocS_AttendeeWithRelations">AttendeeWithRelations</h2>
+<h2 id="tocS_Calendar">Calendar</h2>
 <!-- backwards compatibility -->
-<a id="schemaattendeewithrelations"></a>
-<a id="schema_AttendeeWithRelations"></a>
-<a id="tocSattendeewithrelations"></a>
-<a id="tocsattendeewithrelations"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "identifier": "string",
-  "isOptional": true,
-  "isOrganizer": true,
-  "messages": "string",
-  "responseStatus": "needsAction",
-  "eventId": "string",
-  "extId": "string",
-  "extMetadata": {},
-  "event": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "bgColor": "string",
-    "description": "string",
-    "endDateTime": "2019-08-24T14:15:22Z",
-    "fgColor": "string",
-    "iCalUid": "string",
-    "isFullDayEvent": true,
-    "isLocked": true,
-    "link": "string",
-    "location": "string",
-    "meetingLink": "string",
-    "identifier": "string",
-    "startDateTime": "2019-08-24T14:15:22Z",
-    "status": "confirmed",
-    "summary": "string",
-    "timezone": "string",
-    "calendarId": "string",
-    "parentEventId": "string",
-    "extId": "string",
-    "extMetadata": {},
-    "calendar": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "source": "string",
-      "enableWorkingHours": true,
-      "location": "string",
-      "identifier": "string",
-      "summary": "string",
-      "timezone": "string",
-      "extId": "string",
-      "extMetadata": {},
-      "events": [
-        {}
-      ],
-      "workingHours": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "dayOfWeek": 0,
-          "end": "string",
-          "start": "string",
-          "calendarId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "calendar": {},
-          "foreignKey": null
-        }
-      ],
-      "subscriptions": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "accessRole": "freeBusyReader",
-          "bgColor": "string",
-          "fgColor": "string",
-          "isHidden": true,
-          "isPrimary": true,
-          "identifier": "string",
-          "defaultReminders": {},
-          "notificationSettings": {},
-          "calendarId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "calendar": {},
-          "foreignKey": null
-        }
-      ]
-    },
-    "foreignKey": null,
-    "parentEvent": {},
-    "attendees": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "identifier": "string",
-        "isOptional": true,
-        "isOrganizer": true,
-        "messages": "string",
-        "responseStatus": "needsAction",
-        "eventId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "event": {},
-        "foreignKey": null
-      }
-    ],
-    "attachments": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "fileUrl": "string",
-        "iconLink": "string",
-        "mimeType": "string",
-        "title": "string",
-        "eventId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "event": {},
-        "foreignKey": null
-      }
-    ]
-  },
-  "foreignKey": null
-}
-
-```
-
-AttendeeWithRelations
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|identifier|string|true|none|none|
-|isOptional|boolean|false|none|none|
-|isOrganizer|boolean|false|none|none|
-|messages|string|false|none|none|
-|responseStatus|string|false|none|none|
-|eventId|string|true|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-|event|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|foreignKey|any|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|responseStatus|needsAction|
-|responseStatus|tentative|
-|responseStatus|accepted|
-|responseStatus|declined|
-
-<h2 id="tocS_AttachmentWithRelations">AttachmentWithRelations</h2>
-<!-- backwards compatibility -->
-<a id="schemaattachmentwithrelations"></a>
-<a id="schema_AttachmentWithRelations"></a>
-<a id="tocSattachmentwithrelations"></a>
-<a id="tocsattachmentwithrelations"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "fileUrl": "string",
-  "iconLink": "string",
-  "mimeType": "string",
-  "title": "string",
-  "eventId": "string",
-  "extId": "string",
-  "extMetadata": {},
-  "event": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "bgColor": "string",
-    "description": "string",
-    "endDateTime": "2019-08-24T14:15:22Z",
-    "fgColor": "string",
-    "iCalUid": "string",
-    "isFullDayEvent": true,
-    "isLocked": true,
-    "link": "string",
-    "location": "string",
-    "meetingLink": "string",
-    "identifier": "string",
-    "startDateTime": "2019-08-24T14:15:22Z",
-    "status": "confirmed",
-    "summary": "string",
-    "timezone": "string",
-    "calendarId": "string",
-    "parentEventId": "string",
-    "extId": "string",
-    "extMetadata": {},
-    "calendar": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "source": "string",
-      "enableWorkingHours": true,
-      "location": "string",
-      "identifier": "string",
-      "summary": "string",
-      "timezone": "string",
-      "extId": "string",
-      "extMetadata": {},
-      "events": [
-        {}
-      ],
-      "workingHours": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "dayOfWeek": 0,
-          "end": "string",
-          "start": "string",
-          "calendarId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "calendar": {},
-          "foreignKey": null
-        }
-      ],
-      "subscriptions": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "accessRole": "freeBusyReader",
-          "bgColor": "string",
-          "fgColor": "string",
-          "isHidden": true,
-          "isPrimary": true,
-          "identifier": "string",
-          "defaultReminders": {},
-          "notificationSettings": {},
-          "calendarId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "calendar": {},
-          "foreignKey": null
-        }
-      ]
-    },
-    "foreignKey": null,
-    "parentEvent": {},
-    "attendees": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "identifier": "string",
-        "isOptional": true,
-        "isOrganizer": true,
-        "messages": "string",
-        "responseStatus": "needsAction",
-        "eventId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "event": {},
-        "foreignKey": null
-      }
-    ],
-    "attachments": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "fileUrl": "string",
-        "iconLink": "string",
-        "mimeType": "string",
-        "title": "string",
-        "eventId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "event": {},
-        "foreignKey": null
-      }
-    ]
-  },
-  "foreignKey": null
-}
-
-```
-
-AttachmentWithRelations
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|fileUrl|string|true|none|none|
-|iconLink|string|false|none|none|
-|mimeType|string|false|none|none|
-|title|string|false|none|none|
-|eventId|string|true|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-|event|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|foreignKey|any|false|none|none|
-
-<h2 id="tocS_EventWithRelations">EventWithRelations</h2>
-<!-- backwards compatibility -->
-<a id="schemaeventwithrelations"></a>
-<a id="schema_EventWithRelations"></a>
-<a id="tocSeventwithrelations"></a>
-<a id="tocseventwithrelations"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "bgColor": "string",
-  "description": "string",
-  "endDateTime": "2019-08-24T14:15:22Z",
-  "fgColor": "string",
-  "iCalUid": "string",
-  "isFullDayEvent": true,
-  "isLocked": true,
-  "link": "string",
-  "location": "string",
-  "meetingLink": "string",
-  "identifier": "string",
-  "startDateTime": "2019-08-24T14:15:22Z",
-  "status": "confirmed",
-  "summary": "string",
-  "timezone": "string",
-  "calendarId": "string",
-  "parentEventId": "string",
-  "extId": "string",
-  "extMetadata": {},
-  "calendar": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "source": "string",
-    "enableWorkingHours": true,
-    "location": "string",
-    "identifier": "string",
-    "summary": "string",
-    "timezone": "string",
-    "extId": "string",
-    "extMetadata": {},
-    "events": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "bgColor": "string",
-        "description": "string",
-        "endDateTime": "2019-08-24T14:15:22Z",
-        "fgColor": "string",
-        "iCalUid": "string",
-        "isFullDayEvent": true,
-        "isLocked": true,
-        "link": "string",
-        "location": "string",
-        "meetingLink": "string",
-        "identifier": "string",
-        "startDateTime": "2019-08-24T14:15:22Z",
-        "status": "confirmed",
-        "summary": "string",
-        "timezone": "string",
-        "calendarId": "string",
-        "parentEventId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "calendar": {},
-        "foreignKey": null,
-        "parentEvent": {},
-        "attendees": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "identifier": "string",
-            "isOptional": true,
-            "isOrganizer": true,
-            "messages": "string",
-            "responseStatus": "needsAction",
-            "eventId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "event": {},
-            "foreignKey": null
-          }
-        ],
-        "attachments": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "fileUrl": "string",
-            "iconLink": "string",
-            "mimeType": "string",
-            "title": "string",
-            "eventId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "event": {},
-            "foreignKey": null
-          }
-        ]
-      }
-    ],
-    "workingHours": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "dayOfWeek": 0,
-        "end": "string",
-        "start": "string",
-        "calendarId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "calendar": {},
-        "foreignKey": null
-      }
-    ],
-    "subscriptions": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "accessRole": "freeBusyReader",
-        "bgColor": "string",
-        "fgColor": "string",
-        "isHidden": true,
-        "isPrimary": true,
-        "identifier": "string",
-        "defaultReminders": {},
-        "notificationSettings": {},
-        "calendarId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "calendar": {},
-        "foreignKey": null
-      }
-    ]
-  },
-  "foreignKey": null,
-  "parentEvent": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "bgColor": "string",
-    "description": "string",
-    "endDateTime": "2019-08-24T14:15:22Z",
-    "fgColor": "string",
-    "iCalUid": "string",
-    "isFullDayEvent": true,
-    "isLocked": true,
-    "link": "string",
-    "location": "string",
-    "meetingLink": "string",
-    "identifier": "string",
-    "startDateTime": "2019-08-24T14:15:22Z",
-    "status": "confirmed",
-    "summary": "string",
-    "timezone": "string",
-    "calendarId": "string",
-    "parentEventId": "string",
-    "extId": "string",
-    "extMetadata": {},
-    "calendar": {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "source": "string",
-      "enableWorkingHours": true,
-      "location": "string",
-      "identifier": "string",
-      "summary": "string",
-      "timezone": "string",
-      "extId": "string",
-      "extMetadata": {},
-      "events": [
-        {}
-      ],
-      "workingHours": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "dayOfWeek": 0,
-          "end": "string",
-          "start": "string",
-          "calendarId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "calendar": {},
-          "foreignKey": null
-        }
-      ],
-      "subscriptions": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "accessRole": "freeBusyReader",
-          "bgColor": "string",
-          "fgColor": "string",
-          "isHidden": true,
-          "isPrimary": true,
-          "identifier": "string",
-          "defaultReminders": {},
-          "notificationSettings": {},
-          "calendarId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "calendar": {},
-          "foreignKey": null
-        }
-      ]
-    },
-    "foreignKey": null,
-    "parentEvent": {},
-    "attendees": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "identifier": "string",
-        "isOptional": true,
-        "isOrganizer": true,
-        "messages": "string",
-        "responseStatus": "needsAction",
-        "eventId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "event": {},
-        "foreignKey": null
-      }
-    ],
-    "attachments": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "fileUrl": "string",
-        "iconLink": "string",
-        "mimeType": "string",
-        "title": "string",
-        "eventId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "event": {},
-        "foreignKey": null
-      }
-    ]
-  },
-  "attendees": [
-    {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "identifier": "string",
-      "isOptional": true,
-      "isOrganizer": true,
-      "messages": "string",
-      "responseStatus": "needsAction",
-      "eventId": "string",
-      "extId": "string",
-      "extMetadata": {},
-      "event": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "bgColor": "string",
-        "description": "string",
-        "endDateTime": "2019-08-24T14:15:22Z",
-        "fgColor": "string",
-        "iCalUid": "string",
-        "isFullDayEvent": true,
-        "isLocked": true,
-        "link": "string",
-        "location": "string",
-        "meetingLink": "string",
-        "identifier": "string",
-        "startDateTime": "2019-08-24T14:15:22Z",
-        "status": "confirmed",
-        "summary": "string",
-        "timezone": "string",
-        "calendarId": "string",
-        "parentEventId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "calendar": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "source": "string",
-          "enableWorkingHours": true,
-          "location": "string",
-          "identifier": "string",
-          "summary": "string",
-          "timezone": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "events": [
-            {}
-          ],
-          "workingHours": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "dayOfWeek": 0,
-              "end": "string",
-              "start": "string",
-              "calendarId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "calendar": {},
-              "foreignKey": null
-            }
-          ],
-          "subscriptions": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "accessRole": "freeBusyReader",
-              "bgColor": "string",
-              "fgColor": "string",
-              "isHidden": true,
-              "isPrimary": true,
-              "identifier": "string",
-              "defaultReminders": {},
-              "notificationSettings": {},
-              "calendarId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "calendar": {},
-              "foreignKey": null
-            }
-          ]
-        },
-        "foreignKey": null,
-        "parentEvent": {},
-        "attendees": [],
-        "attachments": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "fileUrl": "string",
-            "iconLink": "string",
-            "mimeType": "string",
-            "title": "string",
-            "eventId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "event": {},
-            "foreignKey": null
-          }
-        ]
-      },
-      "foreignKey": null
-    }
-  ],
-  "attachments": [
-    {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "fileUrl": "string",
-      "iconLink": "string",
-      "mimeType": "string",
-      "title": "string",
-      "eventId": "string",
-      "extId": "string",
-      "extMetadata": {},
-      "event": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "bgColor": "string",
-        "description": "string",
-        "endDateTime": "2019-08-24T14:15:22Z",
-        "fgColor": "string",
-        "iCalUid": "string",
-        "isFullDayEvent": true,
-        "isLocked": true,
-        "link": "string",
-        "location": "string",
-        "meetingLink": "string",
-        "identifier": "string",
-        "startDateTime": "2019-08-24T14:15:22Z",
-        "status": "confirmed",
-        "summary": "string",
-        "timezone": "string",
-        "calendarId": "string",
-        "parentEventId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "calendar": {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "source": "string",
-          "enableWorkingHours": true,
-          "location": "string",
-          "identifier": "string",
-          "summary": "string",
-          "timezone": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "events": [
-            {}
-          ],
-          "workingHours": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "dayOfWeek": 0,
-              "end": "string",
-              "start": "string",
-              "calendarId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "calendar": {},
-              "foreignKey": null
-            }
-          ],
-          "subscriptions": [
-            {
-              "deleted": true,
-              "deletedOn": "2019-08-24T14:15:22Z",
-              "deletedBy": "string",
-              "createdOn": "2019-08-24T14:15:22Z",
-              "modifiedOn": "2019-08-24T14:15:22Z",
-              "createdBy": "string",
-              "modifiedBy": "string",
-              "id": "string",
-              "accessRole": "freeBusyReader",
-              "bgColor": "string",
-              "fgColor": "string",
-              "isHidden": true,
-              "isPrimary": true,
-              "identifier": "string",
-              "defaultReminders": {},
-              "notificationSettings": {},
-              "calendarId": "string",
-              "extId": "string",
-              "extMetadata": {},
-              "calendar": {},
-              "foreignKey": null
-            }
-          ]
-        },
-        "foreignKey": null,
-        "parentEvent": {},
-        "attendees": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "identifier": "string",
-            "isOptional": true,
-            "isOrganizer": true,
-            "messages": "string",
-            "responseStatus": "needsAction",
-            "eventId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "event": {},
-            "foreignKey": null
-          }
-        ],
-        "attachments": []
-      },
-      "foreignKey": null
-    }
-  ]
-}
-
-```
-
-EventWithRelations
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|bgColor|string|false|none|none|
-|description|string|false|none|none|
-|endDateTime|string(date-time)|false|none|none|
-|fgColor|string|false|none|none|
-|iCalUid|string|false|none|none|
-|isFullDayEvent|boolean|false|none|none|
-|isLocked|boolean|false|none|none|
-|link|string|false|none|none|
-|location|string|false|none|none|
-|meetingLink|string|false|none|none|
-|identifier|string|false|none|none|
-|startDateTime|string(date-time)|false|none|none|
-|status|string|false|none|none|
-|summary|string|false|none|none|
-|timezone|string|false|none|none|
-|calendarId|string|true|none|none|
-|parentEventId|string|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-|calendar|[CalendarWithRelations](#schemacalendarwithrelations)|false|none|(tsType: CalendarWithRelations, schemaOptions: { includeRelations: true })|
-|foreignKey|any|false|none|none|
-|parentEvent|[EventWithRelations](#schemaeventwithrelations)|false|none|(tsType: EventWithRelations, schemaOptions: { includeRelations: true })|
-|attendees|[[AttendeeWithRelations](#schemaattendeewithrelations)]|false|none|[(tsType: AttendeeWithRelations, schemaOptions: { includeRelations: true })]|
-|attachments|[[AttachmentWithRelations](#schemaattachmentwithrelations)]|false|none|[(tsType: AttachmentWithRelations, schemaOptions: { includeRelations: true })]|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|status|confirmed|
-|status|tentative|
-|status|cancelled|
-|status|completed|
-
-<h2 id="tocS_SubscriptionWithRelations">SubscriptionWithRelations</h2>
-<!-- backwards compatibility -->
-<a id="schemasubscriptionwithrelations"></a>
-<a id="schema_SubscriptionWithRelations"></a>
-<a id="tocSsubscriptionwithrelations"></a>
-<a id="tocssubscriptionwithrelations"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "accessRole": "freeBusyReader",
-  "bgColor": "string",
-  "fgColor": "string",
-  "isHidden": true,
-  "isPrimary": true,
-  "identifier": "string",
-  "defaultReminders": {},
-  "notificationSettings": {},
-  "calendarId": "string",
-  "extId": "string",
-  "extMetadata": {},
-  "calendar": {
-    "deleted": true,
-    "deletedOn": "2019-08-24T14:15:22Z",
-    "deletedBy": "string",
-    "createdOn": "2019-08-24T14:15:22Z",
-    "modifiedOn": "2019-08-24T14:15:22Z",
-    "createdBy": "string",
-    "modifiedBy": "string",
-    "id": "string",
-    "source": "string",
-    "enableWorkingHours": true,
-    "location": "string",
-    "identifier": "string",
-    "summary": "string",
-    "timezone": "string",
-    "extId": "string",
-    "extMetadata": {},
-    "events": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "bgColor": "string",
-        "description": "string",
-        "endDateTime": "2019-08-24T14:15:22Z",
-        "fgColor": "string",
-        "iCalUid": "string",
-        "isFullDayEvent": true,
-        "isLocked": true,
-        "link": "string",
-        "location": "string",
-        "meetingLink": "string",
-        "identifier": "string",
-        "startDateTime": "2019-08-24T14:15:22Z",
-        "status": "confirmed",
-        "summary": "string",
-        "timezone": "string",
-        "calendarId": "string",
-        "parentEventId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "calendar": {},
-        "foreignKey": null,
-        "parentEvent": {},
-        "attendees": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "identifier": "string",
-            "isOptional": true,
-            "isOrganizer": true,
-            "messages": "string",
-            "responseStatus": "needsAction",
-            "eventId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "event": {},
-            "foreignKey": null
-          }
-        ],
-        "attachments": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "fileUrl": "string",
-            "iconLink": "string",
-            "mimeType": "string",
-            "title": "string",
-            "eventId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "event": {},
-            "foreignKey": null
-          }
-        ]
-      }
-    ],
-    "workingHours": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "dayOfWeek": 0,
-        "end": "string",
-        "start": "string",
-        "calendarId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "calendar": {},
-        "foreignKey": null
-      }
-    ],
-    "subscriptions": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "accessRole": "freeBusyReader",
-        "bgColor": "string",
-        "fgColor": "string",
-        "isHidden": true,
-        "isPrimary": true,
-        "identifier": "string",
-        "defaultReminders": {},
-        "notificationSettings": {},
-        "calendarId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "calendar": {},
-        "foreignKey": null
-      }
-    ]
-  },
-  "foreignKey": null
-}
-
-```
-
-SubscriptionWithRelations
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|accessRole|string|false|none|none|
-|bgColor|string|false|none|none|
-|fgColor|string|false|none|none|
-|isHidden|boolean|false|none|none|
-|isPrimary|boolean|false|none|none|
-|identifier|string|true|none|none|
-|defaultReminders|object|false|none|none|
-|notificationSettings|object|false|none|none|
-|calendarId|string|true|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-|calendar|[CalendarWithRelations](#schemacalendarwithrelations)|false|none|(tsType: CalendarWithRelations, schemaOptions: { includeRelations: true })|
-|foreignKey|any|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|accessRole|freeBusyReader|
-|accessRole|reader|
-|accessRole|writer|
-|accessRole|owner|
-
-<h2 id="tocS_CalendarWithRelations">CalendarWithRelations</h2>
-<!-- backwards compatibility -->
-<a id="schemacalendarwithrelations"></a>
-<a id="schema_CalendarWithRelations"></a>
-<a id="tocScalendarwithrelations"></a>
-<a id="tocscalendarwithrelations"></a>
+<a id="schemacalendar"></a>
+<a id="schema_Calendar"></a>
+<a id="tocScalendar"></a>
+<a id="tocscalendar"></a>
 
 ```json
 {
@@ -15960,432 +12262,12 @@ SubscriptionWithRelations
   "summary": "string",
   "timezone": "string",
   "extId": "string",
-  "extMetadata": {},
-  "events": [
-    {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "bgColor": "string",
-      "description": "string",
-      "endDateTime": "2019-08-24T14:15:22Z",
-      "fgColor": "string",
-      "iCalUid": "string",
-      "isFullDayEvent": true,
-      "isLocked": true,
-      "link": "string",
-      "location": "string",
-      "meetingLink": "string",
-      "identifier": "string",
-      "startDateTime": "2019-08-24T14:15:22Z",
-      "status": "confirmed",
-      "summary": "string",
-      "timezone": "string",
-      "calendarId": "string",
-      "parentEventId": "string",
-      "extId": "string",
-      "extMetadata": {},
-      "calendar": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "source": "string",
-        "enableWorkingHours": true,
-        "location": "string",
-        "identifier": "string",
-        "summary": "string",
-        "timezone": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "events": [],
-        "workingHours": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "dayOfWeek": 0,
-            "end": "string",
-            "start": "string",
-            "calendarId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "calendar": {},
-            "foreignKey": null
-          }
-        ],
-        "subscriptions": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "accessRole": "freeBusyReader",
-            "bgColor": "string",
-            "fgColor": "string",
-            "isHidden": true,
-            "isPrimary": true,
-            "identifier": "string",
-            "defaultReminders": {},
-            "notificationSettings": {},
-            "calendarId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "calendar": {},
-            "foreignKey": null
-          }
-        ]
-      },
-      "foreignKey": null,
-      "parentEvent": {},
-      "attendees": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "identifier": "string",
-          "isOptional": true,
-          "isOrganizer": true,
-          "messages": "string",
-          "responseStatus": "needsAction",
-          "eventId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "event": {},
-          "foreignKey": null
-        }
-      ],
-      "attachments": [
-        {
-          "deleted": true,
-          "deletedOn": "2019-08-24T14:15:22Z",
-          "deletedBy": "string",
-          "createdOn": "2019-08-24T14:15:22Z",
-          "modifiedOn": "2019-08-24T14:15:22Z",
-          "createdBy": "string",
-          "modifiedBy": "string",
-          "id": "string",
-          "fileUrl": "string",
-          "iconLink": "string",
-          "mimeType": "string",
-          "title": "string",
-          "eventId": "string",
-          "extId": "string",
-          "extMetadata": {},
-          "event": {},
-          "foreignKey": null
-        }
-      ]
-    }
-  ],
-  "workingHours": [
-    {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "dayOfWeek": 0,
-      "end": "string",
-      "start": "string",
-      "calendarId": "string",
-      "extId": "string",
-      "extMetadata": {},
-      "calendar": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "source": "string",
-        "enableWorkingHours": true,
-        "location": "string",
-        "identifier": "string",
-        "summary": "string",
-        "timezone": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "events": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "bgColor": "string",
-            "description": "string",
-            "endDateTime": "2019-08-24T14:15:22Z",
-            "fgColor": "string",
-            "iCalUid": "string",
-            "isFullDayEvent": true,
-            "isLocked": true,
-            "link": "string",
-            "location": "string",
-            "meetingLink": "string",
-            "identifier": "string",
-            "startDateTime": "2019-08-24T14:15:22Z",
-            "status": "confirmed",
-            "summary": "string",
-            "timezone": "string",
-            "calendarId": "string",
-            "parentEventId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "calendar": {},
-            "foreignKey": null,
-            "parentEvent": {},
-            "attendees": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "identifier": "string",
-                "isOptional": true,
-                "isOrganizer": true,
-                "messages": "string",
-                "responseStatus": "needsAction",
-                "eventId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "event": {},
-                "foreignKey": null
-              }
-            ],
-            "attachments": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "fileUrl": "string",
-                "iconLink": "string",
-                "mimeType": "string",
-                "title": "string",
-                "eventId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "event": {},
-                "foreignKey": null
-              }
-            ]
-          }
-        ],
-        "workingHours": [],
-        "subscriptions": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "accessRole": "freeBusyReader",
-            "bgColor": "string",
-            "fgColor": "string",
-            "isHidden": true,
-            "isPrimary": true,
-            "identifier": "string",
-            "defaultReminders": {},
-            "notificationSettings": {},
-            "calendarId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "calendar": {},
-            "foreignKey": null
-          }
-        ]
-      },
-      "foreignKey": null
-    }
-  ],
-  "subscriptions": [
-    {
-      "deleted": true,
-      "deletedOn": "2019-08-24T14:15:22Z",
-      "deletedBy": "string",
-      "createdOn": "2019-08-24T14:15:22Z",
-      "modifiedOn": "2019-08-24T14:15:22Z",
-      "createdBy": "string",
-      "modifiedBy": "string",
-      "id": "string",
-      "accessRole": "freeBusyReader",
-      "bgColor": "string",
-      "fgColor": "string",
-      "isHidden": true,
-      "isPrimary": true,
-      "identifier": "string",
-      "defaultReminders": {},
-      "notificationSettings": {},
-      "calendarId": "string",
-      "extId": "string",
-      "extMetadata": {},
-      "calendar": {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "source": "string",
-        "enableWorkingHours": true,
-        "location": "string",
-        "identifier": "string",
-        "summary": "string",
-        "timezone": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "events": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "bgColor": "string",
-            "description": "string",
-            "endDateTime": "2019-08-24T14:15:22Z",
-            "fgColor": "string",
-            "iCalUid": "string",
-            "isFullDayEvent": true,
-            "isLocked": true,
-            "link": "string",
-            "location": "string",
-            "meetingLink": "string",
-            "identifier": "string",
-            "startDateTime": "2019-08-24T14:15:22Z",
-            "status": "confirmed",
-            "summary": "string",
-            "timezone": "string",
-            "calendarId": "string",
-            "parentEventId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "calendar": {},
-            "foreignKey": null,
-            "parentEvent": {},
-            "attendees": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "identifier": "string",
-                "isOptional": true,
-                "isOrganizer": true,
-                "messages": "string",
-                "responseStatus": "needsAction",
-                "eventId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "event": {},
-                "foreignKey": null
-              }
-            ],
-            "attachments": [
-              {
-                "deleted": true,
-                "deletedOn": "2019-08-24T14:15:22Z",
-                "deletedBy": "string",
-                "createdOn": "2019-08-24T14:15:22Z",
-                "modifiedOn": "2019-08-24T14:15:22Z",
-                "createdBy": "string",
-                "modifiedBy": "string",
-                "id": "string",
-                "fileUrl": "string",
-                "iconLink": "string",
-                "mimeType": "string",
-                "title": "string",
-                "eventId": "string",
-                "extId": "string",
-                "extMetadata": {},
-                "event": {},
-                "foreignKey": null
-              }
-            ]
-          }
-        ],
-        "workingHours": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "dayOfWeek": 0,
-            "end": "string",
-            "start": "string",
-            "calendarId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "calendar": {},
-            "foreignKey": null
-          }
-        ],
-        "subscriptions": []
-      },
-      "foreignKey": null
-    }
-  ]
+  "extMetadata": {}
 }
 
 ```
 
-CalendarWithRelations
+Calendar
 
 ### Properties
 
@@ -16407,9 +12289,6 @@ CalendarWithRelations
 |timezone|string|false|none|none|
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
-|events|[[EventWithRelations](#schemaeventwithrelations)]|false|none|[(tsType: EventWithRelations, schemaOptions: { includeRelations: true })]|
-|workingHours|[[WorkingHourWithRelations](#schemaworkinghourwithrelations)]|false|none|[(tsType: WorkingHourWithRelations, schemaOptions: { includeRelations: true })]|
-|subscriptions|[[SubscriptionWithRelations](#schemasubscriptionwithrelations)]|false|none|[(tsType: SubscriptionWithRelations, schemaOptions: { includeRelations: true })]|
 
 <h2 id="tocS_WorkingHourWithRelations">WorkingHourWithRelations</h2>
 <!-- backwards compatibility -->
@@ -16450,129 +12329,7 @@ CalendarWithRelations
     "summary": "string",
     "timezone": "string",
     "extId": "string",
-    "extMetadata": {},
-    "events": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "bgColor": "string",
-        "description": "string",
-        "endDateTime": "2019-08-24T14:15:22Z",
-        "fgColor": "string",
-        "iCalUid": "string",
-        "isFullDayEvent": true,
-        "isLocked": true,
-        "link": "string",
-        "location": "string",
-        "meetingLink": "string",
-        "identifier": "string",
-        "startDateTime": "2019-08-24T14:15:22Z",
-        "status": "confirmed",
-        "summary": "string",
-        "timezone": "string",
-        "calendarId": "string",
-        "parentEventId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "calendar": {},
-        "foreignKey": null,
-        "parentEvent": {},
-        "attendees": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "identifier": "string",
-            "isOptional": true,
-            "isOrganizer": true,
-            "messages": "string",
-            "responseStatus": "needsAction",
-            "eventId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "event": {},
-            "foreignKey": null
-          }
-        ],
-        "attachments": [
-          {
-            "deleted": true,
-            "deletedOn": "2019-08-24T14:15:22Z",
-            "deletedBy": "string",
-            "createdOn": "2019-08-24T14:15:22Z",
-            "modifiedOn": "2019-08-24T14:15:22Z",
-            "createdBy": "string",
-            "modifiedBy": "string",
-            "id": "string",
-            "fileUrl": "string",
-            "iconLink": "string",
-            "mimeType": "string",
-            "title": "string",
-            "eventId": "string",
-            "extId": "string",
-            "extMetadata": {},
-            "event": {},
-            "foreignKey": null
-          }
-        ]
-      }
-    ],
-    "workingHours": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "dayOfWeek": 0,
-        "end": "string",
-        "start": "string",
-        "calendarId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "calendar": {},
-        "foreignKey": null
-      }
-    ],
-    "subscriptions": [
-      {
-        "deleted": true,
-        "deletedOn": "2019-08-24T14:15:22Z",
-        "deletedBy": "string",
-        "createdOn": "2019-08-24T14:15:22Z",
-        "modifiedOn": "2019-08-24T14:15:22Z",
-        "createdBy": "string",
-        "modifiedBy": "string",
-        "id": "string",
-        "accessRole": "freeBusyReader",
-        "bgColor": "string",
-        "fgColor": "string",
-        "isHidden": true,
-        "isPrimary": true,
-        "identifier": "string",
-        "defaultReminders": {},
-        "notificationSettings": {},
-        "calendarId": "string",
-        "extId": "string",
-        "extMetadata": {},
-        "calendar": {},
-        "foreignKey": null
-      }
-    ]
+    "extMetadata": {}
   },
   "foreignKey": null
 }
@@ -16599,7 +12356,7 @@ WorkingHourWithRelations
 |calendarId|string|true|none|none|
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
-|calendar|[CalendarWithRelations](#schemacalendarwithrelations)|false|none|(tsType: CalendarWithRelations, schemaOptions: { includeRelations: true })|
+|calendar|[Calendar](#schemacalendar)|false|none|none|
 |foreignKey|any|false|none|none|
 
 #### Enumerated Values
@@ -16986,6 +12743,94 @@ NewSubscription
 |calendarId|string|true|none|none|
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|accessRole|freeBusyReader|
+|accessRole|reader|
+|accessRole|writer|
+|accessRole|owner|
+
+<h2 id="tocS_SubscriptionWithRelations">SubscriptionWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemasubscriptionwithrelations"></a>
+<a id="schema_SubscriptionWithRelations"></a>
+<a id="tocSsubscriptionwithrelations"></a>
+<a id="tocssubscriptionwithrelations"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "accessRole": "freeBusyReader",
+  "bgColor": "string",
+  "fgColor": "string",
+  "isHidden": true,
+  "isPrimary": true,
+  "identifier": "string",
+  "defaultReminders": {},
+  "notificationSettings": {},
+  "calendarId": "string",
+  "extId": "string",
+  "extMetadata": {},
+  "calendar": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "source": "string",
+    "enableWorkingHours": true,
+    "location": "string",
+    "identifier": "string",
+    "summary": "string",
+    "timezone": "string",
+    "extId": "string",
+    "extMetadata": {}
+  },
+  "foreignKey": null
+}
+
+```
+
+SubscriptionWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|accessRole|string|false|none|none|
+|bgColor|string|false|none|none|
+|fgColor|string|false|none|none|
+|isHidden|boolean|false|none|none|
+|isPrimary|boolean|false|none|none|
+|identifier|string|true|none|none|
+|defaultReminders|object|false|none|none|
+|notificationSettings|object|false|none|none|
+|calendarId|string|true|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+|calendar|[Calendar](#schemacalendar)|false|none|none|
+|foreignKey|any|false|none|none|
 
 #### Enumerated Values
 
@@ -17774,6 +13619,181 @@ FreeBusyDTO
 |timeMin|string(date-time)|true|none|none|
 |items|[[EventAttendeeViewItemDTO](#schemaeventattendeeviewitemdto)]|false|none|none|
 
+<h2 id="tocS_EventWithRelations">EventWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemaeventwithrelations"></a>
+<a id="schema_EventWithRelations"></a>
+<a id="tocSeventwithrelations"></a>
+<a id="tocseventwithrelations"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "bgColor": "string",
+  "description": "string",
+  "endDateTime": "2019-08-24T14:15:22Z",
+  "fgColor": "string",
+  "iCalUid": "string",
+  "isFullDayEvent": true,
+  "isLocked": true,
+  "link": "string",
+  "location": "string",
+  "meetingLink": "string",
+  "identifier": "string",
+  "startDateTime": "2019-08-24T14:15:22Z",
+  "status": "confirmed",
+  "summary": "string",
+  "timezone": "string",
+  "calendarId": "string",
+  "parentEventId": "string",
+  "extId": "string",
+  "extMetadata": {},
+  "calendar": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "source": "string",
+    "enableWorkingHours": true,
+    "location": "string",
+    "identifier": "string",
+    "summary": "string",
+    "timezone": "string",
+    "extId": "string",
+    "extMetadata": {}
+  },
+  "foreignKey": null,
+  "parentEvent": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "bgColor": "string",
+    "description": "string",
+    "endDateTime": "2019-08-24T14:15:22Z",
+    "fgColor": "string",
+    "iCalUid": "string",
+    "isFullDayEvent": true,
+    "isLocked": true,
+    "link": "string",
+    "location": "string",
+    "meetingLink": "string",
+    "identifier": "string",
+    "startDateTime": "2019-08-24T14:15:22Z",
+    "status": "confirmed",
+    "summary": "string",
+    "timezone": "string",
+    "calendarId": "string",
+    "parentEventId": "string",
+    "extId": "string",
+    "extMetadata": {}
+  },
+  "attendees": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "identifier": "string",
+      "isOptional": true,
+      "isOrganizer": true,
+      "messages": "string",
+      "responseStatus": "needsAction",
+      "eventId": "string",
+      "extId": "string",
+      "extMetadata": {}
+    }
+  ],
+  "attachments": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "fileUrl": "string",
+      "iconLink": "string",
+      "mimeType": "string",
+      "title": "string",
+      "eventId": "string",
+      "extId": "string",
+      "extMetadata": {}
+    }
+  ]
+}
+
+```
+
+EventWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|bgColor|string|false|none|none|
+|description|string|false|none|none|
+|endDateTime|string(date-time)|false|none|none|
+|fgColor|string|false|none|none|
+|iCalUid|string|false|none|none|
+|isFullDayEvent|boolean|false|none|none|
+|isLocked|boolean|false|none|none|
+|link|string|false|none|none|
+|location|string|false|none|none|
+|meetingLink|string|false|none|none|
+|identifier|string|false|none|none|
+|startDateTime|string(date-time)|false|none|none|
+|status|string|false|none|none|
+|summary|string|false|none|none|
+|timezone|string|false|none|none|
+|calendarId|string|true|none|none|
+|parentEventId|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+|calendar|[Calendar](#schemacalendar)|false|none|none|
+|foreignKey|any|false|none|none|
+|parentEvent|[Event](#schemaevent)|false|none|none|
+|attendees|[[Attendee](#schemaattendee)]|false|none|none|
+|attachments|[[Attachment](#schemaattachment)]|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|status|confirmed|
+|status|tentative|
+|status|cancelled|
+|status|completed|
+
 <h2 id="tocS_EventPartial">EventPartial</h2>
 <!-- backwards compatibility -->
 <a id="schemaeventpartial"></a>
@@ -18075,58 +14095,6 @@ AttachmentPartial
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
 
-<h2 id="tocS_Calendar">Calendar</h2>
-<!-- backwards compatibility -->
-<a id="schemacalendar"></a>
-<a id="schema_Calendar"></a>
-<a id="tocScalendar"></a>
-<a id="tocscalendar"></a>
-
-```json
-{
-  "deleted": true,
-  "deletedOn": "2019-08-24T14:15:22Z",
-  "deletedBy": "string",
-  "createdOn": "2019-08-24T14:15:22Z",
-  "modifiedOn": "2019-08-24T14:15:22Z",
-  "createdBy": "string",
-  "modifiedBy": "string",
-  "id": "string",
-  "source": "string",
-  "enableWorkingHours": true,
-  "location": "string",
-  "identifier": "string",
-  "summary": "string",
-  "timezone": "string",
-  "extId": "string",
-  "extMetadata": {}
-}
-
-```
-
-Calendar
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|deleted|boolean|false|none|none|
-|deletedOn|string(date-time)¦null|false|none|none|
-|deletedBy|string¦null|false|none|none|
-|createdOn|string(date-time)|false|none|none|
-|modifiedOn|string(date-time)|false|none|none|
-|createdBy|string|false|none|none|
-|modifiedBy|string|false|none|none|
-|id|string|false|none|none|
-|source|string|false|none|none|
-|enableWorkingHours|boolean|false|none|none|
-|location|string|false|none|none|
-|identifier|string|true|none|none|
-|summary|string|false|none|none|
-|timezone|string|false|none|none|
-|extId|string|false|none|none|
-|extMetadata|object|false|none|none|
-
 <h2 id="tocS_NewCalendar">NewCalendar</h2>
 <!-- backwards compatibility -->
 <a id="schemanewcalendar"></a>
@@ -18242,6 +14210,133 @@ CalendarDTO
 |extMetadata|object|false|none|none|
 |workingHours|[[WorkingHour](#schemaworkinghour)]|false|none|none|
 |subscription|object|false|none|none|
+
+<h2 id="tocS_CalendarWithRelations">CalendarWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemacalendarwithrelations"></a>
+<a id="schema_CalendarWithRelations"></a>
+<a id="tocScalendarwithrelations"></a>
+<a id="tocscalendarwithrelations"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "source": "string",
+  "enableWorkingHours": true,
+  "location": "string",
+  "identifier": "string",
+  "summary": "string",
+  "timezone": "string",
+  "extId": "string",
+  "extMetadata": {},
+  "events": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "bgColor": "string",
+      "description": "string",
+      "endDateTime": "2019-08-24T14:15:22Z",
+      "fgColor": "string",
+      "iCalUid": "string",
+      "isFullDayEvent": true,
+      "isLocked": true,
+      "link": "string",
+      "location": "string",
+      "meetingLink": "string",
+      "identifier": "string",
+      "startDateTime": "2019-08-24T14:15:22Z",
+      "status": "confirmed",
+      "summary": "string",
+      "timezone": "string",
+      "calendarId": "string",
+      "parentEventId": "string",
+      "extId": "string",
+      "extMetadata": {}
+    }
+  ],
+  "workingHours": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "dayOfWeek": 0,
+      "end": "string",
+      "start": "string",
+      "calendarId": "string",
+      "extId": "string",
+      "extMetadata": {}
+    }
+  ],
+  "subscriptions": [
+    {
+      "deleted": true,
+      "deletedOn": "2019-08-24T14:15:22Z",
+      "deletedBy": "string",
+      "createdOn": "2019-08-24T14:15:22Z",
+      "modifiedOn": "2019-08-24T14:15:22Z",
+      "createdBy": "string",
+      "modifiedBy": "string",
+      "id": "string",
+      "accessRole": "freeBusyReader",
+      "bgColor": "string",
+      "fgColor": "string",
+      "isHidden": true,
+      "isPrimary": true,
+      "identifier": "string",
+      "defaultReminders": {},
+      "notificationSettings": {},
+      "calendarId": "string",
+      "extId": "string",
+      "extMetadata": {}
+    }
+  ]
+}
+
+```
+
+CalendarWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|source|string|false|none|none|
+|enableWorkingHours|boolean|false|none|none|
+|location|string|false|none|none|
+|identifier|string|true|none|none|
+|summary|string|false|none|none|
+|timezone|string|false|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+|events|[[Event](#schemaevent)]|false|none|none|
+|workingHours|[[WorkingHour](#schemaworkinghour)]|false|none|none|
+|subscriptions|[[Subscription](#schemasubscription)]|false|none|none|
 
 <h2 id="tocS_CalendarPartial">CalendarPartial</h2>
 <!-- backwards compatibility -->
@@ -18574,6 +14669,99 @@ NewAttendee
 |responseStatus|accepted|
 |responseStatus|declined|
 
+<h2 id="tocS_AttendeeWithRelations">AttendeeWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemaattendeewithrelations"></a>
+<a id="schema_AttendeeWithRelations"></a>
+<a id="tocSattendeewithrelations"></a>
+<a id="tocsattendeewithrelations"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "identifier": "string",
+  "isOptional": true,
+  "isOrganizer": true,
+  "messages": "string",
+  "responseStatus": "needsAction",
+  "eventId": "string",
+  "extId": "string",
+  "extMetadata": {},
+  "event": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "bgColor": "string",
+    "description": "string",
+    "endDateTime": "2019-08-24T14:15:22Z",
+    "fgColor": "string",
+    "iCalUid": "string",
+    "isFullDayEvent": true,
+    "isLocked": true,
+    "link": "string",
+    "location": "string",
+    "meetingLink": "string",
+    "identifier": "string",
+    "startDateTime": "2019-08-24T14:15:22Z",
+    "status": "confirmed",
+    "summary": "string",
+    "timezone": "string",
+    "calendarId": "string",
+    "parentEventId": "string",
+    "extId": "string",
+    "extMetadata": {}
+  },
+  "foreignKey": null
+}
+
+```
+
+AttendeeWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|identifier|string|true|none|none|
+|isOptional|boolean|false|none|none|
+|isOrganizer|boolean|false|none|none|
+|messages|string|false|none|none|
+|responseStatus|string|false|none|none|
+|eventId|string|true|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+|event|[Event](#schemaevent)|false|none|none|
+|foreignKey|any|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|responseStatus|needsAction|
+|responseStatus|tentative|
+|responseStatus|accepted|
+|responseStatus|declined|
+
 <h2 id="tocS_NewAttachment">NewAttachment</h2>
 <!-- backwards compatibility -->
 <a id="schemanewattachment"></a>
@@ -18621,6 +14809,88 @@ NewAttachment
 |eventId|string|true|none|none|
 |extId|string|false|none|none|
 |extMetadata|object|false|none|none|
+
+<h2 id="tocS_AttachmentWithRelations">AttachmentWithRelations</h2>
+<!-- backwards compatibility -->
+<a id="schemaattachmentwithrelations"></a>
+<a id="schema_AttachmentWithRelations"></a>
+<a id="tocSattachmentwithrelations"></a>
+<a id="tocsattachmentwithrelations"></a>
+
+```json
+{
+  "deleted": true,
+  "deletedOn": "2019-08-24T14:15:22Z",
+  "deletedBy": "string",
+  "createdOn": "2019-08-24T14:15:22Z",
+  "modifiedOn": "2019-08-24T14:15:22Z",
+  "createdBy": "string",
+  "modifiedBy": "string",
+  "id": "string",
+  "fileUrl": "string",
+  "iconLink": "string",
+  "mimeType": "string",
+  "title": "string",
+  "eventId": "string",
+  "extId": "string",
+  "extMetadata": {},
+  "event": {
+    "deleted": true,
+    "deletedOn": "2019-08-24T14:15:22Z",
+    "deletedBy": "string",
+    "createdOn": "2019-08-24T14:15:22Z",
+    "modifiedOn": "2019-08-24T14:15:22Z",
+    "createdBy": "string",
+    "modifiedBy": "string",
+    "id": "string",
+    "bgColor": "string",
+    "description": "string",
+    "endDateTime": "2019-08-24T14:15:22Z",
+    "fgColor": "string",
+    "iCalUid": "string",
+    "isFullDayEvent": true,
+    "isLocked": true,
+    "link": "string",
+    "location": "string",
+    "meetingLink": "string",
+    "identifier": "string",
+    "startDateTime": "2019-08-24T14:15:22Z",
+    "status": "confirmed",
+    "summary": "string",
+    "timezone": "string",
+    "calendarId": "string",
+    "parentEventId": "string",
+    "extId": "string",
+    "extMetadata": {}
+  },
+  "foreignKey": null
+}
+
+```
+
+AttachmentWithRelations
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deleted|boolean|false|none|none|
+|deletedOn|string(date-time)¦null|false|none|none|
+|deletedBy|string¦null|false|none|none|
+|createdOn|string(date-time)|false|none|none|
+|modifiedOn|string(date-time)|false|none|none|
+|createdBy|string|false|none|none|
+|modifiedBy|string|false|none|none|
+|id|string|false|none|none|
+|fileUrl|string|true|none|none|
+|iconLink|string|false|none|none|
+|mimeType|string|false|none|none|
+|title|string|false|none|none|
+|eventId|string|true|none|none|
+|extId|string|false|none|none|
+|extMetadata|object|false|none|none|
+|event|[Event](#schemaevent)|false|none|none|
+|foreignKey|any|false|none|none|
 
 <h2 id="tocS_loopback.Count">loopback.Count</h2>
 <!-- backwards compatibility -->

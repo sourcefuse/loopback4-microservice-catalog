@@ -2,8 +2,8 @@
   "openapi": "3.0.0",
   "info": {
     "title": "@sourceloop/user-tenant-service",
-    "version": "7.0.6",
-    "description": "Sourceloop User Tenant Service",
+    "version": "8.1.0",
+    "description": "Sourceloop User Tenant Service.",
     "contact": {
       "name": "SourceFuse"
     }
@@ -2477,760 +2477,9 @@
         "additionalProperties": false,
         "x-typescript-type": "Omit<UserTenantPrefs, 'id' | 'userTenantId'>"
       },
-      "TenantConfigWithRelations": {
-        "title": "TenantConfigWithRelations",
+      "UserTenant": {
+        "title": "UserTenant",
         "type": "object",
-        "description": "(tsType: TenantConfigWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "configKey": {
-            "type": "string"
-          },
-          "configValue": {
-            "type": "object"
-          },
-          "tenantId": {
-            "type": "string"
-          },
-          "tenant": {
-            "$ref": "#/components/schemas/TenantWithRelations"
-          },
-          "foreignKey": {}
-        },
-        "required": [
-          "configKey",
-          "tenantId"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "TenantConfigWithRelations"
-      },
-      "UserViewWithRelations": {
-        "title": "UserViewWithRelations",
-        "type": "object",
-        "description": "User details view in DB (tsType: UserViewWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "firstName": {
-            "type": "string"
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "middleName": {
-            "type": "string"
-          },
-          "username": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          },
-          "designation": {
-            "type": "string"
-          },
-          "phone": {
-            "type": "string"
-          },
-          "authClientIds": {
-            "type": "string"
-          },
-          "lastLogin": {
-            "type": "string"
-          },
-          "photoUrl": {
-            "type": "string"
-          },
-          "gender": {
-            "type": "string",
-            "description": "This field takes a single character as input in database.\n    'M' for male and 'F' for female.",
-            "enum": [
-              "M",
-              "F",
-              "O"
-            ]
-          },
-          "dob": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "defaultTenantId": {
-            "type": "string"
-          },
-          "status": {
-            "type": "number",
-            "maximum": 11,
-            "minimum": 0
-          },
-          "tenantId": {
-            "type": "string"
-          },
-          "roleId": {
-            "type": "string"
-          },
-          "tenantName": {
-            "type": "string"
-          },
-          "tenantKey": {
-            "type": "string"
-          },
-          "roleName": {
-            "type": "string"
-          },
-          "userTenantId": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "firstName",
-          "username",
-          "email",
-          "defaultTenantId",
-          "tenantId",
-          "roleId",
-          "tenantName",
-          "userTenantId"
-        ],
-        "additionalProperties": false
-      },
-      "RoleWithRelations": {
-        "title": "RoleWithRelations",
-        "type": "object",
-        "description": "(tsType: RoleWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "roleType": {
-            "type": "number",
-            "maximum": 15,
-            "minimum": 0
-          },
-          "description": {
-            "type": "string"
-          },
-          "permissions": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "allowedClients": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "tenantId": {
-            "type": "string"
-          },
-          "userTenants": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/UserTenantWithRelations"
-            }
-          },
-          "createdByUser": {
-            "$ref": "#/components/schemas/UserViewWithRelations"
-          },
-          "foreignKey": {},
-          "modifiedByUser": {
-            "$ref": "#/components/schemas/UserViewWithRelations"
-          }
-        },
-        "required": [
-          "name",
-          "tenantId"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "RoleWithRelations"
-      },
-      "UserGroupWithRelations": {
-        "title": "UserGroupWithRelations",
-        "type": "object",
-        "description": "(tsType: UserGroupWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "groupId": {
-            "type": "string"
-          },
-          "userTenantId": {
-            "type": "string"
-          },
-          "group": {
-            "$ref": "#/components/schemas/GroupWithRelations"
-          },
-          "foreignKey": {},
-          "userTenant": {
-            "$ref": "#/components/schemas/UserTenantWithRelations"
-          }
-        },
-        "required": [
-          "groupId",
-          "userTenantId"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "UserGroupWithRelations"
-      },
-      "GroupWithRelations": {
-        "title": "GroupWithRelations",
-        "type": "object",
-        "description": "(tsType: GroupWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "photoUrl": {
-            "type": "string"
-          },
-          "tenantId": {
-            "type": "string"
-          },
-          "userGroups": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/UserGroupWithRelations"
-            }
-          }
-        },
-        "required": [
-          "tenantId"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "GroupWithRelations"
-      },
-      "TenantWithRelations": {
-        "title": "TenantWithRelations",
-        "type": "object",
-        "description": "signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "status": {
-            "type": "number",
-            "description": "Tenant status - Active or Inactive",
-            "enum": [
-              1,
-              0
-            ],
-            "nullable": true
-          },
-          "key": {
-            "type": "string"
-          },
-          "website": {
-            "type": "string"
-          },
-          "address": {
-            "type": "string"
-          },
-          "city": {
-            "type": "string"
-          },
-          "state": {
-            "type": "string"
-          },
-          "zip": {
-            "type": "string"
-          },
-          "country": {
-            "type": "string"
-          },
-          "tenantConfigs": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TenantConfigWithRelations"
-            }
-          },
-          "userTenants": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/UserTenantWithRelations"
-            }
-          },
-          "users": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/UserWithRelations"
-            }
-          },
-          "roles": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/RoleWithRelations"
-            }
-          },
-          "groups": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/GroupWithRelations"
-            }
-          }
-        },
-        "required": [
-          "name",
-          "status"
-        ],
-        "additionalProperties": false
-      },
-      "UserCredentialsWithRelations": {
-        "title": "UserCredentialsWithRelations",
-        "type": "object",
-        "description": "(tsType: UserCredentialsWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "authProvider": {
-            "type": "string"
-          },
-          "authId": {
-            "type": "string"
-          },
-          "authToken": {
-            "type": "string"
-          },
-          "secretKey": {
-            "type": "string",
-            "description": "Secret for Authenticator app"
-          },
-          "password": {
-            "type": "string"
-          },
-          "userId": {
-            "type": "string"
-          },
-          "user": {
-            "$ref": "#/components/schemas/UserWithRelations"
-          },
-          "foreignKey": {}
-        },
-        "required": [
-          "authProvider",
-          "userId"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "UserCredentialsWithRelations"
-      },
-      "UserWithRelations": {
-        "title": "UserWithRelations",
-        "type": "object",
-        "description": "This is signature for user model. (tsType: UserWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "firstName": {
-            "type": "string"
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "middleName": {
-            "type": "string"
-          },
-          "username": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          },
-          "designation": {
-            "type": "string"
-          },
-          "phone": {
-            "type": "string",
-            "pattern": "^\\+?[1-9]\\d{1,14}$"
-          },
-          "authClientIds": {
-            "type": "string"
-          },
-          "lastLogin": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "photoUrl": {
-            "type": "string"
-          },
-          "gender": {
-            "type": "string",
-            "description": "This field takes a single character as input in database.\n    'M' for male and 'F' for female.",
-            "enum": [
-              "M",
-              "F",
-              "O"
-            ]
-          },
-          "dob": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "defaultTenantId": {
-            "type": "string"
-          },
-          "defaultTenant": {
-            "$ref": "#/components/schemas/TenantWithRelations"
-          },
-          "foreignKey": {},
-          "credentials": {
-            "$ref": "#/components/schemas/UserCredentialsWithRelations"
-          },
-          "userTenants": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/UserTenantWithRelations"
-            }
-          }
-        },
-        "required": [
-          "firstName",
-          "username",
-          "email"
-        ],
-        "additionalProperties": false
-      },
-      "UserLevelPermissionWithRelations": {
-        "title": "UserLevelPermissionWithRelations",
-        "type": "object",
-        "description": "(tsType: UserLevelPermissionWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "permission": {
-            "type": "string"
-          },
-          "allowed": {
-            "type": "boolean"
-          },
-          "userTenantId": {
-            "type": "string"
-          },
-          "userTenant": {
-            "$ref": "#/components/schemas/UserTenantWithRelations"
-          },
-          "foreignKey": {}
-        },
-        "required": [
-          "permission",
-          "allowed",
-          "userTenantId"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "UserLevelPermissionWithRelations"
-      },
-      "UserInvitationWithRelations": {
-        "title": "UserInvitationWithRelations",
-        "type": "object",
-        "description": "(tsType: UserInvitationWithRelations, schemaOptions: { includeRelations: true })",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "expiresOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "token": {
-            "type": "string"
-          },
-          "userTenantId": {
-            "type": "string"
-          },
-          "userTenant": {
-            "$ref": "#/components/schemas/UserTenantWithRelations"
-          },
-          "foreignKey": {}
-        },
-        "required": [
-          "userTenantId"
-        ],
-        "additionalProperties": false,
-        "x-typescript-type": "UserInvitationWithRelations"
-      },
-      "UserTenantWithRelations": {
-        "title": "UserTenantWithRelations",
-        "type": "object",
-        "description": "(tsType: UserTenantWithRelations, schemaOptions: { includeRelations: true })",
         "properties": {
           "deleted": {
             "type": "boolean"
@@ -3277,34 +2526,6 @@
           },
           "roleId": {
             "type": "string"
-          },
-          "user": {
-            "$ref": "#/components/schemas/UserWithRelations"
-          },
-          "foreignKey": {},
-          "tenant": {
-            "$ref": "#/components/schemas/TenantWithRelations"
-          },
-          "role": {
-            "$ref": "#/components/schemas/RoleWithRelations"
-          },
-          "userLevelPermissions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/UserLevelPermissionWithRelations"
-            }
-          },
-          "userGroups": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/UserGroupWithRelations"
-            }
-          },
-          "userInvitations": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/UserInvitationWithRelations"
-            }
           }
         },
         "required": [
@@ -3312,8 +2533,7 @@
           "tenantId",
           "roleId"
         ],
-        "additionalProperties": false,
-        "x-typescript-type": "UserTenantWithRelations"
+        "additionalProperties": false
       },
       "UserTenantPrefsWithRelations": {
         "title": "UserTenantPrefsWithRelations",
@@ -3359,7 +2579,7 @@
             "type": "string"
           },
           "userTenant": {
-            "$ref": "#/components/schemas/UserTenantWithRelations"
+            "$ref": "#/components/schemas/UserTenant"
           },
           "foreignKey": {}
         },
@@ -3441,10 +2661,9 @@
         ],
         "additionalProperties": false
       },
-      "TenantPartial": {
-        "title": "TenantPartial",
+      "TenantConfig": {
+        "title": "TenantConfig",
         "type": "object",
-        "description": "signature for all tenants (tsType: Partial<Tenant>, schemaOptions: { partial: true })",
         "properties": {
           "deleted": {
             "type": "boolean"
@@ -3475,40 +2694,20 @@
           "id": {
             "type": "string"
           },
-          "name": {
+          "configKey": {
             "type": "string"
           },
-          "status": {
-            "type": "number",
-            "description": "Tenant status - Active or Inactive",
-            "enum": [
-              1,
-              0
-            ],
-            "nullable": true
+          "configValue": {
+            "type": "object"
           },
-          "key": {
-            "type": "string"
-          },
-          "website": {
-            "type": "string"
-          },
-          "address": {
-            "type": "string"
-          },
-          "city": {
-            "type": "string"
-          },
-          "state": {
-            "type": "string"
-          },
-          "zip": {
-            "type": "string"
-          },
-          "country": {
+          "tenantId": {
             "type": "string"
           }
         },
+        "required": [
+          "configKey",
+          "tenantId"
+        ],
         "additionalProperties": false
       },
       "User": {
@@ -3599,6 +2798,297 @@
           "username",
           "email"
         ],
+        "additionalProperties": false
+      },
+      "Role": {
+        "title": "Role",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "roleType": {
+            "type": "number",
+            "maximum": 15,
+            "minimum": 0
+          },
+          "description": {
+            "type": "string"
+          },
+          "permissions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "allowedClients": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "tenantId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "tenantId"
+        ],
+        "additionalProperties": false
+      },
+      "Group": {
+        "title": "Group",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "photoUrl": {
+            "type": "string"
+          },
+          "tenantId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "tenantId"
+        ],
+        "additionalProperties": false
+      },
+      "TenantWithRelations": {
+        "title": "TenantWithRelations",
+        "type": "object",
+        "description": "signature for all tenants (tsType: TenantWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "status": {
+            "type": "number",
+            "description": "Tenant status - Active or Inactive",
+            "enum": [
+              1,
+              0
+            ],
+            "nullable": true
+          },
+          "key": {
+            "type": "string"
+          },
+          "website": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "zip": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "tenantConfigs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TenantConfig"
+            }
+          },
+          "userTenants": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserTenant"
+            }
+          },
+          "users": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            }
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Role"
+            }
+          },
+          "groups": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Group"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "status"
+        ],
+        "additionalProperties": false
+      },
+      "TenantPartial": {
+        "title": "TenantPartial",
+        "type": "object",
+        "description": "signature for all tenants (tsType: Partial<Tenant>, schemaOptions: { partial: true })",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "status": {
+            "type": "number",
+            "description": "Tenant status - Active or Inactive",
+            "enum": [
+              1,
+              0
+            ],
+            "nullable": true
+          },
+          "key": {
+            "type": "string"
+          },
+          "website": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "zip": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          }
+        },
         "additionalProperties": false
       },
       "NewUserInTenant": {
@@ -3872,55 +3362,6 @@
         },
         "additionalProperties": false
       },
-      "TenantConfig": {
-        "title": "TenantConfig",
-        "type": "object",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "configKey": {
-            "type": "string"
-          },
-          "configValue": {
-            "type": "object"
-          },
-          "tenantId": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "configKey",
-          "tenantId"
-        ],
-        "additionalProperties": false
-      },
       "NewTenantConfigInTenant": {
         "title": "NewTenantConfigInTenant",
         "type": "object",
@@ -3964,72 +3405,6 @@
         ],
         "additionalProperties": false,
         "x-typescript-type": "Omit<TenantConfig, 'id' | 'tenantId'>"
-      },
-      "Role": {
-        "title": "Role",
-        "type": "object",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "roleType": {
-            "type": "number",
-            "maximum": 15,
-            "minimum": 0
-          },
-          "description": {
-            "type": "string"
-          },
-          "permissions": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "allowedClients": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "tenantId": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "name",
-          "tenantId"
-        ],
-        "additionalProperties": false
       },
       "NewRoleInTenant": {
         "title": "NewRoleInTenant",
@@ -4149,57 +3524,6 @@
         },
         "additionalProperties": false,
         "x-typescript-type": "Omit<Partial<Role>, 'id' | 'tenantId'>"
-      },
-      "Group": {
-        "title": "Group",
-        "type": "object",
-        "properties": {
-          "deleted": {
-            "type": "boolean"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string"
-          },
-          "modifiedBy": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "photoUrl": {
-            "type": "string"
-          },
-          "tenantId": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "tenantId"
-        ],
-        "additionalProperties": false
       },
       "NewGroupInTenant": {
         "title": "NewGroupInTenant",
