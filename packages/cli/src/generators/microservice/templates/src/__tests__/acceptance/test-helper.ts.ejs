@@ -58,7 +58,7 @@ function setUpEnv() {
   process.env.ENABLE_TRACING = '0';
   process.env.ENABLE_OBF = '0';
   <% if (project.facade || project.baseServiceCacheName) { -%>
-  process.env.REDIS_NAME = 'redis';
+  process.env.REDIS_NAME = '<%= project.baseServiceCacheName || "redis" %>';
   <% } -%>
   process.env.HOST='localhost';
 }
