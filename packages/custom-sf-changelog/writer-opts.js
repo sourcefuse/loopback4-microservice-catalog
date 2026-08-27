@@ -2,8 +2,8 @@
 
 const compareFunc = require('compare-func');
 const Q = require('q');
-const readFile = Q.denodeify(require('fs').readFile);
-const resolve = require('path').resolve;
+const readFile = Q.denodeify(require('node:fs').readFile);
+const resolve = require('node:path').resolve;
 const typeMap = {
   feat: 'Features',
   fix: 'Bug Fixes',
@@ -82,7 +82,7 @@ function getWriterOpts() {
 
       // remove references that already appear in the subject
       commit.references = commit.references.filter(
-        reference => issues.indexOf(reference.issue) === -1,
+        reference => !issues.includes(reference.issue),
       );
 
       return commit;

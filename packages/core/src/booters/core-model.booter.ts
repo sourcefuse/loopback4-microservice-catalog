@@ -8,7 +8,7 @@ import {
   MetadataInspector,
 } from '@loopback/core';
 import {glob} from 'glob';
-import path from 'path';
+import path from 'node:path';
 import {OVERRIDE_MODEL_SCHEMA_KEY} from '../build-schema';
 import {BaseBooter} from './base.booter';
 

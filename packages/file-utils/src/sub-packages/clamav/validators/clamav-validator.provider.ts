@@ -1,6 +1,6 @@
 import {HttpErrors} from '@loopback/rest';
 import NodeClam from 'clamscan';
-import {PassThrough} from 'stream';
+import {PassThrough} from 'node:stream';
 import {DEFAULT_CLAMAV_PORT} from '../../../constant';
 import {fileValidator} from '../../../decorators';
 import {File, IFileValidator, ValidatorOutput} from '../../../types';

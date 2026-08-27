@@ -1,6 +1,6 @@
 import {execSync} from 'child_process';
 import {existsSync, readFileSync, writeFileSync} from 'fs';
-import * as path from 'path';
+import * as path from 'node:path';
 import {PackageJson} from 'type-fest';
 import * as TypeDoc from 'typedoc';
 

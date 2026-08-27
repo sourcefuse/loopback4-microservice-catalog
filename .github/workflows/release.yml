@@ -47,7 +47,7 @@ jobs:
       - name: nx dependency
         run: npm i @nx/nx-linux-x64-gnu@16.10.0 --ignore-scripts
       - name: install lerna
-        run: npm i -g lerna@latest --ignore-scripts
+        run: npm i -g lerna@9.0.7 --ignore-scripts
       - name: Test
         run: npm run test --workspaces --if-present
       - name: Lint
@@ -56,10 +56,10 @@ jobs:
         run: git stash
       - name: Bump Versions
         # "HUSKY=0" disables pre-commit-msg check (Needed in order to allow lerna perform the release commit)
-        run: HUSKY=0 npm_config_ignore_scripts=true npx lerna version --yes --ci --conventional-commits
+        run: HUSKY=0 npm_config_ignore_scripts=true npx --ignore-scripts lerna@9.0.7 version --yes --ci --conventional-commits
       - name: Publish to NPM 🚀
         # To always compare changes from registry
         # using `from-package` compares version in local package.json with registry and publish it if required.
-        run: HUSKY=0 npm_config_ignore_scripts=true npx lerna publish from-package --yes
+        run: HUSKY=0 npm_config_ignore_scripts=true npx --ignore-scripts lerna@9.0.7 publish from-package --yes
         # env:
         #   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

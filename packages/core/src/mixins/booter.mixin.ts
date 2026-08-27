@@ -1,6 +1,6 @@
 import {ArtifactOptions, Booter} from '@loopback/boot';
 import {Constructor, injectable} from '@loopback/core';
-import {randomBytes} from 'crypto';
+import {randomBytes} from 'node:crypto';
 
 // Extend ArtifactOptions with a `key` identifier
 export interface BooterOptionsWithKey extends ArtifactOptions {

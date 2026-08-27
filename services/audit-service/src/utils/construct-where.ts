@@ -73,7 +73,7 @@ function getDeletedCondition(customFilter: CustomFilter) {
         {after: null},
         {
           after: {
-            regexp: `"{0,1}deleted"{0,1}\\s*:\\s*${customFilter.deleted}`,
+            regexp: String.raw`"{0,1}deleted"{0,1}\s*:\s*${customFilter.deleted}`,
           },
         },
       ],
@@ -81,7 +81,7 @@ function getDeletedCondition(customFilter: CustomFilter) {
   } else {
     return {
       after: {
-        regexp: `"{0,1}deleted"{0,1}\\s*:\\s*${customFilter.deleted}`,
+        regexp: String.raw`"{0,1}deleted"{0,1}\s*:\s*${customFilter.deleted}`,
       },
     };
   }

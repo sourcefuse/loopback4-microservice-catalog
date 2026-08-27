@@ -28,7 +28,7 @@ jobs:
         run: npm run lint --workspaces --if-present
 
       - name: lerna-coverage
-        run: 'npx lerna run coverage --concurrency 2'
+        run: 'npx --ignore-scripts lerna@9.0.7 run coverage --concurrency 2'
 
       - name: coverage report
         id: coverage

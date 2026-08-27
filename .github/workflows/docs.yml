@@ -25,8 +25,8 @@ jobs:
           npx lerna run build
       - name: Install mkdocs deps/plugins
         run: |
-          pip install mkdocs-material --ignore-scripts
-          pip install mkdocs-include-markdown-plugin --ignore-scripts
+          pip install --only-binary :all: mkdocs-material==9.7.7
+          pip install --only-binary :all: mkdocs-include-markdown-plugin==7.3.0
       - name: Create the docs directory locally in CI
         run: npm run export-typedocs
       - name: Deploy 🚀

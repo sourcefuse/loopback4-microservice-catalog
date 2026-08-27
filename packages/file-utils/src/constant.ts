@@ -11,7 +11,7 @@ const MB = KB * KB;
 const FIVE = 5;
 export const DEFAULT_MULTER_LIMITS: multer.Options['limits'] = {
   fileSize: process.env.UPLOAD_FILE_SIZE_LIMIT
-    ? parseInt(process.env.UPLOAD_FILE_SIZE_LIMIT) * MB + 1
+    ? Number.parseInt(process.env.UPLOAD_FILE_SIZE_LIMIT) * MB + 1
     : FIVE * MB + 1, // 5 MB
   files: 1,
 };

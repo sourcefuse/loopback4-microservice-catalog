@@ -20,7 +20,7 @@ ENV WORKFLOW_MIGRATION_COPY=$WORKFLOW_MIGRATION_COPY
 COPY --chown=node package*.json ./
 COPY --chown=node . .
 
-RUN npm install && npm run build
+RUN npm ci --ignore-scripts && npm run build
 
 # Bundle app source code
 
