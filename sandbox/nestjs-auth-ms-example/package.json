@@ -23,7 +23,7 @@
   "dependencies": {
     "@nestjs/common": "^11.1.19",
     "@nestjs/core": "^11.1.19",
-    "@nestjs/mapped-types": "*",
+    "@nestjs/mapped-types": "^2.1.1",
     "@nestjs/platform-express": "^11.1.19",
     "@nestjs/swagger": "^11.3.2",
     "@sourceloop/authentication-service": "^25.1.0",

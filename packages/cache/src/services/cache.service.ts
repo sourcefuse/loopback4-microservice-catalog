@@ -1,7 +1,7 @@
 import {BindingScope, Context, inject, injectable} from '@loopback/core';
 import {AnyObject} from '@loopback/repository';
 import {IAuthUserWithPermissions, ILogger, LOGGER} from '@sourceloop/core';
-import {createHash} from 'crypto';
+import {createHash} from 'node:crypto';
 import {DEFAULT_CACHE_OPTIONS} from '../constants';
 import {AUTH_USER_KEY, CacheComponentBindings} from '../keys';
 import {

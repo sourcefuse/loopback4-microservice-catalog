@@ -2,7 +2,7 @@ import {Context} from '@loopback/context';
 import {AnyObject} from '@loopback/repository';
 import {Client, expect} from '@loopback/testlab';
 import {JwtKeysRepository} from '@sourceloop/core';
-import {generateKeyPairSync} from 'crypto';
+import {generateKeyPairSync} from 'node:crypto';
 import * as jwt from 'jsonwebtoken';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import * as jose from 'node-jose';

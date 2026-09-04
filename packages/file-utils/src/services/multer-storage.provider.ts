@@ -79,7 +79,7 @@ export class MulterStorageProvider implements Provider<multer.StorageEngine> {
     } else {
       Promise.all(result.waiters)
         .then(results => {
-          const firstError = results.find(r => r);
+          const firstError = results.find(Boolean);
           if (firstError) {
             if (parsedFile) {
               // need to do this casting because of wrong typings

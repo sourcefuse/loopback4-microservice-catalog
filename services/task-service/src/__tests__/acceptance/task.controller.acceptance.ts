@@ -1,6 +1,6 @@
 import {Client, expect} from '@loopback/testlab';
 import {JwtKeysRepository} from '@sourceloop/core';
-import {generateKeyPairSync} from 'crypto';
+import {generateKeyPairSync} from 'node:crypto';
 import * as jwt from 'jsonwebtoken';
 import * as jose from 'node-jose';
 import {TaskPermssionKey} from '../../enums/permission-key.enum';

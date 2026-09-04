@@ -1,7 +1,7 @@
 import {AnyObject} from '@loopback/repository';
 import {Client, expect} from '@loopback/testlab';
 import {JwtKeysRepository, STATUS_CODE} from '@sourceloop/core';
-import {generateKeyPairSync} from 'crypto';
+import {generateKeyPairSync} from 'node:crypto';
 import * as jwt from 'jsonwebtoken';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {nanoid} from 'nanoid';

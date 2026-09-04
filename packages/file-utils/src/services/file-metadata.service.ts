@@ -29,7 +29,7 @@ export class FileMetadataProvider implements Provider<
     if (!this.controllerClass || !this.methodName) return;
     const metadata = getFileMetadata(this.controllerClass, this.methodName);
     if (metadata && metadata.length > 1) {
-      throw Error('Multiple file decorators not supported');
+      throw new Error('Multiple file decorators not supported');
     }
     return metadata?.[0];
   }

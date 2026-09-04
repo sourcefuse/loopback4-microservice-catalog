@@ -1,7 +1,7 @@
 import {Client, expect, sinon} from '@loopback/testlab';
 import {PermissionKey} from '@sourceloop/bpmn-service';
 import {JwtKeysRepository} from '@sourceloop/core';
-import {generateKeyPairSync} from 'crypto';
+import {generateKeyPairSync} from 'node:crypto';
 import * as jwt from 'jsonwebtoken';
 import * as jose from 'node-jose';
 import {ClientApp, ClientAppRepository} from '../../../connectors/http';

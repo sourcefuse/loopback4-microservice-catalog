@@ -9,7 +9,7 @@ import {
   PublicKeysRepository,
   SuccessResponse,
 } from '@sourceloop/core';
-import crypto, {generateKeyPairSync} from 'crypto';
+import crypto, {generateKeyPairSync} from 'node:crypto';
 import * as jwt from 'jsonwebtoken';
 import {
   AuthenticationBindings,
@@ -566,7 +566,7 @@ export class IdpLoginService {
   async generateKeys(): Promise<void> {
     //call the function to generate new keys for process.env.MAX_JWT_KEYS times.
     try {
-      const keyPromises = Array(+(process.env.MAX_JWT_KEYS ?? 2))
+      const keyPromises = new Array(+(process.env.MAX_JWT_KEYS ?? 2))
         .fill(0)
         .map(() => this.generateNewKey());
       await Promise.all(keyPromises);

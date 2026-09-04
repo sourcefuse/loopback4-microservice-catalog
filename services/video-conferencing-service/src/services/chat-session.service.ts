@@ -154,7 +154,7 @@ export class ChatSessionService {
    */
   private _validateExpireTime(expireTime?: Date): void {
     if (expireTime) {
-      if (isNaN(expireTime.valueOf())) {
+      if (Number.isNaN(Number(expireTime.valueOf()))) {
         throw new HttpErrors.BadRequest(
           'Expire time is not in correct format.',
         );

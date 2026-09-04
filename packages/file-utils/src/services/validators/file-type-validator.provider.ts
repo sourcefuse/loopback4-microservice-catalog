@@ -2,7 +2,7 @@ import {inject} from '@loopback/core';
 import {HttpErrors} from '@loopback/rest';
 
 import {fromBuffer} from 'file-type';
-import {PassThrough} from 'stream';
+import {PassThrough} from 'node:stream';
 import {fileValidator} from '../../decorators';
 import {FileUtilBindings} from '../../keys';
 import {File, IFileValidator, MulterConfig, ValidatorOutput} from '../../types';
