@@ -20,6 +20,7 @@ import {
 } from '../../../repositories';
 import {ILogger, LOGGER} from '../../logger-extension';
 import {IAuthUserWithPermissions} from '../keys';
+import {checkIfTokenRevoked} from './utils/revoked-token-checker.util';
 
 export class FacadesBearerAsymmetricTokenVerifyProvider implements Provider<VerifyFunction.BearerFn> {
   constructor(
@@ -43,7 +44,12 @@ export class FacadesBearerAsymmetricTokenVerifyProvider implements Provider<Veri
    */
   value(): VerifyFunction.BearerFn {
     return async (token: string, req?: Request) => {
-      await this._checkIfTokenRevoked(token);
+      // Check if token has been revoked (fail-closed: errors propagate and deny request)
+      await checkIfTokenRevoked(
+        token,
+        this.revokedTokenRepository,
+        this.logger,
+      );
       let user = await this._verifyTokenAndGetUser(token);
       this._checkPasswordExpiry(user);
       try {
@@ -88,27 +94,6 @@ export class FacadesBearerAsymmetricTokenVerifyProvider implements Provider<Veri
         return user;
       }
     };
-  }
-
-  /**
-   * The function `_checkIfTokenRevoked` checks if a token is revoked and throws an error if it is.
-   * @param {string} token - The `token` parameter in the `_checkIfTokenRevoked` function is a string
-   * that represents the token being checked for revocation. This token is used to query the
-   * `revokedTokenRepository` to determine if it has been revoked. If the token is found to be revoked,
-   * an `
-   */
-  private async _checkIfTokenRevoked(token: string): Promise<void> {
-    try {
-      const isRevoked = await this.revokedTokenRepository.get(token);
-      if (isRevoked?.token) {
-        throw new HttpErrors.Unauthorized('TokenRevoked');
-      }
-    } catch (error) {
-      if (HttpErrors.HttpError.prototype.isPrototypeOf(error)) {
-        throw error;
-      }
-      this.logger.error('Revoked token repository not available !');
-    }
   }
 
   /**
