@@ -16,7 +16,7 @@ import {AnyObject, McpTextResponse, PromptFunction} from './types';
 import {yeomanRun} from './utilities/yeoman';
 const chalk = require('chalk'); //NOSONAR
 /* eslint-enable  @typescript-eslint/naming-convention */
-const IGNORED_FLAGS = ['help', 'cwd'];
+const IGNORED_FLAGS = new Set(['help', 'cwd']);
 export default abstract class CommandBase<T extends object> extends Command {
   prompt: PromptFunction;
   env: Environment<T>;
@@ -119,7 +119,7 @@ export default abstract class CommandBase<T extends object> extends Command {
     for (const flag in flags) {
       if (
         (options[flag] !== undefined && options[flag] !== null) ||
-        IGNORED_FLAGS.includes(flag)
+        IGNORED_FLAGS.has(flag)
       ) {
         continue;
       }

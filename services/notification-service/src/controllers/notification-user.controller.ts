@@ -125,7 +125,7 @@ export class NotificationUserController {
     @inject(AuthenticationBindings.CURRENT_USER)
     currentUser: IAuthUserWithPermissions,
   ): Promise<NotificationUser[]> {
-    const invalidFound = notificationUsers.find(
+    const invalidFound = notificationUsers.some(
       notificationUser => currentUser.id !== notificationUser.userId,
     );
     if (invalidFound) {

@@ -8,7 +8,7 @@ import {ApplicationConfig} from '@loopback/core';
 import {RepositoryMixin, juggler} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {SequelizeDataSource} from '@loopback/sequelize';
-import * as path from 'path';
+import * as path from 'node:path';
 import {AuthenticationServiceComponent} from '../../../component';
 
 import {AuthenticationBindings} from 'loopback4-authentication';

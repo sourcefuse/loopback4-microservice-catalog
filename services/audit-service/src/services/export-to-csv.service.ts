@@ -37,7 +37,7 @@ export class ExportToCsvProvider implements Provider<ExportToCsvFn> {
           value = JSON.stringify(auditLog[key]);
 
           // Escape existing quotation marks within the value
-          value = value.replace(/"/g, '""');
+          value = value.replaceAll('"', '""');
 
           // Surround the value with quotation marks
           value = `"${value}"`;

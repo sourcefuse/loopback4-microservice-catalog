@@ -29,7 +29,7 @@ function monthDiff(d1: Date = new Date(), d2: Date = new Date()) {
   months = (d2.getFullYear() - d1.getFullYear()) * monthsNumCount;
   months -= d1.getMonth();
   months += d2.getMonth();
-  return months <= 0 ? 0 : months;
+  return Math.max(0, months);
 }
 export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
   constructor(
@@ -239,9 +239,9 @@ export class RazorpayProvider implements Provider<RazorpayPaymentGateway> {
 
       charge: async (
         chargeResponse: DataObject<{
-          // eslint-disable-next-line
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           razorpay_order_id: string;
-          // eslint-disable-next-line
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           razorpay_payment_id: string;
         }>,
       ) => {

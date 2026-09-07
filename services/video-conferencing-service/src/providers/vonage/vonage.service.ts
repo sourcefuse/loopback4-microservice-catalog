@@ -9,7 +9,7 @@ import axios from 'axios';
 import {sign} from 'jsonwebtoken';
 import moment from 'moment';
 import OpenTok from 'opentok';
-import {promisify} from 'util';
+import {promisify} from 'node:util';
 import {
   VonageAzureTargetOptions,
   VonageConfig,

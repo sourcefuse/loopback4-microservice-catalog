@@ -12,7 +12,7 @@ import {
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
 import {ChatServiceComponent} from '@sourceloop/chat-service';
-import path from 'path';
+import path from 'node:path';
 import {MySequence} from './sequence';
 
 export {ApplicationConfig};

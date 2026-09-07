@@ -156,7 +156,7 @@ export class PsqlSequelizeStrategy extends BaseSequelize {
     });
 
     let resp = false;
-    if (parseInt(result[0].count, 10) === dataSourceNames.length) {
+    if (Number.parseInt(result[0].count, 10) === dataSourceNames.length) {
       resp = true;
     }
     return resp;
@@ -198,7 +198,7 @@ export class PsqlSequelizeStrategy extends BaseSequelize {
       replacements: allPairs,
     });
 
-    return parseInt(result[0].count, 10) === columnEntityPairs.length;
+    return Number.parseInt(result[0].count, 10) === columnEntityPairs.length;
   }
   /**
    * The function applies a row-level filter to a query and returns the modified query.

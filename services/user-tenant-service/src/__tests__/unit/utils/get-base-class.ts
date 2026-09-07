@@ -8,7 +8,7 @@ import {Constructor} from '@loopback/core';
  * @returns base class constructor
  */
 export function getBaseClass(targetClass: Constructor<unknown>) {
-  if (targetClass instanceof Function) {
+  if (typeof targetClass === 'function') {
     let baseClass = targetClass;
 
     while (baseClass) {

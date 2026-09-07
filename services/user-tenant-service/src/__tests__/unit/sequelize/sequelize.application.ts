@@ -9,7 +9,7 @@ import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {SequelizeDataSource} from '@loopback/sequelize';
 import {AuthenticationBindings} from 'loopback4-authentication';
-import * as path from 'path';
+import * as path from 'node:path';
 import {UserTenantServiceComponent} from '../../../component';
 import {UserTenantServiceComponentBindings} from '../../../keys';
 export {ApplicationConfig};

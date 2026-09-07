@@ -11,7 +11,7 @@ import {
   OidcServiceComponent,
   OIDCServiceBindings,
 } from '@sourceloop/oidc-service';
-import path from 'path';
+import path from 'node:path';
 import {MySequence} from './sequence';
 import {CustomFindAccountProvider} from './providers';
 

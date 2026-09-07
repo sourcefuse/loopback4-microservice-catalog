@@ -2,8 +2,8 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import fs from 'fs';
-import {join} from 'path';
+import fs from 'node:fs';
+import {join} from 'node:path';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import AppGenerator from '../../app-generator';
 import {
@@ -26,7 +26,7 @@ import {
   getDependencyVersion,
 } from '../../utils';
 const chalk = require('chalk'); //NOSONAR
-const {promisify} = require('util');
+const {promisify} = require('node:util');
 
 const DATASOURCE_TEMPLATE = join(
   '..',

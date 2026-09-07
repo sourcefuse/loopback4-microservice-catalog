@@ -63,7 +63,7 @@ export class User extends UserModifiableEntity<User> implements IAuthUser {
   @property({
     type: 'string',
     jsonSchema: {
-      pattern: `^\\+?[1-9]\\d{1,14}$`,
+      pattern: String.raw`^\+?[1-9]\d{1,14}$`,
     },
   })
   phone?: string;

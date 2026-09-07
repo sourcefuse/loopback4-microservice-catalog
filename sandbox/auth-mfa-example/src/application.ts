@@ -35,7 +35,7 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import path from 'path';
+import path from 'node:path';
 import * as openapi from './openapi.json';
 import {MfaProvider} from './providers/mfa.provider';
 

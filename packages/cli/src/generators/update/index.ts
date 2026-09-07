@@ -2,8 +2,8 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import fs, {Dirent} from 'fs';
-import {join} from 'path';
+import fs, {Dirent} from 'node:fs';
+import {join} from 'node:path';
 import {AnyObject} from '@loopback/repository';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import BaseUpdateGenerator from '../../update-generator';
@@ -14,7 +14,7 @@ const fse = require('fs-extra'); //NOSONAR
 
 const configJsonFile = require('../../../package.json');
 const tempDeps = configJsonFile.config.templateDependencies;
-const {promisify} = require('util');
+const {promisify} = require('node:util');
 
 const packageJsonFile = 'package.json';
 

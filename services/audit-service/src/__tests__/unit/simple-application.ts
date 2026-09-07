@@ -7,7 +7,7 @@ import {ApplicationConfig} from '@loopback/core';
 import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {TenantUtilitiesBindings} from '@sourceloop/core';
-import * as path from 'path';
+import * as path from 'node:path';
 import {AuditServiceComponent} from '../../component';
 
 export {ApplicationConfig};

@@ -19,7 +19,7 @@ import {Strategies} from 'loopback4-authentication';
 import {SamlStrategyFactoryProvider} from 'loopback4-authentication/SAML';
 import {GoogleAuthStrategyFactoryProvider} from 'loopback4-authentication/passport-google-oauth2';
 import {LocalPasswordStrategyFactoryProvider} from 'loopback4-authentication/passport-local';
-import path from 'path';
+import path from 'node:path';
 import {
   AzureAdSignupProvider,
   FacebookOauth2SignupProvider,

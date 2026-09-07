@@ -1,7 +1,7 @@
 const dotenv = require('dotenv');
-const fs = require('fs');
+const fs = require('node:fs');
 const DBMigrate = require('db-migrate');
-const path = require('path');
+const path = require('node:path');
 let isLocal = false;
 dotenv.config({path: `${process.env.INIT_CWD}/.env`});
 

@@ -1,4 +1,4 @@
-import * as http from 'http';
+import * as http from 'node:http';
 import request from 'supertest';
 import {AuthenticationServiceApplication} from '../..';
 import {STATUS_CODE} from '../../enums/status-codes.enum';

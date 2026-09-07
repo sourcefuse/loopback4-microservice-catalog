@@ -1,7 +1,7 @@
 import {App} from 'cdktf';
 import * as dotenv from 'dotenv';
 import * as dotenvExt from 'dotenv-extended';
-import {resolve} from 'path';
+import {resolve} from 'node:path';
 import {LambdaStack, MigrationStack} from './common';
 
 dotenv.config();

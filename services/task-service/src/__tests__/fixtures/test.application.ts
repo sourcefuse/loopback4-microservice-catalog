@@ -17,7 +17,7 @@ import {
   BearerVerifierConfig,
   BearerVerifierType,
 } from '@sourceloop/core';
-import * as path from 'path';
+import * as path from 'node:path';
 import {CreateTaskCommand, EndTaskCommand} from '../../commands';
 import {TaskServiceComponent} from '../../component';
 import {TaskHttpComponent} from '../../connectors/http';

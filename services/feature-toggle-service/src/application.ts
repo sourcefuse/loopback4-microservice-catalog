@@ -7,7 +7,7 @@ import {ApplicationConfig} from '@loopback/core';
 import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
-import * as path from 'path';
+import * as path from 'node:path';
 import {FeatureToggleServiceComponent} from './component';
 
 export {ApplicationConfig};

@@ -152,8 +152,10 @@ export class AuthenticationServiceComponent implements Component {
     if (+(process.env.AZURE_AUTH_ENABLED ?? 0)) {
       const expressMiddlewares =
         this.application.getSync(SFCoreBindings.EXPRESS_MIDDLEWARES) ?? [];
-      expressMiddlewares.push(cookieParser());
-      expressMiddlewares.push(bodyParser.urlencoded({extended: true}));
+      expressMiddlewares.push(
+        cookieParser(),
+        bodyParser.urlencoded({extended: true}),
+      );
       this.application
         .bind(SFCoreBindings.EXPRESS_MIDDLEWARES)
         .to(expressMiddlewares);

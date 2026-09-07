@@ -85,11 +85,11 @@ export class UserGroupService {
       });
       let userTenantIdResult;
       if (userGroups) {
-        const userGroupRecords = userGroups.map(
-          userGroup => userGroup.userTenantId,
+        const userGroupRecords = new Set(
+          userGroups.map(userGroup => userGroup.userTenantId),
         );
         userTenantIdResult = userTenantIdsOfTenant.filter(
-          userTenantId => !userGroupRecords.includes(userTenantId),
+          userTenantId => !userGroupRecords.has(userTenantId),
         );
       } else {
         userTenantIdResult = userTenantIdsOfTenant;

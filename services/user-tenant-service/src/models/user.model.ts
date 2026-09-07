@@ -76,7 +76,7 @@ export class User<T = DataObject<Model>>
   @property({
     type: 'string',
     jsonSchema: {
-      pattern: `^\\+?[1-9]\\d{1,14}$`,
+      pattern: String.raw`^\+?[1-9]\d{1,14}$`,
     },
   })
   phone?: string;

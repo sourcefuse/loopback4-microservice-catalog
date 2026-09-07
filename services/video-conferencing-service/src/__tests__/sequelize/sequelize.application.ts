@@ -7,7 +7,7 @@ import {ApplicationConfig} from '@loopback/core';
 import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {SequelizeDataSource} from '@loopback/sequelize';
-import * as path from 'path';
+import * as path from 'node:path';
 import {VideoConfServiceComponent} from '../../component';
 import {VideoChatBindings} from '../../keys';
 import {VonageBindings} from '../../providers';

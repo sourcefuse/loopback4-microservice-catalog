@@ -1,7 +1,7 @@
 import {Provider, inject} from '@loopback/context';
 import {AnyObject, repository} from '@loopback/repository';
 import {CONTENT_TYPE, ILogger, LOGGER} from '@sourceloop/core';
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 import fetch from 'node-fetch';
 import {AuthenticationProviderFn} from '..';
 import {AuthRefreshTokenRequest} from '../modules/auth';

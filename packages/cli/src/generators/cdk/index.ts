@@ -627,7 +627,7 @@ ${chalk.blue(`https://github.com/${owner}/${repo}/blob/main/${dir}/README.md`)}
   async _isDefaultExport(className: string, filePath: string) {
     try {
       const fileContent = await readFile(filePath, 'utf-8');
-      const pattern = new RegExp(`default\\s+class\\s+${className}`);
+      const pattern = new RegExp(String.raw`default\s+class\s+${className}`);
       return pattern.test(fileContent);
     } catch (error) {
       this.log.error(`Error reading ${filePath}`);

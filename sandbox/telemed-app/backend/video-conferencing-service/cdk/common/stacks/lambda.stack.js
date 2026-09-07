@@ -5,7 +5,7 @@ const random = require('@cdktf/provider-random');
 const arc_cdk_1 = require('arc-cdk');
 const cdktf_1 = require('cdktf');
 const awsProvider_1 = require('../constructs/awsProvider');
-const path = require('path');
+const path = require('node:path');
 class LambdaStack extends cdktf_1.TerraformStack {
   constructor(scope, id, config) {
     super(scope, id);

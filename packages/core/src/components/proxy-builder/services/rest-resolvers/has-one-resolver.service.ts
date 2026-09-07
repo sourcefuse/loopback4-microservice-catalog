@@ -103,7 +103,7 @@ export class HasOneRestResolver<
   ) {
     const condition = {
       [keyTo]: {
-        inq: ids.filter(id => id), //filter out valid IDs
+        inq: ids.filter(Boolean), //filter out valid IDs
       },
     };
     const whereBuilder = new WhereBuilder();

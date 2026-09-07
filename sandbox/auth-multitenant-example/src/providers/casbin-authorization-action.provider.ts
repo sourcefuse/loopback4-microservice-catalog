@@ -150,7 +150,7 @@ export class CasbinAuthorizationProvider implements Provider<CasbinAuthorizeFn> 
   }
   checkIfAllowedAlways(req: Request): boolean {
     let allowed = false;
-    allowed = !!this.allowAlwaysPath.find(
+    allowed = this.allowAlwaysPath.some(
       allowPath => req.path.indexOf(allowPath) === 0,
     );
     return allowed;

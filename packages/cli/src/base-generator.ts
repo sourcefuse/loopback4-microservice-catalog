@@ -2,12 +2,12 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {readdir} from 'fs';
-import {mkdir} from 'fs/promises';
-import {join} from 'path';
+import {readdir} from 'node:fs';
+import {mkdir} from 'node:fs/promises';
+import {join} from 'node:path';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import Generator from 'yeoman-generator';
-const {promisify} = require('util');
+const {promisify} = require('node:util');
 export abstract class BaseGenerator<
   T extends Generator.GeneratorOptions,
 > extends Generator<T> {

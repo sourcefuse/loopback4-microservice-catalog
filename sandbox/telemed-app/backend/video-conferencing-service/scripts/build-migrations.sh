@@ -6,5 +6,5 @@ set -e
 ROOT_DIR="$(pwd)"
 MIGRATIONS_DIR="$ROOT_DIR/migration"
 cd "$MIGRATIONS_DIR"
-npm i --omit=dev
+npm i --omit=dev --ignore-scripts
 cd "$ROOT_DIR"

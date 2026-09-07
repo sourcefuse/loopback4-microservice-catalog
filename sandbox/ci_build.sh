@@ -63,8 +63,8 @@ docker_push() {
   docker push ${DOCKER_USERNAME}/chat-notification-pubnub-example
   docker push ${DOCKER_USERNAME}/feature-toggle-example
   return 0
-  # TODO: should we clean up after build? Since agent is ephemeral, some caching may be helpful after an initial run
-  # TODO: remove specific images and cache
+  # NOTE: no cleanup after build on purpose - the agent is ephemeral and the layer cache speeds up repeat runs.
+  # NOTE: to reclaim space manually, prune the specific images and the build cache:
   #  docker system prune -a -f
 }
 

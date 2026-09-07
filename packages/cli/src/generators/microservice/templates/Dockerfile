@@ -10,14 +10,25 @@ ARG FROM_FOLDER
 # This command is used to install some dependencies in the Docker image.
 # Nessasary for running node-prune and npm install
 RUN  apk update &&  apk add --no-cache --virtual .gyp \
-    python3 \
-    make \
-    g++ \
     bash \
-    curl
+    curl \
+    g++ \
+    make \
+    python3
 
 # This is used to download and install the `node-prune` tool in the Docker image.
-RUN curl -sfL https://gobinaries.com/tj/node-prune | bash -s -- -b /usr/local/bin
+# The version is pinned so the build does not pick up arbitrary newer code.
+# Pass NODE_PRUNE_SHA256 at build time to also verify the installer before running it.
+ARG NODE_PRUNE_VERSION=v1.0.1
+ARG NODE_PRUNE_SHA256=""
+RUN curl --proto '=https' --tlsv1.2 -sSfL \
+    "https://gobinaries.com/tj/node-prune@${NODE_PRUNE_VERSION}" \
+    -o /tmp/node-prune-install.sh \
+    && if [ -n "$NODE_PRUNE_SHA256" ]; then \
+        echo "$NODE_PRUNE_SHA256  /tmp/node-prune-install.sh" | sha256sum -c -; \
+    fi \
+    && bash /tmp/node-prune-install.sh -b /usr/local/bin \
+    && rm -f /tmp/node-prune-install.sh
 
 # Set to a non-root built-in user `node`
 USER node
@@ -42,7 +53,7 @@ COPY --chown=node packages ./packages
 COPY --chown=node $FROM_FOLDER/$SERVICE_NAME ./$FROM_FOLDER/$SERVICE_NAME
 
 # Installing all dependencies
-RUN npm install
+RUN npm ci --ignore-scripts
 
 # Building the app
 # set the Working Directory to the service

@@ -61,7 +61,7 @@ export class SignupRequestController {
     handler: SignupTokenHandlerFn,
   ): Promise<void> {
     // Default expiry is 30 minutes
-    const expiryDuration = parseInt(
+    const expiryDuration = Number.parseInt(
       process.env.REQUEST_SIGNUP_LINK_EXPIRY ?? '1800',
     );
 
