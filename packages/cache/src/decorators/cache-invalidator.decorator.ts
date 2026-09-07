@@ -15,7 +15,9 @@ export function cacheInvalidator<T extends ICachedService>(
     descriptor: TypedPropertyDescriptor<CacheMethod<S>>,
   ): TypedPropertyDescriptor<CacheMethod<S>> => {
     if (typeof descriptor?.value !== 'function') {
-      throw new Error(`'@cachedItem' can be applied only to the class methods`);
+      throw new TypeError(
+        `'@cachedItem' can be applied only to the class methods`,
+      );
     }
 
     const originalMethod = descriptor.value;

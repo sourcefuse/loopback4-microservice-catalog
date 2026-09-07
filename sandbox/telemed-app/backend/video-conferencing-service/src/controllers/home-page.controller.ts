@@ -18,7 +18,7 @@ export class HomePageController {
     );
     // Replace base path placeholder from env
     this.html = this.html.replaceAll(
-      /\$\{basePath\}/g,
+      '${basePath}',
       process.env.BASE_PATH ?? '',
     );
   }
