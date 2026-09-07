@@ -19,6 +19,10 @@ RUN  apk update &&  apk add --no-cache --virtual .gyp \
 # This is used to download and install the `node-prune` tool in the Docker image.
 # The version is pinned so the build does not pick up arbitrary newer code.
 # Pass NODE_PRUNE_SHA256 at build time to also verify the installer before running it.
+#
+# `curl` is required here and cannot be replaced by `ADD`: the URL serves a shell
+# installer that must be checksum-verified with `sha256sum -c` and then executed,
+# and `ADD` can neither verify conditionally nor run the script it fetches.
 ARG NODE_PRUNE_VERSION=v1.0.1
 ARG NODE_PRUNE_SHA256=""
 RUN curl --proto '=https' --tlsv1.2 -sSfL \
@@ -28,7 +32,7 @@ RUN curl --proto '=https' --tlsv1.2 -sSfL \
         echo "$NODE_PRUNE_SHA256  /tmp/node-prune-install.sh" | sha256sum -c -; \
     fi \
     && bash /tmp/node-prune-install.sh -b /usr/local/bin \
-    && rm -f /tmp/node-prune-install.sh
+    && rm -f /tmp/node-prune-install.sh # NOSONAR - see note above; curl is required to verify then run the installer
 
 # Set to a non-root built-in user `node`
 USER node
