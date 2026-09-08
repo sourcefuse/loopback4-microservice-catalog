@@ -101,7 +101,7 @@ export class ForgetPasswordController {
 
     const codePayload: ClientAuthCode<User> = {
       clientId: client.clientId,
-      userId: parseInt(user.id),
+      userId: Number.parseInt(user.id),
       user: new User({
         id: user.id,
         email: user.email,
@@ -109,7 +109,7 @@ export class ForgetPasswordController {
       }),
     };
     // Default expiry is 30 minutes
-    const expiryDuration = parseInt(
+    const expiryDuration = Number.parseInt(
       process.env.FORGOT_PASSWORD_LINK_EXPIRY ?? '1800',
     );
     const token = await this.jwtSigner(codePayload, {

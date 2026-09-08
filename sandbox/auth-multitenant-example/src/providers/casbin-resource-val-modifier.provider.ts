@@ -28,10 +28,10 @@ export class CasbinResValModifierProvider implements Provider<CasbinResourceModi
 
   async action(pathParams: string[]): Promise<string> {
     const metadata: AuthorizationMetadata = await this.getCasbinMetadata();
-    const allowedPath = this.allowAlwaysPath.find(
+    const isAllowedPath = this.allowAlwaysPath.some(
       path => this.request.path.indexOf(path) === 0,
     );
-    if (allowedPath) {
+    if (isAllowedPath) {
       return this.request.path;
     }
 

@@ -16,7 +16,7 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import * as path from 'path';
+import * as path from 'node:path';
 import {BearerTokenVerifyProvider} from './bearer-token-verifier.provider';
 import {MySequence} from './sequence';
 import {SchedulerServiceComponent} from '../component';

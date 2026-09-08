@@ -21,7 +21,7 @@ import {
 } from 'loopback4-authorization';
 import {HelmetSecurityBindings} from 'loopback4-helmet';
 import {RateLimitSecurityBindings} from 'loopback4-ratelimiter';
-import path from 'path';
+import path from 'node:path';
 import {RedisDataSource} from './datasources/redis.datasource';
 import * as openapi from './openapi.json';
 import {
@@ -75,8 +75,8 @@ export class AuthMultitenantExampleApplication extends BootMixin(
 
     this.bind(RateLimitSecurityBindings.CONFIG).to({
       name: 'redis',
-      max: parseInt(process.env.RATE_LIMITER_MAX_REQS as string),
-      windowMs: parseInt(process.env.RATE_LIMITER_WINDOW_MS as string),
+      max: Number.parseInt(process.env.RATE_LIMITER_MAX_REQS as string),
+      windowMs: Number.parseInt(process.env.RATE_LIMITER_WINDOW_MS as string),
       keyGenerator: rateLimitKeyGen,
     });
     this.bind(HelmetSecurityBindings.CONFIG).to({

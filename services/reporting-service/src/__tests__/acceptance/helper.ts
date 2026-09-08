@@ -79,9 +79,9 @@ class MockDataStoreAdapter implements DataStoreAdapter {
   }
 
   async checkIfDataSourceExists(dataSourceNames: string[]): Promise<boolean> {
-    const validDataSources = ['users', 'mock_table'];
+    const validDataSources = new Set(['users', 'mock_table']);
     return dataSourceNames.every(dataSource =>
-      validDataSources.includes(dataSource),
+      validDataSources.has(dataSource),
     );
   }
 

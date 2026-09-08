@@ -407,7 +407,7 @@ export class DataSetsService {
     // Execute SQL query and process the result
     const result = await this.dataStoreAdapter.query(countQuery);
     if (result && result.length > 0) {
-      const count = parseInt(result[0].count, 10);
+      const count = Number.parseInt(result[0].count, 10);
       return {count};
     }
 

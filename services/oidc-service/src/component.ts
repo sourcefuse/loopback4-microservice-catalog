@@ -26,7 +26,7 @@ import {OidcController} from './controllers';
 import {OidcProviderProvider, FindAccountProvider} from './providers';
 import {OidcInitializerService} from './services';
 import {OIDCServiceBindings} from './keys';
-import path from 'path';
+import path from 'node:path';
 import {AuthClient, User} from './models';
 export class OidcServiceComponent implements Component {
   repositories?: Class<Repository<Model>>[];

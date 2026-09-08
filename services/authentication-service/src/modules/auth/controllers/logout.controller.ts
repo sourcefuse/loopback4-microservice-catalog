@@ -30,7 +30,7 @@ import {HttpsProxyAgent} from 'https-proxy-agent';
 import {authenticate, AuthErrorKeys, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import fetch from 'node-fetch';
-import {URLSearchParams} from 'url';
+import {URLSearchParams} from 'node:url';
 import {AuthServiceBindings} from '../../../keys';
 import {RefreshTokenRequest} from '../../../models';
 import {

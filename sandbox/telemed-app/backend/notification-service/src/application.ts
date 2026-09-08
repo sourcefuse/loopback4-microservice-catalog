@@ -28,7 +28,7 @@ import {
 } from 'loopback4-authorization';
 import {NotificationBindings} from 'loopback4-notifications';
 import {PubNubProvider, PubnubBindings} from 'loopback4-notifications/pubnub';
-import path from 'path';
+import path from 'node:path';
 
 export {ApplicationConfig};
 

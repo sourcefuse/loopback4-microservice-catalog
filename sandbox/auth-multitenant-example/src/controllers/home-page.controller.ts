@@ -3,8 +3,8 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {get} from '@loopback/openapi-v3';
-import * as fs from 'fs';
-import * as path from 'path';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 import {inject} from '@loopback/context';
 import {RestBindings, Response} from '@loopback/rest';
 import {STATUS_CODE} from '@sourceloop/core';

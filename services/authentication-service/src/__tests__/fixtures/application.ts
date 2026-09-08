@@ -15,7 +15,7 @@ import {JwtKeysRepository, PublicKeysRepository} from '@sourceloop/core';
 import {Strategies} from 'loopback4-authentication';
 import {LocalPasswordStrategyFactoryProvider} from 'loopback4-authentication/passport-local';
 import {PassportOtpStrategyFactoryProvider} from 'loopback4-authentication/passport-otp';
-import * as path from 'path';
+import * as path from 'node:path';
 import {AuthenticationServiceComponent} from '../../component';
 import {AuthServiceBindings} from '../../keys';
 import {SignUpBindings} from '../../providers';

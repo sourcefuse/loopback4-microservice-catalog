@@ -24,29 +24,31 @@ export class EventService {
     timeMin: Date,
   ) {
     const where = [];
-    where.push({
-      status: {neq: StatusType.Cancelled},
-    });
-    where.push({
-      or: [
-        {responseStatus: {neq: ResponseStatusType.Declined}},
-        {responseStatus: null as unknown as ResponseStatusType},
-      ],
-    });
-    where.push({
-      and: [{startDateTime: {lt: timeMax}}, {endDateTime: {gt: timeMin}}],
-    });
-    where.push({
-      or: [
-        {
-          and: [
-            {identifier: item.id},
-            {attendeeIdentifier: null as unknown as string},
-          ],
-        },
-        {attendeeIdentifier: item.id},
-      ],
-    });
+    where.push(
+      {
+        status: {neq: StatusType.Cancelled},
+      },
+      {
+        or: [
+          {responseStatus: {neq: ResponseStatusType.Declined}},
+          {responseStatus: null as unknown as ResponseStatusType},
+        ],
+      },
+      {
+        and: [{startDateTime: {lt: timeMax}}, {endDateTime: {gt: timeMin}}],
+      },
+      {
+        or: [
+          {
+            and: [
+              {identifier: item.id},
+              {attendeeIdentifier: null as unknown as string},
+            ],
+          },
+          {attendeeIdentifier: item.id},
+        ],
+      },
+    );
 
     let key: keyof EventAttendeeViewItemDTO;
     for (key in item) {

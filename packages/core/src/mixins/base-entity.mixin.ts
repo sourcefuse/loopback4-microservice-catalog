@@ -14,7 +14,7 @@ export function BaseEntityMixin<
       type: 'date',
       default: () => new Date(),
       name: 'created_on',
-      ...(config?.createdOn ?? {}),
+      ...config?.createdOn,
     })
     createdOn?: Date;
 
@@ -22,7 +22,7 @@ export function BaseEntityMixin<
       type: 'date',
       default: () => new Date(),
       name: 'modified_on',
-      ...(config?.modifiedOn ?? {}),
+      ...config?.modifiedOn,
     })
     modifiedOn?: Date;
   }

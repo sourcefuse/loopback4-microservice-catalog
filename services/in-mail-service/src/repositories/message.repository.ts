@@ -92,12 +92,18 @@ export class MessageRepository extends DefaultTransactionSoftCrudRepository<
     options?: Options,
   ): Promise<Message> {
     const transaction = await this.beginTransaction();
-    const extractedEntity = (({
-      meta = [],
-      attachments = [],
-      group = [],
-      ...o
-    }) => ({meta, attachments, group, message: o}))(entity);
+    const {
+      meta: metaEntities = [],
+      attachments: attachmentEntities = [],
+      group: groupEntities = [],
+      ...messageEntity
+    } = entity;
+    const extractedEntity = {
+      meta: metaEntities,
+      attachments: attachmentEntities,
+      group: groupEntities,
+      message: messageEntity,
+    };
     try {
       const currentUser = await this.getCurrentUser();
       const createdOnBy = {

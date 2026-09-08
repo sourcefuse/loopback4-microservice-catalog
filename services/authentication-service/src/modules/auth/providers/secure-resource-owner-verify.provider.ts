@@ -104,7 +104,7 @@ export class SecureResourceOwnerVerifyProvider implements Provider<VerifyFunctio
       !client ||
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      user.authClientIds.indexOf(client.id ?? 0) < 0
+      !user.authClientIds.includes(client.id ?? 0)
     ) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.ClientInvalid);
     }

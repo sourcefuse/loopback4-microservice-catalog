@@ -16,7 +16,7 @@ import {
   WorkflowServiceBindings,
   WorkflowServiceComponent,
 } from '@sourceloop/bpmn-service';
-import path from 'path';
+import path from 'node:path';
 import {SayHelloCommand} from './commands/sayhello.command';
 import {BpmnProvider} from './providers/bpmn.provider';
 

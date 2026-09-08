@@ -85,9 +85,7 @@ export class OcrParserComponent implements OnInit, OnDestroy {
     if (this.clausesData.length) {
       selecedField = this.clausesData.find(field => field.isSelected);
     }
-    if (!selecedField) {
-      selecedField = this.selectedClauses.find(field => field.isSelected);
-    }
+    selecedField ??= this.selectedClauses.find(field => field.isSelected);
 
     if (selecedField) {
       selecedField.isSelected = false;

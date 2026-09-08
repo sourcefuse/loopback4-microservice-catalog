@@ -87,10 +87,9 @@ export class SurveyCycleService {
       order: ['created_on DESC'],
     });
 
-    return Promise.all([
-      this.surveyRepository
-        .surveyResponders(surveyId)
-        .patch({surveyCycleId: surveyCycle?.id}),
-    ]);
+    const count = await this.surveyRepository
+      .surveyResponders(surveyId)
+      .patch({surveyCycleId: surveyCycle?.id});
+    return [count];
   }
 }

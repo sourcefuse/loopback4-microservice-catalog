@@ -14,7 +14,7 @@ import {ServiceMixin} from '@loopback/service-proxy';
 import {InMailServiceComponent} from '@sourceloop/in-mail-service';
 import * as dotenv from 'dotenv';
 import * as dotenvExt from 'dotenv-extended';
-import path from 'path';
+import path from 'node:path';
 import {MySequence} from './sequence';
 
 export {ApplicationConfig};

@@ -1,6 +1,6 @@
 import {get} from '@loopback/openapi-v3';
-import * as fs from 'fs';
-import * as path from 'path';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 import {inject} from '@loopback/context';
 import {RestBindings, Response} from '@loopback/rest';
 import {authorize} from 'loopback4-authorization';
@@ -17,8 +17,8 @@ export class HomePageController {
       'utf-8',
     );
     // Replace base path placeholder from env
-    this.html = this.html.replace(
-      /\$\{basePath\}/g,
+    this.html = this.html.replaceAll(
+      `\${basePath}`,
       process.env.BASE_PATH ?? '',
     );
   }

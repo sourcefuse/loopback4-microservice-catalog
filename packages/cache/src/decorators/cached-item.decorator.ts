@@ -19,8 +19,10 @@ export function cachedItem<T extends ICachedService>(
     methodName: string,
     descriptor?: TypedPropertyDescriptor<CacheMethod<S>>,
   ): TypedPropertyDescriptor<CacheMethod<S>> => {
-    if (!(descriptor?.value instanceof Function)) {
-      throw Error(`'@cachedItem' can be applied only to the class methods`);
+    if (typeof descriptor?.value !== 'function') {
+      throw new TypeError(
+        `'@cachedItem' can be applied only to the class methods`,
+      );
     }
 
     const originalMethod = descriptor.value;

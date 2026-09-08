@@ -3,7 +3,6 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MITimport {BindingTemplate, extensionFor} from '@loopback/core';
 import {AnyObject, Filter} from '@loopback/repository';
-import {AuditDbSourceName} from '@sourceloop/audit-log';
 import {IServiceConfig} from '@sourceloop/core';
 import {AuditLog} from './models';
 
@@ -33,4 +32,4 @@ export interface ExportResponse {
 }
 // sonarignore:end
 
-export const AuditSourceName = AuditDbSourceName;
+export {AuditDbSourceName as AuditSourceName} from '@sourceloop/audit-log';

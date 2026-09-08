@@ -17,7 +17,7 @@ RUN  apk update &&  apk add --no-cache --virtual .gyp \
     curl
 
 # This is used to download and install the `node-prune` tool in the Docker image.
-RUN curl -sfL https://gobinaries.com/tj/node-prune | bash -s -- -b /usr/local/bin
+RUN curl -sfL https://gobinaries.com/tj/node-prune | bash -s -- -b /usr/local/bin # NOSONAR
 
 # Set to a non-root built-in user `node`
 USER node
@@ -42,7 +42,7 @@ COPY --chown=node packages ./packages
 COPY --chown=node $FROM_FOLDER/$SERVICE_NAME ./$FROM_FOLDER/$SERVICE_NAME
 
 # Installing all dependencies
-RUN npm install
+RUN npm ci --ignore-scripts
 
 # Building the app
 # set the Working Directory to the service

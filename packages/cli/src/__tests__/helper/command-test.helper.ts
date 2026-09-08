@@ -32,7 +32,7 @@ export function commandTest(testCase: CommandTestCase, command: ICommand) {
     );
     await scaffold.run();
     const calls = prompt.getCalls();
-    expect(calls.length).to.be.equal(testCase.prompts.length);
+    expect(calls).to.have.lengthOf(testCase.prompts.length);
     for (let i = 0; i < calls.length; i++) {
       expect(calls[i].args[0][0]).to.be.deep.equal(testCase.prompts[i].input);
     }

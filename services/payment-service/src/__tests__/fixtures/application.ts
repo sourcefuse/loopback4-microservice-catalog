@@ -7,7 +7,7 @@ import {
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
-import path from 'path';
+import path from 'node:path';
 import {PaymentServiceComponent} from '../../component';
 
 export class TestPaymentApplication extends BootMixin(

@@ -6,7 +6,7 @@ import {BootMixin} from '@loopback/boot';
 import {ApplicationConfig} from '@loopback/core';
 import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
-import * as path from 'path';
+import * as path from 'node:path';
 import {SurveyServiceComponent} from './component';
 
 export {ApplicationConfig};

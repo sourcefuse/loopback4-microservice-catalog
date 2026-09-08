@@ -45,7 +45,7 @@ export class EventTriggerController {
   ) {
     await this.httpStream.triggerHandler({
       ...event,
-      timestamp: new Date().getTime(),
+      timestamp: Date.now(),
     });
   }
 }

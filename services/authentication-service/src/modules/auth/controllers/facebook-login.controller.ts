@@ -30,7 +30,7 @@ import {
   STRATEGY,
 } from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-import {URLSearchParams} from 'url';
+import {URLSearchParams} from 'node:url';
 import {AuthCodeBindings, AuthCodeGeneratorFn} from '../../../providers';
 import {AuthClientRepository} from '../../../repositories';
 import {AuthUser, ClientAuthRequest, TokenResponse} from '../models';

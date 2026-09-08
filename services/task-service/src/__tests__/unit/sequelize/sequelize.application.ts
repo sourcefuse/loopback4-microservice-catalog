@@ -11,7 +11,7 @@ import {
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {SequelizeDataSource} from '@loopback/sequelize';
-import * as path from 'path';
+import * as path from 'node:path';
 import {TaskServiceComponent} from '../../../component';
 import {TaskHttpComponent} from '../../../connectors/http';
 import {TaskServiceBindings} from '../../../keys';

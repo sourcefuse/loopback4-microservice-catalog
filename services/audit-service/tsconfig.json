@@ -4,6 +4,7 @@
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "src",
+    "lib": ["es2021"],
     "composite": true
   },
   "include": [

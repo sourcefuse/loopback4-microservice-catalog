@@ -28,7 +28,7 @@ import {
   KafkaStreamService,
   TaskServiceKafkaModule,
 } from '@sourceloop/task-service/kafka';
-import path from 'path';
+import path from 'node:path';
 import {ReadDataCommand} from './commands/read-data.command';
 import {BpmnProvider} from './providers/bpmn.provider';
 import {MySequence} from './sequence';

@@ -25,7 +25,7 @@ export class GenericConversionUtils implements DataStoreDataTypeConversionFuncti
     const formattedValue =
       typeof value === 'string' ? value.replace(/[$,]/g, '').trim() : value;
     const number = Number(formattedValue);
-    if (isNaN(number))
+    if (Number.isNaN(number))
       throw new Error(`Cannot convert to number: ${JSON.stringify([value])}`);
     return number;
   }
@@ -57,7 +57,7 @@ export class GenericConversionUtils implements DataStoreDataTypeConversionFuncti
     } else if (value instanceof Date) {
       dateInput = value;
     } else {
-      throw new Error(
+      throw new TypeError(
         `Cannot convert to date: Unsupported type for value  ${JSON.stringify([
           value,
         ])}`,
@@ -65,7 +65,7 @@ export class GenericConversionUtils implements DataStoreDataTypeConversionFuncti
     }
 
     const date = new Date(dateInput);
-    if (isNaN(date.getTime())) throw new Error(`Invalid date: ${value}`);
+    if (Number.isNaN(date.getTime())) throw new Error(`Invalid date: ${value}`);
     return options?.dateFormat
       ? this.formatDate(date, options.dateFormat)
       : date.toISOString();

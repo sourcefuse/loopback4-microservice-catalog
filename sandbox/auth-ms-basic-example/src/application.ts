@@ -15,7 +15,7 @@ import {
   AuthenticationServiceComponent,
   SignUpBindings,
 } from '@sourceloop/authentication-service';
-import path from 'path';
+import path from 'node:path';
 import {AzureAdSignupProvider} from './providers';
 import {LocalSignupProvider} from './providers/local-signup.provider';
 import {MySequence} from './sequence';

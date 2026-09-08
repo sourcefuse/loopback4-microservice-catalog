@@ -60,7 +60,7 @@ export class MockEngine {
   update(workflow: WorkflowDto) {
     if (this.workflowList?.[workflow.name]) {
       const latest = Math.max(
-        ...Object.keys(this.workflowList[workflow.name]).map(s => Number(s)),
+        ...Object.keys(this.workflowList[workflow.name]).map(Number),
       );
       this.workflowList[workflow.name][latest + 1] = {
         workflowVersion: latest + 1,
@@ -99,7 +99,7 @@ export class MockEngine {
   delete(name: string) {
     if (this.workflowList?.[name]) {
       const latest = Math.max(
-        ...Object.keys(this.workflowList[name]).map(s => Number(s)),
+        ...Object.keys(this.workflowList[name]).map(Number),
       );
       const workflowBackup = this.workflowList[name][latest];
       delete this.workflowList[name];

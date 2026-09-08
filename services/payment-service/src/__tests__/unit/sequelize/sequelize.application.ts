@@ -3,7 +3,7 @@ import {ApplicationConfig} from '@loopback/core';
 import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {SequelizeDataSource} from '@loopback/sequelize';
-import * as path from 'path';
+import * as path from 'node:path';
 import {PaymentServiceComponent} from '../../../component';
 import {PaymentServiceBindings} from '../../../keys';
 

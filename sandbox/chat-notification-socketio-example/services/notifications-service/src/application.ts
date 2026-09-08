@@ -22,7 +22,7 @@ import {
   SocketBindings,
   SocketIOProvider,
 } from 'loopback4-notifications/socketio';
-import path from 'path';
+import path from 'node:path';
 import {MySequence} from './sequence';
 
 // dotenv

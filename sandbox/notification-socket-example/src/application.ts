@@ -11,7 +11,7 @@ import {
 import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
-import path from 'path';
+import path from 'node:path';
 import {MySequence} from './sequence';
 import {NotificationServiceComponent} from '@sourceloop/notification-service';
 

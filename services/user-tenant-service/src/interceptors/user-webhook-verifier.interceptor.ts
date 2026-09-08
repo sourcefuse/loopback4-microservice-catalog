@@ -8,7 +8,7 @@ import {
 } from '@loopback/core';
 import {HttpErrors, RequestContext} from '@loopback/rest';
 import {ILogger, LOGGER} from '@sourceloop/core';
-import {createHmac, timingSafeEqual} from 'crypto';
+import {createHmac, timingSafeEqual} from 'node:crypto';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {UserWebhookDTO} from '../models';
 import {TempUser} from '../types';
@@ -37,7 +37,7 @@ export class UserWebhookVerifierProvider implements Provider<Interceptor> {
       process.env.TIMESTAMP_TOLERANCE ?? DEFAULT_TIME_TOLERANCE
     );
     const timestamp = Number(request.headers['x-timestamp']);
-    if (isNaN(timestamp)) {
+    if (Number.isNaN(timestamp)) {
       this.logger.error('Invalid timestamp');
       throw new HttpErrors.Unauthorized();
     }
