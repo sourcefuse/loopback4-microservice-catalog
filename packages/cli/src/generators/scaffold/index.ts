@@ -2,7 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {join} from 'path';
+import {join} from 'node:path';
 import {BaseGenerator} from '../../base-generator';
 import {ScaffoldOptions} from '../../types';
 const chalk = require('chalk'); //NOSONAR

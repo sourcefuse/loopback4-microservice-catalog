@@ -3,7 +3,7 @@ Object.defineProperty(exports, '__esModule', {value: true});
 const cdktf_1 = require('cdktf');
 const dotenv = require('dotenv');
 const dotenvExt = require('dotenv-extended');
-const path_1 = require('path');
+const path_1 = require('node:path');
 const common_1 = require('./common');
 dotenv.config();
 dotenvExt.load({

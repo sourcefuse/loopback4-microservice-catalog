@@ -9,7 +9,7 @@ import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {SequelizeDataSource} from '@loopback/sequelize';
 import {AuditDbSourceName} from '@sourceloop/audit-log';
-import * as path from 'path';
+import * as path from 'node:path';
 import {AuditServiceComponent} from '../../component';
 import {AuditLogExportProvider} from '../../exporter';
 import {AuditLogExportServiceBindings, AuditServiceBindings} from '../../keys';

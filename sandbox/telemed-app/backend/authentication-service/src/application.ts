@@ -17,7 +17,7 @@ import {
   AuthenticationBindings,
   AuthenticationConfig,
 } from 'loopback4-authentication';
-import path from 'path';
+import path from 'node:path';
 import {MySequence} from './sequence';
 
 export {ApplicationConfig};

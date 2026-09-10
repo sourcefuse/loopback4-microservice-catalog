@@ -155,7 +155,7 @@ export class QuestionHelperService {
       questionId = lastInsertedQuestion?.uid;
     }
 
-    const sequence = parseInt(
+    const sequence = Number.parseInt(
       questionId?.substring(questionIdPrefix.length, questionId?.length) ??
         sequenceStart,
     );

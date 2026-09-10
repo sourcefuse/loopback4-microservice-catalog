@@ -1,7 +1,7 @@
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {AnyObject, juggler} from '@loopback/repository';
 import {AuthCacheSourceName} from '@sourceloop/authentication-service';
-import {readFileSync} from 'fs';
+import {readFileSync} from 'node:fs';
 
 const config = {
   name: process.env.REDIS_NAME,

@@ -17,7 +17,7 @@ import {
 } from '@sourceloop/video-conferencing-service';
 import * as dotenv from 'dotenv';
 import * as dotenvExt from 'dotenv-extended';
-import * as path from 'path';
+import * as path from 'node:path';
 import {MySequence} from './sequence';
 
 export {ApplicationConfig};

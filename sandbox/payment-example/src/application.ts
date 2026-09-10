@@ -20,7 +20,7 @@ import {
 } from '@sourceloop/payment-service';
 import * as dotenv from 'dotenv';
 import * as dotenvExt from 'dotenv-extended';
-import path from 'path';
+import path from 'node:path';
 import {MySequence} from './sequence';
 
 export {ApplicationConfig};

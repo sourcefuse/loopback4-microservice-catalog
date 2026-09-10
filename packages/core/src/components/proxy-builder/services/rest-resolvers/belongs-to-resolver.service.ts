@@ -94,7 +94,7 @@ export class BelongsToRestResolver<
   private async addConditionToScope(ids: T[keyof T][], scope?: Filter<S>) {
     const condition = {
       id: {
-        inq: ids.filter(id => id), //filter out valid IDs
+        inq: ids.filter(Boolean), //filter out valid IDs
       },
     };
     const whereBuilder = new WhereBuilder();

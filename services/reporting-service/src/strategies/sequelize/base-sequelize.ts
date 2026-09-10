@@ -1,6 +1,6 @@
 import {AnyObject} from '@loopback/repository';
 import {ILogger} from '@sourceloop/core';
-import validator from 'validator';
+import escape from 'validator/lib/escape';
 import {
   ColumnEntityPair,
   ColumnForDataSourceModel,
@@ -22,7 +22,7 @@ export abstract class BaseSequelize implements SequelizeStrategy {
 
   sanitizeValue(value: JSONValueType): JSONValueType {
     if (typeof value === 'string') {
-      return validator.escape(value);
+      return escape(value);
     }
     return value;
   }

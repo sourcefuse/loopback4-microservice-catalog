@@ -6,9 +6,9 @@ import {inject} from '@loopback/context';
 import {get} from '@loopback/openapi-v3';
 import {Response, RestBindings} from '@loopback/rest';
 import {STATUS_CODE} from '@sourceloop/core';
-import * as fs from 'fs';
+import * as fs from 'node:fs';
 import {authorize} from 'loopback4-authorization';
-import * as path from 'path';
+import * as path from 'node:path';
 
 export class HomePageController {
   private readonly html: string;

@@ -2,7 +2,7 @@
 REGISTRY=$1
 CURRENT_DIR=$2
 
-# TODO: remove sudo once build agent is fixed
+# NOTE: sudo is intentionally not used here; the build agent runs docker unprivileged.
 
 if [[ -z "$REGISTRY" ]]; then
   REGISTRY="localhost:32000"

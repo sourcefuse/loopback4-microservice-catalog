@@ -10,7 +10,7 @@ import {
   RestExplorerBindings,
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
-import * as path from 'path';
+import * as path from 'node:path';
 import {TaskServiceComponent} from './component';
 
 export {ApplicationConfig};

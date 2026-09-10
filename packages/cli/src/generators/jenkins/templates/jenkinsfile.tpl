@@ -181,12 +181,12 @@ pipeline {
                     sh "sudo wget https://github.com/mikefarah/yq/releases/download/v4.27.2/yq_linux_arm64 -O /usr/bin/yq && sudo chown ubuntu:ubuntu /usr/bin/yq && sudo chmod +x /usr/bin/yq"
                     sh "sudo chown -R ubuntu:ubuntu ${env.WORKSPACE}/"
                     if (params.FULL_BUILD){
-		                sh "lerna exec --scope='@local/*' -- npm ci"
+		                sh "lerna exec --scope='@local/*' -- npm ci --ignore-scripts"
                         sh "lerna bootstrap --include-dependencies"
                         sh "sudo git stash -u"
                         sh "lerna run resolve-links"
                     } else {
-		                sh "lerna exec --scope='@local/*'  --include-dependencies -- npm ci"
+		                sh "lerna exec --scope='@local/*'  --include-dependencies -- npm ci --ignore-scripts"
                         sh "lerna bootstrap --since ${env.LAST_COMMIT}"
                         sh "lerna ls --since ${env.LAST_COMMIT}"
                         sh "lerna run resolve-links --since ${env.LAST_COMMIT}"

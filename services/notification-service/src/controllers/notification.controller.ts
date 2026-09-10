@@ -47,7 +47,7 @@ import {ProcessNotificationService} from '../services';
 import {INotificationFilterFunc, INotificationUserManager} from '../types';
 const basePath = '/notifications';
 
-const maxBodyLen = parseInt(String(process.env.MAX_LENGTH)) ?? 1000;
+const maxBodyLen = Number.parseInt(String(process.env.MAX_LENGTH)) ?? 1000;
 @bind({scope: BindingScope.TRANSIENT})
 export class NotificationController {
   constructor(

@@ -1,6 +1,6 @@
 import {HttpErrors} from '@loopback/rest';
 
-import path from 'path';
+import path from 'node:path';
 import {NAME_REGEX} from '../../constant';
 import {fileValidator} from '../../decorators';
 import {File, IFileValidator, ValidatorOutput} from '../../types';

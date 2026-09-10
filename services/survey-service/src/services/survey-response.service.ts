@@ -4,7 +4,6 @@ import {ILogger, LOGGER} from '@sourceloop/core';
 import {repository, Where} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {JwtPayload, Secret, verify} from 'jsonwebtoken';
-import {isArray} from 'lodash';
 import {AuthorizeErrorKeys} from 'loopback4-authorization';
 import moment from 'moment';
 import {ErrorKeys} from '../enum/error-keys.enum';
@@ -213,7 +212,7 @@ export class SurveyResponseService {
         ),
       );
     } else if (
-      isArray(surveyResponseDetailDto.answer?.optionIds) &&
+      Array.isArray(surveyResponseDetailDto.answer?.optionIds) &&
       QuestionType.MULTI_SELECTION === question.questionType
     ) {
       surveyResponseDetailDto.answer?.optionIds.forEach(optionId => {

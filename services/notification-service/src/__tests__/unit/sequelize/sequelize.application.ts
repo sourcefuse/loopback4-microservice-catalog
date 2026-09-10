@@ -17,7 +17,7 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import * as path from 'path';
+import * as path from 'node:path';
 
 import {NotificationServiceComponent} from '../../../component';
 import {NotifServiceBindings} from '../../../keys';

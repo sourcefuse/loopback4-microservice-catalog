@@ -418,7 +418,7 @@ export class SurveyService {
         order: [orderByCreatedOn],
       });
 
-    const sequence = parseInt(
+    const sequence = Number.parseInt(
       lastInsertedSurvey?.uid?.substring(
         surveyIdPrefix.length,
         lastInsertedSurvey?.uid?.length,

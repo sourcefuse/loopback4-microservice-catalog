@@ -1,7 +1,7 @@
 import {injectable} from '@loopback/core';
 import {AnyObject, repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
-import {createHmac} from 'crypto';
+import {createHmac} from 'node:crypto';
 import {ClientAppRepository} from '../repositories';
 
 @injectable()

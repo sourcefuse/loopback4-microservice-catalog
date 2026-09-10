@@ -196,7 +196,7 @@ export class ChatSessionService {
       throw new HttpErrors.BadRequest(errorMessage);
     }
 
-    if (scheduleTime && isNaN(moment(scheduleTime).valueOf())) {
+    if (scheduleTime && Number.isNaN(moment(scheduleTime).valueOf())) {
       errorMessage = `Schedule Time is Not in correct format`;
 
       throw new HttpErrors.BadRequest(errorMessage);

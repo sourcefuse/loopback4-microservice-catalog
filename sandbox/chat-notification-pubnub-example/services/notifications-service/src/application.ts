@@ -18,7 +18,7 @@ import {NotificationBindings} from 'loopback4-notifications';
 import {PubNubProvider, PubnubBindings} from 'loopback4-notifications/pubnub';
 import {SESBindings, SesProvider} from 'loopback4-notifications/ses';
 import {SNSBindings} from 'loopback4-notifications/sns';
-import path from 'path';
+import path from 'node:path';
 import {MySequence} from './sequence';
 
 // dotenv

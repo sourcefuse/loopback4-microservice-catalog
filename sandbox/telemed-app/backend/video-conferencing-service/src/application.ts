@@ -29,7 +29,7 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import path from 'path';
+import path from 'node:path';
 
 export {ApplicationConfig};
 

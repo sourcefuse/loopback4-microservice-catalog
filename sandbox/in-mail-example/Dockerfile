@@ -15,7 +15,7 @@ WORKDIR /home/node/app
 COPY --chown=node package*.json ./
 COPY --chown=node . .
 
-RUN npm install
+RUN npm ci --ignore-scripts
 
 # Bundle app source code
 COPY --chown=node . .

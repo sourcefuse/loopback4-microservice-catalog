@@ -21,14 +21,14 @@ export function UserModifiableEntityMixin<
     @property({
       type: 'string',
       name: 'created_by',
-      ...(config?.createdBy ?? {}),
+      ...config?.createdBy,
     })
     createdBy?: string;
 
     @property({
       type: 'string',
       name: 'modified_by',
-      ...(config?.modifiedBy ?? {}),
+      ...config?.modifiedBy,
     })
     modifiedBy?: string;
   }

@@ -16,7 +16,7 @@ import {ExpressRequestHandler, RestApplication} from '@loopback/rest';
 import {configure} from 'i18n';
 import {cloneDeep} from 'lodash';
 
-import {IncomingMessage, ServerResponse} from 'http';
+import {IncomingMessage, ServerResponse} from 'node:http';
 
 import {Loopback4HelmetComponent} from 'loopback4-helmet';
 import {RateLimiterComponent} from 'loopback4-ratelimiter';
@@ -97,8 +97,10 @@ export class CoreComponent implements Component {
     }
 
     this.application.bind(SFCoreBindings.EXPRESS_MIDDLEWARES).to(middlewares);
-    this.bindings.push(Binding.bind(OASBindings.HiddenEndpoint).to([]));
-    this.bindings.push(Binding.bind(SFCoreBindings.i18n).to(this.localeObj));
+    this.bindings.push(
+      Binding.bind(OASBindings.HiddenEndpoint).to([]),
+      Binding.bind(SFCoreBindings.i18n).to(this.localeObj),
+    );
     this.application.add(createBindingFromClass(OperationSpecEnhancer));
   }
 

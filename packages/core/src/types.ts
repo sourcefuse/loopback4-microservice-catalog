@@ -4,7 +4,7 @@
 // https://opensource.org/licenses/MIT
 
 import CryptoJS from 'crypto-js';
-import {IncomingMessage, ServerResponse} from 'http';
+import {IncomingMessage, ServerResponse} from 'node:http';
 import {AnyObject} from 'loopback-datasource-juggler';
 import {SWStats} from 'swagger-stats-sf';
 

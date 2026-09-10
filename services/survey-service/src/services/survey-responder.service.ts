@@ -119,6 +119,6 @@ export class SurveyResponderService {
     const endDateString = moment(endDate).format('YYYY-MM-DD');
     const end = new Date(`${endDateString} 23:59:59`);
     const thousand = 1000;
-    return Math.floor((end.getTime() - new Date().getTime()) / thousand);
+    return Math.floor((end.getTime() - Date.now()) / thousand);
   }
 }

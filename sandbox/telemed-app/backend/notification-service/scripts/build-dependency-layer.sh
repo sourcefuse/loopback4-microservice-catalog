@@ -12,5 +12,5 @@ mkdir -p "$LAYER_DIR"
 
 cp "package.json" "$LAYER_DIR"
 cd "$LAYER_DIR"
-npm i --omit=dev
+npm i --omit=dev --ignore-scripts
 cd "$ROOT_DIR"

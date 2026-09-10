@@ -39,7 +39,7 @@ export class GatewayProvider implements Provider<IGateway> {
         subscriptionCreate,
         subscriptionCharge,
         subscriptionWebHook,
-      ] = Array(providerMethodNumbers).fill(providerMissingError);
+      ] = new Array(providerMethodNumbers).fill(providerMissingError);
       return {
         create,
         charge,

@@ -14,7 +14,7 @@ import {ServiceMixin} from '@loopback/service-proxy';
 import {NotificationServiceComponent} from '@sourceloop/notification-service';
 import {NotificationBindings} from 'loopback4-notifications';
 import {PubNubProvider, PubnubBindings} from 'loopback4-notifications/pubnub';
-import path from 'path';
+import path from 'node:path';
 
 export {ApplicationConfig};
 

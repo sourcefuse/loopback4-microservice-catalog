@@ -15,7 +15,7 @@ if [[ -z "$curl_response" ]]; then
   ERROR_COUNT=$((ERROR_COUNT + 1))
 fi
 
-# TODO: Add video when it works - "video"
+# NOTE: "video" is intentionally excluded from the health check until the service exposes openapi.json.
 declare -a services=("workflow" "scheduler" "notification" "in-mail" "auth" "audit")
 
 for service in "${services[@]}"; do

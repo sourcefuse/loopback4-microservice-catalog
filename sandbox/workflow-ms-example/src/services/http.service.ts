@@ -60,7 +60,7 @@ export class HttpClientService {
     if (options?.urlParams) {
       for (const key in options.urlParams) {
         url = url.replace(
-          new RegExp(`\\{${key}\\}`, 'gi'),
+          new RegExp(String.raw`\{${key}\}`, 'gi'),
           options.urlParams[key],
         );
       }

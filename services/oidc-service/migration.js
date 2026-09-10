@@ -1,6 +1,6 @@
 const dotenvExt = require('dotenv-extended');
-const fs = require('fs');
-const path = require('path');
+const fs = require('node:fs');
+const path = require('node:path');
 let isLocal = false;
 dotenvExt.load({
   path: path.join(process.env.INIT_CWD ?? '.', '.env'),

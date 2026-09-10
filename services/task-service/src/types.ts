@@ -3,10 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {AnyObject} from '@loopback/repository';
-import {
-  WorkflowCacheSourceName,
-  WorkflowServiceBindings,
-} from '@sourceloop/bpmn-service';
+import {WorkflowServiceBindings} from '@sourceloop/bpmn-service';
 import {
   TaskService as CamundaTaskService,
   Task,
@@ -84,7 +81,7 @@ export interface CamundaTask {
 }
 
 export const TaskDbSourceName = 'taskdb';
-export const WorkflowServiceSourceName = WorkflowCacheSourceName;
+export {WorkflowCacheSourceName as WorkflowServiceSourceName} from '@sourceloop/bpmn-service';
 export const ExportedWorkflowServiceBindingConfig =
   WorkflowServiceBindings.Config;
 

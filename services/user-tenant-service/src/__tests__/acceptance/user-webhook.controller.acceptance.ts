@@ -1,7 +1,7 @@
 import {AnyObject} from '@loopback/repository';
 import {Client, expect} from '@loopback/testlab';
 import {STATUS_CODE} from '@sourceloop/core';
-import {createHmac} from 'crypto';
+import {createHmac} from 'node:crypto';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {UserTenantServiceApplication} from '../../application';
 import {

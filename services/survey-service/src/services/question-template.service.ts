@@ -135,7 +135,7 @@ export class QuestionTemplateService {
         order: [orderByCreatedOn],
       });
 
-    const sequence = parseInt(
+    const sequence = Number.parseInt(
       lastInsertedTemplate?.uid?.substring(
         templateIdPrefix.length,
         lastInsertedTemplate?.uid?.length,
