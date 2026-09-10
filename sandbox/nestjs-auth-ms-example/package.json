@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/nestjs-auth-ms-example",
   "private": true,
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "An example NestJS Application that uses ARC's (aka SourceLoop) pre-built microservice for authentication.",
   "license": "MIT",
   "scripts": {
@@ -26,7 +26,7 @@
     "@nestjs/mapped-types": "^2.1.1",
     "@nestjs/platform-express": "^11.1.19",
     "@nestjs/swagger": "^11.3.2",
-    "@sourceloop/authentication-service": "^25.1.0",
+    "@sourceloop/authentication-service": "^25.1.1",
     "db-migrate": "^1.0.0-beta.35",
     "db-migrate-pg": "^1.5.2",
     "dotenv": "^16.6.1",

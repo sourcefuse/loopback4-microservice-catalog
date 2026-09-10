@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.14.1 (2026-09-10)</small>
+
+* refactor(all-services): resolve SonarCloud overall-code backlog (#2607) ([85463f5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/85463f5)), closes [#2607](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2607) [#2607](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2607)
+
+
+
+
+
 ## 0.14.0 (2026-08-16)
 
 * fix(cli): pin trivy-action to commit sha in scaffold template (#2598) ([f1b989a](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f1b989a)), closes [#2598](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2598) [#2597](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2597)

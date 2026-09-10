@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>8.0.2 (2026-09-10)</small>
+
+* refactor(all-services): resolve SonarCloud overall-code backlog (#2607) ([85463f5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/85463f5)), closes [#2607](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2607) [#2607](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2607)
+* fix(ci-cd): bump github actions to node 24 runtimes (#2602) ([057812b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/057812b)), closes [#2602](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2602) [#2601](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2601)
+
+
+
+
+
 ## <small>8.0.1 (2026-08-16)</small>
 
 **Note:** Version bump only for package @sourceloop/survey-service

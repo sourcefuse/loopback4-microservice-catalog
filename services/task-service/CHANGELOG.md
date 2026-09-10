@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>11.1.1 (2026-09-10)</small>
+
+* refactor(all-services): resolve SonarCloud overall-code backlog (#2607) ([85463f5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/85463f5)), closes [#2607](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2607) [#2607](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2607)
+* refactor(all-services): resolve sonarcloud reliability and security issues (#2604) ([c3a9ed1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c3a9ed1)), closes [#2604](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2604) [#2603](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2603) [#2603](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2603)
+* fix(ci-cd): bump github actions to node 24 runtimes (#2602) ([057812b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/057812b)), closes [#2602](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2602) [#2601](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2601)
+
+
+
+
+
 ## 11.1.0 (2026-08-16)
 
 * feat(cache): add sequelize support (#2554) ([d724198](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/d724198)), closes [#2554](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2554) [#2552](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2552) [#2552](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2552) [#2552](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2552)
