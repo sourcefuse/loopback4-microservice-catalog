@@ -101,6 +101,9 @@ export class UserRepository extends SequelizeSoftCrudRepository<
   }
 
   async create(entity: DataObject<User>, options?: Options): Promise<User> {
+    if (entity.email) {
+      entity.email = entity.email.toLowerCase();
+    }
     const user = await super.create(entity, options);
     try {
       // Add temporary password for first time
@@ -125,6 +128,9 @@ export class UserRepository extends SequelizeSoftCrudRepository<
     entity: DataObject<User>,
     options?: Options,
   ): Promise<User> {
+    if (entity.email) {
+      entity.email = entity.email.toLowerCase();
+    }
     return super.create(entity, options);
   }
 
