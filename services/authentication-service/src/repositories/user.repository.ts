@@ -108,7 +108,7 @@ export class UserRepository extends DefaultSoftCrudRepository<
 
   async create(entity: DataObject<User>, options?: Options): Promise<User> {
     if (entity.email) {
-      entity.email = entity.email.toLowerCase();
+      entity = {...entity, email: entity.email.toLowerCase()};
     }
     const user = await super.create(entity, options);
     try {
@@ -132,9 +132,31 @@ export class UserRepository extends DefaultSoftCrudRepository<
     options?: Options,
   ): Promise<User> {
     if (entity.email) {
-      entity.email = entity.email.toLowerCase();
+      entity = {...entity, email: entity.email.toLowerCase()};
     }
     return super.create(entity, options);
+  }
+
+  async updateById(
+    id: typeof User.prototype.id,
+    data: DataObject<User>,
+    options?: Options,
+  ): Promise<void> {
+    if (data.email) {
+      data = {...data, email: data.email.toLowerCase()};
+    }
+    return super.updateById(id, data, options);
+  }
+
+  async replaceById(
+    id: typeof User.prototype.id,
+    data: DataObject<User>,
+    options?: Options,
+  ): Promise<void> {
+    if (data.email) {
+      data = {...data, email: data.email.toLowerCase()};
+    }
+    return super.replaceById(id, data, options);
   }
 
   async verifyPassword(username: string, password: string): Promise<User> {
