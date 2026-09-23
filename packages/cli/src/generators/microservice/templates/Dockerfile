@@ -1,88 +1,61 @@
-# Check out https://hub.docker.com/_/node to select a new base image
-ARG nodeVer=18-alpine
+# syntax=docker/dockerfile:1
+#
+# LEGACY full build. It installs and compiles inside the image.
+# The pipeline uses it only when USE_NFT_BUILD is off. It is the fallback
+# for Dockerfile.nft and does not need a host build or the deps image.
+#
+# Build context: the repo root. Build args:
+#   SERVICE_NAME  folder name of this service, e.g. auth-service
+#   FROM_FOLDER   services or facades
+#
+# All three Dockerfiles (this one, Dockerfile.nft, Dockerfile.code) must make
+# the same runtime layout, because a code build overlays dist on the last
+# full-build image, whichever of the two full builds made it.
+ARG nodeVer=24-alpine
 
-# select a base image to build from
-FROM node:$nodeVer AS BASE
-
-# Take the build variables for image base
+FROM node:${nodeVer} AS build
 ARG SERVICE_NAME
 ARG FROM_FOLDER
-# This command is used to install some dependencies in the Docker image.
-# Nessasary for running node-prune and npm install
-RUN  apk update &&  apk add --no-cache --virtual .gyp \
-    bash \
-    curl \
-    g++ \
-    make \
-    python3
 
-# This is used to download and install the `node-prune` tool in the Docker image.
-RUN curl -sfL https://gobinaries.com/tj/node-prune | bash -s -- -b /usr/local/bin
-
-# Set to a non-root built-in user `node`
 USER node
-
-# Create app directory (with user `node`)
-RUN mkdir -p /home/node/app
-
-# Set the working directory to `/home/node/app`
 WORKDIR /home/node/app
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
 COPY --chown=node package*.json ./
+# `packag[e]s` is a wildcard, so the COPY does not fail in a repo with no
+# local packages.
+COPY --chown=node packag[e]s ./packages/
+COPY --chown=node ${FROM_FOLDER}/${SERVICE_NAME} ./${FROM_FOLDER}/${SERVICE_NAME}
 
-# The following two commands is used to copy the `packages`,`service` directory from the local file system to the Docker image.
-#  The `--chown=node` flag ensures that the ownership of the copied files/directories is set to the `node` user.
-#  This is important because the subsequent commands in the Dockerfile are executed with the `node` user,
-#  and it needs the appropriate permissions to access and modify the copied files/directories.
-COPY --chown=node packages ./packages
+RUN --mount=type=cache,target=/home/node/.npm,id=npm-cache,uid=1000,gid=1000 \
+    npm ci --ignore-scripts --no-audit --no-fund
+# If the repo has `patches/`, copy it above and apply it here:
+# RUN npx --yes --ignore-scripts patch-package@8.0.1 --error-on-fail
 
-COPY --chown=node $FROM_FOLDER/$SERVICE_NAME ./$FROM_FOLDER/$SERVICE_NAME
+# Workspaces build in declaration order, so local packages build first.
+RUN npm run build --workspaces --if-present
 
-# Installing all dependencies
-RUN npm ci --ignore-scripts
+RUN --mount=type=cache,target=/home/node/.npm,id=npm-cache,uid=1000,gid=1000 \
+    npm prune --omit=dev --ignore-scripts
+# Optional cleanup. This image copies node_modules whole, so here it helps.
+# RUN npx --yes --ignore-scripts clean-modules --yes
 
-# Building the app
-# set the Working Directory to the service
-WORKDIR /home/node/app/$FROM_FOLDER/$SERVICE_NAME
-# Run Build Command
-RUN npm run build
-
-# Run node-prune
-RUN npm prune --production
-RUN /usr/local/bin/node-prune
-
-# Start fresh for a smaller  image size
-FROM node:$nodeVer
-
-# Take the build variables for image stage
+FROM node:${nodeVer}
 ARG SERVICE_NAME
 ARG FROM_FOLDER
 
-RUN mkdir -p /home/node/app
+WORKDIR /home/node/app
+
+COPY --from=build --chown=node /home/node/app/node_modules ./node_modules
+COPY --from=build --chown=node /home/node/app/${FROM_FOLDER}/${SERVICE_NAME}/dist ./dist
+COPY --from=build --chown=node /home/node/app/${FROM_FOLDER}/${SERVICE_NAME}/node_module[s] ./node_modules/
+COPY --from=build --chown=node /home/node/app/${FROM_FOLDER}/${SERVICE_NAME}/package.json ./package.json
+COPY --from=build --chown=node /home/node/app/${FROM_FOLDER}/${SERVICE_NAME}/public ./public
+COPY --from=build --chown=node /home/node/app/${FROM_FOLDER}/${SERVICE_NAME}/.env.defaults /home/node/app/${FROM_FOLDER}/${SERVICE_NAME}/.env.example ./
+COPY --from=build --chown=node /home/node/app/packag[e]s ./packages/
 
 USER node
 
-WORKDIR /home/node/app
-
-
-# These `COPY` commands are used to copy files and directories from the `BASE` 
-# stage of the Docker image to the current stage.
-COPY --from=BASE --chown=node /home/node/app/node_modules ./node_modules
-COPY --from=BASE --chown=node /home/node/app/package.json ./
-COPY --from=BASE --chown=node /home/node/app/package-lock.json ./
-COPY --from=BASE --chown=node /home/node/app/packages ./packages
-COPY --from=BASE --chown=node /home/node/app/$FROM_FOLDER/$SERVICE_NAME ./$FROM_FOLDER/$SERVICE_NAME
-
-# Set the working directory to `/home/node/app/services/auth-service`
-WORKDIR /home/node/app/$FROM_FOLDER/$SERVICE_NAME
-
-
-# Bind to all network interfaces so that it can be mapped to the host OS
 ENV HOST=0.0.0.0 PORT=3000
-
 EXPOSE ${PORT}
 
-CMD [ "node", "." ]
+CMD [ "node", "-r", "./dist/opentelemetry-registry.js", "." ]
