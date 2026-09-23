@@ -33,6 +33,10 @@ sl react:scaffold my-react-app
 
 ```
 
+## Docker builds and Jenkins
+
+`sl scaffold` and `sl microservice` generate Dockerfiles for code builds, traced (NFT) full builds and legacy full builds. With `--jenkinsfile`, `sl scaffold` also writes a Jenkins pipeline that picks the build mode for each changed service. See [docker-builds.md](src/generators/microservice/docs/docker-builds.md) for the flow, the `nft` config and known issues.
+
 ## MCP Integration
 
 All scaffolded projects automatically include MCP configuration in `mcp.json`. This enables AI assistants like Roo Code to interact with your project intelligently.
@@ -61,7 +65,7 @@ $ npm install -g @sourceloop/cli
 $ sl COMMAND
 running command...
 $ sl (-v|--version|version)
-@sourceloop/cli/13.1.0 darwin-arm64 node-v24.16.0
+@sourceloop/cli/13.1.1 linux-x64 node-v24.19.0
 $ sl --help [COMMAND]
 USAGE
   $ sl COMMAND
@@ -105,7 +109,7 @@ OPTIONS
   --templateVersion=templateVersion  Template branch, tag, or version
 ```
 
-_See code: [src/commands/angular/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v13.1.0/src/commands/angular/scaffold.ts)_
+_See code: [src/commands/angular/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v13.1.1/src/commands/angular/scaffold.ts)_
 
 ## `sl autocomplete [SHELL]`
 
@@ -153,7 +157,7 @@ OPTIONS
   --help                                           show manual pages
 ```
 
-_See code: [src/commands/cdk.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v13.1.0/src/commands/cdk.ts)_
+_See code: [src/commands/cdk.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v13.1.1/src/commands/cdk.ts)_
 
 ## `sl extension [NAME]`
 
@@ -170,7 +174,7 @@ OPTIONS
   --help  show manual pages
 ```
 
-_See code: [src/commands/extension.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v13.1.0/src/commands/extension.ts)_
+_See code: [src/commands/extension.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v13.1.1/src/commands/extension.ts)_
 
 ## `sl help [COMMAND]`
 
@@ -211,7 +215,7 @@ DESCRIPTION
       }
 ```
 
-_See code: [src/commands/mcp.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v13.1.0/src/commands/mcp.ts)_
+_See code: [src/commands/mcp.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v13.1.1/src/commands/mcp.ts)_
 
 ## `sl microservice [NAME]`
 
@@ -259,7 +263,7 @@ OPTIONS
       Include sequelize as ORM in service
 ```
 
-_See code: [src/commands/microservice.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v13.1.0/src/commands/microservice.ts)_
+_See code: [src/commands/microservice.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v13.1.1/src/commands/microservice.ts)_
 
 ## `sl react:scaffold [NAME]`
 
@@ -280,7 +284,7 @@ OPTIONS
   --templateVersion=templateVersion  Template branch or version
 ```
 
-_See code: [src/commands/react/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v13.1.0/src/commands/react/scaffold.ts)_
+_See code: [src/commands/react/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v13.1.1/src/commands/react/scaffold.ts)_
 
 ## `sl scaffold [NAME]`
 
@@ -304,7 +308,7 @@ OPTIONS
   --owner=owner              owner of the repo
 ```
 
-_See code: [src/commands/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v13.1.0/src/commands/scaffold.ts)_
+_See code: [src/commands/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v13.1.1/src/commands/scaffold.ts)_
 
 ## `sl update`
 
@@ -318,7 +322,7 @@ OPTIONS
   --help  show manual pages
 ```
 
-_See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v13.1.0/src/commands/update.ts)_
+_See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v13.1.1/src/commands/update.ts)_
 <!-- commandsstop -->
 
 ---

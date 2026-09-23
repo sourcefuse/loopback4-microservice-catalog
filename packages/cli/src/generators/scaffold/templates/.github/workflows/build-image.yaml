@@ -43,8 +43,11 @@ jobs:
       - name: lerna test
         run: 'npm run test --workspaces --if-present'
 
+      - name: build shared deps image
+        run: 'npm run docker:build:deps'
+
       - name: lerna docker build
-        run: 'npx --ignore-scripts lerna@9.0.7 run docker:build --stream --concurrency 2'
+        run: 'npx --ignore-scripts lerna@9.0.7 run docker:build:nft --stream --concurrency 4'
 
       - name: Login to Docker Hub
         uses: docker/login-action@v2

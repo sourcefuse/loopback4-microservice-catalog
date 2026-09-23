@@ -1,0 +1,40 @@
+# syntax=docker/dockerfile:1
+#
+# CODE build. The pipeline uses it when this service changed but no
+# full-build trigger fired (see scripts/get-full-build-packages.sh). It does
+# not install anything. It starts FROM the last image of this service for
+# the environment and puts the new host-built dist on top.
+#
+# Build context: the repo root. Build args:
+#   SERVICE_NAME  folder name of this service, e.g. auth-service
+#   FROM_FOLDER   services or facades
+#   IMAGE_REPO    registry repo, e.g. the DockerHub org
+#   IMAGE_NAME    image name, i.e. the npm package name
+#   BUILD_ENV     environment tag of the base image, e.g. dev
+#
+# LOCAL PACKAGES: for each `@local/<name>` in this service's dependencies,
+# uncomment and fill in the marked lines, so that their new dist goes in too.
+ARG IMAGE_REPO
+ARG IMAGE_NAME
+ARG BUILD_ENV=dev
+
+FROM ${IMAGE_REPO}/${IMAGE_NAME}:${BUILD_ENV}
+ARG SERVICE_NAME
+ARG FROM_FOLDER
+
+WORKDIR /home/node/app
+
+# COPY merges into an existing folder. Without this delete, a file that we
+# removed from the source stays in the image, and a booter still loads it.
+USER root
+RUN rm -rf ./dist
+# [local packages 1/2] one line per local package:
+# RUN rm -rf ./packages/<name>/dist
+USER node
+
+COPY --chown=node ${FROM_FOLDER}/${SERVICE_NAME}/dist ./dist
+COPY --chown=node ${FROM_FOLDER}/${SERVICE_NAME}/package.json ./package.json
+COPY --chown=node ${FROM_FOLDER}/${SERVICE_NAME}/public ./public
+COPY --chown=node ${FROM_FOLDER}/${SERVICE_NAME}/.env.defaults ${FROM_FOLDER}/${SERVICE_NAME}/.env.example ./
+# [local packages 2/2] one line per local package:
+# COPY --chown=node packages/<name>/dist ./packages/<name>/dist
