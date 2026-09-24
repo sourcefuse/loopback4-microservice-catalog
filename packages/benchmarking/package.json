@@ -1,0 +1,90 @@
+{
+  "name": "@sourceloop/benchmarking",
+  "version": "0.1.0",
+  "description": "Benchmark helpers for Mocha that fail a build when throughput regresses against a tracked baseline",
+  "keywords": [
+    "loopback-extension",
+    "loopback",
+    "benchmark",
+    "performance",
+    "mocha"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "engines": {
+    "node": "^22.12.0 || >=24"
+  },
+  "files": [
+    "README.md",
+    "dist",
+    "src",
+    "!*/__tests__"
+  ],
+  "scripts": {
+    "build": "lb-tsc",
+    "build:watch": "lb-tsc --watch",
+    "lint": "npm run eslint && npm run prettier:check",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+    "prettier:cli": "prettier \"**/*.ts\" \"**/*.js\"",
+    "prettier:check": "npm run prettier:cli -- -l",
+    "prettier:fix": "npm run prettier:cli -- --write",
+    "eslint": "eslint --report-unused-disable-directives .",
+    "eslint:fix": "npm run eslint -- --fix",
+    "pretest": "npm run rebuild",
+    "test": "lb-mocha --grep 'benchmark:' --invert --allow-console-logs \"dist/__tests__\"",
+    "test:benchmark": "lb-mocha --allow-console-logs \"dist/__tests__/acceptance\"",
+    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js",
+    "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
+    "rebuild": "npm run clean && npm run build",
+    "prune": "npm prune --production",
+    "coverage": "nyc npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
+    "directory": "packages/benchmarking"
+  },
+  "author": "Sourcefuse",
+  "license": "MIT",
+  "peerDependencies": {
+    "mocha": ">=10"
+  },
+  "dependencies": {
+    "tinybench": "^5.1.0",
+    "tslib": "^2.8.1"
+  },
+  "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
+    "@loopback/build": "^12.0.11",
+    "@loopback/eslint-config": "^16.0.1",
+    "@loopback/testlab": "^8.0.11",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^20.19.39",
+    "eslint": "^8.57.1",
+    "mocha": "^11.7.5",
+    "source-map-support": "^0.5.21",
+    "typescript": "^5.9.3"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "typedoc": {
+    "config": {
+      "entryPoints": [
+        "src/index.ts"
+      ],
+      "out": "packages/benchmarking",
+      "plugin": [
+        "typedoc-plugin-markdown"
+      ]
+    }
+  }
+}
