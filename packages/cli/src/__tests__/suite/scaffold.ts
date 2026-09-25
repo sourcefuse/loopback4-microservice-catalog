@@ -67,7 +67,8 @@ export const scaffoldSuite = [
         input: {
           type: 'input',
           name: 'helmPath',
-          message: 'Enter the path for Helm chart:',
+          message:
+            'Enter the path for Helm chart (relative to the Jenkins workspace, must start with <project>-helm/):',
         },
         output: 'helm test path',
       },
@@ -134,7 +135,8 @@ export const scaffoldSuite = [
         input: {
           type: 'input',
           name: 'helmPath',
-          message: 'Enter the path for Helm chart:',
+          message:
+            'Enter the path for Helm chart (relative to the Jenkins workspace, must start with <project>-helm/):',
         },
         output: 'helm test path',
       },
@@ -201,7 +203,8 @@ export const scaffoldSuite = [
         input: {
           type: 'input',
           name: 'helmPath',
-          message: 'Enter the path for Helm chart:',
+          message:
+            'Enter the path for Helm chart (relative to the Jenkins workspace, must start with <project>-helm/):',
         },
         output: 'helm test path',
       },
@@ -259,7 +262,8 @@ export const scaffoldSuite = [
         input: {
           type: 'input',
           name: 'helmPath',
-          message: 'Enter the path for Helm chart:',
+          message:
+            'Enter the path for Helm chart (relative to the Jenkins workspace, must start with <project>-helm/):',
         },
         output: 'helm test path',
       },
@@ -318,7 +322,8 @@ export const scaffoldSuite = [
         input: {
           type: 'input',
           name: 'helmPath',
-          message: 'Enter the path for Helm chart:',
+          message:
+            'Enter the path for Helm chart (relative to the Jenkins workspace, must start with <project>-helm/):',
         },
         output: 'helm test path',
       },
@@ -384,7 +389,8 @@ export const scaffoldSuite = [
         input: {
           type: 'input',
           name: 'helmPath',
-          message: 'Enter the path for Helm chart:',
+          message:
+            'Enter the path for Helm chart (relative to the Jenkins workspace, must start with <project>-helm/):',
         },
         output: 'helm test path',
       },
@@ -417,7 +423,8 @@ export const scaffoldSuite = [
         input: {
           type: 'input',
           name: 'helmPath',
-          message: 'Enter the path for Helm chart:',
+          message:
+            'Enter the path for Helm chart (relative to the Jenkins workspace, must start with <project>-helm/):',
         },
         output: 'helm test path',
       },
