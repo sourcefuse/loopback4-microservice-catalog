@@ -60,7 +60,8 @@ pipeline {
         stage('git-setup-and-fetch') {
             steps {
                 slackSend channel: 'dummy-alerts', message: 'Build started: ' + JOB_NAME + ' - #' + BUILD_NUMBER + ' (<' + BUILD_URL + '|Open>)', teamDomain: 'sourcefuse', tokenCredentialId: 'sourcefuse-slack'
-                sh "sudo npm install -g lerna@^9"
+                // Global, because the version stages run lerna before `npm ci`. Keep in sync with the root devDependency.
+                sh "sudo npm install -g lerna@9.0.7"
                 sh "sudo npm install -g npm-merge-driver"
                 sh "sudo git config --global --add safe.directory $WORKSPACE"
                 sh "sudo git remote rm origin"
@@ -70,7 +71,7 @@ pipeline {
                 sh "sudo git config --global user.name 'sf-jenkins-github'"
                 sh "sudo git config --global user.email devops@sourcefuse.com"
                 sh "sudo git remote add origin 'https://$<%= projectName %>_API_CREDENTIALS@github.com/$GIT_REPO_NAME'"
-                // get-full-build-packages.sh needs jq.
+                // get-full-build-packages.sh needs jq. `dpkg --print-architecture` picks the binary for this agent (amd64 or arm64).
                 sh 'command -v jq || (sudo wget -q -O /usr/bin/jq https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-linux-$(dpkg --print-architecture) && sudo chmod +x /usr/bin/jq)'
                 sh "sudo git fetch"
             }
@@ -132,8 +133,8 @@ pipeline {
             }
             steps {
                 script {
-                    sh "curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sudo sh -s -- -b /usr/local/bin latest"
-                    sh "trivy -c trivy.yml fs ."
+                    // Pinned by digest. Bump on purpose: trivy's release channel was compromised in March 2026.
+                    sh 'sudo docker run --rm -v "$PWD:/src" -w /src aquasec/trivy:0.74.0@sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969 -c trivy.yml fs .'
                     sh "sudo git stash -u"
                 }
             }
@@ -151,6 +152,18 @@ pipeline {
                         returnStdout: true
                     ).trim()
                     echo "Packages that need a full build: ${env.FULL_BUILD_PACKAGES ?: 'none'}"
+                    // A root-level trigger (lockfile, patches/, Dockerfile.deps, tracer, root nft)
+                    // marks every image, but `lerna --since` only sees changes inside package
+                    // folders, so push, tag and helm-update would skip them. Drop --since then.
+                    if (env.FULL_BUILD_PACKAGES && !env.BUILD_ALL_PACKAGES.toBoolean()) {
+                        def allImagePackages = sh(
+                            script: "bash ${WORKSPACE}/scripts/get-full-build-packages.sh",
+                            returnStdout: true
+                        ).trim()
+                        if (env.FULL_BUILD_PACKAGES == allImagePackages) {
+                            env.BUILD_ALL_PACKAGES = 'true'
+                        }
+                    }
                 }
             }
         }
@@ -225,8 +238,7 @@ pipeline {
                     def promotionChain = params.PROMOTION_CHAIN.tokenize(',').collect { it.trim() }
                     def idx = promotionChain.indexOf(env.BUILD_ENV)
                     if (idx == -1) {
-                        echo "Warning: BUILD_ENV=${env.BUILD_ENV} is not in the promotion chain. Skipping retag."
-                        return
+                        error("BUILD_ENV=${env.BUILD_ENV} is not in PROMOTION_CHAIN=${params.PROMOTION_CHAIN}")
                     }
                     if (idx == 0 || params.IS_HOTFIX_RELEASE) {
                         echo "Skipping retag: BUILD_ENV=${env.BUILD_ENV}, IS_HOTFIX_RELEASE=${params.IS_HOTFIX_RELEASE}"
@@ -244,7 +256,10 @@ pipeline {
         }
         stage('Docker-build') {
             when {
-                expression { params.BUILD_NEEDED && (env.BUILD_ENV == 'dev' || params.IS_HOTFIX_RELEASE || params.BYPASS_IMAGE_PROMOTION) }
+                expression {
+                    def chain = params.PROMOTION_CHAIN.tokenize(',').collect { it.trim() }
+                    params.BUILD_NEEDED && (env.BUILD_ENV == chain[0] || params.IS_HOTFIX_RELEASE || params.BYPASS_IMAGE_PROMOTION)
+                }
             }
             steps {
                 script {
