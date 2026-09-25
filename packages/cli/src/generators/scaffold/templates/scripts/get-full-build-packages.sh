@@ -44,19 +44,36 @@
 #   d. The package's `dependencies`, `devDependencies` or `nft` changed.
 #      A version bump or a script change alone does NOT count.
 #   e. The `dependencies` or `devDependencies` of a `@local/*` package that
-#      it uses changed. Source changes in a local package do NOT count, a
-#      code build copies the new local dist too.
+#      it uses changed, or rule (f) fired for that local package. Other source
+#      changes in a local package do NOT count, a code build copies the new
+#      local dist too.
+#   f. The package's `src/` imports a bare specifier (not `./` or `../`) that
+#      its `src/` did not import at LAST_COMMIT. Examples: a dependency that
+#      was declared but not used, or a new deep import like `lodash/fp`. A
+#      traced image only has the files that the old dist loaded, so a code
+#      build would fail at boot with `Cannot find module`. Node built-ins do
+#      not count. `import type` lines and matches in comments can cause a full
+#      build that is not necessary. Computed specifiers (`require(name)`) are
+#      not found; they need `nft.alwaysCopy` anyway.
 #
 # Known gap: when a lockfile-only fix (e.g. a transitive security bump) and a
 # direct dependency change land in the same diff window, rule (b) cannot see
 # the lockfile fix. Keep such changes in separate builds, or run the pipeline
 # with BUILD_ALL_PACKAGES=true to force full builds.
 
-set -o pipefail
+set -eo pipefail
+
+for tool in jq node; do
+    command -v "$tool" >/dev/null || { echo "Error: $tool is required" >&2; exit 1; }
+done
 
 # Keeps deps/devDeps/nft only. `-S` sorts keys so that key order is not a change.
 readonly JQ_DEPS_FILTER='{dependencies: (.dependencies // {}), devDependencies: (.devDependencies // {}), nft: (.nft // {})}'
 readonly LOCAL_SCOPE='@local/'
+# `from 'x'`, `require('x')`, `import('x')` and `import 'x'`, where x is not relative.
+readonly IMPORT_SPEC_RE="(from|require\(|import\(|^import)[[:space:]]*['\"][^'\"./][^'\"]*['\"]"
+# Padded with spaces, so that a substring match finds whole names only.
+NODE_BUILTINS=" $(node -p "require('module').builtinModules.join(' ')") "
 
 last_commit="${1:-}"
 build_all=false
@@ -71,6 +88,22 @@ deps_changed() {
     [[ "$old" != "$new" ]]
 }
 
+# Prints the bare import specifiers in "$2/src" at git ref "$1", sorted.
+import_specs() {
+    { git grep -hoE "$IMPORT_SPEC_RE" "$1" -- "$2/src" || true; } \
+        | grep -oE "['\"][^'\"]+['\"]" | tr -d "'\"" | LC_ALL=C sort -u
+}
+
+# Returns 0 when "$1/src" imports a specifier at HEAD that it did not import
+# at last_commit (rule f). `fs/promises` is a built-in because `fs` is.
+has_new_import() {
+    local spec
+    while IFS= read -r spec; do
+        [[ "$spec" == node:* || ( "$spec" != @* && "$NODE_BUILTINS" == *" ${spec%%/*} "* ) ]] || return 0
+    done < <(LC_ALL=C comm -13 <(import_specs "$last_commit" "$1") <(import_specs HEAD "$1"))
+    return 1
+}
+
 array_contains() {
     local needle="$1"; shift
     for element; do [[ "$element" == "$needle" ]] && return 0; done
@@ -83,8 +116,9 @@ elif ! git rev-parse --verify "$last_commit^{commit}" &>/dev/null; then
     echo "Warning: commit '$last_commit' not found, building all packages" >&2
     build_all=true
 else
-    while IFS= read -r file; do changed_files+=("$file"); done \
-        < <(git diff --name-only "$last_commit" HEAD)
+    # A separate assignment, so `set -e` stops the script when git diff fails.
+    diff_output=$(git diff --name-only "$last_commit" HEAD)
+    mapfile -t changed_files <<< "$diff_output"
 
     # Rule (b): root changes go into every image.
     for file in "${changed_files[@]}"; do
@@ -119,12 +153,22 @@ else
         fi
     done
 
-    # Rule (e), part 1: collect local packages whose dependencies changed.
+    # Rule (f) checks only the packages whose src/ changed.
+    mapfile -t src_changed_dirs < <(printf '%s\n' "${changed_files[@]}" \
+        | sed -nE 's#^((packages|services|facades)/[^/]+)/src/.*#\1#p' | sort -u)
+
+    # Rule (e), part 1: collect local packages whose dependencies changed or
+    # that have a new import (rule f).
     if ! $build_all; then
         for file in "${changed_files[@]}"; do
             if [[ "$file" == packages/*/package.json ]] && deps_changed "$file"; then
                 pkg_folder="${file#packages/}"
                 changed_local_pkgs+=("${LOCAL_SCOPE}${pkg_folder%/package.json}")
+            fi
+        done
+        for dir in "${src_changed_dirs[@]}"; do
+            if [[ "$dir" == packages/* ]] && has_new_import "$dir"; then
+                changed_local_pkgs+=("${LOCAL_SCOPE}${dir#packages/}")
             fi
         done
     fi
@@ -154,6 +198,12 @@ for search_dir in services facades; do
                     break
                 fi
             done
+        fi
+
+        # Rule (f).
+        if ! $needs_full_build && array_contains "$pkg_dir" "${src_changed_dirs[@]}" \
+            && has_new_import "$pkg_dir"; then
+            needs_full_build=true
         fi
 
         # Rule (e), part 2: the package uses a local package from part 1.

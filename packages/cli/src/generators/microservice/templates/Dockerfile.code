@@ -5,6 +5,9 @@
 # not install anything. It starts FROM the last image of this service for
 # the environment and puts the new host-built dist on top.
 #
+# A new bare import is a full-build trigger (rule f in the script), so the
+# base image already has every module that the new dist loads.
+#
 # Build context: the repo root. Build args:
 #   SERVICE_NAME  folder name of this service, e.g. auth-service
 #   FROM_FOLDER   services or facades
@@ -27,14 +30,16 @@ WORKDIR /home/node/app
 # COPY merges into an existing folder. Without this delete, a file that we
 # removed from the source stays in the image, and a booter still loads it.
 USER root
-RUN rm -rf ./dist
+RUN rm -rf ./${FROM_FOLDER}/${SERVICE_NAME}/dist
 # [local packages 1/2] one line per local package:
 # RUN rm -rf ./packages/<name>/dist
 USER node
 
-COPY --chown=node ${FROM_FOLDER}/${SERVICE_NAME}/dist ./dist
-COPY --chown=node ${FROM_FOLDER}/${SERVICE_NAME}/package.json ./package.json
-COPY --chown=node ${FROM_FOLDER}/${SERVICE_NAME}/public ./public
-COPY --chown=node ${FROM_FOLDER}/${SERVICE_NAME}/.env.defaults ${FROM_FOLDER}/${SERVICE_NAME}/.env.example ./
+COPY --chown=node ${FROM_FOLDER}/${SERVICE_NAME}/dist ./${FROM_FOLDER}/${SERVICE_NAME}/dist
+COPY --chown=node ${FROM_FOLDER}/${SERVICE_NAME}/package.json ./${FROM_FOLDER}/${SERVICE_NAME}/package.json
+COPY --chown=node ${FROM_FOLDER}/${SERVICE_NAME}/public ./${FROM_FOLDER}/${SERVICE_NAME}/public
+COPY --chown=node ${FROM_FOLDER}/${SERVICE_NAME}/.env.defaults ${FROM_FOLDER}/${SERVICE_NAME}/.env.example ./${FROM_FOLDER}/${SERVICE_NAME}/
 # [local packages 2/2] one line per local package:
 # COPY --chown=node packages/<name>/dist ./packages/<name>/dist
+
+WORKDIR /home/node/app/${FROM_FOLDER}/${SERVICE_NAME}

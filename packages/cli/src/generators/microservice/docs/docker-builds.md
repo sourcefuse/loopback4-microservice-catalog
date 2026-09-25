@@ -32,7 +32,9 @@ package.json      docker:build:full, docker:build:nft, docker:build:code,
                   docker:push, docker:tag, docker:retag, helm-update, nft
 ```
 
-All three Dockerfiles take `SERVICE_NAME` and `FROM_FOLDER` as build args, and the build context is always the repo root. They also make the same runtime layout: the service's `dist`, `package.json`, `public` and env files sit at `/home/node/app`, and local packages go in `/home/node/app/packages`. Keep it that way. A code build puts `dist` on top of whichever full build came last. If the layouts drift apart, a code build writes files to the wrong place.
+All three Dockerfiles take `SERVICE_NAME` and `FROM_FOLDER` as build args, and the build context is always the repo root. They also make the same runtime layout, which is the repo layout: the root `node_modules` is at `/home/node/app/node_modules`, the service is at `/home/node/app/<services|facades>/<name>` with its own nested `node_modules`, local packages are at `/home/node/app/packages`, and `WORKDIR` is the service folder. Keep it that way. npm nests a package in the service's `node_modules` only when its version conflicts with the hoisted one. If we merge the nested folder into the root one, every package gets the service's version. A code build puts `dist` on top of whichever full build came last. If the layouts drift apart, a code build writes files to the wrong place.
+
+Images built before this layout have `dist` at `/home/node/app`. The first build after an upgrade must be a full build of every package (`BUILD_ALL_PACKAGES=true`).
 
 ## How the pipeline picks a mode
 
@@ -49,16 +51,25 @@ A package needs a full build when one of these is true:
 | The package's `Dockerfile` or `Dockerfile.nft` changed | That package |
 | The package's `dependencies`, `devDependencies` or `nft` changed | That package |
 | The `dependencies` or `devDependencies` of an `@local/*` package it uses changed | That package |
+| Its `src/` imports a bare specifier that it did not import before, e.g. a declared but unused dependency or `lodash/fp` | That package |
+| An `@local/*` package it uses has such a new import | That package |
 
 This table matches the header comment of `get-full-build-packages.sh`. Change both together.
 
 A version bump, a script change, a source change or a change to `Dockerfile.code` does not trigger a full build. None of them changes `node_modules`.
 
-The lockfile rule has a gap. With npm workspaces, the root lockfile changes each time a workspace adds a dependency. The script can only treat the lockfile as a trigger when no workspace `package.json` changed. If a transitive security fix and a direct dependency change land in the same build window, only the package whose `package.json` changed gets the fix. Keep those changes in separate builds, or run the pipeline one time with `BUILD_ALL_PACKAGES=true`.
+The new-import rule exists because a traced image only has the files that the old `dist` loaded. A code build copies only the new `dist`. If that `dist` loads a module that the old one did not, the container fails at boot with `Cannot find module`. The script compares the bare `import`, `export … from`, `require()` and `import()` specifiers in `src/` between the last commit and HEAD. Node built-ins (`fs`, `node:path`, `fs/promises`) do not count. The check has limits:
+
+- `import type` lines and specifiers in comments can cause a full build that is not necessary. That is safe, only slower.
+- A computed specifier such as `require(name)` is not found. The tracer cannot follow it either, so it must be in `nft.alwaysCopy`, which a full build then picks up.
+
+The lockfile rule has a gap. With npm workspaces, the root lockfile changes each time a workspace adds a dependency. The script cannot tell whether a workspace change or a transitive update changed the lockfile, so it only treats the lockfile as a trigger when no workspace `package.json` changed. If a transitive security fix and a direct dependency change land in the same build window, only the package whose `package.json` changed gets the fix. We decide that case ourselves: keep those changes in separate builds, or run the pipeline one time with `BUILD_ALL_PACKAGES=true`.
+
+When the script marks every image, the `Detect-changes` stage sets `BUILD_ALL_PACKAGES=true`. `lerna --since` only sees changes inside package folders, so without this the push, tag and helm stages would skip images that a root file triggered.
 
 ### Conventions the script depends on
 
-The script reads folder names and package names, and needs `git` and `jq` on the build agent. If our repo is different, we edit the script. Its header comment names the line to change for each convention.
+The script reads folder names and package names, and needs `git`, `jq` and `node` on the build agent. It stops with an error when `jq` or `node` is missing or `git diff` fails. The Jenkinsfile installs `jq` when the agent has none. It picks the binary with `dpkg --print-architecture`, so it works on amd64 and arm64 agents. On another agent type, change that download URL. If our repo is different, we edit the script. Its header comment names the line to change for each convention.
 
 - Deployable apps are in `services/*` and `facades/*`.
 - A package is an image only if its `package.json` has a `docker:build:full` script.
@@ -75,13 +86,17 @@ The script reads folder names and package names, and needs `git` and `jq` on the
 | `PROMOTION_CHAIN` | Order of environments, e.g. `dev,qa,production` |
 | `BYPASS_IMAGE_PROMOTION` | Build new images in a higher environment instead of retagging |
 
-Only the first environment in `PROMOTION_CHAIN` builds images. A higher environment pulls the image tag of the previous one (`docker:retag`), pushes it with its version, and tags it for its own environment. A hotfix build or `BYPASS_IMAGE_PROMOTION` skips the retag and builds.
+Only the first environment in `PROMOTION_CHAIN` builds images. A higher environment pulls the image tag of the previous one (`docker:retag`), pushes it with its version, and tags it for its own environment. A hotfix build or `BYPASS_IMAGE_PROMOTION` skips the retag and builds. A `BUILD_ENV` that is not in `PROMOTION_CHAIN` fails the build.
 
 `helm-update` writes the image tag into `$WORKSPACE/$HELM_VALUES_YAML_PATH-values.yaml`. The key is the service folder name in camelCase, so `auth-service` becomes `authService`. The Jenkinsfile sets `HELM_VALUES_YAML_PATH` to `<helm path>/<env>`, so the file for `dev` is `<helm path>/dev-values.yaml`. If our chart uses other keys or file names, we edit the script in the service's `package.json`.
+
+The Jenkinsfile clones the helm repo into `<project>-helm/` in the workspace. So `--helmPath` must start with `<project>-helm/`, for example `<project>-helm/values`. Another path makes `helm-update` edit a file outside the helm clone.
 
 ## Code builds
 
 `Dockerfile.code` starts `FROM <repo>/<image>:<env>`, the last image that the pipeline tagged for this environment. It deletes the old `dist`, copies in the new host-built one, and copies `package.json`, `public` and the env files. It runs no install, so it takes seconds.
+
+A code build needs only the published image, not the deps image. A new import is a full-build trigger, so the base image already has every module that the new `dist` loads.
 
 The delete step matters. `COPY` merges into a folder that already exists, so a file that we removed from the source would stay in the image. With LoopBack that causes real bugs: the booter scans `dist/controllers` and still loads a deleted controller.
 
@@ -185,7 +200,7 @@ That is why `Dockerfile.deps` pins `@vercel/nft`. An upgrade changes tracer outp
 
 ## Legacy full builds
 
-`Dockerfile` does the whole build in the image: `npm ci`, `npm run build --workspaces`, `npm prune --omit=dev`, then it copies the result. It needs no deps image and no host build.
+`Dockerfile` does the whole build in the image: `npm ci`, `patch-package` when the repo has `patches/`, `npm run build --workspaces`, `npm prune --omit=dev`, then it copies the result. It needs no deps image and no host build.
 
 It is slow. Each image runs its own `npm ci` over the full monorepo lockfile, and parallel installs can use all of the agent's memory. That is why the pipeline runs legacy builds with `--concurrency 1`. The traced build runs one shared install, so it can use `--concurrency 4`.
 

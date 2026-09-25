@@ -300,7 +300,7 @@ ARGUMENTS
 OPTIONS
   --cwd=cwd                  Directory where project will be scaffolded, instead of the project name
   --description=description  description of the repo
-  --helmPath=helmPath        Enter the path for Helm chart:
+  --helmPath=helmPath        Enter the path for Helm chart (relative to the Jenkins workspace, must start with <project>-helm/):
   --help                     show manual pages
   --integrateWithBackstage   Do you want to include backstage integration files?
   --issuePrefix=issuePrefix  Prefix to be used for issues(e.g. GH-)

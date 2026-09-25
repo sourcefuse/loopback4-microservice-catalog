@@ -25,11 +25,14 @@ COPY --chown=node package*.json ./
 # local packages.
 COPY --chown=node packag[e]s ./packages/
 COPY --chown=node ${FROM_FOLDER}/${SERVICE_NAME} ./${FROM_FOLDER}/${SERVICE_NAME}
+# Same patches as Dockerfile.deps, so both full builds ship the same code.
+COPY --chown=node patche[s] ./patches/
 
 RUN --mount=type=cache,target=/home/node/.npm,id=npm-cache,uid=1000,gid=1000 \
-    npm ci --ignore-scripts --no-audit --no-fund
-# If the repo has `patches/`, copy it above and apply it here:
-# RUN npx --yes --ignore-scripts patch-package@8.0.1 --error-on-fail
+    npm ci --ignore-scripts --no-audit --no-fund \
+ && if [ -n "$(ls -A patches 2>/dev/null)" ]; then \
+      npx --yes --ignore-scripts patch-package@8.0.1 --error-on-fail; \
+    fi
 
 # Workspaces build in declaration order, so local packages build first.
 RUN npm run build --workspaces --if-present
@@ -45,14 +48,18 @@ ARG FROM_FOLDER
 
 WORKDIR /home/node/app
 
+# Keep the repo layout: root node_modules at the root, the service at its
+# workspace path with its own nested node_modules. Merging the nested folder
+# into the root one gives every package the service's versions.
 COPY --from=build --chown=node /home/node/app/node_modules ./node_modules
-COPY --from=build --chown=node /home/node/app/${FROM_FOLDER}/${SERVICE_NAME}/dist ./dist
-COPY --from=build --chown=node /home/node/app/${FROM_FOLDER}/${SERVICE_NAME}/node_module[s] ./node_modules/
-COPY --from=build --chown=node /home/node/app/${FROM_FOLDER}/${SERVICE_NAME}/package.json ./package.json
-COPY --from=build --chown=node /home/node/app/${FROM_FOLDER}/${SERVICE_NAME}/public ./public
-COPY --from=build --chown=node /home/node/app/${FROM_FOLDER}/${SERVICE_NAME}/.env.defaults /home/node/app/${FROM_FOLDER}/${SERVICE_NAME}/.env.example ./
 COPY --from=build --chown=node /home/node/app/packag[e]s ./packages/
+COPY --from=build --chown=node /home/node/app/${FROM_FOLDER}/${SERVICE_NAME}/dist ./${FROM_FOLDER}/${SERVICE_NAME}/dist
+COPY --from=build --chown=node /home/node/app/${FROM_FOLDER}/${SERVICE_NAME}/node_module[s] ./${FROM_FOLDER}/${SERVICE_NAME}/node_modules/
+COPY --from=build --chown=node /home/node/app/${FROM_FOLDER}/${SERVICE_NAME}/package.json ./${FROM_FOLDER}/${SERVICE_NAME}/package.json
+COPY --from=build --chown=node /home/node/app/${FROM_FOLDER}/${SERVICE_NAME}/public ./${FROM_FOLDER}/${SERVICE_NAME}/public
+COPY --from=build --chown=node /home/node/app/${FROM_FOLDER}/${SERVICE_NAME}/.env.defaults /home/node/app/${FROM_FOLDER}/${SERVICE_NAME}/.env.example ./${FROM_FOLDER}/${SERVICE_NAME}/
 
+WORKDIR /home/node/app/${FROM_FOLDER}/${SERVICE_NAME}
 USER node
 
 ENV HOST=0.0.0.0 PORT=3000
