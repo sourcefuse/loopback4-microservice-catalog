@@ -9,7 +9,8 @@
      "migrate": "npm run db:migrate --workspaces --if-present",
      "build": "npm run build --workspaces --if-present",
      "github:coverage": "lerna run coverage --concurrency=2",
-    "coverage:combined": "node coverage.js && nyc report --reporter html"
+    "coverage:combined": "node coverage.js && nyc report --reporter html",
+    "docker:build:deps": "DOCKER_BUILDKIT=1 sudo docker build -f Dockerfile.deps -t <%= name %>-deps:local ."
   },
   "devDependencies": {
     "@commitlint/cli": "^16.1.0",
@@ -33,5 +34,18 @@
     "commitizen": {
       "path": "./node_modules/cz-customizable"
     }
+  },
+  "nft": {
+    "copyDirs": [
+      "node_modules/swagger-ui-dist",
+      "node_modules/swagger-stats-sf/ux",
+      "node_modules/@loopback/rest-explorer/templates"
+    ],
+    "traceGlobs": [
+      {
+        "packages": "@sourceloop/*",
+        "files": "dist/**/*.controller.js"
+      }
+    ]
   }
 }

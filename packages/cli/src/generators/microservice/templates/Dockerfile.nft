@@ -1,0 +1,68 @@
+# syntax=docker/dockerfile:1
+#
+# TRACED ("nft") full build. The pipeline uses it when a full build is needed
+# and USE_NFT_BUILD is on.
+#
+# Before this build:
+#   1. `dist` of this service and of its local packages is built on the host.
+#   2. The shared deps image exists (`npm run docker:build:deps` at the root).
+#
+# Build context: the repo root. Build args:
+#   SERVICE_NAME  folder name of this service, e.g. auth-service
+#   FROM_FOLDER   services or facades
+#   DEPS_IMAGE    tag of the shared deps image, e.g. my-project-deps:local
+#
+# LOCAL PACKAGES: for each `@local/<name>` in this service's dependencies,
+# uncomment and fill in the three marked blocks below (trace COPY, --workspace
+# flag, runtime COPY). A missing block does not fail the build. The app then
+# fails at boot, or a code path fails when it first loads the package.
+ARG nodeVer=24-alpine
+ARG DEPS_IMAGE
+
+FROM ${DEPS_IMAGE} AS trace
+ARG SERVICE_NAME
+ARG FROM_FOLDER
+
+USER node
+WORKDIR /home/node/app
+
+COPY --chown=node ${FROM_FOLDER}/${SERVICE_NAME}/dist ./${FROM_FOLDER}/${SERVICE_NAME}/dist
+COPY --chown=node ${FROM_FOLDER}/${SERVICE_NAME}/package.json ./${FROM_FOLDER}/${SERVICE_NAME}/package.json
+# [local packages 1/3] one line per local package:
+# COPY --chown=node packages/<name>/dist ./packages/<name>/dist
+
+# The tracer follows the real require()/import graph from dist and prints
+# the files that the app can load. `cpio -pdm` copies only those files.
+# [local packages 2/3] add `--workspace packages/<name>` per local package,
+# so the tracer also reads that package's `nft` config.
+RUN node scripts/node-file-tracer.js ${FROM_FOLDER}/${SERVICE_NAME}/dist \
+      --workspace ${FROM_FOLDER}/${SERVICE_NAME} \
+      > /tmp/nft_list.txt \
+ && mkdir -p /home/node/pruned/node_modules /home/node/pruned/${FROM_FOLDER}/${SERVICE_NAME} \
+ && cpio -pdm /home/node/pruned < /tmp/nft_list.txt
+
+FROM node:${nodeVer}
+ARG SERVICE_NAME
+ARG FROM_FOLDER
+
+WORKDIR /home/node/app
+
+# Same layout as the repo (see Dockerfile). Nested node_modules stay nested.
+COPY --from=trace --chown=node /home/node/pruned/node_modules ./node_modules
+COPY --from=trace --chown=node /home/node/pruned/${FROM_FOLDER}/${SERVICE_NAME}/node_module[s] ./${FROM_FOLDER}/${SERVICE_NAME}/node_modules/
+COPY --chown=node ${FROM_FOLDER}/${SERVICE_NAME}/dist ./${FROM_FOLDER}/${SERVICE_NAME}/dist
+COPY --chown=node ${FROM_FOLDER}/${SERVICE_NAME}/package.json ./${FROM_FOLDER}/${SERVICE_NAME}/package.json
+COPY --chown=node ${FROM_FOLDER}/${SERVICE_NAME}/public ./${FROM_FOLDER}/${SERVICE_NAME}/public
+COPY --chown=node ${FROM_FOLDER}/${SERVICE_NAME}/.env.defaults ${FROM_FOLDER}/${SERVICE_NAME}/.env.example ./${FROM_FOLDER}/${SERVICE_NAME}/
+# [local packages 3/3] three lines per local package:
+# COPY --chown=node packages/<name>/dist ./packages/<name>/dist
+# COPY --from=trace --chown=node /home/node/pruned/packages/<name>/node_module[s] ./packages/<name>/node_modules/
+# COPY --chown=node packages/<name>/package.json ./packages/<name>/package.json
+
+WORKDIR /home/node/app/${FROM_FOLDER}/${SERVICE_NAME}
+USER node
+
+ENV HOST=0.0.0.0 PORT=3000
+EXPOSE ${PORT}
+
+CMD [ "node", "-r", "./dist/opentelemetry-registry.js", "." ]

@@ -67,6 +67,7 @@ const MIGRATION_TEMPLATE = join(
 );
 
 const MIGRATION_FOLDER = join('packages', 'migrations');
+const PACKAGE_JSON = 'package.json';
 
 const sourceloopMigrationPath = (packageName: SERVICES) =>
   join('node_modules', `@sourceloop/${packageName}`, 'migrations');
@@ -242,7 +243,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
   async install() {
     if (this.shouldExit()) return false;
     if (!this.shouldExit()) {
-      const packageJsonFile = join(this.destinationPath(), 'package.json');
+      const packageJsonFile = join(this.destinationPath(), PACKAGE_JSON);
       const packageJson = this.fs.readJSON(packageJsonFile) as AnyObject;
       const prefix = this.options.uniquePrefix?.trim();
       if (prefix) {
@@ -258,18 +259,17 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
       scripts['rebuild'] = 'npm run clean && npm run build';
       scripts['start'] =
         'node -r ./dist/opentelemetry-registry.js -r source-map-support/register .';
-      scripts['docker:build'] =
-        `DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE --build-arg FROM_FOLDER=services --build-arg SERVICE_NAME=${this.options.baseService} -t $IMAGE_REPO_NAME/$npm_package_name:$npm_package_version ../../. -f ./Dockerfile`;
-
-      scripts['docker:push'] =
-        ` docker push $IMAGE_REPO_NAME/$npm_package_name:$npm_package_version`;
-      scripts['docker:build:dev'] =
-        `DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE --build-arg FROM_FOLDER=services --build-arg SERVICE_NAME=${this.options.baseService} -t $IMAGE_REPO_NAME/$npm_package_name:$npm_package_version ../../. -f ./Dockerfile`;
-      scripts['docker:push:dev'] =
-        ` docker push $IMAGE_REPO_NAME/$npm_package_name:$npm_package_version`;
+      delete scripts['docker:build'];
+      Object.assign(scripts, this._dockerScripts());
       scripts['coverage'] = 'nyc npm run test';
 
       packageJson.scripts = scripts;
+      const connectors = Object.keys(packageJson.dependencies ?? {}).filter(
+        dep => dep.startsWith('loopback-connector-'),
+      );
+      if (connectors.length) {
+        packageJson.nft = {alwaysCopy: connectors};
+      }
       if (this.options.baseService) {
         packageJson.dependencies[`@sourceloop/${this.options.baseService}`] =
           getDependencyVersion(
@@ -340,22 +340,32 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
     );
   }
 
-  async _appendDockerScript() {
-    const packageJsonFile = join(this.destinationRoot(), './package.json');
-    const packageJson = this.fs.readJSON(packageJsonFile) as AnyObject;
-    const scripts = {...packageJson.scripts};
-    scripts[`docker:build:${this.options.baseService}`] =
-      `docker build --build-arg SERVICE_NAME=${this.options.baseService} --build-arg FROM_FOLDER=services -t $REPOSITORY_URI:${this.options.baseService} -f ./services/${this.options.name}/Dockerfile .`;
-    packageJson.scripts = scripts;
-    const writeFileAsync = promisify(fs.writeFile);
-
-    await writeFileAsync(
-      packageJsonFile,
-      JSON.stringify(packageJson, undefined, JSON_SPACING),
-      function () {
-        //This is intentional.
-      },
+  /**
+   * Docker scripts for the three build modes (full, nft, code) and for the
+   * pipeline steps after the build. Read docs/docker-builds.md for the flow.
+   */
+  private _dockerScripts(): Record<string, string> {
+    const serviceName = this.options.name ?? DEFAULT_NAME;
+    const folder = this.options.facade ? 'facades' : 'services';
+    const rootPackageJson = this.fs.readJSON(
+      join(this.destinationPath(), BACK_TO_ROOT, PACKAGE_JSON),
+    ) as AnyObject;
+    const image =
+      '$IMAGE_REPO_NAME/$npm_package_name:$npm_package_version$IMAGE_OPTIONAL_VERSION';
+    const envImage = '$IMAGE_REPO_NAME/$npm_package_name';
+    const build = `DOCKER_BUILDKIT=1 sudo docker build --build-arg SERVICE_NAME=${serviceName} --build-arg FROM_FOLDER=${folder}`;
+    const helmKey = serviceName.replace(/-([a-z0-9])/g, (_, c: string) =>
+      c.toUpperCase(),
     );
+    return {
+      'docker:build:full': `${build} -t ${image} -f Dockerfile ../../`,
+      'docker:build:nft': `${build} --build-arg DEPS_IMAGE=${rootPackageJson.name}-deps:local -t ${image} -f Dockerfile.nft ../../`,
+      'docker:build:code': `${build} --build-arg IMAGE_REPO=$IMAGE_REPO_NAME --build-arg IMAGE_NAME=$npm_package_name --build-arg BUILD_ENV=$BUILD_ENV -t ${image} -f Dockerfile.code ../../`,
+      'docker:push': `sudo docker push ${image}`,
+      'docker:tag': `sudo docker tag ${image} ${envImage}:$BUILD_ENV && sudo docker push ${envImage}:$BUILD_ENV`,
+      'docker:retag': `sudo docker pull ${envImage}:$SOURCE_ENV && sudo docker tag ${envImage}:$SOURCE_ENV ${image}`,
+      'helm-update': `yq -i '.${helmKey}.tag = strenv(npm_package_version)+strenv(IMAGE_OPTIONAL_VERSION)' $WORKSPACE/$HELM_VALUES_YAML_PATH-values.yaml`,
+    };
   }
   private _setDataSourceName() {
     if (this.options.baseService) {
@@ -599,7 +609,7 @@ export default class MicroserviceGenerator extends AppGenerator<MicroserviceOpti
   private async _migrationExists() {
     try {
       await fs.promises.access(
-        this.destinationPath(join('packages', 'migrations', 'package.json')),
+        this.destinationPath(join('packages', 'migrations', PACKAGE_JSON)),
       );
       // File exists
       return true;
