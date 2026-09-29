@@ -53,7 +53,7 @@ describe('reporter', () => {
         [TEST]: {
           history,
           latest: {
-            ...metricsWithThroughput(history.at(-1) ?? 0),
+            ...metricsWithThroughput(history[history.length - 1] ?? 0),
             latestDeviation: 0,
           },
         },
@@ -353,6 +353,43 @@ describe('reporter', () => {
 
       expect(result.deviation).to.equal(0);
       expect(readReport()[SUITE][TEST].history).to.eql([100]);
+    });
+
+    it('starts fresh when the file holds JSON that is not an object', () => {
+      for (const content of ['null', '[1, 2]', '5']) {
+        writeFileSync(reportFile, content);
+
+        const result = reporter(SUITE, TEST, metricsWithThroughput(100));
+
+        expect(result.deviation).to.equal(0);
+        expect(readReport()[SUITE][TEST].history).to.eql([100]);
+      }
+    });
+
+    it('drops history entries that are not finite numbers', () => {
+      writeFileSync(
+        reportFile,
+        JSON.stringify({[SUITE]: {[TEST]: {history: [100, 'x', null]}}}),
+      );
+
+      const result = reporter(SUITE, TEST, metricsWithThroughput(100));
+
+      expect(result.deviation).to.equal(0);
+      expect(readReport()[SUITE][TEST].history).to.eql([100, 100]);
+    });
+
+    it('reports the run just recorded in `recorded`', () => {
+      expect(
+        reporter(SUITE, TEST, metricsWithThroughput(100)).recorded,
+      ).to.equal(1);
+    });
+
+    it('reports nothing recorded when the baseline is not updated', () => {
+      setEnv('BENCH_UPDATE_BASELINE', undefined);
+
+      expect(
+        reporter(SUITE, TEST, metricsWithThroughput(100)).recorded,
+      ).to.equal(0);
     });
 
     it('leaves no temporary file behind after a write', () => {

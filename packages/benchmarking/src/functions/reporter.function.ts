@@ -24,7 +24,17 @@ function readBaseline(): BaselineData {
     return {};
   }
   try {
-    return JSON.parse(readFileSync(config.reportFile, 'utf-8')) as BaselineData;
+    const parsed: unknown = JSON.parse(
+      readFileSync(config.reportFile, 'utf-8'),
+    );
+    if (
+      typeof parsed !== 'object' ||
+      parsed === null ||
+      Array.isArray(parsed)
+    ) {
+      throw new TypeError('expected a JSON object');
+    }
+    return parsed as BaselineData;
   } catch (error) {
     // A corrupt file must not block the run. Say so loudly though: a silent
     // fresh start turns the gate off for the next few runs.
@@ -80,7 +90,7 @@ export type ReporterResult = {
   deviation: number;
   /** True while the history holds fewer samples than `BENCH_MIN_SAMPLES`. */
   buildingBaseline: boolean;
-  /** Recorded runs in the window this run was compared against. */
+  /** Runs held in the stored window once this run has been handled. */
   recorded: number;
   /**
    * True when this run dropped further below the baseline than the threshold
@@ -110,9 +120,9 @@ export function reporter(
   try {
     const baseline = readBaseline();
     const history = baseline[suite]?.[test]?.history ?? [];
-    const recent = Array.isArray(history)
-      ? history.slice(-config.opsToTrack)
-      : [];
+    const recent = (Array.isArray(history) ? history : [])
+      .filter(value => Number.isFinite(value))
+      .slice(-config.opsToTrack);
 
     const buildingBaseline = recent.length < config.minSamples;
     // An empty window gives NaN, which falls through the same guard that
@@ -124,18 +134,22 @@ export function reporter(
 
     const regressed = !buildingBaseline && deviation < -config.threshold;
 
+    const stored = config.updateBaseline
+      ? nextHistory(recent, metrics.throughput.mean, regressed)
+      : recent;
+
     if (config.updateBaseline) {
       baseline[suite] = {
         ...baseline[suite],
         [test]: {
-          history: nextHistory(recent, metrics.throughput.mean, regressed),
+          history: stored,
           latest: {...metrics, latestDeviation: deviation},
         },
       };
       writeBaseline(baseline);
     }
 
-    return {deviation, buildingBaseline, regressed, recorded: recent.length};
+    return {deviation, buildingBaseline, regressed, recorded: stored.length};
   } catch (error) {
     // A bad setting is the caller's problem and already says so. Only wrap the
     // failures that are really about reading or writing the baseline.
