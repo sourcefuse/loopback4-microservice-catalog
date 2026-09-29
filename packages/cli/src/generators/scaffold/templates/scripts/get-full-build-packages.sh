@@ -84,7 +84,7 @@ changed_local_pkgs=()
 deps_changed() {
     local file="$1" old new
     old=$(git show "$last_commit:$file" 2>/dev/null | jq -cS "$JQ_DEPS_FILTER" 2>/dev/null)
-    new=$(jq -cS "$JQ_DEPS_FILTER" "$file" 2>/dev/null)
+    new=$(git show "HEAD:$file" 2>/dev/null | jq -cS "$JQ_DEPS_FILTER" 2>/dev/null)
     [[ "$old" != "$new" ]]
 }
 
