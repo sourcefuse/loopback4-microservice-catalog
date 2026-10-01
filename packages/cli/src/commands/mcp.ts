@@ -28,7 +28,7 @@ export class Mcp extends Base<{}> {
     argv: string[],
     config: IConfig,
     prompt: PromptFunction,
-    env?: Environment<AnyObject>,
+    env?: Environment,
     cmds?: ICommandWithMcpFlags[],
   ) {
     super(argv, config, prompt, env);
