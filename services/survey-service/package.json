@@ -79,7 +79,7 @@
     "@sourceloop/core": "^21.1.1",
     "dotenv": "^16.6.1",
     "dotenv-extended": "^2.9.0",
-    "jsdom": "^19.0.0",
+    "jsdom": "^24.0.0",
     "jsonwebtoken": "^9.0.3",
     "lodash": "^4.18.1",
     "loopback-connector-postgresql": "^7.2.3",
