@@ -33,6 +33,10 @@ sl react:scaffold my-react-app
 
 ```
 
+## Docker builds and Jenkins
+
+`sl scaffold` and `sl microservice` generate Dockerfiles for code builds, traced (NFT) full builds and legacy full builds. With `--jenkinsfile`, `sl scaffold` also writes a Jenkins pipeline that picks the build mode for each changed service. See [docker-builds.md](src/generators/microservice/docs/docker-builds.md) for the flow, the `nft` config and known issues.
+
 ## MCP Integration
 
 All scaffolded projects automatically include MCP configuration in `mcp.json`. This enables AI assistants like Roo Code to interact with your project intelligently.
@@ -296,7 +300,7 @@ ARGUMENTS
 OPTIONS
   --cwd=cwd                  Directory where project will be scaffolded, instead of the project name
   --description=description  description of the repo
-  --helmPath=helmPath        Enter the path for Helm chart:
+  --helmPath=helmPath        Enter the path for Helm chart (relative to the Jenkins workspace, must start with <project>-helm/):
   --help                     show manual pages
   --integrateWithBackstage   Do you want to include backstage integration files?
   --issuePrefix=issuePrefix  Prefix to be used for issues(e.g. GH-)

@@ -1,0 +1,61 @@
+# syntax=docker/dockerfile:1
+#
+# Shared dependency image for the traced ("nft") full builds.
+#
+# We build this image ONE time per pipeline run and we never push it. Each
+# service's Dockerfile.nft starts FROM it, so the expensive `npm ci` over the
+# whole monorepo lockfile runs one time, not one time per service.
+#
+# This image owns every step that must happen after install and before the
+# tracer reads node_modules:
+#
+#   1. Patching. `patch-package` applies `patches/*.patch` here. The tracer
+#      then copies the patched files. A patch applied later has no effect.
+#
+#   2. Native addons. `--ignore-scripts` skips install scripts, so a package
+#      with a `.node` binary (bcrypt, argon2, sharp, ...) has no binary for
+#      this platform. Rebuild it here and load it one time, so a bad binary
+#      fails the build and not the first request. See the example below.
+#
+#   3. Cleanup (optional). Tools like `node-prune` or `clean-modules` delete
+#      docs, tests and type files from node_modules. The tracer copies only
+#      files that the app loads, so the runtime image does not get those
+#      files anyway. Cleanup here only makes this image and the trace step
+#      a bit faster. It is much more useful in the legacy `Dockerfile`, which
+#      copies node_modules whole.
+#
+# Every Dockerfile.nft needs this image as `<root package name>-deps:local`.
+# Build it with `npm run docker:build:deps` from the repo root.
+ARG nodeVer=24-alpine
+FROM node:${nodeVer}
+
+USER node
+WORKDIR /home/node/app
+
+# Root manifest, lockfile and every workspace manifest. No source code, so a
+# code change does not invalidate the `npm ci` layer.
+COPY --chown=node package.json package-lock.json ./
+COPY --chown=node --parents packages/*/package.json services/*/package.json facades/*/package.json ./
+
+# `patche[s]` is a wildcard, so the COPY does not fail when the repo has no
+# patches directory.
+COPY --chown=node patche[s] ./patches/
+COPY --chown=node scripts/node-file-tracer.js ./scripts/node-file-tracer.js
+
+RUN --mount=type=cache,target=/home/node/.npm,id=npm-cache,uid=1000,gid=1000 \
+    npm ci --omit=dev --ignore-scripts --no-audit --no-fund \
+ && if [ -n "$(ls -A patches 2>/dev/null)" ]; then \
+      npx --yes --ignore-scripts patch-package@8.0.1 --error-on-fail; \
+    fi \
+ && npm install -g @vercel/nft@1.11.0 --prefix /home/node/.nft-global --no-audit --no-fund --ignore-scripts
+
+# Native addon example. Rebuild for this platform, then load it one time.
+# RUN npm rebuild bcrypt && node -e "require('bcrypt').hashSync('x', 1)"
+
+# Optional cleanup example. Pick one tool.
+# RUN npx --yes --ignore-scripts clean-modules --yes
+# RUN wget -qO- https://gobinaries.com/tj/node-prune | sh -s -- -b /home/node/.bin \
+#  && /home/node/.bin/node-prune
+
+# The tracer requires @vercel/nft from here. It is not a project dependency.
+ENV NODE_PATH=/home/node/.nft-global/lib/node_modules

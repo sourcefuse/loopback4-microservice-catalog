@@ -50,7 +50,8 @@ export class Scaffold extends Base<ScaffoldOptions> {
     }),
     helmPath: flags.string({
       name: 'helmPath',
-      description: 'Enter the path for Helm chart:',
+      description:
+        'Enter the path for Helm chart (relative to the Jenkins workspace, must start with <project>-helm/):',
       dependsOn: ['jenkinsfile'],
     }),
   };
