@@ -33,6 +33,9 @@
   "overrides": {
     "semver": "^7.5.4",
     "multer": "^2.0.2",
+    "mochawesome": {
+      "mocha": "^11.8.0"
+    },
     "tough-cookie": "^4.1.3",
     "@node-saml/node-saml": "^5.1.0",
     "@loopback/cli": {
