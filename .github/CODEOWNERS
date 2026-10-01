@@ -9,6 +9,9 @@
 # subdirectories.
 /packages/cache samarpan.bhattacharya@sourcefuse.com
 
+# Owner of the benchmarking helpers package and any of its subdirectories.
+/packages/benchmarking @sf-sahil-jassal
+
 # In this example, owner owns any files in the services/audit-service
 # directory at the root of the repository and any of its
 # subdirectories.

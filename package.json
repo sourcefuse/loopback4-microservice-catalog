@@ -76,6 +76,7 @@
     "packages/core/",
     "packages/cli/",
     "packages/cache/",
+    "packages/benchmarking/",
     "packages/feature-toggle/",
     "packages/observability/",
     "packages/file-utils/",
