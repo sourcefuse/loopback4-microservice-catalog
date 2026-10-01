@@ -11,12 +11,14 @@ export class McpAdapter {
     env.adapter.prompt = this.prompt as typeof env.adapter.prompt;
   }
 
-  async prompt(questions: AnyObject): Promise<never> {
+  prompt(questions: AnyObject): Promise<never> {
     // sonarignore:start
     console.error(JSON.stringify(questions, undefined, 2));
     // sonarignore:end
-    throw new Error(
-      `The generator is expecting an input from prompt, please check the inputs`,
+    return Promise.reject(
+      new Error(
+        `The generator is expecting an input from prompt, please check the inputs`,
+      ),
     );
   }
 }
