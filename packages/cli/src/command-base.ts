@@ -19,12 +19,12 @@ const chalk = require('chalk'); //NOSONAR
 const IGNORED_FLAGS = new Set(['help', 'cwd']);
 export default abstract class CommandBase<T extends object> extends Command {
   prompt: PromptFunction;
-  env: Environment<T>;
+  env: Environment;
   constructor(
     argv: string[],
     config: IConfig,
     prompt: PromptFunction,
-    env?: Environment<T>,
+    env?: Environment,
   ) {
     super(argv, config);
     if (prompt) {
@@ -48,7 +48,9 @@ export default abstract class CommandBase<T extends object> extends Command {
       await this.promptFlags(generatorOptions.flags, inputs.flags);
     }
 
-    this.env.register(require.resolve(`./generators/${type}`), `oclif:${type}`);
+    this.env.register(require.resolve(`./generators/${type}`), {
+      namespace: `oclif:${type}`,
+    });
     await this.env.run(`oclif:${type}`, {
       ...inputs.args,
       ...inputs.flags,

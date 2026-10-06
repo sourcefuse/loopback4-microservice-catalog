@@ -13,7 +13,8 @@ export async function yeomanRun(
 }
 
 function getEnv(workspace: string, name: string) {
-  const env = createEnv([], {cwd: workspace}, new McpAdapter({}));
+  const env = createEnv({cwd: workspace});
+  new McpAdapter().install(env);
   registerGenerators(env, name);
   return env;
 }
@@ -29,8 +30,7 @@ async function runWithEnv(
 }
 
 function registerGenerators(env: Environment, generator: string) {
-  env.register(
-    require.resolve(`../generators/${generator}/index`),
-    `sl:${generator}`,
-  );
+  env.register(require.resolve(`../generators/${generator}/index`), {
+    namespace: `sl:${generator}`,
+  });
 }

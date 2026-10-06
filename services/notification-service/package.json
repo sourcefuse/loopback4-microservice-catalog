@@ -100,7 +100,7 @@
     "eslint": "^8.57.1",
     "firebase-admin": "^13.8.0",
     "mocha": "^10.8.2",
-    "nodemailer": "^7.0.13",
+    "nodemailer": "^10.0.6",
     "nyc": "^15.1.0",
     "pubnub": "^7.6.3",
     "sinon": "^15.2.0",
