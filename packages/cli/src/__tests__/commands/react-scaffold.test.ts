@@ -21,7 +21,7 @@ describe('react scaffold', () => {
     const prompt = stub().resolves({name: ''});
     const env = createStubInstance(Environment);
     env.run.callsFake(
-      async (_namespace: string | string[], options?: RunOptions) => {
+      async (_namespace?: string | string[], options?: RunOptions) => {
         const name = (options?.name as string | undefined) ?? '';
         if (name.trim().length === 0) {
           throw new Error('Project name is required');
@@ -52,7 +52,7 @@ describe('react scaffold', () => {
     const prompt = stub().resolves({});
     const env = createStubInstance(Environment);
     env.run.callsFake(
-      async (_namespace: string | string[], options?: RunOptions) => {
+      async (_namespace?: string | string[], options?: RunOptions) => {
         const name = options?.name as string;
         expect(name).to.equal('react-ui');
       },

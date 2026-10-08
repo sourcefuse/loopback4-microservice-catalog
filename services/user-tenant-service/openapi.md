@@ -1,5 +1,5 @@
 ---
-title: "@sourceloop/user-tenant-service v8.1.0"
+title: "@sourceloop/user-tenant-service v8.1.1"
 language_tabs:
   - javascript: JavaScript
   - javascript--nodejs: Node.JS
@@ -16,7 +16,7 @@ headingLevel: 2
 
 <!-- Generator: Widdershins v4.0.1 -->
 
-<h1 id="-sourceloop-user-tenant-service">@sourceloop/user-tenant-service v8.1.0</h1>
+<h1 id="-sourceloop-user-tenant-service">@sourceloop/user-tenant-service v8.1.1</h1>
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
@@ -939,7 +939,7 @@ fetch('/tenants/{id}',
       "modifiedBy": "string",
       "id": "string",
       "locale": "string",
-      "status": 12,
+      "status": 0,
       "userId": "string",
       "tenantId": "string",
       "roleId": "string"
@@ -981,7 +981,7 @@ fetch('/tenants/{id}',
       "modifiedBy": "string",
       "id": "string",
       "name": "string",
-      "roleType": 15,
+      "roleType": 0,
       "description": "string",
       "permissions": [
         "string"
@@ -1493,7 +1493,7 @@ fetch('/tenants',
         "modifiedBy": "string",
         "id": "string",
         "locale": "string",
-        "status": 12,
+        "status": 0,
         "userId": "string",
         "tenantId": "string",
         "roleId": "string"
@@ -1535,7 +1535,7 @@ fetch('/tenants',
         "modifiedBy": "string",
         "id": "string",
         "name": "string",
-        "roleType": 15,
+        "roleType": 0,
         "description": "string",
         "permissions": [
           "string"
@@ -2259,7 +2259,7 @@ const inputBody = '{
   "createdBy": "string",
   "modifiedBy": "string",
   "name": "string",
-  "roleType": 15,
+  "roleType": 0,
   "description": "string",
   "permissions": [
     "string"
@@ -2298,7 +2298,7 @@ const inputBody = {
   "createdBy": "string",
   "modifiedBy": "string",
   "name": "string",
-  "roleType": 15,
+  "roleType": 0,
   "description": "string",
   "permissions": [
     "string"
@@ -2345,7 +2345,7 @@ fetch('/tenants/{id}/roles',
   "createdBy": "string",
   "modifiedBy": "string",
   "name": "string",
-  "roleType": 15,
+  "roleType": 0,
   "description": "string",
   "permissions": [
     "string"
@@ -2378,7 +2378,7 @@ fetch('/tenants/{id}/roles',
   "modifiedBy": "string",
   "id": "string",
   "name": "string",
-  "roleType": 15,
+  "roleType": 0,
   "description": "string",
   "permissions": [
     "string"
@@ -2417,7 +2417,7 @@ const inputBody = '{
   "createdBy": "string",
   "modifiedBy": "string",
   "name": "string",
-  "roleType": 15,
+  "roleType": 0,
   "description": "string",
   "permissions": [
     "string"
@@ -2456,7 +2456,7 @@ const inputBody = {
   "createdBy": "string",
   "modifiedBy": "string",
   "name": "string",
-  "roleType": 15,
+  "roleType": 0,
   "description": "string",
   "permissions": [
     "string"
@@ -2503,7 +2503,7 @@ fetch('/tenants/{id}/roles',
   "createdBy": "string",
   "modifiedBy": "string",
   "name": "string",
-  "roleType": 15,
+  "roleType": 0,
   "description": "string",
   "permissions": [
     "string"
@@ -2620,7 +2620,7 @@ fetch('/tenants/{id}/roles',
     "modifiedBy": "string",
     "id": "string",
     "name": "string",
-    "roleType": 15,
+    "roleType": 0,
     "description": "string",
     "permissions": [
       "string"
@@ -3144,7 +3144,7 @@ const inputBody = '{
   "gender": "M",
   "dob": "2019-08-24T14:15:22Z",
   "defaultTenantId": "string",
-  "status": 11,
+  "status": 0,
   "roleId": "string"
 }';
 const headers = {
@@ -3186,7 +3186,7 @@ const inputBody = {
   "gender": "M",
   "dob": "2019-08-24T14:15:22Z",
   "defaultTenantId": "string",
-  "status": 11,
+  "status": 0,
   "roleId": "string"
 };
 const headers = {
@@ -3236,7 +3236,7 @@ fetch('/tenants/{id}/users/{userId}',
   "gender": "M",
   "dob": "2019-08-24T14:15:22Z",
   "defaultTenantId": "string",
-  "status": 11,
+  "status": 0,
   "roleId": "string"
 }
 ```
@@ -4442,7 +4442,7 @@ fetch('/user-tenant-prefs',
       "modifiedBy": "string",
       "id": "string",
       "locale": "string",
-      "status": 12,
+      "status": 0,
       "userId": "string",
       "tenantId": "string",
       "roleId": "string"
@@ -5482,7 +5482,7 @@ NewUserTenantPrefs
   "modifiedBy": "string",
   "id": "string",
   "locale": "string",
-  "status": 12,
+  "status": 0,
   "userId": "string",
   "tenantId": "string",
   "roleId": "string"
@@ -5540,7 +5540,7 @@ UserTenant
     "modifiedBy": "string",
     "id": "string",
     "locale": "string",
-    "status": 12,
+    "status": 0,
     "userId": "string",
     "tenantId": "string",
     "roleId": "string"
@@ -5759,7 +5759,7 @@ User
   "modifiedBy": "string",
   "id": "string",
   "name": "string",
-  "roleType": 15,
+  "roleType": 0,
   "description": "string",
   "permissions": [
     "string"
@@ -5889,7 +5889,7 @@ Group
       "modifiedBy": "string",
       "id": "string",
       "locale": "string",
-      "status": 12,
+      "status": 0,
       "userId": "string",
       "tenantId": "string",
       "roleId": "string"
@@ -5931,7 +5931,7 @@ Group
       "modifiedBy": "string",
       "id": "string",
       "name": "string",
-      "roleType": 15,
+      "roleType": 0,
       "description": "string",
       "permissions": [
         "string"
@@ -6230,7 +6230,7 @@ UserDto
   "gender": "M",
   "dob": "2019-08-24T14:15:22Z",
   "defaultTenantId": "string",
-  "status": 11,
+  "status": 0,
   "roleId": "string"
 }
 
@@ -6326,7 +6326,7 @@ NewTenantConfigInTenant
   "createdBy": "string",
   "modifiedBy": "string",
   "name": "string",
-  "roleType": 15,
+  "roleType": 0,
   "description": "string",
   "permissions": [
     "string"
@@ -6374,7 +6374,7 @@ NewRoleInTenant
   "createdBy": "string",
   "modifiedBy": "string",
   "name": "string",
-  "roleType": 15,
+  "roleType": 0,
   "description": "string",
   "permissions": [
     "string"

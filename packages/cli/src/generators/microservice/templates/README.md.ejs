@@ -98,14 +98,14 @@ npm run lint:fix
 - `yarn run migrate`: Migrate database schemas for models
 - `yarn run openapi-spec`: Generate OpenAPI spec into a file
 <% if (project.docker) { -%>
-- `yarn run docker:build`: Build a Docker image for this application
+- `yarn run docker:build:full`: Build a Docker image for this application
 - `yarn run docker:run`: Run this application inside a Docker container
 <% } -%>
 <% } else { -%>
 - `npm run migrate`: Migrate database schemas for models
 - `npm run openapi-spec`: Generate OpenAPI spec into a file
 <% if (project.docker) { -%>
-- `npm run docker:build`: Build a Docker image for this application
+- `npm run docker:build:full`: Build a Docker image for this application
 - `npm run docker:run`: Run this application inside a Docker container
 <% } -%>
 <% } -%>

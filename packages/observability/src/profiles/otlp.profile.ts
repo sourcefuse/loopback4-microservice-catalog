@@ -1,4 +1,8 @@
-import {Resource, detectResourcesSync} from '@opentelemetry/resources';
+import {
+  Resource,
+  detectResources,
+  resourceFromAttributes,
+} from '@opentelemetry/resources';
 import {
   AlwaysOffSampler,
   AlwaysOnSampler,
@@ -57,7 +61,7 @@ function buildResource(config: ResolvedObservabilityConfig): Resource {
     attributes[ATTR_DEPLOYMENT_ENVIRONMENT_NAME] = config.environment;
   }
 
-  return detectResourcesSync().merge(new Resource(attributes));
+  return detectResources().merge(resourceFromAttributes(attributes));
 }
 
 function buildGrpcMetadata(headers: Record<string, string>) {
