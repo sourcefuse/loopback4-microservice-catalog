@@ -19,7 +19,7 @@ function getEnv(workspace: string, name: string) {
   return env;
 }
 
-async function runWithEnv(
+function runWithEnv(
   env: Environment,
   name: string,
   args: string[] | undefined,

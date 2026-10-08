@@ -378,7 +378,7 @@ export default class CdkGenerator extends BaseGenerator<CdkOptions> {
     }
   }
 
-  async end() {
+  end() {
     const {owner, repo, templateDir: dir} = this.remoteConfig;
     this.log(`
 ${chalk.green("🚀 Hooray! You're all set to launch your app.")}

@@ -74,7 +74,7 @@ export abstract class UiScaffoldGenerator<
     }
   }
 
-  async end() {
+  end() {
     if (!this.scaffoldResult) return;
     const config = this.getConfig();
     const name = (this.options.name ?? '').trim();

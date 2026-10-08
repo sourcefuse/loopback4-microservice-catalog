@@ -14,26 +14,30 @@ export class InMemoryStoreStrategy implements ICacheStore {
       // sonarignore:end
     }
   >();
-  async get<T>(key: string): Promise<T | undefined> {
-    return this.getWithCheck(key);
+  get<T>(key: string): Promise<T | undefined> {
+    return Promise.resolve(this.getWithCheck(key));
   }
   getMany<T>(keys: string[]): Promise<(T | undefined)[]> {
     const valuePromises = keys.map(key => this.getWithCheck(key));
     return Promise.all(valuePromises);
   }
-  async set<T>(key: string, value: T, ttl: number): Promise<void> {
+  set<T>(key: string, value: T, ttl: number): Promise<void> {
     this.setWithTime(key, value, ttl);
+    return Promise.resolve();
   }
-  async setMany<T>(keys: [string, T, number][]): Promise<void> {
+  setMany<T>(keys: [string, T, number][]): Promise<void> {
     keys.forEach(([key, value, ttl]) => this.setWithTime(key, value, ttl));
+    return Promise.resolve();
   }
 
-  async delete(key: string): Promise<void> {
+  delete(key: string): Promise<void> {
     this.store.delete(key);
+    return Promise.resolve();
   }
 
-  async deleteMany(keys: string[]): Promise<void> {
+  deleteMany(keys: string[]): Promise<void> {
     keys.forEach(key => this.store.delete(key));
+    return Promise.resolve();
   }
 
   private getWithCheck(key: string) {

@@ -51,7 +51,7 @@ export class BaseBooter implements Booter {
    *
    * NOTE: All properties are configured even if all aren't used.
    */
-  async configure() {
+  configure() {
     this.dirs = this.normalizeToArray(this.options.dirs);
     this.extensions = this.normalizeToArray(this.options.extensions);
 
@@ -61,6 +61,7 @@ export class BaseBooter implements Booter {
     this.glob =
       this.options.glob ??
       `/${joinedDirs}/${this.options.nested ? '**/*' : '*'}${joinedExts}`;
+    return Promise.resolve();
   }
 
   private normalizeToArray<T>(value: T | T[] | undefined): T[] {
@@ -90,7 +91,8 @@ export class BaseBooter implements Booter {
    * NOTE: Booters extending this class should call this method (await super.load())
    * and then process the artifact classes as appropriate.
    */
-  async load() {
+  load() {
     this.classes = loadClassesFromFiles(this.discovered, this.projectRoot);
+    return Promise.resolve();
   }
 }

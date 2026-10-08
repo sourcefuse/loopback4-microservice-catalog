@@ -21,12 +21,13 @@ export class CoreModelBooter extends BaseBooter {
     super();
   }
 
-  async discover(): Promise<void> {
+  discover(): Promise<void> {
     const pattern = path.join(this.projectRoot, '**', '*component.js');
     const filePaths = glob.sync(pattern, {nodir: true});
     this.classes = loadClassesFromFiles(filePaths, this.projectRoot);
+    return Promise.resolve();
   }
-  async load(): Promise<void> {
+  load(): Promise<void> {
     this.classes.forEach(cls => {
       const componentKey = `components.${cls.name}`;
 
@@ -53,5 +54,6 @@ export class CoreModelBooter extends BaseBooter {
         }
       }
     });
+    return Promise.resolve();
   }
 }
