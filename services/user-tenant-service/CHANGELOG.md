@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 9.0.0 (2026-10-08)
+
+* fix(deps): resolve trivy high-severity vulnerabilities (#2616) ([8f9b03e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8f9b03e)), closes [#2616](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2616)
+* fix(sandbox): resolve trivy vulnerability findings in sandbox services (#2615) ([c262018](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c262018)), closes [#2615](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2615)
+
+
+### BREAKING CHANGE
+
+* yes. @sourceloop/cli now requires yeoman-environment 6 and
+Node >= 22.12 (it loads the ESM yeoman-environment via require(esm)), and
+@sourceloop/observability now targets the OpenTelemetry JS SDK 2.x
+(sdk-trace/resources 2.x, OTLP exporters 0.222). Consumers pinned to the
+previous majors must upgrade accordingly.
+
+* fix(deps): sync package-lock and package.json
+
+* refactor(cli): return rejected promise instead of async-throw in mcp adapter prompt
+
+* fix(deps): cap mocha below 12 so mochawesome reporter loads
+
+mocha 12 removed mocha/lib/utils, which mochawesome 7.1.4 requires, causing ERR_MOCHA_INVALID_REPORTER in the CI test jobs. Override mochawesome's mocha to ^11.8.0 so the reporter resolves a compatible mocha.
+
+* fix(deps): regenerate lockfile from clean checkout to restore dropped transitives
+
+The previous lockfile was generated in a churned working tree and dropped transitive deps (peek-readable, readable-web-to-node-stream, @microsoft/tsdoc), causing CI test jobs to fail on 'Cannot find module'. Regenerated from a pristine checkout: complete tree (no dangling deps), Trivy 0, mocha capped below 12. Full workspace build and lerna test pass.
+
+
+
+
 ## <small>8.1.1 (2026-09-10)</small>
 
 * refactor(all-services): resolve SonarCloud overall-code backlog (#2607) ([85463f5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/85463f5)), closes [#2607](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2607) [#2607](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2607)

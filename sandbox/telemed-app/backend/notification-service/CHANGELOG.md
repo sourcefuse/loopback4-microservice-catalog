@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.9.2 (2026-10-08)</small>
+
+* fix(deps): force simple-git ^4.0.2 to clear critical audit CVEs (#2617) ([1659161](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1659161)), closes [#2617](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2617)
+* fix(sandbox): resolve trivy vulnerability findings in sandbox services (#2615) ([c262018](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c262018)), closes [#2615](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2615)
+
+
+
+
+
 ## <small>0.9.1 (2026-09-10)</small>
 
 * refactor(all-services): resolve SonarCloud overall-code backlog (#2607) ([85463f5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/85463f5)), closes [#2607](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2607) [#2607](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2607)
