@@ -32,11 +32,22 @@ export class SamlVerifyProvider implements Provider<VerifyFunction.SamlFn> {
 
   value(): VerifyFunction.SamlFn {
     return async (profile: SamlStrategy.Profile) => {
+      const email = profile.email;
+      const lowerCasedEmail = email?.toLowerCase();
       let user: IAuthUser | null = await this.userRepository.findOne({
         where: {
-          email: profile.email,
+          email,
         },
       });
+      // identity providers do not guarantee the casing of the email they
+      // return, so retry with the canonical form before giving up
+      if (!user && lowerCasedEmail !== email) {
+        user = await this.userRepository.findOne({
+          where: {
+            email: lowerCasedEmail,
+          },
+        });
+      }
       user = await this.preVerifyProvider(profile, user);
       if (!user) {
         const newUser = await this.signupProvider(profile);
