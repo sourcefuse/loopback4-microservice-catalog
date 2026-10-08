@@ -146,27 +146,27 @@ export function SequelizeCacheMixin<
     }
 
     @cacheInvalidator(cacheOptions?.invalidationTags)
-    async create(data: DataObject<M>, options?: AnyObject): Promise<M> {
+    create(data: DataObject<M>, options?: AnyObject): Promise<M> {
       return super.create(data, options);
     }
 
     @cacheInvalidator(cacheOptions?.invalidationTags)
-    async createAll(data: DataObject<M>[], options?: AnyObject): Promise<M[]> {
+    createAll(data: DataObject<M>[], options?: AnyObject): Promise<M[]> {
       return super.createAll(data, options);
     }
 
     @cacheInvalidator(cacheOptions?.invalidationTags)
-    async save(entity: M, options?: AnyObject): Promise<M> {
+    save(entity: M, options?: AnyObject): Promise<M> {
       return super.save(entity, options);
     }
 
     @cacheInvalidator(cacheOptions?.invalidationTags)
-    async update(entity: M, options?: AnyObject): Promise<void> {
+    update(entity: M, options?: AnyObject): Promise<void> {
       return super.update(entity, options);
     }
 
     @cacheInvalidator(cacheOptions?.invalidationTags)
-    async updateAll(
+    updateAll(
       data: DataObject<M>,
       where?: Where<M>,
       options?: AnyObject,
@@ -175,7 +175,7 @@ export function SequelizeCacheMixin<
     }
 
     @cacheInvalidator(cacheOptions?.invalidationTags)
-    async updateById(
+    updateById(
       id: ID,
       data: DataObject<M>,
       options?: AnyObject,
@@ -184,7 +184,7 @@ export function SequelizeCacheMixin<
     }
 
     @cacheInvalidator(cacheOptions?.invalidationTags)
-    async replaceById(
+    replaceById(
       id: ID,
       data: DataObject<M>,
       options?: AnyObject,
@@ -193,17 +193,17 @@ export function SequelizeCacheMixin<
     }
 
     @cacheInvalidator(cacheOptions?.invalidationTags)
-    async delete(entity: M, options?: AnyObject): Promise<void> {
+    delete(entity: M, options?: AnyObject): Promise<void> {
       return super.delete(entity, options);
     }
 
     @cacheInvalidator(cacheOptions?.invalidationTags)
-    async deleteAll(where?: Where<M>, options?: AnyObject): Promise<Count> {
+    deleteAll(where?: Where<M>, options?: AnyObject): Promise<Count> {
       return super.deleteAll(where, options);
     }
 
     @cacheInvalidator(cacheOptions?.invalidationTags)
-    async deleteById(id: ID, options?: AnyObject): Promise<void> {
+    deleteById(id: ID, options?: AnyObject): Promise<void> {
       return super.deleteById(id, options);
     }
   }

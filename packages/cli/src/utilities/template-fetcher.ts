@@ -40,7 +40,7 @@ export class TemplateFetcher {
     }
   }
 
-  async fetchFromGitHub(options: TemplateFetchOptions): Promise<void> {
+  fetchFromGitHub(options: TemplateFetchOptions): Promise<void> {
     const {repo, targetDir, branch, removeGit = true} = options;
     this.validateInputs(repo, branch);
     this.ensureTargetDirNotExists(targetDir);
@@ -58,6 +58,7 @@ export class TemplateFetcher {
 
     if (removeGit) this.removeGitDir(targetDir);
     console.log('✅ Template fetched successfully'); // NOSONAR
+    return Promise.resolve();
   }
 
   private tryBranches(
@@ -119,7 +120,7 @@ export class TemplateFetcher {
       fs.rmSync(gitDir, {recursive: true, force: true});
   }
 
-  async fetchFromLocal(sourcePath: string, targetDir: string): Promise<void> {
+  fetchFromLocal(sourcePath: string, targetDir: string): Promise<void> {
     if (!fs.existsSync(sourcePath))
       throw new Error(`Source not found: ${sourcePath}`);
     this.ensureTargetDirNotExists(targetDir);
@@ -141,6 +142,7 @@ export class TemplateFetcher {
         filter: src => !exclude.has(path.basename(src)),
       });
       console.log('✅ Template copied successfully'); // NOSONAR
+      return Promise.resolve();
     } catch (error) {
       throw new Error(`Failed to copy template: ${String(error)}`);
     }

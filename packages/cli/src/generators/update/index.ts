@@ -95,8 +95,8 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
     }
   }
 
-  private async _checkDependencies(): Promise<boolean> {
-    const {pkgDeps, depsToUpdate} = await this._initialiseDependencies();
+  private _checkDependencies(): Promise<boolean> {
+    const {pkgDeps, depsToUpdate} = this._initialiseDependencies();
 
     const found = this._incompatibleDependencies(pkgDeps, depsToUpdate);
 
@@ -106,9 +106,9 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
           `The project dependencies are compatible with @sourceloop/cli@${configJsonFile.version}`,
         ),
       );
-      return false;
+      return Promise.resolve(false);
     }
-    return this._printDepsToUpdate(depsToUpdate, pkgDeps);
+    return Promise.resolve(this._printDepsToUpdate(depsToUpdate, pkgDeps));
   }
 
   /**
@@ -187,7 +187,7 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
     return found;
   }
 
-  private async _printDepsToUpdate(
+  private _printDepsToUpdate(
     depsToUpdate: PackageDependencies,
     pkgDeps: PackageDependencies,
   ) {
@@ -229,7 +229,7 @@ export default class UpdateGenerator extends BaseUpdateGenerator<UpdateOptions> 
     return true;
   }
 
-  private async _initialiseDependencies() {
+  private _initialiseDependencies() {
     const packageJson = this.fs.readJSON(
       this.destinationPath(packageJsonFile),
     ) as AnyObject;
