@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>8.1.2 (2026-10-08)</small>
+
+* fix(sandbox): resolve trivy vulnerability findings in sandbox services (#2615) ([c262018](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c262018)), closes [#2615](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2615)
+
+
+
+
+
 ## <small>8.1.1 (2026-09-10)</small>
 
 * refactor(all-services): resolve SonarCloud overall-code backlog (#2607) ([85463f5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/85463f5)), closes [#2607](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2607) [#2607](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2607)

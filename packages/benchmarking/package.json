@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/benchmarking",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Benchmark helpers for Mocha that fail a build when throughput regresses against a tracked baseline",
   "keywords": [
     "loopback-extension",

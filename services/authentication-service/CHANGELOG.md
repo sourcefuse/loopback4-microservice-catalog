@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>25.1.2 (2026-10-08)</small>
+
+* fix(authentication-service): match login email case insensitively (#2611) ([87ca012](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/87ca012)), closes [#2611](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2611) [#2609](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2609) [#2609](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2609)
+
+
+
+
+
 ## <small>25.1.1 (2026-09-10)</small>
 
 * refactor(all-services): resolve SonarCloud overall-code backlog (#2607) ([85463f5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/85463f5)), closes [#2607](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2607) [#2607](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2607)
