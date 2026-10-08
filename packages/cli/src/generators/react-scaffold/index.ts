@@ -18,7 +18,7 @@ export default class ReactScaffoldGenerator extends UiScaffoldGenerator<ReactSca
     return super.writing();
   }
 
-  async end() {
+  end() {
     return super.end();
   }
 
