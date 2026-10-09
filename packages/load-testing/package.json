@@ -1,0 +1,99 @@
+{
+  "name": "@sourceloop/load-testing",
+  "version": "0.1.0",
+  "description": "Load tests for the HTTP APIs of LoopBack facades and services: TypeScript scenarios run by Artillery, with p95 limits and a baseline",
+  "keywords": [
+    "loopback-extension",
+    "loopback",
+    "load-testing",
+    "performance",
+    "artillery",
+    "p95"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "load-testing": "bin/load-testing.js"
+  },
+  "engines": {
+    "node": ">=22.18.0 <23 || 24"
+  },
+  "files": [
+    "README.md",
+    "bin",
+    "dist",
+    "src",
+    "!*/__tests__"
+  ],
+  "scripts": {
+    "build": "lb-tsc",
+    "build:watch": "lb-tsc --watch",
+    "lint": "npm run eslint && npm run prettier:check",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+    "prettier:cli": "prettier \"**/*.ts\" \"**/*.js\"",
+    "prettier:check": "npm run prettier:cli -- -l",
+    "prettier:fix": "npm run prettier:cli -- --write",
+    "eslint": "eslint --report-unused-disable-directives .",
+    "eslint:fix": "npm run eslint -- --fix",
+    "pretest": "npm run rebuild",
+    "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
+    "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
+    "rebuild": "npm run clean && npm run build",
+    "coverage": "nyc npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sourcefuse/loopback4-microservice-catalog.git",
+    "directory": "packages/load-testing"
+  },
+  "author": "Sourcefuse",
+  "license": "MIT",
+  "dependencies": {
+    "artillery": "2.0.34",
+    "ms": "^2.1.3",
+    "tslib": "^2.8.1"
+  },
+  "peerDependencies": {
+    "pg": "^8.0.0"
+  },
+  "peerDependenciesMeta": {
+    "pg": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
+    "@loopback/build": "^12.0.11",
+    "@loopback/eslint-config": "^16.0.1",
+    "@loopback/testlab": "^8.0.11",
+    "@types/mocha": "^10.0.10",
+    "@types/ms": "^2.1.0",
+    "@types/node": "^24.19.0",
+    "eslint": "^8.57.1",
+    "mocha": "^11.7.5",
+    "source-map-support": "^0.5.21",
+    "typescript": "^5.9.3"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "typedoc": {
+    "config": {
+      "entryPoints": [
+        "src/index.ts"
+      ],
+      "out": "packages/load-testing",
+      "plugin": [
+        "typedoc-plugin-markdown"
+      ]
+    }
+  }
+}

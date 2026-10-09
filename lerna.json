@@ -4,6 +4,7 @@
     "packages/cli",
     "packages/cache",
     "packages/benchmarking",
+    "packages/load-testing",
     "packages/file-utils",
     "packages/feature-toggle",
     "packages/custom-sf-changelog/",
