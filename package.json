@@ -59,6 +59,9 @@
       "glob": "^10.5.0"
     },
     "js-yaml": "^4.3.2",
+    "artillery": {
+      "js-yaml": "3.15.2"
+    },
     "tmp": "^0.2.7",
     "yeoman-environment": "^6.0.1",
     "yeoman-generator": {
