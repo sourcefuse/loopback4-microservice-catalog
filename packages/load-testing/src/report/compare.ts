@@ -180,8 +180,9 @@ export function readBaseline(pkgDir: string): Baseline | undefined {
   return baseline as Baseline;
 }
 
+/** True for a JSON object. A list is not one: its keys are not names. */
 function isObject(value: unknown): boolean {
-  return typeof value === 'object' && value !== null;
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
 function writeBaseline(pkgDir: string, baseline: Baseline): void {

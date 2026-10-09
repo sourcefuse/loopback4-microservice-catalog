@@ -546,7 +546,8 @@ load.describe(
 
 `load.get`, `load.post`, `load.put`, `load.patch` and `load.delete` make a
 request. Each takes the path and an options object. A path can hold `{name}`
-parts, which `pathParams` fills.
+parts, which `pathParams` fills. A name is any text without braces or a
+slash, for example `{id}` or `{order-id}`.
 
 | Option | Use |
 | --- | --- |
@@ -684,14 +685,19 @@ a time. It never prints the value.
 - An access token with the refused text fails the scenario with a `RunError`,
   before the CLI writes any file. The next scenario still runs. The message
   has no token in it.
+- A base URL with the refused text fails the scenario with a `RunError`, before
+  the CLI writes any file. Artillery reads the target as
+  `{{ $env.LOAD_TESTS_BASE_URL }}`, so such a text would change the target. The
+  message does not show the URL.
 
 The messages read like this. The first line is for `vars`, the second for a
-capture, and the third for the token.
+capture, the third for the token, and the fourth for the base URL.
 
 ```text
 <path> contains text that the engine reads as a template ("{{", "$&", "$`", "$'" or "$$"). Put the value in vars without it, or leave it out.
 load-testing hook capture: "{{", "$&", "$`", "$'" or "$$" in the value of <endpoint id> at <JSON path>. The engine reads it as a template. The vuser stopped before it sent another request.
 The access token contains text that the engine reads as a template ("{{", "$&", "$`", "$'" or "$$"). Log in again to get another token.
+The base URL contains text that the engine reads as a template ("{{", "$&", "$`", "$'" or "$$"). Use a URL without it.
 ```
 
 A refused text in `vars` is rare. A name or a note that comes from an API can
@@ -2227,6 +2233,7 @@ load.it('read an order', [load.get('/orders')], {
 | `load-testing hook beforeEach: vars.<path> contains text that the engine reads as a template ...` | The result of `beforeEach` has the refused text. The vuser failed. Return the value without it. |
 | `load-testing hook capture: ...` with `in the value of <endpoint id> at <JSON path>` | A response gave a value with the refused text to a `captureFrom`. The vuser stopped before its next request. We read the full message in the report file. |
 | `The access token contains text that the engine reads as a template ...` | The access token has the refused text. Log in again to get another token. |
+| `The base URL contains text that the engine reads as a template ...` | `LOAD_TESTS_BASE_URL` has the refused text. Use a URL without it. |
 | `errors.load-testing hook ...  <count>` in the summary of Artillery | Artillery cuts a line at 79 columns. The full text is the key `errors.<message>` under `aggregate.counters` in `src/__tests__/load/.out/<slug>.report.json`. See [Text that the engine refuses](#text-that-the-engine-refuses). |
 | `{{ $env.MY_REGION }}` is empty in a script | Artillery gets only an allowed list of variables. Add the exact name to `artillery.env` in `config.ts`. See [The environment of Artillery](#the-environment-of-artillery). |
 | `artillery.env must be an array of variable names, for example ["MY_REGION"]` | `artillery.env` is not an array. Write a list of names. |

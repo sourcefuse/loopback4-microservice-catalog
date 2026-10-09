@@ -8,7 +8,8 @@ import type {LoadRequest, ParallelGroup, Scenario} from '../../types';
 import {mergeHeaders} from '../../scenario/headers';
 import type {CaptureStep} from './types';
 
-const PATH_PARAM = /\{(\w+)\}/g;
+/** A placeholder of an OpenAPI path. Its name is any text without braces or a slash. */
+const PATH_PARAM = /\{([^{}/]+)\}/g;
 
 /**
  * Starts the name of the variable of a capture. The `loadTests` prefix is

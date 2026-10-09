@@ -8,6 +8,7 @@ import path from 'node:path';
 import {expect} from '@loopback/testlab';
 import {
   TEMPLATE_AT_SOURCE,
+  checkBaseUrl,
   checkRunVars,
   checkToken,
   templateAt,
@@ -141,6 +142,45 @@ describe('the text copy of templateAt', () => {
     }
     for (const [, value] of accepted) {
       expect(templateAt(value, 'vars')).to.be.undefined();
+    }
+  });
+});
+
+describe('checkBaseUrl', () => {
+  const message = `The base URL contains text that the engine reads as a template ("{{", "$&", "$\`", "$'" or "$$"). Use a URL without it.`;
+
+  it('lets a clean URL pass', () => {
+    expect(() => checkBaseUrl('http://127.0.0.1:4014')).to.not.throw();
+  });
+
+  for (const text of ['{{ x }}', '$&', "$'", '$$']) {
+    it(`refuses a URL with ${text}, and does not print it`, () => {
+      expect(() => checkBaseUrl(`http://h/${text}`)).to.throw(RunError, {
+        message,
+      });
+    });
+  }
+});
+
+describe('the Artillery engine and the base URL', () => {
+  it('refuses a base URL with a $ pattern before it writes any file', async () => {
+    const pkgDir = fs.mkdtempSync(path.join(os.tmpdir(), 'load-testing-url-'));
+    try {
+      const run = artillery().run({
+        pkgDir,
+        scenario: scenarioOf('loop', [load.get('/a')]),
+        config: {phases: [{duration: 1, arrivalRate: 1}]},
+        phases: [{duration: 1, arrivalRate: 1}],
+        runVars: {},
+        endpointIds: ['GET /a'],
+        baseUrl: 'http://127.0.0.1:1/$&',
+        signal: new AbortController().signal,
+      });
+
+      await expect(run).to.be.rejectedWith({name: 'RunError'});
+      expect(fs.readdirSync(pkgDir)).to.deepEqual([]);
+    } finally {
+      fs.rmSync(pkgDir, {recursive: true, force: true});
     }
   });
 });

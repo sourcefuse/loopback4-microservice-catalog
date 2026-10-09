@@ -11,7 +11,7 @@ import {withFreshToken} from './run/session';
 import {resolveThresholds} from './project/config';
 import {execute, runScenarios} from './run/execute';
 import {prepare} from './run/prepare';
-import {errorMessage, LoadTestError} from './errors';
+import {describeThrown, errorMessage, LoadTestError} from './errors';
 import {judgeRun} from './report/report';
 import {consoleReporter} from './report/console';
 import type {Reporter, RunResult} from './report/types';
@@ -81,12 +81,13 @@ async function run(
     hasBaseline: baseline !== undefined,
     stopped: outcome.stopped !== undefined,
   });
+  const judged = result.passed;
   const reportersOk = await runReporters(
     config.reporters ?? [consoleReporter()],
     result,
   );
   if (outcome.stopped !== undefined) throw outcome.stopped;
-  const passed = result.passed && reportersOk;
+  const passed = judged && reportersOk;
   saveBaselineIfAsked(
     {
       pkgDir,
@@ -110,14 +111,15 @@ async function runReporters(
   result: RunResult,
 ): Promise<boolean> {
   let ok = true;
-  for (const reporter of reporters) {
+  await reporters.reduce(async (previous, reporter) => {
+    await previous;
     try {
       await reporter.onRunEnd(result);
     } catch (err) {
       printError(`reporter ${reporter.name} failed: ${errorMessage(err)}`);
       ok = false;
     }
-  }
+  }, Promise.resolve());
   return ok;
 }
 
@@ -156,7 +158,9 @@ function isUsageError(err: unknown): err is Error {
 
 /** The stack of an error that the library did not throw, so a bug is easy to find. */
 function errorStack(err: unknown): string {
-  return err instanceof Error ? (err.stack ?? String(err)) : String(err);
+  return err instanceof Error
+    ? (err.stack ?? err.message)
+    : describeThrown(err);
 }
 
 async function dispatch(

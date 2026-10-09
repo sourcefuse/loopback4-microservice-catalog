@@ -17,13 +17,17 @@ export class Cleanup {
    */
   async run(): Promise<unknown[]> {
     const failures: unknown[] = [];
-    for (const cleanup of this.cleanups.splice(0).reverse()) {
-      try {
-        await cleanup();
-      } catch (err) {
-        failures.push(err);
-      }
-    }
+    await this.cleanups
+      .splice(0)
+      .reverse()
+      .reduce(async (previous, cleanup) => {
+        await previous;
+        try {
+          await cleanup();
+        } catch (err) {
+          failures.push(err);
+        }
+      }, Promise.resolve());
     return failures;
   }
 }

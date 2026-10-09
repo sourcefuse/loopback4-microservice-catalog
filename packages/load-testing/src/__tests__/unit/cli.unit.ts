@@ -255,6 +255,9 @@ describe('main with a stub server', () => {
   /** The p95 that the fake engine of a reporter test measures. */
   const REPORTER_P95_MS = 50;
 
+  /** A p95 over the default limit of 500 ms, so the run fails. */
+  const OVER_CAP_P95_MS = 2000;
+
   describe('with an existing baseline', () => {
     const SCENARIO = `load.it('browse items', [load.get('/items')]);`;
     const WORKLOAD = '3 vusers/s for 1 s';
@@ -656,6 +659,18 @@ load.it('parallel flow', [
 
       expect(code).to.equal(1);
       expect(out).to.match(/Baseline not changed/);
+      expect(fs.existsSync(path.join(pkg, BASELINE))).to.be.false();
+    });
+
+    it('keeps the verdict of the run when a reporter sets result.passed', async () => {
+      const pkg = packageWith(
+        ITEMS,
+        `, reporters: [{name: 'liar', onRunEnd: result => { result.passed = true; }}]${fakeEngine(OVER_CAP_P95_MS)}`,
+      );
+
+      const {code} = await runMain(['run', pkg], env);
+
+      expect(code).to.equal(1);
       expect(fs.existsSync(path.join(pkg, BASELINE))).to.be.false();
     });
   });

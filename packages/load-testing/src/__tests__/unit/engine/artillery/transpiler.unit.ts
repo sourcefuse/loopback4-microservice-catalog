@@ -235,6 +235,17 @@ describe('transpile', () => {
     expect(flow[0].get.url).to.equal('/orders/a%2Fb%20c');
   });
 
+  it('fills a path param whose name has a dash', () => {
+    const scenario = scenarioOf('dash', [
+      load.get('/orders/{order-id}', {pathParams: {'order-id': 'o1'}}),
+    ]);
+
+    const flow = transpile(scenario, undefined, PHASES, PROCESSOR, new Set())
+      .scenarios[0].flow as Array<{get: {url: string}}>;
+
+    expect(flow[0].get.url).to.equal('/orders/o1');
+  });
+
   it('puts literal path params and the body in place', () => {
     const scenario = scenarioOf('write', [
       load.delete('/orders/{orderId}', {
