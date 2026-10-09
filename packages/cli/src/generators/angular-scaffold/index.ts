@@ -18,7 +18,7 @@ export default class AngularScaffoldGenerator extends UiScaffoldGenerator<Angula
     return super.writing();
   }
 
-  async end() {
+  end() {
     return super.end();
   }
 
