@@ -2,6 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {inspect} from 'node:util';
 import type {HttpErrorDetails} from './types';
 
 /** How many characters of a response body go in an error message. */
@@ -80,9 +81,17 @@ export class RunError extends LoadTestError {
   override name = 'RunError';
 }
 
+/**
+ * The text of a thrown value that is not an `Error`. A text stays as it is.
+ * Any other value shows its fields: `String` would give "[object Object]".
+ */
+export function describeThrown(value: unknown): string {
+  return typeof value === 'string' ? value : inspect(value);
+}
+
 /** The message of anything that was thrown. */
 export function errorMessage(err: unknown): string {
-  return err instanceof Error ? err.message : String(err);
+  return err instanceof Error ? err.message : describeThrown(err);
 }
 
 /** Milliseconds in one second. */
@@ -94,7 +103,7 @@ export const MS_PER_SECOND = 1000;
  * system error has them in `code`.
  */
 function reasonText(reason: unknown): string {
-  if (!(reason instanceof Error)) return String(reason);
+  if (!(reason instanceof Error)) return describeThrown(reason);
   if (reason.message !== '') return reason.message;
   const inner =
     reason instanceof AggregateError

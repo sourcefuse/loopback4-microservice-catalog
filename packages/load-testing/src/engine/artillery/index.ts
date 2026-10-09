@@ -6,7 +6,7 @@ import type {Measurement} from '../../report/types';
 import type {Engine, EngineRun} from '../types';
 import {runArtillery} from './runner';
 import {artilleryEnv} from './env';
-import {checkRunVars, checkToken} from './templates';
+import {checkBaseUrl, checkRunVars, checkToken} from './templates';
 import {writeScenario} from './transpiler';
 
 /**
@@ -19,6 +19,7 @@ export function artillery(): Engine {
     async run(input: EngineRun): Promise<Measurement> {
       checkRunVars(input.runVars);
       checkToken(input.token);
+      checkBaseUrl(input.baseUrl);
       const scriptPath = writeScenario(
         input.pkgDir,
         input.scenario,

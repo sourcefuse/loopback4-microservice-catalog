@@ -42,6 +42,9 @@ export const TEMPLATE_CAPTURE_MESSAGE = `. The engine reads it as a template. Th
 /** Ends the message about a token that holds a text of `TEMPLATE_PATTERNS`. */
 export const TEMPLATE_TOKEN_MESSAGE = ` contains text that the engine reads as a template (${TEMPLATE_PATTERNS_TEXT}). Log in again to get another token.`;
 
+/** Ends the message about a base URL that holds a text of `TEMPLATE_PATTERNS`. */
+export const TEMPLATE_BASE_URL_MESSAGE = ` contains text that the engine reads as a template (${TEMPLATE_PATTERNS_TEXT}). Use a URL without it.`;
+
 /** True when the engine reads `text` as a template. */
 export function readsAsTemplate(text: string): boolean {
   return TEMPLATE_PATTERNS.some(pattern => text.includes(pattern));
@@ -120,7 +123,8 @@ function templateInObject(value: object, path: string): string | undefined {
  * and a value `undefined` is skipped.
  */
 export function checkRunVars(runVars: Vars): void {
-  const written: unknown = JSON.parse(JSON.stringify(runVars));
+  const text = JSON.stringify(runVars);
+  const written: unknown = JSON.parse(text);
   const found = templateAt(written, 'vars');
   if (found !== undefined) {
     throw new RunError(`${found}${TEMPLATE_VARS_MESSAGE}`);
@@ -135,5 +139,16 @@ export function checkRunVars(runVars: Vars): void {
 export function checkToken(token: string | undefined): void {
   if (token !== undefined && readsAsTemplate(token)) {
     throw new RunError(`The access token${TEMPLATE_TOKEN_MESSAGE}`);
+  }
+}
+
+/**
+ * Stops the run when the base URL holds a text of `TEMPLATE_PATTERNS`.
+ * Artillery reads the target as `{{ $env.LOAD_TESTS_BASE_URL }}`, so such a
+ * text would change the target or never end. The message does not show the URL.
+ */
+export function checkBaseUrl(baseUrl: string): void {
+  if (readsAsTemplate(baseUrl)) {
+    throw new RunError(`The base URL${TEMPLATE_BASE_URL_MESSAGE}`);
   }
 }

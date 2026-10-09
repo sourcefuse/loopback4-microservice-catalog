@@ -297,6 +297,33 @@ describe('saveRun', () => {
     );
   });
 
+  for (const [name, file] of [
+    ['a history that is a list', {history: [], workloads: {}}],
+    ['workloads that are a list', {history: {}, workloads: []}],
+  ] as Array<[string, object]>) {
+    it(`stops at a baseline with ${name}`, () => {
+      fs.writeFileSync(
+        path.join(pkgDir, OUT_DIR, 'baseline.json'),
+        JSON.stringify(file),
+      );
+
+      expect(() => readBaseline(pkgDir)).to.throw(
+        /baseline.json has no history or no workloads/,
+      );
+    });
+  }
+
+  it('stops at a baseline whose endpoints of a scenario are a list', () => {
+    fs.writeFileSync(
+      path.join(pkgDir, OUT_DIR, 'baseline.json'),
+      JSON.stringify({history: {s: []}, workloads: {}}),
+    );
+
+    expect(() => readBaseline(pkgDir)).to.throw(
+      /baseline.json has a history that is not a list of numbers/,
+    );
+  });
+
   it('stops at a baseline whose history has no list of numbers', () => {
     const bad = [
       {history: {s: {'GET /a': '12'}}, workloads: {s: 'w'}},

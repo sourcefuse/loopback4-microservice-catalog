@@ -5,6 +5,7 @@
 import {expect} from '@loopback/testlab';
 import {
   ConfigError,
+  errorMessage,
   fetchFailure,
   guardedStep,
   HttpError,
@@ -72,6 +73,19 @@ describe('error classes', () => {
     expect(new RunError('m', {cause}).cause).to.equal(cause);
     expect(new ConfigError('h', ['p'], {cause}).cause).to.equal(cause);
     expect(new ScenarioError('h', ['p'], {cause}).cause).to.equal(cause);
+  });
+});
+
+describe('errorMessage', () => {
+  it('gives the message of an Error and the text of a text', () => {
+    expect(errorMessage(new Error('boom'))).to.equal('boom');
+    expect(errorMessage('plain text')).to.equal('plain text');
+  });
+
+  it('shows the fields of an object that is not an Error', () => {
+    expect(errorMessage({code: 'E_X', status: 7})).to.equal(
+      "{ code: 'E_X', status: 7 }",
+    );
   });
 });
 
