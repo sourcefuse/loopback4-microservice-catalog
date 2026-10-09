@@ -65,7 +65,7 @@ $ npm install -g @sourceloop/cli
 $ sl COMMAND
 running command...
 $ sl (-v|--version|version)
-@sourceloop/cli/13.1.1 darwin-arm64 node-v24.16.0
+@sourceloop/cli/14.0.0 darwin-arm64 node-v24.16.0
 $ sl --help [COMMAND]
 USAGE
   $ sl COMMAND
@@ -109,7 +109,7 @@ OPTIONS
   --templateVersion=templateVersion  Template branch, tag, or version
 ```
 
-_See code: [src/commands/angular/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v13.1.1/src/commands/angular/scaffold.ts)_
+_See code: [src/commands/angular/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v14.0.0/src/commands/angular/scaffold.ts)_
 
 ## `sl autocomplete [SHELL]`
 
@@ -157,7 +157,7 @@ OPTIONS
   --help                                           show manual pages
 ```
 
-_See code: [src/commands/cdk.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v13.1.1/src/commands/cdk.ts)_
+_See code: [src/commands/cdk.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v14.0.0/src/commands/cdk.ts)_
 
 ## `sl extension [NAME]`
 
@@ -174,7 +174,7 @@ OPTIONS
   --help  show manual pages
 ```
 
-_See code: [src/commands/extension.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v13.1.1/src/commands/extension.ts)_
+_See code: [src/commands/extension.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v14.0.0/src/commands/extension.ts)_
 
 ## `sl help [COMMAND]`
 
@@ -215,7 +215,7 @@ DESCRIPTION
       }
 ```
 
-_See code: [src/commands/mcp.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v13.1.1/src/commands/mcp.ts)_
+_See code: [src/commands/mcp.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v14.0.0/src/commands/mcp.ts)_
 
 ## `sl microservice [NAME]`
 
@@ -263,7 +263,7 @@ OPTIONS
       Include sequelize as ORM in service
 ```
 
-_See code: [src/commands/microservice.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v13.1.1/src/commands/microservice.ts)_
+_See code: [src/commands/microservice.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v14.0.0/src/commands/microservice.ts)_
 
 ## `sl react:scaffold [NAME]`
 
@@ -284,7 +284,7 @@ OPTIONS
   --templateVersion=templateVersion  Template branch or version
 ```
 
-_See code: [src/commands/react/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v13.1.1/src/commands/react/scaffold.ts)_
+_See code: [src/commands/react/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v14.0.0/src/commands/react/scaffold.ts)_
 
 ## `sl scaffold [NAME]`
 
@@ -300,15 +300,22 @@ ARGUMENTS
 OPTIONS
   --cwd=cwd                  Directory where project will be scaffolded, instead of the project name
   --description=description  description of the repo
-  --helmPath=helmPath        Enter the path for Helm chart (relative to the Jenkins workspace, must start with <project>-helm/):
+
+  --helmPath=helmPath        Enter the path for Helm chart (relative to the Jenkins workspace, must start with
+                             <project>-helm/):
+
   --help                     show manual pages
+
   --integrateWithBackstage   Do you want to include backstage integration files?
+
   --issuePrefix=issuePrefix  Prefix to be used for issues(e.g. GH-)
+
   --jenkinsfile              Do you want to create a Jenkinsfile for Helm-based deployment on Kubernetes?
+
   --owner=owner              owner of the repo
 ```
 
-_See code: [src/commands/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v13.1.1/src/commands/scaffold.ts)_
+_See code: [src/commands/scaffold.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v14.0.0/src/commands/scaffold.ts)_
 
 ## `sl update`
 
@@ -322,7 +329,7 @@ OPTIONS
   --help  show manual pages
 ```
 
-_See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v13.1.1/src/commands/update.ts)_
+_See code: [src/commands/update.ts](https://github.com/sourcefuse/loopback4-microservice-catalog/blob/v14.0.0/src/commands/update.ts)_
 <!-- commandsstop -->
 
 ---

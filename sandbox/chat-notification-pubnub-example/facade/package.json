@@ -81,6 +81,7 @@
     "typescript": "^5.9.3"
   },
   "overrides": {
+    "msgpack5": "^6.1.0",
     "check-code-coverage": {
       "lodash": "^4.17.21"
     },
