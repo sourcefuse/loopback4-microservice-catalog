@@ -12,6 +12,9 @@
 # Owner of the benchmarking helpers package and any of its subdirectories.
 /packages/benchmarking @sf-sahil-jassal
 
+# Owner of the load testing package and any of its subdirectories.
+/packages/load-testing @sf-sahil-jassal
+
 # In this example, owner owns any files in the services/audit-service
 # directory at the root of the repository and any of its
 # subdirectories.
