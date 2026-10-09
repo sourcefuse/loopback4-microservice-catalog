@@ -89,13 +89,20 @@ export function templateAt(value: unknown, path: string): string | undefined {
     return readsAsTemplate(value) ? path : undefined;
   }
   if (typeof value !== 'object' || value === null) return undefined;
-  if (Array.isArray(value)) {
-    for (const [index, item] of value.entries()) {
-      const found = templateAt(item, `${path}[${index}]`);
-      if (found !== undefined) return found;
-    }
-    return undefined;
+  return Array.isArray(value)
+    ? templateInArray(value, path)
+    : templateInObject(value, path);
+}
+
+function templateInArray(items: unknown[], path: string): string | undefined {
+  for (const [index, item] of items.entries()) {
+    const found = templateAt(item, `${path}[${index}]`);
+    if (found !== undefined) return found;
   }
+  return undefined;
+}
+
+function templateInObject(value: object, path: string): string | undefined {
   for (const [key, item] of Object.entries(value)) {
     const at = `${path}.${key}`;
     if (readsAsTemplate(key)) return at;

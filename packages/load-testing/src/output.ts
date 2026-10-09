@@ -31,11 +31,11 @@ let outputErrorsIgnored = false;
  * The codes of a write error that means the terminal or the pipe is gone.
  * Any other code, such as a full disk, is a real fault.
  */
-const GONE_OUTPUT_CODES: readonly string[] = [
+const GONE_OUTPUT_CODES: ReadonlySet<string> = new Set([
   'EPIPE',
   'EIO',
   'ERR_STREAM_DESTROYED',
-];
+]);
 
 /**
  * Adds an `error` listener to stdout and stderr, once for each process.
@@ -53,7 +53,7 @@ export function ignoreOutputErrors(): void {
 }
 
 function ignoreGoneOutput(err: NodeJS.ErrnoException): void {
-  if (err.code === undefined || !GONE_OUTPUT_CODES.includes(err.code)) {
+  if (err.code === undefined || !GONE_OUTPUT_CODES.has(err.code)) {
     throw err;
   }
 }

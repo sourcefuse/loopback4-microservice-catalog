@@ -89,18 +89,19 @@ function needsProcessor(
   known: ReadonlySet<string>,
   captures: CaptureStep[][],
 ): boolean {
-  return (
-    known.size > 0 ||
-    captures.some(captured => captured.length > 0) ||
-    scenario.beforeEach !== undefined ||
-    scenario.afterEach !== undefined ||
+  const hasHooks =
+    scenario.beforeEach !== undefined || scenario.afterEach !== undefined;
+  const hasOwnCode =
     scenario.artillery?.functions !== undefined ||
-    scenario.artillery?.processor !== undefined ||
-    requests.some(
-      req =>
-        req.options.beforeRequest !== undefined ||
-        req.options.afterResponse !== undefined,
-    )
+    scenario.artillery?.processor !== undefined;
+  const hasRequestHooks = requests.some(
+    req =>
+      req.options.beforeRequest !== undefined ||
+      req.options.afterResponse !== undefined,
+  );
+  const hasCaptures = captures.some(captured => captured.length > 0);
+  return (
+    known.size > 0 || hasCaptures || hasHooks || hasOwnCode || hasRequestHooks
   );
 }
 
