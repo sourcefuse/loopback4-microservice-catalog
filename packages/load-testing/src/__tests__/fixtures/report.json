@@ -1,0 +1,75 @@
+{
+  "aggregate": {
+    "counters": {
+      "vusers.created_by_name.fixture": 10,
+      "vusers.created": 10,
+      "http.requests": 50,
+      "http.codes.200": 20,
+      "http.responses": 40,
+      "http.downloaded_bytes": 370,
+      "plugins.metrics-by-endpoint.GET /items.codes.200": 10,
+      "plugins.metrics-by-endpoint.GET /items/{id}.codes.200": 10,
+      "http.codes.201": 10,
+      "plugins.metrics-by-endpoint.POST /items.codes.201": 10,
+      "http.codes.404": 10,
+      "plugins.metrics-by-endpoint.GET /missing.codes.404": 10,
+      "plugins.metrics-by-endpoint.GET /boom.errors.ECONNRESET": 10,
+      "errors.ECONNRESET": 10,
+      "vusers.failed": 10
+    },
+    "summaries": {
+      "plugins.metrics-by-endpoint.response_time.GET /items": {
+        "min": 0,
+        "max": 3,
+        "count": 10,
+        "mean": 0.9,
+        "p50": 1,
+        "median": 1,
+        "p75": 1,
+        "p90": 2,
+        "p95": 2,
+        "p99": 2,
+        "p999": 2
+      },
+      "plugins.metrics-by-endpoint.response_time.GET /items/{id}": {
+        "min": 0,
+        "max": 1,
+        "count": 10,
+        "mean": 0.7,
+        "p50": 1,
+        "median": 1,
+        "p75": 1,
+        "p90": 1,
+        "p95": 1,
+        "p99": 1,
+        "p999": 1
+      },
+      "plugins.metrics-by-endpoint.response_time.POST /items": {
+        "min": 0,
+        "max": 3,
+        "count": 10,
+        "mean": 0.3,
+        "p50": 0,
+        "median": 0,
+        "p75": 0,
+        "p90": 0,
+        "p95": 0,
+        "p99": 0,
+        "p999": 0
+      },
+      "plugins.metrics-by-endpoint.response_time.GET /missing": {
+        "min": 0,
+        "max": 1,
+        "count": 10,
+        "mean": 0.1,
+        "p50": 0,
+        "median": 0,
+        "p75": 0,
+        "p90": 0,
+        "p95": 0,
+        "p99": 0,
+        "p999": 0
+      }
+    }
+  }
+}
