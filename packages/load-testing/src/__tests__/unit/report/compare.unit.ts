@@ -213,37 +213,67 @@ describe('addRuns', () => {
     {s: {'GET /a': [10, 12]}, other: {'GET /b': [5]}},
     {s: '3 vusers/s for 60 s', other: '1 vusers/s for 60 s'},
   );
+  const URL = before.baseUrl;
 
   it('adds the p95 of a run to the history of its scenario', () => {
-    const after = addRuns(before, {
-      s: {workload: '3 vusers/s for 60 s', p95: {'GET /a': 14}},
-    });
+    const after = addRuns(
+      before,
+      {s: {workload: '3 vusers/s for 60 s', p95: {'GET /a': 14}}},
+      URL,
+    );
 
     expect(after.history.s).to.deepEqual({'GET /a': [10, 12, 14]});
   });
 
+  it('starts a new history for the scenarios of the run when the host changed', () => {
+    const after = addRuns(
+      before,
+      {s: {workload: '3 vusers/s for 60 s', p95: {'GET /a': 14}}},
+      'http://other.example',
+    );
+
+    expect(after.history.s).to.deepEqual({'GET /a': [14]});
+    expect(after.workloads.s).to.equal('3 vusers/s for 60 s');
+  });
+
+  it('keeps the history of a scenario that did not run, when the host changed', () => {
+    const after = addRuns(
+      before,
+      {s: {workload: '3 vusers/s for 60 s', p95: {'GET /a': 14}}},
+      'http://other.example',
+    );
+
+    expect(after.history.other).to.deepEqual({'GET /b': [5]});
+  });
+
   it('starts a new history when the workload changed', () => {
-    const after = addRuns(before, {
-      s: {workload: '5 vusers/s for 60 s', p95: {'GET /a': 14}},
-    });
+    const after = addRuns(
+      before,
+      {s: {workload: '5 vusers/s for 60 s', p95: {'GET /a': 14}}},
+      URL,
+    );
 
     expect(after.history.s).to.deepEqual({'GET /a': [14]});
     expect(after.workloads.s).to.equal('5 vusers/s for 60 s');
   });
 
   it('keeps the scenarios that did not run', () => {
-    const after = addRuns(before, {
-      s: {workload: '3 vusers/s for 60 s', p95: {'GET /a': 14}},
-    });
+    const after = addRuns(
+      before,
+      {s: {workload: '3 vusers/s for 60 s', p95: {'GET /a': 14}}},
+      URL,
+    );
 
     expect(after.history.other).to.deepEqual({'GET /b': [5]});
     expect(after.workloads.other).to.equal('1 vusers/s for 60 s');
   });
 
   it('starts a baseline', () => {
-    const after = addRuns(undefined, {
-      s: {workload: 'w', p95: {'GET /a': 14}},
-    });
+    const after = addRuns(
+      undefined,
+      {s: {workload: 'w', p95: {'GET /a': 14}}},
+      URL,
+    );
 
     expect(after).to.deepEqual({
       history: {s: {'GET /a': [14]}},

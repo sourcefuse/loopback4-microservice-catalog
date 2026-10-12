@@ -122,7 +122,7 @@ export async function execute(
     if (needsToken) {
       const check =
         scenario.tokenCheck ?? config.tokenCheck ?? defaultTokenCheck;
-      check({token, claims: claimsOf(token), phases});
+      await check({token, claims: claimsOf(token), phases});
     }
     const ran = await engine.run({
       pkgDir,

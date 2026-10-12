@@ -1509,9 +1509,10 @@ limits the length of a load.
 `tokenCheck` replaces the default check. So a custom check must test the
 expiry itself, as the example does. We set it in `config.ts` for the package,
 or in the options of a `load.it`. The innermost wins. It gets
-`{token, claims, phases}`. It throws an error to stop the scenario before its
-load. The report shows the message as a `FAIL:` line. `after` and the cleanups
-still run, and the next scenario starts.
+`{token, claims, phases}`. It throws an error, or rejects when it is `async`,
+to stop the scenario before its load. The run waits for an `async` check. The
+report shows the message as a `FAIL:` line. `after` and the cleanups still run,
+and the next scenario starts.
 
 ```ts
 import {RunError, load} from '@sourceloop/load-testing';
@@ -1890,7 +1891,10 @@ last ten runs.
   then starts a new history.
 - The file keeps the base URL of the run that wrote it. When the next run uses
   another URL, the CLI prints this line. The p95 of another host does not
-  describe this one.
+  describe this one. The run still compares with that baseline. With
+  `LOAD_TESTS_UPDATE_BASELINE=1`, each scenario of the run then starts a new
+  history, and the file keeps the new URL. So the p95 of two hosts never
+  blend into one mean.
 
   ```text
   The baseline is from <url>, not <url>.

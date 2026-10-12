@@ -129,16 +129,21 @@ export function workloadChanged(
 /**
  * The history and the workloads of a baseline after a run. A scenario with
  * a new workload starts a new history, because its old p95 values do not
- * tell what the new load should give.
+ * tell what the new load should give. The same holds for every scenario of
+ * the run when `baseUrl` is not the host of the baseline: the p95 of
+ * another host must not blend into the mean of this one.
  */
 export function addRuns(
   baseline: Baseline | undefined,
   measured: Record<string, BaselineSample>,
+  baseUrl: string,
 ): Pick<Baseline, 'history' | 'workloads'> {
   const history: Baseline['history'] = {...baseline?.history};
   const workloads: Baseline['workloads'] = {...baseline?.workloads};
+  const hostChanged = baseline !== undefined && baseline.baseUrl !== baseUrl;
   for (const [name, {workload, p95}] of Object.entries(measured)) {
-    const runs = workloadChanged(baseline, name, workload) ? {} : history[name];
+    const fresh = hostChanged || workloadChanged(baseline, name, workload);
+    const runs = fresh ? {} : history[name];
     history[name] = {...runs};
     for (const [id, value] of Object.entries(p95)) {
       history[name][id] = addRun(history[name][id], value);
@@ -227,7 +232,7 @@ export function saveRun(
   writeBaseline(pkgDir, {
     baseUrl: run.baseUrl,
     recordedAt: new Date().toISOString(),
-    ...addRuns(run.baseline, run.measured),
+    ...addRuns(run.baseline, run.measured, run.baseUrl),
   });
   return true;
 }

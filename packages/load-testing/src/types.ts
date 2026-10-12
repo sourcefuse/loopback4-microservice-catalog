@@ -127,7 +127,8 @@ export type LoadTestConfig = {
 
 /**
  * Runs before the load of a scenario that sends `token()`, and only when
- * there is a login. Throw to stop the run before the load starts.
+ * there is a login. Throw, or reject, to stop the run before the load
+ * starts. The check can be async: the run waits for it.
  */
 export type TokenCheck = (info: {
   /** The access token. */
@@ -136,7 +137,7 @@ export type TokenCheck = (info: {
   claims: Record<string, unknown>;
   /** The load of the scenario. */
   phases: Phase[];
-}) => void;
+}) => void | Promise<void>;
 
 export type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 

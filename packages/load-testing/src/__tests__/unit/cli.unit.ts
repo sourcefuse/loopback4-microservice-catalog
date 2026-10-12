@@ -363,6 +363,21 @@ describe('main with a stub server', () => {
       expect(out.match(ROW)?.[1]).to.equal('150');
     });
 
+    it('starts a new history when it saves a run against another host', async () => {
+      const pkg = packageWith(SCENARIO, fakeEngine(FAST_P95_MS));
+      recordBaseline(pkg, [100, 200], {baseUrl: 'http://other.example'});
+
+      const {code, out} = await runMain(['run', pkg], env);
+
+      const saved = JSON.parse(
+        fs.readFileSync(path.join(pkg, BASELINE), 'utf8'),
+      );
+      expect(code).to.equal(0);
+      expect(out.match(ROW)?.[1]).to.equal('150');
+      expect(historyOf(pkg)).to.deepEqual([FAST_P95_MS]);
+      expect(saved.baseUrl).to.equal(env.LOAD_TESTS_BASE_URL);
+    });
+
     it('adds the new run to the history and keeps the old runs', async () => {
       const pkg = packageWith(SCENARIO, fakeEngine(FAST_P95_MS));
       recordBaseline(pkg, [100, 200]);

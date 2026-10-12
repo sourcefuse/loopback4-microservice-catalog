@@ -430,11 +430,15 @@ describe('execute', () => {
         const calls: unknown[] = [];
         const scenario = scenarioOf('own check', [withToken()], {
           phases: [{duration: 7, arrivalRate: 1}],
-          tokenCheck: info => calls.push(['scenario', info]),
+          tokenCheck: info => {
+            calls.push(['scenario', info]);
+          },
         });
         const config = {
           ...options().config,
-          tokenCheck: () => calls.push(['config']),
+          tokenCheck: () => {
+            calls.push(['config']);
+          },
         };
 
         await execute(loadedOf(scenario), {
@@ -458,7 +462,9 @@ describe('execute', () => {
         const scenario = scenarioOf('config check', [withToken()]);
         const config = {
           ...options().config,
-          tokenCheck: (info: unknown) => calls.push(info),
+          tokenCheck: (info: unknown) => {
+            calls.push(info);
+          },
         };
 
         // A token that the default check would refuse: 30 s left, 60 s of load.
@@ -485,6 +491,42 @@ describe('execute', () => {
           execute(loadedOf(scenario), {...options(), engine}),
         ).to.be.rejectedWith('too weak');
         expect(inputs).to.have.length(0);
+      });
+
+      it('waits for an async check, and stops the run, before the engine, when it rejects', async () => {
+        const {engine, inputs} = fakeEngine();
+        const done: string[] = [];
+        const scenario = scenarioOf('rejects', [withToken()], {
+          tokenCheck: async () => {
+            await new Promise(resolve => setTimeout(resolve, 10));
+            throw new Error('too weak, later');
+          },
+          after: async () => {
+            done.push('after');
+          },
+        });
+
+        await expect(
+          execute(loadedOf(scenario), {...options(), engine}),
+        ).to.be.rejectedWith('too weak, later');
+        expect(inputs).to.have.length(0);
+        expect(done).to.deepEqual(['after']);
+      });
+
+      it('starts the load after an async check resolves', async () => {
+        const {engine, inputs} = fakeEngine();
+        const calls: string[] = [];
+        const scenario = scenarioOf('resolves', [withToken()], {
+          tokenCheck: async () => {
+            await new Promise(resolve => setTimeout(resolve, 10));
+            calls.push('checked');
+          },
+        });
+
+        await execute(loadedOf(scenario), {...options(), engine});
+
+        expect(calls).to.deepEqual(['checked']);
+        expect(inputs).to.have.length(1);
       });
     });
 
