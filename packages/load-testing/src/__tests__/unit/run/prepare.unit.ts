@@ -61,6 +61,9 @@ load.it.only('two', [load.get('/b')]);`);
     const prepared = await prepare(pkg, ENV);
 
     expect(prepared.scenarios).to.have.length(1);
+    expect(prepared.skipped.map(item => item.scenario.name)).to.deepEqual([
+      'one',
+    ]);
     expect(printed).to.equal('Only 1 of 2 scenarios run (.only)\n');
   });
 

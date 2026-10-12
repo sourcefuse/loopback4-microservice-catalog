@@ -495,6 +495,28 @@ describe('transpile', () => {
       );
     });
 
+    it('takes a capture from an earlier request, also when an earlier request of the group has the same id', () => {
+      const scenario = scenarioOf('s', [
+        load.get('/a'),
+        load.parallel([
+          load.get('/a'),
+          load.get('/b/{id}', {
+            pathParams: {id: captureFrom('GET /a', '$.id')},
+          }),
+        ]),
+      ]);
+
+      const [first, group] = flowOf(scenario) as [
+        {get: {capture?: unknown}},
+        {parallel: {get: {url: string}}[]},
+      ];
+
+      expect(first.get.capture).to.deepEqual([
+        {json: '$.id', as: 'loadTestsCapture_0'},
+      ]);
+      expect(group.parallel[1].get.url).to.equal('/b/{{ loadTestsCapture_0 }}');
+    });
+
     it('takes a capture from an earlier request, also when a request of the group has the same id', () => {
       const scenario = scenarioOf('s', [
         load.get('/a'),
@@ -781,6 +803,24 @@ describe('transpile', () => {
           expect: {},
         },
         http: {timeout: 30},
+      });
+    });
+
+    it('rejects raw fields that the request options own, so that the metrics name stays', () => {
+      const raw = {name: 'mine', url: '/other', json: {}} as never;
+      const scenario = scenarioOf('s', [
+        load.get('/a', {artillery: {raw}}),
+        load.get('/b'),
+      ]);
+
+      expect(() =>
+        transpile(scenario, undefined, PHASES, PROCESSOR, new Set()),
+      ).to.throw(ScenarioError, {
+        problems: [
+          'GET /a: artillery.raw.url is not allowed: the request options set it',
+          'GET /a: artillery.raw.name is not allowed: the request options set it',
+          'GET /a: artillery.raw.json is not allowed: the request options set it',
+        ],
       });
     });
 

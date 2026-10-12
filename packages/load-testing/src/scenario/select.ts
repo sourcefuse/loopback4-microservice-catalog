@@ -15,7 +15,8 @@ function isCi(env: NodeJS.ProcessEnv): boolean {
 /**
  * Picks the scenarios to run. A scenario with `skip` never runs. When a
  * scenario has `only`, just the scenarios with `only` and no `skip` run. When
- * there are none, nothing runs and all scenarios are skipped. A `.only` that
+ * there are none, nothing runs. The scenarios that do not run are the
+ * skipped ones, those that `.only` left out too. A `.only` that
  * stays in a file would hide the other scenarios of the package, so it stops
  * the run when `CI` is set. So does a run where every scenario is skipped:
  * a green gate must not hide that nothing ran.
@@ -36,8 +37,5 @@ export function selectScenarios<T extends {scenario: Scenario}>(
   }
   const picked =
     only.length > 0 ? only.filter(item => !item.scenario.skip) : live;
-  return {
-    run: picked,
-    skipped: picked.length > 0 ? all.filter(item => item.scenario.skip) : all,
-  };
+  return {run: picked, skipped: all.filter(item => !picked.includes(item))};
 }

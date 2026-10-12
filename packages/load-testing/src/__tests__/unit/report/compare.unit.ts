@@ -313,6 +313,19 @@ describe('saveRun', () => {
     });
   }
 
+  it('stops at a baseline that has no baseUrl, or one that is not a text', () => {
+    for (const baseUrl of [undefined, 5, null]) {
+      fs.writeFileSync(
+        path.join(pkgDir, OUT_DIR, 'baseline.json'),
+        JSON.stringify({history: {}, workloads: {}, baseUrl}),
+      );
+
+      expect(() => readBaseline(pkgDir)).to.throw(
+        /baseline.json has no baseUrl. Delete it, and record a new one./,
+      );
+    }
+  });
+
   it('stops at a baseline whose endpoints of a scenario are a list', () => {
     fs.writeFileSync(
       path.join(pkgDir, OUT_DIR, 'baseline.json'),

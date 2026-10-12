@@ -528,7 +528,8 @@ load.describe(
 - `skip` wins over `only`. Only a scenario with `.only` and without `.skip`
   runs. A `.only` on a scenario that also has `.skip` runs nothing. When no
   other scenario has `.only`, nothing runs. The report lists every scenario as
-  skipped. This holds only on a local run. With `CI` set, such a `.only` is an
+  skipped. The scenarios that `.only` leaves out are listed as skipped too.
+  This holds only on a local run. With `CI` set, such a `.only` is an
   error (see below).
 - A `.only` that stays in a file hides the other scenarios. When the variable
   `CI` is set to a value other than empty, `0` or `false`, a `.only` stops the
@@ -856,9 +857,12 @@ values before the load. These rules hold.
 - `duration`, `arrivalCount` and `pause` must be whole numbers above 0.
   `arrivalRate` and `rampTo` can be 0.
 - A phase with `rampTo` also needs `arrivalRate`.
-- A text value for `duration`, `pause`, `arrivalRate`, `rampTo` or
-  `arrivalCount` is not read by the CLI. It only checks that the text is not
-  empty. Artillery reads the text, and a text that it cannot read fails later.
+- A text value for `duration`, `pause` or `arrivalCount` must read as more
+  than 0. The CLI reads it as Artillery reads a time: `"30"` and `"1m"` pass,
+  and `"0"`, `"0m"`, `"-5"` and `"soon"` give the messages above. A text value
+  for `arrivalRate` or `rampTo` is not read by the CLI. It only checks that
+  the text is not empty. Artillery reads the text, and a text that it cannot
+  read fails later.
 
 The messages read like this.
 
@@ -1420,7 +1424,8 @@ The login follows the two-step login of the ARC authentication service
    replaces. The signed payload has no random part (`jti`), so two refreshes
    in the same second give the same token string. The second refresh then
    revokes the token that it just gave. We refresh at most once a minute to
-   avoid this.
+   avoid this. The age comes from the `iat` claim. A token that has no `iat`,
+   such as an opaque token, counts from the time that the CLI got it.
 
 All three calls go to `LOAD_TESTS_AUTH_URL`, or to the base URL when that
 variable is not set. A call that answers with a status other than 2xx throws a
@@ -1775,7 +1780,8 @@ The columns and lines:
   `<scenario>: cleanup failed: <message>`, and not into the report.
 - A line `Baseline: recorded with <workload>, so p95 is not compared` shows that
   the workload changed since the baseline.
-- `Skipped: <name>` lists a scenario that `.skip` hides.
+- `Skipped: <name>` lists a scenario that does not run: it has `.skip`, or a
+  `.only` on another scenario leaves it out.
 - `Coverage` counts the endpoints of `src/openapi.json` that the scenarios call.
   It does not count `/ping`, `/openapi.json` and the `/explorer` paths.
 - When no baseline file exists, the reporter prints the line `No
@@ -1845,7 +1851,7 @@ The fields of a `RunResult`:
 | Field | Meaning |
 | --- | --- |
 | `scenarios` | A `ScenarioResult` for each scenario that ended: `name`, `workload`, `vusers`, `hookErrors`, `problems`, `error`, `baselineNote`, `endpoints` and `passed`. |
-| `skipped` | The names of the skipped scenarios. |
+| `skipped` | The names of the scenarios that did not run: the ones with `.skip`, and the ones that `.only` left out. |
 | `coverage` | `{covered, total, specFile}`. |
 | `heavyApis` | `{max, endpoints: {id, p95}[]}`. |
 | `hasBaseline` | False when there is no baseline file. |
@@ -2115,7 +2121,7 @@ under `artillery` on as they are, so the `{{` check does not read them.
 | `artillery.config` | `config.ts` | Part of the Artillery `config` (`http`, `plugins` and so on), merged into every scenario. It cannot hold `phases`, `processor`, `target` or the `metrics-by-endpoint` plugin, because the package owns them. We use `phases` and `artillery.processor` instead. |
 | `artillery.config` | scenario options | The same, merged over the one of `config.ts`. Plain objects merge. An array replaces the one before it. |
 | `artillery.raw` | scenario options | `weight`, `onError`, `beforeScenario` and `afterScenario`. The package keeps its own `beforeScenario` and `afterScenario`, and adds the ones of `artillery.raw` after them. |
-| `artillery.raw` | request options | Request fields that the package does not own, such as `expect`, `ifTrue`, `capture` by header and `form`. The package keeps its own `capture`, `beforeRequest` and `afterResponse`, and adds the ones of `artillery.raw` after them. |
+| `artillery.raw` | request options | Request fields that the package does not own, such as `expect`, `ifTrue`, `capture` by header and `form`. The package keeps its own `capture`, `beforeRequest` and `afterResponse`, and adds the ones of `artillery.raw` after them. `url`, `name`, `headers`, `json` and `qs` are not allowed: the request options set them, and `name` is the key of the metrics of the endpoint. |
 | `artillery.functions` | scenario options | `{name: fn}` for a `{function: 'name'}` step. The rules of a worker hook hold, but the CLI does not try them before the load. |
 | `artillery.processor` | scenario options | The absolute path of a built `.js` file. Its exports are Artillery processor functions. Every worker loads it, so it can import anything. Every worker pays for its imports. |
 | `load.step(step)` | the request list | An Artillery flow step, such as `think`, `log`, `function` or `loop`. We build a request inside a `loop` with `load.get(...)`. It gets an endpoint id, limits and hooks. |
@@ -2244,7 +2250,7 @@ load.it('read an order', [load.get('/orders')], {
 | `... can use only its arguments and the globals of a worker, such as URL and Buffer: x is not defined` | A worker hook uses an import or a variable of its module. Pass the value through `vars`, or use only globals. |
 | `randomNumber: the minimum and the maximum must be whole numbers from 0 up` | A value is negative or has a fraction. Use whole numbers from 0 up, with `min` not above `max`. |
 | `The scenario name "<name>" gives the file name "baseline", ...` | The file name `baseline` is for the baseline file. Rename the scenario. |
-| `phases[i].duration must be a whole number above 0, or a text such as "1m"` | A phase has a bad time or count. Use a whole number above 0. The same holds for `pause` and `arrivalCount`. A phase with `rampTo` needs `arrivalRate`. |
+| `phases[i].duration must be a whole number above 0, or a text such as "1m"` | A phase has a bad time or count. Use a whole number above 0, or a text that reads as more than 0. The same holds for `pause` and `arrivalCount`. A phase with `rampTo` needs `arrivalRate`. |
 | `phases[i] needs arrivalRate or arrivalCount` | A phase has neither a rate nor a count. Add `arrivalRate`, or `arrivalCount`. |
 | `POST /orders failed: connect ECONNREFUSED 127.0.0.1:4010` | The request did not reach the app. Check the base URL and that the app runs. The text after `failed:` is the cause. |
 | `POST /orders timed out after 60 s` | The app did not answer in time. Check the app. For a slow call, set `timeoutMs` in the options of the call. |
@@ -2256,13 +2262,14 @@ load.it('read an order', [load.get('/orders')], {
 | `vars("x") is set by neither before nor beforeEach` | A request reads `vars('x')` that no hook sets. Set it in `before` or return it from `beforeEach`. |
 | `capture source "GET /orders" is not a request in this scenario` | No request of the scenario has this endpoint id. Check the id. |
 | `capture source "GET /orders" is not earlier in the flow` | The request exists, but it comes after the `captureFrom`. Move it before. |
-| `capture source "GET /orders" runs in parallel with this request` | The source is in the same `load.parallel` group. Capture from a request before the group. |
+| `capture source "GET /orders" runs in parallel with this request` | The source is in the same `load.parallel` group. Capture from a request before the group. A request of the group with the same id does not matter when an earlier request outside the group has it. |
 | `Two scenarios have the same name: ...` | Two scenarios give the same generated file name. Rename one. |
 | `token() needs a login: ...` | A scenario sends `token()`, but `LOAD_TESTS_USERNAME` is not set. Set the login variables. |
 | `FAIL: 3 heavy APIs, but maxHeavyApis is 2. ...` | The package has more heavy APIs than it can have. Lower the `p95` limit of an endpoint to 1000 ms or less. Raise `maxHeavyApis` only for performance debt that the pull request lists. |
 | `Artillery stopped with code 1: <script>` | Artillery failed. Its own output, above this line, tells why. |
 | `artillery is missing from @sourceloop/load-testing: reinstall the package` | Artillery is not installed. Reinstall the package, and do not prune its dependencies. |
-| `src/__tests__/load/.out/baseline.json ... Delete it, and record a new one.` | The baseline file is not valid. Delete it, and run with `LOAD_TESTS_UPDATE_BASELINE=1`. |
+| `src/__tests__/load/.out/baseline.json ... Delete it, and record a new one.` | The baseline file is not valid. It can be bad JSON, or it can miss the history, the workloads or the `baseUrl`. Delete it, and run with `LOAD_TESTS_UPDATE_BASELINE=1`. |
+| `GET /orders: artillery.raw.name is not allowed: the request options set it` | A request sets `url`, `name`, `headers`, `json` or `qs` in `artillery.raw`. Remove it, and use the request options. |
 | Every row says `pass (workload changed)` | The phases changed since the baseline. Run once with `LOAD_TESTS_UPDATE_BASELINE=1` to start a new history. |
 
 ## Limits

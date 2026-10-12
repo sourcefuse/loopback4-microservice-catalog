@@ -176,10 +176,23 @@ export function resolveRequests(
   };
 }
 
+/** The index of the last request before `index` that `matches`, or -1. */
+function lastIndexBefore(
+  requests: LoadRequest[],
+  index: number,
+  matches: (req: LoadRequest) => boolean,
+): number {
+  for (let i = index - 1; i >= 0; i--) {
+    if (matches(requests[i])) return i;
+  }
+  return -1;
+}
+
 /**
  * Returns the index of the last request `from` before `index`, or why not.
  * The source must not be in the parallel group of the request: the requests
- * of a group run at the same time.
+ * of a group run at the same time. A request of the group with the same id
+ * does not hide an earlier source outside the group.
  */
 function earlierIndex(
   requests: LoadRequest[],
@@ -190,11 +203,12 @@ function earlierIndex(
   const current = requests[index];
   const peers =
     groups.find(group => group.requests.includes(current))?.requests ?? [];
-  const source = requests
-    .slice(0, index)
-    .map(req => req.id)
-    .lastIndexOf(from);
-  if (source >= 0 && !peers.includes(requests[source])) return source;
+  const source = lastIndexBefore(
+    requests,
+    index,
+    req => req.id === from && !peers.includes(req),
+  );
+  if (source >= 0) return source;
   if (peers.some(req => req !== current && req.id === from)) {
     return `capture source "${from}" runs in parallel with this request`;
   }

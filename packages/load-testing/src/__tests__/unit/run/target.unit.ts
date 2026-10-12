@@ -4,7 +4,7 @@
 // https://opensource.org/licenses/MIT
 import http from 'node:http';
 import type {AddressInfo, Socket} from 'node:net';
-import {expect} from '@loopback/testlab';
+import {expect, sinon} from '@loopback/testlab';
 import {login, readTarget, refresh, secondsLeft} from '../../../run/target';
 import {LoginError} from '../../../errors';
 import type {Login, Target} from '../../../run/types';
@@ -288,6 +288,40 @@ describe('login and refresh', () => {
 
     expect(await refresh(target, young)).to.equal(young);
     expect(seen).to.not.have.property('/auth/token-refresh');
+  });
+
+  it('keeps an opaque token that the login gave less than a minute ago', async () => {
+    replies = {'/auth/login': {code: 'k'}, '/auth/token': session};
+    const fresh = await login(target);
+    delete seen['/auth/token-refresh'];
+
+    expect(await refresh(target, fresh)).to.equal(fresh);
+    expect(seen).to.not.have.property('/auth/token-refresh');
+  });
+
+  it('keeps an opaque token that a refresh gave less than a minute ago', async () => {
+    replies = {'/auth/token-refresh': {accessToken: 'a2', refreshToken: 'r2'}};
+    const first = await refresh(target, session);
+    delete seen['/auth/token-refresh'];
+
+    expect(await refresh(target, first)).to.equal(first);
+    expect(seen).to.not.have.property('/auth/token-refresh');
+  });
+
+  it('refreshes an opaque token that is a minute old', async () => {
+    replies = {'/auth/token-refresh': {accessToken: 'a2', refreshToken: 'r2'}};
+    const clock = sinon.useFakeTimers({now: Date.now(), toFake: ['Date']});
+    try {
+      const first = await refresh(target, session);
+      clock.tick(60_000);
+      delete seen['/auth/token-refresh'];
+
+      await refresh(target, first);
+    } finally {
+      clock.restore();
+    }
+
+    expect(seen).to.have.property('/auth/token-refresh');
   });
 
   it('refreshes a token that is a minute old', async () => {

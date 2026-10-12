@@ -105,12 +105,27 @@ function needsProcessor(
   );
 }
 
+/**
+ * The Artillery request fields that the library sets from the request. A `raw`
+ * value would replace them: `name` is the key of the metrics of the endpoint.
+ */
+const OWNED_REQUEST_FIELDS = ['url', 'name', 'headers', 'json', 'qs'] as const;
+
 /** The problems with the options of a scenario, as messages. Empty means none. */
 function optionProblems(scenario: Scenario, requests: LoadRequest[]): string[] {
   const problems = artilleryConfigProblems(
     scenario.artillery?.config,
     'artillery.config',
   );
+  for (const req of requests) {
+    for (const key of OWNED_REQUEST_FIELDS) {
+      if (req.options.artillery?.raw && key in req.options.artillery.raw) {
+        problems.push(
+          `${req.id}: artillery.raw.${key} is not allowed: the request options set it`,
+        );
+      }
+    }
+  }
   if (new Set(requests).size < requests.length) {
     problems.push(
       'a request is in the flow twice: call load.get (or post, put, ...) once for each use',

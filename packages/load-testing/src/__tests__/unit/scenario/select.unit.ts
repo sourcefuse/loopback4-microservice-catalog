@@ -51,14 +51,14 @@ describe('selectScenarios', () => {
     expect(names(skipped)).to.deepEqual(['a']);
   });
 
-  it('runs just the scenarios with only', () => {
+  it('runs just the scenarios with only, and lists the others as skipped', () => {
     const {run, skipped} = selectScenarios(
       [loaded('a'), loaded('b', {only: true}), loaded('c')],
       {},
     );
 
     expect(names(run)).to.deepEqual(['b']);
-    expect(skipped).to.deepEqual([]);
+    expect(names(skipped)).to.deepEqual(['a', 'c']);
   });
 
   it('lets skip win over only', () => {

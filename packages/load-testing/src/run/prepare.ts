@@ -46,7 +46,7 @@ export async function prepare(
   const config = readConfig(pkgDir);
   const all = loadScenarios(pkgDir, config);
   const {run: scenarios, skipped} = selectScenarios(all, env);
-  if (scenarios.length < all.length - skipped.length) {
+  if (all.some(({scenario}) => scenario.only)) {
     print(`Only ${scenarios.length} of ${all.length} scenarios run (.only)`);
   }
   const needLogin = scenarios.filter(({scenario}) => usesToken(scenario));

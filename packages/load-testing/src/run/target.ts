@@ -93,6 +93,13 @@ export async function login(
 const MIN_REFRESH_AGE_SECONDS = 60;
 
 /**
+ * When this process got each session, in seconds. `refresh` uses it for a
+ * token that has no `iat` claim, such as an opaque token, so that the minimum
+ * age holds for every token.
+ */
+const obtainedAt = new WeakMap<Session, number>();
+
+/**
  * Gets a new session, unless the access token is less than a minute old. An
  * access token lives 900 s and a run can take longer, so the CLI calls this
  * before each scenario and does not log in again. `signal` stops the request.
@@ -102,7 +109,7 @@ export async function refresh(
   session: Session,
   signal?: AbortSignal,
 ): Promise<Session> {
-  const issued = issuedAt(session.accessToken);
+  const issued = issuedAt(session.accessToken) ?? obtainedAt.get(session);
   if (
     issued !== undefined &&
     Date.now() / MS_PER_SECOND - issued < MIN_REFRESH_AGE_SECONDS
@@ -121,7 +128,7 @@ export async function refresh(
 
 /**
  * The `iat` claim of a JWT, in seconds. Undefined when the token is not a JWT
- * or has no `iat`: the caller then refreshes.
+ * or has no `iat`: the caller then uses the time that it got the session.
  */
 function issuedAt(token: string): number | undefined {
   const {iat} = claimsOf(token);
@@ -159,7 +166,9 @@ function toSession(call: string, body: Record<string, unknown>): Session {
   if (typeof refreshToken !== 'string' || refreshToken === '') {
     throw new LoginError(`${call} gave no refreshToken`);
   }
-  return {accessToken, refreshToken};
+  const session = {accessToken, refreshToken};
+  obtainedAt.set(session, Date.now() / MS_PER_SECOND);
+  return session;
 }
 
 /** Names the origin of the location, never the whole location: it can hold a secret. */

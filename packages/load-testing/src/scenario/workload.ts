@@ -35,7 +35,9 @@ export function phaseSeconds(phases: Phase[]): number | undefined {
  * number of seconds. Any other text goes to the `ms` package, which gives
  * milliseconds.
  */
-function toSeconds(value: number | string | undefined): number | undefined {
+export function toSeconds(
+  value: number | string | undefined,
+): number | undefined {
   if (typeof value === 'number') return value;
   if (typeof value !== 'string' || value.trim() === '') return undefined;
   if (Number.isInteger(Number(value))) return Number(value);

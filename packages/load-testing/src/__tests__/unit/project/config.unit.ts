@@ -356,6 +356,26 @@ describe('configProblems', () => {
     ]);
   });
 
+  it('rejects a text duration, pause or count that is not above 0', () => {
+    const phases = [
+      {duration: '0', arrivalRate: 1},
+      {duration: '0m', arrivalRate: 1},
+      {duration: '-5', arrivalRate: 1},
+      {pause: '0'},
+      {duration: 5, arrivalCount: '0'},
+      {duration: 'soon', arrivalRate: 1},
+    ];
+
+    expect(configProblems({...GOOD, phases})).to.deepEqual([
+      'phases[0].duration must be a whole number above 0, or a text such as "1m"',
+      'phases[1].duration must be a whole number above 0, or a text such as "1m"',
+      'phases[2].duration must be a whole number above 0, or a text such as "1m"',
+      'phases[3].pause must be a whole number above 0, or a text such as "1m"',
+      'phases[4].arrivalCount must be a whole number above 0',
+      'phases[5].duration must be a whole number above 0, or a text such as "1m"',
+    ]);
+  });
+
   it('rejects thresholds below 0', () => {
     const bad = {
       phases: GOOD.phases,

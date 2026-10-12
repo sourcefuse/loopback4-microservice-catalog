@@ -5,6 +5,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import type {LoadTestConfig, Thresholds} from '../types';
+import {toSeconds} from '../scenario/workload';
 import {builtFile, CONFIG_FILE} from './layout';
 import {ConfigError} from '../errors';
 import type {ResolvedThresholds} from './types';
@@ -295,13 +296,12 @@ export function thresholdProblems(
 
 /**
  * A time or a count: a whole number above 0, or a text such as `1m` for
- * Artillery. Artillery cannot read a number with a fraction as a time.
+ * Artillery that reads as more than 0. Artillery cannot read a number with a
+ * fraction as a time.
  */
 function isAmount(value: unknown): boolean {
-  return (
-    (typeof value === 'number' && Number.isInteger(value) && value > 0) ||
-    isText(value)
-  );
+  if (typeof value === 'number') return Number.isInteger(value) && value > 0;
+  return isText(value) && (toSeconds(value as string) ?? 0) > 0;
 }
 
 function isText(value: unknown): boolean {

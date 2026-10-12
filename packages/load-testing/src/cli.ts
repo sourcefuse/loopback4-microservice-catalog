@@ -111,15 +111,14 @@ async function runReporters(
   result: RunResult,
 ): Promise<boolean> {
   let ok = true;
-  await reporters.reduce(async (previous, reporter) => {
-    await previous;
+  for (const reporter of reporters) {
     try {
       await reporter.onRunEnd(result);
     } catch (err) {
       printError(`reporter ${reporter.name} failed: ${errorMessage(err)}`);
       ok = false;
     }
-  }, Promise.resolve());
+  }
   return ok;
 }
 

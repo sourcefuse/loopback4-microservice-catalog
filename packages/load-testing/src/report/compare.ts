@@ -177,6 +177,7 @@ export function readBaseline(pkgDir: string): Baseline | undefined {
   if (Object.values(workloads).some(text => typeof text !== 'string')) {
     throw fail('has a workload that is not a text');
   }
+  if (typeof baseline?.baseUrl !== 'string') throw fail('has no baseUrl');
   return baseline as Baseline;
 }
 
