@@ -76,6 +76,8 @@ setInterval(() => {}, 1000);`,
    * True when the process runs. A zombie is gone: in a container whose PID 1
    * does not reap, a killed orphan stays a zombie, and `kill(pid, 0)` still
    * works for it. Where there is no `/proc`, the `kill` check is the answer.
+   * The PID 1 can reap the zombie between the two checks. Then `/proc/<pid>`
+   * is gone, and the process is gone too.
    */
   function isRunning(pid: number): boolean {
     try {
@@ -90,7 +92,7 @@ setInterval(() => {}, 1000);`,
         stat.slice(stat.lastIndexOf(')') + 2, stat.lastIndexOf(')') + 3) !== 'Z'
       );
     } catch {
-      return true;
+      return !fs.existsSync('/proc/self/stat');
     }
   }
 
@@ -198,7 +200,11 @@ const wait = setInterval(() => {
         expect(isRunning(pid)).to.be.false();
       } finally {
         parent.kill('SIGKILL');
-        if (pid && isRunning(pid)) process.kill(pid, 'SIGKILL');
+        try {
+          if (pid) process.kill(pid, 'SIGKILL');
+        } catch {
+          // The command is already gone.
+        }
       }
     }
 
