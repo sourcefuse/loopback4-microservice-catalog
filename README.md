@@ -147,6 +147,16 @@ ARC API utilizes many LoopBack extensions in the micro-services provided, which 
     <td><a href="https://github.com/sourcefuse/loopback4-vault">GitHub</a></td>
     <td><a href="https://npmjs.com/package/@sourceloop/vault">NPM</a></td>
   </tr>
+  <tr>
+    <td>@sourceloop/benchmarking</td>
+    <td><a href="packages/benchmarking">GitHub</a></td>
+    <td><a href="https://npmjs.com/package/@sourceloop/benchmarking">NPM</a></td>
+  </tr>
+  <tr>
+    <td>@sourceloop/load-testing</td>
+    <td><a href="packages/load-testing">GitHub</a></td>
+    <td><a href="https://npmjs.com/package/@sourceloop/load-testing">NPM</a></td>
+  </tr>
    <tr>
     <td>@loopback/sequelize</td>
     <td><a href="https://github.com/loopbackio/loopback-next/tree/master/extensions/sequelize">GitHub</a></td>
