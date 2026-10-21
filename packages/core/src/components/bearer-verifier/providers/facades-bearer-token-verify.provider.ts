@@ -17,6 +17,7 @@ import moment from 'moment';
 import {RevokedTokenRepository} from '../../../repositories';
 import {ILogger, LOGGER} from '../../logger-extension';
 import {IAuthUserWithPermissions} from '../keys';
+import {checkIfTokenRevoked} from './utils/revoked-token-checker.util';
 
 export class FacadesBearerTokenVerifyProvider implements Provider<VerifyFunction.BearerFn> {
   constructor(
@@ -31,23 +32,19 @@ export class FacadesBearerTokenVerifyProvider implements Provider<VerifyFunction
    * The function verifies a bearer token, checks for token revocation, expiration, and password
    * expiry, and returns the authenticated user.
    * @returns The `value()` function returns a BearerFn function that verifies a token. Inside the
-   * function, it first checks if the token is revoked, then verifies the token using a JWT secret key.
-   * If the token is valid, it checks for password expiry and returns either an instance of
-   * `authUserModel` or the user object based on the availability of `authUserModel`.
+   * function, it first checks if the token is revoked using the shared utility (fail-closed: errors
+   * propagate and deny request), then verifies the token using a JWT secret key. If the token is
+   * valid, it checks for password expiry and returns either an instance of `authUserModel` or the
+   * user object based on the availability of `authUserModel`.
    */
   value(): VerifyFunction.BearerFn {
     return async (token: string, req?: Request) => {
-      try {
-        const isRevoked = await this.revokedTokenRepository.get(token);
-        if (isRevoked?.token) {
-          throw new HttpErrors.Unauthorized('TokenRevoked');
-        }
-      } catch (error) {
-        if (HttpErrors.HttpError.prototype.isPrototypeOf(error)) {
-          throw error;
-        }
-        this.logger.error('Revoked token repository not available !');
-      }
+      // Check if token has been revoked (fail-closed: errors propagate and deny request)
+      await checkIfTokenRevoked(
+        token,
+        this.revokedTokenRepository,
+        this.logger,
+      );
 
       let user: IAuthUserWithPermissions;
       try {

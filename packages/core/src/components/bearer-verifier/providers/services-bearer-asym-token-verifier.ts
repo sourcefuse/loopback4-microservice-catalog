@@ -14,21 +14,27 @@ import {
 } from 'loopback4-authentication';
 import moment from 'moment-timezone';
 import * as jose from 'node-jose';
-import {JwtKeysRepository} from '../../../repositories';
+import {JwtKeysRepository, RevokedTokenRepository} from '../../../repositories';
 import {ILogger, LOGGER} from '../../logger-extension';
 import {IAuthUserWithPermissions} from '../keys';
+import {checkIfTokenRevoked} from './utils/revoked-token-checker.util';
 
 export class ServicesBearerAsymmetricTokenVerifyProvider implements Provider<VerifyFunction.BearerFn> {
   constructor(
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @repository(JwtKeysRepository)
     public jwtKeysRepo: JwtKeysRepository,
+    @repository(RevokedTokenRepository)
+    public revokedTokenRepo: RevokedTokenRepository,
     @inject(AuthenticationBindings.USER_MODEL, {optional: true})
     public authUserModel?: Constructor<EntityWithIdentifier & IAuthUser>,
   ) {}
 
   value(): VerifyFunction.BearerFn {
     return async (token: string) => {
+      // Check if token has been revoked
+      await checkIfTokenRevoked(token, this.revokedTokenRepo, this.logger);
+
       let user: IAuthUserWithPermissions;
 
       try {
