@@ -31,6 +31,7 @@
     }
   },
   "overrides": {
+    "follow-redirects": "^1.16.1",
     "basic-ftp": "^6.2.1",
     "msgpack5": "^6.1.0",
     "semver": "^7.5.4",
