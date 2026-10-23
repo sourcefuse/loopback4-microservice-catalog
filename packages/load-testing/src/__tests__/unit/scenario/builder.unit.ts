@@ -4,6 +4,8 @@
 // https://opensource.org/licenses/MIT
 import {expect} from '@loopback/testlab';
 import {load, takeRegistered} from '../../../scenario/builder';
+import type {HttpScenario} from '../../../types';
+import {token} from '../../../scenario/values';
 
 describe('load.describe and load.it', () => {
   beforeEach(() => {
@@ -91,7 +93,7 @@ describe('load.describe and load.it', () => {
   describe('group options', () => {
     const only = () => {
       const [scenario] = takeRegistered();
-      return scenario;
+      return scenario as HttpScenario;
     };
 
     it('gives the options of a describe to the scenarios inside', () => {
@@ -113,6 +115,14 @@ describe('load.describe and load.it', () => {
         thresholds: {p95: 100},
         group: ['g'],
       });
+    });
+
+    it('gives a browser scenario no headers from a describe', () => {
+      load.describe('g', {headers: {authorization: token()}}, () => {
+        load.browser('open', async () => {});
+      });
+
+      expect(only()).to.not.have.property('headers');
     });
 
     it('still takes a describe with no options', () => {
@@ -211,6 +221,101 @@ describe('load.describe and load.it', () => {
         'load.describe("late"): the function cannot be async',
       );
     });
+  });
+});
+
+describe('load.browser', () => {
+  beforeEach(() => {
+    takeRegistered();
+  });
+
+  it('registers a browser scenario with its label and options', () => {
+    const flow = async () => undefined;
+    const limits = {p95: 900};
+
+    const added = load.browser(
+      'opens the dashboard',
+      {steps: {open: limits}, flow: limits, step: {p95: 800}},
+      flow,
+    );
+
+    expect(added).to.deepEqual({
+      name: 'opens the dashboard',
+      step: {p95: 800},
+      browser: {flow, steps: {open: limits}, flowLimits: limits},
+    });
+    expect(takeRegistered()).to.deepEqual([added]);
+  });
+
+  it('takes a flow with no options', () => {
+    const flow = async () => undefined;
+
+    load.browser('plain', flow);
+
+    expect(takeRegistered()).to.deepEqual([{name: 'plain', browser: {flow}}]);
+  });
+
+  it('throws a TypeError at once for an option that load.browser does not know', () => {
+    const flow = async () => undefined;
+    // A plain JavaScript file can pass what the types forbid.
+    const options = {beforeEach: () => ({}), headers: {a: 'b'}};
+
+    expect(() => load.browser('x', options as never, flow)).to.throw(
+      TypeError,
+      {
+        message:
+          'load.browser: beforeEach is not an option: use one of phases, step, steps, flow, vitals, before, after',
+      },
+    );
+  });
+
+  it('keeps the run-level before and after on the scenario', () => {
+    const flow = async () => undefined;
+    const before = async () => undefined;
+    const after = async () => undefined;
+
+    const added = load.browser('hooks', {before, after}, flow);
+
+    expect(added).to.deepEqual({name: 'hooks', before, after, browser: {flow}});
+  });
+
+  it('throws a TypeError for a hook that runs per user or per request', () => {
+    const flow = async () => undefined;
+    for (const key of [
+      'afterEach',
+      'beforeRequest',
+      'afterResponse',
+      'tokenCheck',
+    ]) {
+      expect(() =>
+        load.browser('x', {[key]: () => ({})} as never, flow),
+      ).to.throw(TypeError, {
+        message: `load.browser: ${key} is not an option: use one of phases, step, steps, flow, vitals, before, after`,
+      });
+    }
+  });
+
+  it('takes a call with no options and no flow, and leaves the flow to the loader', () => {
+    const added = (load.browser as unknown as (name: string) => unknown)('x');
+
+    expect(added).to.deepEqual({name: 'x', browser: {flow: undefined}});
+  });
+
+  it('sets only and skip, from itself or from a describe around it', () => {
+    const flow = async () => undefined;
+    load.browser.only('own only', flow);
+    load.browser.skip('own skip', flow);
+    load.describe.only('block', () => {
+      load.browser('inside', flow);
+    });
+
+    expect(takeRegistered().map(({only, skip}) => ({only, skip}))).to.deepEqual(
+      [
+        {only: true, skip: undefined},
+        {only: undefined, skip: true},
+        {only: true, skip: undefined},
+      ],
+    );
   });
 });
 

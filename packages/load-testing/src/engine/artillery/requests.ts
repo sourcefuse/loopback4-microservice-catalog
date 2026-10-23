@@ -4,7 +4,7 @@
 // https://opensource.org/licenses/MIT
 import {isPlainObject, isValue} from '../../scenario/guards';
 import type {Capture, HeaderMap, Value, Var} from '../../scenario/types';
-import type {LoadRequest, ParallelGroup, Scenario} from '../../types';
+import type {HttpScenario, LoadRequest, ParallelGroup} from '../../types';
 import {mergeHeaders} from '../../scenario/headers';
 import type {CaptureStep} from './types';
 
@@ -26,7 +26,7 @@ type Entries = Record<string, string | number | boolean | Value>;
 /** The headers of a request, over the headers of its scenario. */
 function headersOf(
   req: LoadRequest,
-  scenario: Scenario,
+  scenario: HttpScenario,
 ): HeaderMap | undefined {
   if (scenario.headers === undefined) return req.options.headers;
   return mergeHeaders(scenario.headers, req.options.headers);
@@ -41,7 +41,7 @@ function headersOf(
  * scenario go under the headers of each request.
  */
 export function resolveRequests(
-  scenario: Scenario,
+  scenario: HttpScenario,
   requests: LoadRequest[],
   known: ReadonlySet<string>,
   groups: ParallelGroup[] = [],

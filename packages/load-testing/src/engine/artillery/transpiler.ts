@@ -14,10 +14,20 @@ import {
 import {artilleryConfigProblems} from '../../project/config';
 import {OUT_DIR} from '../../project/layout';
 import {labelOf, slugOf} from '../../scenario/label';
-import type {LoadRequest, ParallelGroup, Scenario, Vars} from '../../types';
+import type {Scenario as ArtilleryScenario} from 'artillery';
+import type {
+  BrowserScenario,
+  HttpScenario,
+  LoadRequest,
+  ParallelGroup,
+  Scenario,
+  Vars,
+} from '../../types';
 import {
   BEFORE_SCENARIO,
   AFTER_SCENARIO,
+  BROWSER_TEST_FUNCTION,
+  browserProcessorSource,
   captureCheckName,
   processorSource,
   probeHooks,
@@ -45,9 +55,21 @@ export function writeScenario(
   const outDir = path.join(pkgDir, OUT_DIR);
   fs.mkdirSync(outDir, {recursive: true});
   const slug = slugOf(scenario);
+  // `.cjs`, because Node reads a `.js` file as ESM in a package with `"type": "module"`.
+  const processorPath = path.join(outDir, `${slug}.processor.cjs`);
+  const scriptPath = path.join(outDir, `${slug}.json`);
+  if (scenario.browser) {
+    return writeBrowserScenario(
+      scenario,
+      defaults,
+      phases,
+      processorPath,
+      scriptPath,
+      runVars,
+    );
+  }
   checkNames(scenario);
 
-  const processorPath = path.join(outDir, `${slug}.processor.js`);
   const requests = requestsIn(scenario.requests);
   // The errors of this call come again from `transpile`, with the real vars.
   const {captures} = resolveRequests(
@@ -73,9 +95,67 @@ export function writeScenario(
     : {eachVars: {}};
   const known = new Set([...Object.keys(runVars), ...Object.keys(eachVars)]);
   const script = transpile(scenario, defaults, phases, processorPath, known);
-  const scriptPath = path.join(outDir, `${slug}.json`);
   fs.writeFileSync(scriptPath, JSON.stringify(script, null, 2));
   return scriptPath;
+}
+
+/** Writes the processor and the script of a browser scenario. Returns the path of the script. */
+function writeBrowserScenario(
+  scenario: BrowserScenario,
+  defaults: ArtilleryConfig | undefined,
+  phases: Phase[],
+  processorPath: string,
+  scriptPath: string,
+  runVars: Vars,
+): string {
+  const {file} = scenario.browser;
+  if (file === undefined) {
+    throw new ScenarioError(
+      `Scenario ${labelOf(scenario)}: no built file. load-testing run sets it.`,
+    );
+  }
+  const label = labelOf(scenario);
+  fs.writeFileSync(processorPath, browserProcessorSource(file, label, runVars));
+  const script = browserScript(label, defaults, phases, processorPath);
+  fs.writeFileSync(scriptPath, JSON.stringify(script, null, 2));
+  return scriptPath;
+}
+
+/**
+ * The Artillery script of a browser scenario. The Playwright engine calls
+ * the flow through the processor, once for each virtual user. It names the
+ * page metrics after the scenario and not after the URL, so 2 scenarios that
+ * open the same page keep their own Web Vitals.
+ */
+function browserScript(
+  label: string,
+  defaults: ArtilleryConfig | undefined,
+  phases: Phase[],
+  processorPath: string,
+): {
+  config: Omit<ArtilleryConfig, 'phases'> & {phases: Phase[]};
+  scenarios: ArtilleryScenario[];
+} {
+  return {
+    config: {
+      ...deepMerge(
+        {
+          target: '{{ $env.LOAD_TESTS_UI_URL }}',
+          engines: {playwright: {aggregateByName: true}},
+          processor: processorPath,
+        },
+        defaults ?? {},
+      ),
+      phases,
+    },
+    scenarios: [
+      {
+        name: label,
+        engine: 'playwright',
+        testFunction: BROWSER_TEST_FUNCTION,
+      },
+    ],
+  };
 }
 
 /**
@@ -142,7 +222,7 @@ function optionProblems(scenario: Scenario, requests: LoadRequest[]): string[] {
  * `vars(name)` may use.
  */
 export function transpile(
-  scenario: Scenario,
+  scenario: HttpScenario,
   defaults: ArtilleryConfig | undefined,
   phases: Phase[],
   processorPath: string,

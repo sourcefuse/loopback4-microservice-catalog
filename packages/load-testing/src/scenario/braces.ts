@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {isPlainObject, isTemplate} from './guards';
-import type {LoadRequest, Scenario} from '../types';
+import type {HttpScenario, LoadRequest} from '../types';
 
 /** Starts a template in Artillery. Artillery expands the text that holds it. */
 export const OPEN_BRACES = '{{';
@@ -58,6 +58,6 @@ export function bracesProblems(req: LoadRequest): string[] {
  * Finds the plain strings of the scenario `headers` that contain `{{`, as
  * `bracesProblems` does for a request.
  */
-export function headerBracesProblems(scenario: Scenario): string[] {
+export function headerBracesProblems(scenario: HttpScenario): string[] {
   return bracesIn(scenario.headers, 'headers');
 }

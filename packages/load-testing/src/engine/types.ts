@@ -24,7 +24,11 @@ export type EngineRun = {
   runVars: Vars;
   /** Ids of the endpoints to measure, for example `GET /orders`. */
   endpointIds: string[];
-  /** The application under test, for example `http://localhost:3000`. */
+  /**
+   * The application under test, for example `http://localhost:3000`: the
+   * API for a scenario of `load.it`, and the web app for a scenario of
+   * `load.browser`.
+   */
   baseUrl: string;
   /**
    * Access token of the login user. Undefined when no login is set, or when

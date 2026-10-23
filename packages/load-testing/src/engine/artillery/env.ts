@@ -3,9 +3,9 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {CLI_ONLY_PREFIX} from '../../project/config';
+import type {UI_URL_ENV} from '../../project/layout';
+import {BASE_URL_ENV} from '../../project/layout';
 import {TOKEN_ENV} from './requests';
-
-const BASE_URL_ENV = 'LOAD_TESTS_BASE_URL';
 
 /**
  * The names that Artillery gets from the CLI by default, and every name
@@ -40,7 +40,10 @@ const DEFAULT_ENV_NAMES = new Set([
   'NODE_ENV',
   'NODE_NO_WARNINGS',
   'NODE_TLS_REJECT_UNAUTHORIZED',
-  'ARTILLERY_WORKERS',
+  // A CI image often keeps its browsers in a custom folder.
+  'PLAYWRIGHT_BROWSERS_PATH',
+  // On Linux, Playwright looks for its browsers in this cache folder.
+  'XDG_CACHE_HOME',
   'SYSTEMROOT',
   'WINDIR',
   'COMSPEC',
@@ -56,17 +59,25 @@ const LOCALE_PREFIX = 'LC_';
  * The environment of Artillery: the variables of `DEFAULT_ENV_NAMES`, and the
  * ones in `extraNames` (`artillery.env` of the config), when the CLI has
  * them. A name that starts with `LOAD_TESTS_` never goes through. The script
- * reads two variables, and this function sets both: the base URL (the hooks
- * use the same one, without a slash at the end) and the token. It sets the
- * token only when `token` is given, that is when the CLI has a login and the
- * scenario uses `token()`.
+ * reads two variables, and this function sets both: the URL of the
+ * application in `urlName` (the hooks use the same one, without a slash at
+ * the end) and the token. It sets the token only when `token` is given, that
+ * is when the CLI has a login and the scenario uses `token()`.
  */
-export function artilleryEnv(
-  baseUrl: string,
-  token?: string,
-  env: NodeJS.ProcessEnv = process.env,
-  extraNames: string[] = [],
-): NodeJS.ProcessEnv {
+export function artilleryEnv({
+  url,
+  token,
+  env = process.env,
+  extraNames = [],
+  urlName = BASE_URL_ENV,
+}: {
+  /** The URL of the API, or of the web app for a browser scenario. */
+  url: string;
+  token?: string;
+  env?: NodeJS.ProcessEnv;
+  extraNames?: string[];
+  urlName?: typeof BASE_URL_ENV | typeof UI_URL_ENV;
+}): NodeJS.ProcessEnv {
   const extra = new Set(extraNames.map(name => name.toUpperCase()));
   const out: NodeJS.ProcessEnv = Object.fromEntries(
     Object.entries(env).filter(([name]) => {
@@ -79,7 +90,7 @@ export function artilleryEnv(
       );
     }),
   );
-  out[BASE_URL_ENV] = baseUrl;
+  out[urlName] = url;
   /*
    * The token goes from the CLI to Artillery in the environment, never on
    * disk. Without a token, an old value in the environment of the CLI must

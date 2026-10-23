@@ -2,10 +2,16 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {expect} from '@loopback/testlab';
+import {expect, sinon} from '@loopback/testlab';
+import type {PlaywrightEngineScenarioTestFunction} from 'artillery';
 import {scenarioOf} from '../../../helpers';
 import type {Phase} from '../../../../scenario/types';
-import type {LoadRequest, RequestOptions} from '../../../../types';
+import type {
+  BrowserPage,
+  LoadRequest,
+  RequestOptions,
+  Scenario,
+} from '../../../../types';
 import {ScenarioError} from '../../../../errors';
 import {load} from '../../../../scenario/builder';
 import {
@@ -969,7 +975,7 @@ describe('writeScenario', () => {
       path.join(pkgDir, 'src/__tests__/load/.out/s.json'),
     );
     expect(
-      fs.existsSync(scriptPath.replace('.json', '.processor.js')),
+      fs.existsSync(scriptPath.replace('.json', '.processor.cjs')),
     ).to.be.true();
   });
 
@@ -1022,7 +1028,7 @@ describe('writeScenario', () => {
 
     expect(runVars).to.deepEqual({});
     expect(
-      fs.readFileSync(scriptPath.replace('.json', '.processor.js'), 'utf8'),
+      fs.readFileSync(scriptPath.replace('.json', '.processor.cjs'), 'utf8'),
     ).to.match(/^const loadTestsRunVars = \(\) => \(\{\}\);$/m);
   });
 
@@ -1048,7 +1054,7 @@ describe('writeScenario', () => {
       writeScenario(pkgDir, scenario, undefined, PHASES, {}),
     ).to.not.throw();
     const source = fs.readFileSync(
-      path.join(pkgDir, 'src/__tests__/load/.out/forms.processor.js'),
+      path.join(pkgDir, 'src/__tests__/load/.out/forms.processor.cjs'),
       'utf8',
     );
     expect(source).to.match(/const loadTestsBeforeEach = \(\{beforeEach\(/);
@@ -1107,6 +1113,131 @@ describe('writeScenario', () => {
     expect(() =>
       writeScenario(pkgDir, scenario, undefined, PHASES, {}),
     ).to.throw(/loadTestsBeforeScenario are used twice or are reserved/);
+  });
+});
+
+describe('writeScenario of a browser scenario', () => {
+  const pkgDir = fs.mkdtempSync(path.join(os.tmpdir(), 'load-testing-'));
+  after(() => fs.rmSync(pkgDir, {recursive: true}));
+  const outDir = path.join(pkgDir, 'src/__tests__/load/.out');
+  const file = path.join(pkgDir, 'dist/__tests__/load/b.load.js');
+  const scenario: Scenario = {
+    name: 'open',
+    group: ['dashboard'],
+    browser: {flow: async () => undefined, file},
+  };
+
+  it('writes a Playwright script that runs the flow from the processor', () => {
+    const scriptPath = writeScenario(pkgDir, scenario, undefined, PHASES, {});
+
+    expect(JSON.parse(fs.readFileSync(scriptPath, 'utf8'))).to.deepEqual({
+      config: {
+        target: '{{ $env.LOAD_TESTS_UI_URL }}',
+        engines: {playwright: {aggregateByName: true}},
+        processor: path.join(outDir, 'dashboard-open.processor.cjs'),
+        phases: PHASES,
+      },
+      scenarios: [
+        {
+          name: 'dashboard › open',
+          engine: 'playwright',
+          testFunction: 'loadTestsBrowser',
+        },
+      ],
+    });
+  });
+
+  it('gives Artillery a function that runs the flow of the file for each user, and records its total time', async () => {
+    const builder = JSON.stringify(
+      path.join(__dirname, '../../../../scenario/builder'),
+    );
+    fs.mkdirSync(path.dirname(file), {recursive: true});
+    fs.writeFileSync(
+      file,
+      `const {load} = require(${builder});
+load.describe('dashboard', () => {
+  load.browser('open', async ({page}) => { await page.goto('/'); });
+});`,
+    );
+    writeScenario(pkgDir, scenario, undefined, PHASES, {});
+    const {loadTestsBrowser} = require(
+      path.join(outDir, 'dashboard-open.processor.cjs'),
+    ) as {
+      loadTestsBrowser: Exclude<PlaywrightEngineScenarioTestFunction, string>;
+    };
+    const emitted: unknown[][] = [];
+    const events = {emit: (...metric: unknown[]) => emitted.push(metric)};
+    const clock = sinon.useFakeTimers({now: 0, toFake: ['Date']});
+    // The page of Playwright is a boundary: its page load takes 250 ms here.
+    const page = {
+      goto: async () => clock.tick(250),
+    } as unknown as BrowserPage;
+    const engineStep = {step: async () => undefined};
+
+    try {
+      await loadTestsBrowser(page, {vars: {}}, events, engineStep);
+      await loadTestsBrowser(page, {vars: {}}, events, engineStep);
+    } finally {
+      clock.restore();
+    }
+
+    expect(emitted).to.deepEqual([
+      ['histogram', 'browser.flow.dashboard \u203a open', 250],
+      ['histogram', 'browser.flow.dashboard \u203a open', 250],
+    ]);
+  });
+
+  it('gives each user a fresh copy of the vars, whatever a flow changes', async () => {
+    const builder = JSON.stringify(
+      path.join(__dirname, '../../../../scenario/builder'),
+    );
+    fs.mkdirSync(path.dirname(file), {recursive: true});
+    fs.writeFileSync(
+      file,
+      `const {load} = require(${builder});
+load.describe('dashboard', () => {
+  load.browser('open', async ({vars}) => {
+    (globalThis.loadTestsSeen ??= []).push(JSON.stringify(vars));
+    vars.nested.n = 2;
+    vars.token = 'b';
+  });
+});`,
+    );
+    // The test above loaded another flow and processor from the same paths.
+    const processorFile = path.join(outDir, 'dashboard-open.processor.cjs');
+    delete require.cache[file];
+    delete require.cache[processorFile];
+    writeScenario(pkgDir, scenario, undefined, PHASES, {
+      token: 'a',
+      nested: {n: 1},
+    });
+    const {loadTestsBrowser} = require(processorFile) as {
+      loadTestsBrowser: Exclude<PlaywrightEngineScenarioTestFunction, string>;
+    };
+    const events = {emit: () => undefined};
+    const page = {} as unknown as BrowserPage;
+    const engineStep = {step: async () => undefined};
+    const seen = globalThis as unknown as {loadTestsSeen?: string[]};
+
+    await loadTestsBrowser(page, {vars: {}}, events, engineStep);
+    await loadTestsBrowser(page, {vars: {}}, events, engineStep);
+
+    expect(seen.loadTestsSeen).to.deepEqual([
+      '{"token":"a","nested":{"n":1}}',
+      '{"token":"a","nested":{"n":1}}',
+    ]);
+    delete seen.loadTestsSeen;
+  });
+
+  it('rejects a browser scenario that no loader gave a file', () => {
+    const noFile: Scenario = {
+      ...scenario,
+      browser: {flow: async () => undefined},
+    };
+
+    expect(() => writeScenario(pkgDir, noFile, undefined, PHASES, {})).to.throw(
+      /dashboard \u203a open: no built file/,
+    );
   });
 });
 
