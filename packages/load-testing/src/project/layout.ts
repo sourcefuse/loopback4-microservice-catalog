@@ -15,6 +15,12 @@ export const SCENARIOS_DIR = path.join(SOURCE_DIR, '__tests__', 'load');
 export const CONFIG_FILE = path.join(SCENARIOS_DIR, 'config.ts');
 export const OUT_DIR = path.join(SCENARIOS_DIR, '.out');
 
+/** The environment variable of the URL of the API. */
+export const BASE_URL_ENV = 'LOAD_TESTS_BASE_URL';
+
+/** The URL of the web app, which the script of a browser scenario reads. */
+export const UI_URL_ENV = 'LOAD_TESTS_UI_URL';
+
 /** The compiled file of a source file of the package. */
 export function builtFile(pkgDir: string, source: string): string {
   const built = path

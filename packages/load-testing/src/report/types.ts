@@ -13,6 +13,16 @@ export type EndpointStats = {
   p95?: number;
 };
 
+/** One browser metric of a run, for example the time of a step. */
+export type MetricStats = {
+  /** Count of samples. */
+  count: number;
+  /** 95th percentile of the samples: milliseconds, or no unit for CLS. */
+  p95: number;
+  /** True for a step with no end element, which took the time of its whole action. */
+  wallClock?: boolean;
+};
+
 /** Virtual users of one scenario run. A vuser runs the steps of a scenario one time. */
 export type VuserCounts = {
   /** Count of vusers that began their run. */
@@ -29,6 +39,11 @@ export type VuserCounts = {
  */
 export type Measurement = {
   endpoints: Map<string, EndpointStats>;
+  /**
+   * Browser metrics by their name in the report, for example
+   * `browser.step.load_dashboard`. An engine with no browser leaves it out.
+   */
+  metrics?: Map<string, MetricStats>;
   /** Errors that a hook threw. They are not application errors. */
   hookErrors: number;
   vusers: VuserCounts;
@@ -71,6 +86,31 @@ export type EndpointResult = {
   note?: string;
 };
 
+/** What the judge says about one browser metric of one scenario. */
+export type MetricResult = {
+  /** The name in the report, for example `browser.step.load_dashboard`. */
+  name: string;
+  /** Count of samples. */
+  samples: number;
+  /** 95th percentile. Undefined when the metric has no samples. */
+  p95?: number;
+  /** `ms` for a time. Empty for CLS, which has no unit. */
+  unit: 'ms' | '';
+  /**
+   * Highest p95 that passes: the p95 limit, or the limit from the baseline
+   * when that is lower. Undefined when no limit gates the metric.
+   */
+  p95Limit?: number;
+  /** Mean p95 of the baseline history. Undefined when it is not compared. */
+  baselineP95?: number;
+  /** Why the metric fails. Empty means it passes. */
+  failures: string[];
+  /** Why a passing metric was not compared with a baseline, for example `no baseline`. */
+  note?: string;
+  /** True for a step with no end element, which took the time of its whole action. */
+  wallClock?: boolean;
+};
+
 /** What the judge says about the vusers of one scenario. */
 export type VuserResult = VuserCounts & {
   /** Highest percent of failed vusers that passes. */
@@ -96,6 +136,8 @@ export type ScenarioResult = {
   baselineNote?: string;
   /** Empty when the scenario threw. */
   endpoints: EndpointResult[];
+  /** The browser metrics. Empty for an HTTP scenario, and when the scenario threw. */
+  metrics: MetricResult[];
   passed: boolean;
 };
 
@@ -120,6 +162,8 @@ export type RunResult = {
     total: number;
     /** The spec file, relative to the package. */
     specFile: string;
+    /** True when the package has no spec file, so the counts are 0. */
+    noSpec?: boolean;
   };
   /**
    * The endpoints with a p95 limit above `P95_TARGETS.supportingApi`, and the
@@ -149,12 +193,18 @@ export type Reporter = {
 };
 
 export type Baseline = {
-  /** Where the baseline ran. For information only. */
-  baseUrl: string;
+  /**
+   * The API where the baseline ran. A run on another API starts a new
+   * history for its scenarios. Undefined when no run had an API.
+   */
+  baseUrl?: string;
+  /** The same for the web app of the browser scenarios. */
+  uiUrl?: string;
   recordedAt: string;
   /**
-   * The p95 of the last runs in milliseconds, oldest first, by scenario
-   * name, then by endpoint id.
+   * The p95 of the last runs, oldest first, by scenario name, then by
+   * endpoint id or browser metric name. Milliseconds, except CLS, which has
+   * no unit.
    */
   history: Record<string, Record<string, number[]>>;
   /**
@@ -168,6 +218,11 @@ export type Baseline = {
 export type BaselineSample = {
   /** The workload of the run, as `describeWorkload` says it. */
   workload: string;
-  /** p95 in milliseconds, by endpoint id. */
+  /** True for a browser scenario, which runs on the UI URL. */
+  browser: boolean;
+  /**
+   * p95 by endpoint id or browser metric name. Milliseconds, except CLS,
+   * which has no unit.
+   */
   p95: Record<string, number>;
 };

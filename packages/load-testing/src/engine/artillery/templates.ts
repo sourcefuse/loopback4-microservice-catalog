@@ -4,6 +4,7 @@
 // https://opensource.org/licenses/MIT
 import {RunError} from '../../errors';
 import {OPEN_BRACES} from '../../scenario/braces';
+import type {BASE_URL_ENV, UI_URL_ENV} from '../../project/layout';
 import type {Vars} from '../../types';
 
 /**
@@ -42,8 +43,8 @@ export const TEMPLATE_CAPTURE_MESSAGE = `. The engine reads it as a template. Th
 /** Ends the message about a token that holds a text of `TEMPLATE_PATTERNS`. */
 export const TEMPLATE_TOKEN_MESSAGE = ` contains text that the engine reads as a template (${TEMPLATE_PATTERNS_TEXT}). Log in again to get another token.`;
 
-/** Ends the message about a base URL that holds a text of `TEMPLATE_PATTERNS`. */
-export const TEMPLATE_BASE_URL_MESSAGE = ` contains text that the engine reads as a template (${TEMPLATE_PATTERNS_TEXT}). Use a URL without it.`;
+/** Ends the message about a URL that holds a text of `TEMPLATE_PATTERNS`. */
+export const TEMPLATE_URL_MESSAGE = ` contains text that the engine reads as a template (${TEMPLATE_PATTERNS_TEXT}). Use a URL without it.`;
 
 /** True when the engine reads `text` as a template. */
 export function readsAsTemplate(text: string): boolean {
@@ -143,12 +144,16 @@ export function checkToken(token: string | undefined): void {
 }
 
 /**
- * Stops the run when the base URL holds a text of `TEMPLATE_PATTERNS`.
- * Artillery reads the target as `{{ $env.LOAD_TESTS_BASE_URL }}`, so such a
- * text would change the target or never end. The message does not show the URL.
+ * Stops the run when the URL of the app holds a text of `TEMPLATE_PATTERNS`.
+ * Artillery reads the target as `{{ $env.<variable> }}`, so such a text would
+ * change the target or never end. `variable` is the name that holds the URL:
+ * the message names it, and does not show the URL.
  */
-export function checkBaseUrl(baseUrl: string): void {
-  if (readsAsTemplate(baseUrl)) {
-    throw new RunError(`The base URL${TEMPLATE_BASE_URL_MESSAGE}`);
+export function checkUrl(
+  url: string,
+  variable: typeof BASE_URL_ENV | typeof UI_URL_ENV,
+): void {
+  if (readsAsTemplate(url)) {
+    throw new RunError(`The URL in ${variable}${TEMPLATE_URL_MESSAGE}`);
   }
 }

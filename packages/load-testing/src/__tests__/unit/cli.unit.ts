@@ -15,6 +15,51 @@ import type {RunResult} from '../../report/types';
 
 type Env = Record<string, string | undefined>;
 
+/** The script of the stub web app. A page shows `.done` when its data comes. */
+const WEB_APP_JS = `const show = () => fetch('/web/data').then(() => {
+  const done = document.createElement('p');
+  done.className = 'done';
+  done.textContent = 'Saved';
+  document.body.append(done);
+});
+document.querySelector('#go')?.addEventListener('click', show);
+if (document.body.dataset.load === 'show') show();`;
+
+/** A page of the stub web app with `body` in its body, after a heading. */
+const webPage = (body: string, bodyAttributes = '') =>
+  `<!doctype html><html><head><title>Orders</title></head><body ${bodyAttributes}><h1>Orders</h1><p>The orders of this week.</p>${body}<script src="/web/app.js"></script></body></html>`;
+
+/**
+ * The stub web app. Its data API answers after 300 ms, so a page shows
+ * `.done` about 300 ms after a click on `#go`.
+ */
+function serveWebApp(url: string, res: http.ServerResponse): void {
+  const send = (type: string, body: string, headers = {}) => {
+    res.writeHead(200, {'content-type': type, ...headers});
+    res.end(body);
+  };
+  const html = (body: string, headers = {}) => send('text/html', body, headers);
+  if (url === '/web/app.js') return send('text/javascript', WEB_APP_JS);
+  if (url === '/web/data') {
+    setTimeout(() => send('application/json', '[]'), 300);
+    return;
+  }
+  if (url === '/web/visible') {
+    return html(
+      webPage('<button id="go">Save</button><p class="done">Saved</p>'),
+    );
+  }
+  if (url === '/web/csp') {
+    return html(webPage('<button id="go">Save</button>'), {
+      'content-security-policy': "script-src 'self'",
+    });
+  }
+  if (url === '/web/nav')
+    return html(webPage('<a id="next" href="/web/next">Next</a>'));
+  if (url === '/web/next') return html(webPage('', 'data-load="show"'));
+  html(webPage('<button id="go">Save</button>'));
+}
+
 /**
  * Runs `main` with this environment, and returns its exit code and what it
  * printed. The output comes back after. `main` reads `env` and not
@@ -70,6 +115,19 @@ describe('main', () => {
     expect(out).to.not.match(/\n\s+at /);
   });
 
+  it('prints the message and the usage when run or report gets more arguments than it takes', async () => {
+    for (const command of ['run', 'report']) {
+      const {code, out} = await runMain(
+        [command, os.tmpdir(), 'extra'],
+        NO_TARGET,
+      );
+
+      expect(code).to.equal(1);
+      expect(out).to.match(/Unexpected argument 'extra'/);
+      expect(out).to.match(/Usage:/);
+    }
+  });
+
   it('prints the usage and gives 0 for --help', async () => {
     const {code, out} = await runMain(['--help'], {});
 
@@ -81,7 +139,7 @@ describe('main', () => {
     const {code, out} = await runMain(['run', os.tmpdir()], NO_TARGET);
 
     expect(code).to.equal(1);
-    expect(out).to.match(/LOAD_TESTS_BASE_URL/);
+    expect(out).to.match(/No src\/__tests__\/load\/config.ts/);
   });
 
   it('prints only the message for an error of the library', async () => {
@@ -134,6 +192,12 @@ describe('main with a stub server', () => {
   const dirs: string[] = [];
   let server: http.Server;
   let env: Env;
+  /** No URL and no login: `report` needs neither. */
+  const NO_TARGET_ENV: Env = {
+    LOAD_TESTS_BASE_URL: undefined,
+    LOAD_TESTS_UI_URL: undefined,
+    LOAD_TESTS_USERNAME: undefined,
+  };
   const NO_LOGIN = {
     LOAD_TESTS_USERNAME: undefined,
     LOAD_TESTS_PASSWORD: undefined,
@@ -158,6 +222,7 @@ describe('main with a stub server', () => {
         res.writeHead(status, {'content-type': 'application/json'});
         res.end(JSON.stringify(body));
       };
+      if (req.url?.startsWith('/web/')) return serveWebApp(req.url, res);
       if (req.url === '/auth/login') return reply(200, {code: 'k'});
       if (req.url === '/auth/token') return reply(200, session);
       if (req.url === '/auth/token-refresh') return reply(200, session);
@@ -361,6 +426,22 @@ describe('main with a stub server', () => {
         `The baseline is from http://other.example, not ${env.LOAD_TESTS_BASE_URL}.`,
       );
       expect(out.match(ROW)?.[1]).to.equal('150');
+    });
+
+    it('does not say that the API baseline is from another URL when only browser scenarios run', async () => {
+      const pkg = packageWith(
+        `load.browser('open', {before: async () => {}}, async () => {});`,
+        fakeEngine(FAST_P95_MS),
+      );
+      recordBaseline(pkg, [100, 200], {baseUrl: 'http://other.example'});
+
+      const {out} = await runMain(['run', pkg], {
+        ...env,
+        LOAD_TESTS_UI_URL: env.LOAD_TESTS_BASE_URL,
+        LOAD_TESTS_UPDATE_BASELINE: undefined,
+      });
+
+      expect(out).to.not.match(/The baseline is from/);
     });
 
     it('starts a new history when it saves a run against another host', async () => {
@@ -600,6 +681,409 @@ load.it('parallel flow', [
     expect(urls).to.containEql('/order');
     expect(urls).to.containEql('/order/abc');
   }).timeout(60_000);
+
+  describe('a browser scenario', () => {
+    /** The run of a browser scenario needs only the URL of the web app. */
+    const uiEnv = (): Env => ({
+      ...NO_TARGET_ENV,
+      ...NO_LOGIN,
+      LOAD_TESTS_UI_URL: env.LOAD_TESTS_BASE_URL,
+    });
+    /** The aggregate of the report file that the run of `slug` wrote. */
+    const reportOf = (pkg: string, slug: string) =>
+      (
+        JSON.parse(
+          fs.readFileSync(
+            path.join(pkg, 'src/__tests__/load/.out', `${slug}.report.json`),
+            'utf8',
+          ),
+        ) as {
+          aggregate: {
+            counters: Record<string, number>;
+            summaries: Record<string, {count: number; p95: number}>;
+          };
+        }
+      ).aggregate;
+
+    // `npm test` skips a title with `browser:`, and `npm run test:browser` runs it.
+    describe('browser: a run of steps', () => {
+      /** How long one run of the package may take: Artillery starts Chromium for each scenario. */
+      const RUN_MS = 180_000;
+      let ran:
+        | Promise<{pkg: string; code: number; out: string; calls: typeof seen}>
+        | undefined;
+      /** Runs the package of these tests once. The tests share the run, because each run is slow. */
+      const runOnce = () =>
+        (ran ??= (async () => {
+          const pkg =
+            packageWith(`load.browser('element', {vitals: {INP: {p95: 1000}}}, async ({page, step}) => {
+  await page.goto('/web/');
+  await step('save', async () => {
+    await page.click('#go');
+    await page.waitForTimeout(1000);
+  }, {endWhenVisible: '.done'});
+});
+load.browser('wall clock', async ({page, step}) => {
+  await page.goto('/web/');
+  await step('save', async () => {
+    await page.click('#go');
+    await page.waitForTimeout(500);
+  });
+});
+load.browser('csp', async ({page, step}) => {
+  await page.goto('/web/csp');
+  await step('save', async () => {
+    await page.click('#go');
+    await page.waitForTimeout(1000);
+  }, {endWhenVisible: '.done'});
+});
+load.browser('new page', async ({page, step}) => {
+  await page.goto('/web/nav');
+  await step('next', async () => {
+    await page.click('#next');
+    await page.waitForTimeout(1000);
+  }, {endWhenVisible: '.done'});
+});
+load.browser('goto', async ({page, step}) => {
+  await step('open', async () => {
+    await page.goto('/web/next');
+  }, {endWhenVisible: '.done'});
+});
+load.browser('hooks', {
+  before: async (_ctx, vars) => {
+    vars.label = 'from before';
+  },
+  after: async ctx => {
+    await ctx.api.delete('/after-hook');
+  },
+}, async ({page, step, vars}) => {
+  await page.goto('/web/');
+  await step('show', () => page.evaluate(text => {
+    const element = document.createElement('p');
+    element.dataset.label = text;
+    element.textContent = text;
+    setTimeout(() => document.body.append(element), 100);
+  }, vars.label), {endWhenVisible: '[data-label="from before"]'});
+});`);
+          // The scenario with hooks needs the base URL of the API.
+          const result = await runMain(['run', pkg], {
+            ...uiEnv(),
+            LOAD_TESTS_BASE_URL: env.LOAD_TESTS_BASE_URL,
+          });
+          // `seen` restarts before each test, and the tests share this run.
+          return {pkg, ...result, calls: [...seen]};
+        })());
+
+      it('ends a step at the first frame where its end element is visible, and not at the end of its action', async () => {
+        const {pkg} = await runOnce();
+
+        const {p95} = reportOf(pkg, 'element').summaries['browser.step.save'];
+
+        // The data comes after 300 ms, and the action ends 1 s after the click.
+        expect(p95).to.be.within(300, 1000);
+      }).timeout(RUN_MS);
+
+      it('times a step without an end element by its whole action, and marks it', async () => {
+        const {pkg} = await runOnce();
+
+        const {summaries, counters} = reportOf(pkg, 'wall-clock');
+
+        expect(summaries['browser.step.save'].p95).to.be.aboveOrEqual(500);
+        expect(counters['browser.step_wall_clock.save']).to.equal(
+          counters['vusers.completed'],
+        );
+      }).timeout(RUN_MS);
+
+      it('ends a step at its element on a page with a strict CSP', async () => {
+        const {pkg} = await runOnce();
+
+        const {p95} = reportOf(pkg, 'csp').summaries['browser.step.save'];
+
+        expect(p95).to.be.within(300, 1000);
+      }).timeout(RUN_MS);
+
+      it('ends a step at its element on the new page that the action loads', async () => {
+        const {pkg} = await runOnce();
+
+        const {p95} = reportOf(pkg, 'new-page').summaries['browser.step.next'];
+
+        // The new page shows the element 300 ms after it loads.
+        expect(p95).to.be.within(300, 1000);
+      }).timeout(RUN_MS);
+
+      it('ends a step at its element when the step is the first navigation, from about:blank', async () => {
+        const {pkg} = await runOnce();
+
+        const {p95} = reportOf(pkg, 'goto').summaries['browser.step.open'];
+
+        // The new page shows the element 300 ms after it loads.
+        expect(p95).to.be.within(300, 3000);
+      }).timeout(RUN_MS);
+
+      it('gives the flow the vars of before, and runs after once', async () => {
+        const {pkg, calls} = await runOnce();
+
+        const {summaries, counters} = reportOf(pkg, 'hooks');
+
+        // The step ends only when the page shows the value that before set.
+        expect(summaries['browser.step.show'].count).to.equal(
+          counters['vusers.completed'],
+        );
+        expect(calls.filter(call => call.url === '/after-hook')).to.have.length(
+          1,
+        );
+      }).timeout(RUN_MS);
+
+      it('passes a run where each step and Web Vital is within its limit, with one sample of each for each user', async () => {
+        const {pkg, code} = await runOnce();
+
+        const {summaries, counters} = reportOf(pkg, 'element');
+
+        expect(code).to.equal(0);
+        const names = ['step.save', 'flow.element'].concat(
+          ['FCP', 'LCP', 'CLS', 'TTFB'].map(vital => `page.${vital}.element`),
+        );
+        expect(
+          names.map(name => [name, summaries[`browser.${name}`]?.count]),
+        ).to.deepEqual(names.map(name => [name, counters['vusers.completed']]));
+      }).timeout(RUN_MS);
+
+      it('reports INP for the click on the last page, when a limit names INP, and passes it', async () => {
+        const {pkg, code, out} = await runOnce();
+
+        const {summaries, counters} = reportOf(pkg, 'element');
+
+        expect(code).to.equal(0);
+        // Step, FCP, LCP, CLS, TTFB and INP: the other scenarios have 5.
+        expect(out).to.match(/Metrics: +6 of 6 pass/);
+        expect(summaries['browser.page.INP.element']?.count).to.equal(
+          counters['vusers.completed'],
+        );
+      }).timeout(RUN_MS);
+
+      it('runs a browser scenario of a package with "type": "module"', async () => {
+        const pkg = packageWith('');
+        const write = (file: string, content: string) =>
+          fs.writeFileSync(path.join(pkg, file), content);
+        write('package.json', JSON.stringify({type: 'module'}));
+        write(
+          'dist/__tests__/load/config.js',
+          `export default {phases: [{arrivalRate: 2, duration: 1}], thresholds: {default: {}}};`,
+        );
+        write(
+          'dist/__tests__/load/s.load.js',
+          `import {load} from ${builder};
+load.browser('esm', async ({page, step}) => {
+  await page.goto('/web/');
+  await step('save', () => page.click('#go'), {endWhenVisible: '.done'});
+});`,
+        );
+
+        const {code} = await runMain(['run', pkg], uiEnv());
+
+        expect(code).to.equal(0);
+        expect(reportOf(pkg, 'esm').summaries).to.have.property(
+          'browser.step.save',
+        );
+      }).timeout(RUN_MS);
+
+      it('fails a run whose step is slower than its limit, and the report command gives the same verdict with no new load', async () => {
+        const pkg = packageWith(
+          `load.browser('slow', {steps: {save: {p95: 200}}}, async ({page, step}) => {
+  await page.goto('/web/');
+  await step('save', () => page.click('#go'), {endWhenVisible: '.done'});
+});`,
+        );
+        const failedStep =
+          /step\.save +\d+ +[\d.]+ ms \(200 ms\) .*FAIL: p95 [\d.]+ ms > limit 200 ms/;
+
+        const run = await runMain(['run', pkg], uiEnv());
+        const requests = seen.length;
+        delete require.cache[path.join(pkg, 'dist/__tests__/load/s.load.js')];
+        // `report` is a new process in real use, and it loads the file again.
+        delete require.cache[path.join(pkg, 'dist/__tests__/load/s.load.js')];
+        const report = await runMain(['report', pkg], uiEnv());
+
+        expect(run.code).to.equal(1);
+        expect(run.out).to.match(failedStep);
+        expect(report.code).to.equal(1);
+        expect(report.out).to.match(failedStep);
+        expect(seen.length).to.equal(requests);
+      }).timeout(RUN_MS);
+
+      it('fails each user whose end element is visible before the action, and names the element', async () => {
+        const pkg =
+          packageWith(`load.browser('visible', async ({page, step}) => {
+  await page.goto('/web/visible');
+  await step('save', () => page.click('#go'), {endWhenVisible: '.done'});
+});`);
+
+        const {code} = await runMain(['run', pkg], uiEnv());
+
+        expect(code).to.equal(1);
+        const {counters} = reportOf(pkg, 'visible');
+        expect(
+          counters["errors.'.done' is visible before the action"],
+        ).to.equal(counters['vusers.created']);
+      }).timeout(RUN_MS);
+    });
+
+    it('stops with the install command when Chromium does not start', async () => {
+      const pkg = packageWith(`load.browser('open', async () => {});`);
+      const noBrowsers = fs.mkdtempSync(path.join(os.tmpdir(), 'no-browsers-'));
+      dirs.push(noBrowsers);
+      // The engine gives Artillery the PLAYWRIGHT_BROWSERS_PATH of the process.
+      const saved = process.env.PLAYWRIGHT_BROWSERS_PATH;
+      process.env.PLAYWRIGHT_BROWSERS_PATH = noBrowsers;
+
+      try {
+        const {code, out} = await runMain(['run', pkg], {
+          ...NO_TARGET_ENV,
+          LOAD_TESTS_UI_URL: 'http://127.0.0.1:9',
+        });
+
+        expect(code).to.equal(1);
+        expect(out).to.match(
+          /Install it with `npx playwright@1\.62\.1 install chromium`/,
+        );
+      } finally {
+        if (saved === undefined) delete process.env.PLAYWRIGHT_BROWSERS_PATH;
+        else process.env.PLAYWRIGHT_BROWSERS_PATH = saved;
+      }
+    }).timeout(30_000);
+
+    it('removes the old report files, so report judges only the last run', async () => {
+      const pkg = packageWith(`load.it('browse items', [load.get('/items')]);
+load.browser('open', async () => {});`);
+      const outDir = path.join(pkg, 'src/__tests__/load/.out');
+      const old = path.join(outDir, 'open.report.json');
+      fs.mkdirSync(outDir, {recursive: true});
+      fs.writeFileSync(old, '{}');
+      const noBrowsers = fs.mkdtempSync(path.join(os.tmpdir(), 'no-browsers-'));
+      dirs.push(noBrowsers);
+      const saved = process.env.PLAYWRIGHT_BROWSERS_PATH;
+      process.env.PLAYWRIGHT_BROWSERS_PATH = noBrowsers;
+      const target = {
+        ...NO_LOGIN,
+        LOAD_TESTS_UI_URL: env.LOAD_TESTS_BASE_URL,
+      };
+
+      try {
+        const run = await runMain(['run', pkg], {...env, ...target});
+        // `report` is a new process in real use, and it loads the file again.
+        delete require.cache[path.join(pkg, 'dist/__tests__/load/s.load.js')];
+        const report = await runMain(['report', pkg], NO_TARGET_ENV);
+
+        expect(run.code).to.equal(1);
+        expect(run.out).to.match(/browse items[^]*pass/);
+        expect(run.out).to.match(/Install it with `npx playwright@1\.62\.1/);
+        expect(fs.existsSync(old)).to.be.false();
+        expect(report.code).to.equal(1);
+        expect(report.out).to.match(
+          /open[^]*No report file: the last run of this scenario failed or did not start\./,
+        );
+        expect(report.out).to.match(/browse items[^]*pass/);
+      } finally {
+        if (saved === undefined) delete process.env.PLAYWRIGHT_BROWSERS_PATH;
+        else process.env.PLAYWRIGHT_BROWSERS_PATH = saved;
+      }
+    }).timeout(60_000);
+  });
+
+  describe('report', () => {
+    it('shows a scenario as failed when Artillery failed it after it wrote the report', async () => {
+      // The ensure plugin of Artillery sets a failing exit code at the end of the run.
+      const pkg = packageWith(
+        `load.it('browse items', [load.get('/items')]);`,
+        ", artillery: {config: {plugins: {ensure: {thresholds: [{'http.response_time.p95': 0}]}}}}",
+      );
+
+      const run = await runMain(['run', pkg], env);
+      delete require.cache[path.join(pkg, 'dist/__tests__/load/s.load.js')];
+      const report = await runMain(['report', pkg], NO_TARGET_ENV);
+
+      expect(run.code).to.equal(1);
+      expect(report.code).to.equal(1);
+      expect(report.out).to.match(
+        /No report file in .*\.out\. Run load-testing run first\./,
+      );
+    }).timeout(60_000);
+
+    const OUT = path.join('src', '__tests__', 'load', '.out');
+    const browser = `load.browser('open dashboard', {steps: {save: {p95: 500}}}, async () => {});`;
+
+    it('prints each metric of the last run from its report file, with no URL, and gives 1 when one fails', async () => {
+      const pkg = packageWith(browser);
+      const label = 'open dashboard';
+      fs.mkdirSync(path.join(pkg, OUT), {recursive: true});
+      fs.writeFileSync(
+        path.join(pkg, OUT, 'open-dashboard.report.json'),
+        JSON.stringify({
+          aggregate: {
+            counters: {
+              'vusers.created': 2,
+              'vusers.completed': 2,
+              'vusers.failed': 0,
+              'browser.step_wall_clock.save': 2,
+            },
+            summaries: {
+              'browser.step.save': {count: 2, p95: 889},
+              [`browser.page.FCP.${label}`]: {count: 2, p95: 300},
+              [`browser.page.LCP.${label}`]: {count: 2, p95: 400},
+              [`browser.page.CLS.${label}`]: {count: 2, p95: 0},
+              [`browser.page.TTFB.${label}`]: {count: 2, p95: 20},
+              [`browser.flow.${label}`]: {count: 2, p95: 1200},
+            },
+          },
+        }),
+      );
+
+      const {code, out} = await runMain(['report', pkg], NO_TARGET_ENV);
+
+      expect(code).to.equal(1);
+      expect(out).to.match(
+        /step\.save \(wall clock\) +2 +889 ms \(500 ms\) +- +FAIL: p95 889 ms > limit 500 ms\n/,
+      );
+      expect(out).to.match(/page\.FCP +2 +300 ms \(1800 ms\) +- +pass/);
+      expect(out).to.match(/flow +2 +1200 ms +- +no limit/);
+    });
+
+    it('fails only the scenario whose report file is broken, and prints the others', async () => {
+      const pkg = packageWith(
+        `${browser}\nload.browser('open orders', async () => {});`,
+      );
+      fs.mkdirSync(path.join(pkg, OUT), {recursive: true});
+      fs.writeFileSync(
+        path.join(pkg, OUT, 'open-dashboard.report.json'),
+        JSON.stringify({
+          aggregate: {
+            counters: {'vusers.created': 2, 'vusers.completed': 2},
+            summaries: {'browser.flow.open dashboard': {count: 2, p95: 1200}},
+          },
+        }),
+      );
+      fs.writeFileSync(path.join(pkg, OUT, 'open-orders.report.json'), '{');
+
+      const {code, out} = await runMain(['report', pkg], NO_TARGET_ENV);
+
+      expect(code).to.equal(1);
+      expect(out).to.match(/open dashboard[^]*flow +2 +1200 ms/);
+      expect(out).to.match(
+        /open orders[^]*Artillery wrote no valid report: .*open-orders\.report\.json/,
+      );
+    });
+
+    it('asks for a run first when no scenario has a report file', async () => {
+      const pkg = packageWith(browser);
+
+      const {code, out} = await runMain(['report', pkg], NO_TARGET_ENV);
+
+      expect(code).to.equal(1);
+      expect(out).to.match(
+        /No report file in .*\.out\. Run load-testing run first\./,
+      );
+    });
+  });
 
   describe('reporters', () => {
     const ITEMS = `load.it('browse items', [load.get('/items')]);`;

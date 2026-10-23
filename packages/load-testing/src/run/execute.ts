@@ -4,10 +4,11 @@
 // https://opensource.org/licenses/MIT
 import {ApiClient} from '../context/api';
 import {Cleanup} from '../context/cleanup';
-import {errorMessage} from '../errors';
+import {ConfigError, errorMessage} from '../errors';
 import {failedScenario, judgeScenario} from '../report/report';
 import {labelOf} from '../scenario/label';
 import {createSql} from '../context/sql';
+import {BASE_URL_ENV, UI_URL_ENV} from '../project/layout';
 import {claimsOf} from './target';
 import {defaultTokenCheck} from './tokenCheck';
 import {usesToken} from '../scenario/token';
@@ -63,6 +64,7 @@ function addJudged(
   if (Object.keys(judged.p95).length > 0) {
     outcome.measured[labelOf(loaded.scenario)] = {
       workload: ran.workload,
+      browser: loaded.browser !== undefined,
       p95: judged.p95,
     };
   }
@@ -91,6 +93,7 @@ export async function execute(
   {scenario, endpoints}: LoadedScenario,
   {pkgDir, config, engine, target, token, signal}: ExecuteOptions,
 ): Promise<ScenarioRun> {
+  const url = targetUrl(scenario, target);
   const cleanup = new Cleanup();
   const database = createSql(config.datasources ?? {}, pkgDir);
   /*
@@ -103,7 +106,9 @@ export async function execute(
   const ctx: RunContext = {
     token,
     claims: token === undefined ? {} : claimsOf(token),
-    api: new ApiClient(target.baseUrl, {signal: () => beforeSignal}),
+    api: new ApiClient(apiUrlOf(scenario, target, url), {
+      signal: () => beforeSignal,
+    }),
     sql: database.sql,
     defer: cleanup.defer,
   };
@@ -131,7 +136,7 @@ export async function execute(
       phases,
       runVars: vars,
       endpointIds: [...endpoints.keys()],
-      baseUrl: target.baseUrl,
+      baseUrl: url,
       token: needsToken ? token : undefined,
       signal,
     });
@@ -154,6 +159,31 @@ export async function execute(
     throw failure;
   }
   return {...run, problems};
+}
+
+/**
+ * Where the load of the scenario goes: the web app for a browser scenario,
+ * and the API for the others. `prepare` asks for the URLs that the run needs.
+ */
+function targetUrl(scenario: Scenario, target: Target): string {
+  const [url, name] = scenario.browser
+    ? [target.uiUrl, UI_URL_ENV]
+    : [target.baseUrl, BASE_URL_ENV];
+  if (url === undefined) throw new ConfigError(`Set ${name}`);
+  return url;
+}
+
+/**
+ * Where `ctx.api` of the hooks goes: always the API, also for a browser
+ * scenario. A browser scenario with no hook never uses the client, so it
+ * needs no base URL and gets the URL of the load.
+ */
+function apiUrlOf(scenario: Scenario, target: Target, url: string): string {
+  const hasHook = scenario.before !== undefined || scenario.after !== undefined;
+  if (!scenario.browser || !hasHook) return url;
+  if (target.baseUrl === undefined)
+    throw new ConfigError(`Set ${BASE_URL_ENV}`);
+  return target.baseUrl;
 }
 
 /**

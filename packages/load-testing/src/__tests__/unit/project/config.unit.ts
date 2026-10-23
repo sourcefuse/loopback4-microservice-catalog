@@ -247,6 +247,57 @@ describe('configProblems', () => {
     ]);
   });
 
+  it('finds browser limits that are out of range', () => {
+    const bad = {
+      ...GOOD,
+      thresholds: {step: {p95: -1}, vitals: {CLS: {minDelta: -0.1}}},
+    };
+
+    expect(configProblems(bad)).to.deepEqual([
+      'thresholds.step.p95 must be 0 or more',
+      'thresholds.vitals.CLS.minDelta must be 0 or more',
+    ]);
+  });
+
+  it('finds a Web Vital name that does not exist', () => {
+    const bad = {...GOOD, thresholds: {vitals: {lcp: {p95: 1}}}};
+
+    expect(configProblems(bad)).to.deepEqual([
+      'thresholds.vitals.lcp is not a Web Vital: use one of FCP, LCP, CLS, TTFB, INP',
+    ]);
+  });
+
+  it('finds a browser limit that is not an object', () => {
+    const bad = {...GOOD, thresholds: {step: 5, vitals: {LCP: 3000}}};
+
+    expect(configProblems(bad)).to.deepEqual([
+      'thresholds.step must be an object of limits, for example {p95: 3000}',
+      'thresholds.vitals.LCP must be an object of limits, for example {p95: 3000}',
+    ]);
+  });
+
+  it('finds a vitals container that is not an object', () => {
+    for (const vitals of [5, 'LCP', ['LCP'], null]) {
+      const bad = {...GOOD, thresholds: {vitals}};
+
+      expect(configProblems(bad)).to.deepEqual([
+        'thresholds.vitals must be an object of limits, for example {LCP: {p95: 2500}}',
+      ]);
+    }
+  });
+
+  it('finds errorRate in a step or a Web Vital limit, which only an endpoint has', () => {
+    const bad = {
+      ...GOOD,
+      thresholds: {step: {errorRate: 5}, vitals: {CLS: {errorRate: 5}}},
+    };
+
+    expect(configProblems(bad)).to.deepEqual([
+      'thresholds.step.errorRate is not a limit of a metric: use p95Regression, minDelta, p95',
+      'thresholds.vitals.CLS.errorRate is not a limit of a metric: use p95Regression, minDelta, p95',
+    ]);
+  });
+
   it('wants a list of phases, and not a flat object', () => {
     const flat = {
       phases: {arrivalRate: 10, duration: 60},
@@ -277,11 +328,20 @@ describe('configProblems', () => {
     ]);
   });
 
-  it('rejects artillery.config.target, because LOAD_TESTS_BASE_URL is the target', () => {
+  it('rejects artillery.config.target, because the URL variables give the target', () => {
     const bad = {...GOOD, artillery: {config: {target: 'http://other'}}};
 
     expect(configProblems(bad)).to.deepEqual([
-      'artillery.config.target is not allowed: the library sets it from LOAD_TESTS_BASE_URL',
+      'artillery.config.target is not allowed: the library sets it from LOAD_TESTS_BASE_URL or LOAD_TESTS_UI_URL',
+    ]);
+  });
+
+  it('rejects engines.playwright.aggregateByName, because the report needs it', () => {
+    const config = {engines: {playwright: {aggregateByName: false}}};
+    const bad = {...GOOD, artillery: {config}};
+
+    expect(configProblems(bad)).to.deepEqual([
+      'artillery.config.engines.playwright.aggregateByName is not allowed: the library sets it',
     ]);
   });
 
