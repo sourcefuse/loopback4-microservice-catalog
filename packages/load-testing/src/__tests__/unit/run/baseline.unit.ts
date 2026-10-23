@@ -21,7 +21,9 @@ describe('saveBaselineIfAsked', () => {
   };
   const outcome: Outcome = {
     scenarios: [],
-    measured: {s: {workload: '1 vuser/s for 1 s', p95: {'GET /a': 5}}},
+    measured: {
+      s: {workload: '1 vuser/s for 1 s', browser: false, p95: {'GET /a': 5}},
+    },
   };
   const run = (passed: boolean) => ({
     pkgDir,
@@ -88,5 +90,13 @@ describe('baselineUrlNote', () => {
   it('says nothing for the same URL, or for no baseline', () => {
     expect(baselineUrlNote(baseline, 'http://old')).to.be.undefined();
     expect(baselineUrlNote(undefined, 'http://new')).to.be.undefined();
+  });
+
+  it('names both URLs of the web app when they differ', () => {
+    const withUi = {...baseline, uiUrl: 'http://old-ui'};
+
+    expect(baselineUrlNote(withUi, undefined, 'http://new-ui')).to.equal(
+      'The baseline of the web app is from http://old-ui, not http://new-ui.',
+    );
   });
 });

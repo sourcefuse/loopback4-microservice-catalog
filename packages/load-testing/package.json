@@ -1,14 +1,17 @@
 {
   "name": "@sourceloop/load-testing",
   "version": "0.2.0",
-  "description": "Load tests for the HTTP APIs of LoopBack facades and services: TypeScript scenarios run by Artillery, with p95 limits and a baseline",
+  "description": "Load tests for the HTTP APIs of LoopBack apps and for the screens of web apps: TypeScript scenarios run by Artillery, with p95 limits and a baseline",
   "keywords": [
     "loopback-extension",
     "loopback",
     "load-testing",
     "performance",
     "artillery",
-    "p95"
+    "p95",
+    "browser",
+    "playwright",
+    "web-vitals"
   ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -43,7 +46,9 @@
     "eslint": "eslint --report-unused-disable-directives .",
     "eslint:fix": "npm run eslint -- --fix",
     "pretest": "npm run rebuild",
-    "test": "lb-mocha --allow-console-logs \"dist/__tests__\"",
+    "test": "lb-mocha --grep browser: --invert --allow-console-logs \"dist/__tests__\"",
+    "pretest:browser": "npm run rebuild",
+    "test:browser": "lb-mocha --grep browser: --allow-console-logs \"dist/__tests__\"",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
     "rebuild": "npm run clean && npm run build",
     "coverage": "nyc npm run test"

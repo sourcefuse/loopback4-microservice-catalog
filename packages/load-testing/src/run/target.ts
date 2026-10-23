@@ -11,9 +11,9 @@ import {
   LoginError,
   MS_PER_SECOND,
 } from '../errors';
-import type {Login, Session, Target} from './types';
+import {BASE_URL_ENV, UI_URL_ENV} from '../project/layout';
+import type {Login, Session, Target, TargetNeeds} from './types';
 
-const BASE_URL_ENV = 'LOAD_TESTS_BASE_URL';
 const AUTH_URL_ENV = 'LOAD_TESTS_AUTH_URL';
 /** The first HTTP status of a redirect. */
 const FIRST_REDIRECT_STATUS = 300;
@@ -28,20 +28,28 @@ const LOGIN_ENV = [
 ] as const;
 
 /**
- * Reads the target from the environment. `LOAD_TESTS_BASE_URL` is always
- * required. When `LOAD_TESTS_USERNAME` is set, the other login variables are
- * required too. When it is not set, the run has no login.
+ * Reads the target from the environment. `needs` says which URLs the
+ * scenarios of the run need.
+ * `LOAD_TESTS_BASE_URL` is required for the API, and `LOAD_TESTS_UI_URL` for
+ * the web app. When `LOAD_TESTS_USERNAME` is set, the other login variables
+ * and the API URL are required too. When it is not set, the run has no login.
  */
-export function readTarget(env: NodeJS.ProcessEnv): Target {
+export function readTarget(env: NodeJS.ProcessEnv, needs: TargetNeeds): Target {
   const hasLogin = !!env.LOAD_TESTS_USERNAME;
-  const missing = [BASE_URL_ENV, ...(hasLogin ? LOGIN_ENV : [])].filter(
-    name => !env[name],
-  );
+  const needsApi = needs.api || hasLogin;
+  const missing = [
+    ...(needsApi ? [BASE_URL_ENV] : []),
+    ...(needs.ui ? [UI_URL_ENV] : []),
+    ...(hasLogin ? LOGIN_ENV : []),
+  ].filter(name => !env[name]);
   if (missing.length > 0) throw new ConfigError(`Set ${missing.join(', ')}`);
   // The check above makes every required value a non-empty string.
   const get = (name: string) => env[name] as string;
+  const ui = needs.ui ? {uiUrl: urlOf(UI_URL_ENV, get(UI_URL_ENV))} : {};
+  if (!needsApi) return ui;
   const baseUrl = urlOf(BASE_URL_ENV, get(BASE_URL_ENV));
   return {
+    ...ui,
     baseUrl,
     // An empty variable counts as not set, as CI often leaves one empty.
     authUrl: env.LOAD_TESTS_AUTH_URL

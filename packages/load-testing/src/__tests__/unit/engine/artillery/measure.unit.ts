@@ -119,6 +119,36 @@ describe('readRun', () => {
     expect(run.vusers).to.deepEqual({started: 1, completed: 0, failed: 1});
   });
 
+  it('reads each browser metric with its sample count and p95', () => {
+    const summaries = {
+      'browser.step.load_dashboard': {count: 10, p95: 812.5},
+      'browser.page.CLS.dashboard': {count: 9, p95: 0.12},
+      'vusers.session_length': {count: 10, p95: 3000},
+    };
+
+    const {metrics} = readOf(aggregate({summaries}));
+
+    expect([...(metrics ?? [])]).to.deepEqual([
+      ['browser.step.load_dashboard', {count: 10, p95: 812.5}],
+      ['browser.page.CLS.dashboard', {count: 9, p95: 0.12}],
+    ]);
+  });
+
+  it('marks a step that took the time of its whole action as wall clock', () => {
+    const summaries = {
+      'browser.step.save': {count: 10, p95: 889},
+      'browser.step.open': {count: 10, p95: 399.5},
+    };
+    const counters = {'browser.step_wall_clock.save': 10};
+
+    const {metrics} = readOf(aggregate({summaries, counters}));
+
+    expect([...(metrics ?? [])]).to.deepEqual([
+      ['browser.step.save', {count: 10, p95: 889, wallClock: true}],
+      ['browser.step.open', {count: 10, p95: 399.5}],
+    ]);
+  });
+
   describe('a report that Artillery did not write well', () => {
     it('names the report when the file is missing', () => {
       const file = path.join(dir, 'none.json');

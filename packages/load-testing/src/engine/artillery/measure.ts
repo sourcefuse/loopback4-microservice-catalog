@@ -4,12 +4,18 @@
 // https://opensource.org/licenses/MIT
 import fs from 'node:fs';
 import {HOOK_ERROR_PREFIX} from './processor';
+import {STEP, WALL_CLOCK_STEP} from '../../report/names';
 import {MS_PER_SECOND, RunError} from '../../errors';
-import type {EndpointStats, Measurement, VuserCounts} from '../../report/types';
+import type {
+  EndpointStats,
+  Measurement,
+  MetricStats,
+  VuserCounts,
+} from '../../report/types';
 
 type Aggregate = {
   counters: Record<string, number>;
-  summaries: Record<string, {p95: number}>;
+  summaries: Record<string, MetricStats>;
   /** Times in ms since 1970. Null when the run counted nothing. */
   firstCounterAt?: number | null;
   lastCounterAt?: number | null;
@@ -21,6 +27,9 @@ type Report = {aggregate: Aggregate};
 type RawReport = {aggregate?: Partial<Aggregate>};
 
 const METRICS = 'plugins.metrics-by-endpoint';
+
+/** The prefix of the metrics that the Playwright engine and our flow emit. */
+const BROWSER = 'browser.';
 
 /** The first HTTP status that counts as an error. */
 const FIRST_ERROR_STATUS = 400;
@@ -57,6 +66,7 @@ export function readRun(reportPath: string, ids: string[]): Measurement {
   };
   return {
     endpoints: parseReport(report, ids),
+    metrics: browserMetrics(report),
     hookErrors: countHookErrors(report),
     vusers: countVusers(report),
     seconds: measuredSeconds(report),
@@ -70,6 +80,23 @@ function countVusers(report: Report): VuserCounts {
     completed: counters['vusers.completed'] ?? 0,
     failed: counters['vusers.failed'] ?? 0,
   };
+}
+
+/**
+ * The browser metrics of the report. A step that `step` timed with the wall
+ * clock also has a counter, and gets the mark `wallClock`.
+ */
+function browserMetrics(report: Report): Map<string, MetricStats> {
+  const {counters, summaries} = report.aggregate;
+  return new Map(
+    Object.entries(summaries)
+      .filter(([key]) => key.startsWith(BROWSER))
+      .map(([key, {count, p95}]) => {
+        const wallClock =
+          (counters[key.replace(STEP, WALL_CLOCK_STEP)] ?? 0) > 0;
+        return [key, {count, p95, ...(wallClock && {wallClock})}];
+      }),
+  );
 }
 
 /** Seconds from the first to the last count, or 0 when nothing was counted. */

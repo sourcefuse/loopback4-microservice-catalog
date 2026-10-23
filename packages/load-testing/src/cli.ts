@@ -10,12 +10,12 @@ import {baselineUrlNote, saveBaselineIfAsked} from './run/baseline';
 import {withFreshToken} from './run/session';
 import {resolveThresholds} from './project/config';
 import {execute, runScenarios} from './run/execute';
-import {prepare} from './run/prepare';
+import {coverageOf, prepare} from './run/prepare';
+import {clearReports, rejudge} from './run/rejudge';
 import {describeThrown, errorMessage, LoadTestError} from './errors';
 import {judgeRun} from './report/report';
-import {consoleReporter} from './report/console';
+import {consoleReporter, detailReporter} from './report/console';
 import type {Reporter, RunResult} from './report/types';
-import {SPEC_FILE} from './project/spec';
 import {labelOf} from './scenario/label';
 import {artillery} from './engine/artillery';
 import {refresh} from './run/target';
@@ -23,9 +23,12 @@ import {ignoreOutputErrors, print, printError} from './output';
 
 const USAGE = `Usage:
   load-testing run <package-dir>       Run the scenarios, compare with the baseline
+  load-testing report <package-dir>    Print each metric of the last run, from its report files
 
 Environment:
-  LOAD_TESTS_BASE_URL       Application under test (required)
+  LOAD_TESTS_BASE_URL       API under test (required for load.it scenarios, the login, and
+                            browser scenarios with before or after)
+  LOAD_TESTS_UI_URL         Web app under test (required for load.browser scenarios)
   LOAD_TESTS_AUTH_URL       Serves /auth/login and /auth/token (default: LOAD_TESTS_BASE_URL)
   LOAD_TESTS_USERNAME       Set it to log in. Then these are required too:
   LOAD_TESTS_PASSWORD, LOAD_TESTS_CLIENT_ID, LOAD_TESTS_CLIENT_SECRET
@@ -38,10 +41,19 @@ async function run(
   cancel: Cancellation,
   env: NodeJS.ProcessEnv,
 ): Promise<number> {
+  clearReports(pkgDir);
   const prepared = await prepare(pkgDir, env, cancel.signal);
   const {target, config, skipped, endpointCoverage, heavyEndpoints} = prepared;
   const baseline = readBaseline(pkgDir);
-  const note = baselineUrlNote(baseline, target.baseUrl);
+  // Only an HTTP scenario records an API sample, so a browser run with hooks has none to compare.
+  const sendsRequests = prepared.scenarios.some(
+    ({scenario}) => scenario.browser === undefined,
+  );
+  const note = baselineUrlNote(
+    baseline,
+    sendsRequests ? target.baseUrl : undefined,
+    target.uiUrl,
+  );
   if (note !== undefined) print(note);
   const engine = config.engine ?? artillery();
   const outcome = await runScenarios(
@@ -69,11 +81,7 @@ async function run(
   );
   const result = judgeRun(outcome.scenarios, {
     skipped: skipped.map(({scenario}) => labelOf(scenario)),
-    coverage: {
-      covered: endpointCoverage.covered,
-      total: endpointCoverage.total,
-      specFile: SPEC_FILE,
-    },
+    coverage: coverageOf(endpointCoverage),
     heavyApis: {
       endpoints: heavyEndpoints,
       max: config.maxHeavyApis ?? 0,
@@ -92,6 +100,7 @@ async function run(
     {
       pkgDir,
       baseUrl: target.baseUrl,
+      uiUrl: target.uiUrl,
       baseline,
       outcome,
       passed,
@@ -100,6 +109,16 @@ async function run(
     {print, printError},
   );
   return passed ? 0 : 1;
+}
+
+/**
+ * Prints each metric of the last run again, from the report files in
+ * `.out`, and gives the exit code of the verdict. It runs no load.
+ */
+async function report(pkgDir: string, env: NodeJS.ProcessEnv): Promise<number> {
+  const result = rejudge(pkgDir, env);
+  await detailReporter().onRunEnd(result);
+  return result.passed ? 0 : 1;
 }
 
 /**
@@ -147,11 +166,15 @@ export async function main(
   }
 }
 
-/** True for the error that `parseArgs` throws for a bad command line. */
+/** A command line that the CLI does not accept, for example an extra argument. */
+class UsageError extends Error {}
+
+/** True for a bad command line: an error of `parseArgs`, or a `UsageError`. */
 function isUsageError(err: unknown): err is Error {
   return (
-    err instanceof Error &&
-    String((err as NodeJS.ErrnoException).code).startsWith('ERR_PARSE_ARGS_')
+    err instanceof UsageError ||
+    (err instanceof Error &&
+      String((err as NodeJS.ErrnoException).code).startsWith('ERR_PARSE_ARGS_'))
   );
 }
 
@@ -175,7 +198,12 @@ async function dispatch(
     print(USAGE);
     return 0;
   }
-  const [command, pkg] = positionals;
+  const [command, pkg, ...extra] = positionals;
+  // `parseArgs` cannot say this: it must accept the command and the package.
+  if (extra.length > 0) {
+    throw new UsageError(`Unexpected argument '${extra[0]}'`);
+  }
+  if (command === 'report' && pkg) return report(path.resolve(pkg), env);
   if (command !== 'run' || !pkg) {
     printError(USAGE);
     return 1;

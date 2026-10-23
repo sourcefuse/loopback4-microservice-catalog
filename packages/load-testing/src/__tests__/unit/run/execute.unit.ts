@@ -21,6 +21,8 @@ import type {RunContext, Scenario} from '../../../types';
 import type {LoadedScenario} from '../../../project/types';
 import type {ScenarioRun} from '../../../report/types';
 
+const apiOnly = {api: true, ui: false};
+
 const loadedOf = (scenario: Scenario): LoadedScenario => ({
   scenario,
   endpoints: new Map([['GET /a', resolveThresholds({})]]),
@@ -30,13 +32,16 @@ describe('execute', () => {
   const pkgDir = fs.mkdtempSync(path.join(os.tmpdir(), 'load-testing-'));
   after(() => fs.rmSync(pkgDir, {recursive: true}));
 
-  const target = readTarget({
-    LOAD_TESTS_BASE_URL: 'http://127.0.0.1:9',
-    LOAD_TESTS_USERNAME: 'u',
-    LOAD_TESTS_PASSWORD: 'p',
-    LOAD_TESTS_CLIENT_ID: 'c',
-    LOAD_TESTS_CLIENT_SECRET: 's',
-  });
+  const target = readTarget(
+    {
+      LOAD_TESTS_BASE_URL: 'http://127.0.0.1:9',
+      LOAD_TESTS_USERNAME: 'u',
+      LOAD_TESTS_PASSWORD: 'p',
+      LOAD_TESTS_CLIENT_ID: 'c',
+      LOAD_TESTS_CLIENT_SECRET: 's',
+    },
+    apiOnly,
+  );
   /** A JWT that expires in `seconds`. */
   const tokenFor = (seconds: number) =>
     `x.${Buffer.from(JSON.stringify({exp: Date.now() / 1000 + seconds})).toString('base64url')}.y`;
@@ -115,7 +120,7 @@ describe('execute', () => {
       await expect(
         execute(loadedOf(scenario), {
           ...options(controller.signal),
-          target: {...target, baseUrl},
+          target: readTarget({LOAD_TESTS_BASE_URL: baseUrl}, apiOnly),
         }),
       ).to.be.rejected();
     } finally {
@@ -148,7 +153,7 @@ describe('execute', () => {
       await expect(
         execute(loadedOf(scenario), {
           ...options(undefined, accessToken),
-          target: {...target, baseUrl},
+          target: readTarget({LOAD_TESTS_BASE_URL: baseUrl}, apiOnly),
         }),
       ).to.be.rejectedWith('stop here');
     } finally {
@@ -270,6 +275,174 @@ describe('execute', () => {
       expect(result.workload).to.equal('1 vusers/s for 60 s');
       expect(result.vusers).to.equal(measurement.vusers);
       expect(result.problems).to.deepEqual([]);
+    });
+
+    it('gives the engine the URL of the web app for a browser scenario', async () => {
+      const {engine, inputs} = fakeEngine();
+      const scenario: Scenario = {
+        name: 'open',
+        browser: {flow: async () => undefined},
+      };
+      const uiUrl = 'http://127.0.0.1:4200';
+
+      await execute(
+        {scenario, endpoints: new Map()},
+        {...options(), engine, target: {uiUrl}, token: undefined},
+      );
+
+      expect(inputs.map(input => input.baseUrl)).to.deepEqual([uiUrl]);
+    });
+
+    it('stops a browser scenario when the run has no URL of the web app', async () => {
+      const {engine, inputs} = fakeEngine();
+      const scenario: Scenario = {
+        name: 'open',
+        browser: {flow: async () => undefined},
+      };
+
+      await expect(
+        execute(
+          {scenario, endpoints: new Map()},
+          {...options(), engine, token: undefined},
+        ),
+      ).to.be.rejectedWith('Set LOAD_TESTS_UI_URL');
+      expect(inputs).to.have.length(0);
+    });
+
+    describe('before and after of a browser scenario', () => {
+      let server: http.Server;
+      let seen: string[];
+      let bothUrls: ReturnType<typeof readTarget>;
+      beforeEach(async () => {
+        seen = [];
+        server = http.createServer((req, res) => {
+          seen.push(`${req.method} ${req.url}`);
+          res.end('{}');
+        });
+        await new Promise<void>(resolve =>
+          server.listen(0, '127.0.0.1', resolve),
+        );
+        const api = `http://127.0.0.1:${(server.address() as AddressInfo).port}`;
+        bothUrls = readTarget(
+          {LOAD_TESTS_BASE_URL: api, LOAD_TESTS_UI_URL: 'http://127.0.0.1:9'},
+          {api: true, ui: true},
+        );
+      });
+      afterEach(() => server.close());
+
+      const run = (scenario: Scenario, engine: Engine) =>
+        execute(
+          {scenario, endpoints: new Map()},
+          {...options(), engine, target: bothUrls, token: undefined},
+        );
+
+      it('runs before on LOAD_TESTS_BASE_URL, gives the vars to the engine, and runs after with them', async () => {
+        const {engine, inputs} = fakeEngine();
+        const scenario = load.browser(
+          'open',
+          {
+            before: async (ctx, runVars) => {
+              await ctx.api.post('/token');
+              runVars.accessToken = 'abc';
+            },
+            after: async (ctx, runVars) => {
+              await ctx.api.delete(`/token/${runVars.accessToken}`);
+            },
+          },
+          async () => undefined,
+        );
+
+        await run(scenario, engine);
+
+        expect(seen).to.deepEqual(['POST /token', 'DELETE /token/abc']);
+        expect(inputs.map(input => input.runVars)).to.deepEqual([
+          {accessToken: 'abc'},
+        ]);
+        expect(inputs.map(input => input.baseUrl)).to.deepEqual([
+          'http://127.0.0.1:9',
+        ]);
+      });
+
+      it('runs after, and does not start the load, when before throws', async () => {
+        const {engine, inputs} = fakeEngine();
+        const scenario = load.browser(
+          'open',
+          {
+            before: async () => {
+              throw new Error('no token');
+            },
+            after: async ctx => {
+              await ctx.api.delete('/token');
+            },
+          },
+          async () => undefined,
+        );
+
+        await expect(run(scenario, engine)).to.be.rejectedWith('no token');
+
+        expect(inputs).to.have.length(0);
+        expect(seen).to.deepEqual(['DELETE /token']);
+      });
+
+      it('runs after when the load fails', async () => {
+        const failing: Engine = {
+          name: 'failing',
+          run: async () => {
+            throw new Error('load failed');
+          },
+        };
+        const scenario = load.browser(
+          'open',
+          {
+            after: async ctx => {
+              await ctx.api.delete('/token');
+            },
+          },
+          async () => undefined,
+        );
+
+        await expect(run(scenario, failing)).to.be.rejectedWith('load failed');
+
+        expect(seen).to.deepEqual(['DELETE /token']);
+      });
+
+      it('reports a failing after of a good run as a problem', async () => {
+        const scenario = load.browser(
+          'open',
+          {
+            after: async () => {
+              throw new Error('revoke failed');
+            },
+          },
+          async () => undefined,
+        );
+
+        const result = await run(scenario, fakeEngine().engine);
+
+        expect(result.problems).to.deepEqual(['after failed: revoke failed']);
+      });
+
+      it('stops a browser scenario with a hook when the run has no LOAD_TESTS_BASE_URL', async () => {
+        const {engine, inputs} = fakeEngine();
+        const scenario = load.browser(
+          'open',
+          {before: async () => undefined},
+          async () => undefined,
+        );
+
+        await expect(
+          execute(
+            {scenario, endpoints: new Map()},
+            {
+              ...options(),
+              engine,
+              target: {uiUrl: 'http://127.0.0.1:9'},
+              token: undefined,
+            },
+          ),
+        ).to.be.rejectedWith('Set LOAD_TESTS_BASE_URL');
+        expect(inputs).to.have.length(0);
+      });
     });
 
     it('gives the phases of the scenario when it has its own', async () => {

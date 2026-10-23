@@ -152,8 +152,9 @@ load.it('orders', [
     write('src/__tests__/load/a.load.ts');
     write('dist/__tests__/load/a.load.js', `exports.default = {};`);
 
+    const file = path.join(pkg, 'dist/__tests__/load/a.load.js');
     expect(() => loadScenarios(pkg, CONFIG)).to.throw(
-      /a\.load\.js registers no scenario/,
+      `${file} registers no scenario. Add a load.it(...) or load.browser(...) call to it. If it has one, two copies of @sourceloop/load-testing are installed.`,
     );
   });
 
@@ -344,6 +345,252 @@ load.describe('g', {thresholds: ${describeLimits}}, () => {
           /Scenario g › n:\n\s+thresholds.p95 must be 0 or more\n\s+thresholds.errorRate must be from 0 to 100/,
       });
     });
+  });
+
+  describe('limits of a browser scenario', () => {
+    const MS = {p95Regression: 20, minDelta: 10};
+
+    /** One file with one browser scenario, in a describe with these options. */
+    function writeBrowser(describeOptions: string, browserOptions: string) {
+      write('src/__tests__/load/b.load.ts');
+      write(
+        'dist/__tests__/load/b.load.js',
+        `const {load} = require(${builder});
+load.describe('dashboard', ${describeOptions}, () => {
+  load.browser('open', ${browserOptions}, async () => {});
+});`,
+      );
+    }
+
+    it('gives a step 1.5 s and turns on every Web Vital but INP, when no level sets a limit', () => {
+      writeBrowser('{}', '{}');
+
+      const [loaded] = loadScenarios(pkg, CONFIG);
+
+      expect(loaded.browser).to.deepEqual({
+        step: {...MS, p95: 1500},
+        steps: {},
+        vitals: {
+          FCP: {...MS, p95: 1800},
+          LCP: {...MS, p95: 2500},
+          CLS: {p95Regression: 20, minDelta: 0.1, p95: 0.1},
+          TTFB: {...MS, p95: 800},
+        },
+      });
+      expect(loaded.endpoints.size).to.equal(0);
+    });
+
+    it('tells the scenario which built file registers it, so a worker can load its flow', () => {
+      writeBrowser('{}', '{}');
+
+      const [loaded] = loadScenarios(pkg, CONFIG);
+
+      expect(loaded.scenario.browser?.file).to.equal(
+        path.join(pkg, 'dist/__tests__/load/b.load.js'),
+      );
+    });
+
+    it('merges library, config, describe, scenario and one metric by field', () => {
+      const config = {
+        phases: PHASES,
+        thresholds: {
+          step: {p95: 2000},
+          vitals: {LCP: {p95: 3000}, CLS: {minDelta: 0.2}},
+        },
+      };
+      writeBrowser(
+        '{step: {p95Regression: 30}, vitals: {INP: {}}}',
+        `{
+          step: {minDelta: 20},
+          vitals: {LCP: {p95Regression: 50}},
+          steps: {loadDashboard: {p95: 5000}},
+          flow: {p95: 8000},
+        }`,
+      );
+
+      const [loaded] = loadScenarios(pkg, config);
+
+      const step = {p95: 2000, p95Regression: 30, minDelta: 20};
+      expect(loaded.browser).to.deepEqual({
+        step,
+        steps: {loadDashboard: {...step, p95: 5000}},
+        vitals: {
+          FCP: {...MS, p95: 1800},
+          LCP: {p95: 3000, p95Regression: 50, minDelta: 10},
+          CLS: {p95: 0.1, p95Regression: 20, minDelta: 0.2},
+          TTFB: {...MS, p95: 800},
+          INP: {...MS, p95: 200},
+        },
+        flow: {...step, p95: 8000},
+      });
+    });
+
+    it('stops when a browser limit is out of range, with the scenario named', () => {
+      writeBrowser(
+        '{step: {p95: -1}}',
+        '{vitals: {LCP: {minDelta: -1}}, steps: {save: {p95: -1}}, flow: {p95Regression: -1}}',
+      );
+
+      expect(() => loadScenarios(pkg, CONFIG)).to.throw({
+        name: 'ScenarioError',
+        message:
+          /Scenario dashboard › open:\n\s+step.p95 must be 0 or more\n\s+vitals.LCP.minDelta must be 0 or more\n\s+steps.save.p95 must be 0 or more\n\s+flow.p95Regression must be 0 or more/,
+      });
+    });
+  });
+
+  describe('names that a browser limit does not know', () => {
+    const NOT_METRIC =
+      'is not a limit of a metric: use p95Regression, minDelta, p95';
+
+    it('stops when a describe or a scenario sets errorRate in a limit of a metric', () => {
+      write('src/__tests__/load/b.load.ts');
+      write(
+        'dist/__tests__/load/b.load.js',
+        `const {load} = require(${builder});
+load.describe('d', {step: {errorRate: 1}, vitals: {CLS: {errorRate: 1}}}, () => {
+  load.browser(
+    'open',
+    {steps: {save: {errorRate: 1}}, flow: {errorRate: 1}},
+    async () => {},
+  );
+});`,
+      );
+
+      expect(() => labels()).to.throw(
+        new ScenarioError('Scenario d › open:', [
+          `step.errorRate ${NOT_METRIC}`,
+          `vitals.CLS.errorRate ${NOT_METRIC}`,
+          `steps.save.errorRate ${NOT_METRIC}`,
+          `flow.errorRate ${NOT_METRIC}`,
+        ]),
+      );
+    });
+
+    it('stops when a describe or a scenario sets a limit that is not an object', () => {
+      write('src/__tests__/load/b.load.ts');
+      write(
+        'dist/__tests__/load/b.load.js',
+        `const {load} = require(${builder});
+load.describe('d', {step: 5}, () => {
+  load.browser(
+    'open',
+    {vitals: {LCP: 3000}, steps: {save: 3000}, flow: 5},
+    async () => {},
+  );
+});`,
+      );
+      const NOT_OBJECT = 'must be an object of limits, for example {p95: 3000}';
+
+      expect(() => labels()).to.throw(
+        new ScenarioError('Scenario d › open:', [
+          `step ${NOT_OBJECT}`,
+          `vitals.LCP ${NOT_OBJECT}`,
+          `steps.save ${NOT_OBJECT}`,
+          `flow ${NOT_OBJECT}`,
+        ]),
+      );
+    });
+
+    it('stops when a limit of a scenario is 0, null, false or an empty text', () => {
+      write('src/__tests__/load/b.load.ts');
+      write(
+        'dist/__tests__/load/b.load.js',
+        `const {load} = require(${builder});
+load.browser(
+  'open',
+  {flow: 0, vitals: null, step: false, steps: ''},
+  async () => {},
+);`,
+      );
+
+      expect(() => labels()).to.throw(
+        new ScenarioError('Scenario open:', [
+          'step must be an object of limits, for example {p95: 3000}',
+          'vitals must be an object of limits, for example {LCP: {p95: 2500}}',
+          'steps must be an object of limits, for example {save: {p95: 3000}}',
+          'flow must be an object of limits, for example {p95: 3000}',
+        ]),
+      );
+    });
+
+    it('stops when the vitals or the steps of a scenario are not an object', () => {
+      write('src/__tests__/load/b.load.ts');
+      write(
+        'dist/__tests__/load/b.load.js',
+        `const {load} = require(${builder});
+load.browser('open', {vitals: 5, steps: 5}, async () => {});`,
+      );
+
+      expect(() => labels()).to.throw(
+        new ScenarioError('Scenario open:', [
+          'vitals must be an object of limits, for example {LCP: {p95: 2500}}',
+          'steps must be an object of limits, for example {save: {p95: 3000}}',
+        ]),
+      );
+    });
+
+    it('stops when a describe or a scenario names a Web Vital that does not exist', () => {
+      write('src/__tests__/load/b.load.ts');
+      write(
+        'dist/__tests__/load/b.load.js',
+        `const {load} = require(${builder});
+load.describe('d', {vitals: {lcp: {p95: 1}}}, () => {
+  load.browser('open', {vitals: {INP2: {p95: 1}}}, async () => {});
+});`,
+      );
+
+      expect(() => labels()).to.throw(
+        new ScenarioError('Scenario d › open:', [
+          'vitals.lcp is not a Web Vital: use one of FCP, LCP, CLS, TTFB, INP',
+          'vitals.INP2 is not a Web Vital: use one of FCP, LCP, CLS, TTFB, INP',
+        ]),
+      );
+    });
+  });
+
+  it('stops when a browser scenario has no flow function', () => {
+    write('src/__tests__/load/b.load.ts');
+    write(
+      'dist/__tests__/load/b.load.js',
+      `const {load} = require(${builder});
+load.browser('open', {});`,
+    );
+
+    expect(() => labels()).to.throw(
+      new ScenarioError('Scenario open:', [
+        'flow must be a function: load.browser(name, async ({page, step}) => {...})',
+      ]),
+    );
+  });
+
+  it('lets the TypeError of load.browser for an unknown option out of the file', () => {
+    write('src/__tests__/load/b.load.ts');
+    write(
+      'dist/__tests__/load/b.load.js',
+      `const {load} = require(${builder});
+load.browser('open', {beforeEach: () => ({})}, async () => {});`,
+    );
+
+    expect(() => labels()).to.throw(TypeError, {
+      message:
+        'load.browser: beforeEach is not an option: use one of phases, step, steps, flow, vitals, before, after',
+    });
+  });
+
+  it('stops with the missing flow when load.browser has no options and no flow', () => {
+    write('src/__tests__/load/b.load.ts');
+    write(
+      'dist/__tests__/load/b.load.js',
+      `const {load} = require(${builder});
+load.browser('open');`,
+    );
+
+    expect(() => labels()).to.throw(
+      new ScenarioError('Scenario open:', [
+        'flow must be a function: load.browser(name, async ({page, step}) => {...})',
+      ]),
+    );
   });
 
   it('stops when a plain string in the headers of a scenario has "{{"', () => {
