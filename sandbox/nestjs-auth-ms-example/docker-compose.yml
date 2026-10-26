@@ -17,7 +17,7 @@ x-db-config: &db-config
 
 services:
   app:
-    image: node:24-alpine
+    image: node:24.22.1-alpine
     command: sh -c "npm ci --ignore-scripts && npm run db:migrate && npm run start:dev"
     ports:
       - 0.0.0.0:3000:4000
