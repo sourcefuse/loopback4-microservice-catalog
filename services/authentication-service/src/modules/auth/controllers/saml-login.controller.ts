@@ -34,8 +34,13 @@ import {AuthCodeBindings, AuthCodeGeneratorFn} from '../../../providers';
 import {AuthClientRepository} from '../../../repositories';
 import {AuthUser, ClientAuthRequest, TokenResponse} from '../models';
 
-// Pending AuthnRequest IDs are dropped after this long, matching node-saml's own in-memory provider
-const SAML_REQUEST_TTL_MS = 8 * 60 * 60 * 1000;
+// Pending AuthnRequest IDs are dropped after this long. SAML_REQUEST_TTL_MS overrides
+// the default, which matches node-saml's own in-memory provider (8 hours).
+const DEFAULT_SAML_REQUEST_TTL_MS = 8 * 60 * 60 * 1000;
+const SAML_REQUEST_TTL_MS =
+  +(process.env.SAML_REQUEST_TTL_MS ?? 0) > 0
+    ? +(process.env.SAML_REQUEST_TTL_MS as string)
+    : DEFAULT_SAML_REQUEST_TTL_MS;
 const samlRequests = new Map<string, CacheItem>();
 // Closes over the Map rather than using this, since @authenticate deep-clones options
 const samlRequestCache: CacheProvider = {

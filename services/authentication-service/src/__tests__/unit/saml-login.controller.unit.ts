@@ -6,7 +6,7 @@ import {AnyObject} from '@loopback/repository';
 import {expect, sinon} from '@loopback/testlab';
 import {Strategy} from '@node-saml/passport-saml';
 import {getAuthenticateMetadata} from 'loopback4-authentication';
-import * as zlib from 'zlib';
+import * as zlib from 'node:zlib';
 
 describe('SamlLoginController - Unit Tests', () => {
   const envKeys = [
@@ -15,6 +15,7 @@ describe('SamlLoginController - Unit Tests', () => {
     'SAML_ISSUER',
     'SAML_ENTRY_POINT',
     'VALIDATE_RESPONSE',
+    'SAML_REQUEST_TTL_MS',
   ];
   const baseEnv: AnyObject = {
     SAML_CALLBACK_URL: 'https://sp.example.com/auth/saml-redirect',
@@ -150,5 +151,30 @@ describe('SamlLoginController - Unit Tests', () => {
     } finally {
       clock.restore();
     }
+  });
+
+  [
+    {value: '60000', expiresAfterMs: 60000},
+    {value: 'abc', expiresAfterMs: 8 * 60 * 60 * 1000},
+    {value: '-5', expiresAfterMs: 8 * 60 * 60 * 1000},
+  ].forEach(({value, expiresAfterMs}) => {
+    it(`expires cached requests after ${expiresAfterMs}ms when SAML_REQUEST_TTL_MS is ${value}`, async () => {
+      const clock = sinon.useFakeTimers();
+      try {
+        const options = loadOptions('postLoginViaSaml', {
+          VALIDATE_RESPONSE: '1',
+          SAML_REQUEST_TTL_MS: value,
+        });
+        const cache = options.cacheProvider;
+
+        await cache.saveAsync('id', 'a');
+        clock.tick(expiresAfterMs - 1);
+        expect(await cache.getAsync('id')).to.equal('a');
+        clock.tick(1);
+        expect(await cache.getAsync('id')).to.equal(null);
+      } finally {
+        clock.restore();
+      }
+    });
   });
 });
