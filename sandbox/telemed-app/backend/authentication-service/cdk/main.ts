@@ -37,7 +37,7 @@ new MigrationStack(app, 'migration', {
   // sonarignore:end
   codePath: resolve(__dirname, '../migration'),
   handler: 'lambda.handler',
-  runtime: 'nodejs18.x',
+  runtime: 'nodejs24.x',
   vpcConfig: {
     securityGroupIds: getSecurityGroup(),
     subnetIds: getSubnetIds(),
@@ -61,7 +61,7 @@ new LambdaStack(app, 'lambda', {
   s3Bucket: process.env.S3_BUCKET!,
   codePath: __dirname,
   handler: 'lambda.handler',
-  runtime: 'nodejs18.x',
+  runtime: 'nodejs24.x',
   layerPath: resolve(__dirname, '../layers'),
   vpcConfig: {
     securityGroupIds: getSecurityGroup(),
