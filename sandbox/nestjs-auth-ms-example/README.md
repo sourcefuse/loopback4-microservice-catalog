@@ -24,6 +24,11 @@ The migrations comes with seed data having a dummy client entry and two users.
 ```
 
 Another username you can try out things with is `sarah.rafferty@example.com` with same password.
+
+> **Note:** the seed migration stores only a bcrypt hash of the password, and the password itself is not
+> published here. Replace `<Enter password here>` with the password you want to use, and set the `password`
+> hash of the two users in `migrations/sqls/20201217172051-init-seed-up.sql` to a bcrypt hash of it before
+> running the migration. Use the same value for `USER_TEMP_PASSWORD` in your `.env`.
 You can try out above json as request body of the login route provided by the sourceloop authentication service.
 
 ## Running the app
