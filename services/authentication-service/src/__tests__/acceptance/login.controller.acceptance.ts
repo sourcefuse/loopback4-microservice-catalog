@@ -23,6 +23,9 @@ import {setupApplication} from './test-helper';
 // Set TEST_USER_PASSWORD in the environment; the placeholder is intentionally not a real password.
 const TEST_USER_PASSWORD =
   process.env.TEST_USER_PASSWORD ?? '<Enter test password>';
+// Used from the reset-password test onwards; it must differ from the initial password.
+const NEW_TEST_USER_PASSWORD =
+  process.env.NEW_TEST_USER_PASSWORD ?? '<Enter new test password>';
 
 describe('Authentication microservice', () => {
   let app: TestingApplication;
@@ -106,7 +109,7 @@ describe('Authentication microservice', () => {
       client_id: 'mobile', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
-      password: 'temp123!@',
+      password: TEST_USER_PASSWORD,
     };
     const response = await client.post(`/auth/login`).send(reqData).expect(401);
     expect(response).to.have.property('error');
@@ -120,7 +123,7 @@ describe('Authentication microservice', () => {
       client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
-      password: 'temp123!@',
+      password: TEST_USER_PASSWORD,
     };
     process.env.JWT_ISSUER = 'test';
     await client.post(`/auth/login`).send(reqData).expect(200);
@@ -132,7 +135,7 @@ describe('Authentication microservice', () => {
       client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
-      password: 'temp123!@',
+      password: TEST_USER_PASSWORD,
     };
     process.env.JWT_ISSUER = 'test';
     const reqForCode = await client
@@ -148,7 +151,7 @@ describe('Authentication microservice', () => {
       client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
-      password: 'temp123!@',
+      password: TEST_USER_PASSWORD,
     };
     process.env.JWT_ISSUER = 'test';
     process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
@@ -177,7 +180,7 @@ describe('Authentication microservice', () => {
       client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
-      password: 'temp123!@',
+      password: TEST_USER_PASSWORD,
     };
     process.env.JWT_ISSUER = 'test';
     process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
@@ -206,7 +209,7 @@ describe('Authentication microservice', () => {
       client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_teacher',
-      password: 'temp123!@',
+      password: TEST_USER_PASSWORD,
     };
     process.env.JWT_ISSUER = 'test';
     process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
@@ -226,7 +229,7 @@ describe('Authentication microservice', () => {
       client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
-      password: 'temp123!@',
+      password: TEST_USER_PASSWORD,
     };
     process.env.JWT_ISSUER = 'test';
     process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
@@ -301,7 +304,7 @@ describe('Authentication microservice', () => {
       .set('Authorization', `Bearer ${reqForToken.body.accessToken}`)
       .send({
         username: 'test_user',
-        password: 'temp123!@',
+        password: TEST_USER_PASSWORD,
         refreshToken: reqForToken.body.refreshToken,
       })
       .expect(200);
@@ -313,7 +316,7 @@ describe('Authentication microservice', () => {
       client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
-      password: 'temp123!@',
+      password: TEST_USER_PASSWORD,
     };
     process.env.JWT_ISSUER = 'test';
     process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
@@ -341,7 +344,7 @@ describe('Authentication microservice', () => {
       client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
-      password: 'temp123!@',
+      password: TEST_USER_PASSWORD,
     };
     process.env.JWT_ISSUER = 'test';
     process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
@@ -468,7 +471,7 @@ describe('Authentication microservice', () => {
       // eslint-disable-next-line @typescript-eslint/naming-convention
       client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
-      password: 'test123',
+      password: '<Enter weak password>',
     };
     await client.patch(`/auth/reset-password`).send(request).expect(422);
   });
@@ -505,7 +508,7 @@ describe('Authentication microservice', () => {
       client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       token,
-      password: 'temp123!@',
+      password: TEST_USER_PASSWORD,
     };
     await client.patch(`/auth/reset-password`).send(request).expect(401);
   });
@@ -525,7 +528,7 @@ describe('Authentication microservice', () => {
       client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       token,
-      password: TEST_USER_PASSWORD,
+      password: NEW_TEST_USER_PASSWORD,
     };
     await client.patch(`/auth/reset-password`).send(request).expect(204);
   });
@@ -536,7 +539,7 @@ describe('Authentication microservice', () => {
       client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
-      password: TEST_USER_PASSWORD,
+      password: NEW_TEST_USER_PASSWORD,
     };
     process.env.JWT_ISSUER = 'test';
     process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
@@ -567,7 +570,7 @@ describe('Authentication microservice', () => {
       client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
-      password: TEST_USER_PASSWORD,
+      password: NEW_TEST_USER_PASSWORD,
     };
     process.env.JWT_ISSUER = 'test';
     process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
@@ -604,7 +607,7 @@ describe('Authentication microservice', () => {
       client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
-      password: TEST_USER_PASSWORD,
+      password: NEW_TEST_USER_PASSWORD,
     };
     process.env.JWT_ISSUER = 'test';
     process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
@@ -713,7 +716,7 @@ describe('Authentication microservice', () => {
         ],
       },
     ]);
-    process.env.USER_TEMP_PASSWORD = 'temp123!@';
+    process.env.USER_TEMP_PASSWORD = TEST_USER_PASSWORD;
     await userRepo.create({
       id: '1',
       firstName: 'Test',
