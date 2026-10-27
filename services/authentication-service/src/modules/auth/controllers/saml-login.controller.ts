@@ -24,10 +24,49 @@ import {
   AuthErrorKeys,
   STRATEGY,
 } from 'loopback4-authentication';
+import {
+  CacheItem,
+  CacheProvider,
+  ValidateInResponseTo,
+} from '@node-saml/passport-saml';
 import {authorize} from 'loopback4-authorization';
 import {AuthCodeBindings, AuthCodeGeneratorFn} from '../../../providers';
 import {AuthClientRepository} from '../../../repositories';
 import {AuthUser, ClientAuthRequest, TokenResponse} from '../models';
+
+// Pending AuthnRequest IDs are dropped after this long. SAML_REQUEST_TTL_MS overrides
+// the default, which matches node-saml's own in-memory provider (8 hours).
+const DEFAULT_SAML_REQUEST_TTL_MS = 8 * 60 * 60 * 1000;
+const SAML_REQUEST_TTL_MS =
+  +(process.env.SAML_REQUEST_TTL_MS ?? 0) > 0
+    ? +(process.env.SAML_REQUEST_TTL_MS as string)
+    : DEFAULT_SAML_REQUEST_TTL_MS;
+const samlRequests = new Map<string, CacheItem>();
+// Closes over the Map rather than using this, since @authenticate deep-clones options
+const samlRequestCache: CacheProvider = {
+  saveAsync: (key, value) => {
+    const now = Date.now();
+    for (const [id, item] of samlRequests) {
+      if (item.createdAt + SAML_REQUEST_TTL_MS > now) {
+        break;
+      }
+      samlRequests.delete(id);
+    }
+    const item = {value, createdAt: now};
+    samlRequests.set(key, item);
+    return Promise.resolve(item);
+  },
+  getAsync: key => {
+    const item = samlRequests.get(key);
+    if (item && item.createdAt + SAML_REQUEST_TTL_MS <= Date.now()) {
+      samlRequests.delete(key);
+      return Promise.resolve(null);
+    }
+    return Promise.resolve(item?.value ?? null);
+  },
+  removeAsync: key =>
+    Promise.resolve(key !== null && samlRequests.delete(key) ? key : null),
+};
 
 export class SamlLoginController {
   constructor(
@@ -43,14 +82,17 @@ export class SamlLoginController {
   @authenticate(STRATEGY.SAML, {
     accessType: 'offline',
     scope: ['profile', 'email'],
-    callbackURL: process.env.SAML_CALLBACK_URL,
+    callbackUrl: process.env.SAML_CALLBACK_URL,
     issuer: process.env.SAML_ISSUER,
-    cert: process.env.SAML_CERT,
+    idpCert: process.env.SAML_CERT,
     entryPoint: process.env.SAML_ENTRY_POINT,
     audience: process.env.SAML_AUDIENCE,
     logoutUrl: process.env.SAML_LOGOUT_URL,
     passReqToCallback: !!+(process.env.SAML_AUTH_PASS_REQ_CALLBACK ?? 0),
-    validateInResponseTo: !!+(process.env.VALIDATE_RESPONSE ?? 1),
+    validateInResponseTo: !!+(process.env.VALIDATE_RESPONSE ?? 0)
+      ? ValidateInResponseTo.always
+      : ValidateInResponseTo.never,
+    cacheProvider: samlRequestCache,
     idpIssuer: process.env.IDP_ISSUER,
     logoutCallbackUrl: process.env.SAML_LOGOUT_CALLBACK_URL,
   })
@@ -85,13 +127,16 @@ export class SamlLoginController {
     accessType: 'offline',
     scope: ['profile', 'email'],
     issuer: process.env.SAML_ISSUER,
-    callbackURL: process.env.SAML_CALLBACK_URL,
-    cert: process.env.SAML_CERT,
+    callbackUrl: process.env.SAML_CALLBACK_URL,
+    idpCert: process.env.SAML_CERT,
     entryPoint: process.env.SAML_ENTRY_POINT,
     audience: process.env.SAML_AUDIENCE,
     logoutUrl: process.env.SAML_LOGOUT_URL,
     passReqToCallback: !!+(process.env.SAML_AUTH_PASS_REQ_CALLBACK ?? 0),
-    validateInResponseTo: !!+(process.env.VALIDATE_RESPONSE ?? 1),
+    validateInResponseTo: !!+(process.env.VALIDATE_RESPONSE ?? 0)
+      ? ValidateInResponseTo.always
+      : ValidateInResponseTo.never,
+    cacheProvider: samlRequestCache,
     idpIssuer: process.env.IDP_ISSUER,
     logoutCallbackUrl: process.env.SAML_LOGOUT_CALLBACK_URL,
   })
