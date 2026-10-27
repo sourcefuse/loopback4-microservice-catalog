@@ -20,6 +20,10 @@ import {TestHelperKey} from '../fixtures/keys';
 import {TestHelperService} from '../fixtures/services';
 import {setupApplication} from './test-helper';
 
+// Set TEST_USER_PASSWORD in the environment; the placeholder is intentionally not a real password.
+const TEST_USER_PASSWORD =
+  process.env.TEST_USER_PASSWORD ?? '<Enter test password>';
+
 describe('Authentication microservice', () => {
   let app: TestingApplication;
   let client: Client;
@@ -521,7 +525,7 @@ describe('Authentication microservice', () => {
       client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       token,
-      password: 'test123#@',
+      password: TEST_USER_PASSWORD,
     };
     await client.patch(`/auth/reset-password`).send(request).expect(204);
   });
@@ -532,7 +536,7 @@ describe('Authentication microservice', () => {
       client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
-      password: 'test123#@',
+      password: TEST_USER_PASSWORD,
     };
     process.env.JWT_ISSUER = 'test';
     process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
@@ -563,7 +567,7 @@ describe('Authentication microservice', () => {
       client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
-      password: 'test123#@',
+      password: TEST_USER_PASSWORD,
     };
     process.env.JWT_ISSUER = 'test';
     process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
@@ -600,7 +604,7 @@ describe('Authentication microservice', () => {
       client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
-      password: 'test123#@',
+      password: TEST_USER_PASSWORD,
     };
     process.env.JWT_ISSUER = 'test';
     process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';

@@ -21,7 +21,7 @@ insert into tenants
 values
   ('Tenant 2', 1, 't2');
 
-/* Password - test123!@# */
+/* Password - <Enter password here> */
 insert into users
     (first_name, last_name, username, email, default_tenant_id)
 select 'John', 'Doe', 'john.doe@example.com', 'john.doe@example.com', id
@@ -43,7 +43,7 @@ from users
 where username = 'john.doe@example.com';
 update users set auth_client_ids = ARRAY[(select id from auth_clients where client_id = 'temp_client')::integer];
 
-/* Password - test123!@# */
+/* Password - <Enter password here> */
 insert into users
     (first_name, last_name, username, email, default_tenant_id)
 select 'Sarah', 'Rafferty', 'sarah.rafferty@example.com', 'sarah.rafferty@example.com', id

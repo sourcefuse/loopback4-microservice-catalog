@@ -19,7 +19,7 @@ The migrations comes with seed data having a dummy client entry and two users.
   "client_id": "temp_client",
   "client_secret": "temp_secret",
   "username": "john.doe@example.com",
-  "password": "test123!@#"
+  "password": "<Enter password here>"
 }
 ```
 
