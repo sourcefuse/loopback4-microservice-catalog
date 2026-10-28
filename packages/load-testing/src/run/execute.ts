@@ -107,9 +107,9 @@ export async function execute(
   const clientOptions = {signal: () => beforeSignal};
   const ctx: RunContext = {
     token,
-    claims: token === undefined ? {} : claimsOf(token),
+    claims: claimsOfToken(token),
     api: new ApiClient(apiUrlOf(scenario, target, url), clientOptions),
-    apis: namedApis(target.apiUrls ?? {}, clientOptions),
+    apis: namedApis(target.apiUrls, clientOptions),
     sql: database.sql,
     defer: cleanup.defer,
   };
@@ -160,6 +160,11 @@ export async function execute(
     throw failure;
   }
   return {...run, problems};
+}
+
+/** The claims of the token. Empty when there is no token. */
+function claimsOfToken(token: string | undefined): Record<string, unknown> {
+  return token === undefined ? {} : claimsOf(token);
 }
 
 /**

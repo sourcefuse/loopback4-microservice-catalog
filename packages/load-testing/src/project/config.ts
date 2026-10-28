@@ -271,37 +271,58 @@ function browserEngineProblems(browsers: unknown): string[] {
     const {name, engine, engineOptions, vitals, check} = Object(
       browser,
     ) as Record<string, unknown>;
-    const problems: string[] = [];
-    if (typeof name !== 'string' || name === '') {
-      problems.push(`${where}.name must be a text that is not empty`);
-    } else if (
-      browsers.findIndex(other => Object(other).name === name) !== index
-    ) {
-      problems.push(`${where}.name "${name}" is used twice`);
-    }
-    if (typeof engine !== 'string' || engine === '') {
-      problems.push(`${where}.engine must be a text that is not empty`);
-    }
-    if (engineOptions !== undefined && !isPlainObject(engineOptions)) {
-      problems.push(`${where}.engineOptions must be an object`);
-    } else if (engineOptions?.aggregateByName !== undefined) {
-      problems.push(
-        `${where}.engineOptions.aggregateByName is not allowed: the library sets it`,
-      );
-    }
-    if (
-      !Array.isArray(vitals) ||
-      vitals.some(vital => !Object.hasOwn(VITAL_DEFAULTS, String(vital)))
-    ) {
-      problems.push(
-        `${where}.vitals must be a list of Web Vitals: ${Object.keys(VITAL_DEFAULTS).join(', ')}`,
-      );
-    }
-    if (check !== undefined && typeof check !== 'function') {
-      problems.push(`${where}.check must be a function`);
-    }
-    return problems;
+    return [
+      ...browserNameProblems(browsers, name, index, where),
+      ...(typeof engine === 'string' && engine !== ''
+        ? []
+        : [`${where}.engine must be a text that is not empty`]),
+      ...browserOptionsProblems(engineOptions, where),
+      ...browserVitalsProblems(vitals, where),
+      ...(check === undefined || typeof check === 'function'
+        ? []
+        : [`${where}.check must be a function`]),
+    ];
   });
+}
+
+/** Returns what is wrong with the name of a browser: it must be text, and unique. */
+function browserNameProblems(
+  browsers: unknown[],
+  name: unknown,
+  index: number,
+  where: string,
+): string[] {
+  if (typeof name !== 'string' || name === '') {
+    return [`${where}.name must be a text that is not empty`];
+  }
+  const isFirstWithName =
+    browsers.findIndex(other => Object(other).name === name) === index;
+  return isFirstWithName ? [] : [`${where}.name "${name}" is used twice`];
+}
+
+/** Returns what is wrong with `engineOptions` of a browser. */
+function browserOptionsProblems(options: unknown, where: string): string[] {
+  if (options === undefined) return [];
+  if (!isPlainObject(options)) {
+    return [`${where}.engineOptions must be an object`];
+  }
+  return options.aggregateByName === undefined
+    ? []
+    : [
+        `${where}.engineOptions.aggregateByName is not allowed: the library sets it`,
+      ];
+}
+
+/** Returns what is wrong with `vitals` of a browser: a list of Web Vital names. */
+function browserVitalsProblems(vitals: unknown, where: string): string[] {
+  const known =
+    Array.isArray(vitals) &&
+    vitals.every(vital => Object.hasOwn(VITAL_DEFAULTS, String(vital)));
+  return known
+    ? []
+    : [
+        `${where}.vitals must be a list of Web Vitals: ${Object.keys(VITAL_DEFAULTS).join(', ')}`,
+      ];
 }
 
 /** Returns what is wrong with `apis`: names that map to variable names. */
@@ -313,7 +334,7 @@ function apisProblems(apis: unknown): string[] {
     ];
   }
   return Object.entries(apis).flatMap(([name, variable]) =>
-    typeof variable === 'string' && /^[A-Za-z_][A-Za-z0-9_]*$/.test(variable)
+    typeof variable === 'string' && /^[A-Za-z_]\w*$/.test(variable)
       ? []
       : [
           `apis.${name} must be the name of a variable, for example LOAD_TESTS_AUTH_SERVICE_URL`,

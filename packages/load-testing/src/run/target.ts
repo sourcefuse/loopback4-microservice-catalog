@@ -41,11 +41,7 @@ export function readTarget(
   needs: TargetNeeds,
   apis: Record<string, string> = {},
 ): Target {
-  if (env.LOAD_TESTS_AUTH_URL && !env.LOAD_TESTS_AUTH_SERVICE_URL) {
-    throw new ConfigError(
-      'LOAD_TESTS_AUTH_URL is now LOAD_TESTS_AUTH_SERVICE_URL. Rename the variable.',
-    );
-  }
+  checkOldAuthUrl(env);
   const hasLogin = !!env.LOAD_TESTS_USERNAME;
   const needsApi = needs.api || hasLogin;
   const missing = [
@@ -83,6 +79,15 @@ export function readTarget(
       },
     }),
   };
+}
+
+/** Stops a run that sets only the old name of `LOAD_TESTS_AUTH_SERVICE_URL`. */
+function checkOldAuthUrl(env: NodeJS.ProcessEnv): void {
+  if (env.LOAD_TESTS_AUTH_URL && !env.LOAD_TESTS_AUTH_SERVICE_URL) {
+    throw new ConfigError(
+      'LOAD_TESTS_AUTH_URL is now LOAD_TESTS_AUTH_SERVICE_URL. Rename the variable.',
+    );
+  }
 }
 
 /**
