@@ -13,6 +13,7 @@ import type {
   Scenario,
 } from '../../../../types';
 import {ScenarioError} from '../../../../errors';
+import type {BrowserEngine} from '../../../../engine/artillery/browsers';
 import {load} from '../../../../scenario/builder';
 import {
   captureFrom,
@@ -1145,6 +1146,77 @@ describe('writeScenario of a browser scenario', () => {
         },
       ],
     });
+  });
+
+  it('names the Artillery engine of the browser, and gives it its options over those of the artillery config', () => {
+    const firefox: BrowserEngine = {
+      name: 'firefox',
+      engine: 'playwright-firefox',
+      engineOptions: {launchOptions: {headless: false}},
+      vitals: ['FCP'],
+    };
+    const defaults = {
+      engines: {'playwright-firefox': {launchOptions: {slowMo: 5}, x: 1}},
+    };
+
+    const scriptPath = writeScenario(
+      pkgDir,
+      scenario,
+      defaults,
+      PHASES,
+      {},
+      firefox,
+    );
+
+    const script = JSON.parse(fs.readFileSync(scriptPath, 'utf8'));
+    expect(script.config.engines).to.deepEqual({
+      'playwright-firefox': {
+        launchOptions: {headless: false},
+        x: 1,
+        aggregateByName: true,
+      },
+    });
+    expect(script.scenarios[0].engine).to.equal('playwright-firefox');
+  });
+
+  it('finds the flow by the label that it registered with, when the label of the run ends with the browser', async () => {
+    const builder = JSON.stringify(
+      path.join(__dirname, '../../../../scenario/builder'),
+    );
+    const firefoxFile = path.join(pkgDir, 'dist/__tests__/load/f.load.js');
+    fs.mkdirSync(path.dirname(firefoxFile), {recursive: true});
+    fs.writeFileSync(
+      firefoxFile,
+      `const {load} = require(${builder});
+load.describe('dashboard', () => {
+  load.browser('open', async () => {});
+});`,
+    );
+    const forFirefox: Scenario = {
+      name: 'open › firefox',
+      group: ['dashboard'],
+      browser: {
+        flow: async () => undefined,
+        file: firefoxFile,
+        registeredLabel: 'dashboard › open',
+      },
+    };
+    writeScenario(pkgDir, forFirefox, undefined, PHASES, {});
+    const {loadTestsBrowser} = require(
+      path.join(outDir, 'dashboard-open-firefox.processor.cjs'),
+    ) as {
+      loadTestsBrowser: Exclude<PlaywrightEngineScenarioTestFunction, string>;
+    };
+    const emitted: unknown[][] = [];
+    const events = {emit: (...metric: unknown[]) => emitted.push(metric)};
+
+    await loadTestsBrowser({} as BrowserPage, {vars: {}}, events, {
+      step: async () => undefined,
+    });
+
+    expect(emitted.map(([, name]) => name)).to.eql([
+      'browser.flow.dashboard › open › firefox',
+    ]);
   });
 
   it('gives Artillery a function that runs the flow of the file for each user, and records its total time', async () => {

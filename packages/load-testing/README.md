@@ -356,7 +356,7 @@ Step 8.6 runs also when `before` or the load failed, and after a signal.
 
 Before it starts, each `load-testing run` deletes the report files of the last run. So `load-testing report` judges only the last run.
 
-A browser scenario has `before` and `after`, but no token check or worker hooks. Its script runs the Playwright engine of Artillery. Before each browser scenario, the CLI starts and closes Chromium, to check that it works. The check uses the `launchOptions` of `engines.playwright` in `artillery.config`, as Artillery does.
+A browser scenario has `before` and `after`, but no token check or worker hooks. Its script runs the Playwright engine of Artillery. Before each browser scenario, the CLI runs the `check` of its browser. For Chromium, it starts and closes the browser, to check that it works. The check uses the `launchOptions` of `engines.playwright` in `artillery.config`, as Artillery does, or the ones that we give to `chromium()`. See [Browsers](#browsers).
 
 ### Limits, baseline and report
 
@@ -504,7 +504,7 @@ load.describe(
 ```
 
 - The scenarios run one after another. Files run in file-name order, and a file runs in the order of its `load.it` calls. They share the app, its pools and the baseline, so they do not run in parallel. Each scenario has its own load, hooks and data.
-- The name of a scenario in the report and in `baseline.json` is `group › name`, for example `OrderController › browse products`. The CLI names the generated files after it, in lower case with `-` between the words. Two scenarios cannot make the same file name, and a name needs a letter or a digit.
+- The name of a scenario in the report and in `baseline.json` is `group › name`, for example `OrderController › browse products`. The CLI names the generated files after it, in lower case with `-` between the words. Two scenarios cannot make the same file name, and a name needs a letter or a digit. A browser scenario runs once for each browser, so its label ends with the browser, for example `orders › save an order › chromium`. See [Browsers](#browsers).
 - The file name `baseline` is reserved for the baseline file. The CLI refuses a scenario whose file name would be `baseline`, for example `baseline` or `Baseline!`, when it loads the scenarios. The message reads `The scenario name "<name>" gives the file name "baseline", which the baseline file uses. Rename the scenario.` The name `baseline orders` is fine.
 - The endpoint id is `METHOD /path`, with the path as we wrote it, for example `GET /orders/{id}`.
 
@@ -818,11 +818,40 @@ load.it(
 | --- | --- |
 | `ctx.token` | The access token of the login user. Undefined without a login. |
 | `ctx.claims` | The claims of that token. `{}` without a login, or for a token that is not a JWT. |
-| `ctx.api` | The HTTP client of the app. It sends no token by itself. |
+| `ctx.api` | The HTTP client of the app under test (`LOAD_TESTS_BASE_URL`). It sends no token by itself. |
+| `ctx.apis.<name>` | The HTTP client of another backend that `apis` in `config.ts` names. It works like `ctx.api`. See [Other backends](#other-backends). |
 | `ctx.sql(db, text, params?)` | One SQL statement on a datasource of `config.ts`. |
 | `ctx.defer(cleanup)` | Registers a cleanup for something that the hook made. |
 
 `ctx.api` adds the base URL to each path. It sends no `Authorization` header and no other default header. For a call that needs the token, we make a client that has it with `ctx.api.with`.
+
+#### Other backends
+
+A hook sometimes needs a backend that is not the app under test, for example the auth service. We name each one in `apis` of `config.ts`. The value is the name of the environment variable that holds its URL.
+
+```ts
+// config.ts
+const config: LoadTestConfig = {
+  phases: [{duration: 10, arrivalRate: 1}],
+  apis: {
+    auth: 'LOAD_TESTS_AUTH_SERVICE_URL',
+    core: 'CORE_SERVICE_URL',
+  },
+};
+
+// a scenario file
+before: async (ctx, vars) => {
+  const {code} = await ctx.apis.auth.post<{code: string}>('/auth/login', {...});
+  const customer = await ctx.api.post('/customers', {...});
+  vars.code = code;
+},
+```
+
+- `ctx.apis.<name>` is a client like `ctx.api`. It has the same methods, `.with`, errors, redirects and the timeout of 60 s. It sends no token. It adds its own base URL to each path.
+- TypeScript does not know the names, because a scenario file does not import `config.ts`. A name that `apis` does not have throws a `ConfigError` when the hook reads it, for example `No API 'auht' in config.ts apis. Known: auth, core`.
+- A run that needs the API stops before the first scenario when a variable of `apis` is not set, or is not an http or https URL. The message names the variable.
+- These clients work in `before`, `after` and the cleanups. A worker hook, and the load itself, still go only to `LOAD_TESTS_BASE_URL`.
+- A browser scenario with `before` or `after` still needs `LOAD_TESTS_BASE_URL`, also when its hooks use only `ctx.apis`.
 
 A path must start with `/`. Otherwise the call throws a `RunError` that reads `<METHOD> <path>: the path must start with "/"`, and it sends nothing. A path such as `@host/x` would change the host and send the token there. A path such as `//host/x` starts with `/`, so it goes to the base host as a path.
 
@@ -1149,9 +1178,9 @@ The login follows the two-step login of the ARC authentication service (`@source
 2. `POST /auth/token` with the `code` and the `clientId`. The answer holds an `accessToken` and a `refreshToken`. Both must be non-empty texts. If not, the CLI throws a `LoginError`: `<call> gave no accessToken` or `<call> gave no refreshToken`.
 3. Before each scenario, the CLI gets a new token with `POST /auth/token-refresh`. It sends the `refreshToken`, and the old access token as a bearer token. It skips the refresh when the access token is less than a minute old. The auth service revokes the access token that a refresh replaces. The signed payload has no random part (`jti`), so two refreshes in the same second give the same token string. The second refresh then revokes the token that it just gave. We refresh at most once a minute to avoid this. The age comes from the `iat` claim. A token that has no `iat`, such as an opaque token, counts from the time that the CLI got it.
 
-All three calls go to `LOAD_TESTS_AUTH_URL`, or to the base URL when that variable is not set. A call that answers with a status other than 2xx throws a `LoginError` with the status and the first 200 characters of the body.
+All three calls go to `LOAD_TESTS_AUTH_SERVICE_URL`, or to the base URL when that variable is not set. A call that answers with a status other than 2xx throws a `LoginError` with the status and the first 200 characters of the body.
 
-The login and the refresh do not follow redirects. A 307 or a 308 would send the password and the client secret again to the new host. A status from 300 to 399 stops with a `LoginError`. It names the status and the origin of the `location` header, when the header parses. It never shows the whole location. The message reads `POST <url> gave <status>, a redirect to <origin>. The login does not follow redirects, so the password goes only to the URL that we set. Set LOAD_TESTS_AUTH_URL to the final URL.` We set `LOAD_TESTS_AUTH_URL` to the final URL.
+The login and the refresh do not follow redirects. A 307 or a 308 would send the password and the client secret again to the new host. A status from 300 to 399 stops with a `LoginError`. It names the status and the origin of the `location` header, when the header parses. It never shows the whole location. The message reads `POST <url> gave <status>, a redirect to <origin>. The login does not follow redirects, so the password goes only to the URL that we set. Set LOAD_TESTS_AUTH_SERVICE_URL to the final URL.` We set `LOAD_TESTS_AUTH_SERVICE_URL` to the final URL.
 
 We use https for an auth URL that is not on this machine. The package does not enforce it, because it accepts http for any host.
 
@@ -1287,7 +1316,7 @@ my-web-app/
 - `nodenext` follows `"type"` in `package.json`. A package with `"type": "module"` builds ESM. The CLI loads it with `require()`, which works for ESM without a top-level `await`. We checked this config with TypeScript 5.9.3 and 7.0.2, with and without `"type": "module"`. TypeScript 7 removed `"moduleResolution": "node"`, so we do not use it.
 - Git ignores `dist/` and `src/__tests__/load/.out/`.
 - `npm install` downloads Chromium for Artillery. See [Install](#install) for the cases where it does not.
-- `LOAD_TESTS_UI_URL` is the origin of the web app, for example `http://localhost:4200`. A run of only browser scenarios with no `before` and no `after` needs neither `LOAD_TESTS_BASE_URL` nor `src/openapi.json`. A browser scenario with `before` or `after` needs `LOAD_TESTS_BASE_URL`, because `ctx.api` of its hooks calls the API.
+- `LOAD_TESTS_UI_URL` is the origin of the web app, for example `http://localhost:4200`. A run of only browser scenarios with no `before` and no `after` needs neither `LOAD_TESTS_BASE_URL` nor `src/openapi.json`. A browser scenario with `before` or `after` needs `LOAD_TESTS_BASE_URL`, because `ctx.api` of its hooks calls the API. A hook that logs in to another service uses `ctx.apis.<name>`. See [Other backends](#other-backends).
 - We load a production build of the app. A dev server sends code that is not minified, so its numbers do not match production.
 
 #### Write a browser scenario
@@ -1360,7 +1389,7 @@ The p95 of each step and of each Web Vital has a limit. The defaults come from t
 | INP | `browser.page.INP.<label>` | 200 ms, only when a level names `INP` |
 | Flow total | `browser.flow.<label>` | none, unless the scenario sets `flow` |
 
-`<label>` is the name of the scenario with its groups, for example `orders › save an order`. `UI_TARGETS` holds the step targets of the standard: `criticalAction` (1500 ms), `standardPage` (2500 ms), `dataHeavyScreen` (5000 ms), `feedback` (1000 ms) and `routeChange` (1000 ms). `WEB_VITALS_TARGETS` holds the Web Vitals limits of the table.
+`<label>` is the name of the scenario with its groups and its browser, for example `orders › save an order › chromium`. `UI_TARGETS` holds the step targets of the standard: `criticalAction` (1500 ms), `standardPage` (2500 ms), `dataHeavyScreen` (5000 ms), `feedback` (1000 ms) and `routeChange` (1000 ms). `WEB_VITALS_TARGETS` holds the Web Vitals limits of the table.
 
 Limits merge by field, from the library up to one metric, as the thresholds of `load.it` do.
 
@@ -1421,6 +1450,45 @@ Artillery adds the `web-vitals` script to each page that a flow opens. It record
 - The TTFB of a single-page app measures the server of `index.html`, for example a proxy or a CDN.
 - The standard gives no percentile for Web Vitals. We gate the p95 against the "good" limit of Google, which is the same number as the standard. This is stricter than the p75 rule of Google.
 
+#### Browsers
+
+A browser scenario runs once for each browser in `artillery.browsers` of `config.ts`. The default is `[chromium()]`. The label of each run ends with the browser, for example `orders › save an order › chromium`. So each browser has its own files, report rows and baseline history. A browser that is added later does not reset the history of the others.
+
+`chromium()` runs the Playwright engine of Artillery. It takes two options. `launchOptions` are the Playwright `launchOptions`, for example `{channel: 'chrome'}` or `{channel: 'msedge'}` to run Chrome or Edge. `startTimeoutMs` is how long the check lets Chromium take to start. The default is 60 s. The `launchOptions` of `engines.playwright` in `artillery.config` work too. When `chromium({launchOptions})` is set, its `launchOptions` replace the whole object of `artillery.config`. They do not merge.
+
+The Playwright engine of Artillery starts only Chromium (`chromium.launch`, Artillery issue 1885). To run Firefox, WebKit or another browser, we write an Artillery engine for it and list a `BrowserEngine` object. The engine is a package that is named `artillery-engine-<name>`. A copy of the Playwright engine of Artillery, with `chromium` changed to `firefox`, is enough to start. NODE_PATH or `npm install` must let Artillery find it.
+
+```ts
+import {chromium, type BrowserEngine} from '@sourceloop/load-testing';
+
+const firefox: BrowserEngine = {
+  name: 'firefox', // the end of the label: `... › firefox`
+  engine: 'playwright-firefox', // runs as artillery-engine-playwright-firefox
+  vitals: ['FCP'], // list only what the browser reports for each user
+};
+
+const config: LoadTestConfig = {
+  phases: [{duration: 10, arrivalRate: 1}],
+  artillery: {browsers: [chromium(), firefox]},
+};
+```
+
+| Field | Use |
+| --- | --- |
+| `name` | The name of the browser. It ends the label of each run. It must be unique. |
+| `engine` | The name of the Artillery engine that runs it, for example `playwright`. |
+| `engineOptions` | Options for that engine. They go over `engines.<engine>` of `artillery.config`. They cannot hold `aggregateByName`. |
+| `vitals` | The Web Vitals that the browser reports. A Web Vital that is not in the list has no limit and no row. Without this, a missing CLS would fail with `no samples`. |
+| `check` | Optional. It runs before each scenario of the browser, and it throws a `ConfigError` when the browser cannot start. |
+
+The engine must follow the contract of the Playwright engine of Artillery:
+
+- It runs the `testFunction` of the script with `(page, context, events)`.
+- It reads `aggregateByName`, which the library sets to `true`, so that the Web Vital metrics carry the label of the scenario.
+- It emits `browser.page.<vital>.<label>` for each Web Vital in `vitals`.
+
+Firefox and Safari report fewer Web Vitals than Chromium. CLS needs the Layout Instability API, which only Chromium has. In a smoke run with Playwright 1.63.0 and Firefox 155.0, the Playwright engine gave an FCP sample for each user, but no LCP, and a TTFB sample for only one of two users. A Web Vital that is in `vitals` and has fewer samples than users fails the run. So list only the Web Vitals that the browser reports for each user, and check them with a short run first.
+
 #### Page objects of Playwright tests
 
 A project with Playwright tests can call its page objects in a flow. Artillery runs one function for each vuser. It does not run the `test()` blocks or the fixtures of a spec file. So a load file imports the page objects, and not the specs.
@@ -1432,7 +1500,7 @@ A project with Playwright tests can call its page objects in a flow. Artillery r
 
 #### Log in, and variables of a flow
 
-A browser scenario has no login helper, and `token()` does not reach the page. To log in once for the whole run, we use `before` and `after`. They run once, in the CLI. `ctx.api` of these hooks calls `LOAD_TESTS_BASE_URL`, and the load goes to `LOAD_TESTS_UI_URL`. So a scenario with `before` or `after` needs both.
+A browser scenario has no login helper, and `token()` does not reach the page. To log in once for the whole run, we use `before` and `after`. They run once, in the CLI. `ctx.api` of these hooks calls `LOAD_TESTS_BASE_URL`, and the load goes to `LOAD_TESTS_UI_URL`. So a scenario with `before` or `after` needs both. A login on a service of its own goes through `ctx.apis.<name>`. See [Other backends](#other-backends).
 
 The flow gets `vars`: a fresh copy for each vuser of what `before` set. Only JSON values pass, as for the vars of `load.it`. `before` logs in and puts the token in `vars`. The flow puts it in the page with `page.addInitScript`. `after` logs out. All vusers share this token, so it must stay valid for the whole run.
 
@@ -1783,7 +1851,7 @@ The columns and lines:
 A browser scenario prints a short block, with the vusers, the flow total and how many metrics pass. A table follows only when a metric fails, and it holds only the failed rows. This run of the scenario in [Write a browser scenario](#write-a-browser-scenario) passed.
 
 ```text
-orders › save an order
+orders › save an order › chromium
 Workload: 2 vusers/s for 10 s
 Vusers:   20 started, 20 completed, 0 failed (limit 1%)
 Flow:     p95 596 ms (no limit)
@@ -1793,7 +1861,7 @@ Metrics:  7 of 7 pass. Run load-testing report to see each one.
 In the next run, the API behind the Save button took 1.2 s to answer. The `save` step went over its limit of 1 s, and the run failed with exit code 1.
 
 ```text
-orders › save an order
+orders › save an order › chromium
 Workload: 2 vusers/s for 10 s
 Vusers:   20 started, 20 completed, 0 failed (limit 1%)
 Flow:     p95 1465.9 ms (no limit)
@@ -1805,7 +1873,7 @@ step.save  20       1274.3 ms (1000 ms)  -     FAIL: p95 1274.3 ms > limit 1000 
 
 - `Flow` is the p95 of the flow total. It shows its limit when the scenario sets `flow`.
 - `Metrics` counts the steps and the Web Vitals that have a limit. It counts the flow total too, when `flow` sets a limit.
-- A metric name leaves out `browser.` and the label of the scenario. So `step.save` is `browser.step.save`, and `page.LCP` is `browser.page.LCP.orders › save an order`.
+- A metric name leaves out `browser.` and the label of the scenario. So `step.save` is `browser.step.save`, and `page.LCP` is `browser.page.LCP.orders › save an order › chromium`.
 - A failed step does not show its error here. Artillery prints it during the load, and the line `Vusers` counts the vusers that failed.
 
 #### The detail of a run
@@ -2066,6 +2134,8 @@ The type checks the keys when we build. When the CLI starts, it also checks the 
 | `tokenCheck` | `TokenCheck` | the default token check | Replaces the default check of the token life. See [Log in](#log-in). |
 | `reporters` | `Reporter[]` | `[consoleReporter()]` | Who gets the result. An empty list prints no result. See [Report](#report). |
 | `engine` | `Engine` | `artillery()` | Who runs the load. See [Engines](#engines). |
+| `apis` | `Record<string, string>` | none | Other backends for `ctx.apis.<name>`. Each value is the name of the variable that holds the URL. See [Other backends](#other-backends). |
+| `artillery.browsers` | `BrowserEngine[]` | `[chromium()]` | The browsers that each browser scenario runs in. See [Browsers](#browsers). |
 | `artillery.config` | `ArtilleryConfig` | none | Artillery `config` options for every scenario. See [Use any Artillery feature](#use-any-artillery-feature). |
 | `artillery.env` | `string[]` | none | The exact names of more variables to pass to Artillery, only when the CLI has them. For example `['MY_REGION']`. See [The environment of Artillery](#the-environment-of-artillery). |
 
@@ -2144,7 +2214,8 @@ Layers merge by field. The strongest layer wins, and a field that no layer sets 
 | Baseline history | the last 10 runs of each endpoint or metric |
 | Token refresh | at most once a minute |
 | Token check margin | the load time plus 120 s must stay below the token life |
-| `ctx.api` and login timeout | 60 s |
+| `ctx.api`, `ctx.apis` and login timeout | 60 s |
+| Browser start timeout of the check | 60 s, `chromium({startTimeoutMs})` |
 | Postgres connection timeout | 10,000 ms |
 | Postgres statement wait of the client | 60 s |
 | End element that never shows | the vuser fails after 30 s |
@@ -2179,7 +2250,8 @@ The CLI prints only the message of an error that it throws on purpose. For any o
 | --- | --- |
 | `LOAD_TESTS_BASE_URL` | The API under test. Required when a `load.it` scenario runs, when a browser scenario has `before` or `after`, and when `LOAD_TESTS_USERNAME` is set. |
 | `LOAD_TESTS_UI_URL` | The web app under test, for example `http://localhost:4200`. Required when a browser scenario runs. |
-| `LOAD_TESTS_AUTH_URL` | The app that serves `/auth/login` and `/auth/token`. Default is the base URL. |
+| `LOAD_TESTS_AUTH_SERVICE_URL` | The app that serves `/auth/login` and `/auth/token`. Default is the base URL. |
+| The variables that `apis` names | The URL of each other backend, for `ctx.apis.<name>`. Required when the run needs the API. |
 | `LOAD_TESTS_USERNAME` | Set it to log in. Then the three variables below are required too. |
 | `LOAD_TESTS_PASSWORD` | The password of the test user. |
 | `LOAD_TESTS_CLIENT_ID` | The client id for the login. |
@@ -2191,7 +2263,8 @@ The CLI prints only the message of an error that it throws on purpose. For any o
 | `XDG_CACHE_HOME` | The cache folder of the user. On Linux, Playwright looks for its browsers there. The Chromium check and Artillery both read it. |
 
 - An empty variable counts as not set, because a CI job can leave one empty.
-- `LOAD_TESTS_BASE_URL`, `LOAD_TESTS_UI_URL` and `LOAD_TESTS_AUTH_URL` must be http or https URLs, with no user and no password. A bad value stops the run with a `ConfigError` that names the variable. It does not show the value, because a URL can hold a password. The CLI removes a slash at the end of the URL.
+- `LOAD_TESTS_AUTH_URL` is the old name of `LOAD_TESTS_AUTH_SERVICE_URL`. A run that finds only the old one stops with a `ConfigError`, also a run of only browser scenarios.
+- `LOAD_TESTS_BASE_URL`, `LOAD_TESTS_UI_URL`, `LOAD_TESTS_AUTH_SERVICE_URL` and the variables of `apis` must be http or https URLs, with no user and no password. A bad value stops the run with a `ConfigError` that names the variable. It does not show the value, because a URL can hold a password. The CLI removes a slash at the end of the URL.
 - The package reads no database variable. Our `config.ts` reads its own.
 - Artillery and its plugins get only a short list of the variables of the CLI. Our secrets stay out of it. See [The environment of Artillery](#the-environment-of-artillery).
 
@@ -2231,16 +2304,16 @@ Every error that the package throws on purpose extends `LoadTestError`. The CLI 
 
 | Class | When |
 | --- | --- |
-| `ConfigError` | `config.ts` (also `artillery.env`), the folder layout, the environment, a datasource, or `token()` with no login. |
+| `ConfigError` | `config.ts` (also `artillery.env`, `artillery.browsers` and `apis`), the folder layout, the environment, a datasource, `token()` with no login, or a name that `ctx.apis` does not have. |
 | `ScenarioError` | A scenario file, a request, a worker hook, a scenario name, a `{{` string or a capture. |
-| `HttpError` | A response of `ctx.api` with a status that is not 2xx. |
+| `HttpError` | A response of `ctx.api` or `ctx.apis.<name>` with a status that is not 2xx. |
 | `LoginError` | The login or the refresh of the token failed, also on a redirect. |
-| `RunError` | A fault of the engine, a report, the baseline file or a token check. Also a `ctx.api` path with no leading `/`. Also refused text in the `vars` of `before` or in the token. Also a 2xx body that is not JSON. |
+| `RunError` | A fault of the engine, a report, the baseline file or a token check. Also a `ctx.api` or `ctx.apis.<name>` path with no leading `/`. Also refused text in the `vars` of `before` or in the token. Also a 2xx body that is not JSON. |
 
 - `ConfigError` and `ScenarioError` have `problems`, one line for each problem. The message is the header, then one indented line for each problem.
 - `HttpError` has `method`, `path` (with the query), `status`, `statusText`, `headers`, `body` (the text) and `data`. `data` is the parsed body when the response says it is JSON, else `undefined`. Its message holds the first 200 characters of the body.
 - All classes accept `{cause}`.
-- A network failure of `ctx.api` is a `RunError` that keeps the cause. The message reads `<METHOD> <path> failed: <cause>`, for example with the cause `connect ECONNREFUSED 127.0.0.1:4010`. The cause is never empty. A timeout reads `<METHOD> <path> timed out after <N> s`. A stalled body gives the same text.
+- A network failure of `ctx.api` or `ctx.apis.<name>` is a `RunError` that keeps the cause. The message reads `<METHOD> <path> failed: <cause>`, for example with the cause `connect ECONNREFUSED 127.0.0.1:4010`. The cause is never empty. A timeout reads `<METHOD> <path> timed out after <N> s`. A stalled body gives the same text.
 - A missing or unreadable Artillery report is a `RunError` with `Artillery wrote no valid report: <reportPath>`. It keeps the cause. A report file that is not a JSON object gives the same message.
 - A report that parses but has no `aggregate` gives the `RunError` `<reportPath> has no aggregate: Artillery wrote no result`.
 - A report with `aggregate` but no `counters` or `summaries` counts as no requests.
@@ -2306,7 +2379,7 @@ The Artillery engine owns the target, the token, the metrics and the phases. The
 
 | Option | Where | Use |
 | --- | --- | --- |
-| `artillery.config` | `config.ts` | Part of the Artillery `config` (`http`, `plugins` and so on), merged into every scenario. It cannot hold `phases`, `processor`, `target`, `engines.playwright.aggregateByName` or the `metrics-by-endpoint` plugin, because the package owns them. We use `phases` and `artillery.processor` instead. The `launchOptions` of `engines.playwright` are allowed. The Chromium check uses them too. |
+| `artillery.config` | `config.ts` | Part of the Artillery `config` (`http`, `plugins` and so on), merged into every scenario. It cannot hold `phases`, `processor`, `target`, `engines.<engine>.aggregateByName` or the `metrics-by-endpoint` plugin, because the package owns them. We use `phases` and `artillery.processor` instead. The `launchOptions` of `engines.playwright` are allowed. The Chromium check uses them too. |
 | `artillery.config` | `load.it` options | The same, merged over the one of `config.ts`. Plain objects merge. An array replaces the one before it. A browser scenario takes `artillery.config` only from `config.ts`. |
 | `artillery.raw` | scenario options | `weight`, `onError`, `beforeScenario` and `afterScenario`. The package keeps its own `beforeScenario` and `afterScenario`, and adds the ones of `artillery.raw` after them. |
 | `artillery.raw` | request options | Request fields that the package does not own, such as `expect`, `ifTrue`, `capture` by header and `form`. The package keeps its own `capture`, `beforeRequest` and `afterResponse`, and adds the ones of `artillery.raw` after them. `url`, `name`, `headers`, `json` and `qs` are not allowed: the request options set them, and `name` is the key of the metrics of the endpoint. |
@@ -2400,7 +2473,11 @@ The package exports these types. We import them with `import type`, and the valu
 | `{{ $env.MY_REGION }}` is empty in a script | Artillery gets only an allowed list of variables. Add the exact name to `artillery.env` in `config.ts`. See [The environment of Artillery](#the-environment-of-artillery). |
 | `artillery.env must be an array of variable names, for example ["MY_REGION"]` | `artillery.env` is not an array. Write a list of names. |
 | `artillery.env[<i>] must be a text that is not empty`, `artillery.env[<i>] must not have "="`, or `artillery.env[<i>] "<name>" is not allowed: these variables are for the CLI only` | An entry of `artillery.env` is not a name, has `=`, or starts with `LOAD_TESTS_`. Use the exact name of a variable that is not for the CLI. |
-| `POST <url> gave <status>, a redirect to <origin>. The login does not follow redirects, ...` | The auth URL redirects. Set `LOAD_TESTS_AUTH_URL` to the final URL. |
+| `POST <url> gave <status>, a redirect to <origin>. The login does not follow redirects, ...` | The auth URL redirects. Set `LOAD_TESTS_AUTH_SERVICE_URL` to the final URL. |
+| `No API '<name>' in config.ts apis. Known: ...` | A hook reads `ctx.apis.<name>` with a name that `apis` in `config.ts` does not have. Fix the name, or add it to `apis`. |
+| `apis.<name> must be the name of a variable, for example LOAD_TESTS_AUTH_SERVICE_URL`, or `apis must be an object ...` | `apis` is not an object of names and variable names. Write `{auth: 'LOAD_TESTS_AUTH_SERVICE_URL'}`. |
+| `artillery.browsers[<i>] ...` | An entry of `artillery.browsers` is wrong: no name, an engine that is not a text, `vitals` that are not Web Vitals, a name that is used twice, or `aggregateByName` in `engineOptions`. See [Browsers](#browsers). |
+| `artillery.browsers has no browser "<name>"` | A scenario names a browser that the list does not have. Use the same list for the whole run. |
 | `<METHOD> <path>: the path must start with "/"` | A `ctx.api` call has a path with no leading `/`. The call sends nothing. Start the path with `/`. |
 | `beforeEach returned a promise: worker hooks must be synchronous` | A worker hook is `async`, or returns a promise. Make it synchronous. Do async work in `before`. |
 | `... can use only its arguments and the globals of a worker, such as URL and Buffer: x is not defined` | A worker hook uses an import or a variable of its module. Pass the value through `vars`, or use only globals. |

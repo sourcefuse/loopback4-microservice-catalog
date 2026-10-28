@@ -163,6 +163,50 @@ describe('execute', () => {
     expect(seen).to.deepEqual([undefined, `Bearer ${accessToken}`]);
   });
 
+  it('gives before ctx.apis for each name of the target, apart from ctx.api', async () => {
+    const seen: string[] = [];
+    const serverFor = async (name: string) => {
+      const server = http.createServer((req, res) => {
+        seen.push(`${name} ${req.url}`);
+        res.end();
+      });
+      await new Promise<void>(resolve =>
+        server.listen(0, '127.0.0.1', resolve),
+      );
+      return {
+        server,
+        url: `http://127.0.0.1:${(server.address() as AddressInfo).port}`,
+      };
+    };
+    const base = await serverFor('base');
+    const auth = await serverFor('auth');
+    const scenario = scenarioOf('apis', [load.get('/a')], {
+      before: async ctx => {
+        await ctx.api.get('/one');
+        await ctx.apis.auth.get('/two');
+        throw new Error('stop here');
+      },
+    });
+
+    try {
+      await expect(
+        execute(loadedOf(scenario), {
+          ...options(),
+          target: readTarget(
+            {LOAD_TESTS_BASE_URL: base.url, AUTH: auth.url},
+            apiOnly,
+            {auth: 'AUTH'},
+          ),
+        }),
+      ).to.be.rejectedWith('stop here');
+    } finally {
+      base.server.close();
+      auth.server.close();
+    }
+
+    expect(seen).to.deepEqual(['base /one', 'auth /two']);
+  });
+
   it('gives ctx.token and ctx.claims for a token, and undefined and {} without one', async () => {
     const seen: Pick<RunContext, 'token' | 'claims'>[] = [];
     const scenario = scenarioOf('ctx token', [load.get('/a')], {

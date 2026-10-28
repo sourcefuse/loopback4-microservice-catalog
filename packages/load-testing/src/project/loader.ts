@@ -16,15 +16,18 @@ import {
   resolveThresholds,
   thresholdProblems,
 } from './config';
-import {labelOf, slugOf} from '../scenario/label';
+import {labelOf, SEPARATOR, slugOf} from '../scenario/label';
+import {browsersOf} from '../engine/artillery/browsers';
 import type {
+  BrowserScenario,
   HttpScenario,
   LoadTestConfig,
   Scenario,
   Thresholds,
+  WebVital,
 } from '../types';
 import {ScenarioError} from '../errors';
-import type {LoadedScenario} from './types';
+import type {BrowserLimits, LoadedScenario} from './types';
 
 const SCENARIO_SUFFIX = '.load.ts';
 
@@ -42,9 +45,19 @@ export function loadScenarios(
   config: LoadTestConfig,
 ): LoadedScenario[] {
   const labels = new Map<string, string>();
+  const browsers = browsersOf(config);
   return findScenarioFiles(path.join(pkgDir, SCENARIOS_DIR))
     .flatMap(source => registeredBy(builtFile(pkgDir, source)))
-    .map(scenario => {
+    .flatMap<{scenario: Scenario; vitals?: readonly WebVital[]}>(scenario => {
+      checkScenario(scenario);
+      return scenario.browser
+        ? browsers.map(browser => ({
+            scenario: forBrowser(scenario, browser.name),
+            vitals: browser.vitals,
+          }))
+        : [{scenario}];
+    })
+    .map(({scenario, vitals}) => {
       // The slug names the files of the scenario, so two scenarios cannot share it.
       const slug = slugOf(scenario);
       if (slug === BASELINE_SLUG) {
@@ -59,17 +72,50 @@ export function loadScenarios(
         );
       }
       labels.set(slug, labelOf(scenario));
-      checkScenario(scenario);
       return {
         scenario,
         endpoints: scenario.browser
           ? new Map()
           : thresholdsById(scenario, config.thresholds?.default ?? {}),
         ...(scenario.browser && {
-          browser: resolveBrowserLimits(config.thresholds ?? {}, scenario),
+          browser: onlyVitals(
+            resolveBrowserLimits(config.thresholds ?? {}, scenario),
+            vitals ?? [],
+          ),
         }),
       };
     });
+}
+
+/**
+ * The scenario for one browser. Its name ends with the browser, so that the
+ * files, the report rows and the baseline of each browser stay apart.
+ */
+function forBrowser(scenario: BrowserScenario, browserName: string): Scenario {
+  return {
+    ...scenario,
+    name: `${scenario.name}${SEPARATOR}${browserName}`,
+    browser: {
+      ...scenario.browser,
+      browserName,
+      registeredLabel: labelOf(scenario),
+    },
+  };
+}
+
+/** The limits without the Web Vitals that the browser does not report. */
+function onlyVitals(
+  limits: BrowserLimits,
+  reported: readonly WebVital[],
+): BrowserLimits {
+  return {
+    ...limits,
+    vitals: Object.fromEntries(
+      Object.entries(limits.vitals).filter(([vital]) =>
+        reported.includes(vital as WebVital),
+      ),
+    ),
+  };
 }
 
 function findScenarioFiles(dir: string): string[] {

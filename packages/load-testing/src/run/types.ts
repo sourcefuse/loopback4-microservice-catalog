@@ -13,10 +13,17 @@ export type Target = (
       baseUrl: string;
       /** Serves `/auth/login` and `/auth/token`. */
       authUrl: string;
+      /** The URL of each backend that `apis` in `config.ts` names, by its name. */
+      apiUrls: Record<string, string>;
       /** Undefined when `LOAD_TESTS_USERNAME` is not set: the run has no login. */
       login?: Login;
     }
-  | {baseUrl?: undefined; authUrl?: undefined; login?: undefined}
+  | {
+      baseUrl?: undefined;
+      authUrl?: undefined;
+      apiUrls?: undefined;
+      login?: undefined;
+    }
 ) & {
   /** The web app under test. Undefined when no browser scenario runs. */
   uiUrl?: string;

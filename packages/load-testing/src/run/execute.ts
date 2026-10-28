@@ -3,6 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {ApiClient} from '../context/api';
+import {namedApis} from '../context/apis';
 import {Cleanup} from '../context/cleanup';
 import {ConfigError, errorMessage} from '../errors';
 import {failedScenario, judgeScenario} from '../report/report';
@@ -103,12 +104,12 @@ export async function execute(
    * signal back when it ends.
    */
   let beforeSignal: AbortSignal | undefined = signal;
+  const clientOptions = {signal: () => beforeSignal};
   const ctx: RunContext = {
     token,
     claims: token === undefined ? {} : claimsOf(token),
-    api: new ApiClient(apiUrlOf(scenario, target, url), {
-      signal: () => beforeSignal,
-    }),
+    api: new ApiClient(apiUrlOf(scenario, target, url), clientOptions),
+    apis: namedApis(target.apiUrls ?? {}, clientOptions),
     sql: database.sql,
     defer: cleanup.defer,
   };

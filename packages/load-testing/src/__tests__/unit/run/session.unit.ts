@@ -9,7 +9,11 @@ import {withFreshToken} from '../../../run/session';
 import type {Session, Target} from '../../../run/types';
 import {scenarioOf} from '../../helpers';
 
-const target: Target = {baseUrl: 'http://app', authUrl: 'http://app'};
+const target: Target = {
+  baseUrl: 'http://app',
+  authUrl: 'http://app',
+  apiUrls: {},
+};
 const loaded = (name: string): LoadedScenario => ({
   scenario: scenarioOf(name, []),
   endpoints: new Map([['GET /a', resolveThresholds({})]]),

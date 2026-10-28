@@ -7,6 +7,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import {loadScenarios} from '../../../project/loader';
+import {chromium} from '../../../engine/artillery/browsers';
 import {labelOf} from '../../../scenario/label';
 import {ScenarioError} from '../../../errors';
 
@@ -344,6 +345,67 @@ load.describe('g', {thresholds: ${describeLimits}}, () => {
         message:
           /Scenario g › n:\n\s+thresholds.p95 must be 0 or more\n\s+thresholds.errorRate must be from 0 to 100/,
       });
+    });
+  });
+
+  describe('browsers', () => {
+    const firefox = {
+      name: 'firefox',
+      engine: 'playwright-firefox',
+      vitals: ['FCP', 'LCP', 'TTFB'] as const,
+    };
+
+    function writeBrowserAndHttp() {
+      write('src/__tests__/load/b.load.ts');
+      write(
+        'dist/__tests__/load/b.load.js',
+        `const {load} = require(${builder});
+load.it('api', [load.get('/api')]);
+load.browser('open', {vitals: {CLS: {p95: 0.2}}}, async () => {});`,
+      );
+    }
+
+    it('runs a browser scenario in chromium only by default, and names it after the browser', () => {
+      writeBrowserAndHttp();
+
+      const [api, open] = loadScenarios(pkg, CONFIG);
+
+      expect(labelOf(api.scenario)).to.equal('api');
+      expect(labelOf(open.scenario)).to.equal('open › chromium');
+      expect(open.scenario.browser).to.containEql({
+        browserName: 'chromium',
+        registeredLabel: 'open',
+      });
+    });
+
+    it('runs a browser scenario once in each browser, in the order of the list, and leaves an HTTP scenario alone', () => {
+      writeBrowserAndHttp();
+      const config = {...CONFIG, artillery: {browsers: [chromium(), firefox]}};
+
+      expect(loadScenarios(pkg, config).map(l => labelOf(l.scenario))).to.eql([
+        'api',
+        'open › chromium',
+        'open › firefox',
+      ]);
+    });
+
+    it('leaves out the limit of a Web Vital that the browser does not report', () => {
+      writeBrowserAndHttp();
+      const config = {...CONFIG, artillery: {browsers: [chromium(), firefox]}};
+
+      const [, inChromium, inFirefox] = loadScenarios(pkg, config);
+
+      expect(Object.keys(inChromium.browser?.vitals ?? {})).to.eql([
+        'FCP',
+        'LCP',
+        'CLS',
+        'TTFB',
+      ]);
+      expect(Object.keys(inFirefox.browser?.vitals ?? {})).to.eql([
+        'FCP',
+        'LCP',
+        'TTFB',
+      ]);
     });
   });
 

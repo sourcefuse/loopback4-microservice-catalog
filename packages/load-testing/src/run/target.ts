@@ -14,7 +14,7 @@ import {
 import {BASE_URL_ENV, UI_URL_ENV} from '../project/layout';
 import type {Login, Session, Target, TargetNeeds} from './types';
 
-const AUTH_URL_ENV = 'LOAD_TESTS_AUTH_URL';
+const AUTH_URL_ENV = 'LOAD_TESTS_AUTH_SERVICE_URL';
 /** The first HTTP status of a redirect. */
 const FIRST_REDIRECT_STATUS = 300;
 /** The last HTTP status of a redirect. */
@@ -33,14 +33,27 @@ const LOGIN_ENV = [
  * `LOAD_TESTS_BASE_URL` is required for the API, and `LOAD_TESTS_UI_URL` for
  * the web app. When `LOAD_TESTS_USERNAME` is set, the other login variables
  * and the API URL are required too. When it is not set, the run has no login.
+ * `apis` maps a name to the variable that holds the URL of another backend.
+ * The run needs these variables when it needs the API.
  */
-export function readTarget(env: NodeJS.ProcessEnv, needs: TargetNeeds): Target {
+export function readTarget(
+  env: NodeJS.ProcessEnv,
+  needs: TargetNeeds,
+  apis: Record<string, string> = {},
+): Target {
+  if (env.LOAD_TESTS_AUTH_URL && !env.LOAD_TESTS_AUTH_SERVICE_URL) {
+    throw new ConfigError(
+      'LOAD_TESTS_AUTH_URL is now LOAD_TESTS_AUTH_SERVICE_URL. Rename the variable.',
+    );
+  }
   const hasLogin = !!env.LOAD_TESTS_USERNAME;
   const needsApi = needs.api || hasLogin;
   const missing = [
-    ...(needsApi ? [BASE_URL_ENV] : []),
-    ...(needs.ui ? [UI_URL_ENV] : []),
-    ...(hasLogin ? LOGIN_ENV : []),
+    ...new Set([
+      ...(needsApi ? [BASE_URL_ENV, ...Object.values(apis)] : []),
+      ...(needs.ui ? [UI_URL_ENV] : []),
+      ...(hasLogin ? LOGIN_ENV : []),
+    ]),
   ].filter(name => !env[name]);
   if (missing.length > 0) throw new ConfigError(`Set ${missing.join(', ')}`);
   // The check above makes every required value a non-empty string.
@@ -52,9 +65,15 @@ export function readTarget(env: NodeJS.ProcessEnv, needs: TargetNeeds): Target {
     ...ui,
     baseUrl,
     // An empty variable counts as not set, as CI often leaves one empty.
-    authUrl: env.LOAD_TESTS_AUTH_URL
-      ? urlOf(AUTH_URL_ENV, env.LOAD_TESTS_AUTH_URL)
+    authUrl: env.LOAD_TESTS_AUTH_SERVICE_URL
+      ? urlOf(AUTH_URL_ENV, env.LOAD_TESTS_AUTH_SERVICE_URL)
       : baseUrl,
+    apiUrls: Object.fromEntries(
+      Object.entries(apis).map(([name, variable]) => [
+        name,
+        urlOf(variable, get(variable)),
+      ]),
+    ),
     ...(hasLogin && {
       login: {
         username: get('LOAD_TESTS_USERNAME'),

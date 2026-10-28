@@ -29,7 +29,10 @@ Environment:
   LOAD_TESTS_BASE_URL       API under test (required for load.it scenarios, the login, and
                             browser scenarios with before or after)
   LOAD_TESTS_UI_URL         Web app under test (required for load.browser scenarios)
-  LOAD_TESTS_AUTH_URL       Serves /auth/login and /auth/token (default: LOAD_TESTS_BASE_URL)
+  LOAD_TESTS_AUTH_SERVICE_URL
+                            Serves /auth/login and /auth/token (default: LOAD_TESTS_BASE_URL)
+  <variables of apis>       The URL of each backend that \`apis\` in config.ts names, for
+                            ctx.apis.<name> (required when the run needs the API)
   LOAD_TESTS_USERNAME       Set it to log in. Then these are required too:
   LOAD_TESTS_PASSWORD, LOAD_TESTS_CLIENT_ID, LOAD_TESTS_CLIENT_SECRET
                             Required when LOAD_TESTS_USERNAME is set

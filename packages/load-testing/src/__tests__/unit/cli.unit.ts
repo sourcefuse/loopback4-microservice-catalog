@@ -233,7 +233,7 @@ describe('main with a stub server', () => {
     await new Promise<void>(resolve => server.listen(0, '127.0.0.1', resolve));
     env = {
       LOAD_TESTS_BASE_URL: `http://127.0.0.1:${(server.address() as AddressInfo).port}`,
-      LOAD_TESTS_AUTH_URL: undefined,
+      LOAD_TESTS_AUTH_SERVICE_URL: undefined,
       LOAD_TESTS_USERNAME: 'u',
       LOAD_TESTS_PASSWORD: 'p',
       LOAD_TESTS_CLIENT_ID: 'c',
@@ -565,7 +565,7 @@ load.it('browse items', [load.get('/items')], {
     expect(out).to.not.match(/FAIL: 1 heavy/);
   }).timeout(60_000);
 
-  it('sends login and refresh to LOAD_TESTS_AUTH_URL, and the scenario requests with the new token to the base URL', async () => {
+  it('sends login and refresh to LOAD_TESTS_AUTH_SERVICE_URL, and the scenario requests with the new token to the base URL', async () => {
     const pkg = packageWith(`
 load.it('with token', [load.get('/items')], {
   headers: {authorization: template\`Bearer \${token()}\`},
@@ -598,7 +598,7 @@ load.it('with token', [load.get('/items')], {
     try {
       const {code} = await runMain(['run', pkg], {
         ...env,
-        LOAD_TESTS_AUTH_URL: authUrl,
+        LOAD_TESTS_AUTH_SERVICE_URL: authUrl,
       });
 
       const items = seen.filter(call => call.url === '/items');
@@ -648,7 +648,7 @@ load.it('cancelled', [load.get('/items')], {
     try {
       const running = runMain(['run', pkg], {
         ...env,
-        LOAD_TESTS_AUTH_URL: authUrl,
+        LOAD_TESTS_AUTH_SERVICE_URL: authUrl,
       });
       await requested;
       process.emit('SIGINT', 'SIGINT');
@@ -694,7 +694,11 @@ load.it('parallel flow', [
       (
         JSON.parse(
           fs.readFileSync(
-            path.join(pkg, 'src/__tests__/load/.out', `${slug}.report.json`),
+            path.join(
+              pkg,
+              'src/__tests__/load/.out',
+              `${slug}-chromium.report.json`,
+            ),
             'utf8',
           ),
         ) as {
@@ -840,8 +844,10 @@ load.browser('hooks', {
         const {summaries, counters} = reportOf(pkg, 'element');
 
         expect(code).to.equal(0);
-        const names = ['step.save', 'flow.element'].concat(
-          ['FCP', 'LCP', 'CLS', 'TTFB'].map(vital => `page.${vital}.element`),
+        const names = ['step.save', 'flow.element › chromium'].concat(
+          ['FCP', 'LCP', 'CLS', 'TTFB'].map(
+            vital => `page.${vital}.element › chromium`,
+          ),
         );
         expect(
           names.map(name => [name, summaries[`browser.${name}`]?.count]),
@@ -856,9 +862,9 @@ load.browser('hooks', {
         expect(code).to.equal(0);
         // Step, FCP, LCP, CLS, TTFB and INP: the other scenarios have 5.
         expect(out).to.match(/Metrics: +6 of 6 pass/);
-        expect(summaries['browser.page.INP.element']?.count).to.equal(
-          counters['vusers.completed'],
-        );
+        expect(
+          summaries['browser.page.INP.element › chromium']?.count,
+        ).to.equal(counters['vusers.completed']);
       }).timeout(RUN_MS);
 
       it('runs a browser scenario of a package with "type": "module"', async () => {
@@ -956,7 +962,7 @@ load.browser('esm', async ({page, step}) => {
       const pkg = packageWith(`load.it('browse items', [load.get('/items')]);
 load.browser('open', async () => {});`);
       const outDir = path.join(pkg, 'src/__tests__/load/.out');
-      const old = path.join(outDir, 'open.report.json');
+      const old = path.join(outDir, 'open-chromium.report.json');
       fs.mkdirSync(outDir, {recursive: true});
       fs.writeFileSync(old, '{}');
       const noBrowsers = fs.mkdtempSync(path.join(os.tmpdir(), 'no-browsers-'));
@@ -1014,10 +1020,10 @@ load.browser('open', async () => {});`);
 
     it('prints each metric of the last run from its report file, with no URL, and gives 1 when one fails', async () => {
       const pkg = packageWith(browser);
-      const label = 'open dashboard';
+      const label = 'open dashboard › chromium';
       fs.mkdirSync(path.join(pkg, OUT), {recursive: true});
       fs.writeFileSync(
-        path.join(pkg, OUT, 'open-dashboard.report.json'),
+        path.join(pkg, OUT, 'open-dashboard-chromium.report.json'),
         JSON.stringify({
           aggregate: {
             counters: {
@@ -1054,22 +1060,27 @@ load.browser('open', async () => {});`);
       );
       fs.mkdirSync(path.join(pkg, OUT), {recursive: true});
       fs.writeFileSync(
-        path.join(pkg, OUT, 'open-dashboard.report.json'),
+        path.join(pkg, OUT, 'open-dashboard-chromium.report.json'),
         JSON.stringify({
           aggregate: {
             counters: {'vusers.created': 2, 'vusers.completed': 2},
-            summaries: {'browser.flow.open dashboard': {count: 2, p95: 1200}},
+            summaries: {
+              'browser.flow.open dashboard › chromium': {count: 2, p95: 1200},
+            },
           },
         }),
       );
-      fs.writeFileSync(path.join(pkg, OUT, 'open-orders.report.json'), '{');
+      fs.writeFileSync(
+        path.join(pkg, OUT, 'open-orders-chromium.report.json'),
+        '{',
+      );
 
       const {code, out} = await runMain(['report', pkg], NO_TARGET_ENV);
 
       expect(code).to.equal(1);
       expect(out).to.match(/open dashboard[^]*flow +2 +1200 ms/);
       expect(out).to.match(
-        /open orders[^]*Artillery wrote no valid report: .*open-orders\.report\.json/,
+        /open orders[^]*Artillery wrote no valid report: .*open-orders-chromium\.report\.json/,
       );
     });
 

@@ -156,6 +156,7 @@ export function configProblems(config: unknown): string[] {
     thresholds,
     datasources,
     engine,
+    apis,
     reporters,
     tokenCheck,
     maxHeavyApis,
@@ -165,10 +166,12 @@ export function configProblems(config: unknown): string[] {
     ...phaseProblems(phases, 'phases'),
     ...artilleryConfigProblems(artillery?.config, 'artillery.config'),
     ...artilleryEnvProblems(artillery?.env),
+    ...browserEngineProblems(artillery?.browsers),
     ...thresholdProblems(limits, 'thresholds.default.'),
     ...browserLimitProblems(thresholds, 'thresholds.'),
     ...datasourceProblems(datasources),
     ...engineProblems(engine),
+    ...apisProblems(apis),
     ...reporterProblems(reporters),
   ];
   if (tokenCheck !== undefined && typeof tokenCheck !== 'function') {
@@ -200,7 +203,7 @@ export function artilleryConfigProblems(
         processor?: unknown;
         target?: unknown;
         plugins?: Record<string, unknown>;
-        engines?: {playwright?: {aggregateByName?: unknown}};
+        engines?: object;
       }
     | undefined,
   where: string,
@@ -211,10 +214,12 @@ export function artilleryConfigProblems(
       `${where}.target is not allowed: the library sets it from LOAD_TESTS_BASE_URL or LOAD_TESTS_UI_URL`,
     );
   }
-  if (config?.engines?.playwright?.aggregateByName !== undefined) {
-    problems.push(
-      `${where}.engines.playwright.aggregateByName is not allowed: the library sets it`,
-    );
+  for (const [name, options] of Object.entries(config?.engines ?? {})) {
+    if (Object(options).aggregateByName !== undefined) {
+      problems.push(
+        `${where}.engines.${name}.aggregateByName is not allowed: the library sets it`,
+      );
+    }
   }
   if (config?.plugins?.['metrics-by-endpoint'] !== undefined) {
     problems.push(
@@ -251,6 +256,69 @@ function artilleryEnvProblems(names: unknown): string[] {
     }
     return [];
   });
+}
+
+/** Returns what is wrong with `artillery.browsers`: a list of browsers with unique names. */
+function browserEngineProblems(browsers: unknown): string[] {
+  if (browsers === undefined) return [];
+  if (!Array.isArray(browsers) || browsers.length === 0) {
+    return [
+      'artillery.browsers must be a list that is not empty, for example [chromium()]',
+    ];
+  }
+  return browsers.flatMap((browser: unknown, index) => {
+    const where = `artillery.browsers[${index}]`;
+    const {name, engine, engineOptions, vitals, check} = Object(
+      browser,
+    ) as Record<string, unknown>;
+    const problems: string[] = [];
+    if (typeof name !== 'string' || name === '') {
+      problems.push(`${where}.name must be a text that is not empty`);
+    } else if (
+      browsers.findIndex(other => Object(other).name === name) !== index
+    ) {
+      problems.push(`${where}.name "${name}" is used twice`);
+    }
+    if (typeof engine !== 'string' || engine === '') {
+      problems.push(`${where}.engine must be a text that is not empty`);
+    }
+    if (engineOptions !== undefined && !isPlainObject(engineOptions)) {
+      problems.push(`${where}.engineOptions must be an object`);
+    } else if (engineOptions?.aggregateByName !== undefined) {
+      problems.push(
+        `${where}.engineOptions.aggregateByName is not allowed: the library sets it`,
+      );
+    }
+    if (
+      !Array.isArray(vitals) ||
+      vitals.some(vital => !Object.hasOwn(VITAL_DEFAULTS, String(vital)))
+    ) {
+      problems.push(
+        `${where}.vitals must be a list of Web Vitals: ${Object.keys(VITAL_DEFAULTS).join(', ')}`,
+      );
+    }
+    if (check !== undefined && typeof check !== 'function') {
+      problems.push(`${where}.check must be a function`);
+    }
+    return problems;
+  });
+}
+
+/** Returns what is wrong with `apis`: names that map to variable names. */
+function apisProblems(apis: unknown): string[] {
+  if (apis === undefined) return [];
+  if (typeof apis !== 'object' || apis === null || Array.isArray(apis)) {
+    return [
+      "apis must be an object of names and variable names, for example {auth: 'LOAD_TESTS_AUTH_SERVICE_URL'}",
+    ];
+  }
+  return Object.entries(apis).flatMap(([name, variable]) =>
+    typeof variable === 'string' && /^[A-Za-z_][A-Za-z0-9_]*$/.test(variable)
+      ? []
+      : [
+          `apis.${name} must be the name of a variable, for example LOAD_TESTS_AUTH_SERVICE_URL`,
+        ],
+  );
 }
 
 /** Returns what is wrong with `engine`: it needs a name and a `run` function. */

@@ -96,16 +96,20 @@ export async function prepare(
 ): Promise<Prepared> {
   const loaded = loadPackage(pkgDir, env);
   const {scenarios} = loaded;
-  const target = readTarget(env, {
-    // The API client of `before` and `after` uses the base URL, also in a browser scenario.
-    api: scenarios.some(
-      ({scenario}) =>
-        scenario.browser === undefined ||
-        scenario.before !== undefined ||
-        scenario.after !== undefined,
-    ),
-    ui: scenarios.some(({scenario}) => scenario.browser !== undefined),
-  });
+  const target = readTarget(
+    env,
+    {
+      // The API client of `before` and `after` uses the base URL, also in a browser scenario.
+      api: scenarios.some(
+        ({scenario}) =>
+          scenario.browser === undefined ||
+          scenario.before !== undefined ||
+          scenario.after !== undefined,
+      ),
+      ui: scenarios.some(({scenario}) => scenario.browser !== undefined),
+    },
+    loaded.config.apis,
+  );
   const needLogin = scenarios.filter(({scenario}) => usesToken(scenario));
   if (target.login === undefined && needLogin.length > 0) {
     throw new ConfigError(

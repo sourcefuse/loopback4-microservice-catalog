@@ -17,16 +17,19 @@ type TestFunction = Exclude<PlaywrightEngineScenarioTestFunction, string>;
  * browser scenario `label`. It loads `file` on its first call, so that the
  * worker loads the scenario only when the load starts. It records the time of
  * the whole flow as `browser.flow.<label>`. `runVars` gives a new copy of
- * the vars of the run for each virtual user.
+ * the vars of the run for each virtual user. `registeredLabel` is the label
+ * under which the flow registered in `file`. It differs from `label` when
+ * the label ends with the browser.
  */
 export function browserTestFunction(
   file: string,
   label: string,
   runVars: () => Vars,
+  registeredLabel = label,
 ): TestFunction {
   let flow: BrowserFlow | undefined;
   return async (page, _context, events) => {
-    flow ??= flowIn(file, label);
+    flow ??= flowIn(file, registeredLabel);
     const start = Date.now();
     await flow({
       page,

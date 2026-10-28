@@ -8,6 +8,7 @@ import type {
   PlaywrightEngineScenarioTestFunction,
 } from 'artillery';
 import type {HeaderMap, Phase, Value} from './scenario/types';
+import type {BrowserEngine} from './engine/artillery/browsers';
 import type {
   ArtilleryConfig,
   ArtilleryRequestOptions,
@@ -159,6 +160,14 @@ export type LoadTestConfig = {
    */
   reporters?: Reporter[];
   /**
+   * Other backends that `before` and `after` call, as `ctx.apis.<name>`. Each
+   * value is the name of the environment variable that holds the URL, for
+   * example `{auth: 'LOAD_TESTS_AUTH_SERVICE_URL'}`. A run that needs the API
+   * stops when one of these variables is not set. The load does not go to
+   * these backends.
+   */
+  apis?: Record<string, string>;
+  /**
    * Runs the load. The default is `artillery()`. A project can write its own
    * engine: an object with a `name` and a `run` function.
    */
@@ -193,6 +202,13 @@ export type LoadTestConfig = {
      * allowed. For example: `{env: ['MY_REGION']}`.
      */
     env?: string[];
+    /**
+     * The browsers that each browser scenario runs in, one run for each. The
+     * label of a run ends with the browser: `<scenario> › chromium`. The
+     * default is `[chromium()]`. To add a browser, write an Artillery engine
+     * for it and list a `BrowserEngine` here. See the README.
+     */
+    browsers?: BrowserEngine[];
   };
   /**
    * Optional. When omitted, the library default applies (`p95Regression` 20,
@@ -256,8 +272,14 @@ export type RunContext = {
    * token is not a JWT, and when there is no token.
    */
   claims: Record<string, unknown>;
-  /** HTTP client for the application under test. */
+  /** HTTP client for the application under test (`LOAD_TESTS_BASE_URL`). */
   api: Api;
+  /**
+   * HTTP clients for the other backends that `apis` in `config.ts` names, for
+   * example `ctx.apis.auth`. They work like `ctx.api`, and send no token.
+   * A name that `apis` does not have throws a `ConfigError`.
+   */
+  apis: Readonly<Record<string, Api>>;
   /** SQL on a datasource that `datasources` in `config.ts` declares. */
   sql: Sql;
   /**
@@ -476,6 +498,13 @@ export type BrowserScenario = ScenarioBase &
        * worker of Artillery loads this file again, to get the flow.
        */
       file?: string;
+      /** The name of the browser of this run. The loader sets it. */
+      browserName?: string;
+      /**
+       * The label under which the flow registered, before the loader added
+       * the browser. The worker finds the flow by it. The loader sets it.
+       */
+      registeredLabel?: string;
     };
   };
 

@@ -13,6 +13,7 @@ import {
 } from '../../scenario/guards';
 import {artilleryConfigProblems} from '../../project/config';
 import {OUT_DIR} from '../../project/layout';
+import {chromium, engineOptionsOf, type BrowserEngine} from './browsers';
 import {labelOf, slugOf} from '../../scenario/label';
 import type {Scenario as ArtilleryScenario} from 'artillery';
 import type {
@@ -51,6 +52,7 @@ export function writeScenario(
   defaults: ArtilleryConfig | undefined,
   phases: Phase[],
   runVars: Vars,
+  browser: BrowserEngine = chromium(),
 ): string {
   const outDir = path.join(pkgDir, OUT_DIR);
   fs.mkdirSync(outDir, {recursive: true});
@@ -66,6 +68,7 @@ export function writeScenario(
       processorPath,
       scriptPath,
       runVars,
+      browser,
     );
   }
   checkNames(scenario);
@@ -107,16 +110,20 @@ function writeBrowserScenario(
   processorPath: string,
   scriptPath: string,
   runVars: Vars,
+  browser: BrowserEngine,
 ): string {
-  const {file} = scenario.browser;
+  const {file, registeredLabel = labelOf(scenario)} = scenario.browser;
   if (file === undefined) {
     throw new ScenarioError(
       `Scenario ${labelOf(scenario)}: no built file. load-testing run sets it.`,
     );
   }
   const label = labelOf(scenario);
-  fs.writeFileSync(processorPath, browserProcessorSource(file, label, runVars));
-  const script = browserScript(label, defaults, phases, processorPath);
+  fs.writeFileSync(
+    processorPath,
+    browserProcessorSource(file, label, runVars, registeredLabel),
+  );
+  const script = browserScript(label, defaults, phases, processorPath, browser);
   fs.writeFileSync(scriptPath, JSON.stringify(script, null, 2));
   return scriptPath;
 }
@@ -132,6 +139,7 @@ function browserScript(
   defaults: ArtilleryConfig | undefined,
   phases: Phase[],
   processorPath: string,
+  browser: BrowserEngine,
 ): {
   config: Omit<ArtilleryConfig, 'phases'> & {phases: Phase[]};
   scenarios: ArtilleryScenario[];
@@ -141,17 +149,23 @@ function browserScript(
       ...deepMerge(
         {
           target: '{{ $env.LOAD_TESTS_UI_URL }}',
-          engines: {playwright: {aggregateByName: true}},
           processor: processorPath,
         },
         defaults ?? {},
       ),
+      engines: {
+        ...defaults?.engines,
+        [browser.engine]: {
+          ...engineOptionsOf(browser, defaults),
+          aggregateByName: true,
+        },
+      },
       phases,
     },
     scenarios: [
       {
         name: label,
-        engine: 'playwright',
+        engine: browser.engine,
         testFunction: BROWSER_TEST_FUNCTION,
       },
     ],

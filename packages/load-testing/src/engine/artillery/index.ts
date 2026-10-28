@@ -5,10 +5,12 @@
 import type {Measurement} from '../../report/types';
 import type {Engine, EngineRun} from '../types';
 import {runArtillery} from './runner';
-import {checkChromium} from './chromium';
+import {browsersOf, engineOptionsOf} from './browsers';
+import type {BrowserEngine} from './browsers';
 import {artilleryEnv} from './env';
-import {isPlainObject} from '../../scenario/guards';
-import type {ArtilleryConfig} from './types';
+import {ScenarioError} from '../../errors';
+import {labelOf} from '../../scenario/label';
+import type {LoadTestConfig, Scenario} from '../../types';
 import {BASE_URL_ENV, UI_URL_ENV} from '../../project/layout';
 import {checkUrl, checkRunVars, checkToken} from './templates';
 import {writeScenario} from './transpiler';
@@ -16,8 +18,8 @@ import {writeScenario} from './transpiler';
 /**
  * The default engine. It writes an Artillery script for the scenario, runs
  * it with the Artillery CLI, and reads the report that Artillery wrote.
- * Before each browser scenario, it checks that Chromium starts with the
- * `launchOptions` of the `artillery.config` of the package. The engine does
+ * Before each browser scenario, it runs the `check` of its browser, which
+ * for Chromium starts it with the `launchOptions` of the package. The engine does
  * not keep the result, so it holds no state from one scenario to the next.
  */
 export function artillery(): Engine {
@@ -40,32 +42,40 @@ export function artillery(): Engine {
         extraNames: input.config.artillery?.env,
         urlName,
       });
+      const browser = input.scenario.browser
+        ? browserOf(input.scenario, input.config)
+        : undefined;
       const scriptPath = writeScenario(
         input.pkgDir,
         input.scenario,
         input.config.artillery?.config,
         input.phases,
         input.runVars,
+        browser,
       );
-      if (input.scenario.browser) {
-        await checkChromium(
-          env,
-          launchOptionsOf(input.config.artillery?.config),
-          input.signal,
-        );
-      }
+      await browser?.check?.({
+        env,
+        options: engineOptionsOf(browser, input.config.artillery?.config),
+        signal: input.signal,
+      });
       return runArtillery(scriptPath, input.endpointIds, env, input.signal);
     },
   };
 }
 
 /**
- * The `launchOptions` that the script of a browser scenario gets: the library
- * sets none, so they come from the `artillery.config` of the package.
+ * The browser of a browser scenario: the one that its label names, or the
+ * first of `artillery.browsers` for a scenario that the loader did not mark.
  */
-function launchOptionsOf(
-  config: ArtilleryConfig | undefined,
-): Record<string, unknown> {
-  const options: unknown = config?.engines?.playwright?.launchOptions;
-  return isPlainObject(options) ? options : {};
+function browserOf(scenario: Scenario, config: LoadTestConfig): BrowserEngine {
+  const browsers = browsersOf(config);
+  const name = scenario.browser?.browserName;
+  const found =
+    name === undefined ? browsers[0] : browsers.find(b => b.name === name);
+  if (found === undefined) {
+    throw new ScenarioError(
+      `Scenario ${labelOf(scenario)}: artillery.browsers has no browser "${name}"`,
+    );
+  }
+  return found;
 }
