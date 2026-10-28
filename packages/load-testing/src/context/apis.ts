@@ -12,11 +12,11 @@ import {ApiClient} from './api';
  * because TypeScript cannot know the names.
  */
 export function namedApis(
-  urls: Record<string, string> = {},
+  urls: Record<string, string> | undefined,
   options: ApiClientOptions,
 ): Readonly<Record<string, Api>> {
   const clients = Object.fromEntries(
-    Object.entries(urls).map(([name, url]) => [
+    Object.entries(urls ?? {}).map(([name, url]) => [
       name,
       new ApiClient(url, options),
     ]),
