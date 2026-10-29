@@ -32,7 +32,7 @@ select 'Admin_t2_private', '{}', '{temp_client_private}', 1, id from tenants whe
 
 
 
-/* Password - test123!@# */
+/* Password - <Enter password here> */
 insert into users
     (first_name, last_name, username, email, default_tenant_id)
 select 'John', 'Doe', 'john.doe@example.com', 'john.doe@example.com', id
@@ -58,7 +58,7 @@ from users
 where username = 'john.doe@example.com';
 update users set auth_client_ids = ARRAY[(select id from auth_clients where client_id = 'temp_client')::integer]
 where username = 'john.doe@example.com';
-/* Password - test123!@# */
+/* Password - <Enter password here> */
 
 
 insert into users

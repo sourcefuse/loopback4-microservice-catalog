@@ -17,6 +17,10 @@ import {
 import {TestingApplication} from '../fixtures/application';
 import {setupApplication} from './test-helper';
 
+// Set TEST_USER_PASSWORD in the environment; the placeholder is intentionally not a real password.
+const TEST_USER_PASSWORD =
+  process.env.TEST_USER_PASSWORD ?? '<Enter test password>';
+
 describe('OTP Controller', () => {
   let app: TestingApplication;
   let client: Client;
@@ -80,7 +84,7 @@ describe('OTP Controller', () => {
       client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
-      password: 'temp123!@',
+      password: TEST_USER_PASSWORD,
     };
     process.env.JWT_ISSUER = 'test';
     const reqForCode = await client
@@ -126,7 +130,7 @@ describe('OTP Controller', () => {
       client_id: 'web', // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user',
-      password: 'temp123!@',
+      password: TEST_USER_PASSWORD,
     };
     process.env.JWT_ISSUER = 'test';
     const reqForCode = await client
@@ -211,7 +215,7 @@ describe('OTP Controller', () => {
         permissions: [],
       },
     ]);
-    process.env.USER_TEMP_PASSWORD = 'temp123!@';
+    process.env.USER_TEMP_PASSWORD = TEST_USER_PASSWORD;
     await userRepo.create({
       id: '1',
       firstName: 'Test',

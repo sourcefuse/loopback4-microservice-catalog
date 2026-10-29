@@ -3081,7 +3081,7 @@ PRIVATE_DECRYPTION_KEY=          # Private key for asymmetric JWT (optional)
 **Authentication Service:**
 ```bash
 # Password Management
-USER_TEMP_PASSWORD=temp123!@     # Default temporary password
+USER_TEMP_PASSWORD='<Enter password here>'     # Default temporary password
 FORGOT_PASSWORD_LINK_EXPIRY=30   # Password reset link TTL (minutes)
 REQUEST_SIGNUP_LINK_EXPIRY=30    # Signup link TTL (minutes)
 

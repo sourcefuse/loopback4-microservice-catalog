@@ -24,6 +24,10 @@ import {
 import {HttpErrors} from '@loopback/rest';
 import {UserStatus} from '@sourceloop/core';
 
+// Set TEST_USER_PASSWORD in the environment; the placeholder is intentionally not a real password.
+const TEST_USER_PASSWORD =
+  process.env.TEST_USER_PASSWORD ?? '<Enter test password>';
+
 describe('Local Password Verify Provider', () => {
   let userRepo: StubbedInstanceWithSinonAccessor<UserRepository>;
   let userTenantRepo: StubbedInstanceWithSinonAccessor<UserTenantRepository>;
@@ -50,7 +54,7 @@ describe('Local Password Verify Provider', () => {
         dob: new Date(),
       });
       const username = 'test_user';
-      const password = 'test123!@';
+      const password = TEST_USER_PASSWORD;
       const findOne = userRepo.stubs.verifyPassword;
       findOne.resolves(user as UserWithRelations);
       const func = localPasswordVerifyProvider.value();
@@ -77,7 +81,7 @@ describe('Local Password Verify Provider', () => {
       });
       const otpCreds = new Otp({
         username: 'test_user',
-        otp: 'test123!@',
+        otp: TEST_USER_PASSWORD,
       });
       const userTenant = new UserTenant({
         id: '1',
@@ -88,7 +92,7 @@ describe('Local Password Verify Provider', () => {
       });
       const err = new HttpErrors[400]();
       const username = 'test';
-      const password = 'test123!@';
+      const password = TEST_USER_PASSWORD;
       const findOne = userRepo.stubs.verifyPassword;
       findOne.throws(err);
       const findTwo = otpRepo.stubs.get;
