@@ -1,8 +1,9 @@
-body {
+/* :root body outranks .mat-app-background by specificity */
+:root body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
     margin: 0;
     overflow-x: hidden;
-    background-color: #F2F2F2 !important;
+    background-color: #F2F2F2;
   }
   
   html, body {
@@ -10,16 +11,16 @@ body {
   }
 
   mark, .mark {
-    padding: 0px !important;
+    padding: 0px;
   }
   
-  .mat-ink-bar {
-    background-color: #8C0000 !important;
+  .mat-tab-group .mat-tab-header .mat-ink-bar.mat-ink-bar {
+    background-color: #8C0000;
 
   }
 
-  .mat-tab-label {
-    min-width: 60px !important
+  .mat-tab-group .mat-tab-label {
+    min-width: 60px
   }
 
   .mat-tab-label-content {

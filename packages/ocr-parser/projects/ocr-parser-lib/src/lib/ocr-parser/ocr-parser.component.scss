@@ -3,15 +3,15 @@
     position: relative;
     ::ng-deep mark,
     .mark {
-        padding: 0px !important;
+        padding: 0px;
     }
-    ::ng-deep .mat-ink-bar {
-        background-color: #8C0000 !important;
+    ::ng-deep .mat-tab-group .mat-tab-header .mat-ink-bar.mat-ink-bar {
+        background-color: #8C0000;
     
     }
     
     ::ng-deep .mat-tab-label {
-        min-width: 60px !important
+        min-width: 60px
     }
     
     ::ng-deep .mat-tab-label-content {
@@ -65,7 +65,7 @@
     padding: 0;
     border-radius: 5px 5px 0px 0px;
     border-top-right-radius: 0;
-    box-shadow: none !important;
+    box-shadow: none;
 }
 
 .footer {
