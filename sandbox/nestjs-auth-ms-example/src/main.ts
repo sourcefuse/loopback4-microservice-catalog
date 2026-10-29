@@ -42,6 +42,6 @@ async function bootstrap() {
   await app.listen(4000);
 }
 bootstrap().catch(err => {
-  console.error(err);
+  process.stderr.write(`${err instanceof Error ? err.stack : err}\n`);
   process.exit(1);
 });
