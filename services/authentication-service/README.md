@@ -420,6 +420,12 @@ Authenttication service can be used as a identity server. Following endpoints ha
         <td></td>
       </tr>
       <tr>
+        <td>REVOKED_TOKEN_MAX_TTL</td>
+        <td>N</td>
+        <td>Maximum TTL for revoked access tokens kept in Redis, in seconds</td>
+        <td>3600</td>
+      </tr>
+      <tr>
         <td>USER_TEMP_PASSWORD</td>
         <td>N</td>
         <td>Temporary password that can be used during development.</td>
