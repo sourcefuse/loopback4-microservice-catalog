@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>25.1.3 (2026-10-30)</small>
+
+* fix(auth): remove hardcoded test passwords from tests and sandboxes (#2630) ([272b85e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/272b85e)), closes [#2630](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2630)
+* fix(authentication-service): use node-saml v5 option names in saml login (#2625) ([6123511](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/6123511)), closes [#2625](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2625) [#2624](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2624) [#2624](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2624) [#2624](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2624) [#2624](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2624) [#2624](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2624)
+
+
+
+
+
 ## <small>25.1.2 (2026-10-08)</small>
 
 * fix(authentication-service): match login email case insensitively (#2611) ([87ca012](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/87ca012)), closes [#2611](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2611) [#2609](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2609) [#2609](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2609)
