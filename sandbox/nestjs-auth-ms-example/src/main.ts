@@ -5,7 +5,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SourceLoop } from './sourceloop';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import {inspect} from 'util';
+import {inspect} from 'node:util';
 
 declare global {
   // eslint-disable-next-line no-var
