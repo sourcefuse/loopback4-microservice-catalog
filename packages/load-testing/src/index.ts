@@ -34,15 +34,17 @@ export {
 } from './errors';
 export {ApiClient} from './context/api';
 export {artillery} from './engine/artillery';
+export {chromium} from './engine/artillery/browsers';
 export type {Engine, EngineRun} from './engine/types';
 export {consoleReporter} from './report/console';
-export {P95_TARGETS} from './project/config';
+export {P95_TARGETS, UI_TARGETS, WEB_VITALS_TARGETS} from './project/config';
 export type {HeavyEndpoint} from './project/types';
 export type {
   EndpointResult,
   EndpointStats,
   HeavyApis,
   Measurement,
+  MetricStats,
   Reporter,
   RunResult,
   ScenarioResult,
@@ -63,7 +65,18 @@ export type {
 } from './context/types';
 export type {ArtilleryConfig} from './engine/artillery/types';
 export type {
+  BrowserCheckInput,
+  BrowserEngine,
+  ChromiumOptions,
+} from './engine/artillery/browsers';
+export type {
   BeforeEachContext,
+  BrowserFlow,
+  BrowserFlowContext,
+  BrowserLimitOptions,
+  BrowserOptions,
+  BrowserPage,
+  BrowserStep,
   FlowItem,
   GroupOptions,
   HookRequest,
@@ -76,11 +89,16 @@ export type {
   ParallelGroup,
   RequestOptions,
   RunContext,
+  MetricThresholds,
+  BrowserScenario,
+  HttpScenario,
   Scenario,
   ScenarioOptions,
   StepInput,
+  StepOptions,
   Thresholds,
   TokenCheck,
   UserContext,
   Vars,
+  WebVital,
 } from './types';

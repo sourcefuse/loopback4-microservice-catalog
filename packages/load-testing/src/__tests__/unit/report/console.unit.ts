@@ -3,7 +3,8 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {expect} from '@loopback/testlab';
-import {consoleReporter} from '../../../report/console';
+import {consoleReporter, detailReporter} from '../../../report/console';
+import type {Reporter} from '../../../report/types';
 import {output} from '../../../output';
 import type {RunResult, ScenarioResult} from '../../../report/types';
 
@@ -42,6 +43,7 @@ const SCENARIO: ScenarioResult = {
       note: 'no baseline',
     },
   ],
+  metrics: [],
   passed: false,
 };
 
@@ -55,14 +57,17 @@ const RESULT: RunResult = {
   stopped: false,
 };
 
-async function linesOf(result: RunResult): Promise<string[]> {
+async function linesOf(
+  result: RunResult,
+  reporter: Reporter = consoleReporter(),
+): Promise<string[]> {
   const text: string[] = [];
   const {out} = output;
   output.out = chunk => {
     text.push(chunk);
   };
   try {
-    await consoleReporter().onRunEnd(result);
+    await reporter.onRunEnd(result);
   } finally {
     output.out = out;
   }
@@ -72,6 +77,7 @@ async function linesOf(result: RunResult): Promise<string[]> {
 describe('consoleReporter', () => {
   it('has the name console', () => {
     expect(consoleReporter().name).to.equal('console');
+    expect(detailReporter().name).to.equal('console-detail');
   });
 
   it('prints the block, the table, the skipped scenarios, the coverage, the note and the legend', async () => {
@@ -152,6 +158,124 @@ describe('consoleReporter', () => {
     const lines = await linesOf({...RESULT, hasBaseline: true});
 
     expect(lines.join('\n')).to.not.match(/No src/);
+  });
+
+  it('says that the coverage is not calculated when the package has no spec', async () => {
+    const coverage = {...RESULT.coverage, covered: 0, total: 0, noSpec: true};
+
+    const lines = await linesOf({...RESULT, coverage});
+
+    expect(lines).to.containEql(
+      'Coverage: not calculated, because the application has no API specification.',
+    );
+  });
+
+  describe('a browser scenario', () => {
+    const LABEL = 'open dashboard';
+    const BROWSER: ScenarioResult = {
+      ...SCENARIO,
+      name: LABEL,
+      endpoints: [],
+      metrics: [
+        {
+          name: 'browser.step.loadDashboard',
+          samples: 100,
+          p95: 812.5,
+          unit: 'ms',
+          p95Limit: 1500,
+          failures: [],
+          note: 'no baseline',
+        },
+        {
+          name: `browser.page.LCP.${LABEL}`,
+          samples: 99,
+          p95: 2600,
+          unit: 'ms',
+          p95Limit: 2500,
+          failures: [
+            'lost samples: 99 for 100 completed vusers',
+            'p95 2600 ms > limit 2500 ms',
+          ],
+        },
+        {
+          name: `browser.page.CLS.${LABEL}`,
+          samples: 100,
+          p95: 0,
+          unit: '',
+          p95Limit: 0.1,
+          failures: [],
+          note: 'no baseline',
+        },
+        {
+          name: `browser.flow.${LABEL}`,
+          samples: 100,
+          p95: 3200,
+          unit: 'ms',
+          failures: [],
+        },
+      ],
+    };
+
+    it('prints the flow total, the count of metrics that pass, and only the failed metrics', async () => {
+      const lines = await linesOf({...RESULT, scenarios: [BROWSER]});
+
+      expect(lines.slice(3, 12)).to.deepEqual([
+        'open dashboard',
+        'Workload: 10 vusers/s for 10 s',
+        'Vusers:   100 started, 100 completed, 0 failed (limit 1%)',
+        'Flow:     p95 3200 ms (no limit)',
+        'Metrics:  2 of 3 pass. Run load-testing report to see each one.',
+        '',
+        'Metric    Samples  p95 (limit)        Base  Result',
+        'page.LCP  99       2600 ms (2500 ms)  -     FAIL: lost samples: 99 for 100 completed vusers; p95 2600 ms > limit 2500 ms',
+        '',
+      ]);
+    });
+
+    it('shows the limit and the baseline of CLS with 2 decimals', async () => {
+      const [, , cls] = BROWSER.metrics;
+      const detail = {
+        ...BROWSER,
+        metrics: [{...cls, p95Limit: 0.25, baselineP95: 0.05}],
+      };
+
+      const lines = await linesOf(
+        {...RESULT, scenarios: [detail]},
+        detailReporter(),
+      );
+
+      expect(lines).to.containEql(
+        'page.CLS  100      0 (0.25)     0.05  pass (no baseline)',
+      );
+    });
+
+    it('prints every metric in the detail, and marks a step with no end element', async () => {
+      const [step, ...others] = BROWSER.metrics;
+      const detail = {
+        ...BROWSER,
+        metrics: [
+          {...step, name: 'browser.step.save', wallClock: true},
+          ...others,
+        ],
+      };
+
+      const lines = await linesOf(
+        {...RESULT, scenarios: [detail]},
+        detailReporter(),
+      );
+
+      expect(lines.slice(6, 15)).to.deepEqual([
+        'Flow:     p95 3200 ms (no limit)',
+        'Metrics:  2 of 3 pass.',
+        '',
+        'Metric                  Samples  p95 (limit)         Base  Result',
+        'step.save (wall clock)  100      812.5 ms (1500 ms)  -     pass (no baseline)',
+        'page.LCP                99       2600 ms (2500 ms)   -     FAIL: lost samples: 99 for 100 completed vusers; p95 2600 ms > limit 2500 ms',
+        'page.CLS                100      0 (0.1)             -     pass (no baseline)',
+        'flow                    100      3200 ms             -     no limit',
+        '',
+      ]);
+    });
   });
 
   describe('heavy APIs', () => {
