@@ -1,8 +1,11 @@
-/* :root body outranks .mat-app-background by specificity */
-:root body {
+body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
     margin: 0;
     overflow-x: hidden;
+  }
+
+  /* :root body outranks .mat-app-background by specificity */
+  :root body {
     background-color: #F2F2F2;
   }
   
