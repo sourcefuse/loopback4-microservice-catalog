@@ -11,6 +11,8 @@ import {
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
+import {AuthenticationComponent, Strategies} from 'loopback4-authentication';
+import {LocalPasswordStrategyFactoryProvider} from 'loopback4-authentication/passport-local';
 import {
   AuthenticationServiceComponent,
   SignUpBindings,
@@ -39,6 +41,10 @@ export class AuthMultitenantExampleApplication extends BootMixin(
       path: '/explorer',
     });
     this.component(RestExplorerComponent);
+    this.bind(Strategies.Passport.LOCAL_STRATEGY_FACTORY).toProvider(
+      LocalPasswordStrategyFactoryProvider,
+    );
+    this.component(AuthenticationComponent);
     this.component(AuthenticationServiceComponent);
     this.bind(SignUpBindings.LOCAL_SIGNUP_PROVIDER).toProvider(
       LocalSignupProvider,
