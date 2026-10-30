@@ -77,6 +77,7 @@ async function linesOf(
 describe('consoleReporter', () => {
   it('has the name console', () => {
     expect(consoleReporter().name).to.equal('console');
+    expect(detailReporter().name).to.equal('console-detail');
   });
 
   it('prints the block, the table, the skipped scenarios, the coverage, the note and the legend', async () => {

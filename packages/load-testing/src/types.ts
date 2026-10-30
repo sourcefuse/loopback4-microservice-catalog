@@ -90,9 +90,11 @@ export type BrowserLimitOptions = {
   /**
    * Limits for each Web Vital, by name. FCP, LCP, CLS and TTFB are on with
    * the limits of `WEB_VITALS_TARGETS`. INP is on only when a layer names
-   * it, because it needs a click or a key press.
+   * it, because it needs a click or a key press. `false` turns a Web Vital
+   * off, for a flow that gives it no sample. The last layer that names a
+   * Web Vital decides if it is on.
    */
-  vitals?: Partial<Record<WebVital, MetricThresholds>>;
+  vitals?: Partial<Record<WebVital, MetricThresholds | false>>;
 };
 
 /** A page of the Playwright that Artillery brings. */

@@ -487,6 +487,42 @@ load.describe('dashboard', ${describeOptions}, () => {
       });
     });
 
+    it('turns a Web Vital off with false, and the last layer that names it wins', () => {
+      const config = {
+        phases: PHASES,
+        thresholds: {vitals: {TTFB: false as const, LCP: {p95: 3000}, INP: {}}},
+      };
+      writeBrowser(
+        '{vitals: {TTFB: {minDelta: 50}, CLS: false}}',
+        '{vitals: {INP: false}}',
+      );
+
+      const [loaded] = loadScenarios(pkg, config);
+
+      expect(loaded.browser?.vitals).to.deepEqual({
+        FCP: {...MS, p95: 1800},
+        LCP: {...MS, p95: 3000},
+        TTFB: {p95Regression: 20, minDelta: 50, p95: 800},
+      });
+    });
+
+    it('turns a Web Vital on again when an inner describe gives it limits', () => {
+      write('src/__tests__/load/b.load.ts');
+      write(
+        'dist/__tests__/load/b.load.js',
+        `const {load} = require(${builder});
+load.describe('app', {vitals: {LCP: false}}, () => {
+  load.describe('dashboard', {vitals: {LCP: {p95: 4000}}}, () => {
+    load.browser('open', {}, async () => {});
+  });
+});`,
+      );
+
+      const [loaded] = loadScenarios(pkg, CONFIG);
+
+      expect(loaded.browser?.vitals.LCP).to.deepEqual({...MS, p95: 4000});
+    });
+
     it('stops when a browser limit is out of range, with the scenario named', () => {
       writeBrowser(
         '{step: {p95: -1}}',

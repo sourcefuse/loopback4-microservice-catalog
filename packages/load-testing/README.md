@@ -1403,7 +1403,7 @@ Limits merge by field, from the library up to one metric, as the thresholds of `
 
 The options of `load.browser` are only `phases`, `step`, `vitals`, `steps`, `flow`, `before` and `after`. Another key in a plain JavaScript file throws a `TypeError` at load time. `before` and `after` have the types and the rules of [Hooks](#hooks): they run once per run, in the CLI, and `after` runs also when `before` or the load failed. A browser scenario has no `beforeEach`, `afterEach`, `beforeRequest` or `afterResponse`, no `tokenCheck` and no `artillery` option. The `TypeError` names the key. A `load.describe` has no `before` or `after`.
 
-Each key takes `p95`, `p95Regression` and `minDelta`, as a threshold does. `vitals` takes one entry for each Web Vital. An entry for `INP`, also an empty one, turns INP on. `steps` and `flow` start from the merged `step` limits. `thresholds.default` (`p95Regression`, `minDelta`) does not change the limits of browser metrics. They use `thresholds.step` and `thresholds.vitals`. An unknown Web Vital name, and `errorRate` in a step or Web Vital limit, are config errors. A limit that is not an object is a config error too. Examples are `step: 5` and `vitals: {LCP: 3000}`.
+Each key takes `p95`, `p95Regression` and `minDelta`, as a threshold does. `vitals` takes one entry for each Web Vital. An entry for `INP`, also an empty one, turns INP on. `false` turns a Web Vital off, for example `vitals: {TTFB: false}` for a flow that gives no TTFB sample. The last level that names a Web Vital decides: an object after `false` turns it on again, from the defaults. `steps` and `flow` start from the merged `step` limits. `thresholds.default` (`p95Regression`, `minDelta`) does not change the limits of browser metrics. They use `thresholds.step` and `thresholds.vitals`. An unknown Web Vital name, and `errorRate` in a step or Web Vital limit, are config errors. A limit that is not an object is a config error too. Examples are `step: 5` and `vitals: {LCP: 3000}`.
 
 ```ts
 import {load, UI_TARGETS, WEB_VITALS_TARGETS} from '@sourceloop/load-testing';
@@ -2210,7 +2210,7 @@ Layers merge by field. The strongest layer wins, and a field that no layer sets 
 | HTTP `p95`, `errorRate`, `p95Regression`, `minDelta` | 500 ms, 1%, 20%, 10 ms |
 | `maxHeavyApis` | 0 |
 | Browser step p95 | 1500 ms (`UI_TARGETS.criticalAction`) |
-| FCP, LCP, CLS, TTFB, INP p95 | 1800 ms, 2500 ms, 0.1, 800 ms, 200 ms (INP only when a layer names it) |
+| FCP, LCP, CLS, TTFB, INP p95 | 1800 ms, 2500 ms, 0.1, 800 ms, 200 ms (INP only when a layer names it; `false` turns one off) |
 | Baseline history | the last 10 runs of each endpoint or metric |
 | Token refresh | at most once a minute |
 | Token check margin | the load time plus 120 s must stay below the token life |

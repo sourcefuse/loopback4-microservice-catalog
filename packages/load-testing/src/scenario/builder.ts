@@ -193,12 +193,16 @@ function mergeVitals(
  * is not an object stays as it is, so that the loader can report it. A
  * plain JavaScript file can set it.
  */
-function mergeLimits(
-  all: MetricThresholds | undefined,
-  layer: MetricThresholds | undefined,
-): MetricThresholds | undefined {
+function mergeLimits<T extends MetricThresholds | false>(
+  all: T | undefined,
+  layer: T | undefined,
+): T | undefined {
   if (!isPlainObject(layer)) return layer;
-  return all === undefined || isPlainObject(all) ? {...all, ...layer} : all;
+  // An object after `false` turns the Web Vital on again, from its defaults.
+  if (all === false) return layer;
+  return all === undefined || isPlainObject(all)
+    ? ({...all, ...layer} as T)
+    : all;
 }
 
 /** Leaves out what a browser scenario has no use for: it sends no requests. */

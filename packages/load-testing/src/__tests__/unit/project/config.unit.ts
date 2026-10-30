@@ -280,6 +280,12 @@ describe('configProblems', () => {
     ]);
   });
 
+  it('accepts false for a Web Vital, which turns it off', () => {
+    const good = {...GOOD, thresholds: {vitals: {TTFB: false, INP: {}}}};
+
+    expect(configProblems(good)).to.deepEqual([]);
+  });
+
   it('finds a Web Vital name that does not exist', () => {
     const bad = {...GOOD, thresholds: {vitals: {lcp: {p95: 1}}}};
 

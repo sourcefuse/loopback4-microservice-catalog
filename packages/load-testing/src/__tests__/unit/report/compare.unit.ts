@@ -517,6 +517,26 @@ describe('saveRun', () => {
     );
   });
 
+  it('stops at a baseline with a history and no host', () => {
+    fs.writeFileSync(
+      path.join(pkgDir, OUT_DIR, 'baseline.json'),
+      JSON.stringify({history: {list: {GET: [100]}}, workloads: {}}),
+    );
+
+    expect(() => readBaseline(pkgDir)).to.throw(
+      /baseline.json has no baseUrl and no uiUrl/,
+    );
+  });
+
+  it('reads an empty baseline with no host', () => {
+    fs.writeFileSync(
+      path.join(pkgDir, OUT_DIR, 'baseline.json'),
+      JSON.stringify({history: {}, workloads: {}}),
+    );
+
+    expect(readBaseline(pkgDir)).to.deepEqual({history: {}, workloads: {}});
+  });
+
   it('stops at a baseline file with no workloads', () => {
     fs.writeFileSync(
       path.join(pkgDir, OUT_DIR, 'baseline.json'),

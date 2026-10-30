@@ -52,7 +52,7 @@ export function writeScenario(
   defaults: ArtilleryConfig | undefined,
   phases: Phase[],
   runVars: Vars,
-  browser: BrowserEngine = chromium(),
+  browser?: BrowserEngine,
 ): string {
   const outDir = path.join(pkgDir, OUT_DIR);
   fs.mkdirSync(outDir, {recursive: true});
@@ -68,7 +68,7 @@ export function writeScenario(
       processorPath,
       scriptPath,
       runVars,
-      browser,
+      browser ?? chromium(),
     );
   }
   checkNames(scenario);

@@ -227,6 +227,10 @@ export function readBaseline(pkgDir: string): Baseline | undefined {
   if (hosts.some(url => typeof url !== 'string')) {
     throw fail('has a baseUrl or uiUrl that is not a text');
   }
+  // Without a host, a run on another host would add to this history.
+  if (hosts.length === 0 && Object.keys(history).length > 0) {
+    throw fail('has no baseUrl and no uiUrl');
+  }
   return baseline as Baseline;
 }
 

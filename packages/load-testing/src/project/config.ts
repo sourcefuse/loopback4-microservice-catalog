@@ -482,6 +482,14 @@ export function metricProblems(
   ];
 }
 
+/** Returns what is wrong with the limits of a Web Vital. `false` turns it off. */
+function vitalProblems(
+  limits: MetricThresholds | false | undefined,
+  where: string,
+): string[] {
+  return limits === false ? [] : metricProblems(limits, where);
+}
+
 /**
  * Returns what is wrong with the `step` and `vitals` limits of the config,
  * of a describe or of a scenario. `where` starts each message.
@@ -498,7 +506,7 @@ export function browserLimitProblems(
         ]
       : Object.entries(vitals ?? {}).flatMap(([vital, limits]) =>
           Object.hasOwn(VITAL_DEFAULTS, vital)
-            ? metricProblems(limits, `${where}vitals.${vital}.`)
+            ? vitalProblems(limits, `${where}vitals.${vital}.`)
             : [
                 `${where}vitals.${vital} is not a Web Vital: use one of ${Object.keys(VITAL_DEFAULTS).join(', ')}`,
               ],
@@ -584,7 +592,8 @@ function rateProblems(fields: Record<string, unknown>, at: string): string[] {
 /**
  * The limits of a browser scenario. Each metric merges the library, the
  * config, and the describes with the scenario, by field. `steps` and `flow`
- * merge on top of `step`. INP is on only when a layer names it, and the flow
+ * merge on top of `step`. INP is on only when a layer names it. `false` in
+ * the last layer that names a Web Vital turns it off. The flow
  * total only when `flow` is set.
  */
 export function resolveBrowserLimits(
@@ -596,21 +605,21 @@ export function resolveBrowserLimits(
     config.step,
     scenario.step,
   );
-  const vitals = (Object.keys(VITAL_DEFAULTS) as WebVital[])
-    .filter(
-      vital =>
-        vital !== 'INP' ||
-        config.vitals?.INP !== undefined ||
-        scenario.vitals?.INP !== undefined,
-    )
-    .map(vital => [
-      vital,
-      resolveMetric(
-        VITAL_DEFAULTS[vital],
-        config.vitals?.[vital],
-        scenario.vitals?.[vital],
-      ),
-    ]);
+  const vitals = (Object.keys(VITAL_DEFAULTS) as WebVital[]).flatMap(vital => {
+    const layers = [config.vitals?.[vital], scenario.vitals?.[vital]];
+    const named = layers.filter(layer => layer !== undefined);
+    const last = named.at(-1);
+    const on = vital === 'INP' ? isPlainObject(last) : last !== false;
+    if (!on) return [];
+    // A layer before the last `false` does not count: `false` resets the limits.
+    const kept = named.slice(named.lastIndexOf(false) + 1);
+    return [
+      [
+        vital,
+        resolveMetric(VITAL_DEFAULTS[vital], ...(kept as MetricThresholds[])),
+      ],
+    ];
+  });
   const {steps = {}, flowLimits} = scenario.browser;
   return {
     step,

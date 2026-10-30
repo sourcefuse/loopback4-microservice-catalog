@@ -47,7 +47,10 @@ export function consoleReporter(): Reporter {
  * `load-testing report` uses it.
  */
 export function detailReporter(): Reporter {
-  return {name: 'console', onRunEnd: result => printRun(result, true)};
+  return {
+    name: 'console-detail',
+    onRunEnd: result => printRun(result, true),
+  };
 }
 
 /** `detail` prints every metric of a browser scenario, not only the failed ones. */
