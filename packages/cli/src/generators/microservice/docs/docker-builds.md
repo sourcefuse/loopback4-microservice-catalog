@@ -117,7 +117,9 @@ The deps image does all the work that must happen after the install and before t
 
 - Patching. If the repo has `patches/`, the image runs `patch-package`. The tracer copies files as they are on disk, so it must see the patched versions.
 - Native addons. `npm ci --ignore-scripts` skips install scripts, so a package that ships a `.node` binary (bcrypt, argon2, sharp) has no binary for this platform. `Dockerfile.deps` has a commented example that rebuilds the addon and loads it one time. A bad binary then fails the build, not the first login request.
-- Cleanup (optional). `node-prune` or `clean-modules` does not make a traced image smaller, because the tracer copies only files that the app loads. It only makes the deps image and the trace a little faster.
+- Cleanup. The image runs `clean-modules` after the install. It does not make a traced image smaller, because the tracer copies only files that the app loads. It only makes the deps image and the trace a little faster.
+
+The tracer ignores `node_modules/.bin`. A dependency can build a bin path from the working directory. nft changes that path to a glob and then traces every dev CLI in `.bin`. One such case made a trace go from about 7,000 to about 136,000 files, and a build go from about 2 minutes to about 12 minutes.
 
 The deps image also installs a pinned `@vercel/nft` globally, so the tracer does not depend on project dependencies. The tracer uses `path.matchesGlob` and `fs.globSync`, so the deps image needs Node 22 or later. The templates use Node 24.
 
