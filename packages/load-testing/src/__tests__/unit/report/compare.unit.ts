@@ -9,10 +9,12 @@ import {expect} from '@loopback/testlab';
 import {
   addRun,
   addRuns,
+  BASELINE_FILE,
   baselineFrom,
   exceedsMax,
   HISTORY_SIZE,
   judge,
+  judgeP95,
   judgeVusers,
   p95Limit,
   readBaseline,
@@ -102,6 +104,30 @@ describe('addRun', () => {
 
   it('starts a history', () => {
     expect(addRun(undefined, 12)).to.deepEqual([12]);
+  });
+});
+
+describe('judgeP95 with a mean baseline', () => {
+  it('shows the baseline in ms with 1 decimal', () => {
+    expect(judgeP95(200, LIMITS, 124.30000000000001)).to.deepEqual([
+      'p95 +60.9% (+75.7 ms) over baseline 124.3 ms',
+    ]);
+  });
+
+  it('shows the baseline of CLS with 2 decimals', () => {
+    const limits = {p95: 1, p95Regression: 10, minDelta: 0.05};
+
+    expect(judgeP95(0.3, limits, 0.15000000000000002, '')).to.deepEqual([
+      'p95 +100% (+0.15) over baseline 0.15',
+    ]);
+  });
+});
+
+describe('judgeP95 at exactly minDelta above the baseline', () => {
+  it('passes a CLS that goes from 0.7 to 0.8 although 0.7 + 0.1 is 0.7999999999999999', () => {
+    const limits = {p95: 1, p95Regression: 10, minDelta: 0.1};
+
+    expect(judgeP95(0.8, limits, 0.7, '')).to.deepEqual([]);
   });
 });
 
@@ -218,7 +244,13 @@ describe('addRuns', () => {
   it('adds the p95 of a run to the history of its scenario', () => {
     const after = addRuns(
       before,
-      {s: {workload: '3 vusers/s for 60 s', p95: {'GET /a': 14}}},
+      {
+        s: {
+          workload: '3 vusers/s for 60 s',
+          browser: false,
+          p95: {'GET /a': 14},
+        },
+      },
       URL,
     );
 
@@ -228,7 +260,13 @@ describe('addRuns', () => {
   it('starts a new history for the scenarios of the run when the host changed', () => {
     const after = addRuns(
       before,
-      {s: {workload: '3 vusers/s for 60 s', p95: {'GET /a': 14}}},
+      {
+        s: {
+          workload: '3 vusers/s for 60 s',
+          browser: false,
+          p95: {'GET /a': 14},
+        },
+      },
       'http://other.example',
     );
 
@@ -239,7 +277,13 @@ describe('addRuns', () => {
   it('keeps the history of a scenario that did not run, when the host changed', () => {
     const after = addRuns(
       before,
-      {s: {workload: '3 vusers/s for 60 s', p95: {'GET /a': 14}}},
+      {
+        s: {
+          workload: '3 vusers/s for 60 s',
+          browser: false,
+          p95: {'GET /a': 14},
+        },
+      },
       'http://other.example',
     );
 
@@ -249,7 +293,13 @@ describe('addRuns', () => {
   it('starts a new history when the workload changed', () => {
     const after = addRuns(
       before,
-      {s: {workload: '5 vusers/s for 60 s', p95: {'GET /a': 14}}},
+      {
+        s: {
+          workload: '5 vusers/s for 60 s',
+          browser: false,
+          p95: {'GET /a': 14},
+        },
+      },
       URL,
     );
 
@@ -260,7 +310,13 @@ describe('addRuns', () => {
   it('keeps the scenarios that did not run', () => {
     const after = addRuns(
       before,
-      {s: {workload: '3 vusers/s for 60 s', p95: {'GET /a': 14}}},
+      {
+        s: {
+          workload: '3 vusers/s for 60 s',
+          browser: false,
+          p95: {'GET /a': 14},
+        },
+      },
       URL,
     );
 
@@ -268,10 +324,73 @@ describe('addRuns', () => {
     expect(after.workloads.other).to.equal('1 vusers/s for 60 s');
   });
 
+  describe('of a run of browser scenarios, with no API', () => {
+    const page = {
+      page: {
+        workload: '3 vusers/s for 60 s',
+        browser: true,
+        p95: {'browser.step.save': 900},
+      },
+    };
+    const withUi = {
+      ...baselineOf(
+        {page: {'browser.step.save': [800]}},
+        {
+          page: '3 vusers/s for 60 s',
+        },
+      ),
+      uiUrl: 'http://ui',
+    };
+
+    it('adds to the history on the same web app', () => {
+      const after = addRuns(withUi, page, undefined, 'http://ui');
+
+      expect(after.history.page).to.deepEqual({
+        'browser.step.save': [800, 900],
+      });
+    });
+
+    it('starts a new history when the web app changed', () => {
+      const after = addRuns(withUi, page, undefined, 'http://other-ui');
+
+      expect(after.history.page).to.deepEqual({'browser.step.save': [900]});
+    });
+  });
+
+  describe('of a baseline with an API and a web app', () => {
+    const both = {
+      ...baselineOf(
+        {api: {'GET /a': [10]}, page: {'browser.step.save': [800]}},
+        {api: 'w', page: 'w'},
+      ),
+      uiUrl: 'http://ui',
+    };
+    const run = {
+      api: {workload: 'w', browser: false, p95: {'GET /a': 14}},
+      page: {workload: 'w', browser: true, p95: {'browser.step.save': 900}},
+    };
+
+    it('keeps the history of the browser scenarios when only the API changed', () => {
+      const after = addRuns(both, run, 'http://other.example', 'http://ui');
+
+      expect(after.history.api).to.deepEqual({'GET /a': [14]});
+      expect(after.history.page).to.deepEqual({
+        'browser.step.save': [800, 900],
+      });
+    });
+
+    it('keeps the history of the HTTP scenarios when only the web app changed', () => {
+      const after = addRuns(both, run, URL, 'http://other-ui');
+
+      expect(after.history.api).to.deepEqual({'GET /a': [10, 14]});
+      expect(after.history.page).to.deepEqual({'browser.step.save': [900]});
+    });
+  });
+
   it('starts a baseline', () => {
     const after = addRuns(
       undefined,
-      {s: {workload: 'w', p95: {'GET /a': 14}}},
+      {s: {workload: 'w', browser: false, p95: {'GET /a': 14}}},
       URL,
     );
 
@@ -283,7 +402,10 @@ describe('addRuns', () => {
 });
 
 describe('saveRun', () => {
-  const measured = {s: {workload: 'w', p95: {'GET /a': 14}}};
+  const measured = {s: {workload: 'w', browser: false, p95: {'GET /a': 14}}};
+  const browserMeasured = {
+    s: {workload: 'w', browser: true, p95: {'browser.flow.s': 900}},
+  };
   let pkgDir: string;
 
   beforeEach(() => {
@@ -300,6 +422,85 @@ describe('saveRun', () => {
     expect(readBaseline(pkgDir)).to.be.undefined();
   });
 
+  it('keeps the API of the baseline after a run of browser scenarios only', () => {
+    saveRun(pkgDir, {
+      baseUrl: 'http://api',
+      measured,
+      failed: false,
+      force: false,
+    });
+
+    saveRun(pkgDir, {
+      uiUrl: 'http://ui',
+      baseline: readBaseline(pkgDir),
+      measured: browserMeasured,
+      failed: false,
+      force: false,
+    });
+
+    expect(readBaseline(pkgDir)).to.containDeep({
+      baseUrl: 'http://api',
+      uiUrl: 'http://ui',
+    });
+  });
+
+  it('keeps the web app of the baseline after a run of HTTP scenarios only', () => {
+    saveRun(pkgDir, {
+      uiUrl: 'http://ui',
+      measured: browserMeasured,
+      failed: false,
+      force: false,
+    });
+
+    saveRun(pkgDir, {
+      baseUrl: 'http://api',
+      baseline: readBaseline(pkgDir),
+      measured,
+      failed: false,
+      force: false,
+    });
+
+    expect(readBaseline(pkgDir)).to.containDeep({
+      baseUrl: 'http://api',
+      uiUrl: 'http://ui',
+    });
+  });
+
+  it('saves no baseUrl after a run of browser scenarios only, although the run has a target', () => {
+    saveRun(pkgDir, {
+      baseUrl: 'http://api',
+      uiUrl: 'http://ui',
+      measured: browserMeasured,
+      failed: false,
+      force: false,
+    });
+
+    expect(readBaseline(pkgDir)?.baseUrl).to.be.undefined();
+    expect(readBaseline(pkgDir)?.uiUrl).to.equal('http://ui');
+  });
+
+  it('saves no uiUrl after a run of HTTP scenarios only, although the run has a target', () => {
+    saveRun(pkgDir, {
+      baseUrl: 'http://api',
+      uiUrl: 'http://ui',
+      measured,
+      failed: false,
+      force: false,
+    });
+
+    expect(readBaseline(pkgDir)?.baseUrl).to.equal('http://api');
+    expect(readBaseline(pkgDir)?.uiUrl).to.be.undefined();
+  });
+
+  it('reads a baseline of browser scenarios only, which has no baseUrl', () => {
+    fs.writeFileSync(
+      path.join(pkgDir, OUT_DIR, 'baseline.json'),
+      JSON.stringify({history: {}, workloads: {}, uiUrl: 'http://ui'}),
+    );
+
+    expect(readBaseline(pkgDir)?.uiUrl).to.equal('http://ui');
+  });
+
   it('makes the folder of the baseline when it is missing', () => {
     fs.rmSync(path.join(pkgDir, OUT_DIR), {recursive: true});
     const run = {baseUrl: 'http://app', measured, failed: false, force: false};
@@ -314,6 +515,26 @@ describe('saveRun', () => {
     expect(() => readBaseline(pkgDir)).to.throw(
       /baseline.json is not valid JSON. Delete it, and record a new one./,
     );
+  });
+
+  it('stops at a baseline with a history and no host', () => {
+    fs.writeFileSync(
+      path.join(pkgDir, OUT_DIR, 'baseline.json'),
+      JSON.stringify({history: {list: {GET: [100]}}, workloads: {}}),
+    );
+
+    expect(() => readBaseline(pkgDir)).to.throw(
+      /baseline.json has no baseUrl and no uiUrl/,
+    );
+  });
+
+  it('reads an empty baseline with no host', () => {
+    fs.writeFileSync(
+      path.join(pkgDir, OUT_DIR, 'baseline.json'),
+      JSON.stringify({history: {}, workloads: {}}),
+    );
+
+    expect(readBaseline(pkgDir)).to.deepEqual({history: {}, workloads: {}});
   });
 
   it('stops at a baseline file with no workloads', () => {
@@ -343,15 +564,28 @@ describe('saveRun', () => {
     });
   }
 
-  it('stops at a baseline that has no baseUrl, or one that is not a text', () => {
-    for (const baseUrl of [undefined, 5, null]) {
+  it('reads a baseline that has no baseUrl and no uiUrl', () => {
+    fs.writeFileSync(
+      path.join(pkgDir, OUT_DIR, 'baseline.json'),
+      JSON.stringify({history: {}, workloads: {}}),
+    );
+
+    expect(readBaseline(pkgDir)).to.deepEqual({history: {}, workloads: {}});
+  });
+
+  it('stops at a baseline with a baseUrl or a uiUrl that is not a text', () => {
+    for (const hosts of [
+      {baseUrl: 5},
+      {baseUrl: null},
+      {baseUrl: 'http://api', uiUrl: 5},
+    ]) {
       fs.writeFileSync(
         path.join(pkgDir, OUT_DIR, 'baseline.json'),
-        JSON.stringify({history: {}, workloads: {}, baseUrl}),
+        JSON.stringify({history: {}, workloads: {}, ...hosts}),
       );
 
       expect(() => readBaseline(pkgDir)).to.throw(
-        /baseline.json has no baseUrl. Delete it, and record a new one./,
+        `${BASELINE_FILE} has a baseUrl or uiUrl that is not a text. Delete it, and record a new one.`,
       );
     }
   });

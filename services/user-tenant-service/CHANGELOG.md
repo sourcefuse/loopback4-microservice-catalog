@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>9.0.1 (2026-10-30)</small>
+
+* fix(auth): remove hardcoded test passwords from tests and sandboxes (#2630) ([272b85e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/272b85e)), closes [#2630](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2630)
+
+
+
+
+
 ## 9.0.0 (2026-10-08)
 
 * fix(deps): resolve trivy high-severity vulnerabilities (#2616) ([8f9b03e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/8f9b03e)), closes [#2616](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2616)

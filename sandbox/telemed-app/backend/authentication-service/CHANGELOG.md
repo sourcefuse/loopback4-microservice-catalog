@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.10.3 (2026-10-30)</small>
+
+* chore(deps): bump node to 24 in sandboxes and raise cli engines to >=22 (#2626) ([0e73bdc](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0e73bdc)), closes [#2626](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2626)
+* fix(deps): resolve high/critical trivy vulnerabilities (#2629) ([2e43b15](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2e43b15)), closes [#2629](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2629) [#2628](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2628)
+* fix(deps): resolve trivy handlebars and msgpack5 vulnerabilities (#2622) ([75fa209](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/75fa209)), closes [#2622](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2622) [#2621](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2621)
+
+
+
+
+
 ## <small>0.10.2 (2026-10-08)</small>
 
 * fix(sandbox): resolve trivy vulnerability findings in sandbox services (#2615) ([c262018](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c262018)), closes [#2615](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2615)

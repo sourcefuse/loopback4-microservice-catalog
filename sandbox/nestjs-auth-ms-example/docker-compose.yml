@@ -8,7 +8,7 @@ x-app-config: &app-config
   AUTHDB_SCHEMA: main
   JWT_SECRET: secret
   JWT_ISSUER: sourcefuse
-  USER_TEMP_PASSWORD: 'test123!@#'
+  USER_TEMP_PASSWORD: '<Enter password here>'
 
 x-db-config: &db-config
   POSTGRES_USER: nestjs

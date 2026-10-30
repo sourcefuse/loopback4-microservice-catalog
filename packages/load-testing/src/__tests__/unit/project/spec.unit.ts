@@ -44,15 +44,11 @@ describe('coverage', () => {
 });
 
 describe('readSpec', () => {
-  it('names src/openapi.json, and the command that makes it, when the file is missing', () => {
+  it('gives undefined when the file is missing', () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'load-testing-'));
 
     try {
-      expect(() => readSpec(dir)).to.throw({
-        name: 'ConfigError',
-        message:
-          /No src\/openapi.json in .*Build the app, run `node .\/dist\/openapi-spec src\/openapi.json`, and commit the file/,
-      });
+      expect(readSpec(dir)).to.be.undefined();
     } finally {
       fs.rmSync(dir, {recursive: true});
     }

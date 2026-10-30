@@ -6,7 +6,7 @@ import type {Scenario} from '../types';
 import {ScenarioError} from '../errors';
 
 /** Goes between the `load.describe` names and the name of a scenario. */
-const SEPARATOR = ' › ';
+export const SEPARATOR = ' › ';
 
 /**
  * `group › name`, or `name` for a scenario that no `load.describe` holds.

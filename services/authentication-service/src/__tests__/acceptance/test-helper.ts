@@ -19,6 +19,10 @@ import {AuthCacheSourceName, AuthDbSourceName} from '../../types';
 import {TestingApplication} from '../fixtures/application';
 import {OtpSenderProvider} from '../fixtures/providers/otp-sender.provider';
 
+// Set TEST_USER_PASSWORD in the environment; the placeholder is intentionally not a real password.
+const TEST_USER_PASSWORD =
+  process.env.TEST_USER_PASSWORD ?? '<Enter test password>';
+
 export async function setupApplication(): Promise<AppWithClient> {
   const restConfig = givenHttpServerConfig({});
 
@@ -41,7 +45,7 @@ export async function setupApplication(): Promise<AppWithClient> {
   app.bind(AuthenticationBindings.CURRENT_USER).to({
     id: 1,
     username: 'test_user',
-    password: 'temp123!@',
+    password: TEST_USER_PASSWORD,
   });
 
   app
