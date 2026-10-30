@@ -3,7 +3,7 @@ mat-card {
   }
   
   .mat-card:not([class*=mat-elevation-z]) {
-	box-shadow: none !important;
+	box-shadow: none;
 	border-radius: 5px 5px 0px 0px;
   }
   

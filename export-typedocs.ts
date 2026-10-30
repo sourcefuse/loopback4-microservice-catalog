@@ -116,7 +116,10 @@ async function main() {
   }
 }
 
-main();
+main().catch(err => {
+  process.stderr.write(`${err instanceof Error ? err.stack : err}\n`);
+  process.exit(1);
+});
 
 // Types
 interface LernaPackageInfo {
