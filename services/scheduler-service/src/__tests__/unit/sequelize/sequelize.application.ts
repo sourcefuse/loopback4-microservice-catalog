@@ -26,6 +26,10 @@ import {SchedulerServiceComponent} from '../../../component';
 import {CoreSchedulerBindings} from '../../../keys';
 import {BearerTokenVerifyProvider} from '../../bearer-token-verifier.provider';
 import {MySequence} from '../../sequence';
+// Set TEST_USER_PASSWORD in the environment; the placeholder is intentionally not a real password.
+const TEST_USER_PASSWORD =
+  process.env.TEST_USER_PASSWORD ?? '<Enter test password>';
+
 export {ApplicationConfig};
 
 export class SchedulerSequelizeApplication extends BootMixin(
@@ -52,7 +56,7 @@ export class SchedulerSequelizeApplication extends BootMixin(
     this.bind(AuthenticationBindings.CURRENT_USER).to({
       id: 1,
       username: 'test_user',
-      password: 'temp123!@',
+      password: TEST_USER_PASSWORD,
     });
     this.component(SchedulerServiceComponent);
     const ds = new SequelizeDataSource({

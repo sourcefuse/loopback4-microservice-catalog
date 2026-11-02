@@ -2,7 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {ChildProcess, spawn} from 'node:child_process';
+import childProcess, {ChildProcess, spawn} from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -32,6 +32,67 @@ describe('runArtillery', () => {
       fs.rmSync(dir, {recursive: true});
     }
   }).timeout(30_000);
+
+  describe('when Artillery has written a report and then fails', () => {
+    const dirs: string[] = [];
+    let script: string;
+    let reportPath: string;
+    beforeEach(() => {
+      const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'load-testing-'));
+      dirs.push(dir);
+      script = path.join(dir, 's.json');
+      reportPath = path.join(dir, 's.report.json');
+      fs.writeFileSync(script, '{}');
+    });
+    afterEach(() => {
+      sinon.restore();
+      for (const dir of dirs.splice(0)) fs.rmSync(dir, {recursive: true});
+    });
+
+    /** Replaces Artillery by a command that writes the report, and then exits. */
+    function stubArtillery(ending: string): void {
+      const realSpawn = childProcess.spawn;
+      sinon
+        .stub(childProcess, 'spawn')
+        .callsFake(((
+          _command: string,
+          args: string[],
+          options: childProcess.SpawnOptions,
+        ) =>
+          realSpawn(
+            process.execPath,
+            [
+              '-e',
+              `require('fs').writeFileSync(process.argv[1], '{}'); ${ending}`,
+              args[args.indexOf('--output') + 1],
+            ],
+            options,
+          )) as typeof childProcess.spawn);
+    }
+
+    it('keeps no report file when the exit code is not 0', async () => {
+      stubArtillery('process.exit(3)');
+
+      await expect(runArtillery(script, [], process.env)).to.be.rejectedWith(
+        /code 3/,
+      );
+      expect(fs.existsSync(reportPath)).to.be.false();
+    });
+
+    it('keeps no report file when the signal aborts the run', async () => {
+      stubArtillery('setTimeout(() => {}, 60000)');
+      const controller = new AbortController();
+      const done = runArtillery(script, [], process.env, controller.signal);
+      for (let i = 0; i < 200 && !fs.existsSync(reportPath); i++) {
+        await new Promise(resolve => setTimeout(resolve, 25));
+      }
+
+      controller.abort(new Error('stop'));
+
+      await expect(done).to.be.rejectedWith('stop');
+      expect(fs.existsSync(reportPath)).to.be.false();
+    });
+  });
 });
 
 describe('artilleryBin', () => {

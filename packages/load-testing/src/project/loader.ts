@@ -4,15 +4,30 @@
 // https://opensource.org/licenses/MIT
 import fs from 'node:fs';
 import path from 'node:path';
-import {takeRegistered} from '../scenario/builder';
-import {requestsIn} from '../scenario/guards';
+import {registeredIn} from '../scenario/builder';
+import {isPlainObject, requestsIn} from '../scenario/guards';
 import {bracesProblems, headerBracesProblems} from '../scenario/braces';
 import {builtFile, SCENARIOS_DIR} from './layout';
-import {phaseProblems, resolveThresholds, thresholdProblems} from './config';
-import {labelOf, slugOf} from '../scenario/label';
-import type {LoadTestConfig, Scenario, Thresholds} from '../types';
+import {
+  browserLimitProblems,
+  metricProblems,
+  phaseProblems,
+  resolveBrowserLimits,
+  resolveThresholds,
+  thresholdProblems,
+} from './config';
+import {labelOf, SEPARATOR, slugOf} from '../scenario/label';
+import {browsersOf} from '../engine/artillery/browsers';
+import type {
+  BrowserScenario,
+  HttpScenario,
+  LoadTestConfig,
+  Scenario,
+  Thresholds,
+  WebVital,
+} from '../types';
 import {ScenarioError} from '../errors';
-import type {LoadedScenario} from './types';
+import type {BrowserLimits, LoadedScenario} from './types';
 
 const SCENARIO_SUFFIX = '.load.ts';
 
@@ -30,9 +45,19 @@ export function loadScenarios(
   config: LoadTestConfig,
 ): LoadedScenario[] {
   const labels = new Map<string, string>();
+  const browsers = browsersOf(config);
   return findScenarioFiles(path.join(pkgDir, SCENARIOS_DIR))
     .flatMap(source => registeredBy(builtFile(pkgDir, source)))
-    .map(scenario => {
+    .flatMap<{scenario: Scenario; vitals?: readonly WebVital[]}>(scenario => {
+      checkScenario(scenario);
+      return scenario.browser
+        ? browsers.map(browser => ({
+            scenario: forBrowser(scenario, browser.name),
+            vitals: browser.vitals,
+          }))
+        : [{scenario}];
+    })
+    .map(({scenario, vitals}) => {
       // The slug names the files of the scenario, so two scenarios cannot share it.
       const slug = slugOf(scenario);
       if (slug === BASELINE_SLUG) {
@@ -47,12 +72,50 @@ export function loadScenarios(
         );
       }
       labels.set(slug, labelOf(scenario));
-      checkScenario(scenario);
       return {
         scenario,
-        endpoints: thresholdsById(scenario, config.thresholds?.default ?? {}),
+        endpoints: scenario.browser
+          ? new Map()
+          : thresholdsById(scenario, config.thresholds?.default ?? {}),
+        ...(scenario.browser && {
+          browser: onlyVitals(
+            resolveBrowserLimits(config.thresholds ?? {}, scenario),
+            vitals ?? [],
+          ),
+        }),
       };
     });
+}
+
+/**
+ * The scenario for one browser. Its name ends with the browser, so that the
+ * files, the report rows and the baseline of each browser stay apart.
+ */
+function forBrowser(scenario: BrowserScenario, browserName: string): Scenario {
+  return {
+    ...scenario,
+    name: `${scenario.name}${SEPARATOR}${browserName}`,
+    browser: {
+      ...scenario.browser,
+      browserName,
+      registeredLabel: labelOf(scenario),
+    },
+  };
+}
+
+/** The limits without the Web Vitals that the browser does not report. */
+function onlyVitals(
+  limits: BrowserLimits,
+  reported: readonly WebVital[],
+): BrowserLimits {
+  return {
+    ...limits,
+    vitals: Object.fromEntries(
+      Object.entries(limits.vitals).filter(([vital]) =>
+        reported.includes(vital as WebVital),
+      ),
+    ),
+  };
 }
 
 function findScenarioFiles(dir: string): string[] {
@@ -73,18 +136,22 @@ function findScenarioFiles(dir: string): string[] {
   return files;
 }
 
-/** The scenarios that the `load.it` calls of a built file register. */
+/**
+ * The scenarios that the `load.it` calls of a built file register. A browser
+ * scenario keeps the file, so that each worker can load its flow again.
+ */
 function registeredBy(file: string): Scenario[] {
-  // Drops what an earlier file left behind.
-  takeRegistered();
-  require(file);
-  const scenarios = takeRegistered();
+  const scenarios = registeredIn(file);
   if (scenarios.length === 0) {
     throw new ScenarioError(
-      `${file} registers no scenario. Add a load.it(...) call to it. If it has one, two copies of @sourceloop/load-testing are installed.`,
+      `${file} registers no scenario. Add a load.it(...) or load.browser(...) call to it. If it has one, two copies of @sourceloop/load-testing are installed.`,
     );
   }
-  return scenarios;
+  return scenarios.map(scenario =>
+    scenario.browser
+      ? {...scenario, browser: {...scenario.browser, file}}
+      : scenario,
+  );
 }
 
 /** Throws a `ScenarioError` that lists what is wrong with the scenario. */
@@ -94,8 +161,25 @@ function checkScenario(scenario: Scenario): void {
     ...(scenario.phases === undefined
       ? []
       : phaseProblems(scenario.phases, 'phases')),
-    ...thresholdProblems(scenario.thresholds, 'thresholds.'),
-    ...headerBracesProblems(scenario),
+    ...(scenario.browser && typeof scenario.browser.flow !== 'function'
+      ? [
+          'flow must be a function: load.browser(name, async ({page, step}) => {...})',
+        ]
+      : []),
+    ...browserLimitProblems(scenario, ''),
+    ...(scenario.browser?.steps !== undefined &&
+    !isPlainObject(scenario.browser.steps)
+      ? ['steps must be an object of limits, for example {save: {p95: 3000}}']
+      : Object.entries(scenario.browser?.steps ?? {}).flatMap(
+          ([name, limits]) => metricProblems(limits, `steps.${name}.`),
+        )),
+    ...metricProblems(scenario.browser?.flowLimits, 'flow.'),
+    ...(scenario.browser
+      ? []
+      : [
+          ...thresholdProblems(scenario.thresholds, 'thresholds.'),
+          ...headerBracesProblems(scenario),
+        ]),
     ...requests.flatMap(req => thresholdProblems(req.options, `${req.id}: `)),
     ...requests.flatMap(bracesProblems),
   ];
@@ -104,7 +188,7 @@ function checkScenario(scenario: Scenario): void {
   }
 }
 
-function thresholdsById(scenario: Scenario, defaults: Thresholds) {
+function thresholdsById(scenario: HttpScenario, defaults: Thresholds) {
   const requests = requestsIn(scenario.requests);
   const ids = [...new Set(requests.map(req => req.id))];
   return new Map(

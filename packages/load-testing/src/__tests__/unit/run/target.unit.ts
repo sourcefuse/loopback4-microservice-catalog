@@ -9,7 +9,70 @@ import {login, readTarget, refresh, secondsLeft} from '../../../run/target';
 import {LoginError} from '../../../errors';
 import type {Login, Target} from '../../../run/types';
 
+const apiOnly = {api: true, ui: false};
+
 describe('readTarget', () => {
+  describe('named apis', () => {
+    const apis = {auth: 'LOAD_TESTS_AUTH_SERVICE_URL', core: 'CORE_URL'};
+    const withApis = {
+      LOAD_TESTS_BASE_URL: 'http://localhost:4014',
+      LOAD_TESTS_AUTH_SERVICE_URL: 'http://localhost:4015/',
+      CORE_URL: 'http://localhost:4016',
+    };
+
+    it('reads the URL of each name, without the slash at the end', () => {
+      expect(readTarget(withApis, apiOnly, apis).apiUrls).to.eql({
+        auth: 'http://localhost:4015',
+        core: 'http://localhost:4016',
+      });
+    });
+
+    it('names each variable that is not set', () => {
+      expect(() =>
+        readTarget(
+          {LOAD_TESTS_BASE_URL: 'http://localhost:4014'},
+          apiOnly,
+          apis,
+        ),
+      ).to.throw('Set LOAD_TESTS_AUTH_SERVICE_URL, CORE_URL');
+    });
+
+    it('names a variable once, also when two names share it', () => {
+      expect(() =>
+        readTarget({LOAD_TESTS_BASE_URL: 'http://localhost:4014'}, apiOnly, {
+          a: 'X_URL',
+          b: 'X_URL',
+        }),
+      ).to.throw(/^Set X_URL$/);
+    });
+
+    it('tells that LOAD_TESTS_AUTH_URL is now LOAD_TESTS_AUTH_SERVICE_URL', () => {
+      expect(() =>
+        readTarget(
+          {
+            ...withApis,
+            LOAD_TESTS_AUTH_SERVICE_URL: '',
+            LOAD_TESTS_AUTH_URL: 'http://x',
+          },
+          apiOnly,
+          {},
+        ),
+      ).to.throw(/now LOAD_TESTS_AUTH_SERVICE_URL/);
+    });
+
+    it('names the variable that is not a URL', () => {
+      expect(() =>
+        readTarget({...withApis, CORE_URL: 'core'}, apiOnly, apis),
+      ).to.throw(/CORE_URL is not an http or https URL/);
+    });
+
+    it('reads none when the run does not need the API', () => {
+      expect(
+        readTarget({}, {api: false, ui: false}, apis).apiUrls,
+      ).to.be.undefined();
+    });
+  });
+
   const env = {
     LOAD_TESTS_BASE_URL: 'http://localhost:4014/',
     LOAD_TESTS_USERNAME: 'u',
@@ -18,22 +81,25 @@ describe('readTarget', () => {
     LOAD_TESTS_CLIENT_SECRET: 's',
   };
 
-  it('uses the base URL for login when LOAD_TESTS_AUTH_URL is not set', () => {
-    expect(readTarget(env)).to.containDeep({
+  it('uses the base URL for login when LOAD_TESTS_AUTH_SERVICE_URL is not set', () => {
+    expect(readTarget(env, apiOnly)).to.containDeep({
       baseUrl: 'http://localhost:4014',
       authUrl: 'http://localhost:4014',
     });
   });
 
-  it('uses the base URL for login when LOAD_TESTS_AUTH_URL is empty', () => {
-    expect(readTarget({...env, LOAD_TESTS_AUTH_URL: ''}).authUrl).to.equal(
-      'http://localhost:4014',
-    );
+  it('uses the base URL for login when LOAD_TESTS_AUTH_SERVICE_URL is empty', () => {
+    expect(
+      readTarget({...env, LOAD_TESTS_AUTH_SERVICE_URL: ''}, apiOnly).authUrl,
+    ).to.equal('http://localhost:4014');
   });
 
-  it('removes the trailing slash of LOAD_TESTS_AUTH_URL, and keeps it apart from the base URL', () => {
+  it('removes the trailing slash of LOAD_TESTS_AUTH_SERVICE_URL, and keeps it apart from the base URL', () => {
     expect(
-      readTarget({...env, LOAD_TESTS_AUTH_URL: 'http://localhost:4015/'}),
+      readTarget(
+        {...env, LOAD_TESTS_AUTH_SERVICE_URL: 'http://localhost:4015/'},
+        apiOnly,
+      ),
     ).to.containDeep({
       baseUrl: 'http://localhost:4014',
       authUrl: 'http://localhost:4015',
@@ -42,7 +108,7 @@ describe('readTarget', () => {
 
   it('names LOAD_TESTS_BASE_URL when it is not a URL', () => {
     expect(() =>
-      readTarget({...env, LOAD_TESTS_BASE_URL: 'not a url'}),
+      readTarget({...env, LOAD_TESTS_BASE_URL: 'not a url'}, apiOnly),
     ).to.throw({
       name: 'ConfigError',
       message: /LOAD_TESTS_BASE_URL is not an http or https URL/,
@@ -51,26 +117,26 @@ describe('readTarget', () => {
 
   it('names LOAD_TESTS_BASE_URL when it has no http or https scheme', () => {
     expect(() =>
-      readTarget({...env, LOAD_TESTS_BASE_URL: 'localhost:3000'}),
+      readTarget({...env, LOAD_TESTS_BASE_URL: 'localhost:3000'}, apiOnly),
     ).to.throw({
       name: 'ConfigError',
       message: /LOAD_TESTS_BASE_URL is not an http or https URL/,
     });
   });
 
-  it('names LOAD_TESTS_AUTH_URL when it is not a URL', () => {
+  it('names LOAD_TESTS_AUTH_SERVICE_URL when it is not a URL', () => {
     expect(() =>
-      readTarget({...env, LOAD_TESTS_AUTH_URL: 'not a url'}),
+      readTarget({...env, LOAD_TESTS_AUTH_SERVICE_URL: 'not a url'}, apiOnly),
     ).to.throw({
       name: 'ConfigError',
-      message: /LOAD_TESTS_AUTH_URL is not an http or https URL/,
+      message: /LOAD_TESTS_AUTH_SERVICE_URL is not an http or https URL/,
     });
   });
 
   it('refuses a URL with a user or a password, and does not show it', () => {
-    for (const name of ['LOAD_TESTS_BASE_URL', 'LOAD_TESTS_AUTH_URL']) {
+    for (const name of ['LOAD_TESTS_BASE_URL', 'LOAD_TESTS_AUTH_SERVICE_URL']) {
       for (const url of ['http://me:secret@host', 'http://me@host']) {
-        expect(() => readTarget({...env, [name]: url})).to.throw({
+        expect(() => readTarget({...env, [name]: url}, apiOnly)).to.throw({
           name: 'ConfigError',
           message: `${name} must not hold a user or a password`,
         });
@@ -79,7 +145,7 @@ describe('readTarget', () => {
   });
 
   it('reads the login when the username is set', () => {
-    expect(readTarget(env).login).to.deepEqual({
+    expect(readTarget(env, apiOnly).login).to.deepEqual({
       username: 'u',
       password: 'p',
       clientId: 'c',
@@ -90,29 +156,52 @@ describe('readTarget', () => {
   it('has no login when the username is not set, or is empty', () => {
     const noLogin = {LOAD_TESTS_BASE_URL: 'http://localhost:4014'};
 
-    expect(readTarget(noLogin).login).to.be.undefined();
+    expect(readTarget(noLogin, apiOnly).login).to.be.undefined();
     expect(
-      readTarget({...noLogin, LOAD_TESTS_USERNAME: ''}).login,
+      readTarget({...noLogin, LOAD_TESTS_USERNAME: ''}, apiOnly).login,
     ).to.be.undefined();
   });
 
   it('always requires the base URL', () => {
-    expect(() => readTarget({})).to.throw('Set LOAD_TESTS_BASE_URL');
+    expect(() => readTarget({}, apiOnly)).to.throw('Set LOAD_TESTS_BASE_URL');
   });
 
   it('names every missing variable when the username is set', () => {
-    expect(() => readTarget({LOAD_TESTS_USERNAME: 'u'})).to.throw(
+    expect(() => readTarget({LOAD_TESTS_USERNAME: 'u'}, apiOnly)).to.throw(
       'Set LOAD_TESTS_BASE_URL, LOAD_TESTS_PASSWORD, LOAD_TESTS_CLIENT_ID, LOAD_TESTS_CLIENT_SECRET',
     );
   });
 
   it('does not ask for the login variables when the username is not set', () => {
     expect(() =>
-      readTarget({
-        LOAD_TESTS_BASE_URL: 'http://localhost:4014',
-        LOAD_TESTS_PASSWORD: 'p',
-      }),
+      readTarget(
+        {
+          LOAD_TESTS_BASE_URL: 'http://localhost:4014',
+          LOAD_TESTS_PASSWORD: 'p',
+        },
+        apiOnly,
+      ),
     ).to.not.throw();
+  });
+
+  describe('of browser scenarios only', () => {
+    const browserOnly = {api: false, ui: true};
+    const ui = {LOAD_TESTS_UI_URL: 'http://localhost:3000/'};
+
+    it('needs the base URL when the username is set, because the login uses the API', () => {
+      const {LOAD_TESTS_BASE_URL, ...noBaseUrl} = env;
+
+      expect(LOAD_TESTS_BASE_URL).to.be.ok();
+      expect(() => readTarget({...noBaseUrl, ...ui}, browserOnly)).to.throw(
+        'Set LOAD_TESTS_BASE_URL',
+      );
+    });
+
+    it('needs no base URL when the username is not set', () => {
+      expect(readTarget(ui, browserOnly)).to.deepEqual({
+        uiUrl: 'http://localhost:3000',
+      });
+    });
   });
 });
 
@@ -145,13 +234,16 @@ describe('login and refresh', () => {
       });
     });
     await new Promise<void>(resolve => server.listen(0, '127.0.0.1', resolve));
-    target = readTarget({
-      LOAD_TESTS_BASE_URL: `http://127.0.0.1:${(server.address() as AddressInfo).port}`,
-      LOAD_TESTS_USERNAME: 'u',
-      LOAD_TESTS_PASSWORD: 'p',
-      LOAD_TESTS_CLIENT_ID: 'c',
-      LOAD_TESTS_CLIENT_SECRET: 's',
-    }) as Target & {login: Login};
+    target = readTarget(
+      {
+        LOAD_TESTS_BASE_URL: `http://127.0.0.1:${(server.address() as AddressInfo).port}`,
+        LOAD_TESTS_USERNAME: 'u',
+        LOAD_TESTS_PASSWORD: 'p',
+        LOAD_TESTS_CLIENT_ID: 'c',
+        LOAD_TESTS_CLIENT_SECRET: 's',
+      },
+      apiOnly,
+    ) as Target & {login: Login};
   });
 
   after(() => new Promise<void>(resolve => server.close(() => resolve())));
@@ -375,13 +467,16 @@ describe('login and refresh stopped by a signal', () => {
       socket.on('close', () => sockets.delete(socket));
     });
     await new Promise<void>(resolve => server.listen(0, '127.0.0.1', resolve));
-    target = readTarget({
-      LOAD_TESTS_BASE_URL: `http://127.0.0.1:${(server.address() as AddressInfo).port}`,
-      LOAD_TESTS_USERNAME: 'u',
-      LOAD_TESTS_PASSWORD: 'p',
-      LOAD_TESTS_CLIENT_ID: 'c',
-      LOAD_TESTS_CLIENT_SECRET: 's',
-    }) as Target & {login: Login};
+    target = readTarget(
+      {
+        LOAD_TESTS_BASE_URL: `http://127.0.0.1:${(server.address() as AddressInfo).port}`,
+        LOAD_TESTS_USERNAME: 'u',
+        LOAD_TESTS_PASSWORD: 'p',
+        LOAD_TESTS_CLIENT_ID: 'c',
+        LOAD_TESTS_CLIENT_SECRET: 's',
+      },
+      apiOnly,
+    ) as Target & {login: Login};
   });
 
   after(() => {
@@ -487,13 +582,16 @@ describe('login and refresh with a redirect', () => {
       });
     });
     await listen(auth);
-    target = readTarget({
-      LOAD_TESTS_BASE_URL: `http://${LISTEN_HOST}:${portOf(auth)}`,
-      LOAD_TESTS_USERNAME: 'u',
-      LOAD_TESTS_PASSWORD: 'p',
-      LOAD_TESTS_CLIENT_ID: 'c',
-      LOAD_TESTS_CLIENT_SECRET: 's',
-    }) as Target & {login: Login};
+    target = readTarget(
+      {
+        LOAD_TESTS_BASE_URL: `http://${LISTEN_HOST}:${portOf(auth)}`,
+        LOAD_TESTS_USERNAME: 'u',
+        LOAD_TESTS_PASSWORD: 'p',
+        LOAD_TESTS_CLIENT_ID: 'c',
+        LOAD_TESTS_CLIENT_SECRET: 's',
+      },
+      apiOnly,
+    ) as Target & {login: Login};
   });
 
   after(async () => {
@@ -510,7 +608,7 @@ describe('login and refresh with a redirect', () => {
   const message = (call: string, code: number, to = '') =>
     `POST http://${LISTEN_HOST}:${portOf(auth)}/auth/${call} gave ${code}, a redirect${to}. ` +
     'The login does not follow redirects, so the password goes only to the URL that we set. ' +
-    'Set LOAD_TESTS_AUTH_URL to the final URL.';
+    'Set LOAD_TESTS_AUTH_SERVICE_URL to the final URL.';
 
   it('does not follow a 307 of the login, and says where it points', async () => {
     const error = await login(target).catch((err: unknown) => err);

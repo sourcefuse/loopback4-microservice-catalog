@@ -7,6 +7,10 @@ import {Client, expect} from '@loopback/testlab';
 import {AuthMultitenantExampleApplication} from '../..';
 import {setupApplication} from './test-helper';
 
+// Set TEST_USER_PASSWORD in the environment; the placeholder is intentionally not a real password.
+const TEST_USER_PASSWORD =
+  process.env.TEST_USER_PASSWORD ?? '<Enter test password>';
+
 describe('PingController', () => {
   let app: AuthMultitenantExampleApplication;
   let client: Client;
@@ -33,13 +37,13 @@ describe('PingController', () => {
       client_id: clientId,
       client_secret: clientSecret,
       username: 'john.doe@example.com',
-      password: 'test123!@#',
+      password: TEST_USER_PASSWORD,
     });
     const sarahAuthRes = await client.post('/auth/login-token').send({
       client_id: clientId,
       client_secret: clientSecret,
       username: 'sarah.rafferty@example.com',
-      password: 'test123!@#',
+      password: TEST_USER_PASSWORD,
     });
     accessToken.john = johnAuthRes.body.accessToken;
     accessToken.sarah = sarahAuthRes.body.accessToken;

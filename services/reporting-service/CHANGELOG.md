@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>8.1.3 (2026-10-30)</small>
+
+**Note:** Version bump only for package @sourceloop/reporting-service
+
+
+
+
+
 ## <small>8.1.2 (2026-10-08)</small>
 
 * fix(sandbox): resolve trivy vulnerability findings in sandbox services (#2615) ([c262018](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c262018)), closes [#2615](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2615)

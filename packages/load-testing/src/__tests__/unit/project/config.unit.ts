@@ -12,6 +12,7 @@ import {
   readConfig,
   resolveThresholds,
 } from '../../../project/config';
+import {chromium} from '../../../engine/artillery/browsers';
 
 const SOURCE = 'src/__tests__/load/config.ts';
 const BUILT = 'dist/__tests__/load/config.js';
@@ -107,6 +108,26 @@ describe('configProblems', () => {
     ]) {
       expect(configProblems({...GOOD, engine})).to.deepEqual([problem]);
     }
+  });
+
+  it('accepts apis that map a name to a variable name', () => {
+    expect(
+      configProblems({...GOOD, apis: {auth: 'LOAD_TESTS_AUTH_SERVICE_URL'}}),
+    ).to.deepEqual([]);
+  });
+
+  it('finds apis that are not an object, or have an empty or non-text variable name', () => {
+    expect(configProblems({...GOOD, apis: ['auth']})).to.have.length(1);
+    expect(configProblems({...GOOD, apis: 'auth'})).to.have.length(1);
+    expect(configProblems({...GOOD, apis: {auth: ''}})).to.deepEqual([
+      'apis.auth must be the name of a variable, for example LOAD_TESTS_AUTH_SERVICE_URL',
+    ]);
+    expect(
+      configProblems({...GOOD, apis: {x: 'http://localhost:4015'}}),
+    ).to.have.length(1);
+    expect(configProblems({...GOOD, apis: {core: 3}})).to.deepEqual([
+      'apis.core must be the name of a variable, for example LOAD_TESTS_AUTH_SERVICE_URL',
+    ]);
   });
 
   it('accepts reporters with a name and an onRunEnd function, and [] too', () => {
@@ -247,6 +268,63 @@ describe('configProblems', () => {
     ]);
   });
 
+  it('finds browser limits that are out of range', () => {
+    const bad = {
+      ...GOOD,
+      thresholds: {step: {p95: -1}, vitals: {CLS: {minDelta: -0.1}}},
+    };
+
+    expect(configProblems(bad)).to.deepEqual([
+      'thresholds.step.p95 must be 0 or more',
+      'thresholds.vitals.CLS.minDelta must be 0 or more',
+    ]);
+  });
+
+  it('accepts false for a Web Vital, which turns it off', () => {
+    const good = {...GOOD, thresholds: {vitals: {TTFB: false, INP: {}}}};
+
+    expect(configProblems(good)).to.deepEqual([]);
+  });
+
+  it('finds a Web Vital name that does not exist', () => {
+    const bad = {...GOOD, thresholds: {vitals: {lcp: {p95: 1}}}};
+
+    expect(configProblems(bad)).to.deepEqual([
+      'thresholds.vitals.lcp is not a Web Vital: use one of FCP, LCP, CLS, TTFB, INP',
+    ]);
+  });
+
+  it('finds a browser limit that is not an object', () => {
+    const bad = {...GOOD, thresholds: {step: 5, vitals: {LCP: 3000}}};
+
+    expect(configProblems(bad)).to.deepEqual([
+      'thresholds.step must be an object of limits, for example {p95: 3000}',
+      'thresholds.vitals.LCP must be an object of limits, for example {p95: 3000}',
+    ]);
+  });
+
+  it('finds a vitals container that is not an object', () => {
+    for (const vitals of [5, 'LCP', ['LCP'], null]) {
+      const bad = {...GOOD, thresholds: {vitals}};
+
+      expect(configProblems(bad)).to.deepEqual([
+        'thresholds.vitals must be an object of limits, for example {LCP: {p95: 2500}}',
+      ]);
+    }
+  });
+
+  it('finds errorRate in a step or a Web Vital limit, which only an endpoint has', () => {
+    const bad = {
+      ...GOOD,
+      thresholds: {step: {errorRate: 5}, vitals: {CLS: {errorRate: 5}}},
+    };
+
+    expect(configProblems(bad)).to.deepEqual([
+      'thresholds.step.errorRate is not a limit of a metric: use p95Regression, minDelta, p95',
+      'thresholds.vitals.CLS.errorRate is not a limit of a metric: use p95Regression, minDelta, p95',
+    ]);
+  });
+
   it('wants a list of phases, and not a flat object', () => {
     const flat = {
       phases: {arrivalRate: 10, duration: 60},
@@ -277,12 +355,79 @@ describe('configProblems', () => {
     ]);
   });
 
-  it('rejects artillery.config.target, because LOAD_TESTS_BASE_URL is the target', () => {
+  it('rejects artillery.config.target, because the URL variables give the target', () => {
     const bad = {...GOOD, artillery: {config: {target: 'http://other'}}};
 
     expect(configProblems(bad)).to.deepEqual([
-      'artillery.config.target is not allowed: the library sets it from LOAD_TESTS_BASE_URL',
+      'artillery.config.target is not allowed: the library sets it from LOAD_TESTS_BASE_URL or LOAD_TESTS_UI_URL',
     ]);
+  });
+
+  it('rejects engines.playwright.aggregateByName, because the report needs it', () => {
+    const config = {engines: {playwright: {aggregateByName: false}}};
+    const bad = {...GOOD, artillery: {config}};
+
+    expect(configProblems(bad)).to.deepEqual([
+      'artillery.config.engines.playwright.aggregateByName is not allowed: the library sets it',
+    ]);
+  });
+
+  it('rejects aggregateByName of any engine', () => {
+    const config = {engines: {firefox: {aggregateByName: true}}};
+
+    expect(configProblems({...GOOD, artillery: {config}})).to.deepEqual([
+      'artillery.config.engines.firefox.aggregateByName is not allowed: the library sets it',
+    ]);
+  });
+
+  describe('artillery.browsers', () => {
+    const firefox = {
+      name: 'firefox',
+      engine: 'playwright-firefox',
+      vitals: ['FCP'],
+    };
+    const problems = (browsers: unknown) =>
+      configProblems({...GOOD, artillery: {browsers}});
+
+    it('accepts chromium() and a browser with its own engine', () => {
+      expect(problems([chromium(), firefox])).to.deepEqual([]);
+    });
+
+    it('rejects a list that is not a list, or is empty', () => {
+      const message =
+        'artillery.browsers must be a list that is not empty, for example [chromium()]';
+
+      expect(problems([])).to.deepEqual([message]);
+      expect(problems(chromium())).to.deepEqual([message]);
+    });
+
+    it('rejects a name that is used twice', () => {
+      expect(problems([firefox, firefox])).to.deepEqual([
+        'artillery.browsers[1].name "firefox" is used twice',
+      ]);
+    });
+
+    it('rejects a browser with no name, no engine, bad vitals or a check that is no function', () => {
+      expect(
+        problems([{name: '', engine: '', vitals: ['LCP', 'lcp'], check: 1}]),
+      ).to.deepEqual([
+        'artillery.browsers[0].name must be a text that is not empty',
+        'artillery.browsers[0].engine must be a text that is not empty',
+        'artillery.browsers[0].vitals must be a list of Web Vitals: FCP, LCP, CLS, TTFB, INP',
+        'artillery.browsers[0].check must be a function',
+      ]);
+    });
+
+    it('rejects engineOptions that are not an object, or set aggregateByName', () => {
+      expect(problems([{...firefox, engineOptions: 'x'}])).to.deepEqual([
+        'artillery.browsers[0].engineOptions must be an object',
+      ]);
+      expect(
+        problems([{...firefox, engineOptions: {aggregateByName: true}}]),
+      ).to.deepEqual([
+        'artillery.browsers[0].engineOptions.aggregateByName is not allowed: the library sets it',
+      ]);
+    });
   });
 
   it('rejects the metrics-by-endpoint plugin, but accepts other plugins', () => {

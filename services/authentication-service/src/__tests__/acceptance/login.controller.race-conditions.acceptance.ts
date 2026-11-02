@@ -18,6 +18,10 @@ import {
 import {TestingApplication} from '../fixtures/application';
 import {setupApplication} from './test-helper';
 
+// Set TEST_USER_PASSWORD in the environment; the placeholder is intentionally not a real password.
+const TEST_USER_PASSWORD =
+  process.env.TEST_USER_PASSWORD ?? '<Enter test password>';
+
 describe('Authentication microservice - Race condition protection', () => {
   let app: TestingApplication;
   let client: Client;
@@ -65,7 +69,7 @@ describe('Authentication microservice - Race condition protection', () => {
       // eslint-disable-next-line @typescript-eslint/naming-convention
       client_secret: 'test',
       username: 'test_user_race',
-      password: 'test123#@',
+      password: TEST_USER_PASSWORD,
     };
     process.env.JWT_ISSUER = 'test';
     process.env.ENCRYPTION_KEY = '0123456789ABCDEF0123456789ABCDEF';
@@ -189,7 +193,7 @@ describe('Authentication microservice - Race condition protection', () => {
         ],
       },
     ]);
-    process.env.USER_TEMP_PASSWORD = 'test123#@';
+    process.env.USER_TEMP_PASSWORD = TEST_USER_PASSWORD;
     await userRepo.create({
       id: '1',
       firstName: 'Test',

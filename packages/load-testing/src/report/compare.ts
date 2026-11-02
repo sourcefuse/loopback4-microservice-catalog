@@ -6,12 +6,16 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {OUT_DIR} from '../project/layout';
 import {RunError} from '../errors';
-import type {ResolvedThresholds} from '../project/types';
+import type {
+  ResolvedMetricThresholds,
+  ResolvedThresholds,
+} from '../project/types';
 import type {
   Baseline,
   EndpointStats,
   BaselineSample,
   HeavyApis,
+  MetricResult,
   VuserCounts,
 } from './types';
 
@@ -41,36 +45,54 @@ export function judge(
     failures.push(`error rate ${round(rate)}% > ${limits.errorRate}%`);
   }
   if (stats.p95 === undefined) return failures;
-  if (stats.p95 > limits.p95) {
-    failures.push(`p95 ${stats.p95} ms > limit ${limits.p95} ms`);
+  return [...failures, ...judgeP95(stats.p95, limits, baselineP95)];
+}
+
+/**
+ * Returns the reasons a p95 fails its limit or its baseline. Empty means it
+ * passes. The messages give `unit` after each value.
+ */
+export function judgeP95(
+  p95: number,
+  limits: ResolvedMetricThresholds,
+  baselineP95: number | undefined,
+  unit: MetricResult['unit'] = 'ms',
+): string[] {
+  const show = (value: number) =>
+    unit === '' ? `${value}` : `${value} ${unit}`;
+  const failures: string[] = [];
+  if (p95 > limits.p95) {
+    failures.push(`p95 ${show(p95)} > limit ${show(limits.p95)}`);
   }
-  if (
-    baselineP95 !== undefined &&
-    stats.p95 > regressionLimit(limits, baselineP95)
-  ) {
-    const delta = stats.p95 - baselineP95;
+  if (baselineP95 !== undefined && p95 > regressionLimit(limits, baselineP95)) {
+    const delta = p95 - baselineP95;
     const over =
       baselineP95 > 0 ? `+${round((delta / baselineP95) * 100)}% ` : '';
     failures.push(
-      `p95 ${over}(+${round(delta)} ms) over baseline ${baselineP95} ms`,
+      `p95 ${over}(+${show(roundFor(unit, delta))}) over baseline ${show(roundFor(unit, baselineP95))}`,
     );
   }
   return failures;
 }
 
+/** Six decimals are far finer than the report, which shows at most 2. */
+const FLOAT_SCALE = 1e6;
+
 /**
- * The p95 above which an endpoint has regressed. It must be more than
+ * The p95 above which a metric has regressed. It must be more than
  * `minDelta` and more than `p95Regression` above the baseline.
  */
 function regressionLimit(
-  limits: ResolvedThresholds,
+  limits: ResolvedMetricThresholds,
   baselineP95: number,
 ): number {
   const allowance = Math.max(
     limits.minDelta,
     (baselineP95 * limits.p95Regression) / 100,
   );
-  return baselineP95 + allowance;
+  // Rounding keeps a p95 that is exactly the allowance above the baseline
+  // from failing by a float error, for example 0.7 + 0.1 is 0.7999999999999999.
+  return Math.round((baselineP95 + allowance) * FLOAT_SCALE) / FLOAT_SCALE;
 }
 
 /**
@@ -78,7 +100,7 @@ function regressionLimit(
  * baseline when that is lower.
  */
 export function p95Limit(
-  limits: ResolvedThresholds,
+  limits: ResolvedMetricThresholds,
   baselineP95?: number,
 ): number {
   return baselineP95 === undefined
@@ -127,22 +149,39 @@ export function workloadChanged(
 }
 
 /**
+ * True when a run used another host than the baseline. A host that one of
+ * them does not have is not a change.
+ */
+export function hostChanged(
+  recorded: string | undefined,
+  current: string | undefined,
+): boolean {
+  return (
+    recorded !== undefined && current !== undefined && recorded !== current
+  );
+}
+
+/**
  * The history and the workloads of a baseline after a run. A scenario with
  * a new workload starts a new history, because its old p95 values do not
- * tell what the new load should give. The same holds for every scenario of
- * the run when `baseUrl` is not the host of the baseline: the p95 of
+ * tell what the new load should give. The same holds for a scenario
+ * when its host is not the host of the baseline: an HTTP scenario
+ * follows `baseUrl`, and a browser scenario follows `uiUrl`. The p95 of
  * another host must not blend into the mean of this one.
  */
 export function addRuns(
   baseline: Baseline | undefined,
   measured: Record<string, BaselineSample>,
-  baseUrl: string,
+  baseUrl: string | undefined,
+  uiUrl?: string,
 ): Pick<Baseline, 'history' | 'workloads'> {
   const history: Baseline['history'] = {...baseline?.history};
   const workloads: Baseline['workloads'] = {...baseline?.workloads};
-  const hostChanged = baseline !== undefined && baseline.baseUrl !== baseUrl;
-  for (const [name, {workload, p95}] of Object.entries(measured)) {
-    const fresh = hostChanged || workloadChanged(baseline, name, workload);
+  const apiMoved = hostChanged(baseline?.baseUrl, baseUrl);
+  const uiMoved = hostChanged(baseline?.uiUrl, uiUrl);
+  for (const [name, {workload, browser, p95}] of Object.entries(measured)) {
+    const moved = browser ? uiMoved : apiMoved;
+    const fresh = moved || workloadChanged(baseline, name, workload);
     const runs = fresh ? {} : history[name];
     history[name] = {...runs};
     for (const [id, value] of Object.entries(p95)) {
@@ -182,7 +221,16 @@ export function readBaseline(pkgDir: string): Baseline | undefined {
   if (Object.values(workloads).some(text => typeof text !== 'string')) {
     throw fail('has a workload that is not a text');
   }
-  if (typeof baseline?.baseUrl !== 'string') throw fail('has no baseUrl');
+  const hosts = [baseline?.baseUrl, baseline?.uiUrl].filter(
+    url => url !== undefined,
+  );
+  if (hosts.some(url => typeof url !== 'string')) {
+    throw fail('has a baseUrl or uiUrl that is not a text');
+  }
+  // Without a host, a run on another host would add to this history.
+  if (hosts.length === 0 && Object.keys(history).length > 0) {
+    throw fail('has no baseUrl and no uiUrl');
+  }
   return baseline as Baseline;
 }
 
@@ -208,8 +256,17 @@ function writeBaseline(pkgDir: string, baseline: Baseline): void {
   }
 }
 
-export function round(value: number): number {
-  return Math.round(value * 10) / 10;
+export function round(value: number, decimals = 1): number {
+  const scale = 10 ** decimals;
+  return Math.round(value * scale) / scale;
+}
+
+/**
+ * Rounds a metric value for display. CLS has no unit and is below 1, so it
+ * needs 2 decimals: with 1, a limit of 0.25 would show as 0.3.
+ */
+export function roundFor(unit: MetricResult['unit'], value: number): number {
+  return round(value, unit === '' ? 2 : 1);
 }
 
 /**
@@ -221,7 +278,8 @@ export function round(value: number): number {
 export function saveRun(
   pkgDir: string,
   run: {
-    baseUrl: string;
+    baseUrl?: string;
+    uiUrl?: string;
     baseline?: Baseline;
     measured: Record<string, BaselineSample>;
     failed: boolean;
@@ -229,10 +287,17 @@ export function saveRun(
   },
 ): boolean {
   if (run.failed && !run.force) return false;
+  const samples = Object.values(run.measured);
+  // A target that no measured scenario used must not replace the stored host.
+  const baseUrl = samples.some(({browser}) => !browser)
+    ? run.baseUrl
+    : undefined;
+  const uiUrl = samples.some(({browser}) => browser) ? run.uiUrl : undefined;
   writeBaseline(pkgDir, {
-    baseUrl: run.baseUrl,
+    baseUrl: baseUrl ?? run.baseline?.baseUrl,
+    uiUrl: uiUrl ?? run.baseline?.uiUrl,
     recordedAt: new Date().toISOString(),
-    ...addRuns(run.baseline, run.measured, run.baseUrl),
+    ...addRuns(run.baseline, run.measured, baseUrl, uiUrl),
   });
   return true;
 }

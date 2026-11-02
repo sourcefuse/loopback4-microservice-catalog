@@ -26,6 +26,14 @@ export function artilleryBin(): string {
   }
 }
 
+/** The end of the file name of a report in `.out`. */
+export const REPORT_SUFFIX = '.report.json';
+
+/** The path of the report that Artillery writes for the scenario with this slug. */
+export function reportPathOf(outDir: string, slug: string): string {
+  return path.join(outDir, `${slug}${REPORT_SUFFIX}`);
+}
+
 /** How long a command that was told to stop may take before it gets SIGKILL. */
 const STOP_GRACE_MS = 10_000;
 
@@ -107,7 +115,10 @@ export async function runArtillery(
   env: NodeJS.ProcessEnv,
   signal?: AbortSignal,
 ): Promise<Measurement> {
-  const reportPath = scriptPath.replace(/\.json$/, '.report.json');
+  const reportPath = reportPathOf(
+    path.dirname(scriptPath),
+    path.basename(scriptPath, '.json'),
+  );
   // A run that writes no report must not reuse the previous one.
   fs.rmSync(reportPath, {force: true});
   const args = [artilleryBin(), 'run', '--output', reportPath, scriptPath];
@@ -115,8 +126,15 @@ export async function runArtillery(
     // Artillery sends anonymous usage data unless this is set.
     env: {...env, ARTILLERY_DISABLE_TELEMETRY: 'true'},
     signal,
+  }).catch((err: unknown) => {
+    // A stopped run leaves a partial report.
+    fs.rmSync(reportPath, {force: true});
+    throw err;
   });
   if (exit.code !== 0) {
+    // Artillery writes the report before its plugins set a failing exit code.
+    // `report` must not judge the file of a failed run.
+    fs.rmSync(reportPath, {force: true});
     const how = exit.signal ?? `code ${exit.code}`;
     throw new RunError(`Artillery stopped with ${how}: ${scriptPath}`);
   }

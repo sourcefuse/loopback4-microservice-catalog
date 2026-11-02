@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>14.0.1 (2026-10-30)</small>
+
+* chore(deps): bump node to 24 in sandboxes and raise cli engines to >=22 (#2626) ([0e73bdc](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0e73bdc)), closes [#2626](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2626)
+* fix(deps): resolve high/critical trivy vulnerabilities (#2629) ([2e43b15](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2e43b15)), closes [#2629](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2629) [#2628](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2628)
+* fix(deps): resolve trivy handlebars and msgpack5 vulnerabilities (#2622) ([75fa209](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/75fa209)), closes [#2622](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2622) [#2621](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2621)
+* fix(sonar): clear master gate blockers (S134 nesting, S6544 scaffold end) (#2619) ([2404716](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2404716)), closes [#2619](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2619)
+* fix(sonar): resolve async-without-await issues and jenkinsfile nesting (#2618) ([e170997](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e170997)), closes [#2618](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2618)
+
+
+
+
+
 ## 14.0.0 (2026-10-08)
 
 * fix(deps): force simple-git ^4.0.2 to clear critical audit CVEs (#2617) ([1659161](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/1659161)), closes [#2617](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2617)

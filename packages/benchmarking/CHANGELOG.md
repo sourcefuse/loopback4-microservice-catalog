@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>1.0.1 (2026-10-30)</small>
+
+* chore(benchmarking): prepare 1.0.0 release ([62352f2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/62352f2))
+
+
+
+
+
 ## 1.0.0 (2026-10-09)
 
 * First public npm release of @sourceloop/benchmarking.

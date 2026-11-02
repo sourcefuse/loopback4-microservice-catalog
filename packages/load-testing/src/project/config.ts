@@ -4,11 +4,23 @@
 // https://opensource.org/licenses/MIT
 import fs from 'node:fs';
 import path from 'node:path';
-import type {LoadTestConfig, Thresholds} from '../types';
+import type {
+  BrowserLimitOptions,
+  LoadTestConfig,
+  MetricThresholds,
+  BrowserScenario,
+  Thresholds,
+  WebVital,
+} from '../types';
 import {toSeconds} from '../scenario/workload';
+import {isPlainObject} from '../scenario/guards';
 import {builtFile, CONFIG_FILE} from './layout';
 import {ConfigError} from '../errors';
-import type {ResolvedThresholds} from './types';
+import type {
+  BrowserLimits,
+  ResolvedMetricThresholds,
+  ResolvedThresholds,
+} from './types';
 
 /** Starts the name of each variable that only the CLI reads. */
 export const CLI_ONLY_PREFIX = 'LOAD_TESTS_';
@@ -39,6 +51,36 @@ export const P95_TARGETS = {
 } as const;
 
 /**
+ * The p95 targets of the standard for a browser step, in ms. Use one as the
+ * `p95` of a step, so that a reader sees which kind of screen the limit is
+ * for. A limit above its target is a deviation: write the reason next to it.
+ */
+export const UI_TARGETS = {
+  /** Login, save, submit or search. This is the default limit of a step. */
+  criticalAction: 1500,
+  /** A standard page or workflow. */
+  standardPage: 2500,
+  /** A data-heavy screen that shows a loader. */
+  dataHeavyScreen: 5000,
+  /** The loader or the result of an action that is not instant. */
+  feedback: 1000,
+  /** A route change in a single-page app. */
+  routeChange: 1000,
+} as const;
+
+/**
+ * The "good" limits of Google for each Web Vital, which the standard uses.
+ * The library gates their p95. CLS has no unit; the others are in ms.
+ */
+export const WEB_VITALS_TARGETS = {
+  FCP: 1800,
+  LCP: 2500,
+  CLS: 0.1,
+  TTFB: 800,
+  INP: 200,
+} as const;
+
+/**
  * The values of `Thresholds` when nothing sets them. The units are in
  * `Thresholds`. Every endpoint counts as user-blocking until it sets another
  * target. A strict default fails safe: a looser limit must be written next to
@@ -51,6 +93,26 @@ const LIBRARY_DEFAULTS: ResolvedThresholds = {
   errorRate: 1,
   p95: P95_TARGETS.userBlockingApi,
 };
+
+const METRIC_DEFAULTS = {
+  p95Regression: LIBRARY_DEFAULTS.p95Regression,
+  minDelta: LIBRARY_DEFAULTS.minDelta,
+};
+
+/**
+ * The limits of each Web Vital when nothing sets them, in the order of the
+ * report. Artillery rounds CLS to 1 decimal, so its `minDelta` is one step
+ * of the report.
+ */
+const VITAL_DEFAULTS: Record<WebVital, ResolvedMetricThresholds> = {
+  FCP: {...METRIC_DEFAULTS, p95: WEB_VITALS_TARGETS.FCP},
+  LCP: {...METRIC_DEFAULTS, p95: WEB_VITALS_TARGETS.LCP},
+  CLS: {...METRIC_DEFAULTS, p95: WEB_VITALS_TARGETS.CLS, minDelta: 0.1},
+  TTFB: {...METRIC_DEFAULTS, p95: WEB_VITALS_TARGETS.TTFB},
+  INP: {...METRIC_DEFAULTS, p95: WEB_VITALS_TARGETS.INP},
+};
+
+const METRIC_KEYS = ['p95Regression', 'minDelta', 'p95'] as const;
 
 const THRESHOLD_KEYS = [
   'p95Regression',
@@ -94,6 +156,7 @@ export function configProblems(config: unknown): string[] {
     thresholds,
     datasources,
     engine,
+    apis,
     reporters,
     tokenCheck,
     maxHeavyApis,
@@ -103,9 +166,12 @@ export function configProblems(config: unknown): string[] {
     ...phaseProblems(phases, 'phases'),
     ...artilleryConfigProblems(artillery?.config, 'artillery.config'),
     ...artilleryEnvProblems(artillery?.env),
+    ...browserEngineProblems(artillery?.browsers),
     ...thresholdProblems(limits, 'thresholds.default.'),
+    ...browserLimitProblems(thresholds, 'thresholds.'),
     ...datasourceProblems(datasources),
     ...engineProblems(engine),
+    ...apisProblems(apis),
     ...reporterProblems(reporters),
   ];
   if (tokenCheck !== undefined && typeof tokenCheck !== 'function') {
@@ -122,11 +188,13 @@ export function configProblems(config: unknown): string[] {
 
 /**
  * Returns what is wrong with an Artillery `config` of the package or of a
- * scenario: the library owns `phases`, `processor`, `target` and the
- * `metrics-by-endpoint` plugin. A change of `target` would send the load to
- * another host than `before` and `after` use. A change of the plugin would
- * rename the metrics, and the report would find no request. `where` starts
- * each message.
+ * scenario: the library owns `phases`, `processor`, `target`, the
+ * `metrics-by-endpoint` plugin and `engines.playwright.aggregateByName`. A
+ * change of `target` would send the load to another host than `before` and
+ * `after` use. A change of the plugin would rename the metrics, and the
+ * report would find no request. A change of `aggregateByName` would rename
+ * the metrics of a browser scenario, and the report would find no Web Vital.
+ * `where` starts each message.
  */
 export function artilleryConfigProblems(
   config:
@@ -135,6 +203,7 @@ export function artilleryConfigProblems(
         processor?: unknown;
         target?: unknown;
         plugins?: Record<string, unknown>;
+        engines?: object;
       }
     | undefined,
   where: string,
@@ -142,8 +211,15 @@ export function artilleryConfigProblems(
   const problems: string[] = [];
   if (config?.target !== undefined) {
     problems.push(
-      `${where}.target is not allowed: the library sets it from LOAD_TESTS_BASE_URL`,
+      `${where}.target is not allowed: the library sets it from LOAD_TESTS_BASE_URL or LOAD_TESTS_UI_URL`,
     );
+  }
+  for (const [name, options] of Object.entries(config?.engines ?? {})) {
+    if (Object(options).aggregateByName !== undefined) {
+      problems.push(
+        `${where}.engines.${name}.aggregateByName is not allowed: the library sets it`,
+      );
+    }
   }
   if (config?.plugins?.['metrics-by-endpoint'] !== undefined) {
     problems.push(
@@ -180,6 +256,90 @@ function artilleryEnvProblems(names: unknown): string[] {
     }
     return [];
   });
+}
+
+/** Returns what is wrong with `artillery.browsers`: a list of browsers with unique names. */
+function browserEngineProblems(browsers: unknown): string[] {
+  if (browsers === undefined) return [];
+  if (!Array.isArray(browsers) || browsers.length === 0) {
+    return [
+      'artillery.browsers must be a list that is not empty, for example [chromium()]',
+    ];
+  }
+  return browsers.flatMap((browser: unknown, index) => {
+    const where = `artillery.browsers[${index}]`;
+    const {name, engine, engineOptions, vitals, check} = Object(
+      browser,
+    ) as Record<string, unknown>;
+    return [
+      ...browserNameProblems(browsers, name, index, where),
+      ...(typeof engine === 'string' && engine !== ''
+        ? []
+        : [`${where}.engine must be a text that is not empty`]),
+      ...browserOptionsProblems(engineOptions, where),
+      ...browserVitalsProblems(vitals, where),
+      ...(check === undefined || typeof check === 'function'
+        ? []
+        : [`${where}.check must be a function`]),
+    ];
+  });
+}
+
+/** Returns what is wrong with the name of a browser: it must be text, and unique. */
+function browserNameProblems(
+  browsers: unknown[],
+  name: unknown,
+  index: number,
+  where: string,
+): string[] {
+  if (typeof name !== 'string' || name === '') {
+    return [`${where}.name must be a text that is not empty`];
+  }
+  const isFirstWithName =
+    browsers.findIndex(other => Object(other).name === name) === index;
+  return isFirstWithName ? [] : [`${where}.name "${name}" is used twice`];
+}
+
+/** Returns what is wrong with `engineOptions` of a browser. */
+function browserOptionsProblems(options: unknown, where: string): string[] {
+  if (options === undefined) return [];
+  if (!isPlainObject(options)) {
+    return [`${where}.engineOptions must be an object`];
+  }
+  return options.aggregateByName === undefined
+    ? []
+    : [
+        `${where}.engineOptions.aggregateByName is not allowed: the library sets it`,
+      ];
+}
+
+/** Returns what is wrong with `vitals` of a browser: a list of Web Vital names. */
+function browserVitalsProblems(vitals: unknown, where: string): string[] {
+  const known =
+    Array.isArray(vitals) &&
+    vitals.every(vital => Object.hasOwn(VITAL_DEFAULTS, String(vital)));
+  return known
+    ? []
+    : [
+        `${where}.vitals must be a list of Web Vitals: ${Object.keys(VITAL_DEFAULTS).join(', ')}`,
+      ];
+}
+
+/** Returns what is wrong with `apis`: names that map to variable names. */
+function apisProblems(apis: unknown): string[] {
+  if (apis === undefined) return [];
+  if (typeof apis !== 'object' || apis === null || Array.isArray(apis)) {
+    return [
+      "apis must be an object of names and variable names, for example {auth: 'LOAD_TESTS_AUTH_SERVICE_URL'}",
+    ];
+  }
+  return Object.entries(apis).flatMap(([name, variable]) =>
+    typeof variable === 'string' && /^[A-Za-z_]\w*$/.test(variable)
+      ? []
+      : [
+          `apis.${name} must be the name of a variable, for example LOAD_TESTS_AUTH_SERVICE_URL`,
+        ],
+  );
 }
 
 /** Returns what is wrong with `engine`: it needs a name and a `run` function. */
@@ -277,9 +437,10 @@ function oneDatasourceProblems(where: string, ds: unknown): string[] {
 export function thresholdProblems(
   limits: Thresholds | undefined,
   where: string,
+  keys: readonly (keyof Thresholds)[] = THRESHOLD_KEYS,
 ): string[] {
   const problems: string[] = [];
-  for (const key of THRESHOLD_KEYS) {
+  for (const key of keys) {
     const value = limits?.[key];
     const highest = key === 'errorRate' ? 100 : Infinity;
     if (
@@ -292,6 +453,65 @@ export function thresholdProblems(
     }
   }
   return problems;
+}
+
+/**
+ * Returns what is wrong with the limits of a metric: a step, a flow or a
+ * Web Vital. A name that is not a metric limit, such as `errorRate`, is a
+ * problem, because a plain JavaScript file can set it and nothing reads it.
+ * Limits that are not an object are a problem too: no key would show it.
+ */
+export function metricProblems(
+  limits: MetricThresholds | undefined,
+  where: string,
+): string[] {
+  if (limits !== undefined && !isPlainObject(limits)) {
+    return [
+      `${where.slice(0, -1)} must be an object of limits, for example {p95: 3000}`,
+    ];
+  }
+  const known: readonly string[] = METRIC_KEYS;
+  return [
+    ...Object.keys(limits ?? {})
+      .filter(key => !known.includes(key))
+      .map(
+        key =>
+          `${where}${key} is not a limit of a metric: use ${METRIC_KEYS.join(', ')}`,
+      ),
+    ...thresholdProblems(limits, where, METRIC_KEYS),
+  ];
+}
+
+/** Returns what is wrong with the limits of a Web Vital. `false` turns it off. */
+function vitalProblems(
+  limits: MetricThresholds | false | undefined,
+  where: string,
+): string[] {
+  return limits === false ? [] : metricProblems(limits, where);
+}
+
+/**
+ * Returns what is wrong with the `step` and `vitals` limits of the config,
+ * of a describe or of a scenario. `where` starts each message.
+ */
+export function browserLimitProblems(
+  {step, vitals}: BrowserLimitOptions = {},
+  where: string,
+): string[] {
+  return [
+    ...metricProblems(step, `${where}step.`),
+    ...(vitals !== undefined && !isPlainObject(vitals)
+      ? [
+          `${where}vitals must be an object of limits, for example {LCP: {p95: 2500}}`,
+        ]
+      : Object.entries(vitals ?? {}).flatMap(([vital, limits]) =>
+          Object.hasOwn(VITAL_DEFAULTS, vital)
+            ? vitalProblems(limits, `${where}vitals.${vital}.`)
+            : [
+                `${where}vitals.${vital} is not a Web Vital: use one of ${Object.keys(VITAL_DEFAULTS).join(', ')}`,
+              ],
+        )),
+  ];
 }
 
 /**
@@ -367,6 +587,65 @@ function rateProblems(fields: Record<string, unknown>, at: string): string[] {
       return value !== undefined && !valid;
     })
     .map(key => `${at}.${key} must be 0 or more`);
+}
+
+/**
+ * The limits of a browser scenario. Each metric merges the library, the
+ * config, and the describes with the scenario, by field. `steps` and `flow`
+ * merge on top of `step`. INP is on only when a layer names it. `false` in
+ * the last layer that names a Web Vital turns it off. The flow
+ * total only when `flow` is set.
+ */
+export function resolveBrowserLimits(
+  config: BrowserLimitOptions,
+  scenario: BrowserScenario,
+): BrowserLimits {
+  const step = resolveMetric(
+    {...METRIC_DEFAULTS, p95: UI_TARGETS.criticalAction},
+    config.step,
+    scenario.step,
+  );
+  const vitals = (Object.keys(VITAL_DEFAULTS) as WebVital[]).flatMap(vital => {
+    const layers = [config.vitals?.[vital], scenario.vitals?.[vital]];
+    const named = layers.filter(layer => layer !== undefined);
+    const last = named.at(-1);
+    const on = vital === 'INP' ? isPlainObject(last) : last !== false;
+    if (!on) return [];
+    // A layer before the last `false` does not count: `false` resets the limits.
+    const kept = named.slice(named.lastIndexOf(false) + 1);
+    return [
+      [
+        vital,
+        resolveMetric(VITAL_DEFAULTS[vital], ...(kept as MetricThresholds[])),
+      ],
+    ];
+  });
+  const {steps = {}, flowLimits} = scenario.browser;
+  return {
+    step,
+    steps: Object.fromEntries(
+      Object.entries(steps).map(([name, limits]) => [
+        name,
+        resolveMetric(step, limits),
+      ]),
+    ),
+    vitals: Object.fromEntries(vitals),
+    ...(flowLimits && {flow: resolveMetric(step, flowLimits)}),
+  };
+}
+
+function resolveMetric(
+  base: ResolvedMetricThresholds,
+  ...layers: Array<MetricThresholds | undefined>
+): ResolvedMetricThresholds {
+  const resolved = {...base};
+  for (const layer of layers) {
+    for (const key of METRIC_KEYS) {
+      const value = layer?.[key];
+      if (value !== undefined) resolved[key] = value;
+    }
+  }
+  return resolved;
 }
 
 /** Merges the layers field by field. A later layer wins. */

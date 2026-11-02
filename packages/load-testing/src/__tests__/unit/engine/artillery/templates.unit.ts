@@ -8,13 +8,14 @@ import path from 'node:path';
 import {expect} from '@loopback/testlab';
 import {
   TEMPLATE_AT_SOURCE,
-  checkBaseUrl,
+  checkUrl,
   checkRunVars,
   checkToken,
   templateAt,
 } from '../../../../engine/artillery/templates';
 import {artillery} from '../../../../engine/artillery';
 import {RunError} from '../../../../errors';
+import {BASE_URL_ENV, UI_URL_ENV} from '../../../../project/layout';
 import {load} from '../../../../scenario/builder';
 import {scenarioOf} from '../../../helpers';
 
@@ -146,20 +147,30 @@ describe('the text copy of templateAt', () => {
   });
 });
 
-describe('checkBaseUrl', () => {
-  const message = `The base URL contains text that the engine reads as a template ("{{", "$&", "$\`", "$'" or "$$"). Use a URL without it.`;
+describe('checkUrl', () => {
+  const message = (variable: string) =>
+    `The URL in ${variable} contains text that the engine reads as a template ("{{", "$&", "$\`", "$'" or "$$"). Use a URL without it.`;
 
   it('lets a clean URL pass', () => {
-    expect(() => checkBaseUrl('http://127.0.0.1:4014')).to.not.throw();
+    expect(() =>
+      checkUrl('http://127.0.0.1:4014', BASE_URL_ENV),
+    ).to.not.throw();
   });
 
   for (const text of ['{{ x }}', '$&', "$'", '$$']) {
     it(`refuses a URL with ${text}, and does not print it`, () => {
-      expect(() => checkBaseUrl(`http://h/${text}`)).to.throw(RunError, {
-        message,
-      });
+      expect(() => checkUrl(`http://h/${text}`, BASE_URL_ENV)).to.throw(
+        RunError,
+        {message: message(BASE_URL_ENV)},
+      );
     });
   }
+
+  it('names LOAD_TESTS_UI_URL when the web app URL is refused', () => {
+    expect(() => checkUrl('http://h/$&', UI_URL_ENV)).to.throw(RunError, {
+      message: message(UI_URL_ENV),
+    });
+  });
 });
 
 describe('the Artillery engine and the base URL', () => {
@@ -178,6 +189,27 @@ describe('the Artillery engine and the base URL', () => {
       });
 
       await expect(run).to.be.rejectedWith({name: 'RunError'});
+      expect(fs.readdirSync(pkgDir)).to.deepEqual([]);
+    } finally {
+      fs.rmSync(pkgDir, {recursive: true, force: true});
+    }
+  });
+
+  it('names LOAD_TESTS_UI_URL when the URL of a browser scenario is refused', async () => {
+    const pkgDir = fs.mkdtempSync(path.join(os.tmpdir(), 'load-testing-ui-'));
+    try {
+      const run = artillery().run({
+        pkgDir,
+        scenario: {name: 'open', browser: {flow: async () => undefined}},
+        config: {phases: [{duration: 1, arrivalRate: 1}]},
+        phases: [{duration: 1, arrivalRate: 1}],
+        runVars: {},
+        endpointIds: [],
+        baseUrl: 'http://127.0.0.1:1/$&',
+        signal: new AbortController().signal,
+      });
+
+      await expect(run).to.be.rejectedWith(/^The URL in LOAD_TESTS_UI_URL /);
       expect(fs.readdirSync(pkgDir)).to.deepEqual([]);
     } finally {
       fs.rmSync(pkgDir, {recursive: true, force: true});

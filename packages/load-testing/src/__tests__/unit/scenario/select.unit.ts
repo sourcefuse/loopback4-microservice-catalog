@@ -5,10 +5,10 @@
 import {expect} from '@loopback/testlab';
 import {scenarioOf} from '../../helpers';
 import {selectScenarios} from '../../../scenario/select';
-import type {Scenario} from '../../../types';
+import type {HttpScenario, Scenario} from '../../../types';
 
 /** What the loader gives for a scenario: the scenario is inside. */
-const loaded = (name: string, extra: Partial<Scenario> = {}) => ({
+const loaded = (name: string, extra: Partial<HttpScenario> = {}) => ({
   scenario: {...scenarioOf(name, []), ...extra},
 });
 

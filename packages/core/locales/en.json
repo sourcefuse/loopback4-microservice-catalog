@@ -45,5 +45,6 @@
 	"Unauthorized": "Unauthorized",
 	"No keys found": "No keys found",
 	"[{\"keyword\"": "\"type\",\"dataPath\":\".valueB\",\"schemaPath\":\"#/properties/valueB/type\",\"params\":{\"type\":\"string\"},\"message\":\"should be string\"}]",
-	"JSON.stringify(validate.errors) invalid": "JSON.stringify(validate.errors) invalid"
+	"JSON.stringify(validate.errors) invalid": "JSON.stringify(validate.errors) invalid",
+	"Code Expired": "Code Expired"
 }

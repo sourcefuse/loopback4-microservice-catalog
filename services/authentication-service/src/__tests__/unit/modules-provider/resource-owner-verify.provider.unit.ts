@@ -26,6 +26,10 @@ import {
   UserTenantRepository,
 } from '../../../repositories';
 
+// Set TEST_USER_PASSWORD in the environment; the placeholder is intentionally not a real password.
+const TEST_USER_PASSWORD =
+  process.env.TEST_USER_PASSWORD ?? '<Enter test password>';
+
 describe('Resource Owner Verify Provider', () => {
   let userRepo: StubbedInstanceWithSinonAccessor<UserRepository>;
   let userTenantRepo: StubbedInstanceWithSinonAccessor<UserTenantRepository>;
@@ -70,7 +74,7 @@ describe('Resource Owner Verify Provider', () => {
         authCodeExpiration: 1800,
       });
       const username = 'testuser';
-      const password = 'test123!@';
+      const password = TEST_USER_PASSWORD;
       const clientId = 'web';
       const clientSecret = 'test';
       const findOne = userRepo.stubs.verifyPassword;
@@ -113,11 +117,11 @@ describe('Resource Owner Verify Provider', () => {
       });
       const otpCreds = new Otp({
         username: 'test_user',
-        otp: 'test123!@',
+        otp: TEST_USER_PASSWORD,
       });
       const err = new HttpErrors[400]();
       const username = 'testuser';
-      const password = 'test123!@';
+      const password = TEST_USER_PASSWORD;
       const clientId = 'web';
       const clientSecret = 'test';
       const findFive = userRepo.stubs.verifyPassword;

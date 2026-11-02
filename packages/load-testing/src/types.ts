@@ -2,8 +2,13 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import type {HttpFlowStep, LoopOptions} from 'artillery';
+import type {
+  HttpFlowStep,
+  LoopOptions,
+  PlaywrightEngineScenarioTestFunction,
+} from 'artillery';
 import type {HeaderMap, Phase, Value} from './scenario/types';
+import type {BrowserEngine} from './engine/artillery/browsers';
 import type {
   ArtilleryConfig,
   ArtilleryRequestOptions,
@@ -49,6 +54,102 @@ export type Thresholds = {
 };
 
 /**
+ * Limits of one browser metric: a step, a Web Vital or the flow total. A
+ * browser metric has no error rate: a step that throws fails its vuser, so
+ * the vuser failure rate gates it.
+ */
+export type MetricThresholds = {
+  /** Fail when p95 is above this. Milliseconds, or no unit for CLS. */
+  p95?: number;
+  /**
+   * Percent, for example `20` for 20%. Fail when p95 is more than this
+   * percent above the baseline p95, and also more than `minDelta` above it.
+   */
+  p95Regression?: number;
+  /**
+   * Fail when p95 is more than this above the baseline p95, and also more
+   * than `p95Regression` above it. Milliseconds, or no unit for CLS.
+   */
+  minDelta?: number;
+};
+
+/** A Web Vital that the Playwright engine of Artillery measures. */
+export type WebVital = 'FCP' | 'LCP' | 'CLS' | 'TTFB' | 'INP';
+
+/**
+ * Limits of the browser scenarios, in config.ts, `load.describe` and
+ * `load.browser`. Layers merge by field: the scenario beats the inner
+ * describe, which beats the outer one, which beats config.ts.
+ */
+export type BrowserLimitOptions = {
+  /**
+   * Limits for every step of the scenario. The library default is a p95 of
+   * `UI_TARGETS.criticalAction`.
+   */
+  step?: MetricThresholds;
+  /**
+   * Limits for each Web Vital, by name. FCP, LCP, CLS and TTFB are on with
+   * the limits of `WEB_VITALS_TARGETS`. INP is on only when a layer names
+   * it, because it needs a click or a key press. `false` turns a Web Vital
+   * off, for a flow that gives it no sample. The last layer that names a
+   * Web Vital decides if it is on.
+   */
+  vitals?: Partial<Record<WebVital, MetricThresholds | false>>;
+};
+
+/** A page of the Playwright that Artillery brings. */
+export type BrowserPage = Parameters<
+  Exclude<PlaywrightEngineScenarioTestFunction, string>
+>[0];
+
+/** The options of one `step` of a browser flow. */
+export type StepOptions = {
+  /**
+   * A CSS selector. The step ends at the first frame where this element is
+   * visible, so the waits of an assertion in the action do not count. The
+   * element must not be visible before the action. Without this option, the
+   * step takes the time of the whole action, and the report marks it.
+   */
+  endWhenVisible?: string;
+};
+
+/** Times one part of a browser flow as `browser.step.<name>`. */
+export type BrowserStep = (
+  name: string,
+  action: () => unknown,
+  options?: StepOptions,
+) => Promise<void>;
+
+/** What a browser flow gets for each virtual user. */
+export type BrowserFlowContext = {
+  page: BrowserPage;
+  step: BrowserStep;
+  /**
+   * What `before` set, as a fresh copy for each virtual user. Empty when
+   * the scenario has no `before`.
+   */
+  vars: Vars;
+};
+
+/** The function that each virtual user of a browser scenario runs. */
+export type BrowserFlow = (context: BrowserFlowContext) => Promise<void>;
+
+/** The options of `load.browser`. */
+export type BrowserOptions = BrowserLimitOptions &
+  Pick<Hooks, 'before' | 'after'> & {
+    /** The load. It replaces the `phases` of config.ts and of the describes. */
+    phases?: Phase[];
+    /** Limits for one step, by its name. They beat `step`, by field. */
+    steps?: Record<string, MetricThresholds>;
+    /**
+     * Limits for the flow total, the time of the whole flow. Without them, the
+     * report shows the flow total and does not gate it. They beat `step`, by
+     * field.
+     */
+    flow?: MetricThresholds;
+  };
+
+/**
  * What `src/__tests__/load/config.ts` exports: the default load and the
  * optional default thresholds of a package.
  */
@@ -60,6 +161,14 @@ export type LoadTestConfig = {
    * a `name` and an `onRunEnd` function.
    */
   reporters?: Reporter[];
+  /**
+   * Other backends that `before` and `after` call, as `ctx.apis.<name>`. Each
+   * value is the name of the environment variable that holds the URL, for
+   * example `{auth: 'LOAD_TESTS_AUTH_SERVICE_URL'}`. A run that needs the API
+   * stops when one of these variables is not set. The load does not go to
+   * these backends.
+   */
+  apis?: Record<string, string>;
   /**
    * Runs the load. The default is `artillery()`. A project can write its own
    * engine: an object with a `name` and a `run` function.
@@ -95,13 +204,20 @@ export type LoadTestConfig = {
      * allowed. For example: `{env: ['MY_REGION']}`.
      */
     env?: string[];
+    /**
+     * The browsers that each browser scenario runs in, one run for each. The
+     * label of a run ends with the browser: `<scenario> › chromium`. The
+     * default is `[chromium()]`. To add a browser, write an Artillery engine
+     * for it and list a `BrowserEngine` here. See the README.
+     */
+    browsers?: BrowserEngine[];
   };
   /**
    * Optional. When omitted, the library default applies (`p95Regression` 20,
    * `minDelta` 10, `errorRate` 1, `p95` 500). The order is endpoint, then
    * package, then library.
    */
-  thresholds?: {
+  thresholds?: BrowserLimitOptions & {
     /** Limits for each endpoint that does not set its own. */
     default?: Thresholds;
   };
@@ -158,8 +274,14 @@ export type RunContext = {
    * token is not a JWT, and when there is no token.
    */
   claims: Record<string, unknown>;
-  /** HTTP client for the application under test. */
+  /** HTTP client for the application under test (`LOAD_TESTS_BASE_URL`). */
   api: Api;
+  /**
+   * HTTP clients for the other backends that `apis` in `config.ts` names, for
+   * example `ctx.apis.auth`. They work like `ctx.api`, and send no token.
+   * A name that `apis` does not have throws a `ConfigError`.
+   */
+  apis: Readonly<Record<string, Api>>;
   /** SQL on a datasource that `datasources` in `config.ts` declares. */
   sql: Sql;
   /**
@@ -299,7 +421,7 @@ export type Hooks = {
  * the merged values: `it` beats the inner `describe`, which beats the outer
  * one.
  */
-export type GroupOptions = {
+export type GroupOptions = BrowserLimitOptions & {
   /**
    * Headers for every request of the scenario. A request header with the
    * same name (any case) wins. A value works as in a request header, for
@@ -330,7 +452,8 @@ export type ScenarioOptions = Hooks &
     artillery?: ArtilleryScenarioOptions;
   };
 
-export type Scenario = ScenarioOptions & {
+/** What every scenario has, from `load.it` and from `load.browser`. */
+type ScenarioBase = {
   name: string;
   /** The names of the `load.describe` blocks around the scenario, outermost first. */
   group?: string[];
@@ -338,8 +461,57 @@ export type Scenario = ScenarioOptions & {
   only?: boolean;
   /** Set by `.skip` on the scenario, or on a `load.describe` around it. It wins over `only`. */
   skip?: boolean;
-  requests: FlowItem[];
 };
+
+/** A scenario of `load.it`. */
+export type HttpScenario = ScenarioBase &
+  ScenarioOptions & {
+    requests: FlowItem[];
+    browser?: undefined;
+  };
+
+/**
+ * A scenario of `load.browser`. It has only what a browser scenario uses.
+ * It has no requests, so it has no headers or thresholds. Only the run-level
+ * hooks `before` and `after` stay: they run once, in the CLI, and their API
+ * client uses `LOAD_TESTS_BASE_URL`. A hook per user or per request has no
+ * use here. The other options are typed as `undefined`, so that code for both kinds of scenario can read them.
+ */
+export type BrowserScenario = ScenarioBase &
+  BrowserLimitOptions &
+  Pick<GroupOptions, 'phases'> &
+  Pick<Hooks, 'before' | 'after'> & {
+    [
+      Unused in Exclude<
+        keyof ScenarioOptions,
+        keyof BrowserLimitOptions | 'phases' | 'before' | 'after'
+      >
+    ]?: undefined;
+  } & {
+    requests?: undefined;
+    browser: {
+      flow: BrowserFlow;
+      /** The `steps` option. */
+      steps?: Record<string, MetricThresholds>;
+      /** The `flow` option. */
+      flowLimits?: MetricThresholds;
+      /**
+       * The built file that registers the scenario. The loader sets it. Each
+       * worker of Artillery loads this file again, to get the flow.
+       */
+      file?: string;
+      /** The name of the browser of this run. The loader sets it. */
+      browserName?: string;
+      /**
+       * The label under which the flow registered, before the loader added
+       * the browser. The worker finds the flow by it. The loader sets it.
+       */
+      registeredLabel?: string;
+    };
+  };
+
+/** What `load.it` or `load.browser` registers. `browser` tells them apart. */
+export type Scenario = HttpScenario | BrowserScenario;
 
 /** What an `HttpError` carries from the response. */
 export type HttpErrorDetails = {

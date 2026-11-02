@@ -5,6 +5,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SourceLoop } from './sourceloop';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import {inspect} from 'node:util';
 
 declare global {
   // eslint-disable-next-line no-var
@@ -41,4 +42,7 @@ async function bootstrap() {
 
   await app.listen(4000);
 }
-bootstrap();
+bootstrap().catch(err => {
+  process.stderr.write(`Cannot start the application. ${inspect(err)}\n`);
+  process.exit(1);
+});

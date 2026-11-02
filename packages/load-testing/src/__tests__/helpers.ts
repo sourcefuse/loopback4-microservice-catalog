@@ -5,7 +5,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import type {HeavyApis} from '../report/types';
-import type {FlowItem, Scenario, ScenarioOptions} from '../types';
+import type {FlowItem, HttpScenario, ScenarioOptions} from '../types';
 
 /**
  * A scenario that no `load.it` registered. The tests that transpile or run
@@ -15,7 +15,7 @@ export function scenarioOf(
   name: string,
   requests: FlowItem[],
   options: ScenarioOptions = {},
-): Scenario {
+): HttpScenario {
   return {name, requests, ...options};
 }
 

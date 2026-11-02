@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.14.2 (2026-10-30)</small>
+
+* chore(deps): bump node to 24 in sandboxes and raise cli engines to >=22 (#2626) ([0e73bdc](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0e73bdc)), closes [#2626](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2626)
+
+
+
+
+
 ## <small>0.14.1 (2026-09-10)</small>
 
 * refactor(all-services): resolve SonarCloud overall-code backlog (#2607) ([85463f5](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/85463f5)), closes [#2607](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2607) [#2607](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2607)

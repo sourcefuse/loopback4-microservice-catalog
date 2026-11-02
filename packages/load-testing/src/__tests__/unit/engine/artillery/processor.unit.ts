@@ -378,7 +378,7 @@ describe('probeHooks', () => {
 
     const scriptPath = writeScenario(pkgDir, scenario, undefined, PHASES, {});
 
-    const processor = require(scriptPath.replace(/\.json$/, '.processor.js'));
+    const processor = require(scriptPath.replace(/\.json$/, '.processor.cjs'));
     expect(processor.loadTestsCaptures_0).to.be.a.Function();
     expect(processor.loadTestsCaptures_1).to.be.undefined();
   });

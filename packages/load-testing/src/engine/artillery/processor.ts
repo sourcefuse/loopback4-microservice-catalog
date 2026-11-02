@@ -26,6 +26,30 @@ export const BEFORE_SCENARIO = 'loadTestsBeforeScenario';
 
 export const AFTER_SCENARIO = 'loadTestsAfterScenario';
 
+/** Name of the function that runs the flow of a browser scenario. */
+export const BROWSER_TEST_FUNCTION = 'loadTestsBrowser';
+
+/**
+ * Source of the processor of a browser scenario. It loads the library by its
+ * full path, so the worker gets the copy that registered the scenario.
+ * `file` is the built file of the scenario, and `registeredLabel` finds the
+ * scenario in it. `label` names the metrics.
+ * `runVars` is what `before` set. Each call of `loadTestsRunVars` parses
+ * the JSON text again, so a user cannot change the vars of another user, and
+ * an own `__proto__` key stays a plain key.
+ */
+export function browserProcessorSource(
+  file: string,
+  label: string,
+  runVars: Vars,
+  registeredLabel = label,
+): string {
+  const runtime = JSON.stringify(require.resolve('./browser'));
+  return `const loadTestsRunVarsText = ${JSON.stringify(JSON.stringify(runVars))};
+const loadTestsRunVars = () => JSON.parse(loadTestsRunVarsText);
+exports.${BROWSER_TEST_FUNCTION} = require(${runtime}).browserTestFunction(${JSON.stringify(file)}, ${JSON.stringify(label)}, loadTestsRunVars, ${JSON.stringify(registeredLabel)});\n`;
+}
+
 /**
  * Name of the export that gives the CLI the hooks and the vars of the
  * processor, to try them before the load.

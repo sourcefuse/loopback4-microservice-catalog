@@ -3,11 +3,13 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {print} from '../output';
-import {BASELINE_FILE, exceedsMax, round} from './compare';
+import {BASELINE_FILE, exceedsMax, round, roundFor} from './compare';
 import {P95_TARGETS} from '../project/config';
+import {flowName} from './names';
 import type {
   EndpointResult,
   HeavyApis,
+  MetricResult,
   Reporter,
   RunResult,
   ScenarioResult,
@@ -23,6 +25,9 @@ const TABLE_HEADER = [
   'Result',
 ];
 
+/** Each value of a browser metric shows its unit, because CLS has none. */
+const METRIC_HEADER = ['Metric', 'Samples', 'p95 (limit)', 'Base', 'Result'];
+
 /** Says what a vuser is, because "users" often means rows of a users table. */
 const LEGEND =
   'A vuser is one virtual user. It runs the steps of a scenario one time. Failed means that its run stopped on an error.';
@@ -33,16 +38,33 @@ const LEGEND =
  * legend. It is the default reporter.
  */
 export function consoleReporter(): Reporter {
-  return {name: 'console', onRunEnd: printRun};
+  return {name: 'console', onRunEnd: result => printRun(result, false)};
 }
 
-function printRun(result: RunResult): void {
+/**
+ * Prints the result as `consoleReporter` does, but with a row for each
+ * metric of a browser scenario, also the ones that pass.
+ * `load-testing report` uses it.
+ */
+export function detailReporter(): Reporter {
+  return {
+    name: 'console-detail',
+    onRunEnd: result => printRun(result, true),
+  };
+}
+
+/** `detail` prints every metric of a browser scenario, not only the failed ones. */
+function printRun(result: RunResult, detail: boolean): void {
   print('\nResults');
-  for (const scenario of result.scenarios) printScenario(scenario);
+  for (const scenario of result.scenarios) printScenario(scenario, detail);
   for (const name of result.skipped) print(`\nSkipped: ${name}`);
   if (!result.stopped) {
-    const {covered, total, specFile} = result.coverage;
-    print(`\nCoverage: ${covered} of ${total} endpoints in ${specFile}`);
+    const {covered, total, specFile, noSpec} = result.coverage;
+    print(
+      noSpec
+        ? '\nCoverage: not calculated, because the application has no API specification.'
+        : `\nCoverage: ${covered} of ${total} endpoints in ${specFile}`,
+    );
     if (!result.hasBaseline) {
       print(
         `No ${BASELINE_FILE}. Run once with LOAD_TESTS_UPDATE_BASELINE=1 to record it.`,
@@ -83,12 +105,73 @@ function describeCount(count: number): string {
   return count === 1 ? '1 endpoint is heavy' : `${count} endpoints are heavy`;
 }
 
-function printScenario(scenario: ScenarioResult): void {
+function printScenario(scenario: ScenarioResult, detail: boolean): void {
   print(`\n${scenario.name}`);
   for (const line of linesOf(scenario)) print(line);
+  if (scenario.metrics.length > 0) {
+    printMetrics(scenario, detail);
+    return;
+  }
   if (scenario.endpoints.length === 0) return;
   print();
   printTable([TABLE_HEADER, ...scenario.endpoints.map(rowOf)]);
+}
+
+/**
+ * The summary of a browser scenario: the flow total, the count of gated
+ * metrics that pass, and a table of the failed ones, or of all with `detail`.
+ */
+function printMetrics({name, metrics}: ScenarioResult, detail: boolean): void {
+  const flow = metrics.find(metric => metric.name === flowName(name));
+  if (flow) {
+    const limit =
+      flow.p95Limit === undefined
+        ? 'no limit'
+        : `limit ${valueOf(flow, flow.p95Limit)}`;
+    print(`Flow:     p95 ${valueOf(flow, flow.p95)} (${limit})`);
+  }
+  const gated = metrics.filter(metric => metric.p95Limit !== undefined);
+  const failed = metrics.filter(metric => metric.failures.length > 0);
+  const passing = `Metrics:  ${gated.length - failed.length} of ${gated.length} pass.`;
+  print(
+    detail ? passing : `${passing} Run load-testing report to see each one.`,
+  );
+  const rows = detail ? metrics : failed;
+  if (rows.length === 0) return;
+  print();
+  printTable([METRIC_HEADER, ...rows.map(metric => metricRow(metric, name))]);
+}
+
+function metricRow(metric: MetricResult, label: string): string[] {
+  const p95 = valueOf(metric, metric.p95);
+  const short = shortName(metric.name, label);
+  return [
+    metric.wallClock ? `${short} (wall clock)` : short,
+    String(metric.samples),
+    metric.p95Limit === undefined
+      ? p95
+      : `${p95} (${valueOf(metric, metric.p95Limit)})`,
+    valueOf(metric, metric.baselineP95),
+    metric.p95Limit === undefined ? 'no limit' : resultCell(metric),
+  ];
+}
+
+/** A value of the metric with its unit, for example `812.5 ms`. */
+function valueOf({unit}: MetricResult, value: number | undefined): string {
+  if (value === undefined) return '-';
+  const rounded = roundFor(unit, value);
+  return unit === '' ? String(rounded) : `${rounded} ${unit}`;
+}
+
+/**
+ * The report name without `browser.` and without the label of the
+ * scenario, for example `step.loadDashboard` or `page.LCP`.
+ */
+function shortName(name: string, label: string): string {
+  const short = name.replace(/^browser\./, '');
+  return short.endsWith(`.${label}`)
+    ? short.slice(0, -label.length - 1)
+    : short;
 }
 
 function linesOf(scenario: ScenarioResult): string[] {
@@ -120,7 +203,10 @@ function rowOf(endpoint: EndpointResult): string[] {
   ];
 }
 
-function resultCell({failures, note}: EndpointResult): string {
+function resultCell({
+  failures,
+  note,
+}: Pick<EndpointResult, 'failures' | 'note'>): string {
   if (failures.length > 0) return `FAIL: ${failures.join('; ')}`;
   return note === undefined ? 'pass' : `pass (${note})`;
 }

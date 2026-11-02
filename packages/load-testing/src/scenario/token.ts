@@ -25,6 +25,7 @@ function hasToken(value: unknown): boolean {
  * the scenario needs a login, and if the token check must run.
  */
 export function usesToken(scenario: Scenario): boolean {
+  if (scenario.browser) return false;
   return (
     hasToken(scenario.headers) ||
     requestsIn(scenario.requests).some(({options}) =>

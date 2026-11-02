@@ -14,6 +14,10 @@ import {AuthenticationServiceComponent} from '../../../component';
 import {AuthenticationBindings} from 'loopback4-authentication';
 import {AuthServiceBindings} from '../../../keys';
 import {AuthCacheSourceName, AuthDbSourceName} from '../../../types';
+// Set TEST_USER_PASSWORD in the environment; the placeholder is intentionally not a real password.
+const TEST_USER_PASSWORD =
+  process.env.TEST_USER_PASSWORD ?? '<Enter test password>';
+
 export {ApplicationConfig};
 
 export class SequelizeAuthenticationServiceApplication extends BootMixin(
@@ -43,7 +47,7 @@ export class SequelizeAuthenticationServiceApplication extends BootMixin(
     this.bind(AuthenticationBindings.CURRENT_USER).to({
       id: 1,
       username: 'test_user',
-      password: 'temp123!@',
+      password: TEST_USER_PASSWORD,
     });
     this.bind(AuthServiceBindings.Config).to({
       useCustomSequence: false,
