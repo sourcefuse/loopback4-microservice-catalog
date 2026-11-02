@@ -86,7 +86,7 @@
     "@loopback/eslint-config": "^16.0.1",
     "@loopback/testlab": "^8.0.11",
     "@sourceloop/benchmarking": "^1.0.0",
-    "@sourceloop/load-testing": "^0.1.0",
+    "@sourceloop/load-testing": "^0.3.0",
     "@types/bcrypt": "^5.0.2",
     "@types/node": "^20.19.39",
     "eslint": "^8.57.1",
