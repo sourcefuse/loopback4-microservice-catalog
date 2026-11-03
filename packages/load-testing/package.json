@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/load-testing",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Load tests for the HTTP APIs of LoopBack apps and for the screens of web apps: TypeScript scenarios run by Artillery, with p95 limits and a baseline",
   "keywords": [
     "loopback-extension",
