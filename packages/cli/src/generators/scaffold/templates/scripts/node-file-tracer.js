@@ -209,6 +209,10 @@ async function traceToFixpoint(initialEntries, rules, base) {
     const { fileList, esmFileList, warnings } = await nodeFileTrace(entries, {
       base,
       cache,
+      /* A dependency can build a bin path from cwd and node_modules/.bin.
+         nft changes it to a glob and traces all dev CLIs.
+         See vercel/nft#619. */
+      ignore: ["**/node_modules/.bin/**"],
     });
     for (const w of warnings) allWarnings.set(w.message, w);
     const traced = new Set([...fileList, ...esmFileList]);
