@@ -14,3 +14,5 @@ vulnerability:
     - os
     - library
   ignore-unfixed: true
+pkg:
+  include-dev-deps: true
