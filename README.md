@@ -128,6 +128,11 @@ ARC API utilizes many LoopBack extensions in the micro-services provided, which 
     <td><a href="https://www.npmjs.com/package/loopback4-message-bus-connector">NPM</a></td>
   </tr>
   <tr>
+    <td>loopback4-nats-connector</td>
+    <td><a href="https://github.com/sourcefuse/loopback4-nats-connector">GitHub</a></td>
+    <td><a href="https://www.npmjs.com/package/loopback4-nats-connector">NPM</a></td>
+  </tr>
+  <tr>
     <td>lb4-llm-chat-component</td>
     <td><a href="https://github.com/sourcefuse/loopback4-llm-chat-extension">GitHub</a></td>
     <td><a href="https://www.npmjs.com/package/lb4-llm-chat-component">NPM</a></td>
