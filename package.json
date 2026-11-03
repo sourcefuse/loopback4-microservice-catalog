@@ -91,7 +91,10 @@
       "fastify": "^5.12.2"
     },
     "picomatch@4": "^4.0.4",
-    "@hapi/content": "^6.0.3"
+    "@hapi/content": "^6.0.3",
+    "nx": {
+      "brace-expansion": "^5.0.12"
+    }
   },
   "dependencies": {
     "@lavamoat/allow-scripts": "^3.4.1",
