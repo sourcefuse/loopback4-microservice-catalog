@@ -109,6 +109,7 @@
       }
     },
     "underscore": "^1.13.8",
-    "undici": "^6.24.0"
+    "undici": "^6.24.0",
+    "serialize-javascript": "^7.0.3"
   }
 }

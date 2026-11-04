@@ -45,14 +45,14 @@
       }
     },
     "postman-request": {
-      "form-data": "4.0.4",
+      "form-data": "4.0.6",
       "qs": "^6.14.1"
     },
     "widdershins": {
-      "markdown-it": "^12.3.2",
+      "markdown-it": "^14.3.3",
       "swagger2openapi": "^7.0.8",
       "yargs": "^17.4.1",
-      "form-data": "4.0.4"
+      "form-data": "4.0.6"
     },
     "form-data": "4.0.6",
     "oidc-provider": {
@@ -72,18 +72,36 @@
       "sigstore": "^4.1.1"
     },
     "lerna": {
-      "pacote": "^21.5.1"
+      "pacote": "^21.5.1",
+      "@npmcli/package-json": {
+        "glob": "^14.0.2"
+      }
     },
     "fast-xml-parser": "^5.5.6",
     "lodash": "^4.18.0",
     "undici": "^6.24.0",
     "axios": "^1.15.2",
     "tar": "^7.5.22",
-    "minimatch@10": {
-      "brace-expansion": "^5.0.12"
-    },
+    "minimatch@10": "^11.0.1",
     "underscore": "^1.13.8",
-    "simple-git": "^4.0.2"
+    "simple-git": "^4.0.2",
+    "markdown-it": "^14.3.3",
+    "serialize-javascript": "^7.0.3",
+    "smol-toml": "^1.7.1",
+    "@types/swagger-stats": {
+      "fastify": "^5.12.2"
+    },
+    "picomatch@4": "^4.0.4",
+    "@hapi/content": "^6.0.3",
+    "nx": {
+      "brace-expansion": "^5.0.12",
+      "minimatch": "^11.0.1"
+    },
+    "uuid@11": "^11.1.1",
+    "csv-parse@5": "^7.0.2",
+    "typedoc": {
+      "minimatch": "^10.2.5"
+    }
   },
   "dependencies": {
     "@lavamoat/allow-scripts": "^3.4.1",
