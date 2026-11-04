@@ -127,6 +127,7 @@ import {
   LoginActivityHelperService,
   LoginHelperService,
   OtpService,
+  SamlLogoutService,
 } from './services';
 import {IAuthServiceConfig, IMfaConfig, IOtpConfig} from './types';
 
@@ -200,6 +201,9 @@ export class AuthenticationServiceComponent implements Component {
       .bind('services.loginActivityHelperService')
       .toClass(LoginActivityHelperService);
     this.application.bind('services.IdpLoginService').toClass(IdpLoginService);
+    this.application
+      .bind('services.SamlLogoutService')
+      .toClass(SamlLogoutService);
 
     //set the userActivity to false by default
     this.application

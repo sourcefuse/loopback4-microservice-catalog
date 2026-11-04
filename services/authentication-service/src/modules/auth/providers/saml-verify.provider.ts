@@ -15,6 +15,10 @@ import {
 } from '../../../providers';
 import {SignUpBindings, VerifyBindings} from '../../../providers/keys';
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
+import {
+  encodeSamlSession,
+  SAML_NAMEID_FORMAT_UNSPECIFIED,
+} from '../../../services/saml-logout.service';
 import {AuthUser} from '../models/auth-user.model';
 export class SamlVerifyProvider implements Provider<VerifyFunction.SamlFn> {
   constructor(
@@ -71,6 +75,16 @@ export class SamlVerifyProvider implements Provider<VerifyFunction.SamlFn> {
         id: user.id as string,
       });
       authUser.permissions = [];
+      // kept in the refresh-token record for SAML Single Logout; never in the JWT
+      if (profile.nameID) {
+        authUser.externalAuthToken = encodeSamlSession({
+          nameID: profile.nameID,
+          // the Format attribute is optional; without it the stored ref would
+          // not decode and Single Logout would silently become local-only
+          nameIDFormat: profile.nameIDFormat || SAML_NAMEID_FORMAT_UNSPECIFIED,
+          sessionIndex: profile.sessionIndex,
+        });
+      }
       return this.postVerifyProvider(profile, authUser);
     };
   }

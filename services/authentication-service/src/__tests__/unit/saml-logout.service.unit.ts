@@ -1,0 +1,156 @@
+// Copyright (c) 2023 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+import {expect, sinon} from '@loopback/testlab';
+import {
+  decodeSamlSession,
+  encodeSamlSession,
+  isSamlSessionToken,
+  readSamlLogoutConfig,
+  SamlLogoutService,
+} from '../../services/saml-logout.service';
+
+const SLO_ENV: Record<string, string> = {
+  SAML_ISSUER: 'sp-issuer',
+  SAML_CERT: 'MIICdummycert',
+  SAML_ENTRY_POINT: 'https://idp.example.com/sso',
+  SAML_CALLBACK_URL: 'https://sp.example.com/auth/saml-redirect?client=web',
+  SAML_SESSION_LOGOUT_URL: 'https://idp.example.com/slo',
+  SAML_SP_PRIVATE_KEY: String.raw`line1\nline2`,
+  SAML_LOGOUT_REDIRECT_URL: 'https://app.example.com/login',
+};
+
+describe('SamlLogoutService - Unit Tests', () => {
+  const session = {
+    nameID: 'j.doe@example.com',
+    nameIDFormat: 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
+    sessionIndex: 'idp-session-1',
+  };
+  const saved: Record<string, string | undefined> = {};
+
+  beforeEach(() => {
+    for (const [key, value] of Object.entries(SLO_ENV)) {
+      saved[key] = process.env[key];
+      process.env[key] = value;
+    }
+  });
+
+  afterEach(() => {
+    for (const key of Object.keys(SLO_ENV)) {
+      if (saved[key] === undefined) {
+        delete process.env[key];
+      } else {
+        process.env[key] = saved[key];
+      }
+    }
+  });
+
+  describe('session reference helpers', () => {
+    it('round-trips a SAML session reference', () => {
+      const token = encodeSamlSession(session);
+
+      expect(isSamlSessionToken(token)).to.be.true();
+      expect(decodeSamlSession(token)).to.eql(session);
+    });
+
+    it('rejects anything that is not a well-formed SAML session reference', () => {
+      expect(isSamlSessionToken('eyJhbGciOi.keycloak')).to.be.false();
+      expect(isSamlSessionToken(undefined)).to.be.false();
+      expect(decodeSamlSession('eyJhbGciOi.keycloak')).to.be.undefined();
+      expect(decodeSamlSession('saml:not-base64-json')).to.be.undefined();
+      expect(
+        decodeSamlSession(
+          `saml:${Buffer.from(JSON.stringify({nameIDFormat: 'x'})).toString('base64url')}`,
+        ),
+      ).to.be.undefined();
+    });
+  });
+
+  describe('readSamlLogoutConfig', () => {
+    it('builds signed logout options when everything is configured', () => {
+      const config = readSamlLogoutConfig();
+
+      expect(config?.postLogoutRedirectUrl).to.equal(
+        SLO_ENV.SAML_LOGOUT_REDIRECT_URL,
+      );
+      expect(config?.samlOptions).to.containDeep({
+        issuer: SLO_ENV.SAML_ISSUER,
+        logoutUrl: SLO_ENV.SAML_SESSION_LOGOUT_URL,
+        privateKey: 'line1\nline2',
+        signatureAlgorithm: 'sha256',
+      });
+    });
+
+    it('is off when any Single Logout or login setting is missing', () => {
+      for (const key of Object.keys(SLO_ENV)) {
+        const value = process.env[key];
+        process.env[key] = '';
+        expect(readSamlLogoutConfig()).to.be.undefined();
+        process.env[key] = value;
+      }
+    });
+  });
+
+  describe('buildLogoutUrl', () => {
+    const logger = {info: sinon.stub(), error: sinon.stub()};
+
+    function serviceWith(logout: sinon.SinonStub) {
+      const factory = sinon.stub().returns({logout});
+      const service = new SamlLogoutService(
+        sinon.stub().resolves(factory),
+        logger as never,
+      );
+      return {service, factory};
+    }
+
+    it('builds the signed logout URL for the stored SAML session', async () => {
+      const logout = sinon
+        .stub()
+        .callsFake((_req, cb) => cb(null, 'https://idp.example.com/slo?SAMLRequest=x'));
+      const {service, factory} = serviceWith(logout);
+
+      const url = await service.buildLogoutUrl(encodeSamlSession(session));
+
+      expect(url).to.equal('https://idp.example.com/slo?SAMLRequest=x');
+      expect(factory.firstCall.args[0]).to.containDeep({
+        logoutUrl: SLO_ENV.SAML_SESSION_LOGOUT_URL,
+        privateKey: 'line1\nline2',
+      });
+      expect(logout.firstCall.args[0].user).to.containDeep({
+        issuer: SLO_ENV.SAML_ISSUER,
+        ...session,
+      });
+    });
+
+    it('returns null for a session that is not a SAML one', async () => {
+      const logout = sinon.stub();
+      const {service} = serviceWith(logout);
+
+      expect(await service.buildLogoutUrl('eyJhbGciOi.keycloak')).to.be.null();
+      sinon.assert.notCalled(logout);
+    });
+
+    it('returns null when Single Logout is not configured', async () => {
+      process.env.SAML_SESSION_LOGOUT_URL = '';
+      const logout = sinon.stub();
+      const {service} = serviceWith(logout);
+
+      expect(
+        await service.buildLogoutUrl(encodeSamlSession(session)),
+      ).to.be.null();
+      sinon.assert.notCalled(logout);
+    });
+
+    it('returns null instead of failing the logout when signing fails', async () => {
+      const logout = sinon
+        .stub()
+        .callsFake((_req, cb) => cb(new Error('bad key')));
+      const {service} = serviceWith(logout);
+
+      expect(
+        await service.buildLogoutUrl(encodeSamlSession(session)),
+      ).to.be.null();
+    });
+  });
+});

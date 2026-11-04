@@ -4,6 +4,7 @@
 // https://opensource.org/licenses/MIT
 /* eslint-disable  @typescript-eslint/naming-convention */
 import {AnyObject} from '@loopback/repository';
+import type {SamlConfig} from '@node-saml/passport-saml';
 import {IServiceConfig} from '@sourceloop/core';
 import {STRATEGY} from 'loopback4-authentication';
 import {OtpMethodType} from './enums';
@@ -53,6 +54,23 @@ export interface IAuthClientDTO {
 export interface ExternalTokens {
   externalAuthToken?: string;
   externalRefreshToken?: string;
+}
+
+/**
+ * IdP session identifiers kept for SP-initiated SAML Single Logout. They are
+ * stored in the refresh-token record's externalAuthToken (never in the JWT)
+ * so the LogoutRequest can name the exact IdP session to end.
+ */
+export interface SamlSessionRef {
+  nameID: string;
+  nameIDFormat: string;
+  sessionIndex?: string;
+}
+
+/** SP-initiated SAML Single Logout settings. */
+export interface SamlLogoutConfig {
+  samlOptions: SamlConfig;
+  postLogoutRedirectUrl: string;
 }
 
 export type ActorId = Extract<keyof UserTenant, string>;
