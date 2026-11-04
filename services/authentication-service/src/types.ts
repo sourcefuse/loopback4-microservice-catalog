@@ -65,12 +65,18 @@ export interface SamlSessionRef {
   nameID: string;
   nameIDFormat: string;
   sessionIndex?: string;
+  // qualifiers of a qualified NameID (e.g. affiliation-scoped persistent IDs);
+  // the LogoutRequest must repeat them or the IdP won't recognise the principal
+  nameQualifier?: string;
+  spNameQualifier?: string;
 }
 
 /** SP-initiated SAML Single Logout settings. */
 export interface SamlLogoutConfig {
   samlOptions: SamlConfig;
   postLogoutRedirectUrl: string;
+  /** Server-side secret the session reference is encrypted with (the SP private key). */
+  sessionSecret: string;
 }
 
 export type ActorId = Extract<keyof UserTenant, string>;

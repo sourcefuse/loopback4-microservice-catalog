@@ -3739,6 +3739,86 @@ This operation does not require authentication
 
 <h1 id="authentication-service-samllogincontroller">SamlLoginController</h1>
 
+## SamlLoginController.samlLogoutCallback
+
+<a id="opIdSamlLoginController.samlLogoutCallback"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{}';
+const headers = {
+  'Content-Type':'application/x-www-form-urlencoded'
+};
+
+fetch('/auth/saml/logout',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {};
+const headers = {
+  'Content-Type':'application/x-www-form-urlencoded'
+};
+
+fetch('/auth/saml/logout',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /auth/saml/logout`
+
+SAML Single Logout return (POST binding) — redirects to the configured post-logout page (SAML_LOGOUT_REDIRECT_URL).
+
+> Body parameter
+
+```yaml
+{}
+
+```
+
+<h3 id="samllogincontroller.samllogoutcallback-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|object|false|none|
+
+<h3 id="samllogincontroller.samllogoutcallback-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|303|[See Other](https://tools.ietf.org/html/rfc7231#section-6.4.4)|Redirect (303) — see the Location header|None|
+
+### Response Headers
+
+|Status|Header|Type|Format|Description|
+|---|---|---|---|---|
+|303|Location|string||none|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
 ## SamlLoginController.postLoginViaSaml
 
 <a id="opIdSamlLoginController.postLoginViaSaml"></a>
@@ -4574,6 +4654,107 @@ To perform this operation, you must be authenticated by means of one of the foll
 HTTPBearer
 </aside>
 
+## LogoutController.samlLogout
+
+<a id="opIdLogoutController.samlLogout"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "refreshToken": "string"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'string'
+};
+
+fetch('/saml/logout',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+const inputBody = {
+  "refreshToken": "string"
+};
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'Authorization':'string'
+};
+
+fetch('/saml/logout',
+{
+  method: 'POST',
+  body: JSON.stringify(inputBody),
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+`POST /saml/logout`
+
+Logs the user out of the application and returns the SAML Single Logout URL for a SAML session.
+
+> Body parameter
+
+```json
+{
+  "refreshToken": "string"
+}
+```
+
+<h3 id="logoutcontroller.samllogout-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|Authorization|header|string|false|This is the access token which is required to authenticate user.|
+|body|body|[RefreshTokenRequestPartial](#schemarefreshtokenrequestpartial)|false|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "success": true,
+  "key": "string",
+  "logoutUrl": "string"
+}
+```
+
+<h3 id="logoutcontroller.samllogout-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Logout result with the SAML logout URL (or null)|[SamlLogoutResponseDto](#schemasamllogoutresponsedto)|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|The syntax of the request entity is incorrect.|None|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Invalid Credentials.|None|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|The entity requested does not exist.|None|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|The syntax of the request entity is incorrect|None|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+HTTPBearer
+</aside>
+
 # Schemas
 
 <h2 id="tocS_SignupRequestDto">SignupRequestDto</h2>
@@ -5142,6 +5323,32 @@ RefreshTokenRequest
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |refreshToken|string|true|none|none|
+
+<h2 id="tocS_SamlLogoutResponseDto">SamlLogoutResponseDto</h2>
+<!-- backwards compatibility -->
+<a id="schemasamllogoutresponsedto"></a>
+<a id="schema_SamlLogoutResponseDto"></a>
+<a id="tocSsamllogoutresponsedto"></a>
+<a id="tocssamllogoutresponsedto"></a>
+
+```json
+{
+  "success": true,
+  "key": "string",
+  "logoutUrl": "string"
+}
+
+```
+
+SamlLogoutResponseDto
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|success|boolean|true|none|none|
+|key|string|false|none|Id of the user that was logged out.|
+|logoutUrl|string¦null|false|none|Signed SAML LogoutRequest URL (HTTP-Redirect binding); send the browser here so the IdP ends its session.|
 
 <h2 id="tocS_LoginRequest">LoginRequest</h2>
 <!-- backwards compatibility -->

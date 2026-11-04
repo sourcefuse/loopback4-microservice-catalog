@@ -6,6 +6,12 @@ import {BindingScope, Getter, inject, injectable} from '@loopback/core';
 import type {SamlConfig, Strategy} from '@node-saml/passport-saml';
 import {ILogger, LOGGER} from '@sourceloop/core';
 import {Strategies} from 'loopback4-authentication';
+import {
+  createCipheriv,
+  createDecipheriv,
+  hkdfSync,
+  randomBytes,
+} from 'node:crypto';
 import type {SamlStrategyFactory} from 'loopback4-authentication/SAML';
 import type {SamlLogoutConfig, SamlSessionRef} from '../types';
 
@@ -15,26 +21,86 @@ export const SAML_SESSION_PREFIX = 'saml:';
 export const SAML_NAMEID_FORMAT_UNSPECIFIED =
   'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified';
 
-export function encodeSamlSession(session: SamlSessionRef): string {
-  return `${SAML_SESSION_PREFIX}${Buffer.from(JSON.stringify(session)).toString('base64url')}`;
+const SESSION_CIPHER = 'aes-256-gcm';
+const SESSION_IV_BYTES = 12;
+const SESSION_TAG_BYTES = 16;
+const SESSION_KEY_BYTES = 32;
+const SESSION_KEY_INFO = 'sourceloop:saml-session-ref';
+
+function deriveSessionKey(secret: string): Buffer {
+  return Buffer.from(
+    hkdfSync(
+      'sha256',
+      secret,
+      Buffer.alloc(0),
+      SESSION_KEY_INFO,
+      SESSION_KEY_BYTES,
+    ),
+  );
+}
+
+function optionalString(value: unknown): string | undefined {
+  return typeof value === 'string' ? value : undefined;
+}
+
+/**
+ * Encrypts the IdP session reference (AES-256-GCM) so it stays opaque wherever
+ * externalAuthToken travels — with the default code writer that includes the
+ * authorization code in the login redirect URL.
+ */
+export function encodeSamlSession(
+  session: SamlSessionRef,
+  secret: string,
+): string {
+  const iv = randomBytes(SESSION_IV_BYTES);
+  const cipher = createCipheriv(SESSION_CIPHER, deriveSessionKey(secret), iv);
+  const ciphertext = Buffer.concat([
+    cipher.update(JSON.stringify(session), 'utf8'),
+    cipher.final(),
+  ]);
+  return `${SAML_SESSION_PREFIX}${Buffer.concat([
+    iv,
+    cipher.getAuthTag(),
+    ciphertext,
+  ]).toString('base64url')}`;
 }
 
 export function isSamlSessionToken(token?: string | null): token is string {
   return !!token?.startsWith(SAML_SESSION_PREFIX);
 }
 
-/** Returns undefined for anything that is not a well-formed SAML session reference. */
+/**
+ * Returns undefined for anything that is not a SAML session reference
+ * encrypted with this secret (including references made before a key rotation).
+ */
 export function decodeSamlSession(
-  token?: string | null,
+  token: string | null | undefined,
+  secret: string,
 ): SamlSessionRef | undefined {
-  if (!isSamlSessionToken(token)) {
+  if (!isSamlSessionToken(token) || !secret) {
     return undefined;
   }
   try {
+    const raw = Buffer.from(
+      token.slice(SAML_SESSION_PREFIX.length),
+      'base64url',
+    );
+    const iv = raw.subarray(0, SESSION_IV_BYTES);
+    const tag = raw.subarray(
+      SESSION_IV_BYTES,
+      SESSION_IV_BYTES + SESSION_TAG_BYTES,
+    );
+    const decipher = createDecipheriv(
+      SESSION_CIPHER,
+      deriveSessionKey(secret),
+      iv,
+    );
+    decipher.setAuthTag(tag);
     const parsed = JSON.parse(
-      Buffer.from(token.slice(SAML_SESSION_PREFIX.length), 'base64url').toString(
-        'utf8',
-      ),
+      Buffer.concat([
+        decipher.update(raw.subarray(SESSION_IV_BYTES + SESSION_TAG_BYTES)),
+        decipher.final(),
+      ]).toString('utf8'),
     );
     if (
       typeof parsed?.nameID !== 'string' ||
@@ -46,14 +112,19 @@ export function decodeSamlSession(
     return {
       nameID: parsed.nameID,
       nameIDFormat: parsed.nameIDFormat,
-      sessionIndex:
-        typeof parsed.sessionIndex === 'string'
-          ? parsed.sessionIndex
-          : undefined,
+      sessionIndex: optionalString(parsed.sessionIndex),
+      nameQualifier: optionalString(parsed.nameQualifier),
+      spNameQualifier: optionalString(parsed.spNameQualifier),
     };
   } catch {
     return undefined;
   }
+}
+
+/** PEM values arrive in env vars with literal "\n" sequences for line breaks. */
+function unescapeNewlines(value?: string): string | undefined {
+  // split/join rather than replaceAll: the package targets a pre-ES2021 lib
+  return value?.split(String.raw`\n`).join('\n');
 }
 
 /**
@@ -63,20 +134,18 @@ export function decodeSamlSession(
  * needs SAML_SESSION_LOGOUT_URL (IdP SLO endpoint), SAML_SP_PRIVATE_KEY (SP
  * signing key) and SAML_LOGOUT_REDIRECT_URL (page shown after logout). The key
  * is kept out of the login options on purpose: a privateKey makes node-saml
- * sign every request, and login AuthnRequests stay unsigned.
+ * sign every request, and login AuthnRequests stay unsigned. The same key also
+ * encrypts the stored session reference.
  */
 export function readSamlLogoutConfig(): SamlLogoutConfig | undefined {
   const logoutUrl = process.env.SAML_SESSION_LOGOUT_URL;
-  const privateKey = process.env.SAML_SP_PRIVATE_KEY?.replaceAll(
-    String.raw`\n`,
-    '\n',
-  );
+  const privateKey = unescapeNewlines(process.env.SAML_SP_PRIVATE_KEY);
   const postLogoutRedirectUrl = process.env.SAML_LOGOUT_REDIRECT_URL;
   if (!logoutUrl || !privateKey || !postLogoutRedirectUrl) {
     return undefined;
   }
   const issuer = process.env.SAML_ISSUER;
-  const idpCert = process.env.SAML_CERT?.replaceAll(String.raw`\n`, '\n');
+  const idpCert = unescapeNewlines(process.env.SAML_CERT);
   const entryPoint = process.env.SAML_ENTRY_POINT;
   const callbackUrl = process.env.SAML_CALLBACK_URL;
   // a LogoutRequest is only valid for the SP the login settings describe
@@ -93,7 +162,7 @@ export function readSamlLogoutConfig(): SamlLogoutConfig | undefined {
     privateKey,
     signatureAlgorithm: 'sha256',
   };
-  return {samlOptions, postLogoutRedirectUrl};
+  return {samlOptions, postLogoutRedirectUrl, sessionSecret: privateKey};
 }
 
 type LogoutRequest = Parameters<Strategy['logout']>[0];
@@ -118,14 +187,20 @@ export class SamlLogoutService {
   ) {}
 
   async buildLogoutUrl(externalAuthToken?: string): Promise<string | null> {
-    const session = decodeSamlSession(externalAuthToken);
-    if (!session) {
+    if (!isSamlSessionToken(externalAuthToken)) {
       return null;
     }
     const config = readSamlLogoutConfig();
     if (!config) {
       this.logger.info(
         '[SamlLogout] Single Logout not configured; ending the local session only',
+      );
+      return null;
+    }
+    const session = decodeSamlSession(externalAuthToken, config.sessionSecret);
+    if (!session) {
+      this.logger.info(
+        '[SamlLogout] SAML session reference unreadable (key rotated?); ending the local session only',
       );
       return null;
     }

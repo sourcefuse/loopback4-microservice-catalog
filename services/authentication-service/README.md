@@ -311,7 +311,7 @@ Authenttication service can be used as a identity server. Following endpoints ha
 
 For users who signed in through SAML (`POST /auth/saml` → IdP → `POST /auth/saml-redirect`), the service supports SP-initiated Single Logout:
 
-1. At login, the IdP session (NameID, NameID format and SessionIndex) is kept in the refresh-token record (`externalAuthToken`). It is never added to the JWT, and it survives token refresh.
+1. At login (when Single Logout is configured), the IdP session — NameID, NameID format, SessionIndex and any NameID qualifiers — is kept in the refresh-token record (`externalAuthToken`). It is encrypted (AES-256-GCM, key derived from `SAML_SP_PRIVATE_KEY`), so it stays opaque wherever it travels, including the authorization code. It is never added to the JWT, and it survives token refresh. Rotating the key turns logout for existing sessions into a local-only logout.
 2. The client calls `POST /saml/logout` with the bearer token and `{"refreshToken": "..."}`. The application session is ended exactly like `POST /logout`, and the response contains `logoutUrl`: a signed SAML LogoutRequest URL (HTTP-Redirect binding).
 3. The client navigates the browser to `logoutUrl` (a top-level navigation, so the IdP session cookie is sent). The IdP ends its session and posts back to `POST /auth/saml/logout`, which redirects (303) to `SAML_LOGOUT_REDIRECT_URL`.
 
