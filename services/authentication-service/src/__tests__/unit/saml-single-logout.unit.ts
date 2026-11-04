@@ -24,11 +24,85 @@ const SLO_ENV: Record<string, string> = {
   SAML_LOGOUT_REDIRECT_URL: 'https://app.example.com/login',
 };
 
-const samlSession = encodeSamlSession({
-  nameID: 'j.doe@example.com',
-  nameIDFormat: 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
-  sessionIndex: 'idp-session-1',
-});
+const USER_ID = 'user-1';
+const EMAIL = 'j.doe@example.com';
+const EMAIL_FORMAT = 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress';
+const SESSION_INDEX = 'idp-session-1';
+const PROFILE_ID = 'saml-profile-id';
+const SLO_REQUEST_URL = 'https://idp.example.com/slo?SAMLRequest=x';
+
+// SAML_SP_PRIVATE_KEY has no escaped line breaks, so it is the session secret as-is
+const SESSION_SECRET = SLO_ENV.SAML_SP_PRIVATE_KEY;
+
+const sessionRef = {
+  nameID: EMAIL,
+  nameIDFormat: EMAIL_FORMAT,
+  sessionIndex: SESSION_INDEX,
+};
+const samlSession = encodeSamlSession(sessionRef, SESSION_SECRET);
+
+/** Applies the Single Logout env and returns a function restoring the previous values. */
+function applySloEnv(): () => void {
+  const saved: Record<string, string | undefined> = {};
+  for (const [key, value] of Object.entries(SLO_ENV)) {
+    saved[key] = process.env[key];
+    process.env[key] = value;
+  }
+  return () => {
+    for (const [key, value] of Object.entries(saved)) {
+      if (value === undefined) {
+        delete process.env[key];
+      } else {
+        process.env[key] = value;
+      }
+    }
+  };
+}
+
+type WithExternalTokens = {
+  externalAuthToken?: string;
+  externalRefreshToken?: string;
+};
+
+/** Runs the SAML verifier for a profile; value() is typed as IAuthUser, which lacks externalAuthToken. */
+async function verify(
+  profileOverrides: Record<string, unknown>,
+): Promise<WithExternalTokens | null> {
+  const passThrough = (_profile: unknown, user: unknown) =>
+    Promise.resolve(user);
+  const provider = new SamlVerifyProvider(
+    {findOne: sinon.stub().resolves({id: USER_ID, email: EMAIL})} as never,
+    {
+      findOne: sinon
+        .stub()
+        .resolves({authProvider: 'saml', authId: PROFILE_ID}),
+    } as never,
+    sinon.stub() as never,
+    sinon.stub().callsFake(passThrough) as never,
+    sinon.stub().callsFake(passThrough) as never,
+  );
+  return (await provider.value()({
+    id: PROFILE_ID,
+    email: EMAIL,
+    issuer: 'https://idp.example.com',
+    nameID: EMAIL,
+    nameIDFormat: EMAIL_FORMAT,
+    sessionIndex: SESSION_INDEX,
+    ...profileOverrides,
+  } as never)) as WithExternalTokens | null;
+}
+
+/** IdpLoginService with only the user repository wired; getUser needs nothing else. */
+function serviceWithUser(): IdpLoginService {
+  const userRepo = {
+    findById: sinon.stub().callsFake(() => Promise.resolve({id: USER_ID})),
+  };
+  const args = new Array(17).fill({});
+  args[1] = userRepo;
+  return new (
+    IdpLoginService as unknown as new (...a: unknown[]) => IdpLoginService
+  )(...args);
+}
 
 describe('SAML Single Logout - Unit Tests', () => {
   describe('LogoutController.samlLogout', () => {
@@ -42,7 +116,7 @@ describe('SAML Single Logout - Unit Tests', () => {
     beforeEach(() => {
       refreshTokenRepo = {
         get: sinon.stub().resolves({
-          userId: 'user-1',
+          userId: USER_ID,
           accessToken,
           externalAuthToken: samlSession,
         }),
@@ -50,10 +124,10 @@ describe('SAML Single Logout - Unit Tests', () => {
       idpLoginService = {
         logoutUser: sinon
           .stub()
-          .resolves(new SuccessResponse({success: true, key: 'user-1'})),
+          .resolves(new SuccessResponse({success: true, key: USER_ID})),
       };
       samlLogoutService = {
-        buildLogoutUrl: sinon.stub().resolves('https://idp.example.com/slo?SAMLRequest=x'),
+        buildLogoutUrl: sinon.stub().resolves(SLO_REQUEST_URL),
       };
       controller = new LogoutController(
         {} as never,
@@ -77,8 +151,8 @@ describe('SAML Single Logout - Unit Tests', () => {
 
       expect(res.toJSON()).to.eql({
         success: true,
-        key: 'user-1',
-        logoutUrl: 'https://idp.example.com/slo?SAMLRequest=x',
+        key: USER_ID,
+        logoutUrl: SLO_REQUEST_URL,
       });
       sinon.assert.calledWith(samlLogoutService.buildLogoutUrl, samlSession);
       sinon.assert.calledOnce(idpLoginService.logoutUser);
@@ -101,7 +175,7 @@ describe('SAML Single Logout - Unit Tests', () => {
     });
 
     it('rejects a refresh token that belongs to another access token', async () => {
-      refreshTokenRepo.get.resolves({userId: 'user-1', accessToken: 'other'});
+      refreshTokenRepo.get.resolves({userId: USER_ID, accessToken: 'other'});
 
       await expect(
         controller.samlLogout(`Bearer ${accessToken}`, {refreshToken} as never),
@@ -118,15 +192,12 @@ describe('SAML Single Logout - Unit Tests', () => {
   });
 
   describe('SamlLoginController.samlLogoutCallback', () => {
-    const saved: Record<string, string | undefined> = {};
+    let restoreEnv: () => void;
     let response: {redirect: sinon.SinonStub};
     let controller: SamlLoginController;
 
     beforeEach(() => {
-      for (const [key, value] of Object.entries(SLO_ENV)) {
-        saved[key] = process.env[key];
-        process.env[key] = value;
-      }
+      restoreEnv = applySloEnv();
       response = {redirect: sinon.stub()};
       controller = new SamlLoginController(
         {} as never,
@@ -135,15 +206,7 @@ describe('SAML Single Logout - Unit Tests', () => {
       );
     });
 
-    afterEach(() => {
-      for (const key of Object.keys(SLO_ENV)) {
-        if (saved[key] === undefined) {
-          delete process.env[key];
-        } else {
-          process.env[key] = saved[key];
-        }
-      }
-    });
+    afterEach(() => restoreEnv());
 
     it('redirects with 303 to the configured post-logout page', () => {
       controller.samlLogoutCallback(response as never);
@@ -166,78 +229,69 @@ describe('SAML Single Logout - Unit Tests', () => {
   });
 
   describe('SamlVerifyProvider session reference', () => {
-    function verify(profileOverrides: Record<string, unknown>) {
-      const user = {id: 'user-1', email: 'j.doe@example.com'};
-      const provider = new SamlVerifyProvider(
-        {findOne: sinon.stub().resolves(user)} as never,
-        {
-          findOne: sinon
-            .stub()
-            .resolves({authProvider: 'saml', authId: 'saml-profile-id'}),
-        } as never,
-        sinon.stub() as never,
-        sinon.stub().callsFake(async (_profile, u) => u) as never,
-        sinon.stub().callsFake(async (_profile, u) => u) as never,
-      );
-      return provider.value()({
-        id: 'saml-profile-id',
-        email: 'j.doe@example.com',
-        issuer: 'https://idp.example.com',
-        nameID: 'j.doe@example.com',
-        nameIDFormat: 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
-        sessionIndex: 'idp-session-1',
-        ...profileOverrides,
-      } as never);
-    }
+    let restoreEnv: () => void;
+
+    beforeEach(() => {
+      restoreEnv = applySloEnv();
+    });
+
+    afterEach(() => restoreEnv());
 
     it('keeps the IdP session (NameID + SessionIndex) for Single Logout', async () => {
       const authUser = await verify({});
 
-      expect(decodeSamlSession(authUser?.externalAuthToken)).to.eql({
-        nameID: 'j.doe@example.com',
-        nameIDFormat: 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
-        sessionIndex: 'idp-session-1',
-      });
+      expect(
+        decodeSamlSession(authUser?.externalAuthToken, SESSION_SECRET),
+      ).to.containDeep(sessionRef);
+    });
+
+    it('keeps NameID qualifiers for IdPs that issue qualified identifiers', async () => {
+      const qualifiers = {
+        nameQualifier: 'https://idp.example.com',
+        spNameQualifier: 'sp-affiliation',
+      };
+
+      const authUser = await verify(qualifiers);
+
+      expect(
+        decodeSamlSession(authUser?.externalAuthToken, SESSION_SECRET),
+      ).to.containDeep(qualifiers);
     });
 
     it('falls back to the unspecified NameID format when Format is omitted', async () => {
       const authUser = await verify({nameIDFormat: undefined});
 
       expect(
-        decodeSamlSession(authUser?.externalAuthToken)?.nameIDFormat,
+        decodeSamlSession(authUser?.externalAuthToken, SESSION_SECRET)
+          ?.nameIDFormat,
       ).to.equal(SAML_NAMEID_FORMAT_UNSPECIFIED);
+    });
+
+    it('stores no session reference when Single Logout is not configured', async () => {
+      delete process.env.SAML_SESSION_LOGOUT_URL;
+
+      const authUser = await verify({});
+
+      expect(authUser?.externalAuthToken).to.be.undefined();
     });
   });
 
   describe('IdpLoginService.getUser', () => {
-    function serviceWithUser() {
-      const userRepo = {
-        findById: sinon.stub().callsFake(async () => ({id: 'user-1'})),
-      };
-      const args = new Array(17).fill({});
-      args[1] = userRepo;
-      return new (IdpLoginService as unknown as new (
-        ...a: unknown[]
-      ) => IdpLoginService)(...args);
-    }
-
     it('carries a SAML session ref on refresh even without an external refresh token', async () => {
-      const user = await serviceWithUser().getUser({
-        userId: 'user-1',
+      const user = (await serviceWithUser().getUser({
+        userId: USER_ID,
         externalAuthToken: samlSession,
-      } as never);
+      } as never)) as WithExternalTokens;
 
-      expect((user as {externalAuthToken?: string}).externalAuthToken).to.equal(
-        samlSession,
-      );
+      expect(user.externalAuthToken).to.equal(samlSession);
     });
 
     it('still carries both external tokens for OAuth logins', async () => {
       const user = (await serviceWithUser().getUser({
-        userId: 'user-1',
+        userId: USER_ID,
         externalAuthToken: 'oauth-access',
         externalRefreshToken: 'oauth-refresh',
-      } as never)) as {externalAuthToken?: string; externalRefreshToken?: string};
+      } as never)) as WithExternalTokens;
 
       expect(user.externalAuthToken).to.equal('oauth-access');
       expect(user.externalRefreshToken).to.equal('oauth-refresh');
