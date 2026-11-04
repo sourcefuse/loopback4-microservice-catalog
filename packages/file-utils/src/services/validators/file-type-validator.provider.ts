@@ -1,7 +1,7 @@
 import {inject} from '@loopback/core';
 import {HttpErrors} from '@loopback/rest';
 
-import {fromBuffer} from 'file-type';
+import {fileTypeFromBuffer} from 'file-type';
 import {PassThrough} from 'node:stream';
 import {fileValidator} from '../../decorators';
 import {FileUtilBindings} from '../../keys';
@@ -52,7 +52,7 @@ export class FileTypeValidator implements IFileValidator {
       file.stream.once('data', chunk => {
         cloneStream.write(chunk);
         file.stream.pipe(cloneStream);
-        fromBuffer(chunk)
+        fileTypeFromBuffer(chunk)
           .then(trueType => {
             /**
              * Trutype gives `jpg` and we maintain whitelist as `['.jpg']`
