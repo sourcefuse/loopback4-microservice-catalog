@@ -17,6 +17,7 @@ import {RefreshToken} from './refresh-token.model';
 import {ResetPasswordWithClient} from './reset-password-with-client.model';
 import {RevokedToken} from './revoked-token.model';
 import {Role} from './role.model';
+import {SamlLogoutResponseDto} from './saml-logout-response-dto.model';
 import {SignupRequestDto} from './signup-request-dto.model';
 import {SignupRequestResponseDto} from './signup-request-response-dto.model';
 import {SignupRequest} from './signup-request.model';
@@ -45,6 +46,7 @@ export * from './refresh-token.model';
 export * from './reset-password-with-client.model';
 export * from './revoked-token.model';
 export * from './role.model';
+export * from './saml-logout-response-dto.model';
 export * from './signup-request-dto.model';
 export * from './signup-request-response-dto.model';
 export * from './signup-request.model';
@@ -78,6 +80,7 @@ export const models = [
   ResetPasswordWithClient,
   SignupRequestDto,
   SignupRequestResponseDto,
+  SamlLogoutResponseDto,
   SignupRequest,
   SignupWithTokenReponseDto,
   LocalUserProfileDto,

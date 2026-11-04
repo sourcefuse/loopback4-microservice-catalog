@@ -2,8 +2,8 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {inject} from '@loopback/context';
-import {repository} from '@loopback/repository';
+import { inject } from '@loopback/context';
+import { repository } from '@loopback/repository';
 import {
   HttpErrors,
   param,
@@ -25,14 +25,14 @@ import {
   SuccessResponse,
   X_TS_TYPE,
 } from '@sourceloop/core';
-import {encode} from 'base-64';
-import {HttpsProxyAgent} from 'https-proxy-agent';
-import {authenticate, AuthErrorKeys, STRATEGY} from 'loopback4-authentication';
-import {authorize} from 'loopback4-authorization';
+import { encode } from 'base-64';
+import { HttpsProxyAgent } from 'https-proxy-agent';
+import { authenticate, AuthErrorKeys, STRATEGY } from 'loopback4-authentication';
+import { authorize } from 'loopback4-authorization';
 import fetch from 'node-fetch';
-import {URLSearchParams} from 'node:url';
-import {AuthServiceBindings} from '../../../keys';
-import {RefreshTokenRequest} from '../../../models';
+import { URLSearchParams } from 'node:url';
+import { AuthServiceBindings } from '../../../keys';
+import { RefreshTokenRequest, SamlLogoutResponseDto } from '../../../models';
 import {
   LoginActivityRepository,
   RefreshTokenRepository,
@@ -40,8 +40,8 @@ import {
   UserRepository,
   UserTenantRepository,
 } from '../../../repositories';
-import {IdpLoginService} from '../../../services';
-import {ActorId} from '../../../types';
+import { IdpLoginService, SamlLogoutService } from '../../../services';
+import { ActorId } from '../../../types';
 
 const proxyUrl = process.env.HTTPS_PROXY ?? process.env.HTTP_PROXY;
 
@@ -74,12 +74,14 @@ export class LogoutController {
     public userTenantRepo: UserTenantRepository,
     @inject('services.IdpLoginService')
     private readonly idpLoginService: IdpLoginService,
-  ) {}
+    @inject('services.SamlLogoutService')
+    private readonly samlLogoutService: SamlLogoutService,
+  ) { }
 
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: ['*']})
+  @authorize({ permissions: ['*'] })
   @post('/logout', {
     security: OPERATION_SECURITY_SPEC,
     description: 'To logout',
@@ -88,7 +90,7 @@ export class LogoutController {
         description: SUCCESS_RESPONSE,
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: {[X_TS_TYPE]: SuccessResponse},
+            schema: { [X_TS_TYPE]: SuccessResponse },
           },
         },
       },
@@ -117,7 +119,7 @@ export class LogoutController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: ['*']})
+  @authorize({ permissions: ['*'] })
   @post('/keycloak/logout', {
     security: OPERATION_SECURITY_SPEC,
     description:
@@ -127,7 +129,7 @@ export class LogoutController {
         description: SUCCESS_RESPONSE,
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: {[X_TS_TYPE]: SuccessResponse},
+            schema: { [X_TS_TYPE]: SuccessResponse },
           },
         },
       },
@@ -192,7 +194,7 @@ export class LogoutController {
     if (refreshTokenModel.accessToken !== token) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenInvalid);
     }
-    await this.revokedTokens.set(token, {token});
+    await this.revokedTokens.set(token, { token });
     await this.refreshTokenRepo.delete(req.refreshToken);
     if (refreshTokenModel.pubnubToken) {
       await this.refreshTokenRepo.delete(refreshTokenModel.pubnubToken);
@@ -208,7 +210,7 @@ export class LogoutController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: ['*']})
+  @authorize({ permissions: ['*'] })
   @post('/google/logout', {
     security: OPERATION_SECURITY_SPEC,
     description:
@@ -218,7 +220,7 @@ export class LogoutController {
         description: SUCCESS_RESPONSE,
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: {[X_TS_TYPE]: SuccessResponse},
+            schema: { [X_TS_TYPE]: SuccessResponse },
           },
         },
       },
@@ -282,7 +284,7 @@ export class LogoutController {
     if (refreshTokenModel.accessToken !== token) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenInvalid);
     }
-    await this.revokedTokens.set(token, {token});
+    await this.revokedTokens.set(token, { token });
     await this.refreshTokenRepo.delete(req.refreshToken);
     if (refreshTokenModel.pubnubToken) {
       await this.refreshTokenRepo.delete(refreshTokenModel.pubnubToken);
@@ -298,7 +300,7 @@ export class LogoutController {
   @authenticate(STRATEGY.BEARER, {
     passReqToCallback: true,
   })
-  @authorize({permissions: ['*']})
+  @authorize({ permissions: ['*'] })
   @post('/cognito/logout', {
     security: OPERATION_SECURITY_SPEC,
     description:
@@ -308,7 +310,7 @@ export class LogoutController {
         description: SUCCESS_RESPONSE,
         content: {
           [CONTENT_TYPE.JSON]: {
-            schema: {[X_TS_TYPE]: SuccessResponse},
+            schema: { [X_TS_TYPE]: SuccessResponse },
           },
         },
       },
@@ -376,7 +378,7 @@ export class LogoutController {
     if (refreshTokenModel.accessToken !== token) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenInvalid);
     }
-    await this.revokedTokens.set(token, {token});
+    await this.revokedTokens.set(token, { token });
     await this.refreshTokenRepo.delete(req.refreshToken);
     if (refreshTokenModel.pubnubToken) {
       await this.refreshTokenRepo.delete(refreshTokenModel.pubnubToken);
@@ -387,5 +389,74 @@ export class LogoutController {
 
       key: refreshTokenModel.userId,
     });
+  }
+
+  /**
+   * Logout for a SAML session: ends the application session exactly like
+   * /logout and also returns a signed SAML LogoutRequest URL. The client sends
+   * the browser there so the IdP ends its own session; the IdP then returns to
+   * /auth/saml/logout. logoutUrl is null when the session is not a SAML one or
+   * Single Logout is not configured for the environment.
+   */
+  @authenticate(STRATEGY.BEARER, {
+    passReqToCallback: true,
+  })
+  // allow-any-authenticated, like the other logout routes: it only ever ends
+  // the caller's own session (the refresh token must belong to the access token)
+  @authorize({ permissions: ['*'] })
+  @post('/saml/logout', {
+    security: OPERATION_SECURITY_SPEC,
+    description:
+      'Logs the user out of the application and returns the SAML Single Logout URL for a SAML session.',
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Logout result with the SAML logout URL (or null)',
+        content: {
+          [CONTENT_TYPE.JSON]: {
+            schema: getModelSchemaRefSF(SamlLogoutResponseDto),
+          },
+        },
+      },
+      ...ErrorCodes,
+    },
+  })
+  async samlLogout(
+    @param.header.string('Authorization', {
+      description: AUTHENTICATE_USER,
+    })
+    auth: string,
+    @requestBody({
+      content: {
+        [CONTENT_TYPE.JSON]: {
+          schema: getModelSchemaRefSF(RefreshTokenRequest, {
+            partial: true,
+          }),
+        },
+      },
+    })
+    req: RefreshTokenRequest,
+  ): Promise<SamlLogoutResponseDto> {
+    const token = auth?.replace(/bearer /i, '');
+    if (!token || !req.refreshToken) {
+      throw new HttpErrors.UnprocessableEntity(
+        AuthenticateErrorKeys.TokenMissing,
+      );
+    }
+    const refreshTokenModel = await this.refreshTokenRepo.get(req.refreshToken);
+    if (!refreshTokenModel) {
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenExpired);
+    }
+    if (refreshTokenModel.accessToken !== token) {
+      throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenInvalid);
+    }
+    // built before logoutUser deletes the refresh record holding the SAML session ref
+    const logoutUrl = await this.samlLogoutService.buildLogoutUrl(
+      refreshTokenModel.externalAuthToken,
+    );
+    const { key } = await this.idpLoginService.logoutUser(auth, req);
+    this.logger.info(
+      `[LogoutController] SAML logout :: userId=${key} :: sloUrlBuilt=${!!logoutUrl}`,
+    );
+    return new SamlLogoutResponseDto({ success: true, key, logoutUrl });
   }
 }

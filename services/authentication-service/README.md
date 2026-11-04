@@ -307,6 +307,16 @@ Authenttication service can be used as a identity server. Following endpoints ha
   </tbody>
   </table>
 
+### SAML Single Logout
+
+For users who signed in through SAML (`POST /auth/saml` → IdP → `POST /auth/saml-redirect`), the service supports SP-initiated Single Logout:
+
+1. At login, the IdP session (NameID, NameID format and SessionIndex) is kept in the refresh-token record (`externalAuthToken`). It is never added to the JWT, and it survives token refresh.
+2. The client calls `POST /saml/logout` with the bearer token and `{"refreshToken": "..."}`. The application session is ended exactly like `POST /logout`, and the response contains `logoutUrl`: a signed SAML LogoutRequest URL (HTTP-Redirect binding).
+3. The client navigates the browser to `logoutUrl` (a top-level navigation, so the IdP session cookie is sent). The IdP ends its session and posts back to `POST /auth/saml/logout`, which redirects (303) to `SAML_LOGOUT_REDIRECT_URL`.
+
+`logoutUrl` is `null` when the session is not a SAML one or Single Logout is not configured; the application session is still ended. Configure `SAML_SESSION_LOGOUT_URL`, `SAML_SP_PRIVATE_KEY` and `SAML_LOGOUT_REDIRECT_URL` (see below), register `<auth-host>/auth/saml/logout` as the Single Logout URL in the IdP, and make sure the application binds `Strategies.Passport.SAML_STRATEGY_FACTORY`.
+
 ### Environment Variables
 
 <table>
@@ -495,6 +505,24 @@ Authenttication service can be used as a identity server. Following endpoints ha
         <td>HTTPS_PROXY</td>
         <td>N</td>
         <td>Https proxy url for keycloak auth</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>SAML_SESSION_LOGOUT_URL</td>
+        <td>N</td>
+        <td>IdP Single Logout (SLO) endpoint used by <code>POST /saml/logout</code>. Single Logout is enabled only when this, <code>SAML_SP_PRIVATE_KEY</code>, <code>SAML_LOGOUT_REDIRECT_URL</code> and the SAML login settings (<code>SAML_ISSUER</code>, <code>SAML_CERT</code>, <code>SAML_ENTRY_POINT</code>, <code>SAML_CALLBACK_URL</code>) are all set.</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>SAML_SP_PRIVATE_KEY</td>
+        <td>N</td>
+        <td>PEM private key of the service provider used to sign SAML LogoutRequests (escaped <code>\n</code> line breaks are supported). Login AuthnRequests stay unsigned.</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>SAML_LOGOUT_REDIRECT_URL</td>
+        <td>N</td>
+        <td>Page the browser is redirected to (303) when the IdP returns to <code>POST /auth/saml/logout</code> after Single Logout.</td>
         <td></td>
       </tr>
 
