@@ -32,4 +32,11 @@ export class TokenResponse extends CoreModel<TokenResponse> {
     type: 'string',
   })
   pubnubToken?: string;
+
+  @property({
+    type: 'date',
+    required: false,
+    description: 'Last successful interactive login time',
+  })
+  lastLogin?: Date;
 }
