@@ -17,6 +17,7 @@ import * as jose from 'node-jose';
 import {
   PublicKeysRepository,
   RevokedTokenRepository,
+  UserTokensValidAfterRepository,
 } from '../../../repositories';
 import {ILogger, LOGGER} from '../../logger-extension';
 import {IAuthUserWithPermissions} from '../keys';
@@ -30,6 +31,8 @@ export class FacadesBearerAsymmetricTokenVerifyProvider implements Provider<Veri
     @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
     @inject(AuthenticationBindings.USER_MODEL, {optional: true})
     public authUserModel?: Constructor<EntityWithIdentifier & IAuthUser>,
+    @repository(UserTokensValidAfterRepository)
+    public userTokensValidAfterRepository?: UserTokensValidAfterRepository,
   ) {}
 
   /**
@@ -73,6 +76,17 @@ export class FacadesBearerAsymmetricTokenVerifyProvider implements Provider<Veri
       } catch (error) {
         this.logger.error(JSON.stringify(error));
         throw new HttpErrors.Unauthorized('TokenExpired');
+      }
+
+      if (
+        user.id &&
+        (await this.userTokensValidAfterRepository?.isRevoked(
+          user.id,
+          user.iat,
+          user.tenantId,
+        ))
+      ) {
+        throw new HttpErrors.Unauthorized('TokenRevoked');
       }
 
       if (
