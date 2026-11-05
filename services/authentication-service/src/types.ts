@@ -15,6 +15,14 @@ import {AuthRefreshTokenRequest} from './modules/auth';
 // sonarignore:start
 export interface IAuthServiceConfig extends IServiceConfig {
   useSymmetricEncryption?: boolean;
+  /**
+   * Opt in to SAML Single Logout (off by default). When enabled, the
+   * POST /saml/logout and POST /auth/saml/logout routes are mounted and the IdP
+   * session reference is kept at login. Note that Single Logout ends the
+   * user's IdP session, which for a corporate SSO signs them out of every
+   * other application using it — enable it only where that is intended.
+   */
+  samlSingleLogout?: boolean;
 }
 // sonarignore:end
 

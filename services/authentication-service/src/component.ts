@@ -57,6 +57,7 @@ import {
   SecureClientPasswordVerifyProvider,
   SecureResourceOwnerVerifyProvider,
 } from './modules/auth';
+import {SamlLogoutController} from './opt-in';
 import {KeycloakVerifyProvider} from './modules/auth/providers/keycloak-verify.provider';
 import {
   AppleOauth2SignupProvider,
@@ -204,6 +205,11 @@ export class AuthenticationServiceComponent implements Component {
     this.application
       .bind('services.SamlLogoutService')
       .toClass(SamlLogoutService);
+    // SAML Single Logout is opt-in: ending the IdP session signs the user out
+    // of every application sharing that SSO, so its routes exist only on request
+    if (this.authConfig?.samlSingleLogout) {
+      this.controllers = [SamlLogoutController];
+    }
 
     //set the userActivity to false by default
     this.application

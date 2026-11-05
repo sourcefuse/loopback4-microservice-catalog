@@ -32,7 +32,6 @@ import {
 import {authorize} from 'loopback4-authorization';
 import {AuthCodeBindings, AuthCodeGeneratorFn} from '../../../providers';
 import {AuthClientRepository} from '../../../repositories';
-import {readSamlLogoutConfig} from '../../../services/saml-logout.service';
 import {AuthUser, ClientAuthRequest, TokenResponse} from '../models';
 
 // Pending AuthnRequest IDs are dropped after this long. SAML_REQUEST_TTL_MS overrides
@@ -185,38 +184,5 @@ export class SamlLoginController {
       this.logger.error(error);
       throw new HttpErrors.Unauthorized(AuthErrorKeys.InvalidCredentials);
     }
-  }
-
-  // Pre-auth by design: the IdP posts the LogoutResponse from the browser after
-  // the application session is already gone, so there is no token to
-  // authenticate. Keep this handler side-effect free — it only redirects to
-  // the server-configured URL and never reads or reflects the posted data.
-  @authorize({permissions: ['*']})
-  @post('/auth/saml/logout', {
-    description:
-      'SAML Single Logout return (POST binding) — redirects to the configured post-logout page (SAML_LOGOUT_REDIRECT_URL).',
-    responses: {
-      [STATUS_CODE.SEE_OTHER]: {
-        description: 'Redirect (303) — see the Location header',
-        headers: {Location: {schema: {type: 'string'}}},
-      },
-    },
-  })
-  samlLogoutCallback(
-    @inject(RestBindings.Http.RESPONSE) response: Response,
-    @requestBody({
-      content: {
-        [CONTENT_TYPE.FORM_URLENCODED]: {},
-      },
-      required: false,
-    })
-    _samlData?: AnyObject, //NOSONAR
-  ): void {
-    const config = readSamlLogoutConfig();
-    if (!config) {
-      throw new HttpErrors.NotFound();
-    }
-    // 303 so the IdP's POST is followed with a GET of the post-logout page
-    response.redirect(STATUS_CODE.SEE_OTHER, config.postLogoutRedirectUrl);
   }
 }
