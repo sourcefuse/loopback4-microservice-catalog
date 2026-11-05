@@ -5,11 +5,12 @@ import {
   inject,
   injectable,
 } from '@loopback/core';
+import {GetObjectCommand, S3} from '@aws-sdk/client-s3';
 import {Filter, defineCrudRepositoryClass, juggler} from '@loopback/repository';
 
-import AWS from 'aws-sdk';
 import csvtojson from 'csvtojson';
 import {AuditServiceApplication} from '../application';
+import {AWSS3Bindings, AwsS3Config} from '../keys';
 import {AuditLog} from '../models';
 import {QuerySelectedFilesFn} from '../types';
 
@@ -18,6 +19,8 @@ export class QuerySelectedFilesProvider implements Provider<QuerySelectedFilesFn
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: AuditServiceApplication,
+    @inject(AWSS3Bindings.Config, {optional: true})
+    private readonly config?: AwsS3Config,
   ) {}
 
   value(): QuerySelectedFilesFn {
@@ -63,22 +66,29 @@ export class QuerySelectedFilesProvider implements Provider<QuerySelectedFilesFn
     return allRecords;
   }
   async getFileContent(fileName: string) {
-    AWS.config = new AWS.Config({
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-      region: process.env.AWS_REGION,
+    const accessKeyId =
+      process.env.AWS_ACCESS_KEY_ID ?? this.config?.accessKeyId;
+    const secretAccessKey =
+      process.env.AWS_SECRET_ACCESS_KEY ?? this.config?.secretAccessKey;
+    // Without a static key pair, leave credentials unset so the SDK uses its
+    // default chain (IAM role, IRSA, instance profile), as aws-sdk v2 did.
+    const s3Client = new S3({
+      ...(accessKeyId && secretAccessKey
+        ? {credentials: {accessKeyId, secretAccessKey}}
+        : {}),
+      region: process.env.AWS_REGION ?? this.config?.region,
+      ...this.config,
     });
-    const s3 = new AWS.S3();
 
-    const params = {
-      Bucket: process.env.AWS_S3_BUCKET_NAME as string,
-      Key: fileName,
-    };
-
-    const {Body} = await s3.getObject(params).promise();
+    const {Body} = await s3Client.send(
+      new GetObjectCommand({
+        Bucket: process.env.AWS_S3_BUCKET_NAME as string,
+        Key: fileName,
+      }),
+    );
     let json: AuditLog[] | undefined;
     if (Body) {
-      json = await csvtojson().fromString(Body?.toString());
+      json = await csvtojson().fromString(await Body.transformToString());
     }
     return json;
   }

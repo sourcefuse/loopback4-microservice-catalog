@@ -84,7 +84,7 @@
     "msgpack5": "^6.1.0",
     "@isaacs/brace-expansion": "^5.0.1",
     "axios": "^1.15.2",
-    "fast-uri": "^3.1.7",
+    "fast-uri": "^3.1.9",
     "minimatch": "^10.2.1",
     "check-code-coverage": {
       "lodash": "^4.17.21"
@@ -94,6 +94,9 @@
     },
     "underscore": "^1.13.8",
     "undici": "^6.24.0",
-    "serialize-javascript": "^7.0.3"
+    "serialize-javascript": "^7.0.3",
+    "csv-parse": "^7.0.2",
+    "glob@>=9": "^14.0.2",
+    "uuid@<11.1.1": "^11.1.1"
   }
 }

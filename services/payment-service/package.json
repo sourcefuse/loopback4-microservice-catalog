@@ -92,7 +92,7 @@
     "razorpay": "^2.9.6",
     "stripe": "^8.222.0",
     "tslib": "^2.8.1",
-    "uuid": "^8.3.2"
+    "uuid": "^11.1.1"
   },
   "devDependencies": {
     "@loopback/build": "^12.0.11",
@@ -101,7 +101,6 @@
     "@types/lodash": "^4.17.24",
     "@types/node": "^20.19.39",
     "@types/paypal__checkout-server-sdk": "^1.0.8",
-    "@types/uuid": "^8.3.4",
     "db-migrate": "^1.0.0-beta.35",
     "db-migrate-pg": "^1.5.2",
     "eslint": "^8.57.1",
