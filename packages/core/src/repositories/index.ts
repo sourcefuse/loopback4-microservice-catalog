@@ -8,3 +8,4 @@ export * from './default-user-modify-crud.repository.base';
 export * from './jwt-keys.repository';
 export * from './public-keys.repository';
 export * from './revoked-token.repository';
+export * from './user-tokens-valid-after.repository';

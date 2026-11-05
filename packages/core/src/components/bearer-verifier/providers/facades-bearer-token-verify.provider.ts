@@ -14,7 +14,10 @@ import {
 } from 'loopback4-authentication';
 import moment from 'moment';
 
-import {RevokedTokenRepository} from '../../../repositories';
+import {
+  RevokedTokenRepository,
+  UserTokensValidAfterRepository,
+} from '../../../repositories';
 import {ILogger, LOGGER} from '../../logger-extension';
 import {IAuthUserWithPermissions} from '../keys';
 
@@ -25,6 +28,8 @@ export class FacadesBearerTokenVerifyProvider implements Provider<VerifyFunction
     @inject(LOGGER.LOGGER_INJECT) private readonly logger: ILogger,
     @inject(AuthenticationBindings.USER_MODEL, {optional: true})
     public authUserModel?: Constructor<EntityWithIdentifier & IAuthUser>,
+    @repository(UserTokensValidAfterRepository)
+    public userTokensValidAfterRepository?: UserTokensValidAfterRepository,
   ) {}
 
   /**
@@ -59,6 +64,8 @@ export class FacadesBearerTokenVerifyProvider implements Provider<VerifyFunction
         this.logger.error(JSON.stringify(error));
         throw new HttpErrors.Unauthorized('TokenExpired');
       }
+
+      await this.userTokensValidAfterRepository?.assertNotRevoked(user);
 
       if (
         user.passwordExpiryTime &&
