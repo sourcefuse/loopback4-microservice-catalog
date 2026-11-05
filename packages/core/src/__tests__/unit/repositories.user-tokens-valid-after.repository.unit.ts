@@ -38,6 +38,17 @@ describe('UserTokensValidAfterRepository', () => {
     expect(await repo.isRevoked('u1', revokedAtSec + 60)).to.be.false();
   });
 
+  it('accepts a token issued in the same second as the marker', async () => {
+    clock.tick(500);
+    await repo.revoke('u1', TTL_MS);
+    expect(await repo.isRevoked('u1', revokedAtSec)).to.be.false();
+  });
+
+  it('revokes a token issued one second before the marker', async () => {
+    await repo.revoke('u1', TTL_MS);
+    expect(await repo.isRevoked('u1', revokedAtSec - 1)).to.be.true();
+  });
+
   it('does not revoke when no marker exists', async () => {
     expect(await repo.isRevoked('u1', revokedAtSec - 600)).to.be.false();
   });
@@ -94,14 +105,20 @@ describe('UserTokensValidAfterRepository', () => {
         .isRevoked('u1', revokedAtSec)
         .catch(e => e);
       expect(err.statusCode).to.eql(503);
-      sinon.assert.calledOnce(logger.error);
+      sinon.assert.calledOnceWithExactly(
+        logger.error,
+        sinon.match('Failed to read tokensValidAfter marker for user u1: down'),
+      );
     });
 
     it('lets the request through when fail-open is bound', async () => {
       expect(
         await buildRepo(failing, true).isRevoked('u1', revokedAtSec),
       ).to.be.false();
-      sinon.assert.calledOnce(logger.error);
+      sinon.assert.calledOnceWithExactly(
+        logger.error,
+        sinon.match('Failed to read tokensValidAfter marker for user u1: down'),
+      );
     });
   });
 });

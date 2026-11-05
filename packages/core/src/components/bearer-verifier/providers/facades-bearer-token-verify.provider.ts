@@ -65,16 +65,7 @@ export class FacadesBearerTokenVerifyProvider implements Provider<VerifyFunction
         throw new HttpErrors.Unauthorized('TokenExpired');
       }
 
-      if (
-        user.id &&
-        (await this.userTokensValidAfterRepository?.isRevoked(
-          user.id,
-          user.iat,
-          user.tenantId,
-        ))
-      ) {
-        throw new HttpErrors.Unauthorized('TokenRevoked');
-      }
+      await this.userTokensValidAfterRepository?.assertNotRevoked(user);
 
       if (
         user.passwordExpiryTime &&

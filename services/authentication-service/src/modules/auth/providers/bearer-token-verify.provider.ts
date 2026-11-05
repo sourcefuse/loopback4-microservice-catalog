@@ -48,17 +48,9 @@ export class BearerTokenVerifyProvider implements Provider<VerifyFunction.Bearer
         throw new HttpErrors.Unauthorized('TokenExpired');
       }
 
-      const {iat} = user as IAuthUserWithPermissions;
-      if (
-        user.id &&
-        (await this.userTokensValidAfterRepository?.isRevoked(
-          user.id,
-          iat,
-          user.tenantId,
-        ))
-      ) {
-        throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.TokenRevoked);
-      }
+      await this.userTokensValidAfterRepository?.assertNotRevoked(
+        user as IAuthUserWithPermissions,
+      );
 
       if (
         user.passwordExpiryTime &&

@@ -46,10 +46,7 @@ export class UserTokenRevocationService {
       ttlSeconds * 1000,
       options?.tenantId,
     );
-    this.logger.info(
-      `Revoked tokens issued so far to user ${userId}${
-        options?.tenantId ? ` in tenant ${options.tenantId}` : ''
-      }`,
-    );
+    const scope = options?.tenantId ? ` in tenant ${options.tenantId}` : '';
+    this.logger.info(`Revoked tokens issued so far to user ${userId}${scope}`);
   }
 }

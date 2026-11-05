@@ -71,7 +71,7 @@ describe('Bearer Token Verify Provider', () => {
       new BearerTokenVerifyProvider(
         revokedTokenRepo,
         logger,
-        async () => Object.assign(new AuthUser({id: 'u1'}), {iat}),
+        () => Promise.resolve(Object.assign(new AuthUser({id: 'u1'}), {iat})),
         markers,
       ).value();
 

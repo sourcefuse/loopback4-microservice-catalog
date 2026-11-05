@@ -136,7 +136,7 @@ describe('LoginController token refresh after user revocation', () => {
       undefined as never,
       idpLoginService,
       undefined as never,
-      async () => true,
+      () => Promise.resolve(true),
       markers,
     );
   });
