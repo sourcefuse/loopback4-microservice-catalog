@@ -58,9 +58,6 @@
     "oidc-provider": {
       "@koa/cors": "^5.0.0"
     },
-    "read-package-json": {
-      "glob": "^10.5.0"
-    },
     "js-yaml": "^4.3.2",
     "artillery": {
       "js-yaml": "3.15.2"
@@ -97,11 +94,18 @@
       "brace-expansion": "^5.0.12",
       "minimatch": "^11.0.1"
     },
-    "uuid@11": "^11.1.1",
+    "uuid@<11.1.1": "^11.1.1",
+    "uuid@13.0.0": "^13.0.1",
+    "@opentelemetry/core": "^2.8.0",
     "csv-parse@5": "^7.0.2",
     "typedoc": {
       "minimatch": "^10.2.5"
-    }
+    },
+    "@tootallnate/once": "^2.0.1",
+    "github-username": {
+      "@octokit/rest": "^20.1.2"
+    },
+    "glob@>=9": "^14.0.2"
   },
   "dependencies": {
     "@lavamoat/allow-scripts": "^3.4.1",
