@@ -3,6 +3,8 @@ import {expect, sinon} from '@loopback/testlab';
 import {AuditServiceApplication} from '../../application';
 import {QuerySelectedFilesProvider} from '../../services';
 
+const FILE_NAME = 'archive.csv';
+
 describe('QuerySelectedFilesProvider getFileContent', () => {
   let sendStub: sinon.SinonStub;
 
@@ -17,13 +19,13 @@ describe('QuerySelectedFilesProvider getFileContent', () => {
   it('parses the csv from the streamed S3 object body', async () => {
     const csv = 'id,actedOn,actor\n1,Product,testUser\n2,User,otherUser';
     // v3 returns a stream; only transformToString yields the content
-    sendStub.resolves({Body: {transformToString: async () => csv}});
+    sendStub.resolves({Body: {transformToString: () => Promise.resolve(csv)}});
     const provider = new QuerySelectedFilesProvider(
       {} as AuditServiceApplication,
       {accessKeyId: 'key', secretAccessKey: 'secret', region: 'us-east-1'},
     );
 
-    const records = await provider.getFileContent('archive.csv');
+    const records = await provider.getFileContent(FILE_NAME);
 
     expect(records).to.deepEqual([
       {id: '1', actedOn: 'Product', actor: 'testUser'},
@@ -31,7 +33,7 @@ describe('QuerySelectedFilesProvider getFileContent', () => {
     ]);
     const command = sendStub.firstCall.args[0];
     expect(command).to.be.instanceOf(GetObjectCommand);
-    expect(command.input.Key).to.equal('archive.csv');
+    expect(command.input.Key).to.equal(FILE_NAME);
   });
 
   describe('credentials', () => {
@@ -74,7 +76,7 @@ describe('QuerySelectedFilesProvider getFileContent', () => {
         {accessKeyId: 'key', secretAccessKey: 'secret', region: 'us-east-1'},
       );
 
-      await provider.getFileContent('archive.csv');
+      await provider.getFileContent(FILE_NAME);
 
       const resolve = sendStub.firstCall.thisValue.config.credentials;
       expect(await resolve()).to.containDeep({
@@ -88,7 +90,7 @@ describe('QuerySelectedFilesProvider getFileContent', () => {
         {} as AuditServiceApplication,
       );
 
-      await provider.getFileContent('archive.csv');
+      await provider.getFileContent(FILE_NAME);
 
       // An explicit empty key pair would resolve; the default chain finds
       // nothing here and rejects.
@@ -103,6 +105,6 @@ describe('QuerySelectedFilesProvider getFileContent', () => {
       {} as AuditServiceApplication,
     );
 
-    expect(await provider.getFileContent('archive.csv')).to.be.undefined();
+    expect(await provider.getFileContent(FILE_NAME)).to.be.undefined();
   });
 });
