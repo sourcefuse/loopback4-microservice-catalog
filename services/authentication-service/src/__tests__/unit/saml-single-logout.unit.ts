@@ -4,8 +4,7 @@
 // https://opensource.org/licenses/MIT
 import {expect, sinon} from '@loopback/testlab';
 import {SuccessResponse} from '@sourceloop/core';
-import {LogoutController} from '../../modules/auth/controllers/logout.controller';
-import {SamlLoginController} from '../../modules/auth/controllers/saml-login.controller';
+import {SamlLogoutController} from '../../opt-in';
 import {SamlVerifyProvider} from '../../modules/auth/providers/saml-verify.provider';
 import {IdpLoginService} from '../../services/idp-login.service';
 import {
@@ -67,6 +66,7 @@ type WithExternalTokens = {
 /** Runs the SAML verifier for a profile; value() is typed as IAuthUser, which lacks externalAuthToken. */
 async function verify(
   profileOverrides: Record<string, unknown>,
+  samlSingleLogout = true,
 ): Promise<WithExternalTokens | null> {
   const passThrough = (_profile: unknown, user: unknown) =>
     Promise.resolve(user);
@@ -80,6 +80,7 @@ async function verify(
     sinon.stub() as never,
     sinon.stub().callsFake(passThrough) as never,
     sinon.stub().callsFake(passThrough) as never,
+    {samlSingleLogout},
   );
   return (await provider.value()({
     id: PROFILE_ID,
@@ -105,13 +106,13 @@ function serviceWithUser(): IdpLoginService {
 }
 
 describe('SAML Single Logout - Unit Tests', () => {
-  describe('LogoutController.samlLogout', () => {
+  describe('SamlLogoutController.samlLogout', () => {
     const accessToken = 'access-token';
     const refreshToken = 'refresh-token';
     let refreshTokenRepo: {get: sinon.SinonStub};
     let idpLoginService: {logoutUser: sinon.SinonStub};
     let samlLogoutService: {buildLogoutUrl: sinon.SinonStub};
-    let controller: LogoutController;
+    let controller: SamlLogoutController;
 
     beforeEach(() => {
       refreshTokenRepo = {
@@ -129,16 +130,9 @@ describe('SAML Single Logout - Unit Tests', () => {
       samlLogoutService = {
         buildLogoutUrl: sinon.stub().resolves(SLO_REQUEST_URL),
       };
-      controller = new LogoutController(
-        {} as never,
-        {} as never,
+      controller = new SamlLogoutController(
         refreshTokenRepo as never,
         {info: sinon.stub(), error: sinon.stub()} as never,
-        {} as never,
-        'id' as never,
-        {} as never,
-        {} as never,
-        {} as never,
         idpLoginService as never,
         samlLogoutService as never,
       );
@@ -191,18 +185,19 @@ describe('SAML Single Logout - Unit Tests', () => {
     });
   });
 
-  describe('SamlLoginController.samlLogoutCallback', () => {
+  describe('SamlLogoutController.samlLogoutCallback', () => {
     let restoreEnv: () => void;
     let response: {redirect: sinon.SinonStub};
-    let controller: SamlLoginController;
+    let controller: SamlLogoutController;
 
     beforeEach(() => {
       restoreEnv = applySloEnv();
       response = {redirect: sinon.stub()};
-      controller = new SamlLoginController(
+      controller = new SamlLogoutController(
         {} as never,
-        {error: sinon.stub()} as never,
-        sinon.stub() as never,
+        {info: sinon.stub(), error: sinon.stub()} as never,
+        {} as never,
+        {} as never,
       );
     });
 
@@ -271,6 +266,12 @@ describe('SAML Single Logout - Unit Tests', () => {
       delete process.env.SAML_SESSION_LOGOUT_URL;
 
       const authUser = await verify({});
+
+      expect(authUser?.externalAuthToken).to.be.undefined();
+    });
+
+    it('stores no session reference unless the application opted in (default)', async () => {
+      const authUser = await verify({}, false);
 
       expect(authUser?.externalAuthToken).to.be.undefined();
     });

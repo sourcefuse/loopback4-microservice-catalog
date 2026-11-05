@@ -13,6 +13,7 @@ import {
   SamlPreVerifyFn,
   SamlSignUpFn,
 } from '../../../providers';
+import {AuthServiceBindings} from '../../../keys';
 import {SignUpBindings, VerifyBindings} from '../../../providers/keys';
 import {UserCredentialsRepository, UserRepository} from '../../../repositories';
 import {
@@ -20,6 +21,7 @@ import {
   readSamlLogoutConfig,
   SAML_NAMEID_FORMAT_UNSPECIFIED,
 } from '../../../services/saml-logout.service';
+import type {IAuthServiceConfig} from '../../../types';
 import {AuthUser} from '../models/auth-user.model';
 export class SamlVerifyProvider implements Provider<VerifyFunction.SamlFn> {
   constructor(
@@ -33,6 +35,8 @@ export class SamlVerifyProvider implements Provider<VerifyFunction.SamlFn> {
     private readonly preVerifyProvider: SamlPreVerifyFn,
     @inject(VerifyBindings.SAML_POST_VERIFY_PROVIDER)
     private readonly postVerifyProvider: SamlPostVerifyFn,
+    @inject(AuthServiceBindings.Config, {optional: true})
+    private readonly authConfig?: IAuthServiceConfig | null,
   ) {}
 
   value(): VerifyFunction.SamlFn {
@@ -77,8 +81,10 @@ export class SamlVerifyProvider implements Provider<VerifyFunction.SamlFn> {
       });
       authUser.permissions = [];
       // kept (encrypted) in the refresh-token record for SAML Single Logout;
-      // never in the JWT, and only when Single Logout is configured
-      const sloConfig = readSamlLogoutConfig();
+      // never in the JWT, and only when the app opted in and SLO is configured
+      const sloConfig = this.authConfig?.samlSingleLogout
+        ? readSamlLogoutConfig()
+        : undefined;
       if (sloConfig && profile.nameID) {
         authUser.externalAuthToken = encodeSamlSession(
           {

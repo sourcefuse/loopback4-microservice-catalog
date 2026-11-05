@@ -1066,39 +1066,6 @@
         "operationId": "ForgetPasswordController.resetPassword"
       }
     },
-    "/auth/saml/logout": {
-      "post": {
-        "x-controller-name": "SamlLoginController",
-        "x-operation-name": "samlLogoutCallback",
-        "tags": [
-          "SamlLoginController"
-        ],
-        "description": "SAML Single Logout return (POST binding) — redirects to the configured post-logout page (SAML_LOGOUT_REDIRECT_URL).",
-        "responses": {
-          "303": {
-            "description": "Redirect (303) — see the Location header",
-            "headers": {
-              "Location": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/x-www-form-urlencoded": {
-              "schema": {
-                "type": "object"
-              }
-            }
-          },
-          "required": false
-        },
-        "operationId": "SamlLoginController.samlLogoutCallback"
-      }
-    },
     "/auth/saml": {
       "post": {
         "x-controller-name": "SamlLoginController",
@@ -2150,66 +2117,6 @@
         },
         "operationId": "LogoutController.logout"
       }
-    },
-    "/saml/logout": {
-      "post": {
-        "x-controller-name": "LogoutController",
-        "x-operation-name": "samlLogout",
-        "tags": [
-          "LogoutController"
-        ],
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "description": "Logs the user out of the application and returns the SAML Single Logout URL for a SAML session.",
-        "responses": {
-          "200": {
-            "description": "Logout result with the SAML logout URL (or null)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SamlLogoutResponseDto"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "The syntax of the request entity is incorrect."
-          },
-          "401": {
-            "description": "Invalid Credentials."
-          },
-          "404": {
-            "description": "The entity requested does not exist."
-          },
-          "422": {
-            "description": "The syntax of the request entity is incorrect"
-          }
-        },
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            },
-            "description": "This is the access token which is required to authenticate user."
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RefreshTokenRequestPartial"
-              }
-            }
-          },
-          "x-parameter-index": 1
-        },
-        "operationId": "LogoutController.samlLogout"
-      }
     }
   },
   "components": {
@@ -2724,29 +2631,6 @@
         },
         "required": [
           "refreshToken"
-        ],
-        "additionalProperties": false
-      },
-      "SamlLogoutResponseDto": {
-        "title": "SamlLogoutResponseDto",
-        "type": "object",
-        "description": "Result of a SAML logout: the application session is always ended; logoutUrl is the signed IdP Single Logout URL, or null when not applicable.",
-        "properties": {
-          "success": {
-            "type": "boolean"
-          },
-          "key": {
-            "type": "string",
-            "description": "Id of the user that was logged out."
-          },
-          "logoutUrl": {
-            "type": "string",
-            "description": "Signed SAML LogoutRequest URL (HTTP-Redirect binding); send the browser here so the IdP ends its session.",
-            "nullable": true
-          }
-        },
-        "required": [
-          "success"
         ],
         "additionalProperties": false
       },
