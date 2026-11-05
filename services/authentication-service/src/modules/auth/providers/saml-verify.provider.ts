@@ -80,27 +80,37 @@ export class SamlVerifyProvider implements Provider<VerifyFunction.SamlFn> {
         id: user.id as string,
       });
       authUser.permissions = [];
-      // kept (encrypted) in the refresh-token record for SAML Single Logout;
-      // never in the JWT, and only when the app opted in and SLO is configured
-      const sloConfig = this.authConfig?.samlSingleLogout
-        ? readSamlLogoutConfig()
-        : undefined;
-      if (sloConfig && profile.nameID) {
-        authUser.externalAuthToken = encodeSamlSession(
-          {
-            nameID: profile.nameID,
-            // the Format attribute is optional; without it the stored ref would
-            // not decode and Single Logout would silently become local-only
-            nameIDFormat:
-              profile.nameIDFormat || SAML_NAMEID_FORMAT_UNSPECIFIED,
-            sessionIndex: profile.sessionIndex,
-            nameQualifier: profile.nameQualifier,
-            spNameQualifier: profile.spNameQualifier,
-          },
-          sloConfig.sessionSecret,
-        );
+      const sessionRef = this.encodeSessionRef(profile);
+      if (sessionRef) {
+        authUser.externalAuthToken = sessionRef;
       }
       return this.postVerifyProvider(profile, authUser);
     };
+  }
+
+  /**
+   * The encrypted IdP session reference kept in the refresh-token record for
+   * SAML Single Logout (never in the JWT), or undefined unless the application
+   * opted in, SLO is configured and the IdP returned a NameID.
+   */
+  private encodeSessionRef(profile: SamlStrategy.Profile): string | undefined {
+    const sloConfig = this.authConfig?.samlSingleLogout
+      ? readSamlLogoutConfig()
+      : undefined;
+    if (!sloConfig || !profile.nameID) {
+      return undefined;
+    }
+    return encodeSamlSession(
+      {
+        nameID: profile.nameID,
+        // the Format attribute is optional; without it the stored ref would
+        // not decode and Single Logout would silently become local-only
+        nameIDFormat: profile.nameIDFormat ?? SAML_NAMEID_FORMAT_UNSPECIFIED,
+        sessionIndex: profile.sessionIndex,
+        nameQualifier: profile.nameQualifier,
+        spNameQualifier: profile.spNameQualifier,
+      },
+      sloConfig.sessionSecret,
+    );
   }
 }
