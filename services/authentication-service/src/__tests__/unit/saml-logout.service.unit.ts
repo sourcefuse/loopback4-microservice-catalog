@@ -36,6 +36,17 @@ const session = {
   sessionIndex: 'idp-session-1',
 };
 
+/** A valid session reference with one byte of its encrypted payload flipped. */
+function tamper(offset: number): string {
+  const raw = Buffer.from(
+    encodeSamlSession(session, SESSION_SECRET).slice('saml:'.length),
+    'base64url',
+  );
+  const index = offset < 0 ? raw.length + offset : offset;
+  raw[index] = raw[index] ^ 0xff;
+  return `saml:${raw.toString('base64url')}`;
+}
+
 describe('SamlLogoutService - Unit Tests', () => {
   const saved: Record<string, string | undefined> = {};
 
@@ -240,17 +251,6 @@ describe('SamlLogoutService - Unit Tests', () => {
     const logger = {warn: sinon.stub()};
 
     beforeEach(() => logger.warn.resetHistory());
-
-    /** Flips one byte of the encrypted payload at the given offset. */
-    function tamper(offset: number): string {
-      const raw = Buffer.from(
-        encodeSamlSession(session, SESSION_SECRET).slice('saml:'.length),
-        'base64url',
-      );
-      const index = offset < 0 ? raw.length + offset : offset;
-      raw[index] = raw[index] ^ 0xff;
-      return `saml:${raw.toString('base64url')}`;
-    }
 
     for (const [part, offset] of [
       ['IV', 0],
