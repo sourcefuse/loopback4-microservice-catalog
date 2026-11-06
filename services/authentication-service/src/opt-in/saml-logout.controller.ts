@@ -5,6 +5,7 @@
 import {inject} from '@loopback/context';
 import {AnyObject, repository} from '@loopback/repository';
 import {
+  get,
   HttpErrors,
   param,
   post,
@@ -114,22 +115,37 @@ export class SamlLogoutController {
     // built before logoutUser deletes the refresh record holding the SAML session ref
     const logoutUrl = await this.samlLogoutService.buildLogoutUrl(
       refreshTokenModel.externalAuthToken,
+      refreshTokenModel.userId,
     );
-    const {key} = await this.idpLoginService.logoutUser(auth, req);
+    let key: string | undefined;
+    try {
+      ({key} = await this.idpLoginService.logoutUser(auth, req));
+    } catch (error) {
+      // logoutUser is not atomic: the tokens may already be revoked, so record
+      // that this logout was half-done and whether the IdP URL was lost
+      this.logger.error(
+        `[SamlLogoutController] SAML logout failed after building the logout URL :: userId=${refreshTokenModel.userId} :: sloUrlBuilt=${!!logoutUrl} :: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      );
+      throw error;
+    }
     this.logger.info(
       `[SamlLogoutController] SAML logout :: userId=${key} :: sloUrlBuilt=${!!logoutUrl}`,
     );
     return new SamlLogoutResponseDto({success: true, key, logoutUrl});
   }
 
-  // Pre-auth by design: the IdP posts the LogoutResponse from the browser after
-  // the application session is already gone, so there is no token to
-  // authenticate. Keep this handler side-effect free — it only redirects to
-  // the server-configured URL and never reads or reflects the posted data.
+  // Pre-auth by design: the IdP returns the LogoutResponse from the browser
+  // after the application session is already gone, so there is no token to
+  // authenticate. Both handlers stay side-effect free — they only redirect to
+  // the server-configured URL and never read or reflect the IdP's data.
+  // Only SP-initiated logout is supported: an IdP-initiated LogoutRequest
+  // (SAMLRequest) is not processed here.
   @authorize({permissions: ['*']})
   @post('/auth/saml/logout', {
     description:
-      'SAML Single Logout return (POST binding) — redirects to the configured post-logout page (SAML_LOGOUT_REDIRECT_URL).',
+      'SAML Single Logout return (HTTP-POST binding) — redirects to the configured post-logout page (SAML_LOGOUT_REDIRECT_URL).',
     responses: {
       [STATUS_CODE.SEE_OTHER]: {
         description: 'Redirect (303) — see the Location header',
@@ -147,11 +163,32 @@ export class SamlLogoutController {
     })
     _samlData?: AnyObject, //NOSONAR
   ): void {
+    this.redirectAfterLogout(response);
+  }
+
+  @authorize({permissions: ['*']})
+  @get('/auth/saml/logout', {
+    description:
+      'SAML Single Logout return (HTTP-Redirect binding, used by e.g. Entra ID) — redirects to the configured post-logout page (SAML_LOGOUT_REDIRECT_URL).',
+    responses: {
+      [STATUS_CODE.SEE_OTHER]: {
+        description: 'Redirect (303) — see the Location header',
+        headers: {Location: {schema: {type: 'string'}}},
+      },
+    },
+  })
+  samlLogoutCallbackRedirect(
+    @inject(RestBindings.Http.RESPONSE) response: Response,
+  ): void {
+    this.redirectAfterLogout(response);
+  }
+
+  private redirectAfterLogout(response: Response): void {
     const config = readSamlLogoutConfig();
     if (!config) {
       throw new HttpErrors.NotFound();
     }
-    // 303 so the IdP's POST is followed with a GET of the post-logout page
+    // 303 so a POST from the IdP is followed with a GET of the post-logout page
     response.redirect(STATUS_CODE.SEE_OTHER, config.postLogoutRedirectUrl);
   }
 }

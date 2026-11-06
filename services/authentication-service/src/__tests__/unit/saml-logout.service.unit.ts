@@ -3,6 +3,9 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {expect, sinon} from '@loopback/testlab';
+import {Strategy} from '@node-saml/passport-saml';
+import {generateKeyPairSync} from 'node:crypto';
+import {inflateRawSync} from 'node:zlib';
 import {
   decodeSamlSession,
   encodeSamlSession,
@@ -135,7 +138,11 @@ describe('SamlLogoutService - Unit Tests', () => {
   });
 
   describe('buildLogoutUrl', () => {
-    const logger = {info: sinon.stub(), error: sinon.stub()};
+    const logger = {
+      info: sinon.stub(),
+      warn: sinon.stub(),
+      error: sinon.stub(),
+    };
 
     function serviceWith(logout: sinon.SinonStub) {
       const factory = sinon.stub().returns({logout});
@@ -227,6 +234,102 @@ describe('SamlLogoutService - Unit Tests', () => {
           encodeSamlSession(session, SESSION_SECRET),
         ),
       ).to.be.null();
+    });
+  });
+  describe('tampered or malformed session references', () => {
+    const logger = {warn: sinon.stub()};
+
+    beforeEach(() => logger.warn.resetHistory());
+
+    /** Flips one byte of the encrypted payload at the given offset. */
+    function tamper(offset: number): string {
+      const raw = Buffer.from(
+        encodeSamlSession(session, SESSION_SECRET).slice('saml:'.length),
+        'base64url',
+      );
+      const index = offset < 0 ? raw.length + offset : offset;
+      raw[index] = raw[index] ^ 0xff;
+      return `saml:${raw.toString('base64url')}`;
+    }
+
+    for (const [part, offset] of [
+      ['IV', 0],
+      ['auth tag', 12],
+      ['ciphertext', -1],
+    ] as const) {
+      it(`rejects a reference with a flipped bit in the ${part}`, () => {
+        expect(
+          decodeSamlSession(tamper(offset), SESSION_SECRET, logger as never),
+        ).to.be.undefined();
+        sinon.assert.calledWithMatch(logger.warn, /could not be decrypted/);
+      });
+    }
+
+    it('rejects a reference shorter than IV plus auth tag', () => {
+      const short = `saml:${Buffer.alloc(20).toString('base64url')}`;
+
+      expect(
+        decodeSamlSession(short, SESSION_SECRET, logger as never),
+      ).to.be.undefined();
+      sinon.assert.calledWithMatch(logger.warn, /truncated/);
+    });
+
+    it('rejects a valid reference that decrypts to the wrong shape', () => {
+      for (const shape of [
+        {nameID: '', nameIDFormat: 'x'},
+        {nameID: 'a', nameIDFormat: 5},
+      ]) {
+        const token = encodeSamlSession(shape as never, SESSION_SECRET);
+        expect(
+          decodeSamlSession(token, SESSION_SECRET, logger as never),
+        ).to.be.undefined();
+      }
+      sinon.assert.calledWithMatch(logger.warn, /unexpected shape/);
+    });
+
+    it('reads a reference written with the escaped SAML_SP_PRIVATE_KEY', () => {
+      // login and logout both derive the key through readSamlLogoutConfig
+      const secret = readSamlLogoutConfig()!.sessionSecret;
+
+      expect(
+        decodeSamlSession(encodeSamlSession(session, secret), secret),
+      ).to.containDeep(session);
+    });
+  });
+
+  describe('buildLogoutUrl with the real node-saml strategy', () => {
+    it('produces a signed LogoutRequest for the stored session', async () => {
+      const {privateKey} = generateKeyPairSync('rsa', {modulusLength: 2048});
+      // stored the way deployments do: PEM with escaped line breaks
+      process.env.SAML_SP_PRIVATE_KEY = privateKey
+        .export({type: 'pkcs8', format: 'pem'})
+        .toString()
+        .split('\n')
+        .join(String.raw`\n`);
+      const secret = readSamlLogoutConfig()!.sessionSecret;
+      const verify = () => undefined;
+      const service = new SamlLogoutService(
+        sinon
+          .stub()
+          .resolves((options: never) => new Strategy(options, verify, verify)),
+        {info: sinon.stub(), warn: sinon.stub(), error: sinon.stub()} as never,
+      );
+
+      const url = await service.buildLogoutUrl(
+        encodeSamlSession(session, secret),
+        'user-1',
+      );
+
+      expect(url).to.startWith(`${SLO_ENV.SAML_SESSION_LOGOUT_URL}?`);
+      const params = new URL(url!).searchParams;
+      expect(params.get('SigAlg')).to.containEql('rsa-sha256');
+      expect(params.get('Signature')).to.be.ok();
+      const request = inflateRawSync(
+        Buffer.from(params.get('SAMLRequest')!, 'base64'),
+      ).toString('utf8');
+      expect(request)
+        .to.containEql(session.nameID)
+        .and.containEql(session.sessionIndex);
     });
   });
 });

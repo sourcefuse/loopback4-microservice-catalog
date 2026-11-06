@@ -76,49 +76,68 @@ export function isSamlSessionToken(token?: string | null): token is string {
 export function decodeSamlSession(
   token: string | null | undefined,
   secret: string,
+  logger?: ILogger,
 ): SamlSessionRef | undefined {
   if (!isSamlSessionToken(token) || !secret) {
     return undefined;
   }
-  try {
-    const raw = Buffer.from(
-      token.slice(SAML_SESSION_PREFIX.length),
-      'base64url',
-    );
-    const iv = raw.subarray(0, SESSION_IV_BYTES);
-    const tag = raw.subarray(
-      SESSION_IV_BYTES,
-      SESSION_IV_BYTES + SESSION_TAG_BYTES,
-    );
-    const decipher = createDecipheriv(
-      SESSION_CIPHER,
-      deriveSessionKey(secret),
-      iv,
-    );
-    decipher.setAuthTag(tag);
-    const parsed = JSON.parse(
-      Buffer.concat([
-        decipher.update(raw.subarray(SESSION_IV_BYTES + SESSION_TAG_BYTES)),
-        decipher.final(),
-      ]).toString('utf8'),
-    );
-    if (
-      typeof parsed?.nameID !== 'string' ||
-      !parsed.nameID ||
-      typeof parsed.nameIDFormat !== 'string'
-    ) {
-      return undefined;
-    }
-    return {
-      nameID: parsed.nameID,
-      nameIDFormat: parsed.nameIDFormat,
-      sessionIndex: optionalString(parsed.sessionIndex),
-      nameQualifier: optionalString(parsed.nameQualifier),
-      spNameQualifier: optionalString(parsed.spNameQualifier),
-    };
-  } catch {
+  const raw = Buffer.from(token.slice(SAML_SESSION_PREFIX.length), 'base64url');
+  if (raw.length <= SESSION_IV_BYTES + SESSION_TAG_BYTES) {
+    logger?.warn('[SamlLogout] SAML session reference is truncated');
     return undefined;
   }
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(decryptSessionRef(raw, secret));
+  } catch (error) {
+    // a wrong or rotated key, tampering and corruption all end here; log the
+    // error class only, never the token or the secret
+    logger?.warn(
+      `[SamlLogout] SAML session reference could not be decrypted :: ${
+        error instanceof Error ? error.name : typeof error
+      }`,
+    );
+    return undefined;
+  }
+  const session = toSessionRef(parsed);
+  if (!session) {
+    logger?.warn('[SamlLogout] SAML session reference has an unexpected shape');
+  }
+  return session;
+}
+
+/** AES-256-GCM decrypt; throws when the key is wrong or the data was altered. */
+function decryptSessionRef(raw: Buffer, secret: string): string {
+  const decipher = createDecipheriv(
+    SESSION_CIPHER,
+    deriveSessionKey(secret),
+    raw.subarray(0, SESSION_IV_BYTES),
+  );
+  decipher.setAuthTag(
+    raw.subarray(SESSION_IV_BYTES, SESSION_IV_BYTES + SESSION_TAG_BYTES),
+  );
+  return Buffer.concat([
+    decipher.update(raw.subarray(SESSION_IV_BYTES + SESSION_TAG_BYTES)),
+    decipher.final(),
+  ]).toString('utf8');
+}
+
+function toSessionRef(parsed: unknown): SamlSessionRef | undefined {
+  const value = parsed as Record<string, unknown> | null;
+  if (
+    typeof value?.nameID !== 'string' ||
+    !value.nameID ||
+    typeof value.nameIDFormat !== 'string'
+  ) {
+    return undefined;
+  }
+  return {
+    nameID: value.nameID,
+    nameIDFormat: value.nameIDFormat,
+    sessionIndex: optionalString(value.sessionIndex),
+    nameQualifier: optionalString(value.nameQualifier),
+    spNameQualifier: optionalString(value.spNameQualifier),
+  };
 }
 
 /** PEM values arrive in env vars with literal "\n" sequences for line breaks. */
@@ -186,21 +205,28 @@ export class SamlLogoutService {
     private readonly logger: ILogger,
   ) {}
 
-  async buildLogoutUrl(externalAuthToken?: string): Promise<string | null> {
+  async buildLogoutUrl(
+    externalAuthToken?: string,
+    userId?: string,
+  ): Promise<string | null> {
     if (!isSamlSessionToken(externalAuthToken)) {
       return null;
     }
     const config = readSamlLogoutConfig();
     if (!config) {
-      this.logger.info(
-        '[SamlLogout] Single Logout not configured; ending the local session only',
+      this.logger.warn(
+        `[SamlLogout] Single Logout not configured; ending the local session only :: userId=${userId}`,
       );
       return null;
     }
-    const session = decodeSamlSession(externalAuthToken, config.sessionSecret);
+    const session = decodeSamlSession(
+      externalAuthToken,
+      config.sessionSecret,
+      this.logger,
+    );
     if (!session) {
-      this.logger.info(
-        '[SamlLogout] SAML session reference unreadable (key rotated?); ending the local session only',
+      this.logger.warn(
+        `[SamlLogout] SAML session reference unreadable; ending the local session only :: userId=${userId}`,
       );
       return null;
     }
@@ -219,7 +245,7 @@ export class SamlLogoutService {
       });
     } catch (error) {
       this.logger.error(
-        `[SamlLogout] Could not build the SAML logout request :: ${
+        `[SamlLogout] Could not build the SAML logout request :: userId=${userId} :: ${
           error instanceof Error ? error.message : String(error)
         }`,
       );

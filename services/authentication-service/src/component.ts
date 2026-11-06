@@ -18,6 +18,8 @@ import {
   CoreComponent,
   CoreControllerBooter,
   CoreModelBooter,
+  ILogger,
+  LOGGER,
   SECURITY_SCHEME_SPEC,
   SFCoreBindings,
   TenantGuardService,
@@ -128,6 +130,7 @@ import {
   LoginActivityHelperService,
   LoginHelperService,
   OtpService,
+  readSamlLogoutConfig,
   SamlLogoutService,
 } from './services';
 import {IAuthServiceConfig, IMfaConfig, IOtpConfig} from './types';
@@ -202,13 +205,10 @@ export class AuthenticationServiceComponent implements Component {
       .bind('services.loginActivityHelperService')
       .toClass(LoginActivityHelperService);
     this.application.bind('services.IdpLoginService').toClass(IdpLoginService);
-    this.application
-      .bind('services.SamlLogoutService')
-      .toClass(SamlLogoutService);
     // SAML Single Logout is opt-in: ending the IdP session signs the user out
-    // of every application sharing that SSO, so its routes exist only on request
+    // of every application sharing that SSO, so it is wired only on request
     if (this.authConfig?.samlSingleLogout) {
-      this.controllers = [SamlLogoutController];
+      this.setupSamlSingleLogout();
     }
 
     //set the userActivity to false by default
@@ -267,6 +267,25 @@ export class AuthenticationServiceComponent implements Component {
    */
   setupSequence() {
     this.application.sequence(MySequence);
+  }
+
+  /**
+   * Wires SAML Single Logout (only called when `samlSingleLogout` is on) and
+   * warns at startup when its environment is incomplete, so a typo'd variable
+   * doesn't leave the feature silently doing nothing.
+   */
+  private setupSamlSingleLogout() {
+    this.application
+      .bind('services.SamlLogoutService')
+      .toClass(SamlLogoutService);
+    this.controllers = [SamlLogoutController];
+    if (!readSamlLogoutConfig()) {
+      this.application
+        .getSync<ILogger>(LOGGER.LOGGER_INJECT, {optional: true})
+        ?.warn(
+          '[SamlLogout] samlSingleLogout is enabled but SAML_SESSION_LOGOUT_URL, SAML_SP_PRIVATE_KEY, SAML_LOGOUT_REDIRECT_URL or the SAML login settings are missing; Single Logout will end the local session only',
+        );
+    }
   }
 
   setupAuthenticationComponent(secureClient = false) {
