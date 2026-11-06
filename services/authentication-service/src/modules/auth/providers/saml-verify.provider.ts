@@ -3,6 +3,7 @@ import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 
 import * as SamlStrategy from '@node-saml/passport-saml';
+import {ILogger, LOGGER} from '@sourceloop/core';
 import {
   AuthErrorKeys,
   IAuthUser,
@@ -37,6 +38,8 @@ export class SamlVerifyProvider implements Provider<VerifyFunction.SamlFn> {
     private readonly postVerifyProvider: SamlPostVerifyFn,
     @inject(AuthServiceBindings.Config, {optional: true})
     private readonly authConfig?: IAuthServiceConfig | null,
+    @inject(LOGGER.LOGGER_INJECT, {optional: true})
+    private readonly logger?: ILogger,
   ) {}
 
   value(): VerifyFunction.SamlFn {
@@ -94,23 +97,46 @@ export class SamlVerifyProvider implements Provider<VerifyFunction.SamlFn> {
    * opted in, SLO is configured and the IdP returned a NameID.
    */
   private encodeSessionRef(profile: SamlStrategy.Profile): string | undefined {
-    const sloConfig = this.authConfig?.samlSingleLogout
-      ? readSamlLogoutConfig()
-      : undefined;
-    if (!sloConfig || !profile.nameID) {
+    if (!this.authConfig?.samlSingleLogout) {
       return undefined;
     }
-    return encodeSamlSession(
-      {
-        nameID: profile.nameID,
-        // the Format attribute is optional; without it the stored ref would
-        // not decode and Single Logout would silently become local-only
-        nameIDFormat: profile.nameIDFormat ?? SAML_NAMEID_FORMAT_UNSPECIFIED,
-        sessionIndex: profile.sessionIndex,
-        nameQualifier: profile.nameQualifier,
-        spNameQualifier: profile.spNameQualifier,
-      },
-      sloConfig.sessionSecret,
-    );
+    const sloConfig = readSamlLogoutConfig();
+    // opted in but no reference possible: SLO would silently do nothing at
+    // logout, so say why here
+    if (!sloConfig) {
+      this.logger?.warn(
+        '[SamlLogout] samlSingleLogout is enabled but the Single Logout environment is incomplete; no IdP session reference stored',
+      );
+      return undefined;
+    }
+    if (!profile.nameID) {
+      this.logger?.warn(
+        '[SamlLogout] The IdP returned no NameID; no IdP session reference stored',
+      );
+      return undefined;
+    }
+    try {
+      return encodeSamlSession(
+        {
+          nameID: profile.nameID,
+          // the Format attribute is optional; without it the stored ref would
+          // not decode and Single Logout would silently become local-only
+          nameIDFormat: profile.nameIDFormat ?? SAML_NAMEID_FORMAT_UNSPECIFIED,
+          sessionIndex: profile.sessionIndex,
+          nameQualifier: profile.nameQualifier,
+          spNameQualifier: profile.spNameQualifier,
+        },
+        sloConfig.sessionSecret,
+      );
+    } catch (error) {
+      // deliberate: Single Logout is optional, so a bad key degrades it to a
+      // local-only logout instead of failing the login
+      this.logger?.error(
+        `[SamlLogout] Could not encrypt the IdP session reference; Single Logout disabled for this session :: ${
+          error instanceof Error ? error.name : typeof error
+        }`,
+      );
+      return undefined;
+    }
   }
 }

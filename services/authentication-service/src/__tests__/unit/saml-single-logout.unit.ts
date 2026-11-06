@@ -63,6 +63,8 @@ type WithExternalTokens = {
   externalRefreshToken?: string;
 };
 
+const providerLogger = {warn: sinon.stub(), error: sinon.stub()};
+
 /** Runs the SAML verifier for a profile; value() is typed as IAuthUser, which lacks externalAuthToken. */
 async function verify(
   profileOverrides: Record<string, unknown>,
@@ -81,6 +83,7 @@ async function verify(
     sinon.stub().callsFake(passThrough) as never,
     sinon.stub().callsFake(passThrough) as never,
     {samlSingleLogout},
+    providerLogger as never,
   );
   return (await provider.value()({
     id: PROFILE_ID,
@@ -112,6 +115,7 @@ describe('SAML Single Logout - Unit Tests', () => {
     let refreshTokenRepo: {get: sinon.SinonStub};
     let idpLoginService: {logoutUser: sinon.SinonStub};
     let samlLogoutService: {buildLogoutUrl: sinon.SinonStub};
+    let logger: {info: sinon.SinonStub; error: sinon.SinonStub};
     let controller: SamlLogoutController;
 
     beforeEach(() => {
@@ -130,9 +134,10 @@ describe('SAML Single Logout - Unit Tests', () => {
       samlLogoutService = {
         buildLogoutUrl: sinon.stub().resolves(SLO_REQUEST_URL),
       };
+      logger = {info: sinon.stub(), error: sinon.stub()};
       controller = new SamlLogoutController(
         refreshTokenRepo as never,
-        {info: sinon.stub(), error: sinon.stub()} as never,
+        logger as never,
         idpLoginService as never,
         samlLogoutService as never,
       );
@@ -148,7 +153,11 @@ describe('SAML Single Logout - Unit Tests', () => {
         key: USER_ID,
         logoutUrl: SLO_REQUEST_URL,
       });
-      sinon.assert.calledWith(samlLogoutService.buildLogoutUrl, samlSession);
+      sinon.assert.calledWith(
+        samlLogoutService.buildLogoutUrl,
+        samlSession,
+        USER_ID,
+      );
       sinon.assert.calledOnce(idpLoginService.logoutUser);
       // the URL is built before logoutUser deletes the record holding the session
       sinon.assert.callOrder(
@@ -183,6 +192,18 @@ describe('SAML Single Logout - Unit Tests', () => {
         controller.samlLogout(`Bearer ${accessToken}`, {} as never),
       ).to.be.rejectedWith(/TokenMissing/);
     });
+
+    it('logs and rethrows when logoutUser fails after the URL is built', async () => {
+      idpLoginService.logoutUser.rejects(new Error('user lookup failed'));
+
+      await expect(
+        controller.samlLogout(`Bearer ${accessToken}`, {refreshToken} as never),
+      ).to.be.rejectedWith(/user lookup failed/);
+      sinon.assert.calledOnce(logger.error);
+      expect(logger.error.firstCall.args[0])
+        .to.containEql(`userId=${USER_ID}`)
+        .and.containEql('sloUrlBuilt=true');
+    });
   });
 
   describe('SamlLogoutController.samlLogoutCallback', () => {
@@ -213,6 +234,16 @@ describe('SAML Single Logout - Unit Tests', () => {
       );
     });
 
+    it('accepts the HTTP-Redirect (GET) binding with the same 303', () => {
+      controller.samlLogoutCallbackRedirect(response as never);
+
+      sinon.assert.calledOnceWithExactly(
+        response.redirect,
+        303,
+        SLO_ENV.SAML_LOGOUT_REDIRECT_URL,
+      );
+    });
+
     it('is not found when Single Logout is not configured', () => {
       delete process.env.SAML_LOGOUT_REDIRECT_URL;
 
@@ -228,6 +259,8 @@ describe('SAML Single Logout - Unit Tests', () => {
 
     beforeEach(() => {
       restoreEnv = applySloEnv();
+      providerLogger.warn.resetHistory();
+      providerLogger.error.resetHistory();
     });
 
     afterEach(() => restoreEnv());
@@ -262,12 +295,23 @@ describe('SAML Single Logout - Unit Tests', () => {
       ).to.equal(SAML_NAMEID_FORMAT_UNSPECIFIED);
     });
 
-    it('stores no session reference when Single Logout is not configured', async () => {
+    it('stores no session reference and warns when the SLO environment is incomplete', async () => {
       delete process.env.SAML_SESSION_LOGOUT_URL;
 
       const authUser = await verify({});
 
       expect(authUser?.externalAuthToken).to.be.undefined();
+      sinon.assert.calledWithMatch(
+        providerLogger.warn,
+        /environment is incomplete/,
+      );
+    });
+
+    it('stores no session reference and warns when the IdP sent no NameID', async () => {
+      const authUser = await verify({nameID: undefined});
+
+      expect(authUser?.externalAuthToken).to.be.undefined();
+      sinon.assert.calledWithMatch(providerLogger.warn, /no NameID/);
     });
 
     it('stores no session reference unless the application opted in (default)', async () => {
