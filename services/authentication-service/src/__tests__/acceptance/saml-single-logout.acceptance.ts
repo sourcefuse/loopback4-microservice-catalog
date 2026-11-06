@@ -12,6 +12,14 @@ import {setupApplication} from './test-helper';
 const CONTROLLER_KEY = 'controllers.SamlLogoutController';
 const SLO_PATHS = ['/saml/logout', '/auth/saml/logout'];
 
+/** An app with the component mounted under the given config. */
+function appWith(samlSingleLogout: boolean): RestApplication {
+  const app = new RestApplication();
+  app.bind(AuthServiceBindings.Config).to({samlSingleLogout});
+  app.component(AuthenticationServiceComponent);
+  return app;
+}
+
 describe('SAML Single Logout opt-in', () => {
   describe('default configuration', () => {
     let app: TestingApplication;
@@ -33,14 +41,6 @@ describe('SAML Single Logout opt-in', () => {
       }
     });
   });
-
-  /** An app with the component mounted under the given config. */
-  function appWith(samlSingleLogout: boolean): RestApplication {
-    const app = new RestApplication();
-    app.bind(AuthServiceBindings.Config).to({samlSingleLogout});
-    app.component(AuthenticationServiceComponent);
-    return app;
-  }
 
   describe('samlSingleLogout: false', () => {
     it('does not mount the SAML Single Logout controller or service', () => {
