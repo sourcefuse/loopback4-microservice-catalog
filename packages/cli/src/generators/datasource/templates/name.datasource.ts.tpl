@@ -13,7 +13,11 @@ const DEFAULT_DB_IDLE_TIMEOUT_MILLIS = 60000;
 const DEFAULT_DB_CONNECTION_TIMEOUT_MILLIS = 2000;
 
 const config = {
+  <% if (project.serviceDependency && project.baseServiceStoreName ) { -%>
+  name: <%= project.baseServiceStoreName  %>,
+  <% }else{ -%>
   name: '<%= project.datasourceName  %>',
+  <% } -%>	
   connector: '<%= project.datasourceConnectorName  %>',
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
@@ -45,7 +49,12 @@ juggler.DataSource
   static readonly defaultConfig = config;
 
   constructor(
+
+  <% if (project.serviceDependency && project.baseServiceStoreName ) { -%>
+    @inject(`datasources.config.${<%= project.baseServiceStoreName %>}`, {optional: true})
+  <% }else{ -%>
     @inject('datasources.config.<%= project.datasourceName %>', {optional: true})
+    <% } -%>	
     dsConfig: object = config,
   ) {
     if (!!+(process.env.ENABLE_DB_CONNECTION_POOLING ?? 0)) {

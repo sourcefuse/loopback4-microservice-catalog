@@ -7,6 +7,34 @@ import {
 <% if (project.facade) { -%>
 import {RateLimitSecurityBindings} from 'loopback4-ratelimiter';
 <% } -%>
+<%
+  const importMap = {};
+
+  if (project.baseServiceDSList) {
+    for (const ds of project.baseServiceDSList) {
+      if (ds.name && ds.fileName) {
+        importMap[ds.fileName] = importMap[ds.fileName] || new Set();
+        importMap[ds.fileName].add(ds.name);
+      }
+    }
+  }
+
+  if (project.serviceDependency && project.baseServiceCacheName) {
+    const redis = project.baseServiceCacheName;
+    importMap[redis] = importMap[redis] || new Set();
+    importMap[redis].add(project.baseServiceCacheName);
+  }
+
+  for (const [fileName, namesSet] of Object.entries(importMap)) {
+    const names = Array.from(namesSet);
+-%>
+import {<%= names.join(', ') %>} from '@sourceloop/<%= project.serviceDependency %>';
+<% } %>
+<% if (project.facade) { -%>
+import {AuthCacheSourceName} from '@sourceloop/core';
+<% } -%>
+
+
 
 export async function setupApplication(): Promise<AppWithClient> {
   const restConfig = givenHttpServerConfig({
@@ -23,21 +51,41 @@ export async function setupApplication(): Promise<AppWithClient> {
   });
 
   <% if(project.baseServiceDSList) { -%>
-  <% for(let i=0; i< project.baseServiceDSList.length; i++) {-%>
-    app.bind('datasources.config.db').to({
-      name: 'db',
-      connector: 'memory',
-    });
+    <% for(let i=0; i< project.baseServiceDSList.length; i++) { 
+      const ds = project.baseServiceDSList[i]; -%>
+      <% if (ds.name) { -%>
+        app.bind(`datasources.config.${<%= ds.name %>}`).to({
+          name: '<%= ds.name %>',
+          connector: 'memory',
+        });
+        <% }else{ -%>
+          app.bind('datasources.config.db').to({
+            name: 'db',
+            connector: 'memory',
+          });
+        <% } -%>	
     <% } -%>
   <% } -%>
+  
+  
 
 
-  <% if (project.facade || project.baseServiceCacheName) { -%>
+  <% if (project.serviceDependency && project.baseServiceCacheName ) { -%>
+    app.bind(`datasources.config.${<%= project.baseServiceCacheName %>}`).to({
+      name: <%= project.baseServiceCacheName %>,
+      connector: 'kv-memory',
+    });
+    <% } else if (project.facade) { -%>
+    app.bind(`datasources.config.${AuthCacheSourceName}`).to({
+      name: AuthCacheSourceName,
+      connector: 'kv-memory',
+    });
+    <% }else{ -%>   
     app.bind(`datasources.config.${process.env.REDIS_NAME}`).to({
       name: process.env.REDIS_NAME,
       connector: 'kv-memory',
     });
-  <% } -%>
+    <% } -%>	
 
   <% if (project.facade) { -%>
     app.bind(RateLimitSecurityBindings.RATELIMIT_SECURITY_ACTION).to(async () => {

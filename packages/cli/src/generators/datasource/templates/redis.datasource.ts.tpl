@@ -8,7 +8,13 @@ import {AuthCacheSourceName} from '@sourceloop/core';
 <% } -%>
 
 const config = {
+  <% if (project.serviceDependency && project.baseServiceCacheName ) { -%>
+  name: <%= project.baseServiceCacheName %>,
+  <% } else if (project.facade) { -%>
+  name: AuthCacheSourceName,
+  <% }else{ -%>
   name: process.env.REDIS_NAME,
+  <% } -%>	
   connector: 'kv-redis',
   host: process.env.REDIS_HOST,
   port: process.env.REDIS_PORT,
@@ -49,11 +55,19 @@ export class RedisDataSource
     static dataSourceName = <%= project.baseServiceCacheName %>;
     <% } else if (project.facade) { -%>
     static dataSourceName = AuthCacheSourceName;
-    <% } -%>
+    <% }else{ -%>
+    static dataSourceName = process.env.REDIS_NAME;
+    <% } -%>	
   static readonly defaultConfig = config;
 
   constructor(
+    <% if (project.serviceDependency && project.baseServiceCacheName ) { -%>
+    @inject(`datasources.config.${<%= project.baseServiceCacheName %>}`, {optional: true})
+    <% } else if (project.facade) { -%>
+    @inject(`datasources.config.${AuthCacheSourceName}`, {optional: true})
+    <% }else{ -%>
     @inject(`datasources.config.${process.env.REDIS_NAME}`, {optional: true})
+    <% } -%>	
     dsConfig: AnyObject = config,
   ) {
     if (
