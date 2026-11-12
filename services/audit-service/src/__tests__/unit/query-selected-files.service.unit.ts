@@ -43,6 +43,7 @@ describe('QuerySelectedFilesProvider getFileContent', () => {
       AWS_ACCESS_KEY_ID: undefined,
       AWS_SECRET_ACCESS_KEY: undefined,
       AWS_SESSION_TOKEN: undefined,
+      AWS_REGION: undefined,
       AWS_PROFILE: undefined,
       AWS_WEB_IDENTITY_TOKEN_FILE: undefined,
       AWS_CONTAINER_CREDENTIALS_RELATIVE_URI: undefined,
@@ -71,6 +72,41 @@ describe('QuerySelectedFilesProvider getFileContent', () => {
     });
 
     it('passes the static key pair when one is configured', async () => {
+      const provider = new QuerySelectedFilesProvider(
+        {} as AuditServiceApplication,
+        {accessKeyId: 'key', secretAccessKey: 'secret', region: 'us-east-1'},
+      );
+
+      await provider.getFileContent(FILE_NAME);
+
+      const resolve = sendStub.firstCall.thisValue.config.credentials;
+      expect(await resolve()).to.containDeep({
+        accessKeyId: 'key',
+        secretAccessKey: 'secret',
+      });
+    });
+
+    it('lets AWS_REGION and the env key pair win over the bound config', async () => {
+      process.env.AWS_ACCESS_KEY_ID = 'envKey';
+      process.env.AWS_SECRET_ACCESS_KEY = 'envSecret';
+      process.env.AWS_REGION = 'eu-west-1';
+      const provider = new QuerySelectedFilesProvider(
+        {} as AuditServiceApplication,
+        {accessKeyId: 'key', secretAccessKey: 'secret', region: 'us-east-1'},
+      );
+
+      await provider.getFileContent(FILE_NAME);
+
+      const {config} = sendStub.firstCall.thisValue;
+      expect(await config.region()).to.equal('eu-west-1');
+      expect(await config.credentials()).to.containDeep({
+        accessKeyId: 'envKey',
+        secretAccessKey: 'envSecret',
+      });
+    });
+
+    it('does not mix an env key with a configured secret', async () => {
+      process.env.AWS_ACCESS_KEY_ID = 'envKey';
       const provider = new QuerySelectedFilesProvider(
         {} as AuditServiceApplication,
         {accessKeyId: 'key', secretAccessKey: 'secret', region: 'us-east-1'},

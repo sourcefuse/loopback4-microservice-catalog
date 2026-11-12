@@ -66,18 +66,27 @@ export class QuerySelectedFilesProvider implements Provider<QuerySelectedFilesFn
     return allRecords;
   }
   async getFileContent(fileName: string) {
-    const accessKeyId =
-      process.env.AWS_ACCESS_KEY_ID ?? this.config?.accessKeyId;
-    const secretAccessKey =
-      process.env.AWS_SECRET_ACCESS_KEY ?? this.config?.secretAccessKey;
-    // Without a static key pair, leave credentials unset so the SDK uses its
-    // default chain (IAM role, IRSA, instance profile), as aws-sdk v2 did.
+    const env = process.env;
+    // Take the key pair from one source only, env first, so a key from one
+    // place is never signed with a secret from another. With no pair,
+    // credentials stay unset and the SDK default chain (IAM role, IRSA,
+    // instance profile) applies.
+    let credentials: {accessKeyId: string; secretAccessKey: string} | undefined;
+    if (env.AWS_ACCESS_KEY_ID && env.AWS_SECRET_ACCESS_KEY) {
+      credentials = {
+        accessKeyId: env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
+      };
+    } else if (this.config?.accessKeyId && this.config?.secretAccessKey) {
+      credentials = {
+        accessKeyId: this.config.accessKeyId,
+        secretAccessKey: this.config.secretAccessKey,
+      };
+    }
     const s3Client = new S3({
-      ...(accessKeyId && secretAccessKey
-        ? {credentials: {accessKeyId, secretAccessKey}}
-        : {}),
-      region: process.env.AWS_REGION ?? this.config?.region,
       ...this.config,
+      ...(credentials ? {credentials} : {}),
+      region: env.AWS_REGION ?? this.config?.region,
     });
 
     const {Body} = await s3Client.send(
