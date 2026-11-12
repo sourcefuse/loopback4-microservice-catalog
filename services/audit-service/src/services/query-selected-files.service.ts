@@ -5,19 +5,34 @@ import {
   inject,
   injectable,
 } from '@loopback/core';
+import {GetObjectCommand, S3} from '@aws-sdk/client-s3';
 import {Filter, defineCrudRepositoryClass, juggler} from '@loopback/repository';
 
-import AWS from 'aws-sdk';
 import csvtojson from 'csvtojson';
 import {AuditServiceApplication} from '../application';
+import {AWSS3Bindings, AwsS3Config} from '../keys';
 import {AuditLog} from '../models';
 import {QuerySelectedFilesFn} from '../types';
+
+type KeyPair = {accessKeyId: string; secretAccessKey: string};
+
+/** Returns the pair only when both halves are set, so they come from one source. */
+function keyPair(
+  accessKeyId: string | undefined,
+  secretAccessKey: string | undefined,
+): KeyPair | undefined {
+  return accessKeyId && secretAccessKey
+    ? {accessKeyId, secretAccessKey}
+    : undefined;
+}
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class QuerySelectedFilesProvider implements Provider<QuerySelectedFilesFn> {
   constructor(
     @inject(CoreBindings.APPLICATION_INSTANCE)
     private readonly application: AuditServiceApplication,
+    @inject(AWSS3Bindings.Config, {optional: true})
+    private readonly config?: AwsS3Config,
   ) {}
 
   value(): QuerySelectedFilesFn {
@@ -63,22 +78,29 @@ export class QuerySelectedFilesProvider implements Provider<QuerySelectedFilesFn
     return allRecords;
   }
   async getFileContent(fileName: string) {
-    AWS.config = new AWS.Config({
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-      region: process.env.AWS_REGION,
+    const env = process.env;
+    // Take the key pair from one source only, env first, so a key from one
+    // place is never signed with a secret from another. With no pair,
+    // credentials stay unset and the SDK default chain (IAM role, IRSA,
+    // instance profile) applies.
+    const credentials =
+      keyPair(env.AWS_ACCESS_KEY_ID, env.AWS_SECRET_ACCESS_KEY) ??
+      keyPair(this.config?.accessKeyId, this.config?.secretAccessKey);
+    const s3Client = new S3({
+      ...this.config,
+      ...(credentials ? {credentials} : {}),
+      region: env.AWS_REGION ?? this.config?.region,
     });
-    const s3 = new AWS.S3();
 
-    const params = {
-      Bucket: process.env.AWS_S3_BUCKET_NAME as string,
-      Key: fileName,
-    };
-
-    const {Body} = await s3.getObject(params).promise();
+    const {Body} = await s3Client.send(
+      new GetObjectCommand({
+        Bucket: process.env.AWS_S3_BUCKET_NAME as string,
+        Key: fileName,
+      }),
+    );
     let json: AuditLog[] | undefined;
     if (Body) {
-      json = await csvtojson().fromString(Body?.toString());
+      json = await csvtojson().fromString(await Body.transformToString());
     }
     return json;
   }

@@ -94,7 +94,6 @@
     "@types/node": "^20.19.39",
     "@types/pubnub": "^4.29.7",
     "@types/sinon": "^10.0.20",
-    "aws-sdk": "^2.1693.0",
     "db-migrate": "^1.0.0-beta.35",
     "db-migrate-pg": "^1.5.2",
     "eslint": "^8.57.1",

@@ -70,7 +70,7 @@
     "loopback-connector-postgresql": "^7.2.3",
     "loopback4-authorization": "^9.0.0",
     "loopback4-notifications": "^11.0.0",
-    "nodemailer": "^10.0.6",
+    "nodemailer": "^10.1.4",
     "prom-client": "^14.2.0",
     "pubnub": "^7.6.3",
     "socket.io-client": "^4.8.3",
@@ -111,9 +111,12 @@
     },
     "underscore": "^1.13.8",
     "undici": "^6.24.0",
-    "fast-uri": "^3.1.7",
+    "fast-uri": "^3.1.9",
     "fast-xml-builder": "^1.1.7",
     "protobufjs": "^7.5.6",
-    "serialize-javascript": "^7.0.3"
+    "serialize-javascript": "^7.0.3",
+    "csv-parse": "^7.0.2",
+    "glob@>=9": "^14.0.2",
+    "uuid@<11.1.1": "^11.1.1"
   }
 }

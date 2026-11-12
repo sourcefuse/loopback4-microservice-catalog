@@ -71,7 +71,9 @@
   },
   "overrides": {
     "undici": "^6.24.0",
-    "fast-uri": "^3.1.7",
-    "serialize-javascript": "^7.0.3"
+    "fast-uri": "^3.1.9",
+    "serialize-javascript": "^7.0.3",
+    "glob@>=9": "^14.0.2",
+    "uuid@<11.1.1": "^11.1.1"
   }
 }

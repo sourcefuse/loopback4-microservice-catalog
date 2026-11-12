@@ -92,7 +92,10 @@
     "underscore": "^1.13.8",
     "undici": "^6.24.0",
     "axios": "^1.15.2",
-    "fast-uri": "^3.1.7",
-    "serialize-javascript": "^7.0.3"
+    "fast-uri": "^3.1.9",
+    "serialize-javascript": "^7.0.3",
+    "csv-parse": "^7.0.2",
+    "glob@>=9": "^14.0.2",
+    "uuid@<11.1.1": "^11.1.1"
   }
 }
