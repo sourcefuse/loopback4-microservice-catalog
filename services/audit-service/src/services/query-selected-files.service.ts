@@ -14,6 +14,18 @@ import {AWSS3Bindings, AwsS3Config} from '../keys';
 import {AuditLog} from '../models';
 import {QuerySelectedFilesFn} from '../types';
 
+type KeyPair = {accessKeyId: string; secretAccessKey: string};
+
+/** Returns the pair only when both halves are set, so they come from one source. */
+function keyPair(
+  accessKeyId: string | undefined,
+  secretAccessKey: string | undefined,
+): KeyPair | undefined {
+  return accessKeyId && secretAccessKey
+    ? {accessKeyId, secretAccessKey}
+    : undefined;
+}
+
 @injectable({scope: BindingScope.TRANSIENT})
 export class QuerySelectedFilesProvider implements Provider<QuerySelectedFilesFn> {
   constructor(
@@ -71,18 +83,9 @@ export class QuerySelectedFilesProvider implements Provider<QuerySelectedFilesFn
     // place is never signed with a secret from another. With no pair,
     // credentials stay unset and the SDK default chain (IAM role, IRSA,
     // instance profile) applies.
-    let credentials: {accessKeyId: string; secretAccessKey: string} | undefined;
-    if (env.AWS_ACCESS_KEY_ID && env.AWS_SECRET_ACCESS_KEY) {
-      credentials = {
-        accessKeyId: env.AWS_ACCESS_KEY_ID,
-        secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
-      };
-    } else if (this.config?.accessKeyId && this.config?.secretAccessKey) {
-      credentials = {
-        accessKeyId: this.config.accessKeyId,
-        secretAccessKey: this.config.secretAccessKey,
-      };
-    }
+    const credentials =
+      keyPair(env.AWS_ACCESS_KEY_ID, env.AWS_SECRET_ACCESS_KEY) ??
+      keyPair(this.config?.accessKeyId, this.config?.secretAccessKey);
     const s3Client = new S3({
       ...this.config,
       ...(credentials ? {credentials} : {}),
