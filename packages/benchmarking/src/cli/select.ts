@@ -71,19 +71,25 @@ function isUnder(path: string, dir: string): boolean {
   return dir === '' || path.startsWith(`${dir}/`);
 }
 
+/** Why a changed path inside this package runs every file, if it does. */
+function ownPackageReason(
+  file: string,
+  input: SelectInput,
+): string | undefined {
+  const path = posix.relative(input.packagePath, file);
+  if (input.files.some(bench => bench.source === path)) return undefined;
+  if (isUnder(path, TESTS_DIR)) {
+    return OTHER_SPEC.test(path) ? undefined : `test helper ${file} changed`;
+  }
+  return isUnder(path, 'src') ? undefined : `package file ${file} changed`;
+}
+
 /** Why a changed path runs every file, if it does. */
 function runAllReason(file: string, input: SelectInput): string | undefined {
   const glob = input.allGlobs.find(pattern => matchesGlob(file, pattern));
   if (glob) return `${file} matches --all ${glob}`;
   if (file.endsWith('.md')) return undefined;
-  if (isUnder(file, input.packagePath)) {
-    const path = posix.relative(input.packagePath, file);
-    if (input.files.some(bench => bench.source === path)) return undefined;
-    if (isUnder(path, TESTS_DIR)) {
-      return OTHER_SPEC.test(path) ? undefined : `test helper ${file} changed`;
-    }
-    return isUnder(path, 'src') ? undefined : `package file ${file} changed`;
-  }
+  if (isUnder(file, input.packagePath)) return ownPackageReason(file, input);
   const dependency = input.dependencyPaths.find(dir => isUnder(file, dir));
   if (dependency) return `dependency ${dependency} changed (${file})`;
   return file.includes('/') ? undefined : `root file ${file} changed`;
@@ -168,12 +174,21 @@ function findRoot(start: string): string {
   }
 }
 
+/** The workspace entry suffix that means "every directory in here". */
+const ANY_CHILD = '/*';
+
+function trimTrailingSlashes(text: string): string {
+  let end = text.length;
+  while (end > 0 && text[end - 1] === '/') end--;
+  return text.slice(0, end);
+}
+
 /** Workspace directories, repository-relative, from `dir/*` and plain entries. */
 function workspaceDirs(root: string): string[] {
   return (workspaceGlobs(readManifest(root)) ?? []).flatMap(glob => {
-    const entry = glob.replace(/\/+$/, '');
-    if (!entry.endsWith('/*')) return [entry];
-    const parent = entry.slice(0, -2);
+    const entry = trimTrailingSlashes(glob);
+    if (!entry.endsWith(ANY_CHILD)) return [entry];
+    const parent = entry.slice(0, -ANY_CHILD.length);
     return existsSync(join(root, parent))
       ? readdirSync(join(root, parent)).map(name => `${parent}/${name}`)
       : [];
@@ -203,7 +218,7 @@ export function dependencyPaths(root: string, packagePath: string): string[] {
     seen.add(workspace.path);
     pending.push(...workspace.dependencies);
   }
-  return [...seen].sort();
+  return [...seen].sort((a, b) => a.localeCompare(b));
 }
 
 /** The source of a built file, by the dist to src rule of `lb-tsc`. */
@@ -244,20 +259,25 @@ async function readLinks(paths: string[]): Promise<Map<string, string[]>> {
 
 type Args = {changed?: string; root?: string; all: string[]; files: string[]};
 
+const VALUE_FLAGS = new Set(['--changed', '--root', '--all']);
+
+function setFlag(parsed: Args, flag: string, value: string): void {
+  if (flag === '--all') parsed.all.push(value);
+  else if (flag === '--changed') parsed.changed = value;
+  else parsed.root = value;
+}
+
 function parseArgs(args: string[]): Args | undefined {
   const parsed: Args = {all: [], files: []};
   for (let i = 0; i < args.length; i++) {
     const arg = args[i];
-    if (arg === '--changed' || arg === '--root' || arg === '--all') {
-      const value = args[++i];
-      if (value === undefined) return undefined;
-      if (arg === '--all') parsed.all.push(value);
-      else parsed[arg === '--changed' ? 'changed' : 'root'] = value;
-    } else if (arg.startsWith('--')) {
-      return undefined;
-    } else {
+    if (!arg.startsWith('--')) {
       parsed.files.push(arg);
+      continue;
     }
+    const value = args[++i];
+    if (!VALUE_FLAGS.has(arg) || value === undefined) return undefined;
+    setFlag(parsed, arg, value);
   }
   return parsed.changed ? parsed : undefined;
 }
