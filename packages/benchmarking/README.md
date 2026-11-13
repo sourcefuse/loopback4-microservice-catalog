@@ -131,6 +131,8 @@ npx bench-compare "$OUT"/base.json "$OUT"/head.json "$OUT"/base-recheck.json "$O
 
 A regression then counts only if the second pass regresses too. Otherwise it shows as `UNCONFIRMED` and does not fail. Run whole files again, not single benchmarks: a benchmark run alone measured up to 25 percent differently from the same benchmark after the rest of its file.
 
+For GitHub Actions, copy [`examples/benchmark-compare.yml`](./examples/benchmark-compare.yml). It does the same steps in one job: it builds both sides the same way, runs five rounds, checks suspects again, and writes the result to the job summary.
+
 Local runs also use one process per file. In one process, V8 optimisation and garbage from earlier files change the numbers of later files.
 
 Exit codes: 0 for no regression, 1 for a regression or for a benchmark of base that is missing from head (deleted, renamed, or crashed on head), 2 for bad usage or an unreadable file.
@@ -280,17 +282,6 @@ Terms: a _side_ is one build, base or head. A _round_ runs every benchmark file 
 `config` is a live view of the settings. Every property is a getter that reads `process.env` when accessed.
 
 The errors all extend `BenchmarkingError`. `BenchmarkError` means the run itself failed: the callback threw, produced nothing, or hit the time limit. `ReporterError` means the run file could not be read or written, and keeps the original on `cause`. An unreadable run file stops the run instead of being replaced. `BenchmarkConfigError` means a setting was refused.
-
-## Moving from 1.x
-
-| 1.x                                                                         | 2.x                                                                        |
-| --------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| A run failed with `PerformanceRegressionError` against a committed baseline | A run only records; `bench-compare` fails on a regression between builds   |
-| `BENCH_UPDATE_BASELINE`, `BENCH_FORCE_BASELINE`                             | Removed. Every run is recorded                                             |
-| `BENCH_OPS_TO_TRACK`, `BENCH_MIN_SAMPLES`                                   | Removed. Every run is kept; `BENCH_MIN_NOISE_HISTORY` sets the noise floor |
-| Run file entry `{history, latest}`                                          | `{history}` only                                                           |
-| `BENCH_ITERATIONS` 10, `BENCH_THRESHOLD` 40, no minimum time                | 30, 15, and `BENCH_MIN_TIME` 200 ms                                        |
-| A 1.x `.bench/report.json`                                                  | Delete it. 2.x appends to it and would mix the old runs in                 |
 
 ## References
 
