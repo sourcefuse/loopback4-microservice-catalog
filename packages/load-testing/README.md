@@ -4,7 +4,7 @@ Load tests for the HTTP API of a LoopBack facade or service, and for the screens
 
 A browser scenario opens the web app in Chromium, for many users at once. It times the steps that a user waits for, and reads the Web Vitals of each page. The same limits, baseline and report apply. See [Browser scenarios](#browser-scenarios).
 
-This package is for load. For a serial latency gate on one operation, with no concurrent users, use [`@sourceloop/benchmarking`](https://github.com/sourcefuse/loopback4-microservice-catalog/tree/master/packages/benchmarking). The two work well together. The benchmark guards the code, and the load test guards the running system.
+This package is for load. For a serial throughput check on one operation, with no concurrent users, use [`@sourceloop/benchmarking`](https://github.com/sourcefuse/loopback4-microservice-catalog/tree/master/packages/benchmarking). The two work well together. The benchmark guards the code, and the load test guards the running system.
 
 New to the package? Read [Install](#install) and [Quickstart](#quickstart), then [Quickstart for a browser scenario](#quickstart-for-a-browser-scenario). Looking for an option, a default or a message? Go to [Reference](#reference) and [Troubleshooting](#troubleshooting).
 
@@ -1673,7 +1673,7 @@ The `Result` column of an endpoint or a browser metric shows `FAIL:` and one or 
 
 ### Baseline
 
-The file `src/__tests__/load/.out/baseline.json` keeps the p95 of the last 10 runs of each endpoint, by scenario. The baseline of an endpoint is the mean of these values. The sister package `@sourceloop/benchmarking` also averages its last ten runs. For a browser scenario, the file keeps each step, each Web Vital and the flow total, by their names in the report.
+The file `src/__tests__/load/.out/baseline.json` keeps the p95 of the last 10 runs of each endpoint, by scenario. The baseline of an endpoint is the mean of these values. For a browser scenario, the file keeps each step, each Web Vital and the flow total, by their names in the report.
 
 - `LOAD_TESTS_UPDATE_BASELINE=1` adds the run to the history. The run prints `Saved src/__tests__/load/.out/baseline.json`.
 - A run that failed stays out, so that a regression does not become the normal value. This holds also when only `after` or a cleanup failed and every endpoint passed, because rows that stay behind can skew the next run. The run prints `Baseline not changed: the run failed. Set LOAD_TESTS_FORCE_BASELINE=1 to add it anyway.` on stderr. `LOAD_TESTS_FORCE_BASELINE=1` adds the run anyway.
