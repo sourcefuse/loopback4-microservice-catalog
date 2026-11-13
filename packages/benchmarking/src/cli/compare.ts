@@ -113,7 +113,9 @@ export function compareReports(base: RunFile, head: RunFile): CompareResult {
     const headHistory = head[suite]?.[test]?.history ?? [];
     if (headHistory.length === 0) {
       onlyInBase.push(`${suite} › ${test}`);
-    } else if (baseHistory.length > 0) {
+      continue;
+    }
+    if (baseHistory.length > 0) {
       rows.push(compareTest(suite, test, baseHistory, headHistory));
     }
   }
@@ -183,7 +185,7 @@ const MARKDOWN_HEADER = [
 
 /** Escapes `|`, so a title cannot break the table. */
 function cell(text: string): string {
-  return text.replace(/\|/g, '\\|');
+  return text.split('|').join(String.raw`\|`);
 }
 
 function markdownRow(row: CompareRow): string {
@@ -256,11 +258,35 @@ function readReport(file: string): RunFile {
   for (const [suite, tests] of Object.entries(data)) {
     for (const [test, entry] of Object.entries(tests ?? {})) {
       if (!Array.isArray((entry as {history?: unknown})?.history)) {
-        throw new Error(`"${file}": ${suite} › ${test} has no history array`);
+        throw new TypeError(
+          `"${file}": ${suite} › ${test} has no history array`,
+        );
       }
     }
   }
   return data;
+}
+
+type CompareArgs = {files: string[]; suspectsOnly: boolean; markdown: boolean};
+
+/** The parsed arguments, or `undefined` for bad usage. */
+function parseArgs(args: string[]): CompareArgs | undefined {
+  const files = args.filter(arg => !arg.startsWith('--'));
+  const unknown = args.some(arg => arg.startsWith('--') && !FLAGS.has(arg));
+  const suspectsOnly = args.includes('--suspects');
+  const validCount =
+    files.length === 2 || (!suspectsOnly && files.length === 4);
+  if (!validCount || unknown) return undefined;
+  return {files, suspectsOnly, markdown: args.includes('--markdown')};
+}
+
+/**
+ * A benchmark missing from head may be a crash on head, which must not hide
+ * a slowdown. Remove a benchmark on purpose by accepting this failure once.
+ */
+function exitCodeOf(result: CompareResult): number {
+  const regressed = result.rows.some(row => row.status === 'REGRESSION');
+  return regressed || result.onlyInBase.length > 0 ? 1 : 0;
 }
 
 /**
@@ -274,25 +300,21 @@ export function main(args: string[]): number {
     console.info(USAGE);
     return 0;
   }
-  const files = args.filter(arg => !arg.startsWith('--'));
-  const unknown = args.filter(arg => arg.startsWith('--') && !FLAGS.has(arg));
-  const suspectsOnly = args.includes('--suspects');
-  const validCount =
-    files.length === 2 || (!suspectsOnly && files.length === 4);
-  if (!validCount || unknown.length > 0) {
+  const parsed = parseArgs(args);
+  if (!parsed) {
     process.stderr.write(`${USAGE}\n`);
     return EXIT_ERROR;
   }
-  const [base, head, baseRecheck, headRecheck] = files.map(readReport);
+  const [base, head, baseRecheck, headRecheck] = parsed.files.map(readReport);
   let result = compareReports(base, head);
   if (result.rows.length === 0 && result.onlyInBase.length === 0) {
     process.stderr.write('bench-compare: no benchmark to compare\n');
     return EXIT_ERROR;
   }
-  if (suspectsOnly) {
-    for (const row of suspectsOf(result)) {
-      console.info(`${row.suite}\t${row.test}`);
-    }
+  if (parsed.suspectsOnly) {
+    suspectsOf(result).forEach(row =>
+      console.info(`${row.suite}\t${row.test}`),
+    );
     return 0;
   }
   if (baseRecheck && headRecheck) {
@@ -301,11 +323,6 @@ export function main(args: string[]): number {
       compareReports(baseRecheck, headRecheck),
     );
   }
-  console.info(
-    args.includes('--markdown') ? toMarkdown(result) : toText(result),
-  );
-  // A benchmark missing from head may be a crash on head, which must not hide
-  // a slowdown. Remove a benchmark on purpose by accepting this failure once.
-  const regressed = result.rows.some(row => row.status === 'REGRESSION');
-  return regressed || result.onlyInBase.length > 0 ? 1 : 0;
+  console.info(parsed.markdown ? toMarkdown(result) : toText(result));
+  return exitCodeOf(result);
 }
