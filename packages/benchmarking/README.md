@@ -265,7 +265,6 @@ Terms: a _side_ is one build, base or head. A _round_ runs every benchmark file 
 
 ### Select
 
-- **Don't let a monorepo tool decide whether benchmarks run.** Tools such as `lerna --since` often ignore changes under `__tests__`. In the field, a change to benchmarks alone then ran nothing. Use `bench-select`. _field_
 - **Do use `git diff --name-only --no-renames`.** With renames on, the old path of a moved file is missing from the list. _this package_
 - **Do select once, on head, and use the same files for both sides.** _this package_
 - **Don't add `bench.links` to a benchmark that boots the whole application.** It reaches too many files to list. Without links it always runs. _field_
