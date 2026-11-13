@@ -178,13 +178,6 @@ export class IdpLoginService {
         throw new HttpErrors.Unauthorized(AuthErrorKeys.UserVerificationFailed);
       }
 
-      if (
-        payload.user?.id &&
-        !(await this.userRepo.firstTimeUser(payload.user.id))
-      ) {
-        await this.userRepo.updateLastLogin(payload.user.id);
-      }
-
       return await this.createJWT(payload, authClient, LoginType.ACCESS);
     } catch (error) {
       this.logger.error(error);
@@ -366,6 +359,13 @@ export class IdpLoginService {
       if (this.userActivity?.markUserActivity)
         this.markUserActivity({...data}, user, userTenant, loginType);
 
+      let lastLogin;
+      if (loginType === LoginType.ACCESS) {
+        lastLogin = Date.now();
+        await this.userRepo.updateLastLogin(user.id ?? '', lastLogin);
+      } else {
+        lastLogin = (await this.userRepo.findById(user.id ?? ''))?.lastLogin;
+      }
       return new TokenResponse({
         accessToken,
         refreshToken,
@@ -373,6 +373,7 @@ export class IdpLoginService {
           .add(authClient.accessTokenExpiration, 's')
           .toDate()
           .getTime(),
+        lastLogin: new Date(lastLogin ?? 0),
       });
     } catch (error) {
       this.logger.error(error);
