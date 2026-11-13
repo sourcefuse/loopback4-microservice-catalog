@@ -19,10 +19,7 @@ import type {
   VuserCounts,
 } from './types';
 
-/**
- * How many runs the baseline remembers. It is the default history size
- * (`opsToTrack`) of @sourceloop/benchmarking.
- */
+/** How many runs the baseline remembers. */
 export const HISTORY_SIZE = 10;
 
 export const BASELINE_FILE = path.join(OUT_DIR, 'baseline.json');
