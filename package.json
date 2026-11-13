@@ -31,7 +31,8 @@
     }
   },
   "overrides": {
-    "basic-ftp": "^6.2.1",
+    "basic-ftp": "^6.2.3",
+    "hono": "^4.13.16",
     "follow-redirects": "^1.16.1",
     "@azure/msal-node": "^7.1.0",
     "msgpack5": "^6.1.0",
