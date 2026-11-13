@@ -5,7 +5,13 @@
 import {inject, Provider} from '@loopback/context';
 import {repository} from '@loopback/repository';
 import {HttpErrors, Request} from '@loopback/rest';
-import {AuthenticateErrorKeys, ILogger, LOGGER} from '@sourceloop/core';
+import {
+  AuthenticateErrorKeys,
+  IAuthUserWithPermissions,
+  ILogger,
+  LOGGER,
+  UserTokensValidAfterRepository,
+} from '@sourceloop/core';
 import {VerifyFunction} from 'loopback4-authentication';
 import moment from 'moment-timezone';
 import {JWTVerifierFn} from '../../../providers';
@@ -20,6 +26,8 @@ export class BearerTokenVerifyProvider implements Provider<VerifyFunction.Bearer
     @inject(LOGGER.LOGGER_INJECT) public logger: ILogger,
     @inject(AuthCodeBindings.JWT_VERIFIER)
     public jwtVerifier: JWTVerifierFn<AuthUser>,
+    @repository(UserTokensValidAfterRepository)
+    public userTokensValidAfterRepository?: UserTokensValidAfterRepository,
   ) {}
 
   value(): VerifyFunction.BearerFn {
@@ -39,6 +47,10 @@ export class BearerTokenVerifyProvider implements Provider<VerifyFunction.Bearer
         this.logger.error(JSON.stringify(error));
         throw new HttpErrors.Unauthorized('TokenExpired');
       }
+
+      await this.userTokensValidAfterRepository?.assertNotRevoked(
+        user as IAuthUserWithPermissions,
+      );
 
       if (
         user.passwordExpiryTime &&
