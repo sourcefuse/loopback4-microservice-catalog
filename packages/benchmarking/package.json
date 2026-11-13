@@ -29,6 +29,7 @@
     "README.md",
     "bin",
     "dist",
+    "examples",
     "src",
     "!*/__tests__"
   ],
