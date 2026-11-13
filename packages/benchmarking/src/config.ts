@@ -4,15 +4,40 @@
 // https://opensource.org/licenses/MIT
 import {BenchmarkConfigError} from './errors/benchmark-config.error';
 
-const DEFAULT_OPS_TO_TRACK = 10;
-const DEFAULT_ITERATIONS = 10;
-const DEFAULT_THRESHOLD = 40;
-const DEFAULT_MIN_SAMPLES = 3;
+/**
+ * 30 rather than 10, so the mean of a run averages out a single GC or
+ * scheduler pause.
+ */
+const DEFAULT_ITERATIONS = 30;
+/**
+ * A test that takes microseconds per call was timed for well under a
+ * millisecond with a fixed iteration count, and varied by up to 24% between
+ * processes on CI. 200 ms of samples brought that under 3%.
+ */
+const DEFAULT_MIN_TIME_MS = 200;
+/** Long enough for V8 to optimise a fast callback before it is measured. */
+const DEFAULT_WARMUP_TIME_MS = 100;
+/**
+ * The most a head build may fall short of the base build, in %. Same-machine
+ * comparisons caught planted slowdowns of 20% and more, with no false alarm.
+ */
+const DEFAULT_THRESHOLD = 15;
+const DEFAULT_NOISE_MULTIPLIER = 4;
+const DEFAULT_MIN_THRESHOLD = 10;
+/** The fewest runs that give a usable spread estimate. */
+const DEFAULT_MIN_NOISE_HISTORY = 3;
+/**
+ * Single lucky-fast runs on CI were 64% from the median of their side. Tests
+ * that run at one of two speeds per process had speeds up to 33% apart, and
+ * both speeds must stay in the mean.
+ */
+const DEFAULT_OUTLIER_PERCENT = 40;
 
-const MAX_OPS_TO_TRACK = 100;
 const MAX_ITERATIONS = 1000;
-const MIN_THRESHOLD = 0;
-const MAX_THRESHOLD = 100;
+const MAX_TIME_MS = 10_000;
+const MAX_PERCENT = 100;
+const MAX_NOISE_HISTORY = 100;
+const MAX_OUTLIER_PERCENT = 1000;
 
 /**
  * Every property is `readonly`, because the live object is built from getters.
@@ -20,36 +45,45 @@ const MAX_THRESHOLD = 100;
  * error instead.
  */
 export type BenchmarkConfig = {
-  readonly opsToTrack: number;
   readonly iterations: number;
+  readonly minTime: number;
   readonly warmup: boolean;
+  readonly warmupTime: number;
   readonly threshold: number;
-  readonly minSamples: number;
-  readonly updateBaseline: boolean;
+  readonly noiseMultiplier: number;
+  readonly minThreshold: number;
+  readonly minNoiseHistory: number;
+  readonly outlierPercent: number;
   readonly reportFile: string;
   readonly isCI: boolean;
-  readonly forceBaseline: boolean;
 };
 
 /**
- * Reads a whole number. `Number` is used rather than `parseInt`, because
- * `parseInt` reads `1e3` as 1 and `10abc` as 10. We would rather fall back to
- * the default than run with a number the caller did not mean.
+ * Reads a number and clamps it to the range. `Number` is used rather than
+ * `parseInt`, because `parseInt` reads `1e3` as 1 and `10abc` as 10. We would
+ * rather fall back to the default than run with a number the caller did not
+ * mean.
  */
-function readInt(
+function readNumber(
   value: string | undefined,
   fallback: number,
   min: number,
   max: number,
+  wholeOnly = true,
 ): number {
   if (!value?.trim()) {
     return fallback;
   }
   const parsed = Number(value);
-  if (!Number.isInteger(parsed)) {
+  const valid = wholeOnly ? Number.isInteger(parsed) : Number.isFinite(parsed);
+  if (!valid) {
     return fallback;
   }
   return Math.min(Math.max(parsed, min), max);
+}
+
+function readPercent(value: string | undefined, fallback: number): number {
+  return readNumber(value, fallback, 0, MAX_PERCENT, false);
 }
 
 /**
@@ -76,56 +110,70 @@ function readPath(value: string | undefined, fallback: string): string {
  * lets a test set a variable after the module is already loaded.
  */
 export const config: BenchmarkConfig = {
-  get opsToTrack(): number {
-    return readInt(
-      process.env.BENCH_OPS_TO_TRACK,
-      DEFAULT_OPS_TO_TRACK,
-      1,
-      MAX_OPS_TO_TRACK,
-    );
-  },
   get iterations(): number {
-    return readInt(
+    return readNumber(
       process.env.BENCH_ITERATIONS,
       DEFAULT_ITERATIONS,
       1,
       MAX_ITERATIONS,
     );
   },
+  get minTime(): number {
+    return readNumber(
+      process.env.BENCH_MIN_TIME,
+      DEFAULT_MIN_TIME_MS,
+      0,
+      MAX_TIME_MS,
+    );
+  },
   get warmup(): boolean {
     return process.env.BENCH_WARMUP !== 'false';
   },
-  get threshold(): number {
-    const raw = process.env.BENCH_THRESHOLD;
-    const parsed = Number(raw ?? '');
-    if (!raw?.trim() || !Number.isFinite(parsed)) {
-      return DEFAULT_THRESHOLD;
-    }
-    return Math.min(Math.max(parsed, MIN_THRESHOLD), MAX_THRESHOLD);
-  },
-  /**
-   * Capped at `opsToTrack`, because the window never holds more than that many
-   * samples. A higher floor would leave the gate building a baseline forever.
-   */
-  get minSamples(): number {
-    const ceiling = this.opsToTrack;
-    return readInt(
-      process.env.BENCH_MIN_SAMPLES,
-      Math.min(DEFAULT_MIN_SAMPLES, ceiling),
-      1,
-      ceiling,
+  get warmupTime(): number {
+    return readNumber(
+      process.env.BENCH_WARMUP_TIME,
+      DEFAULT_WARMUP_TIME_MS,
+      0,
+      MAX_TIME_MS,
     );
   },
-  get updateBaseline(): boolean {
-    return process.env.BENCH_UPDATE_BASELINE === '1';
+  get threshold(): number {
+    return readPercent(process.env.BENCH_THRESHOLD, DEFAULT_THRESHOLD);
+  },
+  get noiseMultiplier(): number {
+    return readNumber(
+      process.env.BENCH_NOISE_MULTIPLIER,
+      DEFAULT_NOISE_MULTIPLIER,
+      0,
+      MAX_PERCENT,
+      false,
+    );
+  },
+  get minThreshold(): number {
+    return readPercent(process.env.BENCH_MIN_THRESHOLD, DEFAULT_MIN_THRESHOLD);
+  },
+  /** At least 2, because a spread needs two runs. */
+  get minNoiseHistory(): number {
+    return readNumber(
+      process.env.BENCH_MIN_NOISE_HISTORY,
+      DEFAULT_MIN_NOISE_HISTORY,
+      2,
+      MAX_NOISE_HISTORY,
+    );
+  },
+  get outlierPercent(): number {
+    return readNumber(
+      process.env.BENCH_OUTLIER_PERCENT,
+      DEFAULT_OUTLIER_PERCENT,
+      0,
+      MAX_OUTLIER_PERCENT,
+      false,
+    );
   },
   get reportFile(): string {
     return readPath(process.env.BENCH_REPORT_FILE, './.bench/report.json');
   },
   get isCI(): boolean {
     return process.env.CI === 'true';
-  },
-  get forceBaseline(): boolean {
-    return process.env.BENCH_FORCE_BASELINE === '1';
   },
 };

@@ -6,7 +6,7 @@ import {describeError} from '../describe-error';
 import {BenchmarkingError} from './benchmarking.error';
 
 /**
- * Thrown when the reporter cannot read or write baseline data. The original
+ * Thrown when a run cannot be recorded in the run file. The original
  * failure stays available on `cause`.
  *
  * `cause` is a declared field instead of the ES2022 `ErrorOptions` argument

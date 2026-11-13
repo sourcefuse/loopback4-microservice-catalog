@@ -5,7 +5,7 @@
 import {expect} from '@loopback/testlab';
 import type {Task} from 'tinybench';
 import {BenchmarkError} from '../../errors';
-import {deviationLabel, toMetrics} from '../../functions/metrics.function';
+import {toMetrics} from '../../functions/metrics.function';
 
 function givenTask(result: unknown): Task {
   return {result} as Task;
@@ -53,21 +53,10 @@ describe('toMetrics', () => {
 
     expect(() => toMetrics(task)).to.throw(/missing throughput or latency/);
   });
-});
 
-describe('deviationLabel', () => {
-  it('follows the gate rather than judging the number itself', () => {
-    expect(deviationLabel(-41, true)).to.equal('REGRESSION');
-    // A big drop while the baseline is still building is not a regression.
-    expect(deviationLabel(-41, false)).to.equal('STABLE');
-  });
+  it('rejects a run stopped at the time limit', () => {
+    const task = givenTask({...fullResult, aborted: true});
 
-  it('calls a gain past the threshold an improvement', () => {
-    expect(deviationLabel(41, false)).to.equal('IMPROVEMENT');
-  });
-
-  it('calls anything inside the threshold stable', () => {
-    expect(deviationLabel(0, false)).to.equal('STABLE');
-    expect(deviationLabel(40, false)).to.equal('STABLE');
+    expect(() => toMetrics(task)).to.throw(/stopped at the Mocha time limit/);
   });
 });
