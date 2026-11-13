@@ -2,29 +2,26 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-/**
- * Shape of the report file and of a single measured run. These describe what we
- * store on disk, not how the run is configured.
- */
 export type MetricRange = {
   mean: number;
   min: number;
   max: number;
 };
 
+/** The numbers of one measured run of one benchmark. */
 export type PerformanceMetrics = {
   throughput: MetricRange;
   latency: MetricRange;
   samples: number;
 };
 
-export type BaselineEntry = {
-  history: number[];
-  latest: PerformanceMetrics & {latestDeviation: number};
-};
-
-export type BaselineData = {
-  [suiteName: string]: {
-    [testName: string]: BaselineEntry;
+/**
+ * What a run file holds: the mean throughput, in ops/s, of each run of each
+ * benchmark, by the suite title path and the benchmark title. Only
+ * `bench-compare` reads it, so the package does not export the type.
+ */
+export type RunFile = {
+  [suite: string]: {
+    [test: string]: {history: number[]};
   };
 };

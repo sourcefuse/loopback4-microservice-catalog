@@ -4,6 +4,9 @@
 // https://opensource.org/licenses/MIT
 import {benchDescribe} from './bench-describe.function';
 import {benchIt} from './bench-it.function';
+import {benchLinks} from './bench-links.function';
+
+export type {BenchHooks, BenchOptions} from './bench-it.function';
 
 /**
  * The only way in. The two functions behind it stay unexported on purpose, so
@@ -19,9 +22,12 @@ import {benchIt} from './bench-it.function';
  *     await service.create(fixture);
  *   });
  * });
+ *
+ * bench.links('src/services/order*.ts');
  * ```
  */
 export const bench = {
   describe: benchDescribe,
   it: benchIt,
+  links: benchLinks,
 } as const;

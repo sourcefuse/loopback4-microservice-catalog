@@ -3,21 +3,8 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {type Task} from 'tinybench';
-import {config} from '../config';
 import {type PerformanceMetrics} from '../types';
 import {BenchmarkError} from '../errors/benchmark.error';
-
-/**
- * Describes a deviation for the CI log. Presentation only, it gates nothing.
- * `regressed` comes from the gate rather than being recomputed here, so the
- * label can never disagree with the outcome of the run.
- */
-export function deviationLabel(deviation: number, regressed: boolean): string {
-  if (regressed) {
-    return 'REGRESSION';
-  }
-  return deviation > config.threshold ? 'IMPROVEMENT' : 'STABLE';
-}
 
 /**
  * Narrows a tinybench task down to the numbers we keep.
@@ -31,6 +18,12 @@ export function toMetrics(task: Task | undefined): PerformanceMetrics {
   if (!result) {
     throw new BenchmarkError(
       'The benchmark produced no result. Check that the callback returns and does not hang.',
+    );
+  }
+
+  if (result.aborted) {
+    throw new BenchmarkError(
+      'The benchmark was stopped at the Mocha time limit. Make the callback faster, or lower BENCH_ITERATIONS or BENCH_MIN_TIME.',
     );
   }
 

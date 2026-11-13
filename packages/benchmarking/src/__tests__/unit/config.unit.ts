@@ -7,14 +7,16 @@ import {config} from '../../config';
 import {BenchmarkConfigError} from '../../errors';
 
 const BENCH_ENV_KEYS = [
-  'BENCH_OPS_TO_TRACK',
   'BENCH_ITERATIONS',
+  'BENCH_MIN_TIME',
   'BENCH_WARMUP',
+  'BENCH_WARMUP_TIME',
   'BENCH_THRESHOLD',
-  'BENCH_MIN_SAMPLES',
+  'BENCH_NOISE_MULTIPLIER',
+  'BENCH_MIN_THRESHOLD',
+  'BENCH_MIN_NOISE_HISTORY',
+  'BENCH_OUTLIER_PERCENT',
   'BENCH_REPORT_FILE',
-  'BENCH_FORCE_BASELINE',
-  'BENCH_UPDATE_BASELINE',
   'CI',
 ] as const;
 
@@ -40,14 +42,16 @@ describe('config', () => {
   });
 
   it('falls back to defaults when nothing is set', () => {
-    expect(config.opsToTrack).to.equal(10);
-    expect(config.iterations).to.equal(10);
-    expect(config.threshold).to.equal(40);
-    expect(config.minSamples).to.equal(3);
+    expect(config.iterations).to.equal(30);
+    expect(config.minTime).to.equal(200);
     expect(config.warmup).to.be.true();
-    expect(config.updateBaseline).to.be.false();
+    expect(config.warmupTime).to.equal(100);
+    expect(config.threshold).to.equal(15);
+    expect(config.noiseMultiplier).to.equal(4);
+    expect(config.minThreshold).to.equal(10);
+    expect(config.minNoiseHistory).to.equal(3);
+    expect(config.outlierPercent).to.equal(40);
     expect(config.isCI).to.be.false();
-    expect(config.forceBaseline).to.be.false();
     expect(config.reportFile).to.equal('./.bench/report.json');
   });
 
@@ -56,24 +60,18 @@ describe('config', () => {
     expect(config.iterations).to.equal(25);
   });
 
-  it('caps the minimum sample count at the window size', () => {
-    process.env.BENCH_OPS_TO_TRACK = '2';
-    process.env.BENCH_MIN_SAMPLES = '9';
-    // A floor above the window would leave the gate building a baseline for
-    // ever, because the window can never hold that many samples.
-    expect(config.minSamples).to.equal(2);
-  });
-
-  it('lowers the default minimum to fit a small window', () => {
-    process.env.BENCH_OPS_TO_TRACK = '2';
-    expect(config.minSamples).to.equal(2);
+  it('needs at least two runs to measure noise', () => {
+    process.env.BENCH_MIN_NOISE_HISTORY = '1';
+    expect(config.minNoiseHistory).to.equal(2);
   });
 
   it('clamps a value above the allowed maximum', () => {
     process.env.BENCH_ITERATIONS = '5000';
-    process.env.BENCH_OPS_TO_TRACK = '250';
+    process.env.BENCH_MIN_TIME = '20000';
+    process.env.BENCH_OUTLIER_PERCENT = '5000';
     expect(config.iterations).to.equal(1000);
-    expect(config.opsToTrack).to.equal(100);
+    expect(config.minTime).to.equal(10000);
+    expect(config.outlierPercent).to.equal(1000);
   });
 
   it('clamps a value below the allowed minimum', () => {
@@ -86,16 +84,16 @@ describe('config', () => {
   it('falls back to the default when a value is not a number', () => {
     process.env.BENCH_ITERATIONS = 'ten';
     process.env.BENCH_THRESHOLD = 'high';
-    expect(config.iterations).to.equal(10);
-    expect(config.threshold).to.equal(40);
+    expect(config.iterations).to.equal(30);
+    expect(config.threshold).to.equal(15);
   });
 
   it('falls back to the default rather than reading a partial number', () => {
     process.env.BENCH_ITERATIONS = '10abc';
-    expect(config.iterations).to.equal(10);
+    expect(config.iterations).to.equal(30);
 
     process.env.BENCH_ITERATIONS = '7.5';
-    expect(config.iterations).to.equal(10);
+    expect(config.iterations).to.equal(30);
   });
 
   it('reads exponent notation as the whole number it means', () => {
@@ -106,13 +104,17 @@ describe('config', () => {
   it('falls back to the default when a value is blank', () => {
     process.env.BENCH_ITERATIONS = '   ';
     process.env.BENCH_THRESHOLD = '';
-    expect(config.iterations).to.equal(10);
-    expect(config.threshold).to.equal(40);
+    expect(config.iterations).to.equal(30);
+    expect(config.threshold).to.equal(15);
   });
 
-  it('accepts a fractional threshold', () => {
+  it('accepts fractional percentages and multipliers', () => {
     process.env.BENCH_THRESHOLD = '7.5';
+    process.env.BENCH_MIN_THRESHOLD = '2.5';
+    process.env.BENCH_NOISE_MULTIPLIER = '3.5';
     expect(config.threshold).to.equal(7.5);
+    expect(config.minThreshold).to.equal(2.5);
+    expect(config.noiseMultiplier).to.equal(3.5);
   });
 
   it('disables warmup only for the exact string "false"', () => {
@@ -121,14 +123,6 @@ describe('config', () => {
 
     process.env.BENCH_WARMUP = '0';
     expect(config.warmup).to.be.true();
-  });
-
-  it('enables baseline writes only for the exact string "1"', () => {
-    process.env.BENCH_UPDATE_BASELINE = 'true';
-    expect(config.updateBaseline).to.be.false();
-
-    process.env.BENCH_UPDATE_BASELINE = '1';
-    expect(config.updateBaseline).to.be.true();
   });
 
   it('rejects a report path that escapes the project', () => {

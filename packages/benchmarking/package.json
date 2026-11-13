@@ -1,7 +1,7 @@
 {
   "name": "@sourceloop/benchmarking",
   "version": "1.0.1",
-  "description": "Benchmark helpers for Mocha that fail a build when throughput regresses against a tracked baseline",
+  "description": "Benchmark helpers for Mocha, with commands that compare two builds and select the benchmarks a change can affect",
   "keywords": [
     "loopback-extension",
     "loopback",
@@ -11,6 +11,10 @@
   ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "bin": {
+    "bench-compare": "bin/bench-compare.js",
+    "bench-select": "bin/bench-select.js"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -19,10 +23,11 @@
     "./package.json": "./package.json"
   },
   "engines": {
-    "node": "22 || 24"
+    "node": ">=22.18.0 <23 || 24"
   },
   "files": [
     "README.md",
+    "bin",
     "dist",
     "src",
     "!*/__tests__"
