@@ -1,5 +1,6 @@
 # Example workflow: compare the benchmarks of a pull request with its base
 # branch, on one machine, in one job.
+# For many benchmark files, see benchmark-compare-sharded.yml.
 #
 # Copy this file to .github/workflows/ and change the values under `env`.
 # The package authors tested the shell steps locally. They did not run the

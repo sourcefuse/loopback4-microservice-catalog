@@ -131,7 +131,7 @@ npx bench-compare "$OUT"/base.json "$OUT"/head.json "$OUT"/base-recheck.json "$O
 
 A regression then counts only if the second pass regresses too. Otherwise it shows as `UNCONFIRMED` and does not fail. Run whole files again, not single benchmarks: a benchmark run alone measured up to 25 percent differently from the same benchmark after the rest of its file.
 
-For GitHub Actions, copy [`examples/benchmark-compare.yml`](./examples/benchmark-compare.yml). It does the same steps in one job: it builds both sides the same way, runs five rounds, checks suspects again, and writes the result to the job summary.
+For GitHub Actions, copy [`examples/benchmark-compare.yml`](./examples/benchmark-compare.yml). It does the same steps in one job: it builds both sides the same way, runs five rounds, checks suspects again, and writes the result to the job summary. When one job takes too long, copy [`examples/benchmark-compare-sharded.yml`](./examples/benchmark-compare-sharded.yml) instead. It splits the files across machines, and each machine runs base and head for its own files.
 
 Local runs also use one process per file. In one process, V8 optimisation and garbage from earlier files change the numbers of later files.
 
@@ -249,6 +249,7 @@ Terms: a _side_ is one build, base or head. A _round_ runs every benchmark file 
 - **Do build base and head the same way.** Install and build both with the same commands, in directories with paths of equal length. In the field, builds made in different ways measured identical code up to 26 percent apart. _field_
 - **Do run each benchmark file in its own process.** Node's own benchmark tool runs every configuration in a separate process, because V8 optimisation depends on what ran before. _field, research [7]_
 - **Do run base and head in one job, on one machine, alternating.** Hosted CI runners get different CPU models from run to run, and the noise between cloud instances is larger than the noise inside one. _field, research [8][9]_
+- **Do split the files across machines to save time, but keep each file on one machine.** Each machine runs base and head for its own files. Never compare a base from one machine with a head from another. _field_
 - **Don't share the machine.** Do not use Mocha `--parallel`, a second benchmark job, or other CPU-heavy programs at the same time. Mocha says parallel mode is not for timing-sensitive tests. For local runs, also keep a laptop on mains power, and on Linux set the CPU frequency governor to `performance`. _research [7][10][11][12]_
 - **Do fail the job when a file crashes or runs no test.** In the field, a crashed file was removed from the comparison without a warning. Count the failed files yourself. Set a time limit for each file, so that a hung file cannot block the check. A failure on head can hide a regression. A failure on base only needs a report. _field_
 - **Don't commit run files.** They belong to one machine and one run. A changed file also makes a monorepo tool such as lerna treat the package as changed. _field_
