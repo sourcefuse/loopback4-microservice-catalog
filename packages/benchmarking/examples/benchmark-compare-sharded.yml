@@ -1,0 +1,167 @@
+# Example workflow: compare the benchmarks of a pull request with its base
+# branch, with the benchmark files split across machines.
+#
+# Use this file when one job takes too long, because the package has many
+# benchmark files. Otherwise use benchmark-compare.yml.
+#
+# Each machine gets a share of the files and runs base and head for its share.
+# Machines can have different hardware, so never compare a base from one
+# machine with a head from another.
+#
+# Copy this file to .github/workflows/ and change the values under `env`.
+# To change the number of machines, change only the `shard` list.
+# The package authors tested the shell steps locally. They did not run the
+# workflow on GitHub, so check the first run of your copy.
+name: Benchmarks
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+# A new push replaces the run of the old push
+concurrency:
+  group: benchmarks-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      # A failure on one machine does not stop the others
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
+    env:
+      # The package to benchmark, from the repository root
+      PACKAGE: services/orders
+      # The built benchmark files, from the package directory
+      TESTS: dist/__tests__/benchmark
+      FILES: '*.benchmark.js'
+      ROUNDS: '5'
+      FILE_TIMEOUT: 15m
+      # This machine's share of the files: index from 0, and machine count
+      SHARD_INDEX: ${{ strategy.job-index }}
+      SHARD_TOTAL: ${{ strategy.job-total }}
+      # Base and head use the same commands. Built differently, identical code
+      # measured up to 26 percent apart.
+      INSTALL: npm ci
+      BUILD: npm run build
+      # Two paths of the same length
+      BASE_DIR: ${{ github.workspace }}/../bench-base
+      HEAD_DIR: ${{ github.workspace }}/../bench-head
+      OUT: ${{ github.workspace }}/.bench-ab
+      # Date code runs at a different speed in each time zone
+      TZ: UTC
+      CI: 'true'
+
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          # The merge commit of the pull request and its first parent, the base
+          fetch-depth: 2
+
+      # One Node version for both sides
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+
+      - name: Build base and head the same way
+        shell: bash
+        run: |
+          git worktree add --detach "$BASE_DIR" HEAD^1
+          git worktree add --detach "$HEAD_DIR" HEAD
+          for dir in "$BASE_DIR" "$HEAD_DIR"; do
+            (cd "$dir" && bash -c "$INSTALL")
+            # A package new in head has no base build
+            if [ -d "$dir/$PACKAGE" ]; then
+              (cd "$dir/$PACKAGE" && bash -c "$BUILD")
+            fi
+          done
+
+      - name: Run base and head in turn
+        shell: bash
+        run: |
+          failed=0
+          # run_rounds <run file suffix> <files>
+          run_rounds() {
+            local round order file side dir status
+            for round in $(seq 1 "$ROUNDS"); do
+              # Flip the order every round, so a slow period affects both sides alike
+              order="base head"
+              if [ $((round % 2)) = 0 ]; then order="head base"; fi
+              for file in $2; do
+                for side in $order; do
+                  dir=$BASE_DIR/$PACKAGE
+                  if [ "$side" = head ]; then dir=$HEAD_DIR/$PACKAGE; fi
+                  # A file new in head has nothing to compare with in base
+                  if [ ! -f "$dir/$file" ]; then continue; fi
+                  # One Node process per file, with a time limit
+                  status=0
+                  (cd "$dir" && BENCH_REPORT_FILE="$OUT/$side$1.json" \
+                    timeout "$FILE_TIMEOUT" npx lb-mocha --allow-console-logs "$file") || status=$?
+                  if [ "$status" != 0 ]; then
+                    # A crash on head can hide a regression. A crash on base is only reported.
+                    echo "::error::$side, round $round: $file failed (exit $status)"
+                    if [ "$side" = head ]; then failed=1; fi
+                  fi
+                done
+              done
+            done
+          }
+
+          all=$(cd "$HEAD_DIR/$PACKAGE" && find "$TESTS" -name "$FILES" | sort)
+          if [ -z "$all" ]; then
+            echo "::error::No benchmark file matches $PACKAGE/$TESTS/$FILES"
+            exit 1
+          fi
+          # Every machine sorts the same list and takes every n-th file
+          files=$(echo "$all" | awk -v k="$SHARD_INDEX" -v n="$SHARD_TOTAL" '(NR - 1) % n == k')
+          if [ -z "$files" ]; then
+            echo "This machine has no files. There are more machines than files."
+            exit 0
+          fi
+          echo "Files on this machine:"
+          echo "$files"
+          run_rounds "" "$files"
+          if [ "$failed" = 1 ]; then exit 1; fi
+          if [ ! -f "$OUT/base.json" ]; then
+            echo "Base has no benchmark results. Nothing to compare."
+            exit 0
+          fi
+
+          # Run this machine's files again when a benchmark looks slower.
+          # A regression counts only if the second pass shows it too.
+          suspects=$(cd "$HEAD_DIR/$PACKAGE" && npx bench-compare "$OUT/base.json" "$OUT/head.json" --suspects)
+          if [ -n "$suspects" ]; then
+            echo "Suspects:"
+            echo "$suspects"
+            run_rounds "-recheck" "$files"
+            if [ "$failed" = 1 ]; then exit 1; fi
+          fi
+
+      - name: Compare
+        shell: bash
+        run: |
+          if [ ! -f "$OUT/base.json" ]; then exit 0; fi
+          reports=("$OUT/base.json" "$OUT/head.json")
+          if [ -f "$OUT/head-recheck.json" ]; then
+            reports+=("$OUT/base-recheck.json" "$OUT/head-recheck.json")
+          fi
+          status=0
+          (cd "$HEAD_DIR/$PACKAGE" && npx bench-compare "${reports[@]}" --markdown) > "$OUT/compare.md" || status=$?
+          {
+            echo "## Shard $((SHARD_INDEX + 1)) of $SHARD_TOTAL"
+            cat "$OUT/compare.md"
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit "$status"
+
+      # Keep the run files with the job. Do not commit them.
+      # Each machine needs its own artifact name.
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: benchmark-runs-${{ matrix.shard }}
+          path: .bench-ab/
