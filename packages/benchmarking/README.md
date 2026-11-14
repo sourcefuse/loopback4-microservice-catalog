@@ -1,16 +1,17 @@
 # @sourceloop/benchmarking
 
-Benchmark helpers for Mocha. We write a benchmark the same way we write a test, and the build fails when throughput drops further than we allow against a tracked baseline.
+Benchmark helpers for Mocha. We write a benchmark the same way we write a test. Each run measures the callback with [tinybench](https://github.com/tinylibs/tinybench) and appends its throughput to a JSON run file. Two commands do the rest:
 
-The package wraps [tinybench](https://github.com/tinylibs/tinybench) and keeps a rolling history of results in a JSON file that we commit. Nothing else to run, no separate benchmark runner, no dashboard.
+- `bench-compare` compares the run files of two builds, recorded on the same machine, and exits 1 on a regression.
+- `bench-select` picks the benchmark files that a change can affect, so a pull request runs fewer of them.
 
 ## What this is, and what it is not
 
-This is a regression gate on the latency of one logical operation, run serially.
+This is a regression check on the throughput of one logical operation, run serially.
 
-It is not a load test. The harness runs one callback at a time and does not model arrival rates or concurrent users, so it will not tell us how the service behaves at 500 people hitting it at once. If our callback opens ten connections in parallel, that is our code's concurrency, and the numbers shift because of it, see the `Promise.all` note below. For arrival rate or real concurrent load, reach for k6 or Artillery. What we get here is narrower, and still useful: did the change we just made slow down this one operation.
+It is not a load test. The harness runs one callback at a time and does not model arrival rates or concurrent users. If our callback opens ten connections in parallel, that is our code's concurrency. See the rule "Do read `Promise.all` throughput as batches" in Do's and Don'ts below. For real concurrent load, use [`@sourceloop/load-testing`](../load-testing), k6 or Artillery.
 
-We picked that scope on purpose. A serial latency gate is cheap enough to run on every pull request. A real load test is not.
+A benchmark run no longer fails on its own. A number from one run, compared with numbers from earlier runs on other machines, was too noisy to gate on. Benchmarks varied by 10 to 60 percent between runs. The reliable signal is a side-by-side comparison: run the base build and the head build on one machine, alternating, and compare the two.
 
 ## Install
 
@@ -18,15 +19,14 @@ We picked that scope on purpose. A serial latency gate is cheap enough to run on
 npm install --save-dev @sourceloop/benchmarking
 ```
 
-Node 22.12 or later, or Node 24. The floor is higher than the rest of this monorepo, which allows Node 22.0 upward. tinybench 5 ships as ESM only, and this package compiles to CommonJS, so loading it depends on `require(esm)`. That landed as stable in 22.12 and is flagged as experimental before it. We would rather state an honest floor than have the package fail on a Node version we claimed to support.
+Node 22.18 or later, or Node 24. tinybench 5 ships as ESM only and this package compiles to CommonJS, so loading it depends on `require(esm)`. `bench-select` uses `path.matchesGlob`, which is stable from Node 22.20; on 22.18 and 22.19 it can print an experimental warning.
 
-Mocha is a peer dependency. We do not pull our own copy in, we use the one already in the project.
+Mocha is a peer dependency. We use the copy already in the project.
 
 ## Quickstart
 
 ```ts
-import {bench} from '@sourceloop/benchmarking';
-import {OrderService} from '../services';
+import {bench, config} from '@sourceloop/benchmarking';
 
 bench.describe('order service', () => {
   let service: OrderService;
@@ -35,248 +35,272 @@ bench.describe('order service', () => {
     service = await givenOrderService();
   });
 
-  bench.it('creates an order', async () => {
-    await service.create(orderFixture);
-  });
+  bench.it(
+    'finds open orders',
+    async () => {
+      await service.findOpen();
+    },
+    {
+      // Outside the measured time, around every iteration, warm-up included
+      beforeEach: () => service.resetOrders(),
+    },
+  );
+
+  bench.it(
+    'counts orders',
+    async () => {
+      await service.count();
+    },
+    // A fast benchmark, where one slow iteration would move the mean
+    {iterations: config.iterations * 3},
+  );
 });
+
+// Optional, see "Running only the affected files"
+bench.links('src/services/order*.ts', 'src/repositories/order*.ts');
 ```
 
-Run it:
-
-```sh
-BENCH_UPDATE_BASELINE=1 npm run test:benchmark
-```
-
-The first few runs record samples and pass without judging anything. Once the history holds `BENCH_MIN_SAMPLES` entries, the gate turns on.
-
-`bench.describe` and `bench.it` both prefix the title with `benchmark:`. That prefix is what lets a normal test run skip all of this:
+`bench.describe` and `bench.it` both prefix the title with `benchmark:`. That prefix lets a normal test run skip benchmarks:
 
 ```jsonc
 {
   "scripts": {
     "test": "lb-mocha --grep 'benchmark:' --invert \"dist/__tests__\"",
-    "test:benchmark": "lb-mocha \"dist/__tests__/acceptance\"",
+    "test:benchmark": "lb-mocha \"dist/__tests__/benchmark\"",
   },
 }
 ```
 
-Mocha matches `--grep` against the full title path, so the prefix on either the suite or the test is enough.
+Each run appends one number per benchmark to `BENCH_REPORT_FILE`. The file grows with every run, so delete it before you collect a new set of runs.
 
 ## Settings
 
-Everything is an environment variable. There is no config file and no options object, because these values change per environment, not per call site.
+Every setting is an environment variable, because the values change per environment, not per call site.
 
-| Variable                | Default                | Range                       | What it does                                                                                                                                                                             |
-| ----------------------- | ---------------------- | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `BENCH_ITERATIONS`      | `10`                   | 1 to 1000                   | How many times tinybench runs the callback.                                                                                                                                              |
-| `BENCH_OPS_TO_TRACK`    | `10`                   | 1 to 100                    | Size of the rolling history window.                                                                                                                                                      |
-| `BENCH_MIN_SAMPLES`     | `3`                    | 1 to `BENCH_OPS_TO_TRACK`   | Samples needed before the gate starts failing builds. The window never holds more than `BENCH_OPS_TO_TRACK`, so a higher floor is clamped down rather than leaving the gate off forever. |
-| `BENCH_THRESHOLD`       | `40`                   | 0 to 100                    | Percent drop we tolerate before the run fails. `0` fails on any drop at all, it does not turn the gate off.                                                                              |
-| `BENCH_WARMUP`          | on                     | `false` to disable          | Runs one unmeasured warmup iteration.                                                                                                                                                    |
-| `BENCH_UPDATE_BASELINE` | off                    | `1` to enable               | Writes the result file. Without this, nothing is saved.                                                                                                                                  |
-| `BENCH_REPORT_FILE`     | `./.bench/report.json` | any path inside the project | Where the history lives.                                                                                                                                                                 |
-| `BENCH_FORCE_BASELINE`  | off                    | `1` to enable               | On a run that regressed, throws the window away and restarts from that run. Ignored otherwise.                                                                                           |
-| `CI`                    | off                    | `true` to enable            | Prints a line per benchmark with throughput, latency and deviation.                                                                                                                      |
+| Variable                  | Default                | Range                 | What it does                                                                                                                                        |
+| ------------------------- | ---------------------- | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `BENCH_ITERATIONS`        | `30`                   | 1 to 1000             | Fewest measured iterations. `bench.it(..., {iterations})` overrides it for one benchmark.                                                           |
+| `BENCH_MIN_TIME`          | `200`                  | 0 to 10000 ms         | Fewest ms of measured time. Measurement stops when both limits are reached, so a fast callback takes many more samples. `0` runs exactly the count. |
+| `BENCH_WARMUP`            | on                     | `false` to disable    | Runs unmeasured warm-up iterations first.                                                                                                           |
+| `BENCH_WARMUP_TIME`       | `100`                  | 0 to 10000 ms         | Fewest ms of warm-up, with at least one iteration. A fast callback warms up for many calls; a slow one warms up once.                               |
+| `BENCH_REPORT_FILE`       | `./.bench/report.json` | any path without `..` | The run file. A path containing `..` is rejected.                                                                                                   |
+| `CI`                      | off                    | `true` to enable      | Prints a line per benchmark with throughput, latency and sample count.                                                                              |
+| `BENCH_THRESHOLD`         | `15`                   | 0 to 100 %            | `bench-compare`: the highest threshold.                                                                                                             |
+| `BENCH_MIN_THRESHOLD`     | `10`                   | 0 to 100 %            | `bench-compare`: the lowest threshold.                                                                                                              |
+| `BENCH_NOISE_MULTIPLIER`  | `4`                    | 0 to 100              | `bench-compare`: the threshold is this many times the run-to-run noise. `0` uses `BENCH_THRESHOLD` for every benchmark.                             |
+| `BENCH_MIN_NOISE_HISTORY` | `3`                    | 2 to 100              | `bench-compare`: fewest runs per side to measure noise.                                                                                             |
+| `BENCH_OUTLIER_PERCENT`   | `40`                   | 0 to 1000 %           | `bench-compare`: leaves out runs this far from their side's median. `0` compares medians.                                                           |
 
-Out of range numbers get clamped rather than rejected, so `BENCH_ITERATIONS=5000` becomes 1000. Anything that is not a whole number falls back to the default instead, including a fraction: `BENCH_ITERATIONS=7.5` runs ten iterations, not seven. `BENCH_THRESHOLD` is the one exception and takes a fraction such as `7.5`. A report path containing `..` is rejected outright, so a stray variable cannot write outside the project.
+Out-of-range numbers are clamped, so `BENCH_ITERATIONS=5000` becomes 1000. A value that is not a number falls back to the default. Counts and times must be whole numbers; percentages and the multiplier take fractions.
 
-The default threshold of 40 percent is loose, and that is deliberate. CodSpeed measured around 2.7 percent run to run variation on GitHub hosted runners, which is enough to make a 2 percent gate fail roughly half the time on code that did not change. A gate nobody trusts gets disabled within a month. Start loose, tighten once the history shows what the real noise is.
+## Comparing two builds
 
-## How the gate decides
-
-We keep a list of past throughput means per benchmark. Each run compares against the average of the last `BENCH_OPS_TO_TRACK` entries:
-
-```
-deviation = ((current - average) / average) * 100
-```
-
-Negative means slower. The run fails when `deviation < -BENCH_THRESHOLD`.
-
-Three things about this are worth knowing before trusting the output.
-
-We compare against a window average, not against the single previous run. github-action-benchmark compares to the previous result by default, which means one lucky fast run quietly raises the bar for everything after it. An average over ten runs absorbs that.
-
-Below `BENCH_MIN_SAMPLES` the gate stays quiet. A new benchmark records its result and passes, and with `CI=true` it prints how many runs it has recorded against how many it needs. Failing a build on a comparison against one prior sample is a coin flip, not a signal.
-
-When a run regresses, we do not add it to the history. The window stays exactly as it was. This one is our own choice and it has no precedent in bencher, github-action-benchmark or CodSpeed, all of which append every result regardless of outcome. Their way is statistically cleaner. Ours prevents a slow bleed, where three merges each lose 15 percent, none of them trips a 40 percent gate on its own, and the baseline drifts down with them until the service is half as fast and the benchmark is still green. Our baseline means last known good, not most recent.
-
-`BENCH_FORCE_BASELINE=1` is the way back out. It only does something on a run that actually regressed, and there it replaces the whole window with that run. A slowdown small enough to pass the gate needs no reset, because it is already in the history.
-
-## Writing benchmarks that mean something
-
-A benchmark that measures the wrong thing is worse than no benchmark. It costs CI minutes, it fails on unrelated changes, and people learn to rerun it until it passes.
-
-### The callback must be async
-
-```ts
-// good
-bench.it('creates an order', async () => {
-  await service.create(fixture);
-});
-
-// bad
-bench.it('creates an order', () => service.create(fixture));
-```
-
-Both return a promise, but tinybench 5 works out whether a plain function is async by calling it once and looking at the result. That extra call is not measured and it is not cleaned up. Declaring `async` skips the probe.
-
-### Measure one operation
-
-```ts
-// good
-bench.it('validates an order payload', async () => {
-  await validator.validate(payload);
-});
-
-// bad
-bench.it('order flow', async () => {
-  const user = await createUser();
-  const cart = await fillCart(user);
-  await checkout(cart);
-  await sendConfirmationEmail(cart);
-});
-```
-
-When the second one regresses by 45 percent, we have learned nothing except that something in four operations got slower. Then we spend an afternoon bisecting by hand. Split it into four benchmarks and the failing one names itself.
-
-### Keep setup out of the measurement
-
-```ts
-// good
-let payload: OrderPayload;
-before(() => {
-  payload = buildLargeOrderPayload();
-});
-bench.it('validates an order payload', async () => {
-  await validator.validate(payload);
-});
-
-// bad
-bench.it('validates an order payload', async () => {
-  const payload = buildLargeOrderPayload();
-  await validator.validate(payload);
-});
-```
-
-Fixture construction lands in the number. If someone later adds a field to the fixture builder, the benchmark regresses and the validator never changed.
-
-### Never touch the network or a shared database
-
-```ts
-// bad
-bench.it('fetches exchange rates', async () => {
-  await fetch('https://api.example.com/rates');
-});
-```
-
-This measures somebody else's uptime. It will fail on a Friday for reasons nobody in the repo can fix. Point benchmarks at in-memory fakes or a container the run owns.
-
-The same goes for a shared database. If two CI jobs hit the same instance, each one shows up in the other's numbers.
-
-### Each iteration must leave the world as it found it
-
-```ts
-// bad
-const queue: Order[] = [];
-bench.it('enqueues an order', async () => {
-  queue.push(await buildOrder());
-});
-```
-
-Iteration 500 works on a much bigger array than iteration 1. We are measuring array growth. Reset shared state in the callback, or use a structure where the operation costs the same every time.
-
-### Do not assert on absolute time
-
-```ts
-// bad
-bench.it('creates an order', async () => {
-  const start = Date.now();
-  await service.create(fixture);
-  expect(Date.now() - start).to.be.lessThan(50);
-});
-```
-
-50 milliseconds on a developer laptop is 300 on a shared runner. The whole point of the baseline is that it is relative to the same machine class over time. Let the gate do the judging, keep assertions out of the callback.
-
-### Do not benchmark a mock
-
-```ts
-// bad
-const repo = createStubInstance(OrderRepository);
-repo.create.resolves(fixture);
-bench.it('creates an order', async () => {
-  await new OrderService(repo).create(fixture);
-});
-```
-
-If the expensive part is stubbed, the number tracks sinon's dispatch cost. Mock at the network edge if we must, and keep the code under measurement real.
-
-### Watch what the number counts
-
-```ts
-bench.it('creates 100 orders', async () => {
-  await Promise.all(orders.map(o => service.create(o)));
-});
-```
-
-This is legitimate, as long as we read it correctly. Throughput here is batches per second, not orders per second. Divide by 100 for per order cost. The name should say so, otherwise the next person reads the dashboard wrong.
-
-## Where the noise comes from
-
-These numbers carry real noise, so treat a failure as a prompt to go and look rather than proof of a regression. V8 optimises hot loops and deoptimises when object shapes change, so a benchmark can measure a fast path that production never hits. A GC pause inside one iteration drags the mean with it, and CI runners add a few percent on their own from noisy neighbours and CPU throttling.
-
-That is why the threshold defaults to a loose 40 percent and why we compare against a window rather than the last run. Reproduce a failure locally before reverting anything.
-
-## Running in CI
-
-The result file is committed. That is what makes the history survive between runs, and it also means a regression shows up in review as a diff on `.bench/report.json`. Keep an eye on it in review, because an unreadable file resets the history and the gate prints a warning and passes.
-
-The history is keyed by the full Mocha title path, so renaming a suite or a benchmark orphans its samples and starts a fresh baseline. That is worth a second of thought before a tidy-up rename.
-
-Mocha's `--parallel` mode is not supported. Every benchmark reads and rewrites the same file, so two workers would overwrite each other.
-
-Only the baseline branch should write it. On a pull request we want the gate to judge, not to record:
-
-```yaml
-- name: Benchmarks
-  run: npm run test:benchmark
-  env:
-    CI: 'true'
-    BENCH_UPDATE_BASELINE: ${{ github.ref == 'refs/heads/master' && '1' || '' }}
-
-- name: Commit the baseline
-  if: github.ref == 'refs/heads/master'
-  run: |
-    git add .bench/report.json
-    git diff --staged --quiet || git commit -m 'chore: update benchmark baseline [skip ci]'
-    git push
-```
-
-One job, not two, so the sample we record is the one the gate just judged. An empty `BENCH_UPDATE_BASELINE` reads as off, because only the exact string `1` enables it. If a pull request wrote to the baseline, every branch would be measuring against itself and the gate would never fire. And the commit step matters: without it the file is written on a runner that gets thrown away, and the history never grows.
-
-When a benchmark fails and we decide the slowdown is worth it, say a new validation pass that halves throughput, reset the window on the baseline branch:
+Build the base commit and the head commit in two directories, then run the same benchmark files for both on one machine. Run one file per process, alternate the two builds file by file, and flip the order every round. Then a slow period on the machine affects both builds alike.
 
 ```sh
-BENCH_UPDATE_BASELINE=1 BENCH_FORCE_BASELINE=1 npm run test:benchmark
+BASE_DIR=/tmp/base/services/orders # built base commit
+HEAD_DIR=$PWD                      # built head commit
+OUT=$PWD/.bench-ab
+rm -rf "$OUT"
+
+run() { # run <base|head> <file> <run file name>
+  local dir=$BASE_DIR
+  [ "$1" = head ] && dir=$HEAD_DIR
+  # A benchmark file new in head has nothing to compare with in base
+  [ -f "$dir/$2" ] || return 0
+  (cd "$dir" && BENCH_REPORT_FILE="$OUT/$3.json" npx lb-mocha --allow-console-logs "$2")
+}
+
+files=$(cd "$HEAD_DIR" && ls dist/__tests__/benchmark/*.js)
+for round in 1 2 3 4 5; do
+  order="base head"
+  [ $((round % 2)) = 0 ] && order="head base"
+  for file in $files; do
+    for side in $order; do run "$side" "$file" "$side"; done
+  done
+done
+
+npx bench-compare "$OUT/base.json" "$OUT/head.json" --markdown
 ```
 
-That only has an effect on a run the gate rejected, which is exactly the case we are recovering from. Then commit the file and say in the commit message why we accepted it. The next person to find a cliff in the history will want that sentence.
+Before you accept a regression, check it again. `bench-compare <base> <head> --suspects` prints `suite<TAB>test` for each benchmark slower than half its threshold. Run the files that hold them for five more rounds, the same way, into `base-recheck` and `head-recheck`. Then give all four files:
+
+```sh
+npx bench-compare "$OUT"/base.json "$OUT"/head.json "$OUT"/base-recheck.json "$OUT"/head-recheck.json
+```
+
+A regression then counts only if the second pass regresses too. Otherwise it shows as `UNCONFIRMED` and does not fail. Run whole files again, not single benchmarks: a benchmark run alone measured up to 25 percent differently from the same benchmark after the rest of its file.
+
+For GitHub Actions, copy [`examples/benchmark-compare.yml`](./examples/benchmark-compare.yml). It does the same steps in one job: it builds both sides the same way, runs five rounds, checks suspects again, and writes the result to the job summary. When one job takes too long, copy [`examples/benchmark-compare-sharded.yml`](./examples/benchmark-compare-sharded.yml) instead. It splits the files across machines, and each machine runs base and head for its own files.
+
+Local runs also use one process per file. In one process, V8 optimisation and garbage from earlier files change the numbers of later files.
+
+Exit codes: 0 for no regression, 1 for a regression or for a benchmark of base that is missing from head (deleted, renamed, or crashed on head), 2 for bad usage or an unreadable file.
+
+## How a comparison decides
+
+For each benchmark, `bench-compare` takes the mean throughput of all runs of each side, without the runs more than `BENCH_OUTLIER_PERCENT` from that side's median. A plain median of a few runs jumps between the two speeds of a benchmark that runs at one of two speeds per process. A plain mean lets one lucky-fast run move the result. The median always stays in, so at worst the comparison is between medians.
+
+```
+deviation = (head - base) / base * 100
+```
+
+The threshold comes from the noise of the benchmark. Noise is the run-to-run coefficient of variation of the noisier side, in percent. The threshold is `BENCH_NOISE_MULTIPLIER × noise`, clamped to [`BENCH_MIN_THRESHOLD`, `BENCH_THRESHOLD`]. A steady benchmark gets a tight threshold and a noisy one a loose one. A side with fewer than `BENCH_MIN_NOISE_HISTORY` runs has no noise value. When neither side has one, the threshold is `BENCH_THRESHOLD`.
+
+The benchmark regresses when `deviation < -threshold`. The defaults caught planted slowdowns of 20 percent and more in same-machine comparisons, with steady benchmarks under 10 percent noise.
+
+## Running only the affected files
+
+`bench.links(...globs)` names the source files that the benchmarks of a file depend on. Paths are relative to the package and can be globs. Put the call at the bottom of the file, below the suites, so the benchmarks themselves stay free of it. It has no effect on a benchmark run.
+
+```ts
+bench.links('src/services/order*.ts', 'src/repositories/order*.ts');
+```
+
+`bench-select` prints the subset of the given built files that a change can affect. Run it in the package directory:
+
+```sh
+git diff --name-only --no-renames origin/master...HEAD > /tmp/changed.txt
+npx bench-select --changed /tmp/changed.txt dist/__tests__/benchmark/*.js > /tmp/selected.txt
+```
+
+It loads each file through Mocha without running a test, and reads its `bench.links` call. A file runs when:
+
+- its own source file changed;
+- a changed path matches one of its links;
+- it has no `bench.links` call.
+
+Every file runs when a changed path is a package file outside `src` (for example `package.json` or a migration), a test helper, a file in the repository root, a file of a workspace package this package depends on, or a match for an `--all <glob>` option. Use `--all` for files outside the package that decide how benchmarks run, such as your CI workflow. Markdown files and other spec files (`*.unit.ts`, `*.acceptance.ts`, `*.integration.ts`) are ignored. `--root` sets the repository root; by default it is the nearest directory upward whose `package.json` has `workspaces`.
+
+It exits 2 when a link matches no file in the package, when a file does not load, or when the source of a built file is missing. A renamed or deleted file then cannot leave a benchmark silently unlinked.
 
 ## Timeouts
 
-Mocha's default timeout is two seconds, which most benchmarks blow through. `bench.it` sets its own timeout from the iteration count: five seconds, plus two for every iteration and one more for warmup. At the default ten iterations that is 27 seconds. A `.mocharc` timeout is not needed for benchmarks and will not override this.
+`bench.it` sets its own Mocha time limit: 5 seconds, plus 2 for each iteration and one more for warm-up, plus 0.3 seconds for each ms of `BENCH_MIN_TIME`. At the defaults that is 127 seconds. When the limit ends, an abort signal also stops tinybench, so a slow benchmark does not keep running after Mocha has failed it.
+
+## Do's and Don'ts
+
+Each rule names its source:
+
+- _field_: a mistake made in a large service suite that used this harness. Before the fixes, its benchmarks varied by 10 to 60 percent between runs.
+- _research [n]_: from the numbered references at the end.
+- _this package_: follows from how this package works.
+
+Terms: a _side_ is one build, base or head. A _round_ runs every benchmark file once for each side. A _suspect_ is a benchmark that `bench-compare --suspects` lists.
+
+### Write the callback
+
+- **Do declare the callback `async`.** tinybench calls a plain function once, without measuring it, to find out whether it returns a promise. _research [1]_
+
+  ```ts
+  bench.it('creates an order', async () => {
+    await service.create(fixture);
+  }); // good
+  bench.it('creates an order', () => service.create(fixture)); // bad
+  ```
+
+- **Do await all the work that the callback starts.** tinybench stops the clock when the returned promise settles. Work that is not awaited, such as an audit write or a timer, runs later in another iteration. A change that moves work to the background then looks faster, but the work is the same. _research [1]_
+- **Do measure one operation.** When a four-step flow regresses, you must find the slow step by hand. Four benchmarks name it. _field_
+- **Do make the callback do real work.** A benchmark on an empty table, on three rows, or on a stubbed-out path measures only the harness. Many such benchmarks were deleted in the field. A mock of the expensive part also measures only the harness. _field_
+- **Do keep setup out of the measured time.** Build fixtures in Mocha `before`, or in the tinybench hook `beforeAll` or `beforeEach`. Otherwise a change to a fixture builder reads as a regression. _field_
+- **Do check the outcome, never the time.** A delete that matched no row still returned 204, and a fake cache ignored a command it did not support, so broken benchmarks looked fast. Check the result in `afterEach`, outside the measured time, and make fakes throw on an unsupported call. Do not assert on time: 50 ms on a laptop is 300 ms on a shared runner. _field_
+- **Do read secrets and auth settings through a helper that throws when a value is missing.** A missing secret made every request fail with 401, and the benchmark measured the error path. _field_
+- **Do call a started application by its URL.** `createRestAppClient(app)` uses the URL. `supertest(handler)` and `createClientForHandler` start a new server for each request, and the benchmark measures that too. _research [15]_
+- **Don't call the network or a shared database.** That measures somebody else's uptime, and two CI jobs on one database show up in each other's numbers. Use in-memory fakes or a container that the run owns. _field_
+- **Do put repeated helpers in one shared fixture.** In the field, auth setup, data restore and forced GC were copied across files, and the copies drifted apart. _field_
+
+### Data and lifecycle
+
+- **Do give every iteration the same data volume.** A callback that inserts rows makes iteration 30 work on more data than iteration 1. Restore state in `beforeEach` or `afterEach`: they run around every iteration, outside the measured time. Piled-up data was a main cause of the 10 to 60 percent swings. _field_
+
+  ```ts
+  bench.it(
+    'creates an order',
+    async () => {
+      await repo.create(order);
+    },
+    {afterEach: () => repo.deleteAll()},
+  );
+  ```
+
+- **Don't let an iteration depend on the one before it.** A cache that the first iteration fills, an id that grows, or a value that flips each iteration changes the work. In the field, a value flipped while the data was restored, so every second iteration did nothing. _field_
+- **Do give each iteration a fresh input.** In the field, the code under test changed one input object that every iteration reused. The benchmark then ran at 8 or 12 operations per second, depending on the process. Build the input in `beforeEach`. _field_
+- **Do give read benchmarks their own fixed data.** Write benchmarks grew a shared record that a later read benchmark used. The size of the read then depended on the iteration count and on the test order. _field_
+- **Do use fixed dates and set `TZ=UTC`.** Code that uses local dates runs at a different speed in each time zone. In the field, date benchmarks ran up to 3 times faster in the first process than in later ones until `TZ=UTC` was set. _field_
+- **Do remember that the hooks also run during warm-up.** They receive the mode, `'warmup'` or `'run'`, as their argument. With warm-up on, `beforeAll` and `afterAll` run twice. _research [1]_
+- **Do clean up in Mocha `after`, not only in the tinybench hook `afterAll`.** tinybench skips `afterAll` when an iteration throws. Also stop servers and timers there. The default Mocha setting `exit: true` hides handles that stay open and slow later benchmarks in the file. Run once with `--no-exit` to find them. _research [1][14]_
+- **Don't open connections at the top level of a benchmark file.** `bench-select` loads every file to read its links. Open them in Mocha `before`. _this package_
+
+### Measure
+
+- **Don't set `BENCH_MIN_TIME=0` for fast benchmarks.** With a fixed count alone, a benchmark that takes microseconds per call was timed for under a millisecond, and varied by up to 24 percent between processes. 200 ms of samples brought that under 3 percent. _field_
+- **Do keep warm-up on.** V8 compiles hot code in tiers (Ignition, Sparkplug, Maglev, TurboFan). Early iterations run slower code than later ones. _research [2][3]_
+- **Don't expect warm-up to guarantee a steady state.** Some benchmarks never settle, or settle at a slower speed. That is why `bench-compare` uses several runs and removes outliers. _research [4]_
+- **Do add rounds, not iterations, when the noise is between processes.** In the field, most noise was between processes: some benchmarks ran at one of two speeds per process. More iterations do not fix that. More rounds do. More iterations help only against noise inside one process. For that, use `{iterations: config.iterations * 3}` on the one benchmark, so `BENCH_ITERATIONS` still scales it. _field_
+- **Do keep per-iteration hooks cheap.** `beforeEach` and `afterEach` run for every iteration, but their time does not count toward `BENCH_MIN_TIME`. A 30 µs callback with a 10 ms hook runs about 6,700 hooks and can reach the time limit. _research [1]_
+- **Do force garbage collection outside the measured time if GC pauses dominate.** Start Node with `--expose-gc` and call `global.gc()` in `beforeEach`. Build a large input for each benchmark, not all inputs at the start. In the field, GC moved inputs built at the start during the first benchmark. _field_
+- **Do measure a V8 flag before you keep it.** In the field, `no-concurrent-recompilation` cut the spread of one benchmark from 12 to 1 percent. That benchmark ran at one of two speeds per process. `single-threaded-gc` made other benchmarks worse. One flag helped on one runner and hurt on another. _field_
+- **Do pass V8 flags per process, the same on both sides.** Node rejects most V8 flags in `NODE_OPTIONS`. Use, for example, `lb-mocha --node-option no-concurrent-recompilation`. V8 flags can change between Node versions. _research [5]_
+- **Do read the source of the tinybench version that this package installs.** Another tinybench version in the root `node_modules` has other defaults. In the field, reading the wrong one led to a wrong warm-up setting. _field_
+- **Don't benchmark with coverage on.** Coverage tools (`nyc`, `c8`) count code in V8, and that changes how V8 optimises it. _research [6]_
+
+### Run
+
+- **Do build base and head the same way.** Install and build both with the same commands, in directories with paths of equal length. In the field, builds made in different ways measured identical code up to 26 percent apart. _field_
+- **Do run each benchmark file in its own process.** Node's own benchmark tool runs every configuration in a separate process, because V8 optimisation depends on what ran before. _field, research [7]_
+- **Do run base and head in one job, on one machine, alternating.** Hosted CI runners get different CPU models from run to run, and the noise between cloud instances is larger than the noise inside one. _field, research [8][9]_
+- **Do split the files across machines to save time, but keep each file on one machine.** Each machine runs base and head for its own files. Never compare a base from one machine with a head from another. _field_
+- **Don't share the machine.** Do not use Mocha `--parallel`, a second benchmark job, or other CPU-heavy programs at the same time. Mocha says parallel mode is not for timing-sensitive tests. For local runs, also keep a laptop on mains power, and on Linux set the CPU frequency governor to `performance`. _research [7][10][11][12]_
+- **Do fail the job when a file crashes or runs no test.** In the field, a crashed file was removed from the comparison without a warning. Count the failed files yourself. Set a time limit for each file, so that a hung file cannot block the check. A failure on head can hide a regression. A failure on base only needs a report. _field_
+- **Don't commit run files.** They belong to one machine and one run. A changed file also makes a monorepo tool such as lerna treat the package as changed. _field_
+- **Don't compare numbers across machines or Node versions.** State the platform (Node version, CPU, flags) with every result you share. _research [8][13]_
+
+### Compare and read results
+
+- **Do read `Promise.all` throughput as batches.** With 100 calls in one callback, throughput counts batches per second. Divide by 100, and say so in the title. _field_
+- **Do collect at least five rounds per side.** A noise value from three runs is itself noisy. Five rounds made the thresholds stable. _field_
+- **Do check a suspect again before you act.** Use `--suspects` and a second pass. Noise rarely moves a benchmark past its threshold twice, but a real slowdown does it every time. In a large suite a false alarm is normal: at 5 percent risk per benchmark, one benchmark in 20 shows a difference that does not exist. _field, research [7]_
+- **Don't re-run the job until it passes.** Each re-run is one more chance for noise to hide a real slowdown. When the second pass confirms a regression, treat it as real. _research [16]_
+- **Don't set `BENCH_THRESHOLD` or `BENCH_MIN_THRESHOLD` below the noise.** At 2.66 percent run-to-run variation on hosted runners, a 2 percent threshold gives a false alarm on roughly half the runs. _research [8]_
+- **Don't rename a benchmark without a reason.** A rename shows as "missing from head" and exits 1. Accept it once, on purpose. _this package_
+
+### Select
+
+- **Do use `git diff --name-only --no-renames`.** With renames on, the old path of a moved file is missing from the list. _this package_
+- **Do select once, on head, and use the same files for both sides.** _this package_
+- **Don't add `bench.links` to a benchmark that boots the whole application.** It reaches too many files to list. Without links it always runs. _field_
+- **Do update the links when you rename, move or delete a source file, or when the code under test starts to call a new file.** A changed file that no link names does not select anything. _field_
 
 ## API
 
 `bench.describe(title, callback)` declares a suite and prefixes the title. The callback must be synchronous, because Mocha collects the tests inside it while the file loads.
 
-`bench.it(title, callback)` declares a benchmark, runs it, compares it, and fails the test on a regression. The callback must be async.
+`bench.it(title, callback, options?)` declares a benchmark. It measures the callback and appends its mean throughput to the run file. The callback must be async. `options` takes the tinybench hooks `beforeAll`, `beforeEach`, `afterEach` and `afterAll`, and `iterations`.
 
-Both are reached through `bench` and nowhere else. The package exposes one root entry point, so there is no second name for either of them and no way to reach past the barrel into a module.
+`bench.links(...globs)` names the source files for `bench-select`. It rejects a glob that starts with `!` or `./`, because `path.matchesGlob` never matches those.
 
-`config` is a live view of the settings. Every property is a getter that reads `process.env` when accessed, so a test can change a variable after the module is loaded.
+`config` is a live view of the settings. Every property is a getter that reads `process.env` when accessed.
 
-The errors all extend `BenchmarkingError`. `PerformanceRegressionError` carries `deviation` and `threshold` as fields so nothing has to parse a message. `BenchmarkError` means the run itself failed, which is different from a regression and should be triaged differently. `ReporterError` wraps a failure to read or write the result file and keeps the original on `cause`. `BenchmarkConfigError` means a setting was refused, currently only a report path pointing outside the project.
+The errors all extend `BenchmarkingError`. `BenchmarkError` means the run itself failed: the callback threw, produced nothing, or hit the time limit. `ReporterError` means the run file could not be read or written, and keeps the original on `cause`. An unreadable run file stops the run instead of being replaced. `BenchmarkConfigError` means a setting was refused.
+
+## References
+
+1. tinybench v5.1.0 source, `Task.benchmark` and `processRunResult`. https://github.com/tinylibs/tinybench/tree/v5.1.0
+2. V8, "Sparkplug — a non-optimizing JavaScript compiler". https://v8.dev/blog/sparkplug
+3. V8, "Maglev — V8's fastest optimizing JIT". https://v8.dev/blog/maglev
+4. Barrett et al., "Virtual Machine Warmup Blows Hot and Cold", OOPSLA 2017. https://arxiv.org/abs/1602.00602
+5. Node.js, command-line options, `NODE_OPTIONS`. https://nodejs.org/api/cli.html#node_optionsoptions
+6. V8, "JavaScript code coverage". https://v8.dev/blog/javascript-code-coverage
+7. Node.js, "How to write and run benchmarks in Node.js core". https://github.com/nodejs/node/blob/main/doc/contributing/writing-and-running-benchmarks.md
+8. CodSpeed, "Benchmarks in CI: Escaping the Cloud Chaos". https://codspeed.io/blog/benchmarks-in-ci-without-noise
+9. Laaber, Scheuner and Leitner, "Software microbenchmarking in the cloud. How bad is it really?", Empirical Software Engineering 2019. https://link.springer.com/article/10.1007/s10664-019-09681-1
+10. Mocha, parallel tests. https://mochajs.org/#parallel-tests
+11. Google Benchmark, "Reducing variance". https://google.github.io/benchmark/reducing_variance.html
+12. LLVM, "Benchmarking tips". https://llvm.org/docs/Benchmarking.html
+13. Gernot Heiser, "Systems Benchmarking Crimes". https://gernot-heiser.org/benchmarking-crimes.html
+14. Mocha, command-line option `--exit`. https://mochajs.org/running/cli/#--exit
+15. supertest v6.3.4 source, `serverAddress`. https://github.com/ladjs/supertest/blob/v6.3.4/lib/test.js
+16. Evan Miller, "How Not To Run an A/B Test". https://www.evanmiller.org/how-not-to-run-an-ab-test.html
 
 ## License
 
