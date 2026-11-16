@@ -54,7 +54,7 @@ pipeline {
         SONAR_TOKEN = credentials('<%= project %>-sonar-token')
     }
     tools {
-        nodejs 'NodeJS 24.22.3'
+        nodejs 'NodeJS 24'
     }
     stages {
         stage('git-setup-and-fetch') {
