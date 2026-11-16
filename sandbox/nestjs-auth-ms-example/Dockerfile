@@ -1,4 +1,4 @@
-FROM node:24.22.1-alpine
+FROM node:24.22.3-alpine
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci --ignore-scripts
