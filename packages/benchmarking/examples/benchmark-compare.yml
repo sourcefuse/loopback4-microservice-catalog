@@ -28,6 +28,7 @@ jobs:
       # The built benchmark files, from the package directory
       TESTS: dist/__tests__/benchmark
       FILES: '*.benchmark.js'
+      # At most 10: a run file keeps only the newest 10 runs
       ROUNDS: '5'
       FILE_TIMEOUT: 15m
       # Base and head use the same commands. Built differently, identical code

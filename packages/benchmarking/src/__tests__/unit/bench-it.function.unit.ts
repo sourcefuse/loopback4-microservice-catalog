@@ -109,6 +109,20 @@ describe('benchIt', () => {
     expect(history[0]).to.be.above(0);
   });
 
+  it('keeps only the newest 10 runs of a benchmark', async () => {
+    const old = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    writeFileSync(
+      reportFile,
+      JSON.stringify({[SUITE_KEY]: {'sample operation': {history: old}}}),
+    );
+
+    await run();
+
+    const history = readReport()[SUITE_KEY]['sample operation'].history;
+    expect(history).to.have.length(10);
+    expect(history.slice(0, 9)).to.eql(old.slice(1));
+  });
+
   it('keeps only the history in the run file', async () => {
     await run();
 

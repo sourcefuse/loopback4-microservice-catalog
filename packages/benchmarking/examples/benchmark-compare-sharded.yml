@@ -40,6 +40,7 @@ jobs:
       # The built benchmark files, from the package directory
       TESTS: dist/__tests__/benchmark
       FILES: '*.benchmark.js'
+      # At most 10: a run file keeps only the newest 10 runs
       ROUNDS: '5'
       FILE_TIMEOUT: 15m
       # This machine's share of the files: index from 0, and machine count

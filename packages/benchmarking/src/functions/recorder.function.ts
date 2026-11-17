@@ -16,6 +16,12 @@ import {type RunFile} from '../types';
 import {BenchmarkingError} from '../errors/benchmarking.error';
 import {ReporterError} from '../errors/reporter.error';
 
+/**
+ * The number of runs a run file keeps for each benchmark. A comparison can
+ * use at most this many rounds per side.
+ */
+export const MAX_RUNS = 10;
+
 /** Reads a run file. A missing file is empty; an unreadable one throws. */
 export function readRunFile(file: string): RunFile {
   if (!existsSync(file)) {
@@ -45,8 +51,9 @@ function writeRunFile(data: RunFile): void {
 }
 
 /**
- * Appends the throughput of one run to `BENCH_REPORT_FILE`. Every run is kept:
- * `bench-compare` needs all runs of each side to measure their spread.
+ * Appends the throughput of one run to `BENCH_REPORT_FILE` and keeps only the
+ * newest {@link MAX_RUNS} runs of the benchmark. `bench-compare` uses all kept
+ * runs of each side to measure their spread.
  *
  * An unreadable file stops the run instead of being replaced. Otherwise one bad
  * write would silently drop the runs that the other side is compared against.
@@ -59,7 +66,10 @@ export function recordRun(
   try {
     const data = readRunFile(config.reportFile);
     const history = data[suite]?.[test]?.history ?? [];
-    data[suite] = {...data[suite], [test]: {history: [...history, throughput]}};
+    data[suite] = {
+      ...data[suite],
+      [test]: {history: [...history, throughput].slice(-MAX_RUNS)},
+    };
     writeRunFile(data);
   } catch (error) {
     if (error instanceof BenchmarkingError) {

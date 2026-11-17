@@ -71,7 +71,7 @@ bench.links('src/services/order*.ts', 'src/repositories/order*.ts');
 }
 ```
 
-Each run appends one number per benchmark to `BENCH_REPORT_FILE`. The file grows with every run, so delete it before you collect a new set of runs.
+Each run appends one number per benchmark to `BENCH_REPORT_FILE`. The file keeps only the newest 10 runs of each benchmark, so one comparison can use at most 10 rounds per side.
 
 ## Settings
 
