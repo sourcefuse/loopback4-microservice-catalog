@@ -201,12 +201,74 @@ Terms: a _side_ is one build, base or head. A _round_ runs every benchmark file 
 
 - **Do await all the work that the callback starts.** tinybench stops the clock when the returned promise settles. Work that is not awaited, such as an audit write or a timer, runs later in another iteration. A change that moves work to the background then looks faster, but the work is the same. _research [1]_
 - **Do measure one operation.** When a four-step flow regresses, you must find the slow step by hand. Four benchmarks name it. _field_
+
+  ```ts
+  // good
+  bench.it('validates an order payload', async () => {
+    await validator.validate(payload);
+  });
+
+  // bad
+  bench.it('order flow', async () => {
+    const user = await createUser();
+    const cart = await fillCart(user);
+    await checkout(cart);
+    await sendConfirmationEmail(cart);
+  });
+  ```
+
 - **Do make the callback do real work.** A benchmark on an empty table, on three rows, or on a stubbed-out path measures only the harness. Many such benchmarks were deleted in the field. A mock of the expensive part also measures only the harness. _field_
+
+  ```ts
+  // bad: the number tracks the dispatch cost of sinon, not the service
+  const repo = createStubInstance(OrderRepository);
+  repo.create.resolves(fixture);
+  bench.it('creates an order', async () => {
+    await new OrderService(repo).create(fixture);
+  });
+  ```
+
 - **Do keep setup out of the measured time.** Build fixtures in Mocha `before`, or in the tinybench hook `beforeAll` or `beforeEach`. Otherwise a change to a fixture builder reads as a regression. _field_
-- **Do check the outcome, never the time.** A delete that matched no row still returned 204, and a fake cache ignored a command it did not support, so broken benchmarks looked fast. Check the result in `afterEach`, outside the measured time, and make fakes throw on an unsupported call. Do not assert on time: 50 ms on a laptop is 300 ms on a shared runner. _field_
+
+  ```ts
+  // good
+  let payload: OrderPayload;
+  before(() => {
+    payload = buildLargeOrderPayload();
+  });
+  bench.it('validates an order payload', async () => {
+    await validator.validate(payload);
+  });
+
+  // bad: the fixture build is in the number
+  bench.it('validates an order payload', async () => {
+    const payload = buildLargeOrderPayload();
+    await validator.validate(payload);
+  });
+  ```
+
+- **Do check the outcome, never the time.** A delete that matched no row still returned 204, and a fake cache ignored a command it did not support, so broken benchmarks looked fast. Check the result in `afterEach`, outside the measured time, and make fakes throw on an unsupported call. Do not assert on time: 50 ms on a laptop is 300 ms on a shared runner. Let `bench-compare` judge the speed. _field_
+
+  ```ts
+  // bad
+  bench.it('creates an order', async () => {
+    const start = Date.now();
+    await service.create(fixture);
+    expect(Date.now() - start).to.be.lessThan(50);
+  });
+  ```
+
 - **Do read secrets and auth settings through a helper that throws when a value is missing.** A missing secret made every request fail with 401, and the benchmark measured the error path. _field_
 - **Do call a started application by its URL.** `createRestAppClient(app)` uses the URL. `supertest(handler)` and `createClientForHandler` start a new server for each request, and the benchmark measures that too. _research [15]_
 - **Don't call the network or a shared database.** That measures somebody else's uptime, and two CI jobs on one database show up in each other's numbers. Use in-memory fakes or a container that the run owns. _field_
+
+  ```ts
+  // bad
+  bench.it('fetches exchange rates', async () => {
+    await fetch('https://api.example.com/rates');
+  });
+  ```
+
 - **Do put repeated helpers in one shared fixture.** In the field, auth setup, data restore and forced GC were copied across files, and the copies drifted apart. _field_
 
 ### Data and lifecycle
@@ -214,6 +276,13 @@ Terms: a _side_ is one build, base or head. A _round_ runs every benchmark file 
 - **Do give every iteration the same data volume.** A callback that inserts rows makes iteration 30 work on more data than iteration 1. Restore state in `beforeEach` or `afterEach`: they run around every iteration, outside the measured time. Piled-up data was a main cause of the 10 to 60 percent swings. _field_
 
   ```ts
+  // bad: iteration 30 pushes onto a longer array than iteration 1
+  const queue: Order[] = [];
+  bench.it('enqueues an order', async () => {
+    queue.push(await buildOrder());
+  });
+
+  // good
   bench.it(
     'creates an order',
     async () => {
@@ -258,6 +327,13 @@ Terms: a _side_ is one build, base or head. A _round_ runs every benchmark file 
 ### Compare and read results
 
 - **Do read `Promise.all` throughput as batches.** With 100 calls in one callback, throughput counts batches per second. Divide by 100, and say so in the title. _field_
+
+  ```ts
+  bench.it('creates 100 orders (batches/s)', async () => {
+    await Promise.all(orders.map(o => service.create(o)));
+  });
+  ```
+
 - **Do collect at least five rounds per side.** A noise value from three runs is itself noisy. Five rounds made the thresholds stable. _field_
 - **Do check a suspect again before you act.** Use `--suspects` and a second pass. Noise rarely moves a benchmark past its threshold twice, but a real slowdown does it every time. In a large suite a false alarm is normal: at 5 percent risk per benchmark, one benchmark in 20 shows a difference that does not exist. _field, research [7]_
 - **Don't re-run the job until it passes.** Each re-run is one more chance for noise to hide a real slowdown. When the second pass confirms a regression, treat it as real. _research [16]_
