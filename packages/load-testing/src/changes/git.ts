@@ -26,9 +26,25 @@ export type Changes = {
 /** The list of every file of a big monorepo is large, so the default buffer is too small. */
 const GIT_MAX_BUFFER_BYTES = 256 * 1024 * 1024;
 
+/** The variable that holds the absolute path of the git program. */
+export const GIT_ENV = 'LOAD_TESTS_GIT';
+
+/** Without the variable, the program is the `git` of the PATH. */
+function gitProgram(): string {
+  const configured = process.env[GIT_ENV];
+  if (configured === undefined || configured === '') {
+    return 'git'; // NOSONAR: the default is the git of the CI machine, and GIT_ENV sets a fixed path.
+  }
+  if (!path.isAbsolute(configured)) {
+    throw new ConfigError(`${GIT_ENV} must be an absolute path: ${configured}`);
+  }
+  return configured;
+}
+
 function git(cwd: string, args: string[]): string {
+  const program = gitProgram();
   try {
-    return execFileSync('git', args, {
+    return execFileSync(program, args, {
       cwd,
       encoding: 'utf8',
       maxBuffer: GIT_MAX_BUFFER_BYTES,

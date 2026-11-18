@@ -80,6 +80,23 @@ type Hook = (...args: never[]) => unknown;
 const TOKENS_SOURCE = `const loadTestsTokens = JSON.parse(process.env.${TOKENS_ENV} || '[]');
 let loadTestsNextToken = Math.floor(Math.random() * loadTestsTokens.length);`;
 
+/** The lines of `beforeScenario` that run `beforeEach` and check the vars it gives. */
+function beforeEachSource(has: boolean): string {
+  if (!has) return '';
+  return `const loadTestsEach = loadTestsBeforeEach({vars: {...context.vars}, vu: loadTestsVu++});
+    const loadTestsBad = loadTestsTemplateAt(JSON.parse(JSON.stringify(loadTestsEach)), 'vars');
+    if (loadTestsBad !== undefined) throw new Error(loadTestsBad + ${JSON.stringify(TEMPLATE_VARS_MESSAGE)});
+    Object.assign(context.vars, loadTestsEach);`;
+}
+
+/** The lines that give the token to the user. They run after `beforeEach`, so that the hook neither sees nor changes the token. */
+function tokenSource(has: boolean): string {
+  if (!has) return '';
+  const empty = `${HOOK_ERROR_PREFIX}tokens: ${TOKENS_ENV} is missing or empty`;
+  return `if (loadTestsTokens.length === 0) return done(new Error(${JSON.stringify(empty)}));
+    context.vars.${TOKEN_VAR} = loadTestsTokens[loadTestsNextToken++ % loadTestsTokens.length];`;
+}
+
 /**
  * Source of the processor that Artillery loads in each worker. It holds the
  * hooks of the scenario, the functions of the consumer, and the vars that
@@ -125,21 +142,8 @@ export function processorSource(
 exports.${BEFORE_SCENARIO} = function (context, ee, done) {
   try {
     Object.assign(context.vars, loadTestsRunVars());
-    ${
-      beforeEach
-        ? `const loadTestsEach = loadTestsBeforeEach({vars: {...context.vars}, vu: loadTestsVu++});
-    const loadTestsBad = loadTestsTemplateAt(JSON.parse(JSON.stringify(loadTestsEach)), 'vars');
-    if (loadTestsBad !== undefined) throw new Error(loadTestsBad + ${JSON.stringify(TEMPLATE_VARS_MESSAGE)});
-    Object.assign(context.vars, loadTestsEach);`
-        : ''
-    }
-    ${
-      // After `beforeEach`, so that the hook neither sees nor changes the token.
-      usesToken(scenario)
-        ? `if (loadTestsTokens.length === 0) return done(new Error(${JSON.stringify(`${HOOK_ERROR_PREFIX}tokens: ${TOKENS_ENV} is missing or empty`)}));
-    context.vars.${TOKEN_VAR} = loadTestsTokens[loadTestsNextToken++ % loadTestsTokens.length];`
-        : ''
-    }
+    ${beforeEachSource(beforeEach !== undefined)}
+    ${tokenSource(usesToken(scenario))}
     done();
   } catch (err) {
     done(loadTestsFail('beforeEach', err));

@@ -130,39 +130,13 @@ export function readConfig(pkgDir: string): LoadTestConfig {
   return config as LoadTestConfig;
 }
 
-/**
- * Returns what is wrong with the values of the config. Empty means nothing.
- * The type checks the keys when the package builds.
- */
-export function configProblems(config: unknown): string[] {
-  if (typeof config !== 'object' || config === null) {
-    return ['the default export must be an object'];
-  }
-  const {
-    phases,
-    artillery,
-    thresholds,
-    engine,
-    apis,
-    reporters,
-    tokenCheck,
-    maxHeavyApis,
-    loginWaitSeconds,
-    runAllWhen,
-  } = config as Partial<LoadTestConfig>;
-  const limits: Thresholds | undefined = thresholds?.default;
-  const problems = [
-    ...phaseProblems(phases, 'phases'),
-    ...artilleryConfigProblems(artillery?.config, 'artillery.config'),
-    ...artilleryEnvProblems(artillery?.env),
-    ...browserEngineProblems(artillery?.browsers),
-    ...thresholdProblems(limits, 'thresholds.default.'),
-    ...browserLimitProblems(thresholds, 'thresholds.'),
-    ...engineProblems(engine),
-    ...apisProblems(apis),
-    ...reporterProblems(reporters),
-    ...patternProblems(runAllWhen, 'runAllWhen'),
-  ];
+/** Returns what is wrong with the single values of the config. */
+function scalarProblems({
+  tokenCheck,
+  maxHeavyApis,
+  loginWaitSeconds,
+}: Partial<LoadTestConfig>): string[] {
+  const problems: string[] = [];
   if (tokenCheck !== undefined && typeof tokenCheck !== 'function') {
     problems.push('tokenCheck must be a function');
   }
@@ -178,6 +152,33 @@ export function configProblems(config: unknown): string[] {
   ) {
     problems.push('loginWaitSeconds must be a number of seconds, 0 or more');
   }
+  return problems;
+}
+
+/**
+ * Returns what is wrong with the values of the config. Empty means nothing.
+ * The type checks the keys when the package builds.
+ */
+export function configProblems(config: unknown): string[] {
+  if (typeof config !== 'object' || config === null) {
+    return ['the default export must be an object'];
+  }
+  const {phases, artillery, thresholds, engine, apis, reporters, runAllWhen} =
+    config as Partial<LoadTestConfig>;
+  const limits: Thresholds | undefined = thresholds?.default;
+  const problems = [
+    ...phaseProblems(phases, 'phases'),
+    ...artilleryConfigProblems(artillery?.config, 'artillery.config'),
+    ...artilleryEnvProblems(artillery?.env),
+    ...browserEngineProblems(artillery?.browsers),
+    ...thresholdProblems(limits, 'thresholds.default.'),
+    ...browserLimitProblems(thresholds, 'thresholds.'),
+    ...engineProblems(engine),
+    ...apisProblems(apis),
+    ...reporterProblems(reporters),
+    ...patternProblems(runAllWhen, 'runAllWhen'),
+  ];
+  problems.push(...scalarProblems(config as Partial<LoadTestConfig>));
   return problems;
 }
 

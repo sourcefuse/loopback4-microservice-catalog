@@ -2145,6 +2145,7 @@ The CLI prints only the message of an error that it throws on purpose. For any o
 | `LOAD_TESTS_AUTH_SERVICE_URL` | The app that serves `/auth/login` and `/auth/token`. Default is the base URL. |
 | The variables that `apis` names | The URL of each other backend, for `ctx.apis.<name>`. Required when the run needs the API. |
 | `LOAD_TESTS_USERS_FILE` | Set it to log in. The path of a JSON file with the pool of test users. Then the two variables below are required too. See [The pool of users](#the-pool-of-users). |
+| `LOAD_TESTS_GIT` | The absolute path of the git program that `--since` runs. Default is the `git` of the `PATH`. A path that is not absolute is an error. |
 | `LOAD_TESTS_CLIENT_ID` | The client id for the login. |
 | `LOAD_TESTS_CLIENT_SECRET` | The client secret for the login. |
 | `CI` | Any value other than empty, `0` or `false` makes a `.only` and a run with every scenario skipped fail. The letter case does not matter. |

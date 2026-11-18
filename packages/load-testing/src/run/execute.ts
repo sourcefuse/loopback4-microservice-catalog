@@ -64,6 +64,27 @@ type ExecuteOptions = {
   signal: AbortSignal;
 };
 
+/** Runs the token check for each user in turn, and stops at the first failure. */
+async function checkTokens(
+  check: NonNullable<LoadTestConfig['tokenCheck']>,
+  sessions: readonly {username: string; accessToken: string}[],
+  phases: ReturnType<typeof phasesOf>,
+  signal: AbortSignal,
+): Promise<void> {
+  for (const {username, accessToken} of sessions) {
+    try {
+      // The order is on purpose: the first failure stops the scenario.
+      await check({token: accessToken, claims: claimsOf(accessToken), phases}); // NOSONAR
+    } catch (err) {
+      signal.throwIfAborted();
+      throw new RunError(
+        `token check for user ${username}: ${errorMessage(err)}`,
+        {cause: err},
+      );
+    }
+  }
+}
+
 /**
  * Runs one scenario: `before`, the load, and `after`. `after` and the
  * cleanups run even when `before` or the load failed, or a signal came. When
@@ -115,23 +136,12 @@ export async function execute(
       ? pool.sessions.map(session => session.accessToken)
       : [];
     if (tokens.length > 0) {
-      const check =
-        scenario.tokenCheck ?? config.tokenCheck ?? defaultTokenCheck;
-      for (const {username, accessToken} of pool.sessions) {
-        try {
-          await check({
-            token: accessToken,
-            claims: claimsOf(accessToken),
-            phases,
-          });
-        } catch (err) {
-          signal.throwIfAborted();
-          throw new RunError(
-            `token check for user ${username}: ${errorMessage(err)}`,
-            {cause: err},
-          );
-        }
-      }
+      await checkTokens(
+        scenario.tokenCheck ?? config.tokenCheck ?? defaultTokenCheck,
+        pool.sessions,
+        phases,
+        signal,
+      );
     }
     const ran = await engine.run({
       pkgDir,

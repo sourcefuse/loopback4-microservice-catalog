@@ -36,7 +36,8 @@ Environment:
   LOAD_TESTS_USERS_FILE     Path of a JSON file with the pool of test users:
                             [{"username": "...", "password": "..."}]. Set it to log in.
   LOAD_TESTS_CLIENT_ID, LOAD_TESTS_CLIENT_SECRET
-                            Required when LOAD_TESTS_USERS_FILE is set`;
+                            Required when LOAD_TESTS_USERS_FILE is set
+  LOAD_TESTS_GIT            Absolute path of the git program for --since (default: git of PATH)`;
 
 async function run(
   pkgDir: string,

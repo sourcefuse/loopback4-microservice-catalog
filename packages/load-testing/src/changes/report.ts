@@ -23,7 +23,8 @@ export function printSelection(selection: ChangeSelection): void {
   );
   print(`Selected ${picked.length} of ${total} scenarios`);
   for (const {scenario, state, reason} of scenarios) {
-    print(`  ${state}: ${scenario}${reason ? ` (${reason})` : ''}`);
+    const why = reason ? ` (${reason})` : '';
+    print(`  ${state}: ${scenario}${why}`);
   }
   if (uncoveredFiles.length > 0) {
     print(

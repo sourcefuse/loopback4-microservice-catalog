@@ -137,4 +137,26 @@ describe('changesSince', () => {
       changesSince(path.join(repo, 'facades/a'), 'no-such-ref'),
     ).to.throw({name: 'ConfigError', message: /--since no-such-ref/});
   });
+
+  describe('LOAD_TESTS_GIT', () => {
+    afterEach(() => delete process.env.LOAD_TESTS_GIT);
+
+    it('rejects a path that is not absolute', () => {
+      process.env.LOAD_TESTS_GIT = 'git';
+      expect(() => changesSince(path.join(repo, 'facades/a'), 'HEAD')).to.throw(
+        {
+          name: 'ConfigError',
+          message: /LOAD_TESTS_GIT must be an absolute path/,
+        },
+      );
+    });
+
+    it('runs the program of the absolute path', () => {
+      const program = execFileSync('which', ['git'], {encoding: 'utf8'}).trim();
+      process.env.LOAD_TESTS_GIT = program;
+      expect(
+        changesSince(path.join(repo, 'facades/a'), 'HEAD').files,
+      ).to.deepEqual([]);
+    });
+  });
 });

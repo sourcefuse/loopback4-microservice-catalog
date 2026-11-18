@@ -10,12 +10,12 @@ import {labelOf} from '../scenario/label';
 import type {Changes} from './git';
 
 /** The lockfiles of the root that make every scenario run. */
-const LOCKFILES = [
+const LOCKFILES = new Set([
   'package-lock.json',
   'npm-shrinkwrap.json',
   'yarn.lock',
   'pnpm-lock.yaml',
-];
+]);
 
 export type SelectionState = 'selected' | 'not selected' | 'skipped';
 
@@ -71,7 +71,7 @@ function runAllTriggers(
         : 'a file of the load folder that is not a scenario file';
     }
     if (file === `${prefix}package.json`) return 'package.json of the package';
-    if (file === 'package.json' || LOCKFILES.includes(file)) {
+    if (file === 'package.json' || LOCKFILES.has(file)) {
       return 'package.json or lockfile of the root';
     }
     return undefined;

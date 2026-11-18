@@ -130,6 +130,44 @@ export async function login(
   );
 }
 
+type Retry = {
+  user: PoolUser;
+  /** The seconds that all waits of the run may still use. */
+  budget: {left: number};
+  waitSeconds: number;
+  signal?: AbortSignal;
+  wait: (ms: number, signal?: AbortSignal) => Promise<unknown>;
+};
+
+/** Sends the call again after each 429, while the budget of waits lasts. */
+async function retrying<T>(
+  call: () => Promise<T>,
+  {user, budget, waitSeconds, signal, wait}: Retry,
+): Promise<T> {
+  for (;;) {
+    try {
+      // A retry must wait for the answer of the call before it sends again.
+      return await call(); // NOSONAR
+    } catch (err) {
+      if (!(err instanceof RateLimited) || signal?.aborted) throw err;
+      if (err.waitSeconds > budget.left) {
+        throw new LoginError(
+          `the server asks to wait ${err.waitSeconds} s, which passes loginWaitSeconds (${waitSeconds} s)`,
+          {cause: err},
+        );
+      }
+      budget.left -= err.waitSeconds;
+      print(`Login of ${user.username} gave 429, waiting ${err.waitSeconds} s`);
+      const waited = guardedStep(
+        () => wait(err.waitSeconds * MS_PER_SECOND, signal),
+        signal,
+        cause => new LoginError('the wait was cut short', {cause}),
+      );
+      await waited; // NOSONAR
+    }
+  }
+}
+
 /**
  * Logs in every user of the pool, one after another. The server limits the
  * login by the address of the client, so a 429 is not an error: the wait of
@@ -144,35 +182,14 @@ export async function loginAll(
   wait: (ms: number, signal?: AbortSignal) => Promise<unknown> = (ms, s) =>
     sleep(ms, undefined, {signal: s}),
 ): Promise<Session[]> {
-  let left = waitSeconds;
+  const budget = {left: waitSeconds};
   const sessions: Session[] = [];
   for (const user of target.login.users) {
-    const send: Send = async call => {
-      for (;;) {
-        try {
-          return await call();
-        } catch (err) {
-          if (!(err instanceof RateLimited) || signal?.aborted) throw err;
-          if (err.waitSeconds > left) {
-            throw new LoginError(
-              `the server asks to wait ${err.waitSeconds} s, which passes loginWaitSeconds (${waitSeconds} s)`,
-              {cause: err},
-            );
-          }
-          left -= err.waitSeconds;
-          print(
-            `Login of ${user.username} gave 429, waiting ${err.waitSeconds} s`,
-          );
-          await guardedStep(
-            () => wait(err.waitSeconds * MS_PER_SECOND, signal),
-            signal,
-            cause => new LoginError('the wait was cut short', {cause}),
-          );
-        }
-      }
-    };
+    const send: Send = call =>
+      retrying(call, {user, budget, waitSeconds, signal, wait});
     try {
-      sessions.push(await login(target, user, signal, send));
+      // One user after another, so that the logins do not burst into the limit of the server.
+      sessions.push(await login(target, user, signal, send)); // NOSONAR
       print(
         `Logged in ${user.username} (${sessions.length}/${target.login.users.length})`,
       );
