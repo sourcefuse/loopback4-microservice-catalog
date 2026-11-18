@@ -108,6 +108,14 @@ describe('ApiClient', () => {
     expect(seen.contentType).to.be.undefined();
   });
 
+  it('keeps the path of the base URL in the request', async () => {
+    reply = res => res.writeHead(204).end();
+
+    await new ApiClient(`${baseUrl}/allocation`).get('/orders');
+
+    expect(seen.url).to.equal('/allocation/orders');
+  });
+
   it('gives undefined for a response with no body', async () => {
     reply = res => res.writeHead(204).end();
 

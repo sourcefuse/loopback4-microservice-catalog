@@ -16,6 +16,8 @@ import {execute, runScenarios} from '../../../run/execute';
 import {artillery} from '../../../engine/artillery';
 import type {Engine, EngineRun} from '../../../engine/types';
 import type {Measurement} from '../../../report/types';
+import {ConfigError} from '../../../errors';
+import {Pool} from '../../../run/session';
 import {readTarget} from '../../../run/target';
 import type {RunContext, Scenario} from '../../../types';
 import type {LoadedScenario} from '../../../project/types';
@@ -25,6 +27,7 @@ const apiOnly = {api: true, ui: false};
 
 const loadedOf = (scenario: Scenario): LoadedScenario => ({
   scenario,
+  source: 's.load.ts',
   endpoints: new Map([['GET /a', resolveThresholds({})]]),
 });
 
@@ -35,16 +38,21 @@ describe('execute', () => {
   const target = readTarget(
     {
       LOAD_TESTS_BASE_URL: 'http://127.0.0.1:9',
-      LOAD_TESTS_USERNAME: 'u',
-      LOAD_TESTS_PASSWORD: 'p',
-      LOAD_TESTS_CLIENT_ID: 'c',
-      LOAD_TESTS_CLIENT_SECRET: 's',
     },
     apiOnly,
   );
   /** A JWT that expires in `seconds`. */
   const tokenFor = (seconds: number) =>
     `x.${Buffer.from(JSON.stringify({exp: Date.now() / 1000 + seconds})).toString('base64url')}.y`;
+  /** A pool with one user for each access token. */
+  const poolOf = (...tokens: string[]) =>
+    new Pool(
+      tokens.map((accessToken, i) => ({
+        username: `u${i}`,
+        accessToken,
+        refreshToken: 'r',
+      })),
+    );
   /** A request that sends the token, so the token check applies. */
   const withToken = () =>
     load.get('/a', {headers: {authorization: template`Bearer ${token()}`}});
@@ -59,7 +67,7 @@ describe('execute', () => {
     },
     engine: artillery(),
     target,
-    token: accessToken,
+    pool: poolOf(accessToken),
     signal,
   });
 
@@ -142,7 +150,7 @@ describe('execute', () => {
       before: async ctx => {
         await ctx.api.get('/plain');
         await ctx.api
-          .with({headers: {authorization: `Bearer ${ctx.token}`}})
+          .with({headers: {authorization: `Bearer ${ctx.auth().token}`}})
           .get('/with');
         throw new Error('stop here');
       },
@@ -207,26 +215,53 @@ describe('execute', () => {
     expect(seen).to.deepEqual(['base /one', 'auth /two']);
   });
 
-  it('gives ctx.token and ctx.claims for a token, and undefined and {} without one', async () => {
-    const seen: Pick<RunContext, 'token' | 'claims'>[] = [];
-    const scenario = scenarioOf('ctx token', [load.get('/a')], {
+  it('gives the users of the pool in turn from ctx.auth, over the scenarios of a run, with the claims of the same token', async () => {
+    const seen: ReturnType<RunContext['auth']>[] = [];
+    const scenario = scenarioOf('ctx auth', [load.get('/a')], {
       before: async ctx => {
-        seen.push({token: ctx.token, claims: ctx.claims});
+        seen.push(ctx.auth(), ctx.auth());
         throw new Error('stop here');
       },
     });
-    const accessToken = tokenFor(900);
+    const first = tokenFor(900);
+    const second = tokenFor(901);
+    const pool = poolOf(first, second, tokenFor(902));
+
+    for (let i = 0; i < 2; i++) {
+      await expect(
+        execute(loadedOf(scenario), {...options(), pool}),
+      ).to.be.rejected();
+    }
+
+    expect(seen.map(user => user.token)).to.deepEqual([
+      first,
+      second,
+      pool.sessions[2].accessToken,
+      first,
+    ]);
+    expect(seen[1].claims.exp).to.be.a.Number();
+    expect(seen[1].claims.exp).to.not.equal(seen[0].claims.exp);
+  });
+
+  it('throws a ConfigError from ctx.auth when there is no login', async () => {
+    let failure: unknown;
+    const scenario = scenarioOf('ctx auth none', [load.get('/a')], {
+      before: async ctx => {
+        try {
+          ctx.auth();
+        } catch (err) {
+          failure = err;
+        }
+        throw new Error('stop here');
+      },
+    });
 
     await expect(
-      execute(loadedOf(scenario), options(undefined, accessToken)),
-    ).to.be.rejected();
-    await expect(
-      execute(loadedOf(scenario), {...options(), token: undefined}),
+      execute(loadedOf(scenario), {...options(), pool: new Pool([])}),
     ).to.be.rejected();
 
-    expect(seen[0].token).to.equal(accessToken);
-    expect(seen[0].claims).to.have.property('exp');
-    expect(seen[1]).to.deepEqual({token: undefined, claims: {}});
+    expect(failure).to.be.instanceOf(ConfigError);
+    expect(String(failure)).to.match(/LOAD_TESTS_USERS_FILE/);
   });
 
   it('cleans up when the script cannot be made', async () => {
@@ -314,7 +349,7 @@ describe('execute', () => {
       expect(input.runVars).to.deepEqual({orderId: 'd1'});
       expect(input.endpointIds).to.deepEqual(['GET /a']);
       expect(input.baseUrl).to.equal(target.baseUrl);
-      expect(input.token).to.be.undefined();
+      expect(input.tokens).to.deepEqual([]);
       expect(input.signal).to.equal(controller.signal);
       expect(result.workload).to.equal('1 vusers/s for 60 s');
       expect(result.vusers).to.equal(measurement.vusers);
@@ -330,8 +365,8 @@ describe('execute', () => {
       const uiUrl = 'http://127.0.0.1:4200';
 
       await execute(
-        {scenario, endpoints: new Map()},
-        {...options(), engine, target: {uiUrl}, token: undefined},
+        {scenario, source: 's.load.ts', endpoints: new Map()},
+        {...options(), engine, target: {uiUrl}, pool: new Pool([])},
       );
 
       expect(inputs.map(input => input.baseUrl)).to.deepEqual([uiUrl]);
@@ -346,8 +381,8 @@ describe('execute', () => {
 
       await expect(
         execute(
-          {scenario, endpoints: new Map()},
-          {...options(), engine, token: undefined},
+          {scenario, source: 's.load.ts', endpoints: new Map()},
+          {...options(), engine, pool: new Pool([])},
         ),
       ).to.be.rejectedWith('Set LOAD_TESTS_UI_URL');
       expect(inputs).to.have.length(0);
@@ -376,8 +411,8 @@ describe('execute', () => {
 
       const run = (scenario: Scenario, engine: Engine) =>
         execute(
-          {scenario, endpoints: new Map()},
-          {...options(), engine, target: bothUrls, token: undefined},
+          {scenario, source: 's.load.ts', endpoints: new Map()},
+          {...options(), engine, target: bothUrls, pool: new Pool([])},
         );
 
       it('runs before on LOAD_TESTS_BASE_URL, gives the vars to the engine, and runs after with them', async () => {
@@ -476,12 +511,12 @@ describe('execute', () => {
 
         await expect(
           execute(
-            {scenario, endpoints: new Map()},
+            {scenario, source: 's.load.ts', endpoints: new Map()},
             {
               ...options(),
               engine,
               target: {uiUrl: 'http://127.0.0.1:9'},
-              token: undefined,
+              pool: new Pool([]),
             },
           ),
         ).to.be.rejectedWith('Set LOAD_TESTS_BASE_URL');
@@ -500,34 +535,17 @@ describe('execute', () => {
       expect(inputs[0].phases).to.deepEqual([{duration: 10, arrivalRate: 2}]);
     });
 
-    describe('after, the cleanups and the SQL connections', () => {
-      /** A datasource that records when its connection ends. */
-      const recordingSql = (steps: string[]) => ({
-        db: {
-          connect: async () => ({
-            query: async () => ({rows: []}),
-            end: async () => {
-              steps.push('close');
-            },
-          }),
-        },
-      });
-      const run = (scenario: Scenario, steps: string[]) =>
+    describe('after and the cleanups', () => {
+      const run = (scenario: Scenario) =>
         execute(loadedOf(scenario), {
           ...options(),
-          config: {
-            phases: [{duration: 60, arrivalRate: 1}],
-            thresholds: {default: {}},
-            datasources: recordingSql(steps),
-          },
           engine: fakeEngine().engine,
         });
 
-      it('runs after, then the cleanups last first, then closes SQL', async () => {
+      it('runs after, then the cleanups last first', async () => {
         const steps: string[] = [];
         const scenario = scenarioOf('order', [load.get('/a')], {
           before: async ctx => {
-            await ctx.sql('db', 'select 1');
             ctx.defer(() => steps.push('cleanup 1'));
             ctx.defer(() => steps.push('cleanup 2'));
           },
@@ -536,22 +554,16 @@ describe('execute', () => {
           },
         });
 
-        const ran = await run(scenario, steps);
+        const ran = await run(scenario);
 
-        expect(steps).to.deepEqual([
-          'after',
-          'cleanup 2',
-          'cleanup 1',
-          'close',
-        ]);
+        expect(steps).to.deepEqual(['after', 'cleanup 2', 'cleanup 1']);
         expect(ran.problems).to.deepEqual([]);
       });
 
-      it('runs the cleanups and closes SQL when after fails, and says what failed', async () => {
+      it('runs the cleanups when after fails, and says what failed', async () => {
         const steps: string[] = [];
         const scenario = scenarioOf('after fails', [load.get('/a')], {
           before: async ctx => {
-            await ctx.sql('db', 'select 1');
             ctx.defer(() => steps.push('cleanup'));
           },
           after: async () => {
@@ -559,26 +571,23 @@ describe('execute', () => {
           },
         });
 
-        const ran = await run(scenario, steps);
+        const ran = await run(scenario);
 
-        expect(steps).to.deepEqual(['cleanup', 'close']);
+        expect(steps).to.deepEqual(['cleanup']);
         expect(ran.problems).to.deepEqual(['after failed: boom']);
       });
 
-      it('says that a cleanup failed, and still closes SQL', async () => {
-        const steps: string[] = [];
+      it('says that a cleanup failed', async () => {
         const scenario = scenarioOf('cleanup fails', [load.get('/a')], {
           before: async ctx => {
-            await ctx.sql('db', 'select 1');
             ctx.defer(() => {
               throw new Error('gone');
             });
           },
         });
 
-        const ran = await run(scenario, steps);
+        const ran = await run(scenario);
 
-        expect(steps).to.deepEqual(['close']);
         expect(ran.problems).to.deepEqual(['cleanup failed: gone']);
       });
     });
@@ -617,8 +626,34 @@ describe('execute', () => {
       await execute(loadedOf(scenarioOf('plain', [load.get('/a')])), opts);
       await execute(loadedOf(scenarioOf('secured', [withToken()])), opts);
 
-      expect(inputs[0].token).to.be.undefined();
-      expect(inputs[1].token).to.equal(accessToken);
+      expect(inputs[0].tokens).to.deepEqual([]);
+      expect(inputs[1].tokens).to.deepEqual([accessToken]);
+    });
+
+    it('gives the engine the tokens of all users of the pool', async () => {
+      const {engine, inputs} = fakeEngine();
+      const tokens = [tokenFor(900), tokenFor(901)];
+
+      await execute(loadedOf(scenarioOf('secured', [withToken()])), {
+        ...options(),
+        pool: poolOf(...tokens),
+        engine,
+      });
+
+      expect(inputs[0].tokens).to.deepEqual(tokens);
+    });
+
+    it('checks every token of the pool and names the user of a token that is too short', async () => {
+      const {engine, inputs} = fakeEngine();
+
+      await expect(
+        execute(loadedOf(scenarioOf('secured', [withToken()])), {
+          ...options(),
+          pool: poolOf(tokenFor(900), tokenFor(30)),
+          engine,
+        }),
+      ).to.be.rejectedWith(/token check for user u1: .*access token expires/);
+      expect(inputs).to.have.length(0);
     });
 
     it('runs no token check and sends no token to the engine without a login', async () => {
@@ -631,11 +666,11 @@ describe('execute', () => {
 
       await execute(loadedOf(scenario), {
         ...options(),
-        token: undefined,
+        pool: new Pool([]),
         engine,
       });
 
-      expect(inputs[0].token).to.be.undefined();
+      expect(inputs[0].tokens).to.deepEqual([]);
     });
 
     describe('tokenCheck', () => {
@@ -673,6 +708,51 @@ describe('execute', () => {
         expect(inputs).to.have.length(1);
       });
 
+      it('runs the check once for each user, with the token and claims of that user', async () => {
+        const {engine} = fakeEngine();
+        const tokens = ['a', 'b', 'c'].map(
+          sub =>
+            `x.${Buffer.from(JSON.stringify({sub})).toString('base64url')}.y`,
+        );
+        const calls: unknown[] = [];
+        const scenario = scenarioOf('each user', [withToken()], {
+          tokenCheck: ({token: checked, claims: found}) => {
+            calls.push([checked, found.sub]);
+          },
+        });
+
+        await execute(loadedOf(scenario), {
+          ...options(),
+          pool: poolOf(...tokens),
+          engine,
+        });
+
+        expect(calls).to.deepEqual([
+          [tokens[0], 'a'],
+          [tokens[1], 'b'],
+          [tokens[2], 'c'],
+        ]);
+      });
+
+      it('stops at the first token that fails, and names that user', async () => {
+        const {engine, inputs} = fakeEngine();
+        const calls: string[] = [];
+        const scenario = scenarioOf('first fails', [withToken()], {
+          tokenCheck: ({token: checked}) => {
+            calls.push(checked);
+            throw new Error('too old');
+          },
+        });
+        const pool = poolOf(tokenFor(900), tokenFor(901));
+
+        await expect(
+          execute(loadedOf(scenario), {...options(), pool, engine}),
+        ).to.be.rejectedWith(/token check for user u0.*too old/);
+
+        expect(calls).to.have.length(1);
+        expect(inputs).to.have.length(0);
+      });
+
       it('lets the check of config.ts replace the default one', async () => {
         const {engine, inputs} = fakeEngine();
         const calls: unknown[] = [];
@@ -706,7 +786,7 @@ describe('execute', () => {
 
         await expect(
           execute(loadedOf(scenario), {...options(), engine}),
-        ).to.be.rejectedWith('too weak');
+        ).to.be.rejectedWith(/user u0: too weak$/);
         expect(inputs).to.have.length(0);
       });
 
@@ -725,7 +805,7 @@ describe('execute', () => {
 
         await expect(
           execute(loadedOf(scenario), {...options(), engine}),
-        ).to.be.rejectedWith('too weak, later');
+        ).to.be.rejectedWith(/user u0: too weak, later$/);
         expect(inputs).to.have.length(0);
         expect(done).to.deepEqual(['after']);
       });
@@ -808,7 +888,6 @@ describe('runScenarios', () => {
       'c',
     ]);
     expect(outcome.scenarios[0].error).to.equal('boom');
-    expect(Object.keys(outcome.measured)).to.deepEqual(['b', 'c']);
   });
 
   it('stops at a signal, and keeps the results of the scenarios that ended', async () => {

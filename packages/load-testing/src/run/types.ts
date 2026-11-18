@@ -2,7 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import type {BaselineSample, ScenarioResult} from '../report/types';
+import type {ScenarioResult} from '../report/types';
 /**
  * The application under test, and how to log in to it, if at all. The URLs
  * of the API are undefined when no scenario of the run sends requests or has
@@ -15,7 +15,7 @@ export type Target = (
       authUrl: string;
       /** The URL of each backend that `apis` in `config.ts` names, by its name. */
       apiUrls: Record<string, string>;
-      /** Undefined when `LOAD_TESTS_USERNAME` is not set: the run has no login. */
+      /** Undefined when `LOAD_TESTS_USERS_FILE` is not set: the run has no login. */
       login?: Login;
     }
   | {
@@ -42,13 +42,18 @@ export type TargetNeeds = {
 
 /** What the two-step ARC login needs. */
 export type Login = {
-  username: string;
-  password: string;
+  /** The pool: every user logs in once. */
+  users: PoolUser[];
   clientId: string;
   clientSecret: string;
 };
 
+/** A test user from `LOAD_TESTS_USERS_FILE`. */
+export type PoolUser = {username: string; password: string};
+
 export type Session = {
+  /** Names the user in messages. */
+  username: string;
   accessToken: string;
   refreshToken: string;
 };
@@ -57,8 +62,6 @@ export type Session = {
 export type Outcome = {
   /** The result of each scenario that ended, in run order. */
   scenarios: ScenarioResult[];
-  /** What each scenario measured, by scenario name. */
-  measured: Record<string, BaselineSample>;
   /** The error of the signal that stopped the run, if one did. */
   stopped?: unknown;
 };

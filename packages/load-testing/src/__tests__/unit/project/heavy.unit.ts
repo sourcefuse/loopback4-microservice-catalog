@@ -17,6 +17,7 @@ import type {LoadedScenario} from '../../../project/types';
 function loaded(limits: Record<string, number>, name = 's'): LoadedScenario {
   return {
     scenario: scenarioOf(name, [load.get('/x')]),
+    source: 's.load.ts',
     endpoints: new Map(
       Object.entries(limits).map(([id, p95]) => [id, resolveThresholds({p95})]),
     ),
@@ -38,6 +39,7 @@ describe('findHeavyEndpoints', () => {
     const defaults: Thresholds = {};
     const scenario: LoadedScenario = {
       scenario: scenarioOf('s', [load.get('/a')]),
+      source: 's.load.ts',
       endpoints: new Map([['GET /a', resolveThresholds(defaults)]]),
     };
 
@@ -47,6 +49,7 @@ describe('findHeavyEndpoints', () => {
   it('counts every endpoint whose limit is above 1000 ms', () => {
     const scenario: LoadedScenario = {
       scenario: scenarioOf('s', [load.get('/a'), load.get('/b')]),
+      source: 's.load.ts',
       endpoints: new Map([
         ['GET /a', resolveThresholds({p95: 2000})],
         ['GET /b', resolveThresholds({p95: 2000})],

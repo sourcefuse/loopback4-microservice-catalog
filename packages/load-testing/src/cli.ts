@@ -5,16 +5,14 @@
 import path from 'node:path';
 import {parseArgs} from 'node:util';
 import {Cancellation} from './run/cancel';
-import {readBaseline} from './report/compare';
-import {baselineUrlNote, saveBaselineIfAsked} from './run/baseline';
-import {withFreshToken} from './run/session';
+import {withFreshPool} from './run/session';
 import {resolveThresholds} from './project/config';
 import {execute, runScenarios} from './run/execute';
-import {coverageOf, prepare} from './run/prepare';
-import {clearReports, rejudge} from './run/rejudge';
+import {coverageOf, loadPackage, prepare} from './run/prepare';
+import {clearSelection, printSelection, writeSelection} from './changes/report';
 import {describeThrown, errorMessage, LoadTestError} from './errors';
 import {judgeRun} from './report/report';
-import {consoleReporter, detailReporter} from './report/console';
+import {consoleReporter} from './report/console';
 import type {Reporter, RunResult} from './report/types';
 import {labelOf} from './scenario/label';
 import {artillery} from './engine/artillery';
@@ -22,8 +20,10 @@ import {refresh} from './run/target';
 import {ignoreOutputErrors, print, printError} from './output';
 
 const USAGE = `Usage:
-  load-testing run <package-dir>       Run the scenarios, compare with the baseline
-  load-testing report <package-dir>    Print each metric of the last run, from its report files
+  load-testing run <package-dir>       Run the scenarios
+  load-testing run <package-dir> --since <ref>
+                                       Run only the scenarios that the changes since <ref> affect.
+                                       A scenario says what it covers with the option covers.
 
 Environment:
   LOAD_TESTS_BASE_URL       API under test (required for load.it scenarios, the login, and
@@ -33,51 +33,46 @@ Environment:
                             Serves /auth/login and /auth/token (default: LOAD_TESTS_BASE_URL)
   <variables of apis>       The URL of each backend that \`apis\` in config.ts names, for
                             ctx.apis.<name> (required when the run needs the API)
-  LOAD_TESTS_USERNAME       Set it to log in. Then these are required too:
-  LOAD_TESTS_PASSWORD, LOAD_TESTS_CLIENT_ID, LOAD_TESTS_CLIENT_SECRET
-                            Required when LOAD_TESTS_USERNAME is set
-  LOAD_TESTS_UPDATE_BASELINE=1  Add this run to the baseline history
-  LOAD_TESTS_FORCE_BASELINE=1   Add it even when the run failed`;
+  LOAD_TESTS_USERS_FILE     Path of a JSON file with the pool of test users:
+                            [{"username": "...", "password": "..."}]. Set it to log in.
+  LOAD_TESTS_CLIENT_ID, LOAD_TESTS_CLIENT_SECRET
+                            Required when LOAD_TESTS_USERS_FILE is set`;
 
 async function run(
   pkgDir: string,
   cancel: Cancellation,
   env: NodeJS.ProcessEnv,
+  since?: string,
 ): Promise<number> {
-  clearReports(pkgDir);
-  const prepared = await prepare(pkgDir, env, cancel.signal);
+  clearSelection(pkgDir);
+  const found = loadPackage(pkgDir, env, since);
+  if (found.selection) {
+    printSelection(found.selection);
+    writeSelection(pkgDir, found.selection);
+    // Nothing to run: no login, no hook, no Artillery.
+    if (found.selection.nothingSelected) return 0;
+  }
+  const prepared = await prepare(pkgDir, env, cancel.signal, found);
   const {target, config, skipped, endpointCoverage, heavyEndpoints} = prepared;
-  const baseline = readBaseline(pkgDir);
-  // Only an HTTP scenario records an API sample, so a browser run with hooks has none to compare.
-  const sendsRequests = prepared.scenarios.some(
-    ({scenario}) => scenario.browser === undefined,
-  );
-  const note = baselineUrlNote(
-    baseline,
-    sendsRequests ? target.baseUrl : undefined,
-    target.uiUrl,
-  );
-  if (note !== undefined) print(note);
   const engine = config.engine ?? artillery();
   const outcome = await runScenarios(
     prepared.scenarios,
-    withFreshToken(
+    withFreshPool(
       target,
-      prepared.session,
+      prepared.sessions,
       refresh,
-      (loaded, token) =>
+      (loaded, pool) =>
         execute(loaded, {
           pkgDir,
           config,
           engine,
           target,
-          token,
+          pool,
           signal: cancel.signal,
         }),
       cancel.signal,
     ),
     {
-      baseline,
       vuserLimits: resolveThresholds(config.thresholds?.default ?? {}),
       signal: cancel.signal,
     },
@@ -89,7 +84,6 @@ async function run(
       endpoints: heavyEndpoints,
       max: config.maxHeavyApis ?? 0,
     },
-    hasBaseline: baseline !== undefined,
     stopped: outcome.stopped !== undefined,
   });
   const judged = result.passed;
@@ -98,30 +92,7 @@ async function run(
     result,
   );
   if (outcome.stopped !== undefined) throw outcome.stopped;
-  const passed = judged && reportersOk;
-  saveBaselineIfAsked(
-    {
-      pkgDir,
-      baseUrl: target.baseUrl,
-      uiUrl: target.uiUrl,
-      baseline,
-      outcome,
-      passed,
-    },
-    env,
-    {print, printError},
-  );
-  return passed ? 0 : 1;
-}
-
-/**
- * Prints each metric of the last run again, from the report files in
- * `.out`, and gives the exit code of the verdict. It runs no load.
- */
-async function report(pkgDir: string, env: NodeJS.ProcessEnv): Promise<number> {
-  const result = rejudge(pkgDir, env);
-  await detailReporter().onRunEnd(result);
-  return result.passed ? 0 : 1;
+  return judged && reportersOk ? 0 : 1;
 }
 
 /**
@@ -195,7 +166,10 @@ async function dispatch(
   const {values, positionals} = parseArgs({
     args,
     allowPositionals: true,
-    options: {help: {type: 'boolean', short: 'h'}},
+    options: {
+      help: {type: 'boolean', short: 'h'},
+      since: {type: 'string'},
+    },
   });
   if (values.help) {
     print(USAGE);
@@ -206,14 +180,16 @@ async function dispatch(
   if (extra.length > 0) {
     throw new UsageError(`Unexpected argument '${extra[0]}'`);
   }
-  if (command === 'report' && pkg) return report(path.resolve(pkg), env);
+  if (values.since !== undefined && command !== 'run') {
+    throw new UsageError('--since works only with the run command');
+  }
   if (command !== 'run' || !pkg) {
     printError(USAGE);
     return 1;
   }
   const cancel = new Cancellation();
   try {
-    return await run(path.resolve(pkg), cancel, env);
+    return await run(path.resolve(pkg), cancel, env, values.since);
   } catch (err) {
     if (cancel.exitCode === undefined) throw err;
     printError('\nCancelled.');

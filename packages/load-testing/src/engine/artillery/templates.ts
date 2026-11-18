@@ -134,7 +134,7 @@ export function checkRunVars(runVars: Vars): void {
 
 /**
  * Stops the run when the access token holds a text of `TEMPLATE_PATTERNS`.
- * Artillery reads the token as `{{ $env.LOAD_TESTS_TOKEN }}` and would expand
+ * Artillery reads the token as `{{ loadTestsToken }}` and would expand
  * it in the same way.
  */
 export function checkToken(token: string | undefined): void {

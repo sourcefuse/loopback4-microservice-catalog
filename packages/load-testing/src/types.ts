@@ -16,7 +16,7 @@ import type {
 } from './engine/artillery/types';
 import type {Engine} from './engine/types';
 import type {Reporter} from './report/types';
-import type {Api, Datasource, Sql} from './context/types';
+import type {Api} from './context/types';
 
 /**
  * Latency and error limits for one endpoint. A missing field takes the value
@@ -27,20 +27,7 @@ import type {Api, Datasource, Sql} from './context/types';
  */
 export type Thresholds = {
   /**
-   * Percent, for example `20` for 20%. Fail when p95 is more than this
-   * percent above the baseline p95. The endpoint fails only when the increase
-   * is also above `minDelta`.
-   */
-  p95Regression?: number;
-  /**
-   * Milliseconds. Fail when p95 is more than this many milliseconds above the
-   * baseline p95. The endpoint fails only when the increase is also above
-   * `p95Regression`.
-   */
-  minDelta?: number;
-  /**
-   * Milliseconds. Fail when p95 is above this. It needs no baseline, so an
-   * endpoint has a limit on the first run too. The default is 500: the
+   * Milliseconds. Fail when p95 is above this. The default is 500: the
    * target for user-blocking APIs. `P95_TARGETS` has the other targets. A
    * higher limit is a deviation: explain it in a comment, and let the review
    * approve it.
@@ -61,16 +48,6 @@ export type Thresholds = {
 export type MetricThresholds = {
   /** Fail when p95 is above this. Milliseconds, or no unit for CLS. */
   p95?: number;
-  /**
-   * Percent, for example `20` for 20%. Fail when p95 is more than this
-   * percent above the baseline p95, and also more than `minDelta` above it.
-   */
-  p95Regression?: number;
-  /**
-   * Fail when p95 is more than this above the baseline p95, and also more
-   * than `p95Regression` above it. Milliseconds, or no unit for CLS.
-   */
-  minDelta?: number;
 };
 
 /** A Web Vital that the Playwright engine of Artillery measures. */
@@ -136,7 +113,8 @@ export type BrowserFlow = (context: BrowserFlowContext) => Promise<void>;
 
 /** The options of `load.browser`. */
 export type BrowserOptions = BrowserLimitOptions &
-  Pick<Hooks, 'before' | 'after'> & {
+  Pick<Hooks, 'before' | 'after'> &
+  Pick<ScenarioOptions, 'covers'> & {
     /** The load. It replaces the `phases` of config.ts and of the describes. */
     phases?: Phase[];
     /** Limits for one step, by its name. They beat `step`, by field. */
@@ -213,23 +191,13 @@ export type LoadTestConfig = {
     browsers?: BrowserEngine[];
   };
   /**
-   * Optional. When omitted, the library default applies (`p95Regression` 20,
-   * `minDelta` 10, `errorRate` 1, `p95` 500). The order is endpoint, then
+   * Optional. When omitted, the library default applies (`errorRate` 1, `p95` 500). The order is endpoint, then
    * package, then library.
    */
   thresholds?: BrowserLimitOptions & {
     /** Limits for each endpoint that does not set its own. */
     default?: Thresholds;
   };
-  /**
-   * The databases that `ctx.sql` can use, by name. The first argument of
-   * `ctx.sql` is one of these names, for example
-   * `{orders: {type: 'postgres', url: process.env.DB_URL, database: 'orders'}}`.
-   * `type: 'postgres'` needs `pg` in your project (`npm install --save-dev
-   * pg`). For another database use `{type: 'custom', connector}`, or the
-   * connector itself.
-   */
-  datasources?: Record<string, Datasource>;
   /**
    * How many heavy APIs the package may have. The default is 0. A heavy API
    * is an endpoint with a `p95` limit above `P95_TARGETS.supportingApi`. The
@@ -239,6 +207,23 @@ export type LoadTestConfig = {
    * owner and a target date.
    */
   maxHeavyApis?: number;
+  /**
+   * The most seconds that the login of the pool may wait in total, when the
+   * server answers 429 (too many requests). The default is 300. Each wait is
+   * the `Retry-After` time of the answer. A pool of N users needs about
+   * N divided by the login limit per minute, in minutes.
+   */
+  loginWaitSeconds?: number;
+  /**
+   * Used by `--since`. When a changed file matches one of these patterns
+   * (relative to the workspace root), every scenario of the package runs.
+   * Use it for what the package depends on and no scenario can list, for
+   * example shared packages, migrations or a Dockerfile. It adds to the
+   * built-in triggers: the other files of `src/__tests__/load`, the
+   * package.json of the package, and the package.json and lockfile of the
+   * root.
+   */
+  runAllWhen?: string[];
 };
 
 /**
@@ -263,17 +248,15 @@ export type Vars = Record<string, unknown>;
 /** What `before` and `after` get. They run once per run, in the CLI. */
 export type RunContext = {
   /**
-   * Access token for the login user. Undefined when no login is set
-   * (`LOAD_TESTS_USERNAME` is not set). `ctx.api` does not send it: for a
-   * call that needs it, write
-   * `ctx.api.with({headers: {authorization: `Bearer ${ctx.token}`}})`.
+   * Gives the access token and the claims of one pool user. Each call gives
+   * the next user in turn, over the whole run, so that the calls of a hook
+   * spread over the pool. The token and the claims belong to the same user.
+   * `ctx.api` does not send the token: for a call that needs it, write
+   * `ctx.api.with({headers: {authorization: `Bearer ${token}`}})`. Throws a
+   * `ConfigError` when `LOAD_TESTS_USERS_FILE` is not set. `claims` is empty
+   * when the token is not a JWT.
    */
-  token?: string;
-  /**
-   * The claims of the access token, for example `tenantId`. Empty when the
-   * token is not a JWT, and when there is no token.
-   */
-  claims: Record<string, unknown>;
+  auth(): {token: string; claims: Record<string, unknown>};
   /** HTTP client for the application under test (`LOAD_TESTS_BASE_URL`). */
   api: Api;
   /**
@@ -282,8 +265,6 @@ export type RunContext = {
    * A name that `apis` does not have throws a `ConfigError`.
    */
   apis: Readonly<Record<string, Api>>;
-  /** SQL on a datasource that `datasources` in `config.ts` declares. */
-  sql: Sql;
   /**
    * Registers a cleanup for something that the hook made. Call it right
    * after the create, for example:
@@ -359,7 +340,7 @@ export type RequestOptions = Thresholds & {
 
 export type LoadRequest = {
   kind: 'request';
-  /** `METHOD /path/{param}`. Results and baselines use this id. */
+  /** `METHOD /path/{param}`. Results use this id. */
   id: string;
   method: Method;
   path: string;
@@ -448,6 +429,14 @@ export type ScenarioOptions = Hooks &
      * scenario. Throw to stop the run.
      */
     tokenCheck?: TokenCheck;
+    /**
+     * The files that the scenario covers: patterns relative to the workspace
+     * root, for example `services/deal-service/src/**`. With `--since`, the
+     * scenario runs when a changed file matches one. It is set on the scenario
+     * only: a `load.describe` does not pass it down. Wildcards do not match
+     * dotfiles.
+     */
+    covers?: string[];
     /** Options that only the Artillery engine reads. */
     artillery?: ArtilleryScenarioOptions;
   };
@@ -480,11 +469,12 @@ export type HttpScenario = ScenarioBase &
 export type BrowserScenario = ScenarioBase &
   BrowserLimitOptions &
   Pick<GroupOptions, 'phases'> &
-  Pick<Hooks, 'before' | 'after'> & {
+  Pick<Hooks, 'before' | 'after'> &
+  Pick<ScenarioOptions, 'covers'> & {
     [
       Unused in Exclude<
         keyof ScenarioOptions,
-        keyof BrowserLimitOptions | 'phases' | 'before' | 'after'
+        keyof BrowserLimitOptions | 'phases' | 'before' | 'after' | 'covers'
       >
     ]?: undefined;
   } & {

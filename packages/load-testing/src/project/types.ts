@@ -27,6 +27,8 @@ export type BrowserLimits = {
 
 export type LoadedScenario = {
   scenario: Scenario;
+  /** The `*.load.ts` file that registers the scenario, as an absolute path. The loader sets it. */
+  source: string;
   /** Thresholds by endpoint id. When requests repeat an id, a later one wins. */
   endpoints: Map<string, ResolvedThresholds>;
   /** The limits of a browser scenario. Undefined for an HTTP scenario. */

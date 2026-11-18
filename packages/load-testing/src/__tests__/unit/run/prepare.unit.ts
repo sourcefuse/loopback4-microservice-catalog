@@ -8,6 +8,7 @@ import os from 'node:os';
 import path from 'node:path';
 import {output} from '../../../output';
 import {prepare} from '../../../run/prepare';
+import {USER, usersFileOf} from '../../helpers';
 
 describe('prepare', () => {
   const ENV = {LOAD_TESTS_BASE_URL: 'http://localhost:4014'};
@@ -54,6 +55,21 @@ describe('prepare', () => {
     );
   }
 
+  it('does not log in when no scenario runs', async () => {
+    packageWith(`load.it.skip('one', [load.get('/a')]);`);
+
+    // The auth URL has no server, so a login would fail.
+    const prepared = await prepare(pkg, {
+      ...ENV,
+      LOAD_TESTS_USERS_FILE: usersFileOf([USER]),
+      LOAD_TESTS_CLIENT_ID: 'c',
+      LOAD_TESTS_CLIENT_SECRET: 's',
+      LOAD_TESTS_AUTH_SERVICE_URL: 'http://127.0.0.1:1',
+    });
+
+    expect(prepared.sessions).to.deepEqual([]);
+  });
+
   it('says how many scenarios run when one has .only', async () => {
     packageWith(`load.it('one', [load.get('/a')]);
 load.it.only('two', [load.get('/b')]);`);
@@ -90,7 +106,7 @@ load.describe('g', {headers: {authorization: token()}}, () => {
         LOAD_TESTS_UI_URL: 'http://localhost:4200/',
       });
 
-      expect(prepared.session).to.equal(undefined);
+      expect(prepared.sessions).to.deepEqual([]);
     });
 
     it('asks for LOAD_TESTS_UI_URL when a browser scenario runs', async () => {

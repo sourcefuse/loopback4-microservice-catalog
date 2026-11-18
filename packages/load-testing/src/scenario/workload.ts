@@ -50,8 +50,7 @@ export function toSeconds(
 
 /**
  * Says the load of the phases in one line, for example `3 vusers/s for 60 s`.
- * The baseline keeps this text. Two runs with the same text have the same
- * load, so their p95 values can be compared.
+ * The report shows this text.
  */
 export function describeWorkload(phases: Phase[]): string {
   return phases.map(describePhase).join(', then ');

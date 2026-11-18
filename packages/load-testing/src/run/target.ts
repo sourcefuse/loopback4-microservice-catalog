@@ -2,17 +2,21 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
+import {setTimeout as sleep} from 'node:timers/promises';
 import {REQUEST_TIMEOUT_MS} from '../context/api';
 import {
   BODY_PREVIEW_LENGTH,
   ConfigError,
+  errorMessage,
   fetchFailure,
   guardedStep,
   LoginError,
   MS_PER_SECOND,
 } from '../errors';
 import {BASE_URL_ENV, UI_URL_ENV} from '../project/layout';
-import type {Login, Session, Target, TargetNeeds} from './types';
+import {print} from '../output';
+import {readUsers, USERS_FILE_ENV} from './users';
+import type {Login, PoolUser, Session, Target, TargetNeeds} from './types';
 
 const AUTH_URL_ENV = 'LOAD_TESTS_AUTH_SERVICE_URL';
 /** The first HTTP status of a redirect. */
@@ -20,18 +24,14 @@ const FIRST_REDIRECT_STATUS = 300;
 /** The last HTTP status of a redirect. */
 const LAST_REDIRECT_STATUS = 399;
 
-/** Needed only when `LOAD_TESTS_USERNAME` is set. */
-const LOGIN_ENV = [
-  'LOAD_TESTS_PASSWORD',
-  'LOAD_TESTS_CLIENT_ID',
-  'LOAD_TESTS_CLIENT_SECRET',
-] as const;
+/** Needed only when `LOAD_TESTS_USERS_FILE` is set. */
+const LOGIN_ENV = ['LOAD_TESTS_CLIENT_ID', 'LOAD_TESTS_CLIENT_SECRET'] as const;
 
 /**
  * Reads the target from the environment. `needs` says which URLs the
  * scenarios of the run need.
  * `LOAD_TESTS_BASE_URL` is required for the API, and `LOAD_TESTS_UI_URL` for
- * the web app. When `LOAD_TESTS_USERNAME` is set, the other login variables
+ * the web app. When `LOAD_TESTS_USERS_FILE` is set, the other login variables
  * and the API URL are required too. When it is not set, the run has no login.
  * `apis` maps a name to the variable that holds the URL of another backend.
  * The run needs these variables when it needs the API.
@@ -42,7 +42,7 @@ export function readTarget(
   apis: Record<string, string> = {},
 ): Target {
   checkOldAuthUrl(env);
-  const hasLogin = !!env.LOAD_TESTS_USERNAME;
+  const hasLogin = !!env[USERS_FILE_ENV];
   const needsApi = needs.api || hasLogin;
   const missing = [
     ...new Set([
@@ -72,8 +72,7 @@ export function readTarget(
     ),
     ...(hasLogin && {
       login: {
-        username: get('LOAD_TESTS_USERNAME'),
-        password: get('LOAD_TESTS_PASSWORD'),
+        users: readUsers(get(USERS_FILE_ENV)),
         clientId: get('LOAD_TESTS_CLIENT_ID'),
         clientSecret: get('LOAD_TESTS_CLIENT_SECRET'),
       },
@@ -90,31 +89,102 @@ function checkOldAuthUrl(env: NodeJS.ProcessEnv): void {
   }
 }
 
+/** Sends one call of the login. `loginAll` passes a version that waits on a 429. */
+type Send = (
+  call: () => Promise<Record<string, string | undefined>>,
+) => Promise<Record<string, string | undefined>>;
+
 /**
- * Logs in with the two-step ARC login. `signal` stops the requests.
+ * Logs in with the two-step ARC login. `signal` stops the requests. `send`
+ * wraps each of the two calls, so that a retry repeats only the call that
+ * failed.
  */
 export async function login(
   target: Target & {login: Login},
+  {username, password}: PoolUser,
   signal?: AbortSignal,
+  send: Send = call => call(),
 ): Promise<Session> {
-  const {username, password, clientId, clientSecret} = target.login;
-  const {code} = await postJson(
-    `${target.authUrl}/auth/login`,
-    {
-      username,
-      password,
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      client_id: clientId,
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      client_secret: clientSecret,
-    },
-    {signal},
+  const {clientId, clientSecret} = target.login;
+  const {code} = await send(() =>
+    postJson(
+      `${target.authUrl}/auth/login`,
+      {
+        username,
+        password,
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        client_id: clientId,
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        client_secret: clientSecret,
+      },
+      {signal},
+    ),
   );
   if (!code) throw new LoginError('POST /auth/login gave no code');
   return toSession(
     'POST /auth/token',
-    await postJson(`${target.authUrl}/auth/token`, {code, clientId}, {signal}),
+    await send(() =>
+      postJson(`${target.authUrl}/auth/token`, {code, clientId}, {signal}),
+    ),
+    username,
   );
+}
+
+/**
+ * Logs in every user of the pool, one after another. The server limits the
+ * login by the address of the client, so a 429 is not an error: the wait of
+ * `Retry-After` comes first, and then the call that got it is sent again. All
+ * waits of the run together are limited by `waitSeconds`. A failure names the
+ * user. `wait` is the sleep, which a test can replace.
+ */
+export async function loginAll(
+  target: Target & {login: Login},
+  waitSeconds: number,
+  signal?: AbortSignal,
+  wait: (ms: number, signal?: AbortSignal) => Promise<unknown> = (ms, s) =>
+    sleep(ms, undefined, {signal: s}),
+): Promise<Session[]> {
+  let left = waitSeconds;
+  const sessions: Session[] = [];
+  for (const user of target.login.users) {
+    const send: Send = async call => {
+      for (;;) {
+        try {
+          return await call();
+        } catch (err) {
+          if (!(err instanceof RateLimited) || signal?.aborted) throw err;
+          if (err.waitSeconds > left) {
+            throw new LoginError(
+              `the server asks to wait ${err.waitSeconds} s, which passes loginWaitSeconds (${waitSeconds} s)`,
+              {cause: err},
+            );
+          }
+          left -= err.waitSeconds;
+          print(
+            `Login of ${user.username} gave 429, waiting ${err.waitSeconds} s`,
+          );
+          await guardedStep(
+            () => wait(err.waitSeconds * MS_PER_SECOND, signal),
+            signal,
+            cause => new LoginError('the wait was cut short', {cause}),
+          );
+        }
+      }
+    };
+    try {
+      sessions.push(await login(target, user, signal, send));
+      print(
+        `Logged in ${user.username} (${sessions.length}/${target.login.users.length})`,
+      );
+    } catch (err) {
+      if (signal?.aborted) throw err;
+      throw new LoginError(
+        `login of user ${user.username} failed: ${errorMessage(err)}`,
+        {cause: err},
+      );
+    }
+  }
+  return sessions;
 }
 
 /**
@@ -155,6 +225,7 @@ export async function refresh(
       {refreshToken: session.refreshToken},
       {bearer: session.accessToken, signal},
     ),
+    session.username,
   );
 }
 
@@ -190,7 +261,11 @@ export function claimsOf(token: string): Record<string, unknown> {
   }
 }
 
-function toSession(call: string, body: Record<string, unknown>): Session {
+function toSession(
+  call: string,
+  body: Record<string, unknown>,
+  username: string,
+): Session {
   const {accessToken, refreshToken} = body;
   if (typeof accessToken !== 'string' || accessToken === '') {
     throw new LoginError(`${call} gave no accessToken`);
@@ -198,7 +273,7 @@ function toSession(call: string, body: Record<string, unknown>): Session {
   if (typeof refreshToken !== 'string' || refreshToken === '') {
     throw new LoginError(`${call} gave no refreshToken`);
   }
-  const session = {accessToken, refreshToken};
+  const session = {username, accessToken, refreshToken};
   obtainedAt.set(session, Date.now() / MS_PER_SECOND);
   return session;
 }
@@ -219,6 +294,31 @@ function redirectMessage(url: string, res: Response): string {
     'The login does not follow redirects, so the password goes only to the URL that we set. ' +
     `Set ${AUTH_URL_ENV} to the final URL.`
   );
+}
+
+const TOO_MANY_REQUESTS = 429;
+/** How long to wait on a 429 that has no usable `Retry-After`. One minute is the usual window of a rate limit. */
+const DEFAULT_WAIT_SECONDS = 60;
+/** The shortest wait. A `Retry-After` of 0 would else make a loop that never ends and never uses the wait limit. */
+const MIN_WAIT_SECONDS = 1;
+
+/** The server limits the calls of this client. `waitSeconds` is how long it asks to wait. */
+class RateLimited extends LoginError {
+  constructor(
+    message: string,
+    readonly waitSeconds: number,
+  ) {
+    super(message);
+  }
+}
+
+/** The `Retry-After` header in seconds. A date or a missing header gives the default. */
+function waitSecondsOf(res: Response): number {
+  const header = res.headers.get('retry-after')?.trim();
+  const seconds = header ? Number(header) : Number.NaN;
+  return Number.isFinite(seconds) && seconds >= 0
+    ? Math.max(MIN_WAIT_SECONDS, Math.ceil(seconds))
+    : DEFAULT_WAIT_SECONDS;
 }
 
 type PostOptions = {bearer?: string; signal?: AbortSignal};
@@ -257,6 +357,12 @@ async function postJson(
     throw new LoginError(redirectMessage(url, res));
   }
   const text = await guard(() => res.text());
+  if (res.status === TOO_MANY_REQUESTS) {
+    throw new RateLimited(
+      `POST ${url} gave 429: ${text.slice(0, BODY_PREVIEW_LENGTH)}`,
+      waitSecondsOf(res),
+    );
+  }
   if (!res.ok) {
     throw new LoginError(
       `POST ${url} gave ${res.status}: ${text.slice(0, BODY_PREVIEW_LENGTH)}`,
@@ -286,7 +392,7 @@ const HTTP_SCHEMES = new Set(['http:', 'https:']);
  * URL is a ConfigError. The scheme is checked too, because `localhost:3000`
  * is a valid URL with the scheme `localhost:`. A URL with a user or a
  * password is a ConfigError too: `fetch` refuses it, and its message shows
- * the password. The URL also goes to messages and to `baseline.json`. The
+ * the password. The URL also goes to messages. The
  * messages here do not show the value, because a URL can hold a password.
  */
 function urlOf(name: string, value: string): string {

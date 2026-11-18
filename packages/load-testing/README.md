@@ -1,8 +1,8 @@
 # @sourceloop/load-testing
 
-Load tests for the HTTP API of a LoopBack facade or service, and for the screens of a web app. We write scenarios in TypeScript, next to our other tests. The package turns each scenario into an [Artillery](https://www.artillery.io) script, and runs it against an app that already runs. It fails the run when an endpoint is too slow, has too many errors, or got slower than its baseline. It also fails the run when the project has too many heavy APIs.
+Load tests for the HTTP API of a LoopBack facade or service, and for the screens of a web app. We write scenarios in TypeScript, next to our other tests. The package turns each scenario into an [Artillery](https://www.artillery.io) script, and runs it against an app that already runs. It fails the run when an endpoint is too slow, or has too many errors. It also fails the run when the project has too many heavy APIs.
 
-A browser scenario opens the web app in Chromium, for many users at once. It times the steps that a user waits for, and reads the Web Vitals of each page. The same limits, baseline and report apply. See [Browser scenarios](#browser-scenarios).
+A browser scenario opens the web app in Chromium, for many users at once. It times the steps that a user waits for, and reads the Web Vitals of each page. The same limits and report apply. See [Browser scenarios](#browser-scenarios).
 
 This package is for load. For a serial throughput check on one operation, with no concurrent users, use [`@sourceloop/benchmarking`](https://github.com/sourcefuse/loopback4-microservice-catalog/tree/master/packages/benchmarking). The two work well together. The benchmark guards the code, and the load test guards the running system.
 
@@ -23,18 +23,17 @@ Contents:
 - [Concepts](#concepts)
   - [Words we use](#words-we-use)
   - [How a run works](#how-a-run-works)
-  - [Limits, baseline and report](#limits-baseline-and-report)
+  - [Limits and report](#limits-and-report)
 - [Guides and recipes](#guides-and-recipes)
   - [Set up a package in a facade and service monorepo](#set-up-a-package-in-a-facade-and-service-monorepo)
   - [Write scenarios](#write-scenarios)
   - [Set the load](#set-the-load)
   - [Hooks](#hooks)
   - [Test data](#test-data)
-  - [Datasources](#datasources)
+  - [Run only what a change affects](#run-only-what-a-change-affects)
   - [Log in](#log-in)
   - [Browser scenarios](#browser-scenarios)
   - [Thresholds and the verdict](#thresholds-and-the-verdict)
-  - [Baseline](#baseline)
   - [Run in CI](#run-in-ci)
   - [Report](#report)
   - [Recipes](#recipes)
@@ -42,7 +41,6 @@ Contents:
   - [One endWhenVisible step per screen](#one-endwhenvisible-step-per-screen)
   - [Choose selectors for end elements](#choose-selectors-for-end-elements)
   - [Size the load](#size-the-load)
-  - [Keep a stable baseline](#keep-a-stable-baseline)
   - [Production build or dev server](#production-build-or-dev-server)
   - [What the Artillery counters mean](#what-the-artillery-counters-mean)
   - [HTTP scenarios](#http-scenarios)
@@ -75,7 +73,7 @@ Use this package when a change can make an API or a screen slower, and we want t
 | Does one operation stay fast in code, with no concurrent users? | [`@sourceloop/benchmarking`](https://github.com/sourcefuse/loopback4-microservice-catalog/tree/master/packages/benchmarking) |
 | Does a screen show the right content, and does a click do the right thing? | Playwright tests |
 
-A run fails, with exit code 1, when an endpoint or a screen step is too slow, has too many errors, or is slower than its baseline. See [Limits, baseline and report](#limits-baseline-and-report).
+A run fails, with exit code 1, when an endpoint or a screen step is too slow or has too many errors. See [Limits and report](#limits-and-report).
 
 ### What this is, and what it is not
 
@@ -103,7 +101,6 @@ What we need to know before the install.
 - Artillery comes with the package as a dependency, pinned to 2.0.34. We install nothing else for it. An install of this package into an empty project adds 468 packages (npm 11, Artillery 2.0.34, measured on 2026-10-09). Artillery has the MPL-2.0 license. We use it unmodified.
 - Artillery lists `@playwright/browser-chromium`, and that package downloads a browser in its install script. A project with only `load.it` scenarios does not need the browser. It skips the download with `npm install --ignore-scripts`, or it sets `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1` before the install.
 - A project with browser scenarios needs Chromium for the Playwright of Artillery, 1.62.1 today. `npm install` already downloads it, through `@playwright/browser-chromium` 1.62.1, a dependency of Artillery 2.0.34. It does not when npm runs no install scripts (for example with `ignore-scripts`, or when npm blocks the script) or when `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD` is set. Then we run `npx playwright@1.62.1 install chromium`. On a new Linux machine, we add `--with-deps` for the OS libraries. A plain `npx playwright install` gets the browser of the project's own Playwright, which can be another build.
-- `pg` is an optional peer dependency. We install it only when a datasource has `type: 'postgres'`. See [Datasources](#datasources).
 - We compile with `skipLibCheck: true`. The type file of Artillery 2.0.34 (`artillery/types.d.ts`) has an error of its own. The LoopBack `tsconfig` of an ARC app already sets this option.
 
 The Artillery engine switches the Artillery telemetry off (`ARTILLERY_DISABLE_TELEMETRY`), so Artillery sends no usage data. Artillery also gets only a short list of the variables of the CLI. See [The environment of Artillery](#the-environment-of-artillery).
@@ -161,12 +158,11 @@ Third, two scripts in the `package.json` of the facade.
 }
 ```
 
-Fourth, the environment. The login user is a test user (see [Log in](#log-in)). The password and the secret come from the shell or from CI secrets, never from a file in git.
+Fourth, the environment. The login users are test users in a JSON file (see [Log in](#log-in)). The file and the secret come from the shell or from CI secrets, never from a file in git.
 
 ```sh
 export LOAD_TESTS_BASE_URL=http://localhost:3000
-export LOAD_TESTS_USERNAME=load-test@example.com
-export LOAD_TESTS_PASSWORD="$LOAD_TEST_PASSWORD"
+export LOAD_TESTS_USERS_FILE=/run/secrets/load-test-users.json
 export LOAD_TESTS_CLIENT_ID=load-test-client
 export LOAD_TESTS_CLIENT_SECRET="$LOAD_TEST_CLIENT_SECRET"
 ```
@@ -177,7 +173,7 @@ Last, run it. The orders facade must already run at the base URL.
 npm run test:load
 ```
 
-The CLI prints `Scenario: <name>` before each scenario, and Artillery prints its own progress while the load runs. At the end the console reporter prints the result. This is the first run, so no baseline exists yet.
+The CLI prints `Scenario: <name>` before each scenario, and Artillery prints its own progress while the load runs. At the end the console reporter prints the result.
 
 ```text
 Results
@@ -186,18 +182,17 @@ OrderController › browse orders and customers
 Workload: 10 vusers/s for 30 s
 Vusers:   300 started, 300 completed, 0 failed (limit 1%)
 
-Endpoint          Requests  Req/s  p95 ms (limit)  Base ms  Err % (limit)  Result
-GET /orders       300       9.9    41.2 (500)      -        0 (1)          pass (no baseline)
-GET /orders/{id}  300       9.9    36.8 (500)      -        0 (1)          pass (no baseline)
-GET /customers    300       9.9    52.3 (500)      -        0 (1)          pass (no baseline)
+Endpoint          Requests  Req/s  p95 ms (limit)  Err % (limit)  Result
+GET /orders       300       9.9    41.2 (500)      0 (1)          pass
+GET /orders/{id}  300       9.9    36.8 (500)      0 (1)          pass
+GET /customers    300       9.9    52.3 (500)      0 (1)          pass
 
 Coverage: 3 of 41 endpoints in src/openapi.json
-No src/__tests__/load/.out/baseline.json. Run once with LOAD_TESTS_UPDATE_BASELINE=1 to record it.
 
 A vuser is one virtual user. It runs the steps of a scenario one time. Failed means that its run stopped on an error.
 ```
 
-The run passes, and the exit code is 0. To record the baseline, run again with `LOAD_TESTS_UPDATE_BASELINE=1`. Later runs compare each p95 with it. See [Baseline](#baseline). The numbers above are an example, and ours will differ.
+The run passes, and the exit code is 0. The numbers above are an example, and ours will differ.
 
 ### Quickstart for a browser scenario
 
@@ -252,13 +247,12 @@ open the home page
 Workload: 1 vusers/s for 10 s
 Vusers:   10 started, 10 completed, 0 failed (limit 1%)
 Flow:     p95 141.2 ms (no limit)
-Metrics:  5 of 5 pass. Run load-testing report to see each one.
+Metrics:  5 of 5 pass.
 
 Coverage: not calculated, because the application has no API specification.
-No src/__tests__/load/.out/baseline.json. Run once with LOAD_TESTS_UPDATE_BASELINE=1 to record it.
 ```
 
-The exit code is 0. `npm run test:load` stops with 1 when a metric fails. We run `npx load-testing report .` to see every metric. See [Read the output](#read-the-output).
+The exit code is 0. `npm run test:load` stops with 1 when a metric fails. See [Read the output](#read-the-output).
 
 ### Read the output
 
@@ -271,11 +265,10 @@ An HTTP scenario prints a table. Each row is one endpoint.
 | `Workload`, `Vusers` | The load that ran, and how many vusers started, completed and failed. |
 | `Requests`, `Req/s` | How many requests the endpoint got, and the rate. |
 | `p95 ms (limit)` | The p95 of the endpoint, and the highest p95 that passes. |
-| `Base ms` | The baseline p95. `-` means that there is none yet. |
 | `Err % (limit)` | The share of failed requests, and its limit. |
 | `Result` | `pass`, or `FAIL:` and the reasons. |
 
-A browser scenario prints a short block: the vusers, the flow total, and how many metrics pass. A table follows only when a metric fails, and it holds only the failed rows. `load-testing report <package-dir>` prints every metric. See [Report](#report) for full samples of both.
+A browser scenario prints a short block: the vusers, the flow total, and how many metrics pass. A table follows only when a metric fails, and it holds only the failed rows. See [Report](#report) for full samples of both.
 
 Artillery is the engine under the package. Each run prints its progress while the load runs, and its counters at the end of the load. See [What the Artillery counters mean](#what-the-artillery-counters-mean).
 
@@ -288,7 +281,6 @@ Read the `Result` column first. Each `FAIL:` reason has a usual cause.
 | `no requests` | The endpoint never got a request. An earlier request stopped the vuser, a `captureFrom` found nothing, or a hook failed. | Read the Artillery output above the table. Fix the first error. |
 | `error rate X% > Y%` | The app answered with 4xx or 5xx, or the network failed. | Check the app log, the token, and the data that `before` creates. |
 | `p95 X ms > limit Y ms` | The endpoint is slow, or the load is too high for the machine. | Run with fewer vusers to tell the two apart. If the limit is wrong, set `p95` and write the reason. |
-| `p95 +N% (+M ms) over baseline B ms` | The endpoint got slower than its last 10 runs. | Find the change. If it is on purpose, see [Baseline](#baseline). |
 | `no samples` | No vuser ran the step, or a step name has a typo. | Check the names in `steps`, and the errors of the vusers. |
 | `lost samples: N for M completed vusers` | Some vusers did not run the step, or a page sent no Web Vital. | Make every vuser run every step. |
 | `vuser failure rate X% > Y%` | A browser scenario judges failed vusers. The share of failed vusers is above `errorRate`. | Read the errors of the failed vusers. Fix the first one. |
@@ -298,7 +290,7 @@ The full list of reasons is in [The reasons in a FAIL line](#the-reasons-in-a-fa
 
 ### Run it locally and in CI
 
-Locally, we start the app, build, and run `npm run test:load`. We add `LOAD_TESTS_UPDATE_BASELINE=1` to record the first baseline. In CI, the job starts the app, restores the baseline, and runs the same script. See [Run in CI](#run-in-ci) for an API repo and a web app repo.
+Locally, we start the app, build, and run `npm run test:load`. In CI, the job starts the app and runs the same script. See [Run in CI](#run-in-ci) for an API repo and a web app repo.
 
 ## Concepts
 
@@ -312,19 +304,18 @@ Locally, we start the app, build, and run `npm run test:load`. We add `LOAD_TEST
 | End element | The element that the CSS selector of `endWhenVisible` finds. The step ends at the first frame where this element is visible. |
 | Flow total | The time of the whole flow of one vuser. The report shows it, and it has a limit only when the scenario sets `flow`. |
 | Web Vitals | FCP (first contentful paint), LCP (largest contentful paint), CLS (cumulative layout shift), TTFB (time to first byte) and INP (interaction to next paint). Artillery reads them only in the first page that a vuser opens. A second page of the same vuser reports none. |
-| Endpoint id | `METHOD path`, for example `GET /orders/{id}`. Results and baselines use it. |
+| Endpoint id | `METHOD path`, for example `GET /orders/{id}`. Results use it. |
 | Vuser | A virtual user. It runs the steps of a scenario once. |
 | Phase | One step of the load, for example `{duration: 60, arrivalRate: 10}`. A load is a list of phases. |
 | Workload | The load of a scenario as one line of text, for example `10 vusers/s for 60 s`. |
 | p95 | The time that 95% of the requests beat, in milliseconds. The time runs to the first byte of the response. It does not include the download of the body. |
 | Limit | The highest value that passes. Each threshold has one. |
-| Baseline | The mean p95 of the last 10 recorded runs of an endpoint. |
-| Report | The text that the reporter prints at the end of a run. `load-testing report` prints it again from the last run. |
+| Report | The text that the reporter prints at the end of a run. |
 | Verdict | Pass or fail, for an endpoint, a scenario and the whole run. The exit code of `run` gives it. |
 | Heavy API | An endpoint with a `p95` limit above `P95_TARGETS.supportingApi` (1000 ms). |
 | Hook | A function that runs at a set point of a run, for example `before`. |
 | Value | An object that the engine fills in at run time, for example `randomString()`. |
-| Datasource | A named database connection that `ctx.sql` can use. |
+| Covers | The list of file patterns that a scenario declares. `--since` runs the scenario when a changed file matches one. |
 | Engine | The part that runs the load and measures it. The default is Artillery. |
 | Reporter | The part that gets the result of the run. The default prints to the console. |
 
@@ -334,53 +325,47 @@ Locally, we start the app, build, and run `npm run test:load`. We add `LOAD_TEST
 
 1. Read `src/__tests__/load/config.ts` from `dist`, and check its values.
 2. Load every `*.load.ts` file from `dist/__tests__/load`. Check the names, the limits, the phases and the values of each scenario.
-3. Choose the scenarios to run (`.only` and `.skip`).
+3. Choose the scenarios to run (`.only` and `.skip`). With `--since`, keep only the scenarios that the changed files select. When none is selected, exit with 0 here: there is no login, no hook and no Artillery.
 4. Check that every endpoint of the scenarios that run is in `src/openapi.json`. A package without this file still runs, and it skips the check.
 5. Read the environment. `LOAD_TESTS_BASE_URL` is required when a `load.it` scenario runs, when a browser scenario has `before` or `after`, or when the run logs in. `LOAD_TESTS_UI_URL` is required when a browser scenario runs. Stop with a `ConfigError` when a scenario sends `token()` and no login is set.
-6. Log in, when `LOAD_TESTS_USERNAME` is set.
-7. Read the baseline file, if it exists.
-8. For each scenario, one after another:
-   1. Get a fresh access token, if the old one is more than a minute old.
+6. Log in every user of the pool, when `LOAD_TESTS_USERS_FILE` is set.
+7. For each scenario, one after another:
+   1. Get a fresh access token for each user, if the old one is more than a minute old.
    2. Run `before`.
    3. Run the token check, if the scenario sends `token()`.
    4. Write the Artillery script (and the worker hooks file), and try the worker hooks once.
    5. Run the phases with Artillery, and read its report.
-   6. Run `after`, then the cleanups (the last one first), then close the SQL connections.
-   7. Judge the scenario against its limits and the baseline.
-9. Judge the run. Every scenario must pass, and the count of heavy APIs must be at most `maxHeavyApis`.
-10. Print the report with the reporters.
-11. Save the baseline, if `LOAD_TESTS_UPDATE_BASELINE=1`. A failed run is not saved, unless `LOAD_TESTS_FORCE_BASELINE=1`.
-12. Exit with 0 when the run passed, and with 1 when it did not.
+   6. Run `after`, then the cleanups (the last one first).
+   7. Judge the scenario against its limits.
+8. Judge the run. Every scenario must pass, and the count of heavy APIs must be at most `maxHeavyApis`.
+9. Print the report with the reporters.
+10. Exit with 0 when the run passed, and with 1 when it did not.
 
-Step 8.6 runs also when `before` or the load failed, and after a signal.
-
-Before it starts, each `load-testing run` deletes the report files of the last run. So `load-testing report` judges only the last run.
+Step 7.6 runs also when `before` or the load failed, and after a signal.
 
 A browser scenario has `before` and `after`, but no token check or worker hooks. Its script runs the Playwright engine of Artillery. Before each browser scenario, the CLI runs the `check` of its browser. For Chromium, it starts and closes the browser, to check that it works. The check uses the `launchOptions` of `engines.playwright` in `artillery.config`, as Artillery does, or the ones that we give to `chromium()`. See [Browsers](#browsers).
 
-### Limits, baseline and report
+### Limits and report
 
 A run turns what the engine measured into a verdict.
 
 1. The engine (Artillery by default) measures each endpoint: requests, errors and p95. For a browser scenario, it measures each step, each Web Vital and the flow total.
 2. The package compares each value with its limits.
-3. The reporter prints the result. `load-testing report` prints it again from the report files of the last run.
+3. The reporter prints the result.
 4. The exit code gives the verdict, 0 or 1.
 
-There are four limits for an HTTP endpoint. A browser metric has `p95`, `p95Regression` and `minDelta`. A browser scenario judges failed vusers with the `errorRate` of `thresholds.default`.
+There are two limits for an HTTP endpoint. A browser metric has `p95`. A browser scenario judges failed vusers with the `errorRate` of `thresholds.default`.
 
-| Limit | It asks | Needs a baseline | Default |
-| --- | --- | --- | --- |
-| `p95` | Is the p95 at or below this many ms? | No | 500 |
-| `errorRate` | Is the share of failed requests at or below this percent? | No | 1 |
-| `p95Regression` | Is the p95 at most this percent above the baseline? | Yes | 20 |
-| `minDelta` | Is the p95 more than this many ms above the baseline? | Yes | 10 |
+| Limit | It asks | Default |
+| --- | --- | --- |
+| `p95` | Is the p95 at or below this many ms? | 500 |
+| `errorRate` | Is the share of failed requests at or below this percent? | 1 |
 
-A regression fails the run only when it is above both `p95Regression` and `minDelta`. The baseline is the mean of the last 10 recorded runs. Without a baseline, a run checks `p95` and `errorRate` only. See [Thresholds and the verdict](#thresholds-and-the-verdict) and [Baseline](#baseline).
+See [Thresholds and the verdict](#thresholds-and-the-verdict).
 
 ## Guides and recipes
 
-The guides below follow the work of one project. We set up the package, write HTTP scenarios, write browser scenarios, set limits and a baseline, run in CI, and read the report. [Recipes](#recipes) at the end answers short "how do I" questions.
+The guides below follow the work of one project. We set up the package, write HTTP scenarios, write browser scenarios, set limits, run in CI, and read the report. [Recipes](#recipes) at the end answers short "how do I" questions.
 
 ### Set up a package in a facade and service monorepo
 
@@ -388,7 +373,7 @@ Our monorepos hold facades and services. A facade takes the request from the cli
 
 #### Where the tests live
 
-We put the load tests in the facade in most cases. A request to the facade passes through the whole path, from the facade to the services and to the databases. So one test covers all of it. A service can have its own load tests too, for an endpoint that clients do not reach through a facade. The set-up is the same for both, and each package has its own `config.ts`, scenarios and baseline.
+We put the load tests in the facade in most cases. A request to the facade passes through the whole path, from the facade to the services and to the databases. So one test covers all of it. A service can have its own load tests too, for an endpoint that clients do not reach through a facade. The set-up is the same for both, and each package has its own `config.ts` and scenarios.
 
 #### Build first
 
@@ -430,13 +415,11 @@ The unit test run of the package loads `dist/__tests__`, and that folder now hol
 
 #### Ignore the generated files
 
-The CLI writes its generated files to `src/__tests__/load/.out/`. These are the Artillery scripts, the worker hooks files, the reports and `baseline.json`. We add this line to `.gitignore` and to `.prettierignore` of the package. Prettier reads only the ignore files of the folder where it runs, so without the line `npm run lint` fails after a load run.
+The CLI writes its generated files to `src/__tests__/load/.out/`. These are the Artillery scripts, the worker hooks files, and the reports. We add this line to `.gitignore` and to `.prettierignore` of the package. Prettier reads only the ignore files of the folder where it runs, so without the line `npm run lint` fails after a load run.
 
 ```text
 src/__tests__/load/.out
 ```
-
-The baseline is the one file that we can keep between CI runs. See [Baseline](#baseline).
 
 #### Folder layout and naming
 
@@ -468,8 +451,9 @@ A fixture function takes the `RunContext` that `before` gets. We import the type
 import type {RunContext} from '@sourceloop/load-testing';
 
 export async function givenCustomer(ctx: RunContext): Promise<string> {
+  const {token} = ctx.auth();
   const api = ctx.api.with({
-    headers: {authorization: `Bearer ${ctx.token}`},
+    headers: {authorization: `Bearer ${token}`},
   });
   const customer = await api.post<{id: string}>('/customers', {
     name: 'loadtest-customer',
@@ -503,9 +487,8 @@ load.describe(
 );
 ```
 
-- The scenarios run one after another. Files run in file-name order, and a file runs in the order of its `load.it` calls. They share the app, its pools and the baseline, so they do not run in parallel. Each scenario has its own load, hooks and data.
-- The name of a scenario in the report and in `baseline.json` is `group › name`, for example `OrderController › browse products`. The CLI names the generated files after it, in lower case with `-` between the words. Two scenarios cannot make the same file name, and a name needs a letter or a digit. A browser scenario runs once for each browser, so its label ends with the browser, for example `orders › save an order › chromium`. See [Browsers](#browsers).
-- The file name `baseline` is reserved for the baseline file. The CLI refuses a scenario whose file name would be `baseline`, for example `baseline` or `Baseline!`, when it loads the scenarios. The message reads `The scenario name "<name>" gives the file name "baseline", which the baseline file uses. Rename the scenario.` The name `baseline orders` is fine.
+- The scenarios run one after another. Files run in file-name order, and a file runs in the order of its `load.it` calls. They share the app and its pools, so they do not run in parallel. Each scenario has its own load, hooks and data.
+- The name of a scenario in the report is `group › name`, for example `OrderController › browse products`. The CLI names the generated files after it, in lower case with `-` between the words. Two scenarios cannot make the same file name, and a name needs a letter or a digit. A browser scenario runs once for each browser, so its label ends with the browser, for example `orders › save an order › chromium`. See [Browsers](#browsers).
 - The endpoint id is `METHOD /path`, with the path as we wrote it, for example `GET /orders/{id}`.
 
 #### Run only some scenarios
@@ -531,7 +514,7 @@ load.describe(
 | `query` | The query string. A number or a boolean becomes its text. |
 | `json` | The JSON body. A value works at any depth, through plain objects and arrays. A `Date` or a class instance goes as it is. |
 | `headers` | Headers of this request. They win over the headers of the scenario. |
-| `p95`, `errorRate`, `p95Regression`, `minDelta` | Limits of this endpoint. See [Thresholds and the verdict](#thresholds-and-the-verdict). |
+| `p95`, `errorRate` | Limits of this endpoint. See [Thresholds and the verdict](#thresholds-and-the-verdict). |
 | `beforeRequest`, `afterResponse` | Worker hooks of this request. See [Hooks](#hooks). |
 | `artillery` | `{raw}`, the Artillery request fields. See [Use any Artillery feature](#use-any-artillery-feature). |
 
@@ -545,7 +528,7 @@ A value is an object that the engine fills in when a vuser sends a request. It w
 | --- | --- |
 | `vars(name)` | What `before` set in `vars`, or what `beforeEach` returned. |
 | `captureFrom(from, jsonPath)` | A part of the response of an earlier request of the scenario. |
-| `token()` | The access token of the login user. |
+| `token()` | The access token of one pool user. Each vuser keeps one token for all its requests. |
 | `randomString(length = 8)` | `length` letters and digits, new for each use. |
 | `randomNumber(min, max)` | A whole number from `min` to `max`, new for each use. |
 | `uuid()` | A UUID, the same in all requests of one vuser. |
@@ -595,7 +578,7 @@ load.it('search orders of a customer', [
 - There is no list of custom values. For a value that these calls cannot make, we compute it in a hook (`before`, `beforeEach` or `beforeRequest`), and read it with `vars(name)`.
 - The calls check their arguments when the scenario file loads. For example `randomString(0)` and `randomNumber(5, 1)` throw a `TypeError`. `randomString(length)` needs a whole number from 1.
 - `randomNumber(min, max)` needs whole numbers from 0 up, and `min` must not be above `max`. A negative or fractional value throws a `TypeError` with `randomNumber: the minimum and the maximum must be whole numbers from 0 up`. Artillery reads only letters, digits, `_`, `,` and spaces inside `$randomNumber(...)`.
-- We do not write `{{ $env.LOAD_TESTS_TOKEN }}` by hand. The CLI gives the token to Artillery only for a scenario that uses `token()`. See [Send the token](#send-the-token).
+- We do not write `{{ loadTestsToken }}` or `{{ $env.LOAD_TESTS_TOKENS }}` by hand. The CLI gives the tokens to Artillery only for a scenario that uses `token()`. See [Send the token](#send-the-token).
 
 #### Text that the engine refuses
 
@@ -661,7 +644,7 @@ load.it('open the order dashboard', [
 
 #### Group options and the merge order
 
-`load.describe(name, options?, define)` and `load.it(name, requests, options?)` both take `headers`, `phases`, `thresholds`, `step` and `vitals`. `load.it` also takes the [hooks](#hooks), `tokenCheck` and `artillery`. `step` and `vitals` are for browser scenarios. A browser scenario takes no `headers` and no `thresholds` from `load.describe`. It uses `step` and `vitals`.
+`load.describe(name, options?, define)` and `load.it(name, requests, options?)` both take `headers`, `phases`, `thresholds`, `step` and `vitals`. `load.it` also takes the [hooks](#hooks), `covers` (see [Run only what a change affects](#run-only-what-a-change-affects)), `tokenCheck` and `artillery`. `step` and `vitals` are for browser scenarios. A browser scenario takes no `headers` and no `thresholds` from `load.describe`. It uses `step` and `vitals`.
 
 ```ts
 import {load, template, token} from '@sourceloop/load-testing';
@@ -761,8 +744,6 @@ The messages read like this.
 
 The report shows every phase in its `Workload` line, for example `10 vusers/s for 60 s`. A ramp reads `ramp 1 to 5 vusers/s over 60 s`. A count reads `100 vusers over 30 s`. A pause reads `pause 10 s`. The phases join with `, then `. A phase with `maxVusers` ends with ` (at most N vusers at once)`. An example is `10 vusers/s for 60 s (at most 50 vusers at once)`. The `name` of a phase is not part of the text.
 
-The baseline file keeps this text. A run with another workload does not compare its p95 with the old one. A change of `maxVusers` counts as a changed workload. See [Baseline](#baseline).
-
 Every vuser of a scenario runs its steps once. A scenario that needs a longer load than the access token lives stops before the load starts. See [Log in](#log-in).
 
 ### Hooks
@@ -795,8 +776,9 @@ load.it(
   ],
   {
     async before(ctx, runVars) {
+      const {token} = ctx.auth();
       const api = ctx.api.with({
-        headers: {authorization: `Bearer ${ctx.token}`},
+        headers: {authorization: `Bearer ${token}`},
       });
       const customer = await api.post<{id: string}>('/customers', {
         name: 'loadtest-customer',
@@ -816,14 +798,12 @@ load.it(
 
 | Member | Use |
 | --- | --- |
-| `ctx.token` | The access token of the login user. Undefined without a login. |
-| `ctx.claims` | The claims of that token. `{}` without a login, or for a token that is not a JWT. |
+| `ctx.auth()` | Gives `{token, claims}` of one pool user. Each call gives the next user in turn, over the whole run. The token and the claims belong to the same user. `claims` is `{}` for a token that is not a JWT. Without a login, it throws a `ConfigError`. |
 | `ctx.api` | The HTTP client of the app under test (`LOAD_TESTS_BASE_URL`). It sends no token by itself. |
 | `ctx.apis.<name>` | The HTTP client of another backend that `apis` in `config.ts` names. It works like `ctx.api`. See [Other backends](#other-backends). |
-| `ctx.sql(db, text, params?)` | One SQL statement on a datasource of `config.ts`. |
 | `ctx.defer(cleanup)` | Registers a cleanup for something that the hook made. |
 
-`ctx.api` adds the base URL to each path. It sends no `Authorization` header and no other default header. For a call that needs the token, we make a client that has it with `ctx.api.with`.
+`ctx.api` adds the base URL to each path. It sends no `Authorization` header and no other default header. For a call that needs the token, we call `ctx.auth()` and make a client that has the token with `ctx.api.with`. Each call of `ctx.auth()` takes the next user, so the calls of a hook spread over the pool. When a hook sends many calls, it calls `ctx.auth()` for each call, or for each group of calls.
 
 #### Other backends
 
@@ -868,11 +848,9 @@ load.it(
   ],
   {
     async before(ctx, runVars) {
-      if (ctx.token === undefined) {
-        throw new Error('Set the LOAD_TESTS_ login variables.');
-      }
+      const {token} = ctx.auth();
       const api = ctx.api.with({
-        headers: {authorization: `Bearer ${ctx.token}`},
+        headers: {authorization: `Bearer ${token}`},
       });
       const orders = await api.get<{id: string}[]>('/orders', {
         query: {limit: 5, archived: false},
@@ -928,8 +906,8 @@ The workers do not load our scenario file, with one exception. For a browser sce
 - A worker hook must be synchronous. A worker does not wait for a promise. An `async` hook would run its work after the vuser went on, and nobody would see a rejection. The CLI fails the scenario before its load when one of the four hooks returns a promise. The next scenario still runs.
 - `beforeEach` must give the same result for the same arguments, and it must have no side effects. It must return an object, the vars of the vuser.
 - Before the load, the CLI runs each hook once, with made-up arguments, from the generated file. A hook that uses a name from outside fails at once, with a `ReferenceError` in the message. For `beforeRequest`, `afterResponse` and `afterEach`, only a `ReferenceError` fails the scenario, because the made-up arguments can cause other errors. A side effect of a hook runs once there. This test runs in the CLI process, so it sees all environment variables. A worker sees only the list that the next rule names.
-- The file writes `vars` (what `before` sets) in plain text. We never put a secret or the token in `vars`. `token()` is safe. The CLI passes the token to Artillery in the environment and does not write it to disk. It does so only for a scenario that uses `token()`.
-- A worker hook runs inside Artillery. So `process.env` there holds only the allowed names, plus `LOAD_TESTS_BASE_URL`, and `LOAD_TESTS_TOKEN` when the scenario sends `token()`. A browser flow gets `LOAD_TESTS_UI_URL` and not `LOAD_TESTS_BASE_URL`. See [The environment of Artillery](#the-environment-of-artillery).
+- The file writes `vars` (what `before` sets) in plain text. We never put a secret in `vars`. `token()` is safe. The browser recipe in [Browsers](#browsers) is the one exception: it puts the tokens of the test users in `vars`, so we use test users only and keep `.out` out of git and out of CI artifacts. The CLI passes the tokens to Artillery in the environment and does not write them to disk. It does so only for a scenario that uses `token()`.
+- A worker hook runs inside Artillery. So `process.env` there holds only the allowed names, plus `LOAD_TESTS_BASE_URL`, and `LOAD_TESTS_TOKENS` when the scenario sends `token()`. A browser flow gets `LOAD_TESTS_UI_URL` and not `LOAD_TESTS_BASE_URL`. See [The environment of Artillery](#the-environment-of-artillery).
 - A `beforeEach` result with the refused text fails the vuser. See [Text that the engine refuses](#text-that-the-engine-refuses).
 - `afterEach` does not run for a vuser whose flow stopped with an error.
 - An error in a worker hook stops that vuser. The report counts these errors apart from app errors, in the `Hooks:` line, and the scenario fails.
@@ -970,9 +948,9 @@ On SIGINT (Ctrl-C), SIGTERM or SIGHUP the CLI does these steps.
 4. Run the reporters, with `stopped: true`. The console reporter prints no coverage or heavy API lines then.
 5. Exit with 128 plus the signal number: 130 for SIGINT (Ctrl-C), 143 for SIGTERM and 129 for SIGHUP.
 
-A second signal ends the process at once, with the exit code of the first. A second signal that comes less than 500 ms after the first is ignored, because npm can forward one Ctrl-C twice. A stopped run saves no baseline.
+A second signal ends the process at once, with the exit code of the first. A second signal that comes less than 500 ms after the first is ignored, because npm can forward one Ctrl-C twice.
 
-Ctrl-C also works during the login (step 6 of [How a run works](#how-a-run-works)) and the token refresh (step 8.1). The CLI prints `Cancelled.` and exits with the code of step 5 above (130, 143 or 129) at once. It does not wait for a request that is still open.
+Ctrl-C also works during the login (step 6 of [How a run works](#how-a-run-works)) and the token refresh (step 7.1). The CLI prints `Cancelled.` and exits with the code of step 5 above (130, 143 or 129) at once. It does not wait for a request that is still open.
 
 The CLI ignores write errors on the terminal, but only `EPIPE`, `EIO` and `ERR_STREAM_DESTROYED`. After SIGHUP the terminal can be gone, and a failed write cannot stop the cleanups. Any other write error, such as a full disk, is thrown.
 
@@ -984,10 +962,7 @@ The scenarios make and delete data in the app under test. A good scenario leaves
 
 #### Create and remove data
 
-There are two ways to create data.
-
-- Through the API, with `ctx.api` in `before`. This goes through the same code as a real client, so it makes audit rows, events and cache entries.
-- With SQL, with `ctx.sql` in `before`. This goes around the app. It makes no audit rows or events, and it does not clear a cache that the app keeps. We use it for data that no endpoint can create, or to find rows by name in `after`.
+We create data through the API, with `ctx.api` or `ctx.apis.<name>` in `before`. This goes through the same code as a real client, so it makes audit rows, events and cache entries. The package has no SQL access, because the databases of a deployed app are rarely open to the CI.
 
 We always register a cleanup with `ctx.defer` right after a create. See [Hooks](#hooks). A vuser can also create and delete its own data as steps of the flow. The first request creates a row, `captureFrom` takes its id, and the last request deletes it. Then no two vusers share a row.
 
@@ -1034,8 +1009,9 @@ load.it(
   {
     headers: {authorization: template`Bearer ${token()}`},
     async before(ctx, runVars) {
+      const {token} = ctx.auth();
       const api = ctx.api.with({
-        headers: {authorization: `Bearer ${ctx.token}`},
+        headers: {authorization: `Bearer ${token}`},
       });
       const customer = await api.post<{id: string}>('/customers', {
         name: 'loadtest-customer',
@@ -1081,104 +1057,121 @@ load.post('/products', {
 - `vu` in `beforeEach` is not unique in the run either.
 - The Artillery engine renders these values as `{{ $randomString(8) }}`, `{{ $randomNumber(1, 9) }}` and `{{ $uuid }}`. If Artillery changes them, we change the engine only.
 
-### Datasources
+### Run only what a change affects
 
-A datasource is a named database connection. We declare datasources in `config.ts`. The first argument of `ctx.sql` is one of the names. A facade can reach several services, and each service has its own database. So we declare one datasource for each database that a scenario touches, for example `orders`, `inventory`, `audit`, `suppliers`, `billing` and `users`.
+A full run takes hours when a monorepo has many scenarios. With `--since <ref>`, the CLI runs only the scenarios that the commits after `<ref>` affect.
 
-A datasource has one of three forms.
-
-- `{type: 'postgres', url, ...}` is Postgres. The package has the adapter, and the project installs the driver.
-- `{type: 'custom', connector}` is any other database, with a connector that we write.
-- A bare `connector` is the same as `custom`, shorter.
-
-In `config.ts`:
-
-```ts
-import type {LoadTestConfig, SqlConnector} from '@sourceloop/load-testing';
-
-// The server URL, with no database path.
-const server = process.env.ORDERS_DB_URL;
-
-declare function openDatabase(url: string): Promise<{
-  run(text: string, params?: unknown[]): Promise<unknown[]>;
-  close(): Promise<void>;
-  onClose(listener: (err: Error) => void): void;
-}>;
-
-// A connector for any other database.
-function warehouse(url: string): SqlConnector {
-  return {
-    async connect(onError) {
-      const db = await openDatabase(url);
-      db.onClose(onError);
-      return {
-        query: async (text, params) => ({rows: await db.run(text, params)}),
-        end: () => db.close(),
-      };
-    },
-  };
-}
-
-const config: LoadTestConfig = {
-  phases: [{duration: 60, arrivalRate: 10}],
-  datasources: {
-    orders: {type: 'postgres', url: server, database: 'orders'},
-    audit: {type: 'postgres', url: server, database: 'audit'},
-    billing: {type: 'custom', connector: warehouse('wh://billing')},
-    inventory: warehouse('wh://inventory'), // a bare connector
-  },
-};
-
-export default config;
+```text
+load-testing run . --since origin/master
 ```
 
-In `orders.controller.load.ts`:
+The library does not know which file a scenario exercises, because a facade calls a service over HTTP. So each scenario lists the files that it covers, with the option `covers`.
 
 ```ts
-import {load} from '@sourceloop/load-testing';
+const DEAL_SERVICE = ['services/deal-service/src/**', 'packages/models/src/**'];
 
-load.it('read orders', [load.get('/orders')], {
-  async before(ctx, runVars) {
-    const rows = await ctx.sql<{id: string}>(
-      'orders',
-      'SELECT id FROM orders WHERE reference LIKE $1',
-      ['loadtest-%'],
-    );
-    runVars.orderId = rows[0]?.id;
-  },
+load.describe('DealController', () => {
+  load.it('lists deals', [load.get('/deals')], {covers: DEAL_SERVICE});
+  load.it('reads a deal', [load.get('/deals/{id}')], {
+    covers: [...DEAL_SERVICE, 'facades/my-facade/src/controllers/deal.controller.ts'],
+  });
 });
 ```
 
-- The package reads no database variable. Our `config.ts` reads the environment, and we choose the name of the variable.
-- `type: 'postgres'` needs the `pg` package in our project, with `npm install --save-dev pg`. The package loads `pg` from our project folder, never from its own, at the first `ctx.sql` call of the datasource. When `pg` is missing, the call fails with a `ConfigError`.
-- The calls to one datasource share one connection and run one after another, also inside `Promise.all`. Calls to different datasources run at the same time.
-- A Postgres datasource takes `url`, or `host`, `port`, `user` and `password`. It also takes `database`, `ssl`, `connectionTimeoutMs`, `statementTimeoutMs` and `applicationName`.
-- We read the URL from an environment variable, never from a literal in `config.ts`. We keep the certificate checks of `ssl` on. We turn them off only for a local database.
-- With `url`, `database` replaces the path of the URL. So one server URL serves many datasources. With `url`, the options `host`, `port`, `user` and `password` are ignored, with no message.
-- `connectionTimeoutMs` is 10,000 ms by default, so a database that does not answer cannot hold the run for ever.
-- `statementTimeoutMs` is a whole number of milliseconds from 0. Another value in a datasource is a `ConfigError` with the message `datasources.<name>.statementTimeoutMs must be a whole number of milliseconds from 0 (0 turns the limit off)`. `connectionTimeoutMs` follows the same rule.
-  - By default the client waits at most 60 s for a statement (`query_timeout`). The server gets no `statement_timeout`, so it keeps running a statement after the client gave up. The CLI then drops that connection. The next `ctx.sql` call opens a new one.
-  - A value above 0 sets both limits. It sends `statement_timeout` to the server as a startup parameter. A proxy such as PgBouncer can refuse that parameter.
-  - Behind such a proxy we leave the option unset (client limit only), or we set `0` (no limit at all).
-- With neither `url` nor `host`, the first call fails with a `ConfigError` that says what to set. A run whose scenarios use no SQL needs no URL.
-- A name that `config.ts` does not declare gives a `ConfigError` that lists the declared names.
-- The package opens one connection for each datasource, at the first call, and keeps it. It drops a connection that breaks, and the next call opens a new one. The connections close after the cleanups of each scenario.
-- `params` fill `$1`, `$2` and so on in the text. A call with several statements and no `params` gives the rows of the last one.
-- A connector has one method, `connect(onError)`. It opens one connection and returns `{query, end}`. It calls `onError` when an idle connection breaks, so that the package can open a new one. It opens nothing when we create the connector.
+#### How the CLI selects
+
+1. The CLI finds the files that changed from the merge-base of `<ref>` and `HEAD` to `HEAD`. Only commits count. A change that is not committed is ignored. A rename counts as a change of both paths.
+2. A scenario runs when one of these is true:
+   - A changed file matches one of its `covers` patterns.
+   - Its own `*.load.ts` file changed.
+   - A run-all trigger matched. Then every scenario of the package runs.
+3. The run-all triggers are:
+   - A file in `src/__tests__/load` that is not a `*.load.ts` file and is not in `.out`, for example `config.ts` or a fixture.
+   - The `package.json` of the package.
+   - The `package.json` of the root, and `package-lock.json`, `npm-shrinkwrap.json`, `yarn.lock` and `pnpm-lock.yaml` of the root.
+   - A file that matches a pattern of `runAllWhen` in `config.ts`.
+4. `.skip` still wins, and `.only` still stops the run in CI. The change filter runs after them. A scenario that the change filter leaves out is `not selected`. It is not `skipped`.
+5. When no scenario is selected, the CLI prints the report, writes `selection.json` and exits with 0. It does not log in, run a hook or start Artillery.
+
+#### Patterns
+
+- A pattern is relative to the root. The root is the nearest folder above the package whose `package.json` has `workspaces`. When there is none, it is the git root.
+- A pattern is a path or a glob, for example `services/deal-service/src/**`. The CLI uses the glob of Node (`path.matchesGlob`). It has no `!` negation. A wildcard does not match a file that starts with a dot, such as `.env.defaults`. Write such a file in full.
+- `covers` is set on the scenario. A `load.describe` does not pass it down. To share patterns, we use a TypeScript constant.
+- `covers` has no effect without `--since`.
+
+#### What stops the run
+
+With `--since`, the CLI stops with exit code 1 and a message when:
+
+- A scenario has no `covers`, or an empty list.
+- A `covers` pattern matches no file of `HEAD`. This finds a pattern that went stale when a folder moved.
+- A pattern is absolute, starts with `!`, or leaves the root with `..`.
+- `<ref>` is unknown, or git has no common commit of `<ref>` and `HEAD`. In a shallow clone, we fetch more history first. The CLI never falls back to a full run.
+
+The CLI needs `git` on the `PATH`. It runs no other program.
+
+#### The report
+
+The CLI prints the ref, the commits, and each scenario with its state and the reason. It also warns about changed files in the folder of the package that no scenario covers and no trigger names. This often means that a new controller needs a `covers` pattern. The warning does not change the exit code.
+
+The CLI writes the same data to `src/__tests__/load/.out/selection.json`. This format is stable, and a CI script can read it.
+
+| Field | Meaning |
+| --- | --- |
+| `ref`, `mergeBase`, `head` | The ref that we passed, and the two commits that the CLI compared. |
+| `changedFiles` | The changed files, relative to the root. |
+| `scenarios` | A list of `{scenario, state, reason?}`. `state` is `selected`, `not selected` or `skipped`. `reason` is set for `selected`. |
+| `uncoveredFiles` | The changed files of the package that no scenario covers. |
+| `nothingSelected` | `true` when no scenario runs. |
+
+#### What the CI script does
+
+The package knows nothing about lerna or the pipeline. The CI script loops over the packages and chooses the ref.
+
+- It fetches enough history for the merge-base.
+- It passes the last commit whose run passed in full, and not the last commit that it tested. Otherwise a failed scenario drops out of the next run.
+- It runs the shared parts: a change of a package that every facade uses is a `runAllWhen` pattern, or a `covers` pattern of the scenarios that use it. The same holds for migrations and a Dockerfile.
+- A package that has no `covers` yet runs without `--since`, in full.
 
 ### Log in
 
-The login is optional. The CLI logs in only when `LOAD_TESTS_USERNAME` is set. Then it also needs the password, the client id and the client secret. `LOAD_TESTS_BASE_URL` is required with a login, also in a run of only browser scenarios. The [Environment](#environment) table lists all six variables.
+The login is optional. The CLI logs in only when `LOAD_TESTS_USERS_FILE` is set. Then it also needs the client id and the client secret. `LOAD_TESTS_BASE_URL` is required with a login, also in a run of only browser scenarios. The [Environment](#environment) table lists the variables.
+
+#### The pool of users
+
+A pool is many test users. Each virtual user of a scenario sends the token of one of them. So the load spreads over the tokens, and the limit of requests per token of the app is not hit by one token. `LOAD_TESTS_USERS_FILE` is the path of a JSON file with a list of users:
+
+```json
+[
+  {"username": "load-test-01@example.com", "password": "..."},
+  {"username": "load-test-02@example.com", "password": "..."}
+]
+```
+
+The file is a secret. In CI we give it as a secret file. The run stops with a `ConfigError` before any login when the file cannot be read, is not JSON, is an empty list, has an entry without a `username` or a `password`, or has a username twice. The messages never show a password. The package never prints a password or a token, and never writes them to a file. It gives the access tokens to Artillery only in the environment, only for a scenario that uses `token()`. The pool size is the number of users in the file. A pool of one user works too.
+
+How many users? The formula is `peak requests a minute ÷ limit per token`, plus about half more, because the picks are not even and the hooks of the same minute count too. These are examples for a limit of 100 requests a minute for each token.
+
+| Peak load | Per minute | Minimum | Use |
+| --- | --- | --- | --- |
+| 5 requests a second | 300 | 3 | 5 |
+| 10 requests a second | 600 | 6 | 9 |
+| 25 requests a second | 1500 | 15 | 23 |
+| 50 requests a second | 3000 | 30 | 45 |
+| A `before` that sends 200 calls in under a minute | 200 | 2 | 3 |
+
+The package does not check the size of the pool. A pool that is too small shows as `429` answers in the report. When there are more virtual users than users, the users are used in turn.
 
 #### The flow
 
 The login follows the two-step login of the ARC authentication service (`@sourceloop/authentication-service`).
 
-1. `POST /auth/login` with `username`, `password`, `client_id` and `client_secret`. The answer holds a `code`.
+1. `POST /auth/login` with `username`, `password`, `client_id` and `client_secret`, for one user of the pool, one user after another. The answer holds a `code`.
 2. `POST /auth/token` with the `code` and the `clientId`. The answer holds an `accessToken` and a `refreshToken`. Both must be non-empty texts. If not, the CLI throws a `LoginError`: `<call> gave no accessToken` or `<call> gave no refreshToken`.
-3. Before each scenario, the CLI gets a new token with `POST /auth/token-refresh`. It sends the `refreshToken`, and the old access token as a bearer token. It skips the refresh when the access token is less than a minute old. The auth service revokes the access token that a refresh replaces. The signed payload has no random part (`jti`), so two refreshes in the same second give the same token string. The second refresh then revokes the token that it just gave. We refresh at most once a minute to avoid this. The age comes from the `iat` claim. A token that has no `iat`, such as an opaque token, counts from the time that the CLI got it.
+3. Before each scenario, the CLI gets a new token for each user with `POST /auth/token-refresh`. It sends the `refreshToken`, and the old access token as a bearer token. It skips the refresh when the access token is less than a minute old. The auth service revokes the access token that a refresh replaces. The signed payload has no random part (`jti`), so two refreshes in the same second give the same token string. The second refresh then revokes the token that it just gave. We refresh at most once a minute to avoid this. The age comes from the `iat` claim. A token that has no `iat`, such as an opaque token, counts from the time that the CLI got it.
 
-All three calls go to `LOAD_TESTS_AUTH_SERVICE_URL`, or to the base URL when that variable is not set. A call that answers with a status other than 2xx throws a `LoginError` with the status and the first 200 characters of the body.
+All three calls go to `LOAD_TESTS_AUTH_SERVICE_URL`, or to the base URL when that variable is not set. A call that answers with a status other than 2xx throws a `LoginError` with the status and the first 200 characters of the body. A failed login stops the run before any scenario, and the message names the user: `login of user <name> failed: ...`. A refresh that fails fails only that scenario, and the message reads `refresh of user <name> failed: ...`.
 
 The login and the refresh do not follow redirects. A 307 or a 308 would send the password and the client secret again to the new host. A status from 300 to 399 stops with a `LoginError`. It names the status and the origin of the `location` header, when the header parses. It never shows the whole location. The message reads `POST <url> gave <status>, a redirect to <origin>. The login does not follow redirects, so the password goes only to the URL that we set. Set LOAD_TESTS_AUTH_SERVICE_URL to the final URL.` We set `LOAD_TESTS_AUTH_SERVICE_URL` to the final URL.
 
@@ -1211,14 +1204,14 @@ load.describe(
 
 `token()` works in `headers`, `query`, `pathParams` and `json`.
 
-- Without a login, `ctx.token` is undefined and `ctx.claims` is `{}`. When a scenario that runs sends `token()`, the whole run stops with a `ConfigError` before any scenario or hook runs. The message names these scenarios.
-- With a login, the engine sends one token for the whole load of a scenario. `after` and the cleanups use the same token as `ctx.token`.
-- The CLI gives the token to Artillery only for a scenario that uses `token()`. Another scenario gets no token variable. `ctx.token` and `ctx.claims` in `before` and `after` do not change.
+- Without a login, `ctx.auth()` throws a `ConfigError`. When a scenario that runs sends `token()`, the whole run stops with a `ConfigError` before any scenario or hook runs. The message names these scenarios.
+- With a login, each virtual user gets one token of the pool and sends it in all its requests. In each Artillery worker, the first virtual user takes a random place in the list, and the next ones take the next tokens in turn.
+- The CLI gives the tokens to Artillery only for a scenario that uses `token()`. Another scenario gets no token variable. `ctx.auth()` in `before` and `after` works in every scenario.
 - `ctx.api` does not send the token. See [Hooks](#hooks).
 
 #### The token check
 
-The token check runs for a scenario that sends `token()`, when there is a login. It runs after `before` and before the load.
+The token check runs for a scenario that sends `token()`, when there is a login. It runs after `before` and before the load. It runs once for each token of the pool. The first token that fails stops the scenario, and the message names the user: `token check for user <name>: ...`.
 
 The default check stops the scenario when the load time plus 120 seconds is at least the time that the token has left. The 120 seconds are for the last requests of Artillery, `after` and the cleanups. The check reads the `exp` claim of the token. A token without `exp` passes.
 
@@ -1253,18 +1246,20 @@ load.it('a long load on orders', [load.get('/orders')], {
 #### Login errors and the rate limit
 
 - A 401 from `/auth/login` means that the username, the password, the client id or the client secret is wrong. The message reads `POST <url>/auth/login gave 401: ...`.
-- A 429 means that something in front of the auth route limits the rate of calls. The package does not retry. The first login happens once, at the start of the run. A 429 there stops the run with a `LoginError`. A 429 on a refresh fails that scenario, and the next scenario tries its own refresh. When it happens, we wait, or we raise the limit for the test environment.
+- A 429 means that something in front of the auth route limits the rate of calls. The limit of the ARC login is often small, for example 5 calls a minute for each client address. The CLI logs in the pool at the start of the run, so a pool of many users meets the limit. On a 429 from a login call, the CLI waits for the seconds of the `Retry-After` header, or 60 seconds when the header is missing, blank or not a number. A `Retry-After` of 0 counts as 1 second. A fraction goes up to the next whole second. This stops a server that always says 0 from keeping the login in a loop without cost to the wait limit. Then it sends the same call again. The waits of the whole run together are limited by `loginWaitSeconds` in `config.ts`. The default is 300. When the next wait passes the limit, the run stops with a `LoginError` that names the user and the limit.
+- The login time is about `users ÷ calls a minute`, in minutes, because the login call and the token call each have their own limit. With a limit of 5 calls a minute for each, 23 users need about 4.5 minutes and fit the default. 45 users need about 9 minutes, so we raise `loginWaitSeconds`.
+- A 429 on a refresh fails that scenario, and the next scenario tries its own refresh. A refresh call carries the token, so a limit for each token does not meet the refresh of the other users.
 
 #### The test user
 
-The login needs a user that exists in each environment. This checklist tells what that user must be. We do not give SQL, because each project creates users in its own way.
+The login needs a user that exists in each environment. This checklist tells what that user must be. The project creates users in its own way.
 
-- [ ] The user is only for load tests. It is never a real person, and nobody else uses it. A name such as `load-test@example.com` shows its purpose.
-- [ ] The user has the smallest role that can call every endpoint under test. A load test needs no more power than that.
-- [ ] A client exists for the login, with a client id (for example `load-test-client`) and a client secret. That client lets the user log in.
-- [ ] The password and the client secret live only in environment variables or in CI secrets. They are never in git, in `config.ts` or in a script.
-- [ ] Create the user with the user API or the seed script of the project. Then the project hashes the password in the way that it expects.
-- [ ] Each environment has its own user, with its own password. We do not share one user over development, test and production-like systems.
+- [ ] The users are only for load tests. It is never a real person, and nobody else uses it. A name such as `load-test-01@example.com` shows its purpose. All users of the pool are in the same tenant and have the same role, because a row that one user makes can be read, changed or deleted by the vuser of another user.
+- [ ] The users have the smallest role that can call every endpoint under test. A load test needs no more power than that.
+- [ ] A client exists for the login, with a client id (for example `load-test-client`) and a client secret. That client lets the users log in.
+- [ ] The users file and the client secret live only in CI secrets or in environment variables. They are never in git, in `config.ts` or in a script.
+- [ ] Create the users with the user API or the seed script of the project. Then the project hashes the passwords in the way that it expects.
+- [ ] Each environment has its own users, with their own passwords. We do not share users over development, test and production-like systems.
 
 ### Browser scenarios
 
@@ -1281,7 +1276,7 @@ my-web-app/
 ├── src/__tests__/load/
 │   ├── config.ts          phases and limits of the project
 │   ├── orders.load.ts     load.browser(...) calls
-│   └── .out/              scripts, reports and baseline.json, not in git
+│   └── .out/              scripts and reports, not in git
 └── tsconfig.load.json     builds src/__tests__/load into dist/__tests__/load
 ```
 
@@ -1401,9 +1396,9 @@ Limits merge by field, from the library up to one metric, as the thresholds of `
 | 4. Scenario | `load.browser` options | `step`, `vitals` |
 | 5. One metric | `load.browser` options | `steps['<name>']`, `flow` |
 
-The options of `load.browser` are only `phases`, `step`, `vitals`, `steps`, `flow`, `before` and `after`. Another key in a plain JavaScript file throws a `TypeError` at load time. `before` and `after` have the types and the rules of [Hooks](#hooks): they run once per run, in the CLI, and `after` runs also when `before` or the load failed. A browser scenario has no `beforeEach`, `afterEach`, `beforeRequest` or `afterResponse`, no `tokenCheck` and no `artillery` option. The `TypeError` names the key. A `load.describe` has no `before` or `after`.
+The options of `load.browser` are only `phases`, `step`, `vitals`, `steps`, `flow`, `before`, `after` and `covers`. Another key in a plain JavaScript file throws a `TypeError` at load time. `before` and `after` have the types and the rules of [Hooks](#hooks): they run once per run, in the CLI, and `after` runs also when `before` or the load failed. A browser scenario has no `beforeEach`, `afterEach`, `beforeRequest` or `afterResponse`, no `tokenCheck` and no `artillery` option. The `TypeError` names the key. A `load.describe` has no `before` or `after`.
 
-Each key takes `p95`, `p95Regression` and `minDelta`, as a threshold does. `vitals` takes one entry for each Web Vital. An entry for `INP`, also an empty one, turns INP on. `false` turns a Web Vital off, for example `vitals: {TTFB: false}` for a flow that gives no TTFB sample. The last level that names a Web Vital decides: an object after `false` turns it on again, from the defaults. `steps` and `flow` start from the merged `step` limits. `thresholds.default` (`p95Regression`, `minDelta`) does not change the limits of browser metrics. They use `thresholds.step` and `thresholds.vitals`. An unknown Web Vital name, and `errorRate` in a step or Web Vital limit, are config errors. A limit that is not an object is a config error too. Examples are `step: 5` and `vitals: {LCP: 3000}`.
+Each key takes only `p95`. `vitals` takes one entry for each Web Vital. An entry for `INP`, also an empty one, turns INP on. `false` turns a Web Vital off, for example `vitals: {TTFB: false}` for a flow that gives no TTFB sample. The last level that names a Web Vital decides: an object after `false` turns it on again, from the defaults. `steps` and `flow` start from the merged `step` limits. `thresholds.default` does not change the limits of browser metrics. They use `thresholds.step` and `thresholds.vitals`. An unknown Web Vital name, and `errorRate` in a step or Web Vital limit, are config errors. A limit that is not an object is a config error too. Examples are `step: 5` and `vitals: {LCP: 3000}`.
 
 ```ts
 import {load, UI_TARGETS, WEB_VITALS_TARGETS} from '@sourceloop/load-testing';
@@ -1434,7 +1429,6 @@ The run checks these rules on top of the limits.
 
 - A metric that a limit names, or that the defaults expect, fails with `no samples` when the report has none. So a step name with a typo fails.
 - A metric with a limit fails with `lost samples` when it has fewer samples than completed vusers. So every vuser must run every step, and its first page must report its Web Vitals.
-- Regression works as for an endpoint. For CLS, `minDelta` is 0.1 by default.
 
 #### Web Vitals
 
@@ -1446,13 +1440,13 @@ Artillery adds the `web-vitals` script to each page that a flow opens. It record
 - A full page load inside a flow loses the LCP, CLS and INP of the page that it leaves. Those numbers then come from the last page only.
 - INP needs a click or a key press on the last page of the flow. The engine reports INP when that page closes. A flow without such an interaction has no INP, so INP is off until a level turns it on.
 - A route change in a single-page app gives no new FCP or LCP. We time it with a step that ends at an element of the new screen.
-- Artillery rounds each p95 to 1 decimal. So the CLS p95 is 0, 0.1, 0.2 and so on. That is why the default `minDelta` of CLS is 0.1. A change from 0 to 0.1 is the smallest change that the report can show, and it is not a regression. Artillery 2.0.34 also makes its summaries from a DDSketch with a relative accuracy of 0.01. So every p95 has an error of about 1%. The table shows the limits and the baselines of CLS with up to 2 decimals.
+- Artillery rounds each p95 to 1 decimal. So the CLS p95 is 0, 0.1, 0.2 and so on. Artillery 2.0.34 also makes its summaries from a DDSketch with a relative accuracy of 0.01. So every p95 has an error of about 1%. The table shows the limits of CLS with up to 2 decimals.
 - The TTFB of a single-page app measures the server of `index.html`, for example a proxy or a CDN.
 - The standard gives no percentile for Web Vitals. We gate the p95 against the "good" limit of Google, which is the same number as the standard. This is stricter than the p75 rule of Google.
 
 #### Browsers
 
-A browser scenario runs once for each browser in `artillery.browsers` of `config.ts`. The default is `[chromium()]`. The label of each run ends with the browser, for example `orders › save an order › chromium`. So each browser has its own files, report rows and baseline history. A browser that is added later does not reset the history of the others.
+A browser scenario runs once for each browser in `artillery.browsers` of `config.ts`. The default is `[chromium()]`. The label of each run ends with the browser, for example `orders › save an order › chromium`. So each browser has its own files and report rows.
 
 `chromium()` runs the Playwright engine of Artillery. It takes two options. `launchOptions` are the Playwright `launchOptions`, for example `{channel: 'chrome'}` or `{channel: 'msedge'}` to run Chrome or Edge. `startTimeoutMs` is how long the check lets Chromium take to start. The default is 60 s. The `launchOptions` of `engines.playwright` in `artillery.config` work too. When `chromium({launchOptions})` is set, its `launchOptions` replace the whole object of `artillery.config`. They do not merge.
 
@@ -1500,31 +1494,28 @@ A project with Playwright tests can call its page objects in a flow. Artillery r
 
 #### Log in, and variables of a flow
 
-A browser scenario has no login helper, and `token()` does not reach the page. To log in once for the whole run, we use `before` and `after`. They run once, in the CLI. `ctx.api` of these hooks calls `LOAD_TESTS_BASE_URL`, and the load goes to `LOAD_TESTS_UI_URL`. So a scenario with `before` or `after` needs both. A login on a service of its own goes through `ctx.apis.<name>`. See [Other backends](#other-backends).
+A browser scenario has no login helper, and `token()` does not reach the page. To give the page a token of the pool, we use `before`. It runs once, in the CLI. `ctx.api` of these hooks calls `LOAD_TESTS_BASE_URL`, and the load goes to `LOAD_TESTS_UI_URL`. So a scenario with `before` or `after` needs both. A login on a service of its own goes through `ctx.apis.<name>`. See [Other backends](#other-backends).
 
-The flow gets `vars`: a fresh copy for each vuser of what `before` set. Only JSON values pass, as for the vars of `load.it`. `before` logs in and puts the token in `vars`. The flow puts it in the page with `page.addInitScript`. `after` logs out. All vusers share this token, so it must stay valid for the whole run.
+The flow gets `vars`: a fresh copy for each vuser of what `before` set. Only JSON values pass, as for the vars of `load.it`. A browser scenario gets no `token()`, so the pool does not reach the page by itself. `before` takes the tokens of the pool with `ctx.auth()` and puts them in `vars`. The flow picks one at random for each vuser, and puts it in the page with `page.addInitScript`. So the API calls of the page spread over the users, and one token does not meet the limit of requests for each token. The tokens must stay valid for the whole run.
 
 ```ts
 import {load} from '@sourceloop/load-testing';
+
+const TOKENS_FOR_THE_PAGES = 10;
 
 load.browser(
   'open the dashboard',
   {
     before: async (ctx, vars) => {
-      const res = await ctx.api.post<{token: string}>('/ui/login', {
-        username: 'ui-user',
-        password: process.env.UI_TEST_PASSWORD,
-      });
-      vars.uiToken = res.token;
-    },
-    after: async (ctx, vars) => {
-      await ctx.api
-        .with({headers: {authorization: `Bearer ${vars.uiToken}`}})
-        .post('/ui/logout');
+      vars.uiTokens = Array.from(
+        {length: TOKENS_FOR_THE_PAGES},
+        () => ctx.auth().token,
+      );
     },
   },
   async ({page, step, vars}) => {
-    const token = String(vars.uiToken);
+    const tokens = vars.uiTokens as string[];
+    const token = tokens[Math.floor(Math.random() * tokens.length)];
     await page.addInitScript((value: string) => {
       window.localStorage.setItem('token', value);
     }, token);
@@ -1535,7 +1526,7 @@ load.browser(
 );
 ```
 
-The paths and the body of the login calls are an example. We use the login of our app. The pattern is a login in `before` that every vuser reuses, as in the [reuse-auth example of Artillery](https://github.com/artilleryio/artillery/tree/main/examples/browser-playwright-reuse-authentication), which reuses the session with `storageState`.
+`ctx.auth()` gives the users in turn, so the ten calls above give ten tokens when the pool has ten users, and fewer different tokens when it has fewer. The name of the `localStorage` key is an example. We use the one of our app. The tokens are in `vars`, and the CLI writes `vars` to the generated files, as for all vars of a browser scenario. So we use test users only. A scenario that has `before` needs `LOAD_TESTS_BASE_URL` and `LOAD_TESTS_USERS_FILE`.
 
 The other way is a login in the flow, for each vuser, for example with the page object of the login screen. Then the scenario needs no hooks and no `LOAD_TESTS_BASE_URL`. The flow runs inside Artillery, which gets only a short list of variables. See [The environment of Artillery](#the-environment-of-artillery). To give the flow a variable, for example the password of a test user, we list its name in `artillery.env` of `config.ts`. A name that starts with `LOAD_TESTS_` is not allowed there.
 
@@ -1549,6 +1540,7 @@ const config: LoadTestConfig = {
 
 export default config;
 ```
+
 ### Thresholds and the verdict
 
 Thresholds are optional. We set them in `thresholds.default` of `config.ts`, in the options of a `load.describe` or a `load.it`, or in the options of one request. An example is `load.get('/orders', {p95: 800})`.
@@ -1558,9 +1550,7 @@ The order is the request, then `load.it`, then `load.describe`, then `thresholds
 | Name | Unit | Default | An endpoint fails when |
 | --- | --- | --- | --- |
 | `errorRate` | percent | 1 | more than this percent of its requests get a network error or a 4xx or 5xx status |
-| `p95` | milliseconds | 500 | its p95 is above this value. It needs no baseline, so the limit holds on the first run too |
-| `p95Regression` | percent | 20 | its p95 is more than this percent above the baseline, and also more than `minDelta` above it |
-| `minDelta` | milliseconds | 10 | its p95 is more than this many milliseconds above the baseline, and also above `p95Regression` |
+| `p95` | milliseconds | 500 | its p95 is above this value |
 
 The names have no unit. The table gives it. `errorRate` must be from 0 to 100. The other values must be 0 or more.
 
@@ -1584,7 +1574,7 @@ import {load, P95_TARGETS} from '@sourceloop/load-testing';
 load.get('/orders/summary', {p95: P95_TARGETS.supportingApi});
 ```
 
-The package has no number for how much slower than before is too slow, and none for an error rate. So `p95Regression` (20), `minDelta` (10) and `errorRate` (1) are values that the package chose.
+The package has no standard number for an error rate. So `errorRate` (1) is a value that the package chose.
 
 > [!CAUTION]
 > Every endpoint counts as user-blocking until it sets another target. The
@@ -1629,7 +1619,7 @@ export default config;
 
 - The package counts the distinct endpoint ids (`METHOD path`) over all scenarios of the package. It counts the skipped scenarios and the ones that `.only` leaves out. The same id in two scenarios counts once, with its highest limit.
 - The report lists the heavy APIs. See [Report](#report).
-- A package with more heavy APIs than `maxHeavyApis` fails the run. The rows keep their own results, and the load still runs. A failed run saves no baseline, unless `LOAD_TESTS_FORCE_BASELINE=1`.
+- A package with more heavy APIs than `maxHeavyApis` fails the run. The rows keep their own results, and the load still runs.
 - We raise the number only for performance debt that the pull request lists, with an owner and a target date. We write the reason in a comment next to the limit.
 - When a fix lands, we lower the number, and we lower the `p95` limit of the fixed endpoint too. An endpoint stays heavy until its limit goes down, also when it got faster. The `Note` line of the report tells when the number can go down.
 
@@ -1642,10 +1632,9 @@ The count does not say which endpoints are heavy. We chose a count because a new
 | An endpoint | It got no requests. |
 | An endpoint | Its error rate is above `errorRate`. |
 | An endpoint | Its p95 is above its `p95` limit. |
-| An endpoint | Its p95 is above its baseline by more than `p95Regression` percent and more than `minDelta` ms. |
 | A browser metric | A limit names it, or the defaults expect it, and the report has no samples of it. |
 | A browser metric | It has a limit, and fewer samples than completed vusers. |
-| A browser metric | Its p95 is above its limit, or above its baseline by more than `p95Regression` percent and more than `minDelta`. |
+| A browser metric | Its p95 is above its limit. |
 | A scenario | More than `errorRate` percent of its vusers failed. The limit is the one of `thresholds.default` or the library default. A vuser fails when its flow stops with an error, for example a network error, a capture that finds nothing, or a hook that throws. A 4xx or 5xx status does not stop a vuser, but it counts in the error rate of its endpoint. |
 | A scenario | A worker hook threw an error. |
 | A scenario | `after` or a cleanup threw. |
@@ -1666,40 +1655,9 @@ The `Result` column of an endpoint or a browser metric shows `FAIL:` and one or 
 | `no requests` | The endpoint got no requests. |
 | `error rate X% > Y%` | The error rate X is above `errorRate` Y. |
 | `p95 X ms > limit Y ms` | The p95 X is above the `p95` limit Y. |
-| `p95 +N% (+M ms) over baseline B ms` | The p95 is N percent and M ms above the baseline B. A baseline of 0 leaves out the `+N% ` part. |
 | `no samples` | A browser metric has no samples. |
 | `lost samples: N for M completed vusers` | A browser metric has N samples, fewer than the M vusers that completed. |
 | `vuser failure rate X% > Y%` | The percent X of started vusers that failed is above `errorRate` Y. A browser scenario uses it. |
-
-### Baseline
-
-The file `src/__tests__/load/.out/baseline.json` keeps the p95 of the last 10 runs of each endpoint, by scenario. The baseline of an endpoint is the mean of these values. For a browser scenario, the file keeps each step, each Web Vital and the flow total, by their names in the report.
-
-- `LOAD_TESTS_UPDATE_BASELINE=1` adds the run to the history. The run prints `Saved src/__tests__/load/.out/baseline.json`.
-- A run that failed stays out, so that a regression does not become the normal value. This holds also when only `after` or a cleanup failed and every endpoint passed, because rows that stay behind can skew the next run. The run prints `Baseline not changed: the run failed. Set LOAD_TESTS_FORCE_BASELINE=1 to add it anyway.` on stderr. `LOAD_TESTS_FORCE_BASELINE=1` adds the run anyway.
-- A reporter that throws also keeps the run out of the baseline. The CLI prints the same `Baseline not changed` line. `LOAD_TESTS_FORCE_BASELINE=1` with `LOAD_TESTS_UPDATE_BASELINE=1` still saves the run.
-- A run that a signal stopped saves nothing.
-- Without a baseline, the run checks only `errorRate` and `p95`. `p95Regression` and `minDelta` do nothing.
-- The file also keeps the workload of each scenario. When a scenario now has another workload, the run does not compare its p95. The result is `pass (workload changed)`. With `LOAD_TESTS_UPDATE_BASELINE=1`, the scenario then starts a new history.
-- The file keeps the base URL of the run that wrote it, and the URL of the web app as `uiUrl`. When the next run uses another URL, the CLI prints one of these lines. The p95 of another host does not describe this one. The run still compares with that baseline. With `LOAD_TESTS_UPDATE_BASELINE=1`, the file keeps the new URL. A run saves `baseUrl` only when it measured an HTTP scenario, and `uiUrl` only when it measured a browser scenario. Else the file keeps the stored value. A new `LOAD_TESTS_BASE_URL` resets the history of the HTTP scenarios only. A new `LOAD_TESTS_UI_URL` resets the history of the browser scenarios only. So the p95 of two hosts never blend into one mean. A run with only one kind of scenario keeps the URL of the other kind. A baseline with no URL loads.
-
-  ```text
-  The baseline is from <url>, not <url>.
-  The baseline of the web app is from <url>, not <url>.
-  ```
-- The CLI writes the file to `baseline.json.<pid>.tmp` in the same folder and renames it, so a killed run leaves no half file. It removes the temp file when the write or the rename fails. A file that is not valid, for example a history that is not a list of numbers, stops the run with a `RunError`. We delete the file and record a new one.
-- The history key is the label `group › name`. A rename of a `load.it` or of a `load.describe` starts an empty history, and the scenario passes as `pass (no baseline)`. The CLI never deletes the old key, so we delete it from the file by hand.
-- A baseline is only good for the machine that made it. A laptop and a CI runner give other numbers.
-
-#### Where the file lives, and how CI keeps it
-
-The file is in `src/__tests__/load/.out/`. The `.gitignore` line from [Ignore the generated files](#ignore-the-generated-files) makes git ignore it. A fresh CI checkout has no baseline, so a CI job must bring it back. The job does this.
-
-1. Restore `baseline.json` before the run, for example from the artifact of the last passing run on the main branch.
-2. Run `npm run test:load`. On the main branch, set `LOAD_TESTS_UPDATE_BASELINE=1` for this run.
-3. After a passing run on the main branch, save the file, for example as an artifact.
-
-Pull request runs only restore the file. They do not save it. So the baseline holds the runs of the main branch, and the run judges a pull request against them.
 
 ### Run in CI
 
@@ -1708,17 +1666,18 @@ A CI job for the load tests does these steps.
 1. Start the apps that the tests need, and their databases. The package starts nothing.
 2. Run the migrations and the seed, so that the databases hold the data that the scenarios expect.
 3. Create the test user, with its client. See [Log in](#log-in).
-4. Set the environment variables. The password and the client secret come from the secrets of the CI system.
-5. Restore the baseline. See [Baseline](#baseline).
-6. Run `npm run test:load`. The job fails when the exit code is not 0.
-7. After a passing run on the main branch, save the baseline.
+4. Set the environment variables. The users file and the client secret come from the secrets of the CI system. The job writes the secret `LOAD_TEST_USERS` to the file before the run.
+5. Run `npm run test:load`. The job fails when the exit code is not 0.
 
 ```yaml
+- name: Write the users file
+  env:
+    USERS: ${{ secrets.LOAD_TEST_USERS }}
+  run: (umask 077; printf '%s' "$USERS" > "$RUNNER_TEMP/load-test-users.json")
 - name: Load tests
   env:
     LOAD_TESTS_BASE_URL: http://localhost:3000
-    LOAD_TESTS_USERNAME: load-test@example.com
-    LOAD_TESTS_PASSWORD: ${{ secrets.LOAD_TEST_PASSWORD }}
+    LOAD_TESTS_USERS_FILE: ${{ runner.temp }}/load-test-users.json
     LOAD_TESTS_CLIENT_ID: load-test-client
     LOAD_TESTS_CLIENT_SECRET: ${{ secrets.LOAD_TEST_CLIENT_SECRET }}
   working-directory: facades/orders-facade
@@ -1727,7 +1686,7 @@ A CI job for the load tests does these steps.
 
 - Artillery does not get the secrets of the CI job. See [The environment of Artillery](#the-environment-of-artillery). A script that needs one more variable lists its name in `artillery.env`.
 - GitHub Actions sets `CI=true`. So a `.only` that stays in a file fails the job, and so does a package where every scenario has `.skip`.
-- A small CI runner gives other numbers than a laptop. We keep the baseline of CI runs apart from the baseline of laptop runs, and we do not copy one to the other.
+- A small CI runner gives other numbers than a laptop. We set the limits for the runner that judges the pull requests.
 - A run in CI takes the time of all phases of all scenarios, plus the time of the hooks. We keep the phases short, or we run the load tests in a separate job.
 
 #### Browser scenarios in CI
@@ -1748,8 +1707,6 @@ jobs:
   load:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    env:
-      BASELINE: src/__tests__/load/.out/baseline.json
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -1771,23 +1728,10 @@ jobs:
             sleep 1
           done
           exit 1
-      - name: Restore the baseline
-        uses: actions/cache/restore@v6
-        with:
-          path: ${{ env.BASELINE }}
-          key: load-baseline-${{ github.run_id }}
-          restore-keys: load-baseline-
       - name: Load tests
         env:
           LOAD_TESTS_UI_URL: http://localhost:4200
-          LOAD_TESTS_UPDATE_BASELINE: ${{ github.ref == 'refs/heads/main' && '1' || '' }}
         run: npm run test:load
-      - name: Save the baseline
-        if: github.ref == 'refs/heads/main'
-        uses: actions/cache/save@v6
-        with:
-          path: ${{ env.BASELINE }}
-          key: load-baseline-${{ github.run_id }}
 ```
 
 - `npm ci` already downloads Chromium. The install step adds the OS libraries of the runner, and it covers a job that skips install scripts.
@@ -1795,13 +1739,11 @@ jobs:
 - `serve@14` has a fixed version. It ignores `--no-port-switching` (see [serve issue 751](https://github.com/vercel/serve/issues/751)) and moves to a free port when port 4200 is busy. So a step before `serve` fails the job when port 4200 is busy. The app can use its own static server instead.
 - The web server writes to `serve.log`, so its output stays out of the log of the load run.
 - The web app calls its APIs. We start them in the job too, or we point the build at a test environment.
-- A pull request restores the baseline of the main branch and does not save it. The save step runs only after a passing run on the main branch.
-- GitHub removes a cache entry that no run reads for 7 days, and then the baseline is gone. A new run on the main branch starts a new baseline.
 - A standard runner of GitHub Actions has 2 to 4 CPU cores. So it can run only a few browser vusers at a time. See [Size the load](#size-the-load).
 
 ### Report
 
-At the end of the run, the console reporter prints one block for each scenario. This sample comes from a run that had a baseline. One endpoint is too slow, and one has errors.
+At the end of the run, the console reporter prints one block for each scenario. In this sample, one endpoint is too slow, and one has errors.
 
 ```text
 Results
@@ -1810,11 +1752,11 @@ OrderController › create an order for a new customer, then delete both
 Workload: 10 vusers/s for 5 s
 Vusers:   50 started, 50 completed, 0 failed (limit 1%)
 
-Endpoint                Requests  Req/s  p95 ms (limit)  Base ms  Err % (limit)  Result
-POST /customers         50        10.1   38.5 (52.9)     42.9     0 (1)          pass
-POST /orders            50        10.1   120.4 (73.6)    61.3     0 (1)          FAIL: p95 +96.4% (+59.1 ms) over baseline 61.3 ms
-DELETE /orders/{id}     50        10.1   44 (500)        -        4 (1)          FAIL: error rate 4% > 1%
-DELETE /customers/{id}  50        10.1   31.9 (500)      -        0 (1)          pass (no baseline)
+Endpoint                Requests  Req/s  p95 ms (limit)  Err % (limit)  Result
+POST /customers         50        10.1   38.5 (500)      0 (1)          pass
+POST /orders            50        10.1   120.4 (100)     0 (1)          FAIL: p95 120.4 ms > limit 100 ms
+DELETE /orders/{id}     50        10.1   44 (500)        4 (1)          FAIL: error rate 4% > 1%
+DELETE /customers/{id}  50        10.1   31.9 (500)      0 (1)          pass
 
 Skipped: OrderController › browse products
 
@@ -1833,17 +1775,14 @@ The columns and lines:
 - `Vusers` counts the virtual users. The limit in brackets is the highest percent of failed vusers that passes. When too many failed, the brackets read `(FAIL: vuser failure rate 8% > 1%)`.
 - `Requests` is the count of responses plus network errors for the endpoint.
 - `Req/s` is the requests divided by the seconds from the first to the last count of the run.
-- `p95 ms (limit)` is the p95. The brackets hold the highest p95 that passes. That is the lower of `p95` and the baseline limit. The baseline limit is the baseline plus the larger of `minDelta` milliseconds and `p95Regression` percent of the baseline. With no baseline, the limit is `p95`.
-- `Base ms` is the baseline p95 of the endpoint, or `-` when there is none.
+- `p95 ms (limit)` is the p95. The brackets hold the `p95` limit, the highest p95 that passes.
 - `Err % (limit)` is the error rate, with `errorRate` in brackets.
-- `Result` is `pass`, or `FAIL:` with the reasons, joined by `;`. A passing endpoint can carry a note in brackets, `pass (no baseline)` or `pass (workload changed)`.
+- `Result` is `pass`, or `FAIL:` with the reasons, joined by `;`.
 - `Hooks:` shows how many errors worker hooks threw. These are not app errors. The scenario fails.
 - A line `FAIL: after failed: ...` or `FAIL: cleanup failed: ...` shows that `after` or a cleanup threw. The numbers in the table are still good, but the scenario fails, and so does the run.
 - A scenario that stopped with an error has no table. It shows one line, `FAIL: <message>`. A failed `after` or cleanup of such a scenario goes to stderr as `<scenario>: after failed: <message>` or `<scenario>: cleanup failed: <message>`, and not into the report.
-- A line `Baseline: recorded with <workload>, so p95 is not compared` shows that the workload changed since the baseline.
 - `Skipped: <name>` lists a scenario that does not run: it has `.skip`, or a `.only` on another scenario leaves it out.
 - `Coverage` counts the endpoints of `src/openapi.json` that the scenarios call. It does not count `/ping`, `/openapi.json` and the `/explorer` paths. A package with no `src/openapi.json` gets the line `Coverage: not calculated, because the application has no API specification.`
-- When no baseline file exists, the reporter prints the line `No src/__tests__/load/.out/baseline.json. Run once with LOAD_TESTS_UPDATE_BASELINE=1 to record it.` after the coverage.
 - The legend at the end says what a vuser is, because "users" can mean the rows of a users table.
 
 #### The block of a browser scenario
@@ -1855,7 +1794,7 @@ orders › save an order › chromium
 Workload: 2 vusers/s for 10 s
 Vusers:   20 started, 20 completed, 0 failed (limit 1%)
 Flow:     p95 596 ms (no limit)
-Metrics:  7 of 7 pass. Run load-testing report to see each one.
+Metrics:  7 of 7 pass.
 ```
 
 In the next run, the API behind the Save button took 1.2 s to answer. The `save` step went over its limit of 1 s, and the run failed with exit code 1.
@@ -1865,42 +1804,16 @@ orders › save an order › chromium
 Workload: 2 vusers/s for 10 s
 Vusers:   20 started, 20 completed, 0 failed (limit 1%)
 Flow:     p95 1465.9 ms (no limit)
-Metrics:  6 of 7 pass. Run load-testing report to see each one.
+Metrics:  6 of 7 pass.
 
-Metric     Samples  p95 (limit)          Base  Result
-step.save  20       1274.3 ms (1000 ms)  -     FAIL: p95 1274.3 ms > limit 1000 ms
+Metric     Samples  p95 (limit)          Result
+step.save  20       1274.3 ms (1000 ms)  FAIL: p95 1274.3 ms > limit 1000 ms
 ```
 
 - `Flow` is the p95 of the flow total. It shows its limit when the scenario sets `flow`.
 - `Metrics` counts the steps and the Web Vitals that have a limit. It counts the flow total too, when `flow` sets a limit.
 - A metric name leaves out `browser.` and the label of the scenario. So `step.save` is `browser.step.save`, and `page.LCP` is `browser.page.LCP.orders › save an order › chromium`.
 - A failed step does not show its error here. Artillery prints it during the load, and the line `Vusers` counts the vusers that failed.
-
-#### The detail of a run
-
-`load-testing report <package-dir>` prints every metric of the last run. It starts no load. It loads `config.ts` and the built scenario files, so it needs a built package, as `run` does. It reads the report files that the last run left in `src/__tests__/load/.out/`, and judges them again with the current limits and baseline. It exits with 0 or 1, as the run did, in most cases. See the last rules below. This is the detail of the passing run above.
-
-```text
-Metric                   Samples  p95 (limit)         Base  Result
-step.open                20       144 ms (1500 ms)    -     pass (no baseline)
-step.save                20       383.8 ms (1000 ms)  -     pass (no baseline)
-step.print (wall clock)  20       47 ms (1500 ms)     -     pass (no baseline)
-page.FCP                 20       47.9 ms (1800 ms)   -     pass (no baseline)
-page.LCP                 20       47.9 ms (2500 ms)   -     pass (no baseline)
-page.CLS                 20       0 (0.1)             -     pass (no baseline)
-page.TTFB                20       3 ms (800 ms)       -     pass (no baseline)
-flow                     20       596 ms              -     no limit
-```
-
-- A `(wall clock)` step has no end element. Its time includes the waits of its assertions.
-- `no limit` marks a metric that no limit gates, here the flow total.
-- Each run deletes the report files of the last run before it starts. So the command judges only the last run.
-- A selected scenario with no report file fails with `No report file: the last run of this scenario failed or did not start.`
-- A run deletes the report file of a scenario when Artillery exits with a non-zero code, for example from the ensure plugin of `artillery.config` `plugins`. It does so also when the run is stopped. So `report` fails that scenario too.
-- A broken report file fails only its own scenario in `report`. The file can hold invalid JSON, or it can have no aggregate. The other scenarios still print.
-- It judges with the baseline file as it is now. After a run that saved the baseline (`LOAD_TESTS_UPDATE_BASELINE=1`, also with `LOAD_TESTS_FORCE_BASELINE=1`), that baseline already holds the run. Then `report` compares the run with itself, so its verdict can differ from the exit code of the run.
-- It does not run `after` or the cleanups, so their failures are not in its verdict.
-- Only the Artillery engine writes report files. With another engine, the command stops with `No report file in <dir>. Run load-testing run first.`
 
 #### The block of heavy APIs
 
@@ -1943,22 +1856,21 @@ export default config;
 
 - A `Reporter` is `{name, onRunEnd(result)}`. The function can be async.
 - `result` is a `RunResult`. It is plain data, with no engine names.
-- The reporters run one after another. A reporter that throws prints `reporter <name> failed: <message>`. The run exits with 1, and the baseline does not move. The other reporters still run. A reporter cannot make a failing run pass.
+- The reporters run one after another. A reporter that throws prints `reporter <name> failed: <message>`. The run exits with 1. The other reporters still run. A reporter cannot make a failing run pass.
 - The reporters run also after a signal, with `stopped: true`.
 
 The fields of a `RunResult`:
 
 | Field | Meaning |
 | --- | --- |
-| `scenarios` | A `ScenarioResult` for each scenario that ended: `name`, `workload`, `vusers`, `hookErrors`, `problems`, `error`, `baselineNote`, `endpoints` and `passed`. |
+| `scenarios` | A `ScenarioResult` for each scenario that ended: `name`, `workload`, `vusers`, `hookErrors`, `problems`, `error`, `endpoints` and `passed`. |
 | `skipped` | The names of the scenarios that did not run: the ones with `.skip`, and the ones that `.only` left out. |
 | `coverage` | `{covered, total, specFile}`. |
 | `heavyApis` | `{max, endpoints: {id, p95}[]}`. |
-| `hasBaseline` | False when there is no baseline file. |
 | `passed` | True when every scenario passed and the heavy APIs are within `max`. |
 | `stopped` | True when a signal ended the run. |
 
-Each entry of `endpoints` is an `EndpointResult`. It holds `id`, `requests`, `perSecond`, `p95`, `p95Limit`, `baselineP95`, `errorRate`, `errorRateLimit`, `failures` and `note`. `vusers` has the type `ScenarioResult['vusers']`. It holds `started`, `completed`, `failed`, `failedLimit` and `failures`.
+Each entry of `endpoints` is an `EndpointResult`. It holds `id`, `requests`, `perSecond`, `p95`, `p95Limit`, `errorRate`, `errorRateLimit` and `failures`. `vusers` has the type `ScenarioResult['vusers']`. It holds `started`, `completed`, `failed`, `failedLimit` and `failures`.
 
 ### Recipes
 
@@ -1973,7 +1885,6 @@ Each entry of `endpoints` is an `EndpointResult`. It holds `id`, `requests`, `pe
 | Raise the limit of one endpoint | [Thresholds and the verdict](#thresholds-and-the-verdict) |
 | Time a screen that loads data late | [End a step at an element](#end-a-step-at-an-element) |
 | Log in once for a browser run | [Log in, and variables of a flow](#log-in-and-variables-of-a-flow) |
-| Record or reset the baseline | [Baseline](#baseline) |
 | Use an Artillery plugin | [Use any Artillery feature](#use-any-artillery-feature) |
 
 #### A browser flow with a form
@@ -2073,22 +1984,12 @@ Each browser vuser runs a real Chromium page, so it needs much more CPU than an 
 - If the step p95 rises and the API p95 stays flat, the load machine is the limit. Lower the rate, or use a bigger machine.
 - A standard GitHub Actions runner has 2 to 4 CPU cores. See [Browser scenarios in CI](#browser-scenarios-in-ci).
 
-### Keep a stable baseline
-
-- Record the baseline on the main branch, on the same kind of machine that judges the pull requests. A laptop and a CI runner give other numbers.
-- Keep the workload fixed. A new workload starts a new history, and the run does not compare p95 until it has one.
-- Use `LOAD_TESTS_FORCE_BASELINE=1` rarely. It adds a failed run to the history, and that run becomes part of the mean.
-- Keep the `p95` limit. The baseline is the mean of the last 10 runs, so a slow rise moves the mean with it. The `p95` limit stays fixed.
-- On a noisy machine, raise `minDelta` before `p95Regression`. A regression must be above both, and `minDelta` guards fast endpoints, where a few milliseconds are a large percent.
-- Use one machine size for the baseline. See [Where the file lives, and how CI keeps it](#where-the-file-lives-and-how-ci-keeps-it).
-
 ### Production build or dev server
 
 Use a production build for browser scenarios. A dev server such as `ng serve` sends many separate, unbundled files. So the Web Vitals and the request counts differ from the ones of a production build.
 
 - Build the app for production, and serve the files with a static server. The [CI example](#browser-scenarios-in-ci) does this.
 - Use a dev server only to check that a scenario works while we write it.
-- The baseline keeps the URL of the web app. A switch from a dev URL to a production URL resets the history of the browser scenarios.
 
 ### What the Artillery counters mean
 
@@ -2128,9 +2029,10 @@ The type checks the keys when we build. When the CLI starts, it also checks the 
 | Key | Type | Default | Use |
 | --- | --- | --- | --- |
 | `phases` | `Phase[]` | none, required | The default load. A list with at least one phase. See [Set the load](#set-the-load). |
-| `thresholds` | `{default?: Thresholds, step?, vitals?}` | `p95` 500, `p95Regression` 20, `minDelta` 10, `errorRate` 1 | `default` holds the limits for each endpoint. `step` and `vitals` hold the limits of browser metrics. See [Thresholds and the verdict](#thresholds-and-the-verdict) and [Limits of a browser scenario](#limits-of-a-browser-scenario). |
+| `thresholds` | `{default?: Thresholds, step?, vitals?}` | `p95` 500, `errorRate` 1 | `default` holds the limits for each endpoint. `step` and `vitals` hold the limits of browser metrics. See [Thresholds and the verdict](#thresholds-and-the-verdict) and [Limits of a browser scenario](#limits-of-a-browser-scenario). |
 | `maxHeavyApis` | whole number, 0 or more | `0` | How many heavy APIs the package can have. |
-| `datasources` | `Record<string, Datasource>` | none | The databases that `ctx.sql` can use. See [Datasources](#datasources). |
+| `loginWaitSeconds` | number, 0 or more | `300` | The most seconds that the login of the pool waits in total on a 429. See [Login errors and the rate limit](#login-errors-and-the-rate-limit). |
+| `runAllWhen` | `string[]` | none | Patterns of files that make every scenario run with `--since`. See [Run only what a change affects](#run-only-what-a-change-affects). |
 | `tokenCheck` | `TokenCheck` | the default token check | Replaces the default check of the token life. See [Log in](#log-in). |
 | `reporters` | `Reporter[]` | `[consoleReporter()]` | Who gets the result. An empty list prints no result. See [Report](#report). |
 | `engine` | `Engine` | `artillery()` | Who runs the load. See [Engines](#engines). |
@@ -2158,13 +2060,7 @@ const config: LoadTestConfig = {
     default: {p95: P95_TARGETS.userBlockingApi, errorRate: 1},
   },
   maxHeavyApis: 0,
-  datasources: {
-    orders: {
-      type: 'postgres',
-      url: process.env.ORDERS_DB_URL,
-      database: 'orders',
-    },
-  },
+  runAllWhen: ['packages/core/**', 'migrations/**'],
   tokenCheck: ({claims}) => {
     if (claims.exp === undefined) {
       throw new Error('the token has no exp claim');
@@ -2180,8 +2076,6 @@ export default config;
 
 `config.ts` has no `headers`. We set headers on `load.describe` or on `load.it`.
 
-The library reads no database variable. `config.ts` reads the environment, and we choose the name of the variable. When `config.ts` loads, it opens nothing.
-
 The check of `artillery.env` gives these problems.
 
 - `artillery.env must be an array of variable names, for example ["MY_REGION"]`
@@ -2195,7 +2089,7 @@ Layers merge by field. The strongest layer wins, and a field that no layer sets 
 
 | Layer | HTTP endpoint | Browser metric |
 | --- | --- | --- |
-| 1. Strongest | the request (`p95`, `errorRate`, `p95Regression`, `minDelta`) | one metric: `steps['<name>']`, `flow` |
+| 1. Strongest | the request (`p95`, `errorRate`) | one metric: `steps['<name>']`, `flow` |
 | 2 | `load.it` `thresholds` | `load.browser` `step`, `vitals` |
 | 3 | `load.describe` `thresholds` (inner first) | `load.describe` `step`, `vitals` |
 | 4 | `thresholds.default` of `config.ts` | `thresholds.step`, `thresholds.vitals` of `config.ts` |
@@ -2207,17 +2101,14 @@ Layers merge by field. The strongest layer wins, and a field that no layer sets 
 
 | What | Value |
 | --- | --- |
-| HTTP `p95`, `errorRate`, `p95Regression`, `minDelta` | 500 ms, 1%, 20%, 10 ms |
+| HTTP `p95`, `errorRate` | 500 ms, 1% |
 | `maxHeavyApis` | 0 |
 | Browser step p95 | 1500 ms (`UI_TARGETS.criticalAction`) |
 | FCP, LCP, CLS, TTFB, INP p95 | 1800 ms, 2500 ms, 0.1, 800 ms, 200 ms (INP only when a layer names it; `false` turns one off) |
-| Baseline history | the last 10 runs of each endpoint or metric |
 | Token refresh | at most once a minute |
 | Token check margin | the load time plus 120 s must stay below the token life |
 | `ctx.api`, `ctx.apis` and login timeout | 60 s |
 | Browser start timeout of the check | 60 s, `chromium({startTimeoutMs})` |
-| Postgres connection timeout | 10,000 ms |
-| Postgres statement wait of the client | 60 s |
 | End element that never shows | the vuser fails after 30 s |
 | Chromium start check | 60 s |
 | Artillery stop after a signal | SIGKILL after 10 s |
@@ -2226,17 +2117,18 @@ Layers merge by field. The strongest layer wins, and a field that no layer sets 
 ### Command line and environment
 
 ```text
-load-testing run <package-dir>
-load-testing report <package-dir>
+load-testing run <package-dir> [--since <ref>]
 ```
 
-Each command takes one folder, the package that holds `src/__tests__/load`. The scripts of the quickstart use `.`. `run` runs the load. `report` prints the detail of the last run, and starts no load. See [The detail of a run](#the-detail-of-a-run). `load-testing --help` prints the usage and exits with 0. The usage lists the `LOAD_TESTS_` variables below. A wrong option, or an extra argument after the folder, prints its message and the usage, with exit code 1. A command other than `run` and `report`, or a missing folder, prints only the usage, with exit code 1.
+`--since <ref>` runs only the scenarios that the commits after `<ref>` affect. See [Run only what a change affects](#run-only-what-a-change-affects).
+
+The command takes one folder, the package that holds `src/__tests__/load`. The scripts of the quickstart use `.`. `load-testing --help` prints the usage and exits with 0. The usage lists the `LOAD_TESTS_` variables below. A wrong option, or an extra argument after the folder, prints its message and the usage, with exit code 1. A command other than `run`, or a missing folder, prints only the usage, with exit code 1.
 
 #### Exit codes
 
 | Code | Meaning |
 | --- | --- |
-| 0 | The run passed. |
+| 0 | The run passed, or `--since` selected no scenario. |
 | 1 | The run failed, a reporter failed, or the CLI stopped on an error before or during the run. |
 | 129 | SIGHUP. |
 | 130 | Ctrl-C (SIGINT). |
@@ -2248,16 +2140,13 @@ The CLI prints only the message of an error that it throws on purpose. For any o
 
 | Variable | Use |
 | --- | --- |
-| `LOAD_TESTS_BASE_URL` | The API under test. Required when a `load.it` scenario runs, when a browser scenario has `before` or `after`, and when `LOAD_TESTS_USERNAME` is set. |
+| `LOAD_TESTS_BASE_URL` | The API under test. Required when a `load.it` scenario runs, when a browser scenario has `before` or `after`, and when `LOAD_TESTS_USERS_FILE` is set. |
 | `LOAD_TESTS_UI_URL` | The web app under test, for example `http://localhost:4200`. Required when a browser scenario runs. |
 | `LOAD_TESTS_AUTH_SERVICE_URL` | The app that serves `/auth/login` and `/auth/token`. Default is the base URL. |
 | The variables that `apis` names | The URL of each other backend, for `ctx.apis.<name>`. Required when the run needs the API. |
-| `LOAD_TESTS_USERNAME` | Set it to log in. Then the three variables below are required too. |
-| `LOAD_TESTS_PASSWORD` | The password of the test user. |
+| `LOAD_TESTS_USERS_FILE` | Set it to log in. The path of a JSON file with the pool of test users. Then the two variables below are required too. See [The pool of users](#the-pool-of-users). |
 | `LOAD_TESTS_CLIENT_ID` | The client id for the login. |
 | `LOAD_TESTS_CLIENT_SECRET` | The client secret for the login. |
-| `LOAD_TESTS_UPDATE_BASELINE` | `1` adds the run to the baseline history. |
-| `LOAD_TESTS_FORCE_BASELINE` | `1` adds a failed run to the history too. It works only with `LOAD_TESTS_UPDATE_BASELINE=1`. |
 | `CI` | Any value other than empty, `0` or `false` makes a `.only` and a run with every scenario skipped fail. The letter case does not matter. |
 | `PLAYWRIGHT_BROWSERS_PATH` | The folder of the Playwright browsers, when it is not the default. The Chromium check and Artillery both read it. |
 | `XDG_CACHE_HOME` | The cache folder of the user. On Linux, Playwright looks for its browsers there. The Chromium check and Artillery both read it. |
@@ -2271,9 +2160,6 @@ The CLI prints only the message of an error that it throws on purpose. For any o
 ```sh
 # Build, run, compare, and exit with 1 on a failure.
 npm run test:load
-
-# The same, and add the run to the baseline.
-LOAD_TESTS_UPDATE_BASELINE=1 npm run test:load
 ```
 
 #### The environment of Artillery
@@ -2295,7 +2181,7 @@ Artillery gets only the names below from the CLI. The match ignores the letter c
 - To pass more variables, we list their exact names in `artillery.env` of `config.ts`, for example `artillery: {env: ['MY_REGION']}`. The CLI passes such a name only when it has the variable. A name that starts with `LOAD_TESTS_` is a config error.
 - `NO_PROXY` and `ALL_PROXY` are not in the list. Artillery reads neither of them. A project that needs one lists its name in `artillery.env`.
 - A proxy URL with a password (`HTTP_PROXY`, `HTTPS_PROXY`) and `NODE_OPTIONS` pass to Artillery as they are. So we use a proxy without a password, and we keep secrets out of `NODE_OPTIONS`.
-- The package sets `LOAD_TESTS_BASE_URL` for a `load.it` scenario, and `LOAD_TESTS_UI_URL` for a browser scenario. It sets `LOAD_TESTS_TOKEN` only for a scenario that uses `token()`. The runner sets `ARTILLERY_DISABLE_TELEMETRY` to `true`.
+- The package sets `LOAD_TESTS_BASE_URL` for a `load.it` scenario, and `LOAD_TESTS_UI_URL` for a browser scenario. It sets `LOAD_TESTS_TOKENS`, a JSON list of the access tokens of the pool, only for a scenario that uses `token()`. The runner sets `ARTILLERY_DISABLE_TELEMETRY` to `true`.
 - The worker hooks (`beforeEach`, `afterEach`, `beforeRequest`, `afterResponse`, `functions` and `processor`) run inside Artillery. They see only these names too. So does the flow of a browser scenario.
 
 ### Errors
@@ -2304,11 +2190,11 @@ Every error that the package throws on purpose extends `LoadTestError`. The CLI 
 
 | Class | When |
 | --- | --- |
-| `ConfigError` | `config.ts` (also `artillery.env`, `artillery.browsers` and `apis`), the folder layout, the environment, a datasource, `token()` with no login, or a name that `ctx.apis` does not have. |
+| `ConfigError` | `config.ts` (also `artillery.env`, `artillery.browsers` and `apis`), the folder layout, the environment, `token()` with no login, or a name that `ctx.apis` does not have. |
 | `ScenarioError` | A scenario file, a request, a worker hook, a scenario name, a `{{` string or a capture. |
 | `HttpError` | A response of `ctx.api` or `ctx.apis.<name>` with a status that is not 2xx. |
 | `LoginError` | The login or the refresh of the token failed, also on a redirect. |
-| `RunError` | A fault of the engine, a report, the baseline file or a token check. Also a `ctx.api` or `ctx.apis.<name>` path with no leading `/`. Also refused text in the `vars` of `before` or in the token. Also a 2xx body that is not JSON. |
+| `RunError` | A fault of the engine, a report or a token check. Also a `ctx.api` or `ctx.apis.<name>` path with no leading `/`. Also refused text in the `vars` of `before` or in the token. Also a 2xx body that is not JSON. |
 
 - `ConfigError` and `ScenarioError` have `problems`, one line for each problem. The message is the header, then one indented line for each problem.
 - `HttpError` has `method`, `path` (with the query), `status`, `statusText`, `headers`, `body` (the text) and `data`. `data` is the parsed body when the response says it is JSON, else `undefined`. Its message holds the first 200 characters of the body.
@@ -2323,8 +2209,9 @@ import {HttpError, load} from '@sourceloop/load-testing';
 
 load.it('read an order', [load.get('/orders')], {
   async before(ctx) {
+    const {token} = ctx.auth();
     const api = ctx.api.with({
-      headers: {authorization: `Bearer ${ctx.token}`},
+      headers: {authorization: `Bearer ${token}`},
     });
     try {
       await api.post('/orders', {reference: 'loadtest-order'});
@@ -2338,7 +2225,7 @@ load.it('read an order', [load.get('/orders')], {
 
 ### Engines
 
-An engine runs the load of one scenario and returns what it measured. The default is `artillery()`. The scenarios, the thresholds, the baseline and the reports do not depend on it. To write an engine, we return an object with a `name` and a `run` function, and set it as `engine` in `config.ts`.
+An engine runs the load of one scenario and returns what it measured. The default is `artillery()`. The scenarios, the thresholds and the reports do not depend on it. To write an engine, we return an object with a `name` and a `run` function, and set it as `engine` in `config.ts`.
 
 This engine is a stub. It sends nothing and measures nothing. It returns fixed numbers for one endpoint, so any other endpoint of a scenario fails with `no requests`.
 
@@ -2366,12 +2253,11 @@ const config: LoadTestConfig = {
 export default config;
 ```
 
-- `run` gets an `EngineRun`. It has `pkgDir`, `scenario`, `config`, `phases`, `runVars` (what `before` set), `endpointIds`, `baseUrl`, `token` (undefined without a login) and `signal`.
+- `run` gets an `EngineRun`. It has `pkgDir`, `scenario`, `config`, `phases`, `runVars` (what `before` set), `endpointIds`, `baseUrl`, `tokens` (the access tokens of the pool; empty without a login) and `signal`.
 - `run` returns a `Measurement`. It has `endpoints` (a map of the endpoint id to `{count, failed, p95}`), `hookErrors`, `vusers` and `seconds`. It can also have `metrics`, a map of the name of a browser metric to its stats. An engine with no browser leaves it out.
 - The package checks the `{{` strings of the scenario for every engine. It checks the run-time values only for the Artillery engine: `vars`, captured values and the token. A custom engine must refuse such text itself, if its tool reads templates. See [Text that the engine refuses](#text-that-the-engine-refuses).
 - On `signal`, the engine stops its work and throws. It throws `ScenarioError` for a scenario that it cannot run, and `RunError` when the load fails.
 - `load.step` and the `artillery` options work only with the Artillery engine. Nothing checks this yet.
-- The baseline file does not record the engine.
 
 ### Use any Artillery feature
 
@@ -2431,11 +2317,11 @@ The package exports these types. We import them with `import type`, and the valu
 
 | Use | Types |
 | --- | --- |
-| Hooks and `ctx` | `RunContext`, `Vars`, `UserContext`, `BeforeEachContext`, `HookRequest`, `HookResponse`, `Hooks`, `Api`, `ApiOptions`, `ApiClientOptions`, `Sql`, `QueryResult` |
+| Hooks and `ctx` | `RunContext`, `Vars`, `UserContext`, `BeforeEachContext`, `HookRequest`, `HookResponse`, `Hooks`, `Api`, `ApiOptions`, `ApiClientOptions` |
 | Scenarios and requests | `ScenarioOptions`, `GroupOptions`, `RequestOptions`, `LoadRequest`, `Method`, `ParallelGroup`, `FlowItem`, `StepInput`, `RawStep`, `Scenario` (`HttpScenario` or `BrowserScenario`), `HttpScenario`, `Phase`, `Thresholds`, `HeaderMap` |
 | Browser scenarios | `BrowserScenario`, `BrowserOptions`, `BrowserFlow`, `BrowserFlowContext`, `BrowserPage`, `BrowserStep`, `StepOptions`, `BrowserLimitOptions`, `MetricThresholds`, `WebVital` |
 | Values | `Value`, `Var`, `Capture`, `Token`, `Template`, `Uuid`, `RandomNumber`, `RandomString` |
-| `config.ts` | `LoadTestConfig`, `TokenCheck`, `ArtilleryConfig`, `Datasource`, `PostgresDatasource`, `PostgresOptions`, `CustomDatasource`, `SqlConnector`, `Connection` |
+| `config.ts` | `LoadTestConfig`, `TokenCheck`, `ArtilleryConfig` |
 | Engines and reporters | `Engine`, `EngineRun`, `Measurement`, `Reporter`, `RunResult`, `ScenarioResult`, `EndpointResult`, `EndpointStats`, `MetricStats`, `VuserCounts`, `HeavyApis`, `HeavyEndpoint` |
 
 ## Help and internals
@@ -2444,15 +2330,13 @@ The package exports these types. We import them with `import type`, and the valu
 
 | What we see | Why, and what to do |
 | --- | --- |
-| `Set LOAD_TESTS_BASE_URL` (or other `LOAD_TESTS_` names) | A required variable is missing or empty. Set it. With `LOAD_TESTS_USERNAME` set, the password, the client id and the client secret are required too. A browser scenario needs `LOAD_TESTS_UI_URL`. |
+| `Set LOAD_TESTS_BASE_URL` (or other `LOAD_TESTS_` names) | A required variable is missing or empty. Set it. With `LOAD_TESTS_USERS_FILE` set, the client id and the client secret are required too. A browser scenario needs `LOAD_TESTS_UI_URL`. |
 | ``Chromium does not start with Playwright 1.62.1, the version that Artillery uses. Install it with `npx playwright@1.62.1 install chromium`. On a new Linux machine, add --with-deps.`` | The check before a browser scenario fails with this line, and the next line gives the error of Playwright. When Chromium does not start in 60 s, a detail line `Chromium did not start in 60 s.` comes with it. Run the command. With browsers in another folder, set `PLAYWRIGHT_BROWSERS_PATH`. On Linux, Playwright also looks in `XDG_CACHE_HOME`. Playwright also reads `PLAYWRIGHT_HOST_PLATFORM_OVERRIDE` and `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS`, and a Nix or an unusual CI image often needs `LD_LIBRARY_PATH`. These names are not in the default list of [The environment of Artillery](#the-environment-of-artillery). We pass them with `artillery.env` in `config.ts`. |
 | `'<selector>' is not visible after the action of step <name>: ...` | The end element of a step never showed. The vuser failed after 30 s. The text after the colon is the first line of the Playwright error. Check the selector, and check that the action shows the element. |
-| `No report file: the last run of this scenario failed or did not start.` | `load-testing report` found no report file for a selected scenario. The last run of this scenario failed or did not start. A run deletes the report file when Artillery exits with a non-zero code, or when the run is stopped. Run the load again. |
 | ``artillery.config.engines.playwright.aggregateByName is not allowed: the library sets it`` or ``artillery.config.target is not allowed: the library sets it from LOAD_TESTS_BASE_URL or LOAD_TESTS_UI_URL`` | `artillery.config` sets an option that the package owns. Remove it. |
 | `Error: '<selector>' is visible before the action`, in the output of Artillery | The end element of a step shows before its action. The step would end at once. Pick an element that only the action shows. |
 | `FAIL: no samples` on a step | No vuser ran the step, or a name in `steps` has a typo. A step that fails its vusers also gives no samples. |
 | `FAIL: lost samples: N for M completed vusers` | Some vusers did not run the step, or a page did not report a Web Vital. Every vuser must run every step. |
-| `No report file in <dir>. Run load-testing run first.` | `load-testing report` found no report of a run. Run the load first. |
 | `No src/__tests__/load/config.ts. Add one that exports the default config ...` | The package has no `config.ts` in the load folder. Add one with `phases`. See [config.ts](#configts). |
 | `No *.load.ts file in <dir>` | The load folder has no scenario file. Add a file that ends in `.load.ts`. |
 | `<file> registers no scenario. Add a load.it(...) or load.browser(...) call to it. If it has one, two copies of @sourceloop/load-testing are installed.` | The file has no `load.it` or `load.browser`, or it imports another copy of the package. In a workspace, install one copy, so that the CLI and the scenario file share it. |
@@ -2461,7 +2345,6 @@ The package exports these types. We import them with `import type`, and the valu
 | `The load takes 1200 s, and the end of the run needs 120 s more, but the access token expires in 800 s.` | The access token would end before the load ends. Shorten the phases, or give the login client a longer token life. The numbers in the message are ours. |
 | `POST <url>/auth/login gave 401: ...` | The username, the password, the client id or the client secret is wrong, or the user cannot use that client. Check the variables and the test user. |
 | `POST <url>/auth/login gave 429: ...` | Something limits the rate of the login. The package does not retry. We wait, or we raise the limit for the test environment. |
-| `The "pg" package is not installed in <dir>. Install it in the project: npm install --save-dev pg` | A Postgres datasource needs the driver in the project. Run `npm install --save-dev pg` in the package. |
 | `POST /orders: json.name contains "{{": use template...` | A plain string has `{{`. Build the text with the tag `template`. |
 | `POST /orders: json key "{{ x }}" contains "{{": rename the key` | An object key has `{{`. A key cannot use `template`. Rename the key. |
 | `vars.<path> contains text that the engine reads as a template ...` | A text in the `vars` of `before` has the refused text. Put the value in `vars` without it, or leave it out. See [Text that the engine refuses](#text-that-the-engine-refuses). |
@@ -2482,14 +2365,12 @@ The package exports these types. We import them with `import type`, and the valu
 | `beforeEach returned a promise: worker hooks must be synchronous` | A worker hook is `async`, or returns a promise. Make it synchronous. Do async work in `before`. |
 | `... can use only its arguments and the globals of a worker, such as URL and Buffer: x is not defined` | A worker hook uses an import or a variable of its module. Pass the value through `vars`, or use only globals. |
 | `randomNumber: the minimum and the maximum must be whole numbers from 0 up` | A value is negative or has a fraction. Use whole numbers from 0 up, with `min` not above `max`. |
-| `The scenario name "<name>" gives the file name "baseline", ...` | The file name `baseline` is for the baseline file. Rename the scenario. |
 | `phases[i].duration must be a whole number above 0, or a text such as "1m"` | A phase has a bad time or count. Use a whole number above 0, or a text that reads as more than 0. The same holds for `pause` and `arrivalCount`. A phase with `rampTo` needs `arrivalRate`. |
 | `phases[i] needs arrivalRate or arrivalCount` | A phase has neither a rate nor a count. Add `arrivalRate`, or `arrivalCount`. |
 | `POST /orders failed: connect ECONNREFUSED 127.0.0.1:4010` | The request did not reach the app. Check the base URL and that the app runs. The text after `failed:` is the cause. |
 | `POST /orders timed out after 60 s` | The app did not answer in time. Check the app. For a slow call, set `timeoutMs` in the options of the call. |
 | `Artillery wrote no valid report: <reportPath>` | Artillery wrote no report, or the file is broken. Read the output of Artillery above the line. |
 | `<reportPath> has no aggregate: Artillery wrote no result` | The report parses but holds no result. Read the output of Artillery above the line. |
-| `ctx.sql: the connection to <name> broke: ...` | An idle database connection broke. The CLI prints this on stderr. The next call opens a new connection. Check the database if it repeats. |
 | `No scenario runs: every scenario has .skip` | `CI` is set and every scenario is skipped. Remove a `.skip`. |
 | `.only is not allowed when CI is set: ...` | A `.only` stays in a file. Remove it before the push. |
 | `vars("x") is set by neither before nor beforeEach` | A request reads `vars('x')` that no hook sets. Set it in `before` or return it from `beforeEach`. |
@@ -2497,13 +2378,11 @@ The package exports these types. We import them with `import type`, and the valu
 | `capture source "GET /orders" is not earlier in the flow` | The request exists, but it comes after the `captureFrom`. Move it before. |
 | `capture source "GET /orders" runs in parallel with this request` | The source is in the same `load.parallel` group. Capture from a request before the group. A request of the group with the same id does not matter when an earlier request outside the group has it. |
 | `Two scenarios have the same name: ...` | Two scenarios give the same generated file name. Rename one. |
-| `token() needs a login: ...` | A scenario sends `token()`, but `LOAD_TESTS_USERNAME` is not set. Set the login variables. |
+| `token() needs a login: ...` | A scenario sends `token()`, but `LOAD_TESTS_USERS_FILE` is not set. Set the login variables. |
 | `FAIL: 3 heavy APIs, but maxHeavyApis is 2. ...` | The package has more heavy APIs than it can have. Lower the `p95` limit of an endpoint to 1000 ms or less. Raise `maxHeavyApis` only for performance debt that the pull request lists. |
 | `Artillery stopped with code 1: <script>` | Artillery failed. Its own output, above this line, tells why. |
 | `artillery is missing from @sourceloop/load-testing: reinstall the package` | Artillery is not installed. Reinstall the package, and do not prune its dependencies. |
-| `<baseline file> has a baseUrl or uiUrl that is not a text. Delete it, and record a new one.` or `src/__tests__/load/.out/baseline.json ... Delete it, and record a new one.` | The baseline file is not valid. It can be bad JSON, or it can miss the history or the workloads, or its `baseUrl` or `uiUrl` is not a text. Delete it, and run with `LOAD_TESTS_UPDATE_BASELINE=1`. |
 | `GET /orders: artillery.raw.name is not allowed: the request options set it` | A request sets `url`, `name`, `headers`, `json` or `qs` in `artillery.raw`. Remove it, and use the request options. |
-| Every row says `pass (workload changed)` | The phases changed since the baseline. Run once with `LOAD_TESTS_UPDATE_BASELINE=1` to start a new history. |
 
 ### Limits
 
@@ -2511,11 +2390,10 @@ The package exports these types. We import them with `import type`, and the valu
 - Artillery does not split a CSV `payload` between the workers. Each worker gets the whole payload. So we cannot use a CSV to give each vuser its own row.
 - The scenarios of a package run one after another, never in parallel.
 - The CLI kills the Artillery processes when it exits, but it cannot catch a SIGKILL of itself. After such a kill, Artillery processes can stay alive.
-- The engine sends one access token for the whole load of a scenario. The token life limits the length of a load. See [Log in](#log-in).
+- Each vuser sends one access token of the pool for the whole load of a scenario. The token life limits the length of a load. See [Log in](#log-in).
 - The count of heavy APIs leaves a gap. If a fix lands and `maxHeavyApis` stays the same, a new heavy API can take its place without a failure. See [Heavy APIs](#heavy-apis).
 - The p95 is the time to the first byte of the response. It does not include the download of the body. Artillery reads this time from its HTTP engine.
 - The p95 includes the whole network path. For a request to a facade, that is the client to the facade, the facade to a service, and the service to its database. The number also depends on the machine that runs the load. A pass on a CI runner does not prove the target in production.
-- A baseline is good only for the machine that made it, and only for one workload.
 - The package does not test a background job that an endpoint starts. It times only the response of the endpoint.
 - A value that a request captures through `artillery.raw` on the request (its `capture` field) gets no check for the refused text. The package checks only `captureFrom`.
 - A `beforeEach` result with the refused text is found in the worker, not before the load starts.
@@ -2525,7 +2403,6 @@ The package exports these types. We import them with `import type`, and the valu
 - A full page load inside a flow loses the LCP, CLS and INP of the page that it leaves. A page from `context.newPage()`, and a popup, never report Web Vitals. The engine reads them only on the first page.
 - Artillery rounds each p95 to 1 decimal, so the CLS p95 moves in steps of 0.1. Its DDSketch also gives every p95 an error of about 1%.
 - Each browser vuser that runs at the same time needs about one CPU core. A small load machine makes the app look slow.
-- `load-testing report` shows only the last run, and only for the Artillery engine.
 
 ### How it works inside
 
@@ -2533,7 +2410,7 @@ The package exports these types. We import them with `import type`, and the valu
 2. For each scenario, the Artillery engine writes an Artillery script, and a processor file for the worker hooks, to `src/__tests__/load/.out/`.
 3. It runs `artillery run --output <slug>.report.json <script>` as a child process. Artillery prints its own progress.
 4. It reads the report file. Per-endpoint p95 and status counts come from the `metrics-by-endpoint` plugin of Artillery. Vusers come from the `vusers.*` counters.
-5. The judge compares the measurement with the limits and the baseline. The reporters print the result.
+5. The judge compares the measurement with the limits. The reporters print the result.
 6. A browser scenario uses the Playwright engine of Artillery. Each worker loads the built flow file at the first vuser. The `step` function records `browser.step.<name>`, and the flow records `browser.flow.<label>`. The end element check runs in the page on each animation frame.
 
 See [Source layout](#source-layout) for the files, and [How a run works](#how-a-run-works) for the order of the steps.
@@ -2548,17 +2425,18 @@ This part is for people who change the package. Each folder is one step of a run
 | `errors.ts` | All error classes, `errorMessage`, `fetchFailure`, `guardedStep` and `MS_PER_SECOND`. |
 | `output.ts` | `print`, `printError`, `output` and `ignoreOutputErrors` (stops a dead terminal from ending the process). No other file writes to the console. |
 | `scenario/` | What a load file calls (`builder.ts`), the values (`values.ts`, `braces.ts`), headers (`headers.ts`), `token.ts`, the name of a scenario (`label.ts`), `.only` and `.skip` (`select.ts`), the load (`workload.ts`). `brand.ts`, `guards.ts` and `types.ts` mark and check the objects that the calls make, and hold the scenario types. |
-| `context/` | What `before` and `after` get as `ctx`: `api.ts`, `sql.ts`, `postgres.ts`, `driver.ts` and `cleanup.ts`. `types.ts` holds the types of `ctx`. |
+| `changes/` | `--since`: the changed files from git (`git.ts`), the choice of scenarios (`select.ts`), the patterns (`patterns.ts`), and the report with `selection.json` (`report.ts`). |
+| `context/` | What `before` and `after` get as `ctx`: `api.ts`, `apis.ts` and `cleanup.ts`. `types.ts` holds the types of `ctx`. |
 | `project/` | What the CLI reads from a package: where its files are, and the constants `BASE_URL_ENV` and `UI_URL_ENV` (`layout.ts`), `config.ts`, the scenario files (`loader.ts`), `spec.ts` and `heavy.ts`. `types.ts` holds the types of these files. |
-| `report/` | Judges the measurement against the limits and the baseline (`compare.ts`, `report.ts`), the metric names (`names.ts`, which a worker loads), and the default reporter and the reporter of `load-testing report` (`console.ts`). |
+| `report/` | Judges the measurement against the limits (`compare.ts`, `report.ts`), the metric names (`names.ts`, which a worker loads), and the default reporter (`console.ts`). |
 | `engine/` | The `Engine` type, in `types.ts`. `engine/artillery/` is the Artillery adapter. `index.ts` there is the `artillery()` engine, and `types.ts` holds the Artillery types. It also holds the transpiler, the worker hooks (`processor.ts`), `requests.ts`, the check for the refused text (`templates.ts`), the environment of the process (`env.ts`), the process (`runner.ts`) and the report reader (`measure.ts`). For browser scenarios, it also holds the flow and its steps in the worker (`browser.ts`), and the Chromium check (`chromium.ts`). |
-| `run/` | One run: the login (`target.ts`), `tokenCheck.ts`, Ctrl-C (`cancel.ts`), `prepare.ts`, `execute.ts`, the token refresh (`session.ts`), the baseline save (`baseline.ts`) and `load-testing report` (`rejudge.ts`). `types.ts` holds the types of a run. |
+| `run/` | One run: the login (`target.ts`), `tokenCheck.ts`, the users file (`users.ts`), Ctrl-C (`cancel.ts`), `prepare.ts`, `execute.ts`, and the token refresh (`session.ts`). `types.ts` holds the types of a run. |
 
 `cli.ts` is the command, and `index.ts` is what the package exports.
 
 The tests are in `src/__tests__/`. See [Contributing](#contributing).
 
-The import order is `types.ts`, `errors.ts`, `output.ts`, `scenario`, `context`, `project`, `report`, `engine`, `run`, `cli.ts`. At run time, a file imports only from the files and folders before it in this list. There is one exception, for types only. `types.ts` has `import type` lines for the `types.ts` files of later folders. They leave no trace in the built code, so they cannot make a cycle. A cycle of run-time imports is a bug. Only `cli.ts`, `index.ts` and `run/rejudge.ts` import the code of `engine/artillery/`. `rejudge.ts` reads the report files that Artillery wrote. The unit tests in `src/__tests__/unit/` use the same folders.
+The import order is `types.ts`, `errors.ts`, `output.ts`, `scenario`, `context`, `project`, `report`, `engine`, `run`, `cli.ts` (`changes` sits between `project` and `report`, and `project` also imports its `patterns.ts`). At run time, a file imports only from the files and folders before it in this list. There is one exception, for types only. `types.ts` has `import type` lines for the `types.ts` files of later folders. They leave no trace in the built code, so they cannot make a cycle. A cycle of run-time imports is a bug. Only `cli.ts` and `index.ts` import the code of `engine/artillery/`. The unit tests in `src/__tests__/unit/` use the same folders.
 
 ### Contributing
 

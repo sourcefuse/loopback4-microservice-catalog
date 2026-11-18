@@ -33,12 +33,12 @@ export function artillery(): Engine {
       } else {
         checkRunVars(input.runVars);
       }
-      checkToken(input.token);
+      input.tokens.forEach(checkToken);
       const urlName = input.scenario.browser ? UI_URL_ENV : BASE_URL_ENV;
       checkUrl(input.baseUrl, urlName);
       const env = artilleryEnv({
         url: input.baseUrl,
-        token: input.token,
+        tokens: input.tokens,
         extraNames: input.config.artillery?.env,
         urlName,
       });

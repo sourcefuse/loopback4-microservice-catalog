@@ -89,6 +89,19 @@ describe('configProblems', () => {
     expect(configProblems(GOOD)).to.deepEqual([]);
   });
 
+  for (const bad of [Number.NaN, Number.POSITIVE_INFINITY, '300', -1]) {
+    it(`refuses loginWaitSeconds ${String(bad)}`, () => {
+      expect(
+        configProblems({...GOOD, loginWaitSeconds: bad}).join('\n'),
+      ).to.match(/loginWaitSeconds/);
+    });
+  }
+
+  it('accepts loginWaitSeconds of 0 and of 300', () => {
+    expect(configProblems({...GOOD, loginWaitSeconds: 0})).to.deepEqual([]);
+    expect(configProblems({...GOOD, loginWaitSeconds: 300})).to.deepEqual([]);
+  });
+
   it('accepts an engine with a name and a run function', () => {
     const engine = {name: 'fake', run: async () => ({})};
 
@@ -194,67 +207,6 @@ describe('configProblems', () => {
     ]);
   });
 
-  it('accepts the three forms of a datasource', () => {
-    const connector = {connect: async () => ({})};
-    const datasources = {
-      a: {type: 'postgres'},
-      b: {type: 'custom', connector},
-      c: connector,
-    };
-
-    expect(configProblems({...GOOD, datasources})).to.deepEqual([]);
-  });
-
-  it('finds a datasource that is wrong, and a name that is empty', () => {
-    const forms =
-      '{type: "postgres", url}, {type: "custom", connector}, or a connector (an object with a connect function)';
-    const datasources = {
-      orders: 'postgres://x',
-      audit: {},
-      kind: {type: 'postgress'},
-      custom: {type: 'custom'},
-      custom2: {type: 'custom', connector: {connect: 1}},
-      '': {connect: async () => ({})},
-    };
-
-    expect(configProblems({...GOOD, datasources})).to.deepEqual([
-      `datasources.orders must be an object: ${forms}`,
-      `datasources.audit must be ${forms}`,
-      'datasources.kind.type must be "postgres" or "custom"',
-      'datasources.custom.connector must be an object with a connect function',
-      'datasources.custom2.connector must be an object with a connect function',
-      'datasources has a name that is empty',
-    ]);
-  });
-
-  describe('the time options of a postgres datasource', () => {
-    for (const option of ['statementTimeoutMs', 'connectionTimeoutMs']) {
-      it(`refuses ${option} that is not a whole number from 0`, () => {
-        for (const value of [-1, 1.5, NaN, Infinity, '5000']) {
-          const datasources = {db: {type: 'postgres', [option]: value}};
-
-          expect(configProblems({...GOOD, datasources})).to.deepEqual([
-            `datasources.db.${option} must be a whole number of milliseconds from 0 (0 turns the limit off)`,
-          ]);
-        }
-      });
-
-      it(`accepts ${option} 0 and 5000`, () => {
-        for (const value of [0, 5000]) {
-          const datasources = {db: {type: 'postgres', [option]: value}};
-
-          expect(configProblems({...GOOD, datasources})).to.deepEqual([]);
-        }
-      });
-    }
-  });
-
-  it('finds datasources that is not an object', () => {
-    expect(configProblems({...GOOD, datasources: 'x'})).to.deepEqual([
-      'datasources must be an object: {name: {type: "postgres", url: ...}}',
-    ]);
-  });
-
   it('lists every wrong value', () => {
     const bad = {
       phases: [{arrivalRate: -1, duration: -1}],
@@ -271,12 +223,12 @@ describe('configProblems', () => {
   it('finds browser limits that are out of range', () => {
     const bad = {
       ...GOOD,
-      thresholds: {step: {p95: -1}, vitals: {CLS: {minDelta: -0.1}}},
+      thresholds: {step: {p95: -1}, vitals: {CLS: {p95: -0.1}}},
     };
 
     expect(configProblems(bad)).to.deepEqual([
       'thresholds.step.p95 must be 0 or more',
-      'thresholds.vitals.CLS.minDelta must be 0 or more',
+      'thresholds.vitals.CLS.p95 must be 0 or more',
     ]);
   });
 
@@ -320,8 +272,8 @@ describe('configProblems', () => {
     };
 
     expect(configProblems(bad)).to.deepEqual([
-      'thresholds.step.errorRate is not a limit of a metric: use p95Regression, minDelta, p95',
-      'thresholds.vitals.CLS.errorRate is not a limit of a metric: use p95Regression, minDelta, p95',
+      'thresholds.step.errorRate is not a limit of a metric: use p95',
+      'thresholds.vitals.CLS.errorRate is not a limit of a metric: use p95',
     ]);
   });
 
@@ -524,12 +476,33 @@ describe('configProblems', () => {
   it('rejects thresholds below 0', () => {
     const bad = {
       phases: GOOD.phases,
-      thresholds: {default: {minDelta: -5, p95: Number.NaN}},
+      thresholds: {default: {errorRate: -5, p95: Number.NaN}},
     };
 
     expect(configProblems(bad)).to.deepEqual([
-      'thresholds.default.minDelta must be 0 or more',
       'thresholds.default.p95 must be 0 or more',
+      'thresholds.default.errorRate must be from 0 to 100',
+    ]);
+  });
+
+  it('accepts runAllWhen patterns, and finds one that is wrong', () => {
+    expect(
+      configProblems({...GOOD, runAllWhen: ['packages/core/**', '.env']}),
+    ).to.deepEqual([]);
+    expect(
+      configProblems({
+        ...GOOD,
+        runAllWhen: ['/abs', '../up', '!no', '', 1],
+      }),
+    ).to.deepEqual([
+      'runAllWhen[0] must be relative to the root, with no leading ! : /abs',
+      'runAllWhen[1] must stay inside the root: ../up',
+      'runAllWhen[2] must be relative to the root, with no leading ! : !no',
+      'runAllWhen[3] must be a pattern that is not empty',
+      'runAllWhen[4] must be a pattern that is not empty',
+    ]);
+    expect(configProblems({...GOOD, runAllWhen: 'x'})).to.deepEqual([
+      "runAllWhen must be a list of patterns, for example ['src/**']",
     ]);
   });
 
@@ -577,8 +550,6 @@ describe('P95_TARGETS', () => {
 describe('resolveThresholds', () => {
   it('uses the library defaults when nothing is set', () => {
     expect(resolveThresholds({})).to.deepEqual({
-      p95Regression: 20,
-      minDelta: 10,
       errorRate: 1,
       p95: 500,
     });
@@ -586,13 +557,8 @@ describe('resolveThresholds', () => {
 
   it('lets a request override one field and keep the rest', () => {
     expect(
-      resolveThresholds(
-        {minDelta: 5, errorRate: 0},
-        {p95: P95_TARGETS.supportingApi},
-      ),
+      resolveThresholds({errorRate: 0}, {p95: P95_TARGETS.supportingApi}),
     ).to.deepEqual({
-      p95Regression: 20,
-      minDelta: 5,
       errorRate: 0,
       p95: 1000,
     });

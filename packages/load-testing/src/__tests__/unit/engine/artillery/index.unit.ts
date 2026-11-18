@@ -43,6 +43,7 @@ describe('artillery engine', () => {
         runVars: {},
         endpointIds: [],
         baseUrl: 'http://localhost:4200',
+        tokens: [],
         signal: new AbortController().signal,
       })
       .then(
@@ -77,6 +78,7 @@ describe('artillery engine', () => {
         runVars: {},
         endpointIds: [],
         baseUrl: 'http://localhost:4200',
+        tokens: [],
         signal: new AbortController().signal,
       });
     const stops = new Error('stop here');
@@ -149,6 +151,7 @@ describe('artillery engine', () => {
         runVars: {password: 'pa$$word', t: '{{x}}'},
         endpointIds: [],
         baseUrl: 'http://localhost:4200',
+        tokens: [],
         signal: new AbortController().signal,
       })
       .then(

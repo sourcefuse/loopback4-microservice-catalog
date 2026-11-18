@@ -6,9 +6,12 @@ import {readConfig} from '../project/config';
 import {loadScenarios} from '../project/loader';
 import {selectScenarios} from '../scenario/select';
 import {coverage, readSpec, SPEC_FILE, specEndpoints} from '../project/spec';
-import {login, readTarget} from './target';
+import {loginAll, readTarget} from './target';
 import type {LoadTestConfig} from '../types';
 import {print} from '../output';
+import {changesSince} from '../changes/git';
+import {selectByChanges} from '../changes/select';
+import type {ChangeSelection} from '../changes/select';
 import {ConfigError} from '../errors';
 import {usesToken} from '../scenario/token';
 import {labelOf} from '../scenario/label';
@@ -17,11 +20,16 @@ import type {Coverage, HeavyEndpoint, LoadedScenario} from '../project/types';
 import type {RunResult} from '../report/types';
 import type {Session, Target} from './types';
 
+/** Seconds that the login may wait in total on 429, when `config.ts` does not say. */
+const DEFAULT_LOGIN_WAIT_SECONDS = 300;
+
 /** The config and the scenarios of a package, before any URL or login. */
-type LoadedPackage = {
+export type LoadedPackage = {
   config: LoadTestConfig;
   scenarios: LoadedScenario[];
   skipped: LoadedScenario[];
+  /** What `--since` selected. Undefined without `--since`. */
+  selection?: ChangeSelection;
   /**
    * How many endpoints of `src/openapi.json` the scenarios cover. Undefined
    * when the package has no spec.
@@ -34,8 +42,8 @@ type LoadedPackage = {
 /** What a run needs before its first scenario. */
 type Prepared = LoadedPackage & {
   target: Target;
-  /** Undefined when the run has no login. */
-  session?: Session;
+  /** One session for each pool user. Empty when the run has no login. */
+  sessions: Session[];
 };
 
 /**
@@ -45,14 +53,25 @@ type Prepared = LoadedPackage & {
 export function loadPackage(
   pkgDir: string,
   env: NodeJS.ProcessEnv,
+  since?: string,
 ): LoadedPackage {
   const config = readConfig(pkgDir);
   const all = loadScenarios(pkgDir, config);
-  const {run: scenarios, skipped} = selectScenarios(all, env);
+  const {run: picked, skipped} = selectScenarios(all, env);
   if (all.some(({scenario}) => scenario.only)) {
-    print(`Only ${scenarios.length} of ${all.length} scenarios run (.only)`);
+    print(`Only ${picked.length} of ${all.length} scenarios run (.only)`);
   }
-  const declared = scenarios.flatMap(s => [...s.endpoints.keys()]);
+  const changed =
+    since === undefined
+      ? undefined
+      : selectByChanges(
+          {picked, skipped},
+          changesSince(pkgDir, since),
+          pkgDir,
+          config.runAllWhen ?? [],
+        );
+  const scenarios = changed?.selected ?? picked;
+  const declared = picked.flatMap(s => [...s.endpoints.keys()]);
   const spec = readSpec(pkgDir);
   const endpointCoverage =
     spec === undefined ? undefined : coverage(declared, specEndpoints(spec));
@@ -65,6 +84,7 @@ export function loadPackage(
     config,
     scenarios,
     skipped,
+    selection: changed?.selection,
     endpointCoverage,
     heavyEndpoints: findHeavyEndpoints(all),
   };
@@ -85,16 +105,16 @@ export function coverageOf(
 
 /**
  * Loads the package, reads the URLs that its scenarios need, and logs in
- * when `LOAD_TESTS_USERNAME` is set. A scenario that uses `token()` with no
+ * when `LOAD_TESTS_USERS_FILE` is set. A scenario that uses `token()` with no
  * login is a `ConfigError`, before any login or hook. `signal` stops the
- * login.
+ * login. `loaded` is the package, when the caller has loaded it already.
  */
 export async function prepare(
   pkgDir: string,
   env: NodeJS.ProcessEnv,
   signal?: AbortSignal,
+  loaded: LoadedPackage = loadPackage(pkgDir, env),
 ): Promise<Prepared> {
-  const loaded = loadPackage(pkgDir, env);
   const {scenarios} = loaded;
   const target = readTarget(
     env,
@@ -113,14 +133,25 @@ export async function prepare(
   const needLogin = scenarios.filter(({scenario}) => usesToken(scenario));
   if (target.login === undefined && needLogin.length > 0) {
     throw new ConfigError(
-      'token() needs a login: set LOAD_TESTS_USERNAME, LOAD_TESTS_PASSWORD, LOAD_TESTS_CLIENT_ID and LOAD_TESTS_CLIENT_SECRET, or remove token() from these scenarios:',
+      'token() needs a login: set LOAD_TESTS_USERS_FILE, LOAD_TESTS_CLIENT_ID and LOAD_TESTS_CLIENT_SECRET, or remove token() from these scenarios:',
       needLogin.map(({scenario}) => labelOf(scenario)),
     );
   }
+  // A run that selects nothing does not log in.
+  const sessions =
+    target.login && scenarios.length > 0
+      ? await loginAll(
+          {...target, login: target.login},
+          loaded.config.loginWaitSeconds ?? DEFAULT_LOGIN_WAIT_SECONDS,
+          signal,
+        )
+      : [];
   return {
     ...loaded,
-    target,
-    session:
-      target.login && (await login({...target, login: target.login}, signal)),
+    // The passwords are needed only for the login above.
+    target: target.login
+      ? {...target, login: {...target.login, users: []}}
+      : target,
+    sessions,
   };
 }

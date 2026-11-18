@@ -31,11 +31,11 @@ export type EngineRun = {
    */
   baseUrl: string;
   /**
-   * Access token of the login user. Undefined when no login is set, or when
-   * the scenario does not use `token()`. The engine passes it to the requests
-   * that use `token()`, and only to them.
+   * Access tokens of the pool users. Empty when no login is set, or when the
+   * scenario does not use `token()`. The engine gives each virtual user one of
+   * them for the requests that use `token()`, and only for them.
    */
-  token?: string;
+  tokens: string[];
   /** Stops the load. The engine must stop its work and then throw. */
   signal: AbortSignal;
 };

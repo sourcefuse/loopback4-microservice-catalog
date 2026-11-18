@@ -18,8 +18,14 @@ const PATH_PARAM = /\{([^{}/]+)\}/g;
  */
 const CAPTURE_PREFIX = 'loadTestsCapture_';
 
-/** The environment variable that holds the token for Artillery. */
-export const TOKEN_ENV = 'LOAD_TESTS_TOKEN';
+/** The environment variable that holds the access tokens of the pool for Artillery, as a JSON list. */
+export const TOKENS_ENV = 'LOAD_TESTS_TOKENS';
+
+/**
+ * The var that holds the token of one virtual user. The generated processor
+ * sets it, and `token()` reads it. The `loadTests` prefix is reserved.
+ */
+export const TOKEN_VAR = 'loadTestsToken';
 
 type Entries = Record<string, string | number | boolean | Value>;
 
@@ -96,7 +102,7 @@ export function resolveRequests(
       case 'var':
         return useVar(req, value);
       case 'token':
-        return `{{ $env.${TOKEN_ENV} }}`;
+        return `{{ ${TOKEN_VAR} }}`;
       case 'randomString':
         return `{{ $randomString(${value.length}) }}`;
       case 'randomNumber':

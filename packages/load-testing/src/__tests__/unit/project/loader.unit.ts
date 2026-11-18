@@ -111,6 +111,21 @@ load.it.skip('links an order', [load.post('/orders')]);
     });
   });
 
+  it('stops when covers has a pattern that leaves the root', () => {
+    write('src/__tests__/load/a.load.ts');
+    write(
+      'dist/__tests__/load/a.load.js',
+      `const {load} = require(${builder});
+load.it('orders', [load.get('/a')], {covers: ['../x/**']});`,
+    );
+
+    expect(() => labels()).to.throw(
+      new ScenarioError('Scenario orders:', [
+        'covers[0] must stay inside the root: ../x/**',
+      ]),
+    );
+  });
+
   it('stops when a plain string has "{{", also in a nested step, with the scenario named', () => {
     write('src/__tests__/load/a.load.ts');
     write(
@@ -173,27 +188,25 @@ load.it('lists  orders!', [load.get('/b')]);`,
     );
   });
 
-  ['baseline', 'Baseline!'].forEach(name => {
-    it(`rejects the scenario name "${name}": the baseline file uses it`, () => {
-      write('src/__tests__/load/a.load.ts');
-      write(
-        'dist/__tests__/load/a.load.js',
-        `const {load} = require(${builder});
-load.it(${JSON.stringify(name)}, [load.get('/a')]);`,
-      );
-
-      expect(() => loadScenarios(pkg, CONFIG)).to.throw(
-        `The scenario name "${name}" gives the file name "baseline", which the baseline file uses. Rename the scenario.`,
-      );
-    });
-  });
-
-  it('loads a scenario whose name only starts with baseline', () => {
+  it('rejects a scenario whose file name is the one of the selection report', () => {
     write('src/__tests__/load/a.load.ts');
     write(
       'dist/__tests__/load/a.load.js',
       `const {load} = require(${builder});
-load.it('baseline orders', [load.get('/a')]);`,
+load.it('Selection', [load.get('/a')]);`,
+    );
+
+    expect(() => loadScenarios(pkg, CONFIG)).to.throw(
+      'The name of "Selection" is reserved for the selection report',
+    );
+  });
+
+  it('loads a scenario that is named baseline', () => {
+    write('src/__tests__/load/a.load.ts');
+    write(
+      'dist/__tests__/load/a.load.js',
+      `const {load} = require(${builder});
+load.it('baseline', [load.get('/a')]);`,
     );
 
     expect(loadScenarios(pkg, CONFIG)).to.have.length(1);
@@ -262,8 +275,6 @@ load.it('n', [load.get('/n')], {phases: [{pause: 5}, {duration: 1, arrivalRate: 
     const [loaded] = loadScenarios(pkg, {phases: PHASES});
 
     expect(loaded.endpoints.get('GET /n')).to.deepEqual({
-      p95Regression: 20,
-      minDelta: 10,
       errorRate: 1,
       p95: 500,
     });
@@ -279,8 +290,6 @@ load.it('n', [load.get('/n')], {phases: [{pause: 5}, {duration: 1, arrivalRate: 
     });
 
     expect(loaded.endpoints.get('GET /n')).to.deepEqual({
-      p95Regression: 20,
-      minDelta: 10,
       errorRate: 5,
       p95: 250,
     });
@@ -325,14 +334,12 @@ load.describe('g', {thresholds: ${describeLimits}}, () => {
     });
 
     it('merges the layers by field', () => {
-      writeLayers('{errorRate: 7}', '{minDelta: 2}', '{p95: 4}');
+      writeLayers('{errorRate: 7}', '{errorRate: 2}', '{p95: 4}');
 
       expect(
         loadScenarios(pkg, CONFIG)[0].endpoints.get('GET /n'),
       ).to.deepEqual({
-        p95Regression: 20,
-        minDelta: 2,
-        errorRate: 7,
+        errorRate: 2,
         p95: 4,
       });
     });
@@ -410,8 +417,6 @@ load.browser('open', {vitals: {CLS: {p95: 0.2}}}, async () => {});`,
   });
 
   describe('limits of a browser scenario', () => {
-    const MS = {p95Regression: 20, minDelta: 10};
-
     /** One file with one browser scenario, in a describe with these options. */
     function writeBrowser(describeOptions: string, browserOptions: string) {
       write('src/__tests__/load/b.load.ts');
@@ -430,13 +435,13 @@ load.describe('dashboard', ${describeOptions}, () => {
       const [loaded] = loadScenarios(pkg, CONFIG);
 
       expect(loaded.browser).to.deepEqual({
-        step: {...MS, p95: 1500},
+        step: {p95: 1500},
         steps: {},
         vitals: {
-          FCP: {...MS, p95: 1800},
-          LCP: {...MS, p95: 2500},
-          CLS: {p95Regression: 20, minDelta: 0.1, p95: 0.1},
-          TTFB: {...MS, p95: 800},
+          FCP: {p95: 1800},
+          LCP: {p95: 2500},
+          CLS: {p95: 0.1},
+          TTFB: {p95: 800},
         },
       });
       expect(loaded.endpoints.size).to.equal(0);
@@ -457,14 +462,14 @@ load.describe('dashboard', ${describeOptions}, () => {
         phases: PHASES,
         thresholds: {
           step: {p95: 2000},
-          vitals: {LCP: {p95: 3000}, CLS: {minDelta: 0.2}},
+          vitals: {LCP: {p95: 3000}, CLS: {p95: 0.2}},
         },
       };
       writeBrowser(
-        '{step: {p95Regression: 30}, vitals: {INP: {}}}',
+        '{step: {p95: 2500}, vitals: {INP: {}}}',
         `{
-          step: {minDelta: 20},
-          vitals: {LCP: {p95Regression: 50}},
+          step: {p95: 1800},
+          vitals: {LCP: {p95: 3500}},
           steps: {loadDashboard: {p95: 5000}},
           flow: {p95: 8000},
         }`,
@@ -472,16 +477,16 @@ load.describe('dashboard', ${describeOptions}, () => {
 
       const [loaded] = loadScenarios(pkg, config);
 
-      const step = {p95: 2000, p95Regression: 30, minDelta: 20};
+      const step = {p95: 1800};
       expect(loaded.browser).to.deepEqual({
         step,
         steps: {loadDashboard: {...step, p95: 5000}},
         vitals: {
-          FCP: {...MS, p95: 1800},
-          LCP: {p95: 3000, p95Regression: 50, minDelta: 10},
-          CLS: {p95: 0.1, p95Regression: 20, minDelta: 0.2},
-          TTFB: {...MS, p95: 800},
-          INP: {...MS, p95: 200},
+          FCP: {p95: 1800},
+          LCP: {p95: 3500},
+          CLS: {p95: 0.2},
+          TTFB: {p95: 800},
+          INP: {p95: 200},
         },
         flow: {...step, p95: 8000},
       });
@@ -493,16 +498,16 @@ load.describe('dashboard', ${describeOptions}, () => {
         thresholds: {vitals: {TTFB: false as const, LCP: {p95: 3000}, INP: {}}},
       };
       writeBrowser(
-        '{vitals: {TTFB: {minDelta: 50}, CLS: false}}',
+        '{vitals: {TTFB: {p95: 900}, CLS: false}}',
         '{vitals: {INP: false}}',
       );
 
       const [loaded] = loadScenarios(pkg, config);
 
       expect(loaded.browser?.vitals).to.deepEqual({
-        FCP: {...MS, p95: 1800},
-        LCP: {...MS, p95: 3000},
-        TTFB: {p95Regression: 20, minDelta: 50, p95: 800},
+        FCP: {p95: 1800},
+        LCP: {p95: 3000},
+        TTFB: {p95: 900},
       });
     });
 
@@ -520,26 +525,25 @@ load.describe('app', {vitals: {LCP: false}}, () => {
 
       const [loaded] = loadScenarios(pkg, CONFIG);
 
-      expect(loaded.browser?.vitals.LCP).to.deepEqual({...MS, p95: 4000});
+      expect(loaded.browser?.vitals.LCP).to.deepEqual({p95: 4000});
     });
 
     it('stops when a browser limit is out of range, with the scenario named', () => {
       writeBrowser(
         '{step: {p95: -1}}',
-        '{vitals: {LCP: {minDelta: -1}}, steps: {save: {p95: -1}}, flow: {p95Regression: -1}}',
+        '{vitals: {LCP: {p95: -1}}, steps: {save: {p95: -1}}, flow: {p95: -1}}',
       );
 
       expect(() => loadScenarios(pkg, CONFIG)).to.throw({
         name: 'ScenarioError',
         message:
-          /Scenario dashboard › open:\n\s+step.p95 must be 0 or more\n\s+vitals.LCP.minDelta must be 0 or more\n\s+steps.save.p95 must be 0 or more\n\s+flow.p95Regression must be 0 or more/,
+          /Scenario dashboard › open:\n\s+step.p95 must be 0 or more\n\s+vitals.LCP.p95 must be 0 or more\n\s+steps.save.p95 must be 0 or more\n\s+flow.p95 must be 0 or more/,
       });
     });
   });
 
   describe('names that a browser limit does not know', () => {
-    const NOT_METRIC =
-      'is not a limit of a metric: use p95Regression, minDelta, p95';
+    const NOT_METRIC = 'is not a limit of a metric: use p95';
 
     it('stops when a describe or a scenario sets errorRate in a limit of a metric', () => {
       write('src/__tests__/load/b.load.ts');
@@ -672,7 +676,7 @@ load.browser('open', {beforeEach: () => ({})}, async () => {});`,
 
     expect(() => labels()).to.throw(TypeError, {
       message:
-        'load.browser: beforeEach is not an option: use one of phases, step, steps, flow, vitals, before, after',
+        'load.browser: beforeEach is not an option: use one of phases, step, steps, flow, vitals, before, after, covers',
     });
   });
 

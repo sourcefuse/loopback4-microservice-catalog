@@ -36,6 +36,20 @@ describe('load.describe and load.it', () => {
     ]);
   });
 
+  it('keeps covers on a scenario, and does not pass it down from a describe', () => {
+    load.describe('Deals', {covers: ['x/**']} as object, () => {
+      load.it('lists', [load.get('/a')], {covers: ['services/deal/**']});
+      load.it('reads', [load.get('/b')]);
+    });
+    load.browser('page', {covers: ['ui/**']}, async () => {});
+
+    expect(takeRegistered().map(s => s.covers)).to.deepEqual([
+      ['services/deal/**'],
+      undefined,
+      ['ui/**'],
+    ]);
+  });
+
   it('marks a scenario with only or skip, from itself or from a describe around it', () => {
     load.it.only('own only', []);
     load.it.skip('own skip', []);
@@ -179,15 +193,14 @@ describe('load.describe and load.it', () => {
 
     it('merges thresholds by field', () => {
       load.describe('outer', {thresholds: {p95: 100, errorRate: 5}}, () => {
-        load.describe('inner', {thresholds: {p95: 200, minDelta: 3}}, () => {
-          load.it('s', [], {thresholds: {minDelta: 9}});
+        load.describe('inner', {thresholds: {p95: 200}}, () => {
+          load.it('s', [], {thresholds: {errorRate: 9}});
         });
       });
 
       expect(only().thresholds).to.deepEqual({
         p95: 200,
-        errorRate: 5,
-        minDelta: 9,
+        errorRate: 9,
       });
     });
 
@@ -264,7 +277,7 @@ describe('load.browser', () => {
       TypeError,
       {
         message:
-          'load.browser: beforeEach is not an option: use one of phases, step, steps, flow, vitals, before, after',
+          'load.browser: beforeEach is not an option: use one of phases, step, steps, flow, vitals, before, after, covers',
       },
     );
   });
@@ -290,7 +303,7 @@ describe('load.browser', () => {
       expect(() =>
         load.browser('x', {[key]: () => ({})} as never, flow),
       ).to.throw(TypeError, {
-        message: `load.browser: ${key} is not an option: use one of phases, step, steps, flow, vitals, before, after`,
+        message: `load.browser: ${key} is not an option: use one of phases, step, steps, flow, vitals, before, after, covers`,
       });
     }
   });

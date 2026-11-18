@@ -15,6 +15,7 @@ import {artilleryConfigProblems} from '../../project/config';
 import {OUT_DIR} from '../../project/layout';
 import {chromium, engineOptionsOf, type BrowserEngine} from './browsers';
 import {labelOf, slugOf} from '../../scenario/label';
+import {usesToken} from '../../scenario/token';
 import type {Scenario as ArtilleryScenario} from 'artillery';
 import type {
   BrowserScenario,
@@ -174,8 +175,8 @@ function browserScript(
 
 /**
  * True when the script needs the generated processor: a var to set, a worker
- * hook, a captured value to check, or a function or a processor of the
- * consumer.
+ * hook, a captured value to check, the token of a pool user, or a function
+ * or a processor of the consumer.
  */
 function needsProcessor(
   scenario: Scenario,
@@ -195,7 +196,12 @@ function needsProcessor(
   );
   const hasCaptures = captures.some(captured => captured.length > 0);
   return (
-    known.size > 0 || hasCaptures || hasHooks || hasOwnCode || hasRequestHooks
+    known.size > 0 ||
+    hasCaptures ||
+    hasHooks ||
+    hasOwnCode ||
+    hasRequestHooks ||
+    usesToken(scenario)
   );
 }
 
@@ -255,7 +261,8 @@ export function transpile(
   }
   const {urls, bodies, headers, queries, captures} = resolved;
 
-  const setsVars = known.size > 0 || scenario.beforeEach !== undefined;
+  const setsVars =
+    known.size > 0 || scenario.beforeEach !== undefined || usesToken(scenario);
   const hasProcessor = needsProcessor(scenario, requests, known, captures);
 
   const stepOf = (req: LoadRequest) => {

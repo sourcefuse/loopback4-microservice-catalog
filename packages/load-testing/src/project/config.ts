@@ -16,6 +16,7 @@ import {toSeconds} from '../scenario/workload';
 import {isPlainObject} from '../scenario/guards';
 import {builtFile, CONFIG_FILE} from './layout';
 import {ConfigError} from '../errors';
+import {patternProblems} from '../changes/patterns';
 import type {
   BrowserLimits,
   ResolvedMetricThresholds,
@@ -88,38 +89,25 @@ export const WEB_VITALS_TARGETS = {
  * not 300 ms, see the caution in the README.
  */
 const LIBRARY_DEFAULTS: ResolvedThresholds = {
-  p95Regression: 20,
-  minDelta: 10,
   errorRate: 1,
   p95: P95_TARGETS.userBlockingApi,
 };
 
-const METRIC_DEFAULTS = {
-  p95Regression: LIBRARY_DEFAULTS.p95Regression,
-  minDelta: LIBRARY_DEFAULTS.minDelta,
-};
-
 /**
  * The limits of each Web Vital when nothing sets them, in the order of the
- * report. Artillery rounds CLS to 1 decimal, so its `minDelta` is one step
- * of the report.
+ * report.
  */
 const VITAL_DEFAULTS: Record<WebVital, ResolvedMetricThresholds> = {
-  FCP: {...METRIC_DEFAULTS, p95: WEB_VITALS_TARGETS.FCP},
-  LCP: {...METRIC_DEFAULTS, p95: WEB_VITALS_TARGETS.LCP},
-  CLS: {...METRIC_DEFAULTS, p95: WEB_VITALS_TARGETS.CLS, minDelta: 0.1},
-  TTFB: {...METRIC_DEFAULTS, p95: WEB_VITALS_TARGETS.TTFB},
-  INP: {...METRIC_DEFAULTS, p95: WEB_VITALS_TARGETS.INP},
+  FCP: {p95: WEB_VITALS_TARGETS.FCP},
+  LCP: {p95: WEB_VITALS_TARGETS.LCP},
+  CLS: {p95: WEB_VITALS_TARGETS.CLS},
+  TTFB: {p95: WEB_VITALS_TARGETS.TTFB},
+  INP: {p95: WEB_VITALS_TARGETS.INP},
 };
 
-const METRIC_KEYS = ['p95Regression', 'minDelta', 'p95'] as const;
+const METRIC_KEYS = ['p95'] as const;
 
-const THRESHOLD_KEYS = [
-  'p95Regression',
-  'minDelta',
-  'p95',
-  'errorRate',
-] as const;
+const THRESHOLD_KEYS = ['p95', 'errorRate'] as const;
 
 /** Loads the default export of the config file, as `tsc` built it. */
 export function readConfig(pkgDir: string): LoadTestConfig {
@@ -154,12 +142,13 @@ export function configProblems(config: unknown): string[] {
     phases,
     artillery,
     thresholds,
-    datasources,
     engine,
     apis,
     reporters,
     tokenCheck,
     maxHeavyApis,
+    loginWaitSeconds,
+    runAllWhen,
   } = config as Partial<LoadTestConfig>;
   const limits: Thresholds | undefined = thresholds?.default;
   const problems = [
@@ -169,10 +158,10 @@ export function configProblems(config: unknown): string[] {
     ...browserEngineProblems(artillery?.browsers),
     ...thresholdProblems(limits, 'thresholds.default.'),
     ...browserLimitProblems(thresholds, 'thresholds.'),
-    ...datasourceProblems(datasources),
     ...engineProblems(engine),
     ...apisProblems(apis),
     ...reporterProblems(reporters),
+    ...patternProblems(runAllWhen, 'runAllWhen'),
   ];
   if (tokenCheck !== undefined && typeof tokenCheck !== 'function') {
     problems.push('tokenCheck must be a function');
@@ -182,6 +171,12 @@ export function configProblems(config: unknown): string[] {
     !(Number.isInteger(maxHeavyApis) && maxHeavyApis >= 0)
   ) {
     problems.push('maxHeavyApis must be a whole number, 0 or more');
+  }
+  if (
+    loginWaitSeconds !== undefined &&
+    !(Number.isFinite(loginWaitSeconds) && loginWaitSeconds >= 0)
+  ) {
+    problems.push('loginWaitSeconds must be a number of seconds, 0 or more');
   }
   return problems;
 }
@@ -375,61 +370,6 @@ function reporterProblems(reporters: unknown): string[] {
   });
 }
 
-/** The options of a postgres datasource that hold a time in milliseconds. */
-const POSTGRES_TIME_OPTIONS = ['statementTimeoutMs', 'connectionTimeoutMs'];
-
-const DATASOURCE_FORMS =
-  '{type: "postgres", url}, {type: "custom", connector}, or a connector (an object with a connect function)';
-
-function hasConnect(value: unknown): boolean {
-  return (
-    typeof value === 'object' &&
-    value !== null &&
-    typeof (value as {connect?: unknown}).connect === 'function'
-  );
-}
-
-/** Returns what is wrong with `datasources`: a name or a datasource. */
-function datasourceProblems(datasources: unknown): string[] {
-  if (datasources === undefined) return [];
-  if (typeof datasources !== 'object' || datasources === null) {
-    return [
-      'datasources must be an object: {name: {type: "postgres", url: ...}}',
-    ];
-  }
-  return Object.entries(datasources).flatMap(([name, ds]) => [
-    ...(name === '' ? ['datasources has a name that is empty'] : []),
-    ...oneDatasourceProblems(`datasources.${name}`, ds),
-  ]);
-}
-
-/** Returns what is wrong with one datasource. `where` starts each message. */
-function oneDatasourceProblems(where: string, ds: unknown): string[] {
-  if (typeof ds !== 'object' || ds === null) {
-    return [`${where} must be an object: ${DATASOURCE_FORMS}`];
-  }
-  if (!('type' in ds)) {
-    return hasConnect(ds) ? [] : [`${where} must be ${DATASOURCE_FORMS}`];
-  }
-  if (ds.type === 'custom') {
-    return hasConnect((ds as {connector?: unknown}).connector)
-      ? []
-      : [`${where}.connector must be an object with a connect function`];
-  }
-  if (ds.type !== 'postgres') {
-    return [`${where}.type must be "postgres" or "custom"`];
-  }
-  return POSTGRES_TIME_OPTIONS.filter(option => {
-    const value = (ds as Record<string, unknown>)[option];
-    return (
-      value !== undefined && !(Number.isInteger(value) && Number(value) >= 0)
-    );
-  }).map(
-    option =>
-      `${where}.${option} must be a whole number of milliseconds from 0 (0 turns the limit off)`,
-  );
-}
-
 /**
  * Returns what is wrong with the values of a set of thresholds, for the
  * config and for one request. `where` starts each message.
@@ -601,7 +541,7 @@ export function resolveBrowserLimits(
   scenario: BrowserScenario,
 ): BrowserLimits {
   const step = resolveMetric(
-    {...METRIC_DEFAULTS, p95: UI_TARGETS.criticalAction},
+    {p95: UI_TARGETS.criticalAction},
     config.step,
     scenario.step,
   );
