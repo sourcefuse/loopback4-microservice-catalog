@@ -316,8 +316,9 @@ load.it('secured', [load.get('/items')], {
   });
 
   describe('the refresh and the token check', () => {
-    it('refreshes the token of every user before the scenario, each with its own token', async () => {
+    it('refreshes the token of every user that expires soon, each with its own token', async () => {
       stub.issuedAgo = 120;
+      stub.life = {ann: 400, bob: 400};
       const pkg = packageWith(WITH_TOKEN);
 
       const {code} = await runMain(['run', pkg], {
@@ -333,8 +334,37 @@ load.it('secured', [load.get('/items')], {
       ).to.deepEqual(['ann', 'bob']);
     }).timeout(60_000);
 
+    it('does not refresh a token that outlives the load and the margin', async () => {
+      stub.issuedAgo = 120;
+      const pkg = packageWith(WITH_TOKEN);
+
+      const {code} = await runMain(['run', pkg], {
+        ...env,
+        LOAD_TESTS_USERS_FILE: usersFileOf(usersOf('ann', 'bob')),
+      });
+
+      expect(code).to.equal(0);
+      expect(refreshesOf()).to.deepEqual([]);
+    }).timeout(60_000);
+
+    it('refreshes only the user whose token is near its end', async () => {
+      stub.issuedAgo = 120;
+      stub.life = {bob: 400};
+      const pkg = packageWith(WITH_TOKEN);
+
+      const {code, out} = await runMain(['run', pkg], {
+        ...env,
+        LOAD_TESTS_USERS_FILE: usersFileOf(usersOf('ann', 'bob')),
+      });
+
+      expect(code).to.equal(0);
+      expect(refreshesOf().map(call => call.user)).to.deepEqual(['bob']);
+      expect(out).to.match(/Refreshed the token of bob/);
+    }).timeout(60_000);
+
     it('fails only the scenario whose refresh failed, names the user, and runs the next scenario', async () => {
       stub.issuedAgo = 120;
+      stub.life = {ann: 400, bob: 400};
       stub.refreshStatus.bob = [500];
       const pkg = packageWith(`
 load.it('first', [load.get('/items')], {

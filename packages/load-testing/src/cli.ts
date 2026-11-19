@@ -15,6 +15,7 @@ import {judgeRun} from './report/report';
 import {consoleReporter} from './report/console';
 import type {Reporter, RunResult} from './report/types';
 import {labelOf} from './scenario/label';
+import {phaseSeconds, phasesOf} from './scenario/workload';
 import {artillery} from './engine/artillery';
 import {refresh} from './run/target';
 import {ignoreOutputErrors, print, printError} from './output';
@@ -71,6 +72,7 @@ async function run(
           pool,
           signal: cancel.signal,
         }),
+      ({scenario}) => phaseSeconds(phasesOf(scenario, config)),
       cancel.signal,
     ),
     {

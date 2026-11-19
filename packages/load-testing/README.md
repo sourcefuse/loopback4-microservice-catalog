@@ -1169,7 +1169,7 @@ The login follows the two-step login of the ARC authentication service (`@source
 
 1. `POST /auth/login` with `username`, `password`, `client_id` and `client_secret`, for one user of the pool, one user after another. The answer holds a `code`.
 2. `POST /auth/token` with the `code` and the `clientId`. The answer holds an `accessToken` and a `refreshToken`. Both must be non-empty texts. If not, the CLI throws a `LoginError`: `<call> gave no accessToken` or `<call> gave no refreshToken`.
-3. Before each scenario, the CLI gets a new token for each user with `POST /auth/token-refresh`. It sends the `refreshToken`, and the old access token as a bearer token. It skips the refresh when the access token is less than a minute old. The auth service revokes the access token that a refresh replaces. The signed payload has no random part (`jti`), so two refreshes in the same second give the same token string. The second refresh then revokes the token that it just gave. We refresh at most once a minute to avoid this. The age comes from the `iat` claim. A token that has no `iat`, such as an opaque token, counts from the time that the CLI got it.
+3. Before each scenario, the CLI gets a new token with `POST /auth/token-refresh` for each user whose token expires within the load time of the scenario plus 300 s. It prints `Refreshed the token of <name>` for each. A token with no `exp` claim, and a scenario whose phase time cannot be read, always count as expiring. The CLI sends the `refreshToken`, and the old access token as a bearer token. It skips the refresh when the access token is less than a minute old. The auth service revokes the access token that a refresh replaces. The signed payload has no random part (`jti`), so two refreshes in the same second give the same token string. The second refresh then revokes the token that it just gave. We refresh at most once a minute to avoid this. The age comes from the `iat` claim. A token that has no `iat`, such as an opaque token, counts from the time that the CLI got it.
 
 All three calls go to `LOAD_TESTS_AUTH_SERVICE_URL`, or to the base URL when that variable is not set. A call that answers with a status other than 2xx throws a `LoginError` with the status and the first 200 characters of the body. A failed login stops the run before any scenario, and the message names the user: `login of user <name> failed: ...`. A refresh that fails fails only that scenario, and the message reads `refresh of user <name> failed: ...`.
 
@@ -2105,7 +2105,7 @@ Layers merge by field. The strongest layer wins, and a field that no layer sets 
 | `maxHeavyApis` | 0 |
 | Browser step p95 | 1500 ms (`UI_TARGETS.criticalAction`) |
 | FCP, LCP, CLS, TTFB, INP p95 | 1800 ms, 2500 ms, 0.1, 800 ms, 200 ms (INP only when a layer names it; `false` turns one off) |
-| Token refresh | at most once a minute |
+| Token refresh | only when the token expires within the load plus 300 s, and at most once a minute |
 | Token check margin | the load time plus 120 s must stay below the token life |
 | `ctx.api`, `ctx.apis` and login timeout | 60 s |
 | Browser start timeout of the check | 60 s, `chromium({startTimeoutMs})` |

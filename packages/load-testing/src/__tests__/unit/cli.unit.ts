@@ -346,10 +346,12 @@ load.it('with token', [load.get('/items')], {
 });`);
     const OLD_TOKEN_AGE_SECONDS = 120;
     const TOKEN_LIFE_SECONDS = 900;
-    const sessionOf = (prefix: string, issuedAgo: number) => {
+    // 280 s left is less than the load and the margin of 300 s, so it refreshes.
+    const OLD_TOKEN_LIFE_SECONDS = 400;
+    const sessionOf = (prefix: string, issuedAgo: number, life: number) => {
       const issued = Math.floor(Date.now() / 1000) - issuedAgo;
       const claims = Buffer.from(
-        JSON.stringify({iat: issued, exp: issued + TOKEN_LIFE_SECONDS}),
+        JSON.stringify({iat: issued, exp: issued + life}),
       ).toString('base64url');
       return {accessToken: `${prefix}.${claims}.y`, refreshToken: 'r'};
     };
@@ -358,8 +360,12 @@ load.it('with token', [load.get('/items')], {
       authSeen.push(`${req.method} ${req.url}`);
       const replies: Record<string, unknown> = {
         '/auth/login': {code: 'k'},
-        '/auth/token': sessionOf('old', OLD_TOKEN_AGE_SECONDS),
-        '/auth/token-refresh': sessionOf('new', 0),
+        '/auth/token': sessionOf(
+          'old',
+          OLD_TOKEN_AGE_SECONDS,
+          OLD_TOKEN_LIFE_SECONDS,
+        ),
+        '/auth/token-refresh': sessionOf('new', 0, TOKEN_LIFE_SECONDS),
       };
       res.writeHead(200, {'content-type': 'application/json'});
       res.end(JSON.stringify(replies[req.url ?? ''] ?? {}));

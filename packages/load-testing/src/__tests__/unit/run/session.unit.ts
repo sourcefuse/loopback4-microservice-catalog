@@ -2,7 +2,7 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {expect} from '@loopback/testlab';
+import {expect, sinon} from '@loopback/testlab';
 import {resolveThresholds} from '../../../project/config';
 import type {LoadedScenario} from '../../../project/types';
 import {withFreshPool} from '../../../run/session';
@@ -25,6 +25,11 @@ const sessionOf = (username: string, accessToken: string): Session => ({
   refreshToken: 'r',
 });
 
+/** The seconds that a JWT has left, from its exp claim. */
+const secondsOf = (token: string) =>
+  JSON.parse(Buffer.from(token.split('.')[1], 'base64url').toString()).exp -
+  Date.now() / 1000;
+
 describe('withFreshPool', () => {
   it('refreshes every user once before each scenario, and gives the new tokens', async () => {
     const refreshed: string[] = [];
@@ -40,6 +45,7 @@ describe('withFreshPool', () => {
       async (_loaded, pool) => {
         tokens.push(pool.sessions.map(session => session.accessToken));
       },
+      () => undefined,
     );
 
     await run(loaded('one'));
@@ -66,6 +72,7 @@ describe('withFreshPool', () => {
         sizes.push(pool.sessions.length);
         expect(pool.next()).to.be.undefined();
       },
+      () => undefined,
     );
 
     await run(loaded('one'));
@@ -84,6 +91,7 @@ describe('withFreshPool', () => {
         seen.push(pool.next()?.username, pool.next()?.username);
         seen.push(pool.next()?.username);
       },
+      () => undefined,
     );
 
     await run(loaded('one'));
@@ -101,6 +109,7 @@ describe('withFreshPool', () => {
         return session;
       },
       async () => 'result',
+      () => undefined,
     );
 
     await expect(run(loaded('one'))).to.be.rejectedWith(
@@ -118,6 +127,7 @@ describe('withFreshPool', () => {
         return session;
       },
       async () => 'result',
+      () => undefined,
     );
 
     expect(await run(loaded('one'))).to.equal('result');
@@ -140,6 +150,7 @@ describe('withFreshPool', () => {
       [sessionOf('a', 't')],
       refreshSession,
       async () => 'result',
+      () => undefined,
       controller.signal,
     );
 
@@ -161,6 +172,7 @@ describe('withFreshPool', () => {
         return {...session, accessToken: `${session.accessToken}+`};
       },
       async () => 'result',
+      () => undefined,
     );
 
     await expect(run(loaded('one'))).to.be.rejectedWith(/user b failed/);
@@ -179,10 +191,89 @@ describe('withFreshPool', () => {
         throw new Error('gave 500');
       },
       async () => 'result',
+      () => undefined,
     );
 
     await expect(run(loaded('one'))).to.be.rejectedWith(
       /user a failed: gave 500; refresh of user b failed: gave 500/,
     );
+  });
+
+  describe('the refresh rule', () => {
+    /** A JWT that expires `left` seconds from now. */
+    const jwt = (left: number) =>
+      `x.${Buffer.from(
+        JSON.stringify({exp: Math.floor(Date.now() / 1000) + left}),
+      ).toString('base64url')}.y`;
+    const run = (
+      sessions: Session[],
+      loadSeconds: number | undefined,
+      refreshed: string[],
+    ) =>
+      withFreshPool(
+        target,
+        sessions,
+        async (_target, session) => {
+          refreshed.push(session.username);
+          return {...session, accessToken: jwt(900)};
+        },
+        async (_loaded, pool) => pool.sessions.map(s => s.accessToken),
+        () => loadSeconds,
+      );
+
+    it('keeps a token that outlives the load and the margin of 300 s', async () => {
+      const refreshed: string[] = [];
+      await run([sessionOf('a', jwt(700))], 300, refreshed)(loaded('one'));
+      expect(refreshed).to.deepEqual([]);
+    });
+
+    it('refreshes a token that expires inside the load and the margin', async () => {
+      const refreshed: string[] = [];
+      const tokens = await run(
+        [sessionOf('a', jwt(590))],
+        300,
+        refreshed,
+      )(loaded('one'));
+      expect(refreshed).to.deepEqual(['a']);
+      expect(secondsOf(tokens[0])).to.be.above(800);
+    });
+
+    it('refreshes only the users whose token is near its end', async () => {
+      const refreshed: string[] = [];
+      await run(
+        [
+          sessionOf('a', jwt(800)),
+          sessionOf('b', jwt(100)),
+          sessionOf('c', 't'),
+        ],
+        60,
+        refreshed,
+      )(loaded('one'));
+      expect(refreshed).to.deepEqual(['b', 'c']);
+    });
+
+    it('refreshes when the time of the load is unknown', async () => {
+      const refreshed: string[] = [];
+      await run(
+        [sessionOf('a', jwt(5000))],
+        undefined,
+        refreshed,
+      )(loaded('one'));
+      expect(refreshed).to.deepEqual(['a']);
+    });
+
+    it('skips the refresh of the first scenario and does it for the next one', async () => {
+      const refreshed: string[] = [];
+      const clock = sinon.useFakeTimers({now: Date.now(), toFake: ['Date']});
+      try {
+        const next = run([sessionOf('a', jwt(900))], 400, refreshed);
+        await next(loaded('one'));
+        clock.tick(450_000);
+        await next(loaded('two'));
+      } finally {
+        clock.restore();
+      }
+      expect(refreshed).to.deepEqual(['a']);
+    });
   });
 });
