@@ -1,6 +1,6 @@
 {
   "name": "@sourceloop/benchmarking",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Benchmark helpers for Mocha, with commands that compare two builds and select the benchmarks a change can affect",
   "keywords": [
     "loopback-extension",

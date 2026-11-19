@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>5.0.5 (2026-11-19)</small>
+
+* fix(deps): bump node to 24.22.3 for november 2026 security release (#2657) ([532da2b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/532da2b)), closes [#2657](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2657)
+* fix(sonar): resolve major s9383 and s9423 issues (#2631) ([13a533c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/13a533c)), closes [#2631](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2631) [#2631](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2631)
+
+
+
+
+
 ## <small>5.0.4 (2026-10-30)</small>
 
 * fix(auth): remove hardcoded test passwords from tests and sandboxes (#2630) ([272b85e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/272b85e)), closes [#2630](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2630)

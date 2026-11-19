@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.8.2 (2026-11-19)</small>
+
+* fix(deps): bump node to 24.22.3 for november 2026 security release (#2657) ([532da2b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/532da2b)), closes [#2657](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2657)
+* fix(deps): clear high- and medium-severity dependabot, trivy and vantage findings (#2639) ([c92481c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c92481c)), closes [#2639](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2639)
+
+
+
+
+
 ## <small>0.8.1 (2026-10-30)</small>
 
 * fix(auth): remove hardcoded test passwords from tests and sandboxes (#2630) ([272b85e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/272b85e)), closes [#2630](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2630)

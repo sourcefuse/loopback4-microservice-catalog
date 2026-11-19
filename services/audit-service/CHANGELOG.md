@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>20.1.3 (2026-11-19)</small>
+
+* fix(deps): clear open dependabot alerts that have a patched version (#2643) ([2f8ba16](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2f8ba16)), closes [#2643](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2643)
+
+
+
+
+
 ## <small>20.1.2 (2026-10-30)</small>
 
 **Note:** Version bump only for package @sourceloop/audit-service

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>7.1.3 (2026-11-19)</small>
+
+**Note:** Version bump only for package @sourceloop/cache
+
+
+
+
+
 ## <small>7.1.2 (2026-10-30)</small>
 
 * fix(sonar): resolve async-without-await issues and jenkinsfile nesting (#2618) ([e170997](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e170997)), closes [#2618](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2618)

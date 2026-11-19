@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>25.1.4 (2026-11-19)</small>
+
+* fix(deps): bump node-forge to 1.4.3 for CVE-2026-125335 (#2649) ([bdf3790](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bdf3790)), closes [#2649](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2649) [#2646](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2646)
+
+
+
+
+
 ## <small>25.1.3 (2026-10-30)</small>
 
 * fix(auth): remove hardcoded test passwords from tests and sandboxes (#2630) ([272b85e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/272b85e)), closes [#2630](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2630)

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>19.1.3 (2026-11-19)</small>
+
+**Note:** Version bump only for package @sourceloop/scheduler-service
+
+
+
+
+
 ## <small>19.1.2 (2026-10-30)</small>
 
 * fix(auth): remove hardcoded test passwords from tests and sandboxes (#2630) ([272b85e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/272b85e)), closes [#2630](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2630)

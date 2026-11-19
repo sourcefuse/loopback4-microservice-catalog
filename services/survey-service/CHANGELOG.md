@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>9.0.2 (2026-11-19)</small>
+
+**Note:** Version bump only for package @sourceloop/survey-service
+
+
+
+
+
 ## <small>9.0.1 (2026-10-30)</small>
 
 **Note:** Version bump only for package @sourceloop/survey-service

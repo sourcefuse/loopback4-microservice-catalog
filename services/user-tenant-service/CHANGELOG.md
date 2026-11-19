@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>9.0.2 (2026-11-19)</small>
+
+* fix(deps): clear open dependabot alerts that have a patched version (#2643) ([2f8ba16](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2f8ba16)), closes [#2643](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2643)
+
+
+
+
+
 ## <small>9.0.1 (2026-10-30)</small>
 
 * fix(auth): remove hardcoded test passwords from tests and sandboxes (#2630) ([272b85e](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/272b85e)), closes [#2630](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2630)

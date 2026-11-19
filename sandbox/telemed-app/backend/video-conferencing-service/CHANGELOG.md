@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.9.3 (2026-11-19)</small>
+
+* fix(deps): bump node-forge and joi to clear trivy findings (#2635) ([947107b](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/947107b)), closes [#2635](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2635) [#2634](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2634)
+* fix(deps): bump node-forge to 1.4.3 for CVE-2026-125335 (#2649) ([bdf3790](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/bdf3790)), closes [#2649](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2649) [#2646](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2646)
+* fix(deps): clear high- and medium-severity dependabot, trivy and vantage findings (#2639) ([c92481c](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/c92481c)), closes [#2639](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2639)
+* fix(deps): clear open dependabot alerts that have a patched version (#2643) ([2f8ba16](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/2f8ba16)), closes [#2643](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2643)
+
+
+
+
+
 ## <small>0.9.2 (2026-10-30)</small>
 
 * chore(deps): bump node to 24 in sandboxes and raise cli engines to >=22 (#2626) ([0e73bdc](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/0e73bdc)), closes [#2626](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2626)
