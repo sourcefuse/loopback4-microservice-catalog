@@ -69,7 +69,7 @@ export function withFreshPool<T>(
     // token, so its new session must be kept even when another user fails.
     const loadSeconds = loadSecondsOf(loaded);
     const results = await Promise.allSettled(
-      pool.sessions.map(session =>
+      pool.sessions.map(async session =>
         expiresSoon(session, loadSeconds)
           ? refreshSession(target, session, signal)
           : session,
