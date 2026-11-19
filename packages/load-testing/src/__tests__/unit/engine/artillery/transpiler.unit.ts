@@ -96,7 +96,7 @@ describe('transpile', () => {
   });
 
   describe('headers and the token', () => {
-    const BEARER = 'Bearer {{ $env.LOAD_TESTS_TOKEN }}';
+    const BEARER = 'Bearer {{ loadTestsToken }}';
     const flowOf = (scenario: ReturnType<typeof scenarioOf>) =>
       transpile(scenario, undefined, PHASES, PROCESSOR, new Set()).scenarios[0]
         .flow as Record<string, Record<string, unknown>>[];
@@ -685,7 +685,7 @@ describe('transpile', () => {
       );
 
       expect(flow.post.json).to.deepEqual({
-        token: '{{ $env.LOAD_TESTS_TOKEN }}',
+        token: '{{ loadTestsToken }}',
         deep: {name: 'order-{{ $randomString(4) }}'},
         list: [
           '{{ $uuid }}',
@@ -718,7 +718,7 @@ describe('transpile', () => {
       expect(flow.get).to.containDeep({
         url: '/a/{{ $uuid }}/3',
         headers: {
-          authorization: 'Bearer {{ $env.LOAD_TESTS_TOKEN }}',
+          authorization: 'Bearer {{ loadTestsToken }}',
           'x-r': '{{ $randomString(8) }}',
         },
         qs: {

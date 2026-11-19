@@ -9,8 +9,7 @@ import type {AddressInfo} from 'node:net';
 import os from 'node:os';
 import path from 'node:path';
 import {expect} from '@loopback/testlab';
-import {main} from '../../cli';
-import {output} from '../../output';
+import {USER, usersFileOf, runMain} from '../helpers';
 import type {RunResult} from '../../report/types';
 
 type Env = Record<string, string | undefined>;
@@ -60,34 +59,10 @@ function serveWebApp(url: string, res: http.ServerResponse): void {
   html(webPage('<button id="go">Save</button>'));
 }
 
-/**
- * Runs `main` with this environment, and returns its exit code and what it
- * printed. The output comes back after. `main` reads `env` and not
- * `process.env`. Artillery writes to the real output, which this does not
- * capture.
- */
-async function runMain(
-  args: string[],
-  env: Env,
-): Promise<{code: number; out: string}> {
-  const text: string[] = [];
-  const {out, err} = output;
-  output.out = output.err = (chunk: string) => {
-    text.push(chunk);
-  };
-  try {
-    return {code: await main(args, env), out: text.join('')};
-  } finally {
-    output.out = out;
-    output.err = err;
-  }
-}
-
 describe('main', () => {
   const NO_TARGET: Env = {
     LOAD_TESTS_BASE_URL: undefined,
-    LOAD_TESTS_USERNAME: undefined,
-    LOAD_TESTS_PASSWORD: undefined,
+    LOAD_TESTS_USERS_FILE: undefined,
     LOAD_TESTS_CLIENT_ID: undefined,
     LOAD_TESTS_CLIENT_SECRET: undefined,
   };
@@ -99,10 +74,18 @@ describe('main', () => {
     expect(out).to.match(/Usage:/);
   });
 
-  it('says in the usage that the login variables are required when the username is set', async () => {
+  it('gives the usage error for the removed report command', async () => {
+    const {code, out} = await runMain(['report', '.'], {});
+
+    expect(code).to.equal(1);
+    expect(out).to.match(/Usage:/);
+    expect(out).not.to.match(/report/);
+  });
+
+  it('says in the usage that the client id and secret are required when the users file is set', async () => {
     const {out} = await runMain(['--help'], {});
 
-    expect(out).to.match(/Required when LOAD_TESTS_USERNAME is set/);
+    expect(out).to.match(/Required when LOAD_TESTS_USERS_FILE is set/);
     expect(out).to.not.match(/Needed only by scenarios/);
   });
 
@@ -115,17 +98,12 @@ describe('main', () => {
     expect(out).to.not.match(/\n\s+at /);
   });
 
-  it('prints the message and the usage when run or report gets more arguments than it takes', async () => {
-    for (const command of ['run', 'report']) {
-      const {code, out} = await runMain(
-        [command, os.tmpdir(), 'extra'],
-        NO_TARGET,
-      );
+  it('prints the message and the usage when run gets more arguments than it takes', async () => {
+    const {code, out} = await runMain(['run', os.tmpdir(), 'extra'], NO_TARGET);
 
-      expect(code).to.equal(1);
-      expect(out).to.match(/Unexpected argument 'extra'/);
-      expect(out).to.match(/Usage:/);
-    }
+    expect(code).to.equal(1);
+    expect(out).to.match(/Unexpected argument 'extra'/);
+    expect(out).to.match(/Usage:/);
   });
 
   it('prints the usage and gives 0 for --help', async () => {
@@ -161,8 +139,7 @@ describe('main', () => {
     const {out} = await runMain(['run', dir], {
       ...NO_TARGET,
       LOAD_TESTS_BASE_URL: 'http://localhost:1',
-      LOAD_TESTS_USERNAME: 'u',
-      LOAD_TESTS_PASSWORD: 'p',
+      LOAD_TESTS_USERS_FILE: usersFileOf([USER]),
       LOAD_TESTS_CLIENT_ID: 'c',
       LOAD_TESTS_CLIENT_SECRET: 's',
     });
@@ -175,16 +152,9 @@ describe('main', () => {
 
 /**
  * The whole run against a stub server: login, `before`, the transpiled script
- * in a real Artillery, `after`, the report, the exit code and the baseline.
+ * in a real Artillery, `after`, the report and the exit code.
  */
 describe('main with a stub server', () => {
-  const BASELINE = path.join(
-    'src',
-    '__tests__',
-    'load',
-    '.out',
-    'baseline.json',
-  );
   const builder = JSON.stringify(require.resolve('../../scenario/builder'));
   const values = JSON.stringify(require.resolve('../../scenario/values'));
   /** What the stub server got, in order. */
@@ -192,18 +162,16 @@ describe('main with a stub server', () => {
   const dirs: string[] = [];
   let server: http.Server;
   let env: Env;
-  /** No URL and no login: `report` needs neither. */
+  /** No URL and no login. */
   const NO_TARGET_ENV: Env = {
     LOAD_TESTS_BASE_URL: undefined,
     LOAD_TESTS_UI_URL: undefined,
-    LOAD_TESTS_USERNAME: undefined,
+    LOAD_TESTS_USERS_FILE: undefined,
   };
   const NO_LOGIN = {
-    LOAD_TESTS_USERNAME: undefined,
-    LOAD_TESTS_PASSWORD: undefined,
+    LOAD_TESTS_USERS_FILE: undefined,
     LOAD_TESTS_CLIENT_ID: undefined,
     LOAD_TESTS_CLIENT_SECRET: undefined,
-    LOAD_TESTS_UPDATE_BASELINE: undefined,
   };
 
   before(async () => {
@@ -234,12 +202,9 @@ describe('main with a stub server', () => {
     env = {
       LOAD_TESTS_BASE_URL: `http://127.0.0.1:${(server.address() as AddressInfo).port}`,
       LOAD_TESTS_AUTH_SERVICE_URL: undefined,
-      LOAD_TESTS_USERNAME: 'u',
-      LOAD_TESTS_PASSWORD: 'p',
+      LOAD_TESTS_USERS_FILE: usersFileOf([USER]),
       LOAD_TESTS_CLIENT_ID: 'c',
       LOAD_TESTS_CLIENT_SECRET: 's',
-      LOAD_TESTS_UPDATE_BASELINE: '1',
-      LOAD_TESTS_FORCE_BASELINE: undefined,
     };
   });
   after(async () => {
@@ -285,7 +250,7 @@ describe('main with a stub server', () => {
     return pkg;
   }
 
-  it('runs a scenario, prints its block, and saves the baseline', async () => {
+  it('runs a scenario and prints its block', async () => {
     const pkg = packageWith(`load.it('browse items', [load.get('/items')]);`);
 
     const {code, out} = await runMain(['run', pkg], env);
@@ -293,14 +258,7 @@ describe('main with a stub server', () => {
     expect(code).to.equal(0);
     expect(out).to.match(/browse items\nWorkload: 3 vusers\/s for 1 s\n/);
     expect(out).to.match(/Vusers: +\d+ started, \d+ completed, 0 failed/);
-    expect(out).to.match(/GET \/items +\d+ .*pass \(no baseline\)/);
-    const baseline = JSON.parse(
-      fs.readFileSync(path.join(pkg, BASELINE), 'utf8'),
-    );
-    expect(baseline.workloads).to.deepEqual({
-      'browse items': '3 vusers/s for 1 s',
-    });
-    expect(baseline.history['browse items']['GET /items']).to.have.length(1);
+    expect(out).to.match(/GET \/items +\d+ .*pass/);
   }).timeout(60_000);
 
   /**
@@ -317,188 +275,10 @@ describe('main with a stub server', () => {
   }),
 }`;
 
-  /** The p95 that the fake engine of a reporter test measures. */
-  const REPORTER_P95_MS = 50;
-
   /** A p95 over the default limit of 500 ms, so the run fails. */
   const OVER_CAP_P95_MS = 2000;
 
-  describe('with an existing baseline', () => {
-    const SCENARIO = `load.it('browse items', [load.get('/items')]);`;
-    const WORKLOAD = '3 vusers/s for 1 s';
-    const MAX_HISTORY = 10;
-    /** The p95 that the fake engine measures. It is under the baseline mean of 150. */
-    const FAST_P95_MS = 120;
-    /** The p95 that the fake engine measures when the run must be slower than its baseline. */
-    const SLOW_P95_MS = 50;
-    const ROW = /GET \/items +\d+ +[\d.-]+ +[\d.]+ \([\d.]+\) +([\d.-]+) /;
-
-    /** Writes the baseline file that `readBaseline` reads. */
-    function recordBaseline(
-      pkg: string,
-      history: number[],
-      {baseUrl = env.LOAD_TESTS_BASE_URL, workload = WORKLOAD} = {},
-    ) {
-      const file = path.join(pkg, BASELINE);
-      fs.mkdirSync(path.dirname(file), {recursive: true});
-      fs.writeFileSync(
-        file,
-        JSON.stringify({
-          baseUrl,
-          recordedAt: '2026-01-01T00:00:00.000Z',
-          history: {'browse items': {'GET /items': history}},
-          workloads: {'browse items': workload},
-        }),
-      );
-    }
-    const historyOf = (pkg: string): number[] =>
-      JSON.parse(fs.readFileSync(path.join(pkg, BASELINE), 'utf8')).history[
-        'browse items'
-      ]['GET /items'];
-
-    it('passes and shows the mean of the history in the Base ms column when the run is faster', async () => {
-      const pkg = packageWith(SCENARIO, fakeEngine(FAST_P95_MS));
-      recordBaseline(pkg, [100, 200]);
-
-      const {code, out} = await runMain(['run', pkg], {
-        ...env,
-        LOAD_TESTS_UPDATE_BASELINE: undefined,
-      });
-
-      expect(code).to.equal(0);
-      expect(out.match(ROW)?.[1]).to.equal('150');
-      expect(out).to.match(/GET \/items .* pass\n/);
-      expect(out).to.not.match(/no baseline/);
-      expect(out).to.not.match(/The baseline is from/);
-    });
-
-    it('fails the run when the p95 is over the mean of the history by more than the limits', async () => {
-      const pkg = packageWith(
-        SCENARIO,
-        `, thresholds: {default: {p95Regression: 1, minDelta: 0}}${fakeEngine(SLOW_P95_MS)}`,
-      );
-      recordBaseline(pkg, [0.1, 0.1]);
-
-      const {code, out} = await runMain(['run', pkg], {
-        ...env,
-        LOAD_TESTS_UPDATE_BASELINE: undefined,
-      });
-
-      expect(code).to.equal(1);
-      expect(out).to.containEql(
-        'FAIL: p95 +49900% (+49.9 ms) over baseline 0.1 ms',
-      );
-      expect(out.match(ROW)?.[1]).to.equal('0.1');
-    });
-
-    it('does not compare the p95 when the workload changed, says so, and starts a new history', async () => {
-      const pkg = packageWith(
-        SCENARIO,
-        `, thresholds: {default: {p95Regression: 1, minDelta: 0}}${fakeEngine(SLOW_P95_MS)}`,
-      );
-      recordBaseline(pkg, [0.1, 0.1], {workload: '4 vusers/s for 1 s'});
-
-      const {code, out} = await runMain(['run', pkg], env);
-
-      expect(code).to.equal(0);
-      expect(out).to.match(
-        /Baseline: recorded with 4 vusers\/s for 1 s, so p95 is not compared/,
-      );
-      expect(out).to.match(/GET \/items .* pass \(workload changed\)/);
-      expect(out.match(ROW)?.[1]).to.equal('-');
-      expect(historyOf(pkg)).to.deepEqual([SLOW_P95_MS]);
-      expect(
-        JSON.parse(fs.readFileSync(path.join(pkg, BASELINE), 'utf8')).workloads,
-      ).to.deepEqual({'browse items': WORKLOAD});
-    });
-
-    it('says that the baseline is from another URL, and still compares with it', async () => {
-      const pkg = packageWith(SCENARIO, fakeEngine(FAST_P95_MS));
-      recordBaseline(pkg, [100, 200], {baseUrl: 'http://other.example'});
-
-      const {code, out} = await runMain(['run', pkg], {
-        ...env,
-        LOAD_TESTS_UPDATE_BASELINE: undefined,
-      });
-
-      expect(code).to.equal(0);
-      expect(out).to.containEql(
-        `The baseline is from http://other.example, not ${env.LOAD_TESTS_BASE_URL}.`,
-      );
-      expect(out.match(ROW)?.[1]).to.equal('150');
-    });
-
-    it('does not say that the API baseline is from another URL when only browser scenarios run', async () => {
-      const pkg = packageWith(
-        `load.browser('open', {before: async () => {}}, async () => {});`,
-        fakeEngine(FAST_P95_MS),
-      );
-      recordBaseline(pkg, [100, 200], {baseUrl: 'http://other.example'});
-
-      const {out} = await runMain(['run', pkg], {
-        ...env,
-        LOAD_TESTS_UI_URL: env.LOAD_TESTS_BASE_URL,
-        LOAD_TESTS_UPDATE_BASELINE: undefined,
-      });
-
-      expect(out).to.not.match(/The baseline is from/);
-    });
-
-    it('starts a new history when it saves a run against another host', async () => {
-      const pkg = packageWith(SCENARIO, fakeEngine(FAST_P95_MS));
-      recordBaseline(pkg, [100, 200], {baseUrl: 'http://other.example'});
-
-      const {code, out} = await runMain(['run', pkg], env);
-
-      const saved = JSON.parse(
-        fs.readFileSync(path.join(pkg, BASELINE), 'utf8'),
-      );
-      expect(code).to.equal(0);
-      expect(out.match(ROW)?.[1]).to.equal('150');
-      expect(historyOf(pkg)).to.deepEqual([FAST_P95_MS]);
-      expect(saved.baseUrl).to.equal(env.LOAD_TESTS_BASE_URL);
-    });
-
-    it('adds the new run to the history and keeps the old runs', async () => {
-      const pkg = packageWith(SCENARIO, fakeEngine(FAST_P95_MS));
-      recordBaseline(pkg, [100, 200]);
-
-      const {code} = await runMain(['run', pkg], env);
-
-      expect(code).to.equal(0);
-      expect(historyOf(pkg)).to.deepEqual([100, 200, FAST_P95_MS]);
-    });
-
-    it('keeps at most ten runs, and drops the oldest', async () => {
-      const pkg = packageWith(SCENARIO, fakeEngine(FAST_P95_MS));
-      const old = Array.from({length: MAX_HISTORY}, (_, i) => 100 + i);
-      recordBaseline(pkg, old);
-
-      const {code} = await runMain(['run', pkg], env);
-
-      expect(code).to.equal(0);
-      expect(historyOf(pkg)).to.deepEqual([...old.slice(1), FAST_P95_MS]);
-    });
-
-    it('adds a real Artillery run to the history of the baseline', async () => {
-      /* Wide limits keep a slow runner from failing this run. A p95 limit above 1000 ms is a heavy API, so one is allowed. */
-      const pkg = packageWith(
-        SCENARIO,
-        ', maxHeavyApis: 1, thresholds: {default: {p95: 60_000, minDelta: 60_000}}',
-      );
-      recordBaseline(pkg, [100, 200]);
-
-      const {code} = await runMain(['run', pkg], env);
-
-      const history = historyOf(pkg);
-      expect(code).to.equal(0);
-      expect(history).to.have.length(3);
-      expect(history.slice(0, 2)).to.deepEqual([100, 200]);
-      expect(history[2]).to.be.a.Number();
-    }).timeout(60_000);
-  });
-
-  it('fails the run for a failing endpoint and for a failing after, and saves no baseline', async () => {
+  it('fails the run for a failing endpoint and for a failing after', async () => {
     const pkg = packageWith(`
 load.it('browse items', [load.get('/items')], {
   after: () => {
@@ -512,12 +292,9 @@ load.it('break things', [load.get('/broken')]);`);
     expect(code).to.equal(1);
     expect(out).to.match(/FAIL: after failed: after broke/);
     expect(out).to.match(/GET \/broken +\d+ .*FAIL: error rate 100% > 1%/);
-    expect(out).to.match(/Baseline not changed/);
-    expect(fs.existsSync(path.join(pkg, BASELINE))).to.be.false();
   }).timeout(60_000);
 
-  it('saves no baseline when only a cleanup fails and every endpoint passes', async () => {
-    // Rows that a failed cleanup leaves can skew the next run.
+  it('fails the run when only a cleanup fails and every endpoint passes', async () => {
     const pkg = packageWith(`
 load.it('browse items', [load.get('/items')], {
   before: async ctx => {
@@ -532,8 +309,6 @@ load.it('browse items', [load.get('/items')], {
     expect(code).to.equal(1);
     expect(out).to.match(/FAIL: cleanup failed: cleanup broke/);
     expect(out).to.match(/GET \/items +\d+ .*pass/);
-    expect(out).to.match(/Baseline not changed/);
-    expect(fs.existsSync(path.join(pkg, BASELINE))).to.be.false();
   }).timeout(60_000);
 
   it('fails the run for a heavy API when maxHeavyApis is not set', async () => {
@@ -548,7 +323,6 @@ load.it('browse items', [load.get('/items')], {
       /FAIL: 1 heavy API, but maxHeavyApis is 0\. Lower the p95 limit/,
     );
     expect(out).to.match(/GET \/items +\d+ .*pass/);
-    expect(fs.existsSync(path.join(pkg, BASELINE))).to.be.false();
   }).timeout(60_000);
 
   it('passes a heavy API that maxHeavyApis allows, and lists it', async () => {
@@ -572,10 +346,12 @@ load.it('with token', [load.get('/items')], {
 });`);
     const OLD_TOKEN_AGE_SECONDS = 120;
     const TOKEN_LIFE_SECONDS = 900;
-    const sessionOf = (prefix: string, issuedAgo: number) => {
+    // 280 s left is less than the load and the margin of 300 s, so it refreshes.
+    const OLD_TOKEN_LIFE_SECONDS = 400;
+    const sessionOf = (prefix: string, issuedAgo: number, life: number) => {
       const issued = Math.floor(Date.now() / 1000) - issuedAgo;
       const claims = Buffer.from(
-        JSON.stringify({iat: issued, exp: issued + TOKEN_LIFE_SECONDS}),
+        JSON.stringify({iat: issued, exp: issued + life}),
       ).toString('base64url');
       return {accessToken: `${prefix}.${claims}.y`, refreshToken: 'r'};
     };
@@ -584,8 +360,12 @@ load.it('with token', [load.get('/items')], {
       authSeen.push(`${req.method} ${req.url}`);
       const replies: Record<string, unknown> = {
         '/auth/login': {code: 'k'},
-        '/auth/token': sessionOf('old', OLD_TOKEN_AGE_SECONDS),
-        '/auth/token-refresh': sessionOf('new', 0),
+        '/auth/token': sessionOf(
+          'old',
+          OLD_TOKEN_AGE_SECONDS,
+          OLD_TOKEN_LIFE_SECONDS,
+        ),
+        '/auth/token-refresh': sessionOf('new', 0, TOKEN_LIFE_SECONDS),
       };
       res.writeHead(200, {'content-type': 'application/json'});
       res.end(JSON.stringify(replies[req.url ?? ''] ?? {}));
@@ -893,7 +673,7 @@ load.browser('esm', async ({page, step}) => {
         );
       }).timeout(RUN_MS);
 
-      it('fails a run whose step is slower than its limit, and the report command gives the same verdict with no new load', async () => {
+      it('fails a run whose step is slower than its limit', async () => {
         const pkg = packageWith(
           `load.browser('slow', {steps: {save: {p95: 200}}}, async ({page, step}) => {
   await page.goto('/web/');
@@ -904,17 +684,9 @@ load.browser('esm', async ({page, step}) => {
           /step\.save +\d+ +[\d.]+ ms \(200 ms\) .*FAIL: p95 [\d.]+ ms > limit 200 ms/;
 
         const run = await runMain(['run', pkg], uiEnv());
-        const requests = seen.length;
-        delete require.cache[path.join(pkg, 'dist/__tests__/load/s.load.js')];
-        // `report` is a new process in real use, and it loads the file again.
-        delete require.cache[path.join(pkg, 'dist/__tests__/load/s.load.js')];
-        const report = await runMain(['report', pkg], uiEnv());
 
         expect(run.code).to.equal(1);
         expect(run.out).to.match(failedStep);
-        expect(report.code).to.equal(1);
-        expect(report.out).to.match(failedStep);
-        expect(seen.length).to.equal(requests);
       }).timeout(RUN_MS);
 
       it('fails each user whose end element is visible before the action, and names the element', async () => {
@@ -957,143 +729,6 @@ load.browser('esm', async ({page, step}) => {
         else process.env.PLAYWRIGHT_BROWSERS_PATH = saved;
       }
     }).timeout(30_000);
-
-    it('removes the old report files, so report judges only the last run', async () => {
-      const pkg = packageWith(`load.it('browse items', [load.get('/items')]);
-load.browser('open', async () => {});`);
-      const outDir = path.join(pkg, 'src/__tests__/load/.out');
-      const old = path.join(outDir, 'open-chromium.report.json');
-      fs.mkdirSync(outDir, {recursive: true});
-      fs.writeFileSync(old, '{}');
-      const noBrowsers = fs.mkdtempSync(path.join(os.tmpdir(), 'no-browsers-'));
-      dirs.push(noBrowsers);
-      const saved = process.env.PLAYWRIGHT_BROWSERS_PATH;
-      process.env.PLAYWRIGHT_BROWSERS_PATH = noBrowsers;
-      const target = {
-        ...NO_LOGIN,
-        LOAD_TESTS_UI_URL: env.LOAD_TESTS_BASE_URL,
-      };
-
-      try {
-        const run = await runMain(['run', pkg], {...env, ...target});
-        // `report` is a new process in real use, and it loads the file again.
-        delete require.cache[path.join(pkg, 'dist/__tests__/load/s.load.js')];
-        const report = await runMain(['report', pkg], NO_TARGET_ENV);
-
-        expect(run.code).to.equal(1);
-        expect(run.out).to.match(/browse items[^]*pass/);
-        expect(run.out).to.match(/Install it with `npx playwright@1\.62\.1/);
-        expect(fs.existsSync(old)).to.be.false();
-        expect(report.code).to.equal(1);
-        expect(report.out).to.match(
-          /open[^]*No report file: the last run of this scenario failed or did not start\./,
-        );
-        expect(report.out).to.match(/browse items[^]*pass/);
-      } finally {
-        if (saved === undefined) delete process.env.PLAYWRIGHT_BROWSERS_PATH;
-        else process.env.PLAYWRIGHT_BROWSERS_PATH = saved;
-      }
-    }).timeout(60_000);
-  });
-
-  describe('report', () => {
-    it('shows a scenario as failed when Artillery failed it after it wrote the report', async () => {
-      // The ensure plugin of Artillery sets a failing exit code at the end of the run.
-      const pkg = packageWith(
-        `load.it('browse items', [load.get('/items')]);`,
-        ", artillery: {config: {plugins: {ensure: {thresholds: [{'http.response_time.p95': 0}]}}}}",
-      );
-
-      const run = await runMain(['run', pkg], env);
-      delete require.cache[path.join(pkg, 'dist/__tests__/load/s.load.js')];
-      const report = await runMain(['report', pkg], NO_TARGET_ENV);
-
-      expect(run.code).to.equal(1);
-      expect(report.code).to.equal(1);
-      expect(report.out).to.match(
-        /No report file in .*\.out\. Run load-testing run first\./,
-      );
-    }).timeout(60_000);
-
-    const OUT = path.join('src', '__tests__', 'load', '.out');
-    const browser = `load.browser('open dashboard', {steps: {save: {p95: 500}}}, async () => {});`;
-
-    it('prints each metric of the last run from its report file, with no URL, and gives 1 when one fails', async () => {
-      const pkg = packageWith(browser);
-      const label = 'open dashboard › chromium';
-      fs.mkdirSync(path.join(pkg, OUT), {recursive: true});
-      fs.writeFileSync(
-        path.join(pkg, OUT, 'open-dashboard-chromium.report.json'),
-        JSON.stringify({
-          aggregate: {
-            counters: {
-              'vusers.created': 2,
-              'vusers.completed': 2,
-              'vusers.failed': 0,
-              'browser.step_wall_clock.save': 2,
-            },
-            summaries: {
-              'browser.step.save': {count: 2, p95: 889},
-              [`browser.page.FCP.${label}`]: {count: 2, p95: 300},
-              [`browser.page.LCP.${label}`]: {count: 2, p95: 400},
-              [`browser.page.CLS.${label}`]: {count: 2, p95: 0},
-              [`browser.page.TTFB.${label}`]: {count: 2, p95: 20},
-              [`browser.flow.${label}`]: {count: 2, p95: 1200},
-            },
-          },
-        }),
-      );
-
-      const {code, out} = await runMain(['report', pkg], NO_TARGET_ENV);
-
-      expect(code).to.equal(1);
-      expect(out).to.match(
-        /step\.save \(wall clock\) +2 +889 ms \(500 ms\) +- +FAIL: p95 889 ms > limit 500 ms\n/,
-      );
-      expect(out).to.match(/page\.FCP +2 +300 ms \(1800 ms\) +- +pass/);
-      expect(out).to.match(/flow +2 +1200 ms +- +no limit/);
-    });
-
-    it('fails only the scenario whose report file is broken, and prints the others', async () => {
-      const pkg = packageWith(
-        `${browser}\nload.browser('open orders', async () => {});`,
-      );
-      fs.mkdirSync(path.join(pkg, OUT), {recursive: true});
-      fs.writeFileSync(
-        path.join(pkg, OUT, 'open-dashboard-chromium.report.json'),
-        JSON.stringify({
-          aggregate: {
-            counters: {'vusers.created': 2, 'vusers.completed': 2},
-            summaries: {
-              'browser.flow.open dashboard › chromium': {count: 2, p95: 1200},
-            },
-          },
-        }),
-      );
-      fs.writeFileSync(
-        path.join(pkg, OUT, 'open-orders-chromium.report.json'),
-        '{',
-      );
-
-      const {code, out} = await runMain(['report', pkg], NO_TARGET_ENV);
-
-      expect(code).to.equal(1);
-      expect(out).to.match(/open dashboard[^]*flow +2 +1200 ms/);
-      expect(out).to.match(
-        /open orders[^]*Artillery wrote no valid report: .*open-orders-chromium\.report\.json/,
-      );
-    });
-
-    it('asks for a run first when no scenario has a report file', async () => {
-      const pkg = packageWith(browser);
-
-      const {code, out} = await runMain(['report', pkg], NO_TARGET_ENV);
-
-      expect(code).to.equal(1);
-      expect(out).to.match(
-        /No report file in .*\.out\. Run load-testing run first\./,
-      );
-    });
   });
 
   describe('reporters', () => {
@@ -1121,7 +756,6 @@ load.browser('open', async () => {});`);
       expect(out).to.not.match(/Results/);
       expect(result?.passed).to.be.true();
       expect(result?.stopped).to.be.false();
-      expect(result?.hasBaseline).to.be.false();
       expect(result?.coverage).to.deepEqual({
         covered: 1,
         total: 6,
@@ -1159,19 +793,6 @@ load.browser('open', async () => {});`);
       expect(globals.lt?.calls).to.deepEqual(['good']);
     }).timeout(60_000);
 
-    it('does not change the baseline when a reporter fails, and says so', async () => {
-      const pkg = packageWith(
-        ITEMS,
-        `, reporters: [{name: 'bad', onRunEnd: () => { throw new Error('no disk'); }}]${fakeEngine(REPORTER_P95_MS)}`,
-      );
-
-      const {code, out} = await runMain(['run', pkg], env);
-
-      expect(code).to.equal(1);
-      expect(out).to.match(/Baseline not changed/);
-      expect(fs.existsSync(path.join(pkg, BASELINE))).to.be.false();
-    });
-
     it('keeps the verdict of the run when a reporter sets result.passed', async () => {
       const pkg = packageWith(
         ITEMS,
@@ -1181,7 +802,6 @@ load.browser('open', async () => {});`);
       const {code} = await runMain(['run', pkg], env);
 
       expect(code).to.equal(1);
-      expect(fs.existsSync(path.join(pkg, BASELINE))).to.be.false();
     });
   });
 
@@ -1225,7 +845,7 @@ load.it('plain', [load.get('/items')]);`);
     const {code, out} = await runMain(['run', pkg], {...env, ...NO_LOGIN});
 
     expect(code).to.equal(1);
-    expect(out).to.match(/token\(\) needs a login: set LOAD_TESTS_USERNAME/);
+    expect(out).to.match(/token\(\) needs a login: set LOAD_TESTS_USERS_FILE/);
     expect(out).to.match(/\n\s+needs token\n/);
     expect(out).to.not.match(/plain/);
     expect(seen).to.deepEqual([]);

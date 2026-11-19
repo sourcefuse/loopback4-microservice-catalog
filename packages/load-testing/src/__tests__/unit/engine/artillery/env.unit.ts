@@ -7,39 +7,41 @@ import {artilleryEnv} from '../../../../engine/artillery/env';
 import {UI_URL_ENV} from '../../../../project/layout';
 
 describe('artilleryEnv', () => {
-  it('sets no LOAD_TESTS_TOKEN without a token, even if the CLI has one', () => {
+  it('sets no LOAD_TESTS_TOKENS without tokens, even if the CLI has one', () => {
     const env = artilleryEnv({
+      tokens: [],
       url: 'http://app',
       env: {
-        LOAD_TESTS_TOKEN: 'old',
+        LOAD_TESTS_TOKENS: 'old',
       },
     });
 
-    expect(env).to.not.have.property('LOAD_TESTS_TOKEN');
+    expect(env).to.not.have.property('LOAD_TESTS_TOKENS');
   });
 
-  it('has the base URL and the token', () => {
+  it('has the base URL and the tokens of the pool as a JSON list', () => {
     const env = artilleryEnv({
       url: 'http://app',
-      token: 'tok',
+      tokens: ['tok', 'tok2'],
       env: {
         LOAD_TESTS_BASE_URL: 'http://other',
       },
     });
 
     expect(env.LOAD_TESTS_BASE_URL).to.equal('http://app');
-    expect(env.LOAD_TESTS_TOKEN).to.equal('tok');
+    expect(env.LOAD_TESTS_TOKENS).to.equal('["tok","tok2"]');
   });
 
   it('drops the secrets of a CI job and the LOAD_TESTS_ variables', () => {
     const env = artilleryEnv({
+      tokens: [],
       url: 'http://app',
       env: {
         GITHUB_TOKEN: 'g',
         AWS_SECRET_ACCESS_KEY: 'a',
         NODE_AUTH_TOKEN: 'n',
         ARTILLERY_CLOUD_API_KEY: 'c',
-        LOAD_TESTS_PASSWORD: 'p',
+        LOAD_TESTS_CLIENT_SECRET: 'p',
       },
     });
 
@@ -48,6 +50,7 @@ describe('artilleryEnv', () => {
 
   it('gives a browser scenario the URL of the web app, and not the base URL', () => {
     const env = artilleryEnv({
+      tokens: [],
       url: 'http://ui',
       env: {LOAD_TESTS_BASE_URL: 'http://api'},
       extraNames: [],
@@ -60,6 +63,7 @@ describe('artilleryEnv', () => {
 
   it('passes PLAYWRIGHT_BROWSERS_PATH, where a CI image can keep its browsers', () => {
     const env = artilleryEnv({
+      tokens: [],
       url: 'http://ui',
       env: {
         PLAYWRIGHT_BROWSERS_PATH: '/ms-playwright',
@@ -71,6 +75,7 @@ describe('artilleryEnv', () => {
 
   it('passes the names of the allow-list, and every LC_ name', () => {
     const env = artilleryEnv({
+      tokens: [],
       url: 'http://app',
       env: {
         PATH: '/bin',
@@ -92,6 +97,7 @@ describe('artilleryEnv', () => {
 
   it('passes XDG_CACHE_HOME, where Playwright looks for its browsers on Linux', () => {
     const env = artilleryEnv({
+      tokens: [],
       url: 'http://ui',
       env: {
         XDG_CACHE_HOME: '/cache',
@@ -103,6 +109,7 @@ describe('artilleryEnv', () => {
 
   it('does not pass ARTILLERY_WORKERS: Artillery does not read it', () => {
     const env = artilleryEnv({
+      tokens: [],
       url: 'http://app',
       env: {
         ARTILLERY_WORKERS: '2',
@@ -114,6 +121,7 @@ describe('artilleryEnv', () => {
 
   it('does not pass ALL_PROXY and NO_PROXY: Artillery does not read them', () => {
     const env = artilleryEnv({
+      tokens: [],
       url: 'http://app',
       env: {
         ALL_PROXY: 'http://user:secret@proxy',
@@ -125,13 +133,18 @@ describe('artilleryEnv', () => {
   });
 
   it('compares the names without regard to letter case', () => {
-    const env = artilleryEnv({url: 'http://app', env: {Path: 'C:\\bin'}});
+    const env = artilleryEnv({
+      tokens: [],
+      url: 'http://app',
+      env: {Path: 'C:\\bin'},
+    });
 
     expect(env.Path).to.equal('C:\\bin');
   });
 
   it('passes a name that the config asks for, and only when the CLI has it', () => {
     const env = artilleryEnv({
+      tokens: [],
       url: 'http://app',
       env: {MY_API_KEY: 'k', OTHER_KEY: 'o'},
       extraNames: ['MY_API_KEY', 'NOT_SET'],
@@ -144,22 +157,23 @@ describe('artilleryEnv', () => {
 
   it('never passes a LOAD_TESTS_ name, also when the config asks for it', () => {
     const env = artilleryEnv({
+      tokens: [],
       url: 'http://app',
-      env: {LOAD_TESTS_PASSWORD: 'p'},
-      extraNames: ['LOAD_TESTS_PASSWORD'],
+      env: {LOAD_TESTS_CLIENT_SECRET: 'p'},
+      extraNames: ['LOAD_TESTS_CLIENT_SECRET'],
     });
 
-    expect(env).to.not.have.property('LOAD_TESTS_PASSWORD');
+    expect(env).to.not.have.property('LOAD_TESTS_CLIENT_SECRET');
   });
 
   it('removes every variable that starts with LOAD_TESTS_, also one that the library does not know', () => {
     const env = artilleryEnv({
+      tokens: [],
       url: 'http://app',
       env: {
-        LOAD_TESTS_PASSWORD: 's',
         LOAD_TESTS_CLIENT_SECRET: 's',
         LOAD_TESTS_DB_URL: 'postgres://u:secret@db',
-        LOAD_TESTS_USERNAME: 'u',
+        LOAD_TESTS_USERS_FILE: 'u',
       },
     });
 
@@ -169,7 +183,7 @@ describe('artilleryEnv', () => {
   it('does not change the environment that it gets', () => {
     const source = {LOAD_TESTS_DB_URL: 'x'};
 
-    artilleryEnv({url: 'http://app', token: 'tok', env: source});
+    artilleryEnv({url: 'http://app', tokens: ['tok'], env: source});
 
     expect(source).to.deepEqual({LOAD_TESTS_DB_URL: 'x'});
   });
@@ -178,11 +192,24 @@ describe('artilleryEnv', () => {
     process.env.LT_ENV_TEST_VAR = 'v';
     try {
       expect(
-        artilleryEnv({url: 'http://app', extraNames: ['LT_ENV_TEST_VAR']})
-          .LT_ENV_TEST_VAR,
+        artilleryEnv({
+          tokens: [],
+          url: 'http://app',
+          extraNames: ['LT_ENV_TEST_VAR'],
+        }).LT_ENV_TEST_VAR,
       ).to.equal('v');
     } finally {
       delete process.env.LT_ENV_TEST_VAR;
     }
+  });
+
+  describe('artilleryEnv token size', () => {
+    it('stops with the pool size when the tokens do not fit in one variable', () => {
+      const tokens = Array.from({length: 120}, () => 'x'.repeat(1000));
+
+      expect(() => artilleryEnv({url: 'http://app', tokens, env: {}})).to.throw(
+        /tokens of 120 users .* Use fewer users/,
+      );
+    });
   });
 });

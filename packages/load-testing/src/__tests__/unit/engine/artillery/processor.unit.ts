@@ -2,13 +2,13 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {expect} from '@loopback/testlab';
+import {expect, sinon} from '@loopback/testlab';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import {scenarioOf} from '../../../helpers';
 import {load} from '../../../../scenario/builder';
-import {captureFrom} from '../../../../scenario/values';
+import {captureFrom, template, token} from '../../../../scenario/values';
 import {
   transpile,
   writeScenario,
@@ -38,6 +38,96 @@ describe('worker hooks', () => {
     new Function('require', 'exports', source)(require, exported);
     return exported as Processor;
   }
+
+  describe('the token of the pool', () => {
+    const withTokens = (value: string | undefined, run: () => void) => {
+      const old = process.env.LOAD_TESTS_TOKENS;
+      if (value === undefined) delete process.env.LOAD_TESTS_TOKENS;
+      else process.env.LOAD_TESTS_TOKENS = value;
+      try {
+        run();
+      } finally {
+        if (old === undefined) delete process.env.LOAD_TESTS_TOKENS;
+        else process.env.LOAD_TESTS_TOKENS = old;
+      }
+    };
+    const tokenScenario = scenarioOf('s', [
+      load.get('/a', {headers: {authorization: template`Bearer ${token()}`}}),
+    ]);
+
+    it('starts at a random place and goes round the list', () => {
+      withTokens('["t0","t1","t2"]', () => {
+        const random = sinon.stub(Math, 'random').returns(0.7);
+        try {
+          const processor = loadProcessor(processorSource(tokenScenario, {}));
+          const seen: unknown[] = [];
+          for (let i = 0; i < 4; i++) {
+            const context = {vars: {} as Record<string, unknown>};
+            processor.loadTestsBeforeScenario(context, {}, () => undefined);
+            seen.push(context.vars.loadTestsToken);
+          }
+
+          // floor(0.7 * 3) = 2, so t2, t0, t1, t2.
+          expect(seen).to.deepEqual(['t2', 't0', 't1', 't2']);
+        } finally {
+          random.restore();
+        }
+      });
+    });
+
+    it('fails the vuser when the list of tokens is missing or empty', () => {
+      for (const value of [undefined, '[]']) {
+        withTokens(value, () => {
+          const processor = loadProcessor(processorSource(tokenScenario, {}));
+          let failure: Error | undefined;
+
+          processor.loadTestsBeforeScenario({vars: {}}, {}, err => {
+            failure = err;
+          });
+
+          expect(failure?.message).to.match(
+            /^load-testing hook tokens: LOAD_TESTS_TOKENS is missing or empty$/,
+          );
+        });
+      }
+    });
+
+    it('does not give the token to beforeEach', () => {
+      withTokens('["t0"]', () => {
+        let seen: Record<string, unknown> = {};
+        const scenario = scenarioOf(
+          's',
+          [load.get('/a', {headers: {authorization: token()}})],
+          {
+            beforeEach: ({vars: run}) => {
+              seen = run;
+              return {};
+            },
+          },
+        );
+        const processor = loadProcessor(processorSource(scenario, {}));
+        const context = {vars: {} as Record<string, unknown>};
+
+        processor.loadTestsBeforeScenario(context, {}, () => undefined);
+
+        expect(seen).not.to.have.property('loadTestsToken');
+        expect(context.vars.loadTestsToken).to.equal('t0');
+      });
+    });
+
+    it('sets no token when the scenario does not use token()', () => {
+      withTokens('["t0"]', () => {
+        const processor = loadProcessor(
+          processorSource(scenarioOf('s', [load.get('/a')]), {}),
+        );
+        const context = {vars: {} as Record<string, unknown>};
+
+        processor.loadTestsBeforeScenario(context, {}, () => undefined);
+
+        expect(context.vars).not.to.have.property('loadTestsToken');
+      });
+    });
+  });
 
   it('gives each user the run vars and what beforeEach returns', () => {
     const scenario = scenarioOf('s', [load.get('/a')], {

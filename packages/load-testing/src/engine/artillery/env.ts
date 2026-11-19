@@ -5,7 +5,8 @@
 import {CLI_ONLY_PREFIX} from '../../project/config';
 import type {UI_URL_ENV} from '../../project/layout';
 import {BASE_URL_ENV} from '../../project/layout';
-import {TOKEN_ENV} from './requests';
+import {ConfigError} from '../../errors';
+import {TOKENS_ENV} from './requests';
 
 /**
  * The names that Artillery gets from the CLI by default, and every name
@@ -56,24 +57,32 @@ const DEFAULT_ENV_NAMES = new Set([
 const LOCALE_PREFIX = 'LC_';
 
 /**
+ * The most bytes that the list of tokens may have. Linux limits one
+ * environment string to 128 KiB, and Artillery would fail to start with an
+ * unclear error.
+ */
+const MAX_TOKENS_BYTES = 100 * 1024;
+
+/**
  * The environment of Artillery: the variables of `DEFAULT_ENV_NAMES`, and the
  * ones in `extraNames` (`artillery.env` of the config), when the CLI has
  * them. A name that starts with `LOAD_TESTS_` never goes through. The script
  * reads two variables, and this function sets both: the URL of the
  * application in `urlName` (the hooks use the same one, without a slash at
- * the end) and the token. It sets the token only when `token` is given, that
- * is when the CLI has a login and the scenario uses `token()`.
+ * the end) and the tokens of the pool as a JSON list. It sets them only when
+ * `tokens` is not empty, that is when the CLI has a login and the scenario
+ * uses `token()`.
  */
 export function artilleryEnv({
   url,
-  token,
+  tokens,
   env = process.env,
   extraNames = [],
   urlName = BASE_URL_ENV,
 }: {
   /** The URL of the API, or of the web app for a browser scenario. */
   url: string;
-  token?: string;
+  tokens: string[];
   env?: NodeJS.ProcessEnv;
   extraNames?: string[];
   urlName?: typeof BASE_URL_ENV | typeof UI_URL_ENV;
@@ -92,10 +101,19 @@ export function artilleryEnv({
   );
   out[urlName] = url;
   /*
-   * The token goes from the CLI to Artillery in the environment, never on
-   * disk. Without a token, an old value in the environment of the CLI must
+   * The tokens go from the CLI to Artillery in the environment, never on
+   * disk. Without tokens, an old value in the environment of the CLI must
    * not reach the script.
    */
-  if (token !== undefined) out[TOKEN_ENV] = token;
+  if (tokens.length > 0) {
+    const list = JSON.stringify(tokens);
+    const bytes = Buffer.byteLength(list);
+    if (bytes > MAX_TOKENS_BYTES) {
+      throw new ConfigError(
+        `the tokens of ${tokens.length} users are ${bytes} bytes, which is more than one environment variable can hold (${MAX_TOKENS_BYTES}). Use fewer users in the pool.`,
+      );
+    }
+    out[TOKENS_ENV] = list;
+  }
   return out;
 }

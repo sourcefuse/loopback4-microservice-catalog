@@ -90,6 +90,7 @@ const BROWSER_OPTIONS: readonly string[] = [
   'vitals',
   'before',
   'after',
+  'covers',
 ];
 
 /** The `load.describe` blocks that are open, the outermost first. */
@@ -275,6 +276,7 @@ function browserWith(flag?: Flag): Browser {
       vitals,
       before,
       after,
+      covers,
     } = options;
     checkBrowserOptions(options);
     return register(flag, {
@@ -285,6 +287,7 @@ function browserWith(flag?: Flag): Browser {
         vitals,
         before,
         after,
+        covers,
       }),
       browser: {
         flow: flow as BrowserFlow,

@@ -9,7 +9,6 @@ import {resolveThresholds} from '../../../project/config';
 import {failedScenario, judgeRun, judgeScenario} from '../../../report/report';
 import type {BrowserLimits, LoadedScenario} from '../../../project/types';
 import type {
-  Baseline,
   MetricStats,
   ScenarioResult,
   ScenarioRun,
@@ -19,6 +18,7 @@ const LIMITS = resolveThresholds({});
 const WORKLOAD = '10 vusers/s for 10 s';
 const LOADED: LoadedScenario = {
   scenario: scenarioOf('browse orders', [load.get('/orders')]),
+  source: 's.load.ts',
   endpoints: new Map([['GET /orders', LIMITS]]),
 };
 
@@ -32,49 +32,23 @@ const runWith = (change: Partial<ScenarioRun> = {}): ScenarioRun => ({
   ...change,
 });
 
-/** A baseline with a mean p95 of 15 ms for `GET /orders`. */
-const baselineWith = (workload: string): Baseline => ({
-  baseUrl: 'http://app',
-  recordedAt: '2026-10-05',
-  history: {'browse orders': {'GET /orders': [10, 20]}},
-  workloads: {'browse orders': workload},
-});
-
-const LIMITS_OF = {baseline: undefined, vuserLimits: LIMITS};
-
 describe('judgeScenario', () => {
-  it('compares p95 with the mean of the baseline, and gives the limit', () => {
-    const {result} = judgeScenario(LOADED, runWith(), {
-      baseline: baselineWith(WORKLOAD),
-      vuserLimits: LIMITS,
-    });
+  it('judges a good run, and gives the limit', () => {
+    const result = judgeScenario(LOADED, runWith(), LIMITS);
 
-    // The limit is 15 ms plus the larger of 10 ms and 20% of 15 ms.
+    expect(result.passed).to.be.true();
     expect(result.endpoints).to.deepEqual([
       {
         id: 'GET /orders',
         requests: 100,
         perSecond: 10,
         p95: 30,
-        p95Limit: 25,
-        baselineP95: 15,
+        p95Limit: 500,
         errorRate: 0,
         errorRateLimit: 1,
-        failures: ['p95 +100% (+15 ms) over baseline 15 ms'],
-        note: undefined,
+        failures: [],
       },
     ]);
-    expect(result.passed).to.be.false();
-  });
-
-  it('passes a good run, and notes that there is no baseline', () => {
-    const {result, p95} = judgeScenario(LOADED, runWith(), LIMITS_OF);
-
-    expect(result.passed).to.be.true();
-    expect(result.endpoints[0].note).to.equal('no baseline');
-    // With no baseline, the default cap is the limit.
-    expect(result.endpoints[0].p95Limit).to.equal(500);
-    expect(result.baselineNote).to.be.undefined();
     expect(result.vusers).to.deepEqual({
       started: 100,
       completed: 100,
@@ -82,53 +56,33 @@ describe('judgeScenario', () => {
       failedLimit: 1,
       failures: [],
     });
-    expect(p95).to.deepEqual({'GET /orders': 30});
   });
 
-  it('fails an endpoint over the default cap, also with no baseline', () => {
+  it('fails an endpoint over the default cap', () => {
     const slow = new Map([['GET /orders', {count: 100, failed: 0, p95: 501}]]);
 
-    const {result} = judgeScenario(
-      LOADED,
-      runWith({endpoints: slow}),
-      LIMITS_OF,
-    );
+    const result = judgeScenario(LOADED, runWith({endpoints: slow}), LIMITS);
 
     expect(result.endpoints[0].failures).to.deepEqual([
       'p95 501 ms > limit 500 ms',
     ]);
-    expect(result.endpoints[0].note).to.be.undefined();
     expect(result.passed).to.be.false();
-  });
-
-  it('does not compare p95 when the workload changed, and says why', () => {
-    const {result} = judgeScenario(LOADED, runWith(), {
-      baseline: baselineWith('3 vusers/s for 10 s'),
-      vuserLimits: LIMITS,
-    });
-
-    expect(result.endpoints[0].baselineP95).to.be.undefined();
-    expect(result.endpoints[0].note).to.equal('workload changed');
-    expect(result.baselineNote).to.equal(
-      'recorded with 3 vusers/s for 10 s, so p95 is not compared',
-    );
-    expect(result.passed).to.be.true();
   });
 
   it('fails when more vusers fail than the error rate allows', () => {
     const vusers = {started: 100, completed: 95, failed: 5};
 
-    const {result} = judgeScenario(LOADED, runWith({vusers}), LIMITS_OF);
+    const result = judgeScenario(LOADED, runWith({vusers}), LIMITS);
 
     expect(result.vusers.failures).to.deepEqual(['vuser failure rate 5% > 1%']);
     expect(result.passed).to.be.false();
   });
 
   it('fails when after or a cleanup failed, and says what', () => {
-    const {result} = judgeScenario(
+    const result = judgeScenario(
       LOADED,
       runWith({problems: ['cleanup failed: gone']}),
-      LIMITS_OF,
+      LIMITS,
     );
 
     expect(result.problems).to.deepEqual(['cleanup failed: gone']);
@@ -136,25 +90,26 @@ describe('judgeScenario', () => {
   });
 
   it('fails when a hook threw', () => {
-    const {result} = judgeScenario(LOADED, runWith({hookErrors: 2}), LIMITS_OF);
+    const result = judgeScenario(LOADED, runWith({hookErrors: 2}), LIMITS);
 
     expect(result.hookErrors).to.equal(2);
     expect(result.passed).to.be.false();
   });
 
   it('gives no requests per second when no time was measured', () => {
-    const {result} = judgeScenario(LOADED, runWith({seconds: 0}), LIMITS_OF);
+    const result = judgeScenario(LOADED, runWith({seconds: 0}), LIMITS);
 
     expect(result.endpoints[0].perSecond).to.be.undefined();
   });
 });
 
 describe('judgeScenario of a browser scenario', () => {
-  const STEP = {p95: 1500, p95Regression: 20, minDelta: 10};
+  const STEP = {p95: 1500};
   const NO_VITALS: BrowserLimits = {step: STEP, steps: {}, vitals: {}};
 
   const loadedWith = (browser: BrowserLimits): LoadedScenario => ({
     scenario: scenarioOf('open dashboard', []),
+    source: 's.load.ts',
     endpoints: new Map(),
     browser,
   });
@@ -167,9 +122,11 @@ describe('judgeScenario of a browser scenario', () => {
       'browser.step.load_dashboard': {count: 100, p95: 812.5},
     });
     const judged = (p95: number) =>
-      judgeScenario(loadedWith({...NO_VITALS, step: {...STEP, p95}}), run, {
-        vuserLimits: LIMITS,
-      }).result;
+      judgeScenario(
+        loadedWith({...NO_VITALS, step: {...STEP, p95}}),
+        run,
+        LIMITS,
+      );
 
     expect(judged(500).metrics).to.deepEqual([
       {
@@ -178,9 +135,7 @@ describe('judgeScenario of a browser scenario', () => {
         p95: 812.5,
         unit: 'ms',
         p95Limit: 500,
-        baselineP95: undefined,
         failures: ['p95 812.5 ms > limit 500 ms'],
-        note: undefined,
       },
     ]);
     expect(judged(500).passed).to.be.false();
@@ -193,9 +148,7 @@ describe('judgeScenario of a browser scenario', () => {
       'browser.step.save': {count: 100, p95: 889, wallClock: true},
     });
 
-    const {metrics} = judgeScenario(loadedWith(NO_VITALS), run, {
-      vuserLimits: LIMITS,
-    }).result;
+    const {metrics} = judgeScenario(loadedWith(NO_VITALS), run, LIMITS);
 
     expect(metrics.map(({name, wallClock}) => [name, wallClock])).to.deepEqual([
       ['browser.step.save', true],
@@ -205,9 +158,7 @@ describe('judgeScenario of a browser scenario', () => {
   it('fails a step that `steps` names and the report does not have', () => {
     const limits = {...NO_VITALS, steps: {openFilter: STEP}};
 
-    const {result} = judgeScenario(loadedWith(limits), browserRun({}), {
-      vuserLimits: LIMITS,
-    });
+    const result = judgeScenario(loadedWith(limits), browserRun({}), LIMITS);
 
     expect(result.metrics).to.containDeep([
       {name: 'browser.step.openFilter', samples: 0, failures: ['no samples']},
@@ -226,9 +177,7 @@ describe('judgeScenario of a browser scenario', () => {
       'browser.step.loadDashboard': {count: 100, p95: 812.5},
     });
 
-    const {result} = judgeScenario(loadedWith(limits), run, {
-      vuserLimits: LIMITS,
-    });
+    const result = judgeScenario(loadedWith(limits), run, LIMITS);
 
     expect(result.metrics).to.containDeep([
       {name: 'browser.step.loadDashboard', p95Limit: 5000, failures: []},
@@ -242,9 +191,7 @@ describe('judgeScenario of a browser scenario', () => {
       'browser.page.LCP.open dashboard': {count: 99, p95: 900},
     });
 
-    const {result} = judgeScenario(loadedWith(limits), run, {
-      vuserLimits: LIMITS,
-    });
+    const result = judgeScenario(loadedWith(limits), run, LIMITS);
 
     expect(result.metrics).to.containDeep([
       {
@@ -261,7 +208,7 @@ describe('judgeScenario of a browser scenario', () => {
       'browser.flow.open dashboard': {count: 99, p95: 3200},
     });
     const judged = (limits: BrowserLimits) =>
-      judgeScenario(loadedWith(limits), run, {vuserLimits: LIMITS}).result;
+      judgeScenario(loadedWith(limits), run, LIMITS);
 
     expect(judged(NO_VITALS).metrics).to.deepEqual([
       {
@@ -270,9 +217,7 @@ describe('judgeScenario of a browser scenario', () => {
         p95: 3200,
         unit: 'ms',
         p95Limit: undefined,
-        baselineP95: undefined,
         failures: [],
-        note: undefined,
       },
     ]);
     expect(judged(NO_VITALS).passed).to.be.true();
@@ -284,51 +229,18 @@ describe('judgeScenario of a browser scenario', () => {
     ]);
   });
 
-  it('gives CLS no unit, and compares it with its baseline', () => {
-    const CLS = {p95: 0.25, p95Regression: 20, minDelta: 0.1};
+  it('gives CLS no unit', () => {
     const name = 'browser.page.CLS.open dashboard';
-    const baseline: Baseline = {
-      baseUrl: 'http://app',
-      recordedAt: '2026-10-22',
-      history: {'open dashboard': {[name]: [0.1]}},
-      workloads: {'open dashboard': WORKLOAD},
-    };
 
-    const {result} = judgeScenario(
-      loadedWith({...NO_VITALS, vitals: {CLS}}),
+    const result = judgeScenario(
+      loadedWith({...NO_VITALS, vitals: {CLS: {p95: 0.25}}}),
       browserRun({[name]: {count: 100, p95: 0.3}}),
-      {baseline, vuserLimits: LIMITS},
+      LIMITS,
     );
 
-    // The limit from the baseline is 0.1 plus the larger of 0.1 and 20% of 0.1.
     expect(result.metrics).to.containDeep([
-      {
-        name,
-        unit: '',
-        p95Limit: 0.2,
-        baselineP95: 0.1,
-        failures: [
-          'p95 0.3 > limit 0.25',
-          'p95 +200% (+0.2) over baseline 0.1',
-        ],
-      },
+      {name, unit: '', p95Limit: 0.25, failures: ['p95 0.3 > limit 0.25']},
     ]);
-  });
-
-  it('gives the p95 of each browser metric for the baseline, by its report name', () => {
-    const run = browserRun({
-      'browser.step.loadDashboard': {count: 100, p95: 812.5},
-      'browser.flow.open dashboard': {count: 100, p95: 3200},
-    });
-
-    const {p95} = judgeScenario(loadedWith(NO_VITALS), run, {
-      vuserLimits: LIMITS,
-    });
-
-    expect(p95).to.deepEqual({
-      'browser.step.loadDashboard': 812.5,
-      'browser.flow.open dashboard': 3200,
-    });
   });
 });
 
@@ -346,10 +258,9 @@ describe('judgeRun', () => {
   const rest = {
     skipped: [],
     coverage: {covered: 1, total: 2, specFile: 'src/openapi.json'},
-    hasBaseline: false,
     stopped: false,
   };
-  const passing = judgeScenario(LOADED, runWith(), LIMITS_OF).result;
+  const passing = judgeScenario(LOADED, runWith(), LIMITS);
 
   const judged = (scenarios: ScenarioResult[], count = 0, max = 0) =>
     judgeRun(scenarios, {...rest, heavyApis: heavy(count, max)});

@@ -185,6 +185,7 @@ describe('the Artillery engine and the base URL', () => {
         runVars: {},
         endpointIds: ['GET /a'],
         baseUrl: 'http://127.0.0.1:1/$&',
+        tokens: [],
         signal: new AbortController().signal,
       });
 
@@ -206,6 +207,7 @@ describe('the Artillery engine and the base URL', () => {
         runVars: {},
         endpointIds: [],
         baseUrl: 'http://127.0.0.1:1/$&',
+        tokens: [],
         signal: new AbortController().signal,
       });
 
@@ -229,7 +231,7 @@ describe('the Artillery engine and the access token', () => {
         runVars: {},
         endpointIds: ['GET /a'],
         baseUrl: 'http://127.0.0.1:1',
-        token: 'abc$&def',
+        tokens: ['abc$&def'],
         signal: new AbortController().signal,
       });
 
@@ -256,6 +258,7 @@ describe('the Artillery engine and the vars of before', () => {
         runVars: {x: '{{ x }}'},
         endpointIds: ['GET /a'],
         baseUrl: 'http://127.0.0.1:1',
+        tokens: [],
         signal: new AbortController().signal,
       });
 

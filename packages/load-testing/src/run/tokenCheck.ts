@@ -16,9 +16,9 @@ const TOKEN_MARGIN_SECONDS = 120;
 
 /**
  * The check that runs when no `tokenCheck` is set. It stops a scenario whose
- * load takes longer than the access token lives. The engine sends one token
- * for the whole load, so every request after the token expires would fail
- * with 401.
+ * load takes longer than the access token lives. Each vuser sends one
+ * pool token for the whole load, so every request after that token expires
+ * would fail with 401.
  */
 export const defaultTokenCheck: TokenCheck = ({token, phases}) => {
   const left = secondsLeft(token);

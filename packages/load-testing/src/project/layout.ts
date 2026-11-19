@@ -13,7 +13,12 @@ const BUILD_DIR = 'dist';
 /** Scenario files, config.ts and generated output all live here. */
 export const SCENARIOS_DIR = path.join(SOURCE_DIR, '__tests__', 'load');
 export const CONFIG_FILE = path.join(SCENARIOS_DIR, 'config.ts');
+/** The end of the name of a file that registers scenarios. */
+export const SCENARIO_SUFFIX = '.load.ts';
 export const OUT_DIR = path.join(SCENARIOS_DIR, '.out');
+
+/** The name, without `.json`, of the selection report in `OUT_DIR`. No scenario may use it as a slug. */
+export const SELECTION_SLUG = 'selection';
 
 /** The environment variable of the URL of the API. */
 export const BASE_URL_ENV = 'LOAD_TESTS_BASE_URL';

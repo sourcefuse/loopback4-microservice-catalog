@@ -72,18 +72,14 @@ export type EndpointResult = {
   perSecond?: number;
   /** 95th percentile of the response time, in milliseconds. Undefined when no response arrived. */
   p95?: number;
-  /** Highest p95 that passes, in milliseconds: the p95 limit, or the limit from the baseline when that is lower. */
+  /** Highest p95 that passes, in milliseconds. */
   p95Limit: number;
-  /** Mean p95 of the baseline history, in milliseconds. Undefined when it is not compared. */
-  baselineP95?: number;
   /** Percent of the requests that failed. */
   errorRate: number;
   /** Highest error rate that passes, in percent. */
   errorRateLimit: number;
   /** Why the endpoint fails. Empty means it passes. */
   failures: string[];
-  /** Why a passing endpoint was not compared with a baseline, for example `no baseline`. */
-  note?: string;
 };
 
 /** What the judge says about one browser metric of one scenario. */
@@ -96,17 +92,10 @@ export type MetricResult = {
   p95?: number;
   /** `ms` for a time. Empty for CLS, which has no unit. */
   unit: 'ms' | '';
-  /**
-   * Highest p95 that passes: the p95 limit, or the limit from the baseline
-   * when that is lower. Undefined when no limit gates the metric.
-   */
+  /** Highest p95 that passes. Undefined when no limit gates the metric. */
   p95Limit?: number;
-  /** Mean p95 of the baseline history. Undefined when it is not compared. */
-  baselineP95?: number;
   /** Why the metric fails. Empty means it passes. */
   failures: string[];
-  /** Why a passing metric was not compared with a baseline, for example `no baseline`. */
-  note?: string;
   /** True for a step with no end element, which took the time of its whole action. */
   wallClock?: boolean;
 };
@@ -132,8 +121,6 @@ export type ScenarioResult = {
   problems: string[];
   /** The message of the error that stopped the scenario. Undefined when it ran. */
   error?: string;
-  /** Says that the baseline was not compared, and why. */
-  baselineNote?: string;
   /** Empty when the scenario threw. */
   endpoints: EndpointResult[];
   /** The browser metrics. Empty for an HTTP scenario, and when the scenario threw. */
@@ -170,8 +157,6 @@ export type RunResult = {
    * allowed count.
    */
   heavyApis: HeavyApis;
-  /** False when the package has no baseline file. */
-  hasBaseline: boolean;
   /**
    * True when every scenario passed, and the package has no more heavy APIs
    * than its max.
@@ -190,39 +175,4 @@ export type Reporter = {
   /** Shown in the message when the reporter fails. */
   name: string;
   onRunEnd(result: RunResult): void | Promise<void>;
-};
-
-export type Baseline = {
-  /**
-   * The API where the baseline ran. A run on another API starts a new
-   * history for its scenarios. Undefined when no run had an API.
-   */
-  baseUrl?: string;
-  /** The same for the web app of the browser scenarios. */
-  uiUrl?: string;
-  recordedAt: string;
-  /**
-   * The p95 of the last runs, oldest first, by scenario name, then by
-   * endpoint id or browser metric name. Milliseconds, except CLS, which has
-   * no unit.
-   */
-  history: Record<string, Record<string, number[]>>;
-  /**
-   * The workload of each scenario in `history`, as `describeWorkload` says
-   * it. A run with another workload starts a new history.
-   */
-  workloads: Record<string, string>;
-};
-
-/** What one scenario measured in a run. */
-export type BaselineSample = {
-  /** The workload of the run, as `describeWorkload` says it. */
-  workload: string;
-  /** True for a browser scenario, which runs on the UI URL. */
-  browser: boolean;
-  /**
-   * p95 by endpoint id or browser metric name. Milliseconds, except CLS,
-   * which has no unit.
-   */
-  p95: Record<string, number>;
 };

@@ -33,7 +33,7 @@ export abstract class ProblemsError extends LoadTestError {
   }
 }
 
-/** The config, the project layout, the target or a datasource is wrong. */
+/** The config, the project layout, or the target is wrong. */
 export class ConfigError extends ProblemsError {
   override name = 'ConfigError';
 }
@@ -76,7 +76,7 @@ export class LoginError extends LoadTestError {
   override name = 'LoginError';
 }
 
-/** The run failed: the runner, a report, the baseline file or a check. */
+/** The run failed: the runner, a report or a check. */
 export class RunError extends LoadTestError {
   override name = 'RunError';
 }

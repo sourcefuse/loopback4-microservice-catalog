@@ -58,7 +58,7 @@ export function vars(name: string): Var {
 }
 
 /**
- * The access token of the login user. Use it in a header, for example
+ * The access token of one pool user. Each vuser keeps one token for all its requests. Use it in a header, for example
  * `` headers: {authorization: template`Bearer ${token()}`} ``.
  */
 export function token(): Token {

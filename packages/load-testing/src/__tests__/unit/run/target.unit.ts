@@ -7,9 +7,11 @@ import type {AddressInfo, Socket} from 'node:net';
 import {expect, sinon} from '@loopback/testlab';
 import {login, readTarget, refresh, secondsLeft} from '../../../run/target';
 import {LoginError} from '../../../errors';
+import {USER, usersFileOf} from '../../helpers';
 import type {Login, Target} from '../../../run/types';
 
 const apiOnly = {api: true, ui: false};
+const usersFile = usersFileOf([USER]);
 
 describe('readTarget', () => {
   describe('named apis', () => {
@@ -75,8 +77,7 @@ describe('readTarget', () => {
 
   const env = {
     LOAD_TESTS_BASE_URL: 'http://localhost:4014/',
-    LOAD_TESTS_USERNAME: 'u',
-    LOAD_TESTS_PASSWORD: 'p',
+    LOAD_TESTS_USERS_FILE: usersFile,
     LOAD_TESTS_CLIENT_ID: 'c',
     LOAD_TESTS_CLIENT_SECRET: 's',
   };
@@ -144,10 +145,9 @@ describe('readTarget', () => {
     }
   });
 
-  it('reads the login when the username is set', () => {
+  it('reads the login when the users file is set', () => {
     expect(readTarget(env, apiOnly).login).to.deepEqual({
-      username: 'u',
-      password: 'p',
+      users: [USER],
       clientId: 'c',
       clientSecret: 's',
     });
@@ -158,7 +158,7 @@ describe('readTarget', () => {
 
     expect(readTarget(noLogin, apiOnly).login).to.be.undefined();
     expect(
-      readTarget({...noLogin, LOAD_TESTS_USERNAME: ''}, apiOnly).login,
+      readTarget({...noLogin, LOAD_TESTS_USERS_FILE: ''}, apiOnly).login,
     ).to.be.undefined();
   });
 
@@ -166,9 +166,11 @@ describe('readTarget', () => {
     expect(() => readTarget({}, apiOnly)).to.throw('Set LOAD_TESTS_BASE_URL');
   });
 
-  it('names every missing variable when the username is set', () => {
-    expect(() => readTarget({LOAD_TESTS_USERNAME: 'u'}, apiOnly)).to.throw(
-      'Set LOAD_TESTS_BASE_URL, LOAD_TESTS_PASSWORD, LOAD_TESTS_CLIENT_ID, LOAD_TESTS_CLIENT_SECRET',
+  it('names every missing variable when the users file is set', () => {
+    expect(() =>
+      readTarget({LOAD_TESTS_USERS_FILE: usersFile}, apiOnly),
+    ).to.throw(
+      'Set LOAD_TESTS_BASE_URL, LOAD_TESTS_CLIENT_ID, LOAD_TESTS_CLIENT_SECRET',
     );
   });
 
@@ -177,7 +179,7 @@ describe('readTarget', () => {
       readTarget(
         {
           LOAD_TESTS_BASE_URL: 'http://localhost:4014',
-          LOAD_TESTS_PASSWORD: 'p',
+          LOAD_TESTS_CLIENT_ID: 'c',
         },
         apiOnly,
       ),
@@ -188,7 +190,7 @@ describe('readTarget', () => {
     const browserOnly = {api: false, ui: true};
     const ui = {LOAD_TESTS_UI_URL: 'http://localhost:3000/'};
 
-    it('needs the base URL when the username is set, because the login uses the API', () => {
+    it('needs the base URL when the users file is set, because the login uses the API', () => {
       const {LOAD_TESTS_BASE_URL, ...noBaseUrl} = env;
 
       expect(LOAD_TESTS_BASE_URL).to.be.ok();
@@ -215,7 +217,7 @@ describe('login and refresh', () => {
   /** When set, the server answers 200 with this text for every path. */
   let rawReply: string | undefined;
   const seen: Record<string, {body: unknown; authorization?: string}> = {};
-  const session = {accessToken: 'a', refreshToken: 'r'};
+  const session = {username: 'u', accessToken: 'a', refreshToken: 'r'};
 
   before(async () => {
     server = http.createServer((req, res) => {
@@ -237,8 +239,7 @@ describe('login and refresh', () => {
     target = readTarget(
       {
         LOAD_TESTS_BASE_URL: `http://127.0.0.1:${(server.address() as AddressInfo).port}`,
-        LOAD_TESTS_USERNAME: 'u',
-        LOAD_TESTS_PASSWORD: 'p',
+        LOAD_TESTS_USERS_FILE: usersFile,
         LOAD_TESTS_CLIENT_ID: 'c',
         LOAD_TESTS_CLIENT_SECRET: 's',
       },
@@ -256,14 +257,14 @@ describe('login and refresh', () => {
   it('logs in with the code that /auth/login gives', async () => {
     replies = {'/auth/login': {code: 'k'}, '/auth/token': session};
 
-    expect(await login(target)).to.deepEqual(session);
+    expect(await login(target, USER)).to.deepEqual(session);
     expect(seen['/auth/token'].body).to.deepEqual({code: 'k', clientId: 'c'});
   });
 
   it('stops when /auth/login gives no code', async () => {
     replies = {'/auth/login': {}};
 
-    await expect(login(target)).to.be.rejectedWith(
+    await expect(login(target, USER)).to.be.rejectedWith(
       'POST /auth/login gave no code',
     );
   });
@@ -274,7 +275,7 @@ describe('login and refresh', () => {
         '/auth/login': {code: 'k'},
         '/auth/token': {...session, accessToken: bad},
       };
-      await expect(login(target)).to.be.rejectedWith(
+      await expect(login(target, USER)).to.be.rejectedWith(
         'POST /auth/token gave no accessToken',
       );
 
@@ -282,7 +283,7 @@ describe('login and refresh', () => {
         '/auth/login': {code: 'k'},
         '/auth/token': {...session, refreshToken: bad},
       };
-      await expect(login(target)).to.be.rejectedWith(
+      await expect(login(target, USER)).to.be.rejectedWith(
         'POST /auth/token gave no refreshToken',
       );
     }
@@ -291,7 +292,7 @@ describe('login and refresh', () => {
   it('names the URL and the status of a refused login', async () => {
     replies = {};
 
-    await expect(login(target)).to.be.rejectedWith(
+    await expect(login(target, USER)).to.be.rejectedWith(
       /^POST http:\/\/127\.0\.0\.1:\d+\/auth\/login gave 401: no$/,
     );
   });
@@ -300,7 +301,7 @@ describe('login and refresh', () => {
     replies = {};
     refusal = 'y'.repeat(500);
 
-    await expect(login(target)).to.be.rejectedWith(
+    await expect(login(target, USER)).to.be.rejectedWith(
       new RegExp(`gave 401: ${'y'.repeat(200)}$`),
     );
   });
@@ -311,7 +312,7 @@ describe('login and refresh', () => {
     const authUrl = `http://127.0.0.1:${(closed.address() as AddressInfo).port}`;
     await new Promise<void>(resolve => closed.close(() => resolve()));
 
-    const error = await login({...target, authUrl}).catch(
+    const error = await login({...target, authUrl}, USER).catch(
       (err: unknown) => err,
     );
 
@@ -324,7 +325,7 @@ describe('login and refresh', () => {
   it('names the URL and the status when a login answers 200 with a body that is not JSON', async () => {
     rawReply = '<html>';
 
-    await expect(login(target)).to.be.rejectedWith(
+    await expect(login(target, USER)).to.be.rejectedWith(
       /^POST http:\/\/127\.0\.0\.1:\d+\/auth\/login gave 200 with a body that is not JSON$/,
     );
   });
@@ -333,7 +334,7 @@ describe('login and refresh', () => {
     it(`names the URL and the status when a login answers 200 with ${body}`, async () => {
       rawReply = body;
 
-      await expect(login(target)).to.be.rejectedWith(
+      await expect(login(target, USER)).to.be.rejectedWith(
         /^POST http:\/\/127\.0\.0\.1:\d+\/auth\/login gave 200 with a body that is not a JSON object$/,
       );
     });
@@ -351,15 +352,16 @@ describe('login and refresh', () => {
     replies = {};
     const reason = new Error('cancelled');
 
-    await expect(login(target, AbortSignal.abort(reason))).to.be.rejectedWith(
-      'cancelled',
-    );
+    await expect(
+      login(target, USER, AbortSignal.abort(reason)),
+    ).to.be.rejectedWith('cancelled');
   });
 
   it('refreshes with the refresh token, and sends the access token', async () => {
     replies = {'/auth/token-refresh': {accessToken: 'a2', refreshToken: 'r2'}};
 
     expect(await refresh(target, session)).to.deepEqual({
+      username: 'u',
       accessToken: 'a2',
       refreshToken: 'r2',
     });
@@ -375,7 +377,11 @@ describe('login and refresh', () => {
   const now = () => Math.floor(Date.now() / 1000);
 
   it('keeps a token that is less than a minute old', async () => {
-    const young = {accessToken: jwt({iat: now() - 5}), refreshToken: 'r'};
+    const young = {
+      username: 'u',
+      accessToken: jwt({iat: now() - 5}),
+      refreshToken: 'r',
+    };
     delete seen['/auth/token-refresh'];
 
     expect(await refresh(target, young)).to.equal(young);
@@ -384,7 +390,7 @@ describe('login and refresh', () => {
 
   it('keeps an opaque token that the login gave less than a minute ago', async () => {
     replies = {'/auth/login': {code: 'k'}, '/auth/token': session};
-    const fresh = await login(target);
+    const fresh = await login(target, USER);
     delete seen['/auth/token-refresh'];
 
     expect(await refresh(target, fresh)).to.equal(fresh);
@@ -418,9 +424,14 @@ describe('login and refresh', () => {
 
   it('refreshes a token that is a minute old', async () => {
     replies = {'/auth/token-refresh': {accessToken: 'a2', refreshToken: 'r2'}};
-    const old = {accessToken: jwt({iat: now() - 60}), refreshToken: 'r'};
+    const old = {
+      username: 'u',
+      accessToken: jwt({iat: now() - 60}),
+      refreshToken: 'r',
+    };
 
     expect(await refresh(target, old)).to.deepEqual({
+      username: 'u',
       accessToken: 'a2',
       refreshToken: 'r2',
     });
@@ -444,7 +455,7 @@ describe('login and refresh stopped by a signal', () => {
   let arrived: () => void;
   const sockets = new Set<Socket>();
   const reason = new Error('cancelled by the test');
-  const session = {accessToken: 'a', refreshToken: 'r'};
+  const session = {username: 'u', accessToken: 'a', refreshToken: 'r'};
 
   before(async () => {
     server = http.createServer((req, res) => {
@@ -470,8 +481,7 @@ describe('login and refresh stopped by a signal', () => {
     target = readTarget(
       {
         LOAD_TESTS_BASE_URL: `http://127.0.0.1:${(server.address() as AddressInfo).port}`,
-        LOAD_TESTS_USERNAME: 'u',
-        LOAD_TESTS_PASSWORD: 'p',
+        LOAD_TESTS_USERS_FILE: usersFile,
         LOAD_TESTS_CLIENT_ID: 'c',
         LOAD_TESTS_CLIENT_SECRET: 's',
       },
@@ -521,7 +531,7 @@ describe('login and refresh stopped by a signal', () => {
   it('gives the reason of the signal when it aborts a login that waits for /auth/login', async () => {
     expect(
       await abortedCall('before-headers', '/auth/login', signal =>
-        login(target, signal),
+        login(target, USER, signal),
       ),
     ).to.equal(reason);
   });
@@ -529,7 +539,7 @@ describe('login and refresh stopped by a signal', () => {
   it('gives the reason of the signal when it aborts a login that waits for /auth/token', async () => {
     expect(
       await abortedCall('before-headers', '/auth/token', signal =>
-        login(target, signal),
+        login(target, USER, signal),
       ),
     ).to.equal(reason);
   });
@@ -537,7 +547,7 @@ describe('login and refresh stopped by a signal', () => {
   it('gives the reason of the signal when it aborts a login that reads the body of /auth/token', async () => {
     expect(
       await abortedCall('in-body', '/auth/token', signal =>
-        login(target, signal),
+        login(target, USER, signal),
       ),
     ).to.equal(reason);
   });
@@ -545,7 +555,7 @@ describe('login and refresh stopped by a signal', () => {
   it('gives the reason of the signal when it aborts a login that reads the body of /auth/login', async () => {
     expect(
       await abortedCall('in-body', '/auth/login', signal =>
-        login(target, signal),
+        login(target, USER, signal),
       ),
     ).to.equal(reason);
   });
@@ -559,7 +569,7 @@ describe('login and refresh with a redirect', () => {
   let status = 307;
   let location: string | undefined;
   let otherRequests = 0;
-  const OLD_TOKEN = {accessToken: 'a', refreshToken: 'r'};
+  const OLD_TOKEN = {username: 'u', accessToken: 'a', refreshToken: 'r'};
   const LISTEN_HOST = '127.0.0.1';
   const portOf = (server: http.Server) =>
     (server.address() as AddressInfo).port;
@@ -585,8 +595,7 @@ describe('login and refresh with a redirect', () => {
     target = readTarget(
       {
         LOAD_TESTS_BASE_URL: `http://${LISTEN_HOST}:${portOf(auth)}`,
-        LOAD_TESTS_USERNAME: 'u',
-        LOAD_TESTS_PASSWORD: 'p',
+        LOAD_TESTS_USERS_FILE: usersFile,
         LOAD_TESTS_CLIENT_ID: 'c',
         LOAD_TESTS_CLIENT_SECRET: 's',
       },
@@ -611,7 +620,7 @@ describe('login and refresh with a redirect', () => {
     'Set LOAD_TESTS_AUTH_SERVICE_URL to the final URL.';
 
   it('does not follow a 307 of the login, and says where it points', async () => {
-    const error = await login(target).catch((err: unknown) => err);
+    const error = await login(target, USER).catch((err: unknown) => err);
 
     expect(error).to.be.instanceOf(LoginError);
     expect((error as LoginError).message).to.equal(
@@ -636,7 +645,7 @@ describe('login and refresh with a redirect', () => {
   it('does not follow a 302', async () => {
     status = 302;
 
-    await expect(login(target)).to.be.rejectedWith(
+    await expect(login(target, USER)).to.be.rejectedWith(
       message('login', 302, ` to http://${LISTEN_HOST}:${portOf(other)}`),
     );
     expect(otherRequests).to.equal(0);
@@ -644,10 +653,10 @@ describe('login and refresh with a redirect', () => {
 
   it('leaves out the target when the location header is missing or is not a URL', async () => {
     location = undefined;
-    await expect(login(target)).to.be.rejectedWith(message('login', 307));
+    await expect(login(target, USER)).to.be.rejectedWith(message('login', 307));
 
     location = 'http://';
-    await expect(login(target)).to.be.rejectedWith(message('login', 307));
+    await expect(login(target, USER)).to.be.rejectedWith(message('login', 307));
   });
 });
 

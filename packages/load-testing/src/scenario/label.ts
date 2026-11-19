@@ -10,7 +10,7 @@ export const SEPARATOR = ' › ';
 
 /**
  * `group › name`, or `name` for a scenario that no `load.describe` holds.
- * Tables, baselines and messages use it.
+ * Tables and messages use it.
  */
 export function labelOf({group = [], name}: Scenario): string {
   return [...group, name].join(SEPARATOR);

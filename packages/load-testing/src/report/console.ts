@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {print} from '../output';
-import {BASELINE_FILE, exceedsMax, round, roundFor} from './compare';
+import {exceedsMax, round, roundFor} from './compare';
 import {P95_TARGETS} from '../project/config';
 import {flowName} from './names';
 import type {
@@ -20,13 +20,12 @@ const TABLE_HEADER = [
   'Requests',
   'Req/s',
   'p95 ms (limit)',
-  'Base ms',
   'Err % (limit)',
   'Result',
 ];
 
 /** Each value of a browser metric shows its unit, because CLS has none. */
-const METRIC_HEADER = ['Metric', 'Samples', 'p95 (limit)', 'Base', 'Result'];
+const METRIC_HEADER = ['Metric', 'Samples', 'p95 (limit)', 'Result'];
 
 /** Says what a vuser is, because "users" often means rows of a users table. */
 const LEGEND =
@@ -38,25 +37,12 @@ const LEGEND =
  * legend. It is the default reporter.
  */
 export function consoleReporter(): Reporter {
-  return {name: 'console', onRunEnd: result => printRun(result, false)};
+  return {name: 'console', onRunEnd: printRun};
 }
 
-/**
- * Prints the result as `consoleReporter` does, but with a row for each
- * metric of a browser scenario, also the ones that pass.
- * `load-testing report` uses it.
- */
-export function detailReporter(): Reporter {
-  return {
-    name: 'console-detail',
-    onRunEnd: result => printRun(result, true),
-  };
-}
-
-/** `detail` prints every metric of a browser scenario, not only the failed ones. */
-function printRun(result: RunResult, detail: boolean): void {
+function printRun(result: RunResult): void {
   print('\nResults');
-  for (const scenario of result.scenarios) printScenario(scenario, detail);
+  for (const scenario of result.scenarios) printScenario(scenario);
   for (const name of result.skipped) print(`\nSkipped: ${name}`);
   if (!result.stopped) {
     const {covered, total, specFile, noSpec} = result.coverage;
@@ -65,11 +51,6 @@ function printRun(result: RunResult, detail: boolean): void {
         ? '\nCoverage: not calculated, because the application has no API specification.'
         : `\nCoverage: ${covered} of ${total} endpoints in ${specFile}`,
     );
-    if (!result.hasBaseline) {
-      print(
-        `No ${BASELINE_FILE}. Run once with LOAD_TESTS_UPDATE_BASELINE=1 to record it.`,
-      );
-    }
     for (const line of heavyApiLines(result.heavyApis)) print(line);
   }
   print(`\n${LEGEND}`);
@@ -105,11 +86,11 @@ function describeCount(count: number): string {
   return count === 1 ? '1 endpoint is heavy' : `${count} endpoints are heavy`;
 }
 
-function printScenario(scenario: ScenarioResult, detail: boolean): void {
+function printScenario(scenario: ScenarioResult): void {
   print(`\n${scenario.name}`);
   for (const line of linesOf(scenario)) print(line);
   if (scenario.metrics.length > 0) {
-    printMetrics(scenario, detail);
+    printMetrics(scenario);
     return;
   }
   if (scenario.endpoints.length === 0) return;
@@ -119,9 +100,9 @@ function printScenario(scenario: ScenarioResult, detail: boolean): void {
 
 /**
  * The summary of a browser scenario: the flow total, the count of gated
- * metrics that pass, and a table of the failed ones, or of all with `detail`.
+ * metrics that pass, and a table of the failed ones.
  */
-function printMetrics({name, metrics}: ScenarioResult, detail: boolean): void {
+function printMetrics({name, metrics}: ScenarioResult): void {
   const flow = metrics.find(metric => metric.name === flowName(name));
   if (flow) {
     const limit =
@@ -133,13 +114,10 @@ function printMetrics({name, metrics}: ScenarioResult, detail: boolean): void {
   const gated = metrics.filter(metric => metric.p95Limit !== undefined);
   const failed = metrics.filter(metric => metric.failures.length > 0);
   const passing = `Metrics:  ${gated.length - failed.length} of ${gated.length} pass.`;
-  print(
-    detail ? passing : `${passing} Run load-testing report to see each one.`,
-  );
-  const rows = detail ? metrics : failed;
-  if (rows.length === 0) return;
+  print(passing);
+  if (failed.length === 0) return;
   print();
-  printTable([METRIC_HEADER, ...rows.map(metric => metricRow(metric, name))]);
+  printTable([METRIC_HEADER, ...failed.map(metric => metricRow(metric, name))]);
 }
 
 function metricRow(metric: MetricResult, label: string): string[] {
@@ -151,7 +129,6 @@ function metricRow(metric: MetricResult, label: string): string[] {
     metric.p95Limit === undefined
       ? p95
       : `${p95} (${valueOf(metric, metric.p95Limit)})`,
-    valueOf(metric, metric.baselineP95),
     metric.p95Limit === undefined ? 'no limit' : resultCell(metric),
   ];
 }
@@ -176,7 +153,7 @@ function shortName(name: string, label: string): string {
 
 function linesOf(scenario: ScenarioResult): string[] {
   if (scenario.error !== undefined) return [`FAIL: ${scenario.error}`];
-  const {workload, vusers, hookErrors, problems, baselineNote} = scenario;
+  const {workload, vusers, hookErrors, problems} = scenario;
   const counts = `${vusers.started} started, ${vusers.completed} completed, ${vusers.failed} failed`;
   return [
     `Workload: ${workload}`,
@@ -187,7 +164,6 @@ function linesOf(scenario: ScenarioResult): string[] {
       ? [`Hooks:    ${hookErrors} error(s), not app errors (FAIL)`]
       : []),
     ...problems.map(problem => `FAIL: ${problem}`),
-    ...(baselineNote === undefined ? [] : [`Baseline: ${baselineNote}`]),
   ];
 }
 
@@ -197,18 +173,13 @@ function rowOf(endpoint: EndpointResult): string[] {
     String(endpoint.requests),
     formatNumber(endpoint.perSecond),
     withLimit(formatNumber(endpoint.p95), endpoint.p95Limit),
-    formatNumber(endpoint.baselineP95),
     withLimit(String(round(endpoint.errorRate)), endpoint.errorRateLimit),
     resultCell(endpoint),
   ];
 }
 
-function resultCell({
-  failures,
-  note,
-}: Pick<EndpointResult, 'failures' | 'note'>): string {
-  if (failures.length > 0) return `FAIL: ${failures.join('; ')}`;
-  return note === undefined ? 'pass' : `pass (${note})`;
+function resultCell({failures}: Pick<EndpointResult, 'failures'>): string {
+  return failures.length > 0 ? `FAIL: ${failures.join('; ')}` : 'pass';
 }
 
 /** A value with its limit next to it, for example `76 (90)`. */

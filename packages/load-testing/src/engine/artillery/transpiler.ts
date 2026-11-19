@@ -15,6 +15,7 @@ import {artilleryConfigProblems} from '../../project/config';
 import {OUT_DIR} from '../../project/layout';
 import {chromium, engineOptionsOf, type BrowserEngine} from './browsers';
 import {labelOf, slugOf} from '../../scenario/label';
+import {usesToken} from '../../scenario/token';
 import type {Scenario as ArtilleryScenario} from 'artillery';
 import type {
   BrowserScenario,
@@ -174,8 +175,8 @@ function browserScript(
 
 /**
  * True when the script needs the generated processor: a var to set, a worker
- * hook, a captured value to check, or a function or a processor of the
- * consumer.
+ * hook, a captured value to check, the token of a pool user, or a function
+ * or a processor of the consumer.
  */
 function needsProcessor(
   scenario: Scenario,
@@ -195,7 +196,12 @@ function needsProcessor(
   );
   const hasCaptures = captures.some(captured => captured.length > 0);
   return (
-    known.size > 0 || hasCaptures || hasHooks || hasOwnCode || hasRequestHooks
+    known.size > 0 ||
+    hasCaptures ||
+    hasHooks ||
+    hasOwnCode ||
+    hasRequestHooks ||
+    usesToken(scenario)
   );
 }
 
@@ -228,6 +234,40 @@ function optionProblems(scenario: Scenario, requests: LoadRequest[]): string[] {
   return problems;
 }
 
+/** Replaces each request of a flow value with its Artillery step. */
+function replaceRequests(
+  value: unknown,
+  stepOf: (req: LoadRequest) => unknown,
+): unknown {
+  if (isRequest(value)) return stepOf(value);
+  if (isParallel(value)) {
+    /*
+     * Artillery runs `{parallel: [...], limit}` (engine_http.ts), although
+     * its types have no `parallel` step. The script is plain JSON, so no
+     * Artillery type is needed here.
+     */
+    return {
+      parallel: value.requests.map(stepOf),
+      ...(value.limit !== undefined && {limit: value.limit}),
+    };
+  }
+  if (isRaw(value)) return replaceRequests(value.step, stepOf);
+  if (Array.isArray(value)) return value.map(v => replaceRequests(v, stepOf));
+  if (isPlainObject(value)) {
+    return Object.fromEntries(
+      Object.entries(value).map(([k, v]) => [k, replaceRequests(v, stepOf)]),
+    );
+  }
+  return value;
+}
+
+/** True when the scenario needs `beforeScenario` to set vars for its users. */
+function setsVarsOf(scenario: HttpScenario, known: ReadonlySet<string>) {
+  return (
+    known.size > 0 || scenario.beforeEach !== undefined || usesToken(scenario)
+  );
+}
+
 /**
  * Makes the Artillery script. `defaults` is the `artillery.config` of
  * config.ts, and the `artillery.config` of the scenario is merged over it.
@@ -255,7 +295,7 @@ export function transpile(
   }
   const {urls, bodies, headers, queries, captures} = resolved;
 
-  const setsVars = known.size > 0 || scenario.beforeEach !== undefined;
+  const setsVars = setsVarsOf(scenario, known);
   const hasProcessor = needsProcessor(scenario, requests, known, captures);
 
   const stepOf = (req: LoadRequest) => {
@@ -267,29 +307,6 @@ export function transpile(
       qs: queries[i],
       capture: captures[i],
     });
-  };
-
-  const replaceRequests = (value: unknown): unknown => {
-    if (isRequest(value)) return stepOf(value);
-    if (isParallel(value)) {
-      /*
-       * Artillery runs `{parallel: [...], limit}` (engine_http.ts), although
-       * its types have no `parallel` step. The script is plain JSON, so no
-       * Artillery type is needed here.
-       */
-      return {
-        parallel: value.requests.map(stepOf),
-        ...(value.limit !== undefined && {limit: value.limit}),
-      };
-    }
-    if (isRaw(value)) return replaceRequests(value.step);
-    if (Array.isArray(value)) return value.map(replaceRequests);
-    if (isPlainObject(value)) {
-      return Object.fromEntries(
-        Object.entries(value).map(([k, v]) => [k, replaceRequests(v)]),
-      );
-    }
-    return value;
   };
 
   const beforeScenario = [
@@ -322,7 +339,7 @@ export function transpile(
         name: labelOf(scenario),
         ...(beforeScenario.length > 0 && {beforeScenario}),
         ...(afterScenario.length > 0 && {afterScenario}),
-        flow: scenario.requests.map(replaceRequests),
+        flow: scenario.requests.map(value => replaceRequests(value, stepOf)),
       },
     ],
   };

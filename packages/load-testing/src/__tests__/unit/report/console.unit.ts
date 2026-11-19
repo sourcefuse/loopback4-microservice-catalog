@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {expect} from '@loopback/testlab';
-import {consoleReporter, detailReporter} from '../../../report/console';
+import {consoleReporter} from '../../../report/console';
 import type {Reporter} from '../../../report/types';
 import {output} from '../../../output';
 import type {RunResult, ScenarioResult} from '../../../report/types';
@@ -27,10 +27,9 @@ const SCENARIO: ScenarioResult = {
       perSecond: 10,
       p95: 30,
       p95Limit: 25,
-      baselineP95: 15,
       errorRate: 0,
       errorRateLimit: 1,
-      failures: ['p95 +100% (+15 ms) over baseline 15 ms'],
+      failures: ['p95 30 ms > limit 25 ms'],
     },
     {
       id: 'GET /orders/{id}',
@@ -40,7 +39,6 @@ const SCENARIO: ScenarioResult = {
       errorRate: 0,
       errorRateLimit: 1,
       failures: [],
-      note: 'no baseline',
     },
   ],
   metrics: [],
@@ -51,7 +49,6 @@ const RESULT: RunResult = {
   scenarios: [SCENARIO],
   skipped: ['later'],
   coverage: {covered: 2, total: 5, specFile: 'src/openapi.json'},
-  hasBaseline: false,
   heavyApis: {max: 0, endpoints: []},
   passed: false,
   stopped: false,
@@ -77,10 +74,9 @@ async function linesOf(
 describe('consoleReporter', () => {
   it('has the name console', () => {
     expect(consoleReporter().name).to.equal('console');
-    expect(detailReporter().name).to.equal('console-detail');
   });
 
-  it('prints the block, the table, the skipped scenarios, the coverage, the note and the legend', async () => {
+  it('prints the block, the table, the skipped scenarios, the coverage and the legend', async () => {
     expect(await linesOf(RESULT)).to.deepEqual([
       '',
       'Results',
@@ -89,21 +85,20 @@ describe('consoleReporter', () => {
       'Workload: 10 vusers/s for 10 s',
       'Vusers:   100 started, 100 completed, 0 failed (limit 1%)',
       '',
-      'Endpoint          Requests  Req/s  p95 ms (limit)  Base ms  Err % (limit)  Result',
-      'GET /orders       100       10     30 (25)         15       0 (1)          FAIL: p95 +100% (+15 ms) over baseline 15 ms',
-      'GET /orders/{id}  50        -      8.3 (500)       -        0 (1)          pass (no baseline)',
+      'Endpoint          Requests  Req/s  p95 ms (limit)  Err % (limit)  Result',
+      'GET /orders       100       10     30 (25)         0 (1)          FAIL: p95 30 ms > limit 25 ms',
+      'GET /orders/{id}  50        -      8.3 (500)       0 (1)          pass',
       '',
       'Skipped: later',
       '',
       'Coverage: 2 of 5 endpoints in src/openapi.json',
-      'No src/__tests__/load/.out/baseline.json. Run once with LOAD_TESTS_UPDATE_BASELINE=1 to record it.',
       '',
       'A vuser is one virtual user. It runs the steps of a scenario one time. Failed means that its run stopped on an error.',
       '',
     ]);
   });
 
-  it('prints the vuser failures, the hook errors, the problems and the baseline note', async () => {
+  it('prints the vuser failures, the hook errors, the problems', async () => {
     const scenario: ScenarioResult = {
       ...SCENARIO,
       vusers: {
@@ -115,7 +110,6 @@ describe('consoleReporter', () => {
       },
       hookErrors: 2,
       problems: ['cleanup failed: gone'],
-      baselineNote: 'recorded with 3 vusers/s for 10 s, so p95 is not compared',
     };
 
     const lines = await linesOf({...RESULT, scenarios: [scenario]});
@@ -125,9 +119,6 @@ describe('consoleReporter', () => {
     );
     expect(lines).to.containEql('Hooks:    2 error(s), not app errors (FAIL)');
     expect(lines).to.containEql('FAIL: cleanup failed: gone');
-    expect(lines).to.containEql(
-      'Baseline: recorded with 3 vusers/s for 10 s, so p95 is not compared',
-    );
   });
 
   it('prints only the error of a scenario that threw, with no table', async () => {
@@ -147,17 +138,11 @@ describe('consoleReporter', () => {
     ]);
   });
 
-  it('prints no coverage and no baseline note when a signal stopped the run', async () => {
+  it('prints no coverage when a signal stopped the run', async () => {
     const lines = await linesOf({...RESULT, stopped: true});
 
-    expect(lines.join('\n')).to.not.match(/Coverage|No src/);
+    expect(lines.join('\n')).to.not.match(/Coverage/);
     expect(lines).to.containEql('Skipped: later');
-  });
-
-  it('prints no baseline note when there is a baseline', async () => {
-    const lines = await linesOf({...RESULT, hasBaseline: true});
-
-    expect(lines.join('\n')).to.not.match(/No src/);
   });
 
   it('says that the coverage is not calculated when the package has no spec', async () => {
@@ -184,7 +169,6 @@ describe('consoleReporter', () => {
           unit: 'ms',
           p95Limit: 1500,
           failures: [],
-          note: 'no baseline',
         },
         {
           name: `browser.page.LCP.${LABEL}`,
@@ -204,7 +188,6 @@ describe('consoleReporter', () => {
           unit: '',
           p95Limit: 0.1,
           failures: [],
-          note: 'no baseline',
         },
         {
           name: `browser.flow.${LABEL}`,
@@ -224,57 +207,52 @@ describe('consoleReporter', () => {
         'Workload: 10 vusers/s for 10 s',
         'Vusers:   100 started, 100 completed, 0 failed (limit 1%)',
         'Flow:     p95 3200 ms (no limit)',
-        'Metrics:  2 of 3 pass. Run load-testing report to see each one.',
+        'Metrics:  2 of 3 pass.',
         '',
-        'Metric    Samples  p95 (limit)        Base  Result',
-        'page.LCP  99       2600 ms (2500 ms)  -     FAIL: lost samples: 99 for 100 completed vusers; p95 2600 ms > limit 2500 ms',
+        'Metric    Samples  p95 (limit)        Result',
+        'page.LCP  99       2600 ms (2500 ms)  FAIL: lost samples: 99 for 100 completed vusers; p95 2600 ms > limit 2500 ms',
         '',
       ]);
     });
 
-    it('shows the limit and the baseline of CLS with 2 decimals', async () => {
+    it('shows the limit of CLS with 2 decimals', async () => {
       const [, , cls] = BROWSER.metrics;
-      const detail = {
-        ...BROWSER,
-        metrics: [{...cls, p95Limit: 0.25, baselineP95: 0.05}],
-      };
-
-      const lines = await linesOf(
-        {...RESULT, scenarios: [detail]},
-        detailReporter(),
-      );
-
-      expect(lines).to.containEql(
-        'page.CLS  100      0 (0.25)     0.05  pass (no baseline)',
-      );
-    });
-
-    it('prints every metric in the detail, and marks a step with no end element', async () => {
-      const [step, ...others] = BROWSER.metrics;
-      const detail = {
+      const failing = {
         ...BROWSER,
         metrics: [
-          {...step, name: 'browser.step.save', wallClock: true},
-          ...others,
+          {
+            ...cls,
+            p95: 0.3,
+            p95Limit: 0.25,
+            failures: ['p95 0.3 > limit 0.25'],
+          },
         ],
       };
 
-      const lines = await linesOf(
-        {...RESULT, scenarios: [detail]},
-        detailReporter(),
-      );
+      const lines = await linesOf({...RESULT, scenarios: [failing]});
 
-      expect(lines.slice(6, 15)).to.deepEqual([
-        'Flow:     p95 3200 ms (no limit)',
-        'Metrics:  2 of 3 pass.',
-        '',
-        'Metric                  Samples  p95 (limit)         Base  Result',
-        'step.save (wall clock)  100      812.5 ms (1500 ms)  -     pass (no baseline)',
-        'page.LCP                99       2600 ms (2500 ms)   -     FAIL: lost samples: 99 for 100 completed vusers; p95 2600 ms > limit 2500 ms',
-        'page.CLS                100      0 (0.1)             -     pass (no baseline)',
-        'flow                    100      3200 ms             -     no limit',
-        '',
-      ]);
+      expect(lines).to.containEql(
+        'page.CLS  100      0.3 (0.25)   FAIL: p95 0.3 > limit 0.25',
+      );
+    });
+
+    it('marks a step with no end element', async () => {
+      const [step] = BROWSER.metrics;
+      const failing = {
+        ...BROWSER,
+        metrics: [
+          {
+            ...step,
+            name: 'browser.step.save',
+            wallClock: true,
+            failures: ['p95 812.5 ms > limit 500 ms'],
+          },
+        ],
+      };
+
+      const lines = await linesOf({...RESULT, scenarios: [failing]});
+
+      expect(lines.join('\n')).to.match(/^step\.save \(wall clock\)/m);
     });
   });
 

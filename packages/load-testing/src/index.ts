@@ -50,19 +50,7 @@ export type {
   ScenarioResult,
   VuserCounts,
 } from './report/types';
-export type {
-  Api,
-  ApiClientOptions,
-  ApiOptions,
-  Connection,
-  CustomDatasource,
-  Datasource,
-  PostgresDatasource,
-  PostgresOptions,
-  QueryResult,
-  Sql,
-  SqlConnector,
-} from './context/types';
+export type {Api, ApiClientOptions, ApiOptions} from './context/types';
 export type {ArtilleryConfig} from './engine/artillery/types';
 export type {
   BrowserCheckInput,

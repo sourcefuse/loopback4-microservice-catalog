@@ -7,7 +7,12 @@ import path from 'node:path';
 import {registeredIn} from '../scenario/builder';
 import {isPlainObject, requestsIn} from '../scenario/guards';
 import {bracesProblems, headerBracesProblems} from '../scenario/braces';
-import {builtFile, SCENARIOS_DIR} from './layout';
+import {
+  builtFile,
+  SCENARIO_SUFFIX,
+  SCENARIOS_DIR,
+  SELECTION_SLUG,
+} from './layout';
 import {
   browserLimitProblems,
   metricProblems,
@@ -27,12 +32,8 @@ import type {
   WebVital,
 } from '../types';
 import {ScenarioError} from '../errors';
+import {patternProblems} from '../changes/patterns';
 import type {BrowserLimits, LoadedScenario} from './types';
-
-const SCENARIO_SUFFIX = '.load.ts';
-
-/** The file name of the baseline in `.out`, without `.json`. A script cannot use it. */
-const BASELINE_SLUG = 'baseline';
 
 /**
  * Loads every `*.load.ts` file under `src/__tests__/load`, in file-name
@@ -47,22 +48,33 @@ export function loadScenarios(
   const labels = new Map<string, string>();
   const browsers = browsersOf(config);
   return findScenarioFiles(path.join(pkgDir, SCENARIOS_DIR))
-    .flatMap(source => registeredBy(builtFile(pkgDir, source)))
-    .flatMap<{scenario: Scenario; vitals?: readonly WebVital[]}>(scenario => {
+    .flatMap(source =>
+      registeredBy(builtFile(pkgDir, source)).map(scenario => ({
+        scenario,
+        source,
+      })),
+    )
+    .flatMap<{
+      scenario: Scenario;
+      source: string;
+      vitals?: readonly WebVital[];
+    }>(({scenario, source}) => {
       checkScenario(scenario);
       return scenario.browser
         ? browsers.map(browser => ({
             scenario: forBrowser(scenario, browser.name),
+            source,
             vitals: browser.vitals,
           }))
-        : [{scenario}];
+        : [{scenario, source}];
     })
-    .map(({scenario, vitals}) => {
+    .map(({scenario, source, vitals}) => {
       // The slug names the files of the scenario, so two scenarios cannot share it.
       const slug = slugOf(scenario);
-      if (slug === BASELINE_SLUG) {
+      // `--since` writes `selection.json` into the folder of these files.
+      if (slug === SELECTION_SLUG) {
         throw new ScenarioError(
-          `The scenario name "${labelOf(scenario)}" gives the file name "${BASELINE_SLUG}", which the baseline file uses. Rename the scenario.`,
+          `The name of "${labelOf(scenario)}" is reserved for the selection report`,
         );
       }
       const same = labels.get(slug);
@@ -74,6 +86,7 @@ export function loadScenarios(
       labels.set(slug, labelOf(scenario));
       return {
         scenario,
+        source,
         endpoints: scenario.browser
           ? new Map()
           : thresholdsById(scenario, config.thresholds?.default ?? {}),
@@ -89,7 +102,7 @@ export function loadScenarios(
 
 /**
  * The scenario for one browser. Its name ends with the browser, so that the
- * files, the report rows and the baseline of each browser stay apart.
+ * files and the report rows of each browser stay apart.
  */
 function forBrowser(scenario: BrowserScenario, browserName: string): Scenario {
   return {
@@ -166,6 +179,7 @@ function checkScenario(scenario: Scenario): void {
           'flow must be a function: load.browser(name, async ({page, step}) => {...})',
         ]
       : []),
+    ...patternProblems(scenario.covers, 'covers'),
     ...browserLimitProblems(scenario, ''),
     ...(scenario.browser?.steps !== undefined &&
     !isPlainObject(scenario.browser.steps)

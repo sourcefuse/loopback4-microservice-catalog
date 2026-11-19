@@ -39,7 +39,7 @@ export type Var = {
   name: string;
 };
 
-/** The access token of the login user. Make it with `token()`. */
+/** The access token of one pool user. Make it with `token()`. */
 export type Token = {kind: 'token'};
 
 /** `length` random letters and digits. Make it with `randomString`. */

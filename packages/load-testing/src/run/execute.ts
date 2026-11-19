@@ -5,13 +5,14 @@
 import {ApiClient} from '../context/api';
 import {namedApis} from '../context/apis';
 import {Cleanup} from '../context/cleanup';
-import {ConfigError, errorMessage} from '../errors';
+import {ConfigError, errorMessage, RunError} from '../errors';
 import {failedScenario, judgeScenario} from '../report/report';
 import {labelOf} from '../scenario/label';
-import {createSql} from '../context/sql';
 import {BASE_URL_ENV, UI_URL_ENV} from '../project/layout';
 import {claimsOf} from './target';
+import type {Pool} from './session';
 import {defaultTokenCheck} from './tokenCheck';
+import {USERS_FILE_ENV} from './users';
 import {usesToken} from '../scenario/token';
 import type {Engine} from '../engine/types';
 import type {LoadTestConfig, RunContext, Scenario, Vars} from '../types';
@@ -19,7 +20,7 @@ import {describeWorkload, phasesOf} from '../scenario/workload';
 import {print, printError} from '../output';
 import type {LoadedScenario, ResolvedThresholds} from '../project/types';
 import type {Outcome, Target} from './types';
-import type {Baseline, ScenarioRun} from '../report/types';
+import type {ScenarioRun} from '../report/types';
 
 /**
  * Runs the scenarios one after another, and judges each. A scenario that
@@ -29,21 +30,19 @@ import type {Baseline, ScenarioRun} from '../report/types';
 export async function runScenarios(
   scenarios: LoadedScenario[],
   runOne: (loaded: LoadedScenario) => Promise<ScenarioRun>,
-  options: {
-    baseline?: Baseline;
-    vuserLimits: ResolvedThresholds;
-    signal: AbortSignal;
-  },
+  options: {vuserLimits: ResolvedThresholds; signal: AbortSignal},
 ): Promise<Outcome> {
-  const {signal, ...limits} = options;
-  const outcome: Outcome = {scenarios: [], measured: {}};
+  const {signal, vuserLimits} = options;
+  const outcome: Outcome = {scenarios: []};
   for (const loaded of scenarios) {
     // A signal that came while the last scenario cleaned up must not start the next one.
     if (signal.aborted) break;
     const name = labelOf(loaded.scenario);
     print(`\nScenario: ${name}`);
     try {
-      addJudged(outcome, loaded, await runOne(loaded), limits);
+      outcome.scenarios.push(
+        judgeScenario(loaded, await runOne(loaded), vuserLimits),
+      );
     } catch (err) {
       if (signal.aborted) return {...outcome, stopped: err};
       outcome.scenarios.push(failedScenario(name, err));
@@ -53,35 +52,38 @@ export async function runScenarios(
   return signal.aborted ? {...outcome, stopped: signal.reason} : outcome;
 }
 
-/** Judges the run of one scenario, and adds the result to the outcome. */
-function addJudged(
-  outcome: Outcome,
-  loaded: LoadedScenario,
-  ran: ScenarioRun,
-  limits: {baseline?: Baseline; vuserLimits: ResolvedThresholds},
-): void {
-  const judged = judgeScenario(loaded, ran, limits);
-  outcome.scenarios.push(judged.result);
-  if (Object.keys(judged.p95).length > 0) {
-    outcome.measured[labelOf(loaded.scenario)] = {
-      workload: ran.workload,
-      browser: loaded.browser !== undefined,
-      p95: judged.p95,
-    };
-  }
-}
-
 type ExecuteOptions = {
   pkgDir: string;
   config: LoadTestConfig;
   /** Runs the load. */
   engine: Engine;
   target: Target;
-  /** Access token of the login user. Undefined when the run has no login. */
-  token?: string;
+  /** The logged-in users. Empty when the run has no login. */
+  pool: Pool;
   /** Stops `before` at its next request, and stops the load. */
   signal: AbortSignal;
 };
+
+/** Runs the token check for each user in turn, and stops at the first failure. */
+async function checkTokens(
+  check: NonNullable<LoadTestConfig['tokenCheck']>,
+  sessions: readonly {username: string; accessToken: string}[],
+  phases: ReturnType<typeof phasesOf>,
+  signal: AbortSignal,
+): Promise<void> {
+  for (const {username, accessToken} of sessions) {
+    try {
+      // The order is on purpose: the first failure stops the scenario.
+      await check({token: accessToken, claims: claimsOf(accessToken), phases}); // NOSONAR
+    } catch (err) {
+      signal.throwIfAborted();
+      throw new RunError(
+        `token check for user ${username}: ${errorMessage(err)}`,
+        {cause: err},
+      );
+    }
+  }
+}
 
 /**
  * Runs one scenario: `before`, the load, and `after`. `after` and the
@@ -92,11 +94,10 @@ type ExecuteOptions = {
  */
 export async function execute(
   {scenario, endpoints}: LoadedScenario,
-  {pkgDir, config, engine, target, token, signal}: ExecuteOptions,
+  {pkgDir, config, engine, target, pool, signal}: ExecuteOptions,
 ): Promise<ScenarioRun> {
   const url = targetUrl(scenario, target);
   const cleanup = new Cleanup();
-  const database = createSql(config.datasources ?? {}, pkgDir);
   /*
    * A signal stops the requests of `before`. It must not stop the cleanups,
    * and a cleanup that `before` registered uses the client of `before`. So
@@ -106,11 +107,18 @@ export async function execute(
   let beforeSignal: AbortSignal | undefined = signal;
   const clientOptions = {signal: () => beforeSignal};
   const ctx: RunContext = {
-    token,
-    claims: claimsOfToken(token),
+    auth: () => {
+      const session = pool.next();
+      if (session === undefined) {
+        throw new ConfigError(
+          `ctx.auth() needs a login: set ${USERS_FILE_ENV}, LOAD_TESTS_CLIENT_ID and LOAD_TESTS_CLIENT_SECRET`,
+        );
+      }
+      const token = session.accessToken;
+      return {token, claims: claimsOf(token)};
+    },
     api: new ApiClient(apiUrlOf(scenario, target, url), clientOptions),
     apis: namedApis(target.apiUrls, clientOptions),
-    sql: database.sql,
     defer: cleanup.defer,
   };
   const vars: Vars = {};
@@ -124,11 +132,16 @@ export async function execute(
     }
     signal.throwIfAborted();
     const phases = phasesOf(scenario, config);
-    const needsToken = token !== undefined && usesToken(scenario);
-    if (needsToken) {
-      const check =
-        scenario.tokenCheck ?? config.tokenCheck ?? defaultTokenCheck;
-      await check({token, claims: claimsOf(token), phases});
+    const tokens = usesToken(scenario)
+      ? pool.sessions.map(session => session.accessToken)
+      : [];
+    if (tokens.length > 0) {
+      await checkTokens(
+        scenario.tokenCheck ?? config.tokenCheck ?? defaultTokenCheck,
+        pool.sessions,
+        phases,
+        signal,
+      );
     }
     const ran = await engine.run({
       pkgDir,
@@ -138,7 +151,7 @@ export async function execute(
       runVars: vars,
       endpointIds: [...endpoints.keys()],
       baseUrl: url,
-      token: needsToken ? token : undefined,
+      tokens,
       signal,
     });
     // A signal can cut the load short and leave a partial report.
@@ -151,7 +164,6 @@ export async function execute(
     ctx,
     vars,
     cleanup,
-    closeSql: database.close,
   });
   if (run === undefined) {
     for (const problem of problems) {
@@ -160,11 +172,6 @@ export async function execute(
     throw failure;
   }
   return {...run, problems};
-}
-
-/** The claims of the token. Empty when there is no token. */
-function claimsOfToken(token: string | undefined): Record<string, unknown> {
-  return token === undefined ? {} : claimsOf(token);
 }
 
 /**
@@ -193,8 +200,8 @@ function apiUrlOf(scenario: Scenario, target: Target, url: string): string {
 }
 
 /**
- * Runs `after`, then the cleanups, then closes the SQL connections. A step
- * that fails does not stop the next step. Returns what failed, as messages.
+ * Runs `after`, then the cleanups. A step that fails does not stop the next
+ * step. Returns what failed, as messages.
  */
 async function finish(
   scenario: Scenario,
@@ -202,12 +209,10 @@ async function finish(
     ctx,
     vars,
     cleanup,
-    closeSql,
   }: {
     ctx: RunContext;
     vars: Vars;
     cleanup: Cleanup;
-    closeSql: () => Promise<void>;
   },
 ): Promise<string[]> {
   const problems: string[] = [];
@@ -219,6 +224,5 @@ async function finish(
   for (const err of await cleanup.run()) {
     problems.push(`cleanup failed: ${errorMessage(err)}`);
   }
-  await closeSql();
   return problems;
 }
