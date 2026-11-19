@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.5.0 (2026-11-19)
+
+* feat(packages): add change detection and a user pool to load-testing (#2659) ([e0681ca](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e0681ca)), closes [#2659](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2659)
+
+
+### BREAKING CHANGE
+
+* `LOAD_TESTS_USERNAME`, `LOAD_TESTS_PASSWORD`,
+`ctx.token`, `ctx.claims`, `datasources`, `ctx.sql`, the baseline
+settings and the `report` command no longer exist. Use
+`LOAD_TESTS_USERS_FILE` and `ctx.auth()`.
+
+* refactor(load-testing): fix sonar findings
+
+* chore(load-testing): drop the pg peer dependency from the lockfile
+
+* fix(load-testing): refresh a pool token only when it expires soon
+
+* fix(load-testing): pass only promises to Promise.allSettled
+
+
+
+
 ## 0.4.0 (2026-11-19)
 
 * feat(benchmarking): compare two builds instead of a stored baseline (#2654) ([fb694c1](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/fb694c1)), closes [#2654](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2654)
