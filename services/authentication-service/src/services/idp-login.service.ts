@@ -288,8 +288,12 @@ export class IdpLoginService {
           },
         ],
       });
-      if (payload.externalAuthToken && payload.externalRefreshToken) {
+      // carried independently: a SAML session ref has no refresh token, and
+      // dropping it on refresh would silently disable Single Logout
+      if (payload.externalAuthToken) {
         (user as AuthUser).externalAuthToken = payload.externalAuthToken;
+      }
+      if (payload.externalRefreshToken) {
         (user as AuthUser).externalRefreshToken = payload.externalRefreshToken;
       }
       return user;
