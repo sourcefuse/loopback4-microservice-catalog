@@ -2,7 +2,10 @@
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-import {PublicKeysRepository} from '@sourceloop/core';
+import {
+  PublicKeysRepository,
+  UserTokensValidAfterRepository,
+} from '@sourceloop/core';
 import {JwtKeysRepository} from '@sourceloop/core/sequelize';
 import {OtpCacheRepository} from '../otp-cache.repository';
 import {OtpRepository} from '../otp.repository';
@@ -54,4 +57,5 @@ export const repositories = [
   LoginActivityRepository,
   JwtKeysRepository,
   PublicKeysRepository,
+  UserTokensValidAfterRepository,
 ];

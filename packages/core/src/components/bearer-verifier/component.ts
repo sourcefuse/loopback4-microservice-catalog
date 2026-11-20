@@ -5,8 +5,12 @@
 import {Binding, Component, inject, ProviderMap} from '@loopback/core';
 import {Class, Model, Repository} from '@loopback/repository';
 import {Strategies} from 'loopback4-authentication';
-import {JwtKeys, RevokedToken} from '../../models';
-import {PublicKeysRepository, RevokedTokenRepository} from '../../repositories';
+import {JwtKeys, RevokedToken, UserTokensValidAfter} from '../../models';
+import {
+  PublicKeysRepository,
+  RevokedTokenRepository,
+  UserTokensValidAfterRepository,
+} from '../../repositories';
 import {ILogger, LOGGER} from '../logger-extension';
 import {
   BearerVerifierBindings,
@@ -26,8 +30,12 @@ export class BearerVerifierComponent implements Component {
   ) {
     this.providers = {};
 
-    this.models = [RevokedToken, JwtKeys];
-    this.repositories = [RevokedTokenRepository, PublicKeysRepository];
+    this.models = [RevokedToken, JwtKeys, UserTokensValidAfter];
+    this.repositories = [
+      RevokedTokenRepository,
+      PublicKeysRepository,
+      UserTokensValidAfterRepository,
+    ];
 
     if (this.config?.type === BearerVerifierType.service) {
       this.providers[Strategies.Passport.BEARER_TOKEN_VERIFIER.key] =

@@ -6,6 +6,7 @@ import {
   JwtKeysRepository,
   PublicKeysRepository,
   RevokedTokenRepository,
+  UserTokensValidAfterRepository,
 } from '@sourceloop/core';
 import {AuthClientRepository} from './auth-client.repository';
 import {AuthSecureClientRepository} from './auth-secure-client.repository';
@@ -55,5 +56,6 @@ export const repositories = [
   UserLevelResourceRepository,
   LoginActivityRepository,
   PublicKeysRepository,
+  UserTokensValidAfterRepository,
   JwtKeysRepository,
 ];

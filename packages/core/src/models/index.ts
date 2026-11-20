@@ -9,6 +9,7 @@ export * from './ext-identifier-enabled-entity.interface';
 export * from './jwt-keys.model';
 export * from './revoked-token.model';
 export * from './success-response.dto';
+export * from './user-tokens-valid-after.model';
 export * from './upsert-response.dto';
 export * from './user-modifiable-entity.model';
 export * from './value-response.model';

@@ -10,6 +10,13 @@ export namespace BearerVerifierBindings {
   export const Config = BindingKey.create<BearerVerifierConfig>(
     `${BINDING_PREFIX}.bearer-verfier.config`,
   );
+  /**
+   * When true, a failure to read the tokensValidAfter marker lets the request
+   * through instead of failing it with 503.
+   */
+  export const TokensValidAfterFailOpen = BindingKey.create<boolean>(
+    `${BINDING_PREFIX}.bearer-verfier.tokens-valid-after-fail-open`,
+  );
 }
 
 export enum BearerVerifierType {
@@ -43,6 +50,7 @@ export interface IAuthUserWithPermissions<
   tenantId?: TID;
   userTenantId?: UTID;
   passwordExpiryTime?: Date;
+  iat?: number;
   allowedResources?: string[];
   getIdentifier?(): string | undefined;
 }

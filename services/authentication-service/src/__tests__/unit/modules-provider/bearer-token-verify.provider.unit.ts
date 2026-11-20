@@ -7,6 +7,8 @@ import {
   createStubInstance,
   expect,
 } from '@loopback/testlab';
+import {juggler} from '@loopback/repository';
+import {UserTokensValidAfterRepository} from '@sourceloop/core';
 import {RevokedTokenRepository} from '../../../repositories';
 import sinon from 'sinon';
 import {BearerTokenVerifyProvider} from '../../../modules/auth/providers/bearer-token-verify.provider';
@@ -58,6 +60,43 @@ describe('Bearer Token Verify Provider', () => {
       const func = bearerTokenVerifyProvider.value();
       const result = await func(token).catch(err => err.message);
       expect(result).to.be.eql('TokenExpired');
+    });
+  });
+
+  describe('Revoked user tokens', () => {
+    const nowSec = Math.floor(Date.now() / 1000);
+    let markers: UserTokensValidAfterRepository;
+
+    const verifierFor = (iat: number) =>
+      new BearerTokenVerifyProvider(
+        revokedTokenRepo,
+        logger,
+        () => Promise.resolve(Object.assign(new AuthUser({id: 'u1'}), {iat})),
+        markers,
+      ).value();
+
+    beforeEach(() => {
+      markers = new UserTokensValidAfterRepository(
+        new juggler.DataSource({connector: 'kv-memory'}),
+      );
+    });
+
+    it('rejects a token issued before the user revocation with TokenRevoked', async () => {
+      await markers.revoke('u1', 3600 * 1000);
+      const err = await verifierFor(nowSec - 600)(token).catch(e => e);
+      expect(err.statusCode).to.eql(401);
+      expect(err.message).to.eql('TokenRevoked');
+    });
+
+    it('accepts a token issued after the user revocation', async () => {
+      await markers.revoke('u1', 3600 * 1000);
+      const user = await verifierFor(nowSec + 60)(token);
+      expect(user?.id).to.eql('u1');
+    });
+
+    it('accepts a token when the user was never revoked', async () => {
+      const user = await verifierFor(nowSec - 600)(token);
+      expect(user?.id).to.eql('u1');
     });
   });
 
