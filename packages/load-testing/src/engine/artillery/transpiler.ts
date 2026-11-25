@@ -327,39 +327,25 @@ export function transpile(
     ...asList(scenario.artillery?.raw?.afterScenario),
   ];
 
-  const merged = deepMerge(
+  const merged = withExpectFormat(
     deepMerge(
-      {
-        target: '{{ $env.LOAD_TESTS_BASE_URL }}',
-        plugins: {
-          'metrics-by-endpoint': {
-            useOnlyRequestNames: true,
-            suppressOutput: true,
+      deepMerge(
+        {
+          target: '{{ $env.LOAD_TESTS_BASE_URL }}',
+          plugins: {
+            'metrics-by-endpoint': {
+              useOnlyRequestNames: true,
+              suppressOutput: true,
+            },
           },
+          ...(hasProcessor && {processor: processorPath}),
         },
-        ...(hasProcessor && {processor: processorPath}),
-      },
-      defaults ?? {},
+        defaults ?? {},
+      ),
+      scenario.artillery?.config ?? {},
     ),
-    scenario.artillery?.config ?? {},
+    expectFormat,
   );
-  // The user declared the `expect` plugin. Print only what we can filter,
-  // unless the user chose a format. The default format prints every check.
-  const plugins = merged.plugins as Record<string, unknown> | undefined;
-  const expectOptions = plugins?.expect as Record<string, unknown> | undefined;
-  if (
-    expectOptions &&
-    !expectOptions.outputFormat &&
-    !expectOptions.formatter
-  ) {
-    // A copy, so that the config of the user stays as it is.
-    Object.assign(merged, {
-      plugins: {
-        ...plugins,
-        expect: {...expectOptions, outputFormat: expectFormat},
-      },
-    });
-  }
   return {
     config: {...merged, phases},
     scenarios: [
@@ -371,6 +357,21 @@ export function transpile(
         flow: scenario.requests.map(value => replaceRequests(value, stepOf)),
       },
     ],
+  };
+}
+
+/**
+ * When the user declared the `expect` plugin without a format, sets the
+ * format, so that the output is one line for each request. It returns a copy,
+ * and the config of the user stays as it is.
+ */
+function withExpectFormat<T extends object>(config: T, format: string): T {
+  const plugins = (config as {plugins?: Record<string, unknown>}).plugins;
+  const options = plugins?.expect as Record<string, unknown> | undefined;
+  if (!options || options.outputFormat || options.formatter) return config;
+  return {
+    ...config,
+    plugins: {...plugins, expect: {...options, outputFormat: format}},
   };
 }
 
