@@ -75,6 +75,32 @@ describe('readRun', () => {
     expect(readOf(report).hookErrors).to.equal(0);
   });
 
+  it('lists the other errors by name, without the hook errors', () => {
+    const counters = {
+      'errors.ECONNREFUSED': 12,
+      'errors.ETIMEDOUT': 3,
+      [`errors.${HOOK_ERROR_PREFIX}beforeEach: boom`]: 1,
+    };
+
+    expect(readOf(aggregate({counters})).errors).to.deepEqual({
+      ECONNREFUSED: 12,
+      ETIMEDOUT: 3,
+    });
+  });
+
+  it('counts an error that is not a code as other, so no free text is printed', () => {
+    const counters = {
+      'errors.ECONNREFUSED': 1,
+      'errors.bad token abc': 2,
+      'errors.x y': 1,
+    };
+
+    expect(readOf(aggregate({counters})).errors).to.deepEqual({
+      ECONNREFUSED: 1,
+      other: 3,
+    });
+  });
+
   it('is the time from the first to the last count', () => {
     const times = {firstCounterAt: 1000, lastCounterAt: 61500};
 

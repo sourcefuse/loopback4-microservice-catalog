@@ -106,6 +106,13 @@ describe('main', () => {
     expect(out).to.match(/Usage:/);
   });
 
+  it('names --verbose in the usage', async () => {
+    const {out} = await runMain(['--help'], {});
+
+    expect(out).to.match(/--verbose/);
+    expect(out).to.match(/LOAD_TESTS_VERBOSE/);
+  });
+
   it('prints the usage and gives 0 for --help', async () => {
     const {code, out} = await runMain(['--help'], {});
 

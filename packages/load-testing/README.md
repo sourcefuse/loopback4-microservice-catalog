@@ -600,7 +600,22 @@ const config: LoadTestConfig = {
 };
 ```
 
-If `custom` throws, we hide the whole line. We write the output to no file, and the JSON report in `.out` holds only metrics.
+If `custom` throws, we hide the whole line. The log file below is masked in the same way, and the JSON report in `.out` holds only metrics.
+
+#### Console output
+
+By default the console output is short, so that a Jenkins log stays easy to read:
+
+- Artillery runs with `--quiet`, so its phase lines, the metrics for each period and its summary do not print. Our `Results` block prints as usual.
+- A passing check prints nothing.
+- When you declare the `expect` plugin, a failed check prints as one JSON line with the url, the check, the expected value and the value we got. This happens for the first 3 different failures in a scenario. A failure is different when the url or the check differs. The response headers, the body and the variables of the user do not print.
+- The other failed requests print as one line, for example `+250 more failed requests: see .out/<scenario>.log`.
+- The first 3 different scenario error lines print, and the rest are counted in the same one line.
+- Network errors such as `ECONNREFUSED` print by code in the `Errors:` line of the `Results` block. Other error texts count as `other`.
+
+The file `.out/<scenario>.log` holds every line that Artillery prints on its standard output, masked. The file mode is 0600. It can hold the request and the first part of the response body of a failed check, so treat it as you treat the console. In Jenkins, you can keep it with `archiveArtifacts 'facades/**/src/__tests__/load/.out/*.log'`.
+
+To print the full Artillery output, run `load-testing run . --verbose`, or set `LOAD_TESTS_VERBOSE` to any value but `0` or `false`. Then every failed check prints in full, with its response headers, its body and the variables of the user, with the phase lines and the metrics for each period. Passing checks still print nothing, unless you set `outputFormat: 'pretty'` for `expect` in `artillery.config`. A format that you set always wins. Masking stays on.
 
 #### Text that the engine refuses
 
@@ -928,7 +943,7 @@ The workers do not load our scenario file, with one exception. For a browser sce
 - A worker hook must be synchronous. A worker does not wait for a promise. An `async` hook would run its work after the vuser went on, and nobody would see a rejection. The CLI fails the scenario before its load when one of the four hooks returns a promise. The next scenario still runs.
 - `beforeEach` must give the same result for the same arguments, and it must have no side effects. It must return an object, the vars of the vuser.
 - Before the load, the CLI runs each hook once, with made-up arguments, from the generated file. A hook that uses a name from outside fails at once, with a `ReferenceError` in the message. For `beforeRequest`, `afterResponse` and `afterEach`, only a `ReferenceError` fails the scenario, because the made-up arguments can cause other errors. A side effect of a hook runs once there. This test runs in the CLI process, so it sees all environment variables. A worker sees only the list that the next rule names.
-- The file writes `vars` (what `before` sets) in plain text. We never put a secret in `vars`. `token()` is safe. The browser recipe in [Browsers](#browsers) is the one exception: it puts the tokens of the test users in `vars`, so we use test users only and keep `.out` out of git and out of CI artifacts. The CLI passes the tokens to Artillery in the environment and does not write them to disk. It does so only for a scenario that uses `token()`.
+- The file writes `vars` (what `before` sets) in plain text. We never put a secret in `vars`. `token()` is safe. The browser recipe in [Browsers](#browsers) is the one exception: it puts the tokens of the test users in `vars`, so we use test users only and keep `.out` out of git and out of CI artifacts, apart from the masked `.log` files. The CLI passes the tokens to Artillery in the environment and does not write them to disk. It does so only for a scenario that uses `token()`.
 - A worker hook runs inside Artillery. So `process.env` there holds only the allowed names, plus `LOAD_TESTS_BASE_URL`, and `LOAD_TESTS_TOKENS` when the scenario sends `token()`. A browser flow gets `LOAD_TESTS_UI_URL` and not `LOAD_TESTS_BASE_URL`. See [The environment of Artillery](#the-environment-of-artillery).
 - A `beforeEach` result with the refused text fails the vuser. See [Text that the engine refuses](#text-that-the-engine-refuses).
 - `afterEach` does not run for a vuser whose flow stopped with an error.

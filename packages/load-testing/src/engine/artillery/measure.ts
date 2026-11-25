@@ -68,6 +68,7 @@ export function readRun(reportPath: string, ids: string[]): Measurement {
     endpoints: parseReport(report, ids),
     metrics: browserMetrics(report),
     hookErrors: countHookErrors(report),
+    errors: countErrors(report),
     vusers: countVusers(report),
     seconds: measuredSeconds(report),
   };
@@ -112,6 +113,20 @@ function countHookErrors(report: Report): number {
   return Object.entries(report.aggregate.counters)
     .filter(([key]) => key.startsWith(`errors.${HOOK_ERROR_PREFIX}`))
     .reduce((sum, [, value]) => sum + value, 0);
+}
+
+/** Counts the errors by code, for example `ECONNREFUSED`, without the hook errors. The rest count as `other`. */
+function countErrors(report: Report): Record<string, number> {
+  const found: Record<string, number> = {};
+  for (const [key, value] of Object.entries(report.aggregate.counters)) {
+    if (!key.startsWith('errors.')) continue;
+    const name = key.slice('errors.'.length);
+    if (name.startsWith(HOOK_ERROR_PREFIX)) continue;
+    // Only a code such as ECONNREFUSED keeps its name. Another text is free form and may hold a secret.
+    const label = /^[A-Z][A-Z0-9_]+$/.test(name) ? name : 'other';
+    found[label] = (found[label] ?? 0) + value;
+  }
+  return found;
 }
 
 function parseReport(

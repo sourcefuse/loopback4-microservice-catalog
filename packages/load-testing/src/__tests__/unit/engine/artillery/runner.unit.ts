@@ -79,6 +79,54 @@ describe('runArtillery', () => {
       expect(fs.existsSync(reportPath)).to.be.false();
     });
 
+    describe('output', () => {
+      const dumpOf = (url: string) =>
+        `console.log(JSON.stringify({url: '${url}', results: [{ok: false, type: 'statusCode', got: 'SECRET'}]}));`;
+      const script3 = () =>
+        `${dumpOf('/a?access_token=abc')} ${dumpOf('/a?access_token=abc')} console.log('done line');`;
+
+      async function runCapturing(verbose: boolean): Promise<string> {
+        const written: string[] = [];
+        sinon
+          .stub(process.stdout, 'write')
+          .callsFake((text: string | Uint8Array) => {
+            written.push(String(text));
+            return true;
+          });
+        stubArtillery(`${script3()} process.exit(3)`);
+        await runArtillery(
+          script,
+          [],
+          process.env,
+          undefined,
+          line => line.replace('SECRET', '<masked>'),
+          verbose,
+        ).catch(() => undefined);
+        sinon.restore();
+        return written.join('');
+      }
+
+      it('prints a short, masked output and writes a masked log', async () => {
+        const out = await runCapturing(false);
+        const log = fs.readFileSync(script.replace('.json', '.log'), 'utf8');
+
+        expect(out).to.not.containEql('SECRET');
+        expect(out.match(/^\{"url"/gm)).to.have.length(1);
+        expect(out).to.containEql('+1 more failed requests: see');
+        expect(out).to.containEql('done line');
+        expect(log.match(/^\{"url"/gm)).to.have.length(2);
+        expect(log).to.not.containEql('SECRET');
+      });
+
+      it('prints every line, masked, and writes no log, when verbose', async () => {
+        const out = await runCapturing(true);
+
+        expect(out).to.not.containEql('SECRET');
+        expect(out.match(/^\{"url"/gm)).to.have.length(2);
+        expect(fs.existsSync(script.replace('.json', '.log'))).to.be.false();
+      });
+    });
+
     it('keeps no report file when the signal aborts the run', async () => {
       stubArtillery('setTimeout(() => {}, 60000)');
       const controller = new AbortController();
@@ -92,6 +140,33 @@ describe('runArtillery', () => {
       await expect(done).to.be.rejectedWith('stop');
       expect(fs.existsSync(reportPath)).to.be.false();
     });
+  });
+});
+
+describe('runCommand with onLine', () => {
+  it('prints the lines that onLine returns, after the mask', async () => {
+    const written: string[] = [];
+    const stub = sinon
+      .stub(process.stdout, 'write')
+      .callsFake((text: string | Uint8Array) => {
+        written.push(String(text));
+        return true;
+      });
+    try {
+      await runCommand(
+        process.execPath,
+        ['-e', "console.log('a secret'); console.log('drop me')"],
+        {
+          env: process.env,
+          mask: line => line.replace('secret', '<masked>'),
+          onLine: line => (line.startsWith('drop') ? [] : [line]),
+        },
+      );
+    } finally {
+      stub.restore();
+    }
+
+    expect(written.join('')).to.equal('a <masked>\n');
   });
 });
 

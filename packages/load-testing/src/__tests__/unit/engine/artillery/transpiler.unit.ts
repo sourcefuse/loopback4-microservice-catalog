@@ -159,7 +159,12 @@ describe('transpile', () => {
       config: {
         target: '{{ $env.LOAD_TESTS_BASE_URL }}',
         phases: [{duration: 60, arrivalRate: 10}],
-        plugins: {'metrics-by-endpoint': {useOnlyRequestNames: true}},
+        plugins: {
+          'metrics-by-endpoint': {
+            useOnlyRequestNames: true,
+            suppressOutput: true,
+          },
+        },
         processor: PROCESSOR,
       },
       scenarios: [
@@ -806,10 +811,29 @@ describe('transpile', () => {
         target: '{{ $env.LOAD_TESTS_BASE_URL }}',
         phases: PHASES,
         plugins: {
-          'metrics-by-endpoint': {useOnlyRequestNames: true},
-          expect: {},
+          'metrics-by-endpoint': {
+            useOnlyRequestNames: true,
+            suppressOutput: true,
+          },
+          expect: {outputFormat: 'json'},
         },
         http: {timeout: 30},
+      });
+    });
+
+    it('sets the output format of expect only when the user declared the plugin, and keeps a format of the user', () => {
+      const plain = scenarioOf('s', [load.get('/a')]);
+      const own = scenarioOf('s', [load.get('/a')], {
+        artillery: {config: {plugins: {expect: {outputFormat: 'pretty'}}}},
+      });
+      const run = (s: ReturnType<typeof scenarioOf>, format?: string) =>
+        transpile(s, undefined, PHASES, PROCESSOR, new Set(), format).config
+          .plugins as Record<string, unknown>;
+
+      expect(run(plain)).to.not.have.property('expect');
+      expect(run(own).expect).to.deepEqual({outputFormat: 'pretty'});
+      expect(own.artillery?.config).to.deepEqual({
+        plugins: {expect: {outputFormat: 'pretty'}},
       });
     });
 

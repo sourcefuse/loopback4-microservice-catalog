@@ -53,6 +53,7 @@ export function artillery(): Engine {
         input.phases,
         input.runVars,
         browser,
+        input.verbose ? 'prettyError' : 'json',
       );
       await browser?.check?.({
         env,
@@ -65,6 +66,7 @@ export function artillery(): Engine {
         env,
         input.signal,
         createMasker(input.tokens, input.config.mask),
+        input.verbose,
       );
     },
   };

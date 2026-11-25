@@ -62,6 +62,8 @@ type ExecuteOptions = {
   pool: Pool;
   /** Stops `before` at its next request, and stops the load. */
   signal: AbortSignal;
+  /** Prints all the output of the engine, not the short form. */
+  verbose?: boolean;
 };
 
 /** Runs the token check for each user in turn, and stops at the first failure. */
@@ -94,7 +96,7 @@ async function checkTokens(
  */
 export async function execute(
   {scenario, endpoints}: LoadedScenario,
-  {pkgDir, config, engine, target, pool, signal}: ExecuteOptions,
+  {pkgDir, config, engine, target, pool, signal, verbose}: ExecuteOptions,
 ): Promise<ScenarioRun> {
   const url = targetUrl(scenario, target);
   const cleanup = new Cleanup();
@@ -153,6 +155,7 @@ export async function execute(
       baseUrl: url,
       tokens,
       signal,
+      verbose,
     });
     // A signal can cut the load short and leave a partial report.
     signal.throwIfAborted();

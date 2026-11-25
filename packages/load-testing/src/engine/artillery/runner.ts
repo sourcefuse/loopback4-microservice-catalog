@@ -7,7 +7,9 @@ import {spawn} from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import readline from 'node:readline';
+import {createCompactFilter} from './compact';
 import {readRun} from './measure';
+import {print} from '../../output';
 import {ConfigError, RunError} from '../../errors';
 import type {Measurement} from '../../report/types';
 
@@ -73,28 +75,37 @@ export function runCommand(
     signal,
     graceMs = STOP_GRACE_MS,
     mask,
+    onLine,
   }: {
     env: NodeJS.ProcessEnv;
     signal?: AbortSignal;
     graceMs?: number;
     /** Hides secrets in each line of output. Without it the output is not changed. */
     mask?: (line: string) => string;
+    /**
+     * Gets each raw line of the standard output, and returns the lines to
+     * print. The lines it returns pass through `mask`.
+     */
+    onLine?: (line: string) => string[];
   },
 ): Promise<Exit> {
   return new Promise((resolve, reject) => {
     const child = spawn(command, args, {
       env,
-      stdio: mask ? ['inherit', 'pipe', 'pipe'] : 'inherit',
+      stdio: Boolean(mask ?? onLine) ? ['inherit', 'pipe', 'pipe'] : 'inherit',
     });
-    if (mask) {
-      for (const [from, to] of [
-        [child.stdout, process.stdout],
-        [child.stderr, process.stderr],
+    if (mask ?? onLine) {
+      for (const [from, to, filter] of [
+        [child.stdout, process.stdout, onLine],
+        // The errors of the command always print.
+        [child.stderr, process.stderr, undefined],
       ] as const) {
         // readline joins the chunks into whole lines, so a secret is not split.
-        readline
-          .createInterface({input: from!})
-          .on('line', line => to.write(`${mask(line)}\n`));
+        readline.createInterface({input: from!}).on('line', line => {
+          for (const out of filter ? filter(line) : [line]) {
+            to.write(`${mask ? mask(out) : out}\n`);
+          }
+        });
       }
     }
     running.add(child);
@@ -127,6 +138,15 @@ export function runCommand(
   });
 }
 
+/** Ends a log stream, and resolves when the data is on disk or the write failed. */
+function closed(log: fs.WriteStream | undefined): Promise<void> {
+  return new Promise(resolve => {
+    if (!log || log.destroyed) return resolve();
+    log.once('close', () => resolve());
+    log.end();
+  });
+}
+
 /**
  * `signal` stops Artillery: the run waits until Artillery has exited, and
  * then fails. Artillery runs its workers as threads of its own process, so
@@ -138,30 +158,54 @@ export async function runArtillery(
   env: NodeJS.ProcessEnv,
   signal?: AbortSignal,
   mask?: (line: string) => string,
+  verbose = false,
 ): Promise<Measurement> {
-  const reportPath = reportPathOf(
-    path.dirname(scriptPath),
-    path.basename(scriptPath, '.json'),
-  );
+  const slug = path.basename(scriptPath, '.json');
+  const reportPath = reportPathOf(path.dirname(scriptPath), slug);
   // A run that writes no report must not reuse the previous one.
   fs.rmSync(reportPath, {force: true});
+  const logPath = path.join(path.dirname(scriptPath), `${slug}.log`);
   const args = [artilleryBin(), 'run', '--output', reportPath, scriptPath];
+  // The short form: every masked line goes to the log file, and the console
+  // gets the first failed requests only.
+  const compact = verbose ? undefined : createCompactFilter();
+  if (compact) args.splice(2, 0, '--quiet');
+  // The log of an earlier run may have a wider mode, and `mode` applies to a new file only.
+  fs.rmSync(logPath, {force: true});
+  const log = compact
+    ? fs.createWriteStream(logPath, {mode: 0o600})
+    : undefined;
+  // A log that cannot be written must not stop the run. The console still has the output.
+  log?.on('error', () => undefined);
   const exit = await runCommand(process.execPath, args, {
     // Artillery sends anonymous usage data unless this is set.
-    env: {...env, ARTILLERY_DISABLE_TELEMETRY: 'true'},
+    env: {...env, ARTILLERY_DISABLE_TELEMETRY: 'true', FORCE_COLOR: '0'},
     signal,
     mask,
-  }).catch((err: unknown) => {
+    onLine: compact
+      ? line => {
+          log?.write(`${mask ? mask(line) : line}\n`);
+          return compact.accept(line);
+        }
+      : undefined,
+  }).catch(async (err: unknown) => {
+    await closed(log);
     // A stopped run leaves a partial report.
     fs.rmSync(reportPath, {force: true});
     throw err;
   });
+  const more = compact?.summary();
+  if (more) print(`${more}: see ${path.relative(process.cwd(), logPath)}`);
+  await closed(log);
   if (exit.code !== 0) {
     // Artillery writes the report before its plugins set a failing exit code.
     // `report` must not judge the file of a failed run.
     fs.rmSync(reportPath, {force: true});
     const how = exit.signal ?? `code ${exit.code}`;
-    throw new RunError(`Artillery stopped with ${how}: ${scriptPath}`);
+    const see = compact
+      ? ` (output: ${path.relative(process.cwd(), logPath)})`
+      : '';
+    throw new RunError(`Artillery stopped with ${how}: ${scriptPath}${see}`);
   }
   return readRun(reportPath, ids);
 }

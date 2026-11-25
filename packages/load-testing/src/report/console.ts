@@ -153,7 +153,7 @@ function shortName(name: string, label: string): string {
 
 function linesOf(scenario: ScenarioResult): string[] {
   if (scenario.error !== undefined) return [`FAIL: ${scenario.error}`];
-  const {workload, vusers, hookErrors, problems} = scenario;
+  const {workload, vusers, hookErrors, problems, errors = {}} = scenario;
   const counts = `${vusers.started} started, ${vusers.completed} completed, ${vusers.failed} failed`;
   return [
     `Workload: ${workload}`,
@@ -162,6 +162,13 @@ function linesOf(scenario: ScenarioResult): string[] {
       : `Vusers:   ${counts} (limit ${vusers.failedLimit}%)`,
     ...(hookErrors > 0
       ? [`Hooks:    ${hookErrors} error(s), not app errors (FAIL)`]
+      : []),
+    ...(Object.keys(errors).length > 0
+      ? [
+          `Errors:   ${Object.entries(errors)
+            .map(([name, count]) => `${name} ${count}`)
+            .join(', ')}`,
+        ]
       : []),
     ...problems.map(problem => `FAIL: ${problem}`),
   ];

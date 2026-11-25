@@ -54,6 +54,7 @@ export function writeScenario(
   phases: Phase[],
   runVars: Vars,
   browser?: BrowserEngine,
+  expectFormat = 'json',
 ): string {
   const outDir = path.join(pkgDir, OUT_DIR);
   fs.mkdirSync(outDir, {recursive: true});
@@ -98,7 +99,14 @@ export function writeScenario(
     ? probeHooks(scenario, processorPath)
     : {eachVars: {}};
   const known = new Set([...Object.keys(runVars), ...Object.keys(eachVars)]);
-  const script = transpile(scenario, defaults, phases, processorPath, known);
+  const script = transpile(
+    scenario,
+    defaults,
+    phases,
+    processorPath,
+    known,
+    expectFormat,
+  );
   fs.writeFileSync(scriptPath, JSON.stringify(script, null, 2));
   return scriptPath;
 }
@@ -281,6 +289,7 @@ export function transpile(
   phases: Phase[],
   processorPath: string,
   known: ReadonlySet<string>,
+  expectFormat = 'json',
 ) {
   const requests = requestsIn(scenario.requests);
   const resolved = resolveRequests(
@@ -318,21 +327,41 @@ export function transpile(
     ...asList(scenario.artillery?.raw?.afterScenario),
   ];
 
-  return {
-    config: {
-      ...deepMerge(
-        deepMerge(
-          {
-            target: '{{ $env.LOAD_TESTS_BASE_URL }}',
-            plugins: {'metrics-by-endpoint': {useOnlyRequestNames: true}},
-            ...(hasProcessor && {processor: processorPath}),
+  const merged = deepMerge(
+    deepMerge(
+      {
+        target: '{{ $env.LOAD_TESTS_BASE_URL }}',
+        plugins: {
+          'metrics-by-endpoint': {
+            useOnlyRequestNames: true,
+            suppressOutput: true,
           },
-          defaults ?? {},
-        ),
-        scenario.artillery?.config ?? {},
-      ),
-      phases,
-    },
+        },
+        ...(hasProcessor && {processor: processorPath}),
+      },
+      defaults ?? {},
+    ),
+    scenario.artillery?.config ?? {},
+  );
+  // The user declared the `expect` plugin. Print only what we can filter,
+  // unless the user chose a format. The default format prints every check.
+  const plugins = merged.plugins as Record<string, unknown> | undefined;
+  const expectOptions = plugins?.expect as Record<string, unknown> | undefined;
+  if (
+    expectOptions &&
+    !expectOptions.outputFormat &&
+    !expectOptions.formatter
+  ) {
+    // A copy, so that the config of the user stays as it is.
+    Object.assign(merged, {
+      plugins: {
+        ...plugins,
+        expect: {...expectOptions, outputFormat: expectFormat},
+      },
+    });
+  }
+  return {
+    config: {...merged, phases},
     scenarios: [
       {
         ...scenario.artillery?.raw,
