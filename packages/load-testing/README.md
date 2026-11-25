@@ -604,7 +604,7 @@ If `custom` throws, we hide the whole line. The log file below is masked in the 
 
 #### Console output
 
-By default the console output is short, so that a Jenkins log stays easy to read:
+By default the console output is short, so that a build log stays easy to read:
 
 - Artillery runs with `--quiet`, so its phase lines, the metrics for each period and its summary do not print. Our `Results` block prints as usual.
 - A passing check prints nothing.
@@ -613,7 +613,7 @@ By default the console output is short, so that a Jenkins log stays easy to read
 - The first 3 different scenario error lines print, and the rest are counted in the same one line.
 - Network errors such as `ECONNREFUSED` print by code in the `Errors:` line of the `Results` block. Other error texts count as `other`.
 
-The file `.out/<scenario>.log` holds every line that Artillery prints on its standard output, masked. The file mode is 0600. It can hold the request and the first part of the response body of a failed check, so treat it as you treat the console. In Jenkins, you can keep it with `archiveArtifacts 'facades/**/src/__tests__/load/.out/*.log'`.
+The file `.out/<scenario>.log` holds every line that Artillery prints on its standard output, masked. The file mode is 0600. It can hold the request and the first part of the response body of a failed check, so treat it as you treat the console. Keep it as a build artifact if you want to read it after the run.
 
 To print the full Artillery output, run `load-testing run . --verbose`, or set `LOAD_TESTS_VERBOSE` to any value but `0` or `false`. Then every failed check prints in full, with its response headers, its body and the variables of the user, with the phase lines and the metrics for each period. Passing checks still print nothing, unless you set `outputFormat: 'pretty'` for `expect` in `artillery.config`. A format that you set always wins. Masking stays on.
 
