@@ -485,6 +485,26 @@ describe('configProblems', () => {
     ]);
   });
 
+  it('accepts mask, and finds a value of the wrong type', () => {
+    expect(
+      configProblems({
+        ...GOOD,
+        mask: {secrets: ['abcdefgh'], names: ['x'], patterns: [/a/]},
+      }),
+    ).to.deepEqual([]);
+    expect(
+      configProblems({
+        ...GOOD,
+        mask: {secrets: 'x', patterns: ['a'], replacement: 5, custom: 1},
+      }),
+    ).to.deepEqual([
+      'mask.secrets must be a list of strings',
+      'mask.patterns must be a list of regular expressions',
+      'mask.replacement must be a string',
+      'mask.custom must be a function',
+    ]);
+  });
+
   it('accepts runAllWhen patterns, and finds one that is wrong', () => {
     expect(
       configProblems({...GOOD, runAllWhen: ['packages/core/**', '.env']}),

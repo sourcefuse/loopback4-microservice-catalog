@@ -580,6 +580,28 @@ load.it('search orders of a customer', [
 - `randomNumber(min, max)` needs whole numbers from 0 up, and `min` must not be above `max`. A negative or fractional value throws a `TypeError` with `randomNumber: the minimum and the maximum must be whole numbers from 0 up`. Artillery reads only letters, digits, `_`, `,` and spaces inside `$randomNumber(...)`.
 - We do not write `{{ loadTestsToken }}` or `{{ $env.LOAD_TESTS_TOKENS }}` by hand. The CLI gives the tokens to Artillery only for a scenario that uses `token()`. See [Send the token](#send-the-token).
 
+#### Secrets in the output
+
+A failed check of the Artillery `expect` plugin prints all the variables of the user, and the login token is one of them. We mask it: the line reads `loadTestsToken: <masked>`. We also mask JWTs, `Bearer` and `Basic` values, and the value after these names: `authorization`, `cookie`, `password`, `secret`, `api-key`, `access_token`, `refresh_token` and `id_token`. You cannot turn these rules off.
+
+The masking runs on each line of the Artillery output, so Artillery does not see a terminal and prints no colour codes. A name hides the rest of its line, also in one-line JSON.
+
+To mask more, add `mask` to `config.ts`. Your rules run after the built-in ones and can only hide more:
+
+```ts
+const config: LoadTestConfig = {
+  mask: {
+    secrets: [process.env.LOAD_TESTS_DB_PASSWORD ?? ''], // exact values, 8 characters or more
+    names: ['tenantSecret'], // `tenantSecret: value` prints `tenantSecret: <masked>`
+    patterns: [/sk_live_\w+/g],
+    replacement: '***', // the default is `<masked>`
+    custom: line => line.replace(/"email":"[^"]+"/g, '"email":"***"'), // runs last
+  },
+};
+```
+
+If `custom` throws, we hide the whole line. We write the output to no file, and the JSON report in `.out` holds only metrics.
+
 #### Text that the engine refuses
 
 Artillery fills a template with a text replace, and it expands a text again after the fill. So a value that holds `{{ ... }}` can read `$env` or loop for ever. A value that holds `$&`, `` $` `` or `$'` can loop or grow, because the replace reads them as patterns. A `$$` becomes one `$`, so `pa$$word` in a longer text would reach the API as `pa$word`. We call these five texts the refused text: `{{`, `$&`, `` $` ``, `$'` and `$$`. A `$1`, a `$0` and a `$<name>` pass.

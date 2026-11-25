@@ -6,6 +6,7 @@ import type {ChildProcess} from 'node:child_process';
 import {spawn} from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
+import readline from 'node:readline';
 import {readRun} from './measure';
 import {ConfigError, RunError} from '../../errors';
 import type {Measurement} from '../../report/types';
@@ -71,10 +72,31 @@ export function runCommand(
     env,
     signal,
     graceMs = STOP_GRACE_MS,
-  }: {env: NodeJS.ProcessEnv; signal?: AbortSignal; graceMs?: number},
+    mask,
+  }: {
+    env: NodeJS.ProcessEnv;
+    signal?: AbortSignal;
+    graceMs?: number;
+    /** Hides secrets in each line of output. Without it the output is not changed. */
+    mask?: (line: string) => string;
+  },
 ): Promise<Exit> {
   return new Promise((resolve, reject) => {
-    const child = spawn(command, args, {env, stdio: 'inherit'});
+    const child = spawn(command, args, {
+      env,
+      stdio: mask ? ['inherit', 'pipe', 'pipe'] : 'inherit',
+    });
+    if (mask) {
+      for (const [from, to] of [
+        [child.stdout, process.stdout],
+        [child.stderr, process.stderr],
+      ] as const) {
+        // readline joins the chunks into whole lines, so a secret is not split.
+        readline
+          .createInterface({input: from!})
+          .on('line', line => to.write(`${mask(line)}\n`));
+      }
+    }
     running.add(child);
     if (!exitHandlerSet) {
       exitHandlerSet = true;
@@ -96,7 +118,8 @@ export function runCommand(
       settled();
       reject(err);
     });
-    child.on('exit', (code, endedBy) => {
+    // `close` comes after the output is read, so the last lines are masked and written.
+    child.on('close', (code, endedBy) => {
       settled();
       if (signal?.aborted) reject(signal.reason);
       else resolve({code, signal: endedBy});
@@ -114,6 +137,7 @@ export async function runArtillery(
   ids: string[],
   env: NodeJS.ProcessEnv,
   signal?: AbortSignal,
+  mask?: (line: string) => string,
 ): Promise<Measurement> {
   const reportPath = reportPathOf(
     path.dirname(scriptPath),
@@ -126,6 +150,7 @@ export async function runArtillery(
     // Artillery sends anonymous usage data unless this is set.
     env: {...env, ARTILLERY_DISABLE_TELEMETRY: 'true'},
     signal,
+    mask,
   }).catch((err: unknown) => {
     // A stopped run leaves a partial report.
     fs.rmSync(reportPath, {force: true});

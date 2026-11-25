@@ -4,6 +4,7 @@
 // https://opensource.org/licenses/MIT
 import type {Measurement} from '../../report/types';
 import type {Engine, EngineRun} from '../types';
+import {createMasker} from './mask';
 import {runArtillery} from './runner';
 import {browsersOf, engineOptionsOf} from './browsers';
 import type {BrowserEngine} from './browsers';
@@ -58,7 +59,13 @@ export function artillery(): Engine {
         options: engineOptionsOf(browser, input.config.artillery?.config),
         signal: input.signal,
       });
-      return runArtillery(scriptPath, input.endpointIds, env, input.signal);
+      return runArtillery(
+        scriptPath,
+        input.endpointIds,
+        env,
+        input.signal,
+        createMasker(input.tokens, input.config.mask),
+      );
     },
   };
 }
