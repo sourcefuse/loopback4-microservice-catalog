@@ -72,6 +72,7 @@ export type {
   Hooks,
   LoadTestConfig,
   MaskOptions,
+  OutputOptions,
   RawStep,
   LoadRequest,
   Method,

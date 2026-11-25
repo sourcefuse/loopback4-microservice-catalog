@@ -12,6 +12,7 @@ import {readRun} from './measure';
 import {print} from '../../output';
 import {ConfigError, RunError} from '../../errors';
 import type {Measurement} from '../../report/types';
+import type {OutputOptions} from '../../types';
 
 /**
  * The Artillery CLI. It is a dependency of this library, so it is found from
@@ -159,6 +160,7 @@ export async function runArtillery(
   signal?: AbortSignal,
   mask?: (line: string) => string,
   verbose = false,
+  output?: OutputOptions,
 ): Promise<Measurement> {
   const slug = path.basename(scriptPath, '.json');
   const reportPath = reportPathOf(path.dirname(scriptPath), slug);
@@ -168,7 +170,7 @@ export async function runArtillery(
   const args = [artilleryBin(), 'run', '--output', reportPath, scriptPath];
   // The short form: every masked line goes to the log file, and the console
   // gets the first failed requests only.
-  const compact = verbose ? undefined : createCompactFilter();
+  const compact = verbose ? undefined : createCompactFilter(output);
   if (compact) args.splice(2, 0, '--quiet');
   // The log of an earlier run may have a wider mode, and `mode` applies to a new file only.
   fs.rmSync(logPath, {force: true});

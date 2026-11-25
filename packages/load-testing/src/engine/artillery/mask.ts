@@ -54,12 +54,23 @@ export function createMasker(
   options: MaskOptions = {},
 ): (line: string) => string {
   const replacement = options.replacement ?? DEFAULT_MASK;
-  const literals = [...tokens, ...(options.secrets ?? [])]
-    .filter(secret => secret.length >= MIN_SECRET_LENGTH)
-    .flatMap(formsOf)
+  // A Set drops a secret that was given twice, for example a token that two users share.
+  const literals = [
+    ...new Set(
+      [...tokens, ...(options.secrets ?? [])]
+        .filter(secret => secret.length >= MIN_SECRET_LENGTH)
+        .flatMap(formsOf),
+    ),
+  ]
     // The longest first, so that a secret inside another one is not left half shown.
     .sort((a, b) => b.length - a.length);
-  const names = [...BUILT_IN_NAMES, ...(options.names ?? [])];
+  const names = [
+    ...new Set(
+      [...BUILT_IN_NAMES, ...(options.names ?? [])].map(name =>
+        name.toLowerCase(),
+      ),
+    ),
+  ];
   const literalRule =
     literals.length > 0
       ? new RegExp(literals.map(escape).join('|'), 'g')

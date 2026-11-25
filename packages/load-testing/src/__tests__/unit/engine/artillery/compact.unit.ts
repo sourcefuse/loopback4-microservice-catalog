@@ -3,6 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 import {expect} from '@loopback/testlab';
+import type {OutputOptions} from '../../../../types';
 import {createCompactFilter} from '../../../../engine/artillery/compact';
 
 /** The line that the expect plugin prints with `outputFormat: json`. */
@@ -14,8 +15,11 @@ function expectLine(url: string, ok = false, type = 'statusCode'): string {
   });
 }
 
-function run(lines: string[]): {out: string[]; summary?: string} {
-  const filter = createCompactFilter();
+function run(
+  lines: string[],
+  limits?: OutputOptions,
+): {out: string[]; summary?: string} {
+  const filter = createCompactFilter(limits);
   return {
     out: lines.flatMap(line => filter.accept(line)),
     summary: filter.summary(),
@@ -80,5 +84,23 @@ describe('createCompactFilter', () => {
 
     expect(out).to.eql(['a', 'b', 'c'].map(error => line(error)));
     expect(summary).to.equal('+2 more error lines');
+  });
+
+  it('uses the limits of the config', () => {
+    const urls = ['/a', '/b', '/c'];
+    const errors = ['a', 'b', 'c'].map(x => `Error: ${x}`);
+    const lines = [...urls.map(url => expectLine(url)), ...errors];
+
+    const two = run(lines, {failedRequests: 2, errorLines: 1});
+    const none = run(lines, {failedRequests: 0, errorLines: 0});
+
+    expect(two.out).to.eql([expectLine('/a'), expectLine('/b'), 'Error: a']);
+    expect(two.summary).to.equal(
+      '+1 more failed requests, +2 more error lines',
+    );
+    expect(none.out).to.eql([]);
+    expect(none.summary).to.equal(
+      '+3 more failed requests, +3 more error lines',
+    );
   });
 });

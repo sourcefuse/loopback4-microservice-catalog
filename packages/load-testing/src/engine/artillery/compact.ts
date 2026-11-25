@@ -3,14 +3,13 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-/** How many different failed requests print, for each scenario. */
-const DUMPS_SHOWN = 3;
-
-/** How many different `Error:` lines print, for each scenario. */
-const ERRORS_SHOWN = 3;
+/** The default of `output.failedRequests` and of `output.errorLines`. */
+const DEFAULT_SHOWN = 3;
 
 /** A line that the plugin prints for a scenario error, for example `Error: connect ECONNREFUSED`. */
 const ERROR_PREFIX = 'Error: ';
+
+import type {OutputOptions} from '../../types';
 
 type Check = {ok?: boolean; type?: string};
 
@@ -54,12 +53,15 @@ function errorOf(line: string): string | undefined {
 /**
  * Makes the output of Artillery short. `accept` returns the lines to print for
  * a line of the output. A line of a passing check prints nothing. The first
- * `DUMPS_SHOWN` failed requests that differ in url and check print, and so do
- * the first `ERRORS_SHOWN` different `Error:` lines. Every other line of a
+ * `failedRequests` failed requests that differ in url and check print, and so do
+ * the first `errorLines` different `Error:` lines. Every other line of a
  * failure is counted, and `summary()` says how many. The caller also writes
  * every line to a file, so nothing is lost.
  */
-export function createCompactFilter(): {
+export function createCompactFilter({
+  failedRequests = DEFAULT_SHOWN,
+  errorLines = DEFAULT_SHOWN,
+}: OutputOptions = {}): {
   accept(line: string): string[];
   summary(): string | undefined;
 } {
@@ -74,7 +76,7 @@ export function createCompactFilter(): {
       if (expectLine) {
         if (expectLine.failed.length === 0) return [];
         const id = `${expectLine.url} ${expectLine.failed.join(',')}`;
-        if (shown.has(id) || shown.size >= DUMPS_SHOWN) {
+        if (shown.has(id) || shown.size >= failedRequests) {
           hidden++;
           return [];
         }
@@ -83,7 +85,7 @@ export function createCompactFilter(): {
       }
       const error = errorOf(line);
       if (error === undefined) return [line];
-      if (errorsShown.has(error) || errorsShown.size >= ERRORS_SHOWN) {
+      if (errorsShown.has(error) || errorsShown.size >= errorLines) {
         hiddenErrors++;
         return [];
       }

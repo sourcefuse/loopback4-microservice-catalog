@@ -608,9 +608,9 @@ By default the console output is short, so that a build log stays easy to read:
 
 - Artillery runs with `--quiet`, so its phase lines, the metrics for each period and its summary do not print. Our `Results` block prints as usual.
 - A passing check prints nothing.
-- When you declare the `expect` plugin, a failed check prints as one JSON line with the url, the check, the expected value and the value we got. This happens for the first 3 different failures in a scenario. A failure is different when the url or the check differs. The response headers, the body and the variables of the user do not print.
+- When you declare the `expect` plugin, a failed check prints as one JSON line with the url, the check, the expected value and the value we got. This happens for the first 3 different failures in a scenario. Set `output.failedRequests` in `config.ts` to change the 3. A failure is different when the url or the check differs. The response headers, the body and the variables of the user do not print.
 - The other failed requests print as one line, for example `+250 more failed requests: see .out/<scenario>.log`.
-- The first 3 different scenario error lines print, and the rest are counted in the same one line.
+- The first 3 different scenario error lines print, and the rest are counted in the same one line. Set `output.errorLines` to change the 3. A limit of 0 prints none, and the log file still holds everything.
 - Network errors such as `ECONNREFUSED` print by code in the `Errors:` line of the `Results` block. Other error texts count as `other`.
 
 The file `.out/<scenario>.log` holds every line that Artillery prints on its standard output, masked. The file mode is 0600. It can hold the request and the first part of the response body of a failed check, so treat it as you treat the console. Keep it as a build artifact if you want to read it after the run.
@@ -2077,6 +2077,8 @@ The type checks the keys when we build. When the CLI starts, it also checks the 
 | `artillery.browsers` | `BrowserEngine[]` | `[chromium()]` | The browsers that each browser scenario runs in. See [Browsers](#browsers). |
 | `artillery.config` | `ArtilleryConfig` | none | Artillery `config` options for every scenario. See [Use any Artillery feature](#use-any-artillery-feature). |
 | `artillery.env` | `string[]` | none | The exact names of more variables to pass to Artillery, only when the CLI has them. For example `['MY_REGION']`. See [The environment of Artillery](#the-environment-of-artillery). |
+| `mask` | `MaskOptions` | the built-in rules only | More rules that hide secrets in the output: `secrets`, `names`, `patterns`, `replacement`, `custom`. See [Secrets in the output](#secrets-in-the-output). |
+| `output` | `{failedRequests?, errorLines?}` | `3` and `3` | How many different failed requests and error lines print for each scenario. See [Console output](#console-output). |
 
 An example with every key. A real package sets only the keys that it needs.
 
@@ -2106,12 +2108,22 @@ const config: LoadTestConfig = {
   reporters: [consoleReporter()],
   engine: artillery(),
   artillery: {config: {http: {timeout: 30}}, env: ['MY_REGION']},
+  mask: {names: ['tenantSecret'], replacement: '***'},
+  output: {failedRequests: 5, errorLines: 5},
 };
 
 export default config;
 ```
 
 `config.ts` has no `headers`. We set headers on `load.describe` or on `load.it`.
+
+The check of `mask` and `output` gives these problems.
+
+- `mask.secrets must be a list of strings`, and the same for `mask.names`
+- `mask.patterns must be a list of regular expressions`
+- `mask.replacement must be a string`
+- `mask.custom must be a function`
+- `output.failedRequests must be a whole number, 0 or more`, and the same for `output.errorLines`
 
 The check of `artillery.env` gives these problems.
 

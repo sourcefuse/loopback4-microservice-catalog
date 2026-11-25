@@ -8,6 +8,7 @@ import type {
   BrowserLimitOptions,
   LoadTestConfig,
   MaskOptions,
+  OutputOptions,
   MetricThresholds,
   BrowserScenario,
   Thresholds,
@@ -156,6 +157,17 @@ function scalarProblems({
   return problems;
 }
 
+/** Returns what is wrong with `output`: each limit is a whole number, 0 or more. */
+function outputProblems(output: OutputOptions | undefined): string[] {
+  if (output === undefined) return [];
+  return (['failedRequests', 'errorLines'] as const)
+    .filter(key => {
+      const value = output[key];
+      return value !== undefined && !(Number.isInteger(value) && value >= 0);
+    })
+    .map(key => `output.${key} must be a whole number, 0 or more`);
+}
+
 /** Returns what is wrong with `mask`: the types that the masker needs at run time. */
 function maskProblems(mask: MaskOptions | undefined): string[] {
   if (mask === undefined) return [];
@@ -203,6 +215,7 @@ export function configProblems(config: unknown): string[] {
     reporters,
     runAllWhen,
     mask,
+    output,
   } = config as Partial<LoadTestConfig>;
   const limits: Thresholds | undefined = thresholds?.default;
   const problems = [
@@ -217,6 +230,7 @@ export function configProblems(config: unknown): string[] {
     ...reporterProblems(reporters),
     ...patternProblems(runAllWhen, 'runAllWhen'),
     ...maskProblems(mask),
+    ...outputProblems(output),
   ];
   problems.push(...scalarProblems(config as Partial<LoadTestConfig>));
   return problems;

@@ -14,6 +14,16 @@ const DUMP = [
 ].join('\n');
 
 describe('createMasker', () => {
+  it('hides a secret and a name that are listed twice', () => {
+    const mask = createMasker([FAKE, FAKE], {
+      secrets: [FAKE],
+      names: ['Password', 'password'],
+    });
+
+    expect(mask(`x ${FAKE} y`)).to.equal('x <masked> y');
+    expect(mask('password: abc')).to.equal('password: <masked>');
+  });
+
   it('hides the token of a failed check and keeps the other variables', () => {
     const mask = createMasker([FAKE]);
     const out = DUMP.split('\n').map(mask).join('\n');

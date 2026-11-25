@@ -67,6 +67,7 @@ export function artillery(): Engine {
         input.signal,
         createMasker(input.tokens, input.config.mask),
         input.verbose,
+        input.config.output,
       );
     },
   };

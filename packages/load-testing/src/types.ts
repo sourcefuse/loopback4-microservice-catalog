@@ -230,6 +230,19 @@ export type LoadTestConfig = {
    * The rules here hide more.
    */
   mask?: MaskOptions;
+  /**
+   * How much of the output of Artillery prints on the console. The rest goes
+   * to `.out/<scenario>.log`. `--verbose` prints all.
+   */
+  output?: OutputOptions;
+};
+
+/** Limits of the short console output, for each scenario. */
+export type OutputOptions = {
+  /** How many different failed requests print. The default is 3. */
+  failedRequests?: number;
+  /** How many different error lines print. The default is 3. */
+  errorLines?: number;
 };
 
 /** Rules that hide secrets in the output of Artillery, line by line. */
