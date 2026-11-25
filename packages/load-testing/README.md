@@ -588,6 +588,14 @@ The masking runs on each line of the Artillery output, so Artillery does not see
 
 To mask more, add `mask` to `config.ts`. Your rules run after the built-in ones and can only hide more:
 
+| Key | Type | Default | What it means |
+| --- | --- | --- | --- |
+| `secrets` | `string[]` | none | Exact values to hide, for example a password from the environment. We also hide the base64 form and the URL form of each value. A value shorter than 8 characters is ignored, because it would hide too much. |
+| `names` | `string[]` | none | Names of variables or headers. In a line `name: value` or `name=value`, we hide the value up to the end of the line. We ignore the case. These add to the built-in names. |
+| `patterns` | `RegExp[]` | none | Regular expressions. We hide each text that one of them matches, in any place of a line. Use it for a value with a known shape, such as `sk_live_...`. |
+| `replacement` | `string` | `<masked>` | The text that takes the place of a hidden value. |
+| `custom` | `(line: string) => string` | none | A function that gets each line after the other rules, and returns the line to print. It runs last and can only hide more. When it throws, we hide the whole line. |
+
 ```ts
 const config: LoadTestConfig = {
   mask: {
