@@ -31,7 +31,7 @@ const JWT = /eyJ[\w-]+\.[\w-]+\.[\w-]*/g;
 const BEARER = /\b(Bearer|Basic)\s+[\w.~+/=-]+/gi;
 
 const escape = (text: string): string =>
-  text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  text.replace(/[.*+?^${}()|[\]\\]/g, String.raw`\$&`);
 
 /** A secret as it is written plain, in base64, and in a URL. */
 function formsOf(secret: string): string[] {
@@ -65,7 +65,7 @@ export function createMasker(
       ? new RegExp(literals.map(escape).join('|'), 'g')
       : undefined;
   const nameRule = new RegExp(
-    `(["']?(?:${names.map(escape).join('|')})["']?\\s*[:=]\\s*)[^\\r\\n]*`,
+    String.raw`(["']?(?:${names.map(escape).join('|')})["']?\s*[:=]\s*)[^\r\n]*`,
     'gi',
   );
   const patterns = (options.patterns ?? []).map(

@@ -10,7 +10,7 @@ const DUMPS_SHOWN = 3;
 const ERRORS_SHOWN = 3;
 
 /** A line that the plugin prints for a scenario error, for example `Error: connect ECONNREFUSED`. */
-const ERROR_LINE = /^Error: /;
+const ERROR_PREFIX = 'Error: ';
 
 type Check = {ok?: boolean; type?: string};
 
@@ -29,7 +29,7 @@ function parseExpectLine(
     const failed = (data.results as Check[])
       .filter(result => result.ok === false)
       .map(result => String(result.type));
-    return {url: String(data.url), failed};
+    return {url: typeof data.url === 'string' ? data.url : '', failed};
   } catch {
     return undefined;
   }
@@ -41,7 +41,7 @@ function parseExpectLine(
  * `{"ok":false,"error":"<message>"}`.
  */
 function errorOf(line: string): string | undefined {
-  if (ERROR_LINE.test(line)) return line;
+  if (line.startsWith(ERROR_PREFIX)) return line;
   if (!line.startsWith('{"ok":false,"error":')) return undefined;
   try {
     const {error} = JSON.parse(line) as {error?: unknown};
