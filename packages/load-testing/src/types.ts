@@ -224,6 +224,42 @@ export type LoadTestConfig = {
    * root.
    */
   runAllWhen?: string[];
+  /**
+   * Hide secrets in the output of Artillery. The login token, JWTs, and
+   * `Bearer` values are always hidden: these rules cannot be turned off.
+   * The rules here hide more.
+   */
+  mask?: MaskOptions;
+  /**
+   * How much of the output of Artillery prints on the console. The rest goes
+   * to `.out/<scenario>.log`. `--verbose` prints all.
+   */
+  output?: OutputOptions;
+};
+
+/** Limits of the short console output, for each scenario. */
+export type OutputOptions = {
+  /** How many different failed requests print. The default is 3. */
+  failedRequests?: number;
+  /** How many different error lines print. The default is 3. */
+  errorLines?: number;
+};
+
+/** Rules that hide secrets in the output of Artillery, line by line. */
+export type MaskOptions = {
+  /** Exact values to hide. A value of less than 8 characters is ignored. */
+  secrets?: string[];
+  /** Texts to hide, found by a regular expression. */
+  patterns?: RegExp[];
+  /** Names of variables or headers: the value in a line `name: value` is hidden. */
+  names?: string[];
+  /** The text that replaces a secret. The default is `<masked>`. */
+  replacement?: string;
+  /**
+   * Runs last, on each line after the other rules. It can only hide more.
+   * When it throws, the whole line is hidden.
+   */
+  custom?: (line: string) => string;
 };
 
 /**

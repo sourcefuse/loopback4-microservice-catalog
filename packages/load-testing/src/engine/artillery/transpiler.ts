@@ -54,6 +54,7 @@ export function writeScenario(
   phases: Phase[],
   runVars: Vars,
   browser?: BrowserEngine,
+  expectFormat = 'json',
 ): string {
   const outDir = path.join(pkgDir, OUT_DIR);
   fs.mkdirSync(outDir, {recursive: true});
@@ -98,7 +99,14 @@ export function writeScenario(
     ? probeHooks(scenario, processorPath)
     : {eachVars: {}};
   const known = new Set([...Object.keys(runVars), ...Object.keys(eachVars)]);
-  const script = transpile(scenario, defaults, phases, processorPath, known);
+  const script = transpile(
+    scenario,
+    defaults,
+    phases,
+    processorPath,
+    known,
+    expectFormat,
+  );
   fs.writeFileSync(scriptPath, JSON.stringify(script, null, 2));
   return scriptPath;
 }
@@ -281,6 +289,7 @@ export function transpile(
   phases: Phase[],
   processorPath: string,
   known: ReadonlySet<string>,
+  expectFormat = 'json',
 ) {
   const requests = requestsIn(scenario.requests);
   const resolved = resolveRequests(
@@ -318,21 +327,27 @@ export function transpile(
     ...asList(scenario.artillery?.raw?.afterScenario),
   ];
 
-  return {
-    config: {
-      ...deepMerge(
-        deepMerge(
-          {
-            target: '{{ $env.LOAD_TESTS_BASE_URL }}',
-            plugins: {'metrics-by-endpoint': {useOnlyRequestNames: true}},
-            ...(hasProcessor && {processor: processorPath}),
+  const merged = withExpectFormat(
+    deepMerge(
+      deepMerge(
+        {
+          target: '{{ $env.LOAD_TESTS_BASE_URL }}',
+          plugins: {
+            'metrics-by-endpoint': {
+              useOnlyRequestNames: true,
+              suppressOutput: true,
+            },
           },
-          defaults ?? {},
-        ),
-        scenario.artillery?.config ?? {},
+          ...(hasProcessor && {processor: processorPath}),
+        },
+        defaults ?? {},
       ),
-      phases,
-    },
+      scenario.artillery?.config ?? {},
+    ),
+    expectFormat,
+  );
+  return {
+    config: {...merged, phases},
     scenarios: [
       {
         ...scenario.artillery?.raw,
@@ -342,6 +357,21 @@ export function transpile(
         flow: scenario.requests.map(value => replaceRequests(value, stepOf)),
       },
     ],
+  };
+}
+
+/**
+ * When the user declared the `expect` plugin without a format, sets the
+ * format, so that the output is one line for each request. It returns a copy,
+ * and the config of the user stays as it is.
+ */
+function withExpectFormat<T extends object>(config: T, format: string): T {
+  const plugins = (config as {plugins?: Record<string, unknown>}).plugins;
+  const options = plugins?.expect as Record<string, unknown> | undefined;
+  if (!options || options.outputFormat || options.formatter) return config;
+  return {
+    ...config,
+    plugins: {...plugins, expect: {...options, outputFormat: format}},
   };
 }
 

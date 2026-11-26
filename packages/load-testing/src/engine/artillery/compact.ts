@@ -1,0 +1,103 @@
+// Copyright (c) 2026 Sourcefuse Technologies
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+
+/** The default of `output.failedRequests` and of `output.errorLines`. */
+const DEFAULT_SHOWN = 3;
+
+/** A line that the plugin prints for a scenario error, for example `Error: connect ECONNREFUSED`. */
+const ERROR_PREFIX = 'Error: ';
+
+import type {OutputOptions} from '../../types';
+
+type Check = {ok?: boolean; type?: string};
+
+/**
+ * The expect plugin with `outputFormat: json` prints one line for each
+ * request that has checks: `{"name":..., "url":..., "results":[...]}`. A line
+ * is one write, so lines of different workers do not mix.
+ */
+function parseExpectLine(
+  line: string,
+): {url: string; failed: string[]} | undefined {
+  if (!line.startsWith('{"')) return undefined;
+  try {
+    const data = JSON.parse(line) as {url?: unknown; results?: unknown};
+    if (!Array.isArray(data.results)) return undefined;
+    const failed = (data.results as Check[])
+      .filter(result => result.ok === false)
+      .map(result => String(result.type));
+    return {url: typeof data.url === 'string' ? data.url : '', failed};
+  } catch {
+    return undefined;
+  }
+}
+
+/**
+ * The text of a scenario error line, or undefined for any other line. The
+ * plugin prints `Error: <message>`, and with the json format
+ * `{"ok":false,"error":"<message>"}`.
+ */
+function errorOf(line: string): string | undefined {
+  if (line.startsWith(ERROR_PREFIX)) return line;
+  if (!line.startsWith('{"ok":false,"error":')) return undefined;
+  try {
+    const {error} = JSON.parse(line) as {error?: unknown};
+    return typeof error === 'string' ? error : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+/**
+ * Makes the output of Artillery short. `accept` returns the lines to print for
+ * a line of the output. A line of a passing check prints nothing. The first
+ * `failedRequests` failed requests that differ in url and check print, and so do
+ * the first `errorLines` different `Error:` lines. Every other line of a
+ * failure is counted, and `summary()` says how many. The caller also writes
+ * every line to a file, so nothing is lost.
+ */
+export function createCompactFilter({
+  failedRequests = DEFAULT_SHOWN,
+  errorLines = DEFAULT_SHOWN,
+}: OutputOptions = {}): {
+  accept(line: string): string[];
+  summary(): string | undefined;
+} {
+  const shown = new Set<string>();
+  const errorsShown = new Set<string>();
+  let hidden = 0;
+  let hiddenErrors = 0;
+
+  return {
+    accept(line: string): string[] {
+      const expectLine = parseExpectLine(line);
+      if (expectLine) {
+        if (expectLine.failed.length === 0) return [];
+        const id = `${expectLine.url} ${expectLine.failed.join(',')}`;
+        if (shown.has(id) || shown.size >= failedRequests) {
+          hidden++;
+          return [];
+        }
+        shown.add(id);
+        return [line];
+      }
+      const error = errorOf(line);
+      if (error === undefined) return [line];
+      if (errorsShown.has(error) || errorsShown.size >= errorLines) {
+        hiddenErrors++;
+        return [];
+      }
+      errorsShown.add(error);
+      return [line];
+    },
+    summary(): string | undefined {
+      const parts = [
+        ...(hidden > 0 ? [`+${hidden} more failed requests`] : []),
+        ...(hiddenErrors > 0 ? [`+${hiddenErrors} more error lines`] : []),
+      ];
+      return parts.length > 0 ? parts.join(', ') : undefined;
+    },
+  };
+}

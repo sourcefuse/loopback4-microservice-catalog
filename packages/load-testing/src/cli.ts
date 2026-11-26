@@ -25,6 +25,10 @@ const USAGE = `Usage:
   load-testing run <package-dir> --since <ref>
                                        Run only the scenarios that the changes since <ref> affect.
                                        A scenario says what it covers with the option covers.
+  load-testing run <package-dir> --verbose
+                                       Print the full output of Artillery. By default the output is
+                                       short: the first failed checks of a scenario, and the rest
+                                       in .out/<scenario>.log.
 
 Environment:
   LOAD_TESTS_BASE_URL       API under test (required for load.it scenarios, the login, and
@@ -38,6 +42,7 @@ Environment:
                             [{"username": "...", "password": "..."}]. Set it to log in.
   LOAD_TESTS_CLIENT_ID, LOAD_TESTS_CLIENT_SECRET
                             Required when LOAD_TESTS_USERS_FILE is set
+  LOAD_TESTS_VERBOSE        Any value but 0 or false: the same as --verbose
   LOAD_TESTS_GIT            Absolute path of the git program for --since (default: git of PATH)`;
 
 async function run(
@@ -45,6 +50,7 @@ async function run(
   cancel: Cancellation,
   env: NodeJS.ProcessEnv,
   since?: string,
+  verbose = false,
 ): Promise<number> {
   clearSelection(pkgDir);
   const found = loadPackage(pkgDir, env, since);
@@ -71,6 +77,7 @@ async function run(
           target,
           pool,
           signal: cancel.signal,
+          verbose,
         }),
       ({scenario}) => phaseSeconds(phasesOf(scenario, config)),
       cancel.signal,
@@ -172,6 +179,7 @@ async function dispatch(
     options: {
       help: {type: 'boolean', short: 'h'},
       since: {type: 'string'},
+      verbose: {type: 'boolean'},
     },
   });
   if (values.help) {
@@ -192,7 +200,12 @@ async function dispatch(
   }
   const cancel = new Cancellation();
   try {
-    return await run(path.resolve(pkg), cancel, env, values.since);
+    const verbose =
+      values.verbose === true ||
+      !['', '0', 'false'].includes(
+        (env.LOAD_TESTS_VERBOSE ?? '').trim().toLowerCase(),
+      );
+    return await run(path.resolve(pkg), cancel, env, values.since, verbose);
   } catch (err) {
     if (cancel.exitCode === undefined) throw err;
     printError('\nCancelled.');

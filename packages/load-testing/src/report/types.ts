@@ -46,6 +46,8 @@ export type Measurement = {
   metrics?: Map<string, MetricStats>;
   /** Errors that a hook threw. They are not application errors. */
   hookErrors: number;
+  /** Other errors of the load by name, for example `ECONNREFUSED`. */
+  errors?: Record<string, number>;
   vusers: VuserCounts;
   /** Seconds from the first to the last count of the run. */
   seconds: number;
@@ -117,6 +119,8 @@ export type ScenarioResult = {
   vusers: VuserResult;
   /** Count of errors that a hook threw. They are not application errors. */
   hookErrors: number;
+  /** Other errors of the load by name, for example `ECONNREFUSED`. */
+  errors?: Record<string, number>;
   /** What failed in `after` and in the cleanups. */
   problems: string[];
   /** The message of the error that stopped the scenario. Undefined when it ran. */

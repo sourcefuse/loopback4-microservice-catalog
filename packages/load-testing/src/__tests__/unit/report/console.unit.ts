@@ -121,6 +121,16 @@ describe('consoleReporter', () => {
     expect(lines).to.containEql('FAIL: cleanup failed: gone');
   });
 
+  it('prints the errors by name, and no line when there are none', async () => {
+    const withErrors = {...SCENARIO, errors: {ECONNREFUSED: 12, ETIMEDOUT: 3}};
+
+    const lines = await linesOf({...RESULT, scenarios: [withErrors]});
+    const none = await linesOf({...RESULT, scenarios: [SCENARIO]});
+
+    expect(lines).to.containEql('Errors:   ECONNREFUSED 12, ETIMEDOUT 3');
+    expect(none.some(line => line.startsWith('Errors:'))).to.be.false();
+  });
+
   it('prints only the error of a scenario that threw, with no table', async () => {
     const scenario: ScenarioResult = {
       ...SCENARIO,

@@ -7,6 +7,8 @@ import path from 'node:path';
 import type {
   BrowserLimitOptions,
   LoadTestConfig,
+  MaskOptions,
+  OutputOptions,
   MetricThresholds,
   BrowserScenario,
   Thresholds,
@@ -155,6 +157,47 @@ function scalarProblems({
   return problems;
 }
 
+/** Returns what is wrong with `output`: each limit is a whole number, 0 or more. */
+function outputProblems(output: OutputOptions | undefined): string[] {
+  if (output === undefined) return [];
+  return (['failedRequests', 'errorLines'] as const)
+    .filter(key => {
+      const value = output[key];
+      return value !== undefined && !(Number.isInteger(value) && value >= 0);
+    })
+    .map(key => `output.${key} must be a whole number, 0 or more`);
+}
+
+/** Returns what is wrong with `mask`: the types that the masker needs at run time. */
+function maskProblems(mask: MaskOptions | undefined): string[] {
+  if (mask === undefined) return [];
+  const problems: string[] = [];
+  const list = (key: 'secrets' | 'names', ok: (v: unknown) => boolean) => {
+    const value: unknown = mask[key];
+    if (value !== undefined && !(Array.isArray(value) && value.every(ok))) {
+      problems.push(`mask.${key} must be a list of strings`);
+    }
+  };
+  list('secrets', v => typeof v === 'string');
+  list('names', v => typeof v === 'string' && v !== '');
+  if (
+    mask.patterns !== undefined &&
+    !(
+      Array.isArray(mask.patterns) &&
+      mask.patterns.every(p => p instanceof RegExp)
+    )
+  ) {
+    problems.push('mask.patterns must be a list of regular expressions');
+  }
+  if (mask.replacement !== undefined && typeof mask.replacement !== 'string') {
+    problems.push('mask.replacement must be a string');
+  }
+  if (mask.custom !== undefined && typeof mask.custom !== 'function') {
+    problems.push('mask.custom must be a function');
+  }
+  return problems;
+}
+
 /**
  * Returns what is wrong with the values of the config. Empty means nothing.
  * The type checks the keys when the package builds.
@@ -163,8 +206,17 @@ export function configProblems(config: unknown): string[] {
   if (typeof config !== 'object' || config === null) {
     return ['the default export must be an object'];
   }
-  const {phases, artillery, thresholds, engine, apis, reporters, runAllWhen} =
-    config as Partial<LoadTestConfig>;
+  const {
+    phases,
+    artillery,
+    thresholds,
+    engine,
+    apis,
+    reporters,
+    runAllWhen,
+    mask,
+    output,
+  } = config as Partial<LoadTestConfig>;
   const limits: Thresholds | undefined = thresholds?.default;
   const problems = [
     ...phaseProblems(phases, 'phases'),
@@ -177,6 +229,8 @@ export function configProblems(config: unknown): string[] {
     ...apisProblems(apis),
     ...reporterProblems(reporters),
     ...patternProblems(runAllWhen, 'runAllWhen'),
+    ...maskProblems(mask),
+    ...outputProblems(output),
   ];
   problems.push(...scalarProblems(config as Partial<LoadTestConfig>));
   return problems;

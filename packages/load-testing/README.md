@@ -580,6 +580,51 @@ load.it('search orders of a customer', [
 - `randomNumber(min, max)` needs whole numbers from 0 up, and `min` must not be above `max`. A negative or fractional value throws a `TypeError` with `randomNumber: the minimum and the maximum must be whole numbers from 0 up`. Artillery reads only letters, digits, `_`, `,` and spaces inside `$randomNumber(...)`.
 - We do not write `{{ loadTestsToken }}` or `{{ $env.LOAD_TESTS_TOKENS }}` by hand. The CLI gives the tokens to Artillery only for a scenario that uses `token()`. See [Send the token](#send-the-token).
 
+#### Secrets in the output
+
+A failed check of the Artillery `expect` plugin prints all the variables of the user, and the login token is one of them. We mask it: the line reads `loadTestsToken: <masked>`. We also mask JWTs, `Bearer` and `Basic` values, and the value after these names: `authorization`, `cookie`, `password`, `secret`, `api-key`, `access_token`, `refresh_token` and `id_token`. You cannot turn these rules off.
+
+The masking runs on each line of the Artillery output, so Artillery does not see a terminal and prints no colour codes. A name hides the rest of its line, also in one-line JSON.
+
+To mask more, add `mask` to `config.ts`. Your rules run after the built-in ones and can only hide more:
+
+| Key | Type | Default | What it means |
+| --- | --- | --- | --- |
+| `secrets` | `string[]` | none | Exact values to hide, for example a password from the environment. We also hide the base64 form and the URL form of each value. A value shorter than 8 characters is ignored, because it would hide too much. |
+| `names` | `string[]` | none | Names of variables or headers. In a line `name: value` or `name=value`, we hide the value up to the end of the line. We ignore the case. These add to the built-in names. |
+| `patterns` | `RegExp[]` | none | Regular expressions. We hide each text that one of them matches, in any place of a line. Use it for a value with a known shape, such as `sk_live_...`. |
+| `replacement` | `string` | `<masked>` | The text that takes the place of a hidden value. |
+| `custom` | `(line: string) => string` | none | A function that gets each line after the other rules, and returns the line to print. It runs last and can only hide more. When it throws, we hide the whole line. |
+
+```ts
+const config: LoadTestConfig = {
+  mask: {
+    secrets: [process.env.LOAD_TESTS_DB_PASSWORD ?? ''], // exact values, 8 characters or more
+    names: ['tenantSecret'], // `tenantSecret: value` prints `tenantSecret: <masked>`
+    patterns: [/sk_live_\w+/g],
+    replacement: '***', // the default is `<masked>`
+    custom: line => line.replace(/"email":"[^"]+"/g, '"email":"***"'), // runs last
+  },
+};
+```
+
+If `custom` throws, we hide the whole line. The log file below is masked in the same way, and the JSON report in `.out` holds only metrics.
+
+#### Console output
+
+By default the console output is short, so that a build log stays easy to read:
+
+- Artillery runs with `--quiet`, so its phase lines, the metrics for each period and its summary do not print. Our `Results` block prints as usual.
+- A passing check prints nothing.
+- When you declare the `expect` plugin, a failed check prints as one JSON line with the url, the check, the expected value and the value we got. This happens for the first 3 different failures in a scenario. Set `output.failedRequests` in `config.ts` to change the 3. A failure is different when the url or the check differs. The response headers, the body and the variables of the user do not print.
+- The other failed requests print as one line, for example `+250 more failed requests: see .out/<scenario>.log`.
+- The first 3 different scenario error lines print, and the rest are counted in the same one line. Set `output.errorLines` to change the 3. A limit of 0 prints none, and the log file still holds everything.
+- Network errors such as `ECONNREFUSED` print by code in the `Errors:` line of the `Results` block. Other error texts count as `other`.
+
+The file `.out/<scenario>.log` holds every line that Artillery prints on its standard output, masked. The file mode is 0600. It can hold the request and the first part of the response body of a failed check, so treat it as you treat the console. Keep it as a build artifact if you want to read it after the run.
+
+To print the full Artillery output, run `load-testing run . --verbose`, or set `LOAD_TESTS_VERBOSE` to any value but `0` or `false`. Then every failed check prints in full, with its response headers, its body and the variables of the user, with the phase lines and the metrics for each period. Passing checks still print nothing, unless you set `outputFormat: 'pretty'` for `expect` in `artillery.config`. A format that you set always wins. Masking stays on.
+
 #### Text that the engine refuses
 
 Artillery fills a template with a text replace, and it expands a text again after the fill. So a value that holds `{{ ... }}` can read `$env` or loop for ever. A value that holds `$&`, `` $` `` or `$'` can loop or grow, because the replace reads them as patterns. A `$$` becomes one `$`, so `pa$$word` in a longer text would reach the API as `pa$word`. We call these five texts the refused text: `{{`, `$&`, `` $` ``, `$'` and `$$`. A `$1`, a `$0` and a `$<name>` pass.
@@ -906,7 +951,7 @@ The workers do not load our scenario file, with one exception. For a browser sce
 - A worker hook must be synchronous. A worker does not wait for a promise. An `async` hook would run its work after the vuser went on, and nobody would see a rejection. The CLI fails the scenario before its load when one of the four hooks returns a promise. The next scenario still runs.
 - `beforeEach` must give the same result for the same arguments, and it must have no side effects. It must return an object, the vars of the vuser.
 - Before the load, the CLI runs each hook once, with made-up arguments, from the generated file. A hook that uses a name from outside fails at once, with a `ReferenceError` in the message. For `beforeRequest`, `afterResponse` and `afterEach`, only a `ReferenceError` fails the scenario, because the made-up arguments can cause other errors. A side effect of a hook runs once there. This test runs in the CLI process, so it sees all environment variables. A worker sees only the list that the next rule names.
-- The file writes `vars` (what `before` sets) in plain text. We never put a secret in `vars`. `token()` is safe. The browser recipe in [Browsers](#browsers) is the one exception: it puts the tokens of the test users in `vars`, so we use test users only and keep `.out` out of git and out of CI artifacts. The CLI passes the tokens to Artillery in the environment and does not write them to disk. It does so only for a scenario that uses `token()`.
+- The file writes `vars` (what `before` sets) in plain text. We never put a secret in `vars`. `token()` is safe. The browser recipe in [Browsers](#browsers) is the one exception: it puts the tokens of the test users in `vars`, so we use test users only and keep `.out` out of git and out of CI artifacts, apart from the masked `.log` files. The CLI passes the tokens to Artillery in the environment and does not write them to disk. It does so only for a scenario that uses `token()`.
 - A worker hook runs inside Artillery. So `process.env` there holds only the allowed names, plus `LOAD_TESTS_BASE_URL`, and `LOAD_TESTS_TOKENS` when the scenario sends `token()`. A browser flow gets `LOAD_TESTS_UI_URL` and not `LOAD_TESTS_BASE_URL`. See [The environment of Artillery](#the-environment-of-artillery).
 - A `beforeEach` result with the refused text fails the vuser. See [Text that the engine refuses](#text-that-the-engine-refuses).
 - `afterEach` does not run for a vuser whose flow stopped with an error.
@@ -2040,6 +2085,8 @@ The type checks the keys when we build. When the CLI starts, it also checks the 
 | `artillery.browsers` | `BrowserEngine[]` | `[chromium()]` | The browsers that each browser scenario runs in. See [Browsers](#browsers). |
 | `artillery.config` | `ArtilleryConfig` | none | Artillery `config` options for every scenario. See [Use any Artillery feature](#use-any-artillery-feature). |
 | `artillery.env` | `string[]` | none | The exact names of more variables to pass to Artillery, only when the CLI has them. For example `['MY_REGION']`. See [The environment of Artillery](#the-environment-of-artillery). |
+| `mask` | `MaskOptions` | the built-in rules only | More rules that hide secrets in the output: `secrets`, `names`, `patterns`, `replacement`, `custom`. See [Secrets in the output](#secrets-in-the-output). |
+| `output` | `{failedRequests?, errorLines?}` | `3` and `3` | How many different failed requests and error lines print for each scenario. See [Console output](#console-output). |
 
 An example with every key. A real package sets only the keys that it needs.
 
@@ -2069,12 +2116,22 @@ const config: LoadTestConfig = {
   reporters: [consoleReporter()],
   engine: artillery(),
   artillery: {config: {http: {timeout: 30}}, env: ['MY_REGION']},
+  mask: {names: ['tenantSecret'], replacement: '***'},
+  output: {failedRequests: 5, errorLines: 5},
 };
 
 export default config;
 ```
 
 `config.ts` has no `headers`. We set headers on `load.describe` or on `load.it`.
+
+The check of `mask` and `output` gives these problems.
+
+- `mask.secrets must be a list of strings`, and the same for `mask.names`
+- `mask.patterns must be a list of regular expressions`
+- `mask.replacement must be a string`
+- `mask.custom must be a function`
+- `output.failedRequests must be a whole number, 0 or more`, and the same for `output.errorLines`
 
 The check of `artillery.env` gives these problems.
 

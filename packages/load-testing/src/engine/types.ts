@@ -38,6 +38,8 @@ export type EngineRun = {
   tokens: string[];
   /** Stops the load. The engine must stop its work and then throw. */
   signal: AbortSignal;
+  /** True to print all the output of the load. The default is a short form. */
+  verbose?: boolean;
 };
 
 /**

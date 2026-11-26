@@ -67,6 +67,7 @@ export function judgeScenario(
       failures: vuserFailures,
     },
     hookErrors: run.hookErrors,
+    errors: run.errors,
     problems: run.problems,
     endpoints,
     metrics,
