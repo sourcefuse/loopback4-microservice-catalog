@@ -24,6 +24,7 @@ import {
   STATUS_CODE,
   SuccessResponse,
   UserStatus,
+  UserTokensValidAfterRepository,
   X_TS_TYPE,
   getModelSchemaRefSF,
 } from '@sourceloop/core';
@@ -35,6 +36,7 @@ import {
   authenticate,
   authenticateClient,
 } from 'loopback4-authentication';
+import * as jwt from 'jsonwebtoken';
 import {AuthorizeErrorKeys, authorize} from 'loopback4-authorization';
 import {LoginType} from '../../../enums';
 import {AuthClient, RefreshToken, User} from '../../../models';
@@ -105,6 +107,8 @@ export class LoginController {
     private readonly getAuthCode: AuthCodeGeneratorFn,
     @inject(UserValidationServiceBindings.VALIDATE_USER)
     private readonly userValidationProvider: UserValidationFn,
+    @repository(UserTokensValidAfterRepository)
+    public userTokensValidAfterRepo?: UserTokensValidAfterRepository,
   ) {}
 
   @authenticateClient(STRATEGY.CLIENT_PASSWORD)
@@ -541,6 +545,7 @@ export class LoginController {
     if (!refreshPayload) {
       throw new HttpErrors.Unauthorized(AuthErrorKeys.TokenExpired);
     }
+    await this.rejectIfUserTokensRevoked(req.refreshToken, refreshPayload);
     const authClient = await this.authClientRepository.findOne({
       where: {
         clientId: refreshPayload.clientId,
@@ -561,5 +566,27 @@ export class LoginController {
       refreshPayload: refreshPayload,
       authClient: authClient,
     };
+  }
+
+  private async rejectIfUserTokensRevoked(
+    refreshToken: string,
+    refreshPayload: RefreshToken,
+  ): Promise<void> {
+    const accessToken = jwt.decode(
+      refreshPayload.accessToken,
+    ) as jwt.JwtPayload;
+    const isRevoked = await this.userTokensValidAfterRepo?.isRevoked(
+      refreshPayload.userId,
+      accessToken?.iat,
+      refreshPayload.tenantId,
+    );
+    if (!isRevoked) {
+      return;
+    }
+    await this.refreshTokenRepo.delete(refreshToken);
+    if (refreshPayload.pubnubToken) {
+      await this.refreshTokenRepo.delete(refreshPayload.pubnubToken);
+    }
+    throw new HttpErrors.Unauthorized(AuthenticateErrorKeys.TokenRevoked);
   }
 }
