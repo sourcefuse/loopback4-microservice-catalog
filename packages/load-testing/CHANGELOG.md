@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>0.5.1 (2026-11-26)</small>
+
+* fix(packages): mask login tokens and shorten the Artillery output of load-testing (#2660) ([f2c5cb2](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/f2c5cb2)), closes [#2660](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2660)
+
+
+
+
+
 ## 0.5.0 (2026-11-19)
 
 * feat(packages): add change detection and a user pool to load-testing (#2659) ([e0681ca](https://github.com/sourcefuse/loopback4-microservice-catalog/commit/e0681ca)), closes [#2659](https://github.com/sourcefuse/loopback4-microservice-catalog/issues/2659)
