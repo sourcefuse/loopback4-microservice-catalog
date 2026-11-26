@@ -307,6 +307,28 @@ Authenttication service can be used as a identity server. Following endpoints ha
   </tbody>
   </table>
 
+### SAML Single Logout
+
+For users who signed in through SAML (`POST /auth/saml` → IdP → `POST /auth/saml-redirect`), the service supports SP-initiated Single Logout. **It is off by default and must be enabled by the application:**
+
+```ts
+this.bind(AuthServiceBindings.Config).to({
+  samlSingleLogout: true,
+});
+```
+
+> **Think before enabling it.** Single Logout ends the user's session at the IdP, not just in this application. With a corporate SSO used for many applications (email, chat, HR tools, …), logging out here signs the user out of all of them. Enable it only for products where that is the intended behaviour.
+
+When it is not enabled, the routes below are not mounted and no IdP session reference is stored, even if the environment variables are set.
+
+1. At login (when Single Logout is enabled and configured), the IdP session — NameID, NameID format, SessionIndex and any NameID qualifiers — is kept in the refresh-token record (`externalAuthToken`). It is encrypted (AES-256-GCM, key derived from `SAML_SP_PRIVATE_KEY`), so it stays opaque wherever it travels, including the authorization code. It is never added to the JWT, and it survives token refresh. Rotating the key turns logout for existing sessions into a local-only logout.
+2. The client calls `POST /saml/logout` with the bearer token and `{"refreshToken": "..."}`. The application session is ended exactly like `POST /logout`, and the response contains `logoutUrl`: a signed SAML LogoutRequest URL (HTTP-Redirect binding).
+3. The client navigates the browser to `logoutUrl` (a top-level navigation, so the IdP session cookie is sent). The IdP ends its session and returns its LogoutResponse to `/auth/saml/logout` — `POST` (HTTP-POST binding) or `GET` (HTTP-Redirect binding, e.g. Entra ID) — which redirects (303) to `SAML_LOGOUT_REDIRECT_URL`.
+
+**Only SP-initiated logout is supported.** `/auth/saml/logout` handles the IdP's LogoutResponse only; an IdP-initiated LogoutRequest (`SAMLRequest`, e.g. when the user signs out in another application) is not processed — no tokens are revoked here and no LogoutResponse is returned to the IdP. Register `/auth/saml/logout` as the response URL of the SP's Single Logout service and do not rely on IdP-initiated logout reaching this service.
+
+`logoutUrl` is `null` when the session is not a SAML one or the environment is not configured for Single Logout; the application session is still ended. Besides `samlSingleLogout: true`, configure `SAML_SESSION_LOGOUT_URL`, `SAML_SP_PRIVATE_KEY` and `SAML_LOGOUT_REDIRECT_URL` (see below), register `<auth-host>/auth/saml/logout` as the Single Logout URL in the IdP, and make sure the application binds `Strategies.Passport.SAML_STRATEGY_FACTORY`.
+
 ### Environment Variables
 
 <table>
@@ -495,6 +517,24 @@ Authenttication service can be used as a identity server. Following endpoints ha
         <td>HTTPS_PROXY</td>
         <td>N</td>
         <td>Https proxy url for keycloak auth</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>SAML_SESSION_LOGOUT_URL</td>
+        <td>N</td>
+        <td>IdP Single Logout (SLO) endpoint used by <code>POST /saml/logout</code>. Single Logout is enabled only when this, <code>SAML_SP_PRIVATE_KEY</code>, <code>SAML_LOGOUT_REDIRECT_URL</code> and the SAML login settings (<code>SAML_ISSUER</code>, <code>SAML_CERT</code>, <code>SAML_ENTRY_POINT</code>, <code>SAML_CALLBACK_URL</code>) are all set.</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>SAML_SP_PRIVATE_KEY</td>
+        <td>N</td>
+        <td>PEM private key of the service provider used to sign SAML LogoutRequests (escaped <code>\n</code> line breaks are supported). Login AuthnRequests stay unsigned.</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>SAML_LOGOUT_REDIRECT_URL</td>
+        <td>N</td>
+        <td>Page the browser is redirected to (303) when the IdP returns to <code>POST /auth/saml/logout</code> after Single Logout.</td>
         <td></td>
       </tr>
 
