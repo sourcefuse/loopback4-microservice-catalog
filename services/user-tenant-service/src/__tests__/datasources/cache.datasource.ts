@@ -12,7 +12,7 @@ import {juggler} from '@loopback/repository';
 
 const config = {
   name: 'AuthCache',
-  connector: 'memory',
+  connector: 'kv-memory',
   localStorage: '',
   file: '',
 };
