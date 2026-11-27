@@ -4,7 +4,9 @@ metadata:
   name: loopback4-microservice-catalog
   annotations:
     github.com/project-slug: sourcefuse/loopback4-microservice-catalog
+    snyk.io/org-id: value
+    backstage.io/techdocs-ref: dir:.
 spec:
-  type: other
-  lifecycle: unknown
+  type: service
+  lifecycle: development
   owner: sourcefuse/loopback4-admins
