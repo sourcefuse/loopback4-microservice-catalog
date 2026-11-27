@@ -62,6 +62,7 @@ export class SequelizeUserModifyCrudRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     entity.modifiedBy = uid;
+    entity.modifiedOn = new Date();
     return super.save(entity, options);
   }
 
@@ -72,6 +73,7 @@ export class SequelizeUserModifyCrudRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     entity.modifiedBy = uid;
+    entity.modifiedOn = new Date();
     return super.update(entity, options);
   }
 
@@ -87,6 +89,7 @@ export class SequelizeUserModifyCrudRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     data.modifiedBy = uid;
+    data.modifiedOn = new Date();
     return super.updateAll(data, where, options);
   }
 
@@ -102,6 +105,7 @@ export class SequelizeUserModifyCrudRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     data.modifiedBy = uid;
+    data.modifiedOn = new Date();
     return super.updateById(id, data, options);
   }
   async replaceById(
@@ -115,6 +119,7 @@ export class SequelizeUserModifyCrudRepository<
     }
     const uid = currentUser?.userTenantId ?? currentUser?.id;
     data.modifiedBy = uid;
+    data.modifiedOn = new Date();
     return super.replaceById(id, data, options);
   }
 }
