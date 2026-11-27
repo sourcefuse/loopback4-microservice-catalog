@@ -2,42 +2,24 @@
 
 name: Release [Manual]
 on: workflow_dispatch
-permissions:
-  contents: write
-  id-token: write
+
+# Nothing gets write access by default; each job asks for what it needs.
+permissions: {}
+
 jobs:
-  Release:
+  # Runs install, tests and lint with no write credentials and no OIDC.
+  Verify:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v5
         with:
-          # fetch-depth is necessary to get all tags
-          # otherwise lerna can't detect the changes and will end up bumping the versions for all packages
-          fetch-depth: 0
-          token: ${{ secrets.RELEASE_COMMIT_GH_PAT }}
+          persist-credentials: false
       - name: Setup Node
         uses: actions/setup-node@v5
         with:
           node-version: '24.x'
-          registry-url: 'https://registry.npmjs.org'
-          always-auth: false # important for trusted publishing
-      - name: Configure CI Git User
-        run: |
-          git config --global user.name $CONFIG_USERNAME
-          git config --global user.email $CONFIG_EMAIL
-          git remote set-url origin https://$GITHUB_ACTOR:$GITHUB_PAT@github.com/sourcefuse/loopback4-microservice-catalog
-        env:
-          GITHUB_PAT: ${{ secrets.RELEASE_COMMIT_GH_PAT }}
-          CONFIG_USERNAME: ${{ vars.RELEASE_COMMIT_USERNAME }}
-          CONFIG_EMAIL: ${{ vars.RELEASE_COMMIT_EMAIL }}
-      # - name: Authenticate with Registry
-      #   run: |
-      #     echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
-      #     npm whoami
-      #   env:
-      #     NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      #     NPM_USERNAME: ${{ vars.NPM_USERNAME }}
-
       - name: Install Dependencies
         run: npm ci --ignore-scripts
       - name: Run After Install Script
@@ -46,12 +28,59 @@ jobs:
       # can be removed once this issue is fixed or we update to later versions
       - name: nx dependency
         run: npm i @nx/nx-linux-x64-gnu@16.10.0 --ignore-scripts
-      - name: install lerna
-        run: npm i -g lerna@9.0.7 --ignore-scripts
       - name: Test
         run: npm run test --workspaces --if-present
       - name: Lint
         run: npm run lint --workspaces --if-present
+
+  Release:
+    needs: Verify
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read # pushes use the app token below, not GITHUB_TOKEN
+      id-token: write # npm trusted publishing
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          # fetch-depth is necessary to get all tags
+          # otherwise lerna can't detect the changes and will end up bumping the versions for all packages
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24.x'
+          registry-url: 'https://registry.npmjs.org'
+          always-auth: false # important for trusted publishing
+      - name: Install Dependencies
+        run: npm ci --ignore-scripts
+      - name: Run After Install Script
+        run: npm run afterinstall
+      - name: nx dependency
+        run: npm i @nx/nx-linux-x64-gnu@16.10.0 --ignore-scripts
+
+      # Minted only after install and build, so no earlier step can see it.
+      # Valid for one hour and limited to this repository.
+      - name: Create release token
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ vars.RELEASE_APP_ID }}
+          private-key: ${{ secrets.RELEASE_APP_PRIVATE_KEY }}
+          permission-contents: write
+
+      - name: Configure CI Git User
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          APP_SLUG: ${{ steps.app-token.outputs.app-slug }}
+        run: |
+          user_id="$(gh api "/users/${APP_SLUG}[bot]" --jq .id)"
+          git config user.name "${APP_SLUG}[bot]"
+          git config user.email "${user_id}+${APP_SLUG}[bot]@users.noreply.github.com"
+          auth="$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)"
+          echo "::add-mask::${auth}"
+          git config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ${auth}"
+
       - name: Stash Changes
         run: git stash
       - name: Bump Versions
@@ -61,5 +90,7 @@ jobs:
         # To always compare changes from registry
         # using `from-package` compares version in local package.json with registry and publish it if required.
         run: HUSKY=0 npm_config_ignore_scripts=true npx --ignore-scripts lerna@9.0.7 publish from-package --yes
-        # env:
-        #   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Remove git credentials
+        if: always()
+        run: git config --local --unset-all http.https://github.com/.extraheader || true
